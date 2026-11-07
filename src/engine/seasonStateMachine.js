@@ -1,5 +1,5 @@
 /**
- * Seasonal & Temporal State Machine for 49ers Nerd HQ
+ * Seasonal & Temporal State Machine for 49ers Faithful
  * Governs which Year-Round, In-Season, and Temporal modules appear on the main dashboard
  * vs. move to the Off-Cycle / Archive Vault.
  */

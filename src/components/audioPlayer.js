@@ -68,8 +68,8 @@ export class PodcastAudioController {
     if (!('mediaSession' in navigator) || !episode) return;
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title: episode.title || '49ers Nerd HQ Autopodcast',
-        artist: episode.format || '49ers Nerd HQ',
+        title: episode.title || '49ers Faithful Autopodcast',
+        artist: episode.format || '49ers Faithful',
         album: 'The Faithful Analytical Briefing',
         artwork: [
           { src: './assets/apple-touch-icon.png', sizes: '512x512', type: 'image/png' }
@@ -119,6 +119,8 @@ export class PodcastAudioController {
       this.audio.playbackRate = this.playbackRate;
       this.audio.currentTime = Math.max(0, startSec);
       this.currentTimeSec = Math.max(0, startSec);
+      // Emit immediately so Mini-Player and Transcript mount without waiting on network buffer
+      this._emit();
       try {
         await this.audio.play();
         this.isPlaying = true;

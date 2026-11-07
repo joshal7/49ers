@@ -1,0 +1,958 @@
+/**
+ * Main Application Controller for 49ers Faithful (https://49ers.joshal.com)
+ */
+
+import { evaluateSeasonState, resolveOrderedDashboardBlocks } from './engine/seasonStateMachine.js';
+import { simulateCapScenario } from './engine/capSimulator.js';
+import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js';
+import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
+import { loadAll49ersData, loadUserPrefs, saveUserPrefs } from './services/dataService.js';
+import {
+  fetchSharedWorkerFeed,
+  runOnDemandDeepAnalysis,
+  generateOnDemandAutopodcast
+} from './services/aiWorkerClient.js';
+
+import { esc, formatRelativeAge } from './views/uiHelpers.js';
+import { renderHomeDashboardHtml } from './views/homeView.js';
+import { renderNewsViewHtml } from './views/newsView.js';
+import { renderRosterCapViewHtml } from './views/rosterCapView.js';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js';
+import { renderAudioAiViewHtml } from './views/audioAiView.js';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js';
+
+const state = {
+  appData: null,
+  prefs: loadUserPrefs(),
+  seasonState: null,
+
+  activeNavTab: 'home', // 'home' | 'news' | 'roster' | 'season' | 'audio'
+  isCustomizingLayout: false,
+  draggedBlockId: null,
+
+  // News state
+  newsMode: 'clustered',
+  newsCategoryFilter: 'all',
+  activeVideosSet: new Set(),
+
+  // Roster & Cap state
+  rosterSubTab: 'roster',
+  rosterSearch: '',
+  rosterUnitFilter: 'All',
+  rosterPosFilter: 'ALL',
+  rosterSort: 'cap_desc',
+  depthMode: 'projected',
+
+  // Season & Temporal state
+  seasonSubTab: 'matchup',
+  combineSearch: '',
+  expandedDraftSpiderIdx: -1,
+
+  // Audio & AI Studio state
+  studioSubTab: 'podcast',
+  podDurationMin: 3,
+  podFormat: 'two_host',
+  podTopicDraft: '',
+  analysisPromptDraft: '',
+  jobStatus: null,
+  workerSharedFeed: { analyses: [], episodes: [] },
+  audioState: {},
+
+  // Bottom Sheet state
+  sheetMode: null, // 'player' | 'settings' | 'vault' | null
+  sheetPlayerId: null,
+  sheetPlayerTab: 'overview',
+  sheetPlayerStatsMode: '2026',
+  sheetPlayerTxScenario: 'cut',
+  reporterSearch: ''
+};
+
+let audioController = null;
+let cachedMonteCarloKey = '';
+let cachedMonteCarloResult = null;
+
+function applyTheme(theme) {
+  const clean = theme === 'light' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', clean);
+  const metaTheme = document.getElementById('metaThemeColor');
+  if (metaTheme) {
+    metaTheme.setAttribute('content', clean === 'light' ? '#F7F5F0' : '#0B0D10');
+  }
+}
+
+function getReportersMap() {
+  return new Map((state.appData?.reporters?.reporters || []).map(r => [r.id, r]));
+}
+
+function getPlayerById(id) {
+  if (!id || !state.appData?.roster?.players) return null;
+  const sid = String(id);
+  return (
+    state.appData.roster.players.find(
+      p => String(p.id) === sid || String(p.otcId) === sid || String(p.pfrId) === sid
+    ) || null
+  );
+}
+
+function getMonteCarloResult() {
+  const inputs = state.appData?.seasonal?.playoffPicture?.simulatorInputs;
+  if (!inputs) return state.appData?.seasonal?.playoffPicture?.baselineSimulation || null;
+
+  const overrides = state.prefs.playoffForcedWinners || {};
+  const key = JSON.stringify(overrides);
+  if (Object.keys(overrides).length === 0) {
+    return state.appData.seasonal.playoffPicture.baselineSimulation;
+  }
+  if (key === cachedMonteCarloKey && cachedMonteCarloResult) {
+    return cachedMonteCarloResult;
+  }
+  cachedMonteCarloKey = key;
+  cachedMonteCarloResult = runPlayoffMonteCarlo({
+    ...inputs,
+    forcedWinners: overrides,
+    iterations: 10000,
+    seed: 492026
+  });
+  return cachedMonteCarloResult;
+}
+
+function getAllEpisodes() {
+  const base = state.appData?.podcastIndex?.episodes || [];
+  const workerEps = state.workerSharedFeed?.episodes || [];
+  const localEps = state.prefs.localCustomEpisodes || [];
+  const merged = [...localEps, ...workerEps, ...base];
+  const seen = new Set();
+  return merged.filter(ep => {
+    if (!ep?.id || seen.has(ep.id)) return false;
+    seen.add(ep.id);
+    return true;
+  });
+}
+
+function getAllAnalyses() {
+  const base = state.appData?.podcastIndex?.sharedAnalyses || [];
+  const workerItems = state.workerSharedFeed?.analyses || [];
+  const localItems = state.prefs.localCustomAnalyses || [];
+  const merged = [...localItems, ...workerItems, ...base];
+  const seen = new Set();
+  return merged.filter(item => {
+    if (!item?.id || seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
+}
+
+function preserveFocusAroundRender(renderFn) {
+  const active = document.activeElement;
+  const activeId = active?.id || null;
+  const selStart = typeof active?.selectionStart === 'number' ? active.selectionStart : null;
+  const selEnd = typeof active?.selectionEnd === 'number' ? active.selectionEnd : null;
+
+  renderFn();
+
+  if (activeId) {
+    const nextEl = document.getElementById(activeId);
+    if (nextEl && typeof nextEl.focus === 'function') {
+      nextEl.focus({ preventScroll: true });
+      if (selStart != null && typeof nextEl.setSelectionRange === 'function') {
+        try {
+          nextEl.setSelectionRange(selStart, selEnd ?? selStart);
+        } catch {}
+      }
+    }
+  }
+}
+
+function renderHeaderAndPhaseBanner() {
+  if (!state.appData) return;
+  const m = state.appData.meta || {};
+  const recPill = document.getElementById('headerRecordPill');
+  const subStatus = document.getElementById('headerSubStatus');
+  if (recPill) recPill.textContent = m.teamRecord || '6-1';
+  if (subStatus) {
+    subStatus.textContent = `${m.standingSummary || '#1 Seed NFC'} • Synced ${formatRelativeAge(m.updatedAt)}`;
+  }
+
+  const bannerEl = document.getElementById('phaseBanner');
+  if (bannerEl && state.seasonState) {
+    const hp = state.seasonState.headlinePhase;
+    bannerEl.innerHTML = `
+      <div class="phase-banner-main">
+        <div class="phase-eyebrow">🏈 ${esc(hp.label)}</div>
+        <div class="phase-detail">${esc(hp.detail)}</div>
+      </div>
+      ${hp.countdownText ? `<span class="phase-countdown mono">⏱ ${esc(hp.countdownText)}</span>` : ''}
+    `;
+  }
+}
+
+function renderNavTabs() {
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+    const tab = btn.getAttribute('data-nav-tab');
+    btn.classList.toggle('active', tab === state.activeNavTab);
+  });
+}
+
+function renderMain() {
+  if (!state.appData) return;
+  const mainEl = document.getElementById('mainView');
+  if (!mainEl) return;
+
+  const reportersMap = getReportersMap();
+  const filteredClusters = filterNewsByUserPrefs(
+    state.appData.news?.clusteredBriefs || [],
+    reportersMap,
+    state.prefs
+  );
+  const filteredRawItems = filterNewsByUserPrefs(
+    state.appData.news?.rawStream || [],
+    reportersMap,
+    state.prefs
+  );
+  const simCapResult = simulateCapScenario(state.appData.cap, state.prefs.capMoves);
+  const mcSimResult = getMonteCarloResult();
+
+  preserveFocusAroundRender(() => {
+    if (state.activeNavTab === 'home') {
+      const orderedBlocks = resolveOrderedDashboardBlocks(
+        state.seasonState.activeBlocks,
+        state.prefs.dashboardOrder
+      );
+      mainEl.innerHTML = renderHomeDashboardHtml({
+        orderedBlocks,
+        archivedBlocks: state.seasonState.archivedBlocks,
+        appData: state.appData,
+        simCapResult,
+        mcSimResult,
+        filteredClusters,
+        isCustomizingLayout: state.isCustomizingLayout
+      });
+    } else if (state.activeNavTab === 'news') {
+      mainEl.innerHTML = renderNewsViewHtml({
+        newsMode: state.newsMode,
+        newsCategoryFilter: state.newsCategoryFilter,
+        filteredClusters,
+        filteredRawItems,
+        reportersById: reportersMap,
+        activeVideosSet: state.activeVideosSet,
+        userPrefs: state.prefs,
+        totalReportersCount: state.appData.reporters?.reporters?.length || 45
+      });
+    } else if (state.activeNavTab === 'roster') {
+      mainEl.innerHTML = renderRosterCapViewHtml({
+        subTab: state.rosterSubTab,
+        rosterSearch: state.rosterSearch,
+        rosterUnitFilter: state.rosterUnitFilter,
+        rosterPosFilter: state.rosterPosFilter,
+        rosterSort: state.rosterSort,
+        depthMode: state.depthMode,
+        appData: state.appData,
+        simCapResult,
+        userCapMoves: state.prefs.capMoves
+      });
+    } else if (state.activeNavTab === 'season') {
+      mainEl.innerHTML = renderSeasonMatchupViewHtml({
+        seasonSub: state.seasonSubTab,
+        activePhases: state.seasonState.activePhases,
+        appData: state.appData,
+        mcSimResult,
+        forcedWinners: state.prefs.playoffForcedWinners,
+        combineSearch: state.combineSearch,
+        expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
+        activeVideosSet: state.activeVideosSet
+      });
+    } else if (state.activeNavTab === 'audio') {
+      mainEl.innerHTML = renderAudioAiViewHtml({
+        studioSub: state.studioSubTab,
+        podDurationMin: state.podDurationMin,
+        podFormat: state.podFormat,
+        podTopicDraft: state.podTopicDraft,
+        analysisPromptDraft: state.analysisPromptDraft,
+        jobStatus: state.jobStatus,
+        allEpisodes: getAllEpisodes(),
+        allAnalyses: getAllAnalyses(),
+        audioState: state.audioState
+      });
+    }
+  });
+
+  renderNavTabs();
+}
+
+function renderSheet() {
+  const backdrop = document.getElementById('bottomSheetBackdrop');
+  const eyebrow = document.getElementById('sheetEyebrow');
+  const title = document.getElementById('sheetTitle');
+  const body = document.getElementById('sheetBody');
+  if (!backdrop || !body) return;
+
+  if (!state.sheetMode) {
+    backdrop.hidden = true;
+    return;
+  }
+
+  backdrop.hidden = false;
+
+  preserveFocusAroundRender(() => {
+    if (state.sheetMode === 'player') {
+      const player = getPlayerById(state.sheetPlayerId);
+      if (eyebrow) eyebrow.textContent = player ? `${player.position} • #${player.jersey ?? '—'}` : 'Player Dossier';
+      if (title) title.textContent = player ? player.name : 'Player Dossier';
+      body.innerHTML = renderPlayerDossierSheetHtml({
+        player,
+        activeTab: state.sheetPlayerTab,
+        statsMode: state.sheetPlayerStatsMode,
+        txScenario: state.sheetPlayerTxScenario
+      });
+    } else if (state.sheetMode === 'settings') {
+      if (eyebrow) eyebrow.textContent = 'Customization & Source Control';
+      if (title) title.textContent = 'Settings & Reporter Filters';
+      body.innerHTML = renderSettingsSheetHtml({
+        userPrefs: state.prefs,
+        reportersData: state.appData?.reporters,
+        reporterSearch: state.reporterSearch
+      });
+    } else if (state.sheetMode === 'vault') {
+      if (eyebrow) eyebrow.textContent = 'Calendar State Machine';
+      if (title) title.textContent = 'Seasonal & Off-Cycle Vault';
+      body.innerHTML = renderArchiveVaultSheetHtml({
+        seasonState: state.seasonState
+      });
+    }
+  });
+}
+
+function renderMiniPlayer(audioSnapshot) {
+  const prevEpId = state.audioState?.episode?.id || null;
+  const nextEpId = audioSnapshot?.episode?.id || null;
+  state.audioState = audioSnapshot || {};
+  const miniEl = document.getElementById('miniPlayer');
+  if (!miniEl) return;
+
+  if (!audioSnapshot?.episode) {
+    miniEl.hidden = true;
+    document.body.classList.remove('has-mini-player');
+    if (prevEpId && state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+      renderMain();
+    }
+    return;
+  }
+
+  miniEl.hidden = false;
+  document.body.classList.add('has-mini-player');
+
+  // If a new episode just loaded while viewing Podcast Studio, immediately mount its interactive transcript
+  if (prevEpId !== nextEpId && state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+    renderMain();
+  }
+
+  const titleEl = document.getElementById('miniPlayerTitle');
+  const timeEl = document.getElementById('miniPlayerTime');
+  const playBtn = document.getElementById('mpPlayPauseBtn');
+  const speedBtn = document.getElementById('mpSpeedBtn');
+
+  if (titleEl) titleEl.textContent = audioSnapshot.episode.title;
+  if (timeEl) {
+    timeEl.textContent = `${formatTimeMmSs(audioSnapshot.currentTimeSec)} / ${formatTimeMmSs(
+      audioSnapshot.durationSec || audioSnapshot.episode.durationSec
+    )}`;
+  }
+  if (playBtn) playBtn.textContent = audioSnapshot.isPlaying ? '⏸' : '▶';
+  if (speedBtn) speedBtn.textContent = `${audioSnapshot.playbackRate}x`;
+
+  // Update active transcript turn highlight in place if on Audio tab
+  if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+    document.querySelectorAll('.transcript-turn').forEach((el, idx) => {
+      el.classList.toggle('active-turn', idx === audioSnapshot.activeTurnIdx);
+    });
+  }
+}
+
+function moveDashboardBlock(blockId, direction) {
+  const currentOrdered = resolveOrderedDashboardBlocks(
+    state.seasonState.activeBlocks,
+    state.prefs.dashboardOrder
+  ).map(b => b.id);
+
+  const idx = currentOrdered.indexOf(blockId);
+  if (idx === -1) return;
+  const targetIdx = idx + direction;
+  if (targetIdx < 0 || targetIdx >= currentOrdered.length) return;
+
+  const swapped = [...currentOrdered];
+  const [removed] = swapped.splice(idx, 1);
+  swapped.splice(targetIdx, 0, removed);
+
+  state.prefs.dashboardOrder = swapped;
+  saveUserPrefs(state.prefs);
+  renderMain();
+}
+
+function reorderBlockBeforeTarget(draggedId, targetId) {
+  if (!draggedId || !targetId || draggedId === targetId) return;
+  const currentOrdered = resolveOrderedDashboardBlocks(
+    state.seasonState.activeBlocks,
+    state.prefs.dashboardOrder
+  ).map(b => b.id);
+
+  const fromIdx = currentOrdered.indexOf(draggedId);
+  const toIdx = currentOrdered.indexOf(targetId);
+  if (fromIdx === -1 || toIdx === -1) return;
+
+  const next = [...currentOrdered];
+  const [moved] = next.splice(fromIdx, 1);
+  next.splice(toIdx, 0, moved);
+
+  state.prefs.dashboardOrder = next;
+  saveUserPrefs(state.prefs);
+  renderMain();
+}
+
+function bindEvents() {
+  // Bottom Nav Tabs
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.activeNavTab = btn.getAttribute('data-nav-tab') || 'home';
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      renderMain();
+    });
+  });
+
+  // Top Header triggers
+  document.getElementById('brandHomeTrigger')?.addEventListener('click', () => {
+    state.activeNavTab = 'home';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    renderMain();
+  });
+
+  document.getElementById('openSettingsBtn')?.addEventListener('click', () => {
+    state.sheetMode = 'settings';
+    renderSheet();
+  });
+
+  document.getElementById('openArchiveBtn')?.addEventListener('click', () => {
+    state.sheetMode = 'vault';
+    renderSheet();
+  });
+
+  document.getElementById('closeSheetBtn')?.addEventListener('click', () => {
+    state.sheetMode = null;
+    renderSheet();
+  });
+
+  document.getElementById('bottomSheetBackdrop')?.addEventListener('click', e => {
+    if (e.target.id === 'bottomSheetBackdrop') {
+      state.sheetMode = null;
+      renderSheet();
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && state.sheetMode) {
+      state.sheetMode = null;
+      renderSheet();
+    }
+  });
+
+  // Sticky Mini-Player Controls
+  document.getElementById('miniPlayerExpandTrigger')?.addEventListener('click', () => {
+    state.activeNavTab = 'audio';
+    state.studioSubTab = 'podcast';
+    renderMain();
+  });
+  document.getElementById('mpPlayPauseBtn')?.addEventListener('click', () => audioController?.togglePlayPause());
+  document.getElementById('mpBack15Btn')?.addEventListener('click', () => audioController?.skip(-15));
+  document.getElementById('mpFwd30Btn')?.addEventListener('click', () => audioController?.skip(30));
+  document.getElementById('mpSpeedBtn')?.addEventListener('click', () => audioController?.cycleSpeed());
+  document.getElementById('mpCloseBtn')?.addEventListener('click', () => audioController?.closePlayer());
+
+  // Delegated Click Handler across Main View & Bottom Sheet
+  document.addEventListener('click', async e => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const action = btn.getAttribute('data-action');
+
+    switch (action) {
+      case 'toggle-customize-layout':
+        state.isCustomizingLayout = !state.isCustomizingLayout;
+        renderMain();
+        break;
+
+      case 'reset-dashboard-order':
+        state.prefs.dashboardOrder = [];
+        saveUserPrefs(state.prefs);
+        renderMain();
+        break;
+
+      case 'move-block-up':
+        moveDashboardBlock(btn.getAttribute('data-block-id'), -1);
+        break;
+
+      case 'move-block-down':
+        moveDashboardBlock(btn.getAttribute('data-block-id'), 1);
+        break;
+
+      case 'jump-view':
+        state.activeNavTab = btn.getAttribute('data-target-tab') || 'home';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
+      case 'jump-roster-sub':
+        state.activeNavTab = 'roster';
+        state.rosterSubTab = btn.getAttribute('data-roster-sub') || 'roster';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
+      case 'jump-season-sub':
+        state.activeNavTab = 'season';
+        state.seasonSubTab = btn.getAttribute('data-season-sub') || 'matchup';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
+      case 'open-vault-module':
+        state.sheetMode = null;
+        renderSheet();
+        state.activeNavTab = 'season';
+        state.seasonSubTab = btn.getAttribute('data-season-sub') || 'draft_class';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
+      case 'open-settings':
+        state.sheetMode = 'settings';
+        renderSheet();
+        break;
+
+      case 'set-news-mode':
+        state.newsMode = btn.getAttribute('data-mode') || 'clustered';
+        renderMain();
+        break;
+
+      case 'set-news-category':
+        state.newsCategoryFilter = btn.getAttribute('data-category') || 'all';
+        renderMain();
+        break;
+
+      case 'play-inline-video': {
+        const key = btn.getAttribute('data-vid-key');
+        if (key) {
+          state.activeVideosSet.add(key);
+          renderMain();
+        }
+        break;
+      }
+
+      case 'set-roster-sub':
+        state.rosterSubTab = btn.getAttribute('data-roster-sub') || 'roster';
+        renderMain();
+        break;
+
+      case 'set-roster-unit':
+        state.rosterUnitFilter = btn.getAttribute('data-unit') || 'All';
+        renderMain();
+        break;
+
+      case 'set-roster-pos':
+        state.rosterPosFilter = btn.getAttribute('data-pos') || 'ALL';
+        renderMain();
+        break;
+
+      case 'set-depth-mode':
+        state.depthMode = btn.getAttribute('data-depth-mode') || 'projected';
+        renderMain();
+        break;
+
+      case 'open-player-sheet': {
+        const pid = btn.getAttribute('data-player-id');
+        const player = getPlayerById(pid);
+        if (player) {
+          state.sheetMode = 'player';
+          state.sheetPlayerId = player.id;
+          state.sheetPlayerTab = btn.getAttribute('data-initial-tab') || 'overview';
+          renderSheet();
+        }
+        break;
+      }
+
+      case 'set-player-tab':
+        state.sheetPlayerTab = btn.getAttribute('data-player-tab') || 'overview';
+        renderSheet();
+        break;
+
+      case 'set-player-stats-mode':
+        state.sheetPlayerStatsMode = btn.getAttribute('data-stats-mode') || '2026';
+        renderSheet();
+        break;
+
+      case 'set-player-tx-scenario':
+        state.sheetPlayerTxScenario = btn.getAttribute('data-tx') || 'cut';
+        renderSheet();
+        break;
+
+      case 'apply-ai-cap-blueprint': {
+        const nextMoves = {};
+        for (const r of (state.appData?.cap?.blueprint?.restructureCandidates || []).slice(0, 2)) {
+          nextMoves[r.id] = 'restructure';
+        }
+        state.prefs.capMoves = nextMoves;
+        saveUserPrefs(state.prefs);
+        renderMain();
+        break;
+      }
+
+      case 'reset-cap-moves':
+        state.prefs.capMoves = {};
+        saveUserPrefs(state.prefs);
+        renderMain();
+        break;
+
+      case 'set-season-sub':
+        state.seasonSubTab = btn.getAttribute('data-season-sub') || 'matchup';
+        renderMain();
+        break;
+
+      case 'toggle-playoff-winner': {
+        const gid = btn.getAttribute('data-game-id');
+        const side = btn.getAttribute('data-side');
+        if (gid && (side === 'HOME' || side === 'AWAY')) {
+          if (state.prefs.playoffForcedWinners[gid] === side) {
+            delete state.prefs.playoffForcedWinners[gid];
+          } else {
+            state.prefs.playoffForcedWinners[gid] = side;
+          }
+          saveUserPrefs(state.prefs);
+          renderMain();
+        }
+        break;
+      }
+
+      case 'reset-playoff-overrides':
+        state.prefs.playoffForcedWinners = {};
+        saveUserPrefs(state.prefs);
+        renderMain();
+        break;
+
+      case 'toggle-draft-spider': {
+        const idx = Number(btn.getAttribute('data-draft-idx'));
+        state.expandedDraftSpiderIdx = state.expandedDraftSpiderIdx === idx ? -1 : idx;
+        renderMain();
+        break;
+      }
+
+      case 'set-studio-sub':
+        state.studioSubTab = btn.getAttribute('data-studio-sub') || 'podcast';
+        state.jobStatus = null;
+        renderMain();
+        break;
+
+      case 'set-pod-duration':
+        state.podDurationMin = Number(btn.getAttribute('data-mins') || 3);
+        renderMain();
+        break;
+
+      case 'set-pod-format':
+        state.podFormat = btn.getAttribute('data-format') || 'two_host';
+        renderMain();
+        break;
+
+      case 'fill-pod-topic':
+        state.podTopicDraft = btn.getAttribute('data-topic') || '';
+        renderMain();
+        break;
+
+      case 'fill-analysis-prompt':
+        state.analysisPromptDraft = btn.getAttribute('data-prompt') || '';
+        renderMain();
+        break;
+
+      case 'analyze-topic-jump':
+        state.activeNavTab = 'audio';
+        state.studioSubTab = 'analysis';
+        state.analysisPromptDraft = btn.getAttribute('data-prompt') || '';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
+      case 'play-episode': {
+        const epId = btn.getAttribute('data-episode-id');
+        const ep = getAllEpisodes().find(x => x.id === epId);
+        if (ep) {
+          if (state.audioState?.episode?.id === ep.id) {
+            await audioController.togglePlayPause();
+          } else {
+            await audioController.loadAndPlay(ep, 0);
+          }
+          renderMain();
+        }
+        break;
+      }
+
+      case 'seek-podcast-turn': {
+        const sec = Number(btn.getAttribute('data-seek-sec') || 0);
+        audioController?.seekTo(sec);
+        break;
+      }
+
+      case 'generate-autopodcast': {
+        const inputEl = document.getElementById('podTopicInput');
+        if (inputEl) state.podTopicDraft = inputEl.value;
+        if (!String(state.podTopicDraft || '').trim()) {
+          state.jobStatus = { active: false, error: 'Please enter or select a podcast topic.' };
+          renderMain();
+          break;
+        }
+        try {
+          state.jobStatus = { active: true, message: 'Initializing Autopodcast generator…' };
+          renderMain();
+          const episode = await generateOnDemandAutopodcast({
+            topic: state.podTopicDraft,
+            durationMinutes: state.podDurationMin,
+            format: state.podFormat === 'solo' ? 'solo' : 'two_host',
+            appData: state.appData,
+            prefs: state.prefs,
+            onProgress: p => {
+              state.jobStatus = { active: true, message: p.message };
+              renderMain();
+            }
+          });
+          state.prefs.localCustomEpisodes = [
+            episode,
+            ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== episode.id)
+          ].slice(0, 20);
+          saveUserPrefs(state.prefs);
+          state.jobStatus = null;
+          state.podTopicDraft = '';
+          await audioController.loadAndPlay(episode, 0);
+          renderMain();
+        } catch (err) {
+          state.jobStatus = { active: false, error: err.message || 'Failed to generate podcast.' };
+          renderMain();
+        }
+        break;
+      }
+
+      case 'run-deep-analysis': {
+        const areaEl = document.getElementById('analysisPromptInput');
+        if (areaEl) state.analysisPromptDraft = areaEl.value;
+        if (!String(state.analysisPromptDraft || '').trim()) {
+          state.jobStatus = { active: false, error: 'Please enter an analysis topic or question.' };
+          renderMain();
+          break;
+        }
+        try {
+          state.jobStatus = { active: true, message: 'Starting deep multi-source analysis…' };
+          renderMain();
+          const report = await runOnDemandDeepAnalysis({
+            prompt: state.analysisPromptDraft,
+            category: 'Custom Deep Dive',
+            appData: state.appData,
+            prefs: state.prefs,
+            onProgress: p => {
+              state.jobStatus = { active: true, message: p.message };
+              renderMain();
+            }
+          });
+          state.prefs.localCustomAnalyses = [
+            report,
+            ...(state.prefs.localCustomAnalyses || []).filter(a => a.id !== report.id)
+          ].slice(0, 25);
+          saveUserPrefs(state.prefs);
+          state.jobStatus = null;
+          state.analysisPromptDraft = '';
+          renderMain();
+        } catch (err) {
+          state.jobStatus = { active: false, error: err.message || 'Analysis failed.' };
+          renderMain();
+        }
+        break;
+      }
+
+      case 'toggle-theme':
+        state.prefs.theme = state.prefs.theme === 'light' ? 'dark' : 'light';
+        applyTheme(state.prefs.theme);
+        saveUserPrefs(state.prefs);
+        renderSheet();
+        break;
+
+      case 'toggle-outlet': {
+        const oid = btn.getAttribute('data-outlet-id');
+        if (oid) {
+          const set = new Set(state.prefs.disabledOutlets || []);
+          if (set.has(oid)) set.delete(oid);
+          else set.add(oid);
+          state.prefs.disabledOutlets = Array.from(set);
+          saveUserPrefs(state.prefs);
+          renderSheet();
+          renderMain();
+        }
+        break;
+      }
+
+      case 'enable-all-reporters':
+        state.prefs.disabledReporterIds = [];
+        state.prefs.disabledOutlets = [];
+        saveUserPrefs(state.prefs);
+        renderSheet();
+        renderMain();
+        break;
+
+      case 'save-group-config': {
+        const authEl = document.getElementById('prefAuthorInput');
+        const passEl = document.getElementById('prefPasscodeInput');
+        const urlEl = document.getElementById('prefWorkerUrlInput');
+        if (authEl) state.prefs.authorName = authEl.value.trim() || 'Josh';
+        if (passEl) state.prefs.groupPasscode = passEl.value.trim();
+        if (urlEl) state.prefs.workerBaseUrl = urlEl.value.trim();
+        saveUserPrefs(state.prefs);
+        const shared = await fetchSharedWorkerFeed(state.prefs);
+        if (shared) state.workerSharedFeed = shared;
+        btn.textContent = '✓ Saved!';
+        setTimeout(() => {
+          if (state.sheetMode === 'settings') renderSheet();
+        }, 900);
+        break;
+      }
+    }
+  });
+
+  // Input & Select Change Listeners
+  document.addEventListener('input', e => {
+    const t = e.target;
+    if (t.id === 'rosterSearchInput') {
+      state.rosterSearch = t.value;
+      renderMain();
+    } else if (t.id === 'combineSearchInput') {
+      state.combineSearch = t.value;
+      renderMain();
+    } else if (t.id === 'podDurationSlider') {
+      state.podDurationMin = Number(t.value || 5);
+      renderMain();
+    } else if (t.id === 'podTopicInput') {
+      state.podTopicDraft = t.value;
+    } else if (t.id === 'analysisPromptInput') {
+      state.analysisPromptDraft = t.value;
+    } else if (t.id === 'reporterFilterSearchInput') {
+      state.reporterSearch = t.value;
+      renderSheet();
+    }
+  });
+
+  document.addEventListener('change', e => {
+    const t = e.target;
+    if (t.id === 'rosterSortSelect') {
+      state.rosterSort = t.value;
+      renderMain();
+    } else if (t.classList.contains('gm-move-select')) {
+      const pid = t.getAttribute('data-player-id');
+      if (pid) {
+        if (t.value === 'none') delete state.prefs.capMoves[pid];
+        else state.prefs.capMoves[pid] = t.value;
+        saveUserPrefs(state.prefs);
+        renderMain();
+      }
+    } else if (t.getAttribute('data-action') === 'toggle-pref-bool') {
+      const key = t.getAttribute('data-pref-key');
+      if (key) {
+        state.prefs[key] = Boolean(t.checked);
+        saveUserPrefs(state.prefs);
+        renderMain();
+      }
+    } else if (t.getAttribute('data-action') === 'toggle-reporter') {
+      const rid = t.getAttribute('data-reporter-id');
+      if (rid) {
+        const set = new Set(state.prefs.disabledReporterIds || []);
+        if (t.checked) set.delete(rid);
+        else set.add(rid);
+        state.prefs.disabledReporterIds = Array.from(set);
+        saveUserPrefs(state.prefs);
+        renderMain();
+      }
+    }
+  });
+
+  // HTML5 Drag-and-Drop on Dashboard Cards when Layout Mode is active
+  document.addEventListener('dragstart', e => {
+    const card = e.target.closest('[data-dashboard-block]');
+    if (!card || !state.isCustomizingLayout) return;
+    state.draggedBlockId = card.getAttribute('data-dashboard-block');
+    card.classList.add('dragging');
+  });
+
+  document.addEventListener('dragend', e => {
+    const card = e.target.closest('[data-dashboard-block]');
+    if (card) card.classList.remove('dragging');
+    state.draggedBlockId = null;
+  });
+
+  document.addEventListener('dragover', e => {
+    if (!state.isCustomizingLayout || !state.draggedBlockId) return;
+    const overCard = e.target.closest('[data-dashboard-block]');
+    if (overCard) e.preventDefault();
+  });
+
+  document.addEventListener('drop', e => {
+    if (!state.isCustomizingLayout || !state.draggedBlockId) return;
+    const targetCard = e.target.closest('[data-dashboard-block]');
+    if (!targetCard) return;
+    e.preventDefault();
+    const targetId = targetCard.getAttribute('data-dashboard-block');
+    reorderBlockBeforeTarget(state.draggedBlockId, targetId);
+    state.draggedBlockId = null;
+  });
+}
+
+async function init() {
+  applyTheme(state.prefs.theme);
+  audioController = new PodcastAudioController(renderMiniPlayer);
+  bindEvents();
+
+  try {
+    state.appData = await loadAll49ersData();
+    state.seasonState = evaluateSeasonState({
+      now: new Date(),
+      calendar: state.appData.meta?.calendar,
+      teamStatus: state.appData.meta?.teamStatus
+    });
+
+    renderHeaderAndPhaseBanner();
+    renderMain();
+
+    // Non-blocking sync of shared Cloudflare Worker intelligence feed if configured
+    fetchSharedWorkerFeed(state.prefs).then(shared => {
+      if (shared) {
+        state.workerSharedFeed = shared;
+        if (state.activeNavTab === 'audio') renderMain();
+      }
+    });
+  } catch (err) {
+    const mainEl = document.getElementById('mainView');
+    if (mainEl) {
+      mainEl.innerHTML = `
+        <div class="card">
+          <div class="card-eyebrow" style="color:var(--crimson)">Feed Load Error</div>
+          <h2 class="card-title">Unable to Load 49ers Data Feeds</h2>
+          <p style="font-size:13px;color:var(--text-secondary)">${esc(err.message)}</p>
+        </div>
+      `;
+    }
+  }
+
+  // Register Offline-Ready Service Worker (handle both pre-load and post-async-init readyState)
+  if ('serviceWorker' in navigator) {
+    const registerSw = () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    };
+    if (document.readyState === 'complete') {
+      registerSw();
+    } else {
+      window.addEventListener('load', registerSw, { once: true });
+    }
+  }
+}
+
+init();

@@ -1,0 +1,1133 @@
+/**
+ * Comprehensive Headless Chrome Mobile & Multi-Viewport E2E QA Suite
+ * Tests every PRD feature, interactive control, quantitative engine integration,
+ * responsive mobile viewport (iPhone 16 393x852, 375x667, 360x780, 768x1024),
+ * zero horizontal overflow, zero console/page errors, and edge/corner cases.
+ */
+
+import { spawn } from 'node:child_process';
+import http from 'node:http';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.resolve(__dirname, '..');
+
+const PORT = 8094;
+const CDP_PORT = 9239;
+const BASE_URL = `http://127.0.0.1:${PORT}/index.html`;
+
+let passed = 0;
+let failed = 0;
+const failures = [];
+
+function recordPass(label) {
+  passed++;
+  console.log(`  ✓ ${label}`);
+}
+
+function recordFail(label, err) {
+  failed++;
+  const msg = err instanceof Error ? err.message : String(err);
+  failures.push({ label, msg });
+  console.error(`  ✗ ${label}\n      -> ${msg}`);
+}
+
+async function runStep(label, fn) {
+  try {
+    await fn();
+    recordPass(label);
+  } catch (err) {
+    recordFail(label, err);
+  }
+}
+
+function assert(cond, msg) {
+  if (!cond) throw new Error(msg || 'Assertion failed');
+}
+
+function startStaticServer(port) {
+  const mime = {
+    '.html': 'text/html; charset=utf-8',
+    '.js': 'application/javascript; charset=utf-8',
+    '.mjs': 'application/javascript; charset=utf-8',
+    '.css': 'text/css; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
+    '.webmanifest': 'application/manifest+json; charset=utf-8',
+    '.svg': 'image/svg+xml',
+    '.png': 'image/png',
+    '.m4a': 'audio/mp4',
+    '.mp3': 'audio/mpeg'
+  };
+
+  return new Promise((resolve, reject) => {
+    const server = http.createServer((req, res) => {
+      const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+      const rel = urlPath === '/' ? 'index.html' : urlPath.replace(/^\/+/, '');
+      const fullPath = path.resolve(rootDir, rel);
+
+      if (!fullPath.startsWith(rootDir) || !fs.existsSync(fullPath) || fs.statSync(fullPath).isDirectory()) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Not Found');
+        return;
+      }
+
+      const contentType = mime[path.extname(fullPath).toLowerCase()] || 'application/octet-stream';
+      const buf = fs.readFileSync(fullPath);
+      const range = req.headers.range;
+
+      if (range && /^bytes=\d*-\d*$/.test(range)) {
+        const [startStr, endStr] = range.replace('bytes=', '').split('-');
+        const start = startStr ? parseInt(startStr, 10) : 0;
+        const end = endStr ? Math.min(buf.length - 1, parseInt(endStr, 10)) : buf.length - 1;
+        if (start >= 0 && start <= end && end < buf.length) {
+          const slice = buf.subarray(start, end + 1);
+          res.writeHead(206, {
+            'Content-Type': contentType,
+            'Accept-Ranges': 'bytes',
+            'Content-Range': `bytes ${start}-${end}/${buf.length}`,
+            'Content-Length': slice.length
+          });
+          res.end(slice);
+          return;
+        }
+      }
+
+      res.writeHead(200, {
+        'Content-Type': contentType,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': buf.length,
+        'Cache-Control': 'no-cache'
+      });
+      res.end(buf);
+    });
+
+    server.on('error', reject);
+    server.listen(port, '127.0.0.1', () => resolve(server));
+  });
+}
+
+async function launchHeadlessChrome(userDataDir) {
+  const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+  if (!fs.existsSync(chromePath)) {
+    throw new Error(`Google Chrome not found at ${chromePath}`);
+  }
+
+  const proc = spawn(
+    chromePath,
+    [
+      '--headless=new',
+      `--remote-debugging-port=${CDP_PORT}`,
+      '--disable-gpu',
+      '--no-first-run',
+      '--no-default-browser-check',
+      '--autoplay-policy=no-user-gesture-required',
+      '--mute-audio',
+      `--user-data-dir=${userDataDir}`,
+      BASE_URL
+    ],
+    { stdio: 'ignore' }
+  );
+
+  for (let i = 0; i < 40; i++) {
+    await new Promise(r => setTimeout(r, 200));
+    try {
+      const res = await fetch(`http://127.0.0.1:${CDP_PORT}/json/list`);
+      if (res.ok) {
+        const pages = await res.json();
+        const target = pages.find(p => p.type === 'page' && p.url.includes(String(PORT)));
+        if (target?.webSocketDebuggerUrl) {
+          return { proc, wsUrl: target.webSocketDebuggerUrl };
+        }
+      }
+    } catch {}
+  }
+
+  proc.kill('SIGKILL');
+  throw new Error('Timed out waiting for Headless Chrome CDP target');
+}
+
+class CdpHarness {
+  constructor(ws) {
+    this.ws = ws;
+    this.nextId = 1;
+    this.consoleErrors = [];
+    this.pageExceptions = [];
+    this.localNetworkFailures = [];
+
+    this.ws.addEventListener('message', evt => {
+      try {
+        const msg = JSON.parse(evt.data);
+        if (msg.method === 'Runtime.consoleAPICalled') {
+          if (msg.params?.type === 'error') {
+            const text = (msg.params.args || []).map(a => a.value ?? a.description ?? '').join(' ');
+            // Ignore blocked external YouTube embed telemetry inside headless Chromium
+            if (!/youtube\.com|doubleclick|googleads/i.test(text)) {
+              this.consoleErrors.push(text);
+            }
+          }
+        } else if (msg.method === 'Runtime.exceptionThrown') {
+          const details = msg.params?.exceptionDetails;
+          this.pageExceptions.push(details?.exception?.description || details?.text || JSON.stringify(details));
+        } else if (msg.method === 'Network.responseReceived') {
+          const url = msg.params?.response?.url || '';
+          const status = msg.params?.response?.status || 200;
+          if (url.includes(`127.0.0.1:${PORT}`) && status >= 400) {
+            this.localNetworkFailures.push(`HTTP ${status}: ${url}`);
+          }
+        }
+      } catch {}
+    });
+  }
+
+  send(method, params = {}, timeoutMs = 15000) {
+    return new Promise((resolve, reject) => {
+      const id = this.nextId++;
+      const timer = setTimeout(() => reject(new Error(`CDP timeout on ${method}`)), timeoutMs);
+      const onMsg = evt => {
+        const data = JSON.parse(evt.data);
+        if (data.id === id) {
+          clearTimeout(timer);
+          this.ws.removeEventListener('message', onMsg);
+          if (data.error) reject(new Error(`${method} error: ${JSON.stringify(data.error)}`));
+          else resolve(data.result);
+        }
+      };
+      this.ws.addEventListener('message', onMsg);
+      this.ws.send(JSON.stringify({ id, method, params }));
+    });
+  }
+
+  async setViewport(width, height, mobile = true, deviceScaleFactor = 3) {
+    await this.send('Emulation.setDeviceMetricsOverride', {
+      width,
+      height,
+      deviceScaleFactor,
+      mobile
+    });
+    await this.sleep(80);
+  }
+
+  async eval(fnOrExpr, arg = undefined) {
+    const expression =
+      typeof fnOrExpr === 'function'
+        ? `(${fnOrExpr.toString()})(${arg === undefined ? '' : JSON.stringify(arg)})`
+        : fnOrExpr;
+    const res = await this.send('Runtime.evaluate', {
+      expression,
+      returnByValue: true,
+      awaitPromise: true
+    });
+    if (res.exceptionDetails) {
+      throw new Error(
+        `Eval exception: ${res.exceptionDetails.exception?.description || res.exceptionDetails.text}`
+      );
+    }
+    return res.result?.value;
+  }
+
+  async waitFor(predicateFn, arg = undefined, timeoutMs = 8000) {
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+      const val = await this.eval(predicateFn, arg);
+      if (val) return val;
+      await this.sleep(100);
+    }
+    throw new Error(`Timed out waiting for condition: ${predicateFn.toString().slice(0, 120)}`);
+  }
+
+  async assertNoOverflow(label) {
+    const metrics = await this.eval(() => {
+      const docOverflow = document.documentElement.scrollWidth - window.innerWidth;
+      const bodyOverflow = document.body.scrollWidth - window.innerWidth;
+      const sheetBody = document.getElementById('sheetBody');
+      const backdrop = document.getElementById('bottomSheetBackdrop');
+      let sheetOverflow = 0;
+      if (backdrop && !backdrop.hidden && sheetBody) {
+        const sheetEl = document.getElementById('bottomSheetContainer');
+        if (sheetEl) {
+          sheetOverflow = sheetEl.scrollWidth - sheetEl.clientWidth;
+        }
+      }
+      return {
+        innerWidth: window.innerWidth,
+        docScrollWidth: document.documentElement.scrollWidth,
+        docOverflow,
+        bodyOverflow,
+        sheetOverflow
+      };
+    });
+
+    assert(
+      metrics.docOverflow <= 1 && metrics.bodyOverflow <= 1 && metrics.sheetOverflow <= 1,
+      `Horizontal overflow detected in [${label}]: innerWidth=${metrics.innerWidth}, docScrollWidth=${metrics.docScrollWidth}, docOverflow=${metrics.docOverflow}px, sheetOverflow=${metrics.sheetOverflow}px`
+    );
+  }
+
+  sleep(ms) {
+    return new Promise(r => setTimeout(r, ms));
+  }
+}
+
+async function main() {
+  console.log('\n======================================================');
+  console.log('49ERS FAITHFUL — HEADLESS CHROME MOBILE E2E QA SUITE');
+  console.log('======================================================');
+
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), '49ers-hq-e2e-'));
+  const server = await startStaticServer(PORT);
+  let chromeProc = null;
+  let ws = null;
+
+  try {
+    const launched = await launchHeadlessChrome(tmpDir);
+    chromeProc = launched.proc;
+
+    ws = new WebSocket(launched.wsUrl);
+    await new Promise((resolve, reject) => {
+      ws.addEventListener('open', resolve, { once: true });
+      ws.addEventListener('error', reject, { once: true });
+    });
+
+    const cdp = new CdpHarness(ws);
+    await cdp.send('Runtime.enable');
+    await cdp.send('Network.enable');
+    await cdp.send('Page.enable');
+
+    // Intercept external youtube.com iframe navigations so headless tests never stall on external ads
+    await cdp.send('Network.setBlockedURLs', {
+      urls: ['*://www.youtube.com/embed/*']
+    });
+
+    // Configure primary target device: iPhone 16 Safari Portrait (393 x 852 @3x)
+    await cdp.setViewport(393, 852, true, 3);
+    await cdp.send('Page.reload', { ignoreCache: true });
+
+    // Wait for live JSON feeds & dashboard cards to render
+    await cdp.waitFor(() => {
+      return document.querySelectorAll('[data-dashboard-block], .reorder-bar').length > 0 ||
+        document.getElementById('mainView')?.textContent?.includes('Customize Order');
+    });
+
+    console.log('\n=== [1/9] PWA Meta, iPhone 16 Home Screen Shortcut, CNAME & Service Worker ===');
+
+    await runStep('PWA manifest, iOS web-app-capable meta tags, apple-touch-icon & CNAME verified', async () => {
+      const pwaInfo = await cdp.eval(async () => {
+        const appleCapable = document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content;
+        const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]')?.content;
+        const touchIcon = document.querySelector('link[rel="apple-touch-icon"]')?.getAttribute('href');
+        const manifestRes = await fetch('./manifest.json');
+        const manifest = await manifestRes.json();
+        const iconRes = await fetch(touchIcon);
+        const cnameRes = await fetch('./CNAME');
+        const cname = (await cnameRes.text()).trim();
+        return {
+          appleCapable,
+          appleTitle,
+          manifestDisplay: manifest.display,
+          manifestIcons: manifest.icons?.length || 0,
+          iconStatus: iconRes.status,
+          cname
+        };
+      });
+
+      assert(pwaInfo.appleCapable === 'yes', 'Missing apple-mobile-web-app-capable=yes');
+      assert(pwaInfo.appleTitle === '49ers HQ', `Unexpected apple title: ${pwaInfo.appleTitle}`);
+      assert(pwaInfo.manifestDisplay === 'standalone', 'Manifest display must be standalone');
+      assert(pwaInfo.manifestIcons >= 2, 'Manifest must define icons');
+      assert(pwaInfo.iconStatus === 200, 'apple-touch-icon.png did not return HTTP 200');
+      assert(pwaInfo.cname === '49ers.joshal.com', `CNAME mismatch: ${pwaInfo.cname}`);
+    });
+
+    await runStep('Service Worker registers cleanly and activates without errors', async () => {
+      const swReady = await cdp.waitFor(async () => {
+        if (!('serviceWorker' in navigator)) return false;
+        const reg = await navigator.serviceWorker.getRegistration();
+        return Boolean(reg && (reg.active || reg.installing || reg.waiting));
+      }, undefined, 6000);
+      assert(swReady, 'Service Worker failed to register');
+    });
+
+    console.log('\n=== [2/9] Home Dashboard, Season State Machine & Persistent Drag/Tap Reordering ===');
+
+    await runStep('Home Dashboard renders active seasonal modules, hides off-cycle modules to Vault, zero overflow', async () => {
+      await cdp.assertNoOverflow('Home Dashboard (iPhone 16 393x852)');
+      const homeInfo = await cdp.eval(() => {
+        const bannerText = document.getElementById('phaseBanner')?.textContent || '';
+        const recordText = document.getElementById('headerRecordPill')?.textContent?.trim();
+        const customizeBtn = document.querySelector('[data-action="toggle-customize-layout"]');
+        const reorderBarText = document.querySelector('.reorder-bar')?.textContent || '';
+        return { bannerText, recordText, hasCustomize: Boolean(customizeBtn), reorderBarText };
+      });
+
+      assert(homeInfo.recordText === '6-1', `Expected header record 6-1, got ${homeInfo.recordText}`);
+      assert(homeInfo.bannerText.length > 10, 'Phase banner should display active NFL window');
+      assert(homeInfo.hasCustomize, 'Missing Customize Order button');
+      assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
+    });
+
+    await runStep('Customizing Dashboard card order via Up/Down + HTML5 Drag/Drop persists across reload & resets cleanly', async () => {
+      const initialOrder = await cdp.eval(() => {
+        document.querySelector('[data-action="toggle-customize-layout"]').click();
+        return Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
+          b.getAttribute('data-block-id')
+        );
+      });
+      assert(initialOrder.length >= 6, `Expected >=6 active blocks, got ${initialOrder.length}`);
+
+      // Check boundary buttons disabled properly
+      const boundaryState = await cdp.eval(() => {
+        const ups = document.querySelectorAll('[data-action="move-block-up"]');
+        const downs = document.querySelectorAll('[data-action="move-block-down"]');
+        return {
+          firstUpDisabled: ups[0]?.disabled,
+          lastDownDisabled: downs[downs.length - 1]?.disabled
+        };
+      });
+      assert(boundaryState.firstUpDisabled === true, 'First block Up button must be disabled');
+      assert(boundaryState.lastDownDisabled === true, 'Last block Down button must be disabled');
+
+      // Move 2nd block up to 1st position
+      const secondBlockId = initialOrder[1];
+      await cdp.eval(id => {
+        document.querySelector(`[data-action="move-block-up"][data-block-id="${id}"]`).click();
+      }, secondBlockId);
+
+      const afterMoveUp = await cdp.eval(() =>
+        Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
+          b.getAttribute('data-block-id')
+        )
+      );
+      assert(afterMoveUp[0] === secondBlockId, 'Moving 2nd block up did not place it at index 0');
+
+      // Also test HTML5 Drag-and-Drop reordering between cards while Customize Layout is active
+      const thirdBlockId = afterMoveUp[2];
+      await cdp.eval(
+        ({ dragId, dropId }) => {
+          const srcCard = document.querySelector(`[data-dashboard-block="${dragId}"]`);
+          const dstCard = document.querySelector(`[data-dashboard-block="${dropId}"]`);
+          if (srcCard && dstCard) {
+            srcCard.dispatchEvent(new Event('dragstart', { bubbles: true }));
+            dstCard.dispatchEvent(new Event('dragover', { bubbles: true, cancelable: true }));
+            dstCard.dispatchEvent(new Event('drop', { bubbles: true, cancelable: true }));
+            srcCard.dispatchEvent(new Event('dragend', { bubbles: true }));
+          }
+        },
+        { dragId: thirdBlockId, dropId: secondBlockId }
+      );
+
+      const afterDragDrop = await cdp.eval(() =>
+        Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
+          b.getAttribute('data-block-id')
+        )
+      );
+      assert(afterDragDrop[0] === thirdBlockId, 'HTML5 drag-and-drop did not move dragged card to target slot');
+
+      // Reload page and confirm custom order persisted in localStorage
+      await cdp.send('Page.reload');
+      await cdp.waitFor(() => document.querySelector('[data-action="toggle-customize-layout"]'));
+
+      const persistedFirst = await cdp.eval(() => {
+        document.querySelector('[data-action="toggle-customize-layout"]').click();
+        return document.querySelector('[data-action="move-block-up"]')?.getAttribute('data-block-id');
+      });
+      assert(persistedFirst === thirdBlockId, 'Custom dashboard order did not persist across reload');
+
+      // Test Reset to Default
+      await cdp.eval(() => {
+        document.querySelector('[data-action="reset-dashboard-order"]').click();
+      });
+      const restoredOrder = await cdp.eval(() => {
+        const list = Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
+          b.getAttribute('data-block-id')
+        );
+        document.querySelector('[data-action="toggle-customize-layout"]').click(); // Exit customize mode
+        return list;
+      });
+      assert(restoredOrder[0] === initialOrder[0], 'Reset Default did not restore original top card');
+    });
+
+    console.log('\n=== [3/9] Team News, Anti-Fluff Synthesis, Video Embeds & Deep Dive AI Jump ===');
+
+    await runStep('News & Film view renders Clustered Fact & Film Briefs, category filters, and click-to-play YouTube facade', async () => {
+      await cdp.eval(() => document.querySelector('[data-nav-tab="news"]').click());
+      await cdp.assertNoOverflow('News & Film Clustered View');
+
+      const newsSnapshot = await cdp.eval(() => {
+        const headlines = Array.from(document.querySelectorAll('.brief-headline')).map(h => h.textContent.trim());
+        const hasClickbaitCut = document.getElementById('mainView').textContent.includes('clickbait cut');
+        const playClipBtns = document.querySelectorAll('[data-action="play-inline-video"]').length;
+        return { count: headlines.length, hasClickbaitCut, playClipBtns };
+      });
+      assert(newsSnapshot.count >= 3, `Expected >=3 clustered briefs, got ${newsSnapshot.count}`);
+      assert(newsSnapshot.hasClickbaitCut, 'Missing clickbait-cut signal badge');
+      assert(newsSnapshot.playClipBtns >= 1, 'Expected at least 1 inline video clip facade');
+
+      // Test clicking inline video facade mounts YouTube iframe with start timestamp
+      const iframeSrc = await cdp.eval(() => {
+        const btn = document.querySelector('[data-action="play-inline-video"]');
+        btn.click();
+        return document.querySelector('.video-iframe-wrap iframe')?.getAttribute('src') || '';
+      });
+      assert(
+        iframeSrc.includes('https://www.youtube.com/embed/') && iframeSrc.includes('playsinline=1'),
+        `Invalid YouTube iframe src: ${iframeSrc}`
+      );
+      await cdp.assertNoOverflow('News View with Expanded Video Embed');
+
+      // Test Category filters & Raw Beat Stream mode
+      for (const cat of ['film', 'cap', 'scheme', 'roster', 'beat', 'all']) {
+        await cdp.eval(c => {
+          document.querySelector(`[data-action="set-news-category"][data-category="${c}"]`)?.click();
+        }, cat);
+      }
+
+      const rawCount = await cdp.eval(() => {
+        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]').click();
+        return document.querySelectorAll('.brief-card').length;
+      });
+      assert(rawCount >= 8, `Expected >=8 raw stream items, got ${rawCount}`);
+      await cdp.assertNoOverflow('News Raw Beat Stream');
+
+      // Return to clustered and test "⚡ Deep Dive AI" jump button
+      const jumpedPrompt = await cdp.eval(() => {
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]').click();
+        const jumpBtn = document.querySelector('[data-action="analyze-topic-jump"]');
+        jumpBtn.click();
+        return {
+          activeTab: document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab'),
+          promptValue: document.getElementById('analysisPromptInput')?.value || ''
+        };
+      });
+      assert(jumpedPrompt.activeTab === 'audio', 'Deep Dive AI jump should navigate to audio/AI tab');
+      assert(jumpedPrompt.promptValue.length > 10, 'Deep Dive AI jump should pre-fill analysis prompt');
+    });
+
+    console.log('\n=== [4/9] Roster Explorer, Focus Preservation, Dual Depth Chart & Armchair GM Cap Sim ===');
+
+    await runStep('Roster Explorer searches by name, #jersey, college, preserves input focus, and handles 0-match gracefully', async () => {
+      await cdp.eval(() => document.querySelector('[data-nav-tab="roster"]').click());
+      await cdp.assertNoOverflow('Roster Explorer Default');
+
+      const totalCount = await cdp.eval(() => document.querySelectorAll('.player-row').length);
+      assert(totalCount >= 80, `Expected >=80 players on full roster, got ${totalCount}`);
+
+      // Test search + focus preservation
+      const focusTest = await cdp.eval(() => {
+        const input = document.getElementById('rosterSearchInput');
+        input.focus();
+        input.value = 'Purdy';
+        input.setSelectionRange(5, 5);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return {
+          activeId: document.activeElement?.id,
+          rows: document.querySelectorAll('.player-row').length,
+          firstText: document.querySelector('.player-row')?.textContent || ''
+        };
+      });
+      assert(focusTest.activeId === 'rosterSearchInput', 'Search input lost focus during re-render!');
+      assert(focusTest.rows === 1 && focusTest.firstText.includes('Brock Purdy'), 'Search for Purdy failed');
+
+      // Search by #13 jersey number
+      const jerseySearchRows = await cdp.eval(() => {
+        const input = document.getElementById('rosterSearchInput');
+        input.value = '#13';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return document.querySelectorAll('.player-row').length;
+      });
+      assert(jerseySearchRows >= 1, 'Jersey #13 search returned 0 results');
+
+      // Zero-match edge case
+      const emptyMsg = await cdp.eval(() => {
+        const input = document.getElementById('rosterSearchInput');
+        input.value = 'ZZZZ_NO_SUCH_PLAYER_999';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return document.querySelector('.player-list')?.textContent?.trim() || '';
+      });
+      assert(emptyMsg.includes('No players match'), 'Expected clean empty state message for zero-match query');
+
+      // Reset search and exercise all unit filters, position filters, and 6 sort modes
+      await cdp.eval(() => {
+        const input = document.getElementById('rosterSearchInput');
+        input.value = '';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      for (const unit of ['Active 53', 'Offense', 'Defense', 'Special Teams', 'IR / Reserve', 'Practice Squad', 'All']) {
+        const c = await cdp.eval(u => {
+          document.querySelector(`[data-action="set-roster-unit"][data-unit="${u}"]`).click();
+          return document.querySelectorAll('.player-row').length;
+        }, unit);
+        assert(c >= 1, `Unit filter "${unit}" unexpectedly returned 0 players`);
+      }
+
+      for (const pos of ['QB', 'RB', 'WR', 'TE', 'OL', 'DL', 'LB', 'DB', 'ALL']) {
+        const c = await cdp.eval(p => {
+          document.querySelector(`[data-action="set-roster-pos"][data-pos="${p}"]`).click();
+          return document.querySelectorAll('.player-row').length;
+        }, pos);
+        assert(c >= 1, `Position filter "${pos}" returned 0 players`);
+      }
+
+      for (const sortKey of ['snaps_desc', 'jersey_asc', 'ras_desc', 'health_asc', 'name_asc', 'cap_desc']) {
+        await cdp.eval(sk => {
+          const sel = document.getElementById('rosterSortSelect');
+          sel.value = sk;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+        }, sortKey);
+      }
+      await cdp.assertNoOverflow('Roster Explorer After Filter & Sort Matrix');
+    });
+
+    await runStep('Dual Depth Chart toggles Projected Week 9 Active vs Baseline and launches Player Dossier', async () => {
+      const depthCheck = await cdp.eval(() => {
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="depth"]').click();
+        const projectedText = document.getElementById('mainView').textContent;
+        const chipsCount = document.querySelectorAll('.depth-player-chip').length;
+        document.querySelector('[data-action="set-depth-mode"][data-depth-mode="baseline"]').click();
+        const baselineChipsCount = document.querySelectorAll('.depth-player-chip').length;
+        document.querySelector('[data-action="set-depth-mode"][data-depth-mode="projected"]').click();
+        return {
+          chipsCount,
+          baselineChipsCount,
+          hasUnits: projectedText.includes('Offense') && projectedText.includes('Defense')
+        };
+      });
+      assert(depthCheck.hasUnits && depthCheck.chipsCount >= 30, 'Depth chart missing units or player chips');
+      await cdp.assertNoOverflow('Dual Depth Chart View');
+    });
+
+    await runStep('Armchair GM Cap Simulator computes Blueprint restructures, CBA >2 Post-June 1 warning, Over-Cap warning & Reset', async () => {
+      await cdp.eval(() => document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]').click());
+      await cdp.assertNoOverflow('Salary Cap & Armchair GM View');
+
+      // Apply AI Blueprint
+      const afterBlueprint = await cdp.eval(() => {
+        const beforeText = document.querySelector('.gm-summary-banner')?.textContent || '';
+        document.querySelector('[data-action="apply-ai-cap-blueprint"]').click();
+        const afterText = document.querySelector('.gm-summary-banner')?.textContent || '';
+        return { beforeText, afterText };
+      });
+      assert(
+        afterBlueprint.afterText.includes('2 move(s) active') && afterBlueprint.afterText.includes('+'),
+        `Blueprint did not apply expected positive cap delta: ${afterBlueprint.afterText}`
+      );
+
+      // Select 3 Post-June 1 cuts (re-querying live DOM after each render) to verify NFL CBA 2-player designation warning
+      const cbaWarningShown = await cdp.eval(() => {
+        document.querySelector('[data-action="reset-cap-moves"]').click();
+        for (let i = 0; i < 3; i++) {
+          const liveSelects = document.querySelectorAll('.gm-move-select');
+          const sel = liveSelects[i];
+          sel.value = 'june_1_cut';
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        return document.getElementById('mainView').textContent.includes('maximum of 2 players as Post-June 1 releases');
+      });
+      assert(cbaWarningShown, 'Expected NFL CBA 2-player Post-June 1 warning banner');
+
+      // Select Pre-June 1 cuts on top 6 contracts to force negative cap space & verify Over-Cap warning (and no $$ formatting bug)
+      const overCapCheck = await cdp.eval(() => {
+        document.querySelector('[data-action="reset-cap-moves"]').click();
+        for (let i = 0; i < 6; i++) {
+          const liveSelects = document.querySelectorAll('.gm-move-select');
+          const sel = liveSelects[i];
+          sel.value = 'cut';
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        const txt = document.getElementById('mainView').textContent;
+        return {
+          hasWarning: txt.includes('Cap Compliance Warning'),
+          hasDoubleDollar: txt.includes('$$')
+        };
+      });
+      assert(overCapCheck.hasWarning, 'Expected Cap Compliance Warning when dead money pushes SF over ceiling');
+      assert(!overCapCheck.hasDoubleDollar, 'Found double-dollar ($$) formatting bug in Cap Compliance Warning');
+
+      // Reset Cap Moves
+      const afterReset = await cdp.eval(() => {
+        document.querySelector('[data-action="reset-cap-moves"]').click();
+        return document.querySelector('.gm-summary-banner')?.textContent || '';
+      });
+      assert(afterReset.includes('0 move(s) active'), 'Reset Cap Moves did not clear active moves');
+    });
+
+    console.log('\n=== [5/9] 5-Tab Player Dossier Sheet (QB, OL Non-Box-Score, PS Non-Top-51 & SVG Spider Chart) ===');
+
+    await runStep('5-Tab Player Dossier renders Overview, 2026/Career EPA+NGS, SVG Spider Chart, 6 Contract Scenarios & Health Priors', async () => {
+      await cdp.eval(() => document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click());
+
+      // Open Brock Purdy Dossier
+      const openedTitle = await cdp.eval(() => {
+        const purdyBtn = Array.from(document.querySelectorAll('.player-row')).find(el =>
+          el.textContent.includes('Brock Purdy')
+        );
+        purdyBtn.click();
+        return document.getElementById('sheetTitle')?.textContent?.trim();
+      });
+      assert(openedTitle === 'Brock Purdy', `Expected Brock Purdy sheet, got ${openedTitle}`);
+      await cdp.assertNoOverflow('Player Dossier: Overview Tab');
+
+      // Stats & EPA (2026 + Career toggle)
+      const statsInfo = await cdp.eval(() => {
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]').click();
+        const text2026 = document.getElementById('sheetBody').textContent;
+        document.querySelector('[data-action="set-player-stats-mode"][data-stats-mode="career"]').click();
+        const careerRows = document.querySelectorAll('#sheetBody table tbody tr').length;
+        document.querySelector('[data-action="set-player-stats-mode"][data-stats-mode="2026"]').click();
+        return {
+          hasEpa: text2026.includes('Passing EPA') && text2026.includes('CPOE'),
+          careerRows
+        };
+      });
+      assert(statsInfo.hasEpa && statsInfo.careerRows >= 3, 'Purdy Stats tab missing EPA/CPOE or career seasons');
+      await cdp.assertNoOverflow('Player Dossier: Stats Tab');
+
+      // Spider Chart SVG + 10 Axes + 3 Comps
+      const spiderInfo = await cdp.eval(() => {
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="spider"]').click();
+        const svg = document.querySelector('#sheetBody svg.spider-svg');
+        const polygonPts = svg?.querySelectorAll('polygon')?.length || 0;
+        const axisBars = document.querySelectorAll('#sheetBody .spider-drill-row').length;
+        const bodyText = document.getElementById('sheetBody').textContent;
+        return { hasSvg: Boolean(svg), polygonPts, axisBars, hasNoNaN: !bodyText.includes('NaN') };
+      });
+      assert(
+        spiderInfo.hasSvg && spiderInfo.polygonPts >= 5 && spiderInfo.axisBars === 10 && spiderInfo.hasNoNaN,
+        `Spider chart malformed: ${JSON.stringify(spiderInfo)}`
+      );
+      await cdp.assertNoOverflow('Player Dossier: Spider Chart Tab');
+
+      // Contract & Cap tab across all 6 transaction scenarios
+      for (const tx of ['cut', 'june_1_cut', 'trade', 'june_1_trade', 'restructure', 'extension']) {
+        const ok = await cdp.eval(t => {
+          const btn = document.querySelector(`[data-action="set-player-tx-scenario"][data-tx="${t}"]`);
+          if (t === 'cut') {
+            document.querySelector('[data-action="set-player-tab"][data-player-tab="contract"]').click();
+          }
+          document.querySelector(`[data-action="set-player-tx-scenario"][data-tx="${t}"]`)?.click();
+          const txt = document.getElementById('sheetBody').textContent;
+          return !txt.includes('NaN') && !txt.includes('undefined');
+        }, tx);
+        assert(ok, `Contract tab transaction scenario "${tx}" leaked NaN/undefined`);
+      }
+      await cdp.assertNoOverflow('Player Dossier: Contract Tab');
+
+      // Health & Priors tab
+      const healthTxt = await cdp.eval(() => {
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="health"]').click();
+        return document.getElementById('sheetBody').textContent;
+      });
+      assert(!healthTxt.includes('NaN') && healthTxt.length > 40, 'Health tab failed to render cleanly');
+      await cdp.assertNoOverflow('Player Dossier: Health Tab');
+
+      // Close via Escape key
+      const closedViaEsc = await cdp.eval(() => {
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        return document.getElementById('bottomSheetBackdrop').hidden;
+      });
+      assert(closedViaEsc === true, 'Escape key did not close Bottom Sheet');
+
+      // Corner Case: Open an Offensive Lineman (Trent Williams) & Practice Squad player to ensure zero NaN on non-box-score/non-OTC players
+      const cornerPlayersOk = await cdp.eval(() => {
+        const trentBtn = Array.from(document.querySelectorAll('.player-row')).find(el =>
+          el.textContent.includes('Trent Williams')
+        );
+        trentBtn.click();
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]').click();
+        const olStatsText = document.getElementById('sheetBody').textContent;
+        document.getElementById('closeSheetBtn').click();
+
+        // Switch to Practice Squad filter and open first PS player on Contract tab
+        document.querySelector('[data-action="set-roster-unit"][data-unit="Practice Squad"]').click();
+        document.querySelector('.player-row').click();
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="contract"]').click();
+        const psContractText = document.getElementById('sheetBody').textContent;
+        document.querySelector('[data-action="set-roster-unit"][data-unit="All"]').click();
+
+        // Close via backdrop click
+        const backdrop = document.getElementById('bottomSheetBackdrop');
+        backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+        return {
+          olOk: olStatsText.includes('Snaps Logged') && !olStatsText.includes('NaN'),
+          psOk: !psContractText.includes('NaN') && psContractText.length > 20,
+          backdropClosed: backdrop.hidden
+        };
+      });
+      assert(cornerPlayersOk.olOk, 'OL non-box-score stats tab failed');
+      assert(cornerPlayersOk.psOk, 'Practice Squad contract tab failed');
+      assert(cornerPlayersOk.backdropClosed, 'Clicking backdrop did not close Bottom Sheet');
+    });
+
+    console.log('\n=== [6/9] Game & Season War Rooms (All 8 Sub-Modules + Live Monte Carlo Toggler) ===');
+
+    await runStep('All 8 Game & Season War Rooms render rich analytics, International stadiums & live 10,000-run Monte Carlo toggling', async () => {
+      await cdp.eval(() => document.querySelector('[data-nav-tab="season"]').click());
+
+      for (const sub of ['matchup', 'health', 'trade', 'stats', 'schedule', 'playoffs', 'draft_class', 'draft_prep']) {
+        await cdp.eval(s => {
+          document.querySelector(`[data-action="set-season-sub"][data-season-sub="${s}"]`).click();
+        }, sub);
+        await cdp.assertNoOverflow(`Game & Season Sub-Tab: ${sub}`);
+        const text = await cdp.eval(() => document.getElementById('mainView').textContent);
+        assert(!text.includes('NaN') && !text.includes('undefined'), `Sub-tab ${sub} rendered NaN/undefined`);
+      }
+
+      // Check International Schedule venues (Melbourne & Mexico City)
+      const intlVerified = await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="schedule"]').click();
+        const txt = document.getElementById('mainView').textContent;
+        return txt.includes('Melbourne') && txt.includes('Mexico City');
+      });
+      assert(intlVerified, 'Schedule view missing Melbourne & Mexico City international venue callouts');
+
+      // Test interactive Monte Carlo Playoff Rooting Guide game-winner override & Clear button
+      const mcInteractive = await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="playoffs"]').click();
+        const firstPickBtn = document.querySelector('[data-action="toggle-playoff-winner"]');
+        firstPickBtn.click();
+        const hasClearBtn = Boolean(document.querySelector('[data-action="reset-playoff-overrides"]'));
+        document.querySelector('[data-action="reset-playoff-overrides"]')?.click();
+        const cleared = !document.querySelector('[data-action="reset-playoff-overrides"]');
+        return { hasClearBtn, cleared };
+      });
+      assert(mcInteractive.hasClearBtn && mcInteractive.cleared, 'Playoff Monte Carlo override toggle/clear failed');
+
+      // Test 2026 Draft Class inline Spider Chart expand/collapse
+      const draftSpiderOk = await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_class"]').click();
+        document.querySelector('[data-action="toggle-draft-spider"][data-draft-idx="0"]').click();
+        const hasSvg = Boolean(document.querySelector('#mainView svg.spider-svg'));
+        document.querySelector('[data-action="toggle-draft-spider"][data-draft-idx="0"]').click();
+        const hiddenAfter = !document.querySelector('#mainView svg.spider-svg');
+        return { hasSvg, hiddenAfter };
+      });
+      assert(draftSpiderOk.hasSvg && draftSpiderOk.hiddenAfter, '2026 Draft Pick spider chart toggle failed');
+
+      // Test 2027 Combine search focus preservation
+      const combineSearchOk = await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_prep"]').click();
+        const inp = document.getElementById('combineSearchInput');
+        inp.focus();
+        inp.value = 'EDGE';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        const focused = document.activeElement?.id === 'combineSearchInput';
+        const rows = document.querySelectorAll('#mainView table tbody tr').length;
+        inp.value = '';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        return { focused, rows };
+      });
+      assert(combineSearchOk.focused && combineSearchOk.rows >= 1, 'Combine search failed or lost input focus');
+    });
+
+    console.log('\n=== [7/9] Autopodcast Studio, Sticky Audio Mini-Player & On-Demand Deep Analysis ===');
+
+    await runStep('Studio .m4a podcast loads into sticky Mini-Player, seeks, cycles 1x..2x speed, persists across tabs & closes', async () => {
+      await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="audio"]').click();
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="podcast"]')?.click();
+      });
+      await cdp.assertNoOverflow('Autopodcast Studio Default');
+
+      await cdp.eval(() => {
+        document.querySelector('[data-action="play-episode"]').click();
+      });
+
+      await cdp.waitFor(() => !document.getElementById('miniPlayer').hidden);
+      await cdp.assertNoOverflow('Autopodcast Active + Sticky Mini-Player');
+
+      // Test +30s skip, transcript turn tap seek, and speed cycling (1x -> 1.25x -> 1.5x -> 2x -> 1x)
+      const playerControls = await cdp.eval(() => {
+        document.getElementById('mpFwd30Btn').click();
+        const speeds = [];
+        for (let i = 0; i < 4; i++) {
+          document.getElementById('mpSpeedBtn').click();
+          speeds.push(document.getElementById('mpSpeedBtn').textContent.trim());
+        }
+        const turns = document.querySelectorAll('[data-action="seek-podcast-turn"]');
+        if (turns[1]) turns[1].click();
+        const timeText = document.getElementById('miniPlayerTime').textContent;
+        return { speeds, turnCount: turns.length, timeText };
+      });
+      assert(
+        JSON.stringify(playerControls.speeds) === JSON.stringify(['1.25x', '1.5x', '2x', '1x']),
+        `Unexpected speed cycle: ${JSON.stringify(playerControls.speeds)}`
+      );
+      assert(playerControls.turnCount >= 4, 'Podcast transcript turns did not render');
+
+      // Switch to Home tab, confirm mini-player persists, tap title to expand back to Audio tab, then close
+      const crossTabPersistence = await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="home"]').click();
+        const stillVisibleOnHome = !document.getElementById('miniPlayer').hidden;
+        document.getElementById('miniPlayerExpandTrigger').click();
+        const backOnAudio = document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab') === 'audio';
+        document.getElementById('mpCloseBtn').click();
+        const closedCleanly = document.getElementById('miniPlayer').hidden;
+        return { stillVisibleOnHome, backOnAudio, closedCleanly };
+      });
+      assert(
+        crossTabPersistence.stillVisibleOnHome && crossTabPersistence.backOnAudio && crossTabPersistence.closedCleanly,
+        `Mini-player lifecycle check failed: ${JSON.stringify(crossTabPersistence)}`
+      );
+    });
+
+    await runStep('On-Demand Autopodcast & Deep Analysis Runner validate empty inputs and synthesize new persistent items', async () => {
+      // 1. Empty podcast topic validation
+      const emptyPodErr = await cdp.eval(() => {
+        const inp = document.getElementById('podTopicInput');
+        inp.value = '   ';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        document.querySelector('[data-action="generate-autopodcast"]').click();
+        return document.getElementById('mainView').textContent;
+      });
+      assert(emptyPodErr.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
+
+      // 2. Generate custom 8m Solo Autopodcast
+      const beforeEpCount = await cdp.eval(() => document.querySelectorAll('[data-action="play-episode"]').length);
+      await cdp.eval(() => {
+        document.querySelector('[data-action="set-pod-duration"][data-mins="8"]').click();
+        document.querySelector('[data-action="set-pod-format"][data-format="solo"]').click();
+        document.querySelector('[data-action="fill-pod-topic"]').click();
+        document.querySelector('[data-action="generate-autopodcast"]').click();
+      });
+
+      await cdp.waitFor(
+        prev => document.querySelectorAll('[data-action="play-episode"]').length > prev,
+        beforeEpCount,
+        6000
+      );
+      await cdp.eval(() => document.getElementById('mpCloseBtn')?.click());
+
+      // 3. Switch to Deep Analysis Runner, test empty validation, then generate custom report
+      const emptyAnalysisErr = await cdp.eval(() => {
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
+        const area = document.getElementById('analysisPromptInput');
+        area.value = '';
+        area.dispatchEvent(new Event('input', { bubbles: true }));
+        document.querySelector('[data-action="run-deep-analysis"]').click();
+        return document.getElementById('mainView').textContent;
+      });
+      assert(emptyAnalysisErr.includes('Please enter an analysis topic'), 'Missing empty analysis prompt validation');
+
+      const beforeReportCount = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
+      await cdp.eval(() => {
+        const area = document.getElementById('analysisPromptInput');
+        area.value = 'Analyze Brock Purdy EPA, Nick Bosa pass rush, and Brandon Aiyuk cap math';
+        area.dispatchEvent(new Event('input', { bubbles: true }));
+        document.querySelector('[data-action="run-deep-analysis"]').click();
+      });
+
+      await cdp.waitFor(
+        prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
+        beforeReportCount,
+        6000
+      );
+      await cdp.assertNoOverflow('Deep Analysis Runner With Generated Report');
+    });
+
+    console.log('\n=== [8/9] Settings, Theme Switching, Reporter/Outlet Filtering, Vault & Storage Resilience ===');
+
+    await runStep('Settings toggles 94 Throwback Light/Night Dark theme, filters outlets/reporters, and opens Vault modules', async () => {
+      // Open Settings
+      await cdp.eval(() => document.getElementById('openSettingsBtn').click());
+      await cdp.assertNoOverflow('Settings Bottom Sheet');
+
+      // Switch to Light Theme ('94 Throwback White & Gold)
+      const lightAttr = await cdp.eval(() => {
+        document.querySelector('[data-action="toggle-theme"]').click();
+        return {
+          theme: document.documentElement.getAttribute('data-theme'),
+          metaColor: document.getElementById('metaThemeColor')?.getAttribute('content')
+        };
+      });
+      assert(lightAttr.theme === 'light' && lightAttr.metaColor === '#F7F5F0', 'Light theme toggle failed');
+      await cdp.assertNoOverflow('Settings Sheet in Light Theme');
+
+      // Mute an outlet & search/mute a reporter while verifying input focus stays in search box
+      const filterState = await cdp.eval(() => {
+        document.querySelector('[data-action="toggle-outlet"]').click();
+        const searchInp = document.getElementById('reporterFilterSearchInput');
+        searchInp.focus();
+        searchInp.value = 'Kawakami';
+        searchInp.dispatchEvent(new Event('input', { bubbles: true }));
+        const keptFocus = document.activeElement?.id === 'reporterFilterSearchInput';
+        const cb = document.querySelector('[data-action="toggle-reporter"]');
+        if (cb) {
+          cb.checked = false;
+          cb.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        return { keptFocus, mutedReporterFound: Boolean(cb) };
+      });
+      assert(filterState.keptFocus && filterState.mutedReporterFound, 'Reporter search/mute failed');
+
+      // Re-enable all reporters & switch back to Dark theme, save credentials, close sheet
+      await cdp.eval(() => {
+        document.querySelector('[data-action="enable-all-reporters"]').click();
+        document.querySelector('[data-action="toggle-theme"]').click();
+        document.querySelector('[data-action="save-group-config"]').click();
+        document.getElementById('closeSheetBtn').click();
+      });
+
+      // Open Seasonal Archive Vault & jump into off-cycle module
+      const vaultJump = await cdp.eval(() => {
+        document.getElementById('openArchiveBtn').click();
+        const btn = document.querySelector('[data-action="open-vault-module"]');
+        const targetSub = btn?.getAttribute('data-season-sub');
+        btn?.click();
+        return {
+          sheetClosed: document.getElementById('bottomSheetBackdrop').hidden,
+          activeNav: document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab'),
+          targetSub
+        };
+      });
+      assert(vaultJump.sheetClosed && vaultJump.activeNav === 'season', 'Vault Inspect jump failed');
+    });
+
+    await runStep('Corrupted localStorage payloads recover gracefully without crashing app boot', async () => {
+      await cdp.eval(() => {
+        window.localStorage.setItem('joshal_49ers_hq_prefs_v1', '{corrupted_json_payload!!!');
+      });
+      await cdp.send('Page.reload');
+      await cdp.waitFor(() => document.querySelector('[data-action="toggle-customize-layout"]'));
+      const healthyAfterCorrupt = await cdp.eval(() =>
+        document.getElementById('headerRecordPill')?.textContent?.trim()
+      );
+      assert(healthyAfterCorrupt === '6-1', 'App failed to recover from corrupted localStorage');
+    });
+
+    await runStep('XSS HTML/Script payloads in search, prompts & markdown are strictly escaped; all inputs >=16px (no iOS zoom)', async () => {
+      await cdp.setViewport(393, 852, true, 3);
+      const securityAndZoom = await cdp.eval(async () => {
+        window.__xssTriggered = false;
+        const payload = `<img src=x onerror="window.__xssTriggered=true"><script>window.__xssTriggered=true</script>`;
+
+        // Check Roster Search + GM Selects font-size >= 16px
+        document.querySelector('[data-nav-tab="roster"]').click();
+        const rSearch = document.getElementById('rosterSearchInput');
+        rSearch.value = payload;
+        rSearch.dispatchEvent(new Event('input', { bubbles: true }));
+
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]').click();
+        const gmSelectFontSizes = Array.from(document.querySelectorAll('input, select, textarea')).map(el =>
+          parseFloat(window.getComputedStyle(el).fontSize)
+        );
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
+        document.getElementById('rosterSearchInput').value = '';
+        document.getElementById('rosterSearchInput').dispatchEvent(new Event('input', { bubbles: true }));
+
+        // Check Deep Analysis markdown escaping with raw HTML payload
+        document.querySelector('[data-nav-tab="audio"]').click();
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
+        const area = document.getElementById('analysisPromptInput');
+        area.value = `Purdy EPA ${payload}`;
+        area.dispatchEvent(new Event('input', { bubbles: true }));
+        const audioInputSizes = Array.from(document.querySelectorAll('input, select, textarea'))
+          .filter(el => el.type !== 'range' && el.type !== 'checkbox')
+          .map(el => parseFloat(window.getComputedStyle(el).fontSize));
+        document.querySelector('[data-action="run-deep-analysis"]').click();
+
+        await new Promise(r => setTimeout(r, 1450));
+
+        // Check Settings inputs >= 16px
+        document.getElementById('openSettingsBtn').click();
+        const settingsInputSizes = Array.from(document.querySelectorAll('#sheetBody input[type="text"], #sheetBody input[type="password"], #sheetBody input[type="url"], #sheetBody input[type="search"]'))
+          .map(el => parseFloat(window.getComputedStyle(el).fontSize));
+        document.getElementById('closeSheetBtn').click();
+
+        const allSizes = [...gmSelectFontSizes, ...audioInputSizes, ...settingsInputSizes];
+        const minFontSize = Math.min(...allSizes);
+        const injectedImgCount = document.querySelectorAll('img[src="x"]').length;
+
+        return {
+          xssTriggered: Boolean(window.__xssTriggered),
+          injectedImgCount,
+          minFontSize
+        };
+      });
+
+      assert(securityAndZoom.xssTriggered === false && securityAndZoom.injectedImgCount === 0, 'XSS payload was not escaped!');
+      assert(
+        securityAndZoom.minFontSize >= 16,
+        `Form control has font-size ${securityAndZoom.minFontSize}px (<16px causes iOS Safari auto-zoom on iPhone 16)`
+      );
+    });
+
+    await runStep('Service Worker CacheStorage populates offline shell & JSON feeds for Levi Stadium / airplane-mode resilience', async () => {
+      const cacheInfo = await cdp.eval(async () => {
+        const keys = await caches.keys();
+        let cachedCount = 0;
+        for (const k of keys) {
+          const c = await caches.open(k);
+          const reqs = await c.keys();
+          cachedCount += reqs.length;
+        }
+        return { cacheBuckets: keys.length, cachedCount };
+      });
+      assert(
+        cacheInfo.cacheBuckets >= 1 && cacheInfo.cachedCount >= 20,
+        `Expected >=20 pre-cached assets in CacheStorage, got ${JSON.stringify(cacheInfo)}`
+      );
+    });
+
+    console.log('\n=== [9/9] Multi-Viewport Responsive Overflow Sweep & Zero Runtime Error Audit ===');
+
+    const viewports = [
+      { name: 'Compact Mobile (360x780)', w: 360, h: 780, mobile: true, dpr: 3 },
+      { name: 'iPhone SE / Small Mobile (375x667)', w: 375, h: 667, mobile: true, dpr: 2 },
+      { name: 'iPhone 16 Pro Max (430x932)', w: 430, h: 932, mobile: true, dpr: 3 },
+      { name: 'iPad / Tablet (768x1024)', w: 768, h: 1024, mobile: false, dpr: 2 }
+    ];
+
+    for (const vp of viewports) {
+      await runStep(`Zero horizontal overflow across all 5 primary tabs at ${vp.name}`, async () => {
+        await cdp.setViewport(vp.w, vp.h, vp.mobile, vp.dpr);
+        for (const tab of ['home', 'news', 'roster', 'season', 'audio']) {
+          await cdp.eval(t => document.querySelector(`[data-nav-tab="${t}"]`).click(), tab);
+          await cdp.assertNoOverflow(`${vp.name} -> ${tab}`);
+        }
+      });
+    }
+
+    await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
+      assert(
+        cdp.consoleErrors.length === 0,
+        `Console errors encountered: ${JSON.stringify(cdp.consoleErrors)}`
+      );
+      assert(
+        cdp.pageExceptions.length === 0,
+        `Uncaught page exceptions encountered: ${JSON.stringify(cdp.pageExceptions)}`
+      );
+      assert(
+        cdp.localNetworkFailures.length === 0,
+        `Local HTTP failures encountered: ${JSON.stringify(cdp.localNetworkFailures)}`
+      );
+    });
+  } finally {
+    try {
+      ws?.close();
+    } catch {}
+    if (chromeProc) {
+      chromeProc.kill('SIGKILL');
+    }
+    server.close();
+    try {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    } catch {}
+  }
+
+  console.log('\n======================================================');
+  console.log(`MOBILE E2E QA SUMMARY: ${passed} Passed, ${failed} Failed`);
+  console.log('======================================================\n');
+
+  if (failed > 0) {
+    process.exit(1);
+  }
+}
+
+main().catch(err => {
+  console.error('Fatal E2E QA runner error:', err);
+  process.exit(1);
+});

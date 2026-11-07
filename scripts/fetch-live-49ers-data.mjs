@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Master Live Data Ingestion & Normalization Pipeline for 49ers Nerd HQ
+ * Master Live Data Ingestion & Normalization Pipeline for 49ers Faithful
  * Pulls 100% $0/month free-tier NFL datasets:
  * - ESPN Public APIs (2026 Roster, Depth Chart, Injuries, Schedule, Standings, News)
  * - nflverse Open Data (Players ID Rosetta Stone, 2022-2026 Player/Team Stats & EPA,
@@ -79,7 +79,7 @@ function parseCsv(text = '') {
 async function fetchCsv(url) {
   const res = await fetch(url, {
     redirect: 'follow',
-    headers: { 'User-Agent': 'Mozilla/5.0 (49ers-Nerd-HQ Data Pipeline)' }
+    headers: { 'User-Agent': 'Mozilla/5.0 (49ers Data Pipeline)' }
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
   const buf = Buffer.from(await res.arrayBuffer());
@@ -134,7 +134,7 @@ function num(v, decimals = null) {
 }
 
 async function main() {
-  console.log('=== 49ers Nerd HQ: Starting Live 2026 Data Ingestion Pipeline ===');
+  console.log('=== 49ers Faithful: Starting Live 2026 Data Ingestion Pipeline ===');
   fs.mkdirSync(dataDir, { recursive: true });
 
   // 1. Ensure Reporter Registry is fresh
@@ -1178,17 +1178,17 @@ async function main() {
       {
         unitMatchup: '49ers Pass Protection (3.2% Sack Rate, #2 NFL) vs. Maxx Crosby & Raiders Front',
         advantage: 'SF Slight Edge',
-        nerdyDetail: 'Trent Williams + quick 2.64s release options neutralize prolonged edge wins; watch Kittle chip-to-flat releases on 3rd & medium.'
+        tacticalDetail: 'Trent Williams + quick 2.64s release options neutralize prolonged edge wins; watch Kittle chip-to-flat releases on 3rd & medium.'
       },
       {
         unitMatchup: 'Purdy Play-Action & Middle-of-Field (+63.2 Pass EPA) vs. Raiders Linebacker/Safety Coverage',
         advantage: 'SF Heavy Edge',
-        nerdyDetail: 'SF leads the NFC in yards per attempt on in-breaking digs/crossers between the numbers (11.4 YPA).'
+        tacticalDetail: 'SF leads the NFC in yards per attempt on in-breaking digs/crossers between the numbers (11.4 YPA).'
       },
       {
         unitMatchup: 'Nick Bosa + DeForest Buckner + Odighizuwa vs. Raiders Pocket & Outside Zone',
         advantage: 'SF Heavy Edge',
-        nerdyDetail: 'First game all season with SF\'s complete A-list defensive line active simultaneously.'
+        tacticalDetail: 'First game all season with SF\'s complete A-list defensive line active simultaneously.'
       }
     ]
   };

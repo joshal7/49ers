@@ -368,7 +368,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
                       2026 Cap: ${formatCompactDollars(c26.capNumber)} • Base: ${formatCompactDollars(c26.baseSalary)}
                     </div>
                   </div>
-                  <select class="select-input gm-move-select" style="width:auto;max-width:176px;font-size:13px;padding:6px 8px"
+                  <select class="select-input gm-move-select" style="width:auto;max-width:184px;padding:6px 8px"
                           data-player-id="${esc(p.id)}" aria-label="Cap Action for ${esc(p.name)}">
                     <option value="none" ${selected === 'none' ? 'selected' : ''}>Keep Contract</option>
                     <option value="restructure" ${selected === 'restructure' ? 'selected' : ''}>

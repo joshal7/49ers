@@ -135,15 +135,21 @@ function renderStatsTab(p, statsMode) {
 
   let primaryStatsHtml = '';
   if (statsMode === '2026') {
+    const snapBannerHtml = `
+      <div style="padding:9px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12px;color:var(--text-secondary)">
+        <strong style="color:var(--text-primary)">2026 Snaps Logged:</strong>
+        Offense <span class="mono">${p.snapSummary?.offenseSnaps || 0} (${p.snapSummary?.offenseSnapPct || 0}%)</span> •
+        Defense <span class="mono">${p.snapSummary?.defenseSnaps || 0} (${p.snapSummary?.defenseSnapPct || 0}%)</span> •
+        Special Teams <span class="mono">${p.snapSummary?.stSnaps || 0} (${p.snapSummary?.stSnapPct || 0}%)</span>
+      </div>
+    `;
+
     if (!s26) {
-      primaryStatsHtml = `<div style="padding:10px;border-radius:8px;background:var(--bg-card-alt);font-size:12.5px">
-        2026 Snaps Logged: <strong>Offense ${p.snapSummary?.offenseSnaps || 0} (${p.snapSummary?.offenseSnapPct || 0}%)</strong> •
-        <strong>Defense ${p.snapSummary?.defenseSnaps || 0} (${p.snapSummary?.defenseSnapPct || 0}%)</strong> •
-        <strong>Special Teams ${p.snapSummary?.stSnaps || 0} (${p.snapSummary?.stSnapPct || 0}%)</strong>.
-        (Offensive linemen &amp; reserve players do not accrue box-score ball-handling stats unless recording a tackle/fumble.)
+      primaryStatsHtml = `${snapBannerHtml}<div style="font-size:12px;color:var(--text-muted)">
+        (Offensive linemen &amp; reserve players do not accrue box-score ball-handling stats unless recording a tackle or fumble recovery.)
       </div>`;
     } else {
-      const blocks = [];
+      const blocks = [snapBannerHtml];
       if (s26.passing.attempts > 0) {
         blocks.push(`
           <div class="sub-label">2026 Passing &amp; EPA (${s26.games} GP)</div>

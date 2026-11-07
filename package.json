@@ -1,9 +1,9 @@
 {
-  "name": "49ers-nerd-hq",
+  "name": "49ers",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "49ers Nerd HQ (49ers.joshal.com) — High-signal San Francisco 49ers analytics, cap simulator, injury models, playoff Monte Carlo, news/film synthesis, and Autopodcast PWA.",
+  "description": "49ers Faithful (49ers.joshal.com) — High-signal San Francisco 49ers analytics, cap simulator, injury models, playoff Monte Carlo, news/film synthesis, and Autopodcast PWA.",
   "scripts": {
     "start": "python3 -m http.server 8080",
     "refresh-data": "node scripts/fetch-live-49ers-data.mjs",

@@ -212,7 +212,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
   const baseTurns = [
     {
       speaker: 'Marcus',
-      text: `Welcome into 49ers Nerd HQ for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in the 2026 play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting—zero clickbait.`
+      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in the 2026 play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting—zero clickbait.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',

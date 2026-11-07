@@ -1,6 +1,6 @@
 /**
  * Anti-Fluff / Sensationalism Classifier & Per-User Reporter/Source Filter
- * Enforces the 49ers Nerd HQ Editorial Charter: facts, X's & O's, and cap math — zero rage-bait.
+ * Enforces the 49ers Faithful Editorial Charter: facts, X's & O's, and cap math — zero rage-bait.
  */
 
 const CLICKBAIT_PATTERNS = [

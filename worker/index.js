@@ -1,5 +1,5 @@
 /**
- * 49ers Nerd HQ — Zero-Cost Serverless Edge Worker (Cloudflare Free Tier)
+ * 49ers Faithful — Zero-Cost Serverless Edge Worker (Cloudflare Free Tier)
  *
  * Endpoints:
  * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts
@@ -8,7 +8,7 @@
  * - POST /api/podcast            -> Generates timed script + Gemini Multi-Speaker TTS audio, stores in R2 & indexes in KV
  */
 
-const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Nerd HQ", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
+const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
 STRICT EDITORIAL RULES:
 1. ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing.
 2. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math (base salary, option/signing proration, Pre/Post-June 1 dead money, rollover cap).
@@ -32,6 +32,28 @@ function jsonResponse(data, status = 200, extraHeaders = {}) {
     status,
     headers: { 'Content-Type': 'application/json; charset=utf-8', ...extraHeaders }
   });
+}
+
+async function parseJsonBodySafe(request) {
+  try {
+    const parsed = await request.json();
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function parseScriptTurnsSafe(rawText) {
+  const cleaned = String(rawText || '')
+    .trim()
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+  try {
+    const arr = JSON.parse(cleaned);
+    if (Array.isArray(arr) && arr.length > 0) return arr;
+  } catch {}
+  return [{ speaker: 'Marcus', text: cleaned || 'Briefing generated.' }];
 }
 
 async function sha256Short(input) {
@@ -101,6 +123,10 @@ export default {
       });
     }
 
+    if (request.method === 'GET' && url.pathname === '/api/health') {
+      return jsonResponse({ ok: true, service: '49ers-worker' }, 200, cors);
+    }
+
     // Authenticate friend-group passcode on API endpoints
     const providedPasscode = request.headers.get('X-Group-Passcode') || '';
     if (env.GROUP_PASSCODE && providedPasscode !== env.GROUP_PASSCODE) {
@@ -118,7 +144,10 @@ export default {
     }
 
     if (request.method === 'POST' && url.pathname === '/api/analyze') {
-      const body = await request.json();
+      const body = await parseJsonBodySafe(request);
+      if (!body) {
+        return jsonResponse({ error: 'Invalid JSON request body' }, 400, cors);
+      }
       const prompt = String(body.prompt || '').trim();
       const sectionContext = String(body.contextSummary || '').slice(0, 6000);
       const author = String(body.author || 'Friend Group').slice(0, 40);
@@ -131,6 +160,14 @@ export default {
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
         return jsonResponse({ cached: true, item: existing }, 200, cors);
+      }
+
+      if (!env.GEMINI_API_KEY) {
+        return jsonResponse(
+          { error: 'GEMINI_API_KEY secret is not configured on this Worker yet.' },
+          503,
+          cors
+        );
       }
 
       const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${
@@ -192,7 +229,10 @@ export default {
     }
 
     if (request.method === 'POST' && url.pathname === '/api/podcast') {
-      const body = await request.json();
+      const body = await parseJsonBodySafe(request);
+      if (!body) {
+        return jsonResponse({ error: 'Invalid JSON request body' }, 400, cors);
+      }
       const topic = String(body.topic || '').trim();
       const durationMinutes = Math.max(2, Math.min(20, Number(body.durationMinutes || 5)));
       const format = body.format === 'solo' ? 'Solo Executive Briefing' : 'Two-Host Analytical Banter';
@@ -207,6 +247,14 @@ export default {
       const existing = await env.SHARED_CACHE?.get(`episode:${epId}`, 'json');
       if (existing && !body.forceRefresh) {
         return jsonResponse({ cached: true, episode: existing }, 200, cors);
+      }
+
+      if (!env.GEMINI_API_KEY) {
+        return jsonResponse(
+          { error: 'GEMINI_API_KEY secret is not configured on this Worker yet.' },
+          503,
+          cors
+        );
       }
 
       // Step 1: Generate tightly timed analytical script via Gemini + Google Search Grounding
@@ -235,7 +283,7 @@ export default {
 
       const scriptJson = await scriptRes.json();
       const rawScriptText = scriptJson.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
-      const turns = JSON.parse(rawScriptText);
+      const turns = parseScriptTurnsSafe(rawScriptText);
 
       // Step 2: Render Multi-Speaker Native Audio via Gemini TTS Free Tier
       let audioUrl = null;
@@ -320,6 +368,6 @@ export default {
       return jsonResponse({ cached: false, episode }, 200, cors);
     }
 
-    return jsonResponse({ status: 'ok', service: '49ers-nerd-hq-worker' }, 200, cors);
+    return jsonResponse({ status: 'ok', service: '49ers-worker' }, 200, cors);
   }
 };

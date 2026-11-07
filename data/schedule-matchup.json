@@ -717,17 +717,17 @@
       {
         "unitMatchup": "49ers Pass Protection (3.2% Sack Rate, #2 NFL) vs. Maxx Crosby & Raiders Front",
         "advantage": "SF Slight Edge",
-        "nerdyDetail": "Trent Williams + quick 2.64s release options neutralize prolonged edge wins; watch Kittle chip-to-flat releases on 3rd & medium."
+        "tacticalDetail": "Trent Williams + quick 2.64s release options neutralize prolonged edge wins; watch Kittle chip-to-flat releases on 3rd & medium."
       },
       {
         "unitMatchup": "Purdy Play-Action & Middle-of-Field (+63.2 Pass EPA) vs. Raiders Linebacker/Safety Coverage",
         "advantage": "SF Heavy Edge",
-        "nerdyDetail": "SF leads the NFC in yards per attempt on in-breaking digs/crossers between the numbers (11.4 YPA)."
+        "tacticalDetail": "SF leads the NFC in yards per attempt on in-breaking digs/crossers between the numbers (11.4 YPA)."
       },
       {
         "unitMatchup": "Nick Bosa + DeForest Buckner + Odighizuwa vs. Raiders Pocket & Outside Zone",
         "advantage": "SF Heavy Edge",
-        "nerdyDetail": "First game all season with SF's complete A-list defensive line active simultaneously."
+        "tacticalDetail": "First game all season with SF's complete A-list defensive line active simultaneously."
       }
     ]
   }

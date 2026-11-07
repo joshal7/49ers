@@ -1,8 +1,8 @@
-# Product Requirements Document (PRD): 49ers Nerd HQ (`49ers.joshal.com`)
+# Product Requirements Document (PRD): 49ers Faithful Briefing (`49ers.joshal.com`)
 
 | Metadata | Details |
 | :--- | :--- |
-| **Product Name** | **49ers Nerd HQ** (Working Title: *The Faithful Briefing / Red & Gold War Room*) |
+| **Product Name** | **49ers Faithful Briefing** (Working Title: *The Faithful Briefing / Red & Gold War Room*) |
 | **Production URL** | `https://49ers.joshal.com` (CNAME → `joshal7.github.io`) |
 | **Repository** | `https://github.com/Joshal7/49ers` |
 | **Target Platform** | Mobile Web PWA (iOS 18+ Safari "Add to Home Screen" on iPhone 16 & Mobile Chrome) |
@@ -14,7 +14,7 @@
 
 ## 1. Executive Summary & Product Vision
 
-**49ers Nerd HQ (`49ers.joshal.com`)** is a private-group, mobile-first Progressive Web App (PWA) built for ~25 deeply knowledgeable San Francisco 49ers fans who want **facts, film/scheme takeaways, quantitative modeling, and salary cap mechanics**—stripped of sensationalized clickbait and engagement-farming hot takes.
+**49ers Faithful Briefing (`49ers.joshal.com`)** is a private-group, mobile-first Progressive Web App (PWA) built for ~25 deeply knowledgeable San Francisco 49ers fans who want **facts, film/scheme takeaways, quantitative modeling, and salary cap mechanics**—stripped of sensationalized clickbait and engagement-farming hot takes.
 
 Modeled after the zero-cost GitHub Pages deployment pattern of `workouts.joshal.com`, the app combines:
 1. **Automated Scheduled Ingestion (GitHub Actions)**: Continually pulls and normalizes 49ers roster data, play-by-play EPA/NextGen metrics (`nflverse`), OverTheCap/Spotrac contract structures, combine spider-chart percentiles, injury/practice logs, betting lines, and content from the top 30–50 49ers beat reporters, national insiders, and YouTube film channels.
@@ -31,7 +31,7 @@ Modeled after the zero-cost GitHub Pages deployment pattern of `workouts.joshal.
 * **Primary Device Context**: iPhone 16 running iOS Safari via a Home Screen Web App shortcut (`display: standalone`), plus Mobile Chrome.
 
 ### 2.2 Strict "No-Fluff / Anti-Sensationalism" Editorial Engine
-Every AI synthesis prompt and feed classifier must enforce the **Nerd HQ Editorial Charter**:
+Every AI synthesis prompt and feed classifier must enforce the **Faithful Editorial Charter**:
 1. **Ban Clickbait & Manufactured Drama**: Automatically filter out or down-rank speculative tabloid framing (e.g., *"You won't believe what Player X posted on Instagram"*, unverified trade bait blogs, or national talking-head rage-bait).
 2. **Separate Fact, Film, and Projection**:
    * **Verified Facts**: Official transactions, practice participation designations, contract numbers, snap counts, and direct coach/player quotes.
@@ -214,7 +214,7 @@ Tapping any player opens a rich, 5-tab mobile bottom sheet:
 * **Two View Modes**:
   1. **`Clustered Fact & Film Briefs` (Default)**: Groups 5–20 redundant tweets/articles about the same event into a single card containing:
      * **The Hard Facts** (bulleted, zero spin)
-     * **Film / Scheme / Cap Implications** (the "nerdy why")
+     * **Film / Scheme / Cap Implications** (the "tactical why")
      * **Consensus vs. Dissent** across beat writers
      * **Fluff Removed Indicator** (e.g., *"Synthesized from 14 posts & 18m presser; 3 clickbait headlines filtered out"*)
   2. **`Raw Chronological Stream`**: Direct chronological feed of individual posts, articles, and videos filtered by the user's selected sources.
@@ -287,7 +287,7 @@ Tapping any player opens a rich, 5-tab mobile bottom sheet:
   * Consensus Point Spread, Moneyline, Over/Under Total, Implied Team Score (e.g., `SF 27.2 – SEA 20.8`), opening-to-current line movement, and public vs. sharp money split if publicly available.
 * **Historical Head-to-Head (Team & Coaching Staff)**:
   * **vs. Franchise**: Last 10 meetings (W-L, ATS record, average margin, home/away splits).
-  * **vs. Opposing Coaching Staff (The Nerd Edge)**: Specifically tracks **Kyle Shanahan vs. Opposing Head Coach AND Opposing Defensive Coordinator** (even from the coordinator's prior teams!) and **49ers DC vs. Opposing OC/QB**. Surfaces historical scheme tendencies (e.g., *"In 6 career games against DC [Name]'s Fangio-style two-high shell, Shanahan runs 21-personnel duo/inside trap on 38% of early downs, averaging +0.18 EPA/rush"*).
+  * **vs. Opposing Coaching Staff (The Analytical Edge)**: Specifically tracks **Kyle Shanahan vs. Opposing Head Coach AND Opposing Defensive Coordinator** (even from the coordinator's prior teams!) and **49ers DC vs. Opposing OC/QB**. Surfaces historical scheme tendencies (e.g., *"In 6 career games against DC [Name]'s Fangio-style two-high shell, Shanahan runs 21-personnel duo/inside trap on 38% of early downs, averaging +0.18 EPA/rush"*).
 * **Key Trench & Coverage Matchup Matrix**:
   * Side-by-side statistical mismatches: 49ers OL Pass Block Efficiency vs. Opponent DL Pass Rush Win Rate; 49ers Motion/Play-Action EPA vs. Opponent Linebacker Coverage EPA; Red Zone Offense vs. Red Zone Defense.
 
@@ -350,7 +350,7 @@ Tapping any player opens a rich, 5-tab mobile bottom sheet:
 #### 10.1 Asynchronous "Deep Analysis" Runner
 * Because deep multi-source synthesis takes 30–180 seconds, any major section features a `"⚡ Run Deep Analysis"` button (plus a custom prompt box).
 * **UX Flow**:
-  1. User taps `"⚡ Run Deep Analysis"` (or types a custom nerdy question like *"Break down how our offensive line pass-pro sets held up against stunted 4-man rushes over the last 3 games"*).
+  1. User taps `"⚡ Run Deep Analysis"` (or types a custom in-depth tactical question like *"Break down how our offensive line pass-pro sets held up against stunted 4-man rushes over the last 3 games"*).
   2. Cloudflare Worker checks if an identical/recent analysis already exists in the shared group cache. If not, it creates an async job ID and initiates a Gemini API + Search Grounding deep synthesis.
   3. UI displays a live step-by-step progress stepper (`1. Pulling nflverse play-by-play & beat transcripts...` → `2. Cross-referencing film notes...` → `3. Synthesizing no-fluff report...`) with elapsed time.
   4. Once complete, the report renders in clean Markdown/tables and is saved to the **Shared Group Intelligence Feed** so all ~24 friends can read it immediately.

@@ -162,7 +162,7 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
 
   if (updatedTeamCapSpace < 0) {
     warnings.push(
-      `Cap Compliance Warning: Selected transactions put the 49ers $${formatCompactDollars(Math.abs(updatedTeamCapSpace))} OVER the ${baseYear} salary cap ceiling.`
+      `Cap Compliance Warning: Selected transactions put the 49ers ${formatCompactDollars(Math.abs(updatedTeamCapSpace))} OVER the ${baseYear} salary cap ceiling.`
     );
   }
 

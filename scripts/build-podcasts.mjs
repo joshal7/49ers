@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Studio-Grade Multi-Speaker Neural Autopodcast Builder for 49ers Nerd HQ
+ * Studio-Grade Multi-Speaker Neural Autopodcast Builder for 49ers Faithful
  * Uses edge-tts (Two-Host Analytical Banter: AndrewNeural + AvaNeural) and macOS afconvert
  * to synthesize compact 24kHz AAC (.m4a) episodes with exact per-segment seek timestamps!
  */
@@ -33,7 +33,7 @@ const EPISODES_SPEC = [
     turns: [
       {
         speaker: 'Marcus',
-        text: "Welcome into 49ers Nerd HQ. Sunday at Levi's Stadium, the six-and-one Niners come out of the Week 8 bye holding the number one seed in the NFC, laying ten points against the Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is officially off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa."
+        text: "Welcome into 49ers Faithful. Sunday at Levi's Stadium, the six-and-one Niners come out of the Week 8 bye holding the number one seed in the NFC, laying ten points against the Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is officially off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa."
       },
       {
         speaker: 'Elena',
