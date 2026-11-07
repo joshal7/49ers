@@ -3,9 +3,18 @@
  * Connects to the zero-cost Cloudflare Worker (/api/analyze, /api/podcast, /api/shared-feed)
  * authenticated via X-Group-Passcode, with an intelligent, data-grounded local synthesis
  * engine when running standalone on GitHub Pages before a Worker URL is configured.
+ *
+ * Enforces strict internal grounding system prompts and post-generation anti-hallucination
+ * roster validation across all LLM-generated surfaces.
  */
 
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import {
+  buildLiveGroundingSystemPrompt,
+  buildAuthoritativeLiveContextSnapshot,
+  getDisallowedFormer49ers,
+  sanitizeHallucinatedRosterText
+} from '../engine/groundingValidator.js';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -13,24 +22,7 @@ function sleep(ms) {
 
 export function buildCompactContextSummary(appData) {
   if (!appData) return '';
-  const m = appData.meta || {};
-  const cap26 = appData.cap?.years?.['2026'] || {};
-  const matchup = appData.scheduleMatchup?.upcomingMatchup || {};
-  const topCap = (appData.cap?.players || [])
-    .slice(0, 8)
-    .map(p => `${p.name} (${p.position}): ${formatCompactDollars(p.contractsByYear?.['2026']?.capNumber)}`)
-    .join('; ');
-  const keyHealth = (appData.health?.practiceReport || [])
-    .slice(0, 8)
-    .map(h => `${h.name} (${h.position}): ${h.playProbabilityPct}% [${h.wed}/${h.thu}/${h.fri}]`)
-    .join('; ');
-
-  return [
-    `Record: ${m.teamRecord} (${m.standingSummary}), Week ${m.currentWeek}.`,
-    `2026 Cap Space: ${formatCompactDollars(cap26.teamCapSpace)} (Top Hits: ${topCap}).`,
-    `Week ${matchup.week} Matchup: ${matchup.oppName} @ SF (${matchup.betting?.spread}, O/U ${matchup.betting?.overUnder}, ${matchup.betting?.restAdvantage}).`,
-    `Health & Practice Priors: ${keyHealth}.`
-  ].join('\n');
+  return buildAuthoritativeLiveContextSnapshot(appData);
 }
 
 export async function fetchSharedWorkerFeed(prefs) {
@@ -55,11 +47,12 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
     if (typeof onProgress === 'function') onProgress({ stepIdx, message });
   };
 
-  emit(1, 'Step 1/3: Indexing live 2026 nflverse EPA, OverTheCap contracts & beat transcripts...');
+  emit(1, 'Step 1/3: Indexing live 2026 roster, injuries, trades, nflverse EPA & OverTheCap ledger...');
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const rosterPlayers = appData?.roster?.players || [];
 
   if (baseUrl) {
-    emit(2, 'Step 2/3: Querying Cloudflare Edge Worker + Gemini Google Search Grounding...');
+    emit(2, 'Step 2/3: Querying Cloudflare Edge Worker + Gemini Live Search Grounding...');
     const res = await fetch(`${baseUrl}/api/analyze`, {
       method: 'POST',
       headers: {
@@ -70,22 +63,26 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
         prompt: cleanPrompt,
         category: category || 'On-Demand Deep Dive',
         author: prefs?.authorName || 'Friend Group',
-        contextSummary: buildCompactContextSummary(appData)
+        systemPrompt: buildLiveGroundingSystemPrompt(appData),
+        contextSummary: buildAuthoritativeLiveContextSnapshot(appData)
       })
     });
     const json = await res.json();
     if (!res.ok) {
       throw new Error(json.error || `Worker HTTP ${res.status}`);
     }
-    emit(3, 'Step 3/3: Analysis complete and saved!');
+    if (json.item && json.item.markdown) {
+      json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers);
+    }
+    emit(3, 'Step 3/3: Analysis verified against live 49ers roster and saved!');
     return json.item;
   }
 
   // Standalone Data-Grounded Analytical Engine (when no Worker URL configured yet)
   await sleep(420);
-  emit(2, 'Step 2/3: Cross-referencing player EPA, snap shares, injury priors & multi-year cap tables...');
+  emit(2, 'Step 2/3: Cross-referencing live 2026 roster, player EPA, injury priors & multi-year cap tables...');
   await sleep(480);
-  emit(3, 'Step 3/3: Compiling structured scouting & cap report...');
+  emit(3, 'Step 3/3: Validating zero stale roster claims & compiling scouting report...');
   await sleep(250);
 
   return synthesizeDataGroundedReport(cleanPrompt, category, appData, prefs?.authorName || 'Josh');
@@ -107,8 +104,9 @@ export async function generateOnDemandAutopodcast({
     if (typeof onProgress === 'function') onProgress({ stepIdx, message });
   };
 
-  emit(1, `Step 1/3: Gathering 2026 stats, cap ledger & beat facts for ${mins}m script...`);
+  emit(1, `Step 1/3: Gathering live 2026 roster, injuries, cap ledger & beat facts for ${mins}m script...`);
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const rosterPlayers = appData?.roster?.players || [];
 
   if (baseUrl) {
     emit(2, `Step 2/3: Synthesizing ${format === 'solo' ? 'Solo Briefing' : 'Two-Host'} script & neural audio on Cloudflare R2...`);
@@ -123,14 +121,21 @@ export async function generateOnDemandAutopodcast({
         durationMinutes: mins,
         format,
         author: prefs?.authorName || 'Friend Group',
-        contextSummary: buildCompactContextSummary(appData)
+        systemPrompt: buildLiveGroundingSystemPrompt(appData),
+        contextSummary: buildAuthoritativeLiveContextSnapshot(appData)
       })
     });
     const json = await res.json();
     if (!res.ok) {
       throw new Error(json.error || `Worker HTTP ${res.status}`);
     }
-    emit(3, 'Step 3/3: Episode cached in R2 and added to Shared Episode Library!');
+    if (json.episode && Array.isArray(json.episode.transcript)) {
+      json.episode.transcript = json.episode.transcript.map(seg => ({
+        ...seg,
+        text: sanitizeHallucinatedRosterText(seg.text || '', rosterPlayers)
+      }));
+    }
+    emit(3, 'Step 3/3: Episode grounded on live roster, cached in R2, and added to Library!');
     return json.episode;
   }
 
@@ -138,7 +143,7 @@ export async function generateOnDemandAutopodcast({
   await sleep(450);
   emit(2, `Step 2/3: Scripting ${mins}-minute ${format === 'solo' ? 'Solo Briefing' : 'Two-Host Analytical Banter'}...`);
   await sleep(500);
-  emit(3, 'Step 3/3: Indexing timed transcript & initializing neural voice synthesizer...');
+  emit(3, 'Step 3/3: Validating live roster accuracy & indexing timed transcript...');
   await sleep(250);
 
   return synthesizeLocalPodcastEpisode(cleanTopic, mins, format, appData, prefs?.authorName || 'Josh');
@@ -151,11 +156,31 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
   const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
   const mc = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
 
+  // Check if the user asked about a retired or departed former 49er not on the live roster
+  const disallowedAsked = getDisallowedFormer49ers(players).filter(nm => q.includes(nm.toLowerCase()));
+
   // Match mentioned players directly from our 88-player live roster!
-  const matchedPlayers = players.filter(p => q.includes(p.name.toLowerCase()) || (p.name.split(' ')[1]?.length >= 5 && q.includes(p.name.split(' ')[1].toLowerCase())));
+  const matchedPlayers = players.filter(
+    p =>
+      q.includes(p.name.toLowerCase()) ||
+      (p.name.split(' ')[1]?.length >= 5 && q.includes(p.name.split(' ')[1].toLowerCase()))
+  );
 
   const sections = [];
   sections.push(`### Analytical Brief: ${prompt}`);
+
+  if (disallowedAsked.length > 0) {
+    const activeDl = players
+      .filter(p => p.rosterBucket === 'active' && ['DE', 'DT', 'DL', 'EDGE'].includes(p.position))
+      .map(p => p.name)
+      .slice(0, 6)
+      .join(', ');
+    sections.push(
+      `#### Live Roster Grounding Verification\n* **Status Check**: ${disallowedAsked.map(n => `**${n}**`).join(', ')} ${
+        disallowedAsked.length === 1 ? 'is' : 'are'
+      } **not** on the live ${appData?.meta?.seasonYear || 2026} San Francisco 49ers 53-man, Injured Reserve, or Practice Squad roster (retired/departed). Current active 49ers front-line contributors include: **${activeDl || 'Nick Bosa, DeForest Buckner, Osa Odighizuwa, Keion White, Mykel Williams, Romello Height'}**.`
+    );
+  }
 
   if (matchedPlayers.length > 0) {
     const pBullets = matchedPlayers.slice(0, 4).map(p => {
@@ -165,7 +190,7 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
         : `Roster Bucket: \`${p.rosterBucket}\``;
       const snapNote = `${p.primarySnapPct}% primary snap share`;
       const healthNote = `Next-Game Play Prob: \`${p.health?.playBadgeLabel}\``;
-      return `* **${p.name} (#${p.jersey || '—'}, ${p.position})**: ${snapNote} • RAS \`${p.spiderProfile?.compositeRas}/10\` • ${capNote} • ${healthNote}. ${p.publicEfficiencyNote || ''}`;
+      return `* **${p.name} (#${p.jersey ?? '—'}, ${p.position})**: ${snapNote} • RAS \`${p.spiderProfile?.compositeRas}/10\` • ${capNote} • ${healthNote}. ${p.publicEfficiencyNote || ''}`;
     });
     sections.push(`#### Matched Player Intelligence (Live 2026 Ledger)\n${pBullets.join('\n')}`);
   }
@@ -173,7 +198,10 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
   if (q.includes('cap') || q.includes('contract') || q.includes('restructure') || q.includes('cut') || q.includes('trade') || q.includes('aiyuk')) {
     const topRestructures = (appData?.cap?.blueprint?.restructureCandidates || [])
       .slice(0, 4)
-      .map(r => `* **${r.name} (${r.position})**: \`${formatCompactDollars(r.capHit2026)}\` cap hit → **+${formatCompactDollars(r.maxRestructureSavings)}** max simple restructure room`)
+      .map(
+        r =>
+          `* **${r.name} (${r.position})**: \`${formatCompactDollars(r.capHit2026)}\` cap hit → **+${formatCompactDollars(r.maxRestructureSavings)}** max simple restructure room`
+      )
       .join('\n');
     sections.push(
       `#### CBA Salary Cap & Rollover Mechanics\n* **2026 Gross Cap Space**: \`${formatCompactDollars(cap26.teamCapSpace)}\` (\`${formatCompactDollars(cap26.effectiveCapSpace)}\` effective after in-season buffer).\n* **Article 13 Rollover Impact**: Carrying unused 2026 cap space into 2027 offsets rising option proration without adding dead-cap void-year tail risk.\n${topRestructures}`
@@ -231,7 +259,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
   const baseTurns = [
     {
       speaker: 'Marcus',
-      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in live ${meta.seasonYear || 2026} play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting.`
+      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in live ${meta.seasonYear || 2026} roster status, play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
@@ -239,7 +267,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     },
     {
       speaker: 'Marcus',
-      text: `When you connect ${topic} to what is happening on tape right now, two things jump off the screen. Offensively, Brock Purdy has generated plus ${purdyEpa} passing EPA while keeping pressure-to-sack rates among the lowest in the NFL. Defensively, pairing Nick Bosa on the Wide-9 rail alongside DeForest Buckner and Osa Odighizuwa inside forces slide-protection conflicts on every passing down.`
+      text: `When you connect ${topic} to what is happening on tape right now, two things jump off the screen. Offensively, Brock Purdy has generated plus ${purdyEpa} passing EPA while keeping pressure-to-sack rates among the lowest in the NFL. Defensively, pairing Nick Bosa on the Wide-9 rail alongside DeForest Buckner, Osa Odighizuwa, Keion White, and Mykel Williams forces slide-protection conflicts on every passing down.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
@@ -247,9 +275,10 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     }
   ];
 
-  // Expand turns proportionally if user requested an 8m or 15m deep dive
   if (durationMinutes >= 6) {
-    const nextOpps = upcomingGames.map(g => `Week ${g.week} ${g.homeAway === 'home' ? 'hosting' : 'at'} ${g.opponent?.name || g.opponent?.abbr}`).join(', ');
+    const nextOpps = upcomingGames
+      .map(g => `Week ${g.week} ${g.homeAway === 'home' ? 'hosting' : 'at'} ${g.opponent?.name || g.opponent?.abbr}`)
+      .join(', ');
     baseTurns.push(
       {
         speaker: 'Marcus',
@@ -286,7 +315,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     presetLabel: `${durationMinutes}m On-Demand Pod`,
     createdBy: author,
     createdAt: new Date().toISOString(),
-    audioUrl: null, // Uses instant Web Speech multi-voice synthesis in PodcastAudioController
+    audioUrl: null,
     durationSec: cursor,
     sourceLinks: [
       { label: 'nflverse EPA & PBP', url: 'https://github.com/nflverse/nflverse-data/releases' },

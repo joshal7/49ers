@@ -6,12 +6,14 @@ import { evaluateSeasonState, resolveOrderedDashboardBlocks } from './engine/sea
 import { simulateCapScenario } from './engine/capSimulator.js';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
+import { is49ersGameLiveWindow } from './engine/breakingClassifier.js';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
   hydrateLiveBlueskyBeatWire,
   hydrateLiveEspnOverlay,
+  hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
 } from './services/dataService.js';
@@ -44,6 +46,8 @@ const state = {
   newsMode: 'clustered',
   newsCategoryFilter: 'all',
   activeVideosSet: new Set(),
+  lastWireSyncAt: null,
+  isSyncingWire: false,
 
   // Roster & Cap state
   rosterSubTab: 'roster',
@@ -60,7 +64,9 @@ const state = {
   expandedDraftSpiderIdx: -1,
 
   // Audio & AI Studio state
-  studioSubTab: 'podcast',
+  studioSubTab: 'beat_podcasts',
+  beatPodViewMode: 'date',
+  beatPodShowFilter: 'all',
   podDurationMin: 3,
   podFormat: 'two_host',
   podTopicDraft: '',
@@ -262,7 +268,10 @@ function renderMain() {
         reportersById: reportersMap,
         activeVideosSet: state.activeVideosSet,
         userPrefs: state.prefs,
-        totalReportersCount: state.appData.reporters?.reporters?.length || 45
+        totalReportersCount: state.appData.reporters?.reporters?.length || 45,
+        isGameLive: is49ersGameLiveWindow(state.appData),
+        lastWireSyncAt: state.lastWireSyncAt || state.appData.meta?.updatedAt,
+        isSyncingWire: state.isSyncingWire
       });
     } else if (state.activeNavTab === 'roster') {
       mainEl.innerHTML = renderRosterCapViewHtml({
@@ -292,6 +301,8 @@ function renderMain() {
       mainEl.innerHTML = renderAudioAiViewHtml({
         appData: state.appData,
         studioSub: state.studioSubTab,
+        beatPodViewMode: state.beatPodViewMode,
+        beatPodShowFilter: state.beatPodShowFilter,
         podDurationMin: state.podDurationMin,
         podFormat: state.podFormat,
         podTopicDraft: state.podTopicDraft,
@@ -701,6 +712,20 @@ function bindEvents() {
         renderMain();
         break;
 
+      case 'set-beat-pod-view':
+        state.beatPodViewMode = btn.getAttribute('data-pod-view') || 'date';
+        renderMain();
+        break;
+
+      case 'set-beat-pod-show-filter':
+        state.beatPodShowFilter = btn.getAttribute('data-show-id') || 'all';
+        renderMain();
+        break;
+
+      case 'sync-live-wire-now':
+        await pollLowLatencyTweetAndInjuryWire(true);
+        break;
+
       case 'set-pod-duration':
         state.podDurationMin = Number(btn.getAttribute('data-mins') || 3);
         renderMain();
@@ -966,7 +991,7 @@ function bindEvents() {
       const target = e.target;
       if (target && target.tagName === 'IMG') {
         const wrap = target.closest(
-          '.player-avatar, .team-logo-wrap, .brief-hero-media, .raw-item-thumb, .yt-facade-media, .video-thumb-stage'
+          '.player-avatar, .team-logo-wrap, .brief-hero-media, .raw-item-thumb, .yt-facade-media, .video-thumb-stage, .beat-podcast-art-wrap'
         );
         if (wrap) wrap.classList.add('img-error');
       }
@@ -975,8 +1000,72 @@ function bindEvents() {
   );
 }
 
+const GAME_LIVE_WIRE_POLL_MS = 20_000; // 20s latency during 49ers game windows (<1 min)
+const STANDARD_WIRE_POLL_MS = 45_000; // 45s latency year-round (<1 min)
+
 let lastLiveCheckMs = 0;
+let lastWirePollMs = 0;
+let wirePollCount = 0;
 let isBackgroundSyncing = false;
+let isWirePolling = false;
+let wirePollTimerId = null;
+
+async function pollLowLatencyTweetAndInjuryWire(manual = false) {
+  if (isWirePolling || !state.appData) return;
+  isWirePolling = true;
+  if (manual) {
+    state.isSyncingWire = true;
+    if (state.activeNavTab === 'news') renderMain();
+  }
+  try {
+    const gameLive = is49ersGameLiveWindow(state.appData);
+    wirePollCount += 1;
+    const shouldCheckEspn = manual || gameLive || wirePollCount % 2 === 0;
+
+    const [addedTweets, espnChanged] = await Promise.all([
+      hydrateLiveBlueskyBeatWire(state.appData),
+      shouldCheckEspn ? hydrateLiveEspnOverlay(state.appData) : Promise.resolve(false)
+    ]);
+
+    state.lastWireSyncAt = new Date().toISOString();
+    lastWirePollMs = Date.now();
+
+    if (addedTweets > 0 || espnChanged) {
+      cachedMonteCarloKey = '';
+      cachedMonteCarloResult = null;
+      renderHeaderAndPhaseBanner();
+    }
+
+    const activeTag = document.activeElement?.tagName;
+    const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+    const hasPlayingIframe = state.activeVideosSet.size > 0;
+
+    if ((manual || addedTweets > 0 || espnChanged) && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
+      renderMain();
+      if (state.sheetMode === 'player') renderSheet();
+    }
+  } catch {
+    // Offline or transient network blip; keep serving existing cached state cleanly
+  } finally {
+    state.isSyncingWire = false;
+    isWirePolling = false;
+    if (manual && state.activeNavTab === 'news') renderMain();
+  }
+}
+
+function scheduleAdaptiveSubMinuteWireLoop() {
+  if (wirePollTimerId) clearTimeout(wirePollTimerId);
+  const nextIntervalMs = is49ersGameLiveWindow(state.appData)
+    ? GAME_LIVE_WIRE_POLL_MS
+    : STANDARD_WIRE_POLL_MS;
+
+  wirePollTimerId = setTimeout(async () => {
+    if (document.visibilityState === 'visible') {
+      await pollLowLatencyTweetAndInjuryWire(false);
+    }
+    scheduleAdaptiveSubMinuteWireLoop();
+  }, nextIntervalMs);
+}
 
 async function refreshLiveFeedsInBackground(forceFull = false) {
   if (isBackgroundSyncing || !state.appData) return;
@@ -994,11 +1083,15 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
       hasNewUpstreamData = true;
     }
 
-    const [addedLivePosts, espnMutated] = await Promise.all([
+    const [addedLivePosts, espnMutated, podsMutated] = await Promise.all([
       hydrateLiveBlueskyBeatWire(state.appData),
-      hydrateLiveEspnOverlay(state.appData)
+      hydrateLiveEspnOverlay(state.appData),
+      hydrateLive49ersPodcasts(state.appData)
     ]);
-    if (addedLivePosts > 0 || espnMutated) {
+    state.lastWireSyncAt = new Date().toISOString();
+    lastWirePollMs = Date.now();
+
+    if (addedLivePosts > 0 || espnMutated || podsMutated) {
       cachedMonteCarloKey = '';
       cachedMonteCarloResult = null;
       hasNewUpstreamData = true;
@@ -1038,18 +1131,38 @@ async function init() {
 
   try {
     state.appData = await loadAll49ersData();
+    state.lastWireSyncAt = state.appData.meta?.updatedAt || new Date().toISOString();
     lastLiveCheckMs = Date.now();
+    lastWirePollMs = Date.now();
     state.seasonState = evaluateSeasonState({
       now: new Date(),
       calendar: state.appData.meta?.calendar,
       teamStatus: state.appData.meta?.teamStatus
     });
 
+    // Expose read-only diagnostics hook for live-wire telemetry & automated QA verification
+    window.__49ersDiagnostics = {
+      getLiveWireConfig: () => ({
+        gameLivePollMs: GAME_LIVE_WIRE_POLL_MS,
+        standardPollMs: STANDARD_WIRE_POLL_MS,
+        isGameLive: is49ersGameLiveWindow(state.appData),
+        lastWireSyncAt: state.lastWireSyncAt
+      }),
+      getState: () => state,
+      forceRender: () => {
+        renderMain();
+        if (state.sheetMode) renderSheet();
+      }
+    };
+
     renderHeaderAndPhaseBanner();
     renderMain();
 
-    // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire)
+    // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire + 6 podcasts)
     refreshLiveFeedsInBackground(false);
+
+    // Start <1 min adaptive live tweet & in-game injury wire polling (20s in-game, 45s standard)
+    scheduleAdaptiveSubMinuteWireLoop();
 
     // Non-blocking sync of shared Cloudflare Worker intelligence feed if configured
     fetchSharedWorkerFeed(state.prefs).then(shared => {
@@ -1074,17 +1187,26 @@ async function init() {
       }
     }, 60_000);
 
-    // Periodic background check for fresh GitHub Actions data every 10 minutes
+    // Periodic background check for full upstream JSON bundles & podcasts every 5 minutes
     setInterval(() => {
       if (document.visibilityState === 'visible') {
         refreshLiveFeedsInBackground(false);
       }
-    }, 10 * 60_000);
+    }, 5 * 60_000);
 
-    // Auto-sync when returning to the PWA/tab after >= 5 minutes or reconnecting online
+    // Instant sub-minute sync when waking the PWA/tab after >= 15s or reconnecting online
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible' && Date.now() - lastLiveCheckMs >= 5 * 60_000) {
-        refreshLiveFeedsInBackground(false);
+      if (document.visibilityState === 'visible') {
+        if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
+          refreshLiveFeedsInBackground(false);
+        } else if (Date.now() - lastWirePollMs >= 15_000) {
+          pollLowLatencyTweetAndInjuryWire(false);
+        }
+      }
+    });
+    window.addEventListener('focus', () => {
+      if (Date.now() - lastWirePollMs >= 15_000) {
+        pollLowLatencyTweetAndInjuryWire(false);
       }
     });
     window.addEventListener('online', () => {

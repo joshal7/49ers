@@ -163,14 +163,7 @@ function renderRosterExplorer({
     return mult * a.name.localeCompare(b.name);
   });
 
-  const dirLabel =
-    sortField === 'name'
-      ? sortDir === 'asc'
-        ? 'A–Z'
-        : 'Z–A'
-      : sortDir === 'asc'
-        ? 'Asc'
-        : 'Desc';
+  const dirArrowSymbol = sortDir === 'asc' ? '↑' : '↓';
 
   return `
     <div class="card">
@@ -183,31 +176,20 @@ function renderRosterExplorer({
                    value="${esc(rosterSearch)}" aria-label="Search Roster" />
           </div>
           <div class="roster-sort-controls">
-            <select id="rosterSortSelect" class="select-input" style="width:auto" aria-label="Sort Roster Field">
+            <select id="rosterSortSelect" class="select-input" aria-label="Sort Roster By">
               ${ROSTER_SORT_FIELDS.map(
-                f => `<option value="${f.key}" ${sortField === f.key ? 'selected' : ''}>${esc(f.label)}</option>`
+                f => `<option value="${f.key}" ${sortField === f.key ? 'selected' : ''}>Sort: ${esc(f.label)}</option>`
               ).join('')}
             </select>
             <button type="button" id="rosterSortDirBtn" class="btn-secondary sort-dir-btn mono"
                     data-action="toggle-roster-sort-dir"
+                    data-sort-dir="${sortDir}"
+                    title="Toggle Sort Order (${sortDir === 'asc' ? 'Ascending' : 'Descending'})"
                     aria-label="Toggle Sort Direction (${sortDir === 'asc' ? 'Ascending' : 'Descending'})">
-              ${iconSvg(sortDir === 'asc' ? 'arrowUp' : 'arrowDown', 13)}
-              <span>${dirLabel}</span>
+              ${iconSvg(sortDir === 'asc' ? 'arrowUp' : 'arrowDown', 15)}
+              <span class="sr-only">${dirArrowSymbol}</span>
             </button>
           </div>
-        </div>
-
-        <div class="pill-bar" aria-label="Sort Players By Field (Tap Again to Flip Up or Down)">
-          ${ROSTER_SORT_FIELDS.map(f => {
-            const isActive = sortField === f.key;
-            const arrow = isActive ? (sortDir === 'asc' ? ' ↑' : ' ↓') : '';
-            return `
-              <button type="button" class="pill-btn ${isActive ? 'active' : ''}"
-                      data-action="set-roster-sort" data-sort-field="${f.key}">
-                <span>${esc(f.shortLabel)}${arrow}</span>
-              </button>
-            `;
-          }).join('')}
         </div>
 
         <div class="pill-bar" aria-label="Unit Filter">

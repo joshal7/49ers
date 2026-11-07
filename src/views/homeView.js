@@ -15,6 +15,11 @@ import {
 } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import {
+  SHORT_TWEET_FULL_TEXT_LIMIT,
+  sortNewsWithBreakingPriority,
+  formatTweetBodyForDisplay
+} from '../engine/breakingClassifier.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -102,7 +107,7 @@ function renderSingleDashboardCard({
   let deepDiveAttr = '';
   let externalHeaderLink = '';
 
-  const rawList = filteredRawItems || appData?.news?.rawStream || [];
+  const rawList = sortNewsWithBreakingPriority(filteredRawItems || appData?.news?.rawStream || []);
 
   switch (block.id) {
     case 'news_briefs': {
@@ -179,22 +184,34 @@ function renderSingleDashboardCard({
             <div>
               <div class="home-wire-heading">
                 <span>Top Beat Tweets</span>
-                <span class="mono" style="font-size:10.5px;color:var(--emerald)">Live Wire</span>
+                <span class="mono" style="font-size:10.5px;color:var(--emerald)">Live Wire (&lt;1m)</span>
               </div>
               <div class="home-wire-list">
                 ${topTweets
-                  .map(
-                    tw => `
-                  <div class="home-wire-item">
+                  .map(tw => {
+                    const authorName = tw.author || tw.reporterName || tw.outletName || '49ers Beat';
+                    const fullShortTweet = formatTweetBodyForDisplay(
+                      tw.fullText || tw.title || '',
+                      SHORT_TWEET_FULL_TEXT_LIMIT
+                    ).text;
+                    return `
+                  <div class="home-wire-item ${tw.breakingPriority > 0 ? 'breaking-elevated' : ''}">
                     <div class="home-wire-meta">
-                      <a href="${esc(tw.authorProfileUrl || tw.url)}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
-                        <strong>${esc(tw.reporterName || tw.outletName)}</strong>
-                        <span class="mono">${esc(tw.authorHandle || '')}</span>
-                      </a>
+                      <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0">
+                        ${
+                          tw.breakingBadge
+                            ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
+                            : ''
+                        }
+                        <a href="${esc(tw.authorProfileUrl || tw.url)}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
+                          <strong>${esc(authorName)}</strong>
+                          <span class="mono">${esc(tw.authorHandle || '')}</span>
+                        </a>
+                      </div>
                       <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
                     </div>
                     <a href="${esc(tw.url)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
-                      ${esc(tw.title.length > 155 ? tw.title.slice(0, 152) + '…' : tw.title)}
+                      ${esc(fullShortTweet)}
                       <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                     </a>
                     ${
@@ -208,8 +225,8 @@ function renderSingleDashboardCard({
                         : ''
                     }
                   </div>
-                `
-                  )
+                `;
+                  })
                   .join('')}
               </div>
             </div>
@@ -634,6 +651,7 @@ function renderSingleDashboardCard({
     case 'autopodcast_ai': {
       const eps = appData?.podcastIndex?.episodes || [];
       const epCount = eps.length;
+      const beatEpsCount = (appData?.beatPodcasts?.episodes || []).length;
       const latestEp = eps[0];
       bodyHtml = `
         <div class="episode-row-head">
@@ -651,7 +669,7 @@ function renderSingleDashboardCard({
             <div style="color:var(--text-primary);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
               ${esc(latestEp?.title || `${epCount} Two-Host Audio Briefings Ready`)}
             </div>
-            <div><strong>${epCount} Episodes Ready</strong> • Synced transcripts + On-Demand Podcast &amp; Scouting Generator.</div>
+            <div><strong>${beatEpsCount} 49ers Beat Podcasts (7d)</strong> + <strong>${epCount} AI Briefings</strong> &amp; Deep Scouting Generator.</div>
           </div>
         </div>
       `;

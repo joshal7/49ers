@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T09:30:42.838Z",
+  "updatedAt": "2026-11-07T15:39:50.513Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -58,37 +58,37 @@
     ],
     "realisticTargets": [
       {
-        "name": "Jakobi Meyers / Veteran Z-X Archetype",
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/zrs4ij8mvw7wr1uujwew",
-        "currentTeam": "Seller Tier (<30% Playoff Odds)",
+        "name": "Darius Slayton / Veteran Z-X Archetype",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/otksyfjll5waf0vsczeu",
+        "currentTeam": "IND (2-6 Seller Tier)",
         "position": "WR",
-        "prorated2026CapCharge": 4250000,
+        "prorated2026CapCharge": 3650000,
         "projectedPickCost": "2027 5th-Round Pick (or 6th-for-7th Pick Swap w/ salary retention)",
         "fitScore": 91,
         "sourceUrl": "https://overthecap.com/position/wide-receiver/2026",
-        "fitBreakdown": "Elite dig/in-breaker route precision over the middle (Shanahan staple) + high run-blocking effort."
+        "fitBreakdown": "Vertical Z/X field stretcher + intermediate dig/over separation over the middle in play-action."
       },
       {
-        "name": "Geron Christian / Veteran Swing OT Archetype",
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/op7pv7rqvcvolr41t285",
-        "currentTeam": "AFC Seller",
+        "name": "Trey Pipkins III / Veteran Swing OT Archetype",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/nhze2mywnxrcmwyck0x4",
+        "currentTeam": "LAC (0-7 Seller Tier)",
         "position": "OT",
-        "prorated2026CapCharge": 1150000,
+        "prorated2026CapCharge": 1850000,
         "projectedPickCost": "2027 Conditional 6th-Round Pick",
-        "fitScore": 84,
-        "sourceUrl": "https://overthecap.com/position/left-tackle/2026",
-        "fitBreakdown": "Outside-zone foot speed threshold (<4.72s shuttle) capable of surviving emergency snaps at LT or RT."
+        "fitScore": 85,
+        "sourceUrl": "https://overthecap.com/position/right-tackle/2026",
+        "fitBreakdown": "Experienced LT/RT swing starter capable of surviving outside-zone reach blocks in January."
       },
       {
-        "name": "Calais Campbell / Rotational Big-End Archetype",
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ekkaync0yveo2cwxlljr",
-        "currentTeam": "NFC/AFC Seller",
+        "name": "Cameron Jordan / Rotational Big-End Archetype",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/eauqz3xbdtl0wfoy71da",
+        "currentTeam": "NO (2-5 Seller Tier)",
         "position": "DL/EDGE",
-        "prorated2026CapCharge": 1400000,
+        "prorated2026CapCharge": 1450000,
         "projectedPickCost": "2027 6th-Round Pick",
-        "fitScore": 82,
-        "sourceUrl": "https://overthecap.com/position/interior-defensive-line/2026",
-        "fitBreakdown": "Goal-line & 1st-down heavy edge setter + special teams field-goal block length."
+        "fitScore": 83,
+        "sourceUrl": "https://overthecap.com/position/edge-rusher/2026",
+        "fitBreakdown": "Heavy early-down edge setter with inside-out power rush polish for postseason 3rd-and-medium."
       }
     ],
     "tieredRumors": [
@@ -3149,46 +3149,46 @@
     "consensusMockTargets": [
       {
         "rank": 1,
-        "name": "Isaiah World",
+        "name": "Jordan Seaton",
         "pos": "OT",
-        "school": "Oregon",
-        "heightWeight": "6'8\" • 312 lbs",
-        "mockFrequencyToSfPct": 28,
-        "shanahanLynchFitScore": 94,
-        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/isaiah-world",
-        "archetypeTraits": "Elite 10-yard split & lateral mirror in outside zone; 34.6\" arm length; 3-year Power-4 starter.",
+        "school": "LSU",
+        "heightWeight": "6'5\" • 315 lbs",
+        "mockFrequencyToSfPct": 27,
+        "shanahanLynchFitScore": 95,
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
+        "archetypeTraits": "Explosive 10-yard split & lateral mirror in outside zone; SEC blindside anchor built for LT succession.",
         "sourcesMocking": [
           "Dane Brugler",
-          "Daniel Jeremiah",
+          "Mel Kiper Jr.",
           "NFL Mock Draft DB"
         ]
       },
       {
         "rank": 2,
-        "name": "Spencer Fano / Zone OT-IOL Tier",
+        "name": "Earnest Greene III",
         "pos": "OT/IOL",
-        "school": "Utah",
-        "heightWeight": "6'5\" • 310 lbs",
+        "school": "Georgia",
+        "heightWeight": "6'4\" • 320 lbs",
         "mockFrequencyToSfPct": 22,
-        "shanahanLynchFitScore": 96,
+        "shanahanLynchFitScore": 94,
         "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
-        "archetypeTraits": "Classic zone-blocking technician; elite 3-cone (<7.45s) and second-level finishing demeanor.",
+        "archetypeTraits": "Dense displacement torque on duo/wide-zone combo blocks with tackle-guard positional versatility.",
         "sourcesMocking": [
           "Field Yates",
-          "Matt Miller",
+          "Daniel Jeremiah",
           "PFF"
         ]
       },
       {
         "rank": 3,
-        "name": "Jermod McCoy / Malik Muhammad",
+        "name": "Leonard Moore / DJ McKinney",
         "pos": "CB",
-        "school": "Tennessee / Texas",
-        "heightWeight": "6'0\" • 194 lbs",
+        "school": "Notre Dame",
+        "heightWeight": "6'2\" • 195 lbs",
         "mockFrequencyToSfPct": 19,
-        "shanahanLynchFitScore": 91,
+        "shanahanLynchFitScore": 92,
         "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
-        "archetypeTraits": "Fluid Cover-3/Quarters zone eyes + physical run-support tackling required of SF boundary corners.",
+        "archetypeTraits": "Long-levered press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical run support.",
         "sourcesMocking": [
           "Lance Zierlein",
           "The Athletic"
@@ -3196,14 +3196,14 @@
       },
       {
         "rank": 4,
-        "name": "Eli Stowers",
-        "pos": "TE",
-        "school": "Vanderbilt",
-        "heightWeight": "6'4\" • 242 lbs",
-        "mockFrequencyToSfPct": 14,
-        "shanahanLynchFitScore": 89,
+        "name": "Iapani Laloulu / Luke Hasz",
+        "pos": "C / TE",
+        "school": "Oregon / Ole Miss",
+        "heightWeight": "6'2\" • 325 lbs / 6'3\" • 245 lbs",
+        "mockFrequencyToSfPct": 15,
+        "shanahanLynchFitScore": 90,
         "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
-        "archetypeTraits": "Converted-QB spatial awareness + dynamic YAC acceleration on crossers/over routes.",
+        "archetypeTraits": "Agile Pac-12/Big Ten reach-blocking pivot or dynamic 12-personnel move-TE seam separator behind Kittle.",
         "sourcesMocking": [
           "PFF",
           "CBS Sports"

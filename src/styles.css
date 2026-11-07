@@ -2387,9 +2387,164 @@ button.featured-player-chip:active {
 }
 
 .sort-dir-btn {
-  padding: 7px 10px;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0 11px;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Breaking & Live In-Game Injury Elevation */
+.breaking-wire-card {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: linear-gradient(160deg, rgba(170, 0, 0, 0.14), var(--bg-elevated) 55%);
+}
+
+.breaking-elevated {
+  border-color: rgba(212, 25, 25, 0.42) !important;
+  box-shadow: inset 3px 0 0 var(--scarlet-bright);
+}
+
+.live-breaking-pill {
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* Player Dossier 7-Day Beat & Tweet Mentions */
+.player-mention-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.player-mention-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.player-mention-author {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.player-mention-tweet-body {
+  display: block;
+  color: var(--text-primary);
+  font-size: 12.8px;
+  line-height: 1.44;
+  font-weight: 500;
+  text-decoration: none;
+  word-break: break-word;
+}
+.player-mention-tweet-body:hover {
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+/* 49ers Beat Podcasts (7-Day Native App Directory) */
+.podcast-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.beat-podcast-ep-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: border-color 0.16s ease, transform 0.12s ease, background 0.16s ease;
+}
+.beat-podcast-ep-card:hover {
+  border-color: var(--gold-border);
+  text-decoration: none;
+}
+.beat-podcast-ep-card:active {
+  transform: scale(0.992);
+}
+
+.beat-podcast-ep-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.beat-podcast-art-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--gold-border);
+  background: linear-gradient(145deg, rgba(170, 0, 0, 0.25), rgba(179, 153, 93, 0.18));
+}
+.beat-podcast-art-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.beat-podcast-art-wrap.img-error img {
+  display: none;
+}
+
+.beat-podcast-ep-title {
+  font-weight: 800;
+  font-size: 13.8px;
+  line-height: 1.32;
+  color: var(--text-primary);
+}
+
+.beat-podcast-ep-summary {
+  font-size: 12.4px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.beat-podcast-ep-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.beat-podcast-launch-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-bright);
+  font-size: 11.5px;
+  font-weight: 700;
 }
 
 @media (max-width: 395px) {

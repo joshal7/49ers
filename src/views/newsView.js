@@ -5,6 +5,11 @@
 
 import { esc, formatRelativeAge, renderPlayerChipsStripHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
+import {
+  SHORT_TWEET_FULL_TEXT_LIMIT,
+  sortNewsWithBreakingPriority,
+  formatTweetBodyForDisplay
+} from '../engine/breakingClassifier.js';
 
 export function renderNewsViewHtml({
   newsMode, // 'clustered' | 'raw'
@@ -14,12 +19,19 @@ export function renderNewsViewHtml({
   reportersById,
   activeVideosSet,
   userPrefs,
-  totalReportersCount
+  totalReportersCount,
+  isGameLive = false,
+  lastWireSyncAt = null,
+  isSyncingWire = false
 }) {
   const mutedCount =
     (userPrefs?.disabledReporterIds?.length || 0) + (userPrefs?.disabledOutlets?.length || 0);
 
-  const tweetCount = (filteredRawItems || []).filter(i => i.type === 'tweet' || i.type === 'social').length;
+  const prioritizedRaw = sortNewsWithBreakingPriority(filteredRawItems || []);
+  const tweetCount = prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social').length;
+  const activeBreakingItems = prioritizedRaw.filter(i => (i.breakingPriority || 0) > 0).slice(0, 3);
+  const pollLabel = isGameLive ? '20s Game-Day Live Poll' : '<1m Live Poll (45s)';
+  const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'just now';
 
   const topToolbar = `
     <div class="card">
@@ -27,14 +39,20 @@ export function renderNewsViewHtml({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('news', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${totalReportersCount} Tracked Beat &amp; National Sources • Direct Source Links</div>
+            <div class="card-eyebrow">${totalReportersCount} Tracked Beat &amp; National Sources • ${pollLabel}</div>
             <h2 class="card-title">Team News, Beat Wire &amp; Film</h2>
           </div>
         </div>
-        <button type="button" class="btn-ghost" data-action="open-settings">
-          ${iconSvg('settings', 14)}
-          <span>Sources${mutedCount > 0 ? ` (${mutedCount} muted)` : ''}</span>
-        </button>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <button type="button" class="btn-ghost" data-action="sync-live-wire-now" ${isSyncingWire ? 'disabled' : ''} title="Check live beat tweets and injury wire immediately">
+            ${iconSvg('bolt', 13)}
+            <span>${isSyncingWire ? 'Syncing…' : `Live (${esc(syncAge)})`}</span>
+          </button>
+          <button type="button" class="btn-ghost" data-action="open-settings">
+            ${iconSvg('settings', 14)}
+            <span>Sources${mutedCount > 0 ? ` (${mutedCount} muted)` : ''}</span>
+          </button>
+        </div>
       </div>
 
       <div class="segmented-control" role="tablist" aria-label="News Feed Mode" style="margin-bottom:10px">
@@ -44,14 +62,14 @@ export function renderNewsViewHtml({
         </button>
         <button type="button" class="pill-btn seg-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
           ${iconSvg('bolt', 14)}
-          <span>Tweets, Articles &amp; Video (${filteredRawItems.length})</span>
+          <span>Tweets, Articles &amp; Video (${prioritizedRaw.length})</span>
         </button>
       </div>
 
       <div class="pill-bar" aria-label="News Category Filter">
         ${(newsMode === 'raw'
           ? [
-              ['all', `All (${filteredRawItems.length})`],
+              ['all', `All (${prioritizedRaw.length})`],
               ['tweets', `Tweets (${tweetCount})`],
               ['articles', 'Articles'],
               ['videos', 'Videos'],
@@ -77,6 +95,49 @@ export function renderNewsViewHtml({
     </div>
   `;
 
+  const breakingAlertStrip =
+    newsMode === 'clustered' && activeBreakingItems.length > 0
+      ? `
+        <section class="card breaking-wire-card" aria-label="Breaking and Live Injury Alerts">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:7px">
+              <span class="badge badge-danger live-breaking-pill">${iconSvg('bolt', 12)}<span>Breaking &amp; Live Injury Wire</span></span>
+              <span class="mono" style="font-size:11px;color:var(--text-muted)">Auto-elevated • &lt;1m latency</span>
+            </div>
+            <button type="button" class="btn-ghost" data-action="set-news-mode" data-mode="raw">
+              <span>All Live Posts</span>
+              ${iconSvg('arrowRight', 12)}
+            </button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            ${activeBreakingItems
+              .map(item => {
+                const isTw = item.type === 'tweet' || item.type === 'social';
+                const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+                const bodyText = isTw
+                  ? formatTweetBodyForDisplay(item.fullText || item.title || '', SHORT_TWEET_FULL_TEXT_LIMIT).text
+                  : item.title;
+                return `
+                  <div class="subcard-panel breaking-elevated" style="font-size:12.5px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
+                      <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                        <span class="badge ${item.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}">${esc(item.breakingBadge || 'BREAKING')}</span>
+                        <span>by <strong>${esc(authorName)}</strong>${isTw && item.authorHandle ? ` <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(item.authorHandle)}</span>` : ` <span style="color:var(--text-muted)">• ${esc(item.outletName || '')}</span>`}</span>
+                      </div>
+                      <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(formatRelativeAge(item.publishedAt))}</span>
+                    </div>
+                    <a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:600;line-height:1.42;color:var(--text-primary)">
+                      ${esc(bodyText)} ${iconSvg('externalLink', 11)}
+                    </a>
+                  </div>
+                `;
+              })
+              .join('')}
+          </div>
+        </section>
+      `
+      : '';
+
   if (newsMode === 'clustered') {
     const visibleClusters =
       newsCategoryFilter === 'all' || ['tweets', 'articles', 'videos'].includes(newsCategoryFilter)
@@ -84,7 +145,7 @@ export function renderNewsViewHtml({
         : filteredClusters.filter(c => c.category === newsCategoryFilter);
 
     if (visibleClusters.length === 0) {
-      return `${topToolbar}<div class="card">No synthesis briefs match your active category or source filters.</div>`;
+      return `${topToolbar}${breakingAlertStrip}<div class="card">No synthesis briefs match your active category or source filters.</div>`;
     }
 
     const clustersHtml = visibleClusters
@@ -209,11 +270,11 @@ export function renderNewsViewHtml({
       })
       .join('');
 
-    return `${topToolbar}${clustersHtml}`;
+    return `${topToolbar}${breakingAlertStrip}${clustersHtml}`;
   }
 
-  // Raw Chronological Stream Mode (Tweets, Articles & Videos)
-  const visibleRaw = (filteredRawItems || []).filter(it => {
+  // Raw Stream Mode (Breaking-Prioritized Tweets, Articles & Videos)
+  const visibleRaw = prioritizedRaw.filter(it => {
     if (newsCategoryFilter === 'all') return true;
     if (newsCategoryFilter === 'tweets') return it.type === 'tweet' || it.type === 'social';
     if (newsCategoryFilter === 'articles') return it.type === 'article' || it.type === 'post';
@@ -227,7 +288,7 @@ export function renderNewsViewHtml({
       : `
         <div class="card" style="display:flex;flex-direction:column;gap:9px">
           ${visibleRaw
-            .slice(0, 50)
+            .slice(0, 65)
             .map(item => {
               const vidKey = item.videoId ? `raw_${item.id}` : null;
               const isVidOpen = vidKey && activeVideosSet.has(vidKey);
@@ -235,40 +296,61 @@ export function renderNewsViewHtml({
               const isVideo = item.type === 'video';
               const badgeCls = isVideo ? 'badge-scarlet' : isTweet ? 'badge-gold' : 'badge-neutral';
               const badgeIcon = isVideo ? 'video' : isTweet ? 'tweet' : 'news';
-              const badgeText = isVideo ? 'Video' : isTweet ? `Tweet • ${item.authorHandle || item.outletName}` : item.outletName;
+              const badgeText = isVideo ? 'Video' : isTweet ? `Tweet • ${item.authorHandle || item.outletName}` : `Article • ${item.outletName || '49ers Beat'}`;
+
+              const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+              const displayTitle = isTweet
+                ? formatTweetBodyForDisplay(item.fullText || item.title || '', SHORT_TWEET_FULL_TEXT_LIMIT).text
+                : item.title;
+
+              const cleanSummary =
+                !isVideo &&
+                !isTweet &&
+                item.summary &&
+                !item.summary.startsWith('Published via ') &&
+                item.summary.toLowerCase() !== `${authorName} • ${item.outletName || ''}`.toLowerCase()
+                  ? item.summary
+                  : '';
 
               const hasThumb = !isVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl);
 
               return `
-                <div class="brief-card">
+                <div class="brief-card ${item.breakingPriority > 0 ? 'breaking-elevated' : ''}" data-raw-type="${esc(item.type || 'article')}">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                    <span class="badge ${badgeCls}">
-                      ${iconSvg(badgeIcon, 12)}
-                      <span>${esc(badgeText)}</span>
-                    </span>
-                    <span style="font-size:11px;color:var(--text-muted)" class="mono">
+                    <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
                       ${
+                        item.breakingBadge
+                          ? `<span class="badge ${item.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill'}">${iconSvg('bolt', 11)}<span>${esc(item.breakingBadge)}</span></span>`
+                          : ''
+                      }
+                      <span class="badge ${badgeCls}">
+                        ${iconSvg(badgeIcon, 12)}
+                        <span>${esc(badgeText)}</span>
+                      </span>
+                    </div>
+                    <span style="font-size:11.5px;color:var(--text-muted)">
+                      by ${
                         item.authorProfileUrl
-                          ? `<a href="${esc(item.authorProfileUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">${esc(item.reporterName)}</a>`
-                          : esc(item.reporterName)
-                      } • ${formatRelativeAge(item.publishedAt)}
+                          ? `<a href="${esc(item.authorProfileUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px"><strong>${esc(authorName)}</strong></a>`
+                          : `<strong style="color:var(--text-secondary)">${esc(authorName)}</strong>`
+                      } <span class="mono">• ${formatRelativeAge(item.publishedAt)}</span>
                     </span>
                   </div>
                   <div class="${hasThumb ? 'media-split-row' : ''}">
                     <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
-                      <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.4">
+                      <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.42">
                         ${
                           item.url
-                            ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">${esc(item.title)} ${iconSvg('externalLink', 12)}</a>`
-                            : esc(item.title)
+                            ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
+                            : esc(displayTitle)
                         }
                       </div>
-                      ${item.summary && !isVideo ? `<div style="font-size:12.5px;color:var(--text-secondary)">${esc(item.summary)}</div>` : ''}
+                      ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${esc(cleanSummary)}</div>` : ''}
                     </div>
                     ${
                       hasThumb
                         ? `<a href="${esc(item.url || item.externalUrl || '#')}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
-                            <img src="${esc(item.imageUrl)}" alt="${esc(item.title)}" width="76" height="76" loading="lazy" decoding="async" />
+                            <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="76" height="76" loading="lazy" decoding="async" />
                           </a>`
                         : ''
                     }
@@ -283,7 +365,7 @@ export function renderNewsViewHtml({
                         </div>`
                       : ''
                   }
-                  ${item.mentionedPlayers?.length ? renderPlayerChipsStripHtml(item.mentionedPlayers, 3) : ''}
+                  ${item.mentionedPlayers?.length ? renderPlayerChipsStripHtml(item.mentionedPlayers, 4) : ''}
                   ${
                     item.videoId
                       ? renderVideoEmbedOrFacade(

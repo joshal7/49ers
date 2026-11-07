@@ -580,16 +580,21 @@ async function main() {
       assert(jumpedPrompt.promptValue.length > 10, 'Deep Dive AI jump should pre-fill analysis prompt');
     });
 
-    console.log('\n=== [4/9] Roster Explorer (Default Name Sort + Asc/Desc Toggle), Dual Depth Chart & GM Cap Sim ===');
+    console.log('\n=== [4/9] Roster Explorer (Simplified Dropdown + Up/Down Arrow Toggle), Dual Depth Chart & GM Cap Sim ===');
 
-    await runStep('Roster Explorer defaults to Name (A-Z), puts Name then Jersey # first, toggles Asc/Desc for every field, and preserves search focus', async () => {
+    await runStep('Roster Explorer removes sort bubbles, uses Dropdown + Up/Down Arrow button for all 7 sort fields, keeps 2 filter rows, and preserves search focus', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="roster"]').click());
       await cdp.assertNoOverflow('Roster Explorer Default');
 
       const defaultSortAudit = await cdp.eval(() => {
         const sel = document.getElementById('rosterSortSelect');
         const optionKeys = Array.from(sel.options).map(o => o.value);
-        const dirText = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
+        const dirBtn = document.getElementById('rosterSortDirBtn');
+        const sortDirAttr = dirBtn?.getAttribute('data-sort-dir') || '';
+        const dirAria = dirBtn?.getAttribute('aria-label') || '';
+        const sortBubblesCount = document.querySelectorAll('[data-action="set-roster-sort"]').length;
+        const unitFilterRowExists = Boolean(document.querySelector('[aria-label="Unit Filter"]'));
+        const posFilterRowExists = Boolean(document.querySelector('[aria-label="Position Group Filter"]'));
         const names = Array.from(document.querySelectorAll('.player-name-line')).map(el =>
           el.childNodes[0]?.textContent?.trim() || el.textContent.trim()
         );
@@ -597,45 +602,54 @@ async function main() {
           totalCount: document.querySelectorAll('.player-row').length,
           selectedValue: sel.value,
           optionKeys,
-          dirText,
+          sortDirAttr,
+          dirAria,
+          sortBubblesCount,
+          unitFilterRowExists,
+          posFilterRowExists,
           firstTwoNames: names.slice(0, 2),
           lastTwoNames: names.slice(-2)
         };
       });
+      assert(defaultSortAudit.sortBubblesCount === 0, `Expected 0 sort bubbles (dropdown-only sort UX), got ${defaultSortAudit.sortBubblesCount}`);
+      assert(defaultSortAudit.unitFilterRowExists && defaultSortAudit.posFilterRowExists, 'Expected both Unit and Position filter rows kept intact');
       assert(defaultSortAudit.totalCount >= 80, `Expected >=80 players on full roster, got ${defaultSortAudit.totalCount}`);
       assert(defaultSortAudit.selectedValue === 'name', `Expected default roster sort 'name', got '${defaultSortAudit.selectedValue}'`);
       assert(defaultSortAudit.optionKeys[0] === 'name' && defaultSortAudit.optionKeys[1] === 'jersey', `Expected Name then Jersey Number at top of sort options, got ${JSON.stringify(defaultSortAudit.optionKeys.slice(0, 2))}`);
-      assert(defaultSortAudit.dirText.includes('A–Z'), `Expected default ascending A–Z indicator, got ${defaultSortAudit.dirText}`);
+      assert(defaultSortAudit.sortDirAttr === 'asc' && defaultSortAudit.dirAria.includes('Ascending'), `Expected default ascending arrow button, got ${defaultSortAudit.sortDirAttr} / ${defaultSortAudit.dirAria}`);
       assert(
         defaultSortAudit.firstTwoNames[0].localeCompare(defaultSortAudit.firstTwoNames[1]) <= 0,
         `Players not sorted alphabetically by default: ${JSON.stringify(defaultSortAudit.firstTwoNames)}`
       );
 
-      // Flip Name sort to Z-A via #rosterSortDirBtn and verify order reverses
+      // Flip Name sort to Z-A via #rosterSortDirBtn arrow button and verify order reverses
       const reversedNameAudit = await cdp.eval(() => {
         document.getElementById('rosterSortDirBtn').click();
-        const dirText = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
+        const dirBtn = document.getElementById('rosterSortDirBtn');
+        const sortDirAttr = dirBtn?.getAttribute('data-sort-dir') || '';
         const firstPlayer = document.querySelector('.player-name-line')?.childNodes[0]?.textContent?.trim() || '';
-        return { dirText, firstPlayer };
+        return { sortDirAttr, firstPlayer };
       });
-      assert(reversedNameAudit.dirText.includes('Z–A'), `Expected Z–A after toggling Name sort dir, got ${reversedNameAudit.dirText}`);
+      assert(reversedNameAudit.sortDirAttr === 'desc', `Expected desc arrow state after clicking arrow button, got ${reversedNameAudit.sortDirAttr}`);
       assert(reversedNameAudit.firstPlayer === defaultSortAudit.lastTwoNames[1], 'Z–A sort did not place last alphabetical player at top');
 
-      // Exercise both Ascending and Descending sort for EVERY sort field (name, jersey, cap, snaps, health, ras, age)
+      // Exercise Dropdown selection + Up/Down Arrow toggle for EVERY sort field (jersey, cap, snaps, health, ras, age, name)
       for (const fieldKey of ['jersey', 'cap', 'snaps', 'health', 'ras', 'age', 'name']) {
         const pairCheck = await cdp.eval(fk => {
-          document.querySelector(`[data-action="set-roster-sort"][data-sort-field="${fk}"]`).click();
+          const sel = document.getElementById('rosterSortSelect');
+          sel.value = fk;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
           const firstPassTop = document.querySelector('.player-name-line')?.textContent?.trim() || '';
-          const firstDirLabel = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
-          // Re-query live pill after renderMain() and click again to flip up <-> down
-          document.querySelector(`[data-action="set-roster-sort"][data-sort-field="${fk}"]`).click();
+          const firstDirAttr = document.getElementById('rosterSortDirBtn')?.getAttribute('data-sort-dir') || '';
+          // Click arrow button next to dropdown to toggle up <-> down
+          document.getElementById('rosterSortDirBtn').click();
           const secondPassTop = document.querySelector('.player-name-line')?.textContent?.trim() || '';
-          const secondDirLabel = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
-          return { firstPassTop, secondPassTop, firstDirLabel, secondDirLabel };
+          const secondDirAttr = document.getElementById('rosterSortDirBtn')?.getAttribute('data-sort-dir') || '';
+          return { firstPassTop, secondPassTop, firstDirAttr, secondDirAttr };
         }, fieldKey);
         assert(
-          pairCheck.firstDirLabel !== pairCheck.secondDirLabel && pairCheck.firstPassTop !== pairCheck.secondPassTop,
-          `Toggling up/down sort direction failed for "${fieldKey}": ${JSON.stringify(pairCheck)}`
+          pairCheck.firstDirAttr !== pairCheck.secondDirAttr && pairCheck.firstPassTop !== pairCheck.secondPassTop,
+          `Dropdown + arrow up/down toggle failed for "${fieldKey}": ${JSON.stringify(pairCheck)}`
         );
       }
 
@@ -891,6 +905,79 @@ async function main() {
       assert(cornerPlayersOk.backdropClosed, 'Clicking backdrop did not close Bottom Sheet');
     });
 
+    await runStep('Player Dossier 7-Day Mentions (Mike Evans & Nick Bosa) render salient tweets + articles, 100% authors, and full short tweets', async () => {
+      const mentionsAudit = await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
+        document.querySelector('[data-action="set-roster-unit"][data-unit="All"]').click();
+        document.querySelector('[data-action="set-roster-pos"][data-pos="ALL"]').click();
+
+        const inspectPlayer = playerName => {
+          const inp = document.getElementById('rosterSearchInput');
+          inp.value = playerName;
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+          const row = Array.from(document.querySelectorAll('.player-row')).find(el =>
+            el.textContent.includes(playerName)
+          );
+          if (!row) return { found: false };
+          row.click();
+          document.querySelector('[data-action="set-player-tab"][data-player-tab="overview"]').click();
+
+          const cards = Array.from(document.querySelectorAll('#sheetBody .player-mention-card'));
+          const tweetCards = cards.filter(c => c.getAttribute('data-mention-type') === 'tweet');
+          const articleCards = cards.filter(c => c.getAttribute('data-mention-type') === 'article');
+          const allHaveAuthor = cards.every(c => {
+            const authTxt = c.querySelector('.player-mention-author')?.textContent?.trim() || '';
+            return authTxt.startsWith('by ') && authTxt.length > 5;
+          });
+          const shortTweetBodies = tweetCards.map(
+            c => c.querySelector('.player-mention-tweet-body')?.textContent?.trim() || ''
+          );
+
+          document.getElementById('closeSheetBtn').click();
+          inp.value = '';
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+
+          return {
+            found: true,
+            totalCards: cards.length,
+            tweetCount: tweetCards.length,
+            articleCount: articleCards.length,
+            allHaveAuthor,
+            shortTweetBodies
+          };
+        };
+
+        return {
+          mikeEvans: inspectPlayer('Mike Evans'),
+          nickBosa: inspectPlayer('Nick Bosa')
+        };
+      });
+
+      assert(mentionsAudit.mikeEvans.found, 'Mike Evans not found on Roster');
+      assert(
+        mentionsAudit.mikeEvans.totalCards >= 5 &&
+          mentionsAudit.mikeEvans.tweetCount >= 1 &&
+          mentionsAudit.mikeEvans.articleCount >= 1,
+        `Mike Evans 7d mentions incomplete: ${JSON.stringify(mentionsAudit.mikeEvans)}`
+      );
+      assert(mentionsAudit.mikeEvans.allHaveAuthor, 'Mike Evans mentions missing author attribution');
+      assert(
+        mentionsAudit.mikeEvans.shortTweetBodies.some(t => t.length >= 60 && !t.endsWith('…')),
+        `Expected full untruncated short tweet on Mike Evans dossier, got: ${JSON.stringify(mentionsAudit.mikeEvans.shortTweetBodies)}`
+      );
+
+      assert(
+        mentionsAudit.nickBosa.found &&
+          mentionsAudit.nickBosa.totalCards >= 5 &&
+          mentionsAudit.nickBosa.tweetCount >= 1 &&
+          mentionsAudit.nickBosa.articleCount >= 1 &&
+          mentionsAudit.nickBosa.allHaveAuthor,
+        `Nick Bosa 7d mentions incomplete: ${JSON.stringify(mentionsAudit.nickBosa)}`
+      );
+      await cdp.assertNoOverflow('Player Mentions Verification');
+    });
+
     console.log('\n=== [6/9] Game & Season Views (Opponent Health & Play Odds + All 8 Sub-Modules + Monte Carlo) ===');
 
     await runStep('Upcoming Matchup renders Opposing Team Health & Play Likelihood, and all 8 Game & Season views have zero War Room text', async () => {
@@ -972,7 +1059,179 @@ async function main() {
       assert(combineSearchOk.focused && combineSearchOk.rows >= 1, 'Combine search failed or lost input focus');
     });
 
-    console.log('\n=== [7/9] Autopodcast Studio, Sticky Audio Mini-Player & On-Demand Deep Analysis ===');
+    console.log('\n=== [7/9] 49ers Beat Podcasts (7-Day Native Launch), Autopodcast Studio & Grounded Deep AI ===');
+
+    await runStep('49ers Podcasts tab renders all 6 flagship shows (last 7 days), toggles By Date vs By Podcast, filters by show, and builds native iOS/Android deep links', async () => {
+      await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="audio"]').click();
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="beat_podcasts"]').click();
+      });
+      await cdp.assertNoOverflow('Audio & AI: 49ers Podcasts By Date');
+
+      const byDateAudit = await cdp.eval(async () => {
+        const epCards = Array.from(document.querySelectorAll('#mainView .beat-podcast-ep-card'));
+        const allHaveTitleAndSummary = epCards.every(c => {
+          const title = c.querySelector('.beat-podcast-ep-title')?.textContent?.trim() || '';
+          const summary = c.querySelector('.beat-podcast-ep-summary')?.textContent?.trim() || '';
+          return title.length >= 4 && summary.length >= 15;
+        });
+
+        // Test individual show filter pill in By Date mode then reset to All
+        const gsFilterBtn = document.querySelector('[data-action="set-beat-pod-show-filter"][data-show-id="the_gold_standard"]');
+        gsFilterBtn?.click();
+        const filteredShows = Array.from(document.querySelectorAll('#mainView .beat-podcast-ep-card')).map(c =>
+          c.getAttribute('data-podcast-show')
+        );
+        document.querySelector('[data-action="set-beat-pod-show-filter"][data-show-id="all"]')?.click();
+
+        // Switch to By Podcast grouped mode
+        document.querySelector('[data-action="set-beat-pod-view"][data-pod-view="show"]').click();
+        const groupHeadings = Array.from(document.querySelectorAll('#mainView .beat-podcast-show-group h3.card-title')).map(
+          el => el.textContent.trim()
+        );
+
+        // Verify native deep link builder inside browser module for iPhone 16 Safari & Android Chrome
+        const { buildNativePodcastAppHref } = await import('/src/views/audioAiView.js');
+        const sample = window.__49ersDiagnostics.getState().appData.beatPodcasts.episodes[0];
+        const iosHref = buildNativePodcastAppHref(
+          sample,
+          'Mozilla/5.0 (iPhone; CPU iPhone OS 18_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Mobile/15E148 Safari/604.1',
+          5
+        );
+        const androidHref = buildNativePodcastAppHref(
+          sample,
+          'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+          5
+        );
+
+        // Return to By Date default
+        document.querySelector('[data-action="set-beat-pod-view"][data-pod-view="date"]').click();
+
+        return {
+          epCount: epCards.length,
+          allHaveTitleAndSummary,
+          filteredAllGoldStandard: filteredShows.length >= 1 && filteredShows.every(s => s === 'the_gold_standard'),
+          groupHeadings,
+          iosHref,
+          androidHref
+        };
+      });
+
+      assert(byDateAudit.epCount >= 10, `Expected >=10 7-day 49ers podcast episodes, got ${byDateAudit.epCount}`);
+      assert(byDateAudit.allHaveTitleAndSummary, 'Every podcast episode card must display both name and summary');
+      assert(byDateAudit.filteredAllGoldStandard, 'Filtering By Date to The Gold Standard failed');
+      for (const expectedShow of [
+        'The Gold Standard',
+        '49ers Talk',
+        '49ers +/-',
+        'Dieter and Hutch',
+        'Locked On 49ers',
+        'Lombardi Lounge'
+      ]) {
+        assert(
+          byDateAudit.groupHeadings.includes(expectedShow),
+          `By Podcast view missing required show "${expectedShow}". Found: ${JSON.stringify(byDateAudit.groupHeadings)}`
+        );
+      }
+      assert(byDateAudit.iosHref.href.startsWith('podcasts://podcasts.apple.com/'), 'iOS native podcast URI failed');
+      assert(byDateAudit.androidHref.href.startsWith('intent://') && byDateAudit.androidHref.href.includes('scheme=pcast'), 'Android native podcast intent URI failed');
+      await cdp.assertNoOverflow('Audio & AI: 49ers Podcasts Grouped & Reset');
+    });
+
+    await runStep('Zero retired-player hallucinations (Bryce Huff), <1m live wire config (20s in-game / 45s standard), and live in-game injury tweet rises to #1', async () => {
+      const liveWireAndGroundingAudit = await cdp.eval(async () => {
+        // 1. Check zero "Bryce Huff" across Home, News (Briefs & Raw), Season, and Audio
+        const huffHits = [];
+        for (const tab of ['home', 'news', 'roster', 'season', 'audio']) {
+          document.querySelector(`[data-nav-tab="${tab}"]`).click();
+          if (/Bryce Huff/i.test(document.getElementById('mainView').textContent || '')) {
+            huffHits.push(tab);
+          }
+        }
+        document.querySelector('[data-nav-tab="news"]').click();
+        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]').click();
+        if (/Bryce Huff/i.test(document.getElementById('mainView').textContent || '')) {
+          huffHits.push('news_raw');
+        }
+
+        // 2. Check <1m polling config
+        const wireCfg = window.__49ersDiagnostics.getLiveWireConfig();
+
+        // 3. Simulate a late-breaking in-game injury return tweet arriving in real time
+        const appState = window.__49ersDiagnostics.getState();
+        const bosa = appState.appData.roster.players.find(p => p.name === 'Nick Bosa');
+        const breakingTweet = {
+          id: 'qa_live_in_game_inj_1',
+          type: 'tweet',
+          title: 'Injury update from Levi’s Stadium: 49ers DE Nick Bosa (ankle) is questionable to return after exiting to the blue medical tent in Q3.',
+          fullText: 'Injury update from Levi’s Stadium: 49ers DE Nick Bosa (ankle) is questionable to return after exiting to the blue medical tent in Q3.',
+          isFullTweet: true,
+          summary: '',
+          mentionedPlayers: [{ id: bosa.id, name: bosa.name, shortName: 'N. Bosa', position: 'DE', jersey: 97, headshotUrl: bosa.headshotUrl }],
+          publishedAt: new Date(Date.now() - 10 * 60_000).toISOString(),
+          url: 'https://bsky.app/profile/mattmaiocco.bsky.social/post/qaliveinj1',
+          outletId: 'nbcsba',
+          outletName: 'NBC Sports Bay Area',
+          reporterId: 'matt_maiocco',
+          reporterName: 'Matt Maiocco',
+          author: 'Matt Maiocco',
+          authorHandle: '@MaioccoNBCS',
+          authorProfileUrl: 'https://bsky.app/profile/mattmaiocco.bsky.social',
+          category: 'injury',
+          signalScore: 98,
+          fluffScore: 0,
+          isClickbait: false
+        };
+        // Insert at the END of rawStream & bosa.recentNews to prove priority sorting elevates it to #1!
+        appState.appData.news.rawStream.push(breakingTweet);
+        bosa.recentNews.push({
+          type: 'tweet',
+          headline: breakingTweet.title,
+          fullText: breakingTweet.fullText,
+          author: 'Matt Maiocco',
+          authorHandle: '@MaioccoNBCS',
+          outletName: 'NBC Sports Bay Area',
+          publishedAt: breakingTweet.publishedAt,
+          url: breakingTweet.url
+        });
+        window.__49ersDiagnostics.forceRender();
+
+        const rawTopCardText = document.querySelector('#mainView .brief-card')?.textContent || '';
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]').click();
+        const clusteredBannerText = document.querySelector('#mainView .breaking-wire-card')?.textContent || '';
+
+        // Check Bosa's Dossier #1 mention
+        appState.sheetMode = 'player';
+        appState.sheetPlayerId = bosa.id;
+        appState.sheetPlayerTab = 'overview';
+        window.__49ersDiagnostics.forceRender();
+        const bosaTopMention = document.querySelector('#sheetBody .player-mention-card')?.textContent || '';
+        document.getElementById('closeSheetBtn').click();
+
+        // Clean up simulated item
+        appState.appData.news.rawStream = appState.appData.news.rawStream.filter(x => x.id !== 'qa_live_in_game_inj_1');
+        bosa.recentNews = bosa.recentNews.filter(x => x.url !== breakingTweet.url);
+        window.__49ersDiagnostics.forceRender();
+
+        return {
+          huffHits,
+          wireCfg,
+          rawRisesToTop: rawTopCardText.includes('LIVE INJURY UPDATE') && rawTopCardText.includes('questionable to return'),
+          clusteredBannerShows: clusteredBannerText.includes('LIVE INJURY UPDATE') && clusteredBannerText.includes('questionable to return'),
+          bosaMentionRisesToTop: bosaTopMention.includes('LIVE INJURY UPDATE') && bosaTopMention.includes('Matt Maiocco')
+        };
+      });
+
+      assert(liveWireAndGroundingAudit.huffHits.length === 0, `Found retired player Bryce Huff in tabs: ${JSON.stringify(liveWireAndGroundingAudit.huffHits)}`);
+      assert(
+        liveWireAndGroundingAudit.wireCfg.gameLivePollMs <= 25_000 &&
+          liveWireAndGroundingAudit.wireCfg.standardPollMs < 60_000,
+        `Expected <1m tweet polling latency, got: ${JSON.stringify(liveWireAndGroundingAudit.wireCfg)}`
+      );
+      assert(liveWireAndGroundingAudit.rawRisesToTop, 'Live in-game injury tweet did not rise to #1 in Raw Wire');
+      assert(liveWireAndGroundingAudit.clusteredBannerShows, 'Live in-game injury tweet did not surface in Breaking Wire banner on Synthesis Briefs');
+      assert(liveWireAndGroundingAudit.bosaMentionRisesToTop, 'Live in-game injury tweet did not rise to #1 in Nick Bosa Dossier mentions');
+    });
 
     await runStep('Studio .m4a podcast loads into sticky Mini-Player, seeks, cycles 1x..2x speed, persists across tabs & closes', async () => {
       await cdp.eval(() => {
@@ -1074,6 +1333,29 @@ async function main() {
         beforeReportCount,
         6000
       );
+
+      // 4. Ask about retired former 49er Bryce Huff and verify Live Roster Grounding Verification explicitly flags him as non-rostered
+      const countBeforeHuffQuery = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
+      await cdp.eval(() => {
+        const area = document.getElementById('analysisPromptInput');
+        area.value = 'How is Bryce Huff fitting into the 2026 49ers pass rush?';
+        area.dispatchEvent(new Event('input', { bubbles: true }));
+        document.querySelector('[data-action="run-deep-analysis"]').click();
+      });
+      await cdp.waitFor(
+        prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
+        countBeforeHuffQuery,
+        6000
+      );
+      const topGeneratedCardText = await cdp.eval(
+        () => document.querySelector('#mainView article.brief-card')?.textContent || ''
+      );
+      assert(
+        topGeneratedCardText.includes('not on the live 2026 San Francisco 49ers') &&
+          topGeneratedCardText.includes('retired/departed'),
+        `Expected explicit live-roster non-rostered verification when querying retired player, got: ${topGeneratedCardText.slice(0, 260)}`
+      );
+
       await cdp.assertNoOverflow('Deep Analysis Runner With Generated Report');
     });
 
@@ -1286,7 +1568,7 @@ async function main() {
             if (href.startsWith('http')) {
               checkedExternalLinks++;
               const rel = a.getAttribute('rel') || '';
-              if (!href.startsWith('https://') || a.getAttribute('target') !== '_blank' || !rel.includes('noopener') || /undefined|NaN/i.test(href)) {
+              if (!href.startsWith('https://') || a.getAttribute('target') !== '_blank' || !rel.includes('noopener') || /(?:\bundefined\b|\bNaN\b|\bnull\b|\/undefined|\/NaN|\/null)/.test(href)) {
                 badLinks.push({ tab, href, target: a.getAttribute('target'), rel });
               }
             }

@@ -5,6 +5,20 @@
  * 2026 Draft Class + Priority UDFAs, and 2027 Draft Prep + Combine boards.
  */
 
+import { classifyBreakingItem, formatTweetBodyForDisplay } from '../../src/engine/breakingClassifier.js';
+import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
+import {
+  OTC_TEAM_CAP_URL,
+  buildMockDraftBigBoardUrl,
+  buildMockDraftProspectUrl,
+  buildMockDraftTeamUrl,
+  buildOtcPositionUrl,
+  buildPfrPlayerUrl,
+  buildPfrTeamDraftUrl,
+  isPaywalledPublisher,
+  sanitizeExternalUrl
+} from '../../src/engine/linkIntegrity.js';
+
 const embedCheckCache = new Map();
 
 /**
@@ -108,9 +122,43 @@ export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbedd
   }
 }
 
+const INSIDER_MIRROR_PREFIXES = [
+  { re: /^(?:adam\s+)?schefter\s*:\s*/i, reporterId: 'adam_schefter', reporterName: 'Adam Schefter', authorHandle: '@AdamSchefter', outletId: 'espn', outletName: 'ESPN NFL Insider' },
+  { re: /^(?:ian\s+)?rapoport\s*:\s*/i, reporterId: 'ian_rapoport', reporterName: 'Ian Rapoport', authorHandle: '@RapSheet', outletId: 'nfl_network', outletName: 'NFL Network' },
+  { re: /^(?:tom\s+)?pelissero\s*:\s*/i, reporterId: 'tom_pelissero', reporterName: 'Tom Pelissero', authorHandle: '@TomPelissero', outletId: 'nfl_network', outletName: 'NFL Network' },
+  { re: /^(?:mike\s+)?garafolo\s*:\s*/i, reporterId: 'mike_garafolo', reporterName: 'Mike Garafolo', authorHandle: '@MikeGarafolo', outletId: 'nfl_network', outletName: 'NFL Network' },
+  { re: /^(?:dianna\s+)?russini\s*:\s*/i, reporterId: 'dianna_russini', reporterName: 'Dianna Russini', authorHandle: '@DMRussini', outletId: 'athletic', outletName: 'The Athletic' },
+  { re: /^(?:albert\s+)?breer\s*:\s*/i, reporterId: 'albert_breer', reporterName: 'Albert Breer', authorHandle: '@AlbertBreer', outletId: 'si', outletName: 'Sports Illustrated' },
+  { re: /^(?:matt\s+)?maiocco\s*:\s*/i, reporterId: 'matt_maiocco', reporterName: 'Matt Maiocco', authorHandle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area' },
+  { re: /^(?:nick\s+)?wagoner\s*:\s*/i, reporterId: 'nick_wagoner', reporterName: 'Nick Wagoner', authorHandle: '@nwagoner', outletId: 'espn', outletName: 'ESPN 49ers Beat' }
+];
+
+function resolveMirroredInsiderAttribution(rawText = '', defaultAcc = {}) {
+  for (const rule of INSIDER_MIRROR_PREFIXES) {
+    if (rule.re.test(rawText)) {
+      return {
+        reporterId: rule.reporterId,
+        reporterName: rule.reporterName,
+        authorHandle: rule.authorHandle,
+        outletId: rule.outletId,
+        outletName: rule.outletName,
+        cleanedBody: rawText.replace(rule.re, '').trim()
+      };
+    }
+  }
+  return {
+    reporterId: defaultAcc.reporterId,
+    reporterName: defaultAcc.reporterName,
+    authorHandle: defaultAcc.authorHandle,
+    outletId: defaultAcc.outletId,
+    outletName: defaultAcc.outletName,
+    cleanedBody: rawText
+  };
+}
+
 /**
  * Pulls live, real-time 49ers beat reporter & insider social posts via public Bluesky XRPC feeds,
- * complete with direct post URLs and attached external article links.
+ * complete with author attribution, full text for short tweets, breaking classification, and links.
  */
 export async function fetchLiveBeatSocialPosts() {
   const accounts = [
@@ -155,6 +203,16 @@ export async function fetchLiveBeatSocialPosts() {
       requireKeyword: false
     },
     {
+      actor: 'nbcsportsbayarea.com',
+      reporterId: 'matt_maiocco',
+      reporterName: 'NBC Sports Bay Area',
+      authorHandle: '@NBCSAuthentic',
+      outletId: 'nbcsba',
+      outletName: 'NBC Sports Bay Area',
+      tier: 1,
+      requireKeyword: true
+    },
+    {
       actor: '49erswebzone.bsky.social',
       reporterId: 'al_sacco',
       reporterName: '49ers Webzone',
@@ -193,53 +251,110 @@ export async function fetchLiveBeatSocialPosts() {
       outletName: 'NFL Network',
       tier: 1,
       requireKeyword: true
+    },
+    {
+      actor: 'insidenflnews.bsky.social',
+      reporterId: 'tom_pelissero',
+      reporterName: 'NFL Insider Wire',
+      authorHandle: '@InsideNFLNews',
+      outletId: 'nfl_network',
+      outletName: 'NFL Insider Wire',
+      tier: 1,
+      requireKeyword: true,
+      parseInsiderPrefix: true
+    },
+    {
+      actor: 'nflnewsreposterbot.bsky.social',
+      reporterId: 'ian_rapoport',
+      reporterName: 'NFL Beat Wire',
+      authorHandle: '@NFLBeatWire',
+      outletId: 'nfl_network',
+      outletName: 'NFL Beat Wire',
+      tier: 1,
+      requireKeyword: true,
+      parseInsiderPrefix: true
     }
   ];
 
-  const sfKeywords = /\b(49ers|niners|san francisco|shanahan|lynch|purdy|bosa|mccaffrey|aiyuk|kittle|warner|buckner|lenoir|pearsall|raiders|santa clara)\b/i;
+  const sfKeywords =
+    /\b(49ers|niners|san francisco|shanahan|lynch|purdy|bosa|mccaffrey|aiyuk|kittle|warner|buckner|odighizuwa|lenoir|pearsall|mike evans|deebo|brandin cooks|christian kirk|demarcus robinson|greenlaw|trent williams|mykel williams|keion white|romello height|santa clara)\b/i;
   const posts = [];
+  const sevenDaysAgoMs = Date.now() - 7 * 86400_000;
 
   await Promise.all(
     accounts.map(async acc => {
       try {
         const res = await fetch(
-          `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acc.actor)}&limit=6&filter=posts_no_replies`,
-          { signal: AbortSignal.timeout(6000) }
+          `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acc.actor)}&limit=14&filter=posts_no_replies`,
+          { signal: AbortSignal.timeout(6500) }
         );
         if (!res.ok) return;
         const data = await res.json();
         for (const entry of data.feed || []) {
-          if (entry.reason) continue; // skip pure reposts without commentary if duplicated
+          if (entry.reason) continue;
           const post = entry.post;
           const rec = post?.record;
-          const rawText = String(rec?.text || '').trim();
-          if (!rawText || rawText.length < 18) continue;
+          const rawText = String(rec?.text || '')
+            .replace(/\s*Original post\s*$/i, '')
+            .trim();
+          if (!rawText || rawText.length < 16) continue;
+          const pubIso = rec?.createdAt || new Date().toISOString();
+          const pubMs = new Date(pubIso).getTime();
+          if (Number.isFinite(pubMs) && pubMs < sevenDaysAgoMs) continue;
+
           const extTitle = post?.embed?.external?.title || '';
           const extUri = post?.embed?.external?.uri || '';
           const extThumb = post?.embed?.external?.thumb || post?.embed?.images?.[0]?.thumb || '';
           if (acc.requireKeyword && !sfKeywords.test(`${rawText} ${extTitle}`)) continue;
 
           const rkey = (post.uri || '').split('/').pop();
-          const postUrl = rkey ? `https://bsky.app/profile/${post.author?.handle || acc.actor}/post/${rkey}` : `https://bsky.app/profile/${acc.actor}`;
-          const cleanedText = rawText.replace(/\s+/g, ' ').trim();
+          const postUrl = rkey
+            ? `https://bsky.app/profile/${post.author?.handle || acc.actor}/post/${rkey}`
+            : `https://bsky.app/profile/${acc.actor}`;
+
+          const attr = acc.parseInsiderPrefix
+            ? resolveMirroredInsiderAttribution(rawText, acc)
+            : {
+                reporterId: acc.reporterId,
+                reporterName: acc.reporterName,
+                authorHandle: acc.authorHandle,
+                outletId: acc.outletId,
+                outletName: acc.outletName,
+                cleanedBody: rawText
+              };
+
+          const formatted = formatTweetBodyForDisplay(attr.cleanedBody);
+          const brk = classifyBreakingItem({
+            title: formatted.text,
+            summary: extTitle,
+            publishedAt: pubIso
+          });
+
+          const safeExternalUrl = sanitizeExternalUrl(extUri, null);
 
           posts.push({
             id: `tweet_${acc.actor.split('.')[0]}_${rkey || posts.length}`,
             type: 'tweet',
-            outletId: acc.outletId,
-            outletName: acc.outletName,
+            outletId: attr.outletId,
+            outletName: attr.outletName,
             tier: acc.tier,
-            reporterId: acc.reporterId,
-            reporterName: acc.reporterName,
-            authorHandle: acc.authorHandle,
+            reporterId: attr.reporterId,
+            reporterName: attr.reporterName,
+            authorHandle: attr.authorHandle,
             authorProfileUrl: `https://bsky.app/profile/${post.author?.handle || acc.actor}`,
-            title: cleanedText,
-            summary: extTitle && !cleanedText.includes(extTitle.slice(0, 24)) ? extTitle : '',
+            title: formatted.text,
+            fullText: formatted.text,
+            isFullTweet: formatted.isFullTweet,
+            summary: extTitle && !formatted.text.includes(extTitle.slice(0, 24)) ? extTitle : '',
             url: postUrl,
-            externalUrl: extUri || null,
-            externalTitle: extTitle || null,
+            externalUrl: safeExternalUrl,
+            externalTitle: safeExternalUrl ? extTitle || null : null,
             imageUrl: extThumb || '',
-            publishedAt: rec?.createdAt || new Date().toISOString()
+            publishedAt: pubIso,
+            isBreaking: brk.isBreaking,
+            isInGameInjury: brk.isInGameInjury,
+            breakingBadge: brk.breakingBadge,
+            breakingPriority: brk.breakingPriority
           });
         }
       } catch {
@@ -248,7 +363,192 @@ export async function fetchLiveBeatSocialPosts() {
     })
   );
 
-  return posts.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  return posts.sort((a, b) => {
+    const pDiff = (b.breakingPriority || 0) - (a.breakingPriority || 0);
+    if (pDiff !== 0) return pDiff;
+    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+  });
+}
+
+export const FLAGSHIP_49ERS_PODCAST_SHOWS = [
+  {
+    id: 'the_gold_standard',
+    collectionId: 1524313515,
+    name: 'The Gold Standard',
+    fullTitle: 'The Gold Standard: San Francisco 49ers Podcast Network',
+    hosts: 'Rob "Stats" Guerrera & Levin Black',
+    network: 'Audacy / Bleav',
+    feedUrl: 'https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b',
+    appleShowUrl: 'https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515'
+  },
+  {
+    id: '49ers_talk',
+    collectionId: 1153457233,
+    name: '49ers Talk',
+    fullTitle: '49ers Talk: A San Francisco 49ers Podcast',
+    hosts: 'Matt Maiocco & Laura Britt',
+    network: 'NBC Sports Bay Area',
+    feedUrl: 'https://feeds.simplecast.com/SCmnvidR',
+    appleShowUrl: 'https://podcasts.apple.com/us/podcast/49ers-talk-a-san-francisco-49ers-podcast/id1153457233'
+  },
+  {
+    id: '49ers_plus_minus',
+    collectionId: 1827546443,
+    name: '49ers +/-',
+    fullTitle: '49ers Plus Minus',
+    hosts: 'Tim Kawakami & SF Standard Beat',
+    network: 'The San Francisco Standard / Audacy',
+    feedUrl: 'https://rss.amperwave.net/v2/feed/audacynetwork/49ers-plus-minus',
+    appleShowUrl: 'https://podcasts.apple.com/us/podcast/49ers-plus-minus/id1827546443'
+  },
+  {
+    id: 'dieter_and_hutch',
+    collectionId: 1530087532,
+    name: 'Dieter and Hutch',
+    fullTitle: 'Dieter and Hutch',
+    hosts: 'Dieter Kurtenbach & Jake Hutchinson',
+    network: 'Bay Area News Group / KNBR',
+    feedUrl: 'https://feeds.castos.com/85z8',
+    appleShowUrl: 'https://podcasts.apple.com/us/podcast/dieter-and-hutch/id1530087532'
+  },
+  {
+    id: 'locked_on_49ers',
+    collectionId: 1143358718,
+    name: 'Locked On 49ers',
+    fullTitle: 'Locked On 49ers - Daily Podcast On The San Francisco 49ers',
+    hosts: 'Brian Peacock & Eric Crocker',
+    network: 'Locked On Podcast Network',
+    feedUrl: 'https://rss.pdrl.fm/f9f75c/feeds.simplecast.com/P83yLSb_',
+    appleShowUrl: 'https://podcasts.apple.com/us/podcast/locked-on-49ers-daily-podcast-on-the-san-francisco-49ers/id1143358718'
+  },
+  {
+    id: 'lombardi_lounge',
+    collectionId: 1757355831,
+    name: 'Lombardi Lounge',
+    fullTitle: 'The David Lombardi Lounge',
+    hosts: 'David Lombardi',
+    network: 'The SF Standard / Lombardi',
+    feedUrl: 'https://feeds.megaphone.fm/NSM7362508743',
+    appleShowUrl: 'https://podcasts.apple.com/us/podcast/the-david-lombardi-lounge/id1757355831'
+  }
+];
+
+function cleanPodcastSummary(rawDesc = '', episodeTitle = '') {
+  let txt = String(rawDesc || '')
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/\b(learn more about your ad choices[\s\S]*)$/i, '')
+    .replace(/\b(support us by supporting our sponsors[\s\S]*)$/i, '')
+    .replace(/\b(visit podcastchoices\.com[\s\S]*)$/i, '')
+    .replace(/\b(follow & subscribe on all podcast platforms[\s\S]*)$/i, '')
+    .replace(/\b(hosted by simplecast[\s\S]*)$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (episodeTitle && txt.toLowerCase().startsWith(episodeTitle.toLowerCase())) {
+    txt = txt.slice(episodeTitle.length).replace(/^[\s\-—:|•]+/, '').trim();
+  }
+
+  if (txt.length > 320) {
+    const cut = txt.slice(0, 318);
+    const sp = cut.lastIndexOf(' ');
+    txt = `${(sp > 220 ? cut.slice(0, sp) : cut).trim()}…`;
+  }
+
+  return txt || 'Latest San Francisco 49ers film, roster, injury, and matchup breakdown.';
+}
+
+/**
+ * Fetches real episodes from the last 7 days across all 6 flagship 49ers podcasts
+ * via Apple Podcasts Lookup API, neatly structured for By Date and By Podcast views.
+ */
+export async function fetchLatest49ersPodcasts7d(nowMs = Date.now()) {
+  const cutoffMs = nowMs - 7 * 86400_000;
+  const showsByColId = new Map(FLAGSHIP_49ERS_PODCAST_SHOWS.map(s => [Number(s.collectionId), s]));
+  const idsParam = FLAGSHIP_49ERS_PODCAST_SHOWS.map(s => s.collectionId).join(',');
+
+  const episodes = [];
+  const showArtworkById = new Map();
+
+  try {
+    const res = await fetch(
+      `https://itunes.apple.com/lookup?id=${idsParam}&entity=podcastEpisode&limit=14`,
+      { signal: AbortSignal.timeout(9000) }
+    );
+    if (res.ok) {
+      const json = await res.json();
+      for (const item of json.results || []) {
+        const colId = Number(item.collectionId);
+        const showMeta = showsByColId.get(colId);
+        if (!showMeta) continue;
+
+        if (item.wrapperType === 'track' || item.kind === 'podcast') {
+          if (item.artworkUrl600 || item.artworkUrl160) {
+            showArtworkById.set(showMeta.id, item.artworkUrl600 || item.artworkUrl160);
+          }
+          continue;
+        }
+
+        if (item.wrapperType !== 'podcastEpisode') continue;
+        const pubMs = item.releaseDate ? new Date(item.releaseDate).getTime() : NaN;
+        if (!Number.isFinite(pubMs) || pubMs < cutoffMs || pubMs > nowMs + 6 * 3600_000) continue;
+
+        const title = String(item.trackName || '').trim();
+        if (!title) continue;
+
+        const cleanAppleUrl = String(
+          item.trackViewUrl || `${showMeta.appleShowUrl}?i=${item.trackId}`
+        ).replace(/&uo=\d+/g, '');
+
+        const durationMin = item.trackTimeMillis
+          ? Math.max(1, Math.round(Number(item.trackTimeMillis) / 60_000))
+          : null;
+
+        episodes.push({
+          id: `pod_${showMeta.id}_${item.trackId || pubMs}`,
+          trackId: item.trackId || null,
+          collectionId: showMeta.collectionId,
+          showId: showMeta.id,
+          showName: showMeta.name,
+          showFullTitle: showMeta.fullTitle,
+          hosts: showMeta.hosts,
+          network: showMeta.network,
+          title,
+          summary: cleanPodcastSummary(item.description || item.shortDescription || '', title),
+          publishedAt: new Date(pubMs).toISOString(),
+          durationMinutes: durationMin,
+          durationDisplay: durationMin ? `${durationMin} min` : 'Episode',
+          artworkUrl: item.artworkUrl160 || item.artworkUrl600 || showArtworkById.get(showMeta.id) || '',
+          appleEpisodeUrl: cleanAppleUrl,
+          appleShowUrl: showMeta.appleShowUrl,
+          feedUrl: item.feedUrl || showMeta.feedUrl,
+          audioStreamUrl: item.episodeUrl || null
+        });
+      }
+    }
+  } catch {
+    // Graceful fallback handled by caller if offline
+  }
+
+  episodes.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+  const shows = FLAGSHIP_49ERS_PODCAST_SHOWS.map(s => ({
+    ...s,
+    artworkUrl: showArtworkById.get(s.id) || episodes.find(e => e.showId === s.id)?.artworkUrl || '',
+    episodeCount7d: episodes.filter(e => e.showId === s.id).length
+  }));
+
+  return {
+    updatedAt: new Date(nowMs).toISOString(),
+    windowDays: 7,
+    shows,
+    episodes
+  };
 }
 
 function normLookup(name = '') {
@@ -353,11 +653,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     }
     if (match) {
       usedHeroUrls.add(match.imageUrl);
+      const safeHeroLink = sanitizeExternalUrl(match.url, '') || '';
       return {
         heroImageUrl: match.imageUrl,
         heroImageAlt: match.imageAlt || match.title || '49ers Beat Photography',
         heroImageSource: match.outletName || '49ers Beat Wire',
-        heroImageLink: match.url || '',
+        heroImageLink: isPaywalledPublisher(match.outletName, safeHeroLink) ? '' : safeHeroLink,
         heroImageIsEditorial: true
       };
     }
@@ -387,17 +688,18 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     const matched = [];
 
     for (const it of rawItems) {
-      if (!it.url || seenUrls.has(it.url)) continue;
+      const safeItemUrl = sanitizeExternalUrl(it.url, null);
+      if (!safeItemUrl || seenUrls.has(safeItemUrl) || isPaywalledPublisher(it.outletName, safeItemUrl)) continue;
       const hay = `${it.title || ''} ${it.summary || ''}`.toLowerCase();
       if (kwLower.some(k => hay.includes(k))) {
-        seenUrls.add(it.url);
+        seenUrls.add(safeItemUrl);
         const shortLabel =
           it.type === 'tweet'
             ? `${it.authorHandle || it.reporterName || 'Beat Post'}: ${(it.title || '').slice(0, 62)}${(it.title || '').length > 62 ? '…' : ''}`
             : (it.title || '').slice(0, 72) + ((it.title || '').length > 72 ? '…' : '');
         matched.push({
           title: shortLabel,
-          url: it.url,
+          url: safeItemUrl,
           outlet: it.outletName || 'Source',
           type: it.type || 'article',
           publishedAt: it.publishedAt || null
@@ -407,9 +709,10 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     }
 
     for (const ex of extraLinks) {
-      if (ex?.url && !seenUrls.has(ex.url) && matched.length < 5) {
-        seenUrls.add(ex.url);
-        matched.push(ex);
+      const safeExUrl = sanitizeExternalUrl(ex?.url, null);
+      if (safeExUrl && !seenUrls.has(safeExUrl) && matched.length < 5) {
+        seenUrls.add(safeExUrl);
+        matched.push({ ...ex, url: safeExUrl });
       }
     }
     return matched;
@@ -623,6 +926,21 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     }
   ]);
 
+  // Derive active rotational DEs strictly from live `rosterPlayers` (zero stale/retired player names!)
+  const activeRotationalEdges = rosterPlayers
+    .filter(
+      p =>
+        p.rosterBucket === 'active' &&
+        ['DE', 'EDGE'].includes(p.position) &&
+        !/nick bosa/i.test(p.name)
+    )
+    .sort((a, b) => (b.primarySnapPct || 0) - (a.primarySnapPct || 0))
+    .map(p => p.name);
+  const edgeRotLabel =
+    activeRotationalEdges.length >= 3
+      ? `${activeRotationalEdges[0]}, ${activeRotationalEdges[1]}, and ${activeRotationalEdges[2]}`
+      : activeRotationalEdges.join(' and ') || 'Keion White, Mykel Williams, and rookie Romello Height';
+
   const week9Clusters = [
     {
       id: 'cluster_bosa_buckner_week9',
@@ -645,7 +963,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         'Pass-Rush Stunt Geometry: Having both Buckner (6\'7", 34.4" arms) and Odighizuwa inside forces opposing protections to slide interior help, isolating Bosa 1-on-1 on the Wide-9 rail without needing 5-man pressures.',
         "Run-Fit Impact vs. Raiders Outside Zone: Raiders HC Klint Kubiak runs heavy wide-zone/boot action with Kirk Cousins, Ashton Jeanty, and Brock Bowers; Buckner's vertical knock-back disrupts playside combo climbs to Fred Warner."
       ],
-      consensusVsDissent: 'Unanimous beat consensus that SF will still manage Bosa around 42–48 snaps (~68% share) in his first game back, rotating Bryce Huff, Keion White, and rookie Romello Height on early run downs.',
+      consensusVsDissent: `Unanimous beat consensus that SF will still manage Bosa around 42–48 snaps (~68% share) in his first game back, rotating ${edgeRotLabel} across early run downs and speed-rush situations.`,
       videoClip: {
         videoId: shanahanBucknerVid.videoId,
         url: `https://www.youtube.com/watch?v=${shanahanBucknerVid.videoId}`,
@@ -755,16 +1073,35 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     });
   }
 
-  return week9Clusters;
+  // Run automated anti-hallucination roster validation on every synthesized brief cluster
+  return week9Clusters.map(cl => {
+    const check = validateNoHallucinatedRosterClaims(
+      `${cl.headline} ${(cl.hardFacts || []).join(' ')} ${(cl.schemeAndCapTakeaways || []).join(' ')} ${cl.consensusVsDissent || ''}`,
+      rosterPlayers
+    );
+    if (check.valid) return cl;
+    return {
+      ...cl,
+      headline: sanitizeHallucinatedRosterText(cl.headline, rosterPlayers),
+      hardFacts: (cl.hardFacts || []).map(f => sanitizeHallucinatedRosterText(f, rosterPlayers)),
+      schemeAndCapTakeaways: (cl.schemeAndCapTakeaways || []).map(f => sanitizeHallucinatedRosterText(f, rosterPlayers)),
+      consensusVsDissent: sanitizeHallucinatedRosterText(cl.consensusVsDissent || '', rosterPlayers)
+    };
+  });
 }
 
-export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = []) {
-  const top2026 = [...capPlayers]
-    .filter(p => p.contractsByYear?.['2026'])
-    .sort((a, b) => (b.contractsByYear['2026'].capNumber || 0) - (a.contractsByYear['2026'].capNumber || 0));
+export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = [], seasonYear = 2026) {
+  const yrKey = capYears?.[String(seasonYear)]
+    ? String(seasonYear)
+    : Object.keys(capYears || {}).sort()[0] || '2026';
+  const nextYrNum = Number(yrKey) + 1;
 
-  const restructureCandidates = top2026
-    .filter(p => (p.contractsByYear['2026']?.transactions?.restructure?.capSavings || 0) >= 2_500_000)
+  const topSeason = [...capPlayers]
+    .filter(p => p.contractsByYear?.[yrKey])
+    .sort((a, b) => (b.contractsByYear[yrKey].capNumber || 0) - (a.contractsByYear[yrKey].capNumber || 0));
+
+  const restructureCandidates = topSeason
+    .filter(p => (p.contractsByYear[yrKey]?.transactions?.restructure?.capSavings || 0) >= 2_500_000)
     .slice(0, 6)
     .map(p => ({
       id: p.id || p.otcId,
@@ -772,51 +1109,51 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = []) {
       position: p.position || 'VET',
       jersey: p.jersey ?? null,
       headshotUrl: p.headshotUrl || '',
-      otcUrl: p.otcUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers',
-      capHit2026: p.contractsByYear['2026'].capNumber,
-      baseSalary2026: p.contractsByYear['2026'].baseSalary,
-      maxRestructureSavings: p.contractsByYear['2026'].transactions.restructure.capSavings,
+      otcUrl: sanitizeExternalUrl(p.otcUrl, OTC_TEAM_CAP_URL),
+      capHit2026: p.contractsByYear[yrKey].capNumber,
+      baseSalary2026: p.contractsByYear[yrKey].baseSalary,
+      maxRestructureSavings: p.contractsByYear[yrKey].transactions.restructure.capSavings,
       rationale: 'High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap.'
     }));
 
-  const cutOrTradeCandidates = top2026
+  const cutOrTradeCandidates = topSeason
     .filter(p => {
-      const tx = p.contractsByYear['2026']?.transactions;
+      const tx = p.contractsByYear[yrKey]?.transactions;
       return (tx?.june_1_trade?.capSavings || 0) >= 2_000_000 || (tx?.june_1_cut?.capSavings || 0) >= 2_000_000;
     })
     .slice(0, 6)
     .map(p => {
-      const c26 = p.contractsByYear['2026'];
+      const cur = p.contractsByYear[yrKey];
       return {
         id: p.id || p.otcId,
         name: p.name,
         position: p.position || 'VET',
         jersey: p.jersey ?? null,
         headshotUrl: p.headshotUrl || '',
-        otcUrl: p.otcUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers',
-        capHit2026: c26.capNumber,
-        postJune1CutSavings: c26.transactions.june_1_cut.capSavings,
-        postJune1TradeSavings: c26.transactions.june_1_trade.capSavings,
-        preJune1DeadMoney: c26.transactions.cut.deadMoney,
-        rationale: 'Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation.'
+        otcUrl: sanitizeExternalUrl(p.otcUrl, OTC_TEAM_CAP_URL),
+        capHit2026: cur.capNumber,
+        postJune1CutSavings: cur.transactions.june_1_cut.capSavings,
+        postJune1TradeSavings: cur.transactions.june_1_trade.capSavings,
+        preJune1DeadMoney: cur.transactions.cut.deadMoney,
+        rationale: `Significant ${yrKey}/${nextYrNum} cash and cap relief via Post-June 1 trade or release designation.`
       };
     });
 
-  const grossSpace = Number(capYears?.['2026']?.teamCapSpace || 35_164_858);
-  const effSpace = Number(capYears?.['2026']?.effectiveCapSpace || Math.max(0, grossSpace - 6_500_000));
+  const grossSpace = Number(capYears?.[yrKey]?.teamCapSpace || 35_164_858);
+  const effSpace = Number(capYears?.[yrKey]?.effectiveCapSpace || Math.max(0, grossSpace - 6_500_000));
   const grossM = (grossSpace / 1e6).toFixed(2);
   const effM = (effSpace / 1e6).toFixed(2);
   const rolloverLowM = Math.max(10, Math.round((grossSpace - 12_000_000) / 1e6));
   const rolloverHighM = Math.max(rolloverLowM + 4, Math.round((grossSpace - 6_000_000) / 1e6));
 
   return {
-    sourceUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+    sourceUrl: OTC_TEAM_CAP_URL,
     executiveSummary:
-      `Paraag Marathe & John Lynch currently hold $${grossM}M in gross 2026 cap space ($${effM}M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $${rolloverLowM}M–$${rolloverHighM}M of unused 2026 cap space into 2027 to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.`,
+      `Paraag Marathe & John Lynch currently hold $${grossM}M in gross ${yrKey} cap space ($${effM}M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $${rolloverLowM}M–$${rolloverHighM}M of unused ${yrKey} cap space into ${nextYrNum} to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.`,
     strategicPillars: [
       {
         title: `1. Rollover Cap Preservation ($${rolloverLowM}M+ Target)`,
-        detail: `Unused 2026 cap space carries over 1-for-1 into 2027 under Article 13 of the NFL CBA. Keeping ~$${rolloverLowM}M+ untouched turns a tight 2027 cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans.`
+        detail: `Unused ${yrKey} cap space carries over 1-for-1 into ${nextYrNum} under Article 13 of the NFL CBA. Keeping ~$${rolloverLowM}M+ untouched turns a tight ${nextYrNum} cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans.`
       },
       {
         title: '2. Option-Bonus & Void-Year Architecture',
@@ -836,19 +1173,21 @@ export function buildTradeDeadlineWarRoom(
   capSummary2026 = {},
   lookupPlayerMeta = () => null,
   lookupTeamLogo = () => '',
-  teamRecord = '6-1'
+  teamRecord = '6-1',
+  seasonYear = 2026
 ) {
+  const yr = Number(seasonYear) || 2026;
   const bucknerMeta = lookupPlayerMeta('DeForest Buckner');
   const osaMeta = lookupPlayerMeta('Osa Odighizuwa');
-  const meyersMeta = lookupPlayerMeta('Jakobi Meyers');
-  const christianMeta = lookupPlayerMeta('Geron Christian');
-  const campbellMeta = lookupPlayerMeta('Calais Campbell');
+  const slaytonMeta = lookupPlayerMeta('Darius Slayton');
+  const pipkinsMeta = lookupPlayerMeta('Trey Pipkins III') || lookupPlayerMeta('Trey Pipkins');
+  const jordanMeta = lookupPlayerMeta('Cameron Jordan');
 
   return {
-    deadlineIso: '2026-11-10T13:00:00-08:00',
-    deadlineDisplay: 'Tuesday, Nov 10, 2026 • 1:00 PM PT',
+    deadlineIso: `${yr}-11-10T13:00:00-08:00`,
+    deadlineDisplay: `Tuesday, Nov 10, ${yr} • 1:00 PM PT`,
     availableGrossCap: capSummary2026.teamCapSpace || 35_164_858,
-    capSourceUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+    capSourceUrl: OTC_TEAM_CAP_URL,
     transactionsUrl: 'https://www.espn.com/nfl/transactions',
     completed2026Moves: [
       {
@@ -862,7 +1201,7 @@ export function buildTradeDeadlineWarRoom(
         timing: 'Pre-Deadline Reunion (Nov 2026)',
         costSummary: 'Conditional Day-3 Pick Package',
         schemeGrade: 'A',
-        sourceUrl: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/',
+        sourceUrl: bucknerMeta?.otcUrl || 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/',
         analysis: 'Reunites an elite 6\'7" interior disruptor with Nick Bosa and the Wide-9 system; immediately stabilizes interior run defense and A/B-gap pass rush.'
       },
       {
@@ -876,7 +1215,7 @@ export function buildTradeDeadlineWarRoom(
         timing: 'March 11, 2026 Trade',
         costSummary: '2026 3rd-Round Pick',
         schemeGrade: 'A-',
-        sourceUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+        sourceUrl: osaMeta?.otcUrl || OTC_TEAM_CAP_URL,
         analysis: "High-motor penetrating 3-technique who carried the interior pass-rush workload during Bosa's Weeks 3–7 absence."
       }
     ],
@@ -902,37 +1241,37 @@ export function buildTradeDeadlineWarRoom(
     ],
     realisticTargets: [
       {
-        name: 'Jakobi Meyers / Veteran Z-X Archetype',
-        headshotUrl: meyersMeta?.headshotUrl || '',
-        currentTeam: 'Seller Tier (<30% Playoff Odds)',
+        name: 'Darius Slayton / Veteran Z-X Archetype',
+        headshotUrl: slaytonMeta?.headshotUrl || '',
+        currentTeam: 'IND (2-6 Seller Tier)',
         position: 'WR',
-        prorated2026CapCharge: 4_250_000,
-        projectedPickCost: '2027 5th-Round Pick (or 6th-for-7th Pick Swap w/ salary retention)',
+        prorated2026CapCharge: 3_650_000,
+        projectedPickCost: `${yr + 1} 5th-Round Pick (or 6th-for-7th Pick Swap w/ salary retention)`,
         fitScore: 91,
-        sourceUrl: 'https://overthecap.com/position/wide-receiver/2026',
-        fitBreakdown: 'Elite dig/in-breaker route precision over the middle (Shanahan staple) + high run-blocking effort.'
+        sourceUrl: buildOtcPositionUrl('wide-receiver', yr),
+        fitBreakdown: 'Vertical Z/X field stretcher + intermediate dig/over separation over the middle in play-action.'
       },
       {
-        name: 'Geron Christian / Veteran Swing OT Archetype',
-        headshotUrl: christianMeta?.headshotUrl || '',
-        currentTeam: 'AFC Seller',
+        name: 'Trey Pipkins III / Veteran Swing OT Archetype',
+        headshotUrl: pipkinsMeta?.headshotUrl || '',
+        currentTeam: 'LAC (0-7 Seller Tier)',
         position: 'OT',
-        prorated2026CapCharge: 1_150_000,
-        projectedPickCost: '2027 Conditional 6th-Round Pick',
-        fitScore: 84,
-        sourceUrl: 'https://overthecap.com/position/left-tackle/2026',
-        fitBreakdown: 'Outside-zone foot speed threshold (<4.72s shuttle) capable of surviving emergency snaps at LT or RT.'
+        prorated2026CapCharge: 1_850_000,
+        projectedPickCost: `${yr + 1} Conditional 6th-Round Pick`,
+        fitScore: 85,
+        sourceUrl: buildOtcPositionUrl('right-tackle', yr),
+        fitBreakdown: 'Experienced LT/RT swing starter capable of surviving outside-zone reach blocks in January.'
       },
       {
-        name: 'Calais Campbell / Rotational Big-End Archetype',
-        headshotUrl: campbellMeta?.headshotUrl || '',
-        currentTeam: 'NFC/AFC Seller',
+        name: 'Cameron Jordan / Rotational Big-End Archetype',
+        headshotUrl: jordanMeta?.headshotUrl || '',
+        currentTeam: 'NO (2-5 Seller Tier)',
         position: 'DL/EDGE',
-        prorated2026CapCharge: 1_400_000,
-        projectedPickCost: '2027 6th-Round Pick',
-        fitScore: 82,
-        sourceUrl: 'https://overthecap.com/position/interior-defensive-line/2026',
-        fitBreakdown: 'Goal-line & 1st-down heavy edge setter + special teams field-goal block length.'
+        prorated2026CapCharge: 1_450_000,
+        projectedPickCost: `${yr + 1} 6th-Round Pick`,
+        fitScore: 83,
+        sourceUrl: buildOtcPositionUrl('edge-rusher', yr),
+        fitBreakdown: 'Heavy early-down edge setter with inside-out power rush polish for postseason 3rd-and-medium.'
       }
     ],
     tieredRumors: [
@@ -961,11 +1300,13 @@ export function buildTradeDeadlineWarRoom(
   };
 }
 
-export function buildDraftPrep2027AndCombine(combineSample = []) {
+export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear = 2027) {
+  const dy = Number(nextDraftYear) || 2027;
+  const bigBoardUrl = buildMockDraftBigBoardUrl(dy);
   return {
-    draftYear: 2027,
+    draftYear: dy,
     sources: [
-      { label: 'NFL Mock Draft Database', url: 'https://www.nflmockdraftdatabase.com/team-needs-2027/san-francisco-49ers' },
+      { label: 'NFL Mock Draft Database', url: buildMockDraftTeamUrl(dy) },
       { label: 'Tankathon 49ers Draft Order', url: 'https://www.tankathon.com/nfl/49ers' },
       { label: 'NFL Combine Tracker', url: 'https://www.nfl.com/combine/' },
       { label: 'RAS Athletic Database', url: 'https://ras.football/' }
@@ -980,7 +1321,7 @@ export function buildDraftPrep2027AndCombine(combineSample = []) {
       { round: 7, projectedOverall: 238, origin: 'From KC (Skyy Moore 2025 Trade)', valueRichHill: 2 }
     ],
     topNeeds2027: [
-      { rank: 1, pos: 'OT (Future Left Tackle Succession)', horizon: 'Critical — Trent Williams turns 39 prior to 2027 kickoff; outside-zone athletic thresholds required.' },
+      { rank: 1, pos: 'OT (Future Left Tackle Succession)', horizon: `Critical — Trent Williams turns 39 prior to ${dy} kickoff; outside-zone athletic thresholds required.` },
       { rank: 2, pos: 'CB (Boundary Press-Zone)', horizon: 'High — Keeping 2nd-contract DB costs controlled alongside Deommodore Lenoir.' },
       { rank: 3, pos: 'C / IOL (Agile Zone Center)', horizon: 'Moderate-High — Sub-4.62 short-shuttle reach-blocking profile for Shanahan wide zone.' },
       { rank: 4, pos: 'TE2 (Move / Inline Y-H Hybrid)', horizon: 'Moderate — Long-term succession & 12-personnel pairing with George Kittle.' }
@@ -988,58 +1329,65 @@ export function buildDraftPrep2027AndCombine(combineSample = []) {
     consensusMockTargets: [
       {
         rank: 1,
-        name: 'Isaiah World',
+        name: 'Jordan Seaton',
         pos: 'OT',
-        school: 'Oregon',
-        heightWeight: '6\'8" • 312 lbs',
-        mockFrequencyToSfPct: 28,
-        shanahanLynchFitScore: 94,
-        sourceUrl: 'https://www.nflmockdraftdatabase.com/players/2027/isaiah-world',
-        archetypeTraits: 'Elite 10-yard split & lateral mirror in outside zone; 34.6" arm length; 3-year Power-4 starter.',
-        sourcesMocking: ['Dane Brugler', 'Daniel Jeremiah', 'NFL Mock Draft DB']
+        school: 'LSU',
+        heightWeight: '6\'5" • 315 lbs',
+        mockFrequencyToSfPct: 27,
+        shanahanLynchFitScore: 95,
+        sourceUrl: buildMockDraftProspectUrl(dy, 'jordan-seaton', 2027),
+        archetypeTraits: 'Explosive 10-yard split & lateral mirror in outside zone; SEC blindside anchor built for LT succession.',
+        sourcesMocking: ['Dane Brugler', 'Mel Kiper Jr.', 'NFL Mock Draft DB']
       },
       {
         rank: 2,
-        name: 'Spencer Fano / Zone OT-IOL Tier',
+        name: 'Trevor Goosby / Cayden Green',
         pos: 'OT/IOL',
-        school: 'Utah',
-        heightWeight: '6\'5" • 310 lbs',
+        school: 'Texas / Missouri',
+        heightWeight: '6\'7" • 315 lbs / 6\'5" • 320 lbs',
         mockFrequencyToSfPct: 22,
-        shanahanLynchFitScore: 96,
-        sourceUrl: 'https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027',
-        archetypeTraits: 'Classic zone-blocking technician; elite 3-cone (<7.45s) and second-level finishing demeanor.',
-        sourcesMocking: ['Field Yates', 'Matt Miller', 'PFF']
+        shanahanLynchFitScore: 94,
+        sourceUrl: buildMockDraftProspectUrl(dy, 'cayden-green', 2027),
+        archetypeTraits: 'Dense displacement torque on duo/wide-zone combo blocks with tackle-guard positional versatility.',
+        sourcesMocking: ['Field Yates', 'Daniel Jeremiah', 'NFL Mock Draft DB']
       },
       {
         rank: 3,
-        name: 'Jermod McCoy / Malik Muhammad',
+        name: 'Leonard Moore / Ashton Hampton',
         pos: 'CB',
-        school: 'Tennessee / Texas',
-        heightWeight: '6\'0" • 194 lbs',
+        school: 'Notre Dame / Clemson',
+        heightWeight: '6\'2" • 195 lbs',
         mockFrequencyToSfPct: 19,
-        shanahanLynchFitScore: 91,
-        sourceUrl: 'https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027',
-        archetypeTraits: 'Fluid Cover-3/Quarters zone eyes + physical run-support tackling required of SF boundary corners.',
-        sourcesMocking: ['Lance Zierlein', 'The Athletic']
+        shanahanLynchFitScore: 92,
+        sourceUrl: buildMockDraftProspectUrl(dy, 'leonard-moore', 2027),
+        archetypeTraits: 'Long-levered press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical run support.',
+        sourcesMocking: ['Lance Zierlein', 'CBS Sports']
       },
       {
         rank: 4,
-        name: 'Eli Stowers',
+        name: "Trey'Dez Green / Jamari Johnson",
         pos: 'TE',
-        school: 'Vanderbilt',
-        heightWeight: '6\'4" • 242 lbs',
-        mockFrequencyToSfPct: 14,
-        shanahanLynchFitScore: 89,
-        sourceUrl: 'https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027',
-        archetypeTraits: 'Converted-QB spatial awareness + dynamic YAC acceleration on crossers/over routes.',
-        sourcesMocking: ['PFF', 'CBS Sports']
+        school: 'LSU / Oregon',
+        heightWeight: '6\'7" • 245 lbs / 6\'5" • 252 lbs',
+        mockFrequencyToSfPct: 15,
+        shanahanLynchFitScore: 90,
+        sourceUrl: bigBoardUrl,
+        archetypeTraits: 'Dynamic 12-personnel move-TE seam separator and red-zone mismatch pairing behind George Kittle.',
+        sourcesMocking: ['NFL Mock Draft DB', 'CBS Sports']
       }
     ],
     combineLeaderboard: combineSample
   };
 }
 
-export async function build2026DraftAndUdfaClass(sfDraft2026Rows = [], spiderBuilder, lookupPlayerMeta = () => null) {
+export async function build2026DraftAndUdfaClass(
+  sfDraft2026Rows = [],
+  spiderBuilder,
+  lookupPlayerMeta = () => null,
+  draftYear = 2026
+) {
+  const dy = Number(draftYear) || 2026;
+  const teamDraftFallbackUrl = buildPfrTeamDraftUrl('SF', dy);
   const curatedPickMeta = {
     'Omar Cooper Jr.': {
       consensusRank: 29,
@@ -1127,13 +1475,13 @@ export async function build2026DraftAndUdfaClass(sfDraft2026Rows = [], spiderBui
     };
 
     draftPicks.push({
-      season: 2026,
+      season: dy,
       type: 'DRAFT_PICK',
       round: Number(row.round),
       pick,
       name,
       playerId: playerMeta?.playerId || '',
-      pfrUrl: row.pfr_player_id ? `https://www.pro-football-reference.com/players/${row.pfr_player_id[0]}/${row.pfr_player_id}.htm` : 'https://www.pro-football-reference.com/teams/sfo/2026_draft.htm',
+      pfrUrl: buildPfrPlayerUrl(row.pfr_player_id) || playerMeta?.pfrUrl || teamDraftFallbackUrl,
       jersey: playerMeta?.jersey ?? null,
       headshotUrl: playerMeta?.headshotUrl || '',
       position: row.position,
@@ -1158,12 +1506,12 @@ export async function build2026DraftAndUdfaClass(sfDraft2026Rows = [], spiderBui
 
   const priorityUdfas = [
     {
-      season: 2026,
+      season: dy,
       type: 'PRIORITY_UDFA',
       name: 'Sebastian Valdez',
       displayName: 'Sebastian Valdez — Priority UDFA Interior DL',
       playerId: valdezMeta?.playerId || '',
-      otcUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+      otcUrl: valdezMeta?.otcUrl || OTC_TEAM_CAP_URL,
       jersey: valdezMeta?.jersey ?? null,
       headshotUrl: valdezMeta?.headshotUrl || '',
       position: 'DT',
@@ -1184,12 +1532,12 @@ export async function build2026DraftAndUdfaClass(sfDraft2026Rows = [], spiderBui
       }
     },
     {
-      season: 2026,
+      season: dy,
       type: 'PRIORITY_UDFA',
       name: 'Priority UDFA Zone Center / Guard',
       displayName: 'Priority UDFA IOL — Zone Center/Guard',
       playerId: '',
-      otcUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+      otcUrl: OTC_TEAM_CAP_URL,
       jersey: null,
       headshotUrl: '',
       position: 'IOL',
@@ -1212,8 +1560,8 @@ export async function build2026DraftAndUdfaClass(sfDraft2026Rows = [], spiderBui
   ];
 
   return {
-    draftYear: 2026,
-    sourceUrl: 'https://www.pro-football-reference.com/teams/sfo/2026_draft.htm',
+    draftYear: dy,
+    sourceUrl: teamDraftFallbackUrl,
     otcDraftUrl: 'https://overthecap.com/draft',
     picks: draftPicks,
     priorityUdfas

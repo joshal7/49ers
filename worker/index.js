@@ -9,10 +9,13 @@
  */
 
 const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
-STRICT EDITORIAL RULES:
-1. ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing.
-2. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math (base salary, option/signing proration, Pre/Post-June 1 dead money, rollover cap).
-3. Cite originating beat writers (Maiocco, Barrows, Wagoner, Lombardi, Chan, Branch, Inman, Tim Ryan, Jonnydel, Crocker) or open datasets (nflverse, OverTheCap, NextGen Stats).`;
+CRITICAL ANTI-HALLUCINATION & REAL-TIME GROUNDING DIRECTIVE:
+1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, or injury designations.
+2. Treat the provided LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
+3. Always prize the latest verified trade data, up-to-the-minute Week injury/practice statuses, active 53-man / IR / Practice Squad roster lists, and current win/loss standings.
+4. NEVER attribute retired, cut, or departed former 49ers (such as Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the current active 49ers rotation unless explicitly marked as Active on the provided LIVE 49ERS ROSTER snapshot.
+5. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math (base salary, option/signing proration, Pre/Post-June 1 dead money, Article 13 rollover cap).
+6. Cite originating beat writers (Maiocco, Barrows, Wagoner, Lombardi, Chan, Branch, Inman, Kurtenbach, Kawakami, Peacock, Crocker, Schefter, Rapoport, Pelissero) or open datasets (nflverse, OverTheCap, NextGen Stats).`;
 
 function corsHeaders(origin, allowedOrigin) {
   const allow =
@@ -54,6 +57,49 @@ function parseScriptTurnsSafe(rawText) {
     if (Array.isArray(arr) && arr.length > 0) return arr;
   } catch {}
   return [{ speaker: 'Marcus', text: cleaned || 'Briefing generated.' }];
+}
+
+const RETIRED_OR_DEPARTED_GUARDRAIL_NAMES = [
+  'Bryce Huff',
+  'Javon Hargrave',
+  'Charvarius Ward',
+  'Talanoa Hufanga',
+  'Aaron Banks',
+  'Leonard Floyd',
+  'Maliek Collins',
+  'Jordan Mason',
+  'Elijah Mitchell',
+  'Jauan Jennings',
+  'Arik Armstead',
+  'Chase Young',
+  'Randy Gregory',
+  'Jake Moody',
+  'Sam Darnold',
+  'Jimmy Garoppolo',
+  'Trey Lance'
+];
+
+function scrubStaleWeightHallucinations(text = '', contextSummary = '') {
+  let out = String(text || '');
+  if (!out) return out;
+  const ctxLower = String(contextSummary || '').toLowerCase();
+  const historicalRe = /\b(retired|former|departed|no longer|not on the active|not currently on)\b/i;
+
+  for (const name of RETIRED_OR_DEPARTED_GUARDRAIL_NAMES) {
+    // Allow only if the live roster snapshot explicitly lists them outside the "DO NOT CITE" line
+    const activeCtxOnly = ctxLower.split('do not cite')[0] || '';
+    if (activeCtxOnly.includes(name.toLowerCase())) continue;
+
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/['’]/g, "['’]?");
+    const listCommaRe = new RegExp(`\\b${escaped},\\s*`, 'gi');
+    const re = new RegExp(`\\b${escaped}\\b`, 'gi');
+    if (!re.test(out)) continue;
+    if (historicalRe.test(out)) continue;
+
+    out = out.replace(listCommaRe, '');
+    out = out.replace(re, 'Mykel Williams');
+  }
+  return out;
 }
 
 async function sha256Short(input) {
@@ -149,14 +195,19 @@ export default {
         return jsonResponse({ error: 'Invalid JSON request body' }, 400, cors);
       }
       const prompt = String(body.prompt || '').trim();
-      const sectionContext = String(body.contextSummary || '').slice(0, 6000);
+      const sectionContext = String(body.contextSummary || '').slice(0, 14000);
+      const clientSystemPrompt = String(body.systemPrompt || '').slice(0, 4000);
+      const effectiveSystemPrompt = clientSystemPrompt
+        ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystemPrompt}`
+        : EDITORIAL_SYSTEM_PROMPT;
       const author = String(body.author || 'Friend Group').slice(0, 40);
 
       if (!prompt) {
         return jsonResponse({ error: 'Prompt is required' }, 400, cors);
       }
 
-      const cacheKey = `analysis:${await sha256Short(prompt.toLowerCase())}`;
+      const contextHash = await sha256Short(sectionContext.slice(0, 600));
+      const cacheKey = `analysis:${await sha256Short(`${prompt.toLowerCase()}:${contextHash}`)}`;
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
         return jsonResponse({ cached: true, item: existing }, 200, cors);
@@ -178,14 +229,14 @@ export default {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: EDITORIAL_SYSTEM_PROMPT }] },
+          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
           tools: [{ google_search: {} }],
           contents: [
             {
               role: 'user',
               parts: [
                 {
-                  text: `Analyze this 49ers topic in depth using live facts, film tendencies, EPA/NGS metrics, and CBA cap numbers:\n\nTOPIC: ${prompt}\n\nLOCAL APP DATA SNAPSHOT:\n${sectionContext}`
+                  text: `Analyze this 49ers topic in depth using ONLY verified live real-time roster/injury/trade/standings facts (never stale model weights), film tendencies, EPA/NGS metrics, and CBA cap numbers:\n\nTOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
                 }
               ]
             }
@@ -199,9 +250,10 @@ export default {
       }
 
       const geminiJson = await geminiRes.json();
-      const markdown =
+      const rawMarkdown =
         geminiJson.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') ||
         'No synthesis generated.';
+      const markdown = scrubStaleWeightHallucinations(rawMarkdown, sectionContext);
       const groundingChunks =
         geminiJson.candidates?.[0]?.groundingMetadata?.groundingChunks
           ?.map(c => c.web?.title)
@@ -236,14 +288,19 @@ export default {
       const topic = String(body.topic || '').trim();
       const durationMinutes = Math.max(2, Math.min(20, Number(body.durationMinutes || 5)));
       const format = body.format === 'solo' ? 'Solo Executive Briefing' : 'Two-Host Analytical Banter';
-      const contextSummary = String(body.contextSummary || '').slice(0, 5000);
+      const contextSummary = String(body.contextSummary || '').slice(0, 14000);
+      const clientSystemPrompt = String(body.systemPrompt || '').slice(0, 4000);
+      const effectiveSystemPrompt = clientSystemPrompt
+        ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystemPrompt}`
+        : EDITORIAL_SYSTEM_PROMPT;
       const targetWords = Math.round(durationMinutes * 145);
 
       if (!topic) {
         return jsonResponse({ error: 'Topic is required' }, 400, cors);
       }
 
-      const epId = `live_${await sha256Short(`${topic}:${durationMinutes}:${format}`)}`;
+      const contextHash = await sha256Short(contextSummary.slice(0, 600));
+      const epId = `live_${await sha256Short(`${topic}:${durationMinutes}:${format}:${contextHash}`)}`;
       const existing = await env.SHARED_CACHE?.get(`episode:${epId}`, 'json');
       if (existing && !body.forceRefresh) {
         return jsonResponse({ cached: true, episode: existing }, 200, cors);
@@ -257,21 +314,21 @@ export default {
         );
       }
 
-      // Step 1: Generate tightly timed analytical script via Gemini + Google Search Grounding
+      // Step 1: Generate tightly timed analytical script strictly grounded in live roster/injury/trade/W-L data
       const scriptUrl = `https://generativelanguage.googleapis.com/v1beta/models/${
         env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
       }:generateContent?key=${env.GEMINI_API_KEY}`;
 
       const scriptPrompt =
         format === 'Solo Executive Briefing'
-          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output STRICT JSON array of objects [{"speaker":"Marcus","text":"..."}]. Zero fluff. Include real stats, cap numbers, and scheme details.\nContext:\n${contextSummary}`
-          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & EPA Data Insider) on: "${topic}". Output STRICT JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}]. Zero morning-zoo fluff. Dive straight into scheme, EPA, injuries, and cap math.\nContext:\n${contextSummary}`;
+          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output STRICT JSON array of objects [{"speaker":"Marcus","text":"..."}]. Zero fluff. Anchor 100% of roster names, trades, injuries, and W-L records to the LIVE REAL-TIME DATA SNAPSHOT below (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & EPA Data Insider) on: "${topic}". Output STRICT JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}]. Zero morning-zoo fluff. Anchor 100% of roster names, trades, injuries, and W-L records to the LIVE REAL-TIME DATA SNAPSHOT below (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
 
       const scriptRes = await fetch(scriptUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: EDITORIAL_SYSTEM_PROMPT }] },
+          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
           contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }],
           generationConfig: { responseMimeType: 'application/json' }
         })
@@ -283,7 +340,10 @@ export default {
 
       const scriptJson = await scriptRes.json();
       const rawScriptText = scriptJson.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
-      const turns = parseScriptTurnsSafe(rawScriptText);
+      const turns = parseScriptTurnsSafe(rawScriptText).map(t => ({
+        ...t,
+        text: scrubStaleWeightHallucinations(t.text || '', contextSummary)
+      }));
 
       // Step 2: Render Multi-Speaker Native Audio via Gemini TTS Free Tier
       let audioUrl = null;

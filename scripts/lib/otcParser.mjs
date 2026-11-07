@@ -1,7 +1,8 @@
 /**
  * OverTheCap Multi-Year HTML Parser for San Francisco 49ers
  * Parses Active Roster, Injured Reserve, Practice Squad, and Dead Money tables
- * across 2026–2030, extracting exact Base Salary, Prorated Bonuses, Cap Hits,
+ * across the live 5-year OTC window (dynamically detected from HTML, e.g. 2026–2030),
+ * extracting exact Base Salary, Prorated Bonuses, Cap Hits, player slugs/IDs,
  * and Pre/Post-June 1 Cut, Trade, Restructure, & Extension deltas.
  */
 
@@ -11,7 +12,7 @@ export function parseDollarCell(raw = '') {
     .replace(/\s+/g, '')
     .trim();
   if (!clean || clean === '-' || clean === '$0') return 0;
-  const isNeg = clean.startsWith('(') && clean.endsWith(')') || clean.startsWith('-');
+  const isNeg = (clean.startsWith('(') && clean.endsWith(')')) || clean.startsWith('-');
   const digits = Number(clean.replace(/[^0-9.]/g, ''));
   if (Number.isNaN(digits)) return 0;
   return isNeg ? -Math.round(digits) : Math.round(digits);
@@ -26,24 +27,46 @@ function parseTxDivs(cellHtml = '') {
   return out;
 }
 
-export function parseOverTheCapHtml(html = '') {
-  const years = ['2026', '2027', '2028', '2029', '2030'];
+export function parseOverTheCapHtml(html = '', fallbackBaseYear = 2026) {
+  const detectedYears = [...new Set([...String(html || '').matchAll(/\bid="y(20\d{2})"/g)].map(m => m[1]))]
+    .sort((a, b) => Number(a) - Number(b))
+    .slice(0, 5);
+  const baseYrNum = detectedYears.length ? Number(detectedYears[0]) : Number(fallbackBaseYear) || new Date().getFullYear();
+  const years =
+    detectedYears.length >= 3
+      ? detectedYears
+      : Array.from({ length: 5 }, (_, i) => String(baseYrNum + i));
+  const baseYearStr = years[0];
+
   const yearSummaries = {};
-  const playersMap = new Map(); // key: otcId or normalized name
+  const playersMap = new Map(); // key: numeric otcId
+  const directoryMap = new Map(); // key: numeric otcId across ALL tables on the page (active, IR, PS, PUP, dead)
   const deadMoneyLedgerByYear = {};
 
-  // Projected NFL Cap Ceilings for multi-year planning
-  const projectedCeilings = {
+  // Capture every genuine /player/<slug>/<otcId>/ anchor on the page for link resolution
+  for (const lm of String(html || '').matchAll(/<a\s+href="\/player\/([^/"]+)\/(\d+)\/?"[^>]*>([\s\S]*?)<\/a>/gi)) {
+    const slug = lm[1].trim();
+    const otcId = lm[2].trim();
+    const name = lm[3].replace(/<[^>]+>/g, '').trim();
+    if (slug && otcId && name && !directoryMap.has(otcId)) {
+      directoryMap.set(otcId, { otcId, slug, name });
+    }
+  }
+
+  // Projected NFL Cap Ceilings for multi-year planning (with linear CBA growth extrapolation for future years)
+  const knownCeilings = {
     '2026': 301_200_000,
     '2027': 323_500_000,
     '2028': 346_000_000,
     '2029': 368_500_000,
     '2030': 391_000_000
   };
+  const getProjectedCeiling = yrStr =>
+    knownCeilings[yrStr] || Math.round(301_200_000 + Math.max(0, Number(yrStr) - 2026) * 22_500_000);
 
   for (let idx = 0; idx < years.length; idx++) {
     const yr = years[idx];
-    const nextYr = years[idx + 1] || '2031';
+    const nextYr = years[idx + 1] || String(Number(yr) + 1);
     const startIdx = html.indexOf(`id="y${yr}"`);
     if (startIdx === -1) continue;
     const endIdx = html.indexOf(`id="y${nextYr}"`, startIdx + 10);
@@ -66,10 +89,11 @@ export function parseOverTheCapHtml(html = '') {
       const rows = [...contractedMatch[1].matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)];
       for (const rMatch of rows) {
         const rowHtml = rMatch[1];
-        const linkMatch = rowHtml.match(/<a\s+href="\/player\/([^/]+)\/(\d+)\/?">([^<]+)<\/a>/i);
+        const linkMatch = rowHtml.match(/<a\s+href="\/player\/([^/"]+)\/(\d+)\/?"[^>]*>([\s\S]*?)<\/a>/i);
         if (!linkMatch) continue;
-        const [, slug, otcId, rawName] = linkMatch;
-        const name = rawName.trim();
+        const slug = linkMatch[1].trim();
+        const otcId = linkMatch[2].trim();
+        const name = linkMatch[3].replace(/<[^>]+>/g, '').trim();
         const tds = [...rowHtml.matchAll(/<td([^>]*)>([\s\S]*?)<\/td>/gi)];
         if (tds.length < 13) continue;
 
@@ -103,6 +127,8 @@ export function parseOverTheCapHtml(html = '') {
             name,
             contractsByYear: {}
           });
+        } else if (slug && !playersMap.get(otcId).slug) {
+          playersMap.get(otcId).slug = slug;
         }
         playersMap.get(otcId).contractsByYear[yr] = {
           year: Number(yr),
@@ -141,19 +167,43 @@ export function parseOverTheCapHtml(html = '') {
       for (const r of rows) {
         const tds = [...r[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)];
         if (tds.length < 2) continue;
-        const linkMatch = tds[0][1].match(/<a\s+href="\/player\/([^/]+)\/(\d+)\/?">([^<]+)<\/a>/i);
-        const name = linkMatch ? linkMatch[3].trim() : tds[0][1].replace(/<[^>]+>/g, '').trim();
-        const otcId = linkMatch ? linkMatch[2] : `na_${name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+        const linkMatch = tds[0][1].match(/<a\s+href="\/player\/([^/"]+)\/(\d+)\/?"[^>]*>([\s\S]*?)<\/a>/i);
+        const slug = linkMatch ? linkMatch[1].trim() : null;
+        const otcId = linkMatch ? linkMatch[2].trim() : `na_${tds[0][1].replace(/<[^>]+>/g, '').trim().toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+        const name = linkMatch
+          ? linkMatch[3].replace(/<[^>]+>/g, '').trim()
+          : tds[0][1].replace(/<[^>]+>/g, '').trim();
         const capCharge = parseDollarCell(tds[tds.length - 1][1]);
         if (!name || capCharge === 0) continue;
 
         if (catLower.includes('dead')) {
           deadMoneyTotal += capCharge;
-          deadMoneyLedgerByYear[yr].push({ otcId, name, capCharge });
+          deadMoneyLedgerByYear[yr].push({
+            otcId,
+            slug,
+            otcUrl: slug && /^\d+$/.test(otcId) ? `https://overthecap.com/player/${slug}/${otcId}/` : null,
+            name,
+            capCharge
+          });
         } else {
           if (catLower.includes('injured') || catLower.includes('pup')) irCapTotal += capCharge;
           if (catLower.includes('practice')) psCapTotal += capCharge;
+
+          // Ensure IR / PUP / Practice Squad players WITH genuine OTC links are registered in playersMap
+          // even when they do not appear in the active-roster table for that season.
+          if (linkMatch && /^\d+$/.test(otcId) && !playersMap.has(otcId)) {
+            playersMap.set(otcId, {
+              otcId,
+              slug,
+              name,
+              contractsByYear: {}
+            });
+          }
+
           if (playersMap.has(otcId) && !playersMap.get(otcId).contractsByYear[yr]) {
+            if (slug && !playersMap.get(otcId).slug) {
+              playersMap.get(otcId).slug = slug;
+            }
             playersMap.get(otcId).contractsByYear[yr] = {
               year: Number(yr),
               rosterBucket: catLower.includes('practice') ? 'practice_squad' : 'ir',
@@ -180,12 +230,12 @@ export function parseOverTheCapHtml(html = '') {
       }
     }
 
-    const draftPoolReserve = yr === '2026' ? 0 : 8_850_000; // 2026 rookies already signed!
-    const inSeasonBuffer = yr === '2026' ? 6_500_000 : 7_500_000;
+    const draftPoolReserve = yr === baseYearStr ? 0 : 8_850_000;
+    const inSeasonBuffer = yr === baseYearStr ? 6_500_000 : 7_500_000;
 
     yearSummaries[yr] = {
       year: Number(yr),
-      capCeiling: projectedCeilings[yr] || 301_200_000,
+      capCeiling: getProjectedCeiling(yr),
       totalLiabilities,
       top51,
       teamCapSpace,
@@ -203,8 +253,19 @@ export function parseOverTheCapHtml(html = '') {
     };
   }
 
+  // Merge any remaining directory-only OTC links (e.g. dead-money-only or zero-dollar reserve players)
+  // into `otcDirectory` so player link resolution never misses a genuine OTC slug/ID.
+  for (const [otcId, p] of playersMap.entries()) {
+    if (!directoryMap.has(otcId) && p.slug) {
+      directoryMap.set(otcId, { otcId, slug: p.slug, name: p.name });
+    }
+  }
+
   return {
+    baseYear: Number(baseYearStr),
+    yearKeys: years,
     years: yearSummaries,
-    otcPlayers: Array.from(playersMap.values())
+    otcPlayers: Array.from(playersMap.values()),
+    otcDirectory: Array.from(directoryMap.values())
   };
 }

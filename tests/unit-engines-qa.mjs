@@ -34,7 +34,21 @@ import {
   filterNewsByUserPrefs
 } from '../src/engine/antiFluffFilter.js';
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
-import { hydrateLiveEspnOverlay } from '../src/services/dataService.js';
+import { hydrateLiveEspnOverlay, hydrateLiveBlueskyBeatWire } from '../src/services/dataService.js';
+import {
+  validateNoHallucinatedRosterClaims,
+  sanitizeHallucinatedRosterText,
+  buildLiveGroundingSystemPrompt,
+  buildAuthoritativeLiveContextSnapshot
+} from '../src/engine/groundingValidator.js';
+import {
+  SHORT_TWEET_FULL_TEXT_LIMIT,
+  classifyBreakingItem,
+  sortNewsWithBreakingPriority,
+  formatTweetBodyForDisplay,
+  is49ersGameLiveWindow
+} from '../src/engine/breakingClassifier.js';
+import { buildNativePodcastAppHref } from '../src/views/audioAiView.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -735,6 +749,7 @@ test('All outbound URLs across every data/*.json feed are valid HTTPS URLs with 
     'data/schedule-matchup.json',
     'data/health.json',
     'data/seasonal.json',
+    'data/beat-podcasts.json',
     'data/podcasts/index.json'
   ];
 
@@ -757,7 +772,10 @@ test('All outbound URLs across every data/*.json feed are valid HTTPS URLs with 
         if (k === 'audioUrl' && v.startsWith('./')) continue;
         urlCount++;
         assert.ok(v.startsWith('https://'), `Non-HTTPS outbound URL at ${trail}.${k}: ${v}`);
-        assert.ok(!/undefined|NaN|null/i.test(v), `Corrupt interpolation in URL at ${trail}.${k}: ${v}`);
+        assert.ok(
+          !/(?:\bundefined\b|\bNaN\b|\bnull\b|\/undefined|\/NaN|\/null)/.test(v),
+          `Corrupt interpolation in URL at ${trail}.${k}: ${v}`
+        );
         // Throws if malformed URL
         new URL(v);
       } else if (v && typeof v === 'object') {
@@ -903,10 +921,324 @@ await testAsync('Zero-server client auto-refresh (hydrateLiveEspnOverlay) automa
     assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.oppRecord, '4-5');
     assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.homeAway, 'away');
     assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.betting.spread, 'SF -4.0');
-    assert.ok(mockAppData.news.rawStream[0].url.startsWith('https://www.espn.com/'));
+    assert.ok(
+      mockAppData.news.rawStream.some(it => it.url === 'https://www.espn.com/nfl/story/_/id/999001/49ers-win'),
+      'Expected hydrated ESPN article upgraded from http:// to https://'
+    );
   } finally {
     globalThis.fetch = origFetch;
   }
+});
+
+console.log('\n=== [8/8] Anti-Hallucination Grounding, 7d Player Mentions, <1m Breaking Wire & 6 Beat Podcasts QA ===');
+
+test('Anti-hallucination validator catches retired/departed players (Bryce Huff) while permitting active 2026 49ers & historical context', () => {
+  const ros = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const badClaim = 'Unanimous beat consensus that SF will manage Bosa around 45 snaps, rotating Bryce Huff, Keion White, and rookie Romello Height.';
+  const checkBad = validateNoHallucinatedRosterClaims(badClaim, ros.players);
+  assert.equal(checkBad.ok, false, 'Must flag retired Bryce Huff as hallucinated active 49er');
+  assert.ok(checkBad.violations.includes('Bryce Huff'));
+
+  const scrubbed = sanitizeHallucinatedRosterText(badClaim, ros.players);
+  assert.ok(!/Bryce Huff/i.test(scrubbed), `Expected Bryce Huff scrubbed, got: ${scrubbed}`);
+  assert.ok(scrubbed.includes('Keion White'), 'Active 49er Keion White must remain intact');
+
+  // Historical / retired mention is permitted
+  const historicalOk = validateNoHallucinatedRosterClaims(
+    'Retired former 49er Bryce Huff is no longer on the 2026 roster.',
+    ros.players
+  );
+  assert.equal(historicalOk.ok, true, 'Explicit retired/former phrasing should be allowed');
+
+  // Players actually on live 2026 49ers roster (DeForest Buckner, Mike Evans, Deebo Samuel Sr.) are permitted
+  const activeReturnedOk = validateNoHallucinatedRosterClaims(
+    'DeForest Buckner and Nick Bosa anchor the front while Mike Evans rehabs on IR.',
+    ros.players
+  );
+  assert.equal(activeReturnedOk.ok, true);
+});
+
+test('Zero hallucinations across news.json, seasonal.json, and podcasts/index.json; system prompt enforces real-time priority', () => {
+  const meta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+  const ros = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const news = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const health = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const sm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const cap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+  const podIdx = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'podcasts', 'index.json'), 'utf8'));
+
+  const rawNewsTxt = JSON.stringify(news);
+  const rawSeasonalTxt = JSON.stringify(seasonal);
+  const rawPodTxt = JSON.stringify(podIdx);
+  assert.ok(!/Bryce Huff/i.test(rawNewsTxt), 'news.json must have zero Bryce Huff references');
+  assert.ok(!/Bryce Huff/i.test(rawSeasonalTxt), 'seasonal.json must have zero Bryce Huff references');
+  assert.ok(!/Bryce Huff/i.test(rawPodTxt), 'podcasts/index.json must have zero Bryce Huff references');
+
+  // 2027 Draft Prep prospect board, needs & mock drafts must NOT list players already drafted in April 2026
+  const dp = seasonal.draftPrep2027 || {};
+  const draft2027ProspectsTxt = JSON.stringify({
+    topNeeds2027: dp.topNeeds2027,
+    consensusMocks: dp.consensusMocks,
+    prospectBoard: dp.prospectBoard
+  });
+  for (const alreadyInNfl of ['Isaiah World', 'Spencer Fano', 'Jermod McCoy', 'Malik Muhammad', 'Eli Stowers']) {
+    assert.ok(!draft2027ProspectsTxt.includes(alreadyInNfl), `2027 Draft Prep listed 2026 NFL draftee ${alreadyInNfl}`);
+  }
+
+  for (const b of news.clusteredBriefs) {
+    const val = validateNoHallucinatedRosterClaims(
+      `${b.headline} ${(b.hardFacts || []).join(' ')} ${(b.schemeAndCapTakeaways || []).join(' ')} ${b.consensusVsDissent || ''}`,
+      ros.players
+    );
+    assert.equal(val.ok, true, `Cluster ${b.id} failed anti-hallucination check: ${JSON.stringify(val.violations)}`);
+  }
+
+  const sysPrompt = buildLiveGroundingSystemPrompt({ meta, roster: ros, health, scheduleMatchup: sm, cap, seasonal });
+  const liveSnap = buildAuthoritativeLiveContextSnapshot({ meta, roster: ros, health, scheduleMatchup: sm, cap, seasonal, news });
+  assert.ok(sysPrompt.includes('NEVER rely on stale pre-trained model weights'));
+  assert.ok(sysPrompt.includes('Bryce Huff'));
+  assert.ok(liveSnap.includes('ACTIVE 53-MAN ROSTER'));
+  assert.ok(liveSnap.includes('DeForest Buckner'));
+  assert.ok(liveSnap.includes('Mike Evans'));
+});
+
+await testAsync('Worker /api/analyze scrubs hallucinated retired players from LLM output and busts cache when live data snapshot updates', async () => {
+  const origFetch = globalThis.fetch;
+  let geminiCalls = 0;
+  globalThis.fetch = async () => {
+    geminiCalls++;
+    return new Response(
+      JSON.stringify({
+        candidates: [
+          {
+            content: {
+              parts: [
+                {
+                  text: '### Pass Rush Rotation\n* SF will rotate Bryce Huff, Keion White, and Nick Bosa on early downs.'
+                }
+              ]
+            }
+          }
+        ]
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+  try {
+    const envWithKey = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-key' });
+    const res1 = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/analyze', {
+          method: 'POST',
+          headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: 'Evaluate 49ers DE rotation',
+            contextSummary: 'LIVE RECORD: 6-1 | Active DE: Nick Bosa, Keion White, Mykel Williams'
+          })
+        }),
+        envWithKey
+      )
+    ).json();
+
+    assert.ok(!/Bryce Huff/i.test(res1.item.markdown), `Worker failed to scrub Bryce Huff: ${res1.item.markdown}`);
+    assert.ok(res1.item.markdown.includes('Keion White'));
+    assert.equal(geminiCalls, 1);
+
+    // Updating live contextSummary (e.g. after game moves record to 7-1) must bypass old KV cache!
+    const res2 = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/analyze', {
+          method: 'POST',
+          headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: 'Evaluate 49ers DE rotation',
+            contextSummary: 'LIVE RECORD: 7-1 | Active DE: Nick Bosa, Keion White, Mykel Williams'
+          })
+        }),
+        envWithKey
+      )
+    ).json();
+    assert.equal(res2.cached, false, 'Changed live contextSummary must bust stale KV cache');
+    assert.equal(geminiCalls, 2);
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+test('Deep 7-day player mentions populate Mike Evans & Nick Bosa with tweets + articles, 100% author attribution, and full short tweets', () => {
+  const ros = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const news = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+
+  const mikeEvans = ros.players.find(p => p.name === 'Mike Evans');
+  const nickBosa = ros.players.find(p => p.name === 'Nick Bosa');
+  assert.ok(mikeEvans, 'Mike Evans present on 2026 49ers roster');
+  assert.ok(mikeEvans.recentNews.length >= 5, `Expected >=5 recent 7d mentions for Mike Evans, got ${mikeEvans.recentNews.length}`);
+  assert.ok(mikeEvans.recentNews.some(n => n.type === 'tweet'), 'Mike Evans must include salient recent tweets');
+  assert.ok(mikeEvans.recentNews.some(n => n.type === 'article'), 'Mike Evans must include recent articles');
+  assert.ok(nickBosa.recentNews.length >= 5 && nickBosa.recentNews.some(n => n.type === 'tweet'));
+
+  // 100% author attribution across every player mention and every rawStream item
+  for (const p of ros.players) {
+    for (const m of p.recentNews || []) {
+      assert.ok(
+        typeof m.author === 'string' && m.author.trim().length >= 2,
+        `Player ${p.name} mention "${m.headline}" missing author`
+      );
+    }
+  }
+  for (const item of news.rawStream) {
+    const auth = item.author || item.reporterName;
+    assert.ok(typeof auth === 'string' && auth.trim().length >= 2, `Raw item ${item.id} missing author`);
+  }
+
+  // Short tweet full-text preservation (<= 320 chars) vs long-post clean boundary trim
+  const shortTweet = '49ers DE Nick Bosa (calf) and RB Christian McCaffrey (hamstring) are off the injury report and good to go Sunday vs. the Raiders.';
+  const fmtShort = formatTweetBodyForDisplay(shortTweet, SHORT_TWEET_FULL_TEXT_LIMIT);
+  assert.equal(fmtShort.text, shortTweet);
+  assert.equal(fmtShort.isFullTweet, true);
+
+  const veryLongPost = `${'A'.repeat(180)} ${'B'.repeat(180)}`;
+  const fmtLong = formatTweetBodyForDisplay(veryLongPost, SHORT_TWEET_FULL_TEXT_LIMIT);
+  assert.equal(fmtLong.isFullTweet, false);
+  assert.ok(fmtLong.text.endsWith('…') && fmtLong.text.length <= SHORT_TWEET_FULL_TEXT_LIMIT + 1);
+});
+
+await testAsync('Breaking in-game injury return classifier, game-window detector & live Bluesky hydrator elevate <1m injury tweets to #1', async () => {
+  const nowMs = Date.parse('2026-11-08T22:15:00Z'); // Mid-game Sunday 2:15 PM PT (kickoff 21:25Z)
+  const gameAppData = {
+    scheduleMatchup: {
+      upcomingMatchup: { kickoffIso: '2026-11-08T21:25:00Z', liveState: 'pre' },
+      schedule: [{ week: 9, dateIso: '2026-11-08T21:25:00Z', completed: false, statusState: 'pre' }]
+    }
+  };
+  assert.equal(is49ersGameLiveWindow(gameAppData, nowMs), true, 'Must detect active 49ers game window by kickoff clock');
+  assert.equal(
+    is49ersGameLiveWindow(gameAppData, Date.parse('2026-11-05T18:00:00Z')),
+    false,
+    'Thursday afternoon must not be flagged as live game window'
+  );
+
+  const items = [
+    {
+      id: 'older_feature',
+      type: 'article',
+      title: 'Film breakdown of Brock Purdy play-action footwork',
+      publishedAt: new Date(nowMs - 5 * 60_000).toISOString()
+    },
+    {
+      id: 'live_inj',
+      type: 'tweet',
+      title: 'Injury update: 49ers LB Fred Warner (ankle) is questionable to return after heading to the blue medical tent.',
+      publishedAt: new Date(nowMs - 15 * 60_000).toISOString()
+    }
+  ];
+  const sorted = sortNewsWithBreakingPriority(items, nowMs);
+  assert.equal(sorted[0].id, 'live_inj', 'In-game injury return update must rise to #1 above newer regular articles');
+  assert.equal(sorted[0].breakingBadge, 'LIVE INJURY UPDATE');
+  assert.equal(sorted[0].isInGameInjury, true);
+
+  // Mock Bluesky XRPC live feed to verify client sub-minute hydration into rawStream AND player.recentNews
+  const ros = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const news = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const liveTestData = { roster: ros, news: { rawStream: [...news.rawStream] } };
+
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async url => {
+    if (String(url).includes('mattmaiocco.bsky.social')) {
+      return new Response(
+        JSON.stringify({
+          feed: [
+            {
+              post: {
+                uri: 'at://did:plc:test/app.bsky.feed.post/liveinj999',
+                record: {
+                  text: 'Injury update from Levi’s Stadium: 49ers DE Nick Bosa (ankle) is questionable to return in the 3rd quarter.',
+                  createdAt: new Date().toISOString()
+                }
+              }
+            }
+          ]
+        }),
+        { status: 200 }
+      );
+    }
+    return new Response(JSON.stringify({ feed: [] }), { status: 200 });
+  };
+
+  try {
+    const added = await hydrateLiveBlueskyBeatWire(liveTestData);
+    assert.equal(added, 1);
+    assert.ok(liveTestData.news.rawStream[0].title.includes('Nick Bosa (ankle) is questionable to return'));
+    assert.equal(liveTestData.news.rawStream[0].breakingBadge, 'LIVE INJURY UPDATE');
+    assert.equal(liveTestData.news.rawStream[0].author, 'Matt Maiocco');
+
+    const bosa = liveTestData.roster.players.find(p => p.name === 'Nick Bosa');
+    assert.ok(bosa.recentNews[0].headline.includes('Nick Bosa (ankle) is questionable to return'));
+    assert.equal(bosa.recentNews[0].breakingBadge, 'LIVE INJURY UPDATE');
+    assert.equal(bosa.recentNews[0].author, 'Matt Maiocco');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+test('All 6 flagship 49ers podcasts (last 7 days) are populated and native iOS / Android podcast app deep links resolve accurately', () => {
+  const pods = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'beat-podcasts.json'), 'utf8'));
+  const requiredShows = [
+    'The Gold Standard',
+    '49ers Talk',
+    '49ers +/-',
+    'Dieter and Hutch',
+    'Locked On 49ers',
+    'Lombardi Lounge'
+  ];
+  const showNames = pods.shows.map(s => s.name);
+  for (const req of requiredShows) {
+    assert.ok(showNames.includes(req), `Missing required 49ers podcast show: ${req}`);
+  }
+  assert.ok(pods.episodes.length >= 10, `Expected >=10 49ers podcast episodes from last 7 days, got ${pods.episodes.length}`);
+
+  const refMs = new Date(pods.updatedAt).getTime();
+  for (const ep of pods.episodes) {
+    assert.ok(ep.title && ep.title.length >= 4, 'Podcast episode missing title');
+    assert.ok(ep.summary && ep.summary.length >= 15, `Podcast episode "${ep.title}" missing summary`);
+    const ageDays = (refMs - new Date(ep.publishedAt).getTime()) / 86_400_000;
+    assert.ok(ageDays <= 7.1 && ageDays >= -0.2, `Episode "${ep.title}" outside 7-day window (${ageDays.toFixed(2)}d)`);
+  }
+
+  const sampleEp = pods.episodes[0];
+  const iosLaunch = buildNativePodcastAppHref(
+    sampleEp,
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1',
+    5
+  );
+  assert.equal(iosLaunch.platform, 'ios');
+  assert.ok(iosLaunch.href.startsWith('podcasts://podcasts.apple.com/'), `Expected iOS native podcasts:// URI, got ${iosLaunch.href}`);
+
+  const ipadLaunch = buildNativePodcastAppHref(
+    sampleEp,
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15',
+    5
+  );
+  assert.equal(ipadLaunch.platform, 'ios');
+  assert.ok(ipadLaunch.href.startsWith('podcasts://'));
+
+  const androidLaunch = buildNativePodcastAppHref(
+    sampleEp,
+    'Mozilla/5.0 (Linux; Android 15; Pixel 9 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    5
+  );
+  assert.equal(androidLaunch.platform, 'android');
+  assert.ok(androidLaunch.href.startsWith('intent://') && androidLaunch.href.includes('scheme=pcast'));
+
+  const desktopLaunch = buildNativePodcastAppHref(
+    sampleEp,
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    0
+  );
+  assert.equal(desktopLaunch.platform, 'desktop');
+  assert.ok(desktopLaunch.href.startsWith('https://podcasts.apple.com/'));
 });
 
 console.log(`\n======================================================`);

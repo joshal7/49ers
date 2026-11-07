@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sanitizeExternalUrl } from '../src/engine/linkIntegrity.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -17,11 +18,11 @@ const dataDir = path.join(rootDir, 'data');
 export const OUTLETS = [
   { id: '49ers_official', name: '49ers.com / Official Team', tier: 1, type: 'official', url: 'https://www.49ers.com/news/' },
   { id: 'nbcsba', name: 'NBC Sports Bay Area', tier: 1, type: 'beat', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/' },
-  { id: 'athletic', name: 'The Athletic', tier: 1, type: 'beat', url: 'https://www.nytimes.com/athletic/nfl/team/niners/' },
+  { id: 'athletic', name: 'The Athletic (Public Beat Wire)', tier: 1, type: 'beat', url: 'https://bsky.app/profile/mattbarrows.bsky.social' },
   { id: 'espn', name: 'ESPN NFL & 49ers Beat', tier: 1, type: 'national_beat', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' },
   { id: 'sf_standard', name: 'The San Francisco Standard', tier: 1, type: 'beat', url: 'https://sfstandard.com/sports/' },
-  { id: 'sf_chronicle', name: 'San Francisco Chronicle', tier: 1, type: 'beat', url: 'https://www.sfchronicle.com/sports/49ers/' },
-  { id: 'bay_area_news', name: 'Bay Area News Group / Mercury News', tier: 1, type: 'beat', url: 'https://www.mercurynews.com/sports/49ers/' },
+  { id: 'sf_chronicle', name: 'San Francisco Chronicle (Public Beat Wire)', tier: 1, type: 'beat', url: 'https://x.com/Eric_Branch' },
+  { id: 'bay_area_news', name: 'Bay Area News Group (Public Beat Wire)', tier: 1, type: 'beat', url: 'https://x.com/CamInman' },
   { id: 'niners_nation', name: 'Niners Nation', tier: 2, type: 'blog_analysis', url: 'https://www.ninersnation.com/' },
   { id: '49ers_webzone', name: '49ers Webzone', tier: 2, type: 'blog_news', url: 'https://www.49erswebzone.com/' },
   { id: 'nfl_network', name: 'NFL Network / NFL.com', tier: 1, type: 'national', url: 'https://www.nfl.com/teams/san-francisco-49ers/' },
@@ -141,13 +142,18 @@ export async function buildReporterRegistry() {
     const xUrl = cleanHandle ? `https://x.com/${cleanHandle}` : null;
     const bskyUrl = bskyHandle ? `https://bsky.app/profile/${bskyHandle}` : null;
     const outlet = outletMap.get(rep.outletId);
+    const safeOutletUrl = sanitizeExternalUrl(outlet?.url, bskyUrl || xUrl || 'https://www.49ers.com/news/');
+    const safeProfileUrl = sanitizeExternalUrl(
+      bskyUrl || xUrl || safeOutletUrl,
+      'https://www.49ers.com/news/'
+    );
     return {
       ...rep,
       xUrl,
       bskyHandle,
       bskyUrl,
-      profileUrl: xUrl || bskyUrl || outlet?.url || 'https://www.49ers.com/news/',
-      outletUrl: outlet?.url || null,
+      profileUrl: safeProfileUrl,
+      outletUrl: safeOutletUrl,
       liveWeeklyMentions: liveMentions,
       popularityScore,
       defaultEnabled: true

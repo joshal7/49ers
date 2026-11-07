@@ -10,10 +10,19 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildPfrTeamSeasonUrl, sanitizeExternalUrl } from '../src/engine/linkIntegrity.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const podcastDir = path.join(rootDir, 'data', 'podcasts');
+const activeSeasonYear = (() => {
+  try {
+    const meta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+    return Number(meta.seasonYear) || new Date().getFullYear();
+  } catch {
+    return new Date().getFullYear();
+  }
+})();
 
 const SAMPLE_RATE = 24000;
 const HOST_VOICES = {
@@ -147,9 +156,9 @@ const PRE_CACHED_ANALYSES = [
     createdAt: '2026-11-06T20:40:00-08:00',
     createdBy: '49ers Faithful Film Desk',
     sourcesCited: [
-      { label: 'nflverse 2026 Pass-Rush & EPA', url: 'https://github.com/nflverse/nflverse-data' },
+      { label: `nflverse ${activeSeasonYear} Pass-Rush & EPA`, url: 'https://github.com/nflverse/nflverse-data' },
       { label: 'Kyle Shanahan Press Conference', url: 'https://www.youtube.com/watch?v=x0TpSoyfx7I' },
-      { label: 'Pro-Football-Reference 49ers Defense', url: 'https://www.pro-football-reference.com/teams/sfo/2026.htm' }
+      { label: 'Pro-Football-Reference 49ers Defense', url: buildPfrTeamSeasonUrl('SF', activeSeasonYear) }
     ],
     markdown: `### Executive Finding
 Pairing **DeForest Buckner** (6'7", 295 lbs, 34.4" arm length) and **Osa Odighizuwa** inside with **Nick Bosa** and **Keion White** on the Wide-9 rails eliminates the #1 protection adjustment offenses used against San Francisco in 2024–2025: **5-man half-slide + RB chip toward Bosa**.
@@ -161,7 +170,7 @@ Pairing **DeForest Buckner** (6'7", 295 lbs, 34.4" arm length) and **Osa Odighiz
 2. **Early-Down Run-Fit Integrity vs. Outside Zone**:
    * Through Week 7 without Bosa for 5 games, SF relied heavily on **Fred Warner** erasing leaky B-gap creases. Buckner's career tackle-for-loss rate against outside zone restores two-gap knock-back, keeping Warner clean to rob play-action crossers.
 3. **Snap-Count Pitch Count Projection (Week 9 vs. Raiders)**:
-   * Expect Bosa around **42–46 snaps (~68%)**, with **Bryce Huff** and 3rd-round rookie **Romello Height** rotating on 2nd-and-long speed rushes.`
+   * Expect Bosa around **42–46 snaps (~68%)**, with **Mykel Williams**, **Keion White**, and 3rd-round rookie **Romello Height** rotating on early run downs and 2nd-and-long speed rushes.`
   },
   {
     id: 'analysis_purdy_2026_cpoe_epa',
@@ -375,7 +384,7 @@ async function main() {
         presetLabel: ep.presetLabel,
         createdBy: ep.createdBy,
         createdAt: ep.createdAt,
-        sourceLinks: ep.sourceLinks || [],
+        sourceLinks: (ep.sourceLinks || []).filter(s => sanitizeExternalUrl(s?.url, null)),
         audioUrl: `./data/podcasts/${ep.id}.m4a`,
         durationSec,
         fileSizeBytes,
