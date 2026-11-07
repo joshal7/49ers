@@ -127,11 +127,11 @@ export default {
       return jsonResponse({ ok: true, service: '49ers-worker' }, 200, cors);
     }
 
-    // Authenticate friend-group passcode on API endpoints
+    // Authenticate sync passcode on API endpoints
     const providedPasscode = request.headers.get('X-Group-Passcode') || '';
     if (env.GROUP_PASSCODE && providedPasscode !== env.GROUP_PASSCODE) {
       return jsonResponse(
-        { error: 'Invalid or missing friend-group passcode. Enter your group passcode in Settings.' },
+        { error: 'Invalid or missing sync passcode. Enter your passcode in Settings.' },
         401,
         cors
       );

@@ -1,26 +1,38 @@
 {
-  "updatedAt": "2026-11-07T06:44:08.571Z",
+  "updatedAt": "2026-11-07T08:33:12.257Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
     "availableGrossCap": 35164858,
+    "capSourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+    "transactionsUrl": "https://www.espn.com/nfl/transactions",
     "completed2026Moves": [
       {
         "player": "DeForest Buckner",
+        "playerId": "2971282",
+        "jersey": 99,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png",
         "position": "IDL (3-Tech)",
         "acquiredFrom": "IND",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
         "timing": "Pre-Deadline Reunion (Nov 2026)",
         "costSummary": "Conditional Day-3 Pick Package",
         "schemeGrade": "A",
-        "analysis": "Reunites an elite 6'7\" interior disruptor with Nick Bosa and Kris Kocurek/Wide-9 system; immediately stabilizes interior run defense and A/B-gap pass rush."
+        "sourceUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/",
+        "analysis": "Reunites an elite 6'7\" interior disruptor with Nick Bosa and the Wide-9 system; immediately stabilizes interior run defense and A/B-gap pass rush."
       },
       {
         "player": "Osa Odighizuwa",
+        "playerId": "4035840",
+        "jersey": 92,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035840.png",
         "position": "IDL (DT)",
         "acquiredFrom": "DAL",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
         "timing": "March 11, 2026 Trade",
         "costSummary": "2026 3rd-Round Pick",
         "schemeGrade": "A-",
+        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
         "analysis": "High-motor penetrating 3-technique who carried the interior pass-rush workload during Bosa's Weeks 3–7 absence."
       }
     ],
@@ -47,59 +59,79 @@
     "realisticTargets": [
       {
         "name": "Jakobi Meyers / Veteran Z-X Archetype",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/zrs4ij8mvw7wr1uujwew",
         "currentTeam": "Seller Tier (<30% Playoff Odds)",
         "position": "WR",
         "prorated2026CapCharge": 4250000,
         "projectedPickCost": "2027 5th-Round Pick (or 6th-for-7th Pick Swap w/ salary retention)",
         "fitScore": 91,
+        "sourceUrl": "https://overthecap.com/position/wide-receiver/2026",
         "fitBreakdown": "Elite dig/in-breaker route precision over the middle (Shanahan staple) + high run-blocking effort."
       },
       {
-        "name": "geron Christian / Veteran Swing OT Archetype",
+        "name": "Geron Christian / Veteran Swing OT Archetype",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/op7pv7rqvcvolr41t285",
         "currentTeam": "AFC Seller",
         "position": "OT",
         "prorated2026CapCharge": 1150000,
         "projectedPickCost": "2027 Conditional 6th-Round Pick",
         "fitScore": 84,
+        "sourceUrl": "https://overthecap.com/position/left-tackle/2026",
         "fitBreakdown": "Outside-zone foot speed threshold (<4.72s shuttle) capable of surviving emergency snaps at LT or RT."
       },
       {
         "name": "Calais Campbell / Rotational Big-End Archetype",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ekkaync0yveo2cwxlljr",
         "currentTeam": "NFC/AFC Seller",
         "position": "DL/EDGE",
         "prorated2026CapCharge": 1400000,
         "projectedPickCost": "2027 6th-Round Pick",
         "fitScore": 82,
+        "sourceUrl": "https://overthecap.com/position/interior-defensive-line/2026",
         "fitBreakdown": "Goal-line & 1st-down heavy edge setter + special teams field-goal block length."
       }
     ],
     "tieredRumors": [
       {
-        "tier": "Tier 1 • Verified Insider",
+        "tier": "Tier 1 • Verified Beat & National",
         "sources": "Nick Wagoner, Matt Barrows, Adam Schefter",
+        "sourceUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
         "summary": "After acquiring DeForest Buckner and getting Nick Bosa back healthy for Week 9, SF prefers preserving 2027 rollover cap unless a seller eats base salary on a veteran WR.",
         "credibilityPct": 95
       },
       {
-        "tier": "Tier 1 • Verified Insider",
+        "tier": "Tier 1 • Verified Beat & National",
         "sources": "Adam Schefter, Matt Maiocco",
+        "sourceUrl": "https://bsky.app/profile/mattmaiocco.bsky.social",
         "summary": "Brandon Aiyuk met with 49ers brass Friday seeking reinstatement; both sides working toward a structured resolution rather than contentious grievances.",
         "credibilityPct": 97
       },
       {
-        "tier": "Tier 2 • Beat Analytical Projection",
+        "tier": "Tier 2 • Cap & Beat Projection",
         "sources": "David Lombardi, Kyle Posey",
+        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
         "summary": "Any pre-Tuesday move is projected to stay under $3.5M in remaining 2026 cap charge to protect ~$25M+ carryover into 2027.",
         "credibilityPct": 86
       }
     ]
   },
   "playoffPicture": {
+    "sources": [
+      {
+        "label": "ESPN NFL Standings",
+        "url": "https://www.espn.com/nfl/standings"
+      },
+      {
+        "label": "NFL Official Playoff Picture",
+        "url": "https://www.nfl.com/standings/playoff-picture"
+      }
+    ],
     "baselineSimulation": {
       "iterations": 10000,
       "sfOdds": {
         "abbr": "SF",
         "name": "San Francisco 49ers",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
         "division": "NFC West",
         "currentRecord": "6-1",
         "projectedWins": 13.6,
@@ -121,6 +153,7 @@
         {
           "abbr": "SF",
           "name": "San Francisco 49ers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
           "division": "NFC West",
           "currentRecord": "6-1",
           "projectedWins": 13.6,
@@ -141,6 +174,7 @@
         {
           "abbr": "MIN",
           "name": "Minnesota Vikings",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
           "division": "NFC North",
           "currentRecord": "6-1",
           "projectedWins": 12.9,
@@ -161,6 +195,7 @@
         {
           "abbr": "CHI",
           "name": "Chicago Bears",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png",
           "division": "NFC North",
           "currentRecord": "6-2",
           "projectedWins": 11.6,
@@ -181,6 +216,7 @@
         {
           "abbr": "NYG",
           "name": "New York Giants",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
           "division": "NFC East",
           "currentRecord": "4-2-1",
           "projectedWins": 9.6,
@@ -201,6 +237,7 @@
         {
           "abbr": "DET",
           "name": "Detroit Lions",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
           "division": "NFC North",
           "currentRecord": "5-2",
           "projectedWins": 10.9,
@@ -221,6 +258,7 @@
         {
           "abbr": "TB",
           "name": "Tampa Bay Buccaneers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
           "division": "NFC South",
           "currentRecord": "3-5",
           "projectedWins": 8.1,
@@ -241,6 +279,7 @@
         {
           "abbr": "GB",
           "name": "Green Bay Packers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
           "division": "NFC North",
           "currentRecord": "5-3",
           "projectedWins": 9.6,
@@ -261,6 +300,7 @@
         {
           "abbr": "SEA",
           "name": "Seattle Seahawks",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
           "division": "NFC West",
           "currentRecord": "4-4",
           "projectedWins": 9.1,
@@ -281,6 +321,7 @@
         {
           "abbr": "LAR",
           "name": "Los Angeles Rams",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
           "division": "NFC West",
           "currentRecord": "4-4",
           "projectedWins": 8.7,
@@ -301,6 +342,7 @@
         {
           "abbr": "CAR",
           "name": "Carolina Panthers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
           "division": "NFC South",
           "currentRecord": "3-4",
           "projectedWins": 7.3,
@@ -321,6 +363,7 @@
         {
           "abbr": "DAL",
           "name": "Dallas Cowboys",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
           "division": "NFC East",
           "currentRecord": "3-5",
           "projectedWins": 7.3,
@@ -341,6 +384,7 @@
         {
           "abbr": "ATL",
           "name": "Atlanta Falcons",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
           "division": "NFC South",
           "currentRecord": "3-5",
           "projectedWins": 6.4,
@@ -361,6 +405,7 @@
         {
           "abbr": "WAS",
           "name": "Washington Commanders",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
           "division": "NFC East",
           "currentRecord": "2-4-1",
           "projectedWins": 5.8,
@@ -381,6 +426,7 @@
         {
           "abbr": "NO",
           "name": "New Orleans Saints",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
           "division": "NFC South",
           "currentRecord": "2-5",
           "projectedWins": 5.4,
@@ -401,6 +447,7 @@
         {
           "abbr": "ARI",
           "name": "Arizona Cardinals",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
           "division": "NFC West",
           "currentRecord": "3-5",
           "projectedWins": 6.2,
@@ -421,6 +468,7 @@
         {
           "abbr": "PHI",
           "name": "Philadelphia Eagles",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
           "division": "NFC East",
           "currentRecord": "2-6",
           "projectedWins": 4.5,
@@ -456,7 +504,9 @@
         "primaryDeltaPct": 22.1,
         "seed1SwingPct": 22.1,
         "divSwingPct": 2.8,
-        "berthSwingPct": 0.8
+        "berthSwingPct": 0.8,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
       },
       {
         "gameId": "2026_09_LV_SF",
@@ -473,7 +523,9 @@
         "primaryDeltaPct": 17,
         "seed1SwingPct": 17,
         "divSwingPct": 2.9,
-        "berthSwingPct": 0.7
+        "berthSwingPct": 0.7,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png"
       },
       {
         "gameId": "2026_09_BUF_MIN",
@@ -490,7 +542,9 @@
         "primaryDeltaPct": 11.1,
         "seed1SwingPct": 11.1,
         "divSwingPct": 0,
-        "berthSwingPct": 0
+        "berthSwingPct": 0,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
       },
       {
         "gameId": "2026_10_MIN_GB",
@@ -507,7 +561,9 @@
         "primaryDeltaPct": 11,
         "seed1SwingPct": 11,
         "divSwingPct": 0,
-        "berthSwingPct": 0.4
+        "berthSwingPct": 0.4,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png"
       },
       {
         "gameId": "2026_09_TB_CHI",
@@ -524,7 +580,9 @@
         "primaryDeltaPct": 3.7,
         "seed1SwingPct": 3.7,
         "divSwingPct": 0,
-        "berthSwingPct": 0.1
+        "berthSwingPct": 0.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png"
       },
       {
         "gameId": "2026_10_SEA_LV",
@@ -541,7 +599,9 @@
         "primaryDeltaPct": 1.5,
         "seed1SwingPct": 0.1,
         "divSwingPct": 1.5,
-        "berthSwingPct": 0.2
+        "berthSwingPct": 0.2,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png"
       },
       {
         "gameId": "2026_09_ARI_SEA",
@@ -558,7 +618,9 @@
         "primaryDeltaPct": 1.2,
         "seed1SwingPct": 0.1,
         "divSwingPct": 1.2,
-        "berthSwingPct": 0.1
+        "berthSwingPct": 0.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png"
       },
       {
         "gameId": "2026_09_DET_MIA",
@@ -575,7 +637,9 @@
         "primaryDeltaPct": 0.9,
         "seed1SwingPct": 0.9,
         "divSwingPct": 0,
-        "berthSwingPct": 0.1
+        "berthSwingPct": 0.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png"
       },
       {
         "gameId": "2026_10_NE_DET",
@@ -592,7 +656,9 @@
         "primaryDeltaPct": 0.9,
         "seed1SwingPct": 0.9,
         "divSwingPct": 0,
-        "berthSwingPct": 0.1
+        "berthSwingPct": 0.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png"
       },
       {
         "gameId": "2026_10_LA_ARI",
@@ -609,7 +675,9 @@
         "primaryDeltaPct": 0.7,
         "seed1SwingPct": 0.1,
         "divSwingPct": 0.7,
-        "berthSwingPct": 0.1
+        "berthSwingPct": 0.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png"
       },
       {
         "gameId": "2026_09_LA_WAS",
@@ -626,7 +694,9 @@
         "primaryDeltaPct": 0.6,
         "seed1SwingPct": 0,
         "divSwingPct": 0.6,
-        "berthSwingPct": 0.1
+        "berthSwingPct": 0.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
       },
       {
         "gameId": "2026_09_NYG_PHI",
@@ -643,7 +713,9 @@
         "primaryDeltaPct": 0.5,
         "seed1SwingPct": 0.5,
         "divSwingPct": 0,
-        "berthSwingPct": 0
+        "berthSwingPct": 0,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
       }
     ],
     "seedPathCards": [
@@ -668,6 +740,7 @@
         {
           "abbr": "SF",
           "name": "San Francisco 49ers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
           "division": "NFC West",
           "wins": 6,
           "losses": 1,
@@ -684,6 +757,7 @@
         {
           "abbr": "MIN",
           "name": "Minnesota Vikings",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
           "division": "NFC North",
           "wins": 6,
           "losses": 1,
@@ -700,6 +774,7 @@
         {
           "abbr": "CHI",
           "name": "Chicago Bears",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png",
           "division": "NFC North",
           "wins": 6,
           "losses": 2,
@@ -716,6 +791,7 @@
         {
           "abbr": "DET",
           "name": "Detroit Lions",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
           "division": "NFC North",
           "wins": 5,
           "losses": 2,
@@ -732,6 +808,7 @@
         {
           "abbr": "GB",
           "name": "Green Bay Packers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
           "division": "NFC North",
           "wins": 5,
           "losses": 3,
@@ -748,6 +825,7 @@
         {
           "abbr": "NYG",
           "name": "New York Giants",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
           "division": "NFC East",
           "wins": 4,
           "losses": 2,
@@ -764,6 +842,7 @@
         {
           "abbr": "SEA",
           "name": "Seattle Seahawks",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
           "division": "NFC West",
           "wins": 4,
           "losses": 4,
@@ -780,6 +859,7 @@
         {
           "abbr": "LAR",
           "name": "Los Angeles Rams",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
           "division": "NFC West",
           "wins": 4,
           "losses": 4,
@@ -796,6 +876,7 @@
         {
           "abbr": "CAR",
           "name": "Carolina Panthers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
           "division": "NFC South",
           "wins": 3,
           "losses": 4,
@@ -812,6 +893,7 @@
         {
           "abbr": "TB",
           "name": "Tampa Bay Buccaneers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
           "division": "NFC South",
           "wins": 3,
           "losses": 5,
@@ -828,6 +910,7 @@
         {
           "abbr": "ATL",
           "name": "Atlanta Falcons",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
           "division": "NFC South",
           "wins": 3,
           "losses": 5,
@@ -844,6 +927,7 @@
         {
           "abbr": "ARI",
           "name": "Arizona Cardinals",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
           "division": "NFC West",
           "wins": 3,
           "losses": 5,
@@ -860,6 +944,7 @@
         {
           "abbr": "DAL",
           "name": "Dallas Cowboys",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
           "division": "NFC East",
           "wins": 3,
           "losses": 5,
@@ -876,6 +961,7 @@
         {
           "abbr": "WAS",
           "name": "Washington Commanders",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
           "division": "NFC East",
           "wins": 2,
           "losses": 4,
@@ -892,6 +978,7 @@
         {
           "abbr": "NO",
           "name": "New Orleans Saints",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
           "division": "NFC South",
           "wins": 2,
           "losses": 5,
@@ -908,6 +995,7 @@
         {
           "abbr": "PHI",
           "name": "Philadelphia Eagles",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
           "division": "NFC East",
           "wins": 2,
           "losses": 6,
@@ -2974,6 +3062,24 @@
   },
   "draftPrep2027": {
     "draftYear": 2027,
+    "sources": [
+      {
+        "label": "NFL Mock Draft Database",
+        "url": "https://www.nflmockdraftdatabase.com/team-needs-2027/san-francisco-49ers"
+      },
+      {
+        "label": "Tankathon 49ers Draft Order",
+        "url": "https://www.tankathon.com/nfl/49ers"
+      },
+      {
+        "label": "NFL Combine Tracker",
+        "url": "https://www.nfl.com/combine/"
+      },
+      {
+        "label": "RAS Athletic Database",
+        "url": "https://ras.football/"
+      }
+    ],
     "pickInventory": [
       {
         "round": 1,
@@ -3049,6 +3155,7 @@
         "heightWeight": "6'8\" • 312 lbs",
         "mockFrequencyToSfPct": 28,
         "shanahanLynchFitScore": 94,
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/isaiah-world",
         "archetypeTraits": "Elite 10-yard split & lateral mirror in outside zone; 34.6\" arm length; 3-year Power-4 starter.",
         "sourcesMocking": [
           "Dane Brugler",
@@ -3058,13 +3165,14 @@
       },
       {
         "rank": 2,
-        "name": "Spencer Fano / Gennings Dunker",
+        "name": "Spencer Fano / Zone OT-IOL Tier",
         "pos": "OT/IOL",
-        "school": "Utah / Iowa",
+        "school": "Utah",
         "heightWeight": "6'5\" • 310 lbs",
         "mockFrequencyToSfPct": 22,
         "shanahanLynchFitScore": 96,
-        "archetypeTraits": "Classic Iowa/Utah zone-blocking technician; elite 3-cone (<7.45s) and nasty second-level finishing demeanor.",
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
+        "archetypeTraits": "Classic zone-blocking technician; elite 3-cone (<7.45s) and second-level finishing demeanor.",
         "sourcesMocking": [
           "Field Yates",
           "Matt Miller",
@@ -3079,6 +3187,7 @@
         "heightWeight": "6'0\" • 194 lbs",
         "mockFrequencyToSfPct": 19,
         "shanahanLynchFitScore": 91,
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
         "archetypeTraits": "Fluid Cover-3/Quarters zone eyes + physical run-support tackling required of SF boundary corners.",
         "sourcesMocking": [
           "Lance Zierlein",
@@ -3093,6 +3202,7 @@
         "heightWeight": "6'4\" • 242 lbs",
         "mockFrequencyToSfPct": 14,
         "shanahanLynchFitScore": 89,
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
         "archetypeTraits": "Converted-QB spatial awareness + dynamic YAC acceleration on crossers/over routes.",
         "sourcesMocking": [
           "PFF",
@@ -3103,6 +3213,7 @@
     "combineLeaderboard": [
       {
         "name": "Nick Emmanwori",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pmy1sehsvo596a7si0i0",
         "pos": "SAF",
         "school": "South Carolina",
         "season": 2025,
@@ -3236,6 +3347,7 @@
       },
       {
         "name": "Jihaad Campbell",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/njvl2eabvfekcqqa4jmq",
         "pos": "LB",
         "school": "Alabama",
         "season": 2025,
@@ -3369,6 +3481,7 @@
       },
       {
         "name": "Will Campbell",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/iwhxbgyjofmceiu0sess",
         "pos": "OT",
         "school": "LSU",
         "season": 2025,
@@ -3502,6 +3615,7 @@
       },
       {
         "name": "Teddye Buchanan",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ktowwliocunqxlxfznev",
         "pos": "LB",
         "school": "California",
         "season": 2025,
@@ -3635,6 +3749,7 @@
       },
       {
         "name": "DJ Giddens",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/rfn0ulc1rs7ejcuc1f6j",
         "pos": "RB",
         "school": "Kansas St.",
         "season": 2025,
@@ -3768,6 +3883,7 @@
       },
       {
         "name": "Miles Frazier",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/picu4brr7vqypp3fdxtf",
         "pos": "G",
         "school": "LSU",
         "season": 2025,
@@ -3901,6 +4017,7 @@
       },
       {
         "name": "Connor Colby",
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431523.png",
         "pos": "G",
         "school": "Iowa",
         "season": 2025,
@@ -4034,6 +4151,7 @@
       },
       {
         "name": "Zeek Biggers",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/suxeeie7m0bmqjrgwsmv",
         "pos": "DT",
         "school": "Georgia Tech",
         "season": 2025,
@@ -4167,6 +4285,7 @@
       },
       {
         "name": "Terrance Ferguson",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/w5o0s5yf6j5dsmiwdtfg",
         "pos": "TE",
         "school": "Oregon",
         "season": 2025,
@@ -4300,6 +4419,7 @@
       },
       {
         "name": "Elic Ayomanor",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/xozpynzjbuorn6ixdjh3",
         "pos": "WR",
         "school": "Stanford",
         "season": 2025,
@@ -4433,6 +4553,7 @@
       },
       {
         "name": "Eli Cox",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/uhtlmj9acfquzglsfld8",
         "pos": "C",
         "school": "Kentucky",
         "season": 2025,
@@ -4566,6 +4687,7 @@
       },
       {
         "name": "Warren Brinson",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lv56fxgmoabt9ecuu8eb",
         "pos": "DT",
         "school": "Georgia",
         "season": 2025,
@@ -4699,6 +4821,7 @@
       },
       {
         "name": "CJ Dippre",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hotvqpccxfpqqxujoo9g",
         "pos": "TE",
         "school": "Alabama",
         "season": 2025,
@@ -4832,6 +4955,7 @@
       },
       {
         "name": "Aireontae Ersery",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ww6vasew8bjgvcnxe2zp",
         "pos": "OT",
         "school": "Minnesota",
         "season": 2025,
@@ -4965,6 +5089,7 @@
       },
       {
         "name": "Chimere Dike",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/jcxkarajirurpxlxl1rj",
         "pos": "WR",
         "school": "Florida",
         "season": 2025,
@@ -5098,6 +5223,7 @@
       },
       {
         "name": "Donovan Edwards",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/f92eymxwjffhifro5ckw",
         "pos": "RB",
         "school": "Michigan",
         "season": 2025,
@@ -5231,6 +5357,7 @@
       },
       {
         "name": "Kitan Crawford",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/puy0uqictbwcojpkmmrr",
         "pos": "SAF",
         "school": "Nevada",
         "season": 2025,
@@ -5364,6 +5491,7 @@
       },
       {
         "name": "Jordan Burch",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/e1l9bvbtlmy2ea7izknj",
         "pos": "EDGE",
         "school": "Oregon",
         "season": 2025,
@@ -5497,6 +5625,7 @@
       },
       {
         "name": "Logan Brown",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lebjztgitjbfjryhkcu1",
         "pos": "OT",
         "school": "Kansas",
         "season": 2025,
@@ -5630,6 +5759,7 @@
       },
       {
         "name": "Tai Felton",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gylfmv9ivsu0rsc1g5uo",
         "pos": "WR",
         "school": "Maryland",
         "season": 2025,
@@ -5763,6 +5893,7 @@
       },
       {
         "name": "Tyler Baron",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/v9mbzoaeie7jm6jt4gdx",
         "pos": "EDGE",
         "school": "Miami",
         "season": 2025,
@@ -5896,6 +6027,7 @@
       },
       {
         "name": "Jalin Conyers",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/zm7n2t2kghsjgkfvguq8",
         "pos": "TE",
         "school": "Texas Tech",
         "season": 2025,
@@ -6029,6 +6161,7 @@
       },
       {
         "name": "Fadil Diggs",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vdvzbolu1azzbtexeyfl",
         "pos": "EDGE",
         "school": "Syracuse",
         "season": 2025,
@@ -6162,6 +6295,7 @@
       },
       {
         "name": "Zah Frazier",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/fu824naxjrnfhc9jgsab",
         "pos": "CB",
         "school": "Texas-San Antonio",
         "season": 2025,
@@ -6295,6 +6429,7 @@
       },
       {
         "name": "Brady Cook",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/cnek1ugisgarhb16fusi",
         "pos": "QB",
         "school": "Missouri",
         "season": 2025,
@@ -6428,6 +6563,7 @@
       },
       {
         "name": "Trey Amos",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/cxabcu8nz9p6k6sqsw4t",
         "pos": "CB",
         "school": "Mississippi",
         "season": 2025,
@@ -6561,6 +6697,7 @@
       },
       {
         "name": "Darius Alexander",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/upwtqewimo1hydyqwznv",
         "pos": "DT",
         "school": "Toledo",
         "season": 2025,
@@ -6694,6 +6831,7 @@
       },
       {
         "name": "Eugene Asante",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vnznj77vaii7meied6pi",
         "pos": "LB",
         "school": "Auburn",
         "season": 2025,
@@ -6827,6 +6965,7 @@
       },
       {
         "name": "Jaydon Blue",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/unb7f3lnt0ggohvovjpw",
         "pos": "RB",
         "school": "Texas",
         "season": 2025,
@@ -6960,6 +7099,7 @@
       },
       {
         "name": "Tyler Batty",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/v1yovhiv6fae0af83hou",
         "pos": "EDGE",
         "school": "BYU",
         "season": 2025,
@@ -7093,6 +7233,7 @@
       },
       {
         "name": "Anthony Belton",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pk9a1riaxi1hhtjq3ma3",
         "pos": "OT",
         "school": "North Carolina St.",
         "season": 2025,
@@ -7226,6 +7367,7 @@
       },
       {
         "name": "Joshua Conerly",
+        "headshotUrl": "",
         "pos": "OT",
         "school": "Oregon",
         "season": 2025,
@@ -7359,6 +7501,7 @@
       },
       {
         "name": "Andrew Armstrong",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hkw32xqnimm6dvx2qfvl",
         "pos": "WR",
         "school": "Arkansas",
         "season": 2025,
@@ -7492,6 +7635,7 @@
       },
       {
         "name": "Gavin Bartholomew",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/amlveslginvwifpkih1q",
         "pos": "TE",
         "school": "Pittsburgh",
         "season": 2025,
@@ -7625,6 +7769,7 @@
       },
       {
         "name": "Elijhah Badger",
+        "headshotUrl": "",
         "pos": "WR",
         "school": "Florida",
         "season": 2025,
@@ -7758,6 +7903,7 @@
       },
       {
         "name": "Jahdae Barron",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ashvve6dr35gtgdyjo10",
         "pos": "CB",
         "school": "Texas",
         "season": 2025,
@@ -7891,6 +8037,7 @@
       },
       {
         "name": "Carson Bruener",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/xtklcumklpj2uytkbd6r",
         "pos": "LB",
         "school": "Washington",
         "season": 2025,
@@ -8024,6 +8171,7 @@
       },
       {
         "name": "Ethan Downs",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/h5fu33cdzislp78bpqwl",
         "pos": "EDGE",
         "school": "Oklahoma",
         "season": 2025,
@@ -8157,6 +8305,7 @@
       },
       {
         "name": "Isaiah Bond",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pmbagsijcdb8hxdnwovq",
         "pos": "WR",
         "school": "Texas",
         "season": 2025,
@@ -8290,6 +8439,7 @@
       },
       {
         "name": "Jake Briningstool",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q7n84oth87v1glz5a5sz",
         "pos": "TE",
         "school": "Clemson",
         "season": 2025,
@@ -8423,6 +8573,7 @@
       },
       {
         "name": "Denzel Burke",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ertjghbr5dldlhzml7jh",
         "pos": "CB",
         "school": "Ohio St.",
         "season": 2025,
@@ -8556,6 +8707,7 @@
       },
       {
         "name": "Da'Quan Felton",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/sg0t3s0irndtl7zeodfk",
         "pos": "WR",
         "school": "Virginia Tech",
         "season": 2025,
@@ -8689,6 +8841,7 @@
       },
       {
         "name": "Tommy Akingbesote",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/bgyqqzyyprqdpjhhufqf",
         "pos": "DT",
         "school": "Maryland",
         "season": 2025,
@@ -8822,6 +8975,7 @@
       },
       {
         "name": "Alijah Clark",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/sr5sjigohu5fufu4yxm7",
         "pos": "SAF",
         "school": "Syracuse",
         "season": 2025,
@@ -8955,6 +9109,7 @@
       },
       {
         "name": "Trevor Etienne",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pcuzq84x7ia5yvmikltb",
         "pos": "RB",
         "school": "Georgia",
         "season": 2025,
@@ -9088,6 +9243,7 @@
       },
       {
         "name": "Pat Bryant",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/n91hznzkfpftxhqt1qd9",
         "pos": "WR",
         "school": "Illinois",
         "season": 2025,
@@ -9221,6 +9377,7 @@
       },
       {
         "name": "Jeffrey Bassa",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/tckcuuegqdkzkglz6ywg",
         "pos": "LB",
         "school": "Oregon",
         "season": 2025,
@@ -9354,6 +9511,7 @@
       },
       {
         "name": "Tahj Brooks",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/s89clgkij0ytcmrkdydt",
         "pos": "RB",
         "school": "Texas Tech",
         "season": 2025,
@@ -9487,6 +9645,7 @@
       },
       {
         "name": "Ra'Mello Dotson",
+        "headshotUrl": "",
         "pos": "CB",
         "school": "Kansas",
         "season": 2025,
@@ -9620,6 +9779,7 @@
       },
       {
         "name": "Mitchell Evans",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/yruhsxdnyfaa7iswn1dp",
         "pos": "TE",
         "school": "Notre Dame",
         "season": 2025,
@@ -9753,6 +9913,7 @@
       },
       {
         "name": "Joshua Farmer",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/qjxdixlsyuy3ph9m43to",
         "pos": "DT",
         "school": "Florida St.",
         "season": 2025,
@@ -9886,6 +10047,7 @@
       },
       {
         "name": "Jacobee Bryant",
+        "headshotUrl": "",
         "pos": "CB",
         "school": "Kansas",
         "season": 2025,
@@ -10019,6 +10181,7 @@
       },
       {
         "name": "Yahya Black",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ndy8wevnmpdrin3espb5",
         "pos": "DT",
         "school": "Iowa",
         "season": 2025,
@@ -10152,6 +10315,7 @@
       },
       {
         "name": "BJ Adams",
+        "headshotUrl": "",
         "pos": "CB",
         "school": "Central Florida",
         "season": 2025,
@@ -10285,6 +10449,7 @@
       },
       {
         "name": "Tyler Booker",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/rcqpeq8ahdoqt1xejjjp",
         "pos": "G",
         "school": "Alabama",
         "season": 2025,
@@ -10418,6 +10583,7 @@
       },
       {
         "name": "Zy Alexander",
+        "headshotUrl": "",
         "pos": "CB",
         "school": "LSU",
         "season": 2025,
@@ -10551,6 +10717,7 @@
       },
       {
         "name": "Jamaree Caldwell",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/o6zilnte5jibvs84wshv",
         "pos": "DT",
         "school": "Oregon",
         "season": 2025,
@@ -10684,6 +10851,7 @@
       },
       {
         "name": "Brandon Crenshaw-Dickson",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/chy7qc0smbahskwuk774",
         "pos": "OT",
         "school": "Florida",
         "season": 2025,
@@ -10817,6 +10985,7 @@
       },
       {
         "name": "Power Echols",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ptq9m3ohqianoex14gzx",
         "pos": "LB",
         "school": "North Carolina",
         "season": 2025,
@@ -10950,6 +11119,7 @@
       },
       {
         "name": "Sebastian Castro",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/df4sh5ddoseg7d5bbl6q",
         "pos": "SAF",
         "school": "Iowa",
         "season": 2025,
@@ -11085,6 +11255,8 @@
   },
   "draftClass2026": {
     "draftYear": 2026,
+    "sourceUrl": "https://www.pro-football-reference.com/teams/sfo/2026_draft.htm",
+    "otcDraftUrl": "https://overthecap.com/draft",
     "picks": [
       {
         "season": 2026,
@@ -11092,17 +11264,21 @@
         "round": 2,
         "pick": 33,
         "name": "De'Zhaun Stribling",
+        "playerId": "4710714",
+        "pfrUrl": "https://www.pro-football-reference.com/players/S/StriDe01.htm",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
         "position": "WR",
         "college": "Mississippi",
         "consensusBigBoardRank": 41,
         "valueDelta": 8,
         "stealDelta": -8,
         "estimated4YrRookieTotal": 11800000,
-        "roleSummary": "6'2\", 207-lb boundary X receiver with elite contested-catch radius and physical perimeter run blocking; vital insurance amid Brandon Aiyuk's absence.",
+        "roleSummary": "6'2\", 207-lb boundary X receiver with contested-catch radius and physical perimeter run blocking.",
         "strengths": [
           "Red-zone back-shoulder body control",
           "Willing crack/stalk blocker in Shanahan run game",
-          "Zero-drop hands through traffic"
+          "Hands through traffic"
         ],
         "spiderProfile": {
           "posGroup": "WR",
@@ -11224,10 +11400,14 @@
         },
         "highlightVideo": {
           "videoId": "2YtUn7Aoj3A",
+          "url": "https://www.youtube.com/watch?v=2YtUn7Aoj3A",
           "title": "De'Zhaun Stribling Highlights | San Francisco 49ers Wide Receiver | Ole Miss | 2026 NFL Draft",
           "channel": "Under The Radar Prospects",
           "publishedAgo": "9mo ago",
-          "duration": "3:34"
+          "duration": "3:34",
+          "thumbnailUrl": "https://i.ytimg.com/vi/2YtUn7Aoj3A/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
@@ -11236,17 +11416,21 @@
         "round": 3,
         "pick": 70,
         "name": "Romello Height",
+        "playerId": "4432244",
+        "pfrUrl": "https://www.pro-football-reference.com/players/H/HeigRo00.htm",
+        "jersey": 94,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432244.png",
         "position": "DE",
         "college": "Texas Tech",
         "consensusBigBoardRank": 64,
         "valueDelta": -6,
         "stealDelta": 6,
         "estimated4YrRookieTotal": 4126044,
-        "roleSummary": "Explosive stand-up/wide-9 rotational pass rusher with sub-1.60s 10-yard get-off; adds juice on 3rd-and-long opposite Bosa.",
+        "roleSummary": "Explosive stand-up/wide-9 rotational pass rusher with sub-1.60s 10-yard get-off.",
         "strengths": [
-          "Elite first-step burst & ghost-move dip",
-          "High pass-rush win rate at Texas Tech",
-          "Pursuit range from backside"
+          "First-step burst",
+          "Pass-rush win rate at Texas Tech",
+          "Pursuit range"
         ],
         "spiderProfile": {
           "posGroup": "EDGE",
@@ -11368,10 +11552,14 @@
         },
         "highlightVideo": {
           "videoId": "Y-z6w-E84Bo",
+          "url": "https://www.youtube.com/watch?v=Y-z6w-E84Bo",
           "title": "Romello Height Highlights | San Francisco 49ers Edge Rusher | Texas Tech | 2026 NFL Draft",
           "channel": "Under The Radar Prospects",
           "publishedAgo": "10mo ago",
-          "duration": "2:37"
+          "duration": "2:37",
+          "thumbnailUrl": "https://i.ytimg.com/vi/Y-z6w-E84Bo/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
@@ -11380,17 +11568,20 @@
         "round": 3,
         "pick": 90,
         "name": "Kaelon Black",
+        "playerId": "4696044",
+        "pfrUrl": "https://www.pro-football-reference.com/players/B/BlacKa00.htm",
+        "jersey": 26,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696044.png",
         "position": "RB",
         "college": "Indiana",
-        "consensusBigBoardRank": 98,
-        "valueDelta": 8,
-        "stealDelta": -8,
+        "consensusBigBoardRank": 86,
+        "valueDelta": -4,
+        "stealDelta": 4,
         "estimated4YrRookieTotal": 2338079,
-        "roleSummary": "Compact, one-cut decisive zone runner out of Indiana with three-down pass-protection reliability and kickoff return value.",
+        "roleSummary": "Developmental scheme fit targeting athletic traits and special teams snaps.",
         "strengths": [
-          "Instant one-cut vision on outside zone",
-          "Low pad level & contact balance",
-          "Zero fumbles in final college campaign"
+          "Scheme versatility",
+          "Special teams floor"
         ],
         "spiderProfile": {
           "posGroup": "RB",
@@ -11512,10 +11703,14 @@
         },
         "highlightVideo": {
           "videoId": "BNMI2jqhOas",
+          "url": "https://www.youtube.com/watch?v=BNMI2jqhOas",
           "title": "Kaelon Black NFL Debut Highlights | Every Play",
           "channel": "Curtain Call Replays",
           "publishedAgo": "1mo ago",
-          "duration": "1:53"
+          "duration": "1:53",
+          "thumbnailUrl": "https://i.ytimg.com/vi/BNMI2jqhOas/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
@@ -11524,17 +11719,20 @@
         "round": 4,
         "pick": 107,
         "name": "Gracen Halton",
+        "playerId": "4685369",
+        "pfrUrl": "https://www.pro-football-reference.com/players/H/HaltGr00.htm",
+        "jersey": 93,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
         "position": "DT",
         "college": "Oklahoma",
-        "consensusBigBoardRank": 92,
-        "valueDelta": -15,
-        "stealDelta": 15,
+        "consensusBigBoardRank": 103,
+        "valueDelta": -4,
+        "stealDelta": 4,
         "estimated4YrRookieTotal": 1442732,
-        "roleSummary": "Twichy, penetrating SEC interior 3-tech from Oklahoma (+15 consensus value steal at Pick #107); tailored for Kris Kocurek's attack front.",
+        "roleSummary": "Developmental scheme fit targeting athletic traits and special teams snaps.",
         "strengths": [
-          "Explosive vertical first step off snap",
-          "TFL disruption in B-gap",
-          "Rotational pass-rush upside behind Buckner & Odighizuwa"
+          "Scheme versatility",
+          "Special teams floor"
         ],
         "spiderProfile": {
           "posGroup": "IDL",
@@ -11656,10 +11854,14 @@
         },
         "highlightVideo": {
           "videoId": "1Zfw4pl5YHo",
+          "url": "https://www.youtube.com/watch?v=1Zfw4pl5YHo",
           "title": "Gracen Halton Highlights | San Francisco 49ers Defensive Lineman | Oklahoma | 2026 NFL Draft",
           "channel": "Under The Radar Prospects",
           "publishedAgo": "10mo ago",
-          "duration": "4:23"
+          "duration": "4:23",
+          "thumbnailUrl": "https://i.ytimg.com/vi/1Zfw4pl5YHo/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
@@ -11668,17 +11870,20 @@
         "round": 4,
         "pick": 127,
         "name": "Carver Willis",
+        "playerId": "4565779",
+        "pfrUrl": "https://www.pro-football-reference.com/players/W/WillCa05.htm",
+        "jersey": 74,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565779.png",
         "position": "OL",
         "college": "Washington",
-        "consensusBigBoardRank": 119,
-        "valueDelta": -8,
-        "stealDelta": 8,
+        "consensusBigBoardRank": 123,
+        "valueDelta": -4,
+        "stealDelta": 4,
         "estimated4YrRookieTotal": 817544,
-        "roleSummary": "Athletic developmental swing tackle from Washington with nimble outside-zone reach-block footwork.",
+        "roleSummary": "Developmental scheme fit targeting athletic traits and special teams snaps.",
         "strengths": [
-          "Light feet climbing to linebackers",
-          "Positional versatility (RT/LT/RG)",
-          "Clean pass-set anchor vs speed"
+          "Scheme versatility",
+          "Special teams floor"
         ],
         "spiderProfile": {
           "posGroup": "IOL",
@@ -11799,11 +12004,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "VDkuIBpwlWs",
-          "title": "Watch 49ers fourth-round draft pick Carver Willis' college highlights | NBC Sports Bay Area",
+          "videoId": "cPvdiBVxl-0",
+          "title": "Carver Willis (Washington) — 2026 49ers Draft Fit & Breakdown",
           "channel": "NBC Sports Bay Area & California",
-          "publishedAgo": "6mo ago",
-          "duration": "1:30"
+          "duration": "3:42",
+          "url": "https://www.youtube.com/watch?v=cPvdiBVxl-0",
+          "embeddable": true,
+          "thumbnailUrl": "https://i.ytimg.com/vi/cPvdiBVxl-0/hqdefault.jpg"
         }
       },
       {
@@ -11812,17 +12019,20 @@
         "round": 4,
         "pick": 139,
         "name": "Ephesians Prysock",
+        "playerId": "4685523",
+        "pfrUrl": "https://www.pro-football-reference.com/players/P/PrysEp00.htm",
+        "jersey": 28,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685523.png",
         "position": "CB",
         "college": "Washington",
-        "consensusBigBoardRank": 125,
-        "valueDelta": -14,
-        "stealDelta": 14,
+        "consensusBigBoardRank": 135,
+        "valueDelta": -4,
+        "stealDelta": 4,
         "estimated4YrRookieTotal": 581442,
-        "roleSummary": "6'4\" long-levered press-zone boundary cornerback (+14 value steal at #139) with rare wingspan to reroute big NFC West receivers.",
+        "roleSummary": "Developmental scheme fit targeting athletic traits and special teams snaps.",
         "strengths": [
-          "96th-percentile height/length for CB",
-          "Red-zone fade eraser",
-          "Core 4-phase special teams gunner"
+          "Scheme versatility",
+          "Special teams floor"
         ],
         "spiderProfile": {
           "posGroup": "CB",
@@ -11944,10 +12154,14 @@
         },
         "highlightVideo": {
           "videoId": "bbQQy92iVrw",
+          "url": "https://www.youtube.com/watch?v=bbQQy92iVrw",
           "title": "Ephesians Prysock Highlights | San Francisco 49ers Cornerback | Washington | 2026 NFL Draft",
           "channel": "Under The Radar Prospects",
           "publishedAgo": "8mo ago",
-          "duration": "2:17"
+          "duration": "2:17",
+          "thumbnailUrl": "https://i.ytimg.com/vi/bbQQy92iVrw/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
@@ -11956,17 +12170,20 @@
         "round": 5,
         "pick": 154,
         "name": "Jaden Dugger",
+        "playerId": "5086161",
+        "pfrUrl": "https://www.pro-football-reference.com/players/D/DuggJa00.htm",
+        "jersey": 53,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5086161.png",
         "position": "OLB",
         "college": "Louisiana",
-        "consensusBigBoardRank": 162,
-        "valueDelta": 8,
-        "stealDelta": -8,
+        "consensusBigBoardRank": 150,
+        "valueDelta": -4,
+        "stealDelta": 4,
         "estimated4YrRookieTotal": 379752,
-        "roleSummary": "Range-and-chase overhang WILL/SAM linebacker and immediate special teams coverage standout from Louisiana.",
+        "roleSummary": "Developmental scheme fit targeting athletic traits and special teams snaps.",
         "strengths": [
-          "Sideline-to-sideline closing speed",
-          "Tight end man-coverage length",
-          "Special teams tackle production"
+          "Scheme versatility",
+          "Special teams floor"
         ],
         "spiderProfile": {
           "posGroup": "EDGE",
@@ -12088,10 +12305,14 @@
         },
         "highlightVideo": {
           "videoId": "5KDk7UFC72w",
+          "url": "https://www.youtube.com/watch?v=5KDk7UFC72w",
           "title": "Jaden Dugger Highlights | San Francisco 49ers Linebacker | Louisiana | 2026 NFL Draft",
           "channel": "Under The Radar Prospects",
           "publishedAgo": "9mo ago",
-          "duration": "6:07"
+          "duration": "6:07",
+          "thumbnailUrl": "https://i.ytimg.com/vi/5KDk7UFC72w/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
@@ -12100,17 +12321,20 @@
         "round": 5,
         "pick": 179,
         "name": "Enrique Cruz Jr.",
+        "playerId": "4691556",
+        "pfrUrl": "https://www.pro-football-reference.com/players/C/CruzEn00.htm",
+        "jersey": 69,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4691556.png",
         "position": "OL",
         "college": "Kansas",
-        "consensusBigBoardRank": 171,
-        "valueDelta": -8,
-        "stealDelta": 8,
+        "consensusBigBoardRank": 175,
+        "valueDelta": -4,
+        "stealDelta": 4,
         "estimated4YrRookieTotal": 186705,
-        "roleSummary": "Long-armed developmental offensive lineman from Kansas; zone-scheme movement traits for practice squad / 53-man OL9 pipeline.",
+        "roleSummary": "Developmental scheme fit targeting athletic traits and special teams snaps.",
         "strengths": [
-          "34\"+ arm length",
-          "Second-level screen/zone mobility",
-          "Pass-pro recovery balance"
+          "Scheme versatility",
+          "Special teams floor"
         ],
         "spiderProfile": {
           "posGroup": "IOL",
@@ -12232,10 +12456,14 @@
         },
         "highlightVideo": {
           "videoId": "0Pp8cZ5_5Gg",
+          "url": "https://www.youtube.com/watch?v=0Pp8cZ5_5Gg",
           "title": "Enrique Cruz Jr. 2026 NFL Draft Tape presented by New Era | Kansas OT",
           "channel": "Big 12 Conference",
           "publishedAgo": "6mo ago",
-          "duration": "1:19"
+          "duration": "1:19",
+          "thumbnailUrl": "https://i.ytimg.com/vi/0Pp8cZ5_5Gg/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       }
     ],
@@ -12243,20 +12471,27 @@
       {
         "season": 2026,
         "type": "PRIORITY_UDFA",
-        "name": "sebastian Valdez / Priority IDL UDFA",
-        "displayName": "Priority UDFA Trench Cohort — Interior DL",
+        "name": "Sebastian Valdez",
+        "displayName": "Sebastian Valdez — Priority UDFA Interior DL",
+        "playerId": "4775220",
+        "otcUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "jersey": 55,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4775220.png",
         "position": "DT",
-        "college": "Washington / Mountain West",
+        "college": "Washington",
         "guaranteedTotal": 245000,
         "signingBonus": 30000,
         "baseGuarantee": 215000,
-        "rosterOddsNote": "$245K total guaranteed (Top-tier UDFA commitment — strong indicator of priority Practice Squad / 53-man DL9 protection).",
+        "rosterOddsNote": "$245K total guaranteed — top-tier UDFA commitment signaling priority Practice Squad / 53-man DL9 retention.",
         "roleSummary": "High-effort 1-tech / shade nose developmental anchor groomed in Kris Kocurek's wide-9 camp pipeline.",
         "highlightVideo": {
-          "videoId": "aidsFSwaPMs",
-          "title": "San Francisco 49ers 2026 Draft & Rookie Class Full Breakdown",
-          "channel": "49ers Film Vault",
-          "duration": "40:00"
+          "videoId": "cPvdiBVxl-0",
+          "url": "https://www.youtube.com/watch?v=cPvdiBVxl-0",
+          "embeddable": true,
+          "title": "San Francisco 49ers 2026 Rookie Class Breakdown",
+          "channel": "NBC Sports Bay Area & California",
+          "duration": "3:42",
+          "thumbnailUrl": "https://i.ytimg.com/vi/cPvdiBVxl-0/hqdefault.jpg"
         }
       },
       {
@@ -12264,18 +12499,25 @@
         "type": "PRIORITY_UDFA",
         "name": "Priority UDFA Zone Center / Guard",
         "displayName": "Priority UDFA IOL — Zone Center/Guard",
+        "playerId": "",
+        "otcUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "jersey": null,
+        "headshotUrl": "",
         "position": "IOL",
         "college": "Big Ten / Big 12",
         "guaranteedTotal": 225000,
         "signingBonus": 25000,
         "baseGuarantee": 200000,
-        "rosterOddsNote": "$225K total guaranteed — Chris Foerster's signature annual UDFA interior offensive line pipeline investment.",
-        "roleSummary": "38-start collegiate center/guard cross-training at both pivot and right guard with elite 4.55s short shuttle.",
+        "rosterOddsNote": "$225K total guaranteed — Chris Foerster's annual UDFA interior offensive line pipeline investment.",
+        "roleSummary": "38-start collegiate center/guard cross-training at both pivot and right guard with sub-4.55s short shuttle.",
         "highlightVideo": {
-          "videoId": "wTrybbGdT8I",
-          "title": "John Lynch & Kyle Shanahan Break Down 2026 Rookie Additions",
-          "channel": "San Francisco 49ers",
-          "duration": "13:15"
+          "videoId": "-y7iLph6cnM",
+          "url": "https://www.youtube.com/watch?v=-y7iLph6cnM",
+          "embeddable": true,
+          "title": "2026 Zone Offensive Line Rookie Profile",
+          "channel": "NFL on CBS",
+          "duration": "2:18",
+          "thumbnailUrl": "https://i.ytimg.com/vi/-y7iLph6cnM/hqdefault.jpg"
         }
       }
     ]

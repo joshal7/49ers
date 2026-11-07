@@ -7,8 +7,13 @@
       "topic": "Week 9 LV @ SF Matchup, Wide-9 Stunt Geometry & Maxx Crosby Protection Plan",
       "format": "Two-Host Analytical Banter",
       "presetLabel": "3m Quick Hit",
-      "createdBy": "Josh (Shared Group Feed)",
+      "createdBy": "49ers Faithful Desk",
       "createdAt": "2026-11-06T21:15:00-08:00",
+      "sourceLinks": [
+        { "label": "ESPN Raiders @ 49ers Matchup", "url": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers" },
+        { "label": "nflverse 2026 EPA Dataset", "url": "https://github.com/nflverse/nflverse-data" },
+        { "label": "49ers Official Injury Report", "url": "https://www.49ers.com/team/injury-report/" }
+      ],
       "audioUrl": "./data/podcasts/ep-week9-raiders-film.m4a",
       "durationSec": 133,
       "fileSizeBytes": 1085510,
@@ -69,8 +74,12 @@
       "topic": "OverTheCap Multi-Year Ledger, CBA Rollover Strategy & Brandon Aiyuk Cap Mechanics",
       "format": "Two-Host Analytical Banter",
       "presetLabel": "4m Cap Dive",
-      "createdBy": "Josh (Shared Group Feed)",
+      "createdBy": "49ers Faithful Desk",
       "createdAt": "2026-11-06T19:50:00-08:00",
+      "sourceLinks": [
+        { "label": "OverTheCap 49ers Cap Table", "url": "https://overthecap.com/salary-cap/san-francisco-49ers" },
+        { "label": "NFLPA Public Cap Report", "url": "https://nflpa.com/reports/public-salary-cap-report" }
+      ],
       "audioUrl": "./data/podcasts/ep-cap-aiyuk-blueprint.m4a",
       "durationSec": 129,
       "fileSizeBytes": 1054039,
@@ -127,12 +136,17 @@
     },
     {
       "id": "ep-trade-deadline-seeding",
-      "title": "Nov 10 Trade Deadline War Room & 10,000-Run NFC #1 Seed Outlook",
+      "title": "Nov 10 Trade Window & 10,000-Run NFC #1 Seed Outlook",
       "topic": "Tuesday Nov 10 Deadline Targets, Pro-Rated Cap Costs & NFC Tiebreaker Equity",
       "format": "Two-Host Analytical Banter",
       "presetLabel": "3m Strategy Brief",
-      "createdBy": "Group Analytics Bot",
+      "createdBy": "49ers Faithful Analytics",
       "createdAt": "2026-11-06T17:20:00-08:00",
+      "sourceLinks": [
+        { "label": "OverTheCap 49ers Contracts", "url": "https://overthecap.com/salary-cap/san-francisco-49ers" },
+        { "label": "ESPN NFL Standings", "url": "https://www.espn.com/nfl/standings" },
+        { "label": "NFL Transactions Wire", "url": "https://www.espn.com/nfl/transactions" }
+      ],
       "audioUrl": "./data/podcasts/ep-trade-deadline-seeding.m4a",
       "durationSec": 97,
       "fileSizeBytes": 794233,
@@ -186,11 +200,11 @@
       "title": "Scheme & EPA Deep Dive: How DeForest Buckner + Osa Odighizuwa Transform Nick Bosa’s Pass-Rush Geometry",
       "category": "Film & Trench Analytics",
       "createdAt": "2026-11-06T20:40:00-08:00",
-      "createdBy": "Josh",
+      "createdBy": "49ers Faithful Film Desk",
       "sourcesCited": [
-        "nflverse 2026 Pass-Rush & EPA",
-        "Kyle Shanahan Podium Transcript",
-        "Tim Ryan Trench Notes"
+        { "label": "nflverse 2026 Pass-Rush & EPA", "url": "https://github.com/nflverse/nflverse-data" },
+        { "label": "Kyle Shanahan Press Conference", "url": "https://www.youtube.com/watch?v=x0TpSoyfx7I" },
+        { "label": "Pro-Football-Reference 49ers Defense", "url": "https://www.pro-football-reference.com/teams/sfo/2026.htm" }
       ],
       "markdown": "### Executive Finding\nPairing **DeForest Buckner** (6'7\", 295 lbs, 34.4\" arm length) and **Osa Odighizuwa** inside with **Nick Bosa** and **Keion White** on the Wide-9 rails eliminates the #1 protection adjustment offenses used against San Francisco in 2024–2025: **5-man half-slide + RB chip toward Bosa**.\n\n### Key Quantitative & Film Mechanics\n1. **Interior Slide Conflict (2i / 3-Tech Split)**:\n   * When SF aligns Buckner at the 3-technique weak and Odighizuwa at the 2i/shade strong, the opposing center must turn toward Odighizuwa or risk immediate A-gap penetration in Brock Purdy's opponent mirror (2.4s pocket collapse).\n   * If the center slides away from Buckner + Bosa's side, the offensive guard is left on an island against Buckner's forklift bull-rush, preventing the guard from widening to help the tackle on **T-E (Tackle-End) stunts**.\n2. **Early-Down Run-Fit Integrity vs. Outside Zone**:\n   * Through Week 7 without Bosa for 5 games, SF relied heavily on **Fred Warner** erasing leaky B-gap creases. Buckner's career tackle-for-loss rate against outside zone restores two-gap knock-back, keeping Warner clean to rob play-action crossers.\n3. **Snap-Count Pitch Count Projection (Week 9 vs. Raiders)**:\n   * Expect Bosa around **42–46 snaps (~68%)**, with **Bryce Huff** and 3rd-round rookie **Romello Height** rotating on 2nd-and-long speed rushes."
     },
@@ -199,11 +213,11 @@
       "title": "Brock Purdy 2026 Through 7 Games: Why +4.25% CPOE & 3.2% Sack Avoidance Sustain Top-3 NFL Offense",
       "category": "QB & Passing Analytics",
       "createdAt": "2026-11-06T18:10:00-08:00",
-      "createdBy": "Shared Group Feed",
+      "createdBy": "49ers Faithful Analytics",
       "sourcesCited": [
-        "nflverse 2026 REG Player & Team Stats",
-        "NextGen Stats Passing",
-        "Jonnydel Film Notes"
+        { "label": "nflverse 2026 REG Player & Team Stats", "url": "https://github.com/nflverse/nflverse-data" },
+        { "label": "NFL NextGen Stats Passing", "url": "https://nextgenstats.nfl.com/stats/passing" },
+        { "label": "RBSDM Quarterback EPA + CPOE", "url": "https://rbsdm.com/stats/stats/" }
       ],
       "markdown": "### 2026 Statistical Snapshot (Weeks 1–7, 6-1 Record)\n* **Passing Efficiency**: `146/211 (69.2%)`, `1,748 Yards (8.28 YPA)`, `15 TD`, `4 INT`\n* **Total Passing EPA**: `+63.23` (**Top-3 NFL** per game at `+9.03 EPA/game`)\n* **Completion % Over Expected (CPOE)**: `+4.25%`\n* **Sacks Taken**: Only `7 sacks` across `218 dropbacks` (`3.2% sack rate`, **#2 best in NFL**)\n\n### What Changed on Film in 2026\n1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting hero throws when two-high shells bracket the deep over route, Purdy has cut his pressure-to-sack conversion nearly in half by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets.\n2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even without Brandon Aiyuk active, Purdy has completed **70 passes of 10+ yards** and **24 explosive passes of 20+ yards** through 7 games by trusting **Ricky Pearsall**, **Jauan Jennings**, and rookie **De'Zhaun Stribling** before they clear linebacker leverage."
     }

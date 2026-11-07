@@ -1,80 +1,92 @@
 {
-  "updatedAt": "2026-11-07T06:43:57.830Z",
+  "updatedAt": "2026-11-07T08:32:59.143Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-21T06:43:57.830Z",
+  "nextAutoReviewAt": "2026-11-21T08:32:59.143Z",
   "totalTrackedReporters": 45,
   "outlets": [
     {
       "id": "49ers_official",
       "name": "49ers.com / Official Team",
       "tier": 1,
-      "type": "official"
+      "type": "official",
+      "url": "https://www.49ers.com/news/"
     },
     {
       "id": "nbcsba",
       "name": "NBC Sports Bay Area",
       "tier": 1,
-      "type": "beat"
+      "type": "beat",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/"
     },
     {
       "id": "athletic",
-      "name": "The Athletic (Non-Paywall Briefs & Pods)",
+      "name": "The Athletic",
       "tier": 1,
-      "type": "beat"
+      "type": "beat",
+      "url": "https://www.nytimes.com/athletic/nfl/team/niners/"
     },
     {
       "id": "espn",
       "name": "ESPN NFL & 49ers Beat",
       "tier": 1,
-      "type": "national_beat"
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers"
     },
     {
       "id": "sf_standard",
       "name": "The San Francisco Standard",
       "tier": 1,
-      "type": "beat"
+      "type": "beat",
+      "url": "https://sfstandard.com/sports/"
     },
     {
       "id": "sf_chronicle",
       "name": "San Francisco Chronicle",
       "tier": 1,
-      "type": "beat"
+      "type": "beat",
+      "url": "https://www.sfchronicle.com/sports/49ers/"
     },
     {
       "id": "bay_area_news",
       "name": "Bay Area News Group / Mercury News",
       "tier": 1,
-      "type": "beat"
+      "type": "beat",
+      "url": "https://www.mercurynews.com/sports/49ers/"
     },
     {
       "id": "niners_nation",
       "name": "Niners Nation",
       "tier": 2,
-      "type": "blog_analysis"
+      "type": "blog_analysis",
+      "url": "https://www.ninersnation.com/"
     },
     {
       "id": "49ers_webzone",
       "name": "49ers Webzone",
       "tier": 2,
-      "type": "blog_news"
+      "type": "blog_news",
+      "url": "https://www.49erswebzone.com/"
     },
     {
       "id": "nfl_network",
       "name": "NFL Network / NFL.com",
       "tier": 1,
-      "type": "national"
+      "type": "national",
+      "url": "https://www.nfl.com/teams/san-francisco-49ers/"
     },
     {
       "id": "youtube_film",
       "name": "Independent Film & Analytics Creators",
       "tier": 1,
-      "type": "video_film"
+      "type": "video_film",
+      "url": "https://www.youtube.com/results?search_query=49ers+all+22+film"
     },
     {
       "id": "knbr_radio",
       "name": "KNBR / Radio & Broadcast Booth",
       "tier": 1,
-      "type": "audio_beat"
+      "type": "audio_beat",
+      "url": "https://www.knbr.com/49ers/"
     }
   ],
   "reporters": [
@@ -87,6 +99,11 @@
       "category": "official",
       "styleTag": "factual-scheme",
       "baseScore": 99,
+      "xUrl": "https://x.com/49ers",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/49ers",
+      "outletUrl": "https://www.49ers.com/news/",
       "liveWeeklyMentions": 54,
       "popularityScore": 99,
       "defaultEnabled": true
@@ -100,6 +117,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 99,
+      "xUrl": "https://x.com/AdamSchefter",
+      "bskyHandle": "adamscheftermirror.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/adamscheftermirror.bsky.social",
+      "profileUrl": "https://x.com/AdamSchefter",
+      "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
       "liveWeeklyMentions": 10,
       "popularityScore": 96,
       "defaultEnabled": true
@@ -113,6 +135,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 96,
+      "xUrl": "https://x.com/nwagoner",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/nwagoner",
+      "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
       "liveWeeklyMentions": 82,
       "popularityScore": 96,
       "defaultEnabled": true
@@ -126,6 +153,11 @@
       "category": "official",
       "styleTag": "factual-roster",
       "baseScore": 96,
+      "xUrl": "https://x.com/JohnLynch49ers",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/JohnLynch49ers",
+      "outletUrl": "https://www.49ers.com/news/",
       "liveWeeklyMentions": 12,
       "popularityScore": 95,
       "defaultEnabled": true
@@ -139,6 +171,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 98,
+      "xUrl": "https://x.com/RapSheet",
+      "bskyHandle": "rapsheet.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/rapsheet.bsky.social",
+      "profileUrl": "https://x.com/RapSheet",
+      "outletUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
       "liveWeeklyMentions": 6,
       "popularityScore": 92,
       "defaultEnabled": true
@@ -152,6 +189,11 @@
       "category": "beat",
       "styleTag": "analytics-cap",
       "baseScore": 94,
+      "xUrl": "https://x.com/LombardiHimself",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/LombardiHimself",
+      "outletUrl": "https://sfstandard.com/sports/",
       "liveWeeklyMentions": 8,
       "popularityScore": 90,
       "defaultEnabled": true
@@ -165,6 +207,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 96,
+      "xUrl": "https://x.com/TomPelissero",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/TomPelissero",
+      "outletUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
       "liveWeeklyMentions": 6,
       "popularityScore": 90,
       "defaultEnabled": true
@@ -178,6 +225,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 98,
+      "xUrl": "https://x.com/MaioccoNBCS",
+      "bskyHandle": "mattmaiocco.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/mattmaiocco.bsky.social",
+      "profileUrl": "https://x.com/MaioccoNBCS",
+      "outletUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/",
       "liveWeeklyMentions": 3,
       "popularityScore": 89,
       "defaultEnabled": true
@@ -191,6 +243,11 @@
       "category": "analytics",
       "styleTag": "film-breakdown",
       "baseScore": 93,
+      "xUrl": "https://x.com/minakimes",
+      "bskyHandle": "minakimes.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/minakimes.bsky.social",
+      "profileUrl": "https://x.com/minakimes",
+      "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
       "liveWeeklyMentions": 7,
       "popularityScore": 88,
       "defaultEnabled": true
@@ -204,6 +261,11 @@
       "category": "official",
       "styleTag": "factual-beat",
       "baseScore": 97,
+      "xUrl": "https://x.com/49ers",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/49ers",
+      "outletUrl": "https://www.49ers.com/news/",
       "liveWeeklyMentions": 2,
       "popularityScore": 87,
       "defaultEnabled": true
@@ -217,6 +279,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 89,
+      "xUrl": "https://x.com/KP_Show",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/KP_Show",
+      "outletUrl": "https://www.ninersnation.com/",
       "liveWeeklyMentions": 9,
       "popularityScore": 86,
       "defaultEnabled": true
@@ -230,6 +297,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 89,
+      "xUrl": "https://x.com/JFowlerESPN",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/JFowlerESPN",
+      "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
       "liveWeeklyMentions": 7,
       "popularityScore": 85,
       "defaultEnabled": true
@@ -243,6 +315,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 97,
+      "xUrl": "https://x.com/mattbarrows",
+      "bskyHandle": "mattbarrows.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/mattbarrows.bsky.social",
+      "profileUrl": "https://x.com/mattbarrows",
+      "outletUrl": "https://www.nytimes.com/athletic/nfl/team/niners/",
       "liveWeeklyMentions": 0,
       "popularityScore": 85,
       "defaultEnabled": true
@@ -256,6 +333,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 95,
+      "xUrl": "https://x.com/DMRussini",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/DMRussini",
+      "outletUrl": "https://www.nytimes.com/athletic/nfl/team/niners/",
       "liveWeeklyMentions": 0,
       "popularityScore": 84,
       "defaultEnabled": true
@@ -269,6 +351,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 91,
+      "xUrl": "https://x.com/BenjaminSolak",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/BenjaminSolak",
+      "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
       "liveWeeklyMentions": 3,
       "popularityScore": 83,
       "defaultEnabled": true
@@ -282,6 +369,11 @@
       "category": "draft",
       "styleTag": "film-breakdown",
       "baseScore": 94,
+      "xUrl": "https://x.com/dpbrugler",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/dpbrugler",
+      "outletUrl": "https://www.nytimes.com/athletic/nfl/team/niners/",
       "liveWeeklyMentions": 0,
       "popularityScore": 83,
       "defaultEnabled": true
@@ -295,6 +387,11 @@
       "category": "draft",
       "styleTag": "film-breakdown",
       "baseScore": 93,
+      "xUrl": "https://x.com/MoveTheSticks",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/MoveTheSticks",
+      "outletUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 82,
       "defaultEnabled": true
@@ -308,6 +405,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 93,
+      "xUrl": "https://x.com/jonnydelsfa",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/jonnydelsfa",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 82,
       "defaultEnabled": true
@@ -321,6 +423,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 93,
+      "xUrl": "https://x.com/MikeGarafolo",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/MikeGarafolo",
+      "outletUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 82,
       "defaultEnabled": true
@@ -334,6 +441,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 93,
+      "xUrl": "https://x.com/TimRyan49ers",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/TimRyan49ers",
+      "outletUrl": "https://www.knbr.com/49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 82,
       "defaultEnabled": true
@@ -347,6 +459,11 @@
       "category": "national_insider",
       "styleTag": "factual-scheme",
       "baseScore": 92,
+      "xUrl": "https://x.com/AlbertBreer",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/AlbertBreer",
+      "outletUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 81,
       "defaultEnabled": true
@@ -360,6 +477,11 @@
       "category": "video_pod",
       "styleTag": "factual-beat",
       "baseScore": 88,
+      "xUrl": "https://x.com/TheSFNiners",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/TheSFNiners",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 4,
       "popularityScore": 81,
       "defaultEnabled": true
@@ -373,6 +495,11 @@
       "category": "video_pod",
       "styleTag": "analytical-pod",
       "baseScore": 92,
+      "xUrl": "https://x.com/GuyHaberman",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/GuyHaberman",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 81,
       "defaultEnabled": true
@@ -386,6 +513,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 92,
+      "xUrl": "https://x.com/jenniferleechan",
+      "bskyHandle": "jenniferleechan.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/jenniferleechan.bsky.social",
+      "profileUrl": "https://x.com/jenniferleechan",
+      "outletUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 81,
       "defaultEnabled": true
@@ -399,6 +531,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 91,
+      "xUrl": "https://x.com/Eric_Branch",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/Eric_Branch",
+      "outletUrl": "https://www.sfchronicle.com/sports/49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 80,
       "defaultEnabled": true
@@ -412,6 +549,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 91,
+      "xUrl": "https://x.com/eric_crocker",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/eric_crocker",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 80,
       "defaultEnabled": true
@@ -425,6 +567,11 @@
       "category": "national_insider",
       "styleTag": "analytics-cap",
       "baseScore": 91,
+      "xUrl": "https://x.com/FieldYates",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/FieldYates",
+      "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
       "liveWeeklyMentions": 0,
       "popularityScore": 80,
       "defaultEnabled": true
@@ -438,6 +585,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 90,
+      "xUrl": "https://x.com/CamInman",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/CamInman",
+      "outletUrl": "https://www.mercurynews.com/sports/49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 79,
       "defaultEnabled": true
@@ -451,6 +603,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 90,
+      "xUrl": "https://x.com/JL_Chapman",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/JL_Chapman",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 79,
       "defaultEnabled": true
@@ -464,6 +621,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 89,
+      "xUrl": "https://x.com/BrettKollmann",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/BrettKollmann",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 78,
       "defaultEnabled": true
@@ -477,6 +639,11 @@
       "category": "analytics",
       "styleTag": "analytics-cap",
       "baseScore": 89,
+      "xUrl": "https://x.com/PFF_Jeff",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/PFF_Jeff",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 78,
       "defaultEnabled": true
@@ -490,6 +657,11 @@
       "category": "beat",
       "styleTag": "analytics-cap",
       "baseScore": 83,
+      "xUrl": "https://x.com/RohanChakrav",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/RohanChakrav",
+      "outletUrl": "https://www.ninersnation.com/",
       "liveWeeklyMentions": 6,
       "popularityScore": 78,
       "defaultEnabled": true
@@ -503,6 +675,11 @@
       "category": "beat",
       "styleTag": "columnist-insider",
       "baseScore": 88,
+      "xUrl": "https://x.com/timkawakami",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/timkawakami",
+      "outletUrl": "https://sfstandard.com/sports/",
       "liveWeeklyMentions": 1,
       "popularityScore": 78,
       "defaultEnabled": true
@@ -516,6 +693,11 @@
       "category": "analytics",
       "styleTag": "analytics-cap",
       "baseScore": 87,
+      "xUrl": "https://x.com/akashanav",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/akashanav",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 77,
       "defaultEnabled": true
@@ -529,6 +711,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 87,
+      "xUrl": "https://x.com/GregPapa",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/GregPapa",
+      "outletUrl": "https://www.knbr.com/49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 77,
       "defaultEnabled": true
@@ -542,6 +729,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 84,
+      "xUrl": "https://x.com/JasonAponte2103",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/JasonAponte2103",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 3,
       "popularityScore": 77,
       "defaultEnabled": true
@@ -555,6 +747,11 @@
       "category": "national_insider",
       "styleTag": "factual-roster",
       "baseScore": 87,
+      "xUrl": "https://x.com/Schultz_Report",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/Schultz_Report",
+      "outletUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 77,
       "defaultEnabled": true
@@ -568,6 +765,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 86,
+      "xUrl": "https://x.com/VicTafur",
+      "bskyHandle": "victafur.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/victafur.bsky.social",
+      "profileUrl": "https://x.com/VicTafur",
+      "outletUrl": "https://www.nytimes.com/athletic/nfl/team/niners/",
       "liveWeeklyMentions": 0,
       "popularityScore": 76,
       "defaultEnabled": true
@@ -581,6 +783,11 @@
       "category": "beat",
       "styleTag": "factual-beat",
       "baseScore": 85,
+      "xUrl": "https://x.com/AlSacco49",
+      "bskyHandle": "49erswebzone.bsky.social",
+      "bskyUrl": "https://bsky.app/profile/49erswebzone.bsky.social",
+      "profileUrl": "https://x.com/AlSacco49",
+      "outletUrl": "https://www.49erswebzone.com/",
       "liveWeeklyMentions": 0,
       "popularityScore": 75,
       "defaultEnabled": true
@@ -594,6 +801,11 @@
       "category": "official",
       "styleTag": "factual-beat",
       "baseScore": 84,
+      "xUrl": "https://x.com/BrianaJeannel",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/BrianaJeannel",
+      "outletUrl": "https://www.49ers.com/news/",
       "liveWeeklyMentions": 0,
       "popularityScore": 74,
       "defaultEnabled": true
@@ -607,6 +819,11 @@
       "category": "film",
       "styleTag": "film-breakdown",
       "baseScore": 84,
+      "xUrl": "https://x.com/VishKumaran",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/VishKumaran",
+      "outletUrl": "https://www.ninersnation.com/",
       "liveWeeklyMentions": 0,
       "popularityScore": 74,
       "defaultEnabled": true
@@ -620,6 +837,11 @@
       "category": "analytics",
       "styleTag": "analytics-cap",
       "baseScore": 83,
+      "xUrl": "https://x.com/Steph49K",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/Steph49K",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 73,
       "defaultEnabled": true
@@ -633,6 +855,11 @@
       "category": "beat",
       "styleTag": "opinion-hot-take",
       "baseScore": 82,
+      "xUrl": "https://x.com/dkurtenbach",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/dkurtenbach",
+      "outletUrl": "https://www.mercurynews.com/sports/49ers/",
       "liveWeeklyMentions": 0,
       "popularityScore": 72,
       "defaultEnabled": true
@@ -646,6 +873,11 @@
       "category": "video_pod",
       "styleTag": "opinion-hot-take",
       "baseScore": 80,
+      "xUrl": "https://x.com/sportslarryknbr",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/sportslarryknbr",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 70,
       "defaultEnabled": true
@@ -659,6 +891,11 @@
       "category": "beat",
       "styleTag": "opinion-hot-take",
       "baseScore": 78,
+      "xUrl": "https://x.com/grantcohn",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/grantcohn",
+      "outletUrl": "https://www.youtube.com/results?search_query=49ers+all+22+film",
       "liveWeeklyMentions": 0,
       "popularityScore": 69,
       "defaultEnabled": true

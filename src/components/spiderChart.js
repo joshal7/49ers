@@ -110,7 +110,13 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
     Array.isArray(spiderProfile.historicalComps) && spiderProfile.historicalComps.length > 0
       ? `
         <div class="spider-comps-box">
-          <div class="sub-label">MockDraftable Euclidean NFL Athletic Comps (${escapeHtml(spiderProfile.posGroup)})</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+            <div class="sub-label">NFL Combine Athletic Comparables (${escapeHtml(spiderProfile.posGroup)})</div>
+            <div style="display:flex;gap:8px;font-size:11px">
+              <a href="https://www.mockdraftable.com/" target="_blank" rel="noopener noreferrer" class="ext-link">MockDraftable ↗</a>
+              <a href="https://ras.football/" target="_blank" rel="noopener noreferrer" class="ext-link">RAS.football ↗</a>
+            </div>
+          </div>
           <div class="spider-comps-grid">
             ${spiderProfile.historicalComps
               .map(
@@ -128,7 +134,7 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
       : '';
 
   return `
-    <div class="spider-card" aria-label="MockDraftable Athletic Spider Chart for ${escapeHtml(playerName)}">
+    <div class="spider-card" aria-label="NFL Combine Athletic Spider Chart for ${escapeHtml(playerName)}">
       <div class="spider-header">
         <div>
           <div class="sub-label">Positional Athletic Percentiles (${escapeHtml(spiderProfile.posGroup)})</div>

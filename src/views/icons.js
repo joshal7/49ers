@@ -95,6 +95,14 @@ const SVG_PATHS = {
     <path d="M7 17L17 7"/>
     <polyline points="8 7 17 7 17 16"/>
   `,
+  external: `
+    <path d="M7 17L17 7"/>
+    <polyline points="8 7 17 7 17 16"/>
+  `,
+  tweet: `
+    <path d="M21 11.5C21 16.2 16.97 20 12 20C10.4 20 8.9 19.6 7.6 18.9L3 20L4.3 15.9C3.5 14.6 3 13.1 3 11.5C3 6.8 7.03 3 12 3C16.97 3 21 6.8 21 11.5Z" fill="currentColor" fill-opacity="0.14"/>
+    <path d="M21 11.5C21 16.2 16.97 20 12 20C10.4 20 8.9 19.6 7.6 18.9L3 20L4.3 15.9C3.5 14.6 3 13.1 3 11.5C3 6.8 7.03 3 12 3C16.97 3 21 6.8 21 11.5Z"/>
+  `,
   arrowUp: `
     <line x1="12" y1="19" x2="12" y2="5"/>
     <polyline points="6 11 12 5 18 11"/>
@@ -114,7 +122,7 @@ const SVG_PATHS = {
     <line x1="20" y1="20" x2="16.2" y2="16.2"/>
   `,
 
-  // Domain & War Room Icons
+  // Domain & Feature Icons
   sparkles: `
     <path d="M12 3L14.2 8.8L20 11L14.2 13.2L12 19L9.8 13.2L4 11L9.8 8.8L12 3Z" fill="currentColor" fill-opacity="0.22"/>
     <path d="M12 3L14.2 8.8L20 11L14.2 13.2L12 19L9.8 13.2L4 11L9.8 8.8L12 3Z"/>

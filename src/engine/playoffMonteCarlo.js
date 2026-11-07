@@ -83,6 +83,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       idx,
       abbr,
       name: t.name || abbr,
+      logoUrl: t.logoUrl || '',
       division: t.division || NFC_DIVISIONS[abbr] || 'NFC West',
       wins: Number(t.wins || 0),
       losses: Number(t.losses || 0),
@@ -338,6 +339,7 @@ export function runPlayoffMonteCarlo(config = {}) {
     return {
       abbr: t.abbr,
       name: t.name,
+      logoUrl: t.logoUrl || '',
       division: t.division,
       currentRecord: `${t.wins}-${t.losses}${t.ties ? `-${t.ties}` : ''}`,
       projectedWins: Number((totalSimulatedWins[i] / iterations).toFixed(1)),

@@ -8,7 +8,7 @@
  * 5. health    — Week 9 Practice Progression, Player Toughness/Vet-Rest Priors & 2026 Injury Log
  */
 
-import { esc, playProbBadgeClass } from './uiHelpers.js';
+import { esc, playProbBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
@@ -71,31 +71,59 @@ function renderOverviewTab(p) {
           <div class="sub-label" style="margin-bottom:6px">Recent Beat &amp; Roster Mentions</div>
           <div style="display:flex;flex-direction:column;gap:6px">
             ${p.recentNews
-              .map(
-                n => `
-              <div class="subcard-panel" style="font-size:12.5px">
-                <a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
-                ${n.summary ? `<div style="color:var(--text-secondary);margin-top:2px">${esc(n.summary)}</div>` : ''}
+              .map(n => {
+                const hasImg = n.imageUrl && /^https:\/\//i.test(n.imageUrl);
+                return `
+              <div class="subcard-panel ${hasImg ? 'media-split-row' : ''}" style="font-size:12.5px">
+                <div style="min-width:0">
+                  <a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
+                  ${n.summary ? `<div style="color:var(--text-secondary);margin-top:2px">${esc(n.summary)}</div>` : ''}
+                </div>
+                ${
+                  hasImg
+                    ? `<div class="raw-item-thumb compact" style="width:54px;height:54px">
+                        <img src="${esc(n.imageUrl)}" alt="${esc(n.headline)}" width="54" height="54" loading="lazy" decoding="async" />
+                      </div>`
+                    : ''
+                }
               </div>
-            `
-              )
+            `;
+              })
               .join('')}
           </div>
         </div>
       `
       : `<div style="font-size:12px;color:var(--text-muted)">No breaking beat items specific to ${esc(p.name)} in the past 7 days.</div>`;
 
+  const profileLinks = [
+    p.espnUrl ? { label: 'ESPN Profile', url: p.espnUrl } : null,
+    p.otcUrl ? { label: 'OverTheCap Contract', url: p.otcUrl } : null,
+    p.pfrUrl ? { label: 'Pro-Football-Ref', url: p.pfrUrl } : null
+  ].filter(Boolean);
+
   return `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="jersey-chip mono" style="width:42px;height:42px;font-size:15px">#${p.jersey ?? '—'}</div>
-        <div>
+    <div class="dossier-hero-banner">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0">
+        ${renderPlayerAvatarHtml(p, 68, { showJerseyBadge: true, hero: true })}
+        <div style="min-width:0">
           <div style="font-weight:800;font-size:15px">${esc(p.position)} • ${esc(p.unit)} (${esc(p.rosterBucket.replace('_', ' ').toUpperCase())})</div>
           <div style="font-size:12px;color:var(--text-secondary)">${esc(p.displayHeight)} • ${esc(p.displayWeight)} • Age ${p.age ?? '—'} • ${esc(p.college)}</div>
         </div>
       </div>
       <span class="badge ${playProbBadgeClass(p.health?.playProbabilityPct)} mono">${esc(p.health?.playBadgeLabel)}</span>
     </div>
+
+    ${
+      profileLinks.length
+        ? `<div class="source-link-strip">
+            ${profileLinks
+              .map(
+                pl => `<a href="${esc(pl.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(pl.label)}</span>${iconSvg('externalLink', 11)}</a>`
+              )
+              .join('')}
+          </div>`
+        : ''
+    }
 
     <div class="kpi-grid">
       <div class="kpi-box">
@@ -105,6 +133,7 @@ function renderOverviewTab(p) {
       <div class="kpi-box">
         <div class="kpi-label">2026 Snap Share</div>
         <div class="kpi-val mono">${p.primarySnapPct}%</div>
+        ${renderMiniMeterHtml(p.primarySnapPct, 'gold')}
       </div>
       <div class="kpi-box">
         <div class="kpi-label">2026 Cap Hit</div>
@@ -129,9 +158,16 @@ function renderStatsTab(p, statsMode) {
   const s26 = p.stats2026;
 
   const modeToggle = `
-    <div style="display:flex;gap:6px">
-      <button type="button" class="pill-btn ${statsMode === '2026' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="2026">2026 Season</button>
-      <button type="button" class="pill-btn ${statsMode === 'career' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="career">Career Year-by-Year (${seasons.length})</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <div style="display:flex;gap:6px">
+        <button type="button" class="pill-btn ${statsMode === '2026' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="2026">2026 Season</button>
+        <button type="button" class="pill-btn ${statsMode === 'career' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="career">Career Year-by-Year (${seasons.length})</button>
+      </div>
+      <div class="source-link-strip">
+        ${p.pfrUrl ? `<a href="${esc(p.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Stats</span>${iconSvg('externalLink', 10)}</a>` : ''}
+        <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 10)}</a>
+        <a href="https://nextgenstats.nfl.com/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NextGen</span>${iconSvg('externalLink', 10)}</a>
+      </div>
     </div>
   `;
 
@@ -325,7 +361,12 @@ function renderContractTab(p, txScenario) {
 
   return `
     <div>
-      <div class="sub-label" style="margin-bottom:6px">Multi-Year OverTheCap Ledger (${yrs[0].year}–${yrs[yrs.length - 1].year})</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+        <div class="sub-label">Multi-Year OverTheCap Ledger (${yrs[0].year}–${yrs[yrs.length - 1].year})</div>
+        <a href="${esc(p.otcUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+          <span>View Contract on OverTheCap</span>${iconSvg('externalLink', 10)}
+        </a>
+      </div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead>
@@ -381,7 +422,10 @@ function renderHealthTab(p) {
         <div class="sub-label">Projected Week 9 Play Likelihood</div>
         <div style="font-size:13px;color:var(--text-secondary)">Status: <strong>${esc(h.status)}</strong> ${h.injuryType ? `(${esc(h.injuryType)})` : ''}</div>
       </div>
-      <span class="badge ${playProbBadgeClass(h.playProbabilityPct)} mono" style="font-size:13px;padding:4px 10px">${esc(h.playBadgeLabel)}</span>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <a href="https://www.49ers.com/team/injury-report/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('externalLink', 10)}</a>
+        <span class="badge ${playProbBadgeClass(h.playProbabilityPct)} mono" style="font-size:13px;padding:4px 10px">${esc(h.playBadgeLabel)}</span>
+      </div>
     </div>
 
     <div class="kpi-grid">

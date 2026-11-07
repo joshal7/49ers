@@ -7,6 +7,7 @@ const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
 export const DEFAULT_USER_PREFS = {
   theme: 'dark', // 'dark' = Levi's Night Game | 'light' = '94 Throwback White & Gold
   dashboardOrder: [],
+  dashboardOrderVersion: 2,
   disabledReporterIds: [],
   disabledOutlets: [],
   muteHotTakePersonalities: false,
@@ -28,10 +29,12 @@ export function loadUserPrefs() {
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
       return structuredCloneFallback(DEFAULT_USER_PREFS);
     }
+    const orderIsV2 = parsed.dashboardOrderVersion === 2;
     return {
       ...structuredCloneFallback(DEFAULT_USER_PREFS),
       ...parsed,
-      dashboardOrder: Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
+      dashboardOrderVersion: 2,
+      dashboardOrder: orderIsV2 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
       disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
       disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
       capMoves: parsed.capMoves && typeof parsed.capMoves === 'object' ? parsed.capMoves : {},

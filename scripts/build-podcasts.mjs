@@ -28,8 +28,13 @@ const EPISODES_SPEC = [
     topic: 'Week 9 LV @ SF Matchup, Wide-9 Stunt Geometry & Maxx Crosby Protection Plan',
     format: 'Two-Host Analytical Banter',
     presetLabel: '3m Quick Hit',
-    createdBy: 'Josh (Shared Group Feed)',
+    createdBy: '49ers Faithful Desk',
     createdAt: '2026-11-06T21:15:00-08:00',
+    sourceLinks: [
+      { label: 'ESPN Raiders @ 49ers Matchup', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' },
+      { label: 'nflverse 2026 EPA Dataset', url: 'https://github.com/nflverse/nflverse-data' },
+      { label: '49ers Official Injury Report', url: 'https://www.49ers.com/team/injury-report/' }
+    ],
     turns: [
       {
         speaker: 'Marcus',
@@ -63,8 +68,12 @@ const EPISODES_SPEC = [
     topic: 'OverTheCap Multi-Year Ledger, CBA Rollover Strategy & Brandon Aiyuk Cap Mechanics',
     format: 'Two-Host Analytical Banter',
     presetLabel: '4m Cap Dive',
-    createdBy: 'Josh (Shared Group Feed)',
+    createdBy: '49ers Faithful Desk',
     createdAt: '2026-11-06T19:50:00-08:00',
+    sourceLinks: [
+      { label: 'OverTheCap 49ers Cap Table', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'NFLPA Public Cap Report', url: 'https://nflpa.com/reports/public-salary-cap-report' }
+    ],
     turns: [
       {
         speaker: 'Elena',
@@ -94,12 +103,17 @@ const EPISODES_SPEC = [
   },
   {
     id: 'ep-trade-deadline-seeding',
-    title: 'Nov 10 Trade Deadline War Room & 10,000-Run NFC #1 Seed Outlook',
+    title: 'Nov 10 Trade Window & 10,000-Run NFC #1 Seed Outlook',
     topic: 'Tuesday Nov 10 Deadline Targets, Pro-Rated Cap Costs & NFC Tiebreaker Equity',
     format: 'Two-Host Analytical Banter',
     presetLabel: '3m Strategy Brief',
-    createdBy: 'Group Analytics Bot',
+    createdBy: '49ers Faithful Analytics',
     createdAt: '2026-11-06T17:20:00-08:00',
+    sourceLinks: [
+      { label: 'OverTheCap 49ers Contracts', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'ESPN NFL Standings', url: 'https://www.espn.com/nfl/standings' },
+      { label: 'NFL Transactions Wire', url: 'https://www.espn.com/nfl/transactions' }
+    ],
     turns: [
       {
         speaker: 'Marcus',
@@ -131,8 +145,12 @@ const PRE_CACHED_ANALYSES = [
     title: 'Scheme & EPA Deep Dive: How DeForest Buckner + Osa Odighizuwa Transform Nick Bosa’s Pass-Rush Geometry',
     category: 'Film & Trench Analytics',
     createdAt: '2026-11-06T20:40:00-08:00',
-    createdBy: 'Josh',
-    sourcesCited: ['nflverse 2026 Pass-Rush & EPA', 'Kyle Shanahan Podium Transcript', 'Tim Ryan Trench Notes'],
+    createdBy: '49ers Faithful Film Desk',
+    sourcesCited: [
+      { label: 'nflverse 2026 Pass-Rush & EPA', url: 'https://github.com/nflverse/nflverse-data' },
+      { label: 'Kyle Shanahan Press Conference', url: 'https://www.youtube.com/watch?v=x0TpSoyfx7I' },
+      { label: 'Pro-Football-Reference 49ers Defense', url: 'https://www.pro-football-reference.com/teams/sfo/2026.htm' }
+    ],
     markdown: `### Executive Finding
 Pairing **DeForest Buckner** (6'7", 295 lbs, 34.4" arm length) and **Osa Odighizuwa** inside with **Nick Bosa** and **Keion White** on the Wide-9 rails eliminates the #1 protection adjustment offenses used against San Francisco in 2024–2025: **5-man half-slide + RB chip toward Bosa**.
 
@@ -150,8 +168,12 @@ Pairing **DeForest Buckner** (6'7", 295 lbs, 34.4" arm length) and **Osa Odighiz
     title: 'Brock Purdy 2026 Through 7 Games: Why +4.25% CPOE & 3.2% Sack Avoidance Sustain Top-3 NFL Offense',
     category: 'QB & Passing Analytics',
     createdAt: '2026-11-06T18:10:00-08:00',
-    createdBy: 'Shared Group Feed',
-    sourcesCited: ['nflverse 2026 REG Player & Team Stats', 'NextGen Stats Passing', 'Jonnydel Film Notes'],
+    createdBy: '49ers Faithful Analytics',
+    sourcesCited: [
+      { label: 'nflverse 2026 REG Player & Team Stats', url: 'https://github.com/nflverse/nflverse-data' },
+      { label: 'NFL NextGen Stats Passing', url: 'https://nextgenstats.nfl.com/stats/passing' },
+      { label: 'RBSDM Quarterback EPA + CPOE', url: 'https://rbsdm.com/stats/stats/' }
+    ],
     markdown: `### 2026 Statistical Snapshot (Weeks 1–7, 6-1 Record)
 * **Passing Efficiency**: \`146/211 (69.2%)\`, \`1,748 Yards (8.28 YPA)\`, \`15 TD\`, \`4 INT\`
 * **Total Passing EPA**: \`+63.23\` (**Top-3 NFL** per game at \`+9.03 EPA/game\`)
@@ -353,6 +375,7 @@ async function main() {
         presetLabel: ep.presetLabel,
         createdBy: ep.createdBy,
         createdAt: ep.createdAt,
+        sourceLinks: ep.sourceLinks || [],
         audioUrl: `./data/podcasts/${ep.id}.m4a`,
         durationSec,
         fileSizeBytes,

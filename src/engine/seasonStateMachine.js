@@ -7,111 +7,111 @@
 export const ALL_DASHBOARD_BLOCKS = [
   {
     id: 'news_briefs',
-    title: 'Team News & Beat Synthesis',
-    shortTitle: 'News & Film',
+    title: 'News',
+    shortTitle: 'News',
     phase: 'YEAR_ROUND',
     navTab: 'news',
     defaultPriority: 10,
-    badgeLabel: 'Year-Round'
+    badgeLabel: 'Live Wire'
   },
   {
     id: 'upcoming_matchup',
-    title: 'Upcoming Matchup War Room',
+    title: 'Upcoming Matchup',
     shortTitle: 'Matchup',
-    phase: 'IN_SEASON',
-    navTab: 'season',
-    defaultPriority: 15,
-    badgeLabel: 'In-Season'
-  },
-  {
-    id: 'team_health',
-    title: 'Team Health & Play Probabilities',
-    shortTitle: 'Health & IR',
     phase: 'IN_SEASON',
     navTab: 'season',
     defaultPriority: 20,
     badgeLabel: 'In-Season'
   },
   {
-    id: 'trade_deadline',
-    title: 'Trade Deadline War Room',
-    shortTitle: 'Trade Hub',
-    phase: 'TRADE_WINDOW',
-    navTab: 'season',
-    defaultPriority: 12,
-    badgeLabel: 'Oct 1 – Deadline'
-  },
-  {
-    id: 'playoff_picture',
-    title: 'Playoff Picture & Monte Carlo Simulator',
-    shortTitle: 'Playoff Odds',
-    phase: 'PLAYOFF_PUSH',
-    navTab: 'season',
-    defaultPriority: 14,
-    badgeLabel: 'Final 5 Weeks'
-  },
-  {
-    id: 'draft_prep',
-    title: 'Post-Season Draft War Room & Combine',
-    shortTitle: 'Draft Prep',
-    phase: 'DRAFT_PREP',
-    navTab: 'season',
-    defaultPriority: 13,
-    badgeLabel: 'Pre-Draft'
-  },
-  {
-    id: 'draft_live_udfa',
-    title: 'Draft Class & UDFA Film Breakdown',
-    shortTitle: 'Draft & UDFAs',
-    phase: 'DRAFT_LIVE_UDFA',
-    navTab: 'season',
-    defaultPriority: 11,
-    badgeLabel: 'Draft – Post-UDFA'
-  },
-  {
-    id: 'team_stats',
-    title: 'Team Stats, EPA & Power Rankings',
-    shortTitle: 'Team Stats',
+    id: 'team_health',
+    title: 'Team Health & Play Probability',
+    shortTitle: 'Team Health',
     phase: 'IN_SEASON',
     navTab: 'season',
     defaultPriority: 30,
     badgeLabel: 'In-Season'
   },
   {
+    id: 'schedule_overview',
+    title: 'Schedule',
+    shortTitle: 'Schedule',
+    phase: 'YEAR_ROUND',
+    navTab: 'season',
+    defaultPriority: 40,
+    badgeLabel: 'Season'
+  },
+  {
+    id: 'trade_deadline',
+    title: 'Trade Window',
+    shortTitle: 'Trade Window',
+    phase: 'TRADE_WINDOW',
+    navTab: 'season',
+    defaultPriority: 50,
+    badgeLabel: 'Oct 1 – Deadline'
+  },
+  {
+    id: 'playoff_picture',
+    title: 'Playoff Probabilities',
+    shortTitle: 'Playoff Odds',
+    phase: 'PLAYOFF_PUSH',
+    navTab: 'season',
+    defaultPriority: 52,
+    badgeLabel: 'Final 5 Weeks'
+  },
+  {
+    id: 'draft_prep',
+    title: 'Draft',
+    shortTitle: 'Draft',
+    phase: 'DRAFT_PREP',
+    navTab: 'season',
+    defaultPriority: 54,
+    badgeLabel: 'Pre-Draft'
+  },
+  {
+    id: 'draft_live_udfa',
+    title: 'Draft Recap',
+    shortTitle: 'Draft Recap',
+    phase: 'DRAFT_LIVE_UDFA',
+    navTab: 'season',
+    defaultPriority: 56,
+    badgeLabel: 'Draft & UDFAs'
+  },
+  {
+    id: 'team_stats',
+    title: 'Team Stats',
+    shortTitle: 'Team Stats',
+    phase: 'IN_SEASON',
+    navTab: 'season',
+    defaultPriority: 60,
+    badgeLabel: 'In-Season'
+  },
+  {
     id: 'roster_depth',
-    title: 'Roster, Spider Charts & Dual Depth Chart',
-    shortTitle: 'Roster & Depth',
+    title: 'Roster',
+    shortTitle: 'Roster',
     phase: 'YEAR_ROUND',
     navTab: 'roster',
-    defaultPriority: 35,
+    defaultPriority: 70,
     badgeLabel: 'Year-Round'
   },
   {
     id: 'salary_cap',
-    title: 'Salary Cap & Armchair GM Simulator',
+    title: 'Salary Cap',
     shortTitle: 'Salary Cap',
     phase: 'YEAR_ROUND',
     navTab: 'roster',
-    defaultPriority: 40,
-    badgeLabel: 'Year-Round'
-  },
-  {
-    id: 'schedule_overview',
-    title: 'Schedule & Venue/Rest Tracker',
-    shortTitle: 'Schedule',
-    phase: 'YEAR_ROUND',
-    navTab: 'season',
-    defaultPriority: 45,
+    defaultPriority: 80,
     badgeLabel: 'Year-Round'
   },
   {
     id: 'autopodcast_ai',
-    title: 'Autopodcast Studio & Deep AI Runner',
-    shortTitle: 'Audio & AI',
+    title: 'Auto Podcast',
+    shortTitle: 'Auto Podcast',
     phase: 'YEAR_ROUND',
     navTab: 'audio',
-    defaultPriority: 50,
-    badgeLabel: 'Bonus Studio'
+    defaultPriority: 90,
+    badgeLabel: 'Audio & AI'
   }
 ];
 
@@ -234,7 +234,7 @@ export function evaluateSeasonState(options = {}) {
   } else if (activePhases.has('DRAFT_PREP')) {
     headlinePhase = {
       code: 'DRAFT_PREP',
-      label: 'Post-Season Draft War Room',
+      label: 'NFL Draft & Combine Preview',
       detail: 'Consensus mocks, Shanahan/Lynch archetype fit scores & Combine results',
       countdownText: formatRemainingTime(nowMs, inPre2026Draft ? tPrevDraftStart : tDraftStart, 'Round 1 Kickoff')
     };
@@ -242,7 +242,7 @@ export function evaluateSeasonState(options = {}) {
     headlinePhase = {
       code: 'TRADE_WINDOW',
       label: 'Active NFL Trade Window',
-      detail: 'In-season Week ' + (weekNum || 9) + ' + Trade Deadline target fits, cap math & insider tiers',
+      detail: 'Week ' + (weekNum || 9) + ' matchup + Trade Deadline targets, cap math & beat reports',
       countdownText: formatRemainingTime(nowMs, tTradeDeadline, 'Trade Deadline')
     };
   } else if (activePhases.has('PLAYOFF_PUSH')) {
@@ -255,8 +255,8 @@ export function evaluateSeasonState(options = {}) {
   } else if (activePhases.has('IN_SEASON')) {
     headlinePhase = {
       code: 'IN_SEASON',
-      label: nowMs >= tRegEnd ? 'NFL Postseason War Room' : `In-Season • Week ${weekNum || ''}`.trim(),
-      detail: 'Matchup trench mismatches, coaching H2H tendencies & player injury priors',
+      label: nowMs >= tRegEnd ? 'NFL Postseason' : `In-Season • Week ${weekNum || ''}`.trim(),
+      detail: 'Matchup trench mismatches, coaching H2H tendencies & player availability',
       countdownText: null
     };
   }
@@ -299,8 +299,9 @@ export function resolveOrderedDashboardBlocks(activeBlocks, savedOrderIds = []) 
 
   const merged = [...knownOrdered];
   for (const newBlock of newlyActivated) {
-    // Insert temporal blocks right after #1 block (or at index 0 if highest priority)
-    const insertIdx = newBlock.phase !== 'YEAR_ROUND' ? Math.min(1, merged.length) : merged.length;
+    // Insert newly activated blocks according to their natural defaultPriority neighbor
+    const nextHigherIdx = merged.findIndex(b => b.defaultPriority > newBlock.defaultPriority);
+    const insertIdx = nextHigherIdx >= 0 ? nextHigherIdx : merged.length;
     merged.splice(insertIdx, 0, newBlock);
   }
   return merged;

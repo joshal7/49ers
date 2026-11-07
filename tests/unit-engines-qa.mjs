@@ -11,9 +11,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import {
+  ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveOrderedDashboardBlocks
 } from '../src/engine/seasonStateMachine.js';
+import {
+  ROSTER_SORT_FIELDS,
+  normalizeRosterSort
+} from '../src/views/rosterCapView.js';
 import { simulateCapScenario } from '../src/engine/capSimulator.js';
 import {
   computePlayerPlayProbability,
@@ -104,19 +109,51 @@ test('Draft Day 1 transitions from DRAFT_PREP to DRAFT_LIVE_UDFA', () => {
   assert.ok(s.activePhases.includes('DRAFT_LIVE_UDFA'));
 });
 
-test('resolveOrderedDashboardBlocks preserves user order, drops retired blocks, and surfaces new temporal blocks', () => {
-  const active = [
-    { id: 'news_briefs', phase: 'YEAR_ROUND' },
-    { id: 'playoff_picture', phase: 'PLAYOFF_PUSH' },
-    { id: 'salary_cap', phase: 'YEAR_ROUND' }
-  ];
-  const saved = ['salary_cap', 'trade_deadline', 'news_briefs']; // trade_deadline retired; playoff_picture newly activated!
+test('Default ALL_DASHBOARD_BLOCKS priority order matches exact user specification and excludes "War Room"', () => {
+  const sortedIds = [...ALL_DASHBOARD_BLOCKS]
+    .sort((a, b) => a.defaultPriority - b.defaultPriority)
+    .map(b => b.id);
+  assert.deepEqual(sortedIds, [
+    'news_briefs',
+    'upcoming_matchup',
+    'team_health',
+    'schedule_overview',
+    'trade_deadline',
+    'playoff_picture',
+    'draft_prep',
+    'draft_live_udfa',
+    'team_stats',
+    'roster_depth',
+    'salary_cap',
+    'autopodcast_ai'
+  ]);
+  for (const b of ALL_DASHBOARD_BLOCKS) {
+    assert.ok(!/war\s*room/i.test(b.title), `Unexpected War Room in title: ${b.title}`);
+    assert.ok(!/war\s*room/i.test(b.shortTitle), `Unexpected War Room in shortTitle: ${b.shortTitle}`);
+  }
+});
+
+test('resolveOrderedDashboardBlocks preserves user order, drops retired blocks, and inserts new seasonal blocks in relative priority position', () => {
+  const active = ALL_DASHBOARD_BLOCKS.filter(b =>
+    ['news_briefs', 'schedule_overview', 'playoff_picture', 'team_stats', 'salary_cap'].includes(b.id)
+  );
+  const saved = ['news_briefs', 'schedule_overview', 'trade_deadline', 'team_stats', 'salary_cap']; // trade_deadline retired; playoff_picture newly activated!
   const resolved = resolveOrderedDashboardBlocks(active, saved).map(b => b.id);
-  assert.equal(resolved.length, 3);
-  assert.ok(!resolved.includes('trade_deadline'));
-  assert.equal(resolved[0], 'salary_cap');
-  assert.equal(resolved[1], 'playoff_picture'); // Surfaced near top!
-  assert.equal(resolved[2], 'news_briefs');
+  assert.deepEqual(resolved, [
+    'news_briefs',
+    'schedule_overview',
+    'playoff_picture',
+    'team_stats',
+    'salary_cap'
+  ]);
+});
+
+test('Roster sort fields place Name first, Jersey Number second, and support asc/desc normalization', () => {
+  assert.equal(ROSTER_SORT_FIELDS[0].key, 'name');
+  assert.equal(ROSTER_SORT_FIELDS[1].key, 'jersey');
+  assert.deepEqual(normalizeRosterSort(), { field: 'name', dir: 'asc' });
+  assert.deepEqual(normalizeRosterSort('jersey', 'desc'), { field: 'jersey', dir: 'desc' });
+  assert.deepEqual(normalizeRosterSort('cap_desc'), { field: 'cap', dir: 'desc' });
 });
 
 test('Invalid date throws descriptive error', () => {
@@ -349,16 +386,51 @@ test('All required 49ers beat reporters & national insiders from PRD are present
   }
 });
 
-test('All 88 roster players have valid 10-axis Spider Charts (1..99th percentiles) & health models', () => {
+test('All 88 roster players have valid 10-axis Spider Charts (1..99th percentiles), external links, alphabetical default sort & health models', () => {
   const ros = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
   assert.ok(ros.players.length >= 75);
+  assert.ok(ros.players[0].name.localeCompare(ros.players[1].name) <= 0, 'roster.json should be sorted by name ascending by default');
   for (const p of ros.players) {
     assert.ok(p.name && p.position);
+    assert.ok(p.espnUrl?.startsWith('https://'), `Player ${p.name} missing espnUrl`);
     assert.equal(p.spiderProfile?.axes?.length, 10, `Player ${p.name} missing 10 spider axes`);
     for (const ax of p.spiderProfile.axes) {
       assert.ok(ax.percentile >= 1 && ax.percentile <= 99, `Invalid pct for ${p.name} ${ax.key}`);
     }
     assert.ok(p.health.playProbabilityPct >= 0 && p.health.playProbabilityPct <= 99);
+  }
+});
+
+test('Live news.json contains fresh social tweets, beat articles with URLs, synthesis sourceLinks, and verified YouTube embeddable flags', () => {
+  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  assert.ok(newsJson.clusteredBriefs.length >= 3);
+  for (const b of newsJson.clusteredBriefs) {
+    assert.ok(Array.isArray(b.sourceLinks) && b.sourceLinks.length >= 1, `Brief ${b.id} missing sourceLinks`);
+    if (b.videoClip) {
+      assert.equal(b.videoClip.embeddable, true, `Clustered brief video ${b.videoClip.videoId} must be verified embeddable`);
+    }
+  }
+  const tweets = newsJson.rawStream.filter(i => i.type === 'tweet');
+  const articles = newsJson.rawStream.filter(i => i.type === 'article');
+  const videos = newsJson.rawStream.filter(i => i.type === 'video');
+  assert.ok(tweets.length >= 10, `Expected >=10 live beat tweets/posts, got ${tweets.length}`);
+  assert.ok(articles.length >= 5, `Expected >=5 live beat articles, got ${articles.length}`);
+  assert.ok(tweets.every(s => s.url?.startsWith('https://')), 'Every tweet post must have a direct https URL');
+  assert.ok(videos.every(v => typeof v.embeddable === 'boolean'), 'Every video item must carry verified embeddable boolean');
+  const blocked49ersVid = videos.find(v => v.videoId === 'pb6-G63jccQ');
+  if (blocked49ersVid) {
+    assert.equal(blocked49ersVid.embeddable, false, 'DRM-blocked 49ers channel video pb6-G63jccQ must be marked embeddable: false');
+  }
+});
+
+test('Upcoming Matchup includes opponent health report & play likelihood percentages', () => {
+  const sm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const oppHealth = sm.upcomingMatchup?.opponentHealth;
+  assert.ok(oppHealth, 'Missing upcomingMatchup.opponentHealth');
+  assert.ok(oppHealth.teamName?.includes('Raiders'), `Expected Raiders opponent health, got ${oppHealth.teamName}`);
+  assert.ok(Array.isArray(oppHealth.injuryReport) && oppHealth.injuryReport.length >= 3, 'Expected opponent injuryReport entries');
+  for (const p of oppHealth.injuryReport) {
+    assert.ok(typeof p.playProbabilityPct === 'number' && p.playProbabilityPct >= 0 && p.playProbabilityPct <= 99);
   }
 });
 

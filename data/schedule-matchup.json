@@ -1,7 +1,27 @@
 {
-  "updatedAt": "2026-11-07T06:44:08.571Z",
+  "updatedAt": "2026-11-07T08:33:12.257Z",
+  "sources": [
+    {
+      "label": "ESPN 49ers Schedule",
+      "url": "https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers"
+    },
+    {
+      "label": "nflverse Play-by-Play & EPA",
+      "url": "https://github.com/nflverse/nflverse-data"
+    },
+    {
+      "label": "Pro-Football-Reference 49ers",
+      "url": "https://www.pro-football-reference.com/teams/sfo/2026.htm"
+    },
+    {
+      "label": "NFL NextGen Stats",
+      "url": "https://nextgenstats.nfl.com/"
+    }
+  ],
   "schedule": [
     {
+      "id": "401872657",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872657/49ers-rams",
       "week": 1,
       "dateIso": "2026-09-11T00:35Z",
       "statusDetail": "Final",
@@ -10,9 +30,11 @@
       "sfScore": 27,
       "oppScore": 7,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "LAR",
         "name": "Los Angeles Rams",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
         "record": "4-4",
         "pointDiff": 26,
         "coach": "Sean McVay"
@@ -31,6 +53,8 @@
       "broadcast": "Netflix"
     },
     {
+      "id": "401872942",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872942/dolphins-49ers",
       "week": 2,
       "dateIso": "2026-09-20T20:25Z",
       "statusDetail": "Final",
@@ -39,9 +63,11 @@
       "sfScore": 35,
       "oppScore": 13,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "MIA",
         "name": "Miami Dolphins",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
         "record": "1-6",
         "pointDiff": -64,
         "coach": "Jeff Hafley"
@@ -60,6 +86,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401872958",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872958/cardinals-49ers",
       "week": 3,
       "dateIso": "2026-09-27T20:05Z",
       "statusDetail": "Final",
@@ -68,9 +96,11 @@
       "sfScore": 36,
       "oppScore": 30,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "ARI",
         "name": "Arizona Cardinals",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
         "record": "3-5",
         "pointDiff": -63,
         "coach": "Jonathan Gannon"
@@ -89,6 +119,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401872975",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872975/broncos-49ers",
       "week": 4,
       "dateIso": "2026-10-04T20:25Z",
       "statusDetail": "Final",
@@ -97,9 +129,11 @@
       "sfScore": 24,
       "oppScore": 14,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "DEN",
         "name": "Denver Broncos",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
         "record": "6-2",
         "pointDiff": 7,
         "coach": "Sean Payton"
@@ -118,6 +152,8 @@
       "broadcast": "CBS"
     },
     {
+      "id": "401872992",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872992/49ers-seahawks",
       "week": 5,
       "dateIso": "2026-10-11T20:25Z",
       "statusDetail": "Final",
@@ -126,9 +162,11 @@
       "sfScore": 32,
       "oppScore": 29,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "SEA",
         "name": "Seattle Seahawks",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
         "record": "4-4",
         "pointDiff": 26,
         "coach": "Mike Macdonald"
@@ -147,6 +185,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873008",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873008/commanders-49ers",
       "week": 6,
       "dateIso": "2026-10-20T00:15Z",
       "statusDetail": "Final",
@@ -155,9 +195,11 @@
       "sfScore": 23,
       "oppScore": 17,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "WAS",
         "name": "Washington Commanders",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
         "record": "2-4-1",
         "pointDiff": -23,
         "coach": "Dan Quinn"
@@ -176,6 +218,8 @@
       "broadcast": "ESPN"
     },
     {
+      "id": "401873017",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873017/49ers-falcons",
       "week": 7,
       "dateIso": "2026-10-25T17:00Z",
       "statusDetail": "Final",
@@ -184,9 +228,11 @@
       "sfScore": 20,
       "oppScore": 29,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "ATL",
         "name": "Atlanta Falcons",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
         "record": "3-5",
         "pointDiff": -18,
         "coach": "Raheem Morris"
@@ -205,6 +251,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873047",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873047/raiders-49ers",
       "week": 9,
       "dateIso": "2026-11-08T21:25Z",
       "statusDetail": "11/8 - 4:25 PM EST",
@@ -213,9 +261,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "LV",
         "name": "Las Vegas Raiders",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
         "record": "4-4",
         "pointDiff": -9,
         "coach": "Klint Kubliak"
@@ -234,6 +284,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873063",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873063/49ers-cowboys",
       "week": 10,
       "dateIso": "2026-11-15T21:25Z",
       "statusDetail": "11/15 - 4:25 PM EST",
@@ -242,9 +294,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "DAL",
         "name": "Dallas Cowboys",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
         "record": "3-5",
         "pointDiff": 6,
         "coach": "Brian Schottenheimer"
@@ -263,6 +317,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873077",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873077/vikings-49ers",
       "week": 11,
       "dateIso": "2026-11-23T01:20Z",
       "statusDetail": "11/22 - 8:20 PM EST",
@@ -271,9 +327,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "MIN",
         "name": "Minnesota Vikings",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
         "record": "6-1",
         "pointDiff": 47,
         "coach": "Kevin O'Connell"
@@ -292,6 +350,8 @@
       "broadcast": "NBC"
     },
     {
+      "id": "401873091",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873091/seahawks-49ers",
       "week": 12,
       "dateIso": "2026-11-29T21:25Z",
       "statusDetail": "11/29 - 4:25 PM EST",
@@ -300,9 +360,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "SEA",
         "name": "Seattle Seahawks",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
         "record": "4-4",
         "pointDiff": 26,
         "coach": "Mike Macdonald"
@@ -321,6 +383,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873095",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873095/49ers-giants",
       "week": 13,
       "dateIso": "2026-12-06T18:00Z",
       "statusDetail": "12/6 - 1:00 PM EST",
@@ -329,9 +393,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "NYG",
         "name": "New York Giants",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
         "record": "4-2-1",
         "pointDiff": 2,
         "coach": "John Harbaugh"
@@ -350,6 +416,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873120",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873120/rams-49ers",
       "week": 14,
       "dateIso": "2026-12-13T21:25Z",
       "statusDetail": "12/13 - 4:25 PM EST",
@@ -358,9 +426,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "LAR",
         "name": "Los Angeles Rams",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
         "record": "4-4",
         "pointDiff": 26,
         "coach": "Sean McVay"
@@ -379,6 +449,8 @@
       "broadcast": "Fox"
     },
     {
+      "id": "401873124",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873124/49ers-chargers",
       "week": 15,
       "dateIso": "2026-12-18T01:15Z",
       "statusDetail": "12/17 - 8:15 PM EST",
@@ -387,9 +459,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "LAC",
         "name": "Los Angeles Chargers",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
         "record": "0-7",
         "pointDiff": -76,
         "coach": "Jim Harbaugh"
@@ -408,6 +482,8 @@
       "broadcast": "Prime Video"
     },
     {
+      "id": "401873153",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873153/49ers-chiefs",
       "week": 16,
       "dateIso": "2026-12-27T21:25Z",
       "statusDetail": "12/27 - 4:25 PM EST",
@@ -416,9 +492,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "KC",
         "name": "Kansas City Chiefs",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
         "record": "5-2",
         "pointDiff": 36,
         "coach": "Andy Reid"
@@ -437,6 +515,8 @@
       "broadcast": "CBS"
     },
     {
+      "id": "401873170",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873170/eagles-49ers",
       "week": 17,
       "dateIso": "2027-01-04T01:20Z",
       "statusDetail": "1/3 - 8:20 PM EST",
@@ -445,9 +525,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "PHI",
         "name": "Philadelphia Eagles",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
         "record": "2-6",
         "pointDiff": -65,
         "coach": "Nick Sirianni"
@@ -466,6 +548,8 @@
       "broadcast": "NBC"
     },
     {
+      "id": "401873184",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873184/49ers-cardinals",
       "week": 18,
       "dateIso": "2027-01-10T05:00Z",
       "statusDetail": "TBD",
@@ -474,9 +558,11 @@
       "sfScore": null,
       "oppScore": null,
       "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
       "opponent": {
         "abbr": "ARI",
         "name": "Arizona Cardinals",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
         "record": "3-5",
         "pointDiff": -63,
         "coach": "Jonathan Gannon"
@@ -594,30 +680,35 @@
     "sources": [
       {
         "outlet": "Inpredictable / Betting Market Power Rating",
+        "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 1,
         "delta": "+1",
         "blurb": "Market spreads price SF as the #1 neutral-field roster in football (+6.4 pts over average) with Bosa & CMC active."
       },
       {
         "outlet": "The Athletic NFL Power Rankings",
+        "url": "https://www.nytimes.com/athletic/nfl/",
         "rank": 2,
         "delta": "+1",
         "blurb": "Sitting at 6-1 coming out of the bye with DeForest Buckner added to the interior makes San Francisco the clear NFC pace-setter."
       },
       {
         "outlet": "ESPN NFL Nation Power Panel",
+        "url": "https://www.espn.com/nfl/story/_/page/nflpowerrankings",
         "rank": 2,
         "delta": "0",
         "blurb": "Brock Purdy's efficiency (+4.25% CPOE) has kept the offense humming while the defensive line reloads for November."
       },
       {
         "outlet": "NFL.com (Eric Edholm)",
+        "url": "https://www.nfl.com/news/series/power-rankings",
         "rank": 3,
         "delta": "+1",
         "blurb": "The Week 7 stumble in Atlanta is the lone blemish; health arrow is pointing sharply up ahead of the Raiders visit."
       },
       {
-        "outlet": "Sharp Football / EPA Composite",
+        "outlet": "RBSDM / nflverse EPA Composite",
+        "url": "https://rbsdm.com/stats/stats/",
         "rank": 2,
         "delta": "0",
         "blurb": "Top-3 dropback EPA combined with the league's #2 pass-block sack avoidance."
@@ -626,13 +717,264 @@
   },
   "upcomingMatchup": {
     "week": 9,
+    "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873047/raiders-49ers",
+    "injurySourceUrl": "https://www.espn.com/nfl/injuries",
+    "sfInjuryReportUrl": "https://www.49ers.com/team/injury-report/",
+    "statsSourceUrl": "https://github.com/nflverse/nflverse-data",
     "kickoffIso": "2026-11-08T13:25:00-08:00",
     "kickoffDisplay": "Sunday, Nov 8, 2026 • 1:25 PM PT (CBS)",
     "venue": "Levi's Stadium • Santa Clara, CA (Natural Bermuda Grass)",
     "sfRecord": "6-1 (#1 Seed in NFC)",
+    "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
     "oppAbbr": "LV",
     "oppName": "Las Vegas Raiders",
+    "oppLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
     "oppRecord": "4-4",
+    "featuredPlayers": [
+      {
+        "id": "4361741",
+        "name": "Brock Purdy",
+        "shortName": "B. Purdy",
+        "position": "QB",
+        "jersey": 13,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+      },
+      {
+        "id": "4040605",
+        "name": "Nick Bosa",
+        "shortName": "N. Bosa",
+        "position": "DE",
+        "jersey": 97,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
+      },
+      {
+        "id": "3117251",
+        "name": "Christian McCaffrey",
+        "shortName": "C. McCaffrey",
+        "position": "RB",
+        "jersey": 23,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png"
+      },
+      {
+        "id": "2971282",
+        "name": "DeForest Buckner",
+        "shortName": "D. Buckner",
+        "position": "DT",
+        "jersey": null,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
+      },
+      {
+        "id": "3040151",
+        "name": "George Kittle",
+        "shortName": "G. Kittle",
+        "position": "TE",
+        "jersey": 85,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3040151.png"
+      },
+      {
+        "id": "3138826",
+        "name": "Fred Warner",
+        "shortName": "F. Warner",
+        "position": "LB",
+        "jersey": 54,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3138826.png"
+      }
+    ],
+    "opponentHealth": {
+      "teamAbbr": "LV",
+      "teamName": "Las Vegas Raiders",
+      "sourceUrl": "https://www.espn.com/nfl/injuries",
+      "teamInjuriesUrl": "https://www.espn.com/nfl/team/injuries/_/name/lv",
+      "summary": {
+        "ruledOutCount": 1,
+        "questionableOrDoubtfulCount": 1,
+        "clearedCount": 1,
+        "irCount": 6
+      },
+      "injuryReport": [
+        {
+          "name": "Thomas Booker IV",
+          "position": "DT",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360749.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4360749",
+          "wed": "DNP",
+          "thu": "DNP",
+          "fri": "DNP",
+          "injuryType": "Ankle",
+          "gameStatus": "Out",
+          "shortComment": "Booker (ankle) has been ruled out for Sunday's game in San Francisco, Paul Gutierrez of the Raiders' official site reports.",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out"
+        },
+        {
+          "name": "Darien Porter",
+          "position": "CB",
+          "jersey": 26,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430330.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4430330",
+          "wed": "LP",
+          "thu": "LP",
+          "fri": "LP",
+          "injuryType": "Groin",
+          "gameStatus": "Questionable",
+          "shortComment": "Porter (groin) is listed as questionable ahead of Sunday's game against the 49ers, Ryan McFadden of ESPN.com reports.",
+          "playProbabilityPct": 73,
+          "playBadgeLabel": "73% • True GTD"
+        },
+        {
+          "name": "Dont'e Thornton Jr.",
+          "position": "WR",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432775.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4432775",
+          "wed": "LP",
+          "thu": "FP",
+          "fri": "FP",
+          "injuryType": "back",
+          "gameStatus": "No Designation (Cleared)",
+          "shortComment": "Thornton (back) does not have a designation for Sunday's battle against San Francisco, Paul Gutierrez of the Raiders' official site reports.",
+          "playProbabilityPct": 95,
+          "playBadgeLabel": "95% • Probable"
+        }
+      ],
+      "keyStartersHealthy": [
+        {
+          "name": "Brock Bowers",
+          "position": "TE",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4432665",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Bowers caught seven of 10 targets for 92 yards and two touchdowns in Sunday's 38-33 win over the Jets."
+        },
+        {
+          "name": "Kirk Cousins",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14880.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/14880",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Cousins completed 19 of 26 passes for 247 yards and three touchdowns in Sunday's 38-33 win over the Jets. He added five rushing attempts for three yards and a rushing touchdown."
+        },
+        {
+          "name": "Ashton Jeanty",
+          "position": "RB",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4890973.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4890973",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Raiders head coach Klint Kubiak said Wednesday that the breakdown in carries between Jeanty and Mike Washington will be determined on a week-to-week basis, Ryan McFadden of ESPN.com reports."
+        },
+        {
+          "name": "Michael Mayer",
+          "position": "TE",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429086.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4429086",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Mayer caught five of six targets for 53 yards in Sunday's 38-33 win over the Jets."
+        },
+        {
+          "name": "Kolton Miller",
+          "position": "OT",
+          "jersey": 74,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3134312.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3134312",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Practiced in full; active without game designation."
+        },
+        {
+          "name": "Jackson Powers-Johnson",
+          "position": "G",
+          "jersey": 58,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875295.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4875295",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Practiced in full; active without game designation."
+        }
+      ],
+      "irReserve": [
+        {
+          "name": "Chigozie Anusiem",
+          "position": "CB",
+          "jersey": 29,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360475.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4360475",
+          "status": "Injured Reserve",
+          "injuryType": "Injured Reserve",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Injured Reserve"
+        },
+        {
+          "name": "Chris Collier",
+          "position": "RB",
+          "jersey": 33,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4698191.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4698191",
+          "status": "Injured Reserve",
+          "injuryType": "Injured Reserve",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Injured Reserve"
+        },
+        {
+          "name": "Keyron Crawford",
+          "position": "DE",
+          "jersey": 42,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4911904.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4911904",
+          "status": "Injured Reserve",
+          "injuryType": "Injured Reserve",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Injured Reserve"
+        },
+        {
+          "name": "Brennan Jackson",
+          "position": "LB",
+          "jersey": 54,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4373471.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4373471",
+          "status": "Injured Reserve",
+          "injuryType": "Injured Reserve",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Injured Reserve"
+        },
+        {
+          "name": "Patrick Johnson",
+          "position": "DE",
+          "jersey": 93,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243916.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4243916",
+          "status": "Injured Reserve",
+          "injuryType": "Injured Reserve",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Injured Reserve"
+        },
+        {
+          "name": "Justin Pickett",
+          "position": "G",
+          "jersey": 77,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688538.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4688538",
+          "status": "Injured Reserve",
+          "injuryType": "Injured Reserve",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Injured Reserve"
+        }
+      ]
+    },
     "betting": {
       "favorite": "San Francisco 49ers",
       "spread": "SF -10.0",

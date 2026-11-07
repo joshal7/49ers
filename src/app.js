@@ -18,7 +18,7 @@ import { esc, formatRelativeAge } from './views/uiHelpers.js';
 import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
 import { renderNewsViewHtml } from './views/newsView.js';
-import { renderRosterCapViewHtml } from './views/rosterCapView.js';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js';
 import { renderAudioAiViewHtml } from './views/audioAiView.js';
@@ -43,7 +43,8 @@ const state = {
   rosterSearch: '',
   rosterUnitFilter: 'All',
   rosterPosFilter: 'ALL',
-  rosterSort: 'cap_desc',
+  rosterSort: 'name',
+  rosterSortDir: 'asc',
   depthMode: 'projected',
 
   // Season & Temporal state
@@ -242,6 +243,7 @@ function renderMain() {
         simCapResult,
         mcSimResult,
         filteredClusters,
+        filteredRawItems,
         isCustomizingLayout: state.isCustomizingLayout
       });
     } else if (state.activeNavTab === 'news') {
@@ -262,6 +264,7 @@ function renderMain() {
         rosterUnitFilter: state.rosterUnitFilter,
         rosterPosFilter: state.rosterPosFilter,
         rosterSort: state.rosterSort,
+        rosterSortDir: state.rosterSortDir,
         depthMode: state.depthMode,
         appData: state.appData,
         simCapResult,
@@ -330,8 +333,8 @@ function renderSheet() {
         reporterSearch: state.reporterSearch
       });
     } else if (state.sheetMode === 'vault') {
-      if (eyebrow) eyebrow.textContent = 'Calendar State Machine';
-      if (title) title.textContent = 'Seasonal & Off-Cycle Vault';
+      if (eyebrow) eyebrow.textContent = 'Seasonal Schedule';
+      if (title) title.textContent = 'Off-Cycle Archive';
       body.innerHTML = renderArchiveVaultSheetHtml({
         seasonState: state.seasonState
       });
@@ -579,11 +582,34 @@ function bindEvents() {
         renderMain();
         break;
 
+      case 'set-roster-sort': {
+        const nextField = btn.getAttribute('data-sort-field') || 'name';
+        const cur = normalizeRosterSort(state.rosterSort, state.rosterSortDir);
+        if (cur.field === nextField) {
+          state.rosterSortDir = cur.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          const def = ROSTER_SORT_FIELDS.find(f => f.key === nextField);
+          state.rosterSort = nextField;
+          state.rosterSortDir = def?.defaultDir || 'asc';
+        }
+        renderMain();
+        break;
+      }
+
+      case 'toggle-roster-sort-dir': {
+        const cur = normalizeRosterSort(state.rosterSort, state.rosterSortDir);
+        state.rosterSort = cur.field;
+        state.rosterSortDir = cur.dir === 'asc' ? 'desc' : 'asc';
+        renderMain();
+        break;
+      }
+
       case 'set-depth-mode':
         state.depthMode = btn.getAttribute('data-depth-mode') || 'projected';
         renderMain();
         break;
 
+      case 'open-player':
       case 'open-player-sheet': {
         const pid = btn.getAttribute('data-player-id');
         const player = getPlayerById(pid);
@@ -862,7 +888,10 @@ function bindEvents() {
   document.addEventListener('change', e => {
     const t = e.target;
     if (t.id === 'rosterSortSelect') {
-      state.rosterSort = t.value;
+      const nextField = t.value;
+      const def = ROSTER_SORT_FIELDS.find(f => f.key === nextField);
+      state.rosterSort = nextField;
+      if (def) state.rosterSortDir = def.defaultDir;
       renderMain();
     } else if (t.classList.contains('gm-move-select')) {
       const pid = t.getAttribute('data-player-id');
@@ -921,6 +950,21 @@ function bindEvents() {
     reorderBlockBeforeTarget(state.draggedBlockId, targetId);
     state.draggedBlockId = null;
   });
+
+  // Graceful fallback for any dynamic player headshot, team crest, or article photo
+  document.addEventListener(
+    'error',
+    e => {
+      const target = e.target;
+      if (target && target.tagName === 'IMG') {
+        const wrap = target.closest(
+          '.player-avatar, .team-logo-wrap, .brief-hero-media, .raw-item-thumb, .yt-facade-media, .video-thumb-stage'
+        );
+        if (wrap) wrap.classList.add('img-error');
+      }
+    },
+    true
+  );
 }
 
 async function init() {

@@ -352,7 +352,7 @@ async function main() {
 
     console.log('\n=== [2/9] Home Dashboard, Season State Machine & Persistent Drag/Tap Reordering ===');
 
-    await runStep('Home Dashboard renders active seasonal modules, crisp vector SVG icons, hides off-cycle modules to Vault, zero overflow', async () => {
+    await runStep('Home Dashboard renders exact requested default module order, top tweets & articles, opponent health, source links, and zero PRD callouts', async () => {
       await cdp.assertNoOverflow('Home Dashboard (iPhone 16 393x852)');
       const homeInfo = await cdp.eval(() => {
         const bannerText = document.getElementById('phaseBanner')?.textContent || '';
@@ -361,7 +361,30 @@ async function main() {
         const reorderBarText = document.querySelector('.reorder-bar')?.textContent || '';
         const navSvgCount = document.querySelectorAll('.bottom-nav svg.ui-icon').length;
         const cardBadgeSvgCount = document.querySelectorAll('.card-icon-badge svg.ui-icon').length;
-        return { bannerText, recordText, hasCustomize: Boolean(customizeBtn), reorderBarText, navSvgCount, cardBadgeSvgCount };
+        const blockOrder = Array.from(document.querySelectorAll('[data-dashboard-block]')).map(el =>
+          el.getAttribute('data-dashboard-block')
+        );
+        const mainText = document.getElementById('mainView')?.textContent || '';
+        const newsCard = document.querySelector('[data-dashboard-block="news_briefs"]');
+        const tweetLinks = newsCard ? newsCard.querySelectorAll('.home-wire-item a[href^="https://"]').length : 0;
+        const articleLinks = newsCard ? newsCard.querySelectorAll('a.home-article-row[href^="https://"]').length : 0;
+        const externalLinksCount = document.querySelectorAll('#mainView a[href^="https://"]').length;
+        const matchupText = document.querySelector('[data-dashboard-block="upcoming_matchup"]')?.textContent || '';
+        return {
+          bannerText,
+          recordText,
+          hasCustomize: Boolean(customizeBtn),
+          reorderBarText,
+          navSvgCount,
+          cardBadgeSvgCount,
+          blockOrder,
+          hasWarRoom: /war\s*room/i.test(mainText),
+          hasClickbaitCut: /clickbait\s*cut/i.test(mainText),
+          tweetLinks,
+          articleLinks,
+          externalLinksCount,
+          hasOpponentHealthPreview: matchupText.includes('Las Vegas Raiders') && matchupText.includes('Health')
+        };
       });
 
       assert(homeInfo.recordText === '6-1', `Expected header record 6-1, got ${homeInfo.recordText}`);
@@ -370,6 +393,27 @@ async function main() {
       assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
       assert(homeInfo.navSvgCount === 5, `Expected 5 SVG icons in bottom nav, got ${homeInfo.navSvgCount}`);
       assert(homeInfo.cardBadgeSvgCount >= 6, `Expected >=6 SVG card icon badges on Home Dashboard, got ${homeInfo.cardBadgeSvgCount}`);
+      assert(
+        JSON.stringify(homeInfo.blockOrder) ===
+          JSON.stringify([
+            'news_briefs',
+            'upcoming_matchup',
+            'team_health',
+            'schedule_overview',
+            'trade_deadline',
+            'team_stats',
+            'roster_depth',
+            'salary_cap',
+            'autopodcast_ai'
+          ]),
+        `Unexpected default Home block order: ${JSON.stringify(homeInfo.blockOrder)}`
+      );
+      assert(!homeInfo.hasWarRoom, 'Found "War Room" text on Home Dashboard');
+      assert(!homeInfo.hasClickbaitCut, 'Found "clickbait cut" PRD text on Home Dashboard');
+      assert(homeInfo.tweetLinks >= 3, `Expected >=3 clickable top beat tweet links on Home, got ${homeInfo.tweetLinks}`);
+      assert(homeInfo.articleLinks >= 3, `Expected >=3 clickable top beat article links on Home, got ${homeInfo.articleLinks}`);
+      assert(homeInfo.externalLinksCount >= 12, `Expected >=12 external source links on Home, got ${homeInfo.externalLinksCount}`);
+      assert(homeInfo.hasOpponentHealthPreview, 'Missing Opposing Team Health preview on Home Upcoming Matchup card');
     });
 
     await runStep('Customizing Dashboard card order via Up/Down + HTML5 Drag/Drop persists across reload & resets cleanly', async () => {
@@ -453,46 +497,73 @@ async function main() {
       assert(restoredOrder[0] === initialOrder[0], 'Reset Default did not restore original top card');
     });
 
-    console.log('\n=== [3/9] Team News, Anti-Fluff Synthesis, Video Embeds & Deep Dive AI Jump ===');
+    console.log('\n=== [3/9] Team News, Source Links, Verified Video Embeds & Deep Dive AI Jump ===');
 
-    await runStep('News & Film view renders Clustered Fact & Film Briefs, category filters, and click-to-play YouTube facade', async () => {
+    await runStep('News & Film view renders Beat Synthesis with source links, verified YouTube embeds/fallbacks, and Tweet/Article/Video filters', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="news"]').click());
       await cdp.assertNoOverflow('News & Film Clustered View');
 
       const newsSnapshot = await cdp.eval(() => {
+        const mainText = document.getElementById('mainView').textContent;
         const headlines = Array.from(document.querySelectorAll('.brief-headline')).map(h => h.textContent.trim());
-        const hasClickbaitCut = document.getElementById('mainView').textContent.includes('clickbait cut');
+        const hasClickbaitCut = /clickbait\s*cut/i.test(mainText);
+        const hasNoFluffEngine = /no-fluff\s*synthesis\s*engine/i.test(mainText);
         const playClipBtns = document.querySelectorAll('[data-action="play-inline-video"]').length;
-        return { count: headlines.length, hasClickbaitCut, playClipBtns };
+        const sourceCardLinks = document.querySelectorAll('.source-card-link[href^="https://"]').length;
+        return { count: headlines.length, hasClickbaitCut, hasNoFluffEngine, playClipBtns, sourceCardLinks };
       });
       assert(newsSnapshot.count >= 3, `Expected >=3 clustered briefs, got ${newsSnapshot.count}`);
-      assert(newsSnapshot.hasClickbaitCut, 'Missing clickbait-cut signal badge');
-      assert(newsSnapshot.playClipBtns >= 1, 'Expected at least 1 inline video clip facade');
+      assert(!newsSnapshot.hasClickbaitCut, 'Found PRD "clickbait cut" text in News view');
+      assert(!newsSnapshot.hasNoFluffEngine, 'Found PRD "No-Fluff Synthesis Engine" text in News view');
+      assert(newsSnapshot.playClipBtns >= 1, 'Expected at least 1 verified inline video clip facade');
+      assert(newsSnapshot.sourceCardLinks >= 4, `Expected >=4 clickable source links on briefs, got ${newsSnapshot.sourceCardLinks}`);
 
-      // Test clicking inline video facade mounts YouTube iframe with start timestamp
-      const iframeSrc = await cdp.eval(() => {
+      // Test clicking verified inline video facade mounts YouTube iframe with playsinline=1 & referrerpolicy
+      const iframeCheck = await cdp.eval(() => {
         const btn = document.querySelector('[data-action="play-inline-video"]');
         btn.click();
-        return document.querySelector('.video-iframe-wrap iframe')?.getAttribute('src') || '';
+        const iframe = document.querySelector('.video-iframe-wrap iframe');
+        return {
+          src: iframe?.getAttribute('src') || '',
+          refPolicy: iframe?.getAttribute('referrerpolicy') || ''
+        };
       });
       assert(
-        iframeSrc.includes('https://www.youtube.com/embed/') && iframeSrc.includes('playsinline=1'),
-        `Invalid YouTube iframe src: ${iframeSrc}`
+        iframeCheck.src.includes('https://www.youtube.com/embed/') && iframeCheck.src.includes('playsinline=1'),
+        `Invalid YouTube iframe src: ${iframeCheck.src}`
       );
+      assert(iframeCheck.refPolicy === 'strict-origin-when-cross-origin', 'Missing strict-origin-when-cross-origin referrerpolicy on YouTube iframe');
       await cdp.assertNoOverflow('News View with Expanded Video Embed');
 
-      // Test Category filters & Raw Beat Stream mode
+      // Test Category filters & Raw Beat Stream mode (including Tweets, Articles, Videos filters & non-embeddable fallback card)
       for (const cat of ['film', 'cap', 'scheme', 'roster', 'beat', 'all']) {
         await cdp.eval(c => {
           document.querySelector(`[data-action="set-news-category"][data-category="${c}"]`)?.click();
         }, cat);
       }
 
-      const rawCount = await cdp.eval(() => {
+      const rawStreamAudit = await cdp.eval(() => {
         document.querySelector('[data-action="set-news-mode"][data-mode="raw"]').click();
-        return document.querySelectorAll('.brief-card').length;
+        const totalCards = document.querySelectorAll('.brief-card').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
+        const tweetCards = document.querySelectorAll('.brief-card').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="articles"]')?.click();
+        const articleCards = document.querySelectorAll('.brief-card').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
+        const videoCards = document.querySelectorAll('.brief-card').length;
+        const externalFallbackCards = document.querySelectorAll('a.video-external-card[href*="youtube.com/watch"]').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        return { totalCards, tweetCards, articleCards, videoCards, externalFallbackCards };
       });
-      assert(rawCount >= 8, `Expected >=8 raw stream items, got ${rawCount}`);
+      assert(rawStreamAudit.totalCards >= 15, `Expected >=15 raw stream items, got ${rawStreamAudit.totalCards}`);
+      assert(rawStreamAudit.tweetCards >= 5, `Expected >=5 tweets in Raw Tweets filter, got ${rawStreamAudit.tweetCards}`);
+      assert(rawStreamAudit.articleCards >= 4, `Expected >=4 articles in Raw Articles filter, got ${rawStreamAudit.articleCards}`);
+      assert(rawStreamAudit.videoCards >= 3, `Expected >=3 videos in Raw Videos filter, got ${rawStreamAudit.videoCards}`);
+      assert(rawStreamAudit.externalFallbackCards >= 1, 'Expected DRM-blocked channel videos to render external YouTube thumbnail card instead of broken iframe');
       await cdp.assertNoOverflow('News Raw Beat Stream');
 
       // Return to clustered and test "⚡ Deep Dive AI" jump button
@@ -509,14 +580,71 @@ async function main() {
       assert(jumpedPrompt.promptValue.length > 10, 'Deep Dive AI jump should pre-fill analysis prompt');
     });
 
-    console.log('\n=== [4/9] Roster Explorer, Focus Preservation, Dual Depth Chart & Armchair GM Cap Sim ===');
+    console.log('\n=== [4/9] Roster Explorer (Default Name Sort + Asc/Desc Toggle), Dual Depth Chart & GM Cap Sim ===');
 
-    await runStep('Roster Explorer searches by name, #jersey, college, preserves input focus, and handles 0-match gracefully', async () => {
+    await runStep('Roster Explorer defaults to Name (A-Z), puts Name then Jersey # first, toggles Asc/Desc for every field, and preserves search focus', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="roster"]').click());
       await cdp.assertNoOverflow('Roster Explorer Default');
 
-      const totalCount = await cdp.eval(() => document.querySelectorAll('.player-row').length);
-      assert(totalCount >= 80, `Expected >=80 players on full roster, got ${totalCount}`);
+      const defaultSortAudit = await cdp.eval(() => {
+        const sel = document.getElementById('rosterSortSelect');
+        const optionKeys = Array.from(sel.options).map(o => o.value);
+        const dirText = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
+        const names = Array.from(document.querySelectorAll('.player-name-line')).map(el =>
+          el.childNodes[0]?.textContent?.trim() || el.textContent.trim()
+        );
+        return {
+          totalCount: document.querySelectorAll('.player-row').length,
+          selectedValue: sel.value,
+          optionKeys,
+          dirText,
+          firstTwoNames: names.slice(0, 2),
+          lastTwoNames: names.slice(-2)
+        };
+      });
+      assert(defaultSortAudit.totalCount >= 80, `Expected >=80 players on full roster, got ${defaultSortAudit.totalCount}`);
+      assert(defaultSortAudit.selectedValue === 'name', `Expected default roster sort 'name', got '${defaultSortAudit.selectedValue}'`);
+      assert(defaultSortAudit.optionKeys[0] === 'name' && defaultSortAudit.optionKeys[1] === 'jersey', `Expected Name then Jersey Number at top of sort options, got ${JSON.stringify(defaultSortAudit.optionKeys.slice(0, 2))}`);
+      assert(defaultSortAudit.dirText.includes('A–Z'), `Expected default ascending A–Z indicator, got ${defaultSortAudit.dirText}`);
+      assert(
+        defaultSortAudit.firstTwoNames[0].localeCompare(defaultSortAudit.firstTwoNames[1]) <= 0,
+        `Players not sorted alphabetically by default: ${JSON.stringify(defaultSortAudit.firstTwoNames)}`
+      );
+
+      // Flip Name sort to Z-A via #rosterSortDirBtn and verify order reverses
+      const reversedNameAudit = await cdp.eval(() => {
+        document.getElementById('rosterSortDirBtn').click();
+        const dirText = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
+        const firstPlayer = document.querySelector('.player-name-line')?.childNodes[0]?.textContent?.trim() || '';
+        return { dirText, firstPlayer };
+      });
+      assert(reversedNameAudit.dirText.includes('Z–A'), `Expected Z–A after toggling Name sort dir, got ${reversedNameAudit.dirText}`);
+      assert(reversedNameAudit.firstPlayer === defaultSortAudit.lastTwoNames[1], 'Z–A sort did not place last alphabetical player at top');
+
+      // Exercise both Ascending and Descending sort for EVERY sort field (name, jersey, cap, snaps, health, ras, age)
+      for (const fieldKey of ['jersey', 'cap', 'snaps', 'health', 'ras', 'age', 'name']) {
+        const pairCheck = await cdp.eval(fk => {
+          document.querySelector(`[data-action="set-roster-sort"][data-sort-field="${fk}"]`).click();
+          const firstPassTop = document.querySelector('.player-name-line')?.textContent?.trim() || '';
+          const firstDirLabel = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
+          // Re-query live pill after renderMain() and click again to flip up <-> down
+          document.querySelector(`[data-action="set-roster-sort"][data-sort-field="${fk}"]`).click();
+          const secondPassTop = document.querySelector('.player-name-line')?.textContent?.trim() || '';
+          const secondDirLabel = document.getElementById('rosterSortDirBtn')?.textContent?.trim() || '';
+          return { firstPassTop, secondPassTop, firstDirLabel, secondDirLabel };
+        }, fieldKey);
+        assert(
+          pairCheck.firstDirLabel !== pairCheck.secondDirLabel && pairCheck.firstPassTop !== pairCheck.secondPassTop,
+          `Toggling up/down sort direction failed for "${fieldKey}": ${JSON.stringify(pairCheck)}`
+        );
+      }
+
+      // Reset back to default Name A-Z
+      await cdp.eval(() => {
+        const sel = document.getElementById('rosterSortSelect');
+        sel.value = 'name';
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+      });
 
       // Test search + focus preservation
       const focusTest = await cdp.eval(() => {
@@ -552,7 +680,7 @@ async function main() {
       });
       assert(emptyMsg.includes('No players match'), 'Expected clean empty state message for zero-match query');
 
-      // Reset search and exercise all unit filters, position filters, and 6 sort modes
+      // Reset search and exercise all unit filters & position filters
       await cdp.eval(() => {
         const input = document.getElementById('rosterSearchInput');
         input.value = '';
@@ -573,14 +701,6 @@ async function main() {
           return document.querySelectorAll('.player-row').length;
         }, pos);
         assert(c >= 1, `Position filter "${pos}" returned 0 players`);
-      }
-
-      for (const sortKey of ['snaps_desc', 'jersey_asc', 'ras_desc', 'health_asc', 'name_asc', 'cap_desc']) {
-        await cdp.eval(sk => {
-          const sel = document.getElementById('rosterSortSelect');
-          sel.value = sk;
-          sel.dispatchEvent(new Event('change', { bubbles: true }));
-        }, sortKey);
       }
       await cdp.assertNoOverflow('Roster Explorer After Filter & Sort Matrix');
     });
@@ -771,18 +891,38 @@ async function main() {
       assert(cornerPlayersOk.backdropClosed, 'Clicking backdrop did not close Bottom Sheet');
     });
 
-    console.log('\n=== [6/9] Game & Season War Rooms (All 8 Sub-Modules + Live Monte Carlo Toggler) ===');
+    console.log('\n=== [6/9] Game & Season Views (Opponent Health & Play Odds + All 8 Sub-Modules + Monte Carlo) ===');
 
-    await runStep('All 8 Game & Season War Rooms render rich analytics, International stadiums & live 10,000-run Monte Carlo toggling', async () => {
+    await runStep('Upcoming Matchup renders Opposing Team Health & Play Likelihood, and all 8 Game & Season views have zero War Room text', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="season"]').click());
 
-      for (const sub of ['matchup', 'health', 'trade', 'stats', 'schedule', 'playoffs', 'draft_class', 'draft_prep']) {
+      // Verify Opposing Team (Las Vegas Raiders) Health & Play Likelihood section in Upcoming Matchup
+      const oppHealthAudit = await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+        const sec = document.getElementById('opponentHealthSection');
+        const txt = sec?.textContent || '';
+        const pctBadges = sec ? Array.from(sec.querySelectorAll('.badge')).filter(b => b.textContent.includes('%')).length : 0;
+        const injuryLink = Boolean(sec?.querySelector('a[href^="https://"]'));
+        return {
+          exists: Boolean(sec),
+          hasRaiders: txt.includes('Las Vegas Raiders'),
+          pctBadges,
+          injuryLink
+        };
+      });
+      assert(oppHealthAudit.exists, 'Missing #opponentHealthSection in Upcoming Matchup view');
+      assert(oppHealthAudit.hasRaiders, 'Opponent Health section missing Las Vegas Raiders');
+      assert(oppHealthAudit.pctBadges >= 3, `Expected >=3 opponent play likelihood % badges, got ${oppHealthAudit.pctBadges}`);
+      assert(oppHealthAudit.injuryLink, 'Missing external ESPN Injuries source link in Opponent Health section');
+
+      for (const sub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
         await cdp.eval(s => {
           document.querySelector(`[data-action="set-season-sub"][data-season-sub="${s}"]`).click();
         }, sub);
         await cdp.assertNoOverflow(`Game & Season Sub-Tab: ${sub}`);
         const text = await cdp.eval(() => document.getElementById('mainView').textContent);
         assert(!text.includes('NaN') && !text.includes('undefined'), `Sub-tab ${sub} rendered NaN/undefined`);
+        assert(!/war\s*room/i.test(text), `Sub-tab ${sub} still contains "War Room" text`);
       }
 
       // Check International Schedule venues (Melbourne & Mexico City)

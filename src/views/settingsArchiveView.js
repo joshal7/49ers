@@ -1,6 +1,6 @@
 /**
- * Settings (Theme, Editorial Filters, Outlet & 45-Reporter Toggles, Group Passcode)
- * & Seasonal Off-Cycle Archive Vault Sheet Renderers
+ * Settings (Theme, Feed Filters, Outlet & Reporter Toggles, Cloud Sync)
+ * & Seasonal Off-Cycle Archive Sheet Renderers
  */
 
 import { esc } from './uiHelpers.js';
@@ -22,9 +22,9 @@ export function renderSettingsSheetHtml({
   );
 
   return `
-    <!-- Theme & Editorial Mode -->
+    <!-- Theme & Feed Preferences -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:10px">
-      <div class="sub-label">1. Visual Aesthetic &amp; Editorial Guardrails</div>
+      <div class="sub-label">1. Display &amp; Feed Preferences</div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
         <div>
@@ -39,8 +39,8 @@ export function renderSettingsSheetHtml({
 
       <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
         <div>
-          <strong>Mute Opinion / Hot-Take Columnists</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Hides opinion-heavy columnists while keeping beat facts &amp; film</div>
+          <strong>Mute Opinion Columnists</strong>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Hides opinion-heavy commentary while keeping beat reporting &amp; film</div>
         </div>
         <input type="checkbox" data-action="toggle-pref-bool" data-pref-key="muteHotTakePersonalities"
                ${userPrefs.muteHotTakePersonalities ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--scarlet)" />
@@ -48,25 +48,25 @@ export function renderSettingsSheetHtml({
 
       <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
         <div>
-          <strong>Strict Analytics, Film &amp; Cap Only</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Filters stream strictly to high-density EPA, All-22 &amp; CBA cap items</div>
+          <strong>Analytics, Film &amp; Cap Only</strong>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Filters stream to EPA, All-22 film &amp; salary cap coverage</div>
         </div>
         <input type="checkbox" data-action="toggle-pref-bool" data-pref-key="strictAnalyticsFilmOnly"
                ${userPrefs.strictAnalyticsFilmOnly ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--scarlet)" />
       </label>
     </div>
 
-    <!-- Shared Friend-Group Passcode & Worker Endpoint -->
+    <!-- Display Name & Sync Endpoint -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
-      <div class="sub-label">2. Friend-Group Shared AI Cache &amp; Passcode</div>
+      <div class="sub-label">2. Display Name &amp; Cloud Sync</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
         <div>
           <label style="font-size:11px;color:var(--text-secondary)" for="prefAuthorInput">Your Display Name</label>
           <input type="text" id="prefAuthorInput" class="text-input" value="${esc(userPrefs.authorName || 'Josh')}" />
         </div>
         <div>
-          <label style="font-size:11px;color:var(--text-secondary)" for="prefPasscodeInput">Group Passcode</label>
-          <input type="password" id="prefPasscodeInput" class="text-input" placeholder="Shared PIN" value="${esc(userPrefs.groupPasscode || '')}" />
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefPasscodeInput">Sync Passcode</label>
+          <input type="password" id="prefPasscodeInput" class="text-input" placeholder="Optional PIN" value="${esc(userPrefs.groupPasscode || '')}" />
         </div>
       </div>
       <div>
@@ -75,7 +75,7 @@ export function renderSettingsSheetHtml({
       </div>
       <button type="button" class="btn-secondary" data-action="save-group-config">
         ${iconSvg('save', 14)}
-        <span>Save Group Credentials</span>
+        <span>Save Sync Settings</span>
       </button>
     </div>
 
@@ -101,7 +101,7 @@ export function renderSettingsSheetHtml({
     <!-- Individual Beat Reporters & Insiders -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="sub-label">4. Auto-Ranked Reporters &amp; Analysts (${reporters.length})</div>
+        <div class="sub-label">4. Beat Reporters &amp; Analysts (${reporters.length})</div>
         <div style="display:flex;gap:6px">
           <button type="button" class="btn-ghost" data-action="enable-all-reporters">${iconSvg('check', 12)}<span>Enable All</span></button>
         </div>
@@ -118,13 +118,19 @@ export function renderSettingsSheetHtml({
         ${visibleReporters
           .map(r => {
             const enabled = !disabledReps.has(r.id);
+            const repLink = r.bskyUrl || r.profileUrl || r.xUrl || '';
             return `
               <label style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer">
                 <div style="min-width:0">
-                  <div style="font-weight:700;font-size:13px">
-                    ${esc(r.name)} <span style="color:var(--gold-bright);font-size:11px">${esc(r.handle)}</span>
+                  <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                    <span>${esc(r.name)}</span>
+                    ${
+                      repLink
+                        ? `<a href="${esc(repLink)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:var(--gold-bright);font-size:11px;display:inline-flex;align-items:center;gap:3px">${esc(r.handle)} ${iconSvg('externalLink', 10)}</a>`
+                        : `<span style="color:var(--gold-bright);font-size:11px">${esc(r.handle)}</span>`
+                    }
                   </div>
-                  <div style="font-size:11px;color:var(--text-secondary)">${esc(r.role)} • Pop Score <span class="mono">${r.popularityScore}</span></div>
+                  <div style="font-size:11px;color:var(--text-secondary)">${esc(r.role)}</div>
                 </div>
                 <input type="checkbox" data-action="toggle-reporter" data-reporter-id="${esc(r.id)}"
                        ${enabled ? 'checked' : ''} style="width:19px;height:19px;flex-shrink:0;accent-color:var(--scarlet)" />
@@ -153,11 +159,11 @@ export function renderArchiveVaultSheetHtml({ seasonState }) {
 
   return `
     <div style="font-size:12.5px;color:var(--text-secondary)">
-      Temporal modules automatically surface on your Home Dashboard during their NFL calendar window and retire cleanly afterward so your daily flow stays focused. You can inspect any off-cycle war room right here year-round:
+      Seasonal modules surface on your Home Dashboard during their active NFL calendar window and move to the archive afterward. You can open any off-cycle module anytime below:
     </div>
 
     <div>
-      <div class="sub-label" style="margin-bottom:6px">Off-Cycle / Archived War Rooms (${archived.length})</div>
+      <div class="sub-label" style="margin-bottom:6px">Off-Cycle / Archived Views (${archived.length})</div>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${
           archived.length === 0
@@ -174,7 +180,7 @@ export function renderArchiveVaultSheetHtml({ seasonState }) {
                   </div>
                 </div>
                 <button type="button" class="btn-primary" data-action="open-vault-module" data-season-sub="${esc(jumpMap[b.id] || 'draft_class')}">
-                  <span>Inspect</span>
+                  <span>Open</span>
                   ${iconSvg('arrowRight', 13)}
                 </button>
               </div>

@@ -15,19 +15,30 @@ const rootDir = path.resolve(__dirname, '..');
 const dataDir = path.join(rootDir, 'data');
 
 export const OUTLETS = [
-  { id: '49ers_official', name: '49ers.com / Official Team', tier: 1, type: 'official' },
-  { id: 'nbcsba', name: 'NBC Sports Bay Area', tier: 1, type: 'beat' },
-  { id: 'athletic', name: 'The Athletic (Non-Paywall Briefs & Pods)', tier: 1, type: 'beat' },
-  { id: 'espn', name: 'ESPN NFL & 49ers Beat', tier: 1, type: 'national_beat' },
-  { id: 'sf_standard', name: 'The San Francisco Standard', tier: 1, type: 'beat' },
-  { id: 'sf_chronicle', name: 'San Francisco Chronicle', tier: 1, type: 'beat' },
-  { id: 'bay_area_news', name: 'Bay Area News Group / Mercury News', tier: 1, type: 'beat' },
-  { id: 'niners_nation', name: 'Niners Nation', tier: 2, type: 'blog_analysis' },
-  { id: '49ers_webzone', name: '49ers Webzone', tier: 2, type: 'blog_news' },
-  { id: 'nfl_network', name: 'NFL Network / NFL.com', tier: 1, type: 'national' },
-  { id: 'youtube_film', name: 'Independent Film & Analytics Creators', tier: 1, type: 'video_film' },
-  { id: 'knbr_radio', name: 'KNBR / Radio & Broadcast Booth', tier: 1, type: 'audio_beat' }
+  { id: '49ers_official', name: '49ers.com / Official Team', tier: 1, type: 'official', url: 'https://www.49ers.com/news/' },
+  { id: 'nbcsba', name: 'NBC Sports Bay Area', tier: 1, type: 'beat', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/' },
+  { id: 'athletic', name: 'The Athletic', tier: 1, type: 'beat', url: 'https://www.nytimes.com/athletic/nfl/team/niners/' },
+  { id: 'espn', name: 'ESPN NFL & 49ers Beat', tier: 1, type: 'national_beat', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' },
+  { id: 'sf_standard', name: 'The San Francisco Standard', tier: 1, type: 'beat', url: 'https://sfstandard.com/sports/' },
+  { id: 'sf_chronicle', name: 'San Francisco Chronicle', tier: 1, type: 'beat', url: 'https://www.sfchronicle.com/sports/49ers/' },
+  { id: 'bay_area_news', name: 'Bay Area News Group / Mercury News', tier: 1, type: 'beat', url: 'https://www.mercurynews.com/sports/49ers/' },
+  { id: 'niners_nation', name: 'Niners Nation', tier: 2, type: 'blog_analysis', url: 'https://www.ninersnation.com/' },
+  { id: '49ers_webzone', name: '49ers Webzone', tier: 2, type: 'blog_news', url: 'https://www.49erswebzone.com/' },
+  { id: 'nfl_network', name: 'NFL Network / NFL.com', tier: 1, type: 'national', url: 'https://www.nfl.com/teams/san-francisco-49ers/' },
+  { id: 'youtube_film', name: 'Independent Film & Analytics Creators', tier: 1, type: 'video_film', url: 'https://www.youtube.com/results?search_query=49ers+all+22+film' },
+  { id: 'knbr_radio', name: 'KNBR / Radio & Broadcast Booth', tier: 1, type: 'audio_beat', url: 'https://www.knbr.com/49ers/' }
 ];
+
+const BSKY_HANDLES = {
+  matt_maiocco: 'mattmaiocco.bsky.social',
+  matt_barrows: 'mattbarrows.bsky.social',
+  jennifer_lee_chan: 'jenniferleechan.bsky.social',
+  vic_tafur: 'victafur.bsky.social',
+  al_sacco: '49erswebzone.bsky.social',
+  adam_schefter: 'adamscheftermirror.bsky.social',
+  ian_rapoport: 'rapsheet.bsky.social',
+  mina_kimes: 'minakimes.bsky.social'
+};
 
 const SEEDED_REPORTERS = [
   // Official Team Podium Voices
@@ -95,7 +106,7 @@ async function fetchLiveMentionCounts() {
   let corpus = '';
   for (const u of urls) {
     try {
-      const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+      const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0' }, signal: AbortSignal.timeout(6000) });
       if (r.ok) {
         corpus += '\n' + (await r.text());
       }
@@ -121,11 +132,22 @@ export async function buildReporterRegistry() {
   fs.mkdirSync(dataDir, { recursive: true });
   const mentionCounts = await fetchLiveMentionCounts();
 
+  const outletMap = new Map(OUTLETS.map(o => [o.id, o]));
   const reporters = SEEDED_REPORTERS.map(rep => {
     const liveMentions = mentionCounts.get(rep.id) || 0;
     const popularityScore = Math.min(100, Math.round(rep.baseScore * 0.88 + Math.min(12, liveMentions * 0.9)));
+    const cleanHandle = (rep.handle || '').replace(/^@/, '');
+    const bskyHandle = BSKY_HANDLES[rep.id] || null;
+    const xUrl = cleanHandle ? `https://x.com/${cleanHandle}` : null;
+    const bskyUrl = bskyHandle ? `https://bsky.app/profile/${bskyHandle}` : null;
+    const outlet = outletMap.get(rep.outletId);
     return {
       ...rep,
+      xUrl,
+      bskyHandle,
+      bskyUrl,
+      profileUrl: xUrl || bskyUrl || outlet?.url || 'https://www.49ers.com/news/',
+      outletUrl: outlet?.url || null,
       liveWeeklyMentions: liveMentions,
       popularityScore,
       defaultEnabled: true

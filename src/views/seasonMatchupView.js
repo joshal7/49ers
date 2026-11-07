@@ -1,17 +1,25 @@
 /**
- * In-Season & Temporal War Rooms View
+ * In-Season & Seasonal Views
  * Sub-modules:
- * - matchup     : Week 9 Matchup War Room (Betting, Franchise H2H, Shanahan vs Kubiak Staff H2H, Trench Matrix)
- * - health      : Team Health (Wed/Thu/Fri Practice, Player Toughness & Vet-Rest Priors, IR 4-Game Return Tracker)
+ * - matchup     : Upcoming Matchup (Betting, Opponent Health & Play Likelihood, Coaching H2H, Trench Matrix, Franchise H2H)
+ * - health      : Team Health & Play Probability (Wed/Thu/Fri Practice, Player Priors, IR 4-Game Return Tracker)
+ * - schedule    : Full 2026 Schedule (Melbourne & Mexico City International Venues, Turf, Rest Deltas, Gamecast Links)
+ * - trade       : Trade Window (Oct 1 – Nov 10: Buckner/Odighizuwa Grades, Needs, Fits, Pick Costs, Insider Reports)
+ * - playoffs    : Playoff Probabilities (10,000-Run Monte Carlo Simulator, Explicit Seed Paths & Interactive Rooting Guide)
+ * - draft_prep  : Draft (2027 Needs, Consensus Mocks, Shanahan/Lynch Fit Score, Combine Hub)
+ * - draft_class : Draft Recap (2026 Draft Picks & Priority UDFAs, Spider Charts & Verified Highlight Reels)
  * - stats       : Team Stats (1st–32nd NFL Standard & Advanced EPA Rankings + Aggregated Power Rankings)
- * - trade       : Trade Deadline War Room (Oct 1 – Nov 10: Buckner/Odighizuwa Grades, Needs, Fits, Pick Costs, Tiered Rumors)
- * - playoffs    : Near-Playoffs 10,000-Run Monte Carlo Simulator, Explicit Seed Paths & Interactive Rooting Guide
- * - schedule    : Full 2026 Schedule (Melbourne & Mexico City International Venues, Turf, Rest Deltas)
- * - draft_prep  : Post-Season Draft War Room (2027 Needs, Consensus Mocks, Shanahan/Lynch Archetype Fit Score, Combine Hub)
- * - draft_class : 2026 Draft Picks & Priority UDFAs (Consensus Value Steals, Guaranteed UDFA $, Spider Charts & Highlight Reels)
  */
 
-import { esc, playProbBadgeClass, rankBadgeClass } from './uiHelpers.js';
+import {
+  esc,
+  playProbBadgeClass,
+  rankBadgeClass,
+  renderPlayerAvatarHtml,
+  renderTeamLogoHtml,
+  renderPlayerChipsStripHtml,
+  renderMiniMeterHtml
+} from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
@@ -29,30 +37,32 @@ export function renderSeasonMatchupViewHtml({
 }) {
   const phaseSet = new Set(activePhases || []);
 
+  // Ordered to match Home Dashboard priority:
+  // Matchup -> Team Health -> Schedule -> Time-Specific (Trade Window -> Playoff Odds -> Draft -> Draft Recap) -> Team Stats
   const subTabs = [
-    { key: 'matchup', icon: 'swords', label: 'Wk 9 Matchup', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'health', icon: 'heartPulse', label: 'Health & IR', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'trade', icon: 'trade', label: 'Trade Deadline', activeNow: phaseSet.has('TRADE_WINDOW') },
-    { key: 'stats', icon: 'season', label: 'Team Stats & Ranks', activeNow: phaseSet.has('IN_SEASON') },
+    { key: 'matchup', icon: 'swords', label: 'Upcoming Matchup', activeNow: phaseSet.has('IN_SEASON') },
+    { key: 'health', icon: 'heartPulse', label: 'Team Health', activeNow: phaseSet.has('IN_SEASON') },
     { key: 'schedule', icon: 'calendar', label: 'Schedule', activeNow: true },
-    { key: 'playoffs', icon: 'trophy', label: 'Playoff Monte Carlo', activeNow: phaseSet.has('PLAYOFF_PUSH') },
-    { key: 'draft_class', icon: 'radar', label: '2026 Draft & UDFAs', activeNow: phaseSet.has('DRAFT_LIVE_UDFA') },
-    { key: 'draft_prep', icon: 'compass', label: '2027 Draft & Combine', activeNow: phaseSet.has('DRAFT_PREP') }
+    { key: 'trade', icon: 'trade', label: 'Trade Window', activeNow: phaseSet.has('TRADE_WINDOW') },
+    { key: 'playoffs', icon: 'trophy', label: 'Playoff Odds', activeNow: phaseSet.has('PLAYOFF_PUSH') },
+    { key: 'draft_prep', icon: 'compass', label: 'Draft', activeNow: phaseSet.has('DRAFT_PREP') },
+    { key: 'draft_class', icon: 'radar', label: 'Draft Recap', activeNow: phaseSet.has('DRAFT_LIVE_UDFA') },
+    { key: 'stats', icon: 'season', label: 'Team Stats', activeNow: phaseSet.has('IN_SEASON') }
   ];
 
-  // Sort active-phase tabs first while keeping off-cycle tabs accessible in Vault/Preview
+  // Keep active-phase tabs first while preserving natural relative order
   subTabs.sort((a, b) => Number(b.activeNow) - Number(a.activeNow));
 
   const switcherCard = `
     <div class="card">
-      <div class="pill-bar" role="tablist" aria-label="Game Week and Seasonal War Rooms">
+      <div class="pill-bar" role="tablist" aria-label="Game Week and Seasonal Views">
         ${subTabs
           .map(
             t => `
           <button type="button" class="pill-btn ${seasonSub === t.key ? 'active' : ''}"
                   data-action="set-season-sub" data-season-sub="${t.key}">
             ${iconSvg(t.icon, 14)}
-            <span>${esc(t.label)}${!t.activeNow ? ' (Vault)' : ''}</span>
+            <span>${esc(t.label)}${!t.activeNow ? ' (Archive)' : ''}</span>
           </button>
         `
           )
@@ -64,7 +74,7 @@ export function renderSeasonMatchupViewHtml({
   if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData);
   if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData);
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
-  if (seasonSub === 'trade') return switcherCard + renderTradeWarRoom(appData);
+  if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (seasonSub === 'playoffs') return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners);
   if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData);
   if (seasonSub === 'draft_prep') return switcherCard + renderDraftPrepAndCombine(appData, combineSearch);
@@ -74,6 +84,11 @@ export function renderSeasonMatchupViewHtml({
 function renderUpcomingMatchup(appData) {
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const bet = um.betting || {};
+  const oppHealth = um.opponentHealth || {};
+  const oppInjReport = oppHealth.injuryReport || [];
+  const oppHealthyStarters = oppHealth.keyStartersHealthy || [];
+  const oppIrList = oppHealth.irReserve || [];
+  const sfPr = (appData?.health?.practiceReport || []).slice(0, 5);
 
   return `
     <section class="card temporal-highlight">
@@ -81,7 +96,7 @@ function renderUpcomingMatchup(appData) {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('swords', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Week ${um.week} Matchup War Room • ${esc(um.kickoffDisplay)}</div>
+            <div class="card-eyebrow">Week ${um.week} Upcoming Matchup • ${esc(um.kickoffDisplay)}</div>
             <h2 class="card-title">${esc(um.oppName)} (${esc(um.oppRecord)}) @ 49ers (${esc(um.sfRecord)})</h2>
           </div>
         </div>
@@ -92,9 +107,37 @@ function renderUpcomingMatchup(appData) {
         </button>
       </div>
 
-      <div class="inline-icon-meta" style="margin-bottom:8px">
-        ${iconSvg('stadium', 14)}
-        <span>${esc(um.venue)}</span>
+      <div class="matchup-scoreboard">
+        <div class="sb-team-col">
+          ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 40)}
+          <div class="sb-team-meta">
+            <div class="sb-team-abbr">${esc(um.oppName || 'Raiders')}</div>
+            <div class="sb-team-rec mono">${esc(um.oppRecord || '2-5')}</div>
+          </div>
+        </div>
+        <span class="sb-vs-pill mono">@ WK ${um.week || 9}</span>
+        <div class="sb-team-col home">
+          <div class="sb-team-meta">
+            <div class="sb-team-abbr">49ers</div>
+            <div class="sb-team-rec mono">${esc(um.sfRecord?.split(' ')[0] || '6-1')}</div>
+          </div>
+          ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <div class="inline-icon-meta">
+          ${iconSvg('stadium', 14)}
+          <span>${esc(um.venue)}</span>
+        </div>
+        <div class="source-link-strip">
+          ${
+            um.gameUrl
+              ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('externalLink', 11)}</a>`
+              : ''
+          }
+          <a href="${esc(um.statsSourceUrl || 'https://github.com/nflverse/nflverse-data')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse EPA</span>${iconSvg('externalLink', 11)}</a>
+        </div>
       </div>
 
       <div class="kpi-grid">
@@ -103,8 +146,139 @@ function renderUpcomingMatchup(appData) {
         <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12.5px">${esc(bet.impliedScore)}</div></div>
       </div>
 
+      ${um.featuredPlayers?.length ? `<div style="margin:8px 0">${renderPlayerChipsStripHtml(um.featuredPlayers, 6)}</div>` : ''}
+
       <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
         <strong>Line Movement &amp; Rest:</strong> ${esc(bet.openingSpread)} • Moneyline <span class="mono">${esc(bet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(bet.restAdvantage)}</strong>
+      </div>
+    </section>
+
+    <section class="card" id="opponentHealthSection">
+      <div class="card-header">
+        <div class="card-header-left">
+          ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 28)}
+          <div class="card-title-group">
+            <div class="card-eyebrow">Opposing Team Availability &amp; Play Likelihood</div>
+            <h3 class="card-title">${esc(um.oppName)} Injury Report &amp; Play Odds</h3>
+          </div>
+        </div>
+        <div class="source-link-strip">
+          <a href="${esc(oppHealth.teamInjuriesUrl || um.injurySourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>${esc(um.oppAbbr || 'OPP')} Injury Wire</span>${iconSvg('externalLink', 11)}
+          </a>
+        </div>
+      </div>
+
+      <div class="kpi-grid" style="margin-bottom:10px">
+        <div class="kpi-box">
+          <div class="kpi-label">Ruled Out</div>
+          <div class="kpi-val mono" style="color:var(--crimson)">${oppHealth.summary?.ruledOutCount ?? 0}</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Questionable / GTD</div>
+          <div class="kpi-val mono" style="color:var(--gold-bright)">${oppHealth.summary?.questionableOrDoubtfulCount ?? 0}</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">On Injured Reserve</div>
+          <div class="kpi-val mono">${oppHealth.summary?.irCount ?? oppIrList.length}</div>
+        </div>
+      </div>
+
+      ${
+        oppInjReport.length > 0
+          ? `
+            <div class="sub-label" style="margin-bottom:6px">Week ${um.week || 9} Injury Designations &amp; Modeled Play Likelihood</div>
+            <div class="table-scroll" style="margin-bottom:10px">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>${esc(um.oppAbbr || 'OPP')} Player</th>
+                    <th>Injury / Status</th>
+                    <th class="mono">W / T / F</th>
+                    <th>Play Likelihood</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${oppInjReport
+                    .map(
+                      op => `
+                    <tr>
+                      <td>
+                        <div style="display:flex;align-items:center;gap:7px">
+                          ${renderPlayerAvatarHtml(op, 28)}
+                          <div>
+                            <div>
+                              ${
+                                op.espnUrl
+                                  ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                                  : `<strong>${esc(op.name)}</strong>`
+                              }
+                              <span style="color:var(--gold-bright);font-size:11px"> ${esc(op.position)}${op.jersey != null ? ` #${op.jersey}` : ''}</span>
+                            </div>
+                            ${op.shortComment ? `<div style="font-size:11px;color:var(--text-muted);max-width:340px">${esc(op.shortComment)}</div>` : ''}
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div><strong>${esc(op.injuryType)}</strong></div>
+                        <div style="font-size:11px;color:var(--text-muted)">${esc(op.gameStatus)}</div>
+                      </td>
+                      <td class="mono">${esc(op.wed)} / ${esc(op.thu)} / ${esc(op.fri)}</td>
+                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span></td>
+                    </tr>
+                  `
+                    )
+                    .join('')}
+                </tbody>
+              </table>
+            </div>
+          `
+          : `<div class="subcard-panel" style="font-size:12.5px;margin-bottom:10px">No active-roster ${esc(um.oppName)} players currently carry a restricted game designation.</div>`
+      }
+
+      ${
+        oppHealthyStarters.length > 0
+          ? `
+            <div class="sub-label" style="margin-bottom:6px">Key ${esc(um.oppName)} Starters Cleared to Play</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+              ${oppHealthyStarters
+                .map(
+                  st => `
+                <a href="${esc(st.espnUrl || oppHealth.sourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="padding:5px 9px">
+                  <strong>${esc(st.name)}</strong>
+                  <span style="color:var(--text-muted)">(${esc(st.position)})</span>
+                  <span class="mono" style="color:var(--emerald);font-weight:700">${st.playProbabilityPct}%</span>
+                </a>
+              `
+                )
+                .join('')}
+            </div>
+          `
+          : ''
+      }
+
+      ${
+        oppIrList.length > 0
+          ? `
+            <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:10px">
+              <strong>${esc(um.oppAbbr || 'OPP')} Injured Reserve (0% Play):</strong>
+              ${oppIrList.map(ir => `${esc(ir.name)} (${esc(ir.position)})`).join(', ')}
+            </div>
+          `
+          : ''
+      }
+
+      <div class="subcard-panel" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="font-size:12px;color:var(--text-secondary)">
+          <strong>49ers Side:</strong> ${sfPr
+            .slice(0, 3)
+            .map(p => `${esc(p.name)} (${esc(p.playBadgeLabel)})`)
+            .join(' • ')}
+        </div>
+        <button type="button" class="btn-ghost" data-action="set-season-sub" data-season-sub="health">
+          ${iconSvg('heartPulse', 13)}
+          <span>Full 49ers Health</span>
+        </button>
       </div>
     </section>
 
@@ -129,7 +303,7 @@ function renderUpcomingMatchup(appData) {
               <strong style="font-size:13px">${esc(m.unitMatchup)}</strong>
               <span class="badge badge-positive">${esc(m.advantage)}</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || m.nerdyDetail)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || '')}</div>
           </div>
         `
           )
@@ -138,8 +312,15 @@ function renderUpcomingMatchup(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Recent Franchise History (${esc(um.franchiseHistory?.recentRecord)})</div>
-      <h3 class="card-title" style="margin-bottom:8px">49ers vs. Raiders Recent Meetings</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <div>
+          <div class="card-eyebrow">Recent Franchise History (${esc(um.franchiseHistory?.recentRecord)})</div>
+          <h3 class="card-title">49ers vs. Raiders Recent Meetings</h3>
+        </div>
+        <a href="https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=sfo&amp;tm2=rai&amp;yr=all" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+          <span>PFR Box Scores</span>${iconSvg('externalLink', 11)}
+        </a>
+      </div>
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">${esc(um.franchiseHistory?.lastMeetingNote)}</div>
       <div class="table-scroll">
         <table class="data-table mono">
@@ -172,15 +353,23 @@ function renderTeamHealthAndIr(appData) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('heartPulse', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Player-Specific Priors (Vet Rest &amp; Toughness Adjusted)</div>
+            <div class="card-eyebrow">Practice Participation &amp; Player Availability</div>
             <h2 class="card-title">Week ${h.week || 9} Practice &amp; Play Likelihood</h2>
           </div>
         </div>
-        <span class="badge badge-gold mono">IR Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <a href="${esc(h.sourceUrl || 'https://www.49ers.com/team/injury-report/')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>49ers.com Report</span>${iconSvg('externalLink', 11)}
+          </a>
+          <a href="${esc(h.espnInjuryUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>ESPN Injuries</span>${iconSvg('externalLink', 11)}
+          </a>
+          <span class="badge badge-gold mono">IR Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
+        </div>
       </div>
 
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
-        Accounts for player-specific habits (e.g., Trent Williams / CMC veteran rest days vs. acute ankle/soft-tissue tags, plus Fred Warner / George Kittle "plays through Questionable" toughness rates). Tap any player for full factor breakdown.
+        Accounts for veteran rest days (e.g., Trent Williams / CMC) vs. acute injury designations and historical play-through rates. Tap any player for full injury and contract details.
       </div>
 
       <div class="table-scroll">
@@ -195,7 +384,12 @@ function renderTeamHealthAndIr(appData) {
               .map(
                 p => `
               <tr style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health">
-                <td><strong>${esc(p.name)}</strong> <span style="color:var(--gold-bright);font-size:11px">${esc(p.position)}</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:8px">
+                    ${renderPlayerAvatarHtml(p, 30)}
+                    <span><strong>${esc(p.name)}</strong> <span style="color:var(--gold-bright);font-size:11px">${esc(p.position)}</span></span>
+                  </div>
+                </td>
                 <td>${esc(p.injuryType)}</td>
                 <td class="mono">${esc(p.wed)} / ${esc(p.thu)} / ${esc(p.fri)}</td>
                 <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(p.playBadgeLabel)}</span></td>
@@ -217,8 +411,11 @@ function renderTeamHealthAndIr(appData) {
             ir => `
           <div class="subcard-panel" style="cursor:pointer"
                data-action="open-player-sheet" data-player-id="${esc(ir.playerId)}" data-initial-tab="health">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-              <strong>${esc(ir.name)} <span style="color:var(--gold-bright)">(${esc(ir.position)})</span></strong>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                ${renderPlayerAvatarHtml(ir, 34, { showJerseyBadge: ir.jersey != null })}
+                <strong>${esc(ir.name)} <span style="color:var(--gold-bright)">(${esc(ir.position)})</span></strong>
+              </div>
               <span class="badge badge-gold mono">Est. Return: ${esc(ir.projectedReturnWeek)}</span>
             </div>
             <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">
@@ -248,6 +445,11 @@ function renderTeamStatsAndPower(appData) {
             <h2 class="card-title">49ers Team Stats &amp; NFL Rankings</h2>
           </div>
         </div>
+        <div class="source-link-strip">
+          <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 11)}</a>
+          <a href="https://www.pro-football-reference.com/teams/sfo/2026.htm" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
+          <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
+        </div>
       </div>
 
       <div class="table-scroll">
@@ -263,7 +465,10 @@ function renderTeamStatsAndPower(appData) {
                 <td><strong>${esc(r.label)}</strong></td>
                 <td style="color:var(--text-secondary);font-size:11.5px">${esc(r.category)}</td>
                 <td class="mono"><strong>${esc(r.displayValue)}</strong></td>
-                <td><span class="badge ${rankBadgeClass(r.rank)} mono">#${r.rank}</span></td>
+                <td style="min-width:86px">
+                  <span class="badge ${rankBadgeClass(r.rank)} mono">#${r.rank}</span>
+                  ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : r.rank <= 18 ? 'gold' : 'scarlet')}
+                </td>
                 <td class="mono" style="color:var(--text-muted)">${esc(r.leagueAvgDisplay)}</td>
               </tr>
             `
@@ -290,8 +495,12 @@ function renderTeamStatsAndPower(appData) {
           .map(
             s => `
           <div class="subcard-panel">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
-              <strong>${esc(s.outlet)}</strong>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px">
+              ${
+                s.url
+                  ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(s.outlet)}</strong> ${iconSvg('externalLink', 11)}</a>`
+                  : `<strong>${esc(s.outlet)}</strong>`
+              }
               <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta)})</span>
             </div>
             <div style="font-size:12.5px;color:var(--text-secondary)">${esc(s.blurb)}</div>
@@ -304,7 +513,7 @@ function renderTeamStatsAndPower(appData) {
   `;
 }
 
-function renderTradeWarRoom(appData) {
+function renderTradeWindow(appData) {
   const tw = appData?.seasonal?.tradeWarRoom || {};
   return `
     <section class="card temporal-highlight">
@@ -313,10 +522,14 @@ function renderTradeWarRoom(appData) {
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trade', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Oct 1 – Trade Deadline • ${esc(tw.deadlineDisplay)}</div>
-            <h2 class="card-title">Trade Deadline War Room</h2>
+            <h2 class="card-title">NFL Trade Window</h2>
           </div>
         </div>
-        <span class="badge badge-positive mono">${formatCompactDollars(tw.availableGrossCap)} Gross Cap</span>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <a href="${esc(tw.capSourceUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>OverTheCap</span>${iconSvg('externalLink', 11)}</a>
+          <a href="${esc(tw.transactionsUrl || 'https://www.espn.com/nfl/transactions')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Transactions</span>${iconSvg('externalLink', 11)}</a>
+          <span class="badge badge-positive mono">${formatCompactDollars(tw.availableGrossCap)} Gross Cap</span>
+        </div>
       </div>
 
       <div class="sub-label" style="margin-bottom:6px">Completed 2026 Impact Acquisitions</div>
@@ -325,12 +538,27 @@ function renderTradeWarRoom(appData) {
           .map(
             m => `
           <div class="subcard-panel" style="border-color:var(--gold-border)">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
-              <strong>${esc(m.player)} (${esc(m.position)}) ← ${esc(m.acquiredFrom)}</strong>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:9px;min-width:0">
+                ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 36, { showJerseyBadge: m.jersey != null })}
+                <div style="min-width:0">
+                  <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                    <strong style="cursor:${m.playerId ? 'pointer' : 'default'}" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>${esc(m.player)} (${esc(m.position)})</strong>
+                    <span style="color:var(--text-muted)">←</span>
+                    ${m.acquiredFrom ? renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 18) : ''}
+                    <strong>${esc(m.acquiredFrom)}</strong>
+                    ${
+                      m.sourceUrl
+                        ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px;margin-left:4px">Source ${iconSvg('externalLink', 10)}</a>`
+                        : ''
+                    }
+                  </div>
+                  <div style="font-size:11.5px;color:var(--gold-bright)">${esc(m.timing)} • Cost: ${esc(m.costSummary)}</div>
+                </div>
+              </div>
               <span class="badge badge-positive mono">Grade ${esc(m.schemeGrade)}</span>
             </div>
-            <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.timing)} • Cost: ${esc(m.costSummary)}</div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.analysis)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${esc(m.analysis)}</div>
           </div>
         `
           )
@@ -354,18 +582,34 @@ function renderTradeWarRoom(appData) {
 
     <section class="card">
       <div class="card-eyebrow">9/18ths Pro-Rated Base Salary &amp; Rich Hill Pick Costs</div>
-      <h3 class="card-title" style="margin-bottom:8px">Realistic Seller-Team Fit Matrix</h3>
+      <h3 class="card-title" style="margin-bottom:8px">Seller-Team Target Fit Matrix</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(tw.realisticTargets || [])
           .map(
             t => `
           <div class="subcard-panel">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-              <strong>${esc(t.name)} (${esc(t.position)})</strong>
-              <span class="badge badge-gold mono">Fit ${t.fitScore}/100 • Cap ${formatCompactDollars(t.prorated2026CapCharge)}</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:9px;min-width:0">
+                ${renderPlayerAvatarHtml({ name: t.name, jersey: t.jersey, headshotUrl: t.headshotUrl }, 36)}
+                <div style="min-width:0">
+                  <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                    <strong>${esc(t.name)} (${esc(t.position)})</strong>
+                    ${t.teamAbbr ? renderTeamLogoHtml(t.teamAbbr, t.teamLogoUrl, 17) : ''}
+                    ${
+                      t.sourceUrl
+                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">Cap Table ${iconSvg('externalLink', 10)}</a>`
+                        : ''
+                    }
+                  </div>
+                  <div style="font-size:11.5px;color:var(--emerald)">Est. Cost: ${esc(t.projectedPickCost)}</div>
+                </div>
+              </div>
+              <div style="min-width:128px;text-align:right">
+                <span class="badge badge-gold mono">Fit ${t.fitScore}/100 • Cap ${formatCompactDollars(t.prorated2026CapCharge)}</span>
+                ${renderMiniMeterHtml(t.fitScore, 'gold')}
+              </div>
             </div>
-            <div style="font-size:11.5px;color:var(--emerald);margin:2px 0">Est. Cost: ${esc(t.projectedPickCost)}</div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(t.fitBreakdown)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${esc(t.fitBreakdown)}</div>
           </div>
         `
           )
@@ -374,16 +618,20 @@ function renderTradeWarRoom(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Anti-Sensationalism Credibility Tiers</div>
-      <h3 class="card-title" style="margin-bottom:8px">Verified Trade Rumors &amp; Front Office Intel</h3>
+      <div class="card-eyebrow">Beat &amp; National Insider Reports</div>
+      <h3 class="card-title" style="margin-bottom:8px">Trade Window Updates &amp; Front Office Notes</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(tw.tieredRumors || [])
           .map(
             r => `
           <div class="subcard-panel">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:3px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
               <span class="badge ${r.tier.includes('Tier 1') ? 'badge-positive' : 'badge-gold'}">${esc(r.tier)}</span>
-              <span style="font-size:11px;color:var(--text-muted)">${esc(r.sources)}</span>
+              ${
+                r.sourceUrl
+                  ? `<a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">${esc(r.sources)} ${iconSvg('externalLink', 10)}</a>`
+                  : `<span style="font-size:11px;color:var(--text-muted)">${esc(r.sources)}</span>`
+              }
             </div>
             <div style="font-size:12.5px">${esc(r.summary)}</div>
           </div>
@@ -412,25 +660,31 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
             <h2 class="card-title">49ers Playoff &amp; Seeding Probabilities</h2>
           </div>
         </div>
-        ${
-          overrideCount > 0
-            ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">${iconSvg('reset', 13)}<span>Clear (${overrideCount})</span></button>`
-            : `<span class="badge badge-gold mono">10,000 Runs</span>`
-        }
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <a href="https://www.nfl.com/standings/playoff-picture" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Playoff Picture</span>${iconSvg('externalLink', 11)}</a>
+          ${
+            overrideCount > 0
+              ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">${iconSvg('reset', 13)}<span>Clear (${overrideCount})</span></button>`
+              : `<span class="badge badge-gold mono">10,000 Runs</span>`
+          }
+        </div>
       </div>
 
       <div class="kpi-grid">
         <div class="kpi-box">
           <div class="kpi-label">Make Playoffs</div>
           <div class="kpi-val mono" style="color:var(--emerald)">${sf.makePlayoffsPct ?? 0}%</div>
+          ${renderMiniMeterHtml(sf.makePlayoffsPct ?? 0, 'emerald')}
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Win NFC West</div>
           <div class="kpi-val mono" style="color:var(--gold-bright)">${sf.winDivisionPct ?? 0}%</div>
+          ${renderMiniMeterHtml(sf.winDivisionPct ?? 0, 'gold')}
         </div>
         <div class="kpi-box">
           <div class="kpi-label">#1 Seed Bye</div>
           <div class="kpi-val mono">${sf.seed1ByePct ?? 0}%</div>
+          ${renderMiniMeterHtml(sf.seed1ByePct ?? 0, 'scarlet')}
         </div>
       </div>
 
@@ -478,13 +732,17 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
                 <div class="scenario-toggle-pair">
                   <button type="button"
                           class="team-pick-btn mono ${picked === 'AWAY' ? 'selected' : ''} ${g.recommendedWinner === 'AWAY' ? 'recommended' : ''}"
+                          style="display:inline-flex;align-items:center;gap:5px"
                           data-action="toggle-playoff-winner" data-game-id="${esc(g.gameId)}" data-side="AWAY">
-                    ${esc(g.away)}
+                    ${renderTeamLogoHtml(g.away, g.awayLogoUrl, 16)}
+                    <span>${esc(g.away)}</span>
                   </button>
                   <button type="button"
                           class="team-pick-btn mono ${picked === 'HOME' ? 'selected' : ''} ${g.recommendedWinner === 'HOME' ? 'recommended' : ''}"
+                          style="display:inline-flex;align-items:center;gap:5px"
                           data-action="toggle-playoff-winner" data-game-id="${esc(g.gameId)}" data-side="HOME">
-                    ${esc(g.home)}
+                    ${renderTeamLogoHtml(g.home, g.homeLogoUrl, 16)}
+                    <span>${esc(g.home)}</span>
                   </button>
                 </div>
               </div>
@@ -495,8 +753,13 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Explicit Seeding Scenarios</div>
-      <h3 class="card-title" style="margin-bottom:8px">Paths to #1 Seed &amp; Division Crown</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <div>
+          <div class="card-eyebrow">Explicit Seeding Scenarios</div>
+          <h3 class="card-title">Paths to #1 Seed &amp; Division Crown</h3>
+        </div>
+        <a href="https://www.espn.com/nfl/standings" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Standings</span>${iconSvg('externalLink', 11)}</a>
+      </div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
         ${(pp.seedPathCards || [])
           .map(
@@ -519,7 +782,12 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
               .map(
                 t => `
               <tr style="${t.abbr === 'SF' ? 'background:var(--gold-soft)' : ''}">
-                <td><strong>${esc(t.abbr)}</strong></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px">
+                    ${renderTeamLogoHtml(t.abbr, t.logoUrl, 20)}
+                    <strong>${esc(t.abbr)}</strong>
+                  </div>
+                </td>
                 <td style="font-family:var(--font-sans);font-size:11px">${esc(t.division.replace('NFC ', ''))}</td>
                 <td>${esc(t.currentRecord)}</td>
                 <td>${t.projectedWins}</td>
@@ -546,9 +814,12 @@ function renderFullSchedule(appData) {
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('calendar', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">2026 Regular Season • International, Surface &amp; Rest Differential</div>
-            <h2 class="card-title">49ers Matchups &amp; Venue Tracker</h2>
+            <h2 class="card-title">49ers Schedule &amp; Venue Tracker</h2>
           </div>
         </div>
+        <a href="https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+          <span>ESPN Schedule</span>${iconSvg('externalLink', 11)}
+        </a>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:8px">
@@ -565,17 +836,25 @@ function renderFullSchedule(appData) {
                 g.venue?.isInternational ? 'var(--gold-border)' : 'var(--border-subtle)'
               }">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-                  <div>
-                    <span class="mono" style="color:var(--gold-bright);font-weight:800">WK ${g.week}</span> •
-                    <strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>
-                    <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent?.record)})</span>
+                  <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                    ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 28)}
+                    <div style="min-width:0">
+                      <span class="mono" style="color:var(--gold-bright);font-weight:800">WK ${g.week}</span> •
+                      <strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>
+                      <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent?.record)})</span>
+                    </div>
                   </div>
-                  <div style="display:flex;gap:5px;align-items:center">
+                  <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
                     ${restBadge}
                     ${
                       g.completed
                         ? `<span class="badge ${g.result === 'W' ? 'badge-positive' : 'badge-danger'} mono">${g.result} ${g.sfScore}-${g.oppScore}</span>`
                         : `<span class="badge badge-neutral mono">${esc(g.statusDetail)}</span>`
+                    }
+                    ${
+                      g.gameUrl
+                        ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${g.completed ? 'Box Score' : 'Gamecast'}</span>${iconSvg('externalLink', 10)}</a>`
+                        : ''
                     }
                   </div>
                 </div>
@@ -611,9 +890,17 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('compass', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Post-Season Until Draft • 2-Year Cap &amp; Roster Horizon</div>
-            <h2 class="card-title">2027 Draft War Room &amp; Pick Inventory</h2>
+            <div class="card-eyebrow">2-Year Cap &amp; Roster Horizon</div>
+            <h2 class="card-title">2027 NFL Draft &amp; Pick Inventory</h2>
           </div>
+        </div>
+        <div class="source-link-strip">
+          ${(dp.sources || [])
+            .slice(0, 3)
+            .map(
+              s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(s.label)}</span>${iconSvg('externalLink', 10)}</a>`
+            )
+            .join('')}
         </div>
       </div>
 
@@ -651,7 +938,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Aggregated Mock Consensus + Shanahan/Lynch Archetype Fit</div>
+      <div class="card-eyebrow">Aggregated Mock Consensus + Shanahan/Lynch Fit</div>
       <h3 class="card-title" style="margin-bottom:8px">Top Projected 49ers Prospect Fits</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(dp.consensusMockTargets || [])
@@ -659,7 +946,11 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
             m => `
           <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-              <strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>
+              ${
+                m.sourceUrl
+                  ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong> ${iconSvg('externalLink', 11)}</a>`
+                  : `<strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>`
+              }
               <span class="badge badge-positive mono">SF Fit ${m.shanahanLynchFitScore}/100 • ${m.mockFrequencyToSfPct}% Mocks</span>
             </div>
             <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.heightWeight)} • Mocked by: ${esc((m.sourcesMocking || []).join(', '))}</div>
@@ -672,8 +963,17 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">NFL Scouting Combine Measurables &amp; RAS Leaderboard</div>
-      <h3 class="card-title" style="margin-bottom:8px">Searchable Combine Results (${filteredCombine.length})</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <div>
+          <div class="card-eyebrow">NFL Scouting Combine Measurables &amp; RAS Leaderboard</div>
+          <h3 class="card-title">Searchable Combine Results (${filteredCombine.length})</h3>
+        </div>
+        <div class="source-link-strip">
+          <a href="https://www.nfl.com/combine/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Combine</span>${iconSvg('externalLink', 10)}</a>
+          <a href="https://ras.football/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RAS.football</span>${iconSvg('externalLink', 10)}</a>
+          <a href="https://www.mockdraftable.com/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>MockDraftable</span>${iconSvg('externalLink', 10)}</a>
+        </div>
+      </div>
       <div class="search-input-wrap" style="margin-bottom:8px">
         ${iconSvg('search', 15, 'search-input-icon')}
         <input type="search" id="combineSearchInput" class="text-input has-lead-icon"
@@ -718,9 +1018,13 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('radar', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Draft Day 1 Through Post-UDFA • Value vs. Consensus &amp; Film</div>
+            <div class="card-eyebrow">Draft Recap • Value vs. Consensus &amp; Film</div>
             <h2 class="card-title">2026 49ers Draft Class (${picks.length} Picks)</h2>
           </div>
+        </div>
+        <div class="source-link-strip">
+          <a href="${esc(dc.sourceUrl || 'https://www.pro-football-reference.com/teams/sfo/2026_draft.htm')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Draft</span>${iconSvg('externalLink', 11)}</a>
+          <a href="${esc(dc.otcDraftUrl || 'https://overthecap.com/draft')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>OTC Rookie Pool</span>${iconSvg('externalLink', 11)}</a>
         </div>
       </div>
 
@@ -737,11 +1041,20 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
 
             return `
               <div class="brief-card">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                  <div>
-                    <span class="badge badge-scarlet mono">Rd ${pk.round} • Pick #${pk.pick}</span>
-                    <strong style="font-size:14.5px;margin-left:5px">${esc(pk.name)}</strong>
-                    <span style="color:var(--gold-bright);font-weight:700"> ${esc(pk.position)} • ${esc(pk.college)}</span>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:9px;min-width:0">
+                    <span style="cursor:${pk.playerId ? 'pointer' : 'default'};display:inline-flex" ${pk.playerId ? `data-action="open-player-sheet" data-player-id="${esc(pk.playerId)}"` : ''}>
+                      ${renderPlayerAvatarHtml({ name: pk.name, jersey: pk.jersey, headshotUrl: pk.headshotUrl }, 40, { showJerseyBadge: pk.jersey != null })}
+                    </span>
+                    <div style="min-width:0">
+                      <span class="badge badge-scarlet mono">Rd ${pk.round} • Pick #${pk.pick}</span>
+                      ${
+                        pk.pfrUrl
+                          ? `<a href="${esc(pk.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:14.5px;margin-left:5px"><strong>${esc(pk.name)}</strong> ${iconSvg('externalLink', 11)}</a>`
+                          : `<strong style="font-size:14.5px;margin-left:5px">${esc(pk.name)}</strong>`
+                      }
+                      <span style="color:var(--gold-bright);font-weight:700"> ${esc(pk.position)} • ${esc(pk.college)}</span>
+                    </div>
                   </div>
                   ${stealBadge}
                 </div>
@@ -770,7 +1083,8 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                         0,
                         pk.highlightVideo.title || `${pk.name} College Highlights`,
                         pk.highlightVideo.channel,
-                        isVidPlaying
+                        isVidPlaying,
+                        pk.highlightVideo.embeddable !== false
                       )
                     : ''
                 }
@@ -782,7 +1096,7 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Guaranteed Money = #1 Predictor of 53-Man / Priority PS Odds</div>
+      <div class="card-eyebrow">Sorted by Guaranteed Contract Commitment</div>
       <h3 class="card-title" style="margin-bottom:8px">Priority Undrafted Free Agents (UDFAs)</h3>
       <div style="display:flex;flex-direction:column;gap:9px">
         ${udfas
@@ -790,8 +1104,20 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
             const vidKey = `udfa26_${idx}_${u.highlightVideo?.videoId || idx}`;
             return `
               <div class="brief-card">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                  <strong>${esc(u.displayName || u.name)} (${esc(u.position)})</strong>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:9px;min-width:0">
+                    <span style="cursor:${u.playerId ? 'pointer' : 'default'};display:inline-flex" ${u.playerId ? `data-action="open-player-sheet" data-player-id="${esc(u.playerId)}"` : ''}>
+                      ${renderPlayerAvatarHtml({ name: u.displayName || u.name, jersey: u.jersey, headshotUrl: u.headshotUrl }, 38, { showJerseyBadge: u.jersey != null })}
+                    </span>
+                    <div>
+                      <strong>${esc(u.displayName || u.name)} (${esc(u.position)})</strong>
+                      ${
+                        u.otcUrl
+                          ? `<a href="${esc(u.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:6px">OTC ${iconSvg('externalLink', 10)}</a>`
+                          : ''
+                      }
+                    </div>
+                  </div>
                   <span class="badge badge-gold mono">${formatCompactDollars(u.guaranteedTotal)} Guaranteed</span>
                 </div>
                 <div style="font-size:12px;color:var(--emerald)">${esc(u.rosterOddsNote)}</div>
@@ -804,7 +1130,8 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                         0,
                         u.highlightVideo.title,
                         u.highlightVideo.channel,
-                        activeVideosSet.has(vidKey)
+                        activeVideosSet.has(vidKey),
+                        u.highlightVideo.embeddable !== false
                       )
                     : ''
                 }

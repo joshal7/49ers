@@ -77,7 +77,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
     if (!res.ok) {
       throw new Error(json.error || `Worker HTTP ${res.status}`);
     }
-    emit(3, 'Step 3/3: Analysis complete and synced to Shared Friend-Group Cache!');
+    emit(3, 'Step 3/3: Analysis complete and saved!');
     return json.item;
   }
 
@@ -85,7 +85,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
   await sleep(420);
   emit(2, 'Step 2/3: Cross-referencing player EPA, snap shares, injury priors & multi-year cap tables...');
   await sleep(480);
-  emit(3, 'Step 3/3: Compiling no-fluff analytical report...');
+  emit(3, 'Step 3/3: Compiling structured scouting & cap report...');
   await sleep(250);
 
   return synthesizeDataGroundedReport(cleanPrompt, category, appData, prefs?.authorName || 'Josh');
@@ -198,7 +198,11 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
     category: category || 'Data-Grounded Synthesis',
     createdAt: new Date().toISOString(),
     createdBy: author,
-    sourcesCited: ['nflverse 2026 Play-by-Play & Stats', 'OverTheCap 2026–2030 Ledger', '49ers Beat Synthesis'],
+    sourcesCited: [
+      { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
+      { label: 'OverTheCap 49ers Cap', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
+    ],
     markdown: sections.join('\n\n')
   };
 }
@@ -212,7 +216,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
   const baseTurns = [
     {
       speaker: 'Marcus',
-      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in the 2026 play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting—zero clickbait.`
+      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in the 2026 play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
@@ -268,6 +272,10 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     createdAt: new Date().toISOString(),
     audioUrl: null, // Uses instant Web Speech multi-voice synthesis in PodcastAudioController
     durationSec: cursor,
+    sourceLinks: [
+      { label: 'nflverse EPA & PBP', url: 'https://github.com/nflverse/nflverse-data/releases' },
+      { label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' }
+    ],
     transcript
   };
 }

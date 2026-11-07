@@ -1,10 +1,29 @@
 /**
- * Autopodcast Studio, Shared Episode Library & On-Demand Deep Analysis Runner View
+ * Auto Podcast & Deep Scouting/Cap Analysis View
  */
 
 import { esc, renderMarkdownSafe, formatRelativeAge } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
+
+function renderSourceChips(items = []) {
+  if (!Array.isArray(items) || items.length === 0) return '';
+  const rendered = items
+    .map(item => {
+      if (!item) return '';
+      if (typeof item === 'string') {
+        return `<span class="badge badge-neutral">${esc(item)}</span>`;
+      }
+      const label = item.label || item.outlet || item.title || 'Source';
+      if (item.url) {
+        return `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(label)}</span>${iconSvg('externalLink', 10)}</a>`;
+      }
+      return `<span class="badge badge-neutral">${esc(label)}</span>`;
+    })
+    .filter(Boolean)
+    .join('');
+  return rendered ? `<div class="source-link-strip">${rendered}</div>` : '';
+}
 
 export function renderAudioAiViewHtml({
   studioSub = 'podcast', // 'podcast' | 'analysis'
@@ -19,14 +38,14 @@ export function renderAudioAiViewHtml({
 }) {
   const modeSwitcher = `
     <div class="card">
-      <div class="segmented-control" role="tablist" aria-label="Autopodcast and Deep AI Modes">
+      <div class="segmented-control" role="tablist" aria-label="Auto Podcast and Deep Analysis Modes">
         <button type="button" class="pill-btn seg-btn ${studioSub === 'podcast' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="podcast">
           ${iconSvg('mic', 14)}
-          <span>Autopodcast Studio (${allEpisodes.length})</span>
+          <span>Auto Podcast (${allEpisodes.length})</span>
         </button>
         <button type="button" class="pill-btn seg-btn ${studioSub === 'analysis' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="analysis">
           ${iconSvg('sparkles', 14)}
-          <span>Deep Analysis Runner (${allAnalyses.length})</span>
+          <span>Deep Analysis (${allAnalyses.length})</span>
         </button>
       </div>
     </div>
@@ -184,16 +203,16 @@ function renderPodcastStudio({
 
       <button type="button" class="btn-primary" style="width:100%" data-action="generate-autopodcast" ${jobStatus?.active ? 'disabled' : ''}>
         ${iconSvg('mic', 15)}
-        <span>Generate ${podDurationMin}-Min Autopodcast &amp; Share With Group</span>
+        <span>Generate ${podDurationMin}-Min Audio Briefing</span>
       </button>
     </section>
 
     ${transcriptHtml}
 
-    <!-- Shared Friend-Group Episode Library -->
+    <!-- Audio Briefing Library -->
     <section class="card">
-      <div class="card-eyebrow">Cached &amp; Instant Play • iOS Lock-Screen MediaSession Enabled</div>
-      <h3 class="card-title" style="margin-bottom:9px">Shared Friend-Group Episode Library (${allEpisodes.length})</h3>
+      <div class="card-eyebrow">Instant Play • Lock-Screen Controls</div>
+      <h3 class="card-title" style="margin-bottom:9px">Audio Briefing Library (${allEpisodes.length})</h3>
 
       <div style="display:flex;flex-direction:column;gap:8px">
         ${allEpisodes
@@ -202,14 +221,29 @@ function renderPodcastStudio({
             const isPlayingNow = isCurrent && audioState?.isPlaying;
             return `
               <div class="brief-card" style="border-color:${isCurrent ? 'var(--gold)' : 'var(--border-subtle)'}">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                  <span class="badge ${ep.audioUrl ? 'badge-positive' : 'badge-gold'}">${esc(ep.presetLabel || ep.format)}</span>
-                  <span class="mono" style="font-size:11px;color:var(--text-muted)">
-                    ${formatTimeMmSs(ep.durationSec)} • ${esc(ep.createdBy)} • ${formatRelativeAge(ep.createdAt)}
-                  </span>
+                <div class="episode-row-head">
+                  <div class="studio-cover-art" aria-hidden="true">
+                    ${iconSvg('mic', 17)}
+                    <span class="studio-wave-bars">
+                      <span style="height:${isPlayingNow ? '9px' : '4px'}"></span>
+                      <span style="height:${isPlayingNow ? '5px' : '9px'}"></span>
+                      <span style="height:10px"></span>
+                      <span style="height:${isPlayingNow ? '8px' : '5px'}"></span>
+                      <span style="height:6px"></span>
+                    </span>
+                  </div>
+                  <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:4px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+                      <span class="badge ${ep.audioUrl ? 'badge-positive' : 'badge-gold'}">${esc(ep.presetLabel || ep.format)}</span>
+                      <span class="mono" style="font-size:11px;color:var(--text-muted)">
+                        ${formatTimeMmSs(ep.durationSec)} • ${esc(ep.createdBy)} • ${formatRelativeAge(ep.createdAt)}
+                      </span>
+                    </div>
+                    <div style="font-weight:800;font-size:14px">${esc(ep.title)}</div>
+                    <div style="font-size:12px;color:var(--text-secondary)">${esc(ep.topic)}</div>
+                  </div>
                 </div>
-                <div style="font-weight:800;font-size:14px">${esc(ep.title)}</div>
-                <div style="font-size:12px;color:var(--text-secondary)">${esc(ep.topic)}</div>
+                ${renderSourceChips(ep.sourceLinks || [])}
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
                   <span style="font-size:11.5px;color:var(--gold-bright)">${esc(ep.format)}</span>
                   <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(ep.id)}">
@@ -239,13 +273,13 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Multi-Source Synthesis • Shared Group Cache</div>
-            <h2 class="card-title">On-Demand Deep Analysis Runner</h2>
+            <div class="card-eyebrow">Play-by-Play EPA • Salary Cap • Beat Reporting</div>
+            <h2 class="card-title">AI Scouting &amp; Cap Analysis</h2>
           </div>
         </div>
       </div>
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
-        Synthesizes live play-by-play EPA, OverTheCap contract tables, and beat transcripts into a structured report (cached for all ~25 friends).
+        Synthesizes 2026 play-by-play EPA, OverTheCap contract tables, and beat reporting into a structured breakdown with source links.
       </div>
 
       <div class="pill-bar" style="margin-bottom:8px">
@@ -262,7 +296,7 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any 49ers scheme, EPA, injury prior, cap, trade, or draft question…"
+                placeholder="Ask any 49ers scheme, EPA, injury, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
@@ -280,8 +314,8 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Zero Fluff • Fact &amp; Film Reports</div>
-      <h3 class="card-title" style="margin-bottom:10px">Shared Friend-Group Intelligence Reports (${allAnalyses.length})</h3>
+      <div class="card-eyebrow">Film &amp; Salary Cap Breakdowns</div>
+      <h3 class="card-title" style="margin-bottom:10px">Saved Scouting &amp; Cap Reports (${allAnalyses.length})</h3>
 
       <div style="display:flex;flex-direction:column;gap:10px">
         ${allAnalyses
@@ -294,8 +328,9 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
             </div>
             <h4 style="margin:2px 0;font-size:14.5px">${esc(rep.title)}</h4>
             ${renderMarkdownSafe(rep.markdown)}
-            <div style="font-size:11px;color:var(--text-muted);border-top:1px solid var(--border-subtle);padding-top:5px">
-              Sources: ${esc((rep.sourcesCited || []).join(' • '))}
+            <div style="border-top:1px solid var(--border-subtle);padding-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+              <span style="font-size:11px;color:var(--text-muted)">Sources:</span>
+              ${renderSourceChips(rep.sourcesCited || [])}
             </div>
           </article>
         `
