@@ -5,6 +5,7 @@
 import { esc, renderMarkdownSafe, formatRelativeAge } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
+import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 
 const SEVEN_DAYS_MS = 7 * 86_400_000;
 
@@ -112,8 +113,9 @@ function renderSourceChips(items = []) {
         return `<span class="badge badge-neutral">${esc(item)}</span>`;
       }
       const label = item.label || item.outlet || item.title || 'Source';
-      if (item.url) {
-        return `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(label)}</span>${iconSvg('externalLink', 10)}</a>`;
+      const safeUrl = sanitizeExternalUrl(item.url, null);
+      if (safeUrl) {
+        return `<a href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(label)}</span>${iconSvg('externalLink', 10)}</a>`;
       }
       return `<span class="badge badge-neutral">${esc(label)}</span>`;
     })

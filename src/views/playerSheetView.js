@@ -17,6 +17,11 @@ import {
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
+import {
+  isIndividualOtcPlayerUrl,
+  isPaywalledPublisher,
+  sanitizeExternalUrl
+} from '../engine/linkIntegrity.js';
 
 export function renderPlayerDossierSheetHtml({
   player,
@@ -70,7 +75,11 @@ export function renderPlayerDossierSheetHtml({
 
 function renderOverviewTab(p) {
   const sortedMentions = Array.isArray(p.recentNews)
-    ? sortNewsWithBreakingPriority(p.recentNews)
+    ? sortNewsWithBreakingPriority(
+        p.recentNews.filter(
+          n => sanitizeExternalUrl(n?.url, null) && !isPaywalledPublisher(n?.outletName, n?.url)
+        )
+      )
     : [];
 
   const newsHtml =
@@ -121,8 +130,8 @@ function renderOverviewTab(p) {
                     ${typePill}
                     <span class="player-mention-author">
                       by ${
-                        n.authorProfileUrl && /^https:\/\//i.test(n.authorProfileUrl)
-                          ? `<a href="${esc(n.authorProfileUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(authorName)}</strong></a>`
+                        sanitizeExternalUrl(n.authorProfileUrl, null)
+                          ? `<a href="${esc(sanitizeExternalUrl(n.authorProfileUrl))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(authorName)}</strong></a>`
                           : `<strong>${esc(authorName)}</strong>`
                       }${isTweet && n.authorHandle ? ` <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(n.authorHandle)}</span>` : ''}${outletLabel ? ` <span style="color:var(--text-muted)">• ${esc(outletLabel)}</span>` : ''}
                     </span>
@@ -134,18 +143,18 @@ function renderOverviewTab(p) {
                   <div style="min-width:0">
                     ${
                       isTweet
-                        ? `<a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
+                        ? `<a href="${esc(sanitizeExternalUrl(n.url, '#'))}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
                            ${
-                             n.externalUrl && /^https:\/\//i.test(n.externalUrl)
+                             sanitizeExternalUrl(n.externalUrl, null)
                                ? `<div style="margin-top:5px">
-                                    <a href="${esc(n.externalUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                                    <a href="${esc(sanitizeExternalUrl(n.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
                                       <span>Linked: ${esc((n.summary || n.outletName || 'Read Story').slice(0, 56))}</span>
                                       ${iconSvg('externalLink', 10)}
                                     </a>
                                   </div>`
                                : ''
                            }`
-                        : `<a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
+                        : `<a href="${esc(sanitizeExternalUrl(n.url, '#'))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
                            ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${esc(cleanSummary)}</div>` : ''}`
                     }
                   </div>
@@ -166,10 +175,18 @@ function renderOverviewTab(p) {
       `
       : `<div style="font-size:12px;color:var(--text-muted)">No beat tweets or articles specific to ${esc(p.name)} in the past 7 days.</div>`;
 
+  const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
+  const safeOtcUrl = sanitizeExternalUrl(p.otcUrl, null);
+  const safePfrUrl = sanitizeExternalUrl(p.pfrUrl, null);
   const profileLinks = [
-    p.espnUrl ? { label: 'ESPN Profile', url: p.espnUrl } : null,
-    p.otcUrl ? { label: 'OverTheCap Contract', url: p.otcUrl } : null,
-    p.pfrUrl ? { label: 'Pro-Football-Ref', url: p.pfrUrl } : null
+    safeEspnUrl ? { label: 'ESPN Profile', url: safeEspnUrl } : null,
+    safeOtcUrl
+      ? {
+          label: isIndividualOtcPlayerUrl(safeOtcUrl) ? 'OverTheCap Contract' : 'OverTheCap 49ers Cap',
+          url: safeOtcUrl
+        }
+      : null,
+    safePfrUrl ? { label: 'Pro-Football-Ref', url: safePfrUrl } : null
   ].filter(Boolean);
 
   return `

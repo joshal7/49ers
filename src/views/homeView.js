@@ -20,6 +20,12 @@ import {
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
+import {
+  buildMockDraftTeamUrl,
+  buildPfrTeamDraftUrl,
+  isPaywalledPublisher,
+  sanitizeExternalUrl
+} from '../engine/linkIntegrity.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -112,9 +118,16 @@ function renderSingleDashboardCard({
   switch (block.id) {
     case 'news_briefs': {
       const top2 = (filteredClusters || []).slice(0, 2);
-      const topTweets = rawList.filter(it => (it.type === 'tweet' || it.type === 'social') && it.url).slice(0, 3);
+      const topTweets = rawList
+        .filter(it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null))
+        .slice(0, 3);
       const topArticles = rawList
-        .filter(it => (it.type === 'article' || it.type === 'post') && it.url)
+        .filter(
+          it =>
+            (it.type === 'article' || it.type === 'post') &&
+            sanitizeExternalUrl(it.url, null) &&
+            !isPaywalledPublisher(it.outletName, it.url)
+        )
         .slice(0, 3);
 
       bodyHtml = `
@@ -148,17 +161,18 @@ function renderSingleDashboardCard({
                     }
                   </div>
                   ${
-                    c.featuredPlayers?.length || (c.sourceLinks || []).length
+                    c.featuredPlayers?.length || (c.sourceLinks || []).filter(sl => sanitizeExternalUrl(sl?.url, null)).length
                       ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px">
                           ${c.featuredPlayers?.length ? renderAvatarStackHtml(c.featuredPlayers, 25, 5) : '<span></span>'}
                           ${
-                            (c.sourceLinks || []).length
+                            (c.sourceLinks || []).filter(sl => sanitizeExternalUrl(sl?.url, null)).length
                               ? `<div class="source-link-strip">
                                   ${c.sourceLinks
+                                    .filter(sl => sanitizeExternalUrl(sl?.url, null))
                                     .slice(0, 2)
                                     .map(
                                       sl => `
-                                    <a href="${esc(sl.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                                    <a href="${esc(sanitizeExternalUrl(sl.url))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
                                       <span>${esc(sl.outlet || 'Source')}</span>
                                       ${iconSvg('external', 11)}
                                     </a>
@@ -203,21 +217,21 @@ function renderSingleDashboardCard({
                             ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
-                        <a href="${esc(tw.authorProfileUrl || tw.url)}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
+                        <a href="${esc(sanitizeExternalUrl(tw.authorProfileUrl, sanitizeExternalUrl(tw.url, '#')))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
                           <strong>${esc(authorName)}</strong>
                           <span class="mono">${esc(tw.authorHandle || '')}</span>
                         </a>
                       </div>
                       <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
                     </div>
-                    <a href="${esc(tw.url)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
+                    <a href="${esc(sanitizeExternalUrl(tw.url, '#'))}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
                       ${esc(fullShortTweet)}
                       <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                     </a>
                     ${
-                      tw.externalUrl
+                      sanitizeExternalUrl(tw.externalUrl, null)
                         ? `<div style="margin-top:3px">
-                            <a href="${esc(tw.externalUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                            <a href="${esc(sanitizeExternalUrl(tw.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
                               <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
                               ${iconSvg('external', 10)}
                             </a>
@@ -512,10 +526,12 @@ function renderSingleDashboardCard({
 
     case 'draft_prep': {
       const dp = appData?.seasonal?.draftPrep2027 || {};
-      externalHeaderLink = `<a href="https://www.nflmockdraftdatabase.com/team-needs-2027/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock DB</span>${iconSvg('external', 11)}</a>`;
+      const nextDraftYr = Number(dp.draftYear) || (Number(appData?.meta?.seasonYear) || 2026) + 1;
+      const dpTeamUrl = sanitizeExternalUrl(dp.sources?.[0]?.url, null) || buildMockDraftTeamUrl(nextDraftYr);
+      externalHeaderLink = `<a href="${esc(dpTeamUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock DB</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          <strong>Top 2027 Horizons:</strong> ${(dp.topNeeds2027 || []).slice(0, 3).map(n => esc(n.pos)).join(' • ')}
+          <strong>Top ${nextDraftYr} Horizons:</strong> ${(dp.topNeeds2027 || []).slice(0, 3).map(n => esc(n.pos)).join(' • ')}
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="draft_prep"`;
@@ -524,10 +540,12 @@ function renderSingleDashboardCard({
 
     case 'draft_live_udfa': {
       const dc = appData?.seasonal?.draftClass2026 || {};
+      const curDraftYr = Number(dc.draftYear) || Number(appData?.meta?.seasonYear) || 2026;
+      const dcUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl('SF', curDraftYr);
       const pickAvatars = (dc.picks || [])
         .slice(0, 6)
         .map(pk => ({ id: pk.playerId, name: pk.name, position: pk.position, jersey: pk.jersey, headshotUrl: pk.headshotUrl }));
-      externalHeaderLink = `<a href="${esc(dc.sourceUrl || 'https://www.pro-football-reference.com/teams/sfo/2026_draft.htm')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Draft</span>${iconSvg('external', 11)}</a>`;
+      externalHeaderLink = `<a href="${esc(dcUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Draft</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
           <div style="font-size:12.5px;color:var(--text-secondary);min-width:0;flex:1">

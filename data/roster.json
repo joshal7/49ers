@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T15:39:50.513Z",
+  "updatedAt": "2026-11-07T16:37:41.930Z",
   "count": 88,
   "players": [
     {
@@ -9,7 +9,7 @@
       "otcId": "12403",
       "otcSlug": "alfred-collins",
       "otcUrl": "https://overthecap.com/player/alfred-collins/12403/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430835",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430835/alfred-collins",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CollAl01.htm",
       "name": "Alfred Collins",
       "shortName": "A. Collins",
@@ -24,8 +24,47 @@
       "college": "Texas",
       "draftInfo": "2025 • Rd 2, Pick #43",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430835.png",
-      "capHit2026": 0,
+      "capHit2026": 2342478,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2342478,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2342478,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -344,24 +383,6 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4430835_6",
-          "type": "article",
-          "headline": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T16:18:08.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
-          "isBreaking": true,
-          "isInGameInjury": false,
-          "breakingBadge": "BREAKING",
-          "breakingPriority": 1
-        },
-        {
           "id": "p7d_4430835_4",
           "type": "article",
           "headline": "Where PFF ranked the 49ers’ defensive line heading into the 2026 season",
@@ -392,6 +413,24 @@
           "publishedAt": "2026-11-07T00:44:05.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOZk5QX1A0bXNzS3dBUGtxT3hGR0kxZTNBWVB5c1NqMTRIWDlDN1dDMUNNcFJRMEZlYXVydzhXSzNxQ3J2dmZ2V0E4LTc3WlRta3l1dldSVlNRM2lXV1EzTmxfeEpJY1h1TU0xSENtbGdMM0hTLTV5R056WmVHZXI1cjhRU1lDenQ5UFh2QlFDSDlaV2dNanpmRw?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4430835_6",
+          "type": "article",
+          "headline": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T16:18:08.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -476,9 +515,9 @@
       "gsisId": "00-0038865",
       "pfrId": "FarmAn00",
       "otcId": "11136",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/andrew-farmer-ii/11136/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4394894",
+      "otcSlug": "andrew-farmer",
+      "otcUrl": "https://overthecap.com/player/andrew-farmer/11136/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4394894/andrew-farmer-ii",
       "pfrUrl": "https://www.pro-football-reference.com/players/F/FarmAn00.htm",
       "name": "Andrew Farmer II",
       "shortName": "A. Farmer II",
@@ -493,8 +532,48 @@
       "college": "Lane College",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4394894.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 540000,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 540000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 540000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -794,7 +873,7 @@
       "otcId": "8808",
       "otcSlug": "ashtyn-davis",
       "otcUrl": "https://overthecap.com/player/ashtyn-davis/8808/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3858271",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3858271/ashtyn-davis",
       "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviAs00.htm",
       "name": "Ashtyn Davis",
       "shortName": "A. Davis",
@@ -1437,9 +1516,9 @@
       "gsisId": "00-0035829",
       "pfrId": "PleaAu00",
       "otcId": "9052",
-      "otcSlug": null,
+      "otcSlug": "austen-pleasants",
       "otcUrl": "https://overthecap.com/player/austen-pleasants/9052/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3920814",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3920814/austen-pleasants",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PleaAu00.htm",
       "name": "Austen Pleasants",
       "shortName": "A. Pleasants",
@@ -1454,8 +1533,48 @@
       "college": "Ohio",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3920814.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 1075000,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 1075000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1075000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -1809,7 +1928,7 @@
       "otcId": "2959",
       "otcSlug": "brandin-cooks",
       "otcUrl": "https://overthecap.com/player/brandin-cooks/2959/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/16731",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/16731/brandin-cooks",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CookBr00.htm",
       "name": "Brandin Cooks",
       "shortName": "B. Cooks",
@@ -2470,7 +2589,7 @@
       "otcId": "8765",
       "otcSlug": "brandon-aiyuk",
       "otcUrl": "https://overthecap.com/player/brandon-aiyuk/8765/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360438",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360438/brandon-aiyuk",
       "pfrUrl": "https://www.pro-football-reference.com/players/A/AiyuBr00.htm",
       "name": "Brandon Aiyuk",
       "shortName": "B. Aiyuk",
@@ -2485,8 +2604,47 @@
       "college": "Arizona State",
       "draftInfo": "2020 • Rd 1, Pick #25",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
-      "capHit2026": 0,
+      "capHit2026": 12450790,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 12450790,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 12450790,
+          "transactions": {
+            "cut": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -3052,7 +3210,25 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4360438_5",
+          "id": "p7d_4360438_6",
+          "type": "article",
+          "headline": "49ers rumors: Brandon Aiyuk’s reinstatement chances ‘not promising’ in 2026",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Yahoo Sports 49ers Coverage",
+          "author": "Yahoo Sports",
+          "authorHandle": null,
+          "outletName": "Yahoo Sports",
+          "publishedAt": "2026-11-07T01:41:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQTmV2VjV1d3p1R2dKYmt1YlZiRDFOSHZXSWVzc2FCdjJ5WVFUc1NNSTU2R2R6VXRhcmd5U1FqTEZ4cllWZEZoejlpN1Z2YlhtbVNfaG5hc3RhWG9WQUh3amd0UjBEdmdsUXR6TjBTWXdiSzFiaktEWTlScWZmOEdfbndzN3g4VzJrekxzUDhOdC04eGM?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4360438_4",
           "type": "article",
           "headline": "49ers coach gives blunt reaction to disgruntled Brandon Aiyuk's return to team: 'I could care less'",
           "fullText": null,
@@ -3070,7 +3246,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4360438_4",
+          "id": "p7d_4360438_3",
           "type": "article",
           "headline": "Drew Rosenhaus after Brandon Aiyuk’s meeting with 49ers: “To be continued”",
           "fullText": null,
@@ -3086,24 +3262,6 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
-        },
-        {
-          "id": "sfstd_141",
-          "type": "article",
-          "headline": "Brandon Aiyuk swore he’d never deal with the 49ers again. Then he showed up",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The wide receiver hasn’t played in the NFL since tearing three knee ligaments in October 2024.",
-          "author": "David Lombardi",
-          "authorHandle": null,
-          "outletName": "The SF Standard",
-          "publishedAt": "2026-11-07T00:39:26.000Z",
-          "imageUrl": "",
-          "url": "https://sfstandard.com/2026/11/06/brandon-aiyuk-49ers-reports-team-facility/",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
         }
       ]
     },
@@ -3112,9 +3270,9 @@
       "gsisId": "00-0039333",
       "pfrId": "CodrBr00",
       "otcId": "11901",
-      "otcSlug": null,
+      "otcSlug": "brandon-codrington",
       "otcUrl": "https://overthecap.com/player/brandon-codrington/11901/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4576069",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4576069/brandon-codrington",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CodrBr00.htm",
       "name": "Brandon Codrington",
       "shortName": "B. Codrington",
@@ -3129,8 +3287,48 @@
       "college": "North Carolina Central",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4576069.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -3420,7 +3618,7 @@
       "otcId": "11071",
       "otcSlug": "brayden-willis",
       "otcUrl": "https://overthecap.com/player/brayden-willis/11071/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360290",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360290/brayden-willis",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillBr06.htm",
       "name": "Brayden Willis",
       "shortName": "B. Willis",
@@ -4079,9 +4277,9 @@
       "gsisId": "00-0035743",
       "pfrId": "TothBr00",
       "otcId": "8620",
-      "otcSlug": null,
+      "otcSlug": "brett-toth",
       "otcUrl": "https://overthecap.com/player/brett-toth/8620/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3129116",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3129116/brett-toth",
       "pfrUrl": "https://www.pro-football-reference.com/players/T/TothBr00.htm",
       "name": "Brett Toth",
       "shortName": "B. Toth",
@@ -4496,7 +4694,7 @@
       "otcId": "10307",
       "otcSlug": "brock-purdy",
       "otcUrl": "https://overthecap.com/player/brock-purdy/10307/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4361741",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4361741/brock-purdy",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PurdBr00.htm",
       "name": "Brock Purdy",
       "shortName": "B. Purdy",
@@ -5215,7 +5413,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4361741_6",
+          "id": "p7d_4361741_5",
           "type": "article",
           "headline": "Brock Purdy gives 49ers a major reason for optimism in 2026",
           "fullText": null,
@@ -5227,6 +5425,24 @@
           "publishedAt": "2026-11-07T07:12:17.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNZUFRZ251eXRuUC0ybXlBQW5xSFZDR2lTMThOVXduYW9PQWVCbHZzbHpaUjVJVzdkYS1ZaFFfaTZUX1ZQRGdQaVFtZ29BWWVXR0pyZmh5QjI3SDAwN1AtMzh0VzFNRVl0NWpYakoxUE92OVg4YzcycldwMXZnVmk2bXM2cXN0Zw?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4361741_6",
+          "type": "article",
+          "headline": "Tom Brady Makes Strong Statement on 49ers QB Brock Purdy",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Yahoo Sports 49ers Coverage",
+          "author": "Yahoo Sports",
+          "authorHandle": null,
+          "outletName": "Yahoo Sports",
+          "publishedAt": "2026-11-06T03:40:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOejRfNWdEYlliUlhacU5vdERqT2tXQ3pqV0dwb0llWm5XWVZ4NGVEYzdUdjhwZ1dVYnp3WlhpczZDSlhXT1ZKQmRZWnFJc1k5eGZ0dElLMXNEdC1DZDc5dEwyZEJpdENMMlZnRl83NkQwSkRMWTlkY0pUekNpOFUtbnRHZVhsV25v?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -5269,7 +5485,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4361741_5",
+          "id": "p7d_4361741_4",
           "type": "article",
           "headline": "Brock Purdy, 49ers excited for Demarcus Robinson's return from ankle injury",
           "fullText": null,
@@ -5281,24 +5497,6 @@
           "publishedAt": "2026-11-05T18:29:19.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNUTYzMlpjT3RpY3JxWVF1MDB4Mm5ObnViek9nM3BHX2NNclExcDhyRGRqQjdraDdhelhiTnE1b3JEdDhQWXFRTHRNZXVoaENDRDBZOVAwWk4yMDNaNEdlem5FMWEtWFdXXzZLRlE1U3dfaEtGNDN0UWg0MUtvMEppTlVwWGJaOVV1ZGJmSnNmc2J4NXlmNkRWek9DclEzcW4tb1lqNGhRZ0Z0N3dSZ3AzZ21CemRlUdIBvgFBVV95cUxQX04ySFVYRnpsbE12c3QydnBzalN5WHByQzc4Z1hVNmsyVzUzRXlJeVoyMDdGdWV1NmdLTmZkMUQxcGxvb0ItQWlYdHVlV0xHMGEyZTZuUHRHdF91WGlQUjQxbzh0YlVIeHpPNkJ1bU5qZTlvX0dnUWstOW9KMG9nNGI2WlZNZVFIR0dXRDhXQmdabjBFekdsVVVfTUpTTjFTNVpWTkxNdjBYN3ZBTXZDQlVmN1g3c1Nmc21tcjl3?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4361741_4",
-          "type": "article",
-          "headline": "Ranking 49ers’ top 5 MVPs so far and 5 most important players down the stretch",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The New York Times 49ers Coverage",
-          "author": "The New York Times",
-          "authorHandle": null,
-          "outletName": "The New York Times",
-          "publishedAt": "2026-11-04T13:02:09.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNTkhyTzQ3bDRWZnVzdkVxSEp2M3lhMlpvV3ZRaDAwTlJTWnc2RXFKWkJJejZnQzh5dGQyZHREcUpzX2owVXpmcVMzZHVnS3ZRWWpndnR0MHdnMWp1bG5ubm16ak43ajBSTXI4eXhkV25aMFpNYjltX0EzQkp0a3BBNTNMUVFwR3FzdmdxbVFB?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -5349,7 +5547,7 @@
       "otcId": "12473",
       "otcSlug": "c-j-west",
       "otcUrl": "https://overthecap.com/player/c-j-west/12473/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4686308",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4686308/cj-west",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WestCJ00.htm",
       "name": "C.J. West",
       "shortName": "C.J. West",
@@ -5364,8 +5562,47 @@
       "college": "Indiana",
       "draftInfo": "2025 • Rd 4, Pick #113",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-      "capHit2026": 0,
+      "capHit2026": 844440,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 844440,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 844440,
+          "transactions": {
+            "cut": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -5936,7 +6173,7 @@
       "otcId": "13271",
       "otcSlug": "carver-willis",
       "otcUrl": "https://overthecap.com/player/carver-willis/13271/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565779",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565779/carver-willis",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillCa05.htm",
       "name": "Carver Willis",
       "shortName": "C. Willis",
@@ -6279,7 +6516,7 @@
       "otcId": "6932",
       "otcSlug": "christian-kirk",
       "otcUrl": "https://overthecap.com/player/christian-kirk/6932/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3895856",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3895856/christian-kirk",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KirkCh01.htm",
       "name": "Christian Kirk",
       "shortName": "C. Kirk",
@@ -6898,7 +7135,7 @@
       "otcId": "5592",
       "otcSlug": "christian-mccaffrey",
       "otcUrl": "https://overthecap.com/player/christian-mccaffrey/5592/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3117251",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3117251/christian-mccaffrey",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/McCaCh01.htm",
       "name": "Christian McCaffrey",
       "shortName": "C. McCaffrey",
@@ -7672,7 +7909,7 @@
           "breakingPriority": 1
         },
         {
-          "id": "p7d_3117251_4",
+          "id": "p7d_3117251_3",
           "type": "article",
           "headline": "Christian McCaffrey returns to 49ers practice, says time away was part of the plan",
           "fullText": null,
@@ -7762,7 +7999,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3117251_6",
+          "id": "p7d_3117251_5",
           "type": "article",
           "headline": "Christian McCaffrey headlines 49ers' first injury report before Raiders clash",
           "fullText": null,
@@ -7774,6 +8011,24 @@
           "publishedAt": "2026-11-05T15:30:05.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNVmxUYWk2ZEZiVkRyRTlYNkN4Q0J6UC1COE9rcmI2bTV0NldsS1E4dnFDeXR2bFBpNFU1WE1RbzRkRldpOWxoUko3azF3Z2lLWnpYTVB4NEN3MmhRTk0taVB2WkgxejdjZXFId2M0TXNyS3RzZWg3dUctcDhxU052bWRTYnA5ODhYTUQ4Q2lPWDRMckhxM0RQY3l3a3otRmZzQS1r?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_3117251_6",
+          "type": "article",
+          "headline": "Christian McCaffrey says \"I feel great\" after hamstring injury, but he didn't practice on Wednesday",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "NBC Sports 49ers Coverage",
+          "author": "NBC Sports",
+          "authorHandle": null,
+          "outletName": "NBC Sports",
+          "publishedAt": "2026-11-05T01:02:13.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNbkVYVWVySklwWHVHaXpuQkwwOVI5Slg2QXdOVVJxWkdxSjBJNU5ITlRVazJHTnFjZnVKZ2k3aEhqTlZIVU1SUV9EZ1ZvR05laVpPTjViY2RHMGtuQm0wVmVJSnpOMlpqOE0taU9WRmZQMmt2cHVpSGdNMG1YUVRtcGowaHV3X1BqRTRQcDdXcS00Wkl2RnhRMEd6c19lLUlKcWJhZC1ybURCdUhQRjdFcWlWM3dhb3ZVZjNLV093RThrSUVjYW5RSm51RFZxQWh1c0JxNU9feU9Nd2ZkWXUySGxBaVI0d2Jua3djNktn?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -7796,24 +8051,6 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
-        },
-        {
-          "id": "p7d_3117251_1",
-          "type": "article",
-          "headline": "Fantasy football managers can breathe easy with 49ers’ Christian McCaffrey injury update",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Yahoo Sports 49ers Coverage",
-          "author": "Yahoo Sports",
-          "authorHandle": null,
-          "outletName": "Yahoo Sports",
-          "publishedAt": "2026-11-04T23:48:30.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxORmpXTGllc0FOSDd6QTJJeEZhMEZWaTVkci11Ulc1cnJKWGo0aXhpazg2VjFYaXNCMVRyaEVDUU9VUTRvOVo4Rms5cjRsR3N6OTk4cjVhNW9wNUd1ZWFpX0pqUGVOY3lPYWpQQU1DVWlOYVcxTXEtZVgwSUxMTEJFV2IySHFVcVBDZGlEZTJXWkU?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
         }
       ]
     },
@@ -7824,7 +8061,7 @@
       "otcId": "8893",
       "otcSlug": "colton-mckivitz",
       "otcUrl": "https://overthecap.com/player/colton-mckivitz/8893/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916075",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916075/colton-mckivitz",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/McKiCo00.htm",
       "name": "Colton McKivitz",
       "shortName": "C. McKivitz",
@@ -8514,7 +8751,25 @@
       },
       "recentNews": [
         {
-          "id": "p7d_3916075_3",
+          "id": "p7d_3916075_2",
+          "type": "article",
+          "headline": "49ers vs. Raiders: 5 Players to Watch in Week 9 matchup",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T15:56:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOckV6djNPSDlKZDFRV08yX2xLUFpXTlg5d09uQV8zOEtBVG0zWUU3Ti1tQUNhMlYxSVpXYU5fRU42VElKVFpGbEEzVUpIQy0xUFh1dm9OcTJfa0tJMTk0Z1NDSkNVLUVwWXFhaTJXamtENnpQMzNaVDdTSGlNSm1HSi1Xc3ZPa0hr?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_3916075_5",
           "type": "article",
           "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
           "fullText": null,
@@ -8550,7 +8805,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3916075_5",
+          "id": "p7d_3916075_6",
           "type": "article",
           "headline": "49ers RB2 battle shifts as Jordan James injury opens door for Kaelon Black",
           "fullText": null,
@@ -8586,25 +8841,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3916075_6",
-          "type": "article",
-          "headline": "49ers concerned about Ricky Pearsall injury, but young receivers could benefit",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T09:04:03.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPTzEwMTZ0THVRSUZPUmNPV2ROQlZidmRNbW9mUUg4VWpqZE5xSGFycFFTSDBCcVRTYXFmc2JES3hJRlFIVFpIbTRNVE5vZllWM2lHeVc0eEMxdWlrNkxseXVzeWVwSXExOTlCMUEtUHltekdvcXliNUpCb3Y4U1BLTFdzdm01V1VMV2QtM3JGa1ZtcDA?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_3916075_2",
+          "id": "p7d_3916075_3",
           "type": "article",
           "headline": "Rams CB Jaylen Watson is out for season after shoulder surgery. Myles Garrett returns to practice",
           "fullText": null,
@@ -8648,7 +8885,7 @@
       "otcId": "12609",
       "otcSlug": "connor-colby",
       "otcUrl": "https://overthecap.com/player/connor-colby/12609/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431523",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431523/connor-colby",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/ColbCo00.htm",
       "name": "Connor Colby",
       "shortName": "C. Colby",
@@ -9261,7 +9498,7 @@
       "otcId": "9101",
       "otcSlug": "corliss-waitman",
       "otcUrl": "https://overthecap.com/player/corliss-waitman/9101/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3125280",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3125280/corliss-waitman",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WaitCo00.htm",
       "name": "Corliss Waitman",
       "shortName": "C. Waitman",
@@ -9743,43 +9980,25 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3125280_2",
-          "type": "article",
-          "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T01:07:21.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPNGFVdjhMMTdMNGl1WWhYTnVyYS1KQ1VGRE5HWjZqRmd3ek5vU1B5X2ZuYzFvUGhTMHMwS2trUk1WdVRDN0hMbENNb2ZUaTFkaUw3eHNnOF93VE9mLTlhYU1LSExTblpxR1lESkF5N2d0MndsdlZfSVByRGs0aTdDTU5PQ2hZdw?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_3125280_4",
-          "type": "article",
-          "headline": "49ers officially announce re-signing LB Garret Wallow to a one-year deal",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T16:24:32.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQcVg4SVZ6MTZjcHNZM0ExRkgwVjJvTzMyQ0NNZ0gzaXBJbkszUU5Cd0FFZVoyVkk1UGotRVR4SmF3dnFGZEpKNkpQVWo0ZEdlUGM2eXJZbFE4ek1HUDdvU2tOSkVRNlB2eVRwLTRfcy1TdDdXQWxiQ0lPRGNDekRTM1dWMHlFVTRKbGNjZzZRcWlEcFE?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
           "id": "p7d_3125280_6",
+          "type": "article",
+          "headline": "49ers’ Kyle Shanahan delivers blunt responses when asked about Brandon Aiyuk",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "By Kyle Shanahan • 49ers Webzone",
+          "author": "Kyle Shanahan",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T22:31:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNaVRvOEEwZTJoUG1hR1dpSWxmTGZXUGVBd1hvb3lmNzhYVDBsWGZ2S0NhUWdQOEZFVl9QamJKblNmeHVwVjdWamhuZGVwT0N4TkU2cUJMSVYzM1RfNGp5WGJsMGVuUzVwYXVVVHJFOHdNZnJUYWgwRFA4OFpJQUR6cEE4ejRSZGNIZWlUYll4ejQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_3125280_5",
           "type": "article",
           "headline": "49ers sign exclusive-rights free agent Austen Pleasants to one-year tender",
           "fullText": null,
@@ -9797,7 +10016,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3125280_5",
+          "id": "p7d_3125280_4",
           "type": "article",
           "headline": "49ers rookies report to training camp today",
           "fullText": null,
@@ -9849,6 +10068,24 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
+        },
+        {
+          "id": "p7d_3125280_2",
+          "type": "article",
+          "headline": "49ers Midseason Recap: Full Circle And Ready For More",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Stadium Rant 49ers Coverage",
+          "author": "Stadium Rant",
+          "authorHandle": null,
+          "outletName": "Stadium Rant",
+          "publishedAt": "2026-11-01T05:15:09.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBHeFd1OEt6TkFQS0tzMTRHZlU0TWN2OGxzcDU2NVFfRnJ1NVFNVHZLYUhUVDc0T2xIc1NTQTNGS0FLMXNwc051RDh4MnhBeUJmdHVmcWhMZG1CSk5WMFRZ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
         }
       ]
     },
@@ -9857,9 +10094,9 @@
       "gsisId": "00-0036638",
       "pfrId": "ForrDa00",
       "otcId": "9627",
-      "otcSlug": null,
+      "otcSlug": "darrick-forrest",
       "otcUrl": "https://overthecap.com/player/darrick-forrest/9627/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4239088",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4239088/darrick-forrest",
       "pfrUrl": "https://www.pro-football-reference.com/players/F/ForrDa00.htm",
       "name": "Darrick Forrest",
       "shortName": "D. Forrest",
@@ -9874,8 +10111,48 @@
       "college": "Cincinnati",
       "draftInfo": "2021 • Rd 5, Pick #163",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239088.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 565000,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 565000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 565000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -10184,7 +10461,7 @@
       "otcId": "13177",
       "otcSlug": "dezhaun-stribling",
       "otcUrl": "https://overthecap.com/player/dezhaun-stribling/13177/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4710714",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4710714/dezhaun-stribling",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/StriDe01.htm",
       "name": "De'Zhaun Stribling",
       "shortName": "D. Stribling",
@@ -10199,8 +10476,47 @@
       "college": "Ole Miss",
       "draftInfo": "2026 • Rd 2, Pick #33",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
-      "capHit2026": 0,
+      "capHit2026": 2432134,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2432134,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2432134,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -10651,7 +10967,7 @@
       "otcId": "7827",
       "otcSlug": "deebo-samuel",
       "otcUrl": "https://overthecap.com/player/deebo-samuel/7827/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3126486",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3126486/deebo-samuel-sr",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/SamuDe00.htm",
       "name": "Deebo Samuel Sr.",
       "shortName": "D. Samuel Sr.",
@@ -11227,16 +11543,16 @@
         {
           "id": "p7d_3126486_5",
           "type": "article",
-          "headline": "NFL injury tracker Week 9: Latest news, fantasy implications as 49ers' Mike Evans, Deebo Samuel likely out; Giants' Cam Skattebo remains out of practice",
+          "headline": "NFL injury tracker Week 9: Latest news, fantasy implications as 49ers' Mike Evans, Deebo Samuel out; Giants' Cam Skattebo doubtful",
           "fullText": null,
           "isFullTweet": false,
           "summary": "Yahoo Sports 49ers Coverage",
           "author": "Yahoo Sports",
           "authorHandle": null,
           "outletName": "Yahoo Sports",
-          "publishedAt": "2026-11-07T00:12:00.000Z",
+          "publishedAt": "2026-11-07T14:45:36.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiqgJBVV95cUxNZ29JZlZpSUViVl91QW9Ici0wcFpscEJleFZzdHNvMGtjU2t5ZENSVGFzbkdhQzNKaXJWV1RQNkl6OEcwaEhyYXMzMXhTQVlBUXhMdzZSSndnSDdNMDhHRTJNeWh3eFRSSi1HR0lkcnhUNVpDLWJYQXNkWGRuNjNhRjlCTkVuNkxPVXNyeENHbmhuazdFdV9ub2d2RHlHanBfbmR4bkxCbDQzQlJyaWJXM3l5VzdwdnpwU0Q3T2VvMXE0blpTVWc1cXB1cjhmNU1CQmRKRnJyTGw2RnBYWE5YN2pIVEdidzdXcWt4RkJ6d2lSRklyZmFFejk1S2tjTXRYRTdYcXFDNDFBYjk1c3RqWnI2RFRmTUh6T2pUaEwtaFJoOHd6VVJyZlp3?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxQR2RLNnRGdTExSDNaTmRPMUVfa2g4WHdleTAwSnF1Q201eHE2bHNqbGZoWEg5bkY0eWdCUVY0TjFqODJsMnpwc0gzbHAtTFVRVDRaa3NNOEFWTVNkbFdVVGV4bEdQZmF1UW9HRkVVaXBOaC1oU0xHaUxENUstVHI5cGZObjZOejFzZmxHcUZrWWdYcXZUMWVXNEdWRlhWanhud2k1NTRISFA4WHlNR0pLSlZLbmwyRUdYbGNQeEhjNG9BZDNMU0Z4ZzJnZ0FnOEFIZnU4ZUR0SXppczl4eEQ1WGdLS3pPTDI2QTlOOTdzZnVSSlplODB2SDhKb3NhR0lGX1NMekh1YXQ4WWdL?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -11395,7 +11711,7 @@
       "otcId": "4720",
       "otcSlug": "deforest-buckner",
       "otcUrl": "https://overthecap.com/player/deforest-buckner/4720/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/2971282",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2971282/deforest-buckner",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BuckDe00.htm",
       "name": "DeForest Buckner",
       "shortName": "D. Buckner",
@@ -12175,7 +12491,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_2971282_3",
+          "id": "p7d_2971282_4",
           "type": "article",
           "headline": "Why DeForest Buckner Wanted to Return to the San Francisco 49ers",
           "fullText": null,
@@ -12201,7 +12517,7 @@
       "otcId": "4839",
       "otcSlug": "demarcus-robinson",
       "otcUrl": "https://overthecap.com/player/demarcus-robinson/4839/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3043116",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3043116/demarcus-robinson",
       "pfrUrl": "https://www.pro-football-reference.com/players/R/RobiDe01.htm",
       "name": "Demarcus Robinson",
       "shortName": "D. Robinson",
@@ -12216,8 +12532,47 @@
       "college": "Florida",
       "draftInfo": "2016 • Rd 4, Pick #126",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
-      "capHit2026": 0,
+      "capHit2026": 2701867,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2701867,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2701867,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -12879,7 +13234,7 @@
           "breakingPriority": 1
         },
         {
-          "id": "p7d_3043116_2",
+          "id": "p7d_3043116_1",
           "type": "article",
           "headline": "49ers Rule Out Three Wide Receivers vs. Raiders; Bosa Returns to Full Practice Ahead of Week 9 #LVvsSF",
           "fullText": null,
@@ -13049,7 +13404,7 @@
       "otcId": "9636",
       "otcSlug": "deommodore-lenoir",
       "otcUrl": "https://overthecap.com/player/deommodore-lenoir/9636/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242488",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242488/deommodore-lenoir",
       "pfrUrl": "https://www.pro-football-reference.com/players/L/LenoDe00.htm",
       "name": "Deommodore Lenoir",
       "shortName": "D. Lenoir",
@@ -13763,6 +14118,24 @@
           "breakingPriority": 0
         },
         {
+          "id": "p7d_4242488_3",
+          "type": "article",
+          "headline": "49ers’ Kyle Shanahan reveals long-standing interest in newly added DB",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "By Kyle Shanahan • 49ers Webzone",
+          "author": "Kyle Shanahan",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T19:05:56.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNOXlpbHVSSHNiampXeGJ4RHZ5WGdTdl9wMzg0Z3pQX2p1TnltRWF4TmZ5aFJTc09OdkZaQmFBU1RUSnRtRUwtVHZ2QXUwci1Da0J3RmNZMHh1RTVQanJhTHd5VnkxTGktdG9lNDV2WS0xRVRvUHJzdlRoM1ZCVTZKSjAtYlBrS3ppQW1sN2FOMnJpYlR2MHc?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_4242488_2",
           "type": "article",
           "headline": "49ers insider shares injury update on key defensive starter",
@@ -13775,24 +14148,6 @@
           "publishedAt": "2026-11-06T15:51:51.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQbk1uSG4yalZLUEl3V3NmWWpkdlMxbGlMTXB4eWxtUjh4TGpkMGNoeWVwcGZfMDNrQmtxT0lrdDN2WmhsV3Q3SHR3eERCY3k3MGJxRE9xUUNzaVpXckF0WDBKanJzQmU4bFEyN2NMak1JMW5hS1loMUxCNXF4UnRGaXFMQUplTElKY3ZfeHVB?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4242488_3",
-          "type": "article",
-          "headline": "49ers Training Camp Practice 15: Quick Hits",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T08:57:48.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOX1lJYmZYdE81dmZabU9QR1lrVGlhNTh6TldSS2tXY3REQ3pCUWtsLTdjeVcydE13X1RuQ2F6RzNHM3k0ZGNjalJZanpzNGx5a2dHQWtuMkZiZHNKUVAtdmZkWXMtaGxfOVhxVFVfazN2VDlBZEZKMVktc2RxbFdIUTFWZU1xbDA?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -13843,7 +14198,7 @@
       "otcId": "11694",
       "otcSlug": "dominick-puni",
       "otcUrl": "https://overthecap.com/player/dominick-puni/11694/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5092959",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/5092959/dominick-puni",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PuniDo00.htm",
       "name": "Dominick Puni",
       "shortName": "D. Puni",
@@ -14346,25 +14701,7 @@
       },
       "recentNews": [
         {
-          "id": "p7d_5092959_0",
-          "type": "article",
-          "headline": "49ers say Bosa is ‘cleared to go’ vs. Raiders; 3 wideouts ruled out with injury",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The Mercury News 49ers Coverage",
-          "author": "The Mercury News",
-          "authorHandle": null,
-          "outletName": "The Mercury News",
-          "publishedAt": "2026-11-06T22:04:43.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPa0NPSTFqUEhSZng3cTFvLUpZczlHMUt0djBsMjR4bU51Qk54d0FYRzlfdW1hTnBvekJwNWJ0aVVER3NjNlRpWWdMRnJwaEdTdmZmdUM4eldpWGNRRmN3eHdwS3k2S0t0VFNxX2lHTm16WXBLbF9Ja1hUSmRVUDlCb3ZGZ1BwUm04Y3V1NGZNWC1KQQ?oc=5",
-          "isBreaking": true,
-          "isInGameInjury": false,
-          "breakingBadge": "BREAKING",
-          "breakingPriority": 1
-        },
-        {
-          "id": "p7d_5092959_2",
+          "id": "p7d_5092959_1",
           "type": "article",
           "headline": "49ers training camp: Brock Purdy, Mac Jones shine in practice as WR chemistry grows",
           "fullText": null,
@@ -14382,7 +14719,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_5092959_1",
+          "id": "p7d_5092959_0",
           "type": "article",
           "headline": "49ers training camp: Osa Odighizuwa shines in practice, George Kittle ramping up",
           "fullText": null,
@@ -14406,9 +14743,9 @@
       "gsisId": "00-0039700",
       "pfrId": "NugeDr00",
       "otcId": "11976",
-      "otcSlug": null,
+      "otcSlug": "drake-nugent",
       "otcUrl": "https://overthecap.com/player/drake-nugent/11976/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428144",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428144/drake-nugent",
       "pfrUrl": "https://www.pro-football-reference.com/players/N/NugeDr00.htm",
       "name": "Drake Nugent",
       "shortName": "D. Nugent",
@@ -14423,8 +14760,48 @@
       "college": "Michigan",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428144.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -14587,7 +14964,7 @@
       "otcId": "7939",
       "otcSlug": "dre-greenlaw",
       "otcUrl": "https://overthecap.com/player/dre-greenlaw/7939/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916903",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916903/dre-greenlaw",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GreeDr00.htm",
       "name": "Dre Greenlaw",
       "shortName": "D. Greenlaw",
@@ -15430,7 +15807,7 @@
       "otcId": "7373",
       "otcSlug": "eddy-pineiro",
       "otcUrl": "https://overthecap.com/player/eddy-pineiro/7373/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034949",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034949/eddy-pineiro",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PineEd00.htm",
       "name": "Eddy Pineiro",
       "shortName": "E. Pineiro",
@@ -16138,6 +16515,24 @@
           "breakingPriority": 0
         },
         {
+          "id": "p7d_4034949_6",
+          "type": "article",
+          "headline": "49ers' Kyle Shanahan sends clear message about Brandon Aiyuk",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "By Kyle Shanahan • 49ers Webzone",
+          "author": "Kyle Shanahan",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-05T23:58:11.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9SY2lONkd3RS1kVHhjU1VQckVuMGQ3V2ktWUxqZWE2cDNMNnpZM05lcU1LaWJWdmphMVU0aXh1Y2pOdEZCd09fbkV3Vm1aQkxzX2RrV0QxT2c?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_4034949_4",
           "type": "article",
           "headline": "49ers finish preseason with 18-12 win over Raiders in field goal fest",
@@ -16175,24 +16570,6 @@
         },
         {
           "id": "p7d_4034949_5",
-          "type": "article",
-          "headline": "Jake Moody is thrust into the spotlight yet again amid 49ers' kicking struggles",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Niner Noise 49ers Coverage",
-          "author": "Niner Noise",
-          "authorHandle": null,
-          "outletName": "Niner Noise",
-          "publishedAt": "2026-11-04T01:00:00.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNM1RMYXBuckdjTDE1dHh3Tjh4b3Y0YkhfOFRESnBNRzFVQ2Z5ekY0VmFuZjgyM1lXbVJic1llS3JxRDk5dVRxSzNrUVdUNG1JSlpCeEh6WjdTSGVRcUpwam5MZmh0MTE5TzlUOF9JNDhWTkJkVGRCVm9jemMzUlRkeWpVakxjdw?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4034949_6",
           "type": "article",
           "headline": "Stream Eddy Piñeiro in Week 9 to capitalize on massive scoring opportunities without burning a single dollar of FAAB",
           "fullText": null,
@@ -16254,7 +16631,7 @@
       "otcId": "13323",
       "otcSlug": "enrique-cruz-jr",
       "otcUrl": "https://overthecap.com/player/enrique-cruz-jr/13323/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4691556",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4691556/enrique-cruz-jr",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CruzEn00.htm",
       "name": "Enrique Cruz Jr.",
       "shortName": "E. Cruz Jr.",
@@ -16590,7 +16967,7 @@
       "otcId": "13283",
       "otcSlug": "ephesians-prysock",
       "otcUrl": "https://overthecap.com/player/ephesians-prysock/13283/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685523",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685523/ephesians-prysock",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PrysEp00.htm",
       "name": "Ephesians Prysock",
       "shortName": "E. Prysock",
@@ -16924,9 +17301,9 @@
       "gsisId": "00-0036584",
       "pfrId": "SareFo00",
       "otcId": "9757",
-      "otcSlug": null,
+      "otcSlug": "foster-sarell",
       "otcUrl": "https://overthecap.com/player/foster-sarell/9757/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242555",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242555/foster-sarell",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/SareFo00.htm",
       "name": "Foster Sarell",
       "shortName": "F. Sarell",
@@ -16941,8 +17318,48 @@
       "college": "Stanford",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242555.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 330300,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 330300,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 330300,
+          "transactions": {
+            "cut": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -17105,7 +17522,7 @@
       "otcId": "6955",
       "otcSlug": "fred-warner",
       "otcUrl": "https://overthecap.com/player/fred-warner/6955/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3138826",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3138826/fred-warner",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WarnFr00.htm",
       "name": "Fred Warner",
       "shortName": "F. Warner",
@@ -17801,25 +18218,25 @@
       },
       "recentNews": [
         {
-          "id": "p7d_3138826_1",
+          "id": "p7d_3138826_3",
           "type": "article",
-          "headline": "Fred Warner has turned the Peanut Punch into a 49ers defensive staple",
+          "headline": "Fred Warner has turned the Peanut Punch into a 49ers defensive staple - Merced Sun-Star",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "Niners Wire 49ers Coverage",
-          "author": "Niners Wire",
+          "summary": "Merced Sun-Star 49ers Coverage",
+          "author": "Merced Sun-Star",
           "authorHandle": null,
-          "outletName": "Niners Wire",
+          "outletName": "Merced Sun-Star",
           "publishedAt": "2026-11-07T01:01:00.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPZXNjTzV6M2thTXptb0RGVlRER2ZGeTBkR3BLd0puQ0piZnNNUm9rdXRGMGtRdndDOGM1SUJ0OEJiU1pMMXRFV3haTXJLMFo1LTNjMk93R19KaXlBbDNMZFVINExoWHJJUVY3Zi1OZnM5TjB4VzFocTNXdkQzdVlXalNHc0NJYXowX0hCVlk1VERuRklxbDB3SWRVM19kY2RVeEpWVkRuVk1tUy1YVHUwRjdfaWNZVXJ6WGc5MFRQeGVJYXVnNVE?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9CLUpqRUpYb3BpSkF0TVhxdEJKY09nM2MyQTd4dmszbFI3R0U0Y2xNUzVTdGFGam9nWlViTE1KdUV1b3FqRzBueVItZXVhRDNYMTB3SnVqVzRjYk9hX2tfN3EzTXVaUzExRWc?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3138826_2",
+          "id": "p7d_3138826_1",
           "type": "article",
           "headline": "Where 49ers’ Fred Warner landed in ESPN’s off-ball linebacker rankings after injury",
           "fullText": null,
@@ -17855,7 +18272,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3138826_5",
+          "id": "p7d_3138826_6",
           "type": "article",
           "headline": "Fred Warner vs Brock Bowers Will Be Pure CINEMA 🍿 #fredwarner #49ers #raiders #nfl",
           "fullText": null,
@@ -17873,25 +18290,25 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3138826_6",
+          "id": "p7d_3138826_2",
           "type": "article",
-          "headline": "49ers’ Fred Warner Drops Bold Brock Bowers Statement Before Raiders Game",
+          "headline": "49ers’ Fred Warner showers Brock Bowers with ultimate praise before Raiders clash",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "Heavy.com 49ers Coverage",
-          "author": "Heavy.com",
+          "summary": "Yahoo Sports 49ers Coverage",
+          "author": "Yahoo Sports",
           "authorHandle": null,
-          "outletName": "Heavy.com",
-          "publishedAt": "2026-11-05T12:57:31.000Z",
+          "outletName": "Yahoo Sports",
+          "publishedAt": "2026-11-05T13:25:14.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQNFlLS3MyVTNwdnF2MXkyS1VRRnNJdXdCbjFPOXlyOWt6bFlJVENGcFRCcFBNVnhGNDdhclRYRkRDUGJwSkFrWWFnU0gwUUFRRVM5eWlhOHNyV2dNZS04WjZfWnM2bERzdkV1Y05fWVNtcnpnUl9aaW1uWWozVXlUendaUHF1LVQzWnl4S1JoVi1OZw?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOc1hObGtFMENkUk5oOUlVQW5xUG5Xb0t0ZnF3LTNnSVNMZ2doRWVsSkdiR2RMaWd5N2ktWFQyRjM5bllKcmcyYkdKTm1WcU1rcDMzdktWNTlFRFAzRklfX0RsT3UwcjRDSWhfeS1odGtya3czM0ZNREgyNnRtdjVmdlNJRnFXNVU?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3138826_3",
+          "id": "p7d_3138826_4",
           "type": "article",
           "headline": "Bosa, Warner, and McCaffrey Talk the Return of DeForest Buckner, Staying Healthy, and the Week 9 Matchup Against the Raiders",
           "fullText": null,
@@ -17914,20 +18331,20 @@
           "headline": "Gimme Him: 49ers LB Fred Warner could improve the Raiders' run defense",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "Yahoo Sports 49ers Coverage",
-          "author": "Yahoo Sports",
+          "summary": "Raiders Wire 49ers Coverage",
+          "author": "Raiders Wire",
           "authorHandle": null,
-          "outletName": "Yahoo Sports",
-          "publishedAt": "2026-11-04T19:48:59.000Z",
+          "outletName": "Raiders Wire",
+          "publishedAt": "2026-11-04T19:48:00.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBkX0o1R1VON01tSWhkckNJT0FPbGxOcWEzOTJzNW9CeDVRLXJqNXkwNFZIcjFDbmFnSFNGeDdieU5VcmxzdWF5RGp1U3hzd3RhRmpKaFN3djlKT2w3WDJNb2JQdG54dFA1OF9YTUphVmlPSElCSUh3M2FlRGI?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPa01kbk4zQmJwU0N4a3JpYkVrY2ZZSjFYWjQySndTQ2N5NG96MDIyc3k5WVZybHktZ3RIQmZBZUE4aldXS3FjeU5SWHZxMVlFTDJIOW1WdjBSTk1uVlhGX2hZUnBpQzUxbDZINTBOWTZpYVkzb0FKWU9IMEEySld3bEFQLUhwQVI0VUVWMTljS3gzVlpYQkF1V1c4aUFUQUtDbXpjUUZ0d0hUOEZuMm9RbnpaV1YwUE9Z?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3138826_4",
+          "id": "p7d_3138826_5",
           "type": "article",
           "headline": "Fred Warner's Defensive Player of the Year case is impossible to ignore",
           "fullText": null,
@@ -17953,7 +18370,7 @@
       "otcId": "9634",
       "otcSlug": "garret-wallow",
       "otcUrl": "https://overthecap.com/player/garret-wallow/9634/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241807",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241807/garret-wallow",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WallGa00.htm",
       "name": "Garret Wallow",
       "shortName": "G. Wallow",
@@ -18485,7 +18902,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4241807_3",
+          "id": "p7d_4241807_5",
           "type": "article",
           "headline": "49ers injury report: Official designations for Mike Evans, 6 others",
           "fullText": null,
@@ -18521,7 +18938,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4241807_5",
+          "id": "p7d_4241807_6",
           "type": "article",
           "headline": "49ers vs. Raiders injury report: 5 players miss Wednesday’s practice",
           "fullText": null,
@@ -18539,18 +18956,18 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4241807_6",
+          "id": "p7d_4241807_3",
           "type": "article",
-          "headline": "Transcript: Kyle Shanahan shares updates ahead of 49ers-Raiders game",
+          "headline": "49ers full injury updates a mixed bag of news for 2nd Week 9 practice",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "By Kyle Shanahan • 49ers Webzone",
-          "author": "Kyle Shanahan",
+          "summary": "Niners Wire 49ers Coverage",
+          "author": "Niners Wire",
           "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-04T22:26:52.000Z",
+          "outletName": "Niners Wire",
+          "publishedAt": "2026-11-06T02:18:00.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQY1JmdU84NEg1bENDOVE4UjUyQXZ6bGZnWW43ck1jUkdfSGNNMDc1Z0luSTM0aTkxRkRuaU54WW9yNzhudFFPZExDTThGbElhMmJxV3JIblpzQmJKZHBpc3h4ekxuQlpGTnN6ZFltUWRka0RKQTBxenFkY2FZcWRMZERFNnlsVGdLZ19YdnVpa0o1WF9WTDVkQ1pn?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQeVFWYkFWeWVYa1Fxczhjd0pUV2VEWU1iNzcxSmswZmxVX0xtRU1odnN3dmswX3NQTUVXeEY1QjhaZ2FHT3FwVVFjenQwcXZuVlVBMW1uSTZSYS02dXlZZTdqeEVENTFqSWJ1dmUtR3BLYll3anF2bzVMSEppSENmY0NvVkdMc0x2WlNBQk81TWFaU09nVFRIc0lDNHNaSjlTN2tUakJHcW05YkJxQ1QzYzk2TlMwTGxRZlJpNFd1OWRhbHljRTFUMXJ4dE83QWRjYmFVeURobW8?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -18601,7 +19018,7 @@
       "otcId": "5732",
       "otcSlug": "george-kittle",
       "otcUrl": "https://overthecap.com/player/george-kittle/5732/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3040151",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3040151/george-kittle",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KittGe00.htm",
       "name": "George Kittle",
       "shortName": "G. Kittle",
@@ -19307,7 +19724,7 @@
       },
       "recentNews": [
         {
-          "id": "p7d_3040151_1",
+          "id": "p7d_3040151_2",
           "type": "article",
           "headline": "49ers update: NFL insider shares blunt assessment of George Kittle’s Week 1 status",
           "fullText": null,
@@ -19397,7 +19814,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3040151_2",
+          "id": "p7d_3040151_1",
           "type": "article",
           "headline": "George Kittle, Trent Williams Talk DeForest Buckner's Return and Getting Back to 49ers Football After the Bye",
           "fullText": null,
@@ -19441,7 +19858,7 @@
       "otcId": "13251",
       "otcSlug": "gracen-halton",
       "otcUrl": "https://overthecap.com/player/gracen-halton/13251/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685369",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685369/gracen-halton",
       "pfrUrl": "https://www.pro-football-reference.com/players/H/HaltGr00.htm",
       "name": "Gracen Halton",
       "shortName": "G. Halton",
@@ -19922,7 +20339,25 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4685369_1",
+          "id": "p7d_4685369_6",
+          "type": "article",
+          "headline": "49ers mailbag: Which 2026 draftees will make an impact? Will SF add more free agents? Was Kyle Shanahan annoyed by the first pick?",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "By Kyle Shanahan • 49ers Webzone",
+          "author": "Kyle Shanahan",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T03:33:38.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQRUt0X29nWFRPTWFudUlyRC1ZbS1GSWpaSWk2S0tYaHdGRUpQUmVtb0JnQUJyZE9VTFpiSGx4cDB1NUlqN09aRVVuS0o4UUJ2T2NURlVqbW1aMm9Vems4UWlBZlVnYU9ucGNZUk9lWTI5RWJtVkVEN0xwUThQSEVUc0tmVjFLUWZ3VGdEZ3pQQQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4685369_0",
           "type": "article",
           "headline": "49ers Notebook: Gracen Halton, other rookies shine vs. Titans; Kurtis Rourke impresses; Will another QB be needed?",
           "fullText": null,
@@ -19940,7 +20375,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4685369_6",
+          "id": "p7d_4685369_5",
           "type": "article",
           "headline": "49ers Get Massive Nick Bosa Update Ahead of Raiders Game",
           "fullText": null,
@@ -19958,7 +20393,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4685369_5",
+          "id": "p7d_4685369_4",
           "type": "article",
           "headline": "‘We’re ready to wreak havoc’: 49ers’ Alfred Collins excited about revamped D-line",
           "fullText": null,
@@ -19976,7 +20411,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4685369_3",
+          "id": "p7d_4685369_2",
           "type": "article",
           "headline": "49ers defense receives great news as Nick Bosa is suddenly ‘ready to go’",
           "fullText": null,
@@ -19994,7 +20429,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4685369_2",
+          "id": "p7d_4685369_1",
           "type": "article",
           "headline": "Golden Nuggets: Less than a week until the trade deadline",
           "fullText": null,
@@ -20012,25 +20447,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4685369_0",
-          "type": "article",
-          "headline": "49ers rookie Gracen Halton loses starting job but gains mentor in DeForest Buckner",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "San Francisco Chronicle 49ers Coverage",
-          "author": "San Francisco Chronicle",
-          "authorHandle": null,
-          "outletName": "San Francisco Chronicle",
-          "publishedAt": "2026-11-03T22:44:55.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPZk1aSDZyQUp3MUZFbE14M0VrSmxvTEd5WUVQeFVaZGFTV01ydGVoZzhUMmtoMTlKcGVXUGFvTnVHcmNYWFlZcVdibnUwcVNTdDVoNi03Y2ZScjhSN1p1YlNoYWJpV3Q3M2xxc29tM2pKd2tUdER0WVRsbGcyZ29QRHFpTWhhUkEycmtTc0FmWEdUa2JHLVdJeDdvWjI1TXVQc2NVLTl0LU1XX1VJ?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4685369_4",
+          "id": "p7d_4685369_3",
           "type": "article",
           "headline": "AFC South team stealing defensive lineman from 49ers' practice squad",
           "fullText": null,
@@ -20054,9 +20471,9 @@
       "gsisId": "00-0036448",
       "pfrId": "AlarIs00",
       "otcId": "9426",
-      "otcSlug": null,
+      "otcSlug": "isaac-alarcon",
       "otcUrl": "https://overthecap.com/player/isaac-alarcon/9426/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4686629",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4686629/isaac-alarcon",
       "pfrUrl": "https://www.pro-football-reference.com/players/A/AlarIs00.htm",
       "name": "Isaac Alarcon",
       "shortName": "I. Alarcon",
@@ -20235,7 +20652,7 @@
       "otcId": "11737",
       "otcSlug": "isaac-guerendo",
       "otcUrl": "https://overthecap.com/player/isaac-guerendo/11737/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372561",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372561/isaac-guerendo",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GuerIs00.htm",
       "name": "Isaac Guerendo",
       "shortName": "I. Guerendo",
@@ -20250,8 +20667,47 @@
       "college": "Louisville",
       "draftInfo": "2024 • Rd 4, Pick #129",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372561.png",
-      "capHit2026": 0,
+      "capHit2026": 1251132,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 1251132,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1251132,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -20574,24 +21030,6 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4372561_0",
-          "type": "article",
-          "headline": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T16:18:08.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
-          "isBreaking": true,
-          "isInGameInjury": false,
-          "breakingBadge": "BREAKING",
-          "breakingPriority": 1
-        },
-        {
           "id": "p7d_4372561_1",
           "type": "article",
           "headline": "49ers rookie Kaelon Black confident in dual-threat potential after minicamp debut",
@@ -20664,6 +21102,24 @@
           "breakingPriority": 0
         },
         {
+          "id": "p7d_4372561_0",
+          "type": "article",
+          "headline": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T16:18:08.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_4372561_5",
           "type": "article",
           "headline": "49ers training camp: Osa Odighizuwa shines in practice, George Kittle ramping up",
@@ -20706,9 +21162,9 @@
       "gsisId": "00-0036741",
       "pfrId": "StolJa00",
       "otcId": "9857",
-      "otcSlug": null,
+      "otcSlug": "jack-stoll",
       "otcUrl": "https://overthecap.com/player/jack-stoll/9857/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034862",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034862/jack-stoll",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/StolJa00.htm",
       "name": "Jack Stoll",
       "shortName": "J. Stoll",
@@ -20723,8 +21179,48 @@
       "college": "Nebraska",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034862.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 353322,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 353322,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 353322,
+          "transactions": {
+            "cut": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 1,
         "offenseSnaps": 0,
@@ -21077,7 +21573,7 @@
       "otcId": "11743",
       "otcSlug": "jacob-cowing",
       "otcUrl": "https://overthecap.com/player/jacob-cowing/11743/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575665",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575665/jacob-cowing",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CowiJa00.htm",
       "name": "Jacob Cowing",
       "shortName": "J. Cowing",
@@ -21676,7 +22172,7 @@
       "otcId": "13298",
       "otcSlug": "jaden-dugger",
       "otcUrl": "https://overthecap.com/player/jaden-dugger/13298/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5086161",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/5086161/jaden-dugger",
       "pfrUrl": "https://www.pro-football-reference.com/players/D/DuggJa00.htm",
       "name": "Jaden Dugger",
       "shortName": "J. Dugger",
@@ -22297,7 +22793,7 @@
       "otcId": "5134",
       "otcSlug": "jake-brendel",
       "otcUrl": "https://overthecap.com/player/jake-brendel/5134/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/2577185",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2577185/jake-brendel",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BrenJa01.htm",
       "name": "Jake Brendel",
       "shortName": "J. Brendel",
@@ -22941,7 +23437,7 @@
       },
       "recentNews": [
         {
-          "id": "p7d_2577185_1",
+          "id": "p7d_2577185_0",
           "type": "article",
           "headline": "49ers’ injury concerns hit fever pitch as entire position group ruled out for Raiders clash",
           "fullText": null,
@@ -22959,36 +23455,18 @@
           "breakingPriority": 1
         },
         {
-          "id": "p7d_2577185_0",
+          "id": "p7d_2577185_1",
           "type": "article",
-          "headline": "49ers say Bosa is ‘cleared to go’ vs. Raiders; 3 wideouts ruled out with injury",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The Mercury News 49ers Coverage",
-          "author": "The Mercury News",
-          "authorHandle": null,
-          "outletName": "The Mercury News",
-          "publishedAt": "2026-11-06T22:04:43.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPa0NPSTFqUEhSZng3cTFvLUpZczlHMUt0djBsMjR4bU51Qk54d0FYRzlfdW1hTnBvekJwNWJ0aVVER3NjNlRpWWdMRnJwaEdTdmZmdUM4eldpWGNRRmN3eHdwS3k2S0t0VFNxX2lHTm16WXBLbF9Ja1hUSmRVUDlCb3ZGZ1BwUm04Y3V1NGZNWC1KQQ?oc=5",
-          "isBreaking": true,
-          "isInGameInjury": false,
-          "breakingBadge": "BREAKING",
-          "breakingPriority": 1
-        },
-        {
-          "id": "p7d_2577185_2",
-          "type": "article",
-          "headline": "49ers vs. Raiders preseason finale: Players and position battles to watch",
+          "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
           "fullText": null,
           "isFullTweet": false,
           "summary": "49ers Webzone 49ers Coverage",
           "author": "49ers Webzone",
           "authorHandle": null,
           "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T00:46:00.000Z",
+          "publishedAt": "2026-11-07T01:07:21.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPWDBCQ0JqT0FxdU1UZ3ZxcVdBYjdrM3Q4OG5fUGdaeVpZUmNCZFllS0ZZOHAxZUxYM2x3bHpuWHR1YmxzYzBWaWRYOHhoU1UzVTZhVGR0VlQ4R2RIT2g5bWtFNmpubDk0VDdJYU1jSVZtMVlzMXhpNlBVTkNDaVZRVWJjNlBzcVNtWEhqcDJRd1N3QQ?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPNGFVdjhMMTdMNGl1WWhYTnVyYS1KQ1VGRE5HWjZqRmd3ek5vU1B5X2ZuYzFvUGhTMHMwS2trUk1WdVRDN0hMbENNb2ZUaTFkaUw3eHNnOF93VE9mLTlhYU1LSExTblpxR1lESkF5N2d0MndsdlZfSVByRGs0aTdDTU5PQ2hZdw?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -23003,7 +23481,7 @@
       "otcId": "10357",
       "otcSlug": "jake-tonges",
       "otcUrl": "https://overthecap.com/player/jake-tonges/10357/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259147",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259147/jake-tonges",
       "pfrUrl": "https://www.pro-football-reference.com/players/T/TongJa00.htm",
       "name": "Jake Tonges",
       "shortName": "J. Tonges",
@@ -23018,8 +23496,47 @@
       "college": "California",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259147.png",
-      "capHit2026": 0,
+      "capHit2026": 2058000,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2058000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2058000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -23601,9 +24118,9 @@
       "gsisId": "00-0038648",
       "pfrId": "GrahJa02",
       "otcId": "11079",
-      "otcSlug": null,
+      "otcSlug": "jalen-graham",
       "otcUrl": "https://overthecap.com/player/jalen-graham/11079/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4570410",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4570410/jalen-graham",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GrahJa02.htm",
       "name": "Jalen Graham",
       "shortName": "J. Graham",
@@ -23618,8 +24135,48 @@
       "college": "Purdue",
       "draftInfo": "2023 • Rd 7, Pick #255",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570410.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 347222,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 347222,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 347222,
+          "transactions": {
+            "cut": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 2,
         "offenseSnaps": 0,
@@ -24095,9 +24652,9 @@
       "gsisId": "00-0041362",
       "pfrId": "StroJa03",
       "otcId": "13812",
-      "otcSlug": null,
+      "otcSlug": "jalen-stroman",
       "otcUrl": "https://overthecap.com/player/jalen-stroman/13812/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683155",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683155/jalen-stroman",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/StroJa03.htm",
       "name": "Jalen Stroman",
       "shortName": "J. Stroman",
@@ -24112,8 +24669,48 @@
       "college": "Notre Dame",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683155.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -24271,13 +24868,13 @@
     },
     {
       "id": "4693371",
-      "gsisId": "THO581952",
-      "pfrId": "ThomJa01",
+      "gsisId": "00-0041363",
+      "pfrId": "ThomJa06",
       "otcId": "13808",
       "otcSlug": "james-thompson-jr",
       "otcUrl": "https://overthecap.com/player/james-thompson-jr/13808/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693371",
-      "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomJa01.htm",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693371/james-thompson-jr",
+      "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomJa06.htm",
       "name": "James Thompson Jr.",
       "shortName": "J. Thompson Jr.",
       "jersey": 96,
@@ -24723,7 +25320,25 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4693371_5",
+          "id": "p7d_4693371_3",
+          "type": "article",
+          "headline": "PFF names 49ers’ highest-graded player of the 2026 preseason",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T14:01:51.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQ1RHOV93Ti1iQTFrLXhxOVRrLV9KRHZPbTVsRU04YklReDdqQ2RCbkZ3OVJmbWJMZWZocjVkM3FEbWpfbDJXVUhSa0pwc3RncUVQMC1pRkdmeDNFcmNrQjhnQUNBNzJqbHBSZ3ZMNThlRk1YLWJhTktiQjJsVlprLXJlUUw4QkoyZkhkYjV0dzIyY3M?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4693371_6",
           "type": "article",
           "headline": "49ers Position Grades Reveal Strengths and Weaknesses at 4-0",
           "fullText": null,
@@ -24741,7 +25356,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4693371_3",
+          "id": "p7d_4693371_4",
           "type": "article",
           "headline": "49ers vs. Chargers in preseason: How to watch, stream, and listen, plus odds",
           "fullText": null,
@@ -24795,25 +25410,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4693371_6",
-          "type": "article",
-          "headline": "49ers training camp: Brock Purdy, Mac Jones shine in practice as WR chemistry grows",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T00:58:52.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPVlk1QmFCYjE5ZG5Yb0xhVTV1aHY2MllKU0JVTHBkRGhNMEd1bkhGNnFoNkJEc0JDM3p0MjA1R3NSSlNYc3lZa2lLNEZwdFdZcjJLd0oybjlDNUZvWTlIdVVzLWZOaUxiU1B2YVViWnBuRnBNNGdEck5NZ1U5OUtfdWppbHRId2ItNm15aTFR?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4693371_4",
+          "id": "p7d_4693371_5",
           "type": "article",
           "headline": "49ers training camp: Osa Odighizuwa shines in practice, George Kittle ramping up",
           "fullText": null,
@@ -24857,7 +25454,7 @@
       "otcId": "11025",
       "otcSlug": "jarrett-patterson",
       "otcUrl": "https://overthecap.com/player/jarrett-patterson/11025/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372774",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372774/jarrett-patterson",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PattJa03.htm",
       "name": "Jarrett Patterson",
       "shortName": "J. Patterson",
@@ -25259,36 +25856,54 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4372774_6",
+          "id": "p7d_4372774_1",
           "type": "article",
-          "headline": "49ers vs. Cardinals: 3 Keys to Victory in Week 3",
+          "headline": "PFF names 49ers’ highest-graded player of the 2026 preseason",
           "fullText": null,
           "isFullTweet": false,
           "summary": "49ers Webzone 49ers Coverage",
           "author": "49ers Webzone",
           "authorHandle": null,
           "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T01:21:46.000Z",
+          "publishedAt": "2026-11-07T14:01:51.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOcU5wNkFKNmxFRUc1NWpZVlpDYnZpTUtyaU4wcEVjYnRGYWdBOUNjQW8tN3loSUo1ZGU3WTVXNkdmRHpKenBPVWRHVUc4bzhCRWM4ZmRHM3RzT2k4RkNzdUpjd0g5YmZmTEVPYjc1c3lwUEM3Q2NvWk91M3QxTnJ0RkpQMlZBdw?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQ1RHOV93Ti1iQTFrLXhxOVRrLV9KRHZPbTVsRU04YklReDdqQ2RCbkZ3OVJmbWJMZWZocjVkM3FEbWpfbDJXVUhSa0pwc3RncUVQMC1pRkdmeDNFcmNrQjhnQUNBNzJqbHBSZ3ZMNThlRk1YLWJhTktiQjJsVlprLXJlUUw4QkoyZkhkYjV0dzIyY3M?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4372774_1",
+          "id": "p7d_4372774_3",
           "type": "article",
-          "headline": "49ers sign exclusive-rights free agent Austen Pleasants to one-year tender",
+          "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
           "fullText": null,
           "isFullTweet": false,
           "summary": "49ers Webzone 49ers Coverage",
           "author": "49ers Webzone",
           "authorHandle": null,
           "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T05:52:42.000Z",
+          "publishedAt": "2026-11-07T01:07:21.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQWWpsd1VxcDRvdTMxWFNYVldKcS1qdFRzazlYLVFuNURyVzVMWDZUeVpMWU5wSVM5ZHREX2RjLVA2a1hIek9wRlhwM1VQbmY4amY4TEw4SkxoUkEzVVFDV29CN0lWY2ZHWFlSNVpGSVc0ZG10Qy1MUmpvNlRrUFd5bmdCblpuU3Q4Y1QtQVVlc19iUzFFamUwUm5kSQ?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPNGFVdjhMMTdMNGl1WWhYTnVyYS1KQ1VGRE5HWjZqRmd3ek5vU1B5X2ZuYzFvUGhTMHMwS2trUk1WdVRDN0hMbENNb2ZUaTFkaUw3eHNnOF93VE9mLTlhYU1LSExTblpxR1lESkF5N2d0MndsdlZfSVByRGs0aTdDTU5PQ2hZdw?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4372774_6",
+          "type": "article",
+          "headline": "49ers officially announce re-signing LB Garret Wallow to a one-year deal",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T16:24:32.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQcVg4SVZ6MTZjcHNZM0ExRkgwVjJvTzMyQ0NNZ0gzaXBJbkszUU5Cd0FFZVoyVkk1UGotRVR4SmF3dnFGZEpKNkpQVWo0ZEdlUGM2eXJZbFE4ek1HUDdvU2tOSkVRNlB2eVRwLTRfcy1TdDdXQWxiQ0lPRGNDekRTM1dWMHlFVTRKbGNjZzZRcWlEcFE?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -25307,24 +25922,6 @@
           "publishedAt": "2026-11-06T04:39:47.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOVktZR1JtU2drREsxcmNWenpiZjlfYnJjbXp3ZnRFY2JJeWFVMnlOeXZEaHdpUG1LT1ZUT3Z2dlhaRDc4Rm5QVU8xNzlmcDZnSW4wNjVzNDlJRmVKQWxaYlI1c0s4dGk1SUo1QWEwOFZrSHpDV1ZWTmY5NFVVMmdscnZR?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4372774_3",
-          "type": "article",
-          "headline": "49ers rookies report to training camp today",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-05T23:56:36.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNNDN4ajc1Wk5XaUdxeXdUZ1VzYjYzSXBqRmgycEFmWFVtVEg2dXJRZmxiT0ZhMWtPbGR0SkFsdDFVWmd2aERmcFRLT3h3dW0wQUVySGtTQnpETzU3YVd1T1hQX3oyUF85TmIzMVk2Y1k2LU9jQVVCQzhhYnFVS1pOX0MxZDV3X2o1?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -25375,7 +25972,7 @@
       "otcId": "10911",
       "otcSlug": "jiayir-brown",
       "otcUrl": "https://overthecap.com/player/jiayir-brown/10911/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693644",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693644/jiayir-brown",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowJi01.htm",
       "name": "Ji'Ayir Brown",
       "shortName": "J. Brown",
@@ -26049,7 +26646,7 @@
       "otcId": "1671",
       "otcSlug": "jon-weeks",
       "otcUrl": "https://overthecap.com/player/jon-weeks/1671/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/13729",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/13729/jon-weeks",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WeekJo00.htm",
       "name": "Jon Weeks",
       "shortName": "J. Weeks",
@@ -26401,7 +26998,25 @@
       },
       "recentNews": [
         {
-          "id": "p7d_13729_5",
+          "id": "p7d_13729_6",
+          "type": "article",
+          "headline": "49ers vs. Raiders PFF grades: Best and worst from the game, plus snap counts",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T02:26:49.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNSkZpQUVNQW1yZEhNN0pjVlhiZ0xQRjlaNGk3bHhfa2dvMTg4cmZLem5USmNkU2dwMHlFVGpfX0dMN1hCcTN2eVVIT0tKa2ZZZGFsWjZ4dzFyU1g3WEt4bTdZVW1tWjVoSndUUTJRM1ozUDlBMjc2MWpSQnd4MFV6Z0MtNFlqUQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_13729_4",
           "type": "article",
           "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
           "fullText": null,
@@ -26473,7 +27088,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_13729_6",
+          "id": "p7d_13729_5",
           "type": "article",
           "headline": "49ers to Welcome Thousands of Fans at La Casa de Los Fieles for Unforgettable Events in Mexico",
           "fullText": null,
@@ -26509,24 +27124,6 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_13729_4",
-          "type": "article",
-          "headline": "Inside the 49ers’ revamped hydrotherapy room, from cold tubs to an underwater treadmill",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The New York Times 49ers Coverage",
-          "author": "The New York Times",
-          "authorHandle": null,
-          "outletName": "The New York Times",
-          "publishedAt": "2026-11-03T19:07:05.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQMnVxNHppekVIQmV4aE5fc2NHSzFfRm5oRUZIY1VPZEtDTFZ1T3dia1dFb1AxdC12aGFPb1duNEtqRXpDcFZRWkNzVWZ3UXkxUU1LdEo3eUdDdmpTVExTTWZwcXh2MllEWGlLdHB3bGVydGVrWTBjbHUyMEZGX3BBMHVBX2JkTXNsRGVHWDlUMVY3RVR0VElaLUlrd3ZQT2p6NEE?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
           "id": "espn_50369005",
           "type": "article",
           "headline": "Fantasy football D/ST outlook for Weeks 9-12: Fire up Texans, and how 'bout them Cowboys?",
@@ -26553,7 +27150,7 @@
       "otcId": "12507",
       "otcSlug": "jordan-james",
       "otcUrl": "https://overthecap.com/player/jordan-james/12507/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685397",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685397/jordan-james",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JameJo01.htm",
       "name": "Jordan James",
       "shortName": "J. James",
@@ -26989,7 +27586,7 @@
       "otcId": "12498",
       "otcSlug": "jordan-watkins",
       "otcUrl": "https://overthecap.com/player/jordan-watkins/12498/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431466",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431466/jordan-watkins",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WatkJo00.htm",
       "name": "Jordan Watkins",
       "shortName": "J. Watkins",
@@ -27535,6 +28132,24 @@
           "breakingPriority": 0
         },
         {
+          "id": "p7d_4431466_6",
+          "type": "article",
+          "headline": "49ers mailbag: Can Brock Purdy win NFL MVP? Will SF bring in more receivers? Jordan Watkins or Brandin Cooks?",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T14:10:59.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQSVQxZjJCam5KbHZQTFBnYzItd0I0aEdjcDlkLXlPdFVaVUJKb0NtVEdrY2pLMnFuQUlWVnNIYTBPR1Z2eUV1dWVkQ0FXbjgtZ29NYWNKdWJ4cFMzYWtUQlBpSXdtRGJvOV9iczNQWmdFcEp1ZE9Xb09qZHF0VXdnTFRmQ0dwWTl2bEc0?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_4431466_5",
           "type": "article",
           "headline": "Unlikely that Evans or Deebo will play in Week 9",
@@ -27587,24 +28202,6 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4431466_6",
-          "type": "article",
-          "headline": "New 49ers Rumors on Potential WR Trade After DeForest Buckner Deal Ahead of 2026 NFL Deadline",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Bleacher Report 49ers Coverage",
-          "author": "Bleacher Report",
-          "authorHandle": null,
-          "outletName": "Bleacher Report",
-          "publishedAt": "2026-10-31T16:24:07.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOMXJ0dzgyRjVoTl9tSmRQS2ZLRjN4QXhNTUxyN2FmZzVTQ1h3WFJxeUdKVlNCV2FlRzhfZDhlbkhEX3NRQ3F5YWhleS1tRElOM21feHd0TFNvSm92dXhiQ205MENKcXQtMzROMW1HcG45NmpmT1ZLRThteGVuTkVxNnVCVktHdWplY1ZDUWtWdHdVWDR0S0VZSWYtNUtEeHFMRTZoR1FxVXJoZFNBZzRSZ2JqZ2xreGVaT3JQNXh2MTl3SHNBSDFkTGtmck0?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
         }
       ]
     },
@@ -27615,7 +28212,7 @@
       "otcId": "13234",
       "otcSlug": "kaelon-black",
       "otcUrl": "https://overthecap.com/player/kaelon-black/13234/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696044",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696044/kaelon-black",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BlacKa00.htm",
       "name": "Kaelon Black",
       "shortName": "K. Black",
@@ -28232,7 +28829,7 @@
       "otcId": "10870",
       "otcSlug": "keion-white",
       "otcUrl": "https://overthecap.com/player/keion-white/10870/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4243493",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4243493/keion-white",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WhitKe03.htm",
       "name": "Keion White",
       "shortName": "K. White",
@@ -28785,7 +29382,7 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4243493_5",
+          "id": "p7d_4243493_4",
           "type": "article",
           "headline": "Key stats from the 49ers’ 27-7 Week 1 win vs. the Rams",
           "fullText": null,
@@ -28803,7 +29400,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4243493_4",
+          "id": "p7d_4243493_3",
           "type": "article",
           "headline": "Golden Nuggets: What a crisp autumn Saturday to make a trade",
           "fullText": null,
@@ -28821,7 +29418,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4243493_2",
+          "id": "p7d_4243493_1",
           "type": "article",
           "headline": "3 projected first-round picks draw comparisons to 49ers starters",
           "fullText": null,
@@ -28857,7 +29454,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4243493_6",
+          "id": "p7d_4243493_5",
           "type": "article",
           "headline": "3 Trade Deadline Targets for 49ers Who Fit Raheem Morris's Scheme",
           "fullText": null,
@@ -28875,25 +29472,25 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4243493_1",
+          "id": "p7d_4243493_6",
           "type": "article",
-          "headline": "Ranking 49ers’ top 5 MVPs so far and 5 most important players down the stretch",
+          "headline": "5 sneaky-good trades John Lynch's 49ers could pull off by NFL trade deadline",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "The New York Times 49ers Coverage",
-          "author": "The New York Times",
+          "summary": "By John Lynch • Niner Noise",
+          "author": "John Lynch",
           "authorHandle": null,
-          "outletName": "The New York Times",
-          "publishedAt": "2026-11-04T13:02:09.000Z",
+          "outletName": "Niner Noise",
+          "publishedAt": "2026-11-04T13:00:00.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNTkhyTzQ3bDRWZnVzdkVxSEp2M3lhMlpvV3ZRaDAwTlJTWnc2RXFKWkJJejZnQzh5dGQyZHREcUpzX2owVXpmcVMzZHVnS3ZRWWpndnR0MHdnMWp1bG5ubm16ak43ajBSTXI4eXhkV25aMFpNYjltX0EzQkp0a3BBNTNMUVFwR3FzdmdxbVFB?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPLXIzcTlnNnBsQ0RUOHJGbl9hdkJyZW5WWlktSEswT3ZfMlZURnN4aEliMThQTlJPV2h2ZW84ZWU5dFA4RUdoRGxSXzdxaXNLbDI5NzRibFhqVzdFU0s4WVpXVEFGMWVMVXFuNVY1SkQ5SzNRbUZrWi1WZDV3Ykw0aUUtUEVvZVlST3c?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4243493_3",
+          "id": "p7d_4243493_2",
           "type": "article",
           "headline": "3 pass-rushers 49ers must now be looking at in 2027 NFL Draft",
           "fullText": null,
@@ -28917,9 +29514,9 @@
       "gsisId": "00-0034854",
       "pfrId": "HodgKh00",
       "otcId": "7678",
-      "otcSlug": null,
+      "otcSlug": "khadarel-hodge",
       "otcUrl": "https://overthecap.com/player/khadarel-hodge/7678/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3047876",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3047876/khadarel-hodge",
       "pfrUrl": "https://www.pro-football-reference.com/players/H/HodgKh00.htm",
       "name": "KhaDarel Hodge",
       "shortName": "K. Hodge",
@@ -29493,7 +30090,7 @@
       "otcId": "8887",
       "otcSlug": "khalid-kareem",
       "otcUrl": "https://overthecap.com/player/khalid-kareem/8887/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039029",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039029/khalid-kareem",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KareKh00.htm",
       "name": "Khalid Kareem",
       "shortName": "K. Kareem",
@@ -30060,42 +30657,6 @@
         {
           "id": "p7d_4039029_1",
           "type": "article",
-          "headline": "49ers’ ‘Hulk’ was a zero-star recruit. Now he’s manhandling NFL linemen",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "San Francisco Chronicle 49ers Coverage",
-          "author": "San Francisco Chronicle",
-          "authorHandle": null,
-          "outletName": "San Francisco Chronicle",
-          "publishedAt": "2026-11-07T00:30:25.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPR1hNdjU5X015Vi1NVm5ndFI0Z0xmb1Z6ZEVDSThlY3QwVXk4MHkwbmc3Z2FqWVdxSE5zTktwcmFXdk41SE1XdmJ3a1hFZHpoSzRaMFZaMWdmRjZXaDhVekh0b0ZJemU2Rl9ZblJiQ2g3dzQwWXNmdjVTZWdjQ3F4dmctZzhNcnFuOEtfOW5iM0pvdWJiMC1NcmsyME5kTE4w?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4039029_4",
-          "type": "article",
-          "headline": "Could the 49ers make a deal with the Texans again for a defensive lineman?",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Niners Nation 49ers Coverage",
-          "author": "Niners Nation",
-          "authorHandle": null,
-          "outletName": "Niners Nation",
-          "publishedAt": "2026-11-05T16:01:00.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxQS1FPUFlDNktIMFU0MUJ1VnRicXhfaWJhWnVzeF9zUlRQR1M5ZGVnclpXYjNlbkJPUER3VHk2X0daNFZtS0pnMW03SDlaUzRXUVJPN05hNjRid2pxWnhJY3ExX3FINlZJWkJqS3puRm1UNHRpNng3Smo0dlhOT0xvbmdaaXVOeXgxeHhaMUFxOGVrZTFlWkdIVVNGS2h4WnpPa2RUNHdpdEZhNlM1dHZreHlqd2h2ZDVQdEpRTDB4SnM4Xy01enpLWEc5eXNQVG1LSVBKV2dDb01RLXNSRUsxOFlTaFRsbHJJMjV3ZFFnN01jWjUtLVlzSDZSVQ?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4039029_2",
-          "type": "article",
           "headline": "49ers defense receives great news as Nick Bosa is suddenly ‘ready to go’",
           "fullText": null,
           "isFullTweet": false,
@@ -30112,7 +30673,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4039029_3",
+          "id": "p7d_4039029_2",
           "type": "article",
           "headline": "Texans poach veteran defensive tackle off the 49ers’ practice squad",
           "fullText": null,
@@ -30135,10 +30696,10 @@
       "id": "4699678",
       "gsisId": "00-0041357",
       "pfrId": "DinkKh00",
-      "otcId": "4699678",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4699678",
+      "otcId": "13810",
+      "otcSlug": "khalil-dinkins",
+      "otcUrl": "https://overthecap.com/player/khalil-dinkins/13810/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4699678/khalil-dinkins",
       "pfrUrl": "https://www.pro-football-reference.com/players/D/DinkKh00.htm",
       "name": "Khalil Dinkins",
       "shortName": "K. Dinkins",
@@ -30153,8 +30714,48 @@
       "college": "Penn State",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4699678.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -30317,7 +30918,7 @@
       "otcId": "12587",
       "otcSlug": "kurtis-rourke",
       "otcUrl": "https://overthecap.com/player/kurtis-rourke/12587/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430431",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430431/kurtis-rourke",
       "pfrUrl": "https://www.pro-football-reference.com/players/R/RourKu01.htm",
       "name": "Kurtis Rourke",
       "shortName": "K. Rourke",
@@ -30614,7 +31215,7 @@
       "otcId": "2298",
       "otcSlug": "kyle-juszczyk",
       "otcUrl": "https://overthecap.com/player/kyle-juszczyk/2298/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/16002",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/16002/kyle-juszczyk",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JuszKy00.htm",
       "name": "Kyle Juszczyk",
       "shortName": "K. Juszczyk",
@@ -31322,7 +31923,25 @@
       },
       "recentNews": [
         {
-          "id": "p7d_16002_4",
+          "id": "p7d_16002_0",
+          "type": "article",
+          "headline": "Why Kyle Juszczyk expects 49ers rookies to make an early impact",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T04:21:07.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNTWxqZzl6cWRFcVhRRnJXSVMxLVFhOGIzcElQM3k3aUlRNVFFbUctVUlRZEJkY0hUcWZMbmJOS0dKZ3RrSTh2RXNwbDJYLVJFZkZJYlZNZG83Y0V1d3RvR0pYTDd2N1N3ZmZ1UEQ4VDF3YllCeldfUGZvbHdIYWc5TlBIWHgxSkZjR1Jv?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_16002_3",
           "type": "article",
           "headline": "NFL drops $15K fine for 49ers' Kyle Juszczyk",
           "fullText": null,
@@ -31340,7 +31959,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_16002_6",
+          "id": "p7d_16002_5",
           "type": "article",
           "headline": "49ers, Kyle Shanahan should find a way vs. Raiders",
           "fullText": null,
@@ -31358,7 +31977,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_16002_0",
+          "id": "p7d_16002_1",
           "type": "article",
           "headline": "Raiders-49ers: Las Vegas must answer Kyle Juszczyk packages in Week 9 key matchups",
           "fullText": null,
@@ -31376,25 +31995,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_16002_1",
-          "type": "article",
-          "headline": "Two unlikely 49ers — a fullback and a party animal — just made team’s 10-year wall",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The New York Times 49ers Coverage",
-          "author": "The New York Times",
-          "authorHandle": null,
-          "outletName": "The New York Times",
-          "publishedAt": "2026-11-05T13:22:30.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxONXk2Z3R0Q1Z6WkRMTDJlVlk0XzY5T3BjQ1RjeHJqMzJlaVNGNnV2QnNPWk5fdHRlNkxacEFnVFBYa3hWdFVuSjE1d2hQdW1DcDJjZGh3bF9wajY1OFlXdmNyMzc4bndQRlRLX1g1R1FwU1d4YXItYWJRTTdPeGRaQ2NlZWJYZjB3bUt1V2tFa0paTlVISVE?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_16002_5",
+          "id": "p7d_16002_4",
           "type": "article",
           "headline": "Is DeForest Buckner's 'nostalgic' trade return the final piece for the 49ers?",
           "fullText": null,
@@ -31412,7 +32013,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_16002_3",
+          "id": "p7d_16002_2",
           "type": "article",
           "headline": "Kyle Juszczyk on Brandon Aiyuk's potential return: \"Today's news was not news for us\"",
           "fullText": null,
@@ -31430,18 +32031,18 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_16002_2",
+          "id": "p7d_16002_6",
           "type": "article",
-          "headline": "Kyle Juszczyk Fantasy Outlook & Stats",
+          "headline": "Kyle Juszczyk's 'I scored a touchdown' story: SB LIV",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "FantasySP 49ers Coverage",
-          "author": "FantasySP",
+          "summary": "ESPN 49ers Coverage",
+          "author": "ESPN",
           "authorHandle": null,
-          "outletName": "FantasySP",
-          "publishedAt": "2026-11-03T01:29:09.000Z",
+          "outletName": "ESPN",
+          "publishedAt": "2026-11-04T16:50:07.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBkTlhCb0ctemE2eVhKUlgxSk5FTU1CUmdxNV9OV2VwelVTMW9yNjVJcFJyMGJwbjg1eENyZ0h0QVpxUFZJOGZhUUp4aHkxU1dDczc3MFcwLXpPazJweG1WOTdWN3dWQWM?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE14bUNqY1hkQzg1Q2tQSjdiMGNqYjFZRU5kSXFNUmFtREMzTEswZkw1cUpLSVV2RVRIcmR6X2h6Q2g4LWNUdTlzX1N1OGJ1dVROT0drQ3RqV05Tb091UWFmdEhVYXZ0ei03TjA1QXJ1NFBjYmpyVW1B?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -31456,7 +32057,7 @@
       "otcId": "9609",
       "otcSlug": "luke-farrell",
       "otcUrl": "https://overthecap.com/player/luke-farrell/9609/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040612",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040612/luke-farrell",
       "pfrUrl": "https://www.pro-football-reference.com/players/F/FarrLu00.htm",
       "name": "Luke Farrell",
       "shortName": "L. Farrell",
@@ -32273,7 +32874,7 @@
       "otcId": "8451",
       "otcSlug": "luke-gifford",
       "otcUrl": "https://overthecap.com/player/luke-gifford/8451/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3116097",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3116097/luke-gifford",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GiffLu00.htm",
       "name": "Luke Gifford",
       "shortName": "L. Gifford",
@@ -33024,25 +33625,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3116097_6",
-          "type": "article",
-          "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T01:07:21.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPNGFVdjhMMTdMNGl1WWhYTnVyYS1KQ1VGRE5HWjZqRmd3ek5vU1B5X2ZuYzFvUGhTMHMwS2trUk1WdVRDN0hMbENNb2ZUaTFkaUw3eHNnOF93VE9mLTlhYU1LSExTblpxR1lESkF5N2d0MndsdlZfSVByRGs0aTdDTU5PQ2hZdw?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_3116097_4",
+          "id": "p7d_3116097_5",
           "type": "article",
           "headline": "49ers training camp: Shanahan ramps up for preseason, Purdy throws two pick-sixes",
           "fullText": null,
@@ -33078,7 +33661,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_3116097_5",
+          "id": "p7d_3116097_6",
           "type": "article",
           "headline": "49ers training camp: Osa Odighizuwa shines in practice, George Kittle ramping up",
           "fullText": null,
@@ -33090,6 +33673,24 @@
           "publishedAt": "2026-11-06T10:41:55.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQeDNtVEh3T3RkdlNiNWxWZi03YXRTZGpmR2ppZFZfNlBMN3ItcGxlWlI5WXZ6Q2tGTU1jNG5vTURpeUw1TzN6OVhaeF81MFAtWVR6Qk4xSGhVaXBNTElIVE5VM1dlTFBCLUtpM1BqY3BnS1k0ZHE2M1ZrNjFCSFNERFZCYk9aTmtUbGpwczlmRmxaQlU?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_3116097_4",
+          "type": "article",
+          "headline": "Another 49ers receiver added to injury report ahead of Week 9 vs. Raiders",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "NBC Sports Bay Area & California 49ers Coverage",
+          "author": "NBC Sports Bay Area & California",
+          "authorHandle": null,
+          "outletName": "NBC Sports Bay Area & California",
+          "publishedAt": "2026-11-05T22:49:37.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQSjJEenFJV3Y2OHZMUVI3LUM2WUhGbENvSWlWdW9DMVNHaUVKNXIxOWRQaUxMWXdhS2VIZkZYWW0wcFlLNnE4U1VpREFpS3NXSFdZYkMxWHBzRzFKWVM3bkpiUGJFc3Nlc2RBbklvaEllb0FtZWFCVUlVU0p5aFlpWW5VNlJ4UkE1aGZ5eVBuc2cwT1JWWVN0S1VIX19Pel9hbHl0MjA5QmdVV1pTcXdnYzAtak1uSVdzV1l5UWtiYljSAcgBQVVfeXFMUDM3c1BvNVNYTW55YzRUWnRYaHNHVzl6cUh4STgybGJpUGlqU2NNLXBTVlVHRVgyTUdCUmZJXzVna1B4cnFZOU5lWnlXY1Y1MC1DUTFkc3piREhGVElfN3RZbzhhUEVPTE5aQl82Z0hBd3FHd3VnSkFCdVpZX3lDODc4VGtnQXhuUm1TZWVydmw1NE15VnJoTGF6ZUhERkZOZ3NhaW5WQ05xVGhmcWFGdExISWNGTzRjdlRkQ3I2Nm9KemxyZEE5U3U?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -33140,7 +33741,7 @@
       "otcId": "9479",
       "otcSlug": "mac-jones",
       "otcUrl": "https://overthecap.com/player/mac-jones/9479/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241464",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241464/mac-jones",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JoneMa05.htm",
       "name": "Mac Jones",
       "shortName": "M. Jones",
@@ -33841,7 +34442,7 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4241464_3",
+          "id": "p7d_4241464_4",
           "type": "article",
           "headline": "NFL insider shares thoughts on 49ers QB Mac Jones’ future",
           "fullText": null,
@@ -33877,24 +34478,6 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4241464_6",
-          "type": "article",
-          "headline": "49ers news: John Lynch rules out Mike Evans and Deebo Samuel; talks Mac Jones and Brandon Aiyuk",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "By John Lynch • Niners Nation",
-          "author": "John Lynch",
-          "authorHandle": null,
-          "outletName": "Niners Nation",
-          "publishedAt": "2026-11-05T17:32:25.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQTGdMMGZpVTFZWk1yM2NPTC16MDdraGJDRmJrMjZfcVJfRkhLbUdETGF4Nk5hWjR0Q24wSW0wcnZGVU1lcWRBbjJudEdxdC1NU0V6Z3kwRTFrVndiZm1HSUNPa2JkRmx4SWVDeS1CS2lWRllkbWhrQWhvRnJRUWNJYUNyeVVJRmZiekhNOXFtVUdNVVNwMU92ZHZhNmwtOTROUGtKRGN6Q1Y5VENUdUpTSUg2Q3hwQnh4LVdIRUdMRGNYd1ZZTzUwdWpBNW9zTHhKS1k4TThKVjA5QVdiamhsVw?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
           "id": "p7d_4241464_0",
           "type": "article",
           "headline": "There’s one team the 49ers should trade Mac Jones to, and it’s because they’d overpay",
@@ -33913,7 +34496,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4241464_5",
+          "id": "p7d_4241464_6",
           "type": "article",
           "headline": "Lamar Jackson injury conundrum suddenly puts 49ers' Mac Jones back into spotlight",
           "fullText": null,
@@ -33925,6 +34508,24 @@
           "publishedAt": "2026-11-02T19:00:02.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQSC1IVG1salRULVdJMmcySENNWnRlN3lQT2UxckNaM1lXQzMyNTNTd0cweVJZZE51Xy1GZ0UxeVhBcXZuWFhwcmt5Q0RROEpQMXlsTDJGanNQdERMYnBXcElFV2FscTFWT2gybFE4bWhGcncyQ2JSaXJqcmlBaTR6SFRXM094MW1NM0FfSzNnRlhEUQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4241464_3",
+          "type": "article",
+          "headline": "49ers news: Will Mac Jones be a trade target for QB-needy teams?",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Niners Nation 49ers Coverage",
+          "author": "Niners Nation",
+          "authorHandle": null,
+          "outletName": "Niners Nation",
+          "publishedAt": "2026-11-02T16:01:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPM0FSbEEyZDMzSjlOWkk0NFIzaVhuZDdyYzEyOFR0Zy1LQzNrX1ZWbXduRkx5aEtyVXFicDJVa1FSSHZId3cxZkZSdUhuXzZ5Ql84WVk0Rm5Ta2JSRFJQNnhaczhVWVhFRW9odTRkVFppWlB3WnNRUUhHOFhZcnFoWUp1QllkSWp3QnZPbFlzSlhaS2ZGS09lTzlqamI4RmZDZmJxQTJpZ0RLSm9mRl96TTh3T2o?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -33949,7 +34550,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4241464_4",
+          "id": "p7d_4241464_5",
           "type": "article",
           "headline": "Analyst Suggests 49ers Trade QB Mac Jones to NFC Contender",
           "fullText": null,
@@ -33975,7 +34576,7 @@
       "otcId": "11732",
       "otcSlug": "malik-mustapha",
       "otcUrl": "https://overthecap.com/player/malik-mustapha/11732/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696211",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696211/malik-mustapha",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/MustMa00.htm",
       "name": "Malik Mustapha",
       "shortName": "M. Mustapha",
@@ -34545,24 +35146,6 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4696211_5",
-          "type": "article",
-          "headline": "49ers vs. Falcons: 5 Players to Watch in Week 7 matchup",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T03:22:26.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOTV8zTTBqcW1VRnRTUEk3LUw1d3RQeWY5VXYwZTczY0haZk1NVjU1elRIUW5qa2xJYk1lSHpxVG9CZXdVVnhtRG9aQzlIMGtDV1YyMXNxNGtJMGUxUjI5d2RmX0JFSkp5b3JqdXFPdnFHcjNJQThIU01nOVdQTFZMRzdaVFhZd3FK?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
           "id": "p7d_4696211_2",
           "type": "article",
           "headline": "Evaluating Chances of 49ers Landing All-Pro Safety in Trade",
@@ -34599,7 +35182,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4696211_6",
+          "id": "p7d_4696211_5",
           "type": "article",
           "headline": "49ers training camp: 5 overlooked players who could shape the 2026 season",
           "fullText": null,
@@ -34615,6 +35198,24 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4696211_6",
+          "type": "article",
+          "headline": "Ranking top 3 49ers most likely to be dealt at 2026 NFL trade deadline after adding DeForest Buckner",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "ClutchPoints 49ers Coverage",
+          "author": "ClutchPoints",
+          "authorHandle": null,
+          "outletName": "ClutchPoints",
+          "publishedAt": "2026-11-03T00:37:28.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxNam9iU0dXTVg2QlB6cFZZVTFhbGRueEpfcFJGYUg2N25uQmhDV3dpUkp2bVRVNHhfQ0JIbzA0SXZSU1U3NzdPTlJZUk5FdlNDdFlrZE9VQzdtTzNqVVYyQy1JZXJsb0pITnlMNVBUSXAzX29KRTV1WnNfbEh5cGZzd1hVd1pVQ00yODluRmR2THJsZ0xZNWV6SDFWd0xPdHFoNUtQZENIYk5WNU1xX0Via1J6MlFoNFN3enROR2ZCVnNxTENjbzFndFd6VVN5WGp1VnZsdjN5S2lKczd3dFZya2Ywcw?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
         }
       ]
     },
@@ -34625,7 +35226,7 @@
       "otcId": "12520",
       "otcSlug": "marques-sigle",
       "otcUrl": "https://overthecap.com/player/marques-sigle/12520/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693337",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693337/marques-sigle",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/SiglMa00.htm",
       "name": "Marques Sigle",
       "shortName": "M. Sigle",
@@ -35142,7 +35743,7 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4693337_3",
+          "id": "p7d_4693337_2",
           "type": "article",
           "headline": "Raiders-49ers Week 9 Injury Report: Thomas Booker ruled Out, Darien Porter questionable for Sunday",
           "fullText": null,
@@ -35196,7 +35797,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4693337_4",
+          "id": "p7d_4693337_3",
           "type": "article",
           "headline": "Marques Sigle News: In line to start Sunday",
           "fullText": null,
@@ -35214,7 +35815,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4693337_5",
+          "id": "p7d_4693337_4",
           "type": "article",
           "headline": "49ers training camp: 5 overlooked players who could shape the 2026 season",
           "fullText": null,
@@ -35232,7 +35833,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4693337_6",
+          "id": "p7d_4693337_5",
           "type": "article",
           "headline": "49ers' Marques Sigle: Limited Wednesday",
           "fullText": null,
@@ -35244,6 +35845,24 @@
           "publishedAt": "2026-11-05T03:29:05.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPN3pzbF91V1FxWWxqYjhsUVA3ZjN0aFRud090V09YZDk5NC0zYnVUQmllanRfZTh1a1JLSzdJOW5GT1RzLTdDUkEwWlB1WXh3TnM0VEEwMHRZMUtKSmZRR280NF9VUEVYelNQaTdzUVBlUi1pRW16ZjdSbUVkOHl0dnIwMEZfa2wybGNUcG5xZw?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4693337_6",
+          "type": "article",
+          "headline": "49ers open practice window for a pair of veterans; Nick Bosa returns",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Niners Nation 49ers Coverage",
+          "author": "Niners Nation",
+          "authorHandle": null,
+          "outletName": "Niners Nation",
+          "publishedAt": "2026-11-04T21:18:50.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPeXlQUDhtYS13Q0tWY05WWl9JMC1vRzJEWi00Vmh1NmRKY0NGbW5jMURBeURWWmNWVFlmeXRiYUFsWmhiN0RyT1ZzN3BYU051MWNMckdiRTZSQ0JKNTFrbkNMQkl2WXhGdEhoeUIzLXVXanZ4Q2xBVzExTG1HXzQ1SU1HZjBTNy1BcFkwU192bWZtcUtKemI2eFhRb0ZNUnZfV0Q0Zl9pNGJRLUV3UG16V3ltbGM5eEZkWlcwZnFiUUdpRWR2eWptRi1pTUQ?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -35262,24 +35881,6 @@
           "publishedAt": "2026-11-04T20:42:48.806Z",
           "imageUrl": "",
           "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3mzj7q2w5nk2y",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4693337_2",
-          "type": "article",
-          "headline": "Ranking 49ers’ top 5 MVPs so far and 5 most important players down the stretch",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The New York Times 49ers Coverage",
-          "author": "The New York Times",
-          "authorHandle": null,
-          "outletName": "The New York Times",
-          "publishedAt": "2026-11-04T13:02:09.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNTkhyTzQ3bDRWZnVzdkVxSEp2M3lhMlpvV3ZRaDAwTlJTWnc2RXFKWkJJejZnQzh5dGQyZHREcUpzX2owVXpmcVMzZHVnS3ZRWWpndnR0MHdnMWp1bG5ubm16ak43ajBSTXI4eXhkV25aMFpNYjltX0EzQkp0a3BBNTNMUVFwR3FzdmdxbVFB?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -35310,9 +35911,9 @@
       "gsisId": "00-0039354",
       "pfrId": "JackMc00",
       "otcId": "11705",
-      "otcSlug": null,
+      "otcSlug": "mckinnley-jackson",
       "otcUrl": "https://overthecap.com/player/mckinnley-jackson/11705/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4692680",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4692680/mckinnley-jackson",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JackMc00.htm",
       "name": "McKinnley Jackson",
       "shortName": "M. Jackson",
@@ -35327,8 +35928,48 @@
       "college": "Texas A&M",
       "draftInfo": "2024 • Rd 3, Pick #97",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692680.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 233750,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 233750,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 233750,
+          "transactions": {
+            "cut": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -35631,7 +36272,7 @@
       "otcId": "13807",
       "otcSlug": "mikail-kamara",
       "otcUrl": "https://overthecap.com/player/mikail-kamara/13807/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696051",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696051/mikail-kamara",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KamaMi00.htm",
       "name": "Mikail Kamara",
       "shortName": "M. Kamara",
@@ -35646,8 +36287,47 @@
       "college": "Indiana",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696051.png",
-      "capHit2026": 0,
+      "capHit2026": 515000,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 515000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 515000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -35900,7 +36580,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4696051_2",
+          "id": "p7d_4696051_3",
           "type": "article",
           "headline": "49ers training camp: Osa Odighizuwa shines in practice, George Kittle ramping up",
           "fullText": null,
@@ -35934,6 +36614,24 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4696051_2",
+          "type": "article",
+          "headline": "49ers rookie minicamp set for May 8-9: Schedule, draft class, and UDFAs",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-05T14:48:42.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQZnIyQlNMdUUzX3NqNGtWTzFXQVlEZTRKNGVFQUFPZEEyTGs5RjF5Y1I3RklreUkzcWpaeDVZRENPTS03dHlMSkQ0OHBRTHdiVml5SDNJZUpidTRJaFA4YmF6Z3pEU3A4MHFORDQwSTdfSXVhbVV5ZlZFSjZlU0w1bUpYMXNIX3M4UkE?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
         }
       ]
     },
@@ -35944,7 +36642,7 @@
       "otcId": "2946",
       "otcSlug": "mike-evans",
       "otcUrl": "https://overthecap.com/player/mike-evans/2946/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/16737",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/16737/mike-evans",
       "pfrUrl": "https://www.pro-football-reference.com/players/E/EvanMi00.htm",
       "name": "Mike Evans",
       "shortName": "M. Evans",
@@ -36764,6 +37462,24 @@
           "breakingPriority": 0
         },
         {
+          "id": "p7d_16737_6",
+          "type": "article",
+          "headline": "49ers’ Kyle Shanahan shares encouraging update on Mike Evans injury",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "By Kyle Shanahan • 49ers Webzone",
+          "author": "Kyle Shanahan",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-05T23:28:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQcDFxYTkwRHJKYWRnTTRubUpTUzRTZGRHeWxFVC1LOFNNSkFubU5IR0NXMkl4UFJVWWdwS1dZUzVoc29SN2hqMUJlakQ5R0ZGaEhuMW5tNFRxWnBicUlrcDlvNE1nVE1YM2N0QXo4enZnazFoTC1XM2V1MFFqZkoycVlTRUJRYjEtYVZOaDVmTEs?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_16737_0",
           "type": "article",
           "headline": "49ers reveal bad news on Mike Evans and Deebo Samuel for Raiders game",
@@ -36834,24 +37550,6 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
-        },
-        {
-          "id": "tweet_mattmaiocco_3mzlbfwj6ts2h",
-          "type": "tweet",
-          "headline": "GM John Lynch on KNBR: It's likely Mike Evans and Deebo Samuel will not be available Sunday against the Raiders. But the 49ers are getting back Demarcus Robinson and KhaDarel Hodge -- two players who were among the six active wide receivers for Week 1.",
-          "fullText": "GM John Lynch on KNBR: It's likely Mike Evans and Deebo Samuel will not be available Sunday against the Raiders. But the 49ers are getting back Demarcus Robinson and KhaDarel Hodge -- two players who were among the six active wide receivers for Week 1.",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-05T16:18:15.603Z",
-          "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzlbfwj6ts2h",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
         }
       ]
     },
@@ -36862,7 +37560,7 @@
       "otcId": "12371",
       "otcSlug": "mykel-williams",
       "otcUrl": "https://overthecap.com/player/mykel-williams/12371/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685623",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685623/mykel-williams",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillMy00.htm",
       "name": "Mykel Williams",
       "shortName": "M. Williams",
@@ -37385,24 +38083,6 @@
       },
       "recentNews": [
         {
-          "id": "p7d_4685623_6",
-          "type": "article",
-          "headline": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T16:18:08.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
-          "isBreaking": true,
-          "isInGameInjury": false,
-          "breakingBadge": "BREAKING",
-          "breakingPriority": 1
-        },
-        {
           "id": "p7d_4685623_1",
           "type": "article",
           "headline": "49ers Rule Out Three Wide Receivers vs. Raiders; Bosa Returns to Full Practice Ahead of Week 9 #LVvsSF",
@@ -37433,6 +38113,24 @@
           "publishedAt": "2026-11-06T20:10:38.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNQjdWZVJSTW5FTFdvY0ZQanh0cjJOcEhQUkhCODJGaWF6RW9xN1JsMTREZXVlUzJYVXlLLWtwMlpWeXJ6b3MtM1AxX3BWVGMxOUtkc2RzOU11SXJzNkcxVFRZMV8yX01qRUVXVG9waVhDdjdKT2R3T0diYUVDQzYydkh5U0JMWENVeWc?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4685623_6",
+          "type": "article",
+          "headline": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T16:18:08.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -37517,9 +38215,9 @@
       "gsisId": "00-0036871",
       "pfrId": "HobbNa00",
       "otcId": "9631",
-      "otcSlug": null,
+      "otcSlug": "nate-hobbs",
       "otcUrl": "https://overthecap.com/player/nate-hobbs/9631/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240542",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240542/nate-hobbs",
       "pfrUrl": "https://www.pro-football-reference.com/players/H/HobbNa00.htm",
       "name": "Nate Hobbs",
       "shortName": "N. Hobbs",
@@ -37534,8 +38232,48 @@
       "college": "Illinois",
       "draftInfo": "2021 • Rd 5, Pick #167",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 3380000,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 3380000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 3380000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -38091,7 +38829,7 @@
       "otcId": "7793",
       "otcSlug": "nick-bosa",
       "otcUrl": "https://overthecap.com/player/nick-bosa/7793/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040605",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040605/nick-bosa",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BosaNi00.htm",
       "name": "Nick Bosa",
       "shortName": "N. Bosa",
@@ -38980,7 +39718,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4040605_3",
+          "id": "p7d_4040605_4",
           "type": "article",
           "headline": "Nick Bosa and model girlfriend win 49ers bye week with injury return and topless modeling shoot",
           "fullText": null,
@@ -39024,7 +39762,7 @@
       "otcId": "12435",
       "otcSlug": "nick-martin",
       "otcUrl": "https://overthecap.com/player/nick-martin/12435/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4573188",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4573188/nick-martin",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/MartNi01.htm",
       "name": "Nick Martin",
       "shortName": "N. Martin",
@@ -39039,8 +39777,47 @@
       "college": "Oklahoma State",
       "draftInfo": "2025 • Rd 3, Pick #75",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573188.png",
-      "capHit2026": 0,
+      "capHit2026": 1491288,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 1491288,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1491288,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -39370,18 +40147,36 @@
           "breakingPriority": 2
         },
         {
-          "id": "p7d_4573188_6",
+          "id": "p7d_4573188_5",
           "type": "article",
-          "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
+          "headline": "49ers vs. Chargers in preseason: How to watch, stream, and listen, plus odds",
           "fullText": null,
           "isFullTweet": false,
           "summary": "49ers Webzone 49ers Coverage",
           "author": "49ers Webzone",
           "authorHandle": null,
           "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T01:07:21.000Z",
+          "publishedAt": "2026-11-07T07:39:12.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPNGFVdjhMMTdMNGl1WWhYTnVyYS1KQ1VGRE5HWjZqRmd3ek5vU1B5X2ZuYzFvUGhTMHMwS2trUk1WdVRDN0hMbENNb2ZUaTFkaUw3eHNnOF93VE9mLTlhYU1LSExTblpxR1lESkF5N2d0MndsdlZfSVByRGs0aTdDTU5PQ2hZdw?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNMFZaNEcycmhQQ0s2dnpZYnA3R2Q1MGpxclBRaHNDNE1lakhZd0RfdTdGZDlZbTVLaklTcWVMd0lpQ2VoZ1NTSjRxVnRObjlubGlsNEljWjZQeFdzZmJpakZTRVgycHVidkJJMVhJWVBJQlhnSkdzd1pFNjRCbUZpbmc0alh2UVhFUlZmLQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4573188_6",
+          "type": "article",
+          "headline": "49ers Training Camp Practice 15: Quick Hits",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T08:48:38.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOX1lJYmZYdE81dmZabU9QR1lrVGlhNTh6TldSS2tXY3REQ3pCUWtsLTdjeVcydE13X1RuQ2F6RzNHM3k0ZGNjalJZanpzNGx5a2dHQWtuMkZiZHNKUVAtdmZkWXMtaGxfOVhxVFVfazN2VDlBZEZKMVktc2RxbFdIUTFWZU1xbDA?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -39389,24 +40184,6 @@
         },
         {
           "id": "p7d_4573188_3",
-          "type": "article",
-          "headline": "49ers training camp: 5 overlooked players who could shape the 2026 season",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-05T14:48:34.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNclR0SklEYXBhM2JyVkdfLW5iWXNwT1hFSWd0QXhpR3dJbV9DbS00c2Q4dWNjVkNKd0x0c2MyYWRBa2FhWGJwZEE4N3B4NGhmOXFINjBTeXMyNlRrVUhXYzBYVGJuMWd1cEdlREFoZFZQLVhuTU5naXVISy0xeU1RUXFsbXhUbGZ0R2xzdXFoTQ?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4573188_4",
           "type": "article",
           "headline": "49ers Training Camp Day 6: Injuries continue to mount, and other quick hits",
           "fullText": null,
@@ -39424,7 +40201,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4573188_5",
+          "id": "p7d_4573188_4",
           "type": "article",
           "headline": "49ers Just Got SCARY News For The NFC — One More Move Could Change Everything! 49ers News Learner Tien (Hsh6SXN4Bw)",
           "fullText": null,
@@ -39466,9 +40243,9 @@
       "gsisId": "00-0037831",
       "pfrId": "ZakeNi00",
       "otcId": "10232",
-      "otcSlug": null,
+      "otcSlug": "nick-zakelj",
       "otcUrl": "https://overthecap.com/player/nick-zakelj/10232/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4247590",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4247590/nick-zakelj",
       "pfrUrl": "https://www.pro-football-reference.com/players/Z/ZakeNi00.htm",
       "name": "Nick Zakelj",
       "shortName": "N. Zakelj",
@@ -39483,8 +40260,48 @@
       "college": "Fordham",
       "draftInfo": "2022 • Rd 6, Pick #187",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4247590.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 565000,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 565000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 565000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -39836,9 +40653,9 @@
       "gsisId": "00-0034807",
       "pfrId": "OkorOg00",
       "otcId": "7045",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/ogbo-okoronkwo/7045/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3052667",
+      "otcSlug": "ogbonnia-okoronkwo",
+      "otcUrl": "https://overthecap.com/player/ogbonnia-okoronkwo/7045/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3052667/ogbo-okoronkwo",
       "pfrUrl": "https://www.pro-football-reference.com/players/O/OkorOg00.htm",
       "name": "Ogbo Okoronkwo",
       "shortName": "O. Okoronkwo",
@@ -39853,8 +40670,48 @@
       "college": "Oklahoma",
       "draftInfo": "2018 • Rd 5, Pick #160",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052667.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 251350,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 251350,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 251350,
+          "transactions": {
+            "cut": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 7,
         "offenseSnaps": 0,
@@ -40409,7 +41266,7 @@
       "otcId": "9539",
       "otcSlug": "osa-odighizuwa",
       "otcUrl": "https://overthecap.com/player/osa-odighizuwa/9539/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035840",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035840/osa-odighizuwa",
       "pfrUrl": "https://www.pro-football-reference.com/players/O/OdigOs00.htm",
       "name": "Osa Odighizuwa",
       "shortName": "O. Odighizuwa",
@@ -41239,7 +42096,7 @@
       "otcId": "11672",
       "otcSlug": "renardo-green",
       "otcUrl": "https://overthecap.com/player/renardo-green/11672/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427325",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427325/renardo-green",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GreeRe00.htm",
       "name": "Renardo Green",
       "shortName": "R. Green",
@@ -41780,6 +42637,24 @@
           "breakingPriority": 2
         },
         {
+          "id": "p7d_4427325_3",
+          "type": "article",
+          "headline": "Kyle Shanahan has high expectations for 49ers CB Renardo Green after strong start to 2026",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "By Kyle Shanahan • 49ers Webzone",
+          "author": "Kyle Shanahan",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T13:59:30.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNV1FVX1ZxV0lVck5lclZQWE01WjdfeXBxOTFJM1RhVWJqM2piU2Jval9yNVlUbDdfM2sxRll6aGpQRnN1WTlveFd2NkV2T1FQTHdXeHRLUm1KMEcycGJwNjFVdTV4TnhuRHpuLWJBZ1BFLXV0VmQwaktkclNMQW1ia0RmU0E5RVpTRlNfZzJ4RXV1UQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_4427325_4",
           "type": "article",
           "headline": "49ers' Renardo Green addresses Kyle Shanahan sideline confrontation, game slowing down",
@@ -41868,24 +42743,6 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4427325_3",
-          "type": "article",
-          "headline": "The 5 Best-Performing 49ers at the Bye Week",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Yahoo Sports 49ers Coverage",
-          "author": "Yahoo Sports",
-          "authorHandle": null,
-          "outletName": "Yahoo Sports",
-          "publishedAt": "2026-10-31T16:00:06.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOcG1wSjBxUVdOaHEwdXlSUDE2RTFPOFFlQ1A0VGc5RWZjWk5Ic1hyX1lhakN3c2VBbEFEZVJRMDNYMV9hQnZXN1BCM21ibHluOXlaOXBZUEZDV0YyZDNQbUVhY3dvRUhHWmV0UXo4TDBha25CUElSTDYyWVhScHRvVFln?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
         }
       ]
     },
@@ -41896,7 +42753,7 @@
       "otcId": "11639",
       "otcSlug": "ricky-pearsall",
       "otcUrl": "https://overthecap.com/player/ricky-pearsall/11639/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428209",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428209/ricky-pearsall",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PearRi00.htm",
       "name": "Ricky Pearsall",
       "shortName": "R. Pearsall",
@@ -41911,8 +42768,47 @@
       "college": "Florida",
       "draftInfo": "2024 • Rd 1, Pick #31",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
-      "capHit2026": 0,
+      "capHit2026": 3419563,
       "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 3419563,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 3419563,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
         "2027": {
           "year": 2027,
           "rosterBucket": "active",
@@ -42267,9 +43163,45 @@
           "author": "USA Today",
           "authorHandle": null,
           "outletName": "USA Today",
-          "publishedAt": "2026-11-07T14:31:36.000Z",
+          "publishedAt": "2026-11-07T14:31:34.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9fRjVrMW1CNVJ4elpBQS04UWdzdi1ob1FoN090djY2cy1WOUkxUWxEcHFXSW9DM3pBZmRPRU9OOWsxeVc1YlJ6VW9GVXRvS2JCZlk4eURod1YtWXRsMXQ4NGdLYnJzZw?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4428209_1",
+          "type": "article",
+          "headline": "Deebo Samuel opens up on 49ers return, Mike Evans partnership, and Ricky Pearsall's injury",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-07T02:27:19.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOdnRmZEtvVmItU1VLajRZRHdoMVE0RWt5bEZWSDBxQWNxemlCbEJ3bGI1RHB1ZkFRb3l0dlQwQ1NickRhdnlLRldnc0NWdUJfcXJIVUJaQUxXN0JxR3dyYjllZHBvQndHYUR3enp6cXNOeEhKeXE3b0hYMVBJMGp4VTdiOThqY2xVRkpralFYSFZyQQ?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4428209_6",
+          "type": "article",
+          "headline": "49ers trade pitch lands former second-round draft pick",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-06T15:08:49.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOck5SeHB6WGpEVjVTMmZHdXVOc0lvaEhIUkxMMXBGRXhBUWVzTnRsMWNsaFdNRU51c3BBMlNGaUE0TTdvTlFKREpGTnN0T0ZBYldzRGgzRDZJS2owelI4OThnLWVLeHpaSjJ1aDBkNEFLWE5GTjNsRWtYV0pWbkM5ZF9CRU1yMHEtd0hZ?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -42294,25 +43226,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4428209_6",
-          "type": "article",
-          "headline": "49ers Training Camp Day 2: Who stood out in Monday’s practice?",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T05:25:32.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNYUFIeUllNndlcVUyQkdrUTdraEVkcGR5ZWV5NWNlcVJ4WnZwMzV4T0IybHRqMzZ6dXR1aDBlZHVKalpNNGk2R0lua2NXaFdmbVd2azJKUGUtNngwemd6SkpoeW5IekdXMTA3YnFjeTdoSWVOLW5FN2RQcm8tTDZycHJyckNockloajFj?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4428209_2",
+          "id": "p7d_4428209_5",
           "type": "article",
           "headline": "49ers Training Camp Day 6: Injuries continue to mount, and other quick hits",
           "fullText": null,
@@ -42324,24 +43238,6 @@
           "publishedAt": "2026-11-05T06:02:27.000Z",
           "imageUrl": "",
           "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOcEoxcnlHUmE1SmdDQzlKbXljajVWSkFoWFdrQkdnUzhOTEpmNTBtUU5xQU1OOTczNUFKTGZZUkV4Nm8yeG1zRkF3Wm51bDNIODRsdFA0OWpTeEQwckxxSGE2M3AwekNnNS1WemFCY0VlS3dyQWIzSW1SbHhzc252aks3LXRPZy1JWm1Zbw?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4428209_5",
-          "type": "article",
-          "headline": "49ers trade targets: 4 players San Francisco could pursue at NFL trade deadline",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "USA Today 49ers Coverage",
-          "author": "USA Today",
-          "authorHandle": null,
-          "outletName": "USA Today",
-          "publishedAt": "2026-11-03T23:15:00.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQdTc2RFZvdmI1dEV3VXZYdGdyVl85WF9GLUFzRTZGU3dtYVNmeE1WMTFpTmZKYnN4N2FBOGx5VDI2SWI2Y3RxdjlhemZGallvZFpSYjJpUkxZOVB3YjIzWVlfNFdTR3RBeFh2VXF2b0Vxdkh3eWN1UlBsaGVtdXdLUzRlVGRsU1A1U1BBTDNaY2lxdVltYWVUaHF3MTM4Y2l4UFE?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -42366,7 +43262,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4428209_1",
+          "id": "p7d_4428209_2",
           "type": "article",
           "headline": "Reports: Vikings WR Jauan Jennings against possible trade to 49ers",
           "fullText": null,
@@ -42392,7 +43288,7 @@
       "otcId": "10997",
       "otcSlug": null,
       "otcUrl": "https://overthecap.com/player/robert-beal-jr/10997/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259558",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259558/robert-beal-jr",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BealRo00.htm",
       "name": "Robert Beal Jr.",
       "shortName": "R. Beal Jr.",
@@ -42918,7 +43814,7 @@
       "otcId": "13214",
       "otcSlug": "romello-height",
       "otcUrl": "https://overthecap.com/player/romello-height/13214/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4432244",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4432244/romello-height",
       "pfrUrl": "https://www.pro-football-reference.com/players/H/HeigRo00.htm",
       "name": "Romello Height",
       "shortName": "R. Height",
@@ -43441,6 +44337,24 @@
           "breakingPriority": 0
         },
         {
+          "id": "p7d_4432244_1",
+          "type": "article",
+          "headline": "DeForest Buckner didn't even have to play a game to prove 49ers struck gold",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Niner Noise 49ers Coverage",
+          "author": "Niner Noise",
+          "authorHandle": null,
+          "outletName": "Niner Noise",
+          "publishedAt": "2026-11-07T00:00:00.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOc05vUzlQQjZpREV4X09KV3dfY0lfcElBbnlla21ob1d4dnRqdjM5a1BvZThUdmpiUV9GakZuQzNqZFQ4N2xyeUViZ1doMXZzU2hpaU85QUg3V203enRFcDh1dWVIdDhCTzcxY25ndHppYjNEQnBpOW1hVkpQWG1McVBySW1EUFU2WlRLUFdrODU?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
           "id": "p7d_4432244_0",
           "type": "article",
           "headline": "49ers rookie Romello Height learning from Nick Bosa after admiring him from afar",
@@ -43531,24 +44445,6 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4432244_1",
-          "type": "article",
-          "headline": "49ers select EDGE Romello Height in 3rd round of 2026 NFL Draft",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-05T18:46:56.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPdjZTWnJWV0QxNGdZRFE2Z3Z0M0hRdE5QbVZBa00wSHVMTGRLVVlheUhuMlBEM002T1lKUHpMbE0wYTJvY0ZtSHhGQUhNOS05VlhDOUpWa0NBYXNYRXZoZ1p3V2c5YW9XcmtRVEFqZnQ2cXVwNlJMNWI4RllNeGZsWWJuUQ?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
           "id": "p7d_4432244_6",
           "type": "article",
           "headline": "49ers Training Camp Day 6: Injuries continue to mount, and other quick hits",
@@ -43573,9 +44469,9 @@
       "gsisId": "00-0037602",
       "pfrId": "OkuaSa00",
       "otcId": "10473",
-      "otcSlug": null,
+      "otcSlug": "sam-okuayinonu",
       "otcUrl": "https://overthecap.com/player/sam-okuayinonu/10473/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4569497",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4569497/sam-okuayinonu",
       "pfrUrl": "https://www.pro-football-reference.com/players/O/OkuaSa00.htm",
       "name": "Sam Okuayinonu",
       "shortName": "S. Okuayinonu",
@@ -43590,8 +44486,48 @@
       "college": "Maryland",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569497.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 2280000,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2280000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2280000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -44021,7 +44957,7 @@
       "otcId": "12877",
       "otcSlug": "sebastian-valdez",
       "otcUrl": "https://overthecap.com/player/sebastian-valdez/12877/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4775220",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4775220/sebastian-valdez",
       "pfrUrl": "https://www.pro-football-reference.com/players/V/ValdSe00.htm",
       "name": "Sebastian Valdez",
       "shortName": "S. Valdez",
@@ -44377,36 +45313,36 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4775220_2",
+          "id": "p7d_4775220_1",
           "type": "article",
-          "headline": "53 and Counting: 49ers Still Have Roster Moves to Make",
+          "headline": "How the 49ers plan to use DeForest Buckner with new look DL room",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
+          "summary": "Niners Nation 49ers Coverage",
+          "author": "Niners Nation",
           "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-07T01:07:21.000Z",
+          "outletName": "Niners Nation",
+          "publishedAt": "2026-11-06T21:01:31.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPNGFVdjhMMTdMNGl1WWhYTnVyYS1KQ1VGRE5HWjZqRmd3ek5vU1B5X2ZuYzFvUGhTMHMwS2trUk1WdVRDN0hMbENNb2ZUaTFkaUw3eHNnOF93VE9mLTlhYU1LSExTblpxR1lESkF5N2d0MndsdlZfSVByRGs0aTdDTU5PQ2hZdw?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNOXVxN3J4dHNtSi1GV2MwaldaWUhuSUNvU0xBQjE1YWtHMTV3Q0wzV19NTEZ6ejltX0NXRk1ESFR6Ti14UUVCVWJwdXU2NXZaeUFBZ0xERllhOUpnVGg3VTZGM3NmaUUzVUI4Q3ZyMHdGRjZ3TnZIamF2RUdHVHFrZG5PclFYN1M3bndodEo5b1NwX0gxMjBrVE13VHNmaU0temtSVzZjNm03WmdjcENxQlk1WFpEUEEzcm4xa0ZoRjBCSDJrNU54c1RPV3pfYWdkYXpJTlRfQ1ZhajdWdk5iRGNxeGxvQTR0c1N5Qk5taUd1aG5KYTRtWQ?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4775220_0",
+          "id": "p7d_4775220_3",
           "type": "article",
-          "headline": "49ers’ ‘Hulk’ was a zero-star recruit. Now he’s manhandling NFL linemen",
+          "headline": "Jerry Rice talks 49ers: Mike Evans addition, De’Zhaun Stribling, 2026 expectations",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "San Francisco Chronicle 49ers Coverage",
-          "author": "San Francisco Chronicle",
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
           "authorHandle": null,
-          "outletName": "San Francisco Chronicle",
-          "publishedAt": "2026-11-07T00:30:25.000Z",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-05T03:01:38.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPR1hNdjU5X015Vi1NVm5ndFI0Z0xmb1Z6ZEVDSThlY3QwVXk4MHkwbmc3Z2FqWVdxSE5zTktwcmFXdk41SE1XdmJ3a1hFZHpoSzRaMFZaMWdmRjZXaDhVekh0b0ZJemU2Rl9ZblJiQ2g3dzQwWXNmdjVTZWdjQ3F4dmctZzhNcnFuOEtfOW5iM0pvdWJiMC1NcmsyME5kTE4w?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxObXBTd1ZQR2pXLTJ2NS05RkVEam4wZTl0RWR4X1VkMzhnRXdXektTUU14Mnp1OTJXa3A5a0lRWDMzVU4yMlVOMVR0UFNnb0hMTWFWbzh1M0tKU0dKT1hMcmpEcW1NUUMyeVdHbkJtazlRdXdqVWxyZlZwUDFsMmMzbEhWckt0anlCZ0RxZ2JJSFk5ZFRnMVE?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
@@ -44414,24 +45350,6 @@
         },
         {
           "id": "p7d_4775220_5",
-          "type": "article",
-          "headline": "49ers training camp: Shanahan ramps up for preseason, Purdy throws two pick-sixes",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T21:41:12.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPMG5xN19TX0JHWElMVEN3N1Q3MEVndHk2emw4eDFSdzB2bVNFRXMyd1dVUjlCWHhvYkE5azhSb3Y4MENNakI3WWw3OVFzRnFfVW16SzNzWW9SNXZqZnloNWpid1l2OTZEVHRoV2ljWURrMWpRVVZpTHBsRzY4UHVMU2lzSnAtVV9ZV09XT3d5Q21yT095bnc?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4775220_6",
           "type": "article",
           "headline": "These 5 49ers Could Lose Playing Time After the Bye Week",
           "fullText": null,
@@ -44449,7 +45367,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4775220_3",
+          "id": "p7d_4775220_2",
           "type": "article",
           "headline": "AFC South team stealing defensive lineman from 49ers' practice squad",
           "fullText": null,
@@ -44467,7 +45385,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4775220_1",
+          "id": "p7d_4775220_0",
           "type": "article",
           "headline": "Texans poach veteran defensive tackle off the 49ers’ practice squad",
           "fullText": null,
@@ -44491,9 +45409,9 @@
       "gsisId": "00-0037509",
       "pfrId": "McCoSi00",
       "otcId": "10663",
-      "otcSlug": null,
+      "otcSlug": "sincere-mccormick",
       "otcUrl": "https://overthecap.com/player/sincere-mccormick/10663/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430104",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430104/sincere-mccormick",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/McCoSi00.htm",
       "name": "Sincere McCormick",
       "shortName": "S. McCormick",
@@ -44508,8 +45426,48 @@
       "college": "UTSA",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430104.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -44736,7 +45694,7 @@
       "otcId": "7039",
       "otcSlug": "siran-neal",
       "otcUrl": "https://overthecap.com/player/siran-neal/7039/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3057524",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3057524/siran-neal",
       "pfrUrl": "https://www.pro-football-reference.com/players/N/NealSi00.htm",
       "name": "Siran Neal",
       "shortName": "S. Neal",
@@ -45569,7 +46527,7 @@
       "otcId": "11859",
       "otcSlug": "tatum-bethune",
       "otcUrl": "https://overthecap.com/player/tatum-bethune/11859/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4426698",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4426698/tatum-bethune",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BethTa00.htm",
       "name": "Tatum Bethune",
       "shortName": "T. Bethune",
@@ -45967,7 +46925,7 @@
       "otcId": "1466",
       "otcSlug": "trent-williams",
       "otcUrl": "https://overthecap.com/player/trent-williams/1466/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/13241",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/13241/trent-williams",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillTr21.htm",
       "name": "Trent Williams",
       "shortName": "T. Williams",
@@ -46827,7 +47785,7 @@
       "otcId": "12460",
       "otcSlug": "upton-stout",
       "otcUrl": "https://overthecap.com/player/upton-stout/12460/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565200",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565200/upton-stout",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/StouUp00.htm",
       "name": "Upton Stout",
       "shortName": "U. Stout",
@@ -47375,7 +48333,7 @@
           "breakingPriority": 1
         },
         {
-          "id": "p7d_4565200_1",
+          "id": "p7d_4565200_2",
           "type": "article",
           "headline": "49ers Rule Out Three Wide Receivers vs. Raiders; Bosa Returns to Full Practice Ahead of Week 9 #LVvsSF",
           "fullText": null,
@@ -47393,7 +48351,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4565200_4",
+          "id": "p7d_4565200_6",
           "type": "article",
           "headline": "Receiver Mike Evans will miss his 2nd straight game for the 49ers with Achilles tendinitis",
           "fullText": null,
@@ -47429,43 +48387,25 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4565200_6",
+          "id": "p7d_4565200_4",
           "type": "article",
-          "headline": "49ers training camp: Osa Odighizuwa shines in practice, George Kittle ramping up",
+          "headline": "Upton Stout NFL Stats, Game Log & Bio",
           "fullText": null,
           "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
+          "summary": "Pro Football Network 49ers Coverage",
+          "author": "Pro Football Network",
           "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T10:41:55.000Z",
+          "outletName": "Pro Football Network",
+          "publishedAt": "2026-11-06T20:44:56.000Z",
           "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQeDNtVEh3T3RkdlNiNWxWZi03YXRTZGpmR2ppZFZfNlBMN3ItcGxlWlI5WXZ6Q2tGTU1jNG5vTURpeUw1TzN6OVhaeF81MFAtWVR6Qk4xSGhVaXBNTElIVE5VM1dlTFBCLUtpM1BqY3BnS1k0ZHE2M1ZrNjFCSFNERFZCYk9aTmtUbGpwczlmRmxaQlU?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBrTDV0c1I2QWt4WUpQc3JjeWp6Mi1Edk15Y2FtV3FNUWtmak5QdzZFdy1ISXZEU1NpMlNSSkF0TmtxRkVfZU5pakdJMmw1TEQwOG40aE41TGNZQkh0V2VPWXV5cEtRSmluZUE?oc=5",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4565200_5",
-          "type": "article",
-          "headline": "49ers Training Camp Day 2: Who stood out in Monday’s practice?",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "49ers Webzone 49ers Coverage",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-06T05:25:32.000Z",
-          "imageUrl": "",
-          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNYUFIeUllNndlcVUyQkdrUTdraEVkcGR5ZWV5NWNlcVJ4WnZwMzV4T0IybHRqMzZ6dXR1aDBlZHVKalpNNGk2R0lua2NXaFdmbVd2azJKUGUtNngwemd6SkpoeW5IekdXMTA3YnFjeTdoSWVOLW5FN2RQcm8tTDZycHJyckNockloajFj?oc=5",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0
-        },
-        {
-          "id": "p7d_4565200_2",
+          "id": "p7d_4565200_3",
           "type": "article",
           "headline": "49ers full injury updates a mixed bag of news for 2nd Week 9 practice - Merced Sun-Star",
           "fullText": null,
@@ -47483,7 +48423,7 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4565200_0",
+          "id": "p7d_4565200_1",
           "type": "article",
           "headline": "Under-the-radar good injury news for 49ers in 2nd Week 9 practice",
           "fullText": null,
@@ -47501,7 +48441,25 @@
           "breakingPriority": 0
         },
         {
-          "id": "p7d_4565200_3",
+          "id": "p7d_4565200_0",
+          "type": "article",
+          "headline": "49ers CB Upton Stout named potential difference-maker on defense",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "49ers Webzone 49ers Coverage",
+          "author": "49ers Webzone",
+          "authorHandle": null,
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-05T12:06:24.000Z",
+          "imageUrl": "",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxObzVDMlBRQWZqM2dGRWQ2dlRkM2plaXh2QTlibktZTEFHNzNNWUhFdnp5aXlEMk9XdlBGWS1laU12dEp3RDUycEt5Vnhpdzd4TFpCYTNLeFhoYlJJaGhUWHFJb205WkJxSlprMGxIMm5BRkw4N3pIbmdHUnFDRG1QTmVvNlFhU2JWY2UyV2x1bWl3YmxBLWFN?oc=5",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0
+        },
+        {
+          "id": "p7d_4565200_5",
           "type": "article",
           "headline": "Several key 49ers players return to practice in first session after bye week",
           "fullText": null,
@@ -47527,7 +48485,7 @@
       "otcId": "10229",
       "otcSlug": "vederian-lowe",
       "otcUrl": "https://overthecap.com/player/vederian-lowe/10229/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240554",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240554/vederian-lowe",
       "pfrUrl": "https://www.pro-football-reference.com/players/L/LoweVe00.htm",
       "name": "Vederian Lowe",
       "shortName": "V. Lowe",
@@ -48342,9 +49300,9 @@
       "gsisId": "00-0038575",
       "pfrId": "FehoVi00",
       "otcId": "10953",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/viliami-fehoko-jr/10953/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4374148",
+      "otcSlug": "viliami-fehoko",
+      "otcUrl": "https://overthecap.com/player/viliami-fehoko/10953/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4374148/viliami-fehoko-jr",
       "pfrUrl": "https://www.pro-football-reference.com/players/F/FehoVi00.htm",
       "name": "Viliami Fehoko Jr.",
       "shortName": "V. Fehoko Jr.",
@@ -48359,8 +49317,48 @@
       "college": "San José State",
       "draftInfo": "2023 • Rd 4, Pick #129",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374148.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 192500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 192500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 192500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 1,
         "offenseSnaps": 0,
@@ -48536,7 +49534,7 @@
       "otcId": "13573",
       "otcSlug": null,
       "otcUrl": "https://overthecap.com/player/vincent-anthony-jr/13573/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4875123",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4875123/vincent-anthony-jr",
       "pfrUrl": "https://www.pro-football-reference.com/players/A/AnthVi00.htm",
       "name": "Vincent Anthony Jr.",
       "shortName": "V. Anthony Jr.",
@@ -48713,9 +49711,9 @@
       "gsisId": "00-0041359",
       "pfrId": "GrimWe00",
       "otcId": "13813",
-      "otcSlug": null,
+      "otcSlug": "wesley-grimes",
       "otcUrl": "https://overthecap.com/player/wesley-grimes/13813/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4888723",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4888723/wesley-grimes",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GrimWe00.htm",
       "name": "Wesley Grimes",
       "shortName": "W. Grimes",
@@ -48730,8 +49728,48 @@
       "college": "NC State",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4888723.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -48892,9 +49930,9 @@
       "gsisId": "00-0041361",
       "pfrId": "PaulWi00",
       "otcId": "13811",
-      "otcSlug": null,
+      "otcSlug": "will-pauling",
       "otcUrl": "https://overthecap.com/player/will-pauling/13811/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683114",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683114/will-pauling",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PaulWi00.htm",
       "name": "Will Pauling",
       "shortName": "W. Pauling",
@@ -48909,8 +49947,48 @@
       "college": "Notre Dame",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683114.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 247500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -49071,9 +50149,9 @@
       "gsisId": "00-0038359",
       "pfrId": "SmitXa00",
       "otcId": "11126",
-      "otcSlug": null,
+      "otcSlug": "xavier-smith",
       "otcUrl": "https://overthecap.com/player/xavier-smith/11126/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4386544",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4386544/xavier-smith",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/SmitXa00.htm",
       "name": "Xavier Smith",
       "shortName": "X. Smith",
@@ -49088,8 +50166,48 @@
       "college": "Florida A&M",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
-      "capHit2026": 0,
-      "contractsByYear": {},
+      "capHit2026": 192500,
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 192500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 192500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      },
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,

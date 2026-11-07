@@ -33,8 +33,37 @@ import {
   cleanSensationalistText,
   filterNewsByUserPrefs
 } from '../src/engine/antiFluffFilter.js';
-import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
+import {
+  buildClusteredNewsBriefs,
+  buildFrontOfficeCapBlueprint,
+  buildTradeDeadlineWarRoom,
+  buildDraftPrep2027AndCombine,
+  build2026DraftAndUdfaClass
+} from '../scripts/lib/seasonalContentBuilder.mjs';
+import { parseOverTheCapHtml } from '../scripts/lib/otcParser.mjs';
 import { hydrateLiveEspnOverlay, hydrateLiveBlueskyBeatWire } from '../src/services/dataService.js';
+import {
+  OTC_TEAM_CAP_URL,
+  isPaywalledOrBlockedUrl,
+  isPaywalledPublisher,
+  sanitizeExternalUrl,
+  isIndividualOtcPlayerUrl,
+  isValidOtcPlayerId,
+  isValidPfrPlayerId,
+  buildEspnPlayerUrl,
+  buildPfrPlayerUrl,
+  buildOtcPlayerUrl,
+  buildPfrTeamSeasonUrl,
+  buildPfrTeamDraftUrl,
+  buildPfrHeadToHeadUrl,
+  buildMockDraftTeamUrl,
+  buildMockDraftBigBoardUrl,
+  buildMockDraftProspectUrl,
+  buildEspnTeamInjuriesUrl,
+  buildEspnTeamLogoUrl,
+  getPlayerLookupKeys,
+  createPlayerIdentityResolver
+} from '../src/engine/linkIntegrity.js';
 import {
   validateNoHallucinatedRosterClaims,
   sanitizeHallucinatedRosterText,
@@ -1239,6 +1268,329 @@ test('All 6 flagship 49ers podcasts (last 7 days) are populated and native iOS /
   );
   assert.equal(desktopLaunch.platform, 'desktop');
   assert.ok(desktopLaunch.href.startsWith('https://podcasts.apple.com/'));
+});
+
+console.log('\n=== [7/7] Outgoing Link Policy, Paywall Blocker, Homonym Disambiguation & Dynamic Year Rollover QA ===');
+
+test('Paywall & broken-URL policy blocks NYT/Athletic, Chronicle, Mercury News, PFF player grades, ESPN+ & 404 paths while allowing public NFL sources', () => {
+  const mustBlock = [
+    'https://www.nytimes.com/athletic/nfl/team/niners/',
+    'https://www.nytimes.com/athletic/7654321/2026/11/06/49ers-mailbag/?unlocked_article_code=abc',
+    'https://theathletic.com/nfl/team/niners/',
+    'https://www.sfchronicle.com/sports/49ers/',
+    'https://www.mercurynews.com/sports/49ers/',
+    'https://www.pff.com/nfl/players/brock-purdy/77812',
+    'https://www.pff.com/nfl/teams/san-francisco-49ers/28',
+    'https://premium.pff.com/nfl/players/2026/REGPO/brock-purdy/77812/offense',
+    'https://www.espn.com/nfl/insider/story/_/id/41234567/nfl-grades',
+    'https://www.nfl.com/news/series/power-rankings',
+    'https://www.nflmockdraftdatabase.com/team-needs-2027/san-francisco-49ers',
+    'https://www.nflmockdraftdatabase.com/mock-plus',
+    'https://www.espn.com/nfl/player/_/id/undefined/brock-purdy',
+    'https://overthecap.com/player/null/NaN/',
+    ''
+  ];
+  for (const url of mustBlock) {
+    assert.equal(isPaywalledOrBlockedUrl(url), true, `Expected blocked/paywalled URL: ${url}`);
+    assert.equal(sanitizeExternalUrl(url, null), null, `Expected sanitizeExternalUrl to reject: ${url}`);
+  }
+
+  assert.equal(isPaywalledPublisher('The Athletic', 'https://news.google.com/rss/articles/CBMi123'), true);
+  assert.equal(isPaywalledPublisher('San Francisco Chronicle', 'https://news.google.com/rss/articles/CBMi456'), true);
+  assert.equal(isPaywalledPublisher('The Mercury News', ''), true);
+  assert.equal(isPaywalledPublisher('NBC Sports Bay Area', 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/'), false);
+
+  const mustAllow = [
+    'https://www.espn.com/nfl/player/_/id/4361741/brock-purdy',
+    'https://overthecap.com/player/brock-purdy/10267/',
+    'https://www.pro-football-reference.com/players/P/PurdBr00.htm',
+    'https://www.pff.com/news/nfl-2026-midseason-all-pro-team',
+    'https://www.cbssports.com/nfl/powerrankings/',
+    'https://nfeloapp.com/nfl-power-ratings/',
+    'https://www.nflmockdraftdatabase.com/teams/2027/san-francisco-49ers',
+    'https://www.nflmockdraftdatabase.com/players/2027/jordan-seaton',
+    'https://bsky.app/profile/mattbarrows.bsky.social',
+    'http://www.espn.com/nfl/standings'
+  ];
+  for (const url of mustAllow) {
+    assert.equal(isPaywalledOrBlockedUrl(url), false, `Expected public URL allowed: ${url}`);
+    const sanitized = sanitizeExternalUrl(url, null);
+    assert.ok(sanitized && sanitized.startsWith('https://'), `Expected https upgrade for: ${url}`);
+  }
+});
+
+test('Player identity resolver defeats retired nflverse homonym collisions (1978 ThomJa01 vs active 2026 ThomJa06) and never conflates ESPN IDs with OTC IDs', () => {
+  const mockPlayersRows = [
+    // Upstream nflverse bug: retired 1978 NYG WR James Thompson carrying rookie DT's espn_id!
+    {
+      gsis_id: '00-0016349',
+      display_name: 'James Thompson',
+      espn_id: '4693371',
+      pfr_id: 'ThomJa01',
+      otc_id: '',
+      position: 'WR',
+      latest_team: 'NYG',
+      birth_date: '1953-01-09',
+      last_season: '1978',
+      status: 'RET',
+      college_name: 'Memphis'
+    },
+    // Actual active 2026 49ers DT James Thompson Jr. (missing espn_id in upstream CSV)
+    {
+      gsis_id: '00-0041363',
+      display_name: 'James Thompson Jr.',
+      espn_id: '',
+      pfr_id: 'ThomJa06',
+      otc_id: '13808',
+      position: 'DT',
+      latest_team: 'SFO',
+      birth_date: '2002-04-11',
+      entry_year: '2025',
+      last_season: '2026',
+      status: 'ACT',
+      college_name: 'Wisconsin'
+    },
+    // Khalil Dinkins without otc_id in nflverse CSV (resolved via OTC directory)
+    {
+      gsis_id: '00-0040999',
+      display_name: 'Khalil Dinkins',
+      espn_id: '4699678',
+      pfr_id: 'DinkKh00',
+      otc_id: '',
+      position: 'TE',
+      latest_team: 'SFO',
+      birth_date: '2001-05-03',
+      entry_year: '2025',
+      last_season: '2026',
+      status: 'DEV',
+      college_name: 'Penn State'
+    }
+  ];
+
+  const mockOtcPlayers = [
+    { name: 'James Thompson Jr.', otcId: '13808', slug: 'james-thompson-jr' },
+    { name: 'Khalil Dinkins', otcId: '13810', slug: 'khalil-dinkins' },
+    { name: 'Ogbonnia Okoronkwo', otcId: '7045', slug: 'ogbonnia-okoronkwo' }
+  ];
+
+  const resolver = createPlayerIdentityResolver({
+    nflPlayers: mockPlayersRows,
+    otcPlayers: mockOtcPlayers,
+    seasonYear: 2026
+  });
+
+  const resolvedJt = resolver.resolvePlayer({
+    espnId: '4693371',
+    fullName: 'James Thompson Jr.',
+    position: 'DT',
+    college: 'Wisconsin',
+    teamAbbr: 'SF'
+  });
+  assert.equal(resolvedJt.pfrId, 'ThomJa06');
+  assert.equal(resolvedJt.pfrUrl, 'https://www.pro-football-reference.com/players/T/ThomJa06.htm');
+  assert.equal(resolvedJt.otcId, '13808');
+  assert.equal(resolvedJt.otcUrl, 'https://overthecap.com/player/james-thompson-jr/13808/');
+
+  const resolvedKd = resolver.resolvePlayer({
+    espnId: '4699678',
+    fullName: 'Khalil Dinkins',
+    position: 'TE',
+    college: 'Penn State',
+    teamAbbr: 'SF'
+  });
+  assert.equal(resolvedKd.otcId, '13810');
+  assert.notEqual(resolvedKd.otcId, '4699678');
+  assert.equal(resolvedKd.otcUrl, 'https://overthecap.com/player/khalil-dinkins/13810/');
+  assert.equal(isValidOtcPlayerId('4699678', '4699678'), false);
+
+  // Nickname resolution: ESPN "Ogbo Okoronkwo" <-> OTC "Ogbonnia Okoronkwo"
+  assert.ok(getPlayerLookupKeys('Ogbo Okoronkwo').includes('ogbonniaokoronkwo'));
+  const resolvedOgbo = resolver.resolvePlayer({
+    espnId: '3915486',
+    fullName: 'Ogbo Okoronkwo',
+    position: 'DE',
+    teamAbbr: 'SF'
+  });
+  assert.equal(resolvedOgbo.otcId, '7045');
+  assert.equal(resolvedOgbo.otcUrl, 'https://overthecap.com/player/ogbonnia-okoronkwo/7045/');
+});
+
+await testAsync('Dynamic season/draft year rollover (2027 season / 2028 draft) updates OTC contract windows, PFR, MockDraftDB & ESPN team slugs without hardcoded years', async () => {
+  // 1. Dynamic OverTheCap parser window when OTC HTML advances to 2027-2031
+  const syntheticOtc2027Html = `
+    <div id="y2027" class="salary-cap-container">
+      Total Cap Liabilities: $318,000,000 Top 51: $270,000,000 Team Cap Space: $41,500,000 Offense: $150,000,000 Defense: $130,000,000 Special: $7,000,000
+      <table class="team-salary-cap-table"><tbody>
+        <tr><td><a href="/player/brock-purdy/10267/">Brock Purdy</a></td><td>$18,000,000</td><td>$7,100,000</td><td>$7,550,000</td><td>$0</td><td>$850,000</td><td>$100,000</td><td>$0</td><td>$18,000,000</td><td>$33,600,000</td>
+        <td><span class="cap_2027 cut">$58,000,000</span><span class="cap_2027 june_1_cut">$14,650,000</span><span class="cap_2027 restructure">$0</span></td>
+        <td><span class="cap_2027 cut">-$24,400,000</span><span class="cap_2027 june_1_cut">$18,950,000</span><span class="cap_2027 restructure">$13,200,000</span></td></tr>
+      </tbody></table>
+      <table class="non-active"><tbody>
+        <tr><td><a href="/player/khalil-dinkins/13810/">Khalil Dinkins</a></td><td>$289,800</td></tr>
+      </tbody></table>
+    </div>
+    <div id="y2028" class="salary-cap-container">Total Cap Liabilities: $295,000,000 Top 51: $260,000,000 Team Cap Space: $52,000,000</div>
+    <div id="y2029" class="salary-cap-container"></div>
+    <div id="y2030" class="salary-cap-container"></div>
+    <div id="y2031" class="salary-cap-container"></div>
+  `;
+  const parsed27 = parseOverTheCapHtml(syntheticOtc2027Html, 2027);
+  assert.deepEqual(Object.keys(parsed27.years), ['2027', '2028', '2029', '2030', '2031']);
+  assert.equal(parsed27.otcDirectory.find(x => x.slug === 'khalil-dinkins')?.otcId, '13810');
+
+  const sim27 = simulateCapScenario({ years: parsed27.years, players: parsed27.otcPlayers }, {});
+  assert.equal(sim27.summary.updatedCapSpace, 41_500_000);
+
+  // 2. Dynamic URL builders for future years & special franchise codes (WAS -> wsh, LV -> rai, SF -> sfo)
+  assert.equal(buildPfrTeamSeasonUrl('SF', 2027), 'https://www.pro-football-reference.com/teams/sfo/2027.htm');
+  assert.equal(buildPfrTeamDraftUrl('SF', 2027), 'https://www.pro-football-reference.com/teams/sfo/2027_draft.htm');
+  assert.equal(buildPfrHeadToHeadUrl('SF', 'LV'), 'https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=sfo&tm2=rai&yr=all');
+  assert.equal(buildEspnTeamInjuriesUrl('WAS'), 'https://www.espn.com/nfl/team/injuries/_/name/wsh');
+  assert.equal(buildEspnTeamLogoUrl('WAS'), 'https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png');
+  assert.equal(buildMockDraftTeamUrl(2028), 'https://www.nflmockdraftdatabase.com/teams/2028/san-francisco-49ers');
+  assert.equal(buildMockDraftBigBoardUrl(2028), 'https://www.nflmockdraftdatabase.com/big-boards/2028/consensus-big-board-2028');
+  // Prospect slug from 2027 falls back cleanly to 2028 Big Board when draftYear advances to 2028 (preventing 404s!)
+  assert.equal(
+    buildMockDraftProspectUrl(2028, 'jordan-seaton', 2027),
+    'https://www.nflmockdraftdatabase.com/big-boards/2028/consensus-big-board-2028'
+  );
+
+  const dp2028 = buildDraftPrep2027AndCombine([], 2028);
+  assert.equal(dp2028.draftYear, 2028);
+  assert.equal(dp2028.sources[0].url, 'https://www.nflmockdraftdatabase.com/teams/2028/san-francisco-49ers');
+  for (const tgt of dp2028.consensusMockTargets) {
+    assert.equal(isPaywalledOrBlockedUrl(tgt.sourceUrl), false);
+    assert.ok(tgt.sourceUrl.includes('/2028/'));
+  }
+
+  const tw2027 = buildTradeDeadlineWarRoom(parsed27.years['2027'], () => null, buildEspnTeamLogoUrl, '5-2', 2027);
+  for (const fit of tw2027.realisticTargets) {
+    assert.ok(fit.sourceUrl.endsWith('/2027'), `Expected dynamic /2027 OTC position URL, got ${fit.sourceUrl}`);
+    assert.equal(isPaywalledOrBlockedUrl(fit.sourceUrl), false);
+  }
+});
+
+await testAsync('Client-side Bluesky live wire hydrator strips paywalled externalUrl embeds while preserving free beat posts', async () => {
+  const liveTestData = { roster: { players: [] }, news: { rawStream: [] } };
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async url => {
+    if (String(url).includes('mattbarrows.bsky.social')) {
+      return new Response(
+        JSON.stringify({
+          feed: [
+            {
+              post: {
+                uri: 'at://did:plc:test/app.bsky.feed.post/paywallguard123',
+                record: {
+                  text: '49ers practice report: Brock Purdy and Nick Bosa were full participants on Friday ahead of Sunday.',
+                  createdAt: new Date().toISOString()
+                },
+                embed: {
+                  external: {
+                    uri: 'https://www.nytimes.com/athletic/9999999/2026/11/07/49ers-practice-report/',
+                    title: 'Paywalled Athletic Story'
+                  }
+                }
+              }
+            }
+          ]
+        }),
+        { status: 200 }
+      );
+    }
+    return new Response(JSON.stringify({ feed: [] }), { status: 200 });
+  };
+
+  try {
+    const added = await hydrateLiveBlueskyBeatWire(liveTestData);
+    assert.equal(added, 1);
+    const post = liveTestData.news.rawStream[0];
+    assert.equal(post.url, 'https://bsky.app/profile/mattbarrows.bsky.social/post/paywallguard123');
+    assert.equal(post.externalUrl, null, 'Paywalled NYT/Athletic externalUrl must be stripped');
+    assert.equal(post.externalTitle, null, 'Paywalled externalTitle must be cleared when externalUrl is stripped');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+test('Exhaustive URL audit across all 11 compiled JSON feeds & all 88 roster players: 100% HTTPS, zero paywalls, zero homonym bugs', () => {
+  const jsonFiles = [
+    'data/meta.json',
+    'data/roster.json',
+    'data/depth-chart.json',
+    'data/cap.json',
+    'data/reporters.json',
+    'data/news.json',
+    'data/schedule-matchup.json',
+    'data/health.json',
+    'data/seasonal.json',
+    'data/beat-podcasts.json',
+    'data/podcasts/index.json'
+  ];
+
+  let scannedUrlCount = 0;
+  const violations = [];
+  const walkUrls = (val, loc) => {
+    if (typeof val === 'string' && /^https?:\/\//i.test(val.trim())) {
+      scannedUrlCount += 1;
+      if (!val.startsWith('https://')) {
+        violations.push(`${loc}: non-HTTPS URL ${val}`);
+      }
+      if (isPaywalledOrBlockedUrl(val)) {
+        violations.push(`${loc}: paywalled or broken URL ${val}`);
+      }
+    } else if (Array.isArray(val)) {
+      val.forEach((item, i) => walkUrls(item, `${loc}[${i}]`));
+    } else if (val && typeof val === 'object') {
+      for (const [k, v] of Object.entries(val)) {
+        walkUrls(v, `${loc}.${k}`);
+      }
+    }
+  };
+
+  for (const rel of jsonFiles) {
+    const parsed = JSON.parse(fs.readFileSync(path.join(rootDir, rel), 'utf8'));
+    walkUrls(parsed, rel);
+  }
+
+  assert.ok(scannedUrlCount >= 2000, `Expected >=2000 scanned URLs across data/*.json, got ${scannedUrlCount}`);
+  assert.deepEqual(violations, [], `Found link policy violations:\n${violations.join('\n')}`);
+
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')).players;
+  assert.ok(roster.length >= 80, `Expected >=80 roster players, got ${roster.length}`);
+  for (const p of roster) {
+    assert.match(
+      p.espnUrl || '',
+      /^https:\/\/www\.espn\.com\/nfl\/player\/_\/id\/\d+\/[a-z0-9-]+$/,
+      `Invalid espnUrl for ${p.name}: ${p.espnUrl}`
+    );
+    assert.ok(
+      isIndividualOtcPlayerUrl(p.otcUrl) || p.otcUrl === OTC_TEAM_CAP_URL,
+      `Invalid otcUrl for ${p.name}: ${p.otcUrl}`
+    );
+    if (p.otcId) {
+      assert.equal(
+        isValidOtcPlayerId(p.otcId, p.id),
+        true,
+        `Player ${p.name} has invalid otcId (${p.otcId}) vs espnId (${p.id})`
+      );
+    }
+    if (p.pfrUrl) {
+      assert.equal(isValidPfrPlayerId(p.pfrId), true, `Invalid pfrId for ${p.name}: ${p.pfrId}`);
+      assert.equal(p.pfrUrl, buildPfrPlayerUrl(p.pfrId), `Mismatched pfrUrl for ${p.name}: ${p.pfrUrl}`);
+    }
+  }
+
+  // Regression guards on previously broken per-player links
+  const jamesThompson = roster.find(p => p.name === 'James Thompson Jr.');
+  assert.ok(jamesThompson, 'James Thompson Jr. present on roster');
+  assert.equal(jamesThompson.pfrId, 'ThomJa06', 'James Thompson Jr. must resolve to active DT ThomJa06, not 1978 ThomJa01');
+  assert.equal(jamesThompson.otcUrl, 'https://overthecap.com/player/james-thompson-jr/13808/');
+
+  const khalilDinkins = roster.find(p => p.name === 'Khalil Dinkins');
+  assert.ok(khalilDinkins, 'Khalil Dinkins present on roster');
+  assert.equal(khalilDinkins.otcId, '13810');
+  assert.equal(khalilDinkins.otcUrl, 'https://overthecap.com/player/khalil-dinkins/13810/');
 });
 
 console.log(`\n======================================================`);

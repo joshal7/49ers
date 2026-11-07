@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T15:39:50.513Z",
+  "updatedAt": "2026-11-07T16:37:41.930Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -18,7 +18,7 @@
         "timing": "Pre-Deadline Reunion (Nov 2026)",
         "costSummary": "Conditional Day-3 Pick Package",
         "schemeGrade": "A",
-        "sourceUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/",
+        "sourceUrl": "https://overthecap.com/player/deforest-buckner/4720/",
         "analysis": "Reunites an elite 6'7\" interior disruptor with Nick Bosa and the Wide-9 system; immediately stabilizes interior run defense and A/B-gap pass rush."
       },
       {
@@ -32,7 +32,7 @@
         "timing": "March 11, 2026 Trade",
         "costSummary": "2026 3rd-Round Pick",
         "schemeGrade": "A-",
-        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "sourceUrl": "https://overthecap.com/player/osa-odighizuwa/9539/",
         "analysis": "High-motor penetrating 3-technique who carried the interior pass-rush workload during Bosa's Weeks 3–7 absence."
       }
     ],
@@ -3065,7 +3065,7 @@
     "sources": [
       {
         "label": "NFL Mock Draft Database",
-        "url": "https://www.nflmockdraftdatabase.com/team-needs-2027/san-francisco-49ers"
+        "url": "https://www.nflmockdraftdatabase.com/teams/2027/san-francisco-49ers"
       },
       {
         "label": "Tankathon 49ers Draft Order",
@@ -3155,7 +3155,7 @@
         "heightWeight": "6'5\" • 315 lbs",
         "mockFrequencyToSfPct": 27,
         "shanahanLynchFitScore": 95,
-        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/jordan-seaton",
         "archetypeTraits": "Explosive 10-yard split & lateral mirror in outside zone; SEC blindside anchor built for LT succession.",
         "sourcesMocking": [
           "Dane Brugler",
@@ -3165,47 +3165,47 @@
       },
       {
         "rank": 2,
-        "name": "Earnest Greene III",
+        "name": "Trevor Goosby / Cayden Green",
         "pos": "OT/IOL",
-        "school": "Georgia",
-        "heightWeight": "6'4\" • 320 lbs",
+        "school": "Texas / Missouri",
+        "heightWeight": "6'7\" • 315 lbs / 6'5\" • 320 lbs",
         "mockFrequencyToSfPct": 22,
         "shanahanLynchFitScore": 94,
-        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/cayden-green",
         "archetypeTraits": "Dense displacement torque on duo/wide-zone combo blocks with tackle-guard positional versatility.",
         "sourcesMocking": [
           "Field Yates",
           "Daniel Jeremiah",
-          "PFF"
+          "NFL Mock Draft DB"
         ]
       },
       {
         "rank": 3,
-        "name": "Leonard Moore / DJ McKinney",
+        "name": "Leonard Moore / Ashton Hampton",
         "pos": "CB",
-        "school": "Notre Dame",
+        "school": "Notre Dame / Clemson",
         "heightWeight": "6'2\" • 195 lbs",
         "mockFrequencyToSfPct": 19,
         "shanahanLynchFitScore": 92,
-        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/leonard-moore",
         "archetypeTraits": "Long-levered press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical run support.",
         "sourcesMocking": [
           "Lance Zierlein",
-          "The Athletic"
+          "CBS Sports"
         ]
       },
       {
         "rank": 4,
-        "name": "Iapani Laloulu / Luke Hasz",
-        "pos": "C / TE",
-        "school": "Oregon / Ole Miss",
-        "heightWeight": "6'2\" • 325 lbs / 6'3\" • 245 lbs",
+        "name": "Trey'Dez Green / Jamari Johnson",
+        "pos": "TE",
+        "school": "LSU / Oregon",
+        "heightWeight": "6'7\" • 245 lbs / 6'5\" • 252 lbs",
         "mockFrequencyToSfPct": 15,
         "shanahanLynchFitScore": 90,
         "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
-        "archetypeTraits": "Agile Pac-12/Big Ten reach-blocking pivot or dynamic 12-personnel move-TE seam separator behind Kittle.",
+        "archetypeTraits": "Dynamic 12-personnel move-TE seam separator and red-zone mismatch pairing behind George Kittle.",
         "sourcesMocking": [
-          "PFF",
+          "NFL Mock Draft DB",
           "CBS Sports"
         ]
       }
@@ -7367,7 +7367,7 @@
       },
       {
         "name": "Joshua Conerly",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q9vrq43u3qh6nw3rcajo",
         "pos": "OT",
         "school": "Oregon",
         "season": 2025,
@@ -10047,7 +10047,7 @@
       },
       {
         "name": "Jacobee Bryant",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/krehmn2g4cxokjpcr6iw",
         "pos": "CB",
         "school": "Kansas",
         "season": 2025,
@@ -12476,7 +12476,7 @@
         "name": "Sebastian Valdez",
         "displayName": "Sebastian Valdez — Priority UDFA Interior DL",
         "playerId": "4775220",
-        "otcUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "otcUrl": "https://overthecap.com/player/sebastian-valdez/12877/",
         "jersey": 55,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4775220.png",
         "position": "DT",

@@ -352,10 +352,14 @@ function renderDualDepthChart({ appData, depthMode }) {
 
 function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
   const years = appData?.cap?.years || {};
+  const sortedYrKeys = Object.keys(years).sort();
+  const baseYrKey = sortedYrKeys[0] || String(appData?.meta?.seasonYear || 2026);
+  const nextYrKey = sortedYrKeys[1] || String(Number(baseYrKey) + 1);
+  const horizonEndKey = sortedYrKeys[3] || String(Number(baseYrKey) + 3);
   const blueprint = appData?.cap?.blueprint || {};
   const capPlayers = (appData?.cap?.players || []).slice(0, 32);
   const sum = simCapResult?.summary || {};
-  const y26 = years['2026'] || {};
+  const y26 = years[baseYrKey] || {};
   const ceiling = Math.max(1, Number(y26.capCeiling || 304000000));
   const openSpace = Math.max(0, Number(sum.updatedCapSpace ?? y26.teamCapSpace ?? 0));
   const deadCap = Math.max(0, Number(y26.deadMoneyTotal || 0) + Number(sum.baseYearDeadMoneyAdded || 0));
@@ -367,8 +371,8 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
   const spotracUrl = appData?.cap?.spotracUrl || 'https://www.spotrac.com/nfl/san-francisco-49ers/cap/';
   const nflpaUrl = appData?.cap?.nflpaUrl || 'https://nflpa.com/reports/public-salary-cap-report';
 
-  const horizonRows = ['2026', '2027', '2028', '2029']
-    .filter(y => years[y])
+  const horizonRows = sortedYrKeys
+    .slice(0, 4)
     .map(y => {
       const row = years[y];
       return `
@@ -402,7 +406,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('cap', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">OverTheCap &amp; NFLPA Ledger • 2026–2029</div>
+            <div class="card-eyebrow">OverTheCap &amp; NFLPA Ledger • ${baseYrKey}–${horizonEndKey}</div>
             <h2 class="card-title">Multi-Year Salary Cap Horizon</h2>
           </div>
         </div>
@@ -466,7 +470,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
       <div class="gm-summary-banner">
         <div class="kpi-grid">
           <div class="kpi-box">
-            <div class="kpi-label">2026 Cap Space</div>
+            <div class="kpi-label">${baseYrKey} Cap Space</div>
             <div class="kpi-val mono" style="color:${sum.updatedCapSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
               ${formatCompactDollars(sum.updatedCapSpace)}
             </div>
@@ -475,14 +479,14 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
             </div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">2027 Projected Space</div>
+            <div class="kpi-label">${nextYrKey} Projected Space</div>
             <div class="kpi-val mono">${formatCompactDollars(sum.updatedNextYearCapSpace)}</div>
             <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              2027 Delta: ${formatCompactDollars(sum.nextYearCapDelta, true)}
+              ${nextYrKey} Delta: ${formatCompactDollars(sum.nextYearCapDelta, true)}
             </div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">New 2026 Dead Cap</div>
+            <div class="kpi-label">New ${baseYrKey} Dead Cap</div>
             <div class="kpi-val mono" style="color:var(--amber)">${formatCompactDollars(sum.baseYearDeadMoneyAdded, true)}</div>
             <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
               ${simCapResult?.moveCount || 0} move(s) active

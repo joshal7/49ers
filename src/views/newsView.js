@@ -10,6 +10,7 @@ import {
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
+import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 
 export function renderNewsViewHtml({
   newsMode, // 'clustered' | 'raw'
@@ -27,7 +28,12 @@ export function renderNewsViewHtml({
   const mutedCount =
     (userPrefs?.disabledReporterIds?.length || 0) + (userPrefs?.disabledOutlets?.length || 0);
 
-  const prioritizedRaw = sortNewsWithBreakingPriority(filteredRawItems || []);
+  const prioritizedRaw = sortNewsWithBreakingPriority(
+    (filteredRawItems || []).filter(i => {
+      if (i.type === 'video' && i.videoId) return true;
+      return Boolean(sanitizeExternalUrl(i.url, null)) && !isPaywalledPublisher(i.outletName, i.url);
+    })
+  );
   const tweetCount = prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social').length;
   const activeBreakingItems = prioritizedRaw.filter(i => (i.breakingPriority || 0) > 0).slice(0, 3);
   const pollLabel = isGameLive ? '20s Game-Day Live Poll' : '<1m Live Poll (45s)';
@@ -170,16 +176,19 @@ export function renderNewsViewHtml({
           );
         }
 
+        const safeSourceLinks = (c.sourceLinks || []).filter(
+          sl => sanitizeExternalUrl(sl?.url, null) && !isPaywalledPublisher(sl?.outlet, sl?.url)
+        );
         const sourceLinksHtml =
-          (c.sourceLinks || []).length > 0
+          safeSourceLinks.length > 0
             ? `
               <div>
                 <div class="brief-section-label">Original Sources &amp; Reports Used</div>
                 <div class="source-links-grid">
-                  ${c.sourceLinks
+                  ${safeSourceLinks
                     .map(
                       sl => `
-                    <a href="${esc(sl.url)}" target="_blank" rel="noopener noreferrer" class="source-card-link">
+                    <a href="${esc(sanitizeExternalUrl(sl.url))}" target="_blank" rel="noopener noreferrer" class="source-card-link">
                       <span class="source-card-outlet">${esc(sl.outlet || 'Source')}${sl.publishedAt ? ` • ${esc(formatRelativeAge(sl.publishedAt))}` : ''}</span>
                       <span class="source-card-title">${esc(sl.title)} ${iconSvg('externalLink', 11)}</span>
                     </a>
@@ -253,7 +262,7 @@ export function renderNewsViewHtml({
                 <span>Voices:</span>
                 ${citedReporters
                   .map(rep => {
-                    const href = rep.bskyUrl || rep.profileUrl || rep.xUrl;
+                    const href = sanitizeExternalUrl(rep.bskyUrl || rep.profileUrl || rep.xUrl, null);
                     return href
                       ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px">${esc(rep.name)}</a>`
                       : `<strong>${esc(rep.name)}</strong>`;
@@ -330,8 +339,8 @@ export function renderNewsViewHtml({
                     </div>
                     <span style="font-size:11.5px;color:var(--text-muted)">
                       by ${
-                        item.authorProfileUrl
-                          ? `<a href="${esc(item.authorProfileUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px"><strong>${esc(authorName)}</strong></a>`
+                        sanitizeExternalUrl(item.authorProfileUrl, null)
+                          ? `<a href="${esc(sanitizeExternalUrl(item.authorProfileUrl))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px"><strong>${esc(authorName)}</strong></a>`
                           : `<strong style="color:var(--text-secondary)">${esc(authorName)}</strong>`
                       } <span class="mono">• ${formatRelativeAge(item.publishedAt)}</span>
                     </span>
@@ -340,25 +349,29 @@ export function renderNewsViewHtml({
                     <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
                       <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.42">
                         ${
-                          item.url
-                            ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
+                          sanitizeExternalUrl(item.url, null)
+                            ? `<a href="${esc(sanitizeExternalUrl(item.url))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
                             : esc(displayTitle)
                         }
                       </div>
                       ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${esc(cleanSummary)}</div>` : ''}
                     </div>
                     ${
-                      hasThumb
-                        ? `<a href="${esc(item.url || item.externalUrl || '#')}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
+                      hasThumb && sanitizeExternalUrl(item.url || item.externalUrl, null)
+                        ? `<a href="${esc(sanitizeExternalUrl(item.url || item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
                             <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="76" height="76" loading="lazy" decoding="async" />
                           </a>`
-                        : ''
+                        : hasThumb
+                          ? `<div class="raw-item-thumb" aria-hidden="true">
+                              <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="76" height="76" loading="lazy" decoding="async" />
+                            </div>`
+                          : ''
                     }
                   </div>
                   ${
-                    item.externalUrl
+                    sanitizeExternalUrl(item.externalUrl, null)
                       ? `<div>
-                          <a href="${esc(item.externalUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                          <a href="${esc(sanitizeExternalUrl(item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
                             <span>Linked Story: ${esc((item.externalTitle || item.outletName || 'Open Article').slice(0, 62))}</span>
                             ${iconSvg('externalLink', 11)}
                           </a>

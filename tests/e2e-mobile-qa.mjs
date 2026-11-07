@@ -1558,22 +1558,68 @@ async function main() {
         const awayTitle = tmpDiv.querySelector('.card-title')?.textContent || '';
         const sbCols = Array.from(tmpDiv.querySelectorAll('.matchup-scoreboard .sb-team-abbr')).map(n => n.textContent.trim());
 
-        // 3. Outbound links across tabs must be https:// with target="_blank" & rel*="noopener"
+        // 3. Outbound links across all primary tabs, sub-tabs, Player Dossier modals & Settings must be https://, non-paywalled, with target="_blank" & rel*="noopener"
+        const { isPaywalledOrBlockedUrl } = await import('/src/engine/linkIntegrity.js');
         const badLinks = [];
         let checkedExternalLinks = 0;
-        for (const tab of ['home', 'news', 'roster', 'season', 'audio']) {
-          document.querySelector(`[data-nav-tab="${tab}"]`).click();
+        const collectAnchors = scopeLabel => {
           for (const a of document.querySelectorAll('a[href]')) {
             const href = a.getAttribute('href') || '';
             if (href.startsWith('http')) {
               checkedExternalLinks++;
               const rel = a.getAttribute('rel') || '';
-              if (!href.startsWith('https://') || a.getAttribute('target') !== '_blank' || !rel.includes('noopener') || /(?:\bundefined\b|\bNaN\b|\bnull\b|\/undefined|\/NaN|\/null)/.test(href)) {
-                badLinks.push({ tab, href, target: a.getAttribute('target'), rel });
+              if (
+                !href.startsWith('https://') ||
+                a.getAttribute('target') !== '_blank' ||
+                !rel.includes('noopener') ||
+                isPaywalledOrBlockedUrl(href)
+              ) {
+                badLinks.push({ scope: scopeLabel, href, target: a.getAttribute('target'), rel });
               }
             }
           }
+        };
+
+        for (const tab of ['home', 'news', 'roster', 'season', 'audio']) {
+          document.querySelector(`[data-nav-tab="${tab}"]`).click();
+          collectAnchors(`tab:${tab}`);
+          if (tab === 'roster') {
+            for (const rSub of ['roster', 'depth', 'cap']) {
+              document.querySelector(`[data-action="set-roster-sub"][data-roster-sub="${rSub}"]`)?.click();
+              collectAnchors(`roster:${rSub}`);
+            }
+          }
+          if (tab === 'season') {
+            for (const sSub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
+              document.querySelector(`[data-action="set-season-sub"][data-season-sub="${sSub}"]`)?.click();
+              collectAnchors(`season:${sSub}`);
+            }
+          }
         }
+
+        // Open Player Dossier sheets for James Thompson Jr. & Khalil Dinkins and verify exact player links across all 5 dossier tabs
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
+        document.querySelector('[data-action="set-roster-unit"][data-unit="All"]')?.click();
+        setRosterQuery('James Thompson');
+        document.querySelector('[data-action="open-player-sheet"]')?.click();
+        const jtSheetHrefs = Array.from(document.querySelectorAll('#sheetBody a[href]')).map(a => a.getAttribute('href'));
+        for (const pTab of ['overview', 'stats', 'spider', 'contract', 'health']) {
+          document.querySelector(`[data-action="set-player-tab"][data-player-tab="${pTab}"]`)?.click();
+          collectAnchors(`dossier:JamesThompson:${pTab}`);
+        }
+        document.querySelector('[data-action="close-sheet"]')?.click();
+
+        setRosterQuery('Khalil Dinkins');
+        document.querySelector('[data-action="open-player-sheet"]')?.click();
+        const kdSheetHrefs = Array.from(document.querySelectorAll('#sheetBody a[href]')).map(a => a.getAttribute('href'));
+        collectAnchors('dossier:KhalilDinkins:overview');
+        document.querySelector('[data-action="close-sheet"]')?.click();
+        setRosterQuery('');
+
+        document.getElementById('openSettingsBtn')?.click();
+        collectAnchors('sheet:settings');
+        document.querySelector('[data-action="close-sheet"]')?.click();
 
         // 4. Verify non-embeddable videos in news.json never attach [data-action="activate-video"]
         document.querySelector('[data-nav-tab="news"]').click();
@@ -1598,6 +1644,8 @@ async function main() {
           sbCols,
           checkedExternalLinks,
           badLinks,
+          jtSheetHrefs,
+          kdSheetHrefs,
           leakedBlockedTriggers
         };
       });
@@ -1609,8 +1657,17 @@ async function main() {
         edgeAudit.awayTitle.startsWith('49ers') && edgeAudit.sbCols[0] === '49ers' && edgeAudit.sbCols[1] === 'Dallas Cowboys',
         `Away-game scoreboard orientation wrong: title="${edgeAudit.awayTitle}", cols=${JSON.stringify(edgeAudit.sbCols)}`
       );
-      assert(edgeAudit.checkedExternalLinks >= 25, `Expected >=25 external links across tabs, checked ${edgeAudit.checkedExternalLinks}`);
-      assert(edgeAudit.badLinks.length === 0, `Insecure or malformed outbound links found: ${JSON.stringify(edgeAudit.badLinks)}`);
+      assert(edgeAudit.checkedExternalLinks >= 80, `Expected >=80 external links across tabs & modals, checked ${edgeAudit.checkedExternalLinks}`);
+      assert(edgeAudit.badLinks.length === 0, `Insecure, paywalled, or malformed outbound links found: ${JSON.stringify(edgeAudit.badLinks)}`);
+      assert(
+        edgeAudit.jtSheetHrefs.includes('https://www.pro-football-reference.com/players/T/ThomJa06.htm') &&
+          edgeAudit.jtSheetHrefs.includes('https://overthecap.com/player/james-thompson-jr/13808/'),
+        `James Thompson Jr. dossier links mismatch: ${JSON.stringify(edgeAudit.jtSheetHrefs)}`
+      );
+      assert(
+        edgeAudit.kdSheetHrefs.includes('https://overthecap.com/player/khalil-dinkins/13810/'),
+        `Khalil Dinkins dossier OTC link mismatch: ${JSON.stringify(edgeAudit.kdSheetHrefs)}`
+      );
       assert(
         edgeAudit.leakedBlockedTriggers.length === 0,
         `Embed-blocked videoIds rendered inline iframe triggers: ${JSON.stringify(edgeAudit.leakedBlockedTriggers)}`

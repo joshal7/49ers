@@ -24,6 +24,11 @@ import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import {
+  buildPfrTeamDraftUrl,
+  buildPfrTeamSeasonUrl,
+  sanitizeExternalUrl
+} from '../engine/linkIntegrity.js';
 
 export function renderSeasonMatchupViewHtml({
   seasonSub = 'matchup',
@@ -459,6 +464,8 @@ function renderTeamHealthAndIr(appData) {
 function renderTeamStatsAndPower(appData) {
   const ranks = appData?.scheduleMatchup?.teamStatRankings || [];
   const pwr = appData?.scheduleMatchup?.powerRankings || {};
+  const seasonYear = Number(appData?.meta?.seasonYear) || 2026;
+  const pfrSeasonUrl = buildPfrTeamSeasonUrl('SF', seasonYear);
 
   return `
     <section class="card">
@@ -466,13 +473,13 @@ function renderTeamStatsAndPower(appData) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('season', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">nflverse 2026 Regular Season • 32-Team Benchmarks</div>
+            <div class="card-eyebrow">nflverse ${seasonYear} Regular Season • 32-Team Benchmarks</div>
             <h2 class="card-title">49ers Team Stats &amp; NFL Rankings</h2>
           </div>
         </div>
         <div class="source-link-strip">
           <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 11)}</a>
-          <a href="https://www.pro-football-reference.com/teams/sfo/2026.htm" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
+          <a href="${esc(pfrSeasonUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
           <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
         </div>
       </div>
@@ -522,8 +529,8 @@ function renderTeamStatsAndPower(appData) {
           <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px">
               ${
-                s.url
-                  ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(s.outlet)}</strong> ${iconSvg('externalLink', 11)}</a>`
+                sanitizeExternalUrl(s.url, null)
+                  ? `<a href="${esc(sanitizeExternalUrl(s.url))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(s.outlet)}</strong> ${iconSvg('externalLink', 11)}</a>`
                   : `<strong>${esc(s.outlet)}</strong>`
               }
               <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta)})</span>
@@ -921,9 +928,10 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
         </div>
         <div class="source-link-strip">
           ${(dp.sources || [])
+            .filter(s => sanitizeExternalUrl(s?.url, null))
             .slice(0, 3)
             .map(
-              s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(s.label)}</span>${iconSvg('externalLink', 10)}</a>`
+              s => `<a href="${esc(sanitizeExternalUrl(s.url))}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(s.label)}</span>${iconSvg('externalLink', 10)}</a>`
             )
             .join('')}
         </div>
@@ -1034,6 +1042,8 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
 
 function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet) {
   const dc = appData?.seasonal?.draftClass2026 || {};
+  const draftYear = Number(dc.draftYear) || Number(appData?.meta?.seasonYear) || 2026;
+  const pfrDraftUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl('SF', draftYear);
   const picks = dc.picks || [];
   const udfas = dc.priorityUdfas || [];
 
@@ -1044,11 +1054,11 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('radar', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Draft Recap • Value vs. Consensus &amp; Film</div>
-            <h2 class="card-title">2026 49ers Draft Class (${picks.length} Picks)</h2>
+            <h2 class="card-title">${draftYear} 49ers Draft Class (${picks.length} Picks)</h2>
           </div>
         </div>
         <div class="source-link-strip">
-          <a href="${esc(dc.sourceUrl || 'https://www.pro-football-reference.com/teams/sfo/2026_draft.htm')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Draft</span>${iconSvg('externalLink', 11)}</a>
+          <a href="${esc(pfrDraftUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Draft</span>${iconSvg('externalLink', 11)}</a>
           <a href="${esc(dc.otcDraftUrl || 'https://overthecap.com/draft')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>OTC Rookie Pool</span>${iconSvg('externalLink', 11)}</a>
         </div>
       </div>

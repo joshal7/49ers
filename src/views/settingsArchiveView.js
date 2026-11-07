@@ -5,6 +5,7 @@
 
 import { esc } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
+import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 
 export function renderSettingsSheetHtml({
   userPrefs,
@@ -118,7 +119,7 @@ export function renderSettingsSheetHtml({
         ${visibleReporters
           .map(r => {
             const enabled = !disabledReps.has(r.id);
-            const repLink = r.bskyUrl || r.profileUrl || r.xUrl || '';
+            const repLink = sanitizeExternalUrl(r.bskyUrl || r.profileUrl || r.xUrl, null);
             return `
               <label style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer">
                 <div style="min-width:0">

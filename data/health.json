@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T15:39:50.513Z",
+  "updatedAt": "2026-11-07T16:37:41.930Z",
   "week": 9,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -7,6 +7,25 @@
   "remainingIrDesignations": 6,
   "maxRegularSeasonIrDesignations": 8,
   "practiceReport": [
+    {
+      "playerId": "4360438",
+      "name": "Brandon Aiyuk",
+      "position": "WR",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Personal",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Multi-ligament knee recovery + roster/contract reinstatement holdout status.",
+      "factors": [
+        "Officially inactive (Out / Reserve / Reinstatement pending)"
+      ],
+      "beatComment": "Pelissero notes that the NFL Management Council and the NFL Players Association are both involved in trying to reaching a resolution that is agreeable to both Aiyuk and the 49ers. It's possible that the embattled wideout could ultimately agree to pay back the money in order to potentially have an opportunity to move on with another club, but there's also a chance the issue goes to arbitration. Aiyuk is planning to show up at San Francisco's facility Friday, though that is unlikely to bring the matter to a close. In fact, it could take an extended period of time to sort out a path forward, especially if arbitration is brought into play."
+    },
     {
       "playerId": "3126486",
       "name": "Deebo Samuel Sr.",
@@ -63,25 +82,6 @@
         "Officially inactive (Out / Reserve / Reinstatement pending)"
       ],
       "beatComment": "After opening the year on injured reserve with a calf injury, Kirk finally got healthy and played 20 snaps in a Week 7 loss to Atlanta. Other injuries at wide receiver opened up an opportunity, but now it seems Kirk is more likely to go back on IR than make an impact in the coming weeks."
-    },
-    {
-      "playerId": "4360438",
-      "name": "Brandon Aiyuk",
-      "position": "WR",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
-      "wed": "DNP",
-      "thu": "DNP",
-      "fri": "DNP",
-      "injuryType": "Personal",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Multi-ligament knee recovery + roster/contract reinstatement holdout status.",
-      "factors": [
-        "Officially inactive (Out / Reserve / Reinstatement pending)"
-      ],
-      "beatComment": "Pelissero notes that the NFL Management Council and the NFL Players Association are both involved in trying to reaching a resolution that is agreeable to both Aiyuk and the 49ers. It's possible that the embattled wideout could ultimately agree to pay back the money in order to potentially have an opportunity to move on with another club, but there's also a chance the issue goes to arbitration. Aiyuk is planning to show up at San Francisco's facility Friday, though that is unlikely to bring the matter to a close. In fact, it could take an extended period of time to sort out a path forward, especially if arbitration is brought into play."
     },
     {
       "playerId": "4240542",

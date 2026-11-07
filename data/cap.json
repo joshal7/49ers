@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T15:39:50.513Z",
+  "updatedAt": "2026-11-07T16:37:41.930Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -24,61 +24,85 @@
       "topDeadMoneyEntries": [
         {
           "otcId": "4802",
+          "slug": "javon-hargrave",
+          "otcUrl": "https://overthecap.com/player/javon-hargrave/4802/",
           "name": "Javon Hargrave",
           "capCharge": 16156528
         },
         {
           "otcId": "8957",
+          "slug": "jauan-jennings",
+          "otcUrl": "https://overthecap.com/player/jauan-jennings/8957/",
           "name": "Jauan Jennings",
           "capCharge": 8030000
         },
         {
           "otcId": "8778",
+          "slug": "yetur-gross-matos",
+          "otcUrl": "https://overthecap.com/player/yetur-gross-matos/8778/",
           "name": "Yetur Gross-Matos",
           "capCharge": 4959000
         },
         {
           "otcId": "4780",
+          "slug": "maliek-collins",
+          "otcUrl": "https://overthecap.com/player/maliek-collins/4780/",
           "name": "Maliek Collins",
           "capCharge": 4074000
         },
         {
           "otcId": "8620",
+          "slug": "brett-toth",
+          "otcUrl": "https://overthecap.com/player/brett-toth/8620/",
           "name": "Brett Toth",
           "capCharge": 2240000
         },
         {
           "otcId": "9738",
+          "slug": "robert-jones",
+          "otcUrl": "https://overthecap.com/player/robert-jones/9738/",
           "name": "Robert Jones",
           "capCharge": 1665000
         },
         {
           "otcId": "8828",
+          "slug": "jordan-elliott",
+          "otcUrl": "https://overthecap.com/player/jordan-elliott/8828/",
           "name": "Jordan Elliott",
           "capCharge": 1395000
         },
         {
           "otcId": "1671",
+          "slug": "jon-weeks",
+          "otcUrl": "https://overthecap.com/player/jon-weeks/1671/",
           "name": "Jon Weeks",
           "capCharge": 1262500
         },
         {
           "otcId": "7157",
+          "slug": "george-odum",
+          "otcUrl": "https://overthecap.com/player/george-odum/7157/",
           "name": "George Odum",
           "capCharge": 1216668
         },
         {
           "otcId": "10166",
+          "slug": "jack-jones",
+          "otcUrl": "https://overthecap.com/player/jack-jones/10166/",
           "name": "Jack Jones",
           "capCharge": 597222
         },
         {
           "otcId": "10166",
+          "slug": "jack-jones",
+          "otcUrl": "https://overthecap.com/player/jack-jones/10166/",
           "name": "Jack Jones",
           "capCharge": 477778
         },
         {
           "otcId": "9101",
+          "slug": "corliss-waitman",
+          "otcUrl": "https://overthecap.com/player/corliss-waitman/9101/",
           "name": "Corliss Waitman",
           "capCharge": 475000
         }
@@ -103,6 +127,8 @@
       "topDeadMoneyEntries": [
         {
           "otcId": "na_total",
+          "slug": null,
+          "otcUrl": null,
           "name": "TOTAL",
           "capCharge": 85003
         }
@@ -293,7 +319,7 @@
       "otcId": "10307",
       "otcSlug": "brock-purdy",
       "otcUrl": "https://overthecap.com/player/brock-purdy/10307/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4361741",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4361741/brock-purdy",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PurdBr00.htm",
       "name": "Brock Purdy",
       "position": "QB",
@@ -504,7 +530,7 @@
       "otcId": "7793",
       "otcSlug": "nick-bosa",
       "otcUrl": "https://overthecap.com/player/nick-bosa/7793/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040605",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040605/nick-bosa",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BosaNi00.htm",
       "name": "Nick Bosa",
       "position": "DE",
@@ -715,7 +741,7 @@
       "otcId": "1466",
       "otcSlug": "trent-williams",
       "otcUrl": "https://overthecap.com/player/trent-williams/1466/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/13241",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/13241/trent-williams",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillTr21.htm",
       "name": "Trent Williams",
       "position": "OT",
@@ -926,7 +952,7 @@
       "otcId": "6955",
       "otcSlug": "fred-warner",
       "otcUrl": "https://overthecap.com/player/fred-warner/6955/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3138826",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3138826/fred-warner",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WarnFr00.htm",
       "name": "Fred Warner",
       "position": "LB",
@@ -1137,7 +1163,7 @@
       "otcId": "5732",
       "otcSlug": "george-kittle",
       "otcUrl": "https://overthecap.com/player/george-kittle/5732/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3040151",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3040151/george-kittle",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KittGe00.htm",
       "name": "George Kittle",
       "position": "TE",
@@ -1344,11 +1370,222 @@
       }
     },
     {
+      "id": "4360438",
+      "otcId": "8765",
+      "otcSlug": "brandon-aiyuk",
+      "otcUrl": "https://overthecap.com/player/brandon-aiyuk/8765/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360438/brandon-aiyuk",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/AiyuBr00.htm",
+      "name": "Brandon Aiyuk",
+      "position": "WR",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 12450790,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 12450790,
+          "transactions": {
+            "cut": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 12450790,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 27274000,
+          "proratedSigning": 2792790,
+          "proratedOption": 9558000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 750000,
+          "workoutBonus": 100000,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 40474790,
+          "transactions": {
+            "cut": {
+              "deadMoney": 19298580,
+              "capSavings": 21176210
+            },
+            "june_1_cut": {
+              "deadMoney": 7363790,
+              "capSavings": 33111000
+            },
+            "trade": {
+              "deadMoney": 19298580,
+              "capSavings": 21176210
+            },
+            "june_1_trade": {
+              "deadMoney": 7363790,
+              "capSavings": 33111000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 19585500
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 20891200
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 29150000,
+          "proratedSigning": 2792790,
+          "proratedOption": 9558000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 750000,
+          "workoutBonus": 100000,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 42350790,
+          "transactions": {
+            "cut": {
+              "deadMoney": 11934790,
+              "capSavings": 30416000
+            },
+            "june_1_cut": {
+              "deadMoney": 7363790,
+              "capSavings": 34987000
+            },
+            "trade": {
+              "deadMoney": 11934790,
+              "capSavings": 30416000
+            },
+            "june_1_trade": {
+              "deadMoney": 7363790,
+              "capSavings": 34987000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 18630000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 22356000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 0,
+          "proratedOption": 9558000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 14545000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 4571000,
+              "capSavings": 9974000
+            },
+            "june_1_cut": {
+              "deadMoney": 4571000,
+              "capSavings": 9974000
+            },
+            "trade": {
+              "deadMoney": 4571000,
+              "capSavings": 9974000
+            },
+            "june_1_trade": {
+              "deadMoney": 4571000,
+              "capSavings": 9974000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -675000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1080000
+            }
+          }
+        },
+        "2030": {
+          "year": 2030,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 0,
+          "proratedOption": 4987000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1116000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "3117251",
       "otcId": "5592",
       "otcSlug": "christian-mccaffrey",
       "otcUrl": "https://overthecap.com/player/christian-mccaffrey/5592/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3117251",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3117251/christian-mccaffrey",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/McCaCh01.htm",
       "name": "Christian McCaffrey",
       "position": "RB",
@@ -1559,7 +1796,7 @@
       "otcId": "9636",
       "otcSlug": "deommodore-lenoir",
       "otcUrl": "https://overthecap.com/player/deommodore-lenoir/9636/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242488",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242488/deommodore-lenoir",
       "pfrUrl": "https://www.pro-football-reference.com/players/L/LenoDe00.htm",
       "name": "Deommodore Lenoir",
       "position": "CB",
@@ -1770,7 +2007,7 @@
       "otcId": "4720",
       "otcSlug": "deforest-buckner",
       "otcUrl": "https://overthecap.com/player/deforest-buckner/4720/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/2971282",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2971282/deforest-buckner",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BuckDe00.htm",
       "name": "DeForest Buckner",
       "position": "DT",
@@ -1903,7 +2140,7 @@
       "otcId": "8893",
       "otcSlug": "colton-mckivitz",
       "otcUrl": "https://overthecap.com/player/colton-mckivitz/8893/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916075",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916075/colton-mckivitz",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/McKiCo00.htm",
       "name": "Colton McKivitz",
       "position": "OT",
@@ -2114,7 +2351,7 @@
       "otcId": "12371",
       "otcSlug": "mykel-williams",
       "otcUrl": "https://overthecap.com/player/mykel-williams/12371/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685623",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685623/mykel-williams",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillMy00.htm",
       "name": "Mykel Williams",
       "position": "DE",
@@ -2247,7 +2484,7 @@
       "otcId": "9539",
       "otcSlug": "osa-odighizuwa",
       "otcUrl": "https://overthecap.com/player/osa-odighizuwa/9539/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035840",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035840/osa-odighizuwa",
       "pfrUrl": "https://www.pro-football-reference.com/players/O/OdigOs00.htm",
       "name": "Osa Odighizuwa",
       "position": "DT",
@@ -2458,7 +2695,7 @@
       "otcId": "7827",
       "otcSlug": "deebo-samuel",
       "otcUrl": "https://overthecap.com/player/deebo-samuel/7827/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3126486",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3126486/deebo-samuel-sr",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/SamuDe00.htm",
       "name": "Deebo Samuel",
       "position": "WR",
@@ -2513,7 +2750,7 @@
       "otcId": "2946",
       "otcSlug": "mike-evans",
       "otcUrl": "https://overthecap.com/player/mike-evans/2946/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/16737",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/16737/mike-evans",
       "pfrUrl": "https://www.pro-football-reference.com/players/E/EvanMi00.htm",
       "name": "Mike Evans",
       "position": "WR",
@@ -2724,7 +2961,7 @@
       "otcId": "10911",
       "otcSlug": "jiayir-brown",
       "otcUrl": "https://overthecap.com/player/jiayir-brown/10911/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693644",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693644/jiayir-brown",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowJi01.htm",
       "name": "Ji'Ayir Brown",
       "position": "S",
@@ -2779,7 +3016,7 @@
       "otcId": "9609",
       "otcSlug": "luke-farrell",
       "otcUrl": "https://overthecap.com/player/luke-farrell/9609/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040612",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040612/luke-farrell",
       "pfrUrl": "https://www.pro-football-reference.com/players/F/FarrLu00.htm",
       "name": "Luke Farrell",
       "position": "TE",
@@ -2986,11 +3223,105 @@
       }
     },
     {
+      "id": "4428209",
+      "otcId": "11639",
+      "otcSlug": "ricky-pearsall",
+      "otcUrl": "https://overthecap.com/player/ricky-pearsall/11639/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428209/ricky-pearsall",
+      "pfrUrl": "https://www.pro-football-reference.com/players/P/PearRi00.htm",
+      "name": "Ricky Pearsall",
+      "position": "WR",
+      "jersey": 1,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 3419563,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 3419563,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 3419563,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 2504781,
+          "proratedSigning": 1484709,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 2504781,
+          "capNumber": 3989490,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3989490,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 3989490,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1484709,
+              "capSavings": 2504781
+            },
+            "june_1_trade": {
+              "deadMoney": 1484709,
+              "capSavings": 2504781
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 1107825
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "3916903",
       "otcId": "7939",
       "otcSlug": "dre-greenlaw",
       "otcUrl": "https://overthecap.com/player/dre-greenlaw/7939/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916903",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916903/dre-greenlaw",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GreeDr00.htm",
       "name": "Dre Greenlaw",
       "position": "LB",
@@ -3197,11 +3528,66 @@
       }
     },
     {
+      "id": "4240542",
+      "otcId": "9631",
+      "otcSlug": "nate-hobbs",
+      "otcUrl": "https://overthecap.com/player/nate-hobbs/9631/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240542/nate-hobbs",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HobbNa00.htm",
+      "name": "Nate Hobbs",
+      "position": "CB",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 3380000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 3380000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 3380000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "2577185",
       "otcId": "5134",
       "otcSlug": "jake-brendel",
       "otcUrl": "https://overthecap.com/player/jake-brendel/5134/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/2577185",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2577185/jake-brendel",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BrenJa01.htm",
       "name": "Jake Brendel",
       "position": "C",
@@ -3373,7 +3759,7 @@
       "otcId": "9479",
       "otcSlug": "mac-jones",
       "otcUrl": "https://overthecap.com/player/mac-jones/9479/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241464",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241464/mac-jones",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JoneMa05.htm",
       "name": "Mac Jones",
       "position": "QB",
@@ -3584,7 +3970,7 @@
       "otcId": "6932",
       "otcSlug": "christian-kirk",
       "otcUrl": "https://overthecap.com/player/christian-kirk/6932/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3895856",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3895856/christian-kirk",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KirkCh01.htm",
       "name": "Christian Kirk",
       "position": "WR",
@@ -3639,7 +4025,7 @@
       "otcId": "2298",
       "otcSlug": "kyle-juszczyk",
       "otcUrl": "https://overthecap.com/player/kyle-juszczyk/2298/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/16002",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/16002/kyle-juszczyk",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JuszKy00.htm",
       "name": "Kyle Juszczyk",
       "position": "FB",
@@ -3846,11 +4232,527 @@
       }
     },
     {
+      "id": "3043116",
+      "otcId": "4839",
+      "otcSlug": "demarcus-robinson",
+      "otcUrl": "https://overthecap.com/player/demarcus-robinson/4839/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3043116/demarcus-robinson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/R/RobiDe01.htm",
+      "name": "Demarcus Robinson",
+      "position": "WR",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2701867,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2701867,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2701867,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 438867,
+          "proratedOption": 418000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2988601,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1316601,
+              "capSavings": 1672000
+            },
+            "june_1_cut": {
+              "deadMoney": 438867,
+              "capSavings": 2549734
+            },
+            "trade": {
+              "deadMoney": 1316601,
+              "capSavings": 1672000
+            },
+            "june_1_trade": {
+              "deadMoney": 438867,
+              "capSavings": 2549734
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -1008750
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1076000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 438867,
+          "proratedOption": 418000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 877734,
+              "capSavings": -877734
+            },
+            "june_1_cut": {
+              "deadMoney": 438867,
+              "capSavings": -438867
+            },
+            "trade": {
+              "deadMoney": 877734,
+              "capSavings": -877734
+            },
+            "june_1_trade": {
+              "deadMoney": 438867,
+              "capSavings": -438867
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -926667
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1112000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 438867,
+          "proratedOption": 418000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 438867,
+              "capSavings": -438867
+            },
+            "june_1_cut": {
+              "deadMoney": 438867,
+              "capSavings": -438867
+            },
+            "trade": {
+              "deadMoney": 438867,
+              "capSavings": -438867
+            },
+            "june_1_trade": {
+              "deadMoney": 438867,
+              "capSavings": -438867
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -717500
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1148000
+            }
+          }
+        },
+        "2030": {
+          "year": 2030,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 0,
+          "proratedOption": 418000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1184000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4710714",
+      "otcId": "13177",
+      "otcSlug": "dezhaun-stribling",
+      "otcUrl": "https://overthecap.com/player/dezhaun-stribling/13177/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4710714/dezhaun-stribling",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/StriDe01.htm",
+      "name": "De'Zhaun Stribling",
+      "position": "WR",
+      "jersey": 7,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2432134,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2432134,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2432134,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1493034,
+          "proratedSigning": 1547134,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 1493034,
+          "capNumber": 3040168,
+          "transactions": {
+            "cut": {
+              "deadMoney": 10944606,
+              "capSavings": -7904438
+            },
+            "june_1_cut": {
+              "deadMoney": 7850338,
+              "capSavings": -4810170
+            },
+            "trade": {
+              "deadMoney": 4641402,
+              "capSavings": -1601234
+            },
+            "june_1_trade": {
+              "deadMoney": 1547134,
+              "capSavings": 1493034
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 375356
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 450427
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 2101068,
+          "proratedSigning": 1547134,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 2101068,
+          "capNumber": 3648202,
+          "transactions": {
+            "cut": {
+              "deadMoney": 7904438,
+              "capSavings": -4256236
+            },
+            "june_1_cut": {
+              "deadMoney": 6357304,
+              "capSavings": -2709102
+            },
+            "trade": {
+              "deadMoney": 3094268,
+              "capSavings": 553934
+            },
+            "june_1_trade": {
+              "deadMoney": 1547134,
+              "capSavings": 2101068
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 563034
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 900854
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "baseSalary": 2709102,
+          "proratedSigning": 1547134,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 2709102,
+          "capNumber": 4256236,
+          "transactions": {
+            "cut": {
+              "deadMoney": 4256236,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 4256236,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1547134,
+              "capSavings": 2709102
+            },
+            "june_1_trade": {
+              "deadMoney": 1547134,
+              "capSavings": 2709102
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 1351282
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4430835",
+      "otcId": "12403",
+      "otcSlug": "alfred-collins",
+      "otcUrl": "https://overthecap.com/player/alfred-collins/12403/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430835/alfred-collins",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CollAl01.htm",
+      "name": "Alfred Collins",
+      "position": "DT",
+      "jersey": 95,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430835.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2342478,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2342478,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2342478,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1776992,
+          "proratedSigning": 1033982,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 1776992,
+          "capNumber": 2810974,
+          "transactions": {
+            "cut": {
+              "deadMoney": 4855426,
+              "capSavings": -2044452
+            },
+            "june_1_cut": {
+              "deadMoney": 3821444,
+              "capSavings": -1010470
+            },
+            "trade": {
+              "deadMoney": 2067964,
+              "capSavings": 743010
+            },
+            "june_1_trade": {
+              "deadMoney": 1033982,
+              "capSavings": 1776992
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 363496
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 581594
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 2245488,
+          "proratedSigning": 1033982,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 1010470,
+          "capNumber": 3279470,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2044452,
+              "capSavings": 1235018
+            },
+            "june_1_cut": {
+              "deadMoney": 2044452,
+              "capSavings": 1235018
+            },
+            "trade": {
+              "deadMoney": 1033982,
+              "capSavings": 2245488
+            },
+            "june_1_trade": {
+              "deadMoney": 1033982,
+              "capSavings": 2245488
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 920390
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4240554",
       "otcId": "10229",
       "otcSlug": "vederian-lowe",
       "otcUrl": "https://overthecap.com/player/vederian-lowe/10229/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240554",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240554/vederian-lowe",
       "pfrUrl": "https://www.pro-football-reference.com/players/L/LoweVe00.htm",
       "name": "Vederian Lowe",
       "position": "OT",
@@ -4057,11 +4959,277 @@
       }
     },
     {
+      "id": "4569497",
+      "otcId": "10473",
+      "otcSlug": "sam-okuayinonu",
+      "otcUrl": "https://overthecap.com/player/sam-okuayinonu/10473/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4569497/sam-okuayinonu",
+      "pfrUrl": "https://www.pro-football-reference.com/players/O/OkuaSa00.htm",
+      "name": "Sam Okuayinonu",
+      "position": "DT",
+      "jersey": 91,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569497.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2280000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2280000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2280000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4259147",
+      "otcId": "10357",
+      "otcSlug": "jake-tonges",
+      "otcUrl": "https://overthecap.com/player/jake-tonges/10357/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259147/jake-tonges",
+      "pfrUrl": "https://www.pro-football-reference.com/players/T/TongJa00.htm",
+      "name": "Jake Tonges",
+      "position": "TE",
+      "jersey": 88,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259147.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 2058000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2058000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 2058000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1260000,
+          "proratedSigning": 523000,
+          "proratedOption": 440000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 50000,
+          "otherBonus": 0,
+          "guaranteedSalary": 1350000,
+          "capNumber": 2613000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3442000,
+              "capSavings": -829000
+            },
+            "june_1_cut": {
+              "deadMoney": 1873000,
+              "capSavings": 740000
+            },
+            "trade": {
+              "deadMoney": 2092000,
+              "capSavings": 521000
+            },
+            "june_1_trade": {
+              "deadMoney": 523000,
+              "capSavings": 2090000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 96000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 96000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 523000,
+          "proratedOption": 440000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 3329000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1569000,
+              "capSavings": 1760000
+            },
+            "june_1_cut": {
+              "deadMoney": 523000,
+              "capSavings": 2806000
+            },
+            "trade": {
+              "deadMoney": 1569000,
+              "capSavings": 1760000
+            },
+            "june_1_trade": {
+              "deadMoney": 523000,
+              "capSavings": 2806000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -926250
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -988000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 523000,
+          "proratedOption": 440000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1046000,
+              "capSavings": -1046000
+            },
+            "june_1_cut": {
+              "deadMoney": 523000,
+              "capSavings": -523000
+            },
+            "trade": {
+              "deadMoney": 1046000,
+              "capSavings": -1046000
+            },
+            "june_1_trade": {
+              "deadMoney": 523000,
+              "capSavings": -523000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -853333
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1024000
+            }
+          }
+        },
+        "2030": {
+          "year": 2030,
+          "rosterBucket": "active",
+          "baseSalary": 0,
+          "proratedSigning": 523000,
+          "proratedOption": 440000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 523000,
+              "capSavings": -523000
+            },
+            "june_1_cut": {
+              "deadMoney": 523000,
+              "capSavings": -523000
+            },
+            "trade": {
+              "deadMoney": 523000,
+              "capSavings": -523000
+            },
+            "june_1_trade": {
+              "deadMoney": 523000,
+              "capSavings": -523000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -662500
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1060000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "3116097",
       "otcId": "8451",
       "otcSlug": "luke-gifford",
       "otcUrl": "https://overthecap.com/player/luke-gifford/8451/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3116097",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3116097/luke-gifford",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GiffLu00.htm",
       "name": "Luke Gifford",
       "position": "LB",
@@ -4272,7 +5440,7 @@
       "otcId": "7373",
       "otcSlug": "eddy-pineiro",
       "otcUrl": "https://overthecap.com/player/eddy-pineiro/7373/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034949",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034949/eddy-pineiro",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PineEd00.htm",
       "name": "Eddy Pineiro",
       "position": "PK",
@@ -4483,7 +5651,7 @@
       "otcId": "10870",
       "otcSlug": "keion-white",
       "otcUrl": "https://overthecap.com/player/keion-white/10870/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4243493",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4243493/keion-white",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WhitKe03.htm",
       "name": "Keion White",
       "position": "DE",
@@ -4538,7 +5706,7 @@
       "otcId": "7039",
       "otcSlug": "siran-neal",
       "otcUrl": "https://overthecap.com/player/siran-neal/7039/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3057524",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3057524/siran-neal",
       "pfrUrl": "https://www.pro-football-reference.com/players/N/NealSi00.htm",
       "name": "Siran Neal",
       "position": "S",
@@ -4710,7 +5878,7 @@
       "otcId": "11672",
       "otcSlug": "renardo-green",
       "otcUrl": "https://overthecap.com/player/renardo-green/11672/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427325",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427325/renardo-green",
       "pfrUrl": "https://www.pro-football-reference.com/players/G/GreeRe00.htm",
       "name": "Renardo Green",
       "position": "CB",
@@ -4804,7 +5972,7 @@
       "otcId": "2959",
       "otcSlug": "brandin-cooks",
       "otcUrl": "https://overthecap.com/player/brandin-cooks/2959/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/16731",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/16731/brandin-cooks",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CookBr00.htm",
       "name": "Brandin Cooks",
       "position": "WR",
@@ -4859,7 +6027,7 @@
       "otcId": "11694",
       "otcSlug": "dominick-puni",
       "otcUrl": "https://overthecap.com/player/dominick-puni/11694/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5092959",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/5092959/dominick-puni",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PuniDo00.htm",
       "name": "Dominick Puni",
       "position": "G",
@@ -4949,11 +6117,144 @@
       }
     },
     {
+      "id": "4573188",
+      "otcId": "12435",
+      "otcSlug": "nick-martin",
+      "otcUrl": "https://overthecap.com/player/nick-martin/12435/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4573188/nick-martin",
+      "pfrUrl": "https://www.pro-football-reference.com/players/M/MartNi01.htm",
+      "name": "Nick Martin",
+      "position": "LB",
+      "jersey": 45,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573188.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 1491288,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1491288,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1491288,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1386516,
+          "proratedSigning": 353030,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 50000,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1789546,
+          "transactions": {
+            "cut": {
+              "deadMoney": 706060,
+              "capSavings": 1083486
+            },
+            "june_1_cut": {
+              "deadMoney": 353030,
+              "capSavings": 1436516
+            },
+            "trade": {
+              "deadMoney": 706060,
+              "capSavings": 1083486
+            },
+            "june_1_trade": {
+              "deadMoney": 353030,
+              "capSavings": 1436516
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 193258
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 309213
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 1684774,
+          "proratedSigning": 353030,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 50000,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2087804,
+          "transactions": {
+            "cut": {
+              "deadMoney": 353030,
+              "capSavings": 1734774
+            },
+            "june_1_cut": {
+              "deadMoney": 353030,
+              "capSavings": 1734774
+            },
+            "trade": {
+              "deadMoney": 353030,
+              "capSavings": 1734774
+            },
+            "june_1_trade": {
+              "deadMoney": 353030,
+              "capSavings": 1734774
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 511819
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "3858271",
       "otcId": "8808",
       "otcSlug": "ashtyn-davis",
       "otcUrl": "https://overthecap.com/player/ashtyn-davis/8808/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3858271",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3858271/ashtyn-davis",
       "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviAs00.htm",
       "name": "Ashtyn Davis",
       "position": "S",
@@ -5008,7 +6309,7 @@
       "otcId": "12460",
       "otcSlug": "upton-stout",
       "otcUrl": "https://overthecap.com/player/upton-stout/12460/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565200",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565200/upton-stout",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/StouUp00.htm",
       "name": "Upton Stout",
       "position": "CB",
@@ -5141,7 +6442,7 @@
       "otcId": "11025",
       "otcSlug": "jarrett-patterson",
       "otcUrl": "https://overthecap.com/player/jarrett-patterson/11025/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372774",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372774/jarrett-patterson",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PattJa03.htm",
       "name": "Jarrett Patterson",
       "position": "G",
@@ -5196,7 +6497,7 @@
       "otcId": "13214",
       "otcSlug": "romello-height",
       "otcUrl": "https://overthecap.com/player/romello-height/13214/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4432244",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4432244/romello-height",
       "pfrUrl": "https://www.pro-football-reference.com/players/H/HeigRo00.htm",
       "name": "Romello Height",
       "position": "DE",
@@ -5368,7 +6669,7 @@
       "otcId": "11732",
       "otcSlug": "malik-mustapha",
       "otcUrl": "https://overthecap.com/player/malik-mustapha/11732/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696211",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696211/malik-mustapha",
       "pfrUrl": "https://www.pro-football-reference.com/players/M/MustMa00.htm",
       "name": "Malik Mustapha",
       "position": "S",
@@ -5458,11 +6759,105 @@
       }
     },
     {
+      "id": "4372561",
+      "otcId": "11737",
+      "otcSlug": "isaac-guerendo",
+      "otcUrl": "https://overthecap.com/player/isaac-guerendo/11737/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4372561/isaac-guerendo",
+      "pfrUrl": "https://www.pro-football-reference.com/players/G/GuerIs00.htm",
+      "name": "Isaac Guerendo",
+      "position": "RB",
+      "jersey": 31,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372561.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 1251132,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1251132,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1251132,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1190000,
+          "proratedSigning": 176132,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1366132,
+          "transactions": {
+            "cut": {
+              "deadMoney": 176132,
+              "capSavings": 1190000
+            },
+            "june_1_cut": {
+              "deadMoney": 176132,
+              "capSavings": 1190000
+            },
+            "trade": {
+              "deadMoney": 176132,
+              "capSavings": 1190000
+            },
+            "june_1_trade": {
+              "deadMoney": 176132,
+              "capSavings": 1190000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4696044",
       "otcId": "13234",
       "otcSlug": "kaelon-black",
       "otcUrl": "https://overthecap.com/player/kaelon-black/13234/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696044",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696044/kaelon-black",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BlacKa00.htm",
       "name": "Kaelon Black",
       "position": "RB",
@@ -5634,7 +7029,7 @@
       "otcId": "11743",
       "otcSlug": "jacob-cowing",
       "otcUrl": "https://overthecap.com/player/jacob-cowing/11743/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575665",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575665/jacob-cowing",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CowiJa00.htm",
       "name": "Jacob Cowing",
       "position": "WR",
@@ -5728,7 +7123,7 @@
       "otcId": "13251",
       "otcSlug": "gracen-halton",
       "otcUrl": "https://overthecap.com/player/gracen-halton/13251/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685369",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685369/gracen-halton",
       "pfrUrl": "https://www.pro-football-reference.com/players/H/HaltGr00.htm",
       "name": "Gracen Halton",
       "position": "DT",
@@ -5900,7 +7295,7 @@
       "otcId": "12498",
       "otcSlug": "jordan-watkins",
       "otcUrl": "https://overthecap.com/player/jordan-watkins/12498/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431466",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431466/jordan-watkins",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WatkJo00.htm",
       "name": "Jordan Watkins",
       "position": "WR",
@@ -6033,7 +7428,7 @@
       "otcId": "13271",
       "otcSlug": "carver-willis",
       "otcUrl": "https://overthecap.com/player/carver-willis/13271/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565779",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4565779/carver-willis",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillCa05.htm",
       "name": "Carver Willis",
       "position": "OT",
@@ -6205,7 +7600,7 @@
       "otcId": "12507",
       "otcSlug": "jordan-james",
       "otcUrl": "https://overthecap.com/player/jordan-james/12507/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685397",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685397/jordan-james",
       "pfrUrl": "https://www.pro-football-reference.com/players/J/JameJo01.htm",
       "name": "Jordan James",
       "position": "RB",
@@ -6338,7 +7733,7 @@
       "otcId": "12520",
       "otcSlug": "marques-sigle",
       "otcUrl": "https://overthecap.com/player/marques-sigle/12520/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693337",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693337/marques-sigle",
       "pfrUrl": "https://www.pro-football-reference.com/players/S/SiglMa00.htm",
       "name": "Marques Sigle",
       "position": "S",
@@ -6471,7 +7866,7 @@
       "otcId": "11859",
       "otcSlug": "tatum-bethune",
       "otcUrl": "https://overthecap.com/player/tatum-bethune/11859/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4426698",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4426698/tatum-bethune",
       "pfrUrl": "https://www.pro-football-reference.com/players/B/BethTa00.htm",
       "name": "Tatum Bethune",
       "position": "LB",
@@ -6565,7 +7960,7 @@
       "otcId": "13283",
       "otcSlug": "ephesians-prysock",
       "otcUrl": "https://overthecap.com/player/ephesians-prysock/13283/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685523",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685523/ephesians-prysock",
       "pfrUrl": "https://www.pro-football-reference.com/players/P/PrysEp00.htm",
       "name": "Ephesians Prysock",
       "position": "CB",
@@ -6737,7 +8132,7 @@
       "otcId": "11071",
       "otcSlug": "brayden-willis",
       "otcUrl": "https://overthecap.com/player/brayden-willis/11071/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360290",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4360290/brayden-willis",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WillBr06.htm",
       "name": "Brayden Willis",
       "position": "TE",
@@ -6792,7 +8187,7 @@
       "otcId": "9634",
       "otcSlug": "garret-wallow",
       "otcUrl": "https://overthecap.com/player/garret-wallow/9634/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241807",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241807/garret-wallow",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WallGa00.htm",
       "name": "Garret Wallow",
       "position": "LB",
@@ -6847,7 +8242,7 @@
       "otcId": "8887",
       "otcSlug": "khalid-kareem",
       "otcUrl": "https://overthecap.com/player/khalid-kareem/8887/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039029",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039029/khalid-kareem",
       "pfrUrl": "https://www.pro-football-reference.com/players/K/KareKh00.htm",
       "name": "Khalid Kareem",
       "position": "DE",
@@ -6902,7 +8297,7 @@
       "otcId": "9101",
       "otcSlug": "corliss-waitman",
       "otcUrl": "https://overthecap.com/player/corliss-waitman/9101/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3125280",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3125280/corliss-waitman",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WaitCo00.htm",
       "name": "Corliss Waitman",
       "position": "P",
@@ -6957,7 +8352,7 @@
       "otcId": "1671",
       "otcSlug": "jon-weeks",
       "otcUrl": "https://overthecap.com/player/jon-weeks/1671/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/13729",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/13729/jon-weeks",
       "pfrUrl": "https://www.pro-football-reference.com/players/W/WeekJo00.htm",
       "name": "Jon Weeks",
       "position": "LS",
@@ -7008,11 +8403,66 @@
       }
     },
     {
+      "id": "3920814",
+      "otcId": "9052",
+      "otcSlug": "austen-pleasants",
+      "otcUrl": "https://overthecap.com/player/austen-pleasants/9052/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3920814/austen-pleasants",
+      "pfrUrl": "https://www.pro-football-reference.com/players/P/PleaAu00.htm",
+      "name": "Austen Pleasants",
+      "position": "OT",
+      "jersey": 62,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3920814.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 1075000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1075000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1075000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4431523",
       "otcId": "12609",
       "otcSlug": "connor-colby",
       "otcUrl": "https://overthecap.com/player/connor-colby/12609/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431523",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431523/connor-colby",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/ColbCo00.htm",
       "name": "Connor Colby",
       "position": "G",
@@ -7145,7 +8595,7 @@
       "otcId": "13298",
       "otcSlug": "jaden-dugger",
       "otcUrl": "https://overthecap.com/player/jaden-dugger/13298/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5086161",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/5086161/jaden-dugger",
       "pfrUrl": "https://www.pro-football-reference.com/players/D/DuggJa00.htm",
       "name": "Jaden Dugger",
       "position": "LB",
@@ -7317,7 +8767,7 @@
       "otcId": "13323",
       "otcSlug": "enrique-cruz-jr",
       "otcUrl": "https://overthecap.com/player/enrique-cruz-jr/13323/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4691556",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4691556/enrique-cruz-jr",
       "pfrUrl": "https://www.pro-football-reference.com/players/C/CruzEn00.htm",
       "name": "Enrique Cruz Jr.",
       "position": "OT",
@@ -7489,7 +8939,7 @@
       "otcId": "12587",
       "otcSlug": "kurtis-rourke",
       "otcUrl": "https://overthecap.com/player/kurtis-rourke/12587/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430431",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430431/kurtis-rourke",
       "pfrUrl": "https://www.pro-football-reference.com/players/R/RourKu01.htm",
       "name": "Kurtis Rourke",
       "position": "QB",
@@ -7622,8 +9072,8 @@
       "otcId": "13808",
       "otcSlug": "james-thompson-jr",
       "otcUrl": "https://overthecap.com/player/james-thompson-jr/13808/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693371",
-      "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomJa01.htm",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4693371/james-thompson-jr",
+      "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomJa06.htm",
       "name": "James Thompson Jr.",
       "position": "DT",
       "jersey": 96,
@@ -7751,11 +9201,144 @@
       }
     },
     {
+      "id": "4686308",
+      "otcId": "12473",
+      "otcSlug": "c-j-west",
+      "otcUrl": "https://overthecap.com/player/c-j-west/12473/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4686308/cj-west",
+      "pfrUrl": "https://www.pro-football-reference.com/players/W/WestCJ00.htm",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 844440,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 844440,
+          "transactions": {
+            "cut": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 844440,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1120000,
+          "proratedSigning": 252773,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1372773,
+          "transactions": {
+            "cut": {
+              "deadMoney": 505546,
+              "capSavings": 867227
+            },
+            "june_1_cut": {
+              "deadMoney": 252773,
+              "capSavings": 1120000
+            },
+            "trade": {
+              "deadMoney": 505546,
+              "capSavings": 867227
+            },
+            "june_1_trade": {
+              "deadMoney": 252773,
+              "capSavings": 1120000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 35000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 1235000,
+          "proratedSigning": 252773,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1487773,
+          "transactions": {
+            "cut": {
+              "deadMoney": 252773,
+              "capSavings": 1235000
+            },
+            "june_1_cut": {
+              "deadMoney": 252773,
+              "capSavings": 1235000
+            },
+            "trade": {
+              "deadMoney": 252773,
+              "capSavings": 1235000
+            },
+            "june_1_trade": {
+              "deadMoney": 252773,
+              "capSavings": 1235000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 112000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4775220",
       "otcId": "12877",
       "otcSlug": "sebastian-valdez",
       "otcUrl": "https://overthecap.com/player/sebastian-valdez/12877/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4775220",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4775220/sebastian-valdez",
       "pfrUrl": "https://www.pro-football-reference.com/players/V/ValdSe00.htm",
       "name": "Sebastian Valdez",
       "position": "DT",
@@ -7800,6 +9383,1074 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 96000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4239088",
+      "otcId": "9627",
+      "otcSlug": "darrick-forrest",
+      "otcUrl": "https://overthecap.com/player/darrick-forrest/9627/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4239088/darrick-forrest",
+      "pfrUrl": "https://www.pro-football-reference.com/players/F/ForrDa00.htm",
+      "name": "Darrick Forrest",
+      "position": "S",
+      "jersey": 29,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239088.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 565000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 565000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4247590",
+      "otcId": "10232",
+      "otcSlug": "nick-zakelj",
+      "otcUrl": "https://overthecap.com/player/nick-zakelj/10232/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4247590/nick-zakelj",
+      "pfrUrl": "https://www.pro-football-reference.com/players/Z/ZakeNi00.htm",
+      "name": "Nick Zakelj",
+      "position": "OT",
+      "jersey": 63,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4247590.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 565000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 565000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 565000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4394894",
+      "otcId": "11136",
+      "otcSlug": "andrew-farmer",
+      "otcUrl": "https://overthecap.com/player/andrew-farmer/11136/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4394894/andrew-farmer-ii",
+      "pfrUrl": "https://www.pro-football-reference.com/players/F/FarmAn00.htm",
+      "name": "Andrew Farmer",
+      "position": "DE",
+      "jersey": 50,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4394894.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 540000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 540000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 540000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4696051",
+      "otcId": "13807",
+      "otcSlug": "mikail-kamara",
+      "otcUrl": "https://overthecap.com/player/mikail-kamara/13807/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4696051/mikail-kamara",
+      "pfrUrl": "https://www.pro-football-reference.com/players/K/KamaMi00.htm",
+      "name": "Mikail Kamara",
+      "position": "DE",
+      "jersey": 59,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696051.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "ir",
+          "baseSalary": 515000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 515000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 515000,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "baseSalary": 1050000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1050000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 1050000
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 1050000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 1050000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 1050000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 60000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 96000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "baseSalary": 1165000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1165000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 1165000
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 1165000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 1165000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 1165000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 152000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4034862",
+      "otcId": "9857",
+      "otcSlug": "jack-stoll",
+      "otcUrl": "https://overthecap.com/player/jack-stoll/9857/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4034862/jack-stoll",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/StolJa00.htm",
+      "name": "Jack Stoll",
+      "position": "TE",
+      "jersey": 89,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034862.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 353322,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 353322,
+          "transactions": {
+            "cut": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 353322,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4570410",
+      "otcId": "11079",
+      "otcSlug": "jalen-graham",
+      "otcUrl": "https://overthecap.com/player/jalen-graham/11079/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4570410/jalen-graham",
+      "pfrUrl": "https://www.pro-football-reference.com/players/G/GrahJa02.htm",
+      "name": "Jalen Graham",
+      "position": "LB",
+      "jersey": 41,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570410.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 347222,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 347222,
+          "transactions": {
+            "cut": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 347222,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4242555",
+      "otcId": "9757",
+      "otcSlug": "foster-sarell",
+      "otcUrl": "https://overthecap.com/player/foster-sarell/9757/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242555/foster-sarell",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/SareFo00.htm",
+      "name": "Foster Sarell",
+      "position": "OT",
+      "jersey": null,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242555.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 330300,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 330300,
+          "transactions": {
+            "cut": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 330300,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "3052667",
+      "otcId": "7045",
+      "otcSlug": "ogbonnia-okoronkwo",
+      "otcUrl": "https://overthecap.com/player/ogbonnia-okoronkwo/7045/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3052667/ogbo-okoronkwo",
+      "pfrUrl": "https://www.pro-football-reference.com/players/O/OkorOg00.htm",
+      "name": "Ogbonnia Okoronkwo",
+      "position": "LB",
+      "jersey": 59,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052667.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 251350,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 251350,
+          "transactions": {
+            "cut": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 251350,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4888723",
+      "otcId": "13813",
+      "otcSlug": "wesley-grimes",
+      "otcUrl": "https://overthecap.com/player/wesley-grimes/13813/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4888723/wesley-grimes",
+      "pfrUrl": "https://www.pro-football-reference.com/players/G/GrimWe00.htm",
+      "name": "Wesley Grimes",
+      "position": "WR",
+      "jersey": 18,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4888723.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4428144",
+      "otcId": "11976",
+      "otcSlug": "drake-nugent",
+      "otcUrl": "https://overthecap.com/player/drake-nugent/11976/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428144/drake-nugent",
+      "pfrUrl": "https://www.pro-football-reference.com/players/N/NugeDr00.htm",
+      "name": "Drake Nugent",
+      "position": "C",
+      "jersey": 66,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428144.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4699678",
+      "otcId": "13810",
+      "otcSlug": "khalil-dinkins",
+      "otcUrl": "https://overthecap.com/player/khalil-dinkins/13810/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4699678/khalil-dinkins",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DinkKh00.htm",
+      "name": "Khalil Dinkins",
+      "position": "TE",
+      "jersey": 43,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4699678.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4430104",
+      "otcId": "10663",
+      "otcSlug": "sincere-mccormick",
+      "otcUrl": "https://overthecap.com/player/sincere-mccormick/10663/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430104/sincere-mccormick",
+      "pfrUrl": "https://www.pro-football-reference.com/players/M/McCoSi00.htm",
+      "name": "Sincere McCormick",
+      "position": "RB",
+      "jersey": 35,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430104.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4683114",
+      "otcId": "13811",
+      "otcSlug": "will-pauling",
+      "otcUrl": "https://overthecap.com/player/will-pauling/13811/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683114/will-pauling",
+      "pfrUrl": "https://www.pro-football-reference.com/players/P/PaulWi00.htm",
+      "name": "Will Pauling",
+      "position": "WR",
+      "jersey": 84,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683114.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4683155",
+      "otcId": "13812",
+      "otcSlug": "jalen-stroman",
+      "otcUrl": "https://overthecap.com/player/jalen-stroman/13812/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683155/jalen-stroman",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/StroJa03.htm",
+      "name": "Jalen Stroman",
+      "position": "S",
+      "jersey": 38,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683155.png",
+      "unit": "Defense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4576069",
+      "otcId": "11901",
+      "otcSlug": "brandon-codrington",
+      "otcUrl": "https://overthecap.com/player/brandon-codrington/11901/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4576069/brandon-codrington",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CodrBr00.htm",
+      "name": "Brandon Codrington",
+      "position": "CB",
+      "jersey": null,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4576069.png",
+      "unit": "Defense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 247500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 247500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 247500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4692680",
+      "otcId": "11705",
+      "otcSlug": "mckinnley-jackson",
+      "otcUrl": "https://overthecap.com/player/mckinnley-jackson/11705/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4692680/mckinnley-jackson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/J/JackMc00.htm",
+      "name": "McKinnley Jackson",
+      "position": "DT",
+      "jersey": null,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692680.png",
+      "unit": "Defense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 233750,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 233750,
+          "transactions": {
+            "cut": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 233750,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4374148",
+      "otcId": "10953",
+      "otcSlug": "viliami-fehoko",
+      "otcUrl": "https://overthecap.com/player/viliami-fehoko/10953/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4374148/viliami-fehoko-jr",
+      "pfrUrl": "https://www.pro-football-reference.com/players/F/FehoVi00.htm",
+      "name": "Viliami Fehoko",
+      "position": "DE",
+      "jersey": 61,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374148.png",
+      "unit": "Defense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 192500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 192500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4386544",
+      "otcId": "11126",
+      "otcSlug": "xavier-smith",
+      "otcUrl": "https://overthecap.com/player/xavier-smith/11126/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4386544/xavier-smith",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/SmitXa00.htm",
+      "name": "Xavier Smith",
+      "position": "WR",
+      "jersey": null,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "practice_squad",
+          "baseSalary": 192500,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 192500,
+          "transactions": {
+            "cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 192500,
+              "capSavings": 0
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
             }
           }
         }

@@ -11,6 +11,13 @@ import {
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
+import {
+  buildEspnPlayerUrl,
+  buildEspnTeamInjuriesUrl,
+  buildEspnTeamLogoUrl,
+  buildPfrHeadToHeadUrl,
+  sanitizeExternalUrl
+} from '../engine/linkIntegrity.js';
 
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
 const GITHUB_RAW_DATA_BASE = 'https://raw.githubusercontent.com/joshal7/49ers/main/data';
@@ -500,6 +507,7 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
           });
 
           const imgThumb = post?.embed?.images?.[0]?.thumb || extEmbed?.thumb || '';
+          const safeExtUrl = sanitizeExternalUrl(extEmbed?.uri, null);
 
           existingUrls.add(postUrl);
           existingTextKeys.add(textKey);
@@ -509,14 +517,14 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
             title: tweetDisplay.text,
             fullText: cleanFull,
             isFullTweet: tweetDisplay.isFullTweet,
-            summary: extEmbed?.title ? cleanSensationalistText(extEmbed.title) : '',
+            summary: safeExtUrl && extEmbed?.title ? cleanSensationalistText(extEmbed.title) : '',
             imageUrl: typeof imgThumb === 'string' && imgThumb.startsWith('https://') ? imgThumb : '',
             imageAlt: `${parsedAttr.reporterName} tweet`,
             mentionedPlayers: mentioned,
             publishedAt: pubIso,
             url: postUrl,
-            externalUrl: typeof extEmbed?.uri === 'string' && extEmbed.uri.startsWith('https://') ? extEmbed.uri : null,
-            externalTitle: extEmbed?.title ? cleanSensationalistText(extEmbed.title) : null,
+            externalUrl: safeExtUrl,
+            externalTitle: safeExtUrl && extEmbed?.title ? cleanSensationalistText(extEmbed.title) : null,
             outletId: parsedAttr.outletId,
             outletName: parsedAttr.outletName,
             reporterId: parsedAttr.reporterId,
@@ -712,12 +720,6 @@ export async function hydrateLiveEspnOverlay(appData) {
       }
 
       if (weekAdvanced) {
-        const PFR_CODES = {
-          ARI: 'crd', ATL: 'atl', BAL: 'rav', BUF: 'buf', CAR: 'car', CHI: 'chi', CIN: 'cin', CLE: 'cle',
-          DAL: 'dal', DEN: 'den', DET: 'det', GB: 'gnb', HOU: 'htx', IND: 'clt', JAX: 'jax', KC: 'kan',
-          LAC: 'sdg', LAR: 'ram', LV: 'rai', MIA: 'mia', MIN: 'min', NE: 'nwe', NO: 'nor', NYG: 'nyg',
-          NYJ: 'nyj', PHI: 'phi', PIT: 'pit', SEA: 'sea', SF: 'sfo', TB: 'tam', TEN: 'oti', WAS: 'was'
-        };
         const dt = nextGame.dateIso ? new Date(nextGame.dateIso) : null;
         const kickoffFmt = dt && !Number.isNaN(dt.getTime())
           ? `${dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/Los_Angeles' })} • ${dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles' })} PT (${nextGame.broadcast || 'NFL'})`
@@ -727,7 +729,7 @@ export async function hydrateLiveEspnOverlay(appData) {
         um.gameUrl = nextGame.gameUrl || um.gameUrl;
         um.oppAbbr = oppAbbr;
         um.oppName = nextGame.opponent?.name || oppAbbr;
-        um.oppLogoUrl = nextGame.opponent?.logoUrl || `https://a.espncdn.com/i/teamlogos/nfl/500/${oppAbbr.toLowerCase()}.png`;
+        um.oppLogoUrl = nextGame.opponent?.logoUrl || buildEspnTeamLogoUrl(oppAbbr);
         um.homeAway = nextGame.homeAway || 'home';
         um.kickoffIso = nextGame.dateIso || um.kickoffIso;
         um.kickoffDisplay = kickoffFmt;
@@ -737,12 +739,12 @@ export async function hydrateLiveEspnOverlay(appData) {
           summary: `Week ${nextWk} schematic matchup pitting Kyle Shanahan's 21/11-personnel motion and Wide-9 defensive front against ${um.oppName} (${um.oppRecord}).`
         };
         if (um.franchiseHistory) {
-          um.franchiseHistory.pfrQueryUrl = `https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=sfo&tm2=${PFR_CODES[oppAbbr] || oppAbbr.toLowerCase()}&yr=all`;
+          um.franchiseHistory.pfrQueryUrl = buildPfrHeadToHeadUrl('SF', oppAbbr);
         }
         if (um.opponentHealth) {
           um.opponentHealth.teamAbbr = oppAbbr;
           um.opponentHealth.teamName = um.oppName;
-          um.opponentHealth.teamInjuriesUrl = `https://www.espn.com/nfl/team/injuries/_/name/${oppAbbr.toLowerCase()}`;
+          um.opponentHealth.teamInjuriesUrl = buildEspnTeamInjuriesUrl(oppAbbr);
           um.opponentHealth.keyStartersHealthy = [];
           um.opponentHealth.irReserve = [];
         }
@@ -888,7 +890,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           position: ath.position?.abbreviation || 'ATH',
           jersey: null,
           headshotUrl: headshot.startsWith('http://') ? `https://${headshot.slice(7)}` : headshot,
-          espnUrl: espnId ? `https://www.espn.com/nfl/player/_/id/${espnId}` : null,
+          espnUrl: buildEspnPlayerUrl(espnId, nm),
           wed,
           thu,
           fri,
@@ -922,9 +924,8 @@ export async function hydrateLiveEspnOverlay(appData) {
     for (const art of espnNewsRaw.articles) {
       const title = cleanSensationalistText(art.headline || '');
       if (!title) continue;
-      let url = art.links?.web?.href || '';
-      if (url.startsWith('http://')) url = `https://${url.slice(7)}`;
-      if (!url.startsWith('https://') || existingUrls.has(url)) continue;
+      const url = sanitizeExternalUrl(art.links?.web?.href, null);
+      if (!url || existingUrls.has(url)) continue;
 
       const summary = cleanSensationalistText(art.description || '');
       const sig = scoreContentSignal(title, summary);

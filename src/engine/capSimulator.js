@@ -25,7 +25,7 @@ export const ROSTER_REPLACEMENT_MIN_SALARY = 960_000;
  * @param {object} [options] - { baseYear?: string, applyReplacementRule?: boolean }
  */
 export function simulateCapScenario(capData, selectedActions = {}, options = {}) {
-  const baseYear = String(options.baseYear || '2026');
+  const baseYear = String(options.baseYear || Object.keys(capData?.years || {}).sort()[0] || '2026');
   const nextYear = String(Number(baseYear) + 1);
   const year3 = String(Number(baseYear) + 2);
   const applyReplacementRule = options.applyReplacementRule !== false;
