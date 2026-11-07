@@ -352,20 +352,24 @@ async function main() {
 
     console.log('\n=== [2/9] Home Dashboard, Season State Machine & Persistent Drag/Tap Reordering ===');
 
-    await runStep('Home Dashboard renders active seasonal modules, hides off-cycle modules to Vault, zero overflow', async () => {
+    await runStep('Home Dashboard renders active seasonal modules, crisp vector SVG icons, hides off-cycle modules to Vault, zero overflow', async () => {
       await cdp.assertNoOverflow('Home Dashboard (iPhone 16 393x852)');
       const homeInfo = await cdp.eval(() => {
         const bannerText = document.getElementById('phaseBanner')?.textContent || '';
         const recordText = document.getElementById('headerRecordPill')?.textContent?.trim();
         const customizeBtn = document.querySelector('[data-action="toggle-customize-layout"]');
         const reorderBarText = document.querySelector('.reorder-bar')?.textContent || '';
-        return { bannerText, recordText, hasCustomize: Boolean(customizeBtn), reorderBarText };
+        const navSvgCount = document.querySelectorAll('.bottom-nav svg.ui-icon').length;
+        const cardBadgeSvgCount = document.querySelectorAll('.card-icon-badge svg.ui-icon').length;
+        return { bannerText, recordText, hasCustomize: Boolean(customizeBtn), reorderBarText, navSvgCount, cardBadgeSvgCount };
       });
 
       assert(homeInfo.recordText === '6-1', `Expected header record 6-1, got ${homeInfo.recordText}`);
       assert(homeInfo.bannerText.length > 10, 'Phase banner should display active NFL window');
       assert(homeInfo.hasCustomize, 'Missing Customize Order button');
       assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
+      assert(homeInfo.navSvgCount === 5, `Expected 5 SVG icons in bottom nav, got ${homeInfo.navSvgCount}`);
+      assert(homeInfo.cardBadgeSvgCount >= 6, `Expected >=6 SVG card icon badges on Home Dashboard, got ${homeInfo.cardBadgeSvgCount}`);
     });
 
     await runStep('Customizing Dashboard card order via Up/Down + HTML5 Drag/Drop persists across reload & resets cleanly', async () => {
