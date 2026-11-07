@@ -1,4 +1,4 @@
-const CACHE_NAME = 'joshal-49ers-hq-v1';
+const CACHE_NAME = 'joshal-49ers-hq-v3';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -33,7 +33,8 @@ const CORE_ASSETS = [
   './data/seasonal.json',
   './data/podcasts/index.json',
   './assets/app-icon.svg',
-  './assets/apple-touch-icon.png'
+  './assets/apple-touch-icon.png',
+  './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', event => {

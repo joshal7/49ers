@@ -154,11 +154,12 @@ a:hover {
 }
 
 .brand-medallion {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   flex-shrink: 0;
-  border: 1px solid var(--gold);
+  border: 1px solid rgba(229, 207, 150, 0.65);
+  box-shadow: 0 2px 8px rgba(170, 0, 0, 0.42);
 }
 
 .brand-titles {
@@ -637,6 +638,14 @@ a:hover {
   -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-subtle);
+  background:
+    linear-gradient(to right, var(--bg-elevated) 24%, rgba(20, 24, 31, 0)),
+    linear-gradient(to left, var(--bg-elevated) 24%, rgba(20, 24, 31, 0)) 100% 0,
+    radial-gradient(farthest-side at 0 50%, rgba(179, 153, 93, 0.25), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(179, 153, 93, 0.28), rgba(0, 0, 0, 0)) 100% 0;
+  background-repeat: no-repeat;
+  background-size: 28px 100%, 28px 100%, 12px 100%, 12px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .data-table {

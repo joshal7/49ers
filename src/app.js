@@ -945,7 +945,10 @@ async function init() {
   // Register Offline-Ready Service Worker (handle both pre-load and post-async-init readyState)
   if ('serviceWorker' in navigator) {
     const registerSw = () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+      navigator.serviceWorker
+        .register('./sw.js')
+        .then(reg => reg.update().catch(() => {}))
+        .catch(() => {});
     };
     if (document.readyState === 'complete') {
       registerSw();
