@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>49ers Nerd HQ — 49ers.joshal.com</title>
+  <meta name="description" content="High-signal San Francisco 49ers facts, All-22 film synthesis, player spider charts, CBA cap simulator, injury play-probability models, Monte Carlo playoff odds, and Autopodcast Studio." />
+
+  <!-- iPhone 16 Safari Home Screen Shortcut & Chrome Mobile PWA Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="49ers HQ" />
+  <meta name="theme-color" content="#0B0D10" id="metaThemeColor" />
+
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./assets/app-icon.svg" />
+  <link rel="apple-touch-icon" sizes="512x512" href="./assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="./src/styles.css?v=1" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sticky Header -->
+    <header class="top-header" role="banner">
+      <div class="header-row">
+        <div class="brand-lockup" id="brandHomeTrigger" style="cursor:pointer" title="Return to Dashboard">
+          <img src="./assets/app-icon.svg" alt="49ers HQ" class="brand-medallion" width="34" height="34" />
+          <div class="brand-titles">
+            <h1 class="brand-name">
+              <span>49ers Nerd HQ</span>
+              <span class="record-pill mono" id="headerRecordPill">6-1</span>
+            </h1>
+            <div class="brand-sub" id="headerSubStatus">#1 Seed NFC • Updated Live</div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button type="button" id="openArchiveBtn" class="icon-btn" aria-label="Open Seasonal & Off-Cycle Vault">
+            <span>🗄️ Vault</span>
+          </button>
+          <button type="button" id="openSettingsBtn" class="icon-btn" aria-label="Settings & Source Filters">
+            <span>⚙️</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dynamic Season Phase Banner -->
+    <section id="phaseBanner" class="phase-banner" aria-label="Active NFL Season Phase"></section>
+
+    <!-- Primary Dynamic View Container -->
+    <main id="mainView" class="main-view" role="main" aria-live="polite">
+      <div class="card">
+        <div class="card-eyebrow">Loading 2026 Ledger</div>
+        <h2 class="card-title">Initializing 49ers Nerd HQ Feeds…</h2>
+      </div>
+    </main>
+  </div>
+
+  <!-- Sticky Podcast Mini-Player (Docked above Bottom Nav when active) -->
+  <aside id="miniPlayer" class="mini-player" hidden aria-label="Autopodcast Mini Player">
+    <div class="mini-player-inner">
+      <div class="mini-player-info" id="miniPlayerExpandTrigger">
+        <div class="mini-player-title" id="miniPlayerTitle">—</div>
+        <div class="mini-player-time mono" id="miniPlayerTime">0:00 / 0:00</div>
+      </div>
+      <div class="mini-player-controls">
+        <button type="button" class="mp-btn" id="mpBack15Btn" aria-label="Rewind 15 seconds">-15s</button>
+        <button type="button" class="mp-btn play" id="mpPlayPauseBtn" aria-label="Play or Pause">▶</button>
+        <button type="button" class="mp-btn" id="mpFwd30Btn" aria-label="Forward 30 seconds">+30s</button>
+        <button type="button" class="mp-btn mono" id="mpSpeedBtn" aria-label="Playback Speed">1x</button>
+        <button type="button" class="mp-btn" id="mpCloseBtn" aria-label="Close Mini Player">✕</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sticky 5-Tab Bottom Navigation -->
+  <nav class="bottom-nav" role="navigation" aria-label="Primary Sections">
+    <div class="bottom-nav-inner">
+      <button type="button" class="nav-tab-btn active" data-nav-tab="home">
+        <span class="nav-icon" aria-hidden="true">🏠</span>
+        <span>Home</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-nav-tab="news">
+        <span class="nav-icon" aria-hidden="true">📰</span>
+        <span>News &amp; Film</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-nav-tab="roster">
+        <span class="nav-icon" aria-hidden="true">🏈</span>
+        <span>Roster &amp; Cap</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-nav-tab="season">
+        <span class="nav-icon" aria-hidden="true">📊</span>
+        <span>Game &amp; Season</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-nav-tab="audio">
+        <span class="nav-icon" aria-hidden="true">🎧</span>
+        <span>Audio &amp; AI</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Universal Slide-Up Bottom Sheet (Player Dossier / Settings / Archive Vault / Podcast Transcript) -->
+  <div id="bottomSheetBackdrop" class="sheet-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="bottom-sheet" id="bottomSheetContainer">
+      <div class="sheet-header">
+        <div style="min-width:0">
+          <div class="card-eyebrow" id="sheetEyebrow">49ers Dossier</div>
+          <h2 class="card-title" id="sheetTitle" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Details</h2>
+        </div>
+        <button type="button" id="closeSheetBtn" class="icon-btn" aria-label="Close Sheet">✕ Close</button>
+      </div>
+      <div class="sheet-body" id="sheetBody"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/app.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+{
+  "updatedAt": "2026-11-07T06:44:08.571Z",
+  "week": 9,
+  "byeWeek": 8,
+  "remainingIrDesignations": 6,
+  "maxRegularSeasonIrDesignations": 8,
+  "practiceReport": [
+    {
+      "playerId": "3126486",
+      "name": "Deebo Samuel Sr.",
+      "position": "WR",
+      "jersey": 19,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Hamstring",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Officially inactive (Out / Reserve / Reinstatement pending)"
+      ],
+      "beatComment": "With Samuel absent from the initial stage of practice Friday after sitting out Wednesday's and Thursday's sessions, he's trending toward an absence Sunday against the Raiders, as is fellow WR Mike Evans (Achilles). Confirmation of the duo's status is set to arrive later Friday once the 49ers' final Week 9 injury report is posted."
+    },
+    {
+      "playerId": "16737",
+      "name": "Mike Evans",
+      "position": "WR",
+      "jersey": 5,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Achilles",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Officially inactive (Out / Reserve / Reinstatement pending)"
+      ],
+      "beatComment": "GM John Lynch said on KNBR radio Thursday that Evans is unlikely to play in Week 9 due to the right Achilles injury he aggravated in Week 6 against the Commanders, per Matt Maiocco of NBC Sports Bay Area. After not practicing in any capacity Wednesday and Thursday, Evans indeed will miss a second consecutive contest. Fellow WRs Deebo Samuel (hamstring) and Christian Kirk (knee) will join Evans on the sideline Sunday, leaving Jordan Watkins, Brandin Cooks and Jacob Cowing as the only options at the position on the 49ers' active roster. The team also may activate Demarcus Robinson (ankle) from IR on Saturday after he was listed as questionable."
+    },
+    {
+      "playerId": "3895856",
+      "name": "Christian Kirk",
+      "position": "WR",
+      "jersey": 3,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Knee - Meniscus",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Officially inactive (Out / Reserve / Reinstatement pending)"
+      ],
+      "beatComment": "After opening the year on injured reserve with a calf injury, Kirk finally got healthy and played 20 snaps in a Week 7 loss to Atlanta. Other injuries at wide receiver opened up an opportunity, but now it seems Kirk is more likely to go back on IR than make an impact in the coming weeks."
+    },
+    {
+      "playerId": "4360438",
+      "name": "Brandon Aiyuk",
+      "position": "WR",
+      "jersey": 11,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Personal",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Multi-ligament knee recovery + roster/contract reinstatement holdout status.",
+      "factors": [
+        "Officially inactive (Out / Reserve / Reinstatement pending)"
+      ],
+      "beatComment": "Pelissero notes that the NFL Management Council and the NFL Players Association are both involved in trying to reaching a resolution that is agreeable to both Aiyuk and the 49ers. It's possible that the embattled wideout could ultimately agree to pay back the money in order to potentially have an opportunity to move on with another club, but there's also a chance the issue goes to arbitration. Aiyuk is planning to show up at San Francisco's facility Friday, though that is unlikely to bring the matter to a close. In fact, it could take an extended period of time to sort out a path forward, especially if arbitration is brought into play."
+    },
+    {
+      "playerId": "3057524",
+      "name": "Siran Neal",
+      "position": "S",
+      "jersey": 33,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "LP",
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 78,
+      "playBadgeLabel": "78% • True GTD",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Friday Limited (LP) — anchored to player Questionable play prior (78%)"
+      ],
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "4565200",
+      "name": "Upton Stout",
+      "position": "CB",
+      "jersey": 20,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "LP",
+      "injuryType": "Shoulder - AC Joint",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 82,
+      "playBadgeLabel": "82% • True GTD",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Friday Limited (LP) — anchored to player Questionable play prior (78%)",
+        "Manageable pain-tolerance injury profile (Shoulder - AC Joint)"
+      ],
+      "beatComment": "Coach Kyle Shanahan said that Stout was only going to enter the game in an emergency scenario for the 49ers' secondary. The team hopes the Week 8 bye will allow Stout's shoulder sprain to fully heal ahead of the Week 9 showdown with the Raiders."
+    },
+    {
+      "playerId": "4361741",
+      "name": "Brock Purdy",
+      "position": "QB",
+      "jersey": 13,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "High availability prior; rarely misses starts if throwing full velocity by Thursday.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Purdy put together an impressive passing yardage total, especially considering he was down both Mike Evans (Achilles) and Deebo Samuel (hamstring), along with De'Zhaun Stribling (IR, ankle) and Demarcus Robinson (IR, ankle). He also lost Christian McCaffrey for the entirety of the second quarter due to a leg injury that the star back eventually returned from, but the scarcity of his top pass catchers eventually led to a more mistake-filled performance than usual. The multi-interception tally was Purdy's first of the season, and the two picks led to 10 points for the Falcons. Purdy should have a chance to work with a deeper pass-catching corps in a Week 9 home matchup against the Raiders on Sunday, Nov. 8, as the Week 8 bye should offer multiple receivers a chance to recover from their respective injuries."
+    },
+    {
+      "playerId": "4040605",
+      "name": "Nick Bosa",
+      "position": "DE",
+      "jersey": 97,
+      "wed": "LP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "knee",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Regularly takes lighter Wednesday load; high active conversion once cleared for Thursday/Friday pass-rush reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Bosa was sidelined for the 49ers' last five contests before their bye in Week 8 because of a nagging knee injury, but after an extra week of rest, he'll return to action in Week 9. He might not get his full regular workload right away, but he should play a significant role on the edge Sunday."
+    },
+    {
+      "playerId": "3138826",
+      "name": "Fred Warner",
+      "position": "LB",
+      "jersey": 54,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "six solo",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Ironman prior — has played through fractured ankle/foot tags; missed almost zero games due to Questionable tags.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Warner led the 49ers in tackles, finishing one ahead of Dre Greenlaw. It was the fourth time through seven games that Warner has notched double-digit stops. The star linebacker ranks second in the NFL with 71 tackles through seven games."
+    },
+    {
+      "playerId": "3117251",
+      "name": "Christian McCaffrey",
+      "position": "RB",
+      "jersey": 23,
+      "wed": "LP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "hamstring",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Scheduled Wednesday maintenance workload; high vigilance on calf/Achilles tightness.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "McCaffrey was a limited practice participant Thursday and Friday, which was enough for him to gain clearance to suit up in Week 9. He was hampered by a left hamstring injury during the 49ers' last game in Week 7 in Atlanta, when he handled a season-low 52 percent snap share but still notched 100 yards from scrimmage and a rushing TD on 13 touches."
+    },
+    {
+      "playerId": "3916903",
+      "name": "Dre Greenlaw",
+      "position": "LB",
+      "jersey": 57,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "four solo",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Greenlaw missed Week 6 against Washington while on suspension but returned Sunday and logged a season-high 91 percent defensive snap share. The veteran linebacker tied his season high with 12 tackles, finishing one behind Fred Warner for the team lead. Greenlaw is enjoying a productive return to San Francisco with 49 tackles and a forced fumble through six contests."
+    },
+    {
+      "playerId": "16002",
+      "name": "Kyle Juszczyk",
+      "position": "FB",
+      "jersey": 44,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Extreme durability prior; routinely plays through hand/finger/shoulder tags.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Juszczyk garnered multiple targets for the fifth straight game that he's played in, and he was able to reach paydirt for the second time this season, reeling in a one-yard touchdown pass from Brock Purdy in the fourth quarter. The fullback has yet to log a carry this season, and he's caught eight of 11 targets for 76 yards and two touchdowns over six contests so far during the 2026 campaign."
+    },
+    {
+      "playerId": "3116097",
+      "name": "Luke Gifford",
+      "position": "LB",
+      "jersey": 51,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "FP",
+      "injuryType": "groin",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Gifford hurt his groin in Week 6 against Washington and didn't play in Week 7 versus Atlanta. However, San Francisco's Week 8 bye appears to have done him well, as the veteran linebacker returned to practice this week with an LP/LP/FP progression. Gifford has played primarily on special teams when healthy this season and will probably continue in that role against Las Vegas."
+    },
+    {
+      "playerId": "4034949",
+      "name": "Eddy Pineiro",
+      "position": "PK",
+      "jersey": 18,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Pineiro went without a field-goal try for the second time this season, and he hasn't made multiple field goals in a contest since Week 1. To make matters worse, the kicker missed an extra-point try for the second straight week, and he's now 21-for-25 on PATs over the first seven games this season. With the 49ers off next week, Pineiro's next chance to be more involved will come in Week 9 against the Raiders."
+    },
+    {
+      "playerId": "16731",
+      "name": "Brandin Cooks",
+      "position": "WR",
+      "jersey": 84,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Cooks was in line to serve as the 49ers' top wide receiver for Week 7 due to the absences of Mike Evans (Achilles) and Deebo Samuel (hamstring). Cooks' 45 offensive snaps were second-most among 49ers wideouts behind Jordan Watkins (50), although the former had only once catch to show for his extra playing time, which didn't happen until the final minute of the fourth quarter. Cooks has three catches (on seven targets) for 33 yards and a touchdown over his last three games, but his role could shrink significantly following the 49ers' Week 8 bye depending on the statuses of Evans, Samuel Christian Kirk and Demarcus Robinson (ankle, IR)."
+    },
+    {
+      "playerId": "4696044",
+      "name": "Kaelon Black",
+      "position": "RB",
+      "jersey": 26,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Christian McCaffrey suffered a thigh injury in the opening period that eventually led to him missing the entire second quarter, affording Black expanded opportunity. The rookie made good use of the extra touches, averaging a career-high 5.3 yards per carry and recording his highest rushing yardage total since his Week 1 NFL debut. Black also rang up his first TD as a professional, a 30-yard breakaway run on the first play of the second quarter. However, the rookie made a key mistake when he lost a fumble with San Francisco nearing the red zone in the second quarter. McCaffrey did return to the game for the second half and now has the Week 8 bye to recover, so Black could be back to a more reduced role in a Week 9 home matchup against the Raiders on Sunday, Nov. 8."
+    },
+    {
+      "playerId": "4575665",
+      "name": "Jacob Cowing",
+      "position": "WR",
+      "jersey": 4,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Cowing and the other 49ers pass catchers operated in expanded roles Sunday due to the absences of both Mike Evans (Achilles) and Deebo Samuel (hamstring). Cowing was on the field for 26 of the 49ers' 66 offensive snaps (39.4 percent), which was third most behind Jordan Watkins (50) and Brandin Cooks (45). Cowing put up season highs in catches, receiving yards and rushing yards, but his role could shrink significantly following the 49ers' Week 8 bye depending on the statuses of Evans, Samuel, Christian Kirk and Demarcus Robinson (ankle, IR), with rookie second-rounder De'Zhaun Stribling (ankle, IR) not expected back until December, per David Lombardi of SFStandard.com."
+    },
+    {
+      "playerId": "4431466",
+      "name": "Jordan Watkins",
+      "position": "WR",
+      "jersey": 17,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "With the 49ers' receiving corps down all of Mike Evans (Achilles), Deebo Samuel (hamstring), De'Zhaun Stribling (IR, ankle) and Demarcus Robinson (IR, ankle), Watkins saw an expanded role and made good use of the opportunity. All three of Watkins' catches went for first downs, and he finished third on the team in receiving yards and targets while also tying for that slotting in receptions. The 2025 fourth-round pick's performance was encouraging, but he's likely to slide back down the depth chart since the wide-receiver room could be much healthier by the time San Francisco returns to action against the Raiders on Sunday, Nov. 8, following the Week 8 bye."
+    },
+    {
+      "playerId": "4685397",
+      "name": "Jordan James",
+      "position": "RB",
+      "jersey": 29,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Cleared / Post-Bye",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Most of James' on-field work Sunday came on special teams. Both of his touches on offense happened on back-to-back plays in the second quarter, coinciding with the absence of Christian McCaffrey, the latter of whom was playing through a thigh injury during most of Sunday's contest. The only way James would see consistent playing time on offense is if one of McCaffrey or rookie Kaelon Black were to miss time. The 49ers will get some additional rest thanks to the Week 8 bye, and their next game takes place Week 9 against the Raiders on Sunday, Nov. 8."
+    },
+    {
+      "playerId": "4693337",
+      "name": "Marques Sigle",
+      "position": "S",
+      "jersey": 36,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "ankle",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Sigle missed the 49ers' last three games before their bye in Week 8 due to an ankle injury he sustained back in Week 4 versus the Broncos, but he's now set to get back on the field in Week 9. He projects to start at safety next to Ji'Ayir Brown against Las Vegas on Sunday."
+    },
+    {
+      "playerId": "4241807",
+      "name": "Garret Wallow",
+      "position": "LB",
+      "jersey": 49,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "FP",
+      "injuryType": "hamstring",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "playBadgeLabel": "95% • Probable",
+      "archetypeNote": "Standard NFL positional availability baseline.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Wallow was sidelined due to a strained hamstring Weeks 6 and 7, but San Francisco's Week 8 bye gave him some extra recovery time. With an LP/LP/FP practice progression under his belt this week, the veteran linebacker is set to return to action against the Raiders. Wallow typically plays less than a quarter of the 49ers' defensive snaps, so he's not a recommended IDP option in fantasy."
+    },
+    {
+      "playerId": "13241",
+      "name": "Trent Williams",
+      "position": "OT",
+      "jersey": 71,
+      "wed": "Vet Rest",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "NIR - Veteran Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Habitual Wed/Thu veteran rest; suits up at ~98% when NIR-Rest, but historically cautious with acute high/low ankle sprains.",
+      "factors": [
+        "Habitual Veteran Rest prior (Trent Williams maintenance schedule)"
+      ],
+      "beatComment": ""
+    }
+  ],
+  "irAndReserveTracker": [
+    {
+      "playerId": "3126486",
+      "name": "Deebo Samuel Sr.",
+      "position": "WR",
+      "jersey": 19,
+      "injuryType": "Hamstring",
+      "status": "Out / Reserve",
+      "placedBeforeWeek": 6,
+      "earliestEligibleWeek": 11,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "With Samuel absent from the initial stage of practice Friday after sitting out Wednesday's and Thursday's sessions, he's trending toward an absence Sunday against the Raiders, as is fellow WR Mike Evans (Achilles). Confirmation of the duo's status is set to arrive later Friday once the 49ers' final Week 9 injury report is posted."
+    },
+    {
+      "playerId": "16737",
+      "name": "Mike Evans",
+      "position": "WR",
+      "jersey": 5,
+      "injuryType": "Achilles",
+      "status": "Out / Reserve",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "GM John Lynch said on KNBR radio Thursday that Evans is unlikely to play in Week 9 due to the right Achilles injury he aggravated in Week 6 against the Commanders, per Matt Maiocco of NBC Sports Bay Area. After not practicing in any capacity Wednesday and Thursday, Evans indeed will miss a second consecutive contest. Fellow WRs Deebo Samuel (hamstring) and Christian Kirk (knee) will join Evans on the sideline Sunday, leaving Jordan Watkins, Brandin Cooks and Jacob Cowing as the only options at the position on the 49ers' active roster. The team also may activate Demarcus Robinson (ankle) from IR on Saturday after he was listed as questionable."
+    },
+    {
+      "playerId": "3895856",
+      "name": "Christian Kirk",
+      "position": "WR",
+      "jersey": 3,
+      "injuryType": "Knee - Meniscus",
+      "status": "Out / Reserve",
+      "placedBeforeWeek": 4,
+      "earliestEligibleWeek": 9,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "After opening the year on injured reserve with a calf injury, Kirk finally got healthy and played 20 snaps in a Week 7 loss to Atlanta. Other injuries at wide receiver opened up an opportunity, but now it seems Kirk is more likely to go back on IR than make an impact in the coming weeks."
+    },
+    {
+      "playerId": "4360438",
+      "name": "Brandon Aiyuk",
+      "position": "WR",
+      "jersey": 11,
+      "injuryType": "Personal",
+      "status": "Out / Reserve",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": 5,
+      "projectedReturnWeek": "TBD (Reinstatement / Trade Resolution)",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Pelissero notes that the NFL Management Council and the NFL Players Association are both involved in trying to reaching a resolution that is agreeable to both Aiyuk and the 49ers. It's possible that the embattled wideout could ultimately agree to pay back the money in order to potentially have an opportunity to move on with another club, but there's also a chance the issue goes to arbitration. Aiyuk is planning to show up at San Francisco's facility Friday, though that is unlikely to bring the matter to a close. In fact, it could take an extended period of time to sort out a path forward, especially if arbitration is brought into play."
+    },
+    {
+      "playerId": "4430835",
+      "name": "Alfred Collins",
+      "position": "DT",
+      "jersey": 95,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 6,
+      "earliestEligibleWeek": 11,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4394894",
+      "name": "Andrew Farmer II",
+      "position": "DE",
+      "jersey": 50,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "3920814",
+      "name": "Austen Pleasants",
+      "position": "OT",
+      "jersey": 62,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 4,
+      "earliestEligibleWeek": 9,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "3129116",
+      "name": "Brett Toth",
+      "position": "C",
+      "jersey": 78,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4686308",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 6,
+      "earliestEligibleWeek": 11,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4239088",
+      "name": "Darrick Forrest",
+      "position": "S",
+      "jersey": 29,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4710714",
+      "name": "De'Zhaun Stribling",
+      "position": "WR",
+      "jersey": 7,
+      "injuryType": "Ankle",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 4,
+      "earliestEligibleWeek": 9,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Stribling, who garnered his share of preseason fantasy buzz, was injured in the 49ers' Week 1 win over the Rams, but it appears as though the wideout is making solid progress in his recovery. A firm timetable for the 2026 second-rounder's return to practice hasn't been outlined yet, but David Lombardi of SFStandard.com previously noted that Stribling (ankle) remains on track to return at some point in December, a notion supported by Barrows' report."
+    },
+    {
+      "playerId": "3043116",
+      "name": "Demarcus Robinson",
+      "position": "WR",
+      "jersey": 11,
+      "injuryType": "Ankle",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "San Francisco GM John Lynch also made optimistic comments about Robinson, who was a limited practice participant Wednesday through Friday. With WRs Mike Evans (Achilles) and Deebo Samuel (hamstring) out for at least one more week, Robinson would join Jordan Watkins, Brandin Cooks and Jacob Cowing as the healthy wide receivers on the active roster. The 49ers need to activate Robinson by 4 p.m. ET on Saturday to have him available for Sunday's home game against the Raiders."
+    },
+    {
+      "playerId": "4372561",
+      "name": "Isaac Guerendo",
+      "position": "RB",
+      "jersey": 31,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 6,
+      "earliestEligibleWeek": 11,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4259147",
+      "name": "Jake Tonges",
+      "position": "TE",
+      "jersey": 88,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4696051",
+      "name": "Mikail Kamara",
+      "position": "DE",
+      "jersey": 59,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 4,
+      "earliestEligibleWeek": 9,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4240542",
+      "name": "Nate Hobbs",
+      "position": "CB",
+      "jersey": 22,
+      "injuryType": "Groin",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Hobbs was limited all week after the 49ers allowed him to return to practice Wednesday, and he's still on injured reserve going into the weekend. If he's not activated before Sunday's contest, rookie fourth-rounder Ephesians Prysock could remain a candidate for a few reps at cornerback in Week 9."
+    },
+    {
+      "playerId": "4573188",
+      "name": "Nick Martin",
+      "position": "LB",
+      "jersey": 45,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 6,
+      "earliestEligibleWeek": 11,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4247590",
+      "name": "Nick Zakelj",
+      "position": "OT",
+      "jersey": 63,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4428209",
+      "name": "Ricky Pearsall",
+      "position": "WR",
+      "jersey": 1,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 4,
+      "earliestEligibleWeek": 9,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    },
+    {
+      "playerId": "4569497",
+      "name": "Sam Okuayinonu",
+      "position": "DT",
+      "jersey": 91,
+      "injuryType": "Reserve / IR",
+      "status": "Injured Reserve",
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Week 11–12",
+      "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
+      "beatNote": "Rehabbing on side field with training staff."
+    }
+  ]
+}

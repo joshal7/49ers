@@ -1,0 +1,28 @@
+{
+  "updatedAt": "2026-11-07T06:44:08.571Z",
+  "seasonYear": 2026,
+  "currentWeek": 9,
+  "teamRecord": "6-1",
+  "standingSummary": "1st in NFC West • #1 Seed in NFC",
+  "pointDifferential": "+58 (197 PF / 139 PA)",
+  "byeWeek": 8,
+  "calendar": {
+    "seasonYear": 2026,
+    "kickoffStart": "2026-09-04T00:00:00-07:00",
+    "tradeWindowStart": "2026-10-01T00:00:00-07:00",
+    "tradeDeadline": "2026-11-10T13:00:00-08:00",
+    "playoffPushStart": "2026-12-08T00:00:00-08:00",
+    "regularSeasonEnd": "2027-01-11T06:00:00-08:00",
+    "superBowlEnd": "2027-02-15T00:00:00-08:00",
+    "draftDay1Start": "2027-04-22T17:00:00-07:00",
+    "draftEnd": "2027-04-24T21:00:00-07:00",
+    "postUdfaEnd": "2027-05-16T23:59:59-07:00",
+    "prevDraftStart": "2026-04-23T17:00:00-07:00",
+    "prevPostUdfaEnd": "2026-05-17T23:59:59-07:00"
+  },
+  "teamStatus": {
+    "currentWeek": 9,
+    "mathematicallyEliminated": false,
+    "eliminatedAt": null
+  }
+}

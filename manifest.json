@@ -1,0 +1,24 @@
+{
+  "name": "49ers Nerd HQ",
+  "short_name": "49ers HQ",
+  "description": "High-signal San Francisco 49ers analytics, roster spider charts, cap simulator, injury models, playoff Monte Carlo, beat synthesis, and Autopodcast PWA.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0B0D10",
+  "theme_color": "#0B0D10",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/app-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

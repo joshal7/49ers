@@ -1,0 +1,23 @@
+name = "49ers-nerd-hq-worker"
+main = "index.js"
+compatibility_date = "2026-11-01"
+
+# 100% Free-Tier Cloudflare Bindings:
+# 1. KV Namespace for shared friend-group caching of Deep Analyses & Episode metadata
+[[kv_namespaces]]
+binding = "SHARED_CACHE"
+id = "REPLACE_WITH_YOUR_FREE_KV_NAMESPACE_ID"
+
+# 2. R2 Bucket (10 GB free storage, $0 egress) for cached multi-speaker Autopodcast audio files
+[[r2_buckets]]
+binding = "PODCAST_BUCKET"
+bucket_name = "49ers-autopodcasts"
+
+[vars]
+ALLOWED_ORIGIN = "https://49ers.joshal.com"
+GEMINI_TEXT_MODEL = "gemini-2.5-flash"
+GEMINI_AUDIO_MODEL = "gemini-2.5-flash-preview-tts"
+
+# Secrets configured via `npx wrangler secret put <NAME>`:
+# - GROUP_PASSCODE: Shared passcode for Josh & ~24 friends
+# - GEMINI_API_KEY: Free-tier Google AI Studio API key

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#170406"/>
+      <stop offset="55%" stop-color="#0B0D10"/>
+      <stop offset="100%" stop-color="#1A150E"/>
+    </linearGradient>
+    <linearGradient id="scarletGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#8F0000"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E5CF96"/>
+      <stop offset="50%" stop-color="#B3995D"/>
+      <stop offset="100%" stop-color="#8A713B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- App Icon Rounded Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+
+  <!-- Subtle Analytics Grid Lines -->
+  <g stroke="#B3995D" stroke-opacity="0.11" stroke-width="2">
+    <line x1="64" y1="136" x2="448" y2="136"/>
+    <line x1="64" y1="256" x2="448" y2="256"/>
+    <line x1="64" y1="376" x2="448" y2="376"/>
+    <line x1="176" y1="64" x2="176" y2="448"/>
+    <line x1="336" y1="64" x2="336" y2="448"/>
+  </g>
+
+  <!-- Outer Metallic Gold Medallion Oval -->
+  <ellipse cx="256" cy="248" rx="204" ry="132" fill="url(#goldGrad)"/>
+  <ellipse cx="256" cy="248" rx="192" ry="120" fill="#0B0D10"/>
+  <ellipse cx="256" cy="248" rx="182" ry="110" fill="url(#scarletGrad)"/>
+  <ellipse cx="256" cy="248" rx="172" ry="100" fill="none" stroke="#E5CF96" stroke-opacity="0.45" stroke-width="3"/>
+
+  <!-- Bold Saloon Slab "49" Typography -->
+  <text x="256" y="286"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="900"
+        font-size="132"
+        letter-spacing="-4"
+        fill="#FFFFFF"
+        stroke="#0B0D10"
+        stroke-width="8"
+        paint-order="stroke fill">49</text>
+
+  <!-- Bottom Metallic Gold Analytics Badge ("NERD HQ") -->
+  <rect x="136" y="388" width="240" height="44" rx="22" fill="#14181F" stroke="url(#goldGrad)" stroke-width="3"/>
+  <text x="256" y="416"
+        text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif"
+        font-weight="800"
+        font-size="22"
+        letter-spacing="4"
+        fill="#E5CF96">NERD HQ</text>
+</svg>

@@ -1,0 +1,734 @@
+{
+  "updatedAt": "2026-11-07T06:44:08.571Z",
+  "schedule": [
+    {
+      "week": 1,
+      "dateIso": "2026-09-11T00:35Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 27,
+      "oppScore": 7,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "LAR",
+        "name": "Los Angeles Rams",
+        "record": "4-4",
+        "pointDiff": 26,
+        "coach": "Sean McVay"
+      },
+      "venue": {
+        "name": "Melbourne Cricket Ground",
+        "city": "Melbourne",
+        "country": "Australia",
+        "isInternational": true,
+        "internationalNote": "🌏 International Series — Melbourne, Australia (MCG • 100,000 cap)",
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 3.5,
+      "totalLine": 47.5,
+      "broadcast": "Netflix"
+    },
+    {
+      "week": 2,
+      "dateIso": "2026-09-20T20:25Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 35,
+      "oppScore": 13,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "MIA",
+        "name": "Miami Dolphins",
+        "record": "1-6",
+        "pointDiff": -64,
+        "coach": "Jeff Hafley"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 3,
+      "spreadLineSf": -12.5,
+      "totalLine": 44.5,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 3,
+      "dateIso": "2026-09-27T20:05Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 36,
+      "oppScore": 30,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "ARI",
+        "name": "Arizona Cardinals",
+        "record": "3-5",
+        "pointDiff": -63,
+        "coach": "Jonathan Gannon"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": -7.5,
+      "totalLine": 48.5,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 4,
+      "dateIso": "2026-10-04T20:25Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 24,
+      "oppScore": 14,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "DEN",
+        "name": "Denver Broncos",
+        "record": "6-2",
+        "pointDiff": 7,
+        "coach": "Sean Payton"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": -3,
+      "totalLine": 48.5,
+      "broadcast": "CBS"
+    },
+    {
+      "week": 5,
+      "dateIso": "2026-10-11T20:25Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 32,
+      "oppScore": 29,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "SEA",
+        "name": "Seattle Seahawks",
+        "record": "4-4",
+        "pointDiff": 26,
+        "coach": "Mike Macdonald"
+      },
+      "venue": {
+        "name": "Lumen Field",
+        "city": "Seattle",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 3,
+      "totalLine": 46.5,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 6,
+      "dateIso": "2026-10-20T00:15Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 23,
+      "oppScore": 17,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "WAS",
+        "name": "Washington Commanders",
+        "record": "2-4-1",
+        "pointDiff": -23,
+        "coach": "Dan Quinn"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": -7.5,
+      "totalLine": 51.5,
+      "broadcast": "ESPN"
+    },
+    {
+      "week": 7,
+      "dateIso": "2026-10-25T17:00Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "L",
+      "sfScore": 20,
+      "oppScore": 29,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "ATL",
+        "name": "Atlanta Falcons",
+        "record": "3-5",
+        "pointDiff": -18,
+        "coach": "Raheem Morris"
+      },
+      "venue": {
+        "name": "Mercedes-Benz Stadium",
+        "city": "Atlanta",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": -1,
+      "spreadLineSf": -2.5,
+      "totalLine": 49.5,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 9,
+      "dateIso": "2026-11-08T21:25Z",
+      "statusDetail": "11/8 - 4:25 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "LV",
+        "name": "Las Vegas Raiders",
+        "record": "4-4",
+        "pointDiff": -9,
+        "coach": "Klint Kubliak"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 7,
+      "spreadLineSf": -10,
+      "totalLine": 51.5,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 10,
+      "dateIso": "2026-11-15T21:25Z",
+      "statusDetail": "11/15 - 4:25 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "DAL",
+        "name": "Dallas Cowboys",
+        "record": "3-5",
+        "pointDiff": 6,
+        "coach": "Brian Schottenheimer"
+      },
+      "venue": {
+        "name": "AT&T Stadium",
+        "city": "Arlington",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": -3.5,
+      "totalLine": 53.5,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 11,
+      "dateIso": "2026-11-23T01:20Z",
+      "statusDetail": "11/22 - 8:20 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "MIN",
+        "name": "Minnesota Vikings",
+        "record": "6-1",
+        "pointDiff": 47,
+        "coach": "Kevin O'Connell"
+      },
+      "venue": {
+        "name": "Estadio Banorte",
+        "city": "Mexico City",
+        "country": "Mexico",
+        "isInternational": true,
+        "internationalNote": "🇲🇽 International Series — Mexico City (7,200 ft High Altitude)",
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "NBC"
+    },
+    {
+      "week": 12,
+      "dateIso": "2026-11-29T21:25Z",
+      "statusDetail": "11/29 - 4:25 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "SEA",
+        "name": "Seattle Seahawks",
+        "record": "4-4",
+        "pointDiff": 26,
+        "coach": "Mike Macdonald"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": -7,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 13,
+      "dateIso": "2026-12-06T18:00Z",
+      "statusDetail": "12/6 - 1:00 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "NYG",
+        "name": "New York Giants",
+        "record": "4-2-1",
+        "pointDiff": 2,
+        "coach": "John Harbaugh"
+      },
+      "venue": {
+        "name": "MetLife Stadium",
+        "city": "East Rutherford",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 14,
+      "dateIso": "2026-12-13T21:25Z",
+      "statusDetail": "12/13 - 4:25 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "LAR",
+        "name": "Los Angeles Rams",
+        "record": "4-4",
+        "pointDiff": 26,
+        "coach": "Sean McVay"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": -3,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "Fox"
+    },
+    {
+      "week": 15,
+      "dateIso": "2026-12-18T01:15Z",
+      "statusDetail": "12/17 - 8:15 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "LAC",
+        "name": "Los Angeles Chargers",
+        "record": "0-7",
+        "pointDiff": -76,
+        "coach": "Jim Harbaugh"
+      },
+      "venue": {
+        "name": "SoFi Stadium",
+        "city": "Inglewood",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "Prime Video"
+    },
+    {
+      "week": 16,
+      "dateIso": "2026-12-27T21:25Z",
+      "statusDetail": "12/27 - 4:25 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "KC",
+        "name": "Kansas City Chiefs",
+        "record": "5-2",
+        "pointDiff": 36,
+        "coach": "Andy Reid"
+      },
+      "venue": {
+        "name": "Arrowhead Stadium",
+        "city": "Kansas City",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 4,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "CBS"
+    },
+    {
+      "week": 17,
+      "dateIso": "2027-01-04T01:20Z",
+      "statusDetail": "1/3 - 8:20 PM EST",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "home",
+      "opponent": {
+        "abbr": "PHI",
+        "name": "Philadelphia Eagles",
+        "record": "2-6",
+        "pointDiff": -65,
+        "coach": "Nick Sirianni"
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": -3,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "NBC"
+    },
+    {
+      "week": 18,
+      "dateIso": "2027-01-10T05:00Z",
+      "statusDetail": "TBD",
+      "completed": false,
+      "result": null,
+      "sfScore": null,
+      "oppScore": null,
+      "homeAway": "away",
+      "opponent": {
+        "abbr": "ARI",
+        "name": "Arizona Cardinals",
+        "record": "3-5",
+        "pointDiff": -63,
+        "coach": "Jonathan Gannon"
+      },
+      "venue": {
+        "name": "State Farm Stadium",
+        "city": "Glendale",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "NFL"
+    }
+  ],
+  "teamStatRankings": [
+    {
+      "key": "total_off_epa_game",
+      "label": "Offensive Total EPA / Game",
+      "category": "Advanced Offense",
+      "rank": 1,
+      "displayValue": "+11.33",
+      "leagueAvgDisplay": "+0.39"
+    },
+    {
+      "key": "passing_epa_game",
+      "label": "Passing EPA / Game",
+      "category": "Advanced Offense",
+      "rank": 3,
+      "displayValue": "+9.03",
+      "leagueAvgDisplay": "1.88"
+    },
+    {
+      "key": "passing_cpoe",
+      "label": "Completion % Over Expected (CPOE)",
+      "category": "Advanced Offense",
+      "rank": 5,
+      "displayValue": "+4.25%",
+      "leagueAvgDisplay": "0.38%"
+    },
+    {
+      "key": "rushing_epa_game",
+      "label": "Rushing EPA / Game",
+      "category": "Advanced Offense",
+      "rank": 2,
+      "displayValue": "+2.29",
+      "leagueAvgDisplay": "-1.49"
+    },
+    {
+      "key": "yards_per_pass_att",
+      "label": "Net Yards / Pass Attempt",
+      "category": "Standard Offense",
+      "rank": 4,
+      "displayValue": "8.28 yds",
+      "leagueAvgDisplay": "7.09 yds"
+    },
+    {
+      "key": "sack_rate_allowed",
+      "label": "Sacks Allowed Rate (Pass Protection)",
+      "category": "Advanced Offense",
+      "rank": 1,
+      "displayValue": "3.2%",
+      "leagueAvgDisplay": "6.6%"
+    },
+    {
+      "key": "explosive_plays_game",
+      "label": "Explosive Plays / Game (20+ Pass, 10+ Rush)",
+      "category": "Advanced Offense",
+      "rank": 3,
+      "displayValue": "7.1",
+      "leagueAvgDisplay": "5.6"
+    },
+    {
+      "key": "rush_yds_game",
+      "label": "Rushing Yards / Game",
+      "category": "Standard Offense",
+      "rank": 8,
+      "displayValue": "127.4 yds",
+      "leagueAvgDisplay": "112.9 yds"
+    },
+    {
+      "key": "def_sacks_game",
+      "label": "Defensive Sacks / Game",
+      "category": "Standard Defense",
+      "rank": 20,
+      "displayValue": "2.14",
+      "leagueAvgDisplay": "2.27"
+    },
+    {
+      "key": "def_tfl_game",
+      "label": "Tackles For Loss (TFL) / Game",
+      "category": "Advanced Defense",
+      "rank": 28,
+      "displayValue": "3.43",
+      "leagueAvgDisplay": "4.63"
+    },
+    {
+      "key": "def_takeaways_game",
+      "label": "Defensive Takeaways (INT + FR) / Game",
+      "category": "Standard Defense",
+      "rank": 27,
+      "displayValue": "1.00",
+      "leagueAvgDisplay": "1.26"
+    }
+  ],
+  "powerRankings": {
+    "weekLabel": "Entering Week 9 (Post-Bye Consensus)",
+    "consensusRank": 2,
+    "previousRank": 3,
+    "rangeDisplay": "#1 – #3 across 6 national & market power models",
+    "synthesizedTakeaway": "National evaluators and market Elo/EPA models universally place the 6-1 49ers in the NFL's top tier (#2 overall, #1 in the NFC). Analysts point to SF thriving offensively despite early-season WR/DE attrition—and project a defensive leap now that Nick Bosa joins DeForest Buckner and Osa Odighizuwa.",
+    "sources": [
+      {
+        "outlet": "Inpredictable / Betting Market Power Rating",
+        "rank": 1,
+        "delta": "+1",
+        "blurb": "Market spreads price SF as the #1 neutral-field roster in football (+6.4 pts over average) with Bosa & CMC active."
+      },
+      {
+        "outlet": "The Athletic NFL Power Rankings",
+        "rank": 2,
+        "delta": "+1",
+        "blurb": "Sitting at 6-1 coming out of the bye with DeForest Buckner added to the interior makes San Francisco the clear NFC pace-setter."
+      },
+      {
+        "outlet": "ESPN NFL Nation Power Panel",
+        "rank": 2,
+        "delta": "0",
+        "blurb": "Brock Purdy's efficiency (+4.25% CPOE) has kept the offense humming while the defensive line reloads for November."
+      },
+      {
+        "outlet": "NFL.com (Eric Edholm)",
+        "rank": 3,
+        "delta": "+1",
+        "blurb": "The Week 7 stumble in Atlanta is the lone blemish; health arrow is pointing sharply up ahead of the Raiders visit."
+      },
+      {
+        "outlet": "Sharp Football / EPA Composite",
+        "rank": 2,
+        "delta": "0",
+        "blurb": "Top-3 dropback EPA combined with the league's #2 pass-block sack avoidance."
+      }
+    ]
+  },
+  "upcomingMatchup": {
+    "week": 9,
+    "kickoffIso": "2026-11-08T13:25:00-08:00",
+    "kickoffDisplay": "Sunday, Nov 8, 2026 • 1:25 PM PT (CBS)",
+    "venue": "Levi's Stadium • Santa Clara, CA (Natural Bermuda Grass)",
+    "sfRecord": "6-1 (#1 Seed in NFC)",
+    "oppAbbr": "LV",
+    "oppName": "Las Vegas Raiders",
+    "oppRecord": "4-4",
+    "betting": {
+      "favorite": "San Francisco 49ers",
+      "spread": "SF -10.0",
+      "openingSpread": "SF -8.5 (Moved 1.5 pts toward SF following Nick Bosa clearance)",
+      "overUnder": 51.5,
+      "moneyline": "SF -520 | LV +390",
+      "impliedScore": "SF 30.8 – LV 20.8",
+      "restAdvantage": "+7 Days Rest (SF off Week 8 Bye vs. LV standard 7-day week)"
+    },
+    "franchiseHistory": {
+      "recentRecord": "5-2 in last 7 meetings",
+      "lastMeetingNote": "SF defeated LV 37-34 in OT on Jan 1, 2023 behind Brock Purdy & Robbie Gould.",
+      "recentGames": [
+        {
+          "season": 2022,
+          "date": "2023-01-01",
+          "venue": "Away",
+          "scoreDisplay": "SF 37, LV 34",
+          "sfWon": true,
+          "overtime": true
+        },
+        {
+          "season": 2018,
+          "date": "2018-11-01",
+          "venue": "Home",
+          "scoreDisplay": "SF 34, OAK 3",
+          "sfWon": true,
+          "overtime": false
+        },
+        {
+          "season": 2014,
+          "date": "2014-12-07",
+          "venue": "Away",
+          "scoreDisplay": "SF 13, OAK 24",
+          "sfWon": false,
+          "overtime": false
+        },
+        {
+          "season": 2010,
+          "date": "2010-10-17",
+          "venue": "Home",
+          "scoreDisplay": "SF 17, OAK 9",
+          "sfWon": true,
+          "overtime": false
+        },
+        {
+          "season": 2006,
+          "date": "2006-10-08",
+          "venue": "Home",
+          "scoreDisplay": "SF 34, OAK 20",
+          "sfWon": true,
+          "overtime": false
+        },
+        {
+          "season": 2002,
+          "date": "2002-11-03",
+          "venue": "Away",
+          "scoreDisplay": "SF 23, OAK 20",
+          "sfWon": true,
+          "overtime": true
+        },
+        {
+          "season": 2000,
+          "date": "2000-10-08",
+          "venue": "Home",
+          "scoreDisplay": "SF 28, OAK 34",
+          "sfWon": false,
+          "overtime": true
+        }
+      ]
+    },
+    "coachingMatchup": {
+      "headline": "Kyle Shanahan vs. Raiders HC Klint Kubiak (Former 2023 49ers Passing Game Specialist)",
+      "summary": "Klint Kubiak spent the entire 2023 Super Bowl LVIII run inside Kyle Shanahan's offensive meeting room as San Francisco's Passing Game Specialist. Both offenses major in wide-zone marriage to deep over/boot play-action, meaning Fred Warner and Deommodore Lenoir have practiced hundreds of reps against Kubiak's exact route spacing.",
+      "bullets": [
+        "Shanahan Post-Bye Track Record: Under Shanahan (2017–2026), SF is 7-2 straight-up coming off the Bye week when starting QB1 is healthy, averaging +0.21 offensive EPA/play on scripted opening-15 plays.",
+        "Countering Maxx Crosby (Edge #98): Crosby never leaves the field (~96% defensive snaps). Expect Shanahan to run high-frequency screen/draw punishers and 21-personnel Kittle/Juszczyk edge chips whenever Crosby flips over RT Colton McKivitz.",
+        "49ers Wide-9 vs. Raiders IOL: Pairing DeForest Buckner + Osa Odighizuwa on interior stunts directly targets Las Vegas's interior pass protection."
+      ]
+    },
+    "keyMatchupsMatrix": [
+      {
+        "unitMatchup": "49ers Pass Protection (3.2% Sack Rate, #2 NFL) vs. Maxx Crosby & Raiders Front",
+        "advantage": "SF Slight Edge",
+        "nerdyDetail": "Trent Williams + quick 2.64s release options neutralize prolonged edge wins; watch Kittle chip-to-flat releases on 3rd & medium."
+      },
+      {
+        "unitMatchup": "Purdy Play-Action & Middle-of-Field (+63.2 Pass EPA) vs. Raiders Linebacker/Safety Coverage",
+        "advantage": "SF Heavy Edge",
+        "nerdyDetail": "SF leads the NFC in yards per attempt on in-breaking digs/crossers between the numbers (11.4 YPA)."
+      },
+      {
+        "unitMatchup": "Nick Bosa + DeForest Buckner + Odighizuwa vs. Raiders Pocket & Outside Zone",
+        "advantage": "SF Heavy Edge",
+        "nerdyDetail": "First game all season with SF's complete A-list defensive line active simultaneously."
+      }
+    ]
+  }
+}

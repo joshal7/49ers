@@ -1,0 +1,1775 @@
+{
+  "updatedAt": "2026-11-07T06:44:08.571Z",
+  "week": 9,
+  "units": [
+    {
+      "id": "16",
+      "unitName": "Defense (Wide-9 Base 4-3 & Nickel 4-2-5)",
+      "rows": [
+        {
+          "slotKey": "lde",
+          "slotLabel": "LDE (Wide-9)",
+          "baselineChain": [
+            {
+              "playerId": "4243493",
+              "name": "Keion White",
+              "jersey": 56,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4432244",
+              "name": "Romello Height",
+              "jersey": 94,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4039029",
+              "name": "Khalid Kareem",
+              "jersey": 47,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4569497",
+              "name": "Sam Okuayinonu",
+              "jersey": 91,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4696051",
+              "name": "Mikail Kamara",
+              "jersey": 59,
+              "baselineRank": 5,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4243493",
+              "name": "Keion White",
+              "jersey": 56,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4432244",
+              "name": "Romello Height",
+              "jersey": 94,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4039029",
+              "name": "Khalid Kareem",
+              "jersey": 47,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4569497",
+              "name": "Sam Okuayinonu",
+              "jersey": 91,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4696051",
+              "name": "Mikail Kamara",
+              "jersey": 59,
+              "baselineRank": 5,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "ldt",
+          "slotLabel": "LDT (1/2i)",
+          "baselineChain": [
+            {
+              "playerId": "4035840",
+              "name": "Osa Odighizuwa",
+              "jersey": 92,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4775220",
+              "name": "Sebastian Valdez",
+              "jersey": 55,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4686308",
+              "name": "C.J. West",
+              "jersey": 99,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4035840",
+              "name": "Osa Odighizuwa",
+              "jersey": 92,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4775220",
+              "name": "Sebastian Valdez",
+              "jersey": 55,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4686308",
+              "name": "C.J. West",
+              "jersey": 99,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rdt",
+          "slotLabel": "RDT (3-Tech)",
+          "baselineChain": [
+            {
+              "playerId": "2971282",
+              "name": "DeForest Buckner",
+              "jersey": null,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685369",
+              "name": "Gracen Halton",
+              "jersey": 93,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4693371",
+              "name": "James Thompson Jr.",
+              "jersey": 96,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430835",
+              "name": "Alfred Collins",
+              "jersey": 95,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "2971282",
+              "name": "DeForest Buckner",
+              "jersey": null,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685369",
+              "name": "Gracen Halton",
+              "jersey": 93,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4693371",
+              "name": "James Thompson Jr.",
+              "jersey": 96,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430835",
+              "name": "Alfred Collins",
+              "jersey": 95,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rde",
+          "slotLabel": "RDE (Wide-9)",
+          "baselineChain": [
+            {
+              "playerId": "4040605",
+              "name": "Nick Bosa",
+              "jersey": 97,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685623",
+              "name": "Mykel Williams",
+              "jersey": 98,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4394894",
+              "name": "Andrew Farmer II",
+              "jersey": 50,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4040605",
+              "name": "Nick Bosa",
+              "jersey": 97,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685623",
+              "name": "Mykel Williams",
+              "jersey": 98,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4394894",
+              "name": "Andrew Farmer II",
+              "jersey": 50,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "wlb",
+          "slotLabel": "WILL LB",
+          "baselineChain": [
+            {
+              "playerId": "3916903",
+              "name": "Dre Greenlaw",
+              "jersey": 57,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4241807",
+              "name": "Garret Wallow",
+              "jersey": 49,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3916903",
+              "name": "Dre Greenlaw",
+              "jersey": 57,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4241807",
+              "name": "Garret Wallow",
+              "jersey": 49,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "mlb",
+          "slotLabel": "MIKE LB",
+          "baselineChain": [
+            {
+              "playerId": "3138826",
+              "name": "Fred Warner",
+              "jersey": 54,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4426698",
+              "name": "Tatum Bethune",
+              "jersey": 48,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4573188",
+              "name": "Nick Martin",
+              "jersey": 45,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3138826",
+              "name": "Fred Warner",
+              "jersey": 54,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4426698",
+              "name": "Tatum Bethune",
+              "jersey": 48,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4573188",
+              "name": "Nick Martin",
+              "jersey": 45,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "slb",
+          "slotLabel": "SAM LB (4-3)",
+          "baselineChain": [
+            {
+              "playerId": "5086161",
+              "name": "Jaden Dugger",
+              "jersey": 53,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3116097",
+              "name": "Luke Gifford",
+              "jersey": 51,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "5086161",
+              "name": "Jaden Dugger",
+              "jersey": 53,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3116097",
+              "name": "Luke Gifford",
+              "jersey": 51,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "lcb",
+          "slotLabel": "LCB",
+          "baselineChain": [
+            {
+              "playerId": "4427325",
+              "name": "Renardo Green",
+              "jersey": 0,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4427325",
+              "name": "Renardo Green",
+              "jersey": 0,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "ss",
+          "slotLabel": "SS",
+          "baselineChain": [
+            {
+              "playerId": "4693337",
+              "name": "Marques Sigle",
+              "jersey": 36,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4696211",
+              "name": "Malik Mustapha",
+              "jersey": 6,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3057524",
+              "name": "Siran Neal",
+              "jersey": 33,
+              "baselineRank": 3,
+              "playProbabilityPct": 78,
+              "statusBadge": "78% • True GTD",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4693337",
+              "name": "Marques Sigle",
+              "jersey": 36,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4696211",
+              "name": "Malik Mustapha",
+              "jersey": 6,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3057524",
+              "name": "Siran Neal",
+              "jersey": 33,
+              "baselineRank": 3,
+              "playProbabilityPct": 78,
+              "statusBadge": "78% • True GTD",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "fs",
+          "slotLabel": "FS",
+          "baselineChain": [
+            {
+              "playerId": "4693644",
+              "name": "Ji'Ayir Brown",
+              "jersey": 27,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3858271",
+              "name": "Ashtyn Davis",
+              "jersey": 24,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4239088",
+              "name": "Darrick Forrest",
+              "jersey": 29,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4693644",
+              "name": "Ji'Ayir Brown",
+              "jersey": 27,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3858271",
+              "name": "Ashtyn Davis",
+              "jersey": 24,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4239088",
+              "name": "Darrick Forrest",
+              "jersey": 29,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rcb",
+          "slotLabel": "RCB",
+          "baselineChain": [
+            {
+              "playerId": "4242488",
+              "name": "Deommodore Lenoir",
+              "jersey": 2,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685523",
+              "name": "Ephesians Prysock",
+              "jersey": 28,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4240542",
+              "name": "Nate Hobbs",
+              "jersey": 22,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4242488",
+              "name": "Deommodore Lenoir",
+              "jersey": 2,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685523",
+              "name": "Ephesians Prysock",
+              "jersey": 28,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4240542",
+              "name": "Nate Hobbs",
+              "jersey": 22,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "nb",
+          "slotLabel": "NICKEL CB (4-2-5)",
+          "baselineChain": [
+            {
+              "playerId": "4565200",
+              "name": "Upton Stout",
+              "jersey": 20,
+              "baselineRank": 1,
+              "playProbabilityPct": 82,
+              "statusBadge": "82% • True GTD",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3858271",
+              "name": "Ashtyn Davis",
+              "jersey": 24,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4565200",
+              "name": "Upton Stout",
+              "jersey": 20,
+              "baselineRank": 1,
+              "playProbabilityPct": 82,
+              "statusBadge": "82% • True GTD",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3858271",
+              "name": "Ashtyn Davis",
+              "jersey": 24,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "unitName": "Special Teams",
+      "rows": [
+        {
+          "slotKey": "pk",
+          "slotLabel": "PK",
+          "baselineChain": [
+            {
+              "playerId": "4034949",
+              "name": "Eddy Pineiro",
+              "jersey": 18,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4034949",
+              "name": "Eddy Pineiro",
+              "jersey": 18,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "p",
+          "slotLabel": "P",
+          "baselineChain": [
+            {
+              "playerId": "3125280",
+              "name": "Corliss Waitman",
+              "jersey": 15,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3125280",
+              "name": "Corliss Waitman",
+              "jersey": 15,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "h",
+          "slotLabel": "H",
+          "baselineChain": [
+            {
+              "playerId": "3125280",
+              "name": "Corliss Waitman",
+              "jersey": 15,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3125280",
+              "name": "Corliss Waitman",
+              "jersey": 15,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "pr",
+          "slotLabel": "PR",
+          "baselineChain": [
+            {
+              "playerId": "4575665",
+              "name": "Jacob Cowing",
+              "jersey": 4,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4431466",
+              "name": "Jordan Watkins",
+              "jersey": 17,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4575665",
+              "name": "Jacob Cowing",
+              "jersey": 4,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4431466",
+              "name": "Jordan Watkins",
+              "jersey": 17,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "kr",
+          "slotLabel": "KR",
+          "baselineChain": [
+            {
+              "playerId": "3126486",
+              "name": "Deebo Samuel Sr.",
+              "jersey": 19,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4685397",
+              "name": "Jordan James",
+              "jersey": 29,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4575665",
+              "name": "Jacob Cowing",
+              "jersey": 4,
+              "baselineRank": 3,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4372561",
+              "name": "Isaac Guerendo",
+              "jersey": 31,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4685397",
+              "name": "Jordan James",
+              "jersey": 29,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4575665",
+              "name": "Jacob Cowing",
+              "jersey": 4,
+              "baselineRank": 3,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3126486",
+              "name": "Deebo Samuel Sr.",
+              "jersey": 19,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4372561",
+              "name": "Isaac Guerendo",
+              "jersey": 31,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "ls",
+          "slotLabel": "LS",
+          "baselineChain": [
+            {
+              "playerId": "13729",
+              "name": "Jon Weeks",
+              "jersey": 46,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "13729",
+              "name": "Jon Weeks",
+              "jersey": 46,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "unitName": "Offense (11 & 21 Personnel)",
+      "rows": [
+        {
+          "slotKey": "wr1",
+          "slotLabel": "WR (X)",
+          "baselineChain": [
+            {
+              "playerId": "16737",
+              "name": "Mike Evans",
+              "jersey": 5,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4431466",
+              "name": "Jordan Watkins",
+              "jersey": 17,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3043116",
+              "name": "Demarcus Robinson",
+              "jersey": 11,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4360438",
+              "name": "Brandon Aiyuk",
+              "jersey": 11,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4431466",
+              "name": "Jordan Watkins",
+              "jersey": 17,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "16737",
+              "name": "Mike Evans",
+              "jersey": 5,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "3043116",
+              "name": "Demarcus Robinson",
+              "jersey": 11,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4360438",
+              "name": "Brandon Aiyuk",
+              "jersey": 11,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "wr2",
+          "slotLabel": "WR (Z)",
+          "baselineChain": [
+            {
+              "playerId": "3126486",
+              "name": "Deebo Samuel Sr.",
+              "jersey": 19,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "16731",
+              "name": "Brandin Cooks",
+              "jersey": 84,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4710714",
+              "name": "De'Zhaun Stribling",
+              "jersey": 7,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "16731",
+              "name": "Brandin Cooks",
+              "jersey": 84,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3126486",
+              "name": "Deebo Samuel Sr.",
+              "jersey": 19,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4710714",
+              "name": "De'Zhaun Stribling",
+              "jersey": 7,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "wr3",
+          "slotLabel": "SLWR (11 Pers)",
+          "baselineChain": [
+            {
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4575665",
+              "name": "Jacob Cowing",
+              "jersey": 4,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4575665",
+              "name": "Jacob Cowing",
+              "jersey": 4,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "lt",
+          "slotLabel": "LT",
+          "baselineChain": [
+            {
+              "playerId": "13241",
+              "name": "Trent Williams",
+              "jersey": 71,
+              "baselineRank": 1,
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4240554",
+              "name": "Vederian Lowe",
+              "jersey": 76,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4691556",
+              "name": "Enrique Cruz Jr.",
+              "jersey": 69,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3920814",
+              "name": "Austen Pleasants",
+              "jersey": 62,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "13241",
+              "name": "Trent Williams",
+              "jersey": 71,
+              "baselineRank": 1,
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4240554",
+              "name": "Vederian Lowe",
+              "jersey": 76,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4691556",
+              "name": "Enrique Cruz Jr.",
+              "jersey": 69,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3920814",
+              "name": "Austen Pleasants",
+              "jersey": 62,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "lg",
+          "slotLabel": "LG",
+          "baselineChain": [
+            {
+              "playerId": "4431523",
+              "name": "Connor Colby",
+              "jersey": 75,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4565779",
+              "name": "Carver Willis",
+              "jersey": 74,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4247590",
+              "name": "Nick Zakelj",
+              "jersey": 63,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4431523",
+              "name": "Connor Colby",
+              "jersey": 75,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4565779",
+              "name": "Carver Willis",
+              "jersey": 74,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4247590",
+              "name": "Nick Zakelj",
+              "jersey": 63,
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "c",
+          "slotLabel": "C",
+          "baselineChain": [
+            {
+              "playerId": "2577185",
+              "name": "Jake Brendel",
+              "jersey": 64,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4372774",
+              "name": "Jarrett Patterson",
+              "jersey": 58,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "2577185",
+              "name": "Jake Brendel",
+              "jersey": 64,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4372774",
+              "name": "Jarrett Patterson",
+              "jersey": 58,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rg",
+          "slotLabel": "RG",
+          "baselineChain": [
+            {
+              "playerId": "5092959",
+              "name": "Dominick Puni",
+              "jersey": 77,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4565779",
+              "name": "Carver Willis",
+              "jersey": 74,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "5092959",
+              "name": "Dominick Puni",
+              "jersey": 77,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4565779",
+              "name": "Carver Willis",
+              "jersey": 74,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rt",
+          "slotLabel": "RT",
+          "baselineChain": [
+            {
+              "playerId": "3916075",
+              "name": "Colton McKivitz",
+              "jersey": 68,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4691556",
+              "name": "Enrique Cruz Jr.",
+              "jersey": 69,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3916075",
+              "name": "Colton McKivitz",
+              "jersey": 68,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4691556",
+              "name": "Enrique Cruz Jr.",
+              "jersey": 69,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "qb",
+          "slotLabel": "QB",
+          "baselineChain": [
+            {
+              "playerId": "4361741",
+              "name": "Brock Purdy",
+              "jersey": 13,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4241464",
+              "name": "Mac Jones",
+              "jersey": 10,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430431",
+              "name": "Kurtis Rourke",
+              "jersey": 14,
+              "baselineRank": 3,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4361741",
+              "name": "Brock Purdy",
+              "jersey": 13,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4241464",
+              "name": "Mac Jones",
+              "jersey": 10,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430431",
+              "name": "Kurtis Rourke",
+              "jersey": 14,
+              "baselineRank": 3,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "te",
+          "slotLabel": "TE (Y)",
+          "baselineChain": [
+            {
+              "playerId": "3040151",
+              "name": "George Kittle",
+              "jersey": 85,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4040612",
+              "name": "Luke Farrell",
+              "jersey": 89,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4360290",
+              "name": "Brayden Willis",
+              "jersey": 9,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4259147",
+              "name": "Jake Tonges",
+              "jersey": 88,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3040151",
+              "name": "George Kittle",
+              "jersey": 85,
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4040612",
+              "name": "Luke Farrell",
+              "jersey": 89,
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4360290",
+              "name": "Brayden Willis",
+              "jersey": 9,
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4259147",
+              "name": "Jake Tonges",
+              "jersey": 88,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rb",
+          "slotLabel": "RB",
+          "baselineChain": [
+            {
+              "playerId": "3117251",
+              "name": "Christian McCaffrey",
+              "jersey": 23,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4696044",
+              "name": "Kaelon Black",
+              "jersey": 26,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685397",
+              "name": "Jordan James",
+              "jersey": 29,
+              "baselineRank": 3,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4372561",
+              "name": "Isaac Guerendo",
+              "jersey": 31,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3117251",
+              "name": "Christian McCaffrey",
+              "jersey": 23,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4696044",
+              "name": "Kaelon Black",
+              "jersey": 26,
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685397",
+              "name": "Jordan James",
+              "jersey": 29,
+              "baselineRank": 3,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4372561",
+              "name": "Isaac Guerendo",
+              "jersey": 31,
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "fb",
+          "slotLabel": "FB (21 Pers)",
+          "baselineChain": [
+            {
+              "playerId": "16002",
+              "name": "Kyle Juszczyk",
+              "jersey": 44,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "16002",
+              "name": "Kyle Juszczyk",
+              "jersey": 44,
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        }
+      ]
+    }
+  ]
+}
