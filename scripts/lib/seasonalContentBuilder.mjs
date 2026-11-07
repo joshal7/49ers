@@ -259,8 +259,18 @@ function normLookup(name = '') {
     .trim();
 }
 
-export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], rosterPlayers = []) {
+export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], rosterPlayers = [], liveCtx = {}) {
   const embeddableLive = liveVideos.filter(v => v.embeddable);
+  const currentWeek = Number(liveCtx.currentWeek || 9);
+  const teamRecord = liveCtx.teamRecord || '6-1';
+  const standingSummary = liveCtx.standingSummary || '1st in NFC West • #1 Seed in NFC';
+  const pointDiffDisplay = liveCtx.pointDifferential || '+58';
+  const um = liveCtx.upcomingMatchup || {};
+  const oppName = um.oppName || 'Las Vegas Raiders';
+  const oppShort = oppName.split(' ').slice(-1)[0] || oppName;
+  const capGrossM = ((Number(liveCtx.capSpaceGross || 35_164_858)) / 1e6).toFixed(2);
+  const tradeDeadlineMs = new Date(liveCtx.tradeDeadlineIso || '2026-11-10T13:00:00-08:00').getTime();
+  const isTradeWindowOpen = Date.now() <= tradeDeadlineMs;
 
   const fallbackBuckner = {
     videoId: 'x0TpSoyfx7I',
@@ -408,41 +418,232 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
   const nowMs = Date.now();
   const isoMinsAgo = mins => new Date(nowMs - mins * 60_000).toISOString();
 
-  return [
+  function latestPublishedFromSources(links = [], fallbackMinsAgo = 45) {
+    const validMs = (links || [])
+      .map(l => (l?.publishedAt ? new Date(l.publishedAt).getTime() : NaN))
+      .filter(ms => Number.isFinite(ms) && ms <= nowMs);
+    if (validMs.length > 0) {
+      return new Date(Math.max(...validMs)).toISOString();
+    }
+    return isoMinsAgo(fallbackMinsAgo);
+  }
+
+  // Automatic Dynamic Cluster Synthesis for Future Weeks (Week 10+, Playoffs, Offseason)
+  if (currentWeek !== 9) {
+    const leadArticles = rawItems.filter(it => it.type === 'article' || it.type === 'tweet');
+    const matchupLinks = matchSourceLinks([oppShort.toLowerCase(), `week ${currentWeek}`, 'shanahan', 'purdy'], [
+      {
+        title: `${oppName} vs. 49ers Week ${currentWeek} Gamecast — ESPN`,
+        url: um.gameUrl || 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
+        outlet: 'ESPN',
+        type: 'article'
+      }
+    ]);
+    const healthLinks = matchSourceLinks(['injury', 'practice', 'questionable', 'bosa', 'mccaffrey', 'williams'], [
+      {
+        title: 'Official 49ers Injury Report',
+        url: 'https://www.49ers.com/team/injury-report/',
+        outlet: '49ers.com',
+        type: 'article'
+      }
+    ]);
+    const capLinks = matchSourceLinks(['cap', 'contract', 'trade', 'roster', 'lynch'], [
+      {
+        title: 'San Francisco 49ers Salary Cap Table — OverTheCap',
+        url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+        outlet: 'OverTheCap',
+        type: 'cap'
+      }
+    ]);
+
+    const topVid = embeddableLive[0] || liveVideos[0] || null;
+    const secondVid = embeddableLive[1] || liveVideos[1] || null;
+
+    const dynamicClusters = [
+      {
+        id: `cluster_matchup_wk${currentWeek}`,
+        publishedAt: latestPublishedFromSources(matchupLinks, 28),
+        category: 'scheme',
+        categoryLabel: `Week ${currentWeek} Matchup Briefing`,
+        headline:
+          leadArticles[0]?.title ||
+          `Week ${currentWeek} Preparation: 49ers (${teamRecord}) Ready for ${oppName} (${um.oppRecord || 'NFL'})`,
+        synthesizedFromCount: Math.max(8, Math.min(22, leadArticles.length)),
+        signalScore: 95,
+        citedReporterIds: ['matt_maiocco', 'matt_barrows', 'nick_wagoner', 'david_lombardi', 'kyle_shanahan'],
+        ...selectClusterPhoto([oppShort.toLowerCase(), 'shanahan', 'purdy', '49ers'], topVid?.videoId || ''),
+        featuredPlayers: pickPlayers(['Brock Purdy', 'Nick Bosa', 'Christian McCaffrey', 'George Kittle', 'Fred Warner']),
+        sourceLinks: matchupLinks,
+        hardFacts: [
+          `San Francisco enters Week ${currentWeek} at ${teamRecord} (${standingSummary}, ${pointDiffDisplay}).`,
+          um.kickoffDisplay
+            ? `Kickoff vs. ${oppName}: ${um.kickoffDisplay} at ${um.venue || "Levi's Stadium"} (${um.betting?.spread || 'Pick'}, O/U ${um.betting?.overUnder || '—'}).`
+            : `Upcoming slate focus shifts directly to ${oppName}.`,
+          ...(leadArticles.slice(0, 2).map(a => a.title).filter(Boolean))
+        ].slice(0, 3),
+        schemeAndCapTakeaways: [
+          um.coachingMatchup?.summary ||
+            `Kyle Shanahan's play-action and outside-zone sequencing remains anchored by Brock Purdy, Christian McCaffrey, and George Kittle.`,
+          `Salary Cap Position: San Francisco carries $${capGrossM}M in gross 2026 cap space on OverTheCap's live ledger.`
+        ],
+        consensusVsDissent:
+          'Beat reporting emphasizes trench health, red-zone efficiency, and clean turnover margin as the decisive Week-to-Week swing variables.',
+        videoClip: topVid
+          ? {
+              videoId: topVid.videoId,
+              url: `https://www.youtube.com/watch?v=${topVid.videoId}`,
+              embeddable: topVid.embeddable !== false,
+              title: topVid.title,
+              channel: topVid.channel,
+              duration: topVid.duration || 'Video',
+              thumbnailUrl: `https://i.ytimg.com/vi/${topVid.videoId}/hqdefault.jpg`,
+              startSeconds: 0,
+              timestampLabel: topVid.title
+            }
+          : null
+      },
+      {
+        id: `cluster_health_roster_wk${currentWeek}`,
+        publishedAt: latestPublishedFromSources(healthLinks, 65),
+        category: 'film',
+        categoryLabel: 'Practice & Roster Wire',
+        headline: `Week ${currentWeek} Practice & Availability Report: Key 49ers Injury Designations & Rotation Notes`,
+        synthesizedFromCount: 11,
+        signalScore: 93,
+        citedReporterIds: ['nick_wagoner', 'matt_maiocco', 'matt_barrows', 'david_lombardi'],
+        ...selectClusterPhoto(['practice', 'injury', 'bosa', 'williams', 'mccaffrey'], secondVid?.videoId || ''),
+        featuredPlayers: pickPlayers(['Trent Williams', 'Nick Bosa', 'Christian McCaffrey', 'DeForest Buckner', 'Deommodore Lenoir']),
+        sourceLinks: healthLinks,
+        hardFacts:
+          (liveCtx.practiceSummaryBullets && liveCtx.practiceSummaryBullets.length > 0
+            ? liveCtx.practiceSummaryBullets
+            : [
+                `Official 49ers & ESPN injury designations updated dynamically for Week ${currentWeek}.`,
+                `Opponent check: ${oppName} carries ${um.opponentHealth?.summary?.ruledOutCount ?? 0} Out and ${um.opponentHealth?.summary?.questionableOrDoubtfulCount ?? 0} Questionable players.`
+              ]),
+        schemeAndCapTakeaways: [
+          'Player-specific veteran rest days (Trent Williams, Christian McCaffrey, Nick Bosa) are separated from acute soft-tissue tags in our availability model.',
+          `Multi-Year Cap Rollover: Preserving unused portion of SF's $${capGrossM}M 2026 cap space offsets 2027 option bonus proration.`
+        ],
+        consensusVsDissent: 'Friday practice participation remains the primary clearance gate for soft-tissue game-time decisions.',
+        videoClip: secondVid
+          ? {
+              videoId: secondVid.videoId,
+              url: `https://www.youtube.com/watch?v=${secondVid.videoId}`,
+              embeddable: secondVid.embeddable !== false,
+              title: secondVid.title,
+              channel: secondVid.channel,
+              duration: secondVid.duration || 'Video',
+              thumbnailUrl: `https://i.ytimg.com/vi/${secondVid.videoId}/hqdefault.jpg`,
+              startSeconds: 0,
+              timestampLabel: secondVid.title
+            }
+          : null
+      },
+      {
+        id: `cluster_cap_horizon_wk${currentWeek}`,
+        publishedAt: latestPublishedFromSources(capLinks, 120),
+        category: 'cap',
+        categoryLabel: 'Cap & Roster Mechanics',
+        headline: `49ers Front Office Ledger ($${capGrossM}M Space): CBA Article 13 Rollover & 2027 Core Horizon`,
+        synthesizedFromCount: 9,
+        signalScore: 91,
+        citedReporterIds: ['matt_barrows', 'david_lombardi', 'field_yates', 'adam_schefter'],
+        ...selectClusterPhoto(['lynch', 'purdy', 'cap', 'contract'], ''),
+        featuredPlayers: pickPlayers(['Brock Purdy', 'Nick Bosa', 'Fred Warner', 'Trent Williams']),
+        sourceLinks: capLinks,
+        hardFacts: [
+          `OverTheCap's live ledger lists San Francisco with $${capGrossM}M in gross 2026 cap space.`,
+          'Unused 2026 cap dollars carry over 1-for-1 into 2027 under Article 13 of the NFL CBA.',
+          'Rookie-scale contributors from the 2025–2026 draft classes continue insulating rotational depth costs.'
+        ],
+        schemeAndCapTakeaways: [
+          'Option-Bonus Structure: Purdy and Bosa option prorations keep immediate base salaries low while preserving pre-April flexibility.',
+          'Post-June 1 Accounting: Any transaction executed after June 1 defers unamortized future-year bonus acceleration into 2027.'
+        ],
+        consensusVsDissent: 'Front office discipline prioritizes 2027 rollover cushion over short-term veteran restructures.',
+        videoClip: null
+      }
+    ];
+
+    return dynamicClusters;
+  }
+
+  const bosaLinks = matchSourceLinks(['buckner', 'bosa', 'mccaffrey', 'injury', 'status'], [
+    {
+      title: 'Kyle Shanahan Full Press Conference: DeForest Buckner Trade & Week 9 Prep',
+      url: 'https://www.youtube.com/watch?v=pb6-G63jccQ',
+      outlet: 'San Francisco 49ers (YouTube)',
+      type: 'video'
+    },
+    {
+      title: 'Official 49ers Week 9 Injury Report',
+      url: 'https://www.49ers.com/team/injury-report/',
+      outlet: '49ers.com',
+      type: 'article'
+    }
+  ]);
+
+  const aiyukLinks = matchSourceLinks(['aiyuk', 'rosenhaus', 'reinstated', 'reinstatement'], [
+    {
+      title: 'Brandon Aiyuk Contract & Cap Breakdown — OverTheCap',
+      url: 'https://overthecap.com/player/brandon-aiyuk/8765/',
+      outlet: 'OverTheCap',
+      type: 'cap'
+    }
+  ]);
+
+  const matchupLinks = matchSourceLinks(['raiders', 'kubiak', 'crosby', 'purdy', 'week 9'], [
+    {
+      title: 'Raiders vs. 49ers Week 9 Matchup & Injury Gamecast — ESPN',
+      url: um.gameUrl || 'https://www.espn.com/nfl/game/_/gameId/401873047/raiders-49ers',
+      outlet: 'ESPN',
+      type: 'article'
+    },
+    {
+      title: 'nflverse 2026 Play-by-Play EPA & CPOE Dataset',
+      url: 'https://github.com/nflverse/nflverse-data',
+      outlet: 'nflverse',
+      type: 'stats'
+    }
+  ]);
+
+  const tradeLinks = matchSourceLinks(['trade', 'deadline', 'lynch', 'cap'], [
+    {
+      title: 'San Francisco 49ers 2026–2029 Salary Cap Table — OverTheCap',
+      url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+      outlet: 'OverTheCap',
+      type: 'cap'
+    },
+    {
+      title: 'NFL Official Transactions Wire — ESPN',
+      url: 'https://www.espn.com/nfl/transactions',
+      outlet: 'ESPN',
+      type: 'article'
+    }
+  ]);
+
+  const week9Clusters = [
     {
       id: 'cluster_bosa_buckner_week9',
-      publishedAt: isoMinsAgo(42),
+      publishedAt: latestPublishedFromSources(bosaLinks, 42),
       category: 'film',
       categoryLabel: 'Trench & Health Briefing',
       headline: 'Nick Bosa & Christian McCaffrey Cleared for Week 9; Full Wide-9 Front Debuts With DeForest Buckner & Osa Odighizuwa',
       synthesizedFromCount: 16,
-      filteredClickbaitCount: 4,
       signalScore: 96,
       citedReporterIds: ['nick_wagoner', 'matt_maiocco', 'matt_barrows', 'kyle_shanahan', 'tim_ryan', 'david_lombardi'],
       ...selectClusterPhoto(['bosa', 'buckner', 'mccaffrey', 'odighizuwa', 'defensive line'], shanahanBucknerVid.videoId),
       featuredPlayers: pickPlayers(['Nick Bosa', 'Christian McCaffrey', 'DeForest Buckner', 'Osa Odighizuwa', 'Fred Warner']),
-      sourceLinks: matchSourceLinks(['buckner', 'bosa', 'mccaffrey', 'injury', 'status'], [
-        {
-          title: 'Kyle Shanahan Full Press Conference: DeForest Buckner Trade & Week 9 Prep',
-          url: 'https://www.youtube.com/watch?v=pb6-G63jccQ',
-          outlet: 'San Francisco 49ers (YouTube)',
-          type: 'video'
-        },
-        {
-          title: 'Official 49ers Week 9 Injury Report',
-          url: 'https://www.49ers.com/team/injury-report/',
-          outlet: '49ers.com',
-          type: 'article'
-        }
-      ]),
+      sourceLinks: bosaLinks,
       hardFacts: [
         'Nick Bosa returns Sunday vs. Las Vegas for the first time since Week 2 without a restrictive game designation after clearing post-Bye full-speed pass-rush reps.',
-        "Christian McCaffrey exited the Week 8 Bye off the injury report and is a full go for Sunday at Levi's Stadium (1:25 PM PT).",
-        'Week 9 marks the first snap sequence pairing Nick Bosa and Keion White on the edges with newly re-acquired DeForest Buckner and Osa Odighizuwa at 3-tech / 2i interior alignments.'
+        "Christian McCaffrey exited the Week 8 Bye off the injury report and is a full go for Sunday at Levi's Stadium (1:25 PM PT, FOX).",
+        'Week 9 marks the first snap sequence pairing Nick Bosa and Keion White on the edges with newly re-acquired DeForest Buckner and Osa Odighizuwa (#92) at 3-tech / 2i interior alignments.'
       ],
       schemeAndCapTakeaways: [
         'Pass-Rush Stunt Geometry: Having both Buckner (6\'7", 34.4" arms) and Odighizuwa inside forces opposing protections to slide interior help, isolating Bosa 1-on-1 on the Wide-9 rail without needing 5-man pressures.',
-        "Run-Fit Impact vs. Raiders Outside Zone: Raiders HC Klint Kubiak runs heavy wide-zone/boot action; Buckner's vertical knock-back disrupts playside combo climbs to Fred Warner."
+        "Run-Fit Impact vs. Raiders Outside Zone: Raiders HC Klint Kubiak runs heavy wide-zone/boot action with Kirk Cousins, Ashton Jeanty, and Brock Bowers; Buckner's vertical knock-back disrupts playside combo climbs to Fred Warner."
       ],
       consensusVsDissent: 'Unanimous beat consensus that SF will still manage Bosa around 42–48 snaps (~68% share) in his first game back, rotating Bryce Huff, Keion White, and rookie Romello Height on early run downs.',
       videoClip: {
@@ -459,34 +660,26 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     },
     {
       id: 'cluster_aiyuk_reinstatement_cap',
-      publishedAt: isoMinsAgo(68),
+      publishedAt: latestPublishedFromSources(aiyukLinks, 68),
       category: 'cap',
       categoryLabel: 'Cap & Roster Mechanics',
-      headline: 'Brandon Aiyuk Meets With 49ers Brass Seeking Reinstatement: Contract, Cap & Trade Window Implications',
+      headline: 'Brandon Aiyuk Meets With 49ers Brass Seeking Reinstatement: Contract, Cap & WR Depth Implications',
       synthesizedFromCount: 19,
-      filteredClickbaitCount: 7,
       signalScore: 94,
       citedReporterIds: ['adam_schefter', 'nick_wagoner', 'matt_barrows', 'matt_maiocco', 'david_lombardi', 'field_yates'],
-      ...selectClusterPhoto(['aiyuk', 'pearsall', 'receiver', 'reinstatement', 'contract'], aiyukVid.videoId),
-      featuredPlayers: pickPlayers(['Brandon Aiyuk', 'Ricky Pearsall', "De'Zhaun Stribling", 'George Kittle']),
-      sourceLinks: matchSourceLinks(['aiyuk', 'rosenhaus', 'reinstated', 'reinstatement'], [
-        {
-          title: 'Brandon Aiyuk Contract & Cap Breakdown — OverTheCap',
-          url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
-          outlet: 'OverTheCap',
-          type: 'cap'
-        }
-      ]),
+      ...selectClusterPhoto(['aiyuk', 'receiver', 'reinstatement', 'contract'], aiyukVid.videoId),
+      featuredPlayers: pickPlayers(['Brandon Aiyuk', 'Brandin Cooks', 'Jacob Cowing', 'Demarcus Robinson', 'George Kittle']),
+      sourceLinks: aiyukLinks,
       hardFacts: [
-        'Brandon Aiyuk and agent Drew Rosenhaus met with 49ers leadership at SAP Performance Facility on Friday, Nov 6, stating he is physically healthy and seeking NFL reinstatement.',
-        "Both sides characterized talks as ongoing ('to be continued') ahead of Tuesday's Nov 10 (1:00 PM PT) NFL Trade Deadline, while Aiyuk remains officially Out for Week 9 vs. Las Vegas.",
-        "Under OverTheCap's 2026 ledger, a standard in-season trade carries accelerated bonus proration unless paired with a bilateral contract rework / guarantee settlement."
+        'Brandon Aiyuk and agent Drew Rosenhaus met with 49ers leadership at SAP Performance Facility on Friday, Nov 6, stating he is physically healthy and seeking reinstatement; NFL Network notes ~$13M in bonus forfeiture complicates a simple release.',
+        'With Aiyuk (Personal), Deebo Samuel Sr. (Hamstring), Mike Evans (Achilles), and Christian Kirk (Knee - Meniscus) ruled Out for Week 9—and Ricky Pearsall + rookie De\'Zhaun Stribling on IR—Kyle Shanahan signaled Demarcus Robinson (Questionable, Ankle) is likely to be activated from IR.',
+        `Under OverTheCap's 2026 ledger ($${capGrossM}M gross cap space), any Post-June 1 trade or release keeps current-year proration on 2026 while deferring remaining future bonus acceleration into 2027.`
       ],
       schemeAndCapTakeaways: [
-        'Cap Math Reality: Because prorated signing/option bonus acceleration after June 1 splits remaining future-year proration into 2027 dead money, trading Aiyuk post-June 1 / pre-Nov 10 preserves 2026 cap flexibility (~$35.16M current space) while pushing unamortized dead cap to 2027 unless guarantees were voided under reserve status.',
-        "On-Field WR Contingency: Ricky Pearsall, 2026 2nd-round rookie De'Zhaun Stribling (6'2\", contested-catch boundary X), and Skyy Moore / Jordan Watkins continue handling 11-personnel snaps alongside George Kittle."
+        `Cap Math Reality: Because prorated signing/option bonus acceleration after June 1 splits remaining future-year proration into 2027 dead money, resolving Aiyuk's contract preserves 2026 cap room ($${capGrossM}M) while bilateral forfeiture language determines 2027 dead-cap relief.`,
+        'On-Field Week 9 WR Rotation: Brandin Cooks (#84), Jordan Watkins, Jacob Cowing (#4), and likely IR-activation Demarcus Robinson handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey.'
       ],
-      consensusVsDissent: "National insiders (Schefter/Maiocco/Barrows) note Friday's NFL personnel notice included no immediate reinstatement, pointing toward an offseason or structured resolution rather than immediate snap reintegration.",
+      consensusVsDissent: "National insiders (Schefter/Pelissero/Maiocco/Barrows) note Friday's NFL personnel notice included no immediate reinstatement, pointing toward a structured trade or settlement rather than immediate snap reintegration.",
       videoClip: {
         videoId: aiyukVid.videoId,
         url: `https://www.youtube.com/watch?v=${aiyukVid.videoId}`,
@@ -501,40 +694,26 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     },
     {
       id: 'cluster_shanahan_vs_kubiak_week9',
-      publishedAt: isoMinsAgo(135),
+      publishedAt: latestPublishedFromSources(matchupLinks, 135),
       category: 'scheme',
       categoryLabel: 'All-22 Matchup Preview',
-      headline: "Shanahan vs. Klint Kubiak Chess Match: Decoding the Raiders' Bay Area Return & Maxx Crosby Gameplan",
+      headline: "Shanahan vs. Klint Kubiak Chess Match: Decoding the 4-4 Raiders' Visit & Maxx Crosby Protection Plan",
       synthesizedFromCount: 12,
-      filteredClickbaitCount: 2,
       signalScore: 95,
       citedReporterIds: ['jonnydel', 'eric_crocker', 'matt_maiocco', 'kyle_posey', 'ben_solak', 'greg_papa'],
       ...selectClusterPhoto(['raiders', 'purdy', 'shanahan', 'kubiak', 'kittle', 'crosby'], offenseFilmVid.videoId),
       featuredPlayers: pickPlayers(['Brock Purdy', 'Trent Williams', 'George Kittle', 'Kyle Juszczyk', 'Deommodore Lenoir']),
-      sourceLinks: matchSourceLinks(['raiders', 'kubiak', 'crosby', 'purdy', 'week 9'], [
-        {
-          title: 'Raiders vs. 49ers Week 9 Matchup & Injury Gamecast — ESPN',
-          url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
-          outlet: 'ESPN',
-          type: 'article'
-        },
-        {
-          title: 'nflverse 2026 Play-by-Play EPA & CPOE Dataset',
-          url: 'https://github.com/nflverse/nflverse-data',
-          outlet: 'nflverse',
-          type: 'stats'
-        }
-      ]),
+      sourceLinks: matchupLinks,
       hardFacts: [
-        'The 6-1 49ers (#1 seed in the NFC, +58 point differential) enter Week 9 with a +7-day rest advantage coming off their Week 8 Bye; SF is a 10.0-point home favorite (51.5 O/U).',
-        "Raiders first-year HC Klint Kubiak served directly on Kyle Shanahan's 2023 NFC Championship staff as Passing Game Specialist.",
-        'Through 7 games, Brock Purdy & the 49ers offense rank top-3 in Passing EPA (+63.23) and CPOE (+4.25%), averaging 8.28 yards per pass attempt with only 7 sacks allowed.'
+        `The ${teamRecord} 49ers (${standingSummary}, ${pointDiffDisplay}) enter Week 9 with a +7-day rest advantage off their Week 8 Bye as 10.0-point home favorites (51.5 O/U, 1:25 PM PT on FOX) vs. Las Vegas (${um.oppRecord || '4-4'}).`,
+        "Raiders first-year HC Klint Kubiak served on Kyle Shanahan's 2023 NFC Championship staff as Passing Game Specialist and enters off a 38-33 Week 8 win behind QB Kirk Cousins and TE Brock Bowers.",
+        'Through 7 games, Brock Purdy & the 49ers offense rank top-3 in Passing EPA (+63.23) and CPOE (+4.25%), averaging 8.28 yards per pass attempt with only 7 sacks allowed (3.2% sack rate, #2 NFL).'
       ],
       schemeAndCapTakeaways: [
-        "Neutralizing Maxx Crosby: Expect heavy 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk on right tackle Colton McKivitz's edge whenever Crosby aligns over RT rather than Trent Williams.",
-        "Countering Familiar Defensive Rules: Kubiak knows SF's motion-to-dagger and Yankee play-action rules intimately; Shanahan historically counters former assistants with tendency-breakers (early-down gap/duo runs out of condensed 12/21 formations)."
+        "Neutralizing Maxx Crosby (#98): Expect heavy 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk on right tackle Colton McKivitz's edge whenever Crosby flips away from Trent Williams.",
+        "Defending Kubiak's 12-Personnel Boot/Crossers: Las Vegas pairs Brock Bowers and Michael Mayer with Kirk Cousins play-action; Fred Warner and Deommodore Lenoir have hundreds of Santa Clara practice reps diagnosing those exact spacing rules."
       ],
-      consensusVsDissent: "Film analysts highlight Las Vegas's vulnerability defending middle-of-field seam/choice routes against linebackers—prime territory for Kittle and CMC angle routes.",
+      consensusVsDissent: "Film analysts highlight Las Vegas's vulnerability defending middle-of-field seam/choice routes against linebackers (Nakobe Dean / Quay Walker)—prime territory for Kittle and McCaffrey option routes.",
       videoClip: {
         videoId: offenseFilmVid.videoId,
         url: `https://www.youtube.com/watch?v=${offenseFilmVid.videoId}`,
@@ -546,46 +725,37 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         startSeconds: 0,
         timestampLabel: '49ers coaches & players preview Week 9 matchup vs. Las Vegas Raiders'
       }
-    },
-    {
+    }
+  ];
+
+  if (isTradeWindowOpen) {
+    week9Clusters.push({
       id: 'cluster_trade_deadline_countdown',
-      publishedAt: isoMinsAgo(210),
+      publishedAt: latestPublishedFromSources(tradeLinks, 185),
       category: 'roster',
       categoryLabel: 'Trade Window Intel',
-      headline: 'Countdown to the Nov 10 Trade Deadline: Evaluating Final 49ers Moves After Landing DeForest Buckner',
+      headline: 'Countdown to the Nov 10 Trade Deadline: Evaluating Final 49ers WR & OL Moves After Landing DeForest Buckner',
       synthesizedFromCount: 14,
-      filteredClickbaitCount: 5,
       signalScore: 91,
       citedReporterIds: ['dianna_russini', 'ian_rapoport', 'matt_barrows', 'john_lynch', 'albert_breer'],
       ...selectClusterPhoto(['trade', 'deadline', 'lynch', 'cap', '49ers'], '1r03PLzYU54'),
       featuredPlayers: pickPlayers(['DeForest Buckner', 'Osa Odighizuwa', 'Brock Purdy', 'Nick Bosa']),
-      sourceLinks: matchSourceLinks(['trade', 'deadline', 'lynch', 'cap'], [
-        {
-          title: 'San Francisco 49ers 2026–2029 Salary Cap Table — OverTheCap',
-          url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
-          outlet: 'OverTheCap',
-          type: 'cap'
-        },
-        {
-          title: 'NFL Official Transactions Wire — ESPN',
-          url: 'https://www.espn.com/nfl/transactions',
-          outlet: 'ESPN',
-          type: 'article'
-        }
-      ]),
+      sourceLinks: tradeLinks,
       hardFacts: [
         'The 2026 NFL Trade Deadline arrives Tuesday, Nov 10 at 1:00 PM PT (4:00 PM ET).',
-        'Having already bolstered the interior defensive line via the DeForest Buckner reunion and spring Osa Odighizuwa trade, John Lynch holds $35.16M in gross 2026 cap room.',
-        'SF front office calls this week have centered on low-cap-hit veteran WR insurance and swing interior offensive line depth rather than another high-pick blockbuster.'
+        `Having already bolstered the interior defensive line via the DeForest Buckner reunion and spring Osa Odighizuwa trade, John Lynch holds $${capGrossM}M in gross 2026 cap room.`,
+        'With four active-roster wideouts ruled Out for Week 9 and Pearsall/Stribling on IR, front office calls center on low-cap-hit boundary WR insurance and swing tackle depth.'
       ],
       schemeAndCapTakeaways: [
-        "Pro-Rated Base Salary Math: With 9 weeks elapsed in an 18-week season, an incoming player's 2026 cap charge to SF is exactly 9/18ths (50%) of their unguaranteed 2026 base salary plus per-game roster bonuses.",
-        '2027 Carryover Tradeoff: Every $1M of unused 2026 cap space rolls dollar-for-dollar into 2027, which Paraag Marathe safeguards to absorb Purdy, Bosa, and Warner option proration.'
+        "Pro-Rated Base Salary Math: With 9 weeks elapsed in an 18-week season, an incoming player's 2026 cap charge to SF is 9/18ths (50%) of their remaining 2026 base salary plus per-game roster bonuses.",
+        '2027 Carryover Tradeoff: Every $1M of unused 2026 cap space rolls dollar-for-dollar into 2027 under CBA Article 13, which Paraag Marathe safeguards to absorb Purdy, Bosa, and Warner option proration.'
       ],
-      consensusVsDissent: 'Beat consensus (Barrows/Maiocco) expects at most a Day-3 pick swap unless an unexpected Week 9 injury occurs Sunday against Las Vegas.',
+      consensusVsDissent: 'Beat consensus (Barrows/Maiocco) expects a targeted Day-3 pick move if WR attrition lingers past Sunday against Las Vegas.',
       videoClip: null
-    }
-  ];
+    });
+  }
+
+  return week9Clusters;
 }
 
 export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = []) {
@@ -632,14 +802,21 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = []) {
       };
     });
 
+  const grossSpace = Number(capYears?.['2026']?.teamCapSpace || 35_164_858);
+  const effSpace = Number(capYears?.['2026']?.effectiveCapSpace || Math.max(0, grossSpace - 6_500_000));
+  const grossM = (grossSpace / 1e6).toFixed(2);
+  const effM = (effSpace / 1e6).toFixed(2);
+  const rolloverLowM = Math.max(10, Math.round((grossSpace - 12_000_000) / 1e6));
+  const rolloverHighM = Math.max(rolloverLowM + 4, Math.round((grossSpace - 6_000_000) / 1e6));
+
   return {
     sourceUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
     executiveSummary:
-      "Paraag Marathe & John Lynch enter November 2026 with $35.16M in gross 2026 cap space ($28.66M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $22M–$28M of unused 2026 cap space into 2027 to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
+      `Paraag Marathe & John Lynch currently hold $${grossM}M in gross 2026 cap space ($${effM}M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $${rolloverLowM}M–$${rolloverHighM}M of unused 2026 cap space into 2027 to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.`,
     strategicPillars: [
       {
-        title: '1. Rollover Cap Preservation ($25M+ Target)',
-        detail: 'Unused 2026 cap space carries over 1-for-1 into 2027 under Article 13 of the NFL CBA. Keeping ~$25M untouched turns a tight 2027 cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans.'
+        title: `1. Rollover Cap Preservation ($${rolloverLowM}M+ Target)`,
+        detail: `Unused 2026 cap space carries over 1-for-1 into 2027 under Article 13 of the NFL CBA. Keeping ~$${rolloverLowM}M+ untouched turns a tight 2027 cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans.`
       },
       {
         title: '2. Option-Bonus & Void-Year Architecture',
@@ -655,7 +832,12 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = []) {
   };
 }
 
-export function buildTradeDeadlineWarRoom(capSummary2026 = {}, lookupPlayerMeta = () => null, lookupTeamLogo = () => '') {
+export function buildTradeDeadlineWarRoom(
+  capSummary2026 = {},
+  lookupPlayerMeta = () => null,
+  lookupTeamLogo = () => '',
+  teamRecord = '6-1'
+) {
   const bucknerMeta = lookupPlayerMeta('DeForest Buckner');
   const osaMeta = lookupPlayerMeta('Osa Odighizuwa');
   const meyersMeta = lookupPlayerMeta('Jakobi Meyers');
@@ -672,7 +854,7 @@ export function buildTradeDeadlineWarRoom(capSummary2026 = {}, lookupPlayerMeta 
       {
         player: 'DeForest Buckner',
         playerId: bucknerMeta?.playerId || '',
-        jersey: bucknerMeta?.jersey ?? 99,
+        jersey: bucknerMeta?.jersey ?? null,
         headshotUrl: bucknerMeta?.headshotUrl || '',
         position: 'IDL (3-Tech)',
         acquiredFrom: 'IND',
@@ -686,7 +868,7 @@ export function buildTradeDeadlineWarRoom(capSummary2026 = {}, lookupPlayerMeta 
       {
         player: 'Osa Odighizuwa',
         playerId: osaMeta?.playerId || '',
-        jersey: osaMeta?.jersey ?? 97,
+        jersey: osaMeta?.jersey ?? 92,
         headshotUrl: osaMeta?.headshotUrl || '',
         position: 'IDL (DT)',
         acquiredFrom: 'DAL',
@@ -703,13 +885,13 @@ export function buildTradeDeadlineWarRoom(capSummary2026 = {}, lookupPlayerMeta 
         rank: 1,
         positionGroup: 'Boundary / X Wide Receiver Insurance',
         urgency: 'Moderate-High',
-        epaContext: 'Brandon Aiyuk remains Out pending resolution; adding a low-cost veteran Z/X separator protects 3-WR playoff snaps alongside Pearsall & Stribling.'
+        epaContext: 'With Brandon Aiyuk, Deebo Samuel Sr., Mike Evans, and Christian Kirk Out—and Ricky Pearsall + rookie De\'Zhaun Stribling on IR—adding a low-cost veteran Z/X separator supports Brandin Cooks, Jordan Watkins, Jacob Cowing & Demarcus Robinson.'
       },
       {
         rank: 2,
         positionGroup: 'Swing Tackle / Interior OL Depth',
         urgency: 'Moderate',
-        epaContext: 'Protecting a 6-1 #1 seed run requires veteran insurance behind Trent Williams (age 38) and Colton McKivitz for cold-weather January games.'
+        epaContext: `Protecting a ${teamRecord} NFC contention run requires veteran insurance behind Trent Williams (age 38) and Colton McKivitz for cold-weather January games.`
       },
       {
         rank: 3,

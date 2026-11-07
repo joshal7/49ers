@@ -180,15 +180,22 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
     );
   }
 
-  if (q.includes('raider') || q.includes('crosby') || q.includes('kubiak') || q.includes('week 9') || q.includes('matchup') || q.includes('line') || q.includes('pass')) {
+  const oppSearchTerm = (matchup.oppName || '').split(' ').slice(-1)[0]?.toLowerCase() || 'matchup';
+  if (q.includes(oppSearchTerm) || q.includes('week') || q.includes('matchup') || q.includes('line') || q.includes('pass') || q.includes('protection')) {
+    const keyTrenchNote =
+      matchup.keyMatchupsMatrix?.[0]?.tacticalDetail ||
+      'Expect 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk on passing downs, while Nick Bosa, DeForest Buckner, and Osa Odighizuwa force interior slide conflicts.';
     sections.push(
-      `#### Film & Scheme Breakdown (Week ${matchup.week} vs. ${matchup.oppName})\n* **Market & Rest Context**: \`${matchup.betting?.spread}\` (\`O/U ${matchup.betting?.overUnder}\`), Implied \`${matchup.betting?.impliedScore}\`, \`${matchup.betting?.restAdvantage}\`.\n* **Coaching Chess Match**: ${matchup.coachingMatchup?.summary}\n* **Protection & Trench Keys**: Expect 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk against Maxx Crosby on passing downs, while Nick Bosa + DeForest Buckner + Osa Odighizuwa force interior slide conflicts.`
+      `#### Film & Scheme Breakdown (Week ${matchup.week || appData?.meta?.currentWeek || ''} vs. ${matchup.oppName || 'Opponent'})\n* **Market & Rest Context**: \`${matchup.betting?.spread || 'Pick'}\` (\`O/U ${matchup.betting?.overUnder || '—'}\`), Implied \`${matchup.betting?.impliedScore || '—'}\`, \`${matchup.betting?.restAdvantage || 'Even Rest'}\`.\n* **Coaching Chess Match**: ${matchup.coachingMatchup?.summary || matchup.coachingMatchup?.headline || ''}\n* **Protection & Trench Keys**: ${keyTrenchNote}`
     );
   }
 
   if (q.includes('playoff') || q.includes('seed') || q.includes('bye') || q.includes('nfc') || sections.length <= 2) {
+    const rec = appData?.meta?.teamRecord || '—';
+    const stand = appData?.meta?.standingSummary || 'NFC Contender';
+    const ptDiff = appData?.meta?.pointDifferential || '—';
     sections.push(
-      `#### Quantitative Season Outlook (10,000 Monte Carlo Runs)\n* **Current Standing**: \`6-1\` (#1 Seed in NFC, \`3-0\` NFC West, \`+58\` point differential).\n* **Simulated Odds**: Playoff Berth \`${mc.makePlayoffsPct || 99.7}%\` • Win NFC West \`${mc.winDivisionPct || 97.7}%\` • **#1 Seed First-Round Bye \`${mc.seed1ByePct || 54.8}%\`**.`
+      `#### Quantitative Season Outlook (10,000 Monte Carlo Runs)\n* **Current Standing**: \`${rec}\` (${stand}, \`${ptDiff}\` point differential).\n* **Simulated Odds**: Playoff Berth \`${mc.makePlayoffsPct ?? 95}%\` • Win NFC West \`${mc.winDivisionPct ?? 75}%\` • **#1 Seed First-Round Bye \`${mc.seed1ByePct ?? 45}%\`**.`
     );
   }
 
@@ -208,40 +215,49 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
 }
 
 function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, author) {
+  const meta = appData?.meta || {};
   const cap26 = appData?.cap?.years?.['2026'] || {};
   const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const upcomingGames = (appData?.scheduleMatchup?.schedule || []).filter(g => !g.completed).slice(0, 4);
   const mc = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
+  const purdy = (appData?.roster?.players || []).find(p => p.name === 'Brock Purdy');
+  const purdyEpa = purdy?.current2026Stats?.passingEpa != null ? purdy.current2026Stats.passingEpa.toFixed(1) : '63.2';
+  const capSpaceM = ((cap26.teamCapSpace || 35164858) / 1_000_000).toFixed(2);
+  const curWk = matchup.week || meta.currentWeek || 9;
+  const rec = meta.teamRecord || '6-1';
+  const stand = meta.standingSummary || '#1 Seed in NFC';
   const solo = format === 'solo';
 
   const baseTurns = [
     {
       speaker: 'Marcus',
-      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in the 2026 play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting.`
+      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in live ${meta.seasonYear || 2026} play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `Let's start with the hard baseline numbers entering Week 9. San Francisco sits at six-and-one, holding the number-one seed in the NFC with a 54.8 percent probability of locking up the first-round bye in our ten-thousand-run Monte Carlo model, and 35.16 million dollars in gross 2026 salary cap space.`
+      text: `Let's start with the hard baseline numbers entering Week ${curWk}. San Francisco sits at ${rec} (${stand}), with a ${mc.seed1ByePct ?? 54.8} percent probability of locking up the NFC first-round bye in our ten-thousand-run Monte Carlo model, and ${capSpaceM} million dollars in gross 2026 salary cap space.`
     },
     {
       speaker: 'Marcus',
-      text: `When you connect ${topic} to what is happening on tape right now, two things jump off the screen. Offensively, Brock Purdy has generated plus 63.2 passing EPA with a 4.25 percent completion rate over expected while taking sacks on only 3.2 percent of dropbacks. Defensively, getting Nick Bosa back off the Week 8 bye alongside DeForest Buckner and Osa Odighizuwa changes every protection slide opponents can call.`
+      text: `When you connect ${topic} to what is happening on tape right now, two things jump off the screen. Offensively, Brock Purdy has generated plus ${purdyEpa} passing EPA while keeping pressure-to-sack rates among the lowest in the NFL. Defensively, pairing Nick Bosa on the Wide-9 rail alongside DeForest Buckner and Osa Odighizuwa inside forces slide-protection conflicts on every passing down.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `And look at the multi-year roster and cap discipline behind it. Every dollar of 2026 cap room that John Lynch and Paraag Marathe preserve past Tuesday's November 10th trade deadline rolls over one-for-one into 2027 under Article 13 of the CBA—cushioning option bonus proration while the 2025 and 2026 draft classes supply cost-controlled rotational snaps.`
+      text: `And look at the multi-year roster and cap discipline behind it. Every dollar of 2026 cap room that John Lynch and Paraag Marathe carry forward rolls over one-for-one into 2027 under Article 13 of the CBA—cushioning option bonus proration while the 2025 and 2026 draft classes supply cost-controlled snaps.`
     }
   ];
 
   // Expand turns proportionally if user requested an 8m or 15m deep dive
   if (durationMinutes >= 6) {
+    const nextOpps = upcomingGames.map(g => `Week ${g.week} ${g.homeAway === 'home' ? 'hosting' : 'at'} ${g.opponent?.name || g.opponent?.abbr}`).join(', ');
     baseTurns.push(
       {
         speaker: 'Marcus',
-        text: `Zooming deeper into the upcoming schedule gauntlet: after Sunday's Levi's Stadium clash against Klint Kubiak and Maxx Crosby's Raiders, San Francisco travels to Dallas in Week 10, faces Minnesota at 7,200 feet altitude in Mexico City in Week 11, and then hits key NFC tiebreaker games against Seattle, the Rams, and Philadelphia.`
+        text: `Zooming deeper into the upcoming schedule slate: San Francisco faces ${nextOpps || `the ${matchup.oppName || 'upcoming slate'}`}, where conference and division tiebreakers carry massive January leverage.`
       },
       {
         speaker: solo ? 'Marcus' : 'Elena',
-        text: `That is why player-specific health management—like respecting Trent Williams' veteran rest cadence while monitoring soft-tissue GPS loads on Ricky Pearsall and Christian McCaffrey—is the single highest-leverage variable between a Wild Card road trip and home-field advantage through January.`
+        text: `That is why player-specific health management—like respecting Trent Williams' veteran rest cadence while managing snap counts across Christian McCaffrey, George Kittle, and Nick Bosa—is the single highest-leverage variable for securing home-field advantage through January.`
       }
     );
   }

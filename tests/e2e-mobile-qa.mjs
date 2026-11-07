@@ -1221,13 +1221,129 @@ async function main() {
       );
     });
 
+    await runStep('Uncommon edge cases: #0 jersey search, apostrophe search, away-game scoreboard orientation, outbound link security & non-embeddable video guard', async () => {
+      const edgeAudit = await cdp.eval(async () => {
+        // 1. Test #0 jersey search (Renardo Green #0 — guards against falsy 0 bug!) & iOS curly/omitted apostrophe search
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
+        document.querySelector('[data-action="set-roster-unit"][data-unit="All"]')?.click();
+        document.querySelector('[data-action="set-roster-pos"][data-pos="ALL"]')?.click();
+        const setRosterQuery = val => {
+          const inp = document.getElementById('rosterSearchInput');
+          inp.value = val;
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+          return document.getElementById('mainView').textContent || '';
+        };
+
+        const zeroText = setRosterQuery('#0');
+        const foundNumberZero = zeroText.includes('Renardo Green');
+
+        // Test BOTH iOS curly smart-quote ('De’Zhaun') AND omitted apostrophe ('Dezhaun')
+        const curlyApostropheFound = setRosterQuery('De\u2019Zhaun').includes("De'Zhaun Stribling");
+        const noApostropheFound = setRosterQuery('Dezhaun').includes("De'Zhaun Stribling");
+        const apostropheFound = curlyApostropheFound && noApostropheFound;
+
+        const emptyGraceful = setRosterQuery('zzzz_no_such_player_999').toLowerCase().includes('no players match');
+        setRosterQuery('');
+
+        // 2. Test away-game matchup scoreboard orientation (49ers on left @ Home Team on right)
+        const { renderSeasonMatchupViewHtml } = await import('/src/views/seasonMatchupView.js');
+        const awayHtml = renderSeasonMatchupViewHtml({
+          seasonSub: 'matchup',
+          activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+          appData: {
+            meta: { teamRecord: '7-1', currentWeek: 10 },
+            scheduleMatchup: {
+              upcomingMatchup: {
+                week: 10,
+                homeAway: 'away',
+                oppAbbr: 'DAL',
+                oppName: 'Dallas Cowboys',
+                oppRecord: '3-5',
+                sfRecord: '7-1 (1st NFC West)',
+                kickoffDisplay: 'Sun, Nov 15 • 1:25 PM PT (FOX)',
+                venue: 'AT&T Stadium',
+                betting: { spread: 'SF -3.5', overUnder: '53.5', restAdvantage: 'Even Rest' },
+                coachingMatchup: { headline: 'Kyle Shanahan vs Brian Schottenheimer' },
+                opponentHealth: { summary: {}, injuryReport: [], keyStartersHealthy: [], irReserve: [] },
+                franchiseHistory: { recentRecord: '3-1', pfrQueryUrl: 'https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=sfo&tm2=dal&yr=all', recentGames: [] }
+              }
+            }
+          }
+        });
+        const tmpDiv = document.createElement('div');
+        tmpDiv.innerHTML = awayHtml;
+        const awayTitle = tmpDiv.querySelector('.card-title')?.textContent || '';
+        const sbCols = Array.from(tmpDiv.querySelectorAll('.matchup-scoreboard .sb-team-abbr')).map(n => n.textContent.trim());
+
+        // 3. Outbound links across tabs must be https:// with target="_blank" & rel*="noopener"
+        const badLinks = [];
+        let checkedExternalLinks = 0;
+        for (const tab of ['home', 'news', 'roster', 'season', 'audio']) {
+          document.querySelector(`[data-nav-tab="${tab}"]`).click();
+          for (const a of document.querySelectorAll('a[href]')) {
+            const href = a.getAttribute('href') || '';
+            if (href.startsWith('http')) {
+              checkedExternalLinks++;
+              const rel = a.getAttribute('rel') || '';
+              if (!href.startsWith('https://') || a.getAttribute('target') !== '_blank' || !rel.includes('noopener') || /undefined|NaN/i.test(href)) {
+                badLinks.push({ tab, href, target: a.getAttribute('target'), rel });
+              }
+            }
+          }
+        }
+
+        // 4. Verify non-embeddable videos in news.json never attach [data-action="activate-video"]
+        document.querySelector('[data-nav-tab="news"]').click();
+        const newsRes = await fetch('./data/news.json');
+        const newsData = await newsRes.json();
+        const blockedIds = new Set();
+        for (const c of newsData.clusteredBriefs || []) {
+          if (c.videoClip && c.videoClip.embeddable === false) blockedIds.add(c.videoClip.videoId);
+        }
+        for (const r of newsData.rawStream || []) {
+          if (r.videoId && r.embeddable === false) blockedIds.add(r.videoId);
+        }
+        const leakedBlockedTriggers = Array.from(document.querySelectorAll('[data-action="activate-video"]'))
+          .map(el => el.getAttribute('data-video-id'))
+          .filter(vid => blockedIds.has(vid));
+
+        return {
+          foundNumberZero,
+          apostropheFound,
+          emptyGraceful,
+          awayTitle,
+          sbCols,
+          checkedExternalLinks,
+          badLinks,
+          leakedBlockedTriggers
+        };
+      });
+
+      assert(edgeAudit.foundNumberZero, 'Searching #0 failed to match Renardo Green');
+      assert(edgeAudit.apostropheFound, "Searching De'Zhaun failed to match De'Zhaun Stribling");
+      assert(edgeAudit.emptyGraceful, 'Empty roster search state did not render gracefully');
+      assert(
+        edgeAudit.awayTitle.startsWith('49ers') && edgeAudit.sbCols[0] === '49ers' && edgeAudit.sbCols[1] === 'Dallas Cowboys',
+        `Away-game scoreboard orientation wrong: title="${edgeAudit.awayTitle}", cols=${JSON.stringify(edgeAudit.sbCols)}`
+      );
+      assert(edgeAudit.checkedExternalLinks >= 25, `Expected >=25 external links across tabs, checked ${edgeAudit.checkedExternalLinks}`);
+      assert(edgeAudit.badLinks.length === 0, `Insecure or malformed outbound links found: ${JSON.stringify(edgeAudit.badLinks)}`);
+      assert(
+        edgeAudit.leakedBlockedTriggers.length === 0,
+        `Embed-blocked videoIds rendered inline iframe triggers: ${JSON.stringify(edgeAudit.leakedBlockedTriggers)}`
+      );
+    });
+
     console.log('\n=== [9/9] Multi-Viewport Responsive Overflow Sweep & Zero Runtime Error Audit ===');
 
     const viewports = [
+      { name: 'Ultra-Narrow Mobile (320x640)', w: 320, h: 640, mobile: true, dpr: 2 },
       { name: 'Compact Mobile (360x780)', w: 360, h: 780, mobile: true, dpr: 3 },
       { name: 'iPhone SE / Small Mobile (375x667)', w: 375, h: 667, mobile: true, dpr: 2 },
       { name: 'iPhone 16 Pro Max (430x932)', w: 430, h: 932, mobile: true, dpr: 3 },
-      { name: 'iPad / Tablet (768x1024)', w: 768, h: 1024, mobile: false, dpr: 2 }
+      { name: 'iPad / Tablet (768x1024)', w: 768, h: 1024, mobile: false, dpr: 2 },
+      { name: 'Desktop Widescreen (1280x900)', w: 1280, h: 900, mobile: false, dpr: 2 }
     ];
 
     for (const vp of viewports) {

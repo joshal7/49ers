@@ -90,6 +90,43 @@ function renderUpcomingMatchup(appData) {
   const oppIrList = oppHealth.irReserve || [];
   const sfPr = (appData?.health?.practiceReport || []).slice(0, 5);
 
+  const sfIsAway = um.homeAway === 'away';
+  const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
+  const oppShortName = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || um.oppName || 'Opponent';
+  const matchupHeadline = sfIsAway
+    ? `49ers (${um.sfRecord || sfRecShort}) @ ${um.oppName} (${um.oppRecord})`
+    : `${um.oppName} (${um.oppRecord}) @ 49ers (${um.sfRecord || sfRecShort})`;
+  const awayColHtml = sfIsAway
+    ? `<div class="sb-team-col">
+        ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
+        <div class="sb-team-meta">
+          <div class="sb-team-abbr">49ers</div>
+          <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
+        </div>
+      </div>`
+    : `<div class="sb-team-col">
+        ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 40)}
+        <div class="sb-team-meta">
+          <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
+          <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
+        </div>
+      </div>`;
+  const homeColHtml = sfIsAway
+    ? `<div class="sb-team-col home">
+        <div class="sb-team-meta">
+          <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
+          <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
+        </div>
+        ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 40)}
+      </div>`
+    : `<div class="sb-team-col home">
+        <div class="sb-team-meta">
+          <div class="sb-team-abbr">49ers</div>
+          <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
+        </div>
+        ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
+      </div>`;
+
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
@@ -97,32 +134,20 @@ function renderUpcomingMatchup(appData) {
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('swords', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Week ${um.week} Upcoming Matchup • ${esc(um.kickoffDisplay)}</div>
-            <h2 class="card-title">${esc(um.oppName)} (${esc(um.oppRecord)}) @ 49ers (${esc(um.sfRecord)})</h2>
+            <h2 class="card-title">${esc(matchupHeadline)}</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
-                data-prompt="Deep film and protection breakdown for Week 9 Las Vegas Raiders at 49ers: Klint Kubiak vs Kyle Shanahan and neutralizing Maxx Crosby">
+                data-prompt="${esc(`Deep film and protection breakdown for Week ${um.week} ${sfIsAway ? `49ers at ${um.oppName}` : `${um.oppName} at 49ers`}: ${um.coachingMatchup?.headline || 'coaching chess match and trench keys'}`)}">
           ${iconSvg('sparkles', 13)}
           <span>AI Film Prep</span>
         </button>
       </div>
 
       <div class="matchup-scoreboard">
-        <div class="sb-team-col">
-          ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 40)}
-          <div class="sb-team-meta">
-            <div class="sb-team-abbr">${esc(um.oppName || 'Raiders')}</div>
-            <div class="sb-team-rec mono">${esc(um.oppRecord || '2-5')}</div>
-          </div>
-        </div>
-        <span class="sb-vs-pill mono">@ WK ${um.week || 9}</span>
-        <div class="sb-team-col home">
-          <div class="sb-team-meta">
-            <div class="sb-team-abbr">49ers</div>
-            <div class="sb-team-rec mono">${esc(um.sfRecord?.split(' ')[0] || '6-1')}</div>
-          </div>
-          ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
-        </div>
+        ${awayColHtml}
+        <span class="sb-vs-pill mono">@ WK ${um.week || ''}</span>
+        ${homeColHtml}
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
@@ -315,9 +340,9 @@ function renderUpcomingMatchup(appData) {
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
         <div>
           <div class="card-eyebrow">Recent Franchise History (${esc(um.franchiseHistory?.recentRecord)})</div>
-          <h3 class="card-title">49ers vs. Raiders Recent Meetings</h3>
+          <h3 class="card-title">49ers vs. ${esc(oppShortName)} Recent Meetings</h3>
         </div>
-        <a href="https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=sfo&amp;tm2=rai&amp;yr=all" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+        <a href="${esc(um.franchiseHistory?.pfrQueryUrl || 'https://www.pro-football-reference.com/teams/sfo/head-to-head.htm')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>PFR Box Scores</span>${iconSvg('externalLink', 11)}
         </a>
       </div>

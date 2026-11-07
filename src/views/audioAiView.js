@@ -26,6 +26,7 @@ function renderSourceChips(items = []) {
 }
 
 export function renderAudioAiViewHtml({
+  appData = null,
   studioSub = 'podcast', // 'podcast' | 'analysis'
   podDurationMin = 3,
   podFormat = 'two_host', // 'two_host' | 'solo'
@@ -55,6 +56,7 @@ export function renderAudioAiViewHtml({
     return (
       modeSwitcher +
       renderPodcastStudio({
+        appData,
         podDurationMin,
         podFormat,
         podTopicDraft,
@@ -68,6 +70,7 @@ export function renderAudioAiViewHtml({
   return (
     modeSwitcher +
     renderDeepAnalysisRunner({
+      appData,
       analysisPromptDraft,
       jobStatus,
       allAnalyses
@@ -76,6 +79,7 @@ export function renderAudioAiViewHtml({
 }
 
 function renderPodcastStudio({
+  appData,
   podDurationMin,
   podFormat,
   podTopicDraft,
@@ -84,11 +88,14 @@ function renderPodcastStudio({
   audioState
 }) {
   const activeEp = audioState?.episode || null;
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const wkLabel = um.week ? `Week ${um.week}` : `Week ${appData?.meta?.currentWeek || ''}`.trim();
+  const oppShort = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || 'Matchup';
   const topicChips = [
-    'Week 9 Raiders Film & Maxx Crosby Protection Plan',
+    `${wkLabel} ${oppShort} Film & Trench Protection Plan`.trim(),
     'DeForest Buckner + Nick Bosa Wide-9 Stunt Geometry',
-    '2026–2028 Cap Rollover & Brandon Aiyuk Contract Math',
-    'Path to #1 NFC Seed & Tiebreakers vs. Detroit/Philly'
+    '2026–2028 Cap Rollover & Contract Leverage Math',
+    'Path to #1 NFC Seed & Conference Tiebreakers'
   ];
 
   const transcriptHtml = activeEp
@@ -260,11 +267,14 @@ function renderPodcastStudio({
   `;
 }
 
-function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses }) {
+function renderDeepAnalysisRunner({ appData, analysisPromptDraft, jobStatus, allAnalyses }) {
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const wkLabel = um.week ? `Week ${um.week}` : 'upcoming';
+  const oppLabel = um.oppName || 'opponent';
   const quickPrompts = [
     'Evaluate Brock Purdy 2026 EPA/play, CPOE, and pressure-to-sack avoidance vs. two-high shells',
-    'Cap & roster breakdown of Brandon Aiyuk reinstatement meeting and Post-June 1 trade dead money',
-    'How DeForest Buckner and Osa Odighizuwa change Nick Bosa pass-rush win rate starting Week 9'
+    'Cap & roster breakdown of 2026–2027 CBA rollover space and Post-June 1 dead-money mechanics',
+    `How DeForest Buckner, Osa Odighizuwa, and Nick Bosa shape Wide-9 pass-rush geometry in ${wkLabel} vs. ${oppLabel}`
   ];
 
   return `

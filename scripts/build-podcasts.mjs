@@ -38,7 +38,7 @@ const EPISODES_SPEC = [
     turns: [
       {
         speaker: 'Marcus',
-        text: "Welcome into 49ers Faithful. Sunday at Levi's Stadium, the six-and-one Niners come out of the Week 8 bye holding the number one seed in the NFC, laying ten points against the Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is officially off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa."
+        text: "Welcome into 49ers Faithful. Sunday afternoon on FOX at Levi's Stadium, the six-and-one Niners come out of the Week 8 bye holding the number one seed in the NFC, laying eight and a half points against the four-and-four Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is officially off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa."
       },
       {
         speaker: 'Elena',
@@ -46,7 +46,7 @@ const EPISODES_SPEC = [
       },
       {
         speaker: 'Marcus',
-        text: "Exactly. And look across the sideline at who is calling plays for Las Vegas: first-year Raiders head coach Klint Kubiak, who spent all of 2023 inside Kyle Shanahan's building as our Passing Game Specialist. Kubiak wants to marry outside zone to deep bootleg crossers—the exact concepts Fred Warner and Deommodore Lenoir rep against every day in Santa Clara."
+        text: "Exactly. And look across the sideline at who is calling plays for Las Vegas: first-year Raiders head coach Klint Kubiak, who spent all of 2023 inside Kyle Shanahan's building as our Passing Game Specialist. Kubiak wants to marry outside zone with Ashton Jeanty to deep play-action crossers for Kirk Cousins and Brock Bowers—the exact concepts Fred Warner and Deommodore Lenoir rep against every day in Santa Clara."
       },
       {
         speaker: 'Elena',
@@ -54,11 +54,11 @@ const EPISODES_SPEC = [
       },
       {
         speaker: 'Marcus',
-        text: "The one wrecker we have to respect for sixty minutes is Maxx Crosby. Crosby plays 96 percent of Vegas's defensive snaps. Whenever he flips away from Trent Williams to line up over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick 2.6-second Rhythm digs to Ricky Pearsall and De'Zhaun Stribling."
+        text: "The one wrecker we have to respect for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to line up over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick 2.6-second rhythm digs to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus Demarcus Robinson if activated from IR."
       },
       {
         speaker: 'Elena',
-        text: "Control Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market score of Niners 31, Raiders 21 tracks right on the numbers."
+        text: "Control Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market score of Niners 29, Raiders 20 tracks right on the numbers."
       }
     ]
   },
@@ -182,7 +182,7 @@ Pairing **DeForest Buckner** (6'7", 295 lbs, 34.4" arm length) and **Osa Odighiz
 
 ### What Changed on Film in 2026
 1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting hero throws when two-high shells bracket the deep over route, Purdy has cut his pressure-to-sack conversion nearly in half by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets.
-2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even without Brandon Aiyuk active, Purdy has completed **70 passes of 10+ yards** and **24 explosive passes of 20+ yards** through 7 games by trusting **Ricky Pearsall**, **Jauan Jennings**, and rookie **De'Zhaun Stribling** before they clear linebacker leverage.`
+2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even without Brandon Aiyuk active, Purdy has completed **70 passes of 10+ yards** and **24 explosive passes of 20+ yards** through 7 games by trusting **Brandin Cooks**, **Jordan Watkins**, **Jacob Cowing**, and early-season reps from **Mike Evans** and **Ricky Pearsall** before they cleared linebacker leverage.`
   }
 ];
 

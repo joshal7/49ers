@@ -91,6 +91,7 @@ function renderRosterExplorer({
 }) {
   const allPlayers = appData?.roster?.players || [];
   const q = String(rosterSearch || '').toLowerCase().trim().replace(/^#/, '');
+  const qNorm = q.replace(/['’`. -]/g, '');
   const { field: sortField, dir: sortDir } = normalizeRosterSort(rosterSort, rosterSortDir);
   const mult = sortDir === 'asc' ? 1 : -1;
 
@@ -112,10 +113,12 @@ function renderRosterExplorer({
     }
 
     if (q) {
-      const matchName = p.name.toLowerCase().includes(q);
+      const nameLower = p.name.toLowerCase();
+      const nameNorm = nameLower.replace(/['’`. -]/g, '');
+      const matchName = nameLower.includes(q) || (qNorm.length >= 2 && nameNorm.includes(qNorm));
       const matchNum = p.jersey !== null && p.jersey !== undefined && String(p.jersey) === q;
       const matchPos = p.position.toLowerCase() === q;
-      const matchSchool = p.college.toLowerCase().includes(q);
+      const matchSchool = (p.college || '').toLowerCase().includes(q);
       if (!matchName && !matchNum && !matchPos && !matchSchool) return false;
     }
     return true;
@@ -278,6 +281,7 @@ function renderRosterExplorer({
 
 function renderDualDepthChart({ appData, depthMode }) {
   const units = appData?.depthChart?.units || [];
+  const depthWk = appData?.depthChart?.week || appData?.meta?.currentWeek || '';
 
   const headerCard = `
     <div class="card">
@@ -297,7 +301,7 @@ function renderDualDepthChart({ appData, depthMode }) {
       <div class="segmented-control" role="tablist" aria-label="Depth Chart Mode">
         <button type="button" class="pill-btn seg-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
           ${iconSvg('bolt', 14)}
-          <span>Projected Week 9 Active (Injury-Adjusted)</span>
+          <span>Projected ${depthWk ? `Week ${depthWk} ` : ''}Active (Injury-Adjusted)</span>
         </button>
         <button type="button" class="pill-btn seg-btn ${depthMode === 'baseline' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="baseline">
           ${iconSvg('layers', 14)}

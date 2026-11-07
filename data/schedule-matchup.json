@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T08:33:12.257Z",
+  "updatedAt": "2026-11-07T09:30:42.838Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -42,6 +42,7 @@
       "venue": {
         "name": "Melbourne Cricket Ground",
         "city": "Melbourne",
+        "state": "VIC",
         "country": "Australia",
         "isInternational": true,
         "internationalNote": "🌏 International Series — Melbourne, Australia (MCG • 100,000 cap)",
@@ -75,6 +76,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -83,7 +85,7 @@
       "restAdvantageDays": 3,
       "spreadLineSf": -12.5,
       "totalLine": 44.5,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401872958",
@@ -108,6 +110,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -116,7 +119,7 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -7.5,
       "totalLine": 48.5,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401872975",
@@ -141,6 +144,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -174,6 +178,7 @@
       "venue": {
         "name": "Lumen Field",
         "city": "Seattle",
+        "state": "WA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -182,7 +187,7 @@
       "restAdvantageDays": 0,
       "spreadLineSf": 3,
       "totalLine": 46.5,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873008",
@@ -207,6 +212,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -240,6 +246,7 @@
       "venue": {
         "name": "Mercedes-Benz Stadium",
         "city": "Atlanta",
+        "state": "GA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -248,7 +255,7 @@
       "restAdvantageDays": -1,
       "spreadLineSf": -2.5,
       "totalLine": 49.5,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873047",
@@ -268,11 +275,12 @@
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
         "record": "4-4",
         "pointDiff": -9,
-        "coach": "Klint Kubliak"
+        "coach": "Klint Kubiak"
       },
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -281,7 +289,7 @@
       "restAdvantageDays": 7,
       "spreadLineSf": -10,
       "totalLine": 51.5,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873063",
@@ -306,6 +314,7 @@
       "venue": {
         "name": "AT&T Stadium",
         "city": "Arlington",
+        "state": "TX",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -314,7 +323,7 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -3.5,
       "totalLine": 53.5,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873077",
@@ -339,6 +348,7 @@
       "venue": {
         "name": "Estadio Banorte",
         "city": "Mexico City",
+        "state": "",
         "country": "Mexico",
         "isInternational": true,
         "internationalNote": "🇲🇽 International Series — Mexico City (7,200 ft High Altitude)",
@@ -372,6 +382,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -380,7 +391,7 @@
       "restAdvantageDays": -7,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873095",
@@ -405,6 +416,7 @@
       "venue": {
         "name": "MetLife Stadium",
         "city": "East Rutherford",
+        "state": "NJ",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -413,7 +425,7 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873120",
@@ -438,6 +450,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -446,7 +459,7 @@
       "restAdvantageDays": -3,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "Fox"
+      "broadcast": "FOX"
     },
     {
       "id": "401873124",
@@ -471,6 +484,7 @@
       "venue": {
         "name": "SoFi Stadium",
         "city": "Inglewood",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -504,6 +518,7 @@
       "venue": {
         "name": "Arrowhead Stadium",
         "city": "Kansas City",
+        "state": "MO",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -537,6 +552,7 @@
       "venue": {
         "name": "Levi's Stadium",
         "city": "Santa Clara",
+        "state": "CA",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -570,6 +586,7 @@
       "venue": {
         "name": "State Farm Stadium",
         "city": "Glendale",
+        "state": "AZ",
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
@@ -672,58 +689,60 @@
     }
   ],
   "powerRankings": {
-    "weekLabel": "Entering Week 9 (Post-Bye Consensus)",
+    "weekLabel": "Entering Week 9 Consensus",
     "consensusRank": 2,
     "previousRank": 3,
-    "rangeDisplay": "#1 – #3 across 6 national & market power models",
-    "synthesizedTakeaway": "National evaluators and market Elo/EPA models universally place the 6-1 49ers in the NFL's top tier (#2 overall, #1 in the NFC). Analysts point to SF thriving offensively despite early-season WR/DE attrition—and project a defensive leap now that Nick Bosa joins DeForest Buckner and Osa Odighizuwa.",
+    "rangeDisplay": "#1 – #3 across 5 national & market power models",
+    "synthesizedTakeaway": "National evaluators and market Elo/EPA models place the 6-1 49ers at #2 overall (#1 Seed in the NFC, +58 (197 PF / 139 PA)). Analysts highlight San Francisco's #3 passing EPA offense paired with an interior defensive line bolstered by DeForest Buckner and Osa Odighizuwa alongside Nick Bosa.",
     "sources": [
       {
         "outlet": "Inpredictable / Betting Market Power Rating",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 1,
         "delta": "+1",
-        "blurb": "Market spreads price SF as the #1 neutral-field roster in football (+6.4 pts over average) with Bosa & CMC active."
+        "blurb": "Market spreads price the 6-1 49ers in the NFL's elite tier entering Week 9 vs. Las Vegas Raiders."
       },
       {
         "outlet": "The Athletic NFL Power Rankings",
         "url": "https://www.nytimes.com/athletic/nfl/",
         "rank": 2,
         "delta": "+1",
-        "blurb": "Sitting at 6-1 coming out of the bye with DeForest Buckner added to the interior makes San Francisco the clear NFC pace-setter."
+        "blurb": "Sitting at 6-1 (3-0 NFC West) with DeForest Buckner added to the interior keeps San Francisco atop NFC contenders."
       },
       {
         "outlet": "ESPN NFL Nation Power Panel",
         "url": "https://www.espn.com/nfl/story/_/page/nflpowerrankings",
         "rank": 2,
         "delta": "0",
-        "blurb": "Brock Purdy's efficiency (+4.25% CPOE) has kept the offense humming while the defensive line reloads for November."
+        "blurb": "Brock Purdy's efficiency (#3 Passing EPA/gm) anchors the offense while the defensive front reloads."
       },
       {
-        "outlet": "NFL.com (Eric Edholm)",
+        "outlet": "NFL.com Power Rankings",
         "url": "https://www.nfl.com/news/series/power-rankings",
         "rank": 3,
         "delta": "+1",
-        "blurb": "The Week 7 stumble in Atlanta is the lone blemish; health arrow is pointing sharply up ahead of the Raiders visit."
+        "blurb": "San Francisco's trench profile and +58 point differential travel into Week 9 against Raiders."
       },
       {
         "outlet": "RBSDM / nflverse EPA Composite",
         "url": "https://rbsdm.com/stats/stats/",
         "rank": 2,
         "delta": "0",
-        "blurb": "Top-3 dropback EPA combined with the league's #2 pass-block sack avoidance."
+        "blurb": "#3 dropback EPA combined with the league's #1 pass-block sack avoidance (3.2%)."
       }
     ]
   },
   "upcomingMatchup": {
     "week": 9,
+    "homeAway": "home",
     "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873047/raiders-49ers",
     "injurySourceUrl": "https://www.espn.com/nfl/injuries",
     "sfInjuryReportUrl": "https://www.49ers.com/team/injury-report/",
     "statsSourceUrl": "https://github.com/nflverse/nflverse-data",
-    "kickoffIso": "2026-11-08T13:25:00-08:00",
-    "kickoffDisplay": "Sunday, Nov 8, 2026 • 1:25 PM PT (CBS)",
-    "venue": "Levi's Stadium • Santa Clara, CA (Natural Bermuda Grass)",
+    "kickoffIso": "2026-11-08T21:25Z",
+    "kickoffDisplay": "Sunday, Nov 8, 2026 • 1:25 PM PT (FOX)",
+    "broadcast": "FOX",
+    "venue": "Levi's Stadium • Santa Clara, CA (Natural Grass)",
     "sfRecord": "6-1 (#1 Seed in NFC)",
     "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
     "oppAbbr": "LV",
@@ -831,7 +850,7 @@
           "wed": "LP",
           "thu": "FP",
           "fri": "FP",
-          "injuryType": "back",
+          "injuryType": "Back",
           "gameStatus": "No Designation (Cleared)",
           "shortComment": "Thornton (back) does not have a designation for Sunday's battle against San Francisco, Paul Gutierrez of the Raiders' official site reports.",
           "playProbabilityPct": 95,
@@ -839,6 +858,17 @@
         }
       ],
       "keyStartersHealthy": [
+        {
+          "name": "Malik Benson",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/5150247",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
+        },
         {
           "name": "Brock Bowers",
           "position": "TE",
@@ -848,7 +878,7 @@
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 97,
           "playBadgeLabel": "97% • Full Go",
-          "shortComment": "Bowers caught seven of 10 targets for 92 yards and two touchdowns in Sunday's 38-33 win over the Jets."
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
         },
         {
           "name": "Kirk Cousins",
@@ -859,7 +889,7 @@
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 97,
           "playBadgeLabel": "97% • Full Go",
-          "shortComment": "Cousins completed 19 of 26 passes for 247 yards and three touchdowns in Sunday's 38-33 win over the Jets. He added five rushing attempts for three yards and a rushing touchdown."
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
         },
         {
           "name": "Ashton Jeanty",
@@ -870,18 +900,29 @@
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 97,
           "playBadgeLabel": "97% • Full Go",
-          "shortComment": "Raiders head coach Klint Kubiak said Wednesday that the breakdown in carries between Jeanty and Mike Washington will be determined on a week-to-week basis, Ryan McFadden of ESPN.com reports."
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
         },
         {
-          "name": "Michael Mayer",
-          "position": "TE",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429086.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4429086",
+          "name": "Dylan Laube",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366963.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4366963",
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 97,
           "playBadgeLabel": "97% • Full Go",
-          "shortComment": "Mayer caught five of six targets for 53 yards in Sunday's 38-33 win over the Jets."
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
+        },
+        {
+          "name": "Tyler Linderbaum",
+          "position": "C",
+          "jersey": 65,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360499.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4360499",
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 97,
+          "playBadgeLabel": "97% • Full Go",
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
         },
         {
           "name": "Kolton Miller",
@@ -892,18 +933,18 @@
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 97,
           "playBadgeLabel": "97% • Full Go",
-          "shortComment": "Practiced in full; active without game designation."
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
         },
         {
-          "name": "Jackson Powers-Johnson",
-          "position": "G",
-          "jersey": 58,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875295.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4875295",
+          "name": "Tre Tucker",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428718.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4428718",
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 97,
           "playBadgeLabel": "97% • Full Go",
-          "shortComment": "Practiced in full; active without game designation."
+          "shortComment": "Listed 1st-string on depth chart; active without game designation."
         }
       ],
       "irReserve": [
@@ -978,15 +1019,16 @@
     "betting": {
       "favorite": "San Francisco 49ers",
       "spread": "SF -10.0",
-      "openingSpread": "SF -8.5 (Moved 1.5 pts toward SF following Nick Bosa clearance)",
+      "openingSpread": "Opened SF -8.5 (Draft Kings)",
       "overUnder": 51.5,
-      "moneyline": "SF -520 | LV +390",
+      "moneyline": "SF -485 | LV +370",
       "impliedScore": "SF 30.8 – LV 20.8",
-      "restAdvantage": "+7 Days Rest (SF off Week 8 Bye vs. LV standard 7-day week)"
+      "restAdvantage": "+7 Days Rest Advantage (SF off Week 8 Bye)"
     },
     "franchiseHistory": {
       "recentRecord": "5-2 in last 7 meetings",
-      "lastMeetingNote": "SF defeated LV 37-34 in OT on Jan 1, 2023 behind Brock Purdy & Robbie Gould.",
+      "lastMeetingNote": "Most recent meeting (2023-01-01): SF won SF 37, LV 34 in OT (Away).",
+      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=sfo&tm2=rai&yr=all",
       "recentGames": [
         {
           "season": 2022,
@@ -1048,28 +1090,28 @@
     },
     "coachingMatchup": {
       "headline": "Kyle Shanahan vs. Raiders HC Klint Kubiak (Former 2023 49ers Passing Game Specialist)",
-      "summary": "Klint Kubiak spent the entire 2023 Super Bowl LVIII run inside Kyle Shanahan's offensive meeting room as San Francisco's Passing Game Specialist. Both offenses major in wide-zone marriage to deep over/boot play-action, meaning Fred Warner and Deommodore Lenoir have practiced hundreds of reps against Kubiak's exact route spacing.",
+      "summary": "Klint Kubiak spent the entire 2023 Super Bowl LVIII run inside Kyle Shanahan's offensive meeting room as San Francisco's Passing Game Specialist. Both offenses marry outside zone to deep boot/over play-action with Kirk Cousins and Brock Bowers, meaning Fred Warner and Deommodore Lenoir have practiced hundreds of reps against Kubiak's exact spacing rules.",
       "bullets": [
-        "Shanahan Post-Bye Track Record: Under Shanahan (2017–2026), SF is 7-2 straight-up coming off the Bye week when starting QB1 is healthy, averaging +0.21 offensive EPA/play on scripted opening-15 plays.",
-        "Countering Maxx Crosby (Edge #98): Crosby never leaves the field (~96% defensive snaps). Expect Shanahan to run high-frequency screen/draw punishers and 21-personnel Kittle/Juszczyk edge chips whenever Crosby flips over RT Colton McKivitz.",
-        "49ers Wide-9 vs. Raiders IOL: Pairing DeForest Buckner + Osa Odighizuwa on interior stunts directly targets Las Vegas's interior pass protection."
+        "Shanahan Post-Bye Track Record: Coming off the Week 8 Bye with a +7-day rest edge, SF historically averages +0.21 EPA/play on opening-15 scripted snaps when QB1 is healthy.",
+        "Countering Maxx Crosby (DE #98): Crosby plays ~96% of Las Vegas defensive snaps. Expect 21-personnel Kittle/Juszczyk edge chips and quick rhythm throws whenever Crosby aligns over RT Colton McKivitz.",
+        "49ers Wide-9 vs. Raiders Pocket: Pairing DeForest Buckner + Osa Odighizuwa (#92) on interior stunts alongside Nick Bosa prevents Las Vegas from sliding center Tyler Linderbaum toward Bosa."
       ]
     },
     "keyMatchupsMatrix": [
       {
-        "unitMatchup": "49ers Pass Protection (3.2% Sack Rate, #2 NFL) vs. Maxx Crosby & Raiders Front",
+        "unitMatchup": "49ers Pass Protection (3.2% Sack Rate, #1 NFL) vs. Raiders Front & Raiders Rush (#17 Sacks/Gm)",
+        "advantage": "SF Edge",
+        "tacticalDetail": "Trent Williams + 21-personnel Kittle/Juszczyk chip releases keep Brock Purdy clean on intermediate in-breakers against Las Vegas Raiders's edge pressure."
+      },
+      {
+        "unitMatchup": "Purdy Play-Action & Middle-of-Field (#3 Pass EPA) vs. Raiders Coverage",
+        "advantage": "SF Edge",
+        "tacticalDetail": "George Kittle, Christian McCaffrey, Brandin Cooks, and SF's motion spacing stress second-level zone leverage between the numbers."
+      },
+      {
+        "unitMatchup": "Nick Bosa + DeForest Buckner + Osa Odighizuwa vs. Kirk Cousins & Raiders O-Line (#3 Sack Rate Allowed)",
         "advantage": "SF Slight Edge",
-        "tacticalDetail": "Trent Williams + quick 2.64s release options neutralize prolonged edge wins; watch Kittle chip-to-flat releases on 3rd & medium."
-      },
-      {
-        "unitMatchup": "Purdy Play-Action & Middle-of-Field (+63.2 Pass EPA) vs. Raiders Linebacker/Safety Coverage",
-        "advantage": "SF Heavy Edge",
-        "tacticalDetail": "SF leads the NFC in yards per attempt on in-breaking digs/crossers between the numbers (11.4 YPA)."
-      },
-      {
-        "unitMatchup": "Nick Bosa + DeForest Buckner + Odighizuwa vs. Raiders Pocket & Outside Zone",
-        "advantage": "SF Heavy Edge",
-        "tacticalDetail": "First game all season with SF's complete A-list defensive line active simultaneously."
+        "tacticalDetail": "Aligning Buckner and Odighizuwa inside forces interior protection slides, isolating Bosa 1-on-1 on the Wide-9 rail."
       }
     ]
   }

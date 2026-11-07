@@ -137,19 +137,35 @@ export function computePlayerPlayProbability(input = {}) {
 
   const factors = [];
 
-  // 1. Hard Roster / Official Ruling Exclusions
+  // 1. Check IR / Reserve Return Window Activation (e.g., 21-day practice window opened + officially Questionable)
+  const isIrReturnQuestionable =
+    (rosterBucket === 'ir' ||
+      rosterBucket === 'injuredreserveorout' ||
+      statusRaw === 'ir' ||
+      statusRaw === 'injured reserve') &&
+    (beatNote.includes('listed as questionable') ||
+      beatNote.includes('questionable for sunday') ||
+      beatNote.includes('questionable ahead of') ||
+      beatNote.includes('likely will be activated') ||
+      beatNote.includes('expected to be activated')) &&
+    !beatNote.includes('ruled out') &&
+    !beatNote.includes('will miss');
+
+  // 2. Hard Roster / Official Ruling Exclusions
   if (
-    rosterBucket === 'ir' ||
-    rosterBucket === 'injuredreserveorout' ||
-    rosterBucket === 'pup' ||
-    rosterBucket === 'suspended' ||
-    statusRaw === 'out' ||
-    statusRaw === 'ir' ||
-    statusRaw === 'injured reserve' ||
-    statusRaw === 'suspended' ||
-    beatNote.includes('ruled out') ||
-    beatNote.includes('placed on injured reserve') ||
-    beatNote.includes('looking to get reinstated')
+    !isIrReturnQuestionable &&
+    (rosterBucket === 'ir' ||
+      rosterBucket === 'injuredreserveorout' ||
+      rosterBucket === 'pup' ||
+      rosterBucket === 'suspended' ||
+      statusRaw === 'out' ||
+      statusRaw === 'ir' ||
+      statusRaw === 'injured reserve' ||
+      statusRaw === 'suspended' ||
+      beatNote.includes('ruled out') ||
+      beatNote.includes('will miss ') ||
+      beatNote.includes('placed on injured reserve') ||
+      beatNote.includes('looking to get reinstated'))
   ) {
     factors.push('Officially inactive (Out / Reserve / Reinstatement pending)');
     return {
@@ -159,6 +175,13 @@ export function computePlayerPlayProbability(input = {}) {
       priorUsed: prior,
       factors
     };
+  }
+
+  if (isIrReturnQuestionable) {
+    factors.push('21-day IR practice window active; officially listed Questionable for activation');
+    if (beatNote.includes('likely will be activated') || beatNote.includes('expected to be activated')) {
+      factors.push('Coaching staff signaled likely roster activation ahead of kickoff');
+    }
   }
 
   const wed = normalizePracticeCode(input.wed, injuryType);
@@ -212,6 +235,8 @@ export function computePlayerPlayProbability(input = {}) {
     statusRaw === 'active' ||
     statusRaw === 'healthy' ||
     beatNote.includes('does not have a designation') ||
+    beatNote.includes("doesn't have a designation") ||
+    beatNote.includes('does not carry an official injury designation') ||
     beatNote.includes('no injury designation') ||
     beatNote.includes('good to go') ||
     beatNote.includes('set to return') ||
@@ -295,9 +320,14 @@ export function computePlayerPlayProbability(input = {}) {
   } else if (beatNote.includes('game-time decision') || beatNote.includes('50-50')) {
     prob = Math.max(0.42, Math.min(0.64, prob));
     factors.push('Shanahan/beat note: true pre-game warmup decision');
-  } else if (beatNote.includes('expected to play') || beatNote.includes('on track to play')) {
+  } else if (
+    beatNote.includes('expected to play') ||
+    beatNote.includes('on track to play') ||
+    beatNote.includes('likely will be activated') ||
+    beatNote.includes('expected to be activated')
+  ) {
     prob = Math.max(prob, 0.84);
-    factors.push('Beat consensus: on track to suit up');
+    factors.push('Beat/podium consensus: on track to suit up');
   }
 
   const pct = Math.max(1, Math.min(99, Math.round(prob * 100)));

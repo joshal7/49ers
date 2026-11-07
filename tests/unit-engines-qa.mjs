@@ -33,6 +33,8 @@ import {
   cleanSensationalistText,
   filterNewsByUserPrefs
 } from '../src/engine/antiFluffFilter.js';
+import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
+import { hydrateLiveEspnOverlay } from '../src/services/dataService.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -608,6 +610,300 @@ await testAsync('Worker /api/analyze & /api/podcast handle malformed JSON (400),
 
     const audio404 = await edgeWorker.fetch(new Request('https://worker.example/api/audio/missing_ep'), envWithKey);
     assert.equal(audio404.status, 404);
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+console.log('\n=== [7/7] Source-of-Truth, Outbound Link Integrity & Auto-Refresh Pipeline QA ===');
+
+test('Practice report excludes box-score tackle blurbs ("six solo") and models IR-return Questionable >50%', () => {
+  const health = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+
+  for (const p of health.practiceReport) {
+    assert.ok(
+      !/\b(solo|tackle|yard|target|catch|touchdown|sack)\b/i.test(p.injuryType || ''),
+      `Bogus stat string leaked into injuryType for ${p.name}: ${p.injuryType}`
+    );
+  }
+
+  // Healthy active stars without real injury designations must not pollute practiceReport
+  for (const healthyName of ['Brock Purdy', 'Fred Warner', 'Dre Greenlaw', 'Kyle Juszczyk', 'Brandin Cooks']) {
+    const rp = roster.players.find(x => x.name === healthyName);
+    if (rp && rp.rosterBucket === 'active' && !rp.health?.injuryType) {
+      assert.ok(
+        !health.practiceReport.some(pr => pr.name === healthyName),
+        `Healthy active player ${healthyName} should not appear on practiceReport`
+      );
+    }
+  }
+
+  // Test IR-return Questionable model directly
+  const irRetProb = computePlayerPlayProbability({
+    name: 'Demarcus Robinson',
+    position: 'WR',
+    gameStatus: 'Questionable',
+    isIrReturnQuestionable: true,
+    injuryType: 'Ankle',
+    wed: 'LP',
+    thu: 'LP',
+    fri: 'LP',
+    beatNote: 'Robinson (ankle) is listed as questionable and likely will be activated from IR.'
+  });
+  assert.ok(irRetProb.probabilityPct >= 75, `Expected IR-return Questionable >=75%, got ${irRetProb.probabilityPct}%`);
+});
+
+test('Upcoming matchup & opponent health reflect live depth-chart starters, normalized TV network, and zero coach typos', () => {
+  const sm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const um = sm.upcomingMatchup;
+  assert.ok(um && um.week >= 1, 'Missing upcomingMatchup');
+  assert.ok(!/Kubliak/i.test(JSON.stringify(sm)), 'Coach name typo "Kubliak" must be normalized to "Kubiak"');
+  assert.ok(
+    ['FOX', 'CBS', 'NBC', 'ESPN', 'ABC', 'Prime Video', 'NFL', 'Netflix', 'Peacock'].some(tv =>
+      String(um.kickoffDisplay || '').includes(tv)
+    ),
+    `Unexpected broadcast in kickoffDisplay: ${um.kickoffDisplay}`
+  );
+  assert.ok(um.franchiseHistory?.pfrQueryUrl?.startsWith('https://www.pro-football-reference.com/'), 'Missing dynamic pfrQueryUrl');
+  assert.ok((um.opponentHealth?.keyStartersHealthy || []).length >= 4, 'Missing opponent healthy 1st-string starters');
+
+  if (um.week === 9 && um.oppAbbr === 'LV') {
+    const starterNames = um.opponentHealth.keyStartersHealthy.map(s => s.name);
+    assert.ok(starterNames.includes('Kirk Cousins'), 'Week 9 LV starters should include QB1 Kirk Cousins');
+    assert.ok(!starterNames.includes('Geno Smith'), 'Geno Smith is not on LV');
+    assert.ok(!starterNames.includes('Christian Wilkins'), 'Christian Wilkins is not an active LV starter');
+  }
+});
+
+await testAsync('Dynamic news synthesis cleanly generates future-week clusters (Week 12+) and retires post-deadline trade cluster', async () => {
+  const futureClusters = await buildClusteredNewsBriefs(
+    [
+      {
+        videoId: 'x0TpSoyfx7I',
+        url: 'https://www.youtube.com/watch?v=x0TpSoyfx7I',
+        title: '49ers Week 12 Preview',
+        channel: 'NBC Sports Bay Area',
+        duration: '4:18',
+        embeddable: true
+      }
+    ],
+    [
+      {
+        title: 'Kyle Shanahan details 49ers Week 12 preparation for Seattle Seahawks',
+        summary: 'Brock Purdy and Nick Bosa full participants ahead of Sunday NFC West clash.',
+        url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
+        outletName: 'ESPN 49ers Beat',
+        type: 'article',
+        publishedAt: '2026-11-27T18:00:00Z'
+      }
+    ],
+    [],
+    {
+      currentWeek: 12,
+      teamRecord: '8-2',
+      standingSummary: '1st in NFC West • #1 Seed in NFC',
+      upcomingMatchup: {
+        week: 12,
+        oppName: 'Seattle Seahawks',
+        oppRecord: '6-4',
+        homeAway: 'home',
+        kickoffDisplay: 'Sun, Nov 29 • 1:25 PM PT (FOX)',
+        betting: { spread: 'SF -4.5', overUnder: '47.5' },
+        coachingMatchup: { summary: 'Shanahan vs Macdonald chess match.' },
+        gameUrl: 'https://www.espn.com/nfl/game/_/gameId/401873091/seahawks-49ers'
+      },
+      practiceReportPlayers: [],
+      cap2026: { teamCapSpace: 34000000, effectiveCapSpace: 29000000 },
+      sfOdds: { makePlayoffsPct: 98.5, winDivisionPct: 88.2, seed1ByePct: 51.0 },
+      tradeDeadlineIso: '2026-11-10T13:00:00-08:00'
+    }
+  );
+  assert.ok(futureClusters.length >= 2, 'Expected dynamic clusters for Week 12');
+  assert.ok(futureClusters[0].headline.includes('Week 12'), `Expected Week 12 headline, got: ${futureClusters[0].headline}`);
+  assert.ok(!futureClusters.some(c => c.id.includes('deadline')), 'Post-Nov-10 clusters must not show expired trade deadline');
+});
+
+test('All outbound URLs across every data/*.json feed are valid HTTPS URLs with zero NaN/undefined interpolations, and all videos declare boolean embeddable', () => {
+  const jsonPaths = [
+    'data/meta.json',
+    'data/roster.json',
+    'data/depth-chart.json',
+    'data/cap.json',
+    'data/reporters.json',
+    'data/news.json',
+    'data/schedule-matchup.json',
+    'data/health.json',
+    'data/seasonal.json',
+    'data/podcasts/index.json'
+  ];
+
+  let urlCount = 0;
+  let videoObjCount = 0;
+
+  function walkObj(node, trail) {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) {
+      node.forEach((item, idx) => walkObj(item, `${trail}[${idx}]`));
+      return;
+    }
+    if ('videoId' in node && node.videoId) {
+      videoObjCount++;
+      assert.equal(typeof node.embeddable, 'boolean', `Video object at ${trail} missing boolean embeddable`);
+      assert.match(String(node.videoId), /^[A-Za-z0-9_-]{11}$/, `Invalid YouTube videoId at ${trail}: ${node.videoId}`);
+    }
+    for (const [k, v] of Object.entries(node)) {
+      if (typeof v === 'string' && /(url|link|href)$/i.test(k) && v !== '') {
+        if (k === 'audioUrl' && v.startsWith('./')) continue;
+        urlCount++;
+        assert.ok(v.startsWith('https://'), `Non-HTTPS outbound URL at ${trail}.${k}: ${v}`);
+        assert.ok(!/undefined|NaN|null/i.test(v), `Corrupt interpolation in URL at ${trail}.${k}: ${v}`);
+        // Throws if malformed URL
+        new URL(v);
+      } else if (v && typeof v === 'object') {
+        walkObj(v, `${trail}.${k}`);
+      }
+    }
+  }
+
+  for (const rel of jsonPaths) {
+    const parsed = JSON.parse(fs.readFileSync(path.join(rootDir, rel), 'utf8'));
+    walkObj(parsed, rel);
+  }
+
+  assert.ok(urlCount >= 400, `Expected >=400 validated HTTPS URLs across JSON feeds, checked ${urlCount}`);
+  assert.ok(videoObjCount >= 12, `Expected >=12 validated video objects, checked ${videoObjCount}`);
+});
+
+await testAsync('Zero-server client auto-refresh (hydrateLiveEspnOverlay) automatically advances week, record, matchup, odds & injuries when games complete', async () => {
+  const wfPath = path.join(rootDir, 'scripts', 'github-workflow-refresh-data.yml');
+  assert.ok(fs.existsSync(wfPath), 'Missing scripts/github-workflow-refresh-data.yml');
+  const wfYaml = fs.readFileSync(wfPath, 'utf8');
+  assert.ok(wfYaml.includes('cron:') && wfYaml.includes('node scripts/fetch-live-49ers-data.mjs'));
+
+  const mockAppData = {
+    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+    health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+  };
+
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async url => {
+    const u = String(url);
+    if (u.includes('/standings')) {
+      return new Response(
+        JSON.stringify({
+          children: [
+            {
+              standings: {
+                entries: [
+                  {
+                    team: { abbreviation: 'SF' },
+                    stats: [
+                      { name: 'overall', displayValue: '7-1' },
+                      { name: 'wins', value: 7 },
+                      { name: 'losses', value: 1 },
+                      { name: 'ties', value: 0 },
+                      { name: 'winPercent', value: 0.875 },
+                      { name: 'pointDifferential', value: 67 },
+                      { name: 'pointsFor', value: 226 },
+                      { name: 'pointsAgainst', value: 159 },
+                      { name: 'playoffSeed', value: 1 },
+                      { name: 'vs. Div.', displayValue: '3-0' },
+                      { name: 'vs. Conf.', displayValue: '4-1' }
+                    ]
+                  },
+                  {
+                    team: { abbreviation: 'DAL' },
+                    stats: [
+                      { name: 'overall', displayValue: '4-5' },
+                      { name: 'wins', value: 4 },
+                      { name: 'losses', value: 5 },
+                      { name: 'ties', value: 0 },
+                      { name: 'winPercent', value: 0.444 },
+                      { name: 'pointDifferential', value: 9 }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }),
+        { status: 200 }
+      );
+    }
+    if (u.includes('/teams/sf/schedule')) {
+      return new Response(
+        JSON.stringify({
+          events: [
+            {
+              week: { number: 9 },
+              competitions: [
+                {
+                  status: { type: { completed: true, shortDetail: 'Final' } },
+                  competitors: [
+                    { team: { abbreviation: 'SF' }, score: { value: 29 } },
+                    { team: { abbreviation: 'LV' }, score: { value: 20 } }
+                  ]
+                }
+              ]
+            },
+            {
+              week: { number: 10 },
+              competitions: [
+                {
+                  status: { type: { completed: false, shortDetail: '11/15 - 4:25 PM EST' } },
+                  competitors: [
+                    { team: { abbreviation: 'SF' } },
+                    { team: { abbreviation: 'DAL' } }
+                  ]
+                }
+              ]
+            }
+          ]
+        }),
+        { status: 200 }
+      );
+    }
+    if (u.includes('/summary?event=')) {
+      return new Response(JSON.stringify({ pickcenter: [{ details: 'SF -4.0', overUnder: 52.5 }] }), { status: 200 });
+    }
+    if (u.includes('/injuries')) {
+      return new Response(JSON.stringify({ injuries: [] }), { status: 200 });
+    }
+    if (u.includes('/news')) {
+      return new Response(
+        JSON.stringify({
+          articles: [
+            {
+              id: '999001',
+              headline: '49ers move to 7-1 behind Nick Bosa and DeForest Buckner ahead of Dallas trip',
+              description: 'San Francisco turns focus to Week 10 at AT&T Stadium.',
+              published: '2026-11-09T02:00:00Z',
+              links: { web: { href: 'http://www.espn.com/nfl/story/_/id/999001/49ers-win' } }
+            }
+          ]
+        }),
+        { status: 200 }
+      );
+    }
+    return new Response('{}', { status: 200 });
+  };
+
+  try {
+    const changed = await hydrateLiveEspnOverlay(mockAppData);
+    assert.equal(changed, true);
+    assert.equal(mockAppData.meta.teamRecord, '7-1');
+    assert.equal(mockAppData.meta.currentWeek, 10);
+    assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.week, 10);
+    assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.oppAbbr, 'DAL');
+    assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.oppRecord, '4-5');
+    assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.homeAway, 'away');
+    assert.equal(mockAppData.scheduleMatchup.upcomingMatchup.betting.spread, 'SF -4.0');
+    assert.ok(mockAppData.news.rawStream[0].url.startsWith('https://www.espn.com/'));
   } finally {
     globalThis.fetch = origFetch;
   }

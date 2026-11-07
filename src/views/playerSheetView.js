@@ -419,8 +419,8 @@ function renderHealthTab(p) {
   return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
       <div>
-        <div class="sub-label">Projected Week 9 Play Likelihood</div>
-        <div style="font-size:13px;color:var(--text-secondary)">Status: <strong>${esc(h.status)}</strong> ${h.injuryType ? `(${esc(h.injuryType)})` : ''}</div>
+        <div class="sub-label">Next-Game Play Likelihood</div>
+        <div style="font-size:13px;color:var(--text-secondary)">Status: <strong>${esc(h.status || 'Active')}</strong> ${h.injuryType ? `(${esc(h.injuryType)})` : ''}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <a href="https://www.49ers.com/team/injury-report/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('externalLink', 10)}</a>

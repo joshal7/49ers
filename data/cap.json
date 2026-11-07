@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T08:33:12.257Z",
+  "updatedAt": "2026-11-07T09:30:42.838Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -165,11 +165,11 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-    "executiveSummary": "Paraag Marathe & John Lynch enter November 2026 with $35.16M in gross 2026 cap space ($28.66M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $22M–$28M of unused 2026 cap space into 2027 to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
+    "executiveSummary": "Paraag Marathe & John Lynch currently hold $35.16M in gross 2026 cap space ($28.66M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $23M–$29M of unused 2026 cap space into 2027 to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
     "strategicPillars": [
       {
-        "title": "1. Rollover Cap Preservation ($25M+ Target)",
-        "detail": "Unused 2026 cap space carries over 1-for-1 into 2027 under Article 13 of the NFL CBA. Keeping ~$25M untouched turns a tight 2027 cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans."
+        "title": "1. Rollover Cap Preservation ($23M+ Target)",
+        "detail": "Unused 2026 cap space carries over 1-for-1 into 2027 under Article 13 of the NFL CBA. Keeping ~$23M+ untouched turns a tight 2027 cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans."
       },
       {
         "title": "2. Option-Bonus & Void-Year Architecture",

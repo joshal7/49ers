@@ -1,39 +1,114 @@
-name: Refresh 49ers Live Feeds & Analytics
+name: Refresh Live 49ers Data Feeds
 
 on:
   schedule:
-    # Runs every 3 hours year-round (covers practice reports, transactions, trade deadline, draft & game-week moves)
-    - cron: '17 */3 * * *'
+    # Runs every 2 hours UTC (covers morning practice reports, Friday injury designations,
+    # Sunday post-game scores & week rollover, trade deadline, and offseason transactions)
+    - cron: '23 */2 * * *'
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/**'
+      - 'src/engine/**'
+      - '.github/workflows/refresh-data.yml'
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: refresh-49ers-live-data
+  cancel-in-progress: false
 
 jobs:
   refresh-feeds:
+    name: Fetch ESPN, OverTheCap, nflverse, Beat Wire & Validate
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      pages_workflow_mode: ${{ steps.check_pages.outputs.workflow_mode }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT || github.token }}
+          fetch-depth: 1
 
       - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Run Live 49ers Data & Reporter Popularity Pipeline
-        run: |
-          node scripts/fetch-live-49ers-data.mjs
+      - name: Run Live 49ers Data Ingestion Pipeline
+        run: node scripts/fetch-live-49ers-data.mjs
 
-      - name: Commit & Push Updated JSON Feeds
+      - name: Validate JSON Integrity & Unit Engine Suite Before Commit
         run: |
-          git config user.name "49ers Automation Bot"
-          git config user.email "actions@github.com"
-          git add data/*.json
-          if git diff --staged --quiet; then
-            echo "No feed changes detected."
-          else
-            git commit -m "chore(data): auto-refresh 49ers roster, cap, health, news & seasonal feeds [skip ci]"
-            git push
+          node tests/unit-engines-qa.mjs
+          node -e '
+            const fs = require("node:fs");
+            const meta = JSON.parse(fs.readFileSync("data/meta.json", "utf8"));
+            const roster = JSON.parse(fs.readFileSync("data/roster.json", "utf8"));
+            const cap = JSON.parse(fs.readFileSync("data/cap.json", "utf8"));
+            const sched = JSON.parse(fs.readFileSync("data/schedule-matchup.json", "utf8"));
+            const news = JSON.parse(fs.readFileSync("data/news.json", "utf8"));
+            const health = JSON.parse(fs.readFileSync("data/health.json", "utf8"));
+            const seasonal = JSON.parse(fs.readFileSync("data/seasonal.json", "utf8"));
+            const pod = JSON.parse(fs.readFileSync("data/podcasts/index.json", "utf8"));
+            if (!meta.teamRecord || !meta.currentWeek) throw new Error("Invalid meta.json");
+            if (!Array.isArray(roster.players) || roster.players.length < 50) throw new Error("Roster count too low");
+            if (!Array.isArray(cap.players) || cap.players.length < 30) throw new Error("Cap players count too low");
+            if (!Array.isArray(sched.schedule) || sched.schedule.length < 17) throw new Error("Schedule incomplete");
+            if (!Array.isArray(news.clusteredBriefs) || news.clusteredBriefs.length < 1) throw new Error("Missing clustered briefs");
+            if (!Array.isArray(health.practiceReport)) throw new Error("Invalid health.json");
+            if (!seasonal.playoffPicture || !Array.isArray(pod.episodes)) throw new Error("Invalid seasonal or podcast JSON");
+            console.log("All 10 JSON feeds validated cleanly.");
+          '
+
+      - name: Commit & Push Updated Data Feeds
+        run: |
+          git config user.name "49ers-faithful-bot"
+          git config user.email "49ers-faithful-bot@users.noreply.github.com"
+          git add data/*.json data/podcasts/index.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
           fi
+          git commit -m "chore(data): auto-refresh live 49ers roster, injuries, cap, schedule & beat wire"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+
+      - name: Check GitHub Pages Build Mode
+        id: check_pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MODE=$(gh api "repos/${{ github.repository }}/pages" --jq '.build_type' 2>/dev/null || echo "legacy")
+          echo "Detected GitHub Pages build_type: $MODE"
+          if [ "$MODE" = "workflow" ]; then
+            echo "workflow_mode=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "workflow_mode=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload Pages Artifact (when Pages uses GitHub Actions mode)
+        if: steps.check_pages.outputs.workflow_mode == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  deploy-pages:
+    name: Deploy to GitHub Pages (Workflow Mode)
+    needs: refresh-feeds
+    if: needs.refresh-feeds.outputs.pages_workflow_mode == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T08:33:12.257Z",
+  "updatedAt": "2026-11-07T09:30:42.838Z",
   "count": 88,
   "players": [
     {
@@ -318,6 +318,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -565,6 +568,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -1109,6 +1115,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -1356,6 +1365,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -1887,16 +1899,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Cooks caught one of three targets for 13 yards during Sunday's 29-20 loss to Atlanta.",
-        "longComment": "Cooks was in line to serve as the 49ers' top wide receiver for Week 7 due to the absences of Mike Evans (Achilles) and Deebo Samuel (hamstring). Cooks' 45 offensive snaps were second-most among 49ers wideouts behind Jordan Watkins (50), although the former had only once catch to show for his extra playing time, which didn't happen until the final minute of the fourth quarter. Cooks has three catches (on seven targets) for 33 yards and a touchdown over his last three games, but his role could shrink significantly following the 49ers' Week 8 bye depending on the statuses of Evans, Samuel Christian Kirk and Demarcus Robinson (ankle, IR).",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": []
@@ -2347,6 +2362,9 @@
       "health": {
         "status": "Out",
         "injuryType": "Personal",
+        "returnDate": "2026-11-15",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -2672,6 +2690,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -3203,6 +3224,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -3506,6 +3530,9 @@
       "health": {
         "status": "Questionable",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -4211,16 +4238,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Purdy completed 27 of 40 passes for 288 yards with one touchdown and two interceptions and added two carries for five yards in the 49ers' 29-20 loss to the Falcons on Sunday.",
-        "longComment": "Purdy put together an impressive passing yardage total, especially considering he was down both Mike Evans (Achilles) and Deebo Samuel (hamstring), along with De'Zhaun Stribling (IR, ankle) and Demarcus Robinson (IR, ankle). He also lost Christian McCaffrey for the entirety of the second quarter due to a leg injury that the star back eventually returned from, but the scarcity of his top pass catchers eventually led to a more mistake-filled performance than usual. The multi-interception tally was Purdy's first of the season, and the two picks led to 10 points for the Falcons. Purdy should have a chance to work with a deeper pass-catching corps in a Week 9 home matchup against the Raiders on Sunday, Nov. 8, as the Week 8 bye should offer multiple receivers a chance to recover from their respective injuries.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "High availability prior; rarely misses starts if throwing full velocity by Thursday.",
         "weeklyHistory2026": []
@@ -4668,6 +4698,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -5001,6 +5034,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -5424,6 +5460,9 @@
       "health": {
         "status": "Out",
         "injuryType": "Knee - Meniscus",
+        "returnDate": "2026-11-15",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -6147,7 +6186,10 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "hamstring",
+        "injuryType": "Hamstring",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "LP",
         "thu": "FP",
         "fri": "FP",
@@ -6880,6 +6922,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -7370,6 +7415,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -7838,6 +7886,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -8141,6 +8192,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -8435,6 +8489,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "Ankle",
+        "returnDate": "2026-12-06",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -8983,6 +9040,9 @@
       "health": {
         "status": "Out",
         "injuryType": "Hamstring",
+        "returnDate": "2026-11-15",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -9624,6 +9684,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -10278,18 +10341,24 @@
         ]
       },
       "health": {
-        "status": "Injured Reserve",
+        "status": "Questionable (IR Return Window)",
         "injuryType": "Ankle",
-        "wed": "DNP",
-        "thu": "DNP",
-        "fri": "DNP",
+        "returnDate": "2026-11-08",
+        "isIrReturnQuestionable": true,
+        "isOnPracticeReport": true,
+        "wed": "LP",
+        "thu": "LP",
+        "fri": "LP",
         "shortComment": "Robinson (ankle) is listed as questionable for Sunday's game against the Raiders, with 49ers coach Kyle Shanahan saying Friday that the wideout likely will be activated from injured reserve, Nick Wagoner of ESPN.com reports.",
         "longComment": "San Francisco GM John Lynch also made optimistic comments about Robinson, who was a limited practice participant Wednesday through Friday. With WRs Mike Evans (Achilles) and Deebo Samuel (hamstring) out for at least one more week, Robinson would join Jordan Watkins, Brandin Cooks and Jacob Cowing as the healthy wide receivers on the active roster. The 49ers need to activate Robinson by 4 p.m. ET on Saturday to have him available for Sunday's home game against the Raiders.",
-        "playProbabilityPct": 0,
-        "playTier": "OUT",
-        "playBadgeLabel": "0% • Out",
+        "playProbabilityPct": 84,
+        "playTier": "FIFTY_FIFTY",
+        "playBadgeLabel": "84% • True GTD",
         "factors": [
-          "Officially inactive (Out / Reserve / Reinstatement pending)"
+          "21-day IR practice window active; officially listed Questionable for activation",
+          "Coaching staff signaled likely roster activation ahead of kickoff",
+          "Friday Limited (LP) — anchored to player Questionable play prior (78%)",
+          "Beat/podium consensus: on track to suit up"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": [
@@ -10993,6 +11062,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -11500,6 +11572,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -11676,6 +11751,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -12375,17 +12453,20 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "four solo",
+        "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Greenlaw posted 12 tackles (four solo) in Sunday's loss to the Falcons.",
-        "longComment": "Greenlaw missed Week 6 against Washington while on suspension but returned Sunday and logged a season-high 91 percent defensive snap share. The veteran linebacker tied his season high with 12 tackles, finishing one behind Fred Warner for the team lead. Greenlaw is enjoying a productive return to San Francisco with 49 tackles and a forced fumble through six contests.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": [
@@ -13094,16 +13175,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Pineiro did not attempt a field goal while going 2-for-3 on PATs in Sunday's 26-20 loss to the Falcons.",
-        "longComment": "Pineiro went without a field-goal try for the second time this season, and he hasn't made multiple field goals in a contest since Week 1. To make matters worse, the kicker missed an extra-point try for the second straight week, and he's now 21-for-25 on PATs over the first seven games this season. With the 49ers off next week, Pineiro's next chance to be more involved will come in Week 9 against the Raiders.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": [
@@ -13434,6 +13518,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -13767,6 +13854,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -13943,6 +14033,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -14642,17 +14735,20 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "six solo",
+        "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Warner recorded 13 tackles (six solo) Sunday in a Week 7 loss to Atlanta.",
-        "longComment": "Warner led the 49ers in tackles, finishing one ahead of Dre Greenlaw. It was the fourth time through seven games that Warner has notched double-digit stops. The star linebacker ranks second in the NFL with 71 tackles through seven games.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Ironman prior — has played through fractured ankle/foot tags; missed almost zero games due to Questionable tags.",
         "weeklyHistory2026": []
@@ -15123,7 +15219,10 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "hamstring",
+        "injuryType": "Hamstring",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "LP",
         "thu": "LP",
         "fri": "FP",
@@ -15840,6 +15939,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -16325,6 +16427,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -16514,6 +16619,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -16857,6 +16965,9 @@
       "health": {
         "status": "Out",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -17223,6 +17334,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -17667,16 +17781,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Cowing caught three of five passes for 38 yards, added a 10-yard carry and returned one kickoff for 28 yards during Sunday's 29-20 loss to the Falcons.",
-        "longComment": "Cowing and the other 49ers pass catchers operated in expanded roles Sunday due to the absences of both Mike Evans (Achilles) and Deebo Samuel (hamstring). Cowing was on the field for 26 of the 49ers' 66 offensive snaps (39.4 percent), which was third most behind Jordan Watkins (50) and Brandin Cooks (45). Cowing put up season highs in catches, receiving yards and rushing yards, but his role could shrink significantly following the 49ers' Week 8 bye depending on the statuses of Evans, Samuel, Christian Kirk and Demarcus Robinson (ankle, IR), with rookie second-rounder De'Zhaun Stribling (ankle, IR) not expected back until December, per David Lombardi of SFStandard.com.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": [
@@ -18146,6 +18263,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -18813,6 +18933,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -19283,6 +19406,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -19774,6 +19900,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -19950,6 +20079,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -20370,6 +20502,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -20807,6 +20942,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -21351,6 +21489,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -21707,6 +21848,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -22148,16 +22292,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "James logged a six-yard carry, turned his lone target into an 11-yard catch and registered 119 yards on four kickoff returns during the 49ers' 29-20 loss to the Falcons on Sunday.",
-        "longComment": "Most of James' on-field work Sunday came on special teams. Both of his touches on offense happened on back-to-back plays in the second quarter, coinciding with the absence of Christian McCaffrey, the latter of whom was playing through a thigh injury during most of Sunday's contest. The only way James would see consistent playing time on offense is if one of McCaffrey or rookie Kaelon Black were to miss time. The 49ers will get some additional rest thanks to the Week 8 bye, and their next game takes place Week 9 against the Raiders on Sunday, Nov. 8.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": []
@@ -22644,16 +22791,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Watkins brought in three of six targets for 56 yards in the 49ers' 29-20 loss to the Falcons on Sunday.",
-        "longComment": "With the 49ers' receiving corps down all of Mike Evans (Achilles), Deebo Samuel (hamstring), De'Zhaun Stribling (IR, ankle) and Demarcus Robinson (IR, ankle), Watkins saw an expanded role and made good use of the opportunity. All three of Watkins' catches went for first downs, and he finished third on the team in receiving yards and targets while also tying for that slotting in receptions. The 2025 fourth-round pick's performance was encouraging, but he's likely to slide back down the depth chart since the wide-receiver room could be much healthier by the time San Francisco returns to action against the Raiders on Sunday, Nov. 8, following the Week 8 bye.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": []
@@ -23112,16 +23262,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Black rushed 12 times for 63 yards and a touchdown and brought in one of three targets for minus-4 yards in the 49ers' 29-20 loss to the Falcons on Sunday. He also lost a fumble and returned one kickoff for 34 yards.",
-        "longComment": "Christian McCaffrey suffered a thigh injury in the opening period that eventually led to him missing the entire second quarter, affording Black expanded opportunity. The rookie made good use of the extra touches, averaging a career-high 5.3 yards per carry and recording his highest rushing yardage total since his Week 1 NFL debut. Black also rang up his first TD as a professional, a 30-yard breakaway run on the first play of the second quarter. However, the rookie made a key mistake when he lost a fumble with San Francisco nearing the red zone in the second quarter. McCaffrey did return to the game for the second half and now has the Week 8 bye to recover, so Black could be back to a more reduced role in a Week 9 home matchup against the Raiders on Sunday, Nov. 8.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": [
@@ -23675,6 +23828,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -24179,6 +24335,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -24730,6 +24889,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -24913,6 +25075,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -25207,16 +25372,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": []
@@ -25894,16 +26062,19 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "Juszczyk caught all three of his targets for 11 yards and a touchdown during Sunday's 29-20 loss to Atlanta.",
-        "longComment": "Juszczyk garnered multiple targets for the fifth straight game that he's played in, and he was able to reach paydirt for the second time this season, reeling in a one-yard touchdown pass from Brock Purdy in the fourth quarter. The fullback has yet to log a carry this season, and he's caught eight of 11 targets for 76 yards and two touchdowns over six contests so far during the 2026 campaign.",
-        "playProbabilityPct": 95,
-        "playTier": "LIKELY",
-        "playBadgeLabel": "95% • Probable",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 99,
+        "playTier": "ACTIVE",
+        "playBadgeLabel": "99% • Full Go",
         "factors": [
-          "Cleared without restrictive game-day designation"
+          "Off injury report; full active status"
         ],
         "archetypeNote": "Extreme durability prior; routinely plays through hand/finger/shoulder tags.",
         "weeklyHistory2026": [
@@ -26606,6 +26777,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -27305,7 +27479,10 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "groin",
+        "injuryType": "Groin",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "LP",
         "thu": "LP",
         "fri": "FP",
@@ -28030,6 +28207,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -28550,6 +28730,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -29045,10 +29228,13 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "ankle",
-        "wed": "-",
-        "thu": "-",
-        "fri": "-",
+        "injuryType": "Ankle",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
+        "wed": "LP",
+        "thu": "FP",
+        "fri": "FP",
         "shortComment": "Sigle (ankle) does not carry an official injury designation ahead of Sunday's game versus the Raiders.",
         "longComment": "Sigle missed the 49ers' last three games before their bye in Week 8 due to an ankle injury he sustained back in Week 4 versus the Broncos, but he's now set to get back on the field in Week 9. He projects to start at safety next to Ji'Ayir Brown against Las Vegas on Sunday.",
         "playProbabilityPct": 95,
@@ -29387,6 +29573,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -29642,6 +29831,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -30339,6 +30531,9 @@
       "health": {
         "status": "Out",
         "injuryType": "Achilles",
+        "returnDate": "2026-11-15",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -30872,6 +31067,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -31288,18 +31486,23 @@
         ]
       },
       "health": {
-        "status": "Injured Reserve",
+        "status": "Questionable (IR Return Window)",
         "injuryType": "Groin",
-        "wed": "DNP",
-        "thu": "DNP",
-        "fri": "DNP",
+        "returnDate": "2026-11-08",
+        "isIrReturnQuestionable": true,
+        "isOnPracticeReport": true,
+        "wed": "LP",
+        "thu": "LP",
+        "fri": "LP",
         "shortComment": "Hobbs (groin) is officially listed as questionable for Sunday's game versus the Raiders.",
         "longComment": "Hobbs was limited all week after the 49ers allowed him to return to practice Wednesday, and he's still on injured reserve going into the weekend. If he's not activated before Sunday's contest, rookie fourth-rounder Ephesians Prysock could remain a candidate for a few reps at cornerback in Week 9.",
-        "playProbabilityPct": 0,
-        "playTier": "OUT",
-        "playBadgeLabel": "0% • Out",
+        "playProbabilityPct": 73,
+        "playTier": "FIFTY_FIFTY",
+        "playBadgeLabel": "73% • True GTD",
         "factors": [
-          "Officially inactive (Out / Reserve / Reinstatement pending)"
+          "21-day IR practice window active; officially listed Questionable for activation",
+          "Friday Limited (LP) — anchored to player Questionable play prior (78%)",
+          "Soft-tissue re-aggravation caution (Groin)"
         ],
         "archetypeNote": "Standard NFL positional availability baseline.",
         "weeklyHistory2026": [
@@ -31996,7 +32199,10 @@
       },
       "health": {
         "status": "Active",
-        "injuryType": "knee",
+        "injuryType": "Knee",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "LP",
         "thu": "FP",
         "fri": "FP",
@@ -32393,6 +32599,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -32633,6 +32842,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -33074,6 +33286,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -33774,6 +33989,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -34294,6 +34512,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -34675,6 +34896,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -35179,6 +35403,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -35651,6 +35878,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -36004,6 +36234,9 @@
       "health": {
         "status": "Injured Reserve",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "DNP",
         "thu": "DNP",
         "fri": "DNP",
@@ -36346,6 +36579,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -36586,6 +36822,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -37234,6 +37473,9 @@
       "health": {
         "status": "Questionable",
         "injuryType": "Knee",
+        "returnDate": "2026-11-08",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "LP",
         "thu": "LP",
         "fri": "LP",
@@ -37648,6 +37890,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -38335,6 +38580,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "Vet Rest",
         "thu": "FP",
         "fri": "FP",
@@ -38882,6 +39130,9 @@
       "health": {
         "status": "Questionable",
         "injuryType": "Shoulder - AC Joint",
+        "returnDate": "2026-11-08",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": true,
         "wed": "LP",
         "thu": "LP",
         "fri": "LP",
@@ -39607,6 +39858,9 @@
       "health": {
         "status": "Active",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -39796,6 +40050,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -39972,6 +40229,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -40148,6 +40408,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -40324,6 +40587,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
@@ -40752,6 +41018,9 @@
       "health": {
         "status": "PRACTICE_SQUAD",
         "injuryType": "",
+        "returnDate": null,
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",

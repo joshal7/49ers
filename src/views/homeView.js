@@ -262,35 +262,55 @@ function renderSingleDashboardCard({
 
     case 'upcoming_matchup': {
       const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+      const sfIsAway = um.homeAway === 'away';
+      const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
       const oppHealth = um.opponentHealth || {};
       const oppInj = (oppHealth.injuryReport || []).slice(0, 3);
       externalHeaderLink = um.gameUrl
         ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
         : '';
-      bodyHtml = `
-        <div class="matchup-scoreboard">
-          <div class="sb-team-col">
-            ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 36)}
-            <div class="sb-team-meta">
-              <div class="sb-team-abbr">${esc(um.oppName || 'Raiders')}</div>
-              <div class="sb-team-rec mono">${esc(um.oppRecord || '2-5')}</div>
-            </div>
-          </div>
-          <span class="sb-vs-pill mono">@</span>
-          <div class="sb-team-col home">
+      const awayTeamCol = sfIsAway
+        ? `<div class="sb-team-col">
+            ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
             <div class="sb-team-meta">
               <div class="sb-team-abbr">49ers</div>
-              <div class="sb-team-rec mono">${esc(um.sfRecord?.split(' ')[0] || '6-1')}</div>
+              <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
+            </div>
+          </div>`
+        : `<div class="sb-team-col">
+            ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 36)}
+            <div class="sb-team-meta">
+              <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
+              <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
+            </div>
+          </div>`;
+      const homeTeamCol = sfIsAway
+        ? `<div class="sb-team-col home">
+            <div class="sb-team-meta">
+              <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
+              <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
+            </div>
+            ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 36)}
+          </div>`
+        : `<div class="sb-team-col home">
+            <div class="sb-team-meta">
+              <div class="sb-team-abbr">49ers</div>
+              <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
             </div>
             ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
-          </div>
+          </div>`;
+      bodyHtml = `
+        <div class="matchup-scoreboard">
+          ${awayTeamCol}
+          <span class="sb-vs-pill mono">@</span>
+          ${homeTeamCol}
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px">
           <div class="inline-icon-meta">
             ${iconSvg('stadium', 14)}
             <span>${esc(um.kickoffDisplay)} • <strong>${esc(um.betting?.restAdvantage || '')}</strong></span>
           </div>
-          <span class="badge badge-positive mono">${esc(um.betting?.spread || 'SF -10.0')} • O/U ${esc(um.betting?.overUnder || '51.5')}</span>
+          <span class="badge badge-positive mono">${esc(um.betting?.spread || 'Pick')} • O/U ${esc(um.betting?.overUnder || '—')}</span>
         </div>
         <div class="subcard-panel" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;margin-bottom:7px">
           <div style="min-width:0;flex:1">
@@ -360,6 +380,14 @@ function renderSingleDashboardCard({
       const sched = appData?.scheduleMatchup?.schedule || [];
       const intl = sched.filter(g => g.venue?.isInternational);
       const upcoming4 = sched.filter(g => !g.completed).slice(0, 4);
+      const overallRec = appData?.meta?.teamRecord || '—';
+      const divRec = appData?.meta?.divisionRecord ? ` (${appData.meta.divisionRecord} NFC West)` : '';
+      const intlNotes = intl
+        .map(g => {
+          const scoreTxt = g.completed ? `${g.result} ${g.sfScore}-${g.oppScore}` : `${g.homeAway === 'home' ? 'vs' : '@'} ${g.opponent?.abbr || ''}`;
+          return `${g.venue?.city || g.venue?.country || 'Intl'} Wk ${g.week} (${scoreTxt})`;
+        })
+        .join(' & ');
       externalHeaderLink = `<a href="https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Schedule</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         ${
@@ -380,7 +408,7 @@ function renderSingleDashboardCard({
             : ''
         }
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          <strong>6-1 Overall (3-0 NFC West)</strong> • International Series: Melbourne Wk 1 (W 27-7 vs LAR) &amp; Mexico City Wk 11 (vs MIN, 7,200 ft altitude). ${intl.length} international venues tracked.
+          <strong>${esc(overallRec)} Overall${esc(divRec)}</strong>${intlNotes ? ` • International Series: ${esc(intlNotes)}.` : ''} ${intl.length} international venues tracked.
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="schedule"`;
@@ -525,6 +553,8 @@ function renderSingleDashboardCard({
     case 'roster_depth': {
       const allP = appData?.roster?.players || [];
       const count = allP.length || 88;
+      const activeCnt = allP.filter(p => p.rosterBucket === 'active').length || 53;
+      const depthWk = appData?.depthChart?.week || appData?.meta?.currentWeek || '';
       const starAvatars = allP
         .filter(p => p.rosterBucket === 'active' && p.headshotUrl)
         .sort((a, b) => (b.capHit2026 || 0) - (a.capHit2026 || 0))
@@ -536,7 +566,7 @@ function renderSingleDashboardCard({
           <span class="mono" style="font-size:11px;color:var(--gold-bright)">Tap headshot for 5-tab Dossier</span>
         </div>
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          Explore all <strong>${count} players</strong> (53 Active + IR + Practice Squad) sorted by Name or Jersey #, with EPA, NextGen Stats, NFL Combine percentiles, Contracts &amp; Week 9 Active Depth Chart.
+          Explore all <strong>${count} players</strong> (${activeCnt} Active + IR + Practice Squad) sorted by Name or Jersey #, with EPA, NextGen Stats, NFL Combine percentiles, Contracts &amp; ${depthWk ? `Week ${depthWk} ` : ''}Active Depth Chart.
         </div>
       `;
       deepDiveAttr = `data-action="jump-view" data-target-tab="roster"`;

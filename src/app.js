@@ -7,7 +7,14 @@ import { simulateCapScenario } from './engine/capSimulator.js';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
-import { loadAll49ersData, loadUserPrefs, saveUserPrefs } from './services/dataService.js';
+import {
+  loadAll49ersData,
+  fetchFresherUpstreamData,
+  hydrateLiveBlueskyBeatWire,
+  hydrateLiveEspnOverlay,
+  loadUserPrefs,
+  saveUserPrefs
+} from './services/dataService.js';
 import {
   fetchSharedWorkerFeed,
   runOnDemandDeepAnalysis,
@@ -172,9 +179,9 @@ function renderHeaderAndPhaseBanner() {
   const m = state.appData.meta || {};
   const recPill = document.getElementById('headerRecordPill');
   const subStatus = document.getElementById('headerSubStatus');
-  if (recPill) recPill.textContent = m.teamRecord || '6-1';
+  if (recPill) recPill.textContent = m.teamRecord || '—';
   if (subStatus) {
-    subStatus.textContent = `${m.standingSummary || '#1 Seed NFC'} • Synced ${formatRelativeAge(m.updatedAt)}`;
+    subStatus.textContent = `${m.standingSummary || 'NFC West'} • Synced ${formatRelativeAge(m.updatedAt)}`;
   }
 
   const bannerEl = document.getElementById('phaseBanner');
@@ -283,6 +290,7 @@ function renderMain() {
       });
     } else if (state.activeNavTab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
+        appData: state.appData,
         studioSub: state.studioSubTab,
         podDurationMin: state.podDurationMin,
         podFormat: state.podFormat,
@@ -967,6 +975,62 @@ function bindEvents() {
   );
 }
 
+let lastLiveCheckMs = 0;
+let isBackgroundSyncing = false;
+
+async function refreshLiveFeedsInBackground(forceFull = false) {
+  if (isBackgroundSyncing || !state.appData) return;
+  isBackgroundSyncing = true;
+  try {
+    let hasNewUpstreamData = false;
+    const fresherBundle = forceFull
+      ? await loadAll49ersData()
+      : await fetchFresherUpstreamData(state.appData.meta?.updatedAt);
+
+    if (fresherBundle) {
+      state.appData = fresherBundle;
+      cachedMonteCarloKey = '';
+      cachedMonteCarloResult = null;
+      hasNewUpstreamData = true;
+    }
+
+    const [addedLivePosts, espnMutated] = await Promise.all([
+      hydrateLiveBlueskyBeatWire(state.appData),
+      hydrateLiveEspnOverlay(state.appData)
+    ]);
+    if (addedLivePosts > 0 || espnMutated) {
+      cachedMonteCarloKey = '';
+      cachedMonteCarloResult = null;
+      hasNewUpstreamData = true;
+    }
+
+    const prevPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
+    state.seasonState = evaluateSeasonState({
+      now: new Date(),
+      calendar: state.appData.meta?.calendar,
+      teamStatus: state.appData.meta?.teamStatus
+    });
+    const nextPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
+
+    renderHeaderAndPhaseBanner();
+
+    const activeTag = document.activeElement?.tagName;
+    const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+    const hasPlayingIframe = state.activeVideosSet.size > 0;
+
+    if ((hasNewUpstreamData || prevPhaseKey !== nextPhaseKey) && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
+      renderMain();
+      if (state.sheetMode) renderSheet();
+    }
+
+    lastLiveCheckMs = Date.now();
+  } catch {
+    // Offline or transient network blip; keep serving existing cached state cleanly
+  } finally {
+    isBackgroundSyncing = false;
+  }
+}
+
 async function init() {
   applyTheme(state.prefs.theme);
   audioController = new PodcastAudioController(renderMiniPlayer);
@@ -974,6 +1038,7 @@ async function init() {
 
   try {
     state.appData = await loadAll49ersData();
+    lastLiveCheckMs = Date.now();
     state.seasonState = evaluateSeasonState({
       now: new Date(),
       calendar: state.appData.meta?.calendar,
@@ -983,12 +1048,47 @@ async function init() {
     renderHeaderAndPhaseBanner();
     renderMain();
 
+    // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire)
+    refreshLiveFeedsInBackground(false);
+
     // Non-blocking sync of shared Cloudflare Worker intelligence feed if configured
     fetchSharedWorkerFeed(state.prefs).then(shared => {
       if (shared) {
         state.workerSharedFeed = shared;
         if (state.activeNavTab === 'audio') renderMain();
       }
+    });
+
+    // Live countdown & relative timestamp ticker (every 60s while tab is visible)
+    setInterval(() => {
+      if (document.visibilityState === 'hidden' || !state.appData) return;
+      const prevPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
+      state.seasonState = evaluateSeasonState({
+        now: new Date(),
+        calendar: state.appData.meta?.calendar,
+        teamStatus: state.appData.meta?.teamStatus
+      });
+      renderHeaderAndPhaseBanner();
+      if (JSON.stringify(state.seasonState?.activePhases || []) !== prevPhaseKey && state.activeVideosSet.size === 0) {
+        renderMain();
+      }
+    }, 60_000);
+
+    // Periodic background check for fresh GitHub Actions data every 10 minutes
+    setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        refreshLiveFeedsInBackground(false);
+      }
+    }, 10 * 60_000);
+
+    // Auto-sync when returning to the PWA/tab after >= 5 minutes or reconnecting online
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && Date.now() - lastLiveCheckMs >= 5 * 60_000) {
+        refreshLiveFeedsInBackground(false);
+      }
+    });
+    window.addEventListener('online', () => {
+      refreshLiveFeedsInBackground(false);
     });
   } catch (err) {
     const mainEl = document.getElementById('mainView');

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T08:33:12.257Z",
+  "updatedAt": "2026-11-07T09:30:42.838Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -10,7 +10,7 @@
       {
         "player": "DeForest Buckner",
         "playerId": "2971282",
-        "jersey": 99,
+        "jersey": null,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png",
         "position": "IDL (3-Tech)",
         "acquiredFrom": "IND",
@@ -41,13 +41,13 @@
         "rank": 1,
         "positionGroup": "Boundary / X Wide Receiver Insurance",
         "urgency": "Moderate-High",
-        "epaContext": "Brandon Aiyuk remains Out pending resolution; adding a low-cost veteran Z/X separator protects 3-WR playoff snaps alongside Pearsall & Stribling."
+        "epaContext": "With Brandon Aiyuk, Deebo Samuel Sr., Mike Evans, and Christian Kirk Out—and Ricky Pearsall + rookie De'Zhaun Stribling on IR—adding a low-cost veteran Z/X separator supports Brandin Cooks, Jordan Watkins, Jacob Cowing & Demarcus Robinson."
       },
       {
         "rank": 2,
         "positionGroup": "Swing Tackle / Interior OL Depth",
         "urgency": "Moderate",
-        "epaContext": "Protecting a 6-1 #1 seed run requires veteran insurance behind Trent Williams (age 38) and Colton McKivitz for cold-weather January games."
+        "epaContext": "Protecting a 6-1 NFC contention run requires veteran insurance behind Trent Williams (age 38) and Colton McKivitz for cold-weather January games."
       },
       {
         "rank": 3,
@@ -722,17 +722,17 @@
       {
         "target": "#1 Seed & First-Round Bye",
         "currentProbPct": 54.8,
-        "pathSummary": "At 6-1 (3-0 NFC West, 4-1 NFC), SF controls its own destiny for the #1 seed. Going 8-2 or better across the final 10 games—especially protecting home-field vs. Seattle (Wk 12), LA Rams (Wk 14), and Philadelphia (Wk 17)—clinches home-field throughout the NFC playoffs."
+        "pathSummary": "At 6-1 (3-0 NFC West, 4-1 NFC), SF holds strong leverage in the NFC #1 seed race across its 10 remaining regular-season games, anchored by upcoming NFC matchups."
       },
       {
         "target": "NFC West Division Title (Seeds #1–#4)",
         "currentProbPct": 97.7,
-        "pathSummary": "SF already holds road/neutral wins over LAR (Wk 1 in Melbourne) and SEA (Wk 5 in Seattle) plus a home win over ARI (Wk 3), sitting at 3-0 in the division. Splitting the remaining 3 division games puts the division crown >85%."
+        "pathSummary": "Sitting at 6-1 overall and 3-0 inside the NFC West (+58 (197 PF / 139 PA)), protecting division head-to-head tiebreakers keeps the NFC West crown at 97.7%."
       },
       {
         "target": "Playoff Berth (Seeds #1–#7)",
         "currentProbPct": 99.7,
-        "pathSummary": "Starting 6-1 gives SF massive tiebreaker equity; winning just 4 of the remaining 10 games (reaching 10-7 with 4+ division wins) yields a >92% playoff berth probability."
+        "pathSummary": "With 6 wins banked through 7 games (4-1 conference record), reaching 10+ total wins across the remaining 10 games yields >92% playoff berth equity."
       }
     ],
     "simulatorInputs": {
@@ -12004,13 +12004,15 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "cPvdiBVxl-0",
-          "title": "Carver Willis (Washington) — 2026 49ers Draft Fit & Breakdown",
+          "videoId": "VDkuIBpwlWs",
+          "url": "https://www.youtube.com/watch?v=VDkuIBpwlWs",
+          "title": "Watch 49ers fourth-round draft pick Carver Willis' college highlights | NBC Sports Bay Area",
           "channel": "NBC Sports Bay Area & California",
-          "duration": "3:42",
-          "url": "https://www.youtube.com/watch?v=cPvdiBVxl-0",
-          "embeddable": true,
-          "thumbnailUrl": "https://i.ytimg.com/vi/cPvdiBVxl-0/hqdefault.jpg"
+          "publishedAgo": "6mo ago",
+          "duration": "1:30",
+          "thumbnailUrl": "https://i.ytimg.com/vi/VDkuIBpwlWs/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {
