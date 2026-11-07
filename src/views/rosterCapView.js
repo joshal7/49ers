@@ -163,7 +163,16 @@ function renderRosterExplorer({ appData, rosterSearch, rosterUnitFilter, rosterP
 }
 
 function renderDualDepthChart({ appData, depthMode }) {
-  const units = appData?.depthChart?.units || [];
+  const getUnitPriority = name => {
+    const n = (name || '').toLowerCase();
+    if (n.includes('offense')) return 1;
+    if (n.includes('defense')) return 2;
+    if (n.includes('special')) return 3;
+    return 4;
+  };
+  const units = [...(appData?.depthChart?.units || [])].sort(
+    (a, b) => getUnitPriority(a.unitName) - getUnitPriority(b.unitName)
+  );
 
   const headerCard = `
     <div class="card">

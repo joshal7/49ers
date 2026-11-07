@@ -120,7 +120,7 @@ function renderUpcomingMatchup(appData) {
               <strong style="font-size:13px">${esc(m.unitMatchup)}</strong>
               <span class="badge badge-positive">${esc(m.advantage)}</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || m.nerdyDetail)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || '')}</div>
           </div>
         `
           )

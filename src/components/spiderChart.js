@@ -18,10 +18,10 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
 
   const axes = spiderProfile.axes;
   const n = axes.length;
-  const size = 300;
+  const size = 324;
   const cx = size / 2;
   const cy = size / 2;
-  const maxR = 96;
+  const maxR = 94;
 
   const angleFor = idx => -Math.PI / 2 + (idx * 2 * Math.PI) / n;
   const pointFor = (idx, pct) => {

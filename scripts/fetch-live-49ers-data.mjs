@@ -736,6 +736,15 @@ async function main() {
     });
   }
 
+  const depthPriority = u => {
+    const n = (u.unitName || '').toLowerCase();
+    if (n.includes('offense')) return 1;
+    if (n.includes('defense')) return 2;
+    if (n.includes('special')) return 3;
+    return 4;
+  };
+  depthUnits.sort((a, b) => depthPriority(a) - depthPriority(b));
+
   // 7. Build Team Health & IR Return Tracker (`data/health.json`)
   const practiceReportPlayers = rosterPlayers
     .filter(

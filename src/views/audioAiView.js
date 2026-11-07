@@ -236,7 +236,7 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any nerdy 49ers scheme, EPA, injury prior, cap, trade, or draft question…"
+                placeholder="Ask any in-depth 49ers scheme, EPA, injury prior, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${

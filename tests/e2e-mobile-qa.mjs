@@ -589,13 +589,18 @@ async function main() {
         document.querySelector('[data-action="set-depth-mode"][data-depth-mode="baseline"]').click();
         const baselineChipsCount = document.querySelectorAll('.depth-player-chip').length;
         document.querySelector('[data-action="set-depth-mode"][data-depth-mode="projected"]').click();
+        const unitTitles = Array.from(document.querySelectorAll('#mainView section.card h3.card-title')).map(el => el.textContent.trim());
         return {
           chipsCount,
           baselineChipsCount,
-          hasUnits: projectedText.includes('Offense') && projectedText.includes('Defense')
+          hasUnits: projectedText.includes('Offense') && projectedText.includes('Defense'),
+          unitTitles
         };
       });
       assert(depthCheck.hasUnits && depthCheck.chipsCount >= 30, 'Depth chart missing units or player chips');
+      assert(depthCheck.unitTitles[0]?.includes('Offense'), `Expected first unit to be Offense, got ${depthCheck.unitTitles[0]}`);
+      assert(depthCheck.unitTitles[1]?.includes('Defense'), `Expected second unit to be Defense, got ${depthCheck.unitTitles[1]}`);
+      assert(depthCheck.unitTitles[2]?.includes('Special Teams'), `Expected third unit to be Special Teams, got ${depthCheck.unitTitles[2]}`);
       await cdp.assertNoOverflow('Dual Depth Chart View');
     });
 

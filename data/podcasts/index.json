@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T06:49:18.343Z",
+  "updatedAt": "2026-11-07T07:20:43.965Z",
   "episodes": [
     {
       "id": "ep-week9-raiders-film",
@@ -10,8 +10,8 @@
       "createdBy": "Josh (Shared Group Feed)",
       "createdAt": "2026-11-06T21:15:00-08:00",
       "audioUrl": "./data/podcasts/ep-week9-raiders-film.m4a",
-      "durationSec": 134,
-      "fileSizeBytes": 1091273,
+      "durationSec": 133,
+      "fileSizeBytes": 1085510,
       "transcript": [
         {
           "idx": 0,
@@ -19,47 +19,47 @@
           "speakerRole": "X's & O's Film Analyst",
           "text": "Welcome into 49ers Faithful. Sunday at Levi's Stadium, the six-and-one Niners come out of the Week 8 bye holding the number one seed in the NFC, laying ten points against the Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is officially off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa.",
           "startSec": 0,
-          "endSec": 22.44
+          "endSec": 21.67
         },
         {
           "idx": 1,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
           "text": "The math behind that defensive front is staggering, Marcus. Even without Bosa from Weeks 3 through 7, Osa Odighizuwa kept the interior disruption afloat. Now you drop six-foot-seven DeForest Buckner into the three-technique next to Odighizuwa, with Bosa and Keion White on the Wide-9 edges. Opposing centers literally cannot slide protection toward Bosa without leaving Buckner singled up on a guard.",
-          "startSec": 22.72,
-          "endSec": 47.87
+          "startSec": 21.95,
+          "endSec": 47.1
         },
         {
           "idx": 2,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
           "text": "Exactly. And look across the sideline at who is calling plays for Las Vegas: first-year Raiders head coach Klint Kubiak, who spent all of 2023 inside Kyle Shanahan's building as our Passing Game Specialist. Kubiak wants to marry outside zone to deep bootleg crossers—the exact concepts Fred Warner and Deommodore Lenoir rep against every day in Santa Clara.",
-          "startSec": 48.15,
-          "endSec": 71
+          "startSec": 47.38,
+          "endSec": 70.23
         },
         {
           "idx": 3,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
           "text": "Plus San Francisco enters with a plus-seven-day rest advantage coming off the bye. Under Shanahan since 2017, when QB1 is healthy post-bye, the 49ers average plus 0.21 EPA per play on their opening fifteen scripted snaps, and Brock Purdy is already sitting top-three in the NFL at plus 63.2 passing EPA and plus 4.25 percent completion percentage over expected.",
-          "startSec": 71.28,
-          "endSec": 98.23
+          "startSec": 70.51,
+          "endSec": 97.46
         },
         {
           "idx": 4,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
           "text": "The one wrecker we have to respect for sixty minutes is Maxx Crosby. Crosby plays 96 percent of Vegas's defensive snaps. Whenever he flips away from Trent Williams to line up over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick 2.6-second Rhythm digs to Ricky Pearsall and De'Zhaun Stribling.",
-          "startSec": 98.51,
-          "endSec": 121.17
+          "startSec": 97.74,
+          "endSec": 120.4
         },
         {
           "idx": 5,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
           "text": "Control Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market score of Niners 31, Raiders 21 tracks right on the numbers.",
-          "startSec": 121.45,
-          "endSec": 133.59
+          "startSec": 120.68,
+          "endSec": 132.82
         }
       ]
     },
@@ -73,7 +73,7 @@
       "createdAt": "2026-11-06T19:50:00-08:00",
       "audioUrl": "./data/podcasts/ep-cap-aiyuk-blueprint.m4a",
       "durationSec": 129,
-      "fileSizeBytes": 1052512,
+      "fileSizeBytes": 1054039,
       "transcript": [
         {
           "idx": 0,
@@ -121,7 +121,7 @@
           "speakerRole": "X's & O's Film Analyst",
           "text": "Which is why drafting 19 combined players across the 2025 and 2026 classes—guys like Mykel Williams, Alfred Collins, De'Zhaun Stribling, Gracen Halton, and Romello Height—was mandatory. Rookie-scale starters keep the championship window wide open while Purdy, Warner, and Bosa anchor the top of the payroll.",
           "startSec": 108.58,
-          "endSec": 128.5
+          "endSec": 128.84
         }
       ]
     },
@@ -135,7 +135,7 @@
       "createdAt": "2026-11-06T17:20:00-08:00",
       "audioUrl": "./data/podcasts/ep-trade-deadline-seeding.m4a",
       "durationSec": 97,
-      "fileSizeBytes": 796594,
+      "fileSizeBytes": 794233,
       "transcript": [
         {
           "idx": 0,
