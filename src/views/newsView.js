@@ -4,6 +4,7 @@
  */
 
 import { esc, formatRelativeAge } from './uiHelpers.js';
+import { iconSvg } from './icons.js';
 
 export function renderNewsViewHtml({
   newsMode, // 'clustered' | 'raw'
@@ -21,21 +22,27 @@ export function renderNewsViewHtml({
   const topToolbar = `
     <div class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">No-Fluff Synthesis Engine • ${totalReportersCount} Beat &amp; National Voices</div>
-          <h2 class="card-title">Team News, Film &amp; Podium Briefs</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('news', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">No-Fluff Synthesis Engine • ${totalReportersCount} Beat &amp; National Voices</div>
+            <h2 class="card-title">Team News, Film &amp; Podium Briefs</h2>
+          </div>
         </div>
         <button type="button" class="btn-ghost" data-action="open-settings">
-          ⚙️ Sources${mutedCount > 0 ? ` (${mutedCount} muted)` : ''}
+          ${iconSvg('settings', 14)}
+          <span>Sources${mutedCount > 0 ? ` (${mutedCount} muted)` : ''}</span>
         </button>
       </div>
 
-      <div style="display:flex;gap:8px;margin-bottom:8px">
-        <button type="button" class="pill-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
-          🧠 Clustered Fact &amp; Film Briefs (${filteredClusters.length})
+      <div class="segmented-control" role="tablist" aria-label="News Feed Mode" style="margin-bottom:10px">
+        <button type="button" class="pill-btn seg-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
+          ${iconSvg('sparkles', 14)}
+          <span>Clustered Fact &amp; Film Briefs (${filteredClusters.length})</span>
         </button>
-        <button type="button" class="pill-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
-          ⚡ Raw Beat Stream (${filteredRawItems.length})
+        <button type="button" class="pill-btn seg-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
+          ${iconSvg('bolt', 14)}
+          <span>Raw Beat Stream (${filteredRawItems.length})</span>
         </button>
       </div>
 
@@ -93,7 +100,7 @@ export function renderNewsViewHtml({
           <article class="card" style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               <span class="badge badge-gold">${esc(c.categoryLabel)}</span>
-              <span class="badge badge-positive mono">Synthesized from ${c.synthesizedFromCount} sources • ${c.filteredClickbaitCount} clickbait cut</span>
+              <span class="badge badge-positive mono">${iconSvg('shieldCheck', 12)}<span>Synthesized from ${c.synthesizedFromCount} sources • ${c.filteredClickbaitCount} clickbait cut</span></span>
             </div>
 
             <h3 class="brief-headline">${esc(c.headline)}</h3>
@@ -114,7 +121,7 @@ export function renderNewsViewHtml({
 
             ${
               c.consensusVsDissent
-                ? `<div style="padding:8px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12.5px">
+                ? `<div class="subcard-panel" style="font-size:12.5px">
                     <strong style="color:var(--gold-bright)">Beat Consensus:</strong> ${esc(c.consensusVsDissent)}
                    </div>`
                 : ''
@@ -122,10 +129,11 @@ export function renderNewsViewHtml({
 
             ${videoHtml}
 
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:4px;border-top:1px solid var(--border-subtle);font-size:11.5px;color:var(--text-muted)">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--border-subtle);font-size:11.5px;color:var(--text-muted)">
               <span>Cited: <strong>${esc(citedNames.join(', '))}</strong></span>
               <button type="button" class="btn-ghost" data-action="analyze-topic-jump" data-prompt="${esc(c.headline)}">
-                ⚡ Deep Dive AI
+                ${iconSvg('sparkles', 13)}
+                <span>Deep Dive AI</span>
               </button>
             </div>
           </article>
@@ -156,7 +164,8 @@ export function renderNewsViewHtml({
                 <div class="brief-card">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
                     <span class="badge ${item.type === 'video' ? 'badge-scarlet' : 'badge-neutral'}">
-                      ${item.type === 'video' ? '🎬 Video' : '📰 ' + esc(item.outletName)}
+                      ${iconSvg(item.type === 'video' ? 'video' : 'news', 12)}
+                      <span>${item.type === 'video' ? 'Video' : esc(item.outletName)}</span>
                     </span>
                     <span style="font-size:11px;color:var(--text-muted)" class="mono">
                       ${esc(item.reporterName)} • ${formatRelativeAge(item.publishedAt)}
@@ -165,7 +174,7 @@ export function renderNewsViewHtml({
                   <div style="font-weight:700;font-size:13.8px">
                     ${
                       item.url && item.type !== 'video'
-                        ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)} ↗</a>`
+                        ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">${esc(item.title)} ${iconSvg('externalLink', 12)}</a>`
                         : esc(item.title)
                     }
                   </div>
@@ -203,8 +212,8 @@ export function renderVideoEmbedOrFacade(vidKey, videoId, startSec, label, chann
           <iframe src="${src}" title="${esc(label)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="video-launch-bar">
-          <span>🎬 ${esc(label)}</span>
-          <a href="https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Number(startSec || 0)}s" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+          <span class="inline-icon-meta">${iconSvg('video', 14)}<span>${esc(label)}</span></span>
+          <a href="https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Number(startSec || 0)}s" target="_blank" rel="noopener noreferrer" class="ext-link">YouTube ${iconSvg('externalLink', 12)}</a>
         </div>
       </div>
     `;
@@ -213,12 +222,16 @@ export function renderVideoEmbedOrFacade(vidKey, videoId, startSec, label, chann
   return `
     <div class="video-embed-box">
       <div class="video-launch-bar">
-        <div style="min-width:0">
-          <div style="font-weight:700;font-size:12.5px;color:#E5CF96">▶ ${esc(label)}</div>
-          <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube')}</div>
+        <div style="display:flex;align-items:center;gap:10px;min-width:0">
+          <div class="video-play-disc" aria-hidden="true">${iconSvg('play', 14)}</div>
+          <div style="min-width:0">
+            <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
+            <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube Film & Podium')}</div>
+          </div>
         </div>
         <button type="button" class="btn-primary" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
-          ▶ Play Clip
+          ${iconSvg('play', 13)}
+          <span>Play Clip</span>
         </button>
       </div>
     </div>

@@ -12,6 +12,7 @@
  */
 
 import { esc, playProbBadgeClass, rankBadgeClass } from './uiHelpers.js';
+import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
@@ -29,14 +30,14 @@ export function renderSeasonMatchupViewHtml({
   const phaseSet = new Set(activePhases || []);
 
   const subTabs = [
-    { key: 'matchup', label: '⚔️ Wk 9 Matchup', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'health', label: '🩺 Health & IR', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'trade', label: '🔄 Trade Deadline', activeNow: phaseSet.has('TRADE_WINDOW') },
-    { key: 'stats', label: '📈 Team Stats & Ranks', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'schedule', label: '🗓️ Schedule', activeNow: true },
-    { key: 'playoffs', label: '🎲 Playoff Monte Carlo', activeNow: phaseSet.has('PLAYOFF_PUSH') },
-    { key: 'draft_class', label: '🎬 2026 Draft & UDFAs', activeNow: phaseSet.has('DRAFT_LIVE_UDFA') },
-    { key: 'draft_prep', label: '🧭 2027 Draft & Combine', activeNow: phaseSet.has('DRAFT_PREP') }
+    { key: 'matchup', icon: 'swords', label: 'Wk 9 Matchup', activeNow: phaseSet.has('IN_SEASON') },
+    { key: 'health', icon: 'heartPulse', label: 'Health & IR', activeNow: phaseSet.has('IN_SEASON') },
+    { key: 'trade', icon: 'trade', label: 'Trade Deadline', activeNow: phaseSet.has('TRADE_WINDOW') },
+    { key: 'stats', icon: 'season', label: 'Team Stats & Ranks', activeNow: phaseSet.has('IN_SEASON') },
+    { key: 'schedule', icon: 'calendar', label: 'Schedule', activeNow: true },
+    { key: 'playoffs', icon: 'trophy', label: 'Playoff Monte Carlo', activeNow: phaseSet.has('PLAYOFF_PUSH') },
+    { key: 'draft_class', icon: 'radar', label: '2026 Draft & UDFAs', activeNow: phaseSet.has('DRAFT_LIVE_UDFA') },
+    { key: 'draft_prep', icon: 'compass', label: '2027 Draft & Combine', activeNow: phaseSet.has('DRAFT_PREP') }
   ];
 
   // Sort active-phase tabs first while keeping off-cycle tabs accessible in Vault/Preview
@@ -50,7 +51,8 @@ export function renderSeasonMatchupViewHtml({
             t => `
           <button type="button" class="pill-btn ${seasonSub === t.key ? 'active' : ''}"
                   data-action="set-season-sub" data-season-sub="${t.key}">
-            ${esc(t.label)}${!t.activeNow ? ' (Vault)' : ''}
+            ${iconSvg(t.icon, 14)}
+            <span>${esc(t.label)}${!t.activeNow ? ' (Vault)' : ''}</span>
           </button>
         `
           )
@@ -76,17 +78,24 @@ function renderUpcomingMatchup(appData) {
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">Week ${um.week} Matchup War Room • ${esc(um.kickoffDisplay)}</div>
-          <h2 class="card-title">${esc(um.oppName)} (${esc(um.oppRecord)}) @ 49ers (${esc(um.sfRecord)})</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('swords', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Week ${um.week} Matchup War Room • ${esc(um.kickoffDisplay)}</div>
+            <h2 class="card-title">${esc(um.oppName)} (${esc(um.oppRecord)}) @ 49ers (${esc(um.sfRecord)})</h2>
+          </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
                 data-prompt="Deep film and protection breakdown for Week 9 Las Vegas Raiders at 49ers: Klint Kubiak vs Kyle Shanahan and neutralizing Maxx Crosby">
-          ⚡ AI Film Prep
+          ${iconSvg('sparkles', 13)}
+          <span>AI Film Prep</span>
         </button>
       </div>
 
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">🏟️ ${esc(um.venue)}</div>
+      <div class="inline-icon-meta" style="margin-bottom:8px">
+        ${iconSvg('stadium', 14)}
+        <span>${esc(um.venue)}</span>
+      </div>
 
       <div class="kpi-grid">
         <div class="kpi-box"><div class="kpi-label">Consensus Line</div><div class="kpi-val mono" style="color:var(--emerald)">${esc(bet.spread)}</div></div>
@@ -94,7 +103,7 @@ function renderUpcomingMatchup(appData) {
         <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12.5px">${esc(bet.impliedScore)}</div></div>
       </div>
 
-      <div style="padding:8px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12px;color:var(--text-secondary)">
+      <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
         <strong>Line Movement &amp; Rest:</strong> ${esc(bet.openingSpread)} • Moneyline <span class="mono">${esc(bet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(bet.restAdvantage)}</strong>
       </div>
     </section>
@@ -115,12 +124,12 @@ function renderUpcomingMatchup(appData) {
         ${(um.keyMatchupsMatrix || [])
           .map(
             m => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--border-subtle)">
+          <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
               <strong style="font-size:13px">${esc(m.unitMatchup)}</strong>
               <span class="badge badge-positive">${esc(m.advantage)}</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || '')}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || m.nerdyDetail)}</div>
           </div>
         `
           )
@@ -160,9 +169,12 @@ function renderTeamHealthAndIr(appData) {
   return `
     <section class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">Player-Specific Priors (Vet Rest &amp; Toughness Adjusted)</div>
-          <h2 class="card-title">Week ${h.week || 9} Practice &amp; Play Likelihood</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('heartPulse', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Player-Specific Priors (Vet Rest &amp; Toughness Adjusted)</div>
+            <h2 class="card-title">Week ${h.week || 9} Practice &amp; Play Likelihood</h2>
+          </div>
         </div>
         <span class="badge badge-gold mono">IR Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
       </div>
@@ -203,7 +215,7 @@ function renderTeamHealthAndIr(appData) {
         ${(h.irAndReserveTracker || [])
           .map(
             ir => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--border-subtle);cursor:pointer"
+          <div class="subcard-panel" style="cursor:pointer"
                data-action="open-player-sheet" data-player-id="${esc(ir.playerId)}" data-initial-tab="health">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
               <strong>${esc(ir.name)} <span style="color:var(--gold-bright)">(${esc(ir.position)})</span></strong>
@@ -229,9 +241,12 @@ function renderTeamStatsAndPower(appData) {
   return `
     <section class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">nflverse 2026 Regular Season • 32-Team Benchmarks</div>
-          <h2 class="card-title">49ers Team Stats &amp; NFL Rankings</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('season', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">nflverse 2026 Regular Season • 32-Team Benchmarks</div>
+            <h2 class="card-title">49ers Team Stats &amp; NFL Rankings</h2>
+          </div>
         </div>
       </div>
 
@@ -274,7 +289,7 @@ function renderTeamStatsAndPower(appData) {
         ${(pwr.sources || [])
           .map(
             s => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt)">
+          <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
               <strong>${esc(s.outlet)}</strong>
               <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta)})</span>
@@ -294,9 +309,12 @@ function renderTradeWarRoom(appData) {
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">Oct 1 – Trade Deadline • ${esc(tw.deadlineDisplay)}</div>
-          <h2 class="card-title">Trade Deadline War Room</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trade', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Oct 1 – Trade Deadline • ${esc(tw.deadlineDisplay)}</div>
+            <h2 class="card-title">Trade Deadline War Room</h2>
+          </div>
         </div>
         <span class="badge badge-positive mono">${formatCompactDollars(tw.availableGrossCap)} Gross Cap</span>
       </div>
@@ -306,7 +324,7 @@ function renderTradeWarRoom(appData) {
         ${(tw.completed2026Moves || [])
           .map(
             m => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--gold-border)">
+          <div class="subcard-panel" style="border-color:var(--gold-border)">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
               <strong>${esc(m.player)} (${esc(m.position)}) ← ${esc(m.acquiredFrom)}</strong>
               <span class="badge badge-positive mono">Grade ${esc(m.schemeGrade)}</span>
@@ -324,7 +342,7 @@ function renderTradeWarRoom(appData) {
         ${(tw.topNeeds || [])
           .map(
             n => `
-          <div style="padding:8px 10px;border-radius:8px;background:var(--bg-card-alt)">
+          <div class="subcard-panel">
             <strong>#${n.rank} ${esc(n.positionGroup)}</strong> <span class="badge badge-warning">${esc(n.urgency)}</span>
             <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">${esc(n.epaContext)}</div>
           </div>
@@ -341,7 +359,7 @@ function renderTradeWarRoom(appData) {
         ${(tw.realisticTargets || [])
           .map(
             t => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt)">
+          <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
               <strong>${esc(t.name)} (${esc(t.position)})</strong>
               <span class="badge badge-gold mono">Fit ${t.fitScore}/100 • Cap ${formatCompactDollars(t.prorated2026CapCharge)}</span>
@@ -362,7 +380,7 @@ function renderTradeWarRoom(appData) {
         ${(tw.tieredRumors || [])
           .map(
             r => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt)">
+          <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:3px">
               <span class="badge ${r.tier.includes('Tier 1') ? 'badge-positive' : 'badge-gold'}">${esc(r.tier)}</span>
               <span style="font-size:11px;color:var(--text-muted)">${esc(r.sources)}</span>
@@ -387,13 +405,16 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">10,000-Iteration Monte Carlo • Official NFL Tiebreakers</div>
-          <h2 class="card-title">49ers Playoff &amp; Seeding Probabilities</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trophy', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">10,000-Iteration Monte Carlo • Official NFL Tiebreakers</div>
+            <h2 class="card-title">49ers Playoff &amp; Seeding Probabilities</h2>
+          </div>
         </div>
         ${
           overrideCount > 0
-            ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">↺ Clear (${overrideCount})</button>`
+            ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">${iconSvg('reset', 13)}<span>Clear (${overrideCount})</span></button>`
             : `<span class="badge badge-gold mono">10,000 Runs</span>`
         }
       </div>
@@ -480,7 +501,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
         ${(pp.seedPathCards || [])
           .map(
             c => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt)">
+          <div class="subcard-panel">
             <strong>${esc(c.target)}</strong>
             <div style="font-size:12.5px;color:var(--text-secondary);margin-top:3px">${esc(c.pathSummary)}</div>
           </div>
@@ -520,8 +541,15 @@ function renderFullSchedule(appData) {
   const sched = appData?.scheduleMatchup?.schedule || [];
   return `
     <section class="card">
-      <div class="card-eyebrow">2026 Regular Season • International, Surface &amp; Rest Differential</div>
-      <h2 class="card-title" style="margin-bottom:10px">49ers Matchups &amp; Venue Tracker</h2>
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('calendar', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">2026 Regular Season • International, Surface &amp; Rest Differential</div>
+            <h2 class="card-title">49ers Matchups &amp; Venue Tracker</h2>
+          </div>
+        </div>
+      </div>
 
       <div style="display:flex;flex-direction:column;gap:8px">
         ${sched
@@ -533,7 +561,7 @@ function renderFullSchedule(appData) {
                   ? `<span class="badge badge-danger mono">${g.restAdvantageDays}d Rest</span>`
                   : '';
             return `
-              <div style="padding:9px 10px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${
+              <div style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${
                 g.venue?.isInternational ? 'var(--gold-border)' : 'var(--border-subtle)'
               }">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -551,9 +579,10 @@ function renderFullSchedule(appData) {
                     }
                   </div>
                 </div>
-                <div style="font-size:11.5px;color:var(--text-secondary);margin-top:4px">
-                  🏟️ ${esc(g.venue?.name)} (${esc(g.venue?.city)}) • ${esc(g.venue?.surface)}
-                  ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">SF ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}
+                <div class="inline-icon-meta" style="margin-top:4px">
+                  ${iconSvg('stadium', 13)}
+                  <span>${esc(g.venue?.name)} (${esc(g.venue?.city)}) • ${esc(g.venue?.surface)}
+                  ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">SF ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}</span>
                 </div>
                 ${
                   g.venue?.internationalNote
@@ -578,14 +607,21 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
 
   return `
     <section class="card">
-      <div class="card-eyebrow">Post-Season Until Draft • 2-Year Cap &amp; Roster Horizon</div>
-      <h2 class="card-title" style="margin-bottom:8px">2027 Draft War Room &amp; Pick Inventory</h2>
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('compass', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Post-Season Until Draft • 2-Year Cap &amp; Roster Horizon</div>
+            <h2 class="card-title">2027 Draft War Room &amp; Pick Inventory</h2>
+          </div>
+        </div>
+      </div>
 
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
         ${(dp.topNeeds2027 || [])
           .map(
             n => `
-          <div style="padding:8px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12.5px">
+          <div class="subcard-panel" style="font-size:12.5px">
             <strong style="color:var(--gold-bright)">#${n.rank} ${esc(n.pos)}:</strong> ${esc(n.horizon)}
           </div>
         `
@@ -621,7 +657,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
         ${(dp.consensusMockTargets || [])
           .map(
             m => `
-          <div style="padding:9px 10px;border-radius:9px;background:var(--bg-card-alt)">
+          <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
               <strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>
               <span class="badge badge-positive mono">SF Fit ${m.shanahanLynchFitScore}/100 • ${m.mockFrequencyToSfPct}% Mocks</span>
@@ -638,8 +674,11 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
     <section class="card">
       <div class="card-eyebrow">NFL Scouting Combine Measurables &amp; RAS Leaderboard</div>
       <h3 class="card-title" style="margin-bottom:8px">Searchable Combine Results (${filteredCombine.length})</h3>
-      <input type="search" id="combineSearchInput" class="text-input" style="margin-bottom:8px"
-             placeholder="Filter Combine athletes by name, position, college…" value="${esc(combineSearch)}" aria-label="Search Combine Results" />
+      <div class="search-input-wrap" style="margin-bottom:8px">
+        ${iconSvg('search', 15, 'search-input-icon')}
+        <input type="search" id="combineSearchInput" class="text-input has-lead-icon"
+               placeholder="Filter Combine athletes by name, position, college…" value="${esc(combineSearch)}" aria-label="Search Combine Results" />
+      </div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead><tr><th>Athlete</th><th>Pos</th><th>School</th><th>Ht / Wt</th><th>40-Yd</th><th>Vert</th><th>3-Cone</th><th>RAS</th></tr></thead>
@@ -675,8 +714,15 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
 
   return `
     <section class="card">
-      <div class="card-eyebrow">Draft Day 1 Through Post-UDFA • Value vs. Consensus &amp; Film</div>
-      <h2 class="card-title" style="margin-bottom:8px">2026 49ers Draft Class (${picks.length} Picks)</h2>
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('radar', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Draft Day 1 Through Post-UDFA • Value vs. Consensus &amp; Film</div>
+            <h2 class="card-title">2026 49ers Draft Class (${picks.length} Picks)</h2>
+          </div>
+        </div>
+      </div>
 
       <div style="display:flex;flex-direction:column;gap:10px">
         ${picks
@@ -709,7 +755,8 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                   <span class="mono" style="font-size:11.5px;color:var(--text-muted)">Est. 4-Yr Deal: ${formatCompactDollars(pk.estimated4YrRookieTotal)}</span>
                   <button type="button" class="btn-ghost" data-action="toggle-draft-spider" data-draft-idx="${idx}">
-                    ${isSpiderOpen ? '▲ Hide Spider Chart' : '🕸️ Athletic Spider Chart'}
+                    ${iconSvg(isSpiderOpen ? 'chevronUp' : 'radar', 13)}
+                    <span>${isSpiderOpen ? 'Hide Spider Chart' : 'Athletic Spider Chart'}</span>
                   </button>
                 </div>
 

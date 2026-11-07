@@ -9,6 +9,7 @@
  */
 
 import { esc, playProbBadgeClass } from './uiHelpers.js';
+import { iconSvg } from './icons.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
 
@@ -21,22 +22,23 @@ export function renderPlayerDossierSheetHtml({
   if (!player) return `<div class="empty-state">Player not found.</div>`;
 
   const tabDefs = [
-    ['overview', 'Overview'],
-    ['stats', 'Stats & EPA'],
-    ['spider', 'Spider Chart'],
-    ['contract', 'Contract & Cap'],
-    ['health', 'Health & Priors']
+    ['overview', 'football', 'Overview'],
+    ['stats', 'season', 'Stats & EPA'],
+    ['spider', 'radar', 'Spider Chart'],
+    ['contract', 'cap', 'Contract & Cap'],
+    ['health', 'heartPulse', 'Health & Priors']
   ];
 
   const tabsBar = `
     <div class="pill-bar" role="tablist" aria-label="Player Dossier Sections">
       ${tabDefs
         .map(
-          ([key, label]) => `
+          ([key, ic, label]) => `
         <button type="button" role="tab" aria-selected="${activeTab === key}"
                 class="pill-btn ${activeTab === key ? 'active' : ''}"
                 data-action="set-player-tab" data-player-tab="${key}">
-          ${esc(label)}
+          ${iconSvg(ic, 13)}
+          <span>${esc(label)}</span>
         </button>
       `
         )
@@ -71,8 +73,8 @@ function renderOverviewTab(p) {
             ${p.recentNews
               .map(
                 n => `
-              <div style="padding:8px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12.5px">
-                <a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer"><strong>${esc(n.headline)} ↗</strong></a>
+              <div class="subcard-panel" style="font-size:12.5px">
+                <a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
                 ${n.summary ? `<div style="color:var(--text-secondary);margin-top:2px">${esc(n.summary)}</div>` : ''}
               </div>
             `
@@ -136,7 +138,7 @@ function renderStatsTab(p, statsMode) {
   let primaryStatsHtml = '';
   if (statsMode === '2026') {
     const snapBannerHtml = `
-      <div style="padding:9px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12px;color:var(--text-secondary)">
+      <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
         <strong style="color:var(--text-primary)">2026 Snaps Logged:</strong>
         Offense <span class="mono">${p.snapSummary?.offenseSnaps || 0} (${p.snapSummary?.offenseSnapPct || 0}%)</span> •
         Defense <span class="mono">${p.snapSummary?.defenseSnaps || 0} (${p.snapSummary?.defenseSnapPct || 0}%)</span> •
@@ -297,7 +299,7 @@ function renderStatsTab(p, statsMode) {
 function renderContractTab(p, txScenario) {
   const yrs = Object.values(p.contractsByYear || {}).sort((a, b) => a.year - b.year);
   if (yrs.length === 0) {
-    return `<div style="padding:10px;border-radius:8px;background:var(--bg-card-alt);font-size:12.5px">
+    return `<div class="subcard-panel" style="font-size:12.5px">
       Practice Squad / Non-Top-51 standard weekly agreement (no multi-year guaranteed dead-money exposure).
     </div>`;
   }
@@ -388,7 +390,7 @@ function renderHealthTab(p) {
       <div class="kpi-box"><div class="kpi-label">Friday</div><div class="kpi-val mono">${esc(h.fri || '-')}</div></div>
     </div>
 
-    <div style="padding:9px 11px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--gold-border);font-size:12.5px">
+    <div class="subcard-panel" style="border-color:var(--gold-border);font-size:12.5px">
       <strong style="color:var(--gold-bright)">Player Availability Prior:</strong> ${esc(h.archetypeNote || 'Standard positional prior.')}
     </div>
 
@@ -401,7 +403,7 @@ function renderHealthTab(p) {
 
     ${
       h.longComment
-        ? `<div style="padding:9px 11px;border-radius:9px;background:var(--bg-card-alt);font-size:12.5px">
+        ? `<div class="subcard-panel" style="font-size:12.5px">
             <strong>Beat &amp; Medical Note:</strong> ${esc(h.longComment)}
            </div>`
         : ''

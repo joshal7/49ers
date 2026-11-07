@@ -1,4 +1,4 @@
-const CACHE_NAME = 'joshal-49ers-hq-v3';
+const CACHE_NAME = '49ers-faithful-v4';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const CORE_ASSETS = [
   './src/components/audioPlayer.js',
   './src/services/dataService.js',
   './src/services/aiWorkerClient.js',
+  './src/views/icons.js',
   './src/views/uiHelpers.js',
   './src/views/homeView.js',
   './src/views/newsView.js',

@@ -3,7 +3,8 @@
  */
 
 import { esc, playProbBadgeClass } from './uiHelpers.js';
-import { formatCompactDollars, formatDollars } from '../engine/capSimulator.js';
+import { iconSvg } from './icons.js';
+import { formatCompactDollars } from '../engine/capSimulator.js';
 
 export function renderRosterCapViewHtml({
   subTab = 'roster', // 'roster' | 'depth' | 'cap'
@@ -20,13 +21,16 @@ export function renderRosterCapViewHtml({
     <div class="card">
       <div class="pill-bar" role="tablist" aria-label="Roster and Salary Cap Modes">
         <button type="button" class="pill-btn ${subTab === 'roster' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="roster">
-          🏈 Roster &amp; Dossiers (${appData?.roster?.players?.length || 0})
+          ${iconSvg('football', 14)}
+          <span>Roster &amp; Dossiers (${appData?.roster?.players?.length || 0})</span>
         </button>
         <button type="button" class="pill-btn ${subTab === 'depth' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="depth">
-          📋 Dual Depth Chart
+          ${iconSvg('layers', 14)}
+          <span>Dual Depth Chart</span>
         </button>
         <button type="button" class="pill-btn ${subTab === 'cap' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="cap">
-          💰 Salary Cap &amp; GM Sim
+          ${iconSvg('cap', 14)}
+          <span>Salary Cap &amp; GM Sim</span>
         </button>
       </div>
     </div>
@@ -85,9 +89,12 @@ function renderRosterExplorer({ appData, rosterSearch, rosterUnitFilter, rosterP
     <div class="card">
       <div class="filter-toolbar">
         <div class="search-sort-row">
-          <input type="search" id="rosterSearchInput" class="text-input"
-                 placeholder="Search player, #jersey, position, college…"
-                 value="${esc(rosterSearch)}" aria-label="Search Roster" />
+          <div class="search-input-wrap">
+            ${iconSvg('search', 15, 'search-input-icon')}
+            <input type="search" id="rosterSearchInput" class="text-input has-lead-icon"
+                   placeholder="Search player, #jersey, position, college…"
+                   value="${esc(rosterSearch)}" aria-label="Search Roster" />
+          </div>
           <select id="rosterSortSelect" class="select-input" style="width:auto" aria-label="Sort Roster">
             <option value="cap_desc" ${rosterSort === 'cap_desc' ? 'selected' : ''}>Cap Hit ↓</option>
             <option value="snaps_desc" ${rosterSort === 'snaps_desc' ? 'selected' : ''}>Snap % ↓</option>
@@ -163,31 +170,27 @@ function renderRosterExplorer({ appData, rosterSearch, rosterUnitFilter, rosterP
 }
 
 function renderDualDepthChart({ appData, depthMode }) {
-  const getUnitPriority = name => {
-    const n = (name || '').toLowerCase();
-    if (n.includes('offense')) return 1;
-    if (n.includes('defense')) return 2;
-    if (n.includes('special')) return 3;
-    return 4;
-  };
-  const units = [...(appData?.depthChart?.units || [])].sort(
-    (a, b) => getUnitPriority(a.unitName) - getUnitPriority(b.unitName)
-  );
+  const units = appData?.depthChart?.units || [];
 
   const headerCard = `
     <div class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">11/21 Offense • Wide-9 Base &amp; Nickel 4-2-5 Defense</div>
-          <h2 class="card-title">Interactive Dual Depth Chart</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('layers', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">11/21 Offense • Wide-9 Base &amp; Nickel 4-2-5 Defense</div>
+            <h2 class="card-title">Interactive Dual Depth Chart</h2>
+          </div>
         </div>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button type="button" class="pill-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
-          ⚡ Projected Week 9 Active (Auto-Promotes Healthy)
+      <div class="segmented-control" role="tablist" aria-label="Depth Chart Mode">
+        <button type="button" class="pill-btn seg-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
+          ${iconSvg('bolt', 14)}
+          <span>Projected Week 9 Active (Auto-Promotes Healthy)</span>
         </button>
-        <button type="button" class="pill-btn ${depthMode === 'baseline' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="baseline">
-          📋 Baseline Full-Roster Hierarchy
+        <button type="button" class="pill-btn seg-btn ${depthMode === 'baseline' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="baseline">
+          ${iconSvg('layers', 14)}
+          <span>Baseline Full-Roster Hierarchy</span>
         </button>
       </div>
     </div>
@@ -271,8 +274,9 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
   const warningsHtml = (simCapResult?.warnings || [])
     .map(
       w => `
-      <div style="padding:8px 10px;border-radius:8px;background:var(--crimson-soft);border:1px solid rgba(239,68,68,0.4);color:var(--crimson);font-size:12px;margin-top:6px">
-        ⚠️ ${esc(w)}
+      <div class="alert-banner-danger">
+        ${iconSvg('alert', 15)}
+        <span>${esc(w)}</span>
       </div>
     `
     )
@@ -282,13 +286,17 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
     <!-- Multi-Year Cap Horizon -->
     <section class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">OverTheCap Synced Ledger • 2026–2029</div>
-          <h2 class="card-title">Multi-Year Salary Cap Horizon</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('cap', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">OverTheCap Synced Ledger • 2026–2029</div>
+            <h2 class="card-title">Multi-Year Salary Cap Horizon</h2>
+          </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
                 data-prompt="Analyze the 49ers 2026-2028 salary cap rollover strategy, option bonus proration on Purdy and Bosa, and Brandon Aiyuk cap scenarios">
-          ⚡ AI Cap Audit
+          ${iconSvg('sparkles', 13)}
+          <span>AI Cap Audit</span>
         </button>
       </div>
 
@@ -311,7 +319,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
         ${(blueprint.strategicPillars || [])
           .map(
             sp => `
-          <div style="padding:8px 10px;border-radius:8px;background:var(--bg-card-alt);font-size:12.5px">
+          <div class="subcard-panel" style="font-size:12.5px">
             <strong>${esc(sp.title)}:</strong> <span style="color:var(--text-secondary)">${esc(sp.detail)}</span>
           </div>
         `
@@ -323,13 +331,16 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
     <!-- Interactive Armchair GM Cap Simulator -->
     <section class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">Interactive CBA Calculator • Top-53 Replacement Rule Applied</div>
-          <h2 class="card-title">Armchair GM Cap Simulator</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('bolt', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Interactive CBA Calculator • Top-53 Replacement Rule Applied</div>
+            <h2 class="card-title">Armchair GM Cap Simulator</h2>
+          </div>
         </div>
         <div style="display:flex;gap:6px">
-          <button type="button" class="btn-secondary" data-action="apply-ai-cap-blueprint">⚡ Blueprint</button>
-          <button type="button" class="btn-ghost" data-action="reset-cap-moves">↺ Reset</button>
+          <button type="button" class="btn-secondary" data-action="apply-ai-cap-blueprint">${iconSvg('sparkles', 13)}<span>Blueprint</span></button>
+          <button type="button" class="btn-ghost" data-action="reset-cap-moves">${iconSvg('reset', 13)}<span>Reset</span></button>
         </div>
       </div>
 

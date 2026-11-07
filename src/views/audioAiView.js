@@ -3,6 +3,7 @@
  */
 
 import { esc, renderMarkdownSafe, formatRelativeAge } from './uiHelpers.js';
+import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 
 export function renderAudioAiViewHtml({
@@ -18,12 +19,14 @@ export function renderAudioAiViewHtml({
 }) {
   const modeSwitcher = `
     <div class="card">
-      <div class="pill-bar" role="tablist" aria-label="Autopodcast and Deep AI Modes">
-        <button type="button" class="pill-btn ${studioSub === 'podcast' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="podcast">
-          🎙️ Autopodcast Studio (${allEpisodes.length})
+      <div class="segmented-control" role="tablist" aria-label="Autopodcast and Deep AI Modes">
+        <button type="button" class="pill-btn seg-btn ${studioSub === 'podcast' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="podcast">
+          ${iconSvg('mic', 14)}
+          <span>Autopodcast Studio (${allEpisodes.length})</span>
         </button>
-        <button type="button" class="pill-btn ${studioSub === 'analysis' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="analysis">
-          ⚡ Deep Analysis Runner (${allAnalyses.length})
+        <button type="button" class="pill-btn seg-btn ${studioSub === 'analysis' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="analysis">
+          ${iconSvg('sparkles', 14)}
+          <span>Deep Analysis Runner (${allAnalyses.length})</span>
         </button>
       </div>
     </div>
@@ -73,9 +76,12 @@ function renderPodcastStudio({
     ? `
       <section class="card temporal-highlight">
         <div class="card-header">
-          <div class="card-title-group">
-            <div class="card-eyebrow">Now Loaded • Tap Any Turn to Seek Audio</div>
-            <h3 class="card-title">${esc(activeEp.title)}</h3>
+          <div class="card-header-left">
+            <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
+            <div class="card-title-group">
+              <div class="card-eyebrow">Now Loaded • Tap Any Turn to Seek Audio</div>
+              <h3 class="card-title">${esc(activeEp.title)}</h3>
+            </div>
           </div>
           <span class="badge badge-gold mono">${formatTimeMmSs(audioState.currentTimeSec)} / ${formatTimeMmSs(audioState.durationSec || activeEp.durationSec)}</span>
         </div>
@@ -87,7 +93,7 @@ function renderPodcastStudio({
             <div class="transcript-turn ${audioState.activeTurnIdx === idx ? 'active-turn' : ''}"
                  data-action="seek-podcast-turn" data-seek-sec="${seg.startSec}">
               <div class="speaker-tag">
-                <span>🎙️ ${esc(seg.speaker)} <span style="font-weight:500;color:var(--text-muted)">(${esc(seg.speakerRole || '')})</span></span>
+                <span class="inline-icon-meta">${iconSvg('mic', 12)}<span>${esc(seg.speaker)} <span style="font-weight:500;color:var(--text-muted)">(${esc(seg.speakerRole || '')})</span></span></span>
                 <span class="mono">${formatTimeMmSs(seg.startSec)}</span>
               </div>
               <div>${esc(seg.text)}</div>
@@ -104,23 +110,29 @@ function renderPodcastStudio({
     <!-- On-Demand Autopodcast Generator -->
     <section class="card">
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">Custom Duration • Multi-Speaker Neural Synthesis</div>
-          <h2 class="card-title">Generate Custom Autopodcast</h2>
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Custom Duration • Multi-Speaker Neural Synthesis</div>
+            <h2 class="card-title">Generate Custom Autopodcast</h2>
+          </div>
         </div>
       </div>
 
       <div class="sub-label" style="margin-bottom:6px">1. Select Duration (${podDurationMin} min)</div>
       <div class="pill-bar" style="margin-bottom:8px">
         ${[
-          [3, '⚡ 3m Quick Hit'],
-          [8, '🚗 8m Commute Brief'],
-          [15, '🧠 15m Deep Film/Cap Dive']
+          [3, 'bolt', '3m Quick Hit'],
+          [8, 'clock', '8m Commute Brief'],
+          [15, 'sparkles', '15m Deep Film/Cap Dive']
         ]
           .map(
-            ([mins, label]) => `
+            ([mins, ic, label]) => `
           <button type="button" class="pill-btn ${Number(podDurationMin) === mins ? 'active' : ''}"
-                  data-action="set-pod-duration" data-mins="${mins}">${esc(label)}</button>
+                  data-action="set-pod-duration" data-mins="${mins}">
+            ${iconSvg(ic, 13)}
+            <span>${esc(label)}</span>
+          </button>
         `
           )
           .join('')}
@@ -135,10 +147,12 @@ function renderPodcastStudio({
       <div class="sub-label" style="margin-bottom:6px">2. Host Format</div>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
         <button type="button" class="pill-btn ${podFormat === 'two_host' ? 'active' : ''}" data-action="set-pod-format" data-format="two_host">
-          🎙️ Two-Host Analytical Banter (Marcus &amp; Elena)
+          ${iconSvg('mic', 13)}
+          <span>Two-Host Analytical Banter (Marcus &amp; Elena)</span>
         </button>
         <button type="button" class="pill-btn ${podFormat === 'solo' ? 'active' : ''}" data-action="set-pod-format" data-format="solo">
-          🎯 Solo Executive Briefing
+          ${iconSvg('target', 13)}
+          <span>Solo Executive Briefing</span>
         </button>
       </div>
 
@@ -148,7 +162,8 @@ function renderPodcastStudio({
           .map(
             t => `
           <button type="button" class="btn-ghost" style="flex-shrink:0" data-action="fill-pod-topic" data-topic="${esc(t)}">
-            + ${esc(t)}
+            ${iconSvg('plus', 12)}
+            <span>${esc(t)}</span>
           </button>
         `
           )
@@ -161,14 +176,15 @@ function renderPodcastStudio({
 
       ${
         jobStatus?.active
-          ? `<div class="job-progress-box" style="margin-bottom:10px">⏳ ${esc(jobStatus.message)}</div>`
+          ? `<div class="job-progress-box" style="margin-bottom:10px">${iconSvg('clock', 14)}<span>${esc(jobStatus.message)}</span></div>`
           : jobStatus?.error
-            ? `<div style="padding:8px 10px;border-radius:8px;background:var(--crimson-soft);color:var(--crimson);font-size:12px;margin-bottom:10px">⚠️ ${esc(jobStatus.error)}</div>`
+            ? `<div class="alert-banner-danger" style="margin-bottom:10px">${iconSvg('alert', 14)}<span>${esc(jobStatus.error)}</span></div>`
             : ''
       }
 
       <button type="button" class="btn-primary" style="width:100%" data-action="generate-autopodcast" ${jobStatus?.active ? 'disabled' : ''}>
-        🎙️ Generate ${podDurationMin}-Min Autopodcast &amp; Share With Group
+        ${iconSvg('mic', 15)}
+        <span>Generate ${podDurationMin}-Min Autopodcast &amp; Share With Group</span>
       </button>
     </section>
 
@@ -183,6 +199,7 @@ function renderPodcastStudio({
         ${allEpisodes
           .map(ep => {
             const isCurrent = activeEp?.id === ep.id;
+            const isPlayingNow = isCurrent && audioState?.isPlaying;
             return `
               <div class="brief-card" style="border-color:${isCurrent ? 'var(--gold)' : 'var(--border-subtle)'}">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
@@ -196,7 +213,8 @@ function renderPodcastStudio({
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
                   <span style="font-size:11.5px;color:var(--gold-bright)">${esc(ep.format)}</span>
                   <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(ep.id)}">
-                    ${isCurrent && audioState?.isPlaying ? '⏸ Playing' : '▶ Play Episode'}
+                    ${iconSvg(isPlayingNow ? 'pause' : 'play', 13)}
+                    <span>${isPlayingNow ? 'Playing' : 'Play Episode'}</span>
                   </button>
                 </div>
               </div>
@@ -217,8 +235,15 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
 
   return `
     <section class="card">
-      <div class="card-eyebrow">Multi-Source Synthesis • Shared Group Cache</div>
-      <h2 class="card-title" style="margin-bottom:6px">On-Demand Deep Analysis Runner</h2>
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">Multi-Source Synthesis • Shared Group Cache</div>
+            <h2 class="card-title">On-Demand Deep Analysis Runner</h2>
+          </div>
+        </div>
+      </div>
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
         Synthesizes live play-by-play EPA, OverTheCap contract tables, and beat transcripts into a structured report (cached for all ~25 friends).
       </div>
@@ -228,7 +253,8 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
           .map(
             p => `
           <button type="button" class="btn-ghost" style="flex-shrink:0" data-action="fill-analysis-prompt" data-prompt="${esc(p)}">
-            + ${esc(p.slice(0, 44))}…
+            ${iconSvg('plus', 12)}
+            <span>${esc(p.slice(0, 44))}…</span>
           </button>
         `
           )
@@ -236,19 +262,20 @@ function renderDeepAnalysisRunner({ analysisPromptDraft, jobStatus, allAnalyses 
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any in-depth 49ers scheme, EPA, injury prior, cap, trade, or draft question…"
+                placeholder="Ask any 49ers scheme, EPA, injury prior, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
         jobStatus?.active
-          ? `<div class="job-progress-box" style="margin-bottom:10px">⏳ ${esc(jobStatus.message)}</div>`
+          ? `<div class="job-progress-box" style="margin-bottom:10px">${iconSvg('clock', 14)}<span>${esc(jobStatus.message)}</span></div>`
           : jobStatus?.error
-            ? `<div style="padding:8px 10px;border-radius:8px;background:var(--crimson-soft);color:var(--crimson);font-size:12px;margin-bottom:10px">⚠️ ${esc(jobStatus.error)}</div>`
+            ? `<div class="alert-banner-danger" style="margin-bottom:10px">${iconSvg('alert', 14)}<span>${esc(jobStatus.error)}</span></div>`
             : ''
       }
 
       <button type="button" class="btn-primary" style="width:100%" data-action="run-deep-analysis" ${jobStatus?.active ? 'disabled' : ''}>
-        ⚡ Run Deep Analysis
+        ${iconSvg('sparkles', 15)}
+        <span>Run Deep Analysis</span>
       </button>
     </section>
 

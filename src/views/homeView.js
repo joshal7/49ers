@@ -4,7 +4,8 @@
  * Supports both touch/click Up/Down reordering and HTML5 drag-and-drop customization!
  */
 
-import { esc, playProbBadgeClass, rankBadgeClass } from './uiHelpers.js';
+import { esc, playProbBadgeClass } from './uiHelpers.js';
+import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 
 export function renderHomeDashboardHtml({
@@ -18,21 +19,25 @@ export function renderHomeDashboardHtml({
 }) {
   const customizeBar = `
     <div class="reorder-bar">
-      <div style="font-size:12px;color:var(--text-secondary)">
-        ${
-          isCustomizingLayout
-            ? '<strong>Layout Mode Active:</strong> Drag cards or tap ↑ / ↓ to prioritize your top blocks.'
-            : `Showing <strong>${orderedBlocks.length} active modules</strong> (${archivedBlocks.length} off-cycle in Vault).`
-        }
+      <div class="reorder-bar-status">
+        <span class="reorder-status-dot ${isCustomizingLayout ? 'customizing' : ''}" aria-hidden="true"></span>
+        <span>
+          ${
+            isCustomizingLayout
+              ? '<strong>Layout Mode Active:</strong> Drag cards or tap arrows to prioritize your top modules.'
+              : `Showing <strong>${orderedBlocks.length} active modules</strong> <span class="text-muted-inline">(${archivedBlocks.length} off-cycle in Vault)</span>`
+          }
+        </span>
       </div>
       <div class="reorder-controls">
         ${
           isCustomizingLayout
-            ? `<button type="button" class="btn-ghost" data-action="reset-dashboard-order">↺ Default</button>`
+            ? `<button type="button" class="btn-ghost" data-action="reset-dashboard-order">${iconSvg('reset', 13)}<span>Default</span></button>`
             : ''
         }
         <button type="button" class="icon-btn ${isCustomizingLayout ? 'active' : ''}" data-action="toggle-customize-layout">
-          ${isCustomizingLayout ? '✓ Done' : '⇅ Customize Order'}
+          ${iconSvg(isCustomizingLayout ? 'check' : 'customize', 14)}
+          <span>${isCustomizingLayout ? 'Done' : 'Customize Order'}</span>
         </button>
       </div>
     </div>
@@ -53,7 +58,7 @@ export function renderHomeDashboardHtml({
     )
     .join('');
 
-  return `${customizeBar}${cardsHtml}`;
+  return `${customizeBar}<div class="dashboard-grid">${cardsHtml}</div>`;
 }
 
 function renderSingleDashboardCard({
@@ -72,10 +77,10 @@ function renderSingleDashboardCard({
       <div class="reorder-controls" aria-label="Reorder ${esc(block.title)}">
         <button type="button" class="reorder-btn" data-action="move-block-up" data-block-id="${esc(block.id)}" ${
         idx === 0 ? 'disabled' : ''
-      } aria-label="Move ${esc(block.shortTitle)} up">↑</button>
+      } aria-label="Move ${esc(block.shortTitle)} up">${iconSvg('arrowUp', 14)}</button>
         <button type="button" class="reorder-btn" data-action="move-block-down" data-block-id="${esc(block.id)}" ${
         idx === total - 1 ? 'disabled' : ''
-      } aria-label="Move ${esc(block.shortTitle)} down">↓</button>
+      } aria-label="Move ${esc(block.shortTitle)} down">${iconSvg('arrowDown', 14)}</button>
       </div>
     `
     : `<span class="badge ${isTemporal ? 'badge-gold' : 'badge-neutral'}">${esc(block.badgeLabel)}</span>`;
@@ -91,13 +96,13 @@ function renderSingleDashboardCard({
           ${top2
             .map(
               c => `
-            <div style="padding:8px 10px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--border-subtle)">
-              <div style="display:flex;justify-content:space-between;gap:6px;margin-bottom:3px">
+            <div class="subcard-panel">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:4px">
                 <span class="badge badge-gold">${esc(c.categoryLabel)}</span>
-                <span style="font-size:11px;color:var(--emerald)" class="mono">🧹 ${c.filteredClickbaitCount} clickbait cut</span>
+                <span class="signal-pill mono">${iconSvg('shieldCheck', 12)}<span>${c.filteredClickbaitCount} clickbait cut</span></span>
               </div>
-              <div style="font-weight:700;font-size:13.5px">${esc(c.headline)}</div>
-              <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">${esc(c.hardFacts?.[0] || '')}</div>
+              <div style="font-weight:700;font-size:13.5px;line-height:1.35">${esc(c.headline)}</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${esc(c.hardFacts?.[0] || '')}</div>
             </div>
           `
             )
@@ -138,10 +143,11 @@ function renderSingleDashboardCard({
           <div style="font-weight:800;font-size:14.5px">${esc(um.oppName)} (${esc(um.oppRecord)}) @ 49ers (${esc(um.sfRecord?.split(' ')[0] || '6-1')})</div>
           <span class="badge badge-positive mono">${esc(um.betting?.spread || 'SF -10.0')} • O/U ${esc(um.betting?.overUnder || '51.5')}</span>
         </div>
-        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">
-          📍 ${esc(um.kickoffDisplay)} • <strong>${esc(um.betting?.restAdvantage || '')}</strong>
+        <div class="inline-icon-meta" style="margin-bottom:7px">
+          ${iconSvg('stadium', 14)}
+          <span>${esc(um.kickoffDisplay)} • <strong>${esc(um.betting?.restAdvantage || '')}</strong></span>
         </div>
-        <div style="font-size:12.5px;padding:7px 9px;border-radius:8px;background:var(--bg-card-alt)">
+        <div class="subcard-panel" style="font-size:12.5px">
           <strong>Coaching Edge:</strong> ${esc(um.coachingMatchup?.headline || '')}
         </div>
       `;
@@ -156,7 +162,7 @@ function renderSingleDashboardCard({
           ${pr
             .map(
               p => `
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;padding:5px 8px;border-radius:8px;background:var(--bg-card-alt)">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;padding:6px 9px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--border-subtle)">
               <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
                 <strong>${esc(p.name)}</strong> <span style="color:var(--text-muted)">(${esc(p.position)} • ${esc(p.injuryType)})</span>
               </span>
@@ -270,7 +276,7 @@ function renderSingleDashboardCard({
         </div>
         ${
           simCapResult?.moveCount > 0
-            ? `<div style="font-size:11.5px;color:var(--gold-bright)">⚡ Armchair GM Active: ${simCapResult.moveCount} custom contract move(s) applied</div>`
+            ? `<div class="inline-icon-meta" style="color:var(--gold-bright);margin-top:4px">${iconSvg('bolt', 13)}<span>Armchair GM Active: ${simCapResult.moveCount} custom contract move(s) applied</span></div>`
             : ''
         }
       `;
@@ -290,8 +296,7 @@ function renderSingleDashboardCard({
     }
 
     case 'autopodcast_ai': {
-      const epCount =
-        (appData?.podcastIndex?.episodes?.length || 0);
+      const epCount = appData?.podcastIndex?.episodes?.length || 0;
       bodyHtml = `
         <div style="font-size:12.5px;color:var(--text-secondary)">
           <strong>${epCount} Studio Two-Host Neural Episodes Ready</strong> + On-Demand Custom Autopodcast &amp; Deep Analysis Runner shared across the friend group.
@@ -302,20 +307,30 @@ function renderSingleDashboardCard({
     }
   }
 
+  const iconName = blockIconName(block.id);
+
   return `
     <article class="card ${isTemporal ? 'temporal-highlight' : ''}"
              data-dashboard-block="${esc(block.id)}"
              ${isCustomizingLayout ? 'draggable="true"' : ''}>
       <div class="card-header">
-        <div class="card-title-group">
-          <div class="card-eyebrow">${esc(block.phase.replace('_', ' '))}</div>
-          <h2 class="card-title">${esc(block.title)}</h2>
+        <div class="card-header-left" style="cursor:pointer" ${deepDiveAttr}>
+          <div class="card-icon-badge ${isTemporal ? 'temporal' : ''}" aria-hidden="true">
+            ${iconSvg(iconName, 18)}
+          </div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">${esc(block.phase.replace('_', ' '))}</div>
+            <h2 class="card-title">${esc(block.title)}</h2>
+          </div>
         </div>
         ${reorderControlsHtml}
       </div>
       ${bodyHtml}
-      <div style="margin-top:10px;display:flex;justify-content:flex-end">
-        <button type="button" class="btn-secondary" ${deepDiveAttr}>Open ${esc(block.shortTitle)} →</button>
+      <div class="card-footer-row">
+        <button type="button" class="btn-secondary card-cta-btn" ${deepDiveAttr}>
+          <span>Open ${esc(block.shortTitle)}</span>
+          ${iconSvg('arrowRight', 14)}
+        </button>
       </div>
     </article>
   `;

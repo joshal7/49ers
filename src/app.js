@@ -15,6 +15,7 @@ import {
 } from './services/aiWorkerClient.js';
 
 import { esc, formatRelativeAge } from './views/uiHelpers.js';
+import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
 import { renderNewsViewHtml } from './views/newsView.js';
 import { renderRosterCapViewHtml } from './views/rosterCapView.js';
@@ -178,12 +179,26 @@ function renderHeaderAndPhaseBanner() {
   const bannerEl = document.getElementById('phaseBanner');
   if (bannerEl && state.seasonState) {
     const hp = state.seasonState.headlinePhase;
+    const isTrade = state.seasonState.activePhases?.includes('TRADE_WINDOW');
+    const targetSub = isTrade ? 'trade' : 'matchup';
     bannerEl.innerHTML = `
-      <div class="phase-banner-main">
-        <div class="phase-eyebrow">🏈 ${esc(hp.label)}</div>
-        <div class="phase-detail">${esc(hp.detail)}</div>
+      <div class="phase-banner-left" style="cursor:pointer" data-action="jump-season-sub" data-season-sub="${targetSub}">
+        <div class="phase-icon-badge" aria-hidden="true">
+          ${iconSvg(isTrade ? 'trade' : 'football', 16)}
+        </div>
+        <div class="phase-banner-main">
+          <div class="phase-eyebrow">${esc(hp.label)}</div>
+          <div class="phase-detail">${esc(hp.detail)}</div>
+        </div>
       </div>
-      ${hp.countdownText ? `<span class="phase-countdown mono">⏱ ${esc(hp.countdownText)}</span>` : ''}
+      ${
+        hp.countdownText
+          ? `<button type="button" class="phase-countdown mono" data-action="jump-season-sub" data-season-sub="${targetSub}">
+               ${iconSvg('clock', 12)}
+               <span>${esc(hp.countdownText)}</span>
+             </button>`
+          : ''
+      }
     `;
   }
 }
@@ -359,8 +374,10 @@ function renderMiniPlayer(audioSnapshot) {
       audioSnapshot.durationSec || audioSnapshot.episode.durationSec
     )}`;
   }
-  if (playBtn) playBtn.textContent = audioSnapshot.isPlaying ? '⏸' : '▶';
+  if (playBtn) playBtn.innerHTML = iconSvg(audioSnapshot.isPlaying ? 'pause' : 'play', 14);
   if (speedBtn) speedBtn.textContent = `${audioSnapshot.playbackRate}x`;
+  const waveEl = miniEl.querySelector('.mini-player-wave');
+  if (waveEl) waveEl.classList.toggle('playing', Boolean(audioSnapshot.isPlaying));
 
   // Update active transcript turn highlight in place if on Audio tab
   if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
@@ -811,7 +828,7 @@ function bindEvents() {
         saveUserPrefs(state.prefs);
         const shared = await fetchSharedWorkerFeed(state.prefs);
         if (shared) state.workerSharedFeed = shared;
-        btn.textContent = '✓ Saved!';
+        btn.innerHTML = `${iconSvg('check', 14)}<span>Saved!</span>`;
         setTimeout(() => {
           if (state.sheetMode === 'settings') renderSheet();
         }, 900);
