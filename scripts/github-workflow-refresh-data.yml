@@ -1,0 +1,39 @@
+name: Refresh 49ers Live Feeds & Analytics
+
+on:
+  schedule:
+    # Runs every 3 hours year-round (covers practice reports, transactions, trade deadline, draft & game-week moves)
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-feeds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run Live 49ers Data & Reporter Popularity Pipeline
+        run: |
+          node scripts/fetch-live-49ers-data.mjs
+
+      - name: Commit & Push Updated JSON Feeds
+        run: |
+          git config user.name "49ers Automation Bot"
+          git config user.email "actions@github.com"
+          git add data/*.json
+          if git diff --staged --quiet; then
+            echo "No feed changes detected."
+          else
+            git commit -m "chore(data): auto-refresh 49ers roster, cap, health, news & seasonal feeds [skip ci]"
+            git push
+          fi
