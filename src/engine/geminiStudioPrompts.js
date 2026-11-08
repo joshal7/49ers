@@ -7,7 +7,7 @@
  *
  * Core Mandates:
  * 1. Always select the highest-capability reasoning model available on the key (prioritizing Pro
- *    frontier reasoning tiers: `gemini-3.8-pro` / `gemini-3.1-pro-preview` / `gemini-3-pro-preview` /
+ *    frontier reasoning tiers: `gemini-3.8-pro` / `gemini-3.1-pro-preview` /
  *    `gemini-2.5-pro` before High-Thinking Flash fallbacks).
  * 2. Respect Gemini API `thinkingConfig` generation boundaries strictly:
  *    - Gemini 3.0+ models (`gemini-3*`, `gemini-4*`): `{ thinkingLevel: "HIGH" }`
@@ -23,11 +23,11 @@
  * Ordered default cascade prioritizing the strongest reasoning Pro models first,
  * with seamless automatic failover to High-Thinking 3.x / 2.5 Flash models if a preview
  * or Pro tier is unavailable or rate-limited on the caller's key.
+ * Note: `gemini-3-pro-preview` was retired by Google in favor of `gemini-3.1-pro-preview` and is excluded.
  */
 export const DEFAULT_BEST_REASONING_CASCADE = [
   'gemini-3.8-pro',
   'gemini-3.1-pro-preview',
-  'gemini-3-pro-preview',
   'gemini-2.5-pro',
   'gemini-3.8-flash',
   'gemini-3-flash-preview',
@@ -71,9 +71,17 @@ export function scoreBestGeminiReasoningModel(modelEntryOrId) {
   if (!id.startsWith('gemini-')) return -1;
 
   if (
-    /\b(tts|audio|imagen|image|veo|video|embedding|aqa|vision|robotics|computer-use|learnlm|gemma|lite|8b|nano|live)\b/i.test(
+    /\b(tts|audio|imagen|image|veo|video|embedding|aqa|vision|robotics|computer-use|learnlm|gemma|lite|8b|nano|live|customtools|thinking)\b/i.test(
       id
     )
+  ) {
+    return -1;
+  }
+
+  // Exclude retired preview checkpoints that Google shut down (which return HTTP 404 on generateContent)
+  if (
+    /^gemini-3-pro-preview\b/i.test(id) ||
+    /^gemini-2\.5-(?:pro|flash)-preview-\d/i.test(id)
   ) {
     return -1;
   }

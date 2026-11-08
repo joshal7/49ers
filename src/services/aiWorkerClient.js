@@ -5,7 +5,7 @@
  * 1. **Direct Browser Gemini Studio Mode (`prefs.geminiApiKey`)**:
  *    Calls `generativelanguage.googleapis.com/v1beta` directly from the browser (key stored privately
  *    in device `localStorage`, never committed to GitHub), dynamically discovering the strongest Pro
- *    reasoning model (`gemini-3.8-pro` / `gemini-3.1-pro-preview` / `gemini-3-pro-preview` / `gemini-2.5-pro`)
+ *    reasoning model (`gemini-3.8-pro` / `gemini-3.1-pro-preview` / `gemini-2.5-pro`)
  *    with generation-accurate `thinkingConfig` (`thinkingLevel: "HIGH"` on Gemini 3+ / `thinkingBudget: 32768`
  *    on Gemini 2.5 Pro), live `google_search` grounding, 3-pass Deep Research -> Synthesis -> Audit, and
  *    **Gemini Native Multi-Speaker NotebookLM TTS** (`gemini-2.5-pro-preview-tts` -> `gemini-2.5-flash-preview-tts`,
@@ -60,7 +60,22 @@ export const ANALYSIS_PIPELINE_STAGES = [
 ];
 
 const DEFAULT_GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
+const LIVE_PRODUCTION_FALLBACK_CASCADE = [
+  'gemini-3.1-pro-preview',
+  'gemini-2.5-pro',
+  'gemini-3-flash-preview',
+  'gemini-2.5-flash'
+];
 const discoveredCascadeByKey = new Map();
+const unavailableModelsByKey = new Map();
+
+function sanitizeRetiredModelId(modelId = '') {
+  const clean = String(modelId || '').replace(/^models\//i, '').trim();
+  if (/^gemini-3-pro-preview\b/i.test(clean)) {
+    return 'gemini-3.1-pro-preview';
+  }
+  return clean;
+}
 
 export function hasLiveAiConnection(prefs = {}) {
   return Boolean(
@@ -77,9 +92,10 @@ export function formatActiveModelBadge(modelId = 'gemini-3.8-pro', suffix = 'Acc
 }
 
 export function resolveActiveHighQualityModelLabel(appData = null, prefs = null) {
-  const verifiedModel = String(prefs?.verifiedGeminiModel || '').trim();
+  const verifiedModel = sanitizeRetiredModelId(prefs?.verifiedGeminiModel || '');
   const modelId =
-    verifiedModel || String(appData?.meta?.aiEngine?.activeModel || 'gemini-3.1-pro-preview').trim();
+    verifiedModel ||
+    sanitizeRetiredModelId(appData?.meta?.aiEngine?.activeModel || 'gemini-3.1-pro-preview');
   const thinkingLevel = String(appData?.meta?.aiEngine?.thinkingLevel || 'HIGH').toUpperCase();
   const verMatch = modelId.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
   const verStr = verMatch ? verMatch[1] : '3.1';
@@ -192,15 +208,22 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
   const json = await res.json();
   const models = Array.isArray(json?.models) ? json.models : [];
   const catalogIds = models.map(m => String(m?.name || '').replace(/^models\//i, '').trim()).filter(Boolean);
+  const cacheKey = `${apiBase}:${key}`;
+  const deadSet = unavailableModelsByKey.get(cacheKey) || new Set();
 
-  // Rank strictly among models actually present on this key first, then append fallback cascade
+  // Rank strictly among models actually present on this key first, then append verified active fallbacks
   const keyPresentRanked = rankBestGeminiReasoningModels(models).filter(
-    id => catalogIds.length === 0 || catalogIds.includes(id)
+    id => (catalogIds.length === 0 || catalogIds.includes(id)) && !deadSet.has(id)
   );
+  const fallbackPool =
+    catalogIds.length > 0 ? LIVE_PRODUCTION_FALLBACK_CASCADE : DEFAULT_BEST_REASONING_CASCADE;
   const fullCascade =
     keyPresentRanked.length > 0
-      ? [...keyPresentRanked, ...DEFAULT_BEST_REASONING_CASCADE.filter(m => !keyPresentRanked.includes(m))]
-      : [...DEFAULT_BEST_REASONING_CASCADE];
+      ? [
+          ...keyPresentRanked,
+          ...fallbackPool.filter(m => !keyPresentRanked.includes(m) && !deadSet.has(m))
+        ]
+      : [...DEFAULT_BEST_REASONING_CASCADE.filter(m => !deadSet.has(m))];
 
   const ttsCascade = DEFAULT_NOTEBOOKLM_TTS_CASCADE.filter(
     id => catalogIds.length === 0 || catalogIds.includes(id)
@@ -216,7 +239,7 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
     modelCount: catalogIds.length,
     checkedAtMs: Date.now()
   };
-  discoveredCascadeByKey.set(`${apiBase}:${key}`, state);
+  discoveredCascadeByKey.set(cacheKey, state);
   return state;
 }
 
@@ -276,8 +299,14 @@ async function resolveDirectGeminiCascades(prefs = {}) {
 function extractGeminiResponseText(geminiJson) {
   const parts = geminiJson?.candidates?.[0]?.content?.parts;
   if (!Array.isArray(parts) || parts.length === 0) return '';
-  return parts
+  const nonThought = parts
     .filter(p => p && !p.thought && typeof p.text === 'string')
+    .map(p => p.text)
+    .join('\n')
+    .trim();
+  if (nonThought) return nonThought;
+  return parts
+    .filter(p => p && typeof p.text === 'string')
     .map(p => p.text)
     .join('\n')
     .trim();
@@ -362,9 +391,30 @@ async function callGeminiDirectWithCascade({
 }) {
   let lastErrorText = '';
   let lastStatus = 500;
+  let hasPrimaryModelError = false;
 
-  for (let i = 0; i < cascade.length; i++) {
-    const model = cascade[i];
+  const cacheKey = `${apiBase}:${key}`;
+  let deadSet = unavailableModelsByKey.get(cacheKey);
+  if (!deadSet) {
+    deadSet = new Set(['gemini-3-pro-preview']);
+    unavailableModelsByKey.set(cacheKey, deadSet);
+  }
+
+  const sanitizedCascade = [];
+  for (const rawModel of cascade || []) {
+    const cleanModel = sanitizeRetiredModelId(rawModel);
+    if (cleanModel && !deadSet.has(cleanModel) && !sanitizedCascade.includes(cleanModel)) {
+      sanitizedCascade.push(cleanModel);
+    }
+  }
+  for (const fb of LIVE_PRODUCTION_FALLBACK_CASCADE) {
+    if (!deadSet.has(fb) && !sanitizedCascade.includes(fb)) {
+      sanitizedCascade.push(fb);
+    }
+  }
+
+  for (let i = 0; i < sanitizedCascade.length; i++) {
+    const model = sanitizedCascade[i];
     const thinkingConfig = buildGeminiThinkingConfig(model);
     const payload = {
       systemInstruction: { parts: [{ text: systemInstructionText }] },
@@ -400,18 +450,39 @@ async function callGeminiDirectWithCascade({
       });
     }
 
+    // If a checkpoint rejects explicit `thinkingConfig` with 400, retry once with native dynamic thinking
+    if (res.status === 400) {
+      let errPreview = '';
+      try {
+        errPreview = await res.clone().text();
+      } catch {}
+      if (/thinking|invalid_argument/i.test(errPreview)) {
+        const dynamicPayload = {
+          systemInstruction: { parts: [{ text: systemInstructionText }] },
+          generationConfig: { temperature },
+          contents: [{ role: 'user', parts: [{ text: userText }] }]
+        };
+        res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dynamicPayload)
+        });
+      }
+    }
+
     if (res.ok) {
       const json = await res.json();
       const text = extractGeminiResponseText(json);
       if (text) {
-        if (i > 0) {
-          discoveredCascadeByKey.set(`${apiBase}:${key}`, {
-            ok: true,
-            bestModel: model,
-            cascade: [model, ...cascade.filter(m => m !== model)],
-            ttsCascade: [...DEFAULT_NOTEBOOKLM_TTS_CASCADE]
-          });
-        }
+        const activeRemaining = sanitizedCascade.filter(m => m !== model && !deadSet.has(m));
+        const existingState = discoveredCascadeByKey.get(cacheKey);
+        discoveredCascadeByKey.set(cacheKey, {
+          ok: true,
+          bestModel: model,
+          cascade: [model, ...activeRemaining],
+          ttsCascade: existingState?.ttsCascade || [...DEFAULT_NOTEBOOKLM_TTS_CASCADE],
+          checkedAtMs: Date.now()
+        });
         return {
           text,
           modelUsed: model,
@@ -419,13 +490,33 @@ async function callGeminiDirectWithCascade({
         };
       }
     } else {
-      lastStatus = res.status;
+      let errText = '';
       try {
-        lastErrorText = await res.text();
+        errText = await res.text();
       } catch {}
+
       if (res.status === 401) {
         throw new Error('Invalid Gemini API Key. Update your key in Audio & AI or Settings.');
       }
+
+      // Permanently skip 404 or zero-quota Free Tier restricted models for the rest of this session
+      if (
+        res.status === 404 ||
+        (res.status === 403 && /free tier|not available/i.test(errText)) ||
+        (res.status === 429 && /limit:\s*0\b|free_tier/i.test(errText))
+      ) {
+        deadSet.add(model);
+      }
+
+      // Do not overwrite a real quota/parameter error (429/403/400/503) with a 404 from a fallback probe
+      if (!hasPrimaryModelError || res.status !== 404) {
+        lastStatus = res.status;
+        lastErrorText = errText;
+        if (res.status !== 404) {
+          hasPrimaryModelError = true;
+        }
+      }
+
       if (![400, 403, 404, 429, 503].includes(res.status)) {
         break;
       }
@@ -1071,6 +1162,9 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
     useGoogleSearch: true,
     temperature: 0.18
   });
+  if (prefs && typeof prefs === 'object' && stage1Res.modelUsed) {
+    prefs.verifiedGeminiModel = stage1Res.modelUsed;
+  }
 
   // STAGE 2: Deep Analytical Synthesis (~12–25s High Thinking)
   emit(
@@ -1323,6 +1417,9 @@ export async function generateOnDemandAutopodcast({
     useGoogleSearch: true,
     temperature: 0.2
   });
+  if (prefs && typeof prefs === 'object' && stage1Res.modelUsed) {
+    prefs.verifiedGeminiModel = stage1Res.modelUsed;
+  }
 
   // STAGE 2: Restructure Deep Research into Smooth NotebookLM Conversational Script (~15–25s)
   const targetWordEst = Math.round(mins * 148);

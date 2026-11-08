@@ -2783,13 +2783,22 @@ await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranki
   assert.ok(scoreBestGeminiReasoningModel('gemini-3.1-pro-preview') > scoreBestGeminiReasoningModel('gemini-2.5-pro'));
   assert.ok(scoreBestGeminiReasoningModel('gemini-2.5-pro') > scoreBestGeminiReasoningModel('gemini-3.8-flash'));
 
+  // Retired gemini-3-pro-preview & dated 2.5 preview checkpoints must be strictly excluded (-1) so they never trigger HTTP 404
+  assert.equal(scoreBestGeminiReasoningModel('gemini-3-pro-preview'), -1, 'Retired gemini-3-pro-preview must be excluded');
+  assert.equal(scoreBestGeminiReasoningModel('models/gemini-3-pro-preview'), -1, 'Retired models/gemini-3-pro-preview must be excluded');
+  assert.equal(scoreBestGeminiReasoningModel('gemini-3.1-pro-preview-customtools'), -1, 'Customtools variant must be excluded');
+  assert.equal(scoreBestGeminiReasoningModel('gemini-2.5-pro-preview-05-06'), -1, 'Retired dated 2.5 preview checkpoint must be excluded');
+  assert.equal(scoreFreeTierGeminiModel('gemini-3-pro-preview'), -1, 'Worker free-tier scorer must also exclude retired gemini-3-pro-preview');
+
   const ranked = rankBestGeminiReasoningModels([
+    { name: 'models/gemini-3-pro-preview', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-2.5-flash', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] }
   ]);
   assert.equal(ranked[0], 'gemini-3.1-pro-preview');
   assert.equal(ranked[1], 'gemini-2.5-pro');
+  assert.equal(ranked.includes('gemini-3-pro-preview'), false, 'Ranked cascade must never include retired gemini-3-pro-preview');
 
   // Gemini 3.0+ uses thinkingLevel: 'HIGH' (never thinkingBudget); Gemini 2.5 uses thinkingBudget
   const cfg38 = buildGeminiThinkingConfig('gemini-3.8-pro');
@@ -3046,6 +3055,13 @@ await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and 
     const label = resolveActiveHighQualityModelLabel(null, userPrefs);
     assert.equal(label.shortModelName, 'Gemini 3.5 Pro High');
     assert.equal(label.modelId, 'gemini-3.5-pro');
+
+    // Verify stale retired gemini-3-pro-preview in localStorage prefs is automatically migrated to gemini-3.1-pro-preview
+    const migratedLabel = resolveActiveHighQualityModelLabel(null, {
+      verifiedGeminiModel: 'gemini-3-pro-preview'
+    });
+    assert.equal(migratedLabel.modelId, 'gemini-3.1-pro-preview');
+    assert.equal(migratedLabel.shortModelName, 'Gemini 3.1 Pro High');
 
     // Run a second time with no new models: should NOT trigger callback
     let reTriggered = false;

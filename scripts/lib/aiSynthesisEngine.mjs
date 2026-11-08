@@ -53,9 +53,16 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
 
   // Exclude non-text, audio-only, image/video, embedding, or ultra-small lite/8b models
   if (
-    /\b(tts|audio|imagen|image|veo|video|embedding|aqa|vision|robotics|computer-use|learnlm|gemma|lite|8b|nano)\b/i.test(
+    /\b(tts|audio|imagen|image|veo|video|embedding|aqa|vision|robotics|computer-use|learnlm|gemma|lite|8b|nano|customtools|thinking)\b/i.test(
       id
     )
+  ) {
+    return -1;
+  }
+
+  if (
+    /^gemini-3-pro-preview\b/i.test(id) ||
+    /^gemini-2\.5-(?:pro|flash)-preview-\d/i.test(id)
   ) {
     return -1;
   }
