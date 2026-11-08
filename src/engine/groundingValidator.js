@@ -108,9 +108,44 @@ export function validateNoHallucinatedRosterClaims(text = '', rosterPlayers = []
   };
 }
 
+const FORMER_49ER_POSITION_GROUP = {
+  'Jimmy Garoppolo': 'QB',
+  'Trey Lance': 'QB',
+  'Sam Darnold': 'QB',
+  'Joshua Dobbs': 'QB',
+  'Brandon Allen': 'QB',
+  'Jordan Mason': 'RB',
+  'Elijah Mitchell': 'RB',
+  'Jerick McKinnon': 'RB',
+  'Tyrion Davis-Price': 'RB',
+  'Ray-Ray McCloud': 'WR',
+  'Danny Gray': 'WR',
+  'Willie Snead': 'WR',
+  'Ronnie Bell': 'WR',
+  'Charlie Woerner': 'TE',
+  'Cameron Latu': 'TE',
+  'Ross Dwelley': 'TE',
+  'Aaron Banks': 'OL',
+  'Jaylon Moore': 'OL',
+  'Jon Feliciano': 'OL',
+  "De'Vondre Campbell": 'LB',
+  'Oren Burks': 'LB',
+  'Azeez Al-Shaair': 'LB',
+  'Demetrius Flannigan-Fowles': 'LB',
+  'Charvarius Ward': 'DB',
+  'Talanoa Hufanga': 'DB',
+  'Tashaun Gipson': 'DB',
+  'Isaiah Oliver': 'DB',
+  'Ambry Thomas': 'DB',
+  'Isaac Yiadom': 'DB',
+  "Rock Ya-Sin": 'DB',
+  'Jake Moody': 'ST',
+  'Mitch Wishnowsky': 'ST'
+};
+
 /**
  * Replaces any accidental stale/retired player reference in generated text with
- * verified active 2026 49ers rotational players from `rosterPlayers`.
+ * verified active 49ers players at the matching position group from `rosterPlayers`.
  */
 export function sanitizeHallucinatedRosterText(text = '', rosterPlayers = []) {
   let out = String(text || '');
@@ -119,15 +154,29 @@ export function sanitizeHallucinatedRosterText(text = '', rosterPlayers = []) {
   const check = validateNoHallucinatedRosterClaims(out, rosterPlayers);
   if (check.valid) return out;
 
-  const activeEdges = (rosterPlayers || [])
-    .filter(p => p.rosterBucket === 'active' && ['DE', 'EDGE', 'OLB'].includes(p.position) && !/bosa/i.test(p.name))
+  const active = (rosterPlayers || []).filter(p => p.rosterBucket === 'active');
+  const activeEdges = active
+    .filter(p => ['DE', 'EDGE', 'OLB'].includes(p.position) && !/bosa/i.test(p.name))
     .map(p => p.name);
   const fallbackEdge = activeEdges[0] || 'Mykel Williams';
 
+  const pickActiveByGroup = grp => {
+    if (grp === 'QB') return active.find(p => p.position === 'QB')?.name || 'Brock Purdy';
+    if (grp === 'RB') return active.find(p => p.position === 'RB')?.name || 'Christian McCaffrey';
+    if (grp === 'WR') return active.find(p => p.position === 'WR')?.name || 'Jauan Jennings';
+    if (grp === 'TE') return active.find(p => p.position === 'TE')?.name || 'George Kittle';
+    if (grp === 'OL') return active.find(p => ['OT', 'T', 'G', 'C', 'OL', 'OG'].includes(p.position))?.name || 'Dominick Puni';
+    if (grp === 'LB') return active.find(p => ['LB', 'ILB', 'MLB'].includes(p.position))?.name || 'Fred Warner';
+    if (grp === 'DB') return active.find(p => ['CB', 'S', 'DB', 'FS', 'SS'].includes(p.position))?.name || 'Deommodore Lenoir';
+    if (grp === 'ST') return active.find(p => ['K', 'P', 'LS'].includes(p.position))?.name || fallbackEdge;
+    return fallbackEdge;
+  };
+
   for (const badName of check.violations) {
+    const replacement = pickActiveByGroup(FORMER_49ER_POSITION_GROUP[badName] || 'EDGE');
     const escaped = badName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/['’]/g, "['’]?");
     const re = new RegExp(`\\b${escaped}\\b`, 'gi');
-    out = out.replace(re, fallbackEdge);
+    out = out.replace(re, replacement);
   }
   return out;
 }
@@ -168,8 +217,11 @@ export function buildLiveGroundingSystemPrompt(appData = null) {
  */
 export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
   const meta = appData?.meta || {};
-  const cap26 = appData?.cap?.years?.['2026'] || {};
-  const cap27 = appData?.cap?.years?.['2027'] || {};
+  const seasonYr = String(meta.seasonYear || 2026);
+  const nextYr = String(Number(seasonYr) + 1);
+  const cap26 = appData?.cap?.years?.[seasonYr] || appData?.cap?.years?.['2026'] || {};
+  const cap27 = appData?.cap?.years?.[nextYr] || appData?.cap?.years?.['2027'] || {};
+  const curDeadMoney = Number(cap26.deadMoneyTotal ?? cap26.deadMoney ?? 0);
   const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
   const rosterPlayers = appData?.roster?.players || [];
   const depthUnits = appData?.depthChart?.units || [];
@@ -289,11 +341,11 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
     `SEASON & RECORD: ${meta.seasonYear || 2026} NFL Season • Week ${meta.currentWeek || 9} • 49ers Record: ${meta.teamRecord || '6-1'} (${meta.standingSummary || 'NFC West'}, Point Diff: ${meta.pointDifferential || ''})`,
     `CALIBRATED 10,000-RUN PLAYOFF SIMULATION (EMPIRICAL-BAYES + EPA + SOS + NFL SEC. 16 TIEBREAKERS): SF Projected Wins: ${sfOdds.projectedWins ?? 12.0} | Playoff Berth: ${sfOdds.makePlayoffsPct ?? 93.0}% | Win NFC West: ${sfOdds.winDivisionPct ?? 82.6}% | #1 Seed First-Round Bye: ${sfOdds.seed1ByePct ?? 34.5}%${topNfcContenders ? `\n  NFC Race Context: ${topNfcContenders}` : ''}`,
     `UPCOMING MATCHUP: Week ${matchup.week || meta.currentWeek || 9} ${matchup.homeAway === 'away' ? '@' : 'vs.'} ${matchup.oppName || ''} (${matchup.oppRecord || ''}) | Kickoff: ${matchup.kickoffDisplay || ''} | Venue: ${matchup.venue || ''} | Spread: ${matchup.betting?.spread || ''} | Total: ${matchup.betting?.overUnder || ''}`,
-    `SALARY CAP & MULTI-YEAR HORIZON (OVERTHECAP LIVE): 2026 Gross Cap Space: $${(cap26.teamCapSpace || 0).toLocaleString()} | 2026 Effective Space: $${(cap26.effectiveCapSpace || 0).toLocaleString()} | 2026 Dead Money: $${(cap26.deadMoney || 0).toLocaleString()} | 2027 Projected Cap Space: $${(cap27.teamCapSpace || 0).toLocaleString()} (Article 13 rollover of 2026 surplus is required to offset 2027 deficit)`,
+    `SALARY CAP & MULTI-YEAR HORIZON (OVERTHECAP LIVE): ${seasonYr} Gross Cap Space: $${(cap26.teamCapSpace || 0).toLocaleString()} | ${seasonYr} Effective Space: $${(cap26.effectiveCapSpace || 0).toLocaleString()} | ${seasonYr} Dead Money: $${curDeadMoney.toLocaleString()} | ${nextYr} Projected Cap Space: $${(cap27.teamCapSpace || 0).toLocaleString()} (Article 13 rollover of ${seasonYr} surplus is required to offset ${nextYr} deficit)`,
     pickLines
-      ? `2027 DRAFT PICK INVENTORY (${pickInventory.length} PICKS TOTAL): ${pickLines}${tradedPicksNote ? `\n  Traded Away Note: ${tradedPicksNote}` : ''}`
+      ? `${nextYr} DRAFT PICK INVENTORY (${pickInventory.length} PICKS TOTAL): ${pickLines}${tradedPicksNote ? `\n  Traded Away Note: ${tradedPicksNote}` : ''}`
       : '',
-    tradeLines ? `VERIFIED 2026 TRADES & ACQUISITIONS:\n${tradeLines}` : '',
+    tradeLines ? `VERIFIED ${seasonYr} TRADES & ACQUISITIONS:\n${tradeLines}` : '',
     needLines ? `TRADE WINDOW RANKED POSITIONAL NEEDS:\n${needLines}` : '',
     targetLines ? `TRADE WINDOW VERIFIED TARGET CANDIDATES:\n${targetLines}` : '',
     pitfallLines ? `TRADE WINDOW PITFALLS & TRAPS TO AVOID:\n${pitfallLines}` : '',

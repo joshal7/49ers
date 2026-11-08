@@ -152,6 +152,7 @@ export function runPlayoffMonteCarlo(config = {}) {
   const {
     nfcTeams = [],
     afcPowerRatings = {},
+    afcRatings = {},
     afcStandings = {},
     completedGames = [],
     remainingGames = [],
@@ -159,6 +160,8 @@ export function runPlayoffMonteCarlo(config = {}) {
     iterations = 10000,
     seed = 492026
   } = config;
+  const resolvedAfcPowerRatings =
+    Object.keys(afcPowerRatings).length > 0 ? afcPowerRatings : afcRatings || {};
 
   if (!Array.isArray(nfcTeams) || nfcTeams.length === 0) {
     return { iterations: 0, sfOdds: null, allTeamOdds: [] };
@@ -223,7 +226,7 @@ export function runPlayoffMonteCarlo(config = {}) {
   for (const [abbr, idx] of abbrToIdx.entries()) {
     if (idx < nTeams) continue;
     const afcRec = afcStandings[abbr] || null;
-    elo[idx] = afcPowerRatings[abbr] || 1500;
+    elo[idx] = resolvedAfcPowerRatings[abbr] || 1500;
     if (afcRec) {
       baseW[idx] = afcRec.wins || 0;
       baseL[idx] = afcRec.losses || 0;
@@ -295,7 +298,7 @@ export function runPlayoffMonteCarlo(config = {}) {
     posteriorEloStd[i] = 42 / Math.sqrt(1 + gp / 7);
   }
 
-  // Pre-compile remaining games involving at least one valid team, sorted chronologically by week
+  // Pre-compile all remaining NFL games (including AFC-vs-AFC so full-season SOV/SOS tiebreakers reflect 17 games)
   const sortedRemGames = [...remainingGames].sort((a, b) => Number(a.week || 0) - Number(b.week || 0));
   const compiledGames = [];
   for (const g of sortedRemGames) {
@@ -304,7 +307,6 @@ export function runPlayoffMonteCarlo(config = {}) {
     const hi = abbrToIdx.get(hAbbr);
     const ai = abbrToIdx.get(aAbbr);
     if (hi === undefined || ai === undefined) continue;
-    if (hi >= nTeams && ai >= nTeams) continue;
 
     const bothNfc = hi < nTeams && ai < nTeams;
     const sameDiv = bothNfc && divIndexOf[hi] === divIndexOf[ai];
@@ -663,14 +665,18 @@ export function runPlayoffMonteCarlo(config = {}) {
       const pHomeRaw = 1 / (1 + Math.exp(-eloDiff * LN10_DIV_400));
       const expectedMargin = eloDiff / ELO_PER_SPREAD_POINT;
 
+      // Draw PRNG variates unconditionally per game (Common Random Numbers) so forcing a game winner
+      // never shifts or desynchronizes the random stream for subsequent games or iterations.
+      const uOutcome = rand();
+      const uMargin = rand();
+
       let outcome; // 1 = HOME, 2 = AWAY, 3 = TIE
       if (g.forcedCode !== 0) {
         outcome = g.forcedCode;
       } else {
         const pTie = 0.0036 * 4 * pHomeRaw * (1 - pHomeRaw);
         const pHomeWin = pHomeRaw * (1 - pTie);
-        const u = rand();
-        outcome = u < pHomeWin ? 1 : u < pHomeWin + pTie ? 3 : 2;
+        outcome = uOutcome < pHomeWin ? 1 : uOutcome < pHomeWin + pTie ? 3 : 2;
       }
 
       // Dynamic weekly Elo update (captures hot/cold streaks & injury shocks across remaining weeks)
@@ -682,7 +688,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       if (outcome === 1) {
         w[hi]++;
         l[ai]++;
-        const margin = Math.max(1, Math.round(Math.abs(expectedMargin) + rand() * 9));
+        const margin = Math.max(1, Math.round(Math.abs(expectedMargin) + uMargin * 9));
         if (hi < nTeams) {
           pd[hi] += margin;
           h2hGames[hi * STRIDE + ai]++;
@@ -704,7 +710,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       } else if (outcome === 2) {
         w[ai]++;
         l[hi]++;
-        const margin = Math.max(1, Math.round(Math.abs(-expectedMargin) + rand() * 9));
+        const margin = Math.max(1, Math.round(Math.abs(-expectedMargin) + uMargin * 9));
         if (ai < nTeams) {
           pd[ai] += margin;
           h2hGames[ai * STRIDE + hi]++;

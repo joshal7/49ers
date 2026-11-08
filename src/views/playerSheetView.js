@@ -428,8 +428,9 @@ function renderContractTab(p, txScenario) {
     </div>`;
   }
 
-  const yr2026 = p.contractsByYear['2026'] || yrs[0];
-  const tx = yr2026.transactions?.[txScenario] || { deadMoney: 0, capSavings: 0 };
+  const activeContractYr = p.contractsByYear['2026'] || yrs[0];
+  const activeYrLabel = activeContractYr?.year || 2026;
+  const tx = activeContractYr.transactions?.[txScenario] || { deadMoney: 0, capSavings: 0 };
 
   const txButtons = [
     ['cut', 'Pre-6/1 Cut'],
@@ -483,7 +484,7 @@ function renderContractTab(p, txScenario) {
     </div>
 
     <div>
-      <div class="sub-label" style="margin-bottom:6px">2026 ${jargonTerm('Dead Cap', 'dead_cap')} &amp; Cap Savings Scenario Explorer</div>
+      <div class="sub-label" style="margin-bottom:6px">${activeYrLabel} ${jargonTerm('Dead Cap', 'dead_cap')} &amp; Cap Savings Scenario Explorer</div>
       <div class="pill-bar" style="margin-bottom:8px">${txButtons}</div>
       <div class="kpi-grid kpi-grid-2">
         <div class="kpi-box">
@@ -491,7 +492,7 @@ function renderContractTab(p, txScenario) {
           <div class="kpi-val mono" style="color:var(--crimson)">${formatDollars(tx.deadMoney)}</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">2026 Net Cap Savings</div>
+          <div class="kpi-label">${activeYrLabel} Net Cap Savings</div>
           <div class="kpi-val mono" style="color:${tx.capSavings >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
             ${formatDollars(tx.capSavings, true)}
           </div>

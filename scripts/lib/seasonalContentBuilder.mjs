@@ -128,7 +128,7 @@ const INSIDER_MIRROR_PREFIXES = [
   { re: /^(?:tom\s+)?pelissero\s*:\s*/i, reporterId: 'tom_pelissero', reporterName: 'Tom Pelissero', authorHandle: '@TomPelissero', outletId: 'nfl_network', outletName: 'NFL Network' },
   { re: /^(?:mike\s+)?garafolo\s*:\s*/i, reporterId: 'mike_garafolo', reporterName: 'Mike Garafolo', authorHandle: '@MikeGarafolo', outletId: 'nfl_network', outletName: 'NFL Network' },
   { re: /^(?:dianna\s+)?russini\s*:\s*/i, reporterId: 'dianna_russini', reporterName: 'Dianna Russini', authorHandle: '@DMRussini', outletId: 'athletic', outletName: 'The Athletic' },
-  { re: /^(?:albert\s+)?breer\s*:\s*/i, reporterId: 'albert_breer', reporterName: 'Albert Breer', authorHandle: '@AlbertBreer', outletId: 'si', outletName: 'Sports Illustrated' },
+  { re: /^(?:albert\s+)?breer\s*:\s*/i, reporterId: 'albert_breer', reporterName: 'Albert Breer', authorHandle: '@AlbertBreer', outletId: 'nfl_network', outletName: 'Sports Illustrated / MMQB' },
   { re: /^(?:matt\s+)?maiocco\s*:\s*/i, reporterId: 'matt_maiocco', reporterName: 'Matt Maiocco', authorHandle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area' },
   { re: /^(?:nick\s+)?wagoner\s*:\s*/i, reporterId: 'nick_wagoner', reporterName: 'Nick Wagoner', authorHandle: '@nwagoner', outletId: 'espn', outletName: 'ESPN 49ers Beat' }
 ];
@@ -736,8 +736,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     return isoMinsAgo(fallbackMinsAgo);
   }
 
-  // Automatic Dynamic Cluster Synthesis for Future Weeks (Week 10+, Playoffs, Offseason)
-  if (currentWeek !== 9) {
+  // Automatic Dynamic Cluster Synthesis for Future Weeks / Future Seasons (Week 10+, Playoffs, Offseason, 2027+)
+  const is2026Week9Raiders =
+    Number(liveCtx.seasonYear || 2026) === 2026 &&
+    currentWeek === 9 &&
+    (!um.oppAbbr || um.oppAbbr === 'LV');
+  if (!is2026Week9Raiders) {
     const leadArticles = rawItems.filter(it => it.type === 'article' || it.type === 'tweet');
     const matchupLinks = matchSourceLinks([oppShort.toLowerCase(), `week ${currentWeek}`, 'shanahan', 'purdy'], [
       {

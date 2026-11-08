@@ -9,8 +9,8 @@
     "refresh-data": "node scripts/fetch-live-49ers-data.mjs",
     "update-reporters": "node scripts/update-reporter-registry.mjs",
     "build-podcasts": "node scripts/build-podcasts.mjs",
-    "test:unit": "node tests/unit-engines-qa.mjs",
+    "test:unit": "node tests/unit-engines-qa.mjs && node tests/holistic-qa-regressions.mjs",
     "test:e2e": "node tests/e2e-mobile-qa.mjs",
-    "test": "node tests/unit-engines-qa.mjs && node tests/e2e-mobile-qa.mjs"
+    "test": "node tests/unit-engines-qa.mjs && node tests/holistic-qa-regressions.mjs && node tests/e2e-mobile-qa.mjs"
   }
 }

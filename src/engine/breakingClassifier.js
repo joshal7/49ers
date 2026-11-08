@@ -76,7 +76,7 @@ export function sortNewsWithBreakingPriority(items = [], nowMs = Date.now(), { a
         isBreaking: cls.isBreaking,
         isInGameInjury: cls.isInGameInjury,
         breakingPriority: cls.ageHours <= activeWindowHours ? cls.breakingPriority : 0,
-        breakingBadge: cls.ageHours <= activeWindowHours ? cls.breakingBadge : cls.isBreaking ? cls.breakingBadge : null
+        breakingBadge: cls.ageHours <= activeWindowHours ? cls.breakingBadge : null
       };
     })
     .sort((a, b) => {

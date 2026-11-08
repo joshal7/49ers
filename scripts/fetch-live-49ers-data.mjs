@@ -55,7 +55,10 @@ import {
   NFC_DIVISIONS
 } from '../src/engine/playoffMonteCarlo.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
-import { DEFAULT_NFL_CALENDAR_2026 } from '../src/engine/seasonStateMachine.js';
+import {
+  DEFAULT_NFL_CALENDAR_2026,
+  buildNflCalendarForSeasonYear
+} from '../src/engine/seasonStateMachine.js';
 import {
   classifyBreakingItem,
   sortNewsWithBreakingPriority,
@@ -894,6 +897,7 @@ async function main() {
         snapPct: primarySnapPct,
         gameStatus: effectiveGameStatusForModel,
         rosterBucket: bucket,
+        isIrReturnQuestionable,
         isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
         injuryType,
         wed,
@@ -1525,7 +1529,7 @@ async function main() {
       url: link,
       outletId: '49ers_official',
       outletName: '49ers.com Official',
-      reporterId: authInfo.reporterId || 'briana_jeannel',
+      reporterId: authInfo.reporterId || 'brianna_jeannel',
       reporterName: authInfo.authorName,
       author: authInfo.authorName,
       isBreaking: brk.isBreaking,
@@ -2353,10 +2357,12 @@ async function main() {
       .map(g => Number(g.week))
   );
   let oppByeWeek = 10;
-  for (let w = 5; w <= 14; w++) {
-    if (!oppPlayedWeeks.has(w)) {
-      oppByeWeek = w;
-      break;
+  if (oppPlayedWeeks.size >= 15) {
+    for (let w = 4; w <= 14; w++) {
+      if (!oppPlayedWeeks.has(w)) {
+        oppByeWeek = w;
+        break;
+      }
     }
   }
 
@@ -2547,6 +2553,7 @@ async function main() {
           snapPct,
           gameStatus: effectiveOppStatus,
           rosterBucket: isIrGroup ? 'ir' : 'active',
+          isIrReturnQuestionable,
           injuryType: specificInjuryType,
           wed,
           thu,
@@ -2898,8 +2905,10 @@ async function main() {
     .slice(0, 3)
     .map(p => `${p.name} (${p.position} — ${p.injuryType}): ${p.playBadgeLabel} [${p.wed}/${p.thu}/${p.fri}].`);
 
+  const activeSeasonCalendar = buildNflCalendarForSeasonYear(seasonYear);
   const nextCapYrKey = String(Number(capPrimaryYrKey) + 1);
   const clusteredBriefs = await buildClusteredNewsBriefs(liveYtClips, rawNewsStream, rosterPlayers, {
+    seasonYear,
     currentWeek,
     teamRecord: sfStandingsDetail.record,
     standingSummary: sfStandingsDetail.standingSummary,
@@ -2908,7 +2917,7 @@ async function main() {
     capSpaceGross: otcParsed.years[capPrimaryYrKey]?.teamCapSpace || 35_164_858,
     capSpaceEffective: otcParsed.years[capPrimaryYrKey]?.effectiveCapSpace || 28_664_858,
     capSpace2027: otcParsed.years[nextCapYrKey]?.teamCapSpace ?? -31_540_066,
-    tradeDeadlineIso: DEFAULT_NFL_CALENDAR_2026.tradeDeadlineIso,
+    tradeDeadlineIso: activeSeasonCalendar.tradeDeadline,
     practiceSummaryBullets
   });
 
@@ -3081,8 +3090,9 @@ async function main() {
     };
   });
 
-  // Calibrated AFC power ratings (Empirical-Bayes + EPA + SOS)
+  // Calibrated AFC power ratings & standings (Empirical-Bayes + EPA + SOS)
   const afcRatings = {};
+  const afcStandings = {};
   for (const entry of afcConf?.standings?.entries || []) {
     const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
     const getStat = name => entry.stats?.find(s => s.name === name);
@@ -3090,6 +3100,7 @@ async function main() {
     const losses = Number(getStat('losses')?.value || 0);
     const ties = Number(getStat('ties')?.value || 0);
     const pointDiff = Number(getStat('pointDifferential')?.value || 0);
+    afcStandings[abbr] = { wins, losses, ties, pointDiff };
     afcRatings[abbr] = computeCalibratedTeamPowerRating({
       wins,
       losses,
@@ -3102,7 +3113,9 @@ async function main() {
 
   const baselineMonteCarlo = runPlayoffMonteCarlo({
     nfcTeams: nfcTeamsBaseline,
+    afcPowerRatings: afcRatings,
     afcRatings,
+    afcStandings,
     completedGames: completed2026Games,
     remainingGames: remaining2026Games,
     iterations: 10000,
@@ -3118,7 +3131,9 @@ async function main() {
   const rootingLeverage = computeRootingGuideLeverage(
     {
       nfcTeams: nfcTeamsBaseline,
+      afcPowerRatings: afcRatings,
       afcRatings,
+      afcStandings,
       completedGames: completed2026Games,
       remainingGames: remaining2026Games
     },
@@ -3271,7 +3286,7 @@ async function main() {
     standingSummary: sfStandingsDetail.standingSummary,
     pointDifferential: sfStandingsDetail.pointDifferentialDisplay,
     byeWeek: detectedByeWeek,
-    calendar: DEFAULT_NFL_CALENDAR_2026,
+    calendar: activeSeasonCalendar,
     teamStatus: {
       currentWeek,
       mathematicallyEliminated: isMathematicallyEliminated,
@@ -3380,7 +3395,9 @@ async function main() {
       ],
       simulatorInputs: {
         nfcTeams: nfcTeamsBaseline,
+        afcPowerRatings: afcRatings,
         afcRatings,
+        afcStandings,
         completedGames: completed2026Games,
         remainingGames: remaining2026Games
       }

@@ -448,6 +448,10 @@ function renderSingleDashboardCard({
 
     case 'trade_deadline': {
       const tw = appData?.seasonal?.tradeWarRoom || {};
+      const curSeasonYr = Number(appData?.meta?.seasonYear) || 2026;
+      const nextSeasonYr = curSeasonYr + 1;
+      const nextShortYr = `'${String(nextSeasonYr).slice(-2)}`;
+      const deadlineLabel = tw.deadlineShortDisplay || (curSeasonYr === 2026 ? 'Tue Nov 10 • 1PM PT' : 'Tue Post-Wk 9 • 1PM PT');
       const { recentTrades } = partitionCompletedTradesByWindow(
         tw.completed2026Moves || [],
         appData?.meta?.updatedAt || Date.now(),
@@ -459,11 +463,11 @@ function renderSingleDashboardCard({
         <div class="kpi-grid kpi-grid-2">
           <div class="kpi-box">
             <div class="kpi-label">NFL Deadline</div>
-            <div class="kpi-val" style="font-size:13px">Tue Nov 10 • 1PM PT</div>
+            <div class="kpi-val" style="font-size:13px">${esc(deadlineLabel)}</div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">2026 Cap / 2027 Horizon</div>
-            <div class="kpi-val mono" style="font-size:12.5px">${formatCompactDollars(tw.availableGrossCap)}${tw.projected2027CapSpace != null ? ` <span style="color:var(--crimson)">(${formatCompactDollars(tw.projected2027CapSpace, true)} '27)</span>` : ''}</div>
+            <div class="kpi-label">${curSeasonYr} Cap / ${nextSeasonYr} Horizon</div>
+            <div class="kpi-val mono" style="font-size:12.5px">${formatCompactDollars(tw.availableGrossCap)}${tw.projected2027CapSpace != null ? ` <span style="color:var(--crimson)">(${formatCompactDollars(tw.projected2027CapSpace, true)} ${nextShortYr})</span>` : ''}</div>
           </div>
         </div>
         ${
@@ -615,10 +619,12 @@ function renderSingleDashboardCard({
 
     case 'salary_cap': {
       const sum = simCapResult?.summary || {};
-      const y26 = appData?.cap?.years?.['2026'] || {};
-      const ceiling = Math.max(1, Number(y26.capCeiling || 304000000));
-      const openSpace = Math.max(0, Number(sum.updatedCapSpace ?? y26.teamCapSpace ?? 0));
-      const deadCap = Math.max(0, Number(y26.deadMoneyTotal || 0) + Number(sum.baseYearDeadMoneyAdded || 0));
+      const baseYr = String(simCapResult?.baseYear || appData?.meta?.seasonYear || '2026');
+      const nextYr = String(Number(baseYr) + 1);
+      const yCur = appData?.cap?.years?.[baseYr] || appData?.cap?.years?.['2026'] || {};
+      const ceiling = Math.max(1, Number(yCur.capCeiling || 304000000));
+      const openSpace = Math.max(0, Number(sum.updatedCapSpace ?? yCur.teamCapSpace ?? 0));
+      const deadCap = Math.max(0, Number(yCur.deadMoneyTotal || 0) + Number(sum.baseYearDeadMoneyAdded || 0));
       const activeUsed = Math.max(0, ceiling - openSpace - deadCap);
       const activePct = Math.min(100, (activeUsed / ceiling) * 100);
       const deadPct = Math.min(100 - activePct, (deadCap / ceiling) * 100);
@@ -629,20 +635,20 @@ function renderSingleDashboardCard({
       bodyHtml = `
         <div class="kpi-grid">
           <div class="kpi-box">
-            <div class="kpi-label">2026 Gross Space</div>
-            <div class="kpi-val mono" style="color:${(sum.updatedCapSpace ?? 0) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(sum.updatedCapSpace ?? y26.teamCapSpace)}</div>
+            <div class="kpi-label">${esc(baseYr)} Gross Space</div>
+            <div class="kpi-val mono" style="color:${(sum.updatedCapSpace ?? yCur.teamCapSpace ?? 0) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(sum.updatedCapSpace ?? yCur.teamCapSpace)}</div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">2026 ${jargonTerm('Dead Cap', 'dead_cap')}</div>
+            <div class="kpi-label">${esc(baseYr)} ${jargonTerm('Dead Cap', 'dead_cap')}</div>
             <div class="kpi-val mono" style="color:var(--amber)">${formatCompactDollars(deadCap)}</div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">2027 Projected</div>
+            <div class="kpi-label">${esc(nextYr)} Projected</div>
             <div class="kpi-val mono" style="color:${(sum.updatedNextYearCapSpace ?? 0) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(sum.updatedNextYearCapSpace)}</div>
           </div>
         </div>
         <div class="cap-alloc-wrap">
-          <div class="cap-alloc-bar" aria-label="2026 Salary Cap Allocation">
+          <div class="cap-alloc-bar" aria-label="${esc(baseYr)} Salary Cap Allocation">
             <span class="cap-seg-active" style="width:${activePct.toFixed(1)}%"></span>
             <span class="cap-seg-dead" style="width:${deadPct.toFixed(1)}%"></span>
             <span class="cap-seg-space" style="width:${spacePct.toFixed(1)}%"></span>

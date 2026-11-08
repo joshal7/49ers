@@ -9,7 +9,8 @@ import {
 } from '../engine/injuryProbabilityModel.js';
 import {
   runPlayoffMonteCarlo,
-  computeCalibratedTeamPowerRating
+  computeCalibratedTeamPowerRating,
+  computeRootingGuideLeverage
 } from '../engine/playoffMonteCarlo.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -377,7 +378,7 @@ function parseInsiderAttributionClient(rawText = '', defaultAcct = {}) {
     pelissero: { reporterId: 'tom_pelissero', reporterName: 'Tom Pelissero', authorHandle: '@TomPelissero', outletId: 'nfl_network', outletName: 'NFL Network' },
     garafolo: { reporterId: 'mike_garafolo', reporterName: 'Mike Garafolo', authorHandle: '@MikeGarafolo', outletId: 'nfl_network', outletName: 'NFL Network' },
     russini: { reporterId: 'dianna_russini', reporterName: 'Dianna Russini', authorHandle: '@DMRussini', outletId: 'athletic', outletName: 'The Athletic' },
-    breer: { reporterId: 'albert_breer', reporterName: 'Albert Breer', authorHandle: '@AlbertBreer', outletId: 'si_mmqb', outletName: 'Sports Illustrated' },
+    breer: { reporterId: 'albert_breer', reporterName: 'Albert Breer', authorHandle: '@AlbertBreer', outletId: 'nfl_network', outletName: 'Sports Illustrated / MMQB' },
     maiocco: { reporterId: 'matt_maiocco', reporterName: 'Matt Maiocco', authorHandle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area' },
     barrows: { reporterId: 'matt_barrows', reporterName: 'Matt Barrows', authorHandle: '@mattbarrows', outletId: 'athletic', outletName: 'The Athletic' }
   };
@@ -402,10 +403,15 @@ function matchPlayersClient(text = '', rosterPlayers = [], max = 12) {
     const fullLower = p.name.toLowerCase();
     const strippedLower = fullLower.replace(/\s+(sr\.?|jr\.?|ii|iii|iv)$/i, '').trim();
     if (hay.includes(fullLower) || (strippedLower.length >= 6 && hay.includes(strippedLower))) {
+      const cleanParts = p.name
+        .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
+        .trim()
+        .split(/\s+/);
+      const surname = cleanParts[cleanParts.length - 1] || p.name;
       hits.push({
         id: p.id,
         name: p.name,
-        shortName: `${p.name[0]}. ${p.name.split(/\s+/).slice(-1)[0]}`,
+        shortName: p.shortName || `${p.name[0]}. ${surname}`,
         position: p.position,
         jersey: p.jersey,
         headshotUrl: p.headshotUrl || ''
@@ -671,10 +677,19 @@ export async function hydrateLiveEspnOverlay(appData) {
         return { w: parts[0] || 0, l: parts[1] || 0, t: parts[2] || 0 };
       };
 
-      const nfcInputs = appData.seasonal?.playoffPicture?.simulatorInputs?.nfcTeams || [];
+      const simInputsRef = appData.seasonal?.playoffPicture?.simulatorInputs;
+      const nfcInputs = simInputsRef?.nfcTeams || [];
       for (const nt of nfcInputs) {
-        const liveT = teamRecords.get(normalizeTeamAbbrClient(nt.abbr));
+        const normAbbr = normalizeTeamAbbrClient(nt.abbr);
+        const liveT = teamRecords.get(normAbbr);
         if (liveT) {
+          if (
+            Number(nt.wins || 0) !== liveT.wins ||
+            Number(nt.losses || 0) !== liveT.losses ||
+            Number(nt.ties || 0) !== liveT.ties
+          ) {
+            standingsOrScoresChanged = true;
+          }
           nt.wins = liveT.wins;
           nt.losses = liveT.losses;
           nt.ties = liveT.ties;
@@ -698,6 +713,38 @@ export async function hydrateLiveEspnOverlay(appData) {
             pointDiff: liveT.pd,
             netEpaPerGame: nt.netEpaPerGame ?? null,
             sosSpreadAdj: nt.sosSpreadAdj ?? 0
+          });
+        }
+      }
+
+      if (simInputsRef) {
+        const nfcAbbrSet = new Set(nfcInputs.map(t => normalizeTeamAbbrClient(t.abbr)));
+        if (!simInputsRef.afcStandings || typeof simInputsRef.afcStandings !== 'object') {
+          simInputsRef.afcStandings = {};
+        }
+        if (!simInputsRef.afcRatings || typeof simInputsRef.afcRatings !== 'object') {
+          simInputsRef.afcRatings = {};
+        }
+        for (const [abbr, liveT] of teamRecords.entries()) {
+          if (nfcAbbrSet.has(abbr)) continue;
+          const prevAfc = simInputsRef.afcStandings[abbr];
+          if (
+            prevAfc &&
+            (prevAfc.wins !== liveT.wins || prevAfc.losses !== liveT.losses || prevAfc.ties !== liveT.ties)
+          ) {
+            standingsOrScoresChanged = true;
+          }
+          simInputsRef.afcStandings[abbr] = {
+            wins: liveT.wins,
+            losses: liveT.losses,
+            ties: liveT.ties,
+            pointDiff: liveT.pd
+          };
+          simInputsRef.afcRatings[abbr] = computeCalibratedTeamPowerRating({
+            wins: liveT.wins,
+            losses: liveT.losses,
+            ties: liveT.ties,
+            pointDiff: liveT.pd
           });
         }
       }
@@ -809,6 +856,7 @@ export async function hydrateLiveEspnOverlay(appData) {
   if (standingsOrScoresChanged && appData.seasonal?.playoffPicture?.simulatorInputs) {
     try {
       const simIn = appData.seasonal.playoffPicture.simulatorInputs;
+      let prunedRemainingCount = 0;
       // Ensure newly completed SF schedule games are moved out of remainingGames so SF never exceeds 17 games
       const completedSfWeeks = new Set(
         (appData.scheduleMatchup?.schedule || []).filter(g => g.completed).map(g => Number(g.week))
@@ -818,6 +866,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           rg => (rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week))
         );
         if (newlyDone.length > 0) {
+          prunedRemainingCount += newlyDone.length;
           simIn.remainingGames = simIn.remainingGames.filter(
             rg => !((rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week)))
           );
@@ -834,16 +883,78 @@ export async function hydrateLiveEspnOverlay(appData) {
           }
         }
       }
+
+      // Also prune newly completed non-SF NFL games when live standings advance so no rival team simulates 18 games
+      if (Array.isArray(simIn.remainingGames) && simIn.remainingGames.length > 0) {
+        const playedCountByAbbr = new Map();
+        for (const nt of simIn.nfcTeams || []) {
+          const ab = normalizeTeamAbbrClient(nt.abbr);
+          playedCountByAbbr.set(ab, (Number(nt.wins) || 0) + (Number(nt.losses) || 0) + (Number(nt.ties) || 0));
+        }
+        for (const [ab, st] of Object.entries(simIn.afcStandings || {})) {
+          playedCountByAbbr.set(
+            normalizeTeamAbbrClient(ab),
+            (Number(st.wins) || 0) + (Number(st.losses) || 0) + (Number(st.ties) || 0)
+          );
+        }
+        const remCountByAbbr = new Map();
+        for (const rg of simIn.remainingGames) {
+          const h = normalizeTeamAbbrClient(rg.home);
+          const a = normalizeTeamAbbrClient(rg.away);
+          remCountByAbbr.set(h, (remCountByAbbr.get(h) || 0) + 1);
+          remCountByAbbr.set(a, (remCountByAbbr.get(a) || 0) + 1);
+        }
+        const excessByAbbr = new Map();
+        for (const [ab, played] of playedCountByAbbr.entries()) {
+          const excess = played + (remCountByAbbr.get(ab) || 0) - 17;
+          if (excess > 0) excessByAbbr.set(ab, excess);
+        }
+        if (excessByAbbr.size > 0) {
+          const sortedRem = [...simIn.remainingGames].sort((a, b) => Number(a.week || 0) - Number(b.week || 0));
+          const kept = [];
+          for (const rg of sortedRem) {
+            const h = normalizeTeamAbbrClient(rg.home);
+            const a = normalizeTeamAbbrClient(rg.away);
+            const exH = excessByAbbr.get(h) || 0;
+            const exA = excessByAbbr.get(a) || 0;
+            const bothExceeded = exH > 0 && exA > 0;
+            const singleMockExceeded =
+              (exH > 0 && !playedCountByAbbr.has(a)) || (exA > 0 && !playedCountByAbbr.has(h));
+            if (bothExceeded || singleMockExceeded) {
+              if (exH > 0) excessByAbbr.set(h, exH - 1);
+              if (exA > 0) excessByAbbr.set(a, exA - 1);
+              prunedRemainingCount++;
+            } else {
+              kept.push(rg);
+            }
+          }
+          simIn.remainingGames = kept;
+        }
+      }
+
       const freshMc = runPlayoffMonteCarlo({ ...simIn, iterations: 10000, seed: 492026 });
       if (freshMc?.sfOdds) {
         appData.seasonal.playoffPicture.baselineSimulation = freshMc;
         if (Array.isArray(appData.seasonal.playoffPicture.seedPathCards)) {
           const sf = freshMc.sfOdds;
           for (const card of appData.seasonal.playoffPicture.seedPathCards) {
-            if (/bye|#1\s*seed/i.test(card.target)) card.probabilityPct = sf.seed1ByePct;
-            else if (/division|nfc\s*west/i.test(card.target)) card.probabilityPct = sf.winDivisionPct;
-            else if (/wild\s*card/i.test(card.target)) card.probabilityPct = sf.wildCardPct;
+            if (/bye|#1\s*seed/i.test(card.target)) {
+              card.currentProbPct = sf.seed1ByePct;
+            } else if (/division|nfc\s*west/i.test(card.target)) {
+              card.currentProbPct = sf.winDivisionPct;
+            } else if (/playoff\s*berth|make\s*playoffs|seeds\s*#1/i.test(card.target)) {
+              card.currentProbPct = sf.makePlayoffsPct;
+            } else if (/wild\s*card/i.test(card.target)) {
+              card.currentProbPct = sf.wildCardPct;
+            }
           }
+        }
+        if (prunedRemainingCount > 0 && Array.isArray(appData.seasonal.playoffPicture.rootingLeverage)) {
+          appData.seasonal.playoffPicture.rootingLeverage = computeRootingGuideLeverage(simIn, 12).map(g => ({
+            ...g,
+            awayLogoUrl: g.awayLogoUrl || buildEspnTeamLogoUrl(g.away),
+            homeLogoUrl: g.homeLogoUrl || buildEspnTeamLogoUrl(g.home)
+          }));
         }
       }
     } catch {
@@ -1095,10 +1206,14 @@ export async function hydrateLiveEspnOverlay(appData) {
       let imgUrl = art.images?.[0]?.url || '';
       if (imgUrl.startsWith('http://')) imgUrl = `https://${imgUrl.slice(7)}`;
       const bylineClean = art.byline
-        ? cleanSensationalistText(String(art.byline).replace(/^By\s+/i, ''))
-        : /wagoner/i.test(summary)
-          ? 'Nick Wagoner'
-          : 'Nick Wagoner';
+        ? cleanSensationalistText(String(art.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim())
+        : 'Nick Wagoner';
+      const bylineLower = bylineClean.toLowerCase();
+      const matchedRep = (appData.reporters?.reporters || []).find(
+        r => r.name && r.name.toLowerCase() === bylineLower
+      );
+      const resolvedReporterId =
+        matchedRep?.id || (/schefter/i.test(bylineClean) ? 'adam_schefter' : 'nick_wagoner');
       const pubIso = art.published || new Date().toISOString();
       const brk = classifyBreakingItem({ title, summary, publishedAt: pubIso });
       const mentioned = matchPlayersClient(`${title} ${summary}`, rosterPlayers, 12);
@@ -1114,9 +1229,9 @@ export async function hydrateLiveEspnOverlay(appData) {
         mentionedPlayers: mentioned,
         publishedAt: pubIso,
         url,
-        outletId: 'espn',
+        outletId: matchedRep?.outletId || 'espn',
         outletName: 'ESPN',
-        reporterId: 'nick_wagoner',
+        reporterId: resolvedReporterId,
         reporterName: bylineClean,
         author: bylineClean,
         isBreaking: brk.isBreaking,

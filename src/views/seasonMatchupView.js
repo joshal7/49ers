@@ -806,7 +806,7 @@ function renderTradeWindow(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">9/18ths Pro-Rated Base Salary &amp; ${jargonTerm('Rich Hill', 'rich_hill')} Pick Costs</div>
+      <div class="card-eyebrow">${Math.max(1, Math.min(18, 18 - (Number(appData?.meta?.currentWeek) || 9)))}/18ths Pro-Rated Base Salary &amp; ${jargonTerm('Rich Hill', 'rich_hill')} Pick Costs</div>
       <h3 class="card-title" style="margin-bottom:8px">Seller-Team Target Fit Matrix</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(tw.realisticTargets || [])
@@ -1061,13 +1061,14 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
 
 function renderFullSchedule(appData) {
   const sched = appData?.scheduleMatchup?.schedule || [];
+  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
   return `
     <section class="card">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('calendar', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">2026 Regular Season • International, Surface &amp; Rest Differential</div>
+            <div class="card-eyebrow">${seasonYr} Regular Season • International, Surface &amp; Rest Differential</div>
             <h2 class="card-title">49ers Schedule &amp; Venue Tracker</h2>
           </div>
         </div>
@@ -1102,7 +1103,7 @@ function renderFullSchedule(appData) {
                     ${restBadge}
                     ${
                       g.completed
-                        ? `<span class="badge ${g.result === 'W' ? 'badge-positive' : 'badge-danger'} mono">${g.result} ${g.sfScore}-${g.oppScore}</span>`
+                        ? `<span class="badge ${g.result === 'W' ? 'badge-positive' : g.result === 'T' ? 'badge-warning' : 'badge-danger'} mono">${g.result} ${g.sfScore}-${g.oppScore}</span>`
                         : `<span class="badge badge-neutral mono">${esc(g.statusDetail)}</span>`
                     }
                     ${
@@ -1133,6 +1134,7 @@ function renderFullSchedule(appData) {
 
 function renderDraftPrepAndCombine(appData, combineSearch) {
   const dp = appData?.seasonal?.draftPrep2027 || {};
+  const nextDraftYr = Number(dp.draftYear) || (Number(appData?.meta?.seasonYear) || 2026) + 1;
   const q = String(combineSearch || '').toLowerCase().trim();
   const filteredCombine = (dp.combineLeaderboard || []).filter(
     c => !q || c.name.toLowerCase().includes(q) || c.pos.toLowerCase().includes(q) || c.school.toLowerCase().includes(q)
@@ -1145,7 +1147,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('compass', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">2-Year Cap &amp; Roster Horizon</div>
-            <h2 class="card-title">2027 NFL Draft &amp; Pick Inventory</h2>
+            <h2 class="card-title">${nextDraftYr} NFL Draft &amp; Pick Inventory</h2>
           </div>
         </div>
         <div class="source-link-strip">

@@ -125,7 +125,7 @@ export const DEFAULT_NFL_CALENDAR_2026 = {
   tradeWindowStart: '2026-10-01T00:00:00-07:00',
   // First Tuesday after Week 9 (Week 9 Sunday is Nov 8, 2026 -> Tuesday Nov 10, 2026 at 1:00 PM PT / 4:00 PM ET)
   tradeDeadline: '2026-11-10T13:00:00-08:00',
-  // 5 weeks before end of regular season (Weeks 14, 15, 16, 17, 18 -> starts Tuesday Dec 8, 2026)
+  // 5 weeks before end of regular season (Weeks 14, 15, 17, 18 -> starts Tuesday Dec 8, 2026)
   playoffPushStart: '2026-12-08T00:00:00-08:00',
   regularSeasonEnd: '2027-01-11T06:00:00-08:00',
   superBowlEnd: '2027-02-15T00:00:00-08:00',
@@ -136,6 +136,68 @@ export const DEFAULT_NFL_CALENDAR_2026 = {
   prevDraftStart: '2026-04-23T17:00:00-07:00',
   prevPostUdfaEnd: '2026-05-17T23:59:59-07:00'
 };
+
+function formatUtcYmd(ms) {
+  const d = new Date(ms);
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function resolveLastThursdayOfAprilUtcMs(year) {
+  const apr30 = Date.UTC(year, 3, 30, 12, 0, 0);
+  const dow = new Date(apr30).getUTCDay(); // 0=Sun..4=Thu..6=Sat
+  const daysBackToThu = (dow - 4 + 7) % 7;
+  return apr30 - daysBackToThu * 86_400_000;
+}
+
+/**
+ * Deterministically builds an NFL League Year calendar for any season year (2026–2035+).
+ * Preserves the exact curated `DEFAULT_NFL_CALENDAR_2026` anchors for 2026 while supporting
+ * automatic multi-year rollovers without manual code changes.
+ */
+export function buildNflCalendarForSeasonYear(seasonYear = 2026) {
+  const yr = Number(seasonYear) || 2026;
+  if (yr === 2026) {
+    return { ...DEFAULT_NFL_CALENDAR_2026 };
+  }
+
+  // Labor Day = First Monday of September -> Kickoff Thursday (+3d), Week 1 Sunday (+6d)
+  const sep1 = Date.UTC(yr, 8, 1, 12, 0, 0);
+  const sep1Dow = new Date(sep1).getUTCDay();
+  const daysToMon = (1 - sep1Dow + 7) % 7;
+  const laborDayMs = sep1 + daysToMon * 86_400_000;
+  const kickoffThuMs = laborDayMs + 3 * 86_400_000;
+  const week1SunMs = laborDayMs + 6 * 86_400_000;
+
+  // First Tuesday after Week 9 Sunday (1:00 PM PT / 4:00 PM ET)
+  const tradeDeadlineTueMs = week1SunMs + (8 * 7 + 2) * 86_400_000;
+  // Tuesday entering Week 14 (5 weeks remaining: Weeks 14..18)
+  const playoffPushTueMs = week1SunMs + (12 * 7 + 2) * 86_400_000;
+  // Monday after Week 18 Sunday
+  const regEndMonMs = week1SunMs + (17 * 7 + 1) * 86_400_000;
+  // Monday after Super Bowl Sunday (5 weeks after Week 18 finale)
+  const superBowlEndMonMs = week1SunMs + (22 * 7 + 1) * 86_400_000;
+
+  const nextDraftThuMs = resolveLastThursdayOfAprilUtcMs(yr + 1);
+  const prevDraftThuMs = resolveLastThursdayOfAprilUtcMs(yr);
+
+  return {
+    seasonYear: yr,
+    kickoffStart: `${formatUtcYmd(kickoffThuMs)}T00:00:00-07:00`,
+    tradeWindowStart: `${yr}-10-01T00:00:00-07:00`,
+    tradeDeadline: `${formatUtcYmd(tradeDeadlineTueMs)}T13:00:00-08:00`,
+    playoffPushStart: `${formatUtcYmd(playoffPushTueMs)}T00:00:00-08:00`,
+    regularSeasonEnd: `${formatUtcYmd(regEndMonMs)}T06:00:00-08:00`,
+    superBowlEnd: `${formatUtcYmd(superBowlEndMonMs)}T00:00:00-08:00`,
+    draftDay1Start: `${formatUtcYmd(nextDraftThuMs)}T17:00:00-07:00`,
+    draftEnd: `${formatUtcYmd(nextDraftThuMs + 2 * 86_400_000)}T21:00:00-07:00`,
+    postUdfaEnd: `${formatUtcYmd(nextDraftThuMs + 24 * 86_400_000)}T23:59:59-07:00`,
+    prevDraftStart: `${formatUtcYmd(prevDraftThuMs)}T17:00:00-07:00`,
+    prevPostUdfaEnd: `${formatUtcYmd(prevDraftThuMs + 24 * 86_400_000)}T23:59:59-07:00`
+  };
+}
 
 /**
  * Evaluate active phases and dashboard blocks for any timestamp and 49ers team status.
@@ -151,7 +213,14 @@ export function evaluateSeasonState(options = {}) {
     throw new Error(`Invalid date passed to evaluateSeasonState: ${options.now}`);
   }
 
-  const cal = { ...DEFAULT_NFL_CALENDAR_2026, ...(options.calendar || {}) };
+  let baseCal = DEFAULT_NFL_CALENDAR_2026;
+  const endOf2026CycleMs = new Date(DEFAULT_NFL_CALENDAR_2026.postUdfaEnd).getTime();
+  if (!options.calendar && nowMs > endOf2026CycleMs) {
+    const inferredSeasonYr =
+      nowDate.getUTCMonth() >= 5 ? nowDate.getUTCFullYear() : nowDate.getUTCFullYear() - 1;
+    baseCal = buildNflCalendarForSeasonYear(inferredSeasonYr);
+  }
+  const cal = { ...baseCal, ...(options.calendar || {}) };
   const status = options.teamStatus || {};
 
   const tKickoff = new Date(cal.kickoffStart).getTime();
@@ -193,7 +262,11 @@ export function evaluateSeasonState(options = {}) {
   }
 
   // 4. DRAFT_PREP: From the moment 49ers are eliminated from post-season (or post-Super Bowl) until Draft starts
-  const draftPrepStart = eliminatedMs ? Math.max(eliminatedMs, tRegEnd) : tSbEnd;
+  const draftPrepStart = eliminatedMs
+    ? Math.max(eliminatedMs, tRegEnd)
+    : status.mathematicallyEliminated
+      ? tRegEnd
+      : tSbEnd;
   const inPre2026Draft = nowMs < tPrevDraftStart;
   if ((nowMs >= draftPrepStart && nowMs < tDraftStart) || inPre2026Draft) {
     activePhases.add('DRAFT_PREP');
@@ -242,7 +315,7 @@ export function evaluateSeasonState(options = {}) {
     headlinePhase = {
       code: 'TRADE_WINDOW',
       label: 'Active NFL Trade Window',
-      detail: 'Week ' + (weekNum || 9) + ' matchup + Trade Deadline targets, cap math & beat reports',
+      detail: `${weekNum > 0 ? `Week ${weekNum} matchup + ` : ''}Trade Deadline targets, cap math & beat reports`,
       countdownText: formatRemainingTime(nowMs, tTradeDeadline, 'Trade Deadline')
     };
   } else if (activePhases.has('PLAYOFF_PUSH')) {
@@ -255,7 +328,7 @@ export function evaluateSeasonState(options = {}) {
   } else if (activePhases.has('IN_SEASON')) {
     headlinePhase = {
       code: 'IN_SEASON',
-      label: nowMs >= tRegEnd ? 'NFL Postseason' : `In-Season • Week ${weekNum || ''}`.trim(),
+      label: nowMs >= tRegEnd ? 'NFL Postseason' : weekNum > 0 ? `In-Season • Week ${weekNum}` : 'In-Season',
       detail: 'Matchup trench mismatches, coaching H2H tendencies & player availability',
       countdownText: null
     };
@@ -340,13 +413,17 @@ export function partitionCompletedTradesByWindow(moves = [], referenceTime = und
   for (const m of Array.isArray(moves) ? moves : []) {
     if (!m) continue;
     const rawIso = m.tradeDateIso || m.acquiredDateIso || m.dateIso || null;
-    let tradeMs = rawIso ? Date.parse(rawIso) : NaN;
+    const normalizedIso =
+      typeof rawIso === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(rawIso.trim())
+        ? `${rawIso.trim()}T12:00:00Z`
+        : rawIso;
+    let tradeMs = normalizedIso ? Date.parse(normalizedIso) : NaN;
     if (!Number.isFinite(tradeMs) && typeof m.compensation === 'string') {
       const dateMatch = m.compensation.match(
         /\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2},\s*\d{4})/i
       );
       if (dateMatch) {
-        tradeMs = Date.parse(dateMatch[1]);
+        tradeMs = Date.parse(`${dateMatch[1]} 12:00:00 UTC`);
       }
     }
 

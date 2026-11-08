@@ -446,21 +446,7 @@ export function computePlayerPlayProbability(input = {}) {
 
   const factors = [];
 
-  // 1. Check IR / Reserve Return Window Activation (e.g., 21-day practice window opened + officially Questionable)
-  const isIrReturnQuestionable =
-    (rosterBucket === 'ir' ||
-      rosterBucket === 'injuredreserveorout' ||
-      statusRaw === 'ir' ||
-      statusRaw === 'injured reserve') &&
-    (beatNote.includes('listed as questionable') ||
-      beatNote.includes('questionable for sunday') ||
-      beatNote.includes('questionable ahead of') ||
-      beatNote.includes('likely will be activated') ||
-      beatNote.includes('expected to be activated')) &&
-    !beatNote.includes('ruled out') &&
-    !beatNote.includes('will miss');
-
-  // 2. Hard Roster / Official Ruling Exclusions
+  // 1. Hard Roster / Official Ruling Flags & IR Return Window Activation
   const isSeasonEndingFlag =
     Boolean(input.isSeasonEnding) ||
     statusRaw.includes('season-ending') ||
@@ -472,6 +458,30 @@ export function computePlayerPlayProbability(input = {}) {
     beatNote.includes('looking to get reinstated') ||
     statusRaw.includes('left squad') ||
     statusRaw.includes('reinstatement');
+
+  const isIrBucketOrStatus =
+    rosterBucket === 'ir' ||
+    rosterBucket === 'injuredreserveorout' ||
+    statusRaw === 'ir' ||
+    statusRaw === 'injured reserve';
+
+  const beatNoteSignalsQuestionableActivation =
+    beatNote.includes('listed as questionable') ||
+    beatNote.includes('questionable for sunday') ||
+    beatNote.includes('questionable ahead of') ||
+    beatNote.includes('likely will be activated') ||
+    beatNote.includes('expected to be activated');
+
+  // 21-day practice window opened + officially Questionable (via explicit caller flag, official Questionable tag, or beat note)
+  const isIrReturnQuestionable =
+    !isSeasonEndingFlag &&
+    !isReinstatementFlag &&
+    !beatNote.includes('ruled out') &&
+    !beatNote.includes('will miss') &&
+    statusRaw !== 'out' &&
+    statusRaw !== 'doubtful' &&
+    (Boolean(input.isIrReturnQuestionable) ||
+      (isIrBucketOrStatus && (statusRaw === 'questionable' || beatNoteSignalsQuestionableActivation)));
 
   if (
     !isIrReturnQuestionable &&
@@ -634,7 +644,7 @@ export function computePlayerPlayProbability(input = {}) {
       } else if (wed === 'DNP' && thu === 'DNP') {
         prob = prior.isVeteranRestHabitual ? 0.62 : 0.30;
         factors.push('Consecutive Wed/Thu DNPs');
-      } else if (statusRaw === 'questionable') {
+      } else if (statusRaw === 'questionable' || isIrReturnQuestionable) {
         prob = prior.questionablePlayRate;
         factors.push(
           `Questionable tag adjusted by player career prior (${Math.round(prior.questionablePlayRate * 100)}%)`
@@ -794,14 +804,15 @@ function buildNormalizedNflWeekTimeline(scheduleEvents = []) {
   }
   if (byWeek.size === 0) return [];
 
-  // Fill in missing regular-season weeks (such as the club's Bye week) at +7d cadence
-  for (let w = 1; w <= 18; w++) {
-    if (!byWeek.has(w)) {
-      if (byWeek.has(w - 1)) {
-        byWeek.set(w, byWeek.get(w - 1) + 7 * 86_400_000);
-      } else if (byWeek.has(w + 1)) {
-        byWeek.set(w, byWeek.get(w + 1) - 7 * 86_400_000);
-      }
+  // Propagate forward and backward at +7d/-7d cadence so single Bye weeks and multi-week gaps are both filled
+  for (let w = 2; w <= 18; w++) {
+    if (!byWeek.has(w) && byWeek.has(w - 1)) {
+      byWeek.set(w, byWeek.get(w - 1) + 7 * 86_400_000);
+    }
+  }
+  for (let w = 17; w >= 1; w--) {
+    if (!byWeek.has(w) && byWeek.has(w + 1)) {
+      byWeek.set(w, byWeek.get(w + 1) - 7 * 86_400_000);
     }
   }
 
