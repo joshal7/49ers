@@ -6,6 +6,10 @@ import { esc, renderMarkdownSafe, formatRelativeAge } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import {
+  estimateGenerationWait,
+  resolveActiveHighQualityModelLabel
+} from '../services/aiWorkerClient.js';
 
 const SEVEN_DAYS_MS = 7 * 86_400_000;
 
@@ -124,8 +128,47 @@ function renderSourceChips(items = []) {
   return rendered ? `<div class="source-link-strip">${rendered}</div>` : '';
 }
 
+function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = true }) {
+  const pct = Math.max(12, Math.min(98, Number(jobStatus?.percent || 24)));
+  const estText = jobStatus?.estLabel || waitEst.estLabel;
+  const modelBadge = jobStatus?.modelLabel || modelInfo.displayLabel;
+  const elapsedSec = jobStatus?.startedAtMs
+    ? Math.max(0, Math.floor((Date.now() - jobStatus.startedAtMs) / 1000))
+    : 0;
+  const elapsedLabel = `Elapsed ${formatTimeMmSs(elapsedSec)}`;
+  const heading = isPodcast
+    ? 'Synthesizing Studio Podcast…'
+    : 'Running Unhurried High-Thinking Analysis…';
+
+  return `
+    <div class="job-progress-box" data-job-progress="active" role="status" aria-live="polite" style="margin-bottom:10px">
+      <div class="job-progress-head">
+        <div class="job-progress-lead">
+          <span class="job-spinner-ring" aria-hidden="true"></span>
+          ${
+            isPodcast
+              ? `<span class="job-wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>`
+              : ''
+          }
+          <span style="font-weight:800;color:var(--gold-bright);min-width:0">${esc(heading)}</span>
+        </div>
+        <span class="badge badge-gold mono">${esc(modelBadge)}</span>
+      </div>
+      <div class="job-progress-step">${esc(jobStatus?.message || 'Verifying live 2026 49ers snapshot…')}</div>
+      <div class="job-progress-track" aria-hidden="true">
+        <div class="job-progress-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="job-eta-strip">
+        <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Est. wait:</strong> ${esc(estText)} • Accuracy prioritized over speed</span></span>
+        <span class="mono" id="jobElapsedClock" style="color:var(--gold-bright);font-weight:700">${esc(elapsedLabel)}</span>
+      </div>
+    </div>
+  `;
+}
+
 export function renderAudioAiViewHtml({
   appData = null,
+  userPrefs = {},
   studioSub = 'podcast', // 'podcast' | 'beat_podcasts' | 'analysis'
   beatPodViewMode = 'date', // 'date' | 'show'
   beatPodShowFilter = 'all',
@@ -178,6 +221,7 @@ export function renderAudioAiViewHtml({
       modeSwitcher +
       renderPodcastStudio({
         appData,
+        userPrefs,
         podDurationMin,
         podFormat,
         podTopicDraft,
@@ -192,6 +236,7 @@ export function renderAudioAiViewHtml({
     modeSwitcher +
     renderDeepAnalysisRunner({
       appData,
+      userPrefs,
       analysisPromptDraft,
       jobStatus,
       allAnalyses
@@ -393,6 +438,7 @@ function renderBeatPodcastsDirectory({
 
 function renderPodcastStudio({
   appData,
+  userPrefs = {},
   podDurationMin,
   podFormat,
   podTopicDraft,
@@ -401,6 +447,14 @@ function renderPodcastStudio({
   audioState
 }) {
   const activeEp = audioState?.episode || null;
+  const modelInfo = resolveActiveHighQualityModelLabel(appData);
+  const waitEst = estimateGenerationWait({
+    kind: 'podcast',
+    durationMinutes: podDurationMin,
+    prefs: userPrefs
+  });
+  const isPodBusy = Boolean(jobStatus?.active && (!jobStatus.kind || jobStatus.kind === 'podcast'));
+  const podError = !jobStatus?.active && (!jobStatus?.kind || jobStatus?.kind === 'podcast') ? jobStatus?.error : '';
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const wkLabel = um.week ? `Week ${um.week}` : `Week ${appData?.meta?.currentWeek || ''}`.trim();
   const oppShort = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || 'Matchup';
@@ -452,7 +506,7 @@ function renderPodcastStudio({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Live-Data Grounded • Multi-Speaker Neural Synthesis</div>
+            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Multi-Speaker Studio TTS</div>
             <h2 class="card-title">Generate Custom Autopodcast</h2>
           </div>
         </div>
@@ -514,16 +568,22 @@ function renderPodcastStudio({
              value="${esc(podTopicDraft)}" aria-label="Podcast Topic" />
 
       ${
-        jobStatus?.active
-          ? `<div class="job-progress-box" style="margin-bottom:10px">${iconSvg('clock', 14)}<span>${esc(jobStatus.message)}</span></div>`
-          : jobStatus?.error
-            ? `<div class="alert-banner-danger" style="margin-bottom:10px">${iconSvg('alert', 14)}<span>${esc(jobStatus.error)}</span></div>`
-            : ''
+        isPodBusy
+          ? renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast: true })
+          : `<div class="est-wait-hint" data-est-wait-preview="podcast">
+               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Rough time (${podDurationMin}m pod):</strong> ${esc(waitEst.estLabel)}</span></span>
+               <span class="mono" style="color:var(--gold-bright);font-weight:700">${esc(modelInfo.modelId)} • HIGH</span>
+             </div>`
+      }
+      ${
+        podError
+          ? `<div class="alert-banner-danger" style="margin-bottom:10px">${iconSvg('alert', 14)}<span>${esc(podError)}</span></div>`
+          : ''
       }
 
-      <button type="button" class="btn-primary" style="width:100%" data-action="generate-autopodcast" ${jobStatus?.active ? 'disabled' : ''}>
-        ${iconSvg('mic', 15)}
-        <span>Generate ${podDurationMin}-Min Audio Briefing</span>
+      <button type="button" class="btn-primary" style="width:100%" data-action="generate-autopodcast" ${isPodBusy ? 'disabled' : ''}>
+        ${isPodBusy ? iconSvg('loader', 15, 'btn-spin-icon') : iconSvg('mic', 15)}
+        <span>${isPodBusy ? `Generating ${podDurationMin}-Min Podcast (${waitEst.estLabel})…` : `Generate ${podDurationMin}-Min Audio Briefing`}</span>
       </button>
     </section>
 
@@ -580,7 +640,12 @@ function renderPodcastStudio({
   `;
 }
 
-function renderDeepAnalysisRunner({ appData, analysisPromptDraft, jobStatus, allAnalyses }) {
+function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft, jobStatus, allAnalyses }) {
+  const modelInfo = resolveActiveHighQualityModelLabel(appData);
+  const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs });
+  const isAnalysisBusy = Boolean(jobStatus?.active && (!jobStatus.kind || jobStatus.kind === 'analysis'));
+  const analysisError =
+    !jobStatus?.active && (!jobStatus?.kind || jobStatus?.kind === 'analysis') ? jobStatus?.error : '';
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const wkLabel = um.week ? `Week ${um.week}` : 'upcoming';
   const oppLabel = um.oppName || 'opponent';
@@ -597,13 +662,13 @@ function renderDeepAnalysisRunner({ appData, analysisPromptDraft, jobStatus, all
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Live Roster &amp; Injury Grounded • Play-by-Play EPA • Cap</div>
+            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Live EPA &amp; Cap Grounded</div>
             <h2 class="card-title">AI Scouting &amp; Cap Analysis</h2>
           </div>
         </div>
       </div>
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
-        Strictly grounded in live ${esc(appData?.meta?.teamRecord || '2026')} standings, current active 53-man roster, up-to-the-minute injury designations, and OverTheCap ledgers.
+        Unhurried High-Thinking synthesis prioritizing 100% accuracy over speed—grounded in live ${esc(appData?.meta?.teamRecord || '2026')} standings, active 53-man roster, injury designations, and OverTheCap ledgers.
       </div>
 
       <div class="pill-bar" style="margin-bottom:8px">
@@ -624,16 +689,22 @@ function renderDeepAnalysisRunner({ appData, analysisPromptDraft, jobStatus, all
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
-        jobStatus?.active
-          ? `<div class="job-progress-box" style="margin-bottom:10px">${iconSvg('clock', 14)}<span>${esc(jobStatus.message)}</span></div>`
-          : jobStatus?.error
-            ? `<div class="alert-banner-danger" style="margin-bottom:10px">${iconSvg('alert', 14)}<span>${esc(jobStatus.error)}</span></div>`
-            : ''
+        isAnalysisBusy
+          ? renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast: false })
+          : `<div class="est-wait-hint" data-est-wait-preview="analysis">
+               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Rough time:</strong> ${esc(waitEst.estLabel)}</span></span>
+               <span class="mono" style="color:var(--gold-bright);font-weight:700">${esc(modelInfo.modelId)} • HIGH</span>
+             </div>`
+      }
+      ${
+        analysisError
+          ? `<div class="alert-banner-danger" style="margin-bottom:10px">${iconSvg('alert', 14)}<span>${esc(analysisError)}</span></div>`
+          : ''
       }
 
-      <button type="button" class="btn-primary" style="width:100%" data-action="run-deep-analysis" ${jobStatus?.active ? 'disabled' : ''}>
-        ${iconSvg('sparkles', 15)}
-        <span>Run Deep Analysis</span>
+      <button type="button" class="btn-primary" style="width:100%" data-action="run-deep-analysis" ${isAnalysisBusy ? 'disabled' : ''}>
+        ${isAnalysisBusy ? iconSvg('loader', 15, 'btn-spin-icon') : iconSvg('sparkles', 15)}
+        <span>${isAnalysisBusy ? `Running High-Thinking Analysis (${waitEst.estLabel})…` : 'Run Deep Analysis'}</span>
       </button>
     </section>
 

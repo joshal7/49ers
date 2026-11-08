@@ -76,9 +76,9 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
   const isPro = /\bpro\b/.test(id);
   if (!isFlash && !isPro) return -1;
 
-  // Google AI Studio Free Tier prioritizes the Flash family (3.x/4.x Flash on High Thinking);
-  // Pro models are restricted/rate-limited on unbilled Free Tier keys.
-  const freeTierBonus = isFlash ? 260 : 80;
+  // Google AI Studio Free Tier prioritizes 3.x/4.x High-Thinking models; if a 3.8+ Pro
+  // tier is exposed on the key's catalog, rank it at the top with automatic failover to Flash High.
+  const freeTierBonus = isFlash ? 260 : versionNum >= 3.8 ? 275 : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
   const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;

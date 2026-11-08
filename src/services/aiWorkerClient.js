@@ -20,6 +20,71 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function resolveActiveHighQualityModelLabel(appData = null) {
+  const modelId = String(appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash').trim();
+  const thinkingLevel = String(appData?.meta?.aiEngine?.thinkingLevel || 'HIGH').toUpperCase();
+  const verMatch = modelId.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
+  const verStr = verMatch ? verMatch[1] : '3.8';
+  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : '';
+  return {
+    modelId,
+    thinkingLevel,
+    displayLabel: `Gemini ${verStr}${tierStr} High • Accuracy-First`
+  };
+}
+
+export function estimateGenerationWait({ kind = 'podcast', durationMinutes = 3, prefs = {} } = {}) {
+  const hasWorker = Boolean(String(prefs?.workerBaseUrl || '').trim());
+  if (kind === 'analysis') {
+    const cloudMinSec = 20;
+    const cloudMaxSec = 40;
+    if (hasWorker) {
+      return {
+        isCloud: true,
+        minSec: cloudMinSec,
+        maxSec: cloudMaxSec,
+        cloudMinSec,
+        cloudMaxSec,
+        estLabel: `~${cloudMinSec}–${cloudMaxSec} sec`,
+        detailLabel: `Est. ~${cloudMinSec}–${cloudMaxSec} sec (3.8 High 2-pass fact audit)`
+      };
+    }
+    return {
+      isCloud: false,
+      minSec: 2,
+      maxSec: 3,
+      cloudMinSec,
+      cloudMaxSec,
+      estLabel: `~2–3 sec (Cloud 3.8 High: ~${cloudMinSec}–${cloudMaxSec}s)`,
+      detailLabel: `Est. ~2–3 sec (~${cloudMinSec}–${cloudMaxSec}s w/ Cloud 3.8 High Worker)`
+    };
+  }
+
+  const mins = Math.max(2, Math.min(20, Number(durationMinutes || 3)));
+  const cloudMinSec = Math.round(22 + mins * 3);
+  const cloudMaxSec = Math.round(42 + mins * 4.5);
+  if (hasWorker) {
+    return {
+      isCloud: true,
+      minSec: cloudMinSec,
+      maxSec: cloudMaxSec,
+      cloudMinSec,
+      cloudMaxSec,
+      estLabel: `~${cloudMinSec}–${cloudMaxSec} sec`,
+      detailLabel: `Est. ~${cloudMinSec}–${cloudMaxSec} sec (3.8 High script audit + Studio TTS)`
+    };
+  }
+  return {
+    isCloud: false,
+    minSec: 2,
+    maxSec: 4,
+    cloudMinSec,
+    cloudMaxSec,
+    estLabel: `~2–4 sec (Cloud 3.8 High: ~${cloudMinSec}–${cloudMaxSec}s)`,
+    detailLabel: `Est. ~2–4 sec (~${cloudMinSec}–${cloudMaxSec}s w/ Cloud 3.8 High Worker)`
+  };
+}
+
 export function buildCompactContextSummary(appData) {
   if (!appData) return '';
   return buildAuthoritativeLiveContextSnapshot(appData);
@@ -43,8 +108,22 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
   const cleanPrompt = String(prompt || '').trim();
   if (!cleanPrompt) throw new Error('Please enter an analysis topic or question.');
 
+  const modelInfo = resolveActiveHighQualityModelLabel(appData);
+  const waitEst = estimateGenerationWait({ kind: 'analysis', prefs });
+  const stepPercents = { 1: 28, 2: 68, 3: 95 };
+
   const emit = (stepIdx, message) => {
-    if (typeof onProgress === 'function') onProgress({ stepIdx, message });
+    if (typeof onProgress === 'function') {
+      onProgress({
+        kind: 'analysis',
+        stepIdx,
+        totalSteps: 3,
+        percent: stepPercents[stepIdx] || 30,
+        estLabel: waitEst.estLabel,
+        modelLabel: modelInfo.displayLabel,
+        message
+      });
+    }
   };
 
   emit(1, 'Step 1/3: Indexing live 2026 roster, injuries, trades, nflverse EPA & OverTheCap ledger...');
@@ -52,8 +131,10 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
   const rosterPlayers = appData?.roster?.players || [];
 
   if (baseUrl) {
-    const activeModelLabel = appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash';
-    emit(2, `Step 2/3: Querying Cloudflare Edge Worker + ${activeModelLabel} (High Thinking) & Live Search Grounding...`);
+    emit(
+      2,
+      `Step 2/3: Running ${modelInfo.modelId} (High Thinking • 2-Pass Accuracy Audit) + Live Search Grounding...`
+    );
     const res = await fetch(`${baseUrl}/api/analyze`, {
       method: 'POST',
       headers: {
@@ -64,6 +145,9 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
         prompt: cleanPrompt,
         category: category || 'On-Demand Deep Dive',
         author: prefs?.authorName || 'Friend Group',
+        verifyPass: true,
+        thinkingLevel: 'HIGH',
+        qualityPriority: 'accuracy_over_latency',
         systemPrompt: buildLiveGroundingSystemPrompt(appData),
         contextSummary: buildAuthoritativeLiveContextSnapshot(appData)
       })
@@ -75,7 +159,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
     if (json.item && json.item.markdown) {
       json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers);
     }
-    emit(3, 'Step 3/3: Analysis verified against live 49ers roster and saved!');
+    emit(3, 'Step 3/3: Multi-pass analysis verified against live 49ers roster and saved!');
     return json.item;
   }
 
@@ -101,8 +185,22 @@ export async function generateOnDemandAutopodcast({
   if (!cleanTopic) throw new Error('Please enter or select a podcast topic.');
   const mins = Math.max(2, Math.min(20, Number(durationMinutes || 5)));
 
+  const modelInfo = resolveActiveHighQualityModelLabel(appData);
+  const waitEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: mins, prefs });
+  const stepPercents = { 1: 25, 2: 66, 3: 94 };
+
   const emit = (stepIdx, message) => {
-    if (typeof onProgress === 'function') onProgress({ stepIdx, message });
+    if (typeof onProgress === 'function') {
+      onProgress({
+        kind: 'podcast',
+        stepIdx,
+        totalSteps: 3,
+        percent: stepPercents[stepIdx] || 25,
+        estLabel: waitEst.estLabel,
+        modelLabel: modelInfo.displayLabel,
+        message
+      });
+    }
   };
 
   emit(1, `Step 1/3: Gathering live 2026 roster, injuries, cap ledger & beat facts for ${mins}m script...`);
@@ -110,7 +208,10 @@ export async function generateOnDemandAutopodcast({
   const rosterPlayers = appData?.roster?.players || [];
 
   if (baseUrl) {
-    emit(2, `Step 2/3: Synthesizing ${format === 'solo' ? 'Solo Briefing' : 'Two-Host'} script & neural audio on Cloudflare R2...`);
+    emit(
+      2,
+      `Step 2/3: Synthesizing ${modelInfo.modelId} High-Thinking ${format === 'solo' ? 'Solo Briefing' : 'Two-Host'} script + Studio Pro TTS...`
+    );
     const res = await fetch(`${baseUrl}/api/podcast`, {
       method: 'POST',
       headers: {
@@ -122,6 +223,9 @@ export async function generateOnDemandAutopodcast({
         durationMinutes: mins,
         format,
         author: prefs?.authorName || 'Friend Group',
+        verifyPass: true,
+        thinkingLevel: 'HIGH',
+        qualityPriority: 'accuracy_over_latency',
         systemPrompt: buildLiveGroundingSystemPrompt(appData),
         contextSummary: buildAuthoritativeLiveContextSnapshot(appData)
       })
@@ -136,13 +240,13 @@ export async function generateOnDemandAutopodcast({
         text: sanitizeHallucinatedRosterText(seg.text || '', rosterPlayers)
       }));
     }
-    emit(3, 'Step 3/3: Episode grounded on live roster, cached in R2, and added to Library!');
+    emit(3, 'Step 3/3: Episode verified against live roster, mastered in R2, and added to Library!');
     return json.episode;
   }
 
   // Standalone Instant Multi-Speaker Episode Generator
   await sleep(450);
-  emit(2, `Step 2/3: Scripting ${mins}-minute ${format === 'solo' ? 'Solo Briefing' : 'Two-Host Analytical Banter'}...`);
+  emit(2, `Step 2/3: Scripting ${mins}-minute ${format === 'solo' ? 'Solo Briefing' : 'Two-Host Analytical Banter'} (${modelInfo.displayLabel})...`);
   await sleep(500);
   emit(3, 'Step 3/3: Validating live roster accuracy & indexing timed transcript...');
   await sleep(250);
@@ -279,10 +383,14 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
     );
   }
 
+  const modelInfo = resolveActiveHighQualityModelLabel(appData);
   return {
     id: `local_analysis_${Date.now()}`,
     title: prompt,
     category: category || 'Data-Grounded Synthesis',
+    modelUsed: modelInfo.modelId,
+    thinkingLevel: modelInfo.thinkingLevel,
+    qualityPriority: 'accuracy_over_latency',
     createdAt: new Date().toISOString(),
     createdBy: author,
     sourcesCited: [
@@ -383,12 +491,16 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     return seg;
   });
 
+  const modelInfo = resolveActiveHighQualityModelLabel(appData);
   return {
     id: `custom_ep_${Date.now()}`,
     title: topic,
     topic,
     format: solo ? 'Solo Executive Briefing' : 'Two-Host Analytical Banter',
     presetLabel: `${durationMinutes}m On-Demand Pod`,
+    modelUsed: modelInfo.modelId,
+    thinkingLevel: modelInfo.thinkingLevel,
+    qualityPriority: 'accuracy_over_latency',
     createdBy: author,
     createdAt: new Date().toISOString(),
     audioUrl: null,

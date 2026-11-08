@@ -1386,14 +1386,56 @@ async function main() {
       });
       assert(emptyPodErr.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
 
-      // 2. Generate custom 8m Solo Autopodcast
+      // 2. Generate custom 8m Solo Autopodcast & verify live Processing Spinner + Rough Estimated Time UI
       const beforeEpCount = await cdp.eval(() => document.querySelectorAll('[data-action="play-episode"]').length);
-      await cdp.eval(() => {
+      const podSetupAndProgress = await cdp.eval(async () => {
         document.querySelector('[data-action="set-pod-duration"][data-mins="8"]').click();
         document.querySelector('[data-action="set-pod-format"][data-format="solo"]').click();
         document.querySelector('[data-action="fill-pod-topic"]').click();
+        const preClickHint = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent || '';
         document.querySelector('[data-action="generate-autopodcast"]').click();
+
+        await new Promise(r => setTimeout(r, 120));
+        const banner = document.querySelector('[data-job-progress="active"]');
+        const spinner = banner?.querySelector('.job-spinner-ring');
+        const spinnerRect = spinner?.getBoundingClientRect();
+        const waveBars = banner?.querySelectorAll('.job-wave-bars span')?.length || 0;
+        const progressFill = banner?.querySelector('.job-progress-fill');
+        const elapsedClock = document.getElementById('jobElapsedClock')?.textContent || '';
+        const genBtn = document.querySelector('[data-action="generate-autopodcast"]');
+
+        return {
+          preClickHint,
+          hasBanner: Boolean(banner),
+          bannerText: banner?.textContent || '',
+          spinnerVisible: Boolean(spinnerRect && spinnerRect.width >= 18 && spinnerRect.height >= 18),
+          waveBars,
+          hasProgressBar: Boolean(progressFill),
+          elapsedClock,
+          btnDisabled: Boolean(genBtn?.disabled),
+          btnSpinIcon: Boolean(genBtn?.querySelector('.btn-spin-icon'))
+        };
       });
+
+      assert(
+        podSetupAndProgress.preClickHint.includes('Rough time (8m pod):') &&
+          podSetupAndProgress.preClickHint.includes('gemini-3.8-flash • HIGH'),
+        `Missing pre-click podcast rough time or 3.8 High model hint: ${podSetupAndProgress.preClickHint}`
+      );
+      assert(
+        podSetupAndProgress.hasBanner &&
+          podSetupAndProgress.spinnerVisible &&
+          podSetupAndProgress.waveBars === 4 &&
+          podSetupAndProgress.hasProgressBar &&
+          podSetupAndProgress.bannerText.includes('Est. wait:') &&
+          podSetupAndProgress.bannerText.includes('Accuracy prioritized over speed') &&
+          podSetupAndProgress.bannerText.includes('Gemini 3.8 High') &&
+          podSetupAndProgress.elapsedClock.startsWith('Elapsed') &&
+          podSetupAndProgress.btnDisabled &&
+          podSetupAndProgress.btnSpinIcon,
+        `Podcast processing spinner / rough estimated time check failed: ${JSON.stringify(podSetupAndProgress)}`
+      );
+      await cdp.assertNoOverflow('Active Podcast Processing Indicator');
 
       await cdp.waitFor(
         prev => document.querySelectorAll('[data-action="play-episode"]').length > prev,
@@ -1402,7 +1444,7 @@ async function main() {
       );
       await cdp.eval(() => document.getElementById('mpCloseBtn')?.click());
 
-      // 3. Switch to Deep Analysis Runner, test empty validation, then generate custom report
+      // 3. Switch to Deep Analysis Runner, test empty validation, then verify live processing banner + generate custom report
       const emptyAnalysisErr = await cdp.eval(() => {
         document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
         const area = document.getElementById('analysisPromptInput');
@@ -1414,12 +1456,29 @@ async function main() {
       assert(emptyAnalysisErr.includes('Please enter an analysis topic'), 'Missing empty analysis prompt validation');
 
       const beforeReportCount = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
-      await cdp.eval(() => {
+      const analysisProgress = await cdp.eval(async () => {
+        const preHint = document.querySelector('[data-est-wait-preview="analysis"]')?.textContent || '';
         const area = document.getElementById('analysisPromptInput');
         area.value = 'Analyze Brock Purdy EPA, Nick Bosa pass rush, and Brandon Aiyuk cap math';
         area.dispatchEvent(new Event('input', { bubbles: true }));
         document.querySelector('[data-action="run-deep-analysis"]').click();
+        await new Promise(r => setTimeout(r, 120));
+        const banner = document.querySelector('[data-job-progress="active"]');
+        return {
+          preHint,
+          hasBanner: Boolean(banner),
+          bannerText: banner?.textContent || '',
+          hasSpinner: Boolean(banner?.querySelector('.job-spinner-ring'))
+        };
       });
+      assert(
+        analysisProgress.preHint.includes('Rough time:') &&
+          analysisProgress.hasBanner &&
+          analysisProgress.hasSpinner &&
+          analysisProgress.bannerText.includes('Est. wait:') &&
+          analysisProgress.bannerText.includes('Gemini 3.8 High'),
+        `Analysis processing spinner / rough time check failed: ${JSON.stringify(analysisProgress)}`
+      );
 
       await cdp.waitFor(
         prev => document.querySelectorAll('#mainView article.brief-card').length > prev,

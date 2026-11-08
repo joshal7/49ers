@@ -235,6 +235,10 @@ const SVG_PATHS = {
     <circle cx="12" cy="12" r="8.8"/>
     <polyline points="12 7.2 12 12 15.2 14"/>
   `,
+  loader: `
+    <circle cx="12" cy="12" r="8.8" stroke-opacity="0.24"/>
+    <path d="M12 3.2A8.8 8.8 0 0 1 20.8 12"/>
+  `,
   sun: `
     <circle cx="12" cy="12" r="4.2" fill="currentColor" fill-opacity="0.22"/>
     <circle cx="12" cy="12" r="4.2"/>

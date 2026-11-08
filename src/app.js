@@ -20,7 +20,9 @@ import {
 import {
   fetchSharedWorkerFeed,
   runOnDemandDeepAnalysis,
-  generateOnDemandAutopodcast
+  generateOnDemandAutopodcast,
+  estimateGenerationWait,
+  resolveActiveHighQualityModelLabel
 } from './services/aiWorkerClient.js';
 
 import { esc, formatRelativeAge } from './views/uiHelpers.js';
@@ -413,6 +415,7 @@ function renderMain() {
     } else if (state.activeNavTab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
         appData: state.appData,
+        userPrefs: state.prefs,
         studioSub: state.studioSubTab,
         beatPodViewMode: state.beatPodViewMode,
         beatPodShowFilter: state.beatPodShowFilter,
@@ -974,12 +977,40 @@ function bindEvents() {
         const inputEl = document.getElementById('podTopicInput');
         if (inputEl) state.podTopicDraft = inputEl.value;
         if (!String(state.podTopicDraft || '').trim()) {
-          state.jobStatus = { active: false, error: 'Please enter or select a podcast topic.' };
+          state.jobStatus = {
+            active: false,
+            kind: 'podcast',
+            error: 'Please enter or select a podcast topic.'
+          };
           renderMain();
           break;
         }
+        const startedAtMs = Date.now();
+        const waitEst = estimateGenerationWait({
+          kind: 'podcast',
+          durationMinutes: state.podDurationMin,
+          prefs: state.prefs
+        });
+        const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
+        const elapsedTicker = setInterval(() => {
+          const clockEl = document.getElementById('jobElapsedClock');
+          if (clockEl) {
+            const sec = Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000));
+            clockEl.textContent = `Elapsed ${formatTimeMmSs(sec)}`;
+          }
+        }, 250);
         try {
-          state.jobStatus = { active: true, message: 'Initializing Autopodcast generator…' };
+          state.jobStatus = {
+            active: true,
+            kind: 'podcast',
+            startedAtMs,
+            stepIdx: 1,
+            totalSteps: 3,
+            percent: 18,
+            estLabel: waitEst.estLabel,
+            modelLabel: modelInfo.displayLabel,
+            message: 'Initializing High-Thinking Autopodcast generator…'
+          };
           renderMain();
           const episode = await generateOnDemandAutopodcast({
             topic: state.podTopicDraft,
@@ -988,7 +1019,17 @@ function bindEvents() {
             appData: state.appData,
             prefs: state.prefs,
             onProgress: p => {
-              state.jobStatus = { active: true, message: p.message };
+              state.jobStatus = {
+                active: true,
+                kind: 'podcast',
+                startedAtMs,
+                stepIdx: p.stepIdx || 1,
+                totalSteps: p.totalSteps || 3,
+                percent: p.percent || 30,
+                estLabel: p.estLabel || waitEst.estLabel,
+                modelLabel: p.modelLabel || modelInfo.displayLabel,
+                message: p.message
+              };
               renderMain();
             }
           });
@@ -1002,8 +1043,14 @@ function bindEvents() {
           await audioController.loadAndPlay(episode, 0);
           renderMain();
         } catch (err) {
-          state.jobStatus = { active: false, error: err.message || 'Failed to generate podcast.' };
+          state.jobStatus = {
+            active: false,
+            kind: 'podcast',
+            error: err.message || 'Failed to generate podcast.'
+          };
           renderMain();
+        } finally {
+          clearInterval(elapsedTicker);
         }
         break;
       }
@@ -1012,12 +1059,36 @@ function bindEvents() {
         const areaEl = document.getElementById('analysisPromptInput');
         if (areaEl) state.analysisPromptDraft = areaEl.value;
         if (!String(state.analysisPromptDraft || '').trim()) {
-          state.jobStatus = { active: false, error: 'Please enter an analysis topic or question.' };
+          state.jobStatus = {
+            active: false,
+            kind: 'analysis',
+            error: 'Please enter an analysis topic or question.'
+          };
           renderMain();
           break;
         }
+        const startedAtMs = Date.now();
+        const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: state.prefs });
+        const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
+        const elapsedTicker = setInterval(() => {
+          const clockEl = document.getElementById('jobElapsedClock');
+          if (clockEl) {
+            const sec = Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000));
+            clockEl.textContent = `Elapsed ${formatTimeMmSs(sec)}`;
+          }
+        }, 250);
         try {
-          state.jobStatus = { active: true, message: 'Starting deep multi-source analysis…' };
+          state.jobStatus = {
+            active: true,
+            kind: 'analysis',
+            startedAtMs,
+            stepIdx: 1,
+            totalSteps: 3,
+            percent: 20,
+            estLabel: waitEst.estLabel,
+            modelLabel: modelInfo.displayLabel,
+            message: 'Starting unhurried High-Thinking multi-source analysis…'
+          };
           renderMain();
           const report = await runOnDemandDeepAnalysis({
             prompt: state.analysisPromptDraft,
@@ -1025,7 +1096,17 @@ function bindEvents() {
             appData: state.appData,
             prefs: state.prefs,
             onProgress: p => {
-              state.jobStatus = { active: true, message: p.message };
+              state.jobStatus = {
+                active: true,
+                kind: 'analysis',
+                startedAtMs,
+                stepIdx: p.stepIdx || 1,
+                totalSteps: p.totalSteps || 3,
+                percent: p.percent || 35,
+                estLabel: p.estLabel || waitEst.estLabel,
+                modelLabel: p.modelLabel || modelInfo.displayLabel,
+                message: p.message
+              };
               renderMain();
             }
           });
@@ -1038,8 +1119,14 @@ function bindEvents() {
           state.analysisPromptDraft = '';
           renderMain();
         } catch (err) {
-          state.jobStatus = { active: false, error: err.message || 'Analysis failed.' };
+          state.jobStatus = {
+            active: false,
+            kind: 'analysis',
+            error: err.message || 'Analysis failed.'
+          };
           renderMain();
+        } finally {
+          clearInterval(elapsedTicker);
         }
         break;
       }

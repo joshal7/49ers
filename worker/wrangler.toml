@@ -23,7 +23,8 @@ GEMINI_TEXT_MODEL = "auto"
 GEMINI_DEFAULT_FREE_MODEL = "gemini-3.8-flash"
 GEMINI_THINKING_LEVEL = "HIGH"
 GEMINI_THINKING_BUDGET = "24576"
-GEMINI_AUDIO_MODEL = "gemini-2.5-flash-preview-tts"
+# "auto" cascades highest-quality Studio Pro TTS (gemini-2.5-pro-preview-tts -> gemini-2.5-flash-preview-tts)
+GEMINI_AUDIO_MODEL = "auto"
 
 # Secrets configured via `npx wrangler secret put <NAME>`:
 # - GROUP_PASSCODE: Shared passcode for Josh & ~24 friends

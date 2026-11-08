@@ -20,10 +20,16 @@ export const DEFAULT_FREE_MODEL_CASCADE = [
   'gemini-2.5-pro'
 ];
 
+export const DEFAULT_AUDIO_TTS_CASCADE = [
+  'gemini-2.5-pro-preview-tts',
+  'gemini-2.5-flash-preview-tts'
+];
+
 export const HIGH_THINKING_BUDGET = 24576;
 
-const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
-PRIZE ACCURACY OVER VELOCITY — DEEP CHAIN-OF-VERIFICATION DIRECTIVE:
+export const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
+UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:
+0. Take full advantage of your maximum High-Thinking token budget. NEVER rush, truncate verification, approximate CBA contract math, or sacrifice prose/dialogue quality to respond faster. Readers and listeners gladly wait longer for an exhaustive, zero-error, coaching-tape-grade output.
 1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations.
 2. Treat the provided AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
 3. MANDATORY COACHING, CAP & DRAFT GROUNDING:
@@ -33,7 +39,7 @@ PRIZE ACCURACY OVER VELOCITY — DEEP CHAIN-OF-VERIFICATION DIRECTIVE:
    - 2027 Draft Capital: Check the exact pick count in the snapshot (SF owns 6 picks in 2027 after trading its own 2027 4th-rounder to Indianapolis for DT DeForest Buckner; Rd 6 is via BAL and Rd 7 is via KC). Do not recommend reckless Day-2 pick overpays for expiring rentals.
    - Trade Target Rigor: Only recommend real NFL players verified on genuine seller/surplus rosters who upgrade true 49ers weak links (perimeter WR / 12-personnel move TE, LG pass protection, rotational speed EDGE, veteran Dime CB/S). Reject declining age-cliff veterans with zero pass-rush juice (e.g., age-37 Cameron Jordan) or recently extended untouchables (e.g., Michael Mayer).
 4. NEVER attribute retired, cut, or departed former 49ers (such as Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the current active 49ers rotation unless explicitly marked as Active on the LIVE 49ERS ROSTER snapshot. You MAY discuss departed players strictly in verified historical, 2026 dead-cap, opponent, or external trade-target context (e.g., Javon Hargrave dead cap or Chase Young on the Saints).
-5. INTERNAL SELF-AUDIT BEFORE OUTPUT: Silently verify every player's current team, contract figure, pick round, and probability against the snapshot and Google Search Grounding before emitting a single word of output.
+5. INTERNAL MULTI-PASS SELF-AUDIT BEFORE OUTPUT: Silently verify every player's current team, contract figure, pick round, scheme mechanic, and probability against the snapshot and Google Search Grounding—and refine phrasing for clarity and precision—before emitting a single word of output.
 6. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, T-E stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math.`;
 
 export function scoreFreeTierGeminiModel(modelEntryOrId) {
@@ -69,7 +75,7 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
   const isPro = /\bpro\b/.test(id);
   if (!isFlash && !isPro) return -1;
 
-  const freeTierBonus = isFlash ? 260 : 80;
+  const freeTierBonus = isFlash ? 260 : versionNum >= 3.8 ? 275 : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
   const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
@@ -377,6 +383,33 @@ async function callGeminiTextWithFallback(env, payload) {
   return { res: lastRes, modelUsed: cascade[0] };
 }
 
+async function callGeminiAudioTtsWithFallback(env, payload) {
+  const configured = String(env.GEMINI_AUDIO_MODEL || '').trim();
+  const cascade =
+    configured && configured !== 'auto'
+      ? [configured, ...DEFAULT_AUDIO_TTS_CASCADE.filter(m => m !== configured)]
+      : [...DEFAULT_AUDIO_TTS_CASCADE];
+
+  let lastRes = null;
+  for (let i = 0; i < cascade.length; i++) {
+    const audioModel = cascade[i];
+    const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/${audioModel}:generateContent?key=${env.GEMINI_API_KEY}`;
+    const res = await fetch(ttsUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    lastRes = res;
+    if (res.ok) {
+      return { res, audioModelUsed: audioModel };
+    }
+    if (![400, 403, 404, 429, 503].includes(res.status)) {
+      break;
+    }
+  }
+  return { res: lastRes, audioModelUsed: cascade[0] };
+}
+
 export default {
   async scheduled(_event, env, ctx) {
     const task = pollAndCacheBestFreeModel(env);
@@ -424,8 +457,10 @@ export default {
           ok: true,
           service: '49ers-worker',
           defaultFreeModel: env.GEMINI_DEFAULT_FREE_MODEL || DEFAULT_FREE_MODEL_CASCADE[0],
+          defaultAudioModel: DEFAULT_AUDIO_TTS_CASCADE[0],
           thinkingLevel: 'HIGH',
-          thinkingBudget: HIGH_THINKING_BUDGET
+          thinkingBudget: HIGH_THINKING_BUDGET,
+          qualityPriority: 'accuracy_over_latency'
         },
         200,
         cors
@@ -490,7 +525,7 @@ export default {
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
-      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(env, {
+      const { res: geminiRes, modelUsed: initialModelUsed } = await callGeminiTextWithFallback(env, {
         systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
@@ -502,7 +537,7 @@ export default {
             role: 'user',
             parts: [
               {
-                text: `Analyze this 49ers topic in depth using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts (never stale model weights), All-22 film tendencies, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nBefore writing your final Markdown report, verify internally that every player's current team, cap figure, draft pick round, and playoff probability matches the snapshot and live Google Search Grounding.\n\nTOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+                text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nAnalyze this 49ers topic in depth using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts (never stale model weights), All-22 film tendencies, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nBefore writing your final Markdown report, verify internally that every player's current team, cap figure, draft pick round, and playoff probability matches the snapshot and live Google Search Grounding.\n\nTOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
               }
             ]
           }
@@ -515,7 +550,39 @@ export default {
       }
 
       const geminiJson = await geminiRes.json();
-      const rawMarkdown = extractNonThoughtText(geminiJson) || 'No synthesis generated.';
+      let modelUsed = initialModelUsed;
+      let verifiedPasses = 1;
+      let rawMarkdown = extractNonThoughtText(geminiJson) || 'No synthesis generated.';
+
+      if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
+        const { res: verifyRes, modelUsed: verifyModel } = await callGeminiTextWithFallback(env, {
+          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
+          generationConfig: {
+            temperature: 0.1,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: `ADVERSARIAL QUALITY & FACT-CHECK AUDIT PASS (ACCURACY OVER LATENCY):\nCarefully audit every single player team assignment, injury status, W-L record, playoff probability, 2027 draft pick slot, and CBA cap figure in the draft report below against the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT. Correct any subtle discrepancy, eliminate any generic filler, and sharpen the All-22 film and CBA cap mechanics. Output ONLY the final verified Markdown report.\n\nTOPIC: ${prompt}\n\nDRAFT REPORT TO AUDIT & POLISH:\n${rawMarkdown}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+                }
+              ]
+            }
+          ]
+        });
+        if (verifyRes && verifyRes.ok) {
+          const verifyJson = await verifyRes.json();
+          const auditedText = extractNonThoughtText(verifyJson);
+          if (auditedText && auditedText.trim().length >= 80) {
+            rawMarkdown = auditedText;
+            modelUsed = verifyModel || modelUsed;
+            verifiedPasses = 2;
+          }
+        }
+      }
+
       const markdown = scrubStaleWeightHallucinations(rawMarkdown, sectionContext);
       const groundingChunks =
         geminiJson.candidates?.[0]?.groundingMetadata?.groundingChunks
@@ -529,6 +596,8 @@ export default {
         category: body.category || 'On-Demand Deep Dive',
         modelUsed,
         thinkingLevel: 'HIGH',
+        qualityPriority: 'accuracy_over_latency',
+        verifiedPasses,
         createdAt: new Date().toISOString(),
         createdBy: author,
         sourcesCited: groundingChunks,
@@ -582,14 +651,14 @@ export default {
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
       const scriptPrompt =
         format === 'Solo Executive Briefing'
-          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Sound genuinely human and conversational—use natural contractions ("let's", "that's", "can't", "here's"), crisp 12-to-22-word spoken sentences, and natural breath rhythm rather than stiff essay prose, while maintaining zero clickbait fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
-          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Make their chemistry sound genuinely human and natural: mix quick 1-sentence reactions or follow-up questions ("Right, and look at what that does to the center slide...", "Hold on—connect those two ledgers for a second.") with sharp 2-to-3-sentence breakdowns, use spoken contractions ("they're", "can't", "doesn't", "it's"), and avoid long run-on written paragraphs or morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
+          ? `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exact CBA cap math, and authentic spoken broadcast quality over generation speed.\n\nWrite a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Sound genuinely human and conversational—use natural contractions ("let's", "that's", "can't", "here's"), crisp 12-to-22-word spoken sentences, and natural breath rhythm rather than stiff essay prose, while maintaining zero clickbait fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+          : `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exact CBA cap math, and authentic spoken studio chemistry over generation speed.\n\nWrite a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Make their chemistry sound genuinely human and natural: mix quick 1-sentence reactions or follow-up questions ("Right, and look at what that does to the center slide...", "Hold on—connect those two ledgers for a second.") with sharp 2-to-3-sentence breakdowns, use spoken contractions ("they're", "can't", "doesn't", "it's"), and avoid long run-on written paragraphs or morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
 
-      const { res: scriptRes, modelUsed } = await callGeminiTextWithFallback(env, {
+      const { res: scriptRes, modelUsed: initialScriptModel } = await callGeminiTextWithFallback(env, {
         systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
-          temperature: 0.25,
+          temperature: 0.2,
           thinkingConfig: { thinkingBudget }
         },
         contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
@@ -600,14 +669,51 @@ export default {
       }
 
       const scriptJson = await scriptRes.json();
-      const rawScriptText = extractNonThoughtText(scriptJson) || '[]';
+      let modelUsed = initialScriptModel;
+      let verifiedPasses = 1;
+      let rawScriptText = extractNonThoughtText(scriptJson) || '[]';
+
+      if (body.verifyPass === true) {
+        const { res: verifyScriptRes, modelUsed: verifyScriptModel } = await callGeminiTextWithFallback(env, {
+          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
+          generationConfig: {
+            temperature: 0.15,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: `ADVERSARIAL PODCAST SCRIPT FACT-CHECK & PROSODY POLISH (ACCURACY OVER LATENCY):\nAudit every player name, team assignment, injury designation, W-L record, playoff probability, 2027 draft pick slot, and CBA cap figure in this JSON script against the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT. Fix any subtle inaccuracy and refine any stiff written sentence so it sounds 100% like natural human studio dialogue with crisp breath cadence. Output ONLY the valid raw JSON array [{"speaker":"...","text":"..."}].\n\nDRAFT JSON SCRIPT:\n${rawScriptText}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+                }
+              ]
+            }
+          ]
+        });
+        if (verifyScriptRes && verifyScriptRes.ok) {
+          const verifyScriptJson = await verifyScriptRes.json();
+          const auditedScriptText = extractNonThoughtText(verifyScriptJson);
+          const candidateTurns = parseScriptTurnsSafe(auditedScriptText || '');
+          if (
+            candidateTurns.length > 0 &&
+            !(candidateTurns.length === 1 && candidateTurns[0].text === '49ers briefing ready.')
+          ) {
+            rawScriptText = auditedScriptText;
+            modelUsed = verifyScriptModel || modelUsed;
+            verifiedPasses = 2;
+          }
+        }
+      }
+
       const turns = parseScriptTurnsSafe(rawScriptText).map(t => ({
         ...t,
         text: scrubStaleWeightHallucinations(t.text || '', contextSummary)
       }));
 
-      // Step 2: Render Multi-Speaker Native Audio via Gemini TTS Free Tier
+      // Step 2: Render Multi-Speaker Native Audio via Highest-Quality Studio Pro TTS Cascade
       let audioUrl = null;
+      let audioModelUsed = null;
       if (env.PODCAST_BUCKET) {
         const directorHeader =
           'Audio Profile: Warm, authentic NFL film and salary-cap podcast recorded in an intimate broadcast studio.\n' +
@@ -615,30 +721,24 @@ export default {
         const ttsDialogue =
           directorHeader +
           turns.map(t => `${t.speaker}: ${humanizeNflTextForTts(t.text)}`).join('\n');
-        const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/${
-          env.GEMINI_AUDIO_MODEL || 'gemini-2.5-flash-preview-tts'
-        }:generateContent?key=${env.GEMINI_API_KEY}`;
 
-        const ttsRes = await fetch(ttsUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: ttsDialogue }] }],
-            generationConfig: {
-              responseModalities: ['AUDIO'],
-              speechConfig: {
-                multiSpeakerVoiceConfig: {
-                  speakerVoiceConfigs: [
-                    { speaker: 'Marcus', voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Orus' } } },
-                    { speaker: 'Elena', voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } } }
-                  ]
-                }
+        const { res: ttsRes, audioModelUsed: resolvedAudioModel } = await callGeminiAudioTtsWithFallback(env, {
+          contents: [{ parts: [{ text: ttsDialogue }] }],
+          generationConfig: {
+            responseModalities: ['AUDIO'],
+            speechConfig: {
+              multiSpeakerVoiceConfig: {
+                speakerVoiceConfigs: [
+                  { speaker: 'Marcus', voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Orus' } } },
+                  { speaker: 'Elena', voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } } }
+                ]
               }
             }
-          })
+          }
         });
 
-        if (ttsRes.ok) {
+        if (ttsRes && ttsRes.ok) {
+          audioModelUsed = resolvedAudioModel;
           const ttsJson = await ttsRes.json();
           const b64 = ttsJson.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
           if (b64) {
@@ -677,7 +777,10 @@ export default {
         format,
         presetLabel: `${durationMinutes}m Custom Pod`,
         modelUsed,
+        audioModelUsed,
         thinkingLevel: 'HIGH',
+        qualityPriority: 'accuracy_over_latency',
+        verifiedPasses,
         createdBy: String(body.author || 'Friend Group'),
         createdAt: new Date().toISOString(),
         audioUrl,

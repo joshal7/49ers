@@ -543,7 +543,14 @@ test('Every CORE_ASSETS entry in sw.js exists on disk', () => {
 
 console.log('\n=== [7/7] Serverless Edge Worker (Auth, Shared KV Cache, R2 Audio & Error Handling) QA ===');
 
-import edgeWorker from '../worker/index.js';
+import edgeWorker, {
+  EDITORIAL_SYSTEM_PROMPT,
+  DEFAULT_AUDIO_TTS_CASCADE
+} from '../worker/index.js';
+import {
+  estimateGenerationWait,
+  resolveActiveHighQualityModelLabel
+} from '../src/services/aiWorkerClient.js';
 
 function createMockWorkerEnv(overrides = {}) {
   const kvStore = new Map();
@@ -2385,6 +2392,166 @@ test('Studio podcast episodes feature >=9 natural conversational turns, tight hu
         `Expected natural conversational inter-turn gap (0.10s..0.32s) in ${ep.id} turn ${i}->${i + 1}, got ${gap}s`
       );
     }
+  }
+});
+
+test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro TTS cascade & rough wait estimator', () => {
+  const sysPrompt = buildLiveGroundingSystemPrompt({});
+  assert.ok(
+    sysPrompt.includes('UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME'),
+    'Client grounding system prompt must explicitly prioritize accuracy & quality over generation time'
+  );
+  assert.ok(
+    sysPrompt.includes('INTERNAL MULTI-PASS SELF-AUDIT'),
+    'Client grounding system prompt must mandate internal multi-pass self-audit'
+  );
+  assert.ok(
+    EDITORIAL_SYSTEM_PROMPT.includes('UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME'),
+    'Worker EDITORIAL_SYSTEM_PROMPT must explicitly prioritize accuracy & quality over generation time'
+  );
+
+  // Highest-quality model ranking: 3.8+ Pro outranks 3.8 Flash when available in catalog, while 3.8 Flash outranks legacy 2.5 Pro
+  assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-3.8-flash');
+  assert.ok(scoreFreeTierGeminiModel('gemini-3.8-pro') > scoreFreeTierGeminiModel('gemini-3.8-flash'));
+  assert.ok(scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-2.5-pro'));
+  assert.deepEqual(DEFAULT_AUDIO_TTS_CASCADE, ['gemini-2.5-pro-preview-tts', 'gemini-2.5-flash-preview-tts']);
+
+  // Model label & rough estimated generation time scaling
+  const labelInfo = resolveActiveHighQualityModelLabel({
+    meta: { aiEngine: { activeModel: 'gemini-3.8-flash', thinkingLevel: 'HIGH' } }
+  });
+  assert.equal(labelInfo.displayLabel, 'Gemini 3.8 High • Accuracy-First');
+
+  const cloud3 = estimateGenerationWait({
+    kind: 'podcast',
+    durationMinutes: 3,
+    prefs: { workerBaseUrl: 'https://49ers-worker.example.workers.dev' }
+  });
+  const cloud8 = estimateGenerationWait({
+    kind: 'podcast',
+    durationMinutes: 8,
+    prefs: { workerBaseUrl: 'https://49ers-worker.example.workers.dev' }
+  });
+  const cloud15 = estimateGenerationWait({
+    kind: 'podcast',
+    durationMinutes: 15,
+    prefs: { workerBaseUrl: 'https://49ers-worker.example.workers.dev' }
+  });
+  assert.equal(cloud3.isCloud, true);
+  assert.ok(cloud15.minSec > cloud8.minSec && cloud8.minSec > cloud3.minSec, 'Longer podcasts must estimate longer High-Thinking wait');
+
+  const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 8, prefs: {} });
+  assert.equal(localEst.isCloud, false);
+  assert.ok(localEst.estLabel.includes('~2–4 sec') && localEst.estLabel.includes('Cloud 3.8 High'));
+});
+
+await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking verification (verifyPass=true) and cascade Pro TTS -> Flash TTS', async () => {
+  const origFetch = globalThis.fetch;
+  const calledUrls = [];
+
+  globalThis.fetch = async urlStr => {
+    const u = String(urlStr);
+    calledUrls.push(u);
+
+    if (u.includes('gemini-2.5-pro-preview-tts')) {
+      return new Response(JSON.stringify({ error: 'Pro TTS free quota busy' }), { status: 429 });
+    }
+    if (u.includes('gemini-2.5-flash-preview-tts')) {
+      const dummyPcm = Buffer.alloc(480, 0).toString('base64');
+      return new Response(
+        JSON.stringify({
+          candidates: [{ content: { parts: [{ inlineData: { data: dummyPcm } }] } }]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    // Text generation calls (Pass 1 + Pass 2)
+    if (calledUrls.length <= 2) {
+      return new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              content: {
+                parts: [
+                  { thought: true, text: 'Internal High-Thinking verification...' },
+                  {
+                    text: '### Verified 3.8 High Report\n* Brock Purdy sits at +52.1 passing EPA while SF preserves $35.16M in 2026 Top-51 space for 2027 Article 13 rollover.'
+                  }
+                ]
+              }
+            }
+          ]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    return new Response(
+      JSON.stringify({
+        candidates: [
+          {
+            content: {
+              parts: [
+                {
+                  text: JSON.stringify([
+                    { speaker: 'Marcus', text: "Let's break down how DeForest Buckner and Nick Bosa collapse interior slide protections." },
+                    { speaker: 'Elena', text: "And remember, rolling our 35.16 million in 2026 space into 2027 under Article 13 keeps the ledger clean." }
+                  ])
+                }
+              ]
+            }
+          }
+        ]
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+  try {
+    const env = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-hq-key' });
+
+    const analyzeRes = await edgeWorker.fetch(
+      new Request('https://worker.example/api/analyze', {
+        method: 'POST',
+        headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: 'Purdy 2026 EPA & 2027 Article 13 rollover',
+          verifyPass: true,
+          author: 'Josh'
+        })
+      }),
+      env
+    );
+    assert.equal(analyzeRes.status, 200);
+    const analyzeJson = await analyzeRes.json();
+    assert.equal(analyzeJson.item.modelUsed, 'gemini-3.8-flash');
+    assert.equal(analyzeJson.item.thinkingLevel, 'HIGH');
+    assert.equal(analyzeJson.item.qualityPriority, 'accuracy_over_latency');
+    assert.equal(analyzeJson.item.verifiedPasses, 2);
+
+    const podRes = await edgeWorker.fetch(
+      new Request('https://worker.example/api/podcast', {
+        method: 'POST',
+        headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic: 'Buckner + Bosa Wide-9 stunt geometry',
+          durationMinutes: 5,
+          format: 'two_host',
+          verifyPass: true,
+          author: 'Josh'
+        })
+      }),
+      env
+    );
+    assert.equal(podRes.status, 200);
+    const podJson = await podRes.json();
+    assert.equal(podJson.episode.modelUsed, 'gemini-3.8-flash');
+    assert.equal(podJson.episode.verifiedPasses, 2);
+    assert.equal(podJson.episode.qualityPriority, 'accuracy_over_latency');
+    assert.equal(podJson.episode.audioModelUsed, 'gemini-2.5-flash-preview-tts');
+    assert.ok(calledUrls.some(u => u.includes('gemini-2.5-pro-preview-tts')), 'Must try Studio Pro TTS first');
+    assert.ok(podJson.episode.audioUrl?.startsWith('https://worker.example/api/audio/live_'));
+  } finally {
+    globalThis.fetch = origFetch;
   }
 });
 
