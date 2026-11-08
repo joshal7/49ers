@@ -502,9 +502,9 @@ function renderSingleDashboardCard({
 
     case 'playoff_picture': {
       const sf = mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
-      const berthPct = sf.makePlayoffsPct ?? 93.7;
-      const divPct = sf.winDivisionPct ?? 83.7;
-      const byePct = sf.seed1ByePct ?? 36.9;
+      const berthPct = sf.makePlayoffsPct ?? 93.0;
+      const divPct = sf.winDivisionPct ?? 82.6;
+      const byePct = sf.seed1ByePct ?? 34.5;
       externalHeaderLink = `<a href="https://www.nfl.com/standings/playoff-picture" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Standings</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div class="kpi-grid">

@@ -21,11 +21,25 @@
  */
 
 export const NFC_DIVISIONS = {
-  'NFC West': ['SF', 'SEA', 'LAR', 'ARI'],
-  'NFC North': ['DET', 'MIN', 'GB', 'CHI'],
-  'NFC East': ['PHI', 'DAL', 'NYG', 'WAS'],
-  'NFC South': ['TB', 'NO', 'ATL', 'CAR']
+  SF: 'NFC West',
+  SEA: 'NFC West',
+  LAR: 'NFC West',
+  ARI: 'NFC West',
+  DET: 'NFC North',
+  MIN: 'NFC North',
+  GB: 'NFC North',
+  CHI: 'NFC North',
+  PHI: 'NFC East',
+  DAL: 'NFC East',
+  NYG: 'NFC East',
+  WAS: 'NFC East',
+  TB: 'NFC South',
+  NO: 'NFC South',
+  ATL: 'NFC South',
+  CAR: 'NFC South'
 };
+
+export const NFC_DIVISION_NAMES = ['NFC West', 'NFC North', 'NFC East', 'NFC South'];
 
 const ALL_AFC_TEAMS = [
   'BUF', 'MIA', 'NE', 'NYJ',
@@ -164,7 +178,7 @@ export function runPlayoffMonteCarlo(config = {}) {
   const totalTeams = nextIdx; // 32
 
   const divIndexOf = new Int8Array(nTeams);
-  const divNames = Object.keys(NFC_DIVISIONS);
+  const divNames = NFC_DIVISION_NAMES;
   const divRosters = divNames.map(() => []);
 
   const baseW = new Int16Array(totalTeams);
@@ -180,7 +194,8 @@ export function runPlayoffMonteCarlo(config = {}) {
   const elo = new Float64Array(totalTeams);
 
   nfcTeams.forEach((t, i) => {
-    const dIdx = Math.max(0, divNames.indexOf(t.division));
+    const resolvedDiv = NFC_DIVISIONS[normalizeTeamAbbr(t.abbr)] || t.division || 'NFC West';
+    const dIdx = Math.max(0, divNames.indexOf(resolvedDiv));
     divIndexOf[i] = dIdx;
     divRosters[dIdx].push(i);
 
@@ -791,7 +806,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       abbr: t.abbr,
       name: t.name,
       logoUrl: t.logoUrl || '',
-      division: t.division,
+      division: NFC_DIVISIONS[normalizeTeamAbbr(t.abbr)] || t.division || 'NFC West',
       currentRecord: `${t.wins}-${t.losses}${t.ties ? `-${t.ties}` : ''}`,
       powerRating: Math.round(elo[i]),
       projectedWins: Math.round((winSum[i] / iterations) * 10) / 10,

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-08T02:18:28.891Z",
+  "updatedAt": "2026-11-08T02:22:19.607Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-22T02:18:28.891Z",
+  "nextAutoReviewAt": "2026-11-22T02:22:19.607Z",
   "totalTrackedReporters": 45,
   "outlets": [
     {
@@ -122,7 +122,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 74,
+      "liveWeeklyMentions": 70,
       "popularityScore": 99,
       "defaultEnabled": true
     },
@@ -176,8 +176,8 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/JohnLynch49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 10,
-      "popularityScore": 93,
+      "liveWeeklyMentions": 6,
+      "popularityScore": 90,
       "defaultEnabled": true
     },
     {

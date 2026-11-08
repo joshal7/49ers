@@ -1250,7 +1250,7 @@ export function buildTradeDeadlineWarRoom(
         costSummary: `${yr + 1} 4th-Round Pick`,
         schemeGrade: 'A',
         sourceUrl: bucknerMeta?.otcUrl || 'https://overthecap.com/player/deforest-buckner/4720/',
-        analysis: 'Reunites an elite 6\'7" interior disruptor (4.0 sacks, 8 QB hits in 7g; $7.90M 2026 cap hit absorbed) with Nick Bosa and Osa Odighizuwa under DC Raheem Morris, keeping Mykel Williams on the edge full-time.'
+        analysis: 'Reunites an elite 6\'7" All-Pro interior disruptor (4.0 sacks, 8 QB hits in 7g; $7.90M 2026 cap hit absorbed) with Nick Bosa under DC Raheem Morris, keeping Mykel Williams on the edge full-time.'
       },
       {
         player: 'Osa Odighizuwa',

@@ -238,32 +238,32 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
     .join('\n');
 
   const tradeLines = completedTrades
-    .map(m => `  - ${m.player} (${m.position}, acquired from ${m.acquiredFrom}, ${m.timing}${m.compensation ? ` for ${m.compensation}` : ''}): ${m.analysis}`)
+    .map(m => `  - ${m.player} (${m.position}, acquired from ${m.acquiredFrom}, ${m.timing}${m.costSummary || m.compensation ? ` for ${m.costSummary || m.compensation}` : ''}): ${m.analysis}`)
     .join('\n');
 
   const needLines = topNeeds
-    .map(n => `  - [${n.urgency}] ${n.position}: ${n.rationale}`)
+    .map(n => `  - [${n.urgency}] ${n.positionGroup || n.position}: ${n.epaContext || n.rationale}`)
     .join('\n');
 
   const targetLines = realisticTargets
     .slice(0, 8)
     .map(
       t =>
-        `  - ${t.name} (${t.position}, ${t.currentTeam || t.archetype || ''}, Fit ${t.fitScore}/100): Cost ${t.projectedPickCost} | 2026 Buyer Cap ${t.acquiring2026CapHit} | 2027 Impact ${t.cap2027Impact || '—'} | ${t.schemeFit}`
+        `  - ${t.name} (${t.position}, ${t.currentTeam || t.archetype || ''}, Fit ${t.fitScore}/100): Cost ${t.projectedPickCost} | 2026 Buyer Cap ${t.acquiring2026CapHit || (t.prorated2026CapCharge != null ? `$${(t.prorated2026CapCharge / 1_000_000).toFixed(2)}M` : '—')} | 2027 Impact ${t.cap2027Impact || '—'} | ${t.fitBreakdown || t.schemeFit || ''}`
     )
     .join('\n');
 
   const pitfallLines = pitfalls
-    .map(pf => `  - AVOID [${pf.category}]: ${pf.targetExample} — ${pf.reason}`)
+    .map(pf => `  - AVOID [${pf.trap || pf.category}]: ${pf.examples || pf.targetExample} — ${pf.whyAvoid || pf.reason}`)
     .join('\n');
 
   const pickLines = pickInventory
-    .map(pk => `Rd ${pk.round}${pk.overall ? ` (#${pk.overall})` : ''} [${pk.origin}]`)
+    .map(pk => `Rd ${pk.round}${pk.projectedOverall || pk.overall ? ` (#${pk.projectedOverall || pk.overall})` : ''} [${pk.origin}]`)
     .join(', ');
 
   const topNfcContenders = (mcSim.allTeamOdds || [])
     .slice(0, 5)
-    .map(t => `${t.abbr} (${t.record || `${t.currentWins || ''}-${t.currentLosses || ''}`}: #1 Bye ${t.seed1ByePct}%, Div ${t.winDivisionPct}%, Playoffs ${t.makePlayoffsPct}%)`)
+    .map(t => `${t.abbr} (${t.currentRecord || t.record || ''}: #1 Bye ${t.seed1ByePct}%, Div ${t.winDivisionPct}%, Playoffs ${t.makePlayoffsPct}%)`)
     .join(' | ');
 
   const latestWireLines = rawStream
@@ -280,7 +280,7 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
     `LIVE TIMESTAMP: ${meta.updatedAt || new Date().toISOString()}`,
     `COACHING STAFF: HC Kyle Shanahan | DC Raheem Morris (Wide-9 4-3 / Nickel 4-2-5 disguised split-safety)`,
     `SEASON & RECORD: ${meta.seasonYear || 2026} NFL Season • Week ${meta.currentWeek || 9} • 49ers Record: ${meta.teamRecord || '6-1'} (${meta.standingSummary || 'NFC West'}, Point Diff: ${meta.pointDifferential || ''})`,
-    `CALIBRATED 10,000-RUN PLAYOFF SIMULATION (EMPIRICAL-BAYES + EPA + SOS + NFL SEC. 16 TIEBREAKERS): SF Projected Wins: ${sfOdds.projectedWins ?? 12.0} | Playoff Berth: ${sfOdds.makePlayoffsPct ?? 93.7}% | Win NFC West: ${sfOdds.winDivisionPct ?? 83.7}% | #1 Seed First-Round Bye: ${sfOdds.seed1ByePct ?? 36.9}%${topNfcContenders ? `\n  NFC Race Context: ${topNfcContenders}` : ''}`,
+    `CALIBRATED 10,000-RUN PLAYOFF SIMULATION (EMPIRICAL-BAYES + EPA + SOS + NFL SEC. 16 TIEBREAKERS): SF Projected Wins: ${sfOdds.projectedWins ?? 12.0} | Playoff Berth: ${sfOdds.makePlayoffsPct ?? 93.0}% | Win NFC West: ${sfOdds.winDivisionPct ?? 82.6}% | #1 Seed First-Round Bye: ${sfOdds.seed1ByePct ?? 34.5}%${topNfcContenders ? `\n  NFC Race Context: ${topNfcContenders}` : ''}`,
     `UPCOMING MATCHUP: Week ${matchup.week || meta.currentWeek || 9} ${matchup.homeAway === 'away' ? '@' : 'vs.'} ${matchup.oppName || ''} (${matchup.oppRecord || ''}) | Kickoff: ${matchup.kickoffDisplay || ''} | Venue: ${matchup.venue || ''} | Spread: ${matchup.betting?.spread || ''} | Total: ${matchup.betting?.overUnder || ''}`,
     `SALARY CAP & MULTI-YEAR HORIZON (OVERTHECAP LIVE): 2026 Gross Cap Space: $${(cap26.teamCapSpace || 0).toLocaleString()} | 2026 Effective Space: $${(cap26.effectiveCapSpace || 0).toLocaleString()} | 2026 Dead Money: $${(cap26.deadMoney || 0).toLocaleString()} | 2027 Projected Cap Space: $${(cap27.teamCapSpace || 0).toLocaleString()} (Article 13 rollover of 2026 surplus is required to offset 2027 deficit)`,
     pickLines

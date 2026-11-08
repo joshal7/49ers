@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-08T01:14:29.296Z",
+  "updatedAt": "2026-11-08T02:27:23.673Z",
   "episodes": [
     {
       "id": "ep-week9-raiders-film",
       "title": "Week 9 Trench & Scheme Preview: Bosa + Buckner Debut vs. Klint Kubiak's Raiders",
-      "topic": "Week 9 LV @ SF Matchup, Wide-9 Stunt Geometry & Maxx Crosby Protection Plan",
+      "topic": "Week 9 LV @ SF Matchup (SF -9.5), Raheem Morris Stunt Geometry & Maxx Crosby Protection Plan",
       "format": "Two-Host Analytical Banter",
       "presetLabel": "3m Quick Hit",
       "createdBy": "49ers Faithful Desk",
-      "createdAt": "2026-11-06T21:15:00-08:00",
+      "createdAt": "2026-11-08T00:26:14.369Z",
       "sourceLinks": [
         {
           "label": "ESPN Raiders @ 49ers Matchup",
-          "url": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers"
+          "url": "https://www.espn.com/nfl/game/_/gameId/401873047/raiders-49ers"
         },
         {
           "label": "nflverse 2026 EPA Dataset",
@@ -24,67 +24,67 @@
         }
       ],
       "audioUrl": "./data/podcasts/ep-week9-raiders-film.m4a",
-      "durationSec": 138,
-      "fileSizeBytes": 1125035,
+      "durationSec": 147,
+      "fileSizeBytes": 1207124,
       "transcript": [
         {
           "idx": 0,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "Welcome into 49ers Faithful. Sunday afternoon on FOX at Levi's Stadium, the six-and-one Niners come out of the Week 8 bye holding the number one seed in the NFC, laying eight and a half points against the four-and-four Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is officially off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa.",
+          "text": "Welcome into 49ers Faithful. Sunday afternoon on FOX at Levi's Stadium, the 6-1 Niners come out of the Week 8 bye holding the number one seed in the NFC—opening at eight and a half and steamed to minus 9.5 with a 51.5 total against the 4-4 Las Vegas Raiders. And for the first time since Week 2, Nick Bosa is off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa.",
           "startSec": 0,
-          "endSec": 24.19
+          "endSec": 27.91
         },
         {
           "idx": 1,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "The math behind that defensive front is staggering, Marcus. Even without Bosa from Weeks 3 through 7, Osa Odighizuwa kept the interior disruption afloat. Now you drop six-foot-seven DeForest Buckner into the three-technique next to Odighizuwa, with Bosa and Keion White on the Wide-9 edges. Opposing centers literally cannot slide protection toward Bosa without leaving Buckner singled up on a guard.",
-          "startSec": 24.47,
-          "endSec": 49.62
+          "text": "The math behind defensive coordinator Raheem Morris's front is staggering, Marcus. Even without Bosa from Weeks 3 through 7, Osa Odighizuwa kept interior disruption afloat. Now Morris drops six-foot-seven DeForest Buckner into the three-technique next to Odighizuwa, with Bosa and Keion White on the Wide-9 edges. Opposing centers cannot slide protection toward Bosa without leaving Buckner singled up on a guard.",
+          "startSec": 28.19,
+          "endSec": 54.45
         },
         {
           "idx": 2,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "Exactly. And look across the sideline at who is calling plays for Las Vegas: first-year Raiders head coach Klint Kubiak, who spent all of 2023 inside Kyle Shanahan's building as our Passing Game Specialist. Kubiak wants to marry outside zone with Ashton Jeanty to deep play-action crossers for Kirk Cousins and Brock Bowers—the exact concepts Fred Warner and Deommodore Lenoir rep against every day in Santa Clara.",
-          "startSec": 49.9,
-          "endSec": 75.68
+          "text": "Exactly. And look across the sideline at who calls plays for Las Vegas: first-year Raiders head coach Klint Kubiak, who spent all of 2023 inside Kyle Shanahan's building as our Passing Game Specialist. Kubiak marries outside zone with Ashton Jeanty to deep play-action crossers for Kirk Cousins and Brock Bowers—the exact route spacing Raheem Morris, Fred Warner, and Deommodore Lenoir disguise split-safety rotations against every week.",
+          "startSec": 54.73,
+          "endSec": 82.16
         },
         {
           "idx": 3,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Plus San Francisco enters with a plus-seven-day rest advantage coming off the bye. Under Shanahan since 2017, when QB1 is healthy post-bye, the 49ers average plus 0.21 EPA per play on their opening fifteen scripted snaps, and Brock Purdy is already sitting top-three in the NFL at plus 63.2 passing EPA and plus 4.25 percent completion percentage over expected.",
-          "startSec": 75.96,
-          "endSec": 102.91
+          "text": "Plus San Francisco enters with a plus-seven-day rest advantage coming off the bye. Under Shanahan since 2017, when QB1 is healthy post-bye, the 49ers average plus 0.21 EPA per play on their opening fifteen scripted snaps, and Brock Purdy sits among the NFL leaders at plus 63.23 passing EPA, plus 4.25 percent completion percentage over expected, and just a 3.2 percent sack rate.",
+          "startSec": 82.44,
+          "endSec": 111.38
         },
         {
           "idx": 4,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "The one wrecker we have to respect for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to line up over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick 2.6-second rhythm digs to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus Demarcus Robinson if activated from IR.",
-          "startSec": 103.19,
-          "endSec": 125.73
+          "text": "The one game-wrecker we have to neutralize for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to align over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick rhythm throws to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus Demarcus Robinson if activated from IR.",
+          "startSec": 111.66,
+          "endSec": 133.82
         },
         {
           "idx": 5,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Control Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market score of Niners 29, Raiders 20 tracks right on the numbers.",
-          "startSec": 126.01,
-          "endSec": 138.01
+          "text": "Neutralize Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market projection of SF 30.5 to LV 21.0 tracks right on the numbers.",
+          "startSec": 134.1,
+          "endSec": 147.1
         }
       ]
     },
     {
       "id": "ep-cap-aiyuk-blueprint",
-      "title": "2026–2028 Salary Cap Blueprint: Rollover Math, Purdy/Bosa Levers & Aiyuk Resolution",
-      "topic": "OverTheCap Multi-Year Ledger, CBA Rollover Strategy & Brandon Aiyuk Cap Mechanics",
+      "title": "2026–2028 Salary Cap Blueprint: Why $35.16M Must Roll Into 2027's -$31.54M Horizon",
+      "topic": "OverTheCap Multi-Year Ledger, CBA Article 13 Rollover Bridge & Brandon Aiyuk Post-June 1 Mechanics",
       "format": "Two-Host Analytical Banter",
       "presetLabel": "4m Cap Dive",
       "createdBy": "49ers Faithful Desk",
-      "createdAt": "2026-11-06T19:50:00-08:00",
+      "createdAt": "2026-11-07T22:26:14.370Z",
       "sourceLinks": [
         {
           "label": "OverTheCap 49ers Cap Table",
@@ -96,134 +96,164 @@
         }
       ],
       "audioUrl": "./data/podcasts/ep-cap-aiyuk-blueprint.m4a",
-      "durationSec": 129,
-      "fileSizeBytes": 1053849,
+      "durationSec": 120,
+      "fileSizeBytes": 983828,
       "transcript": [
         {
           "idx": 0,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Let's open up the OverTheCap ledger for November 2026, because there is a ton of confusion online about why John Lynch and Paraag Marathe are sitting on 35.16 million dollars in gross 2026 cap space right now instead of spending every dollar at the deadline.",
+          "text": "Let's open the live OverTheCap multi-year ledger, because the biggest misconception around the 49ers right now is treating San Francisco's 35.16 million dollars in 2026 cap space like free money. When you flip one tab forward to 2027, San Francisco is currently projected 31.54 million dollars over an estimated 327 million dollar cap ceiling.",
           "startSec": 0,
-          "endSec": 16.37
+          "endSec": 25.68
         },
         {
           "idx": 1,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "Break down the multi-year mechanics, Elena. Casual fans see 35 million and assume it disappears in January if we don't spend it.",
-          "startSec": 16.65,
-          "endSec": 25
+          "text": "Connect those two numbers, Elena. That explains immediately why John Lynch and Paraag Marathe refuse to take on bloated multi-year contracts this week.",
+          "startSec": 25.96,
+          "endSec": 35.25
         },
         {
           "idx": 2,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Under Article 13 of the NFL Collective Bargaining Agreement, unused 2026 cap room carries over one-for-one into 2027. Look at how Brock Purdy and Nick Bosa's deals are structured: Purdy carries a 23.71 million cap number this year with 7.55 million in option proration, while Bosa sits at 22.99 million on a minimum 1.21 million base salary and over 21 million in combined signing and option proration. Rolling over 25 million dollars of clean space into 2027 absorbs next year's scheduled jumps without touching aging veteran contracts.",
-          "startSec": 25.28,
-          "endSec": 64.71
+          "text": "Precisely. Under Article 13 of the NFL Collective Bargaining Agreement, every unused dollar of 2026 cap space rolls over one-for-one into 2027. Brock Purdy carries a 23.71 million dollar cap number this season while Nick Bosa sits at 22.99 million before both contracts escalate sharply next spring. Rolling roughly 28 to 31 million dollars forward erases almost the entire 2027 deficit without touching aging veteran restructures.",
+          "startSec": 35.53,
+          "endSec": 67.38
         },
         {
           "idx": 3,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "Now factor in Friday's headline at SAP Performance Facility: Brandon Aiyuk meeting with team brass saying he is healthy and seeking reinstatement as both sides navigate a likely exit.",
-          "startSec": 64.99,
-          "endSec": 76.42
+          "text": "Now layer in Brandon Aiyuk meeting with team brass at SAP Performance Facility seeking reinstatement as both sides work toward a clean offseason exit.",
+          "startSec": 67.66,
+          "endSec": 77.26
         },
         {
           "idx": 4,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Here is the exact Post-June-1 math on Aiyuk or any major veteran contract after June first: any trade or release executed after June 1st—including right now in November—keeps only the current 2026 prorated bonus on the 2026 books, while accelerating remaining future unamortized bonus proration onto the 2027 dead-cap ledger. And if the resolution includes a bilateral settlement on unaccrued guarantees, San Francisco protects even more of its 2027 cap horizon.",
-          "startSec": 76.7,
-          "endSec": 108.3
+          "text": "Any trade or release executed after June first—including right now in November—functions under Post-June-1 accounting: only the current 2026 bonus proration stays on this year's cap, while remaining unamortized bonus proration accelerates onto the 2027 dead-money ledger. Structuring a bilateral settlement on unaccrued guarantees is critical so Aiyuk's exit does not compound that 31.54 million dollar 2027 crunch.",
+          "startSec": 77.54,
+          "endSec": 106.55
         },
         {
           "idx": 5,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "Which is why drafting 19 combined players across the 2025 and 2026 classes—guys like Mykel Williams, Alfred Collins, De'Zhaun Stribling, Gracen Halton, and Romello Height—was mandatory. Rookie-scale starters keep the championship window wide open while Purdy, Warner, and Bosa anchor the top of the payroll.",
-          "startSec": 108.58,
-          "endSec": 128.84
+          "text": "Which makes hitting on cost-controlled rookie-scale contributors—Mykel Williams, Alfred Collins, Upton Stout, De'Zhaun Stribling, Gracen Halton, and Romello Height—the structural engine keeping this championship window open.",
+          "startSec": 106.83,
+          "endSec": 120.42
         }
       ]
     },
     {
       "id": "ep-trade-deadline-seeding",
-      "title": "Nov 10 Trade Window & 10,000-Run NFC #1 Seed Outlook",
-      "topic": "Tuesday Nov 10 Deadline Targets, Pro-Rated Cap Costs & NFC Tiebreaker Equity",
+      "title": "Nov 10 Trade Window & Calibrated 34.5% NFC #1 Seed Outlook",
+      "topic": "Ranked Positional Needs, 9/18ths Rental Purchasing Power, 6-Pick 2027 Draft Ledger & Empirical-Bayes Playoff Odds",
       "format": "Two-Host Analytical Banter",
-      "presetLabel": "3m Strategy Brief",
+      "presetLabel": "4m Strategy Brief",
       "createdBy": "49ers Faithful Analytics",
-      "createdAt": "2026-11-06T17:20:00-08:00",
+      "createdAt": "2026-11-07T20:26:14.370Z",
       "sourceLinks": [
         {
           "label": "OverTheCap 49ers Contracts",
           "url": "https://overthecap.com/salary-cap/san-francisco-49ers"
         },
         {
-          "label": "ESPN NFL Standings",
-          "url": "https://www.espn.com/nfl/standings"
+          "label": "Tankathon 49ers Draft Picks",
+          "url": "https://www.tankathon.com/nfl/49ers"
         },
         {
-          "label": "NFL Transactions Wire",
-          "url": "https://www.espn.com/nfl/transactions"
+          "label": "ESPN NFL Standings",
+          "url": "https://www.espn.com/nfl/standings"
         }
       ],
       "audioUrl": "./data/podcasts/ep-trade-deadline-seeding.m4a",
-      "durationSec": 97,
-      "fileSizeBytes": 794768,
+      "durationSec": 166,
+      "fileSizeBytes": 1359822,
       "transcript": [
         {
           "idx": 0,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "We are inside the final 96 hours before Tuesday's November 10th, 1 PM Pacific NFL Trade Deadline. John Lynch already swung early to bring DeForest Buckner back home to the Bay Area alongside Osa Odighizuwa. Where does the roster still have vulnerability for January?",
+          "text": "We are inside the final stretch before Tuesday's November 10th, 1 PM Pacific NFL Trade Deadline. John Lynch already sent our 2027 fourth-round pick to Indianapolis to bring DeForest Buckner back home alongside Osa Odighizuwa. Looking strictly at the tape and injury wire, what are San Francisco's true ranked needs?",
           "startSec": 0,
-          "endSec": 16.97
+          "endSec": 20.28
         },
         {
           "idx": 1,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Looking at snap-weighted EPA and injury exposure, two spots stand out: boundary X-receiver insurance with Aiyuk out of the lineup, and veteran swing tackle depth behind 38-year-old Trent Williams. Because nine weeks of the eighteen-week season have elapsed, an incoming player only costs fifty percent—nine eighteenths—of their remaining 2026 base salary against our cap.",
-          "startSec": 17.25,
-          "endSec": 41.27
+          "text": "Number one is perimeter receiver and 12-personnel move tight end—with six receivers on reserve or restricted lists, targeting rookie-contract separators like Adonai Mitchell on the Jets, Josh Downs in Indianapolis, Rashod Bateman in Baltimore, or Greg Dulcich from Miami. Number two is left guard pass-protection stability next to Trent Williams, like Kingsley Suamataia. Number three is rotational speed edge—where winless Los Angeles Chargers veteran Khalil Mack is an ideal expiring one-year rental—followed by dime corner depth like Donte Jackson.",
+          "startSec": 20.56,
+          "endSec": 56.51
         },
         {
           "idx": 2,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "So a veteran Z or X separator on a four-million base salary costs barely two million against our 2026 cap, or under one million if a seller eats half the money for a fifth-for-seventh pick swap.",
-          "startSec": 41.55,
-          "endSec": 53.62
+          "text": "And let's clear up the cap and draft math on those targets. With 35.16 million dollars in 2026 space and nine eighteenths of the regular season remaining, do the 49ers ever need a seller to eat salary?",
+          "startSec": 56.79,
+          "endSec": 69.85
         },
         {
           "idx": 3,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
-          "text": "Exactly. And look at why every marginal upgrade matters right now: in our ten-thousand-run Monte Carlo NFC simulator, sitting at six-and-one with a three-and-oh NFC West mark—already owning road or neutral wins over the Rams in Melbourne and the Seahawks in Seattle—gives the 49ers a 97.7 percent division probability and a 54.8 percent shot at the number-one seed and first-round bye.",
-          "startSec": 53.9,
-          "endSec": 79.97
+          "text": "Not at all—and getting that direction right matters. Because signing bonus proration stays with the seller and acquiring teams only absorb nine eighteenths of remaining 2026 base salary, San Francisco actually holds over 65 million dollars in annualized base-salary purchasing power right now. Our real constraints are next year's 31.54 million dollar cap deficit and owning just 6 total picks in the 2027 draft after trading our fourth-rounder for Buckner. That means targeting expiring rentals or cheap rookie deals for Day-3 picks, while steering clear of zero-sack age-37 traps like Cameron Jordan or extended starters like Michael Mayer.",
+          "startSec": 70.13,
+          "endSec": 112.94
         },
         {
           "idx": 4,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "And look at the December gauntlet ahead: Vikings at 7,200 feet in Mexico City in Week 11, Seahawks in Week 12, Rams in Week 14, at Kansas City in Week 16, and the Eagles visiting Levi's in Week 17. Securing that Wild Card bye is everything.",
-          "startSec": 80.25,
-          "endSec": 97.38
+          "text": "Now connect that deadline discipline to our calibrated ten-thousand-run NFC playoff model, Elena—because raw un-regressed models wildly overstate early six-and-one records.",
+          "startSec": 113.22,
+          "endSec": 124.24
+        },
+        {
+          "idx": 5,
+          "speaker": "Elena",
+          "speakerRole": "Cap & Quantitative Insider",
+          "text": "Right. When you blend Empirical-Bayes regressed team power ratings with net offensive and defensive EPA, strength of schedule, and official NFL Rulebook multi-club tiebreakers, the 6-1 49ers project for 12 wins—giving San Francisco a 93 percent playoff probability, 82.6 percent odds to win the NFC West, and a calibrated 34.5 percent shot at the number-one seed bye, just ahead of 6-1 Minnesota at 29.6 percent and 6-2 Chicago at 15.1 percent. That Week 11 neutral-site showdown against Minnesota in Mexico City is the single biggest swing game in the conference.",
+          "startSec": 124.52,
+          "endSec": 165.58
         }
       ]
     }
   ],
   "sharedAnalyses": [
     {
+      "id": "analysis_trade_window_and_calibrated_seeding",
+      "title": "2026 Trade Window & Calibrated 10,000-Run Playoff Blueprint: Ranked Needs, Rental Math, -$31.54M 2027 Cap Horizon & 34.5% #1 Bye Odds",
+      "category": "Trade Window & Quantitative Seeding",
+      "createdAt": "2026-11-08T01:26:14.370Z",
+      "createdBy": "49ers Faithful Quantitative Desk",
+      "sourcesCited": [
+        {
+          "label": "OverTheCap Multi-Year 49ers Ledger",
+          "url": "https://overthecap.com/salary-cap/san-francisco-49ers"
+        },
+        {
+          "label": "Tankathon 49ers Draft Pick Capital",
+          "url": "https://www.tankathon.com/nfl/49ers"
+        },
+        {
+          "label": "nflverse 2026 EPA & Schedules",
+          "url": "https://github.com/nflverse/nflverse-data"
+        }
+      ],
+      "markdown": "### 1. Midseason CBA Purchasing Power vs. 2027 Cap & Draft Reality\n* **9/18ths Proration Purchasing Power**: Acquiring teams absorb only the remaining **9/18ths** of a player's 2026 base salary while signing/option bonus proration stays on the seller's cap. With **`$35.16M`** in 2026 Top-51 space, San Francisco holds **>`$65M` in annualized base-salary purchasing power** and does **not** need sellers to eat 2026 salary.\n* **The True Front-Office Constraints**:\n  1. **`-$31.54M` Projected 2027 Cap Deficit** (on an estimated `$327.0M` ceiling): Every 2026 dollar spent reduces 1-for-1 CBA Article 13 rollover needed for 2027 compliance.\n  2. **6 Total 2027 Draft Picks**: After trading SF's own 2027 4th-rounder to Indianapolis for **DeForest Buckner**, San Francisco owns **Rd 1 (#31), Rd 2 (#63), Rd 3 (#95), Rd 5 (#170), Rd 6 (#193 via BAL), and Rd 7 (#245 via KC)**—leaving a 75-pick gap between #95 and #170.\n\n### 2. Verified Ranked Needs, Targets & Traps to Avoid\n1. **Perimeter WR / 12-Personnel Move TE (Critical)**: With Mike Evans, Ricky Pearsall, and Demarcus Robinson on IR and Brandon Aiyuk inactive, top cost-controlled fits are **Adonai Mitchell** (NYJ, `~$0.79M` prorated), **Josh Downs** (IND, `~$1.72M`), **Rashod Bateman** (BAL), and **Greg Dulcich** (MIA, `~$0.60M` expiring). *Note on **Quentin Johnston** (LAC): viable only if LAC restructures/retains his guaranteed `$18.0M` 2027 5th-year option.*\n2. **Left Guard Pass Protection (High)**: Upgrade interior anchor next to **Trent Williams** via rookie-scale **Kingsley Suamataia** (KC, `~$0.65M` prorated).\n3. **Rotational Speed EDGE & Dime DB (Targeted Rentals)**: Expiring one-year rentals on 0-7 LAC—**Khalil Mack** (`$4.0M` prorated, `$0` in 2027) and **Donte Jackson** (`$3.0M` prorated)—or **Jessie Bates III** (ATL, played under DC **Raheem Morris** in 2024–2025, contract voids after 2026).\n* **Traps to Reject**: Zero-sack age-37 edge **Cameron Jordan** (0.0 sacks in 7 games), recently extended **Michael Mayer** (LV 3-yr/`$45M` deal), and burning Day-2 picks (#63/#95) on contender starters.\n\n### 3. Calibrated 10,000-Run Playoff Probabilities (Why SF Sits at `34.5%` for the #1 Bye)\n* **Empirical-Bayes + Net EPA + SOS Calibration**: Shrinking 7-game sample variance toward league priors (`gp / (gp + 9.5)`) with per-game posterior uncertainty and full NFL Section 16 multi-club tiebreakers places the **6-1** 49ers at **`12` projected wins**, **`93%` Playoff Berth**, **`82.6%` NFC West Title**, and **`34.5%` #1 Seed First-Round Bye**—leading **Minnesota (`6-1`, `29.6%`)** and **Chicago (`6-2`, `15.1%`)** entering the pivotal Week 11 neutral-site H2H clash vs. Minnesota in Mexico City."
+    },
+    {
       "id": "analysis_wide9_buckner_bosa",
-      "title": "Scheme & EPA Deep Dive: How DeForest Buckner + Osa Odighizuwa Transform Nick Bosa’s Pass-Rush Geometry",
+      "title": "Scheme & EPA Deep Dive: How DC Raheem Morris, DeForest Buckner & Osa Odighizuwa Transform Nick Bosa’s Pass-Rush Geometry",
       "category": "Film & Trench Analytics",
-      "createdAt": "2026-11-06T20:40:00-08:00",
+      "createdAt": "2026-11-07T23:26:14.370Z",
       "createdBy": "49ers Faithful Film Desk",
       "sourcesCited": [
         {
@@ -239,13 +269,13 @@
           "url": "https://www.pro-football-reference.com/teams/sfo/2026.htm"
         }
       ],
-      "markdown": "### Executive Finding\nPairing **DeForest Buckner** (6'7\", 295 lbs, 34.4\" arm length) and **Osa Odighizuwa** inside with **Nick Bosa** and **Keion White** on the Wide-9 rails eliminates the #1 protection adjustment offenses used against San Francisco in 2024–2025: **5-man half-slide + RB chip toward Bosa**.\n\n### Key Quantitative & Film Mechanics\n1. **Interior Slide Conflict (2i / 3-Tech Split)**:\n   * When SF aligns Buckner at the 3-technique weak and Odighizuwa at the 2i/shade strong, the opposing center must turn toward Odighizuwa or risk immediate A-gap penetration in Brock Purdy's opponent mirror (2.4s pocket collapse).\n   * If the center slides away from Buckner + Bosa's side, the offensive guard is left on an island against Buckner's forklift bull-rush, preventing the guard from widening to help the tackle on **T-E (Tackle-End) stunts**.\n2. **Early-Down Run-Fit Integrity vs. Outside Zone**:\n   * Through Week 7 without Bosa for 5 games, SF relied heavily on **Fred Warner** erasing leaky B-gap creases. Buckner's career tackle-for-loss rate against outside zone restores two-gap knock-back, keeping Warner clean to rob play-action crossers.\n3. **Snap-Count Pitch Count Projection (Week 9 vs. Raiders)**:\n   * Expect Bosa around **42–46 snaps (~68%)**, with **Mykel Williams**, **Keion White**, and 3rd-round rookie **Romello Height** rotating on early run downs and 2nd-and-long speed rushes."
+      "markdown": "### Executive Finding\nUnder Defensive Coordinator **Raheem Morris**, pairing **DeForest Buckner** (6'7\", 295 lbs, 34.4\" arm length) and **Osa Odighizuwa** inside with **Nick Bosa** and **Keion White** on the Wide-9 rails eliminates the #1 protection adjustment offenses used against San Francisco in 2024–2025: **5-man half-slide + RB chip toward Bosa**.\n\n### Key Quantitative & Film Mechanics\n1. **Interior Slide Conflict (2i / 3-Tech Split)**:\n   * When Morris aligns Buckner at the 3-technique weak and Odighizuwa at the 2i/shade strong, the opposing center must turn toward Odighizuwa or risk immediate A-gap penetration in the quarterback's lap (2.4s pocket collapse).\n   * If the center slides away from Buckner + Bosa's side, the offensive guard is left on an island against Buckner's forklift bull-rush, preventing the guard from widening to help the tackle on **T-E (Tackle-End) stunts**.\n2. **Early-Down Run-Fit Integrity & Disguised Split-Safety Rotations**:\n   * Through Week 7 without Bosa for 5 games, SF relied heavily on **Fred Warner** erasing leaky B-gap creases. Buckner's career tackle-for-loss rate against outside zone restores two-gap knock-back, letting Morris spin two-high shells into late Cover-3 Buzz and Quarters robbers behind a dominant 4-man rush.\n3. **Snap-Count Pitch Count Projection (Week 9 vs. Raiders)**:\n   * Expect Bosa around **42–46 snaps (~68%)**, with **Mykel Williams**, **Keion White**, and 3rd-round rookie **Romello Height** rotating on early run downs and 2nd-and-long speed rushes."
     },
     {
       "id": "analysis_purdy_2026_cpoe_epa",
       "title": "Brock Purdy 2026 Through 7 Games: Why +4.25% CPOE & 3.2% Sack Avoidance Sustain Top-3 NFL Offense",
       "category": "QB & Passing Analytics",
-      "createdAt": "2026-11-06T18:10:00-08:00",
+      "createdAt": "2026-11-07T21:26:14.370Z",
       "createdBy": "49ers Faithful Analytics",
       "sourcesCited": [
         {
@@ -261,7 +291,7 @@
           "url": "https://rbsdm.com/stats/stats/"
         }
       ],
-      "markdown": "### 2026 Statistical Snapshot (Weeks 1–7, 6-1 Record)\n* **Passing Efficiency**: `146/211 (69.2%)`, `1,748 Yards (8.28 YPA)`, `15 TD`, `4 INT`\n* **Total Passing EPA**: `+63.23` (**Top-3 NFL** per game at `+9.03 EPA/game`)\n* **Completion % Over Expected (CPOE)**: `+4.25%`\n* **Sacks Taken**: Only `7 sacks` across `218 dropbacks` (`3.2% sack rate`, **#2 best in NFL**)\n\n### What Changed on Film in 2026\n1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting hero throws when two-high shells bracket the deep over route, Purdy has cut his pressure-to-sack conversion nearly in half by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets.\n2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even without Brandon Aiyuk active, Purdy has completed **70 passes of 10+ yards** and **24 explosive passes of 20+ yards** through 7 games by trusting **Brandin Cooks**, **Jordan Watkins**, **Jacob Cowing**, and early-season reps from **Mike Evans** and **Ricky Pearsall** before they cleared linebacker leverage."
+      "markdown": "### 2026 Statistical Snapshot (6-1 Record)\n* **Passing Efficiency**: `146/211 (69.2%)`, `1,748 Yards (8.28 YPA)`, `15 TD`, `4 INT`\n* **Total Passing EPA**: `+63.23` (plus `+14.38` rushing EPA on `161` scramble/zone-read yards)\n* **Completion % Over Expected (CPOE)**: `+4.25%`\n* **Sacks Taken**: Only `7 sacks` across `218 dropbacks` (`3.2% sack rate`)\n\n### What Changed on Film in 2026\n1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting low-percentage hero throws when two-high shells bracket the deep over route, Purdy has slashed his pressure-to-sack conversion by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets within `3s`.\n2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even with Brandon Aiyuk inactive and Mike Evans and Ricky Pearsall moved to Injured Reserve after early-season snaps, Purdy has sustained elite intermediate efficiency (`85` passing first downs) by trusting **Brandin Cooks**, **Jordan Watkins**, and **Jacob Cowing** before they clear linebacker leverage."
     }
   ]
 }

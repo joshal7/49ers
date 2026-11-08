@@ -211,18 +211,18 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
 
   if (isTradeQuery && (tw.topNeeds?.length || tw.realisticTargets?.length)) {
     const needsMd = (tw.topNeeds || [])
-      .map(n => `* **[${n.urgency}] ${n.position}**: ${n.rationale}`)
+      .map(n => `* **[${n.urgency}] ${n.positionGroup || n.position}**: ${n.epaContext || n.rationale}`)
       .join('\n');
     const targetsMd = (tw.realisticTargets || [])
       .slice(0, 5)
       .map(
         t =>
-          `* **${t.name} (${t.position} • ${t.currentTeam || t.archetype || ''} • Fit \`${t.fitScore}/100\`)**: Est. Cost \`${t.projectedPickCost}\` • 2026 Buyer Proration \`${t.acquiring2026CapHit}\` • 2027 Horizon \`${t.cap2027Impact || '—'}\`. ${t.schemeFit}`
+          `* **${t.name} (${t.position} • ${t.currentTeam || t.archetype || ''} • Fit \`${t.fitScore}/100\`)**: Est. Cost \`${t.projectedPickCost}\` • 2026 Buyer Proration \`${t.acquiring2026CapHit || formatCompactDollars(t.prorated2026CapCharge)}\` • 2027 Horizon \`${t.cap2027Impact || '—'}\`. ${t.fitBreakdown || t.schemeFit || ''}`
       )
       .join('\n');
     const pitfallsMd = (tw.pitfallsToAvoid || [])
       .slice(0, 3)
-      .map(pf => `* **Avoid ${pf.category} (${pf.targetExample})**: ${pf.reason}`)
+      .map(pf => `* **Avoid ${pf.trap || pf.category} (${pf.examples || pf.targetExample})**: ${pf.whyAvoid || pf.reason}`)
       .join('\n');
 
     sections.push(
@@ -245,7 +245,7 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
 
   if (q.includes('draft') || q.includes('pick') || q.includes('2027') || q.includes('combine') || q.includes('tankathon')) {
     const pickSummary = (dp.pickInventory || [])
-      .map(pk => `* **Round ${pk.round}${pk.overall ? ` (#${pk.overall})` : ''} — ${pk.origin}** (\`~${pk.estValuePts} Rich Hill pts\`): ${pk.note}`)
+      .map(pk => `* **Round ${pk.round}${pk.projectedOverall || pk.overall ? ` (#${pk.projectedOverall || pk.overall})` : ''} — ${pk.origin}** (\`~${pk.valueRichHill ?? pk.estValuePts ?? '—'} Rich Hill pts\`)`)
       .join('\n');
     if (pickSummary) {
       sections.push(
@@ -274,7 +274,7 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
       .map(t => `${t.abbr} (\`${t.seed1ByePct}%\` #1 Bye, \`${t.winDivisionPct}%\` Div)`)
       .join(', ');
     sections.push(
-      `#### Calibrated Season Outlook (10,000 Empirical-Bayes + EPA + SOS Runs)\n* **Current Standing**: \`${rec}\` (${stand}, \`${ptDiff}\` point differential) • **Projected Finish**: \`${mc.projectedWins ?? 12.0} Wins\`.\n* **Calibrated Probabilities**: Playoff Berth \`${mc.makePlayoffsPct ?? 93.7}%\` • Win NFC West \`${mc.winDivisionPct ?? 83.7}%\` • **#1 Seed First-Round Bye \`${mc.seed1ByePct ?? 36.9}%\`**.\n* **NFC Contender Context**: ${topRivals || 'MIN, CHI, and DET cannibalize inside the NFC North while SF holds a Week 11 Mexico City neutral-site tiebreaker showdown vs. Minnesota.'}`
+      `#### Calibrated Season Outlook (10,000 Empirical-Bayes + EPA + SOS Runs)\n* **Current Standing**: \`${rec}\` (${stand}, \`${ptDiff}\` point differential) • **Projected Finish**: \`${mc.projectedWins ?? 12.0} Wins\`.\n* **Calibrated Probabilities**: Playoff Berth \`${mc.makePlayoffsPct ?? 93.0}%\` • Win NFC West \`${mc.winDivisionPct ?? 82.6}%\` • **#1 Seed First-Round Bye \`${mc.seed1ByePct ?? 34.5}%\`**.\n* **NFC Contender Context**: ${topRivals || 'MIN, CHI, and DET cannibalize inside the NFC North while SF holds a Week 11 Mexico City neutral-site tiebreaker showdown vs. Minnesota.'}`
     );
   }
 
@@ -321,7 +321,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `Let's set the verified numbers entering Week ${curWk}. San Francisco sits at ${rec} (${stand}), projecting for ${mc.projectedWins ?? 12.0} wins with a ${mc.makePlayoffsPct ?? 93.7} percent playoff probability, ${mc.winDivisionPct ?? 83.7} percent NFC West equity, and a calibrated ${mc.seed1ByePct ?? 36.9} percent shot at the NFC #1 seed bye across ten thousand Empirical-Bayes and EPA simulations.`
+      text: `Let's set the verified numbers entering Week ${curWk}. San Francisco sits at ${rec} (${stand}), projecting for ${mc.projectedWins ?? 12.0} wins with a ${mc.makePlayoffsPct ?? 93.0} percent playoff probability, ${mc.winDivisionPct ?? 82.6} percent NFC West equity, and a calibrated ${mc.seed1ByePct ?? 34.5} percent shot at the NFC #1 seed bye across ten thousand Empirical-Bayes and EPA simulations.`
     },
     {
       speaker: 'Marcus',

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T01:14:29.296Z",
+  "updatedAt": "2026-11-08T02:22:38.089Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -189,19 +189,19 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-    "executiveSummary": "Paraag Marathe & John Lynch currently hold $35.16M in gross 2026 cap space ($35.16M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $23M–$29M of unused 2026 cap space into 2027 to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
+    "executiveSummary": "Paraag Marathe & John Lynch hold $35.16M in gross 2026 cap space ($35.16M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$31.54M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $27M–$32M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
     "strategicPillars": [
       {
-        "title": "1. Rollover Cap Preservation ($23M+ Target)",
-        "detail": "Unused 2026 cap space carries over 1-for-1 into 2027 under Article 13 of the NFL CBA. Keeping ~$23M+ untouched turns a tight 2027 cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans."
+        "title": "1. CBA Article 13 Rollover Bridge ($27M–$32M Target vs. -$31.54M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027. Preserving $27M+ of 2026 room nearly erases San Francisco's projected -$31.54M 2027 deficit without forcing premature void-year restructures on aging veterans."
       },
       {
-        "title": "2. Option-Bonus & Void-Year Architecture",
-        "detail": "SF structures core stars (Purdy $7.55M option proration, Bosa $8.85M option proration) with low P5 base salaries and spring option exercises that trigger April 1st—maximizing trade flexibility prior to bonus exercise dates."
+        "title": "2. Expiring Rental Purchasing Power & Option-Bonus Architecture",
+        "detail": "Leading the NFC with $35.16M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
       },
       {
-        "title": "3. Rookie-Scale Trench Pipeline (2025–2026 Classes)",
-        "detail": "Drafting 19 combined players across 2025–2026—heavily weighted toward DL/OL (Mykel Williams, Alfred Collins, Gracen Halton, Romello Height, Carver Willis)—insulates the cap from middle-class free-agent inflation."
+        "title": "3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks",
+        "detail": "With SF's 2027 4th-round pick traded for DeForest Buckner (6 picks left: Rd 1, 2, 3, 5, 6-BAL, 7-KC), protecting Round 1–3 capital alongside 2025–2026 draftees (Mykel Williams, Alfred Collins, Omar Cooper Jr., Keionte Scott, Romello Height) is mandatory against 2027 cap tightness."
       }
     ],
     "restructureCandidates": [

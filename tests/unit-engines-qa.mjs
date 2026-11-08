@@ -32,8 +32,13 @@ import {
 } from '../src/engine/injuryProbabilityModel.js';
 import {
   runPlayoffMonteCarlo,
-  computeRootingGuideLeverage
+  computeRootingGuideLeverage,
+  computeCalibratedTeamPowerRating
 } from '../src/engine/playoffMonteCarlo.js';
+import {
+  parseTankathonTeamPicksHtml,
+  extractGeminiResponseText
+} from '../scripts/lib/aiSynthesisEngine.mjs';
 import {
   scoreContentSignal,
   cleanSensationalistText,
@@ -1709,6 +1714,134 @@ test('Trade Window 30-day cutoff keeps recent acquisitions (<=30d) in Trade Wind
   assert.ok(recentTrades.some(m => m.player === 'DeForest Buckner'), 'DeForest Buckner (Nov 3 trade) must be in recentTrades');
   assert.ok(!recentTrades.some(m => m.player === 'Osa Odighizuwa'), 'Osa Odighizuwa (March trade) must NOT be in recentTrades');
   assert.ok(archivedTrades.some(m => m.player === 'Osa Odighizuwa'), 'Osa Odighizuwa (>30d old) must be in archivedTrades');
+});
+
+test('Calibrated Playoff Monte Carlo avoids un-regressed 54.8% inflation and honors NFL 3-club H2H sweep + Step-1 restart rules', () => {
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const sf = seasonal.playoffPicture?.baselineSimulation?.sfOdds;
+  assert.ok(sf, 'sfOdds present');
+  assert.ok(
+    sf.seed1ByePct >= 25 && sf.seed1ByePct <= 45,
+    `Expected calibrated #1 Seed Bye % in [25, 45] (Gemini Argon benchmark 33.5–40%), got ${sf.seed1ByePct}%`
+  );
+  assert.ok(
+    sf.winDivisionPct >= 70 && sf.winDivisionPct <= 92,
+    `Expected calibrated NFC West % in [70, 92], got ${sf.winDivisionPct}%`
+  );
+  assert.ok(
+    sf.makePlayoffsPct >= 85 && sf.makePlayoffsPct <= 98,
+    `Expected calibrated Playoff Berth % in [85, 98], got ${sf.makePlayoffsPct}%`
+  );
+  assert.ok(
+    sf.projectedWins >= 11.2 && sf.projectedWins <= 13.0,
+    `Expected calibrated projected wins in [11.2, 13.0], got ${sf.projectedWins}`
+  );
+
+  // Verify NFL 3-club Wild Card H2H complete-sweep rule (Team A beats BOTH B and C -> A wins #1 seed)
+  const threeWayTeams = [
+    { abbr: 'SF', name: '49ers', division: 'NFC West', wins: 13, losses: 4, confWins: 8, confLosses: 4, pointDiff: 40, powerRating: 1550 },
+    { abbr: 'MIN', name: 'Vikings', division: 'NFC North', wins: 13, losses: 4, confWins: 10, confLosses: 2, pointDiff: 90, powerRating: 1550 },
+    { abbr: 'PHI', name: 'Eagles', division: 'NFC East', wins: 13, losses: 4, confWins: 10, confLosses: 2, pointDiff: 85, powerRating: 1550 },
+    { abbr: 'TB', name: 'Bucs', division: 'NFC South', wins: 9, losses: 8, confWins: 6, confLosses: 6, pointDiff: 0, powerRating: 1500 }
+  ];
+  const sweepSim = runPlayoffMonteCarlo({
+    nfcTeams: threeWayTeams,
+    completedGames: [
+      { id: 'g1', week: 5, home: 'SF', away: 'MIN', homeScore: 24, awayScore: 20 },
+      { id: 'g2', week: 10, home: 'PHI', away: 'SF', homeScore: 17, awayScore: 27 }
+    ],
+    remainingGames: [],
+    iterations: 100
+  });
+  assert.equal(sweepSim.sfOdds.seed1ByePct, 100, 'SF complete H2H sweep over both MIN & PHI must award #1 Seed despite lower confWins');
+});
+
+test('Trade Window purchasing power, real targets, pitfalls to avoid, and 6-pick 2027 Tankathon draft ledger are verified', () => {
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const tw = seasonal.tradeWarRoom;
+  assert.ok(Array.isArray(tw.purchasingPower) && tw.purchasingPower.length === 3, 'purchasingPower 3-tier array required');
+  assert.ok(Array.isArray(tw.pitfallsToAvoid) && tw.pitfallsToAvoid.length >= 3, 'pitfallsToAvoid required');
+  assert.ok(tw.pitfallsToAvoid.some(p => /Cameron Jordan/i.test(`${p.trap} ${p.examples}`)), 'Must warn against 0-sack age-37 Cameron Jordan trap');
+  assert.ok(tw.pitfallsToAvoid.some(p => /Michael Mayer/i.test(`${p.trap} ${p.examples}`)), 'Must warn against extended Michael Mayer rumor');
+
+  const bucknerMove = tw.completed2026Moves.find(m => m.player === 'DeForest Buckner');
+  assert.ok(bucknerMove && /2027 4th/i.test(bucknerMove.costSummary), 'Buckner trade must cite 2027 4th-round pick cost');
+
+  assert.ok(tw.realisticTargets.length >= 8);
+  for (const t of tw.realisticTargets) {
+    assert.ok(!/archetype/i.test(t.name), `Fake archetype target forbidden: ${t.name}`);
+    assert.ok(typeof t.currentTeam === 'string' && t.currentTeam.length >= 3);
+    assert.ok(typeof t.cap2027Impact === 'string' && t.cap2027Impact.length >= 2);
+  }
+
+  const dp = seasonal.draftPrep2027;
+  assert.equal(dp.pickInventory.length, 6, 'SF owns exactly 6 picks in 2027 after Buckner Rd 4 trade');
+  assert.ok(!dp.pickInventory.some(p => p.round === 4), 'Phantom 2027 Round 4 pick must not appear in pickInventory');
+  assert.ok(/Buckner/i.test(dp.tradedPicksNote || ''), 'tradedPicksNote must document Rd 4 sent to IND for Buckner');
+
+  // Unit check on Tankathon HTML parser
+  const parsedSample = parseTankathonTeamPicksHtml(`
+    <h2 class="team-page-section-title">Current Draft Picks</h2>
+    <div class="pick-card"><div class="pick-card-round">1.31 </div>31</div><div class="abbreviation">SF</div></div>
+    <div class="pick-card"><div class="pick-card-round">6.14 </div>193</div><div class="abbreviation">BAL</div></div>
+  `);
+  assert.equal(parsedSample.length, 2);
+  assert.equal(parsedSample[0].projectedOverall, 31);
+  assert.equal(parsedSample[1].fromTeam, 'BAL');
+});
+
+await testAsync('Worker defaults to gemini-2.5-pro with deep thinking, strips internal thought parts, and preserves external trade/dead-cap context', async () => {
+  const origFetch = globalThis.fetch;
+  let capturedUrl = '';
+  let capturedBody = null;
+  globalThis.fetch = async (reqUrl, init) => {
+    capturedUrl = String(reqUrl);
+    capturedBody = JSON.parse(init.body);
+    return new Response(
+      JSON.stringify({
+        candidates: [
+          {
+            content: {
+              parts: [
+                { thought: true, text: 'INTERNAL_SECRET_THOUGHT_SCRATCHPAD: checking cap tables...' },
+                {
+                  text: '### Cap & Trade Audit\n* Javon Hargrave carries 2026 dead cap money, while Saints trade target Chase Young plays in New Orleans. Active SF edge Bryce Huff rotates in.'
+                }
+              ]
+            }
+          }
+        ]
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+  try {
+    const envPro = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-key' });
+    delete envPro.GEMINI_TEXT_MODEL; // verify default fallback is gemini-2.5-pro!
+    const res = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/analyze', {
+          method: 'POST',
+          headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: 'Audit 2026 dead cap and trade window edge market',
+            contextSummary: 'LIVE RECORD: 6-1 | Active DE: Nick Bosa, Keion White, Mykel Williams'
+          })
+        }),
+        envPro
+      )
+    ).json();
+
+    assert.ok(capturedUrl.includes('models/gemini-2.5-pro:generateContent'), `Expected gemini-2.5-pro URL, got ${capturedUrl}`);
+    assert.ok(capturedBody.generationConfig?.thinkingConfig?.thinkingBudget >= 8192, 'Expected deep thinkingBudget');
+    assert.ok(!res.item.markdown.includes('INTERNAL_SECRET_THOUGHT_SCRATCHPAD'), 'Thought part must never leak into output');
+    assert.ok(!/Bryce Huff/i.test(res.item.markdown), 'Active-49er Bryce Huff hallucination must be scrubbed');
+    assert.ok(/Javon Hargrave/i.test(res.item.markdown), 'Legitimate 2026 dead-cap mention of Javon Hargrave must be preserved');
+    assert.ok(/Chase Young/i.test(res.item.markdown), 'Legitimate Saints trade-target mention of Chase Young must be preserved');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
 });
 
 console.log(`\n======================================================`);

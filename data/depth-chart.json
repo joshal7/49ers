@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T01:14:29.296Z",
+  "updatedAt": "2026-11-08T02:22:38.089Z",
   "week": 9,
   "units": [
     {
@@ -1557,9 +1557,9 @@
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
               "baselineRank": 3,
-              "playProbabilityPct": 73,
-              "statusBadge": "73% • True GTD",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1589,9 +1589,10 @@
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
               "baselineRank": 3,
-              "playProbabilityPct": 73,
-              "statusBadge": "73% • True GTD",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false

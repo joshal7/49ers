@@ -408,7 +408,7 @@ function renderPodcastStudio({
     `${wkLabel} ${oppShort} Film & Trench Protection Plan`.trim(),
     '2026 Trade Window Needs, Realistic Targets & 2027 Cap Horizon',
     'DeForest Buckner + Nick Bosa Wide-9 Stunt Geometry',
-    'Calibrated #1 NFC Seed Odds (36.9%) & Conference Tiebreakers'
+    `Calibrated #1 NFC Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%) & Conference Tiebreakers`
   ];
 
   const transcriptHtml = activeEp
@@ -586,7 +586,7 @@ function renderDeepAnalysisRunner({ appData, analysisPromptDraft, jobStatus, all
   const oppLabel = um.oppName || 'opponent';
   const quickPrompts = [
     'Assess 49ers 2026 trade window needs, realistic seller targets, 9/18ths rental math & 2027 -$31.54M cap horizon',
-    'Evaluate calibrated 10,000-run NFC #1 seed bye odds (36.9%), NFC North cannibalization & Week 11 MIN tiebreaker',
+    `Evaluate calibrated 10,000-run NFC #1 seed bye odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%), NFC North cannibalization & Week 11 MIN tiebreaker`,
     'Evaluate Brock Purdy 2026 EPA/play, CPOE, and pressure-to-sack avoidance vs. two-high shells',
     `How DC Raheem Morris pairs DeForest Buckner, Keion White & Nick Bosa in ${wkLabel} vs. ${oppLabel}`
   ];

@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-08T01:14:29.296Z",
+  "updatedAt": "2026-11-08T02:22:38.089Z",
   "week": 9,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/injuries",
-  "remainingIrDesignations": 7,
+  "remainingIrDesignations": 8,
   "maxRegularSeasonIrDesignations": 8,
   "practiceReport": [
     {
@@ -63,27 +63,6 @@
         "Officially inactive (Out / Reserve / Reinstatement pending)"
       ],
       "beatComment": "Per Wagoner, Aiyuk submitted paperwork to be reinstated to the NFL in late October, and since then both the NFL Management Council and the NFL Players Association have been involved in an attempt to reach a resolution that's agreeable to both the wide receiver and the 49ers. Tom Pelissero of Netflix reported Thursday that Aiyuk's efforts to secure his release may be hampered by the roughly $13 million in bonus forfeitures that he owes the team, which could mean arbitration comes into play and delays the process. Friday's meeting between Aiyuk, his agent Drew Rosenhaus and San Francisco brass was only the first step. If the sides reach an agreement, the 49ers will have three options: release Aiyuk, trade him before Tuesday's deadline or add him to their 53-man roster."
-    },
-    {
-      "playerId": "4240542",
-      "name": "Nate Hobbs",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "LP",
-      "injuryType": "Groin",
-      "gameStatus": "Questionable (IR Return Window)",
-      "playProbabilityPct": 73,
-      "playBadgeLabel": "73% • True GTD",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "21-day IR practice window active; officially listed Questionable for activation",
-        "Friday Limited (LP) — anchored to player Questionable play prior (78%)",
-        "Soft-tissue re-aggravation caution (Groin)"
-      ],
-      "beatComment": "Hobbs was limited all week after the 49ers allowed him to return to practice Wednesday, and he's still on injured reserve going into the weekend. If he's not activated before Sunday's contest, rookie fourth-rounder Ephesians Prysock could remain a candidate for a few reps at cornerback in Week 9."
     },
     {
       "playerId": "3057524",
@@ -434,12 +413,12 @@
       "jersey": 22,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
       "injuryType": "Groin",
-      "status": "IR — Designated to Return (Questionable)",
+      "status": "Injured Reserve",
       "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 9,
+      "earliestEligibleWeek": 10,
       "projectedReturnWeek": "Est. Week 10 (Nov 15)",
       "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
-      "beatNote": "Hobbs was limited all week after the 49ers allowed him to return to practice Wednesday, and he's still on injured reserve going into the weekend. If he's not activated before Sunday's contest, rookie fourth-rounder Ephesians Prysock could remain a candidate for a few reps at cornerback in Week 9."
+      "beatNote": "Hobbs had his practice window opened Wednesday and logged three limited practices before initially being deemed questionable to face the Raiders on Sunday. Since he wasn't activated Saturday, the veteran cornerback will have to wait at least another week to return to action. Hobbs' next chance to do so is Sunday, Nov. 15, against Dallas."
     },
     {
       "playerId": "4573188",
