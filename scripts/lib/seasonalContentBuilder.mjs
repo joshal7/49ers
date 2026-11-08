@@ -569,6 +569,11 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
   const oppName = um.oppName || 'Las Vegas Raiders';
   const oppShort = oppName.split(' ').slice(-1)[0] || oppName;
   const capGrossM = ((Number(liveCtx.capSpaceGross || 35_164_858)) / 1e6).toFixed(2);
+  const cap2027Raw = Number(liveCtx.capSpace2027 ?? -31_540_066);
+  const cap2027Label = `${cap2027Raw < 0 ? '-' : '+'}$${(Math.abs(cap2027Raw) / 1e6).toFixed(2)}M`;
+  const spreadLabel = um.betting?.spread || 'SF -9.5';
+  const openSpreadLabel = um.betting?.openingSpread || 'Opened SF -8.5';
+  const totalLabel = um.betting?.overUnder || 51.5;
   const tradeDeadlineMs = new Date(liveCtx.tradeDeadlineIso || '2026-11-10T13:00:00-08:00').getTime();
   const isTradeWindowOpen = Date.now() <= tradeDeadlineMs;
 
@@ -848,7 +853,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         publishedAt: latestPublishedFromSources(capLinks, 120),
         category: 'cap',
         categoryLabel: 'Cap & Roster Mechanics',
-        headline: `49ers Front Office Ledger ($${capGrossM}M Space): CBA Article 13 Rollover & 2027 Core Horizon`,
+        headline: `49ers Front Office Ledger ($${capGrossM}M Space vs. ${cap2027Label} 2027 Horizon): CBA Rollover Mechanics`,
         synthesizedFromCount: 9,
         signalScore: 91,
         citedReporterIds: ['matt_barrows', 'david_lombardi', 'field_yates', 'adam_schefter'],
@@ -856,15 +861,15 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         featuredPlayers: pickPlayers(['Brock Purdy', 'Nick Bosa', 'Fred Warner', 'Trent Williams']),
         sourceLinks: capLinks,
         hardFacts: [
-          `OverTheCap's live ledger lists San Francisco with $${capGrossM}M in gross 2026 cap space.`,
-          'Unused 2026 cap dollars carry over 1-for-1 into 2027 under Article 13 of the NFL CBA.',
+          `OverTheCap's live ledger lists San Francisco with $${capGrossM}M in gross 2026 cap space (#1 in NFC) against a ${cap2027Label} projected 2027 cap balance on a $327M estimated ceiling.`,
+          'Unused 2026 cap dollars carry over 1-for-1 into 2027 under Article 13 of the NFL CBA, directly offsetting next season\'s projected deficit.',
           'Rookie-scale contributors from the 2025–2026 draft classes continue insulating rotational depth costs.'
         ],
         schemeAndCapTakeaways: [
           'Option-Bonus Structure: Purdy and Bosa option prorations keep immediate base salaries low while preserving pre-April flexibility.',
           'Post-June 1 Accounting: Any transaction executed after June 1 defers unamortized future-year bonus acceleration into 2027.'
         ],
-        consensusVsDissent: 'Front office discipline prioritizes 2027 rollover cushion over short-term veteran restructures.',
+        consensusVsDissent: 'Front office discipline prioritizes 2027 rollover cushion over multi-year veteran guarantees.',
         videoClip: null
       }
     ];
@@ -913,7 +918,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
 
   const tradeLinks = matchSourceLinks(['trade', 'deadline', 'lynch', 'cap'], [
     {
-      title: 'San Francisco 49ers 2026–2029 Salary Cap Table — OverTheCap',
+      title: 'San Francisco 49ers 2026–2030 Salary Cap Table — OverTheCap',
       url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
       outlet: 'OverTheCap',
       type: 'cap'
@@ -947,7 +952,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       publishedAt: latestPublishedFromSources(bosaLinks, 42),
       category: 'film',
       categoryLabel: 'Trench & Health Briefing',
-      headline: 'Nick Bosa & Christian McCaffrey Cleared for Week 9; Full Wide-9 Front Debuts With DeForest Buckner & Osa Odighizuwa',
+      headline: 'Nick Bosa & Christian McCaffrey Cleared for Week 9; Full Wide-9 Front Debuts Under DC Raheem Morris With DeForest Buckner & Osa Odighizuwa',
       synthesizedFromCount: 16,
       signalScore: 96,
       citedReporterIds: ['nick_wagoner', 'matt_maiocco', 'matt_barrows', 'kyle_shanahan', 'tim_ryan', 'david_lombardi'],
@@ -957,10 +962,10 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       hardFacts: [
         'Nick Bosa returns Sunday vs. Las Vegas for the first time since Week 2 without a restrictive game designation after clearing post-Bye full-speed pass-rush reps.',
         "Christian McCaffrey exited the Week 8 Bye off the injury report and is a full go for Sunday at Levi's Stadium (1:25 PM PT, FOX).",
-        'Week 9 marks the first snap sequence pairing Nick Bosa and Keion White on the edges with newly re-acquired DeForest Buckner and Osa Odighizuwa (#92) at 3-tech / 2i interior alignments.'
+        'Week 9 marks the first snap sequence under DC Raheem Morris pairing Nick Bosa and Keion White (3.5 sacks) on the edges with newly re-acquired DeForest Buckner (4.0 sacks, 8 QB hits) and Osa Odighizuwa (#92, 2.0 sacks, 7 QB hits) at 3-tech / 2i interior alignments.'
       ],
       schemeAndCapTakeaways: [
-        'Pass-Rush Stunt Geometry: Having both Buckner (6\'7", 34.4" arms) and Odighizuwa inside forces opposing protections to slide interior help, isolating Bosa 1-on-1 on the Wide-9 rail without needing 5-man pressures.',
+        'Pass-Rush Stunt Geometry: Having both Buckner (6\'7", 34.4" arms) and Odighizuwa inside keeps Mykel Williams on the edge full-time and forces opposing protections to slide interior help, isolating Bosa 1-on-1 on the Wide-9 rail without needing 5-man pressures.',
         "Run-Fit Impact vs. Raiders Outside Zone: Raiders HC Klint Kubiak runs heavy wide-zone/boot action with Kirk Cousins, Ashton Jeanty, and Brock Bowers; Buckner's vertical knock-back disrupts playside combo climbs to Fred Warner."
       ],
       consensusVsDissent: `Unanimous beat consensus that SF will still manage Bosa around 42–48 snaps (~68% share) in his first game back, rotating ${edgeRotLabel} across early run downs and speed-rush situations.`,
@@ -990,12 +995,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       sourceLinks: aiyukLinks,
       hardFacts: [
         'Brandon Aiyuk and agent Drew Rosenhaus met with 49ers leadership at SAP Performance Facility on Friday, Nov 6, stating he is physically healthy and seeking reinstatement; NFL Network notes ~$13M in bonus forfeiture complicates a simple release.',
-        'With Aiyuk (Personal), Deebo Samuel Sr. (Hamstring), Mike Evans (Achilles), and Christian Kirk (Knee - Meniscus) ruled Out for Week 9—and Ricky Pearsall + rookie De\'Zhaun Stribling on IR—Kyle Shanahan signaled Demarcus Robinson (Questionable, Ankle) is likely to be activated from IR.',
-        `Under OverTheCap's 2026 ledger ($${capGrossM}M gross cap space), any Post-June 1 trade or release keeps current-year proration on 2026 while deferring remaining future bonus acceleration into 2027.`
+        'With Aiyuk (Personal), Mike Evans (27 rec, 420 yds, +40.9 EPA — Out, Achilles), Deebo Samuel Sr. (16 rec, 206 yds — Out, Hamstring), and Christian Kirk (Knee - Meniscus) ruled Out—and Ricky Pearsall + rookie De\'Zhaun Stribling on IR—Kyle Shanahan signaled Demarcus Robinson (Questionable, Ankle) is likely to be activated from IR.',
+        `Under OverTheCap's 2026 ledger ($${capGrossM}M gross cap space vs. ${cap2027Label} projected in 2027), any Post-June 1 trade or release keeps current-year proration on 2026 while deferring remaining future bonus acceleration into 2027.`
       ],
       schemeAndCapTakeaways: [
-        `Cap Math Reality: Because prorated signing/option bonus acceleration after June 1 splits remaining future-year proration into 2027 dead money, resolving Aiyuk's contract preserves 2026 cap room ($${capGrossM}M) while bilateral forfeiture language determines 2027 dead-cap relief.`,
-        'On-Field Week 9 WR Rotation: Brandin Cooks (#84), Jordan Watkins, Jacob Cowing (#4), and likely IR-activation Demarcus Robinson handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey.'
+        `Cap Math Reality: Because prorated signing/option bonus acceleration after June 1 splits remaining future-year proration into 2027 dead money, resolving Aiyuk's contract preserves 2026 cap room ($${capGrossM}M) for CBA Article 13 rollover into 2027.`,
+        'On-Field Week 9 WR Rotation: Jordan Watkins (6/9, 138 yds), Brandin Cooks (#84), Jacob Cowing (#4), and likely IR-activation Demarcus Robinson handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey.'
       ],
       consensusVsDissent: "National insiders (Schefter/Pelissero/Maiocco/Barrows) note Friday's NFL personnel notice included no immediate reinstatement, pointing toward a structured trade or settlement rather than immediate snap reintegration.",
       videoClip: {
@@ -1015,7 +1020,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       publishedAt: latestPublishedFromSources(matchupLinks, 135),
       category: 'scheme',
       categoryLabel: 'All-22 Matchup Preview',
-      headline: "Shanahan vs. Klint Kubiak Chess Match: Decoding the 4-4 Raiders' Visit & Maxx Crosby Protection Plan",
+      headline: "Shanahan & Raheem Morris vs. Klint Kubiak Chess Match: Decoding the 4-4 Raiders' Visit & Maxx Crosby Protection Plan",
       synthesizedFromCount: 12,
       signalScore: 95,
       citedReporterIds: ['jonnydel', 'eric_crocker', 'matt_maiocco', 'kyle_posey', 'ben_solak', 'greg_papa'],
@@ -1023,13 +1028,13 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       featuredPlayers: pickPlayers(['Brock Purdy', 'Trent Williams', 'George Kittle', 'Kyle Juszczyk', 'Deommodore Lenoir']),
       sourceLinks: matchupLinks,
       hardFacts: [
-        `The ${teamRecord} 49ers (${standingSummary}, ${pointDiffDisplay}) enter Week 9 with a +7-day rest advantage off their Week 8 Bye as 10.0-point home favorites (51.5 O/U, 1:25 PM PT on FOX) vs. Las Vegas (${um.oppRecord || '4-4'}).`,
-        "Raiders first-year HC Klint Kubiak served on Kyle Shanahan's 2023 NFC Championship staff as Passing Game Specialist and enters off a 38-33 Week 8 win behind QB Kirk Cousins and TE Brock Bowers.",
+        `The ${teamRecord} 49ers (${standingSummary}, ${pointDiffDisplay}) enter Week 9 with a +7-day rest advantage off their Week 8 Bye priced at ${spreadLabel} (${openSpreadLabel}, ${totalLabel} O/U, 1:25 PM PT on FOX) vs. Las Vegas (${um.oppRecord || '4-4'}).`,
+        "Raiders first-year HC Klint Kubiak served on Kyle Shanahan's 2023 NFC Championship staff as Passing Game Specialist and enters off a 38-33 Week 8 win behind QB Kirk Cousins, TE Brock Bowers, and extended TE Michael Mayer (36 rec, 351 yds).",
         'Through 7 games, Brock Purdy & the 49ers offense rank top-3 in Passing EPA (+63.23) and CPOE (+4.25%), averaging 8.28 yards per pass attempt with only 7 sacks allowed (3.2% sack rate, #2 NFL).'
       ],
       schemeAndCapTakeaways: [
         "Neutralizing Maxx Crosby (#98): Expect heavy 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk on right tackle Colton McKivitz's edge whenever Crosby flips away from Trent Williams.",
-        "Defending Kubiak's 12-Personnel Boot/Crossers: Las Vegas pairs Brock Bowers and Michael Mayer with Kirk Cousins play-action; Fred Warner and Deommodore Lenoir have hundreds of Santa Clara practice reps diagnosing those exact spacing rules."
+        "Defending Kubiak's 12-Personnel Boot/Crossers: Las Vegas pairs Brock Bowers and Michael Mayer with Kirk Cousins play-action; DC Raheem Morris's disguised split-safety rotations plus Fred Warner and Deommodore Lenoir are built to bait intermediate throws."
       ],
       consensusVsDissent: "Film analysts highlight Las Vegas's vulnerability defending middle-of-field seam/choice routes against linebackers (Nakobe Dean / Quay Walker)—prime territory for Kittle and McCaffrey option routes.",
       videoClip: {
@@ -1052,23 +1057,23 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       publishedAt: latestPublishedFromSources(tradeLinks, 185),
       category: 'roster',
       categoryLabel: 'Trade Window Intel',
-      headline: 'Countdown to the Nov 10 Trade Deadline: Evaluating Final 49ers WR & OL Moves After Landing DeForest Buckner',
+      headline: 'Countdown to the Nov 10 Trade Deadline: Evaluating 49ers WR/12-Personnel TE, Left Guard & Expiring Edge Rentals',
       synthesizedFromCount: 14,
-      signalScore: 91,
-      citedReporterIds: ['dianna_russini', 'ian_rapoport', 'matt_barrows', 'john_lynch', 'albert_breer'],
+      signalScore: 93,
+      citedReporterIds: ['adam_schefter', 'ian_rapoport', 'matt_barrows', 'matt_maiocco', 'albert_breer'],
       ...selectClusterPhoto(['trade', 'deadline', 'lynch', 'cap', '49ers'], '1r03PLzYU54'),
-      featuredPlayers: pickPlayers(['DeForest Buckner', 'Osa Odighizuwa', 'Brock Purdy', 'Nick Bosa']),
+      featuredPlayers: pickPlayers(['DeForest Buckner', 'Osa Odighizuwa', 'Brock Purdy', 'George Kittle']),
       sourceLinks: tradeLinks,
       hardFacts: [
         'The 2026 NFL Trade Deadline arrives Tuesday, Nov 10 at 1:00 PM PT (4:00 PM ET).',
-        `Having already bolstered the interior defensive line via the DeForest Buckner reunion and spring Osa Odighizuwa trade, John Lynch holds $${capGrossM}M in gross 2026 cap room.`,
-        'With four active-roster wideouts ruled Out for Week 9 and Pearsall/Stribling on IR, front office calls center on low-cap-hit boundary WR insurance and swing tackle depth.'
+        `After sending their 2027 4th-round pick to Indianapolis for DT DeForest Buckner ($7.90M 2026 cap charge absorbed from ~$41.26M pre-Buckner room), John Lynch & Paraag Marathe hold $${capGrossM}M in gross 2026 cap space (#1 in NFC) and 6 remaining 2027 draft picks (Rd 1, 2, 3, 5, 6-BAL, 7-KC).`,
+        'With six receivers unavailable (Evans, Samuel, Kirk, Pearsall, Stribling, Aiyuk) and NFC West rival Seattle acquiring All-Pro LG Quenton Nelson, front office calls prioritize WR/pass-catching 12-personnel TE, Left Guard pass protection (Connor Colby pressure spike), and expiring Edge rentals.'
       ],
       schemeAndCapTakeaways: [
-        "Pro-Rated Base Salary Math: With 9 weeks elapsed in an 18-week season, an incoming player's 2026 cap charge to SF is 9/18ths (50%) of their remaining 2026 base salary plus per-game roster bonuses.",
-        '2027 Carryover Tradeoff: Every $1M of unused 2026 cap space rolls dollar-for-dollar into 2027 under CBA Article 13, which Paraag Marathe safeguards to absorb Purdy, Bosa, and Warner option proration.'
+        "Purchasing-Power Leverage (9/18ths Proration): With 9 weeks elapsed in an 18-week season, SF can absorb 50% (9/18ths) of an incoming rental's 2026 base salary directly—keeping pick costs down to Day 3 rather than paying sellers to eat cash.",
+        `2027 Cap Deficit Constraint (${cap2027Label} Projected): Because OverTheCap projects San Francisco at ${cap2027Label} in 2027 on an estimated $327M ceiling, unused 2026 cap rolls over 1-for-1 under CBA Article 13—making expiring 2026 rentals ($0 in 2027) or cheap rookie deals strongly preferred over multi-year veteran guarantees.`
       ],
-      consensusVsDissent: 'Beat consensus (Barrows/Maiocco) expects a targeted Day-3 pick move if WR attrition lingers past Sunday against Las Vegas.',
+      consensusVsDissent: 'Beat & national insiders (Schefter, Rapoport, Barrows, Maiocco) expect SF to pursue Day-3 expiring rentals or rookie-scale fits (Adonai Mitchell, Josh Downs, Rashod Bateman, Greg Dulcich, or Khalil Mack) while protecting 2027 Round 1–3 picks.',
       videoClip: null
     });
   }
@@ -1095,6 +1100,7 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = [], sea
     ? String(seasonYear)
     : Object.keys(capYears || {}).sort()[0] || '2026';
   const nextYrNum = Number(yrKey) + 1;
+  const nextYrKey = String(nextYrNum);
 
   const topSeason = [...capPlayers]
     .filter(p => p.contractsByYear?.[yrKey])
@@ -1141,27 +1147,30 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = [], sea
 
   const grossSpace = Number(capYears?.[yrKey]?.teamCapSpace || 35_164_858);
   const effSpace = Number(capYears?.[yrKey]?.effectiveCapSpace || Math.max(0, grossSpace - 6_500_000));
+  const nextGrossSpace = Number(capYears?.[nextYrKey]?.teamCapSpace ?? -31_540_066);
+  const nextCeilingM = Math.round(Number(capYears?.[nextYrKey]?.capCeiling || 327_000_000) / 1e6);
+  const nextSpaceAbsM = (Math.abs(nextGrossSpace) / 1e6).toFixed(2);
   const grossM = (grossSpace / 1e6).toFixed(2);
   const effM = (effSpace / 1e6).toFixed(2);
-  const rolloverLowM = Math.max(10, Math.round((grossSpace - 12_000_000) / 1e6));
-  const rolloverHighM = Math.max(rolloverLowM + 4, Math.round((grossSpace - 6_000_000) / 1e6));
+  const rolloverLowM = Math.max(10, Math.round((grossSpace - 8_000_000) / 1e6));
+  const rolloverHighM = Math.max(rolloverLowM + 3, Math.round((grossSpace - 3_500_000) / 1e6));
 
   return {
     sourceUrl: OTC_TEAM_CAP_URL,
     executiveSummary:
-      `Paraag Marathe & John Lynch currently hold $${grossM}M in gross ${yrKey} cap space ($${effM}M effective after in-season injury reserve buffer). Rather than spending to zero in-season, SF's multi-year model relies on rolling $${rolloverLowM}M–$${rolloverHighM}M of unused ${yrKey} cap space into ${nextYrNum} to offset rising Year-2/Year-3 option proration on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.`,
+      `Paraag Marathe & John Lynch hold $${grossM}M in gross ${yrKey} cap space ($${effM}M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while ${nextYrNum} currently projects at ${nextGrossSpace < 0 ? `-$${nextSpaceAbsM}M over` : `+$${nextSpaceAbsM}M under`} an estimated $${nextCeilingM}M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $${rolloverLowM}M–$${rolloverHighM}M of unused ${yrKey} cap space 1-for-1 into ${nextYrNum} under CBA Article 13 to neutralize that ${nextYrNum} deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.`,
     strategicPillars: [
       {
-        title: `1. Rollover Cap Preservation ($${rolloverLowM}M+ Target)`,
-        detail: `Unused ${yrKey} cap space carries over 1-for-1 into ${nextYrNum} under Article 13 of the NFL CBA. Keeping ~$${rolloverLowM}M+ untouched turns a tight ${nextYrNum} cap sheet into comfortable operating headroom without forcing premature restructures on aging veterans.`
+        title: `1. CBA Article 13 Rollover Bridge ($${rolloverLowM}M–$${rolloverHighM}M Target vs. ${nextGrossSpace < 0 ? `-$${nextSpaceAbsM}M` : `+$${nextSpaceAbsM}M`} ${nextYrNum} Projection)`,
+        detail: `Unused ${yrKey} cap space carries over dollar-for-dollar into ${nextYrNum}. Preserving $${rolloverLowM}M+ of ${yrKey} room nearly erases San Francisco's projected ${nextGrossSpace < 0 ? `-$${nextSpaceAbsM}M` : `$${nextSpaceAbsM}M`} ${nextYrNum} deficit without forcing premature void-year restructures on aging veterans.`
       },
       {
-        title: '2. Option-Bonus & Void-Year Architecture',
-        detail: 'SF structures core stars (Purdy $7.55M option proration, Bosa $8.85M option proration) with low P5 base salaries and spring option exercises that trigger April 1st—maximizing trade flexibility prior to bonus exercise dates.'
+        title: '2. Expiring Rental Purchasing Power & Option-Bonus Architecture',
+        detail: `Leading the NFC with $${grossM}M in ${yrKey} cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 ${nextYrNum} liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises.`
       },
       {
-        title: '3. Rookie-Scale Trench Pipeline (2025–2026 Classes)',
-        detail: 'Drafting 19 combined players across 2025–2026—heavily weighted toward DL/OL (Mykel Williams, Alfred Collins, Gracen Halton, Romello Height, Carver Willis)—insulates the cap from middle-class free-agent inflation.'
+        title: '3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks',
+        detail: `With SF's 2027 4th-round pick traded for DeForest Buckner (6 picks left: Rd 1, 2, 3, 5, 6-BAL, 7-KC), protecting Round 1–3 capital alongside 2025–2026 draftees (Mykel Williams, Alfred Collins, Omar Cooper Jr., Keionte Scott, Romello Height) is mandatory against ${nextYrNum} cap tightness.`
       }
     ],
     restructureCandidates,
@@ -1174,21 +1183,59 @@ export function buildTradeDeadlineWarRoom(
   lookupPlayerMeta = () => null,
   lookupTeamLogo = () => '',
   teamRecord = '6-1',
-  seasonYear = 2026
+  seasonYear = 2026,
+  extraContext = {}
 ) {
   const yr = Number(seasonYear) || 2026;
+  const gross26 = Number(capSummary2026?.teamCapSpace || 35_164_858);
+  const gross27 = Number(extraContext?.capSummary2027?.teamCapSpace ?? -31_540_066);
+  const ceiling27 = Number(extraContext?.capSummary2027?.capCeiling || 327_000_000);
+
+  const recFor = (abbr, fallback) =>
+    extraContext?.teamRecordsMap?.get?.(abbr)?.record ||
+    extraContext?.teamRecords?.[abbr] ||
+    fallback;
+
+  const targetOtcUrl = (playerUrl2026, posSlug) =>
+    yr === 2026 ? playerUrl2026 : buildOtcPositionUrl(posSlug, yr);
+
   const bucknerMeta = lookupPlayerMeta('DeForest Buckner');
   const osaMeta = lookupPlayerMeta('Osa Odighizuwa');
-  const slaytonMeta = lookupPlayerMeta('Darius Slayton');
-  const pipkinsMeta = lookupPlayerMeta('Trey Pipkins III') || lookupPlayerMeta('Trey Pipkins');
-  const jordanMeta = lookupPlayerMeta('Cameron Jordan');
+  const mitchellMeta = lookupPlayerMeta('Adonai Mitchell');
+  const downsMeta = lookupPlayerMeta('Josh Downs');
+  const batemanMeta = lookupPlayerMeta('Rashod Bateman');
+  const dulcichMeta = lookupPlayerMeta('Greg Dulcich');
+  const mackMeta = lookupPlayerMeta('Khalil Mack');
+  const suamataiaMeta = lookupPlayerMeta('Kingsley Suamataia');
+  const jjMeta = lookupPlayerMeta('Jermaine Johnson II') || lookupPlayerMeta('Jermaine Johnson');
+  const qjMeta = lookupPlayerMeta('Quentin Johnston');
+  const djacksonMeta = lookupPlayerMeta('Donte Jackson');
+  const batesMeta = lookupPlayerMeta('Jessie Bates III') || lookupPlayerMeta('Jessie Bates');
 
   return {
     deadlineIso: `${yr}-11-10T13:00:00-08:00`,
     deadlineDisplay: `Tuesday, Nov 10, ${yr} • 1:00 PM PT`,
-    availableGrossCap: capSummary2026.teamCapSpace || 35_164_858,
+    availableGrossCap: gross26,
+    projected2027CapSpace: gross27,
     capSourceUrl: OTC_TEAM_CAP_URL,
     transactionsUrl: 'https://www.espn.com/nfl/transactions',
+    purchasingPower: [
+      {
+        metric: `${yr} Salary Cap Space`,
+        figure: `$${(gross26 / 1e6).toFixed(2)}M Gross (~$41.26M Pre-Buckner)`,
+        strategicImpact: `#1 in NFC. Lets SF absorb 9/18ths prorated ${yr} base salaries directly on 1-year rentals—keeping draft compensation down to Day 3 instead of paying sellers to eat cash.`
+      },
+      {
+        metric: `${yr + 1} Projected Cap Horizon`,
+        figure: `${gross27 < 0 ? '-' : '+'}$${(Math.abs(gross27) / 1e6).toFixed(2)}M on $${Math.round(ceiling27 / 1e6)}M Est. Cap`,
+        strategicImpact: `Unused ${yr} cap rolls over 1-for-1 under CBA Article 13 to neutralize the ${yr + 1} deficit. Expiring ${yr} rentals ($0 ${yr + 1} cap) or cheap rookie deals are mandatory over multi-year veteran guarantees.`
+      },
+      {
+        metric: `${yr + 1} Draft Pick Inventory`,
+        figure: '6 Picks (Rd 1, 2, 3, 5, 6-BAL, 7-KC)',
+        strategicImpact: `Own ${yr + 1} 4th-round pick went to Indianapolis for DT DeForest Buckner. Protecting Day 1–2 selections (#31, #63, #95) is vital to supply rookie-scale starters against ${yr + 1} cap tightness.`
+      }
+    ],
     completed2026Moves: [
       {
         player: 'DeForest Buckner',
@@ -1198,11 +1245,12 @@ export function buildTradeDeadlineWarRoom(
         position: 'IDL (3-Tech)',
         acquiredFrom: 'IND',
         acquiredFromLogoUrl: lookupTeamLogo('IND'),
-        timing: 'Pre-Deadline Reunion (Nov 2026)',
-        costSummary: 'Conditional Day-3 Pick Package',
+        tradeDateIso: `${yr}-11-03T16:00:00Z`,
+        timing: `Pre-Deadline Reunion (Nov 3, ${yr})`,
+        costSummary: `${yr + 1} 4th-Round Pick`,
         schemeGrade: 'A',
-        sourceUrl: bucknerMeta?.otcUrl || 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/',
-        analysis: 'Reunites an elite 6\'7" interior disruptor with Nick Bosa and the Wide-9 system; immediately stabilizes interior run defense and A/B-gap pass rush.'
+        sourceUrl: bucknerMeta?.otcUrl || 'https://overthecap.com/player/deforest-buckner/4720/',
+        analysis: 'Reunites an elite 6\'7" interior disruptor (4.0 sacks, 8 QB hits in 7g; $7.90M 2026 cap hit absorbed) with Nick Bosa and Osa Odighizuwa under DC Raheem Morris, keeping Mykel Williams on the edge full-time.'
       },
       {
         player: 'Osa Odighizuwa',
@@ -1212,75 +1260,226 @@ export function buildTradeDeadlineWarRoom(
         position: 'IDL (DT)',
         acquiredFrom: 'DAL',
         acquiredFromLogoUrl: lookupTeamLogo('DAL'),
-        timing: 'March 11, 2026 Trade',
-        costSummary: '2026 3rd-Round Pick',
+        tradeDateIso: `${yr}-03-11T16:00:00Z`,
+        timing: `March 11, ${yr} Trade`,
+        costSummary: `${yr} 3rd-Round Pick`,
         schemeGrade: 'A-',
-        sourceUrl: osaMeta?.otcUrl || OTC_TEAM_CAP_URL,
-        analysis: "High-motor penetrating 3-technique who carried the interior pass-rush workload during Bosa's Weeks 3–7 absence."
+        sourceUrl: osaMeta?.otcUrl || 'https://overthecap.com/player/osa-odighizuwa/9539/',
+        analysis: "High-motor penetrating 3-technique (2.0 sacks, 7 QB hits) who carried interior pass-rush disruption during Bosa's Weeks 3–7 absence."
       }
     ],
     topNeeds: [
       {
         rank: 1,
-        positionGroup: 'Boundary / X Wide Receiver Insurance',
-        urgency: 'Moderate-High',
-        epaContext: 'With Brandon Aiyuk, Deebo Samuel Sr., Mike Evans, and Christian Kirk Out—and Ricky Pearsall + rookie De\'Zhaun Stribling on IR—adding a low-cost veteran Z/X separator supports Brandin Cooks, Jordan Watkins, Jacob Cowing & Demarcus Robinson.'
+        positionGroup: 'Wide Receiver & Pass-Catching Tight End (12-Personnel)',
+        urgency: 'High',
+        epaContext: 'Mike Evans (27 rec, 420 yds, +40.9 EPA — Achilles), Deebo Samuel Sr. (16 rec, 206 yds — Hamstring), Christian Kirk (Meniscus), Ricky Pearsall (IR), De\'Zhaun Stribling (IR), and Brandon Aiyuk (Out - Personal) are sidelined, while depth WRs Jacob Cowing (-5.4 EPA) and Brandin Cooks (-2.3 EPA) have struggled. Schefter & Rapoport confirm SF is canvassing both vertical/slot WRs and 12-personnel move TEs alongside George Kittle.'
       },
       {
         rank: 2,
-        positionGroup: 'Swing Tackle / Interior OL Depth',
-        urgency: 'Moderate',
-        epaContext: `Protecting a ${teamRecord} NFC contention run requires veteran insurance behind Trent Williams (age 38) and Colton McKivitz for cold-weather January games.`
+        positionGroup: 'Left Guard (Interior Pass Protection)',
+        urgency: 'Moderate-High',
+        epaContext: `2nd-year LG Connor Colby regressed against top fronts (surrendering 12 pressures in Weeks 5–7 vs. 8 in Weeks 1–4), and relying on rookie 4th-round college OT Carver Willis inside for a ${teamRecord} playoff run is risky—especially after NFC West rival Seattle (${recFor('SEA', '4-4')}) traded for All-Pro LG Quenton Nelson.`
       },
       {
         rank: 3,
-        positionGroup: 'Nickel / Safety Hybrid Depth',
+        positionGroup: 'Edge Rusher (Expiring Pass-Rush Rental)',
+        urgency: 'Moderate',
+        epaContext: 'Acquiring DeForest Buckner alongside Osa Odighizuwa keeps Mykel Williams (1.0 sack) outside full-time with returning Nick Bosa, Keion White (3.5 sacks), and rookie Romello Height (1.5 sacks). SF is monitoring expiring 1-year edge rentals to guarantee 4-man January pressure under DC Raheem Morris.'
+      },
+      {
+        rank: 4,
+        positionGroup: 'Dime Cornerback & Safety (Secondary Depth)',
         urgency: 'Opportunistic',
-        epaContext: 'Special teams + dime package coverage vs. NFC elite TEs/slot WRs (Detroit, Philadelphia, LA Rams).'
+        epaContext: 'After moving on from Jack Jones ($1.08M dead cap), backup slot/dime DB Ashtyn Davis has struggled behind Deommodore Lenoir, Renardo Green, Questionable rookie Upton Stout (shoulder), and IR-return Nate Hobbs (groin), forcing snaps onto 5th-round rookie Ephesians Prysock.'
       }
     ],
     realisticTargets: [
       {
-        name: 'Darius Slayton / Veteran Z-X Archetype',
-        headshotUrl: slaytonMeta?.headshotUrl || '',
-        currentTeam: 'IND (2-6 Seller Tier)',
+        name: 'Adonai Mitchell',
+        jersey: mitchellMeta?.jersey ?? 10,
+        headshotUrl: mitchellMeta?.headshotUrl || '',
+        teamAbbr: 'NYJ',
+        teamLogoUrl: lookupTeamLogo('NYJ'),
+        currentTeam: `NYJ (${recFor('NYJ', '2-6')} Seller)`,
         position: 'WR',
-        prorated2026CapCharge: 3_650_000,
-        projectedPickCost: `${yr + 1} 5th-Round Pick (or 6th-for-7th Pick Swap w/ salary retention)`,
+        prorated2026CapCharge: 735_000,
+        cap2027Impact: '$1.80M Rookie Deal (Non-Gtd)',
+        sellerIncentive: 'Crowded 2-6 Jets WR room; former Colts pick recapturing vertical efficiency (+19.3 EPA on 16 rec, 265 yds).',
+        projectedPickCost: `${yr + 1} 5th-Round Pick (#170)`,
+        fitScore: 93,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/adonai-mitchell/11660/', 'wide-receiver'),
+        fitBreakdown: '6\'2", 4.34s X/Z separator who replaces missing vertical/intermediate air yards while costing just $735K in 2026 and $1.80M on a rookie deal in 2027.'
+      },
+      {
+        name: 'Josh Downs',
+        jersey: downsMeta?.jersey ?? 1,
+        headshotUrl: downsMeta?.headshotUrl || '',
+        teamAbbr: 'IND',
+        teamLogoUrl: lookupTeamLogo('IND'),
+        currentTeam: `IND (${recFor('IND', '2-6')} Fire Sale)`,
+        position: 'WR',
+        prorated2026CapCharge: 1_960_000,
+        cap2027Impact: '$0 (Expiring UFA + Comp Pick Upside)',
+        sellerIncentive: 'Formally requested trade after Indy fired GM Chris Ballard and dealt DeForest Buckner (SF) + Quenton Nelson (SEA).',
+        projectedPickCost: `${yr + 1} 5th (#170) + ${yr + 2} Conditional 4th`,
+        fitScore: 92,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/josh-downs/10903/', 'wide-receiver'),
+        fitBreakdown: 'Elite man-beating slot/Z option separator (30 rec, 330 yds, +14.7 EPA in 2026) built for Brock Purdy timing throws; zero 2027 cap liability.'
+      },
+      {
+        name: 'Rashod Bateman',
+        jersey: batemanMeta?.jersey ?? 7,
+        headshotUrl: batemanMeta?.headshotUrl || '',
+        teamAbbr: 'BAL',
+        teamLogoUrl: lookupTeamLogo('BAL'),
+        currentTeam: `BAL (${recFor('BAL', '4-5')} QB Injury Pivot)`,
+        position: 'WR',
+        prorated2026CapCharge: 1_000_000,
+        cap2027Impact: '$0 Gtd Until Mar 17, 2027 ($7.5M Team Option)',
+        sellerIncentive: 'Ravens placed Lamar Jackson on IR Nov 5 (thumb surgery) with backup Tyler Huntley out for season; SF already holds BAL\'s 2027 6th (#193).',
+        projectedPickCost: `${yr + 1} 6th-Round Pick (#193 via BAL)`,
+        fitScore: 90,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/rashod-bateman/9491/', 'wide-receiver'),
+        fitBreakdown: 'Polished intermediate dig/over route technician (20 rec, 294 yds, +16.5 EPA); $1.0M prorated 2026 cap hit with a clean pre-March 17, 2027 exit option.'
+      },
+      {
+        name: 'Greg Dulcich',
+        jersey: dulcichMeta?.jersey ?? 80,
+        headshotUrl: dulcichMeta?.headshotUrl || '',
+        teamAbbr: 'MIA',
+        teamLogoUrl: lookupTeamLogo('MIA'),
+        currentTeam: `MIA (${recFor('MIA', '1-6')} Seller)`,
+        position: 'TE',
+        prorated2026CapCharge: 575_000,
+        cap2027Impact: '$0 (Contract Voids Feb 10, 2027)',
+        sellerIncentive: '1-6 Dolphins liquidating expiring veterans; directly answers Shanahan\'s search for a 12-personnel move TE.',
+        projectedPickCost: `${yr + 1} 7th-Round Pick (#245 via KC)`,
+        fitScore: 89,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/greg-dulcich/10125/', 'tight-end'),
+        fitBreakdown: '22 catches on 28 targets (78.6% catch rate, 256 yds, +13.2 EPA) in 2026; lets Shanahan live in heavy 12-personnel with George Kittle while WR health stabilizes.'
+      },
+      {
+        name: 'Khalil Mack',
+        jersey: mackMeta?.jersey ?? 52,
+        headshotUrl: mackMeta?.headshotUrl || '',
+        teamAbbr: 'LAC',
+        teamLogoUrl: lookupTeamLogo('LAC'),
+        currentTeam: `LAC (${recFor('LAC', '0-7')} Seller)`,
+        position: 'EDGE',
+        prorated2026CapCharge: 4_000_000,
+        cap2027Impact: '$0 (Expiring 1-Yr Rental)',
+        sellerIncentive: 'Winless 0-7 Chargers moving expiring contracts so veteran edge (3.0 sacks, 6 QB hits, 5 TFL) can chase a Super Bowl ring.',
+        projectedPickCost: `${yr + 1} 5th- or 6th-Round Pick (CHI also bidding)`,
         fitScore: 91,
-        sourceUrl: buildOtcPositionUrl('wide-receiver', yr),
-        fitBreakdown: 'Vertical Z/X field stretcher + intermediate dig/over separation over the middle in play-action.'
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/khalil-mack/2944/', 'edge-rusher'),
+        fitBreakdown: 'SF\'s $35.16M cap room easily absorbs his $4.0M prorated base salary with $0 2027 cap drag, creating an elite postseason edge wave with Nick Bosa and Keion White.'
       },
       {
-        name: 'Trey Pipkins III / Veteran Swing OT Archetype',
-        headshotUrl: pipkinsMeta?.headshotUrl || '',
-        currentTeam: 'LAC (0-7 Seller Tier)',
-        position: 'OT',
-        prorated2026CapCharge: 1_850_000,
-        projectedPickCost: `${yr + 1} Conditional 6th-Round Pick`,
+        name: 'Kingsley Suamataia',
+        jersey: suamataiaMeta?.jersey ?? 76,
+        headshotUrl: suamataiaMeta?.headshotUrl || '',
+        teamAbbr: 'KC',
+        teamLogoUrl: lookupTeamLogo('KC'),
+        currentTeam: `KC (${recFor('KC', '5-2')} OL Surplus)`,
+        position: 'LG/OL',
+        prorated2026CapCharge: 650_000,
+        cap2027Impact: '$1.60M Rookie Scale',
+        sellerIncentive: '23-year-old 2024 2nd-rounder with starting guard/tackle reps available on cheap rookie control.',
+        projectedPickCost: `${yr + 1} 6th-Round Pick (#193) or ${yr + 2} 5th`,
+        fitScore: 87,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/kingsley-suamataia/11671/', 'left-guard'),
+        fitBreakdown: 'High-upside athletic guard/tackle competition to stabilize Left Guard pass protection alongside Trent Williams without straining 2027 cap space.'
+      },
+      {
+        name: 'Jermaine Johnson II',
+        jersey: jjMeta?.jersey ?? 11,
+        headshotUrl: jjMeta?.headshotUrl || '',
+        teamAbbr: 'TEN',
+        teamLogoUrl: lookupTeamLogo('TEN'),
+        currentTeam: `TEN (${recFor('TEN', '1-7')} Seller)`,
+        position: 'EDGE',
+        prorated2026CapCharge: 6_705_500,
+        cap2027Impact: '$0 (Impending UFA + 2028 Comp Pick)',
+        sellerIncentive: '1-7 Titans (coached by former SF DC Robert Saleh) open to recouping picks on impending 5th-year-option UFA.',
+        projectedPickCost: `${yr + 1} 5th (#170) + ${yr + 2} Day-3 Pick`,
+        fitScore: 88,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/jermaine-johnson-ii/10071/', 'edge-rusher'),
+        fitBreakdown: '27-year-old Wide-9 three-down edge setter (3.0 sacks, 6 QB hits, 5 TFL in 2026) whose $6.71M prorated option fits cleanly inside SF\'s 2026 cap cushion.'
+      },
+      {
+        name: 'Quentin Johnston',
+        jersey: qjMeta?.jersey ?? 1,
+        headshotUrl: qjMeta?.headshotUrl || '',
+        teamAbbr: 'LAC',
+        teamLogoUrl: lookupTeamLogo('LAC'),
+        currentTeam: `LAC (${recFor('LAC', '0-7')} Seller)`,
+        position: 'WR',
+        prorated2026CapCharge: 1_340_000,
+        cap2027Impact: '⚠️ $18.0M Gtd 5th-Yr Option (Requires LAC Conversion)',
+        sellerIncentive: '0-7 Chargers listening on 6\'4" perimeter YAC/size target (12 rec, 202 yds, 16.8 YPR in 2026).',
+        projectedPickCost: `Day-3 Pick Swap (6th for 7th w/ 2027 salary retention)`,
+        fitScore: 82,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/quentin-johnston/10845/', 'wide-receiver'),
+        fitBreakdown: 'Low $1.34M 2026 cap hit for play-action crossers, but OTC shows an exercised $18.0M guaranteed 2027 5th-year option—viable only if LAC absorbs/converts 2027 cash.'
+      },
+      {
+        name: 'Donte Jackson',
+        jersey: djacksonMeta?.jersey ?? 26,
+        headshotUrl: djacksonMeta?.headshotUrl || '',
+        teamAbbr: 'LAC',
+        teamLogoUrl: lookupTeamLogo('LAC'),
+        currentTeam: `LAC (${recFor('LAC', '0-7')} Seller)`,
+        position: 'CB',
+        prorated2026CapCharge: 3_000_000,
+        cap2027Impact: '$0 (Expiring UFA)',
+        sellerIncentive: 'Winless Chargers shedding veteran DB contracts ahead of Tuesday\'s deadline.',
+        projectedPickCost: `${yr + 1} 6th-for-7th Pick Swap`,
+        fitScore: 84,
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/donte-jackson/6940/', 'cornerback'),
+        fitBreakdown: '4.32s recovery speed for Raheem Morris\'s dime/nickel packages while Upton Stout (shoulder) and Nate Hobbs (groin) manage soft-tissue tags.'
+      },
+      {
+        name: 'Jessie Bates III',
+        jersey: batesMeta?.jersey ?? 3,
+        headshotUrl: batesMeta?.headshotUrl || '',
+        teamAbbr: 'ATL',
+        teamLogoUrl: lookupTeamLogo('ATL'),
+        currentTeam: `ATL (${recFor('ATL', '3-5')} Bubble)`,
+        position: 'S',
+        prorated2026CapCharge: 6_510_000,
+        cap2027Impact: '$0 (Contract Voids After 2026)',
+        sellerIncentive: 'Played two Pro Bowl-caliber seasons under DC Raheem Morris in Atlanta (2024–2025); contract voids at season\'s end.',
+        projectedPickCost: `${yr + 1} 5th-Round Pick (#170)`,
         fitScore: 85,
-        sourceUrl: buildOtcPositionUrl('right-tackle', yr),
-        fitBreakdown: 'Experienced LT/RT swing starter capable of surviving outside-zone reach blocks in January.'
+        sourceUrl: targetOtcUrl('https://overthecap.com/player/jessie-bates-iii/6939/', 'safety'),
+        fitBreakdown: 'Plug-and-play turnover hawk (1 INT, 4 PD in 2026) with complete mastery of Raheem Morris\'s split-safety disguise rules and $0 2027 cap commitment.'
+      }
+    ],
+    pitfallsToAvoid: [
+      {
+        trap: `Sacrificing ${yr + 1} Day-2 Picks (#63, #95) for Contender Pipe Dreams`,
+        examples: 'Brian Thomas Jr. (JAX 6-2), Garrett Wilson (NYJ), Landon Dickerson (PHI 6-2)',
+        whyAvoid: `Jacksonville and Philadelphia are playoff buyers, and burning Round 2 or 3 picks after trading SF's ${yr + 1} 4th for DeForest Buckner would leave zero picks between #63 and #170 entering a -$31.54M ${yr + 1} cap squeeze.`
       },
       {
-        name: 'Cameron Jordan / Rotational Big-End Archetype',
-        headshotUrl: jordanMeta?.headshotUrl || '',
-        currentTeam: 'NO (2-5 Seller Tier)',
-        position: 'DL/EDGE',
-        prorated2026CapCharge: 1_450_000,
-        projectedPickCost: `${yr + 1} 6th-Round Pick`,
-        fitScore: 83,
-        sourceUrl: buildOtcPositionUrl('edge-rusher', yr),
-        fitBreakdown: 'Heavy early-down edge setter with inside-out power rush polish for postseason 3rd-and-medium.'
+        trap: 'Unproductive Aging Pass-Rushers on Past Name Value',
+        examples: 'Cameron Jordan (NO DE, Age 37 — 0.0 Sacks, 1 QB Hit in 7 Games)',
+        whyAvoid: 'Paying draft capital for a 37-year-old edge defender with zero sacks in 2026 provides no third-down burst upgrade over Mykel Williams, Keion White, or rookie Romello Height.'
+      },
+      {
+        trap: 'Stale Pre-Extension Trade Rumors',
+        examples: 'Michael Mayer (LV TE — Extended 3 Yrs, $45M w/ $30M Guaranteed)',
+        whyAvoid: 'Las Vegas locked Mayer into a $15M/yr extension before Week 1 to co-anchor Klint Kubiak\'s 12-personnel offense (36 rec, 351 yds in 2026); he is no longer an expendable rookie-deal backup.'
       }
     ],
     tieredRumors: [
       {
         tier: 'Tier 1 • Verified Beat & National',
-        sources: 'Nick Wagoner, Matt Barrows, Adam Schefter',
+        sources: 'Adam Schefter, Ian Rapoport, Matt Barrows',
         sourceUrl: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
-        summary: 'After acquiring DeForest Buckner and getting Nick Bosa back healthy for Week 9, SF prefers preserving 2027 rollover cap unless a seller eats base salary on a veteran WR.',
-        credibilityPct: 95
+        summary: `With six WRs sidelined and $${(gross26 / 1e6).toFixed(2)}M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.`,
+        credibilityPct: 96
       },
       {
         tier: 'Tier 1 • Verified Beat & National',
@@ -1290,19 +1489,31 @@ export function buildTradeDeadlineWarRoom(
         credibilityPct: 97
       },
       {
-        tier: 'Tier 2 • Cap & Beat Projection',
-        sources: 'David Lombardi, Kyle Posey',
+        tier: 'Tier 2 • Cap & Trench Intel',
+        sources: 'David Lombardi, Nick Wagoner',
         sourceUrl: 'https://overthecap.com/salary-cap/san-francisco-49ers',
-        summary: 'Any pre-Tuesday move is projected to stay under $3.5M in remaining 2026 cap charge to protect ~$25M+ carryover into 2027.',
-        credibilityPct: 86
+        summary: `Because SF projects at -$31.54M on the ${yr + 1} cap with 6 draft picks left (post-Buckner Rd 4 trade), Paraag Marathe is prioritizing expiring ${yr} contracts ($0 ${yr + 1} cap) so ~$28M–$31M+ rolls over under CBA Article 13.`,
+        credibilityPct: 91
       }
     ]
   };
 }
 
-export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear = 2027) {
+export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear = 2027, livePickInventory = null) {
   const dy = Number(nextDraftYear) || 2027;
   const bigBoardUrl = buildMockDraftBigBoardUrl(dy);
+  const verifiedSixPicks =
+    Array.isArray(livePickInventory) && livePickInventory.length >= 4
+      ? livePickInventory
+      : [
+          { round: 1, projectedOverall: 31, origin: 'Own Pick (Projected Contender Finish)', valueRichHill: 190 },
+          { round: 2, projectedOverall: 63, origin: 'Own Pick', valueRichHill: 82 },
+          { round: 3, projectedOverall: 95, origin: 'Own Pick', valueRichHill: 41 },
+          { round: 5, projectedOverall: 170, origin: 'Own Pick', valueRichHill: 8 },
+          { round: 6, projectedOverall: 193, origin: 'From BAL (Conditional Trade)', valueRichHill: 5 },
+          { round: 7, projectedOverall: 245, origin: 'From KC (Skyy Moore Trade)', valueRichHill: 1 }
+        ];
+
   return {
     draftYear: dy,
     sources: [
@@ -1311,20 +1522,13 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
       { label: 'NFL Combine Tracker', url: 'https://www.nfl.com/combine/' },
       { label: 'RAS Athletic Database', url: 'https://ras.football/' }
     ],
-    pickInventory: [
-      { round: 1, projectedOverall: 30, origin: 'Own Pick (Projected #1–#3 NFC Finish)', valueRichHill: 196 },
-      { round: 2, projectedOverall: 62, origin: 'Own Pick', valueRichHill: 84 },
-      { round: 3, projectedOverall: 94, origin: 'Own Pick', valueRichHill: 42 },
-      { round: 4, projectedOverall: 128, origin: 'Own Pick', valueRichHill: 20 },
-      { round: 4, projectedOverall: 137, origin: 'Projected Compensatory Pick (UFA Departures)', valueRichHill: 16 },
-      { round: 5, projectedOverall: 166, origin: 'Own Pick', valueRichHill: 10 },
-      { round: 7, projectedOverall: 238, origin: 'From KC (Skyy Moore 2025 Trade)', valueRichHill: 2 }
-    ],
+    tradedPicksNote: `6 Total Picks: San Francisco traded its own ${dy} 4th-round pick to Indianapolis on Nov 3, ${dy - 1} for DT DeForest Buckner (and previously dealt its own ${dy} 6th & 7th picks while acquiring Rd 6 via BAL and Rd 7 via KC).`,
+    pickInventory: verifiedSixPicks,
     topNeeds2027: [
       { rank: 1, pos: 'OT (Future Left Tackle Succession)', horizon: `Critical — Trent Williams turns 39 prior to ${dy} kickoff; outside-zone athletic thresholds required.` },
-      { rank: 2, pos: 'CB (Boundary Press-Zone)', horizon: 'High — Keeping 2nd-contract DB costs controlled alongside Deommodore Lenoir.' },
-      { rank: 3, pos: 'C / IOL (Agile Zone Center)', horizon: 'Moderate-High — Sub-4.62 short-shuttle reach-blocking profile for Shanahan wide zone.' },
-      { rank: 4, pos: 'TE2 (Move / Inline Y-H Hybrid)', horizon: 'Moderate — Long-term succession & 12-personnel pairing with George Kittle.' }
+      { rank: 2, pos: 'LG / IOL (Interior Pass Protection)', horizon: 'High — Upgrading Left Guard anchor alongside Dominick Puni and Jake Brendel on a rookie-scale contract.' },
+      { rank: 3, pos: 'CB (Boundary / Nickel Press-Zone)', horizon: 'High — Keeping 2nd-contract DB costs controlled alongside Deommodore Lenoir and Renardo Green.' },
+      { rank: 4, pos: 'TE2 (12-Personnel Move / Inline Hybrid)', horizon: 'Moderate-High — Long-term succession & 12-personnel seam mismatch pairing with George Kittle.' }
     ],
     consensusMockTargets: [
       {
@@ -1348,7 +1552,7 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
         mockFrequencyToSfPct: 22,
         shanahanLynchFitScore: 94,
         sourceUrl: buildMockDraftProspectUrl(dy, 'cayden-green', 2027),
-        archetypeTraits: 'Dense displacement torque on duo/wide-zone combo blocks with tackle-guard positional versatility.',
+        archetypeTraits: 'Dense displacement torque on duo/wide-zone combo blocks with immediate Left Guard floor and tackle versatility.',
         sourcesMocking: ['Field Yates', 'Daniel Jeremiah', 'NFL Mock Draft DB']
       },
       {

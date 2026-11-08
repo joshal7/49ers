@@ -13,17 +13,19 @@
 
 import {
   esc,
+  escJargon,
+  jargonTerm,
   playProbBadgeClass,
   rankBadgeClass,
   renderPlayerAvatarHtml,
   renderTeamLogoHtml,
-  renderPlayerChipsStripHtml,
   renderMiniMeterHtml
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
 import {
   buildPfrTeamDraftUrl,
   buildPfrTeamSeasonUrl,
@@ -176,8 +178,6 @@ function renderUpcomingMatchup(appData) {
         <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12.5px">${esc(bet.impliedScore)}</div></div>
       </div>
 
-      ${um.featuredPlayers?.length ? `<div style="margin:8px 0">${renderPlayerChipsStripHtml(um.featuredPlayers, 6)}</div>` : ''}
-
       <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
         <strong>Line Movement &amp; Rest:</strong> ${esc(bet.openingSpread)} • Moneyline <span class="mono">${esc(bet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(bet.restAdvantage)}</strong>
       </div>
@@ -188,8 +188,8 @@ function renderUpcomingMatchup(appData) {
         <div class="card-header-left">
           ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 28)}
           <div class="card-title-group">
-            <div class="card-eyebrow">Opposing Team Availability &amp; Play Likelihood</div>
-            <h3 class="card-title">${esc(um.oppName)} Injury Report &amp; Play Odds</h3>
+            <div class="card-eyebrow">Opposing Team Availability &amp; Play Likelihood • Bye Wk ${oppHealth.byeWeek || 13}</div>
+            <h3 class="card-title">${esc(um.oppName)} Practice, Priors &amp; Play Odds</h3>
           </div>
         </div>
         <div class="source-link-strip">
@@ -199,25 +199,34 @@ function renderUpcomingMatchup(appData) {
         </div>
       </div>
 
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
+        Modeled at full parity with 49ers Health: combines Wed/Thu/Fri practice progression (${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}), veteran rest adjustments, snap share, and player toughness priors.
+      </div>
+
       <div class="kpi-grid" style="margin-bottom:10px">
         <div class="kpi-box">
-          <div class="kpi-label">Ruled Out</div>
-          <div class="kpi-val mono" style="color:var(--crimson)">${oppHealth.summary?.ruledOutCount ?? 0}</div>
+          <div class="kpi-label">Availability Index</div>
+          <div class="kpi-val mono" style="color:var(--emerald)">${oppHealth.summary?.overallAvailabilityScore ?? 85}/100</div>
+          ${renderMiniMeterHtml(oppHealth.summary?.overallAvailabilityScore ?? 85, 'emerald')}
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Starters Cleared</div>
+          <div class="kpi-val mono">${oppHealth.summary?.activeStartersHealthy ?? 19}/${oppHealth.summary?.totalStarters ?? 22}</div>
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Questionable / GTD</div>
           <div class="kpi-val mono" style="color:var(--gold-bright)">${oppHealth.summary?.questionableOrDoubtfulCount ?? 0}</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">On Injured Reserve</div>
-          <div class="kpi-val mono">${oppHealth.summary?.irCount ?? oppIrList.length}</div>
+          <div class="kpi-label">Ruled Out / ${jargonTerm('IR', 'ir')}</div>
+          <div class="kpi-val mono" style="color:var(--crimson)">${oppHealth.summary?.ruledOutCount ?? 0} Out • ${oppHealth.summary?.irCount ?? oppIrList.length} IR</div>
         </div>
       </div>
 
       ${
         oppInjReport.length > 0
           ? `
-            <div class="sub-label" style="margin-bottom:6px">Week ${um.week || 9} Injury Designations &amp; Modeled Play Likelihood</div>
+            <div class="sub-label" style="margin-bottom:6px">Week ${um.week || 9} Practice Participation &amp; Modeled Play Likelihood</div>
             <div class="table-scroll" style="margin-bottom:10px">
               <table class="data-table">
                 <thead>
@@ -245,7 +254,9 @@ function renderUpcomingMatchup(appData) {
                               }
                               <span style="color:var(--gold-bright);font-size:11px"> ${esc(op.position)}${op.jersey != null ? ` #${op.jersey}` : ''}</span>
                             </div>
-                            ${op.shortComment ? `<div style="font-size:11px;color:var(--text-muted);max-width:340px">${esc(op.shortComment)}</div>` : ''}
+                            <div style="font-size:10.5px;color:var(--text-muted)">
+                              ${op.snapPct ? `<span class="mono">Snaps ${op.snapPct}%</span>` : 'Rotational / Depth'}${op.archetypeNote ? ` • ${esc(op.archetypeNote)}` : ''}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -254,13 +265,33 @@ function renderUpcomingMatchup(appData) {
                         <div style="font-size:11px;color:var(--text-muted)">${esc(op.gameStatus)}</div>
                       </td>
                       <td class="mono">${esc(op.wed)} / ${esc(op.thu)} / ${esc(op.fri)}</td>
-                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span></td>
+                      <td style="min-width:112px">
+                        <span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span>
+                        ${renderMiniMeterHtml(op.playProbabilityPct ?? 0, (op.playProbabilityPct ?? 0) >= 75 ? 'emerald' : (op.playProbabilityPct ?? 0) >= 35 ? 'amber' : 'scarlet')}
+                      </td>
                     </tr>
                   `
                     )
                     .join('')}
                 </tbody>
               </table>
+            </div>
+
+            <div class="sub-label" style="margin-bottom:6px">${esc(um.oppAbbr || 'OPP')} Player Availability Priors &amp; Beat Notes</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+              ${oppInjReport
+                .map(
+                  op => `
+                <div class="subcard-panel" style="font-size:12px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+                    <strong>${esc(op.name)} <span style="color:var(--gold-bright)">(${esc(op.position)} • ${esc(op.injuryType)})</span></strong>
+                    <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc((op.factors || [])[0] || `${op.wed}/${op.thu}/${op.fri} progression`)}</span>
+                  </div>
+                  <div style="color:var(--text-secondary)">${escJargon(op.longComment || op.shortComment || op.archetypeNote || '')}</div>
+                </div>
+              `
+                )
+                .join('')}
             </div>
           `
           : `<div class="subcard-panel" style="font-size:12.5px;margin-bottom:10px">No active-roster ${esc(um.oppName)} players currently carry a restricted game designation.</div>`
@@ -269,14 +300,14 @@ function renderUpcomingMatchup(appData) {
       ${
         oppHealthyStarters.length > 0
           ? `
-            <div class="sub-label" style="margin-bottom:6px">Key ${esc(um.oppName)} Starters Cleared to Play</div>
+            <div class="sub-label" style="margin-bottom:6px">Key ${esc(um.oppName)} Starters Cleared (Offense &amp; Defense)</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
               ${oppHealthyStarters
                 .map(
                   st => `
                 <a href="${esc(st.espnUrl || oppHealth.sourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="padding:5px 9px">
                   <strong>${esc(st.name)}</strong>
-                  <span style="color:var(--text-muted)">(${esc(st.position)})</span>
+                  <span style="color:var(--text-muted)">(${esc(st.position)}${st.snapPct ? ` • ${st.snapPct}% snaps` : ''})</span>
                   <span class="mono" style="color:var(--emerald);font-weight:700">${st.playProbabilityPct}%</span>
                 </a>
               `
@@ -290,9 +321,34 @@ function renderUpcomingMatchup(appData) {
       ${
         oppIrList.length > 0
           ? `
-            <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:10px">
-              <strong>${esc(um.oppAbbr || 'OPP')} Injured Reserve (0% Play):</strong>
-              ${oppIrList.map(ir => `${esc(ir.name)} (${esc(ir.position)})`).join(', ')}
+            <div class="sub-label" style="margin-bottom:6px">${esc(um.oppAbbr || 'OPP')} IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+              ${oppIrList
+                .map(
+                  ir => `
+                <div class="subcard-panel" style="font-size:12px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                    <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                      ${renderPlayerAvatarHtml(ir, 28)}
+                      <div>
+                        ${
+                          ir.espnUrl
+                            ? `<a href="${esc(ir.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(ir.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                            : `<strong>${esc(ir.name)}</strong>`
+                        }
+                        <span style="color:var(--gold-bright)"> (${esc(ir.position)}${ir.injuryType ? ` • ${esc(ir.injuryType)}` : ''})</span>
+                      </div>
+                    </div>
+                    <span class="badge badge-neutral mono">Est. Return: ${esc(typeof ir.projectedReturnWeek === 'number' ? `Wk ${ir.projectedReturnWeek}` : ir.projectedReturnWeek || 'TBD')}</span>
+                  </div>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
+                    ${esc(ir.status || 'Injured Reserve')} • Earliest Eligible: Wk ${ir.earliestEligibleWeek || '—'}${ir.byeWeekNote ? ` (${esc(ir.byeWeekNote)})` : ''}
+                  </div>
+                  ${ir.beatNote ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(ir.beatNote)}</div>` : ''}
+                </div>
+              `
+                )
+                .join('')}
             </div>
           `
           : ''
@@ -314,10 +370,10 @@ function renderUpcomingMatchup(appData) {
 
     <section class="card">
       <div class="card-eyebrow">Opposing Coaching Staff Tendencies</div>
-      <h3 class="card-title" style="margin-bottom:8px">${esc(um.coachingMatchup?.headline)}</h3>
-      <p style="margin:0 0 8px;font-size:13px;color:var(--text-secondary)">${esc(um.coachingMatchup?.summary)}</p>
+      <h3 class="card-title" style="margin-bottom:8px">${escJargon(um.coachingMatchup?.headline)}</h3>
+      <p style="margin:0 0 8px;font-size:13px;color:var(--text-secondary)">${escJargon(um.coachingMatchup?.summary)}</p>
       <ul class="brief-bullets">
-        ${(um.coachingMatchup?.bullets || []).map(b => `<li>${esc(b)}</li>`).join('')}
+        ${(um.coachingMatchup?.bullets || []).map(b => `<li>${escJargon(b)}</li>`).join('')}
       </ul>
     </section>
 
@@ -333,7 +389,7 @@ function renderUpcomingMatchup(appData) {
               <strong style="font-size:13px">${esc(m.unitMatchup)}</strong>
               <span class="badge badge-positive">${esc(m.advantage)}</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.tacticalDetail || '')}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(m.tacticalDetail || '')}</div>
           </div>
         `
           )
@@ -351,7 +407,7 @@ function renderUpcomingMatchup(appData) {
           <span>PFR Box Scores</span>${iconSvg('externalLink', 11)}
         </a>
       </div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">${esc(um.franchiseHistory?.lastMeetingNote)}</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">${escJargon(um.franchiseHistory?.lastMeetingNote)}</div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead><tr><th>Season</th><th>Date</th><th>Site</th><th>Result</th></tr></thead>
@@ -394,12 +450,12 @@ function renderTeamHealthAndIr(appData) {
           <a href="${esc(h.espnInjuryUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
             <span>ESPN Injuries</span>${iconSvg('externalLink', 11)}
           </a>
-          <span class="badge badge-gold mono">IR Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
+          <span class="badge badge-gold mono">${jargonTerm('IR', 'ir')} Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
         </div>
       </div>
 
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
-        Accounts for veteran rest days (e.g., Trent Williams / CMC) vs. acute injury designations and historical play-through rates. Tap any player for full injury and contract details.
+        Accounts for veteran rest days (e.g., Trent Williams / CMC) vs. acute injury designations (${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}) and historical play-through rates. Tap any player for full injury and contract details.
       </div>
 
       <div class="table-scroll">
@@ -451,7 +507,7 @@ function renderTeamHealthAndIr(appData) {
             <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">
               ${esc(ir.status)} • Earliest Eligible: Wk ${ir.earliestEligibleWeek} (${esc(ir.byeWeekNote)})
             </div>
-            <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${esc(ir.beatNote)}</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(ir.beatNote)}</div>
           </div>
         `
           )
@@ -494,7 +550,7 @@ function renderTeamStatsAndPower(appData) {
               .map(
                 r => `
               <tr>
-                <td><strong>${esc(r.label)}</strong></td>
+                <td><strong>${escJargon(r.label)}</strong></td>
                 <td style="color:var(--text-secondary);font-size:11.5px">${esc(r.category)}</td>
                 <td class="mono"><strong>${esc(r.displayValue)}</strong></td>
                 <td style="min-width:86px">
@@ -520,7 +576,7 @@ function renderTeamStatsAndPower(appData) {
         <span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus</span>
       </div>
 
-      <p style="margin:0 0 10px;font-size:13px;color:var(--text-secondary)">${esc(pwr.synthesizedTakeaway)}</p>
+      <p style="margin:0 0 10px;font-size:13px;color:var(--text-secondary)">${escJargon(pwr.synthesizedTakeaway)}</p>
 
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(pwr.sources || [])
@@ -535,7 +591,7 @@ function renderTeamStatsAndPower(appData) {
               }
               <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta)})</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(s.blurb)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(s.blurb)}</div>
           </div>
         `
           )
@@ -547,6 +603,12 @@ function renderTeamStatsAndPower(appData) {
 
 function renderTradeWindow(appData) {
   const tw = appData?.seasonal?.tradeWarRoom || {};
+  const { recentTrades, archivedTrades } = partitionCompletedTradesByWindow(
+    tw.completed2026Moves || [],
+    appData?.meta?.updatedAt || Date.now(),
+    30
+  );
+
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
@@ -564,11 +626,47 @@ function renderTradeWindow(appData) {
         </div>
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">Completed 2026 Impact Acquisitions</div>
-      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px">
-        ${(tw.completed2026Moves || [])
-          .map(
-            m => `
+      ${
+        Array.isArray(tw.purchasingPower) && tw.purchasingPower.length > 0
+          ? `
+        <div class="sub-label" style="margin-bottom:6px">Purchasing Power &amp; 2027 Cap / Draft Constraints</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+          ${tw.purchasingPower
+            .map(
+              pp => `
+            <div class="subcard-panel" style="font-size:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+                <strong>${esc(pp.metric)}</strong>
+                <span class="badge ${String(pp.figure || '').startsWith('-') ? 'badge-warning' : 'badge-gold'} mono">${esc(pp.figure)}</span>
+              </div>
+              <div style="color:var(--text-secondary)">${escJargon(pp.strategicImpact || '')}</div>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      `
+          : ''
+      }
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+        <div class="sub-label" style="margin:0">Completed Impact Acquisitions (Last 30 Days)</div>
+        ${
+          archivedTrades.length > 0
+            ? `<button type="button" class="btn-ghost" data-action="open-archive" style="font-size:11.5px;padding:4px 9px">
+                ${iconSvg('archive', 12)}
+                <span>${archivedTrades.length} Older Trade${archivedTrades.length > 1 ? 's' : ''} (&gt;30d) in Archive</span>
+              </button>`
+            : ''
+        }
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px" id="recentCompletedTradesList">
+        ${
+          recentTrades.length === 0
+            ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No completed 49ers trades within the past 30 days. Older acquisitions are stored in the Archive.</div>`
+            : recentTrades
+                .map(
+                  m => `
           <div class="subcard-panel" style="border-color:var(--gold-border)">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:9px;min-width:0">
@@ -590,11 +688,12 @@ function renderTradeWindow(appData) {
               </div>
               <span class="badge badge-positive mono">Grade ${esc(m.schemeGrade)}</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${esc(m.analysis)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis)}</div>
           </div>
         `
-          )
-          .join('')}
+                )
+                .join('')
+        }
       </div>
 
       <div class="sub-label" style="margin-bottom:6px">Remaining Pre-Deadline Needs</div>
@@ -604,7 +703,7 @@ function renderTradeWindow(appData) {
             n => `
           <div class="subcard-panel">
             <strong>#${n.rank} ${esc(n.positionGroup)}</strong> <span class="badge badge-warning">${esc(n.urgency)}</span>
-            <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">${esc(n.epaContext)}</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">${escJargon(n.epaContext)}</div>
           </div>
         `
           )
@@ -613,7 +712,7 @@ function renderTradeWindow(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">9/18ths Pro-Rated Base Salary &amp; Rich Hill Pick Costs</div>
+      <div class="card-eyebrow">9/18ths Pro-Rated Base Salary &amp; ${jargonTerm('Rich Hill', 'rich_hill')} Pick Costs</div>
       <h3 class="card-title" style="margin-bottom:8px">Seller-Team Target Fit Matrix</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(tw.realisticTargets || [])
@@ -627,13 +726,14 @@ function renderTradeWindow(appData) {
                   <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
                     <strong>${esc(t.name)} (${esc(t.position)})</strong>
                     ${t.teamAbbr ? renderTeamLogoHtml(t.teamAbbr, t.teamLogoUrl, 17) : ''}
+                    ${t.currentTeam ? `<span style="font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(t.currentTeam)}</span>` : ''}
                     ${
                       t.sourceUrl
-                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">Cap Table ${iconSvg('externalLink', 10)}</a>`
+                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">OTC Contract ${iconSvg('externalLink', 10)}</a>`
                         : ''
                     }
                   </div>
-                  <div style="font-size:11.5px;color:var(--emerald)">Est. Cost: ${esc(t.projectedPickCost)}</div>
+                  <div style="font-size:11.5px;color:var(--emerald)">Est. Cost: ${esc(t.projectedPickCost)}${t.cap2027Impact ? ` • <span style="color:${String(t.cap2027Impact).includes('⚠️') ? 'var(--amber)' : 'var(--text-secondary)'}">2027 Cap: ${esc(t.cap2027Impact)}</span>` : ''}</div>
                 </div>
               </div>
               <div style="min-width:128px;text-align:right">
@@ -641,13 +741,41 @@ function renderTradeWindow(appData) {
                 ${renderMiniMeterHtml(t.fitScore, 'gold')}
               </div>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${esc(t.fitBreakdown)}</div>
+            ${t.sellerIncentive ? `<div style="font-size:11.5px;color:var(--text-muted);margin-top:4px"><strong>Seller Context:</strong> ${escJargon(t.sellerIncentive)}</div>` : ''}
+            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:4px">${escJargon(t.fitBreakdown)}</div>
           </div>
         `
           )
           .join('')}
       </div>
     </section>
+
+    ${
+      Array.isArray(tw.pitfallsToAvoid) && tw.pitfallsToAvoid.length > 0
+        ? `
+      <section class="card">
+        <div class="card-eyebrow">Front Office Discipline • Multi-Year Cap &amp; Pick Guardrails</div>
+        <h3 class="card-title" style="margin-bottom:8px">Pitfalls &amp; Trap Targets to Avoid</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          ${tw.pitfallsToAvoid
+            .map(
+              p => `
+            <div class="subcard-panel" style="border-color:rgba(220,38,38,0.28)">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+                <strong>${esc(p.trap)}</strong>
+                <span class="badge badge-danger">Avoid</span>
+              </div>
+              ${p.examples ? `<div style="font-size:11.5px;color:var(--gold-bright);margin-bottom:3px"><strong>Examples:</strong> ${esc(p.examples)}</div>` : ''}
+              <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(p.whyAvoid)}</div>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      </section>
+    `
+        : ''
+    }
 
     <section class="card">
       <div class="card-eyebrow">Beat &amp; National Insider Reports</div>
@@ -665,7 +793,7 @@ function renderTradeWindow(appData) {
                   : `<span style="font-size:11px;color:var(--text-muted)">${esc(r.sources)}</span>`
               }
             </div>
-            <div style="font-size:12.5px">${esc(r.summary)}</div>
+            <div style="font-size:12.5px">${escJargon(r.summary)}</div>
           </div>
         `
           )
@@ -688,7 +816,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trophy', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">10,000-Iteration Monte Carlo • Official NFL Tiebreakers</div>
+            <div class="card-eyebrow">10,000-Iteration ${jargonTerm('Monte Carlo', 'monte_carlo')} • Official NFL Tiebreakers</div>
             <h2 class="card-title">49ers Playoff &amp; Seeding Probabilities</h2>
           </div>
         </div>
@@ -720,7 +848,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
         </div>
       </div>
 
-      <div class="sub-label" style="margin:10px 0 6px">Exact NFC Seed Distribution (Proj. ${sf.projectedWins ?? 13.1} Wins)</div>
+      <div class="sub-label" style="margin:10px 0 6px">Exact NFC Seed Distribution (Proj. ${sf.projectedWins ?? 12.0} Wins)</div>
       <div style="display:flex;flex-direction:column;gap:5px">
         ${[1, 2, 3, 4, 5, 6, 7]
           .map(s => {
@@ -942,17 +1070,18 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
           .map(
             n => `
           <div class="subcard-panel" style="font-size:12.5px">
-            <strong style="color:var(--gold-bright)">#${n.rank} ${esc(n.pos)}:</strong> ${esc(n.horizon)}
+            <strong style="color:var(--gold-bright)">#${n.rank} ${esc(n.pos)}:</strong> ${escJargon(n.horizon)}
           </div>
         `
           )
           .join('')}
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">49ers 2027 Draft Pick Capital (Incl. Comp Projections)</div>
+      <div class="sub-label" style="margin-bottom:6px">49ers ${Number(dp.draftYear) || 2027} Draft Pick Capital (${(dp.pickInventory || []).length} Picks)</div>
+      ${dp.tradedPicksNote ? `<div class="subcard-panel" style="font-size:11.5px;color:var(--text-secondary);margin-bottom:8px">${escJargon(dp.tradedPicksNote)}</div>` : ''}
       <div class="table-scroll">
         <table class="data-table mono">
-          <thead><tr><th>Rd</th><th>Est. Pick</th><th>Origin</th><th>Rich Hill Pts</th></tr></thead>
+          <thead><tr><th>Rd</th><th>Est. Pick</th><th>Origin</th><th>${jargonTerm('Rich Hill', 'rich_hill')} Pts</th></tr></thead>
           <tbody>
             ${(dp.pickInventory || [])
               .map(
@@ -987,7 +1116,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
               <span class="badge badge-positive mono">SF Fit ${m.shanahanLynchFitScore}/100 • ${m.mockFrequencyToSfPct}% Mocks</span>
             </div>
             <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.heightWeight)} • Mocked by: ${esc((m.sourcesMocking || []).join(', '))}</div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${esc(m.archetypeTraits)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(m.archetypeTraits)}</div>
           </div>
         `
           )
@@ -998,7 +1127,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
         <div>
-          <div class="card-eyebrow">NFL Scouting Combine Measurables &amp; RAS Leaderboard</div>
+          <div class="card-eyebrow">NFL Scouting Combine Measurables &amp; ${jargonTerm('RAS', 'ras')} Leaderboard</div>
           <h3 class="card-title">Searchable Combine Results (${filteredCombine.length})</h3>
         </div>
         <div class="source-link-strip">
@@ -1014,7 +1143,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
       </div>
       <div class="table-scroll">
         <table class="data-table mono">
-          <thead><tr><th>Athlete</th><th>Pos</th><th>School</th><th>Ht / Wt</th><th>40-Yd</th><th>Vert</th><th>3-Cone</th><th>RAS</th></tr></thead>
+          <thead><tr><th>Athlete</th><th>Pos</th><th>School</th><th>Ht / Wt</th><th>40-Yd</th><th>Vert</th><th>3-Cone</th><th>${jargonTerm('RAS', 'ras')}</th></tr></thead>
           <tbody>
             ${filteredCombine
               .slice(0, 35)
@@ -1094,10 +1223,10 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                   ${stealBadge}
                 </div>
 
-                <div style="font-size:12.5px;color:var(--text-secondary)">${esc(pk.roleSummary)}</div>
+                <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(pk.roleSummary)}</div>
 
                 <ul class="brief-bullets">
-                  ${(pk.strengths || []).map(s => `<li>${esc(s)}</li>`).join('')}
+                  ${(pk.strengths || []).map(s => `<li>${escJargon(s)}</li>`).join('')}
                 </ul>
 
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -1132,7 +1261,7 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
 
     <section class="card">
       <div class="card-eyebrow">Sorted by Guaranteed Contract Commitment</div>
-      <h3 class="card-title" style="margin-bottom:8px">Priority Undrafted Free Agents (UDFAs)</h3>
+      <h3 class="card-title" style="margin-bottom:8px">Priority Undrafted Free Agents (${jargonTerm('UDFAs', 'udfa')})</h3>
       <div style="display:flex;flex-direction:column;gap:9px">
         ${udfas
           .map((u, idx) => {
@@ -1156,7 +1285,7 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                   <span class="badge badge-gold mono">${formatCompactDollars(u.guaranteedTotal)} Guaranteed</span>
                 </div>
                 <div style="font-size:12px;color:var(--emerald)">${esc(u.rosterOddsNote)}</div>
-                <div style="font-size:12.5px;color:var(--text-secondary)">${esc(u.roleSummary)}</div>
+                <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(u.roleSummary)}</div>
                 ${
                   u.highlightVideo?.videoId
                     ? renderVideoEmbedOrFacade(

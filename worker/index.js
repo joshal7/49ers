@@ -4,18 +4,23 @@
  * Endpoints:
  * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts
  * - GET  /api/audio/:episodeId   -> Streams cached MP3/WAV from Cloudflare R2 (supports HTTP Range for iOS Safari)
- * - POST /api/analyze            -> Runs Gemini 2.5 + Google Search Grounding deep no-fluff synthesis & caches for group
- * - POST /api/podcast            -> Generates timed script + Gemini Multi-Speaker TTS audio, stores in R2 & indexes in KV
+ * - POST /api/analyze            -> Runs Gemini 2.5 Pro (Deep Thinking + Google Search Grounding) synthesis & caches for group
+ * - POST /api/podcast            -> Generates verified script + Gemini Multi-Speaker TTS audio, stores in R2 & indexes in KV
  */
 
 const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
-CRITICAL ANTI-HALLUCINATION & REAL-TIME GROUNDING DIRECTIVE:
-1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, or injury designations.
-2. Treat the provided LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
-3. Always prize the latest verified trade data, up-to-the-minute Week injury/practice statuses, active 53-man / IR / Practice Squad roster lists, and current win/loss standings.
-4. NEVER attribute retired, cut, or departed former 49ers (such as Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the current active 49ers rotation unless explicitly marked as Active on the provided LIVE 49ERS ROSTER snapshot.
-5. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math (base salary, option/signing proration, Pre/Post-June 1 dead money, Article 13 rollover cap).
-6. Cite originating beat writers (Maiocco, Barrows, Wagoner, Lombardi, Chan, Branch, Inman, Kurtenbach, Kawakami, Peacock, Crocker, Schefter, Rapoport, Pelissero) or open datasets (nflverse, OverTheCap, NextGen Stats).`;
+PRIZE ACCURACY OVER VELOCITY — DEEP CHAIN-OF-VERIFICATION DIRECTIVE:
+1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations.
+2. Treat the provided AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
+3. MANDATORY COACHING, CAP & DRAFT GROUNDING:
+   - Head Coach: Kyle Shanahan | Defensive Coordinator: Raheem Morris (Wide-9 4-man rush married to disguised split-safety / Cover-3 Buzz / Quarters rotations).
+   - Multi-Year CBA Cap Reality: San Francisco's 2026 Top-51 cap space (~$35.16M) MUST roll over under CBA Article 13 to offset a projected -$31.54M 2027 cap deficit. Never treat 2026 cap space as "free money" detached from 2027 obligations.
+   - Midseason Trade Proration Math: Acquiring clubs absorb only the remaining weekly proration (e.g., 9/18ths at Week 9) of a player's 2026 base salary while signing/option bonus proration stays with the seller—meaning $35.16M in 2026 space carries ~$65M+ of annualized base-salary purchasing power WITHOUT requiring sellers to eat salary, though every $1 spent in 2026 directly deepens the 2027 deficit.
+   - 2027 Draft Capital: Check the exact pick count in the snapshot (SF owns 6 picks in 2027 after trading its own 2027 4th-rounder to Indianapolis for DT DeForest Buckner; Rd 6 is via BAL and Rd 7 is via KC). Do not recommend reckless Day-2 pick overpays for expiring rentals.
+   - Trade Target Rigor: Only recommend real NFL players verified on genuine seller/surplus rosters who upgrade true 49ers weak links (perimeter WR / 12-personnel move TE, LG pass protection, rotational speed EDGE, veteran Dime CB/S). Reject declining age-cliff veterans with zero pass-rush juice (e.g., age-37 Cameron Jordan) or recently extended untouchables (e.g., Michael Mayer).
+4. NEVER attribute retired, cut, or departed former 49ers (such as Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the current active 49ers rotation unless explicitly marked as Active on the LIVE 49ERS ROSTER snapshot. You MAY discuss departed players strictly in verified historical, 2026 dead-cap, opponent, or external trade-target context (e.g., Javon Hargrave dead cap or Chase Young on the Saints).
+5. INTERNAL SELF-AUDIT BEFORE OUTPUT: Silently verify every player's current team, contract figure, pick round, and probability against the snapshot and Google Search Grounding before emitting a single word of output.
+6. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, T-E stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math.`;
 
 function corsHeaders(origin, allowedOrigin) {
   const allow =
@@ -46,6 +51,16 @@ async function parseJsonBodySafe(request) {
   }
 }
 
+function extractNonThoughtText(geminiJson) {
+  const parts = geminiJson?.candidates?.[0]?.content?.parts;
+  if (!Array.isArray(parts) || parts.length === 0) return '';
+  return parts
+    .filter(p => p && !p.thought && typeof p.text === 'string')
+    .map(p => p.text)
+    .join('\n')
+    .trim();
+}
+
 function parseScriptTurnsSafe(rawText) {
   const cleaned = String(rawText || '')
     .trim()
@@ -55,7 +70,36 @@ function parseScriptTurnsSafe(rawText) {
   try {
     const arr = JSON.parse(cleaned);
     if (Array.isArray(arr) && arr.length > 0) return arr;
-  } catch {}
+  } catch {
+    // Extract balanced JSON array if model included surrounding prose with Google Search grounding
+    const startIdx = cleaned.indexOf('[');
+    if (startIdx >= 0) {
+      let depth = 0;
+      let inStr = false;
+      let esc = false;
+      for (let i = startIdx; i < cleaned.length; i++) {
+        const ch = cleaned[i];
+        if (inStr) {
+          if (esc) esc = false;
+          else if (ch === '\\') esc = true;
+          else if (ch === '"') inStr = false;
+          continue;
+        }
+        if (ch === '"') inStr = true;
+        else if (ch === '[') depth++;
+        else if (ch === ']') {
+          depth--;
+          if (depth === 0) {
+            try {
+              const extracted = JSON.parse(cleaned.slice(startIdx, i + 1));
+              if (Array.isArray(extracted) && extracted.length > 0) return extracted;
+            } catch {}
+            break;
+          }
+        }
+      }
+    }
+  }
   return [{ speaker: 'Marcus', text: cleaned || 'Briefing generated.' }];
 }
 
@@ -83,21 +127,44 @@ function scrubStaleWeightHallucinations(text = '', contextSummary = '') {
   let out = String(text || '');
   if (!out) return out;
   const ctxLower = String(contextSummary || '').toLowerCase();
-  const historicalRe = /\b(retired|former|departed|no longer|not on the active|not currently on)\b/i;
+  const nonActiveContextRe =
+    /\b(retired|former|departed|no longer|not on the active|not currently on|dead\s*cap|dead\s*money|post-june|void\s*year|trade\s*target|trade\s*candidate|trade\s*fit|seller|acquire|saints|new\s*orleans|colts|indianapolis|vikings|minnesota|texans|houston|falcons|atlanta|bears|chicago|titans|tennessee|jaguars|jacksonville|seahawks|seattle|packers|green\s*bay)\b/i;
+
+  // Strip the "DO NOT CITE" warning line when checking whether a player is legitimately on the active roster snapshot
+  const activeRosterSection = (ctxLower.split('do not cite')[0] || '')
+    .split('trade window')[0]
+    .split('dead cap')[0];
 
   for (const name of RETIRED_OR_DEPARTED_GUARDRAIL_NAMES) {
-    // Allow only if the live roster snapshot explicitly lists them outside the "DO NOT CITE" line
-    const activeCtxOnly = ctxLower.split('do not cite')[0] || '';
-    if (activeCtxOnly.includes(name.toLowerCase())) continue;
+    if (name !== 'Bryce Huff' && activeRosterSection.includes(name.toLowerCase())) continue;
 
     const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/['’]/g, "['’]?");
-    const listCommaRe = new RegExp(`\\b${escaped},\\s*`, 'gi');
     const re = new RegExp(`\\b${escaped}\\b`, 'gi');
     if (!re.test(out)) continue;
-    if (historicalRe.test(out)) continue;
 
+    // Inspect every occurrence window (±140 chars); scrub only occurrences that falsely treat them as active 49ers
+    re.lastIndex = 0;
+    let hasActiveHallucination = false;
+    let match;
+    while ((match = re.exec(out)) !== null) {
+      if (name === 'Bryce Huff') {
+        hasActiveHallucination = true;
+        break;
+      }
+      const winStart = Math.max(0, match.index - 140);
+      const winEnd = Math.min(out.length, match.index + match[0].length + 140);
+      const localWindow = out.slice(winStart, winEnd);
+      if (!nonActiveContextRe.test(localWindow)) {
+        hasActiveHallucination = true;
+        break;
+      }
+    }
+
+    if (!hasActiveHallucination) continue;
+
+    const listCommaRe = new RegExp(`\\b${escaped},\\s*`, 'gi');
     out = out.replace(listCommaRe, '');
-    out = out.replace(re, 'Mykel Williams');
+    out = out.replace(new RegExp(`\\b${escaped}\\b`, 'gi'), 'Mykel Williams');
   }
   return out;
 }
@@ -135,6 +202,38 @@ function pcm16ToWav(pcmBytes, sampleRate = 24000) {
   wav.set(new Uint8Array(header), 0);
   wav.set(pcmBytes, 44);
   return wav;
+}
+
+async function callGeminiTextWithFallback(env, payload) {
+  const primaryModel = env.GEMINI_TEXT_MODEL || 'gemini-2.5-pro';
+  const primaryUrl = `https://generativelanguage.googleapis.com/v1beta/models/${primaryModel}:generateContent?key=${env.GEMINI_API_KEY}`;
+  const res = await fetch(primaryUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (
+    !res.ok &&
+    (res.status === 429 || res.status === 503) &&
+    primaryModel !== 'gemini-2.5-flash'
+  ) {
+    const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
+    const fallbackPayload = {
+      ...payload,
+      generationConfig: {
+        ...(payload.generationConfig || {}),
+        thinkingConfig: { thinkingBudget: 8192 }
+      }
+    };
+    return fetch(fallbackUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fallbackPayload)
+    });
+  }
+
+  return res;
 }
 
 export default {
@@ -195,8 +294,8 @@ export default {
         return jsonResponse({ error: 'Invalid JSON request body' }, 400, cors);
       }
       const prompt = String(body.prompt || '').trim();
-      const sectionContext = String(body.contextSummary || '').slice(0, 14000);
-      const clientSystemPrompt = String(body.systemPrompt || '').slice(0, 4000);
+      const sectionContext = String(body.contextSummary || '').slice(0, 28000);
+      const clientSystemPrompt = String(body.systemPrompt || '').slice(0, 6000);
       const effectiveSystemPrompt = clientSystemPrompt
         ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystemPrompt}`
         : EDITORIAL_SYSTEM_PROMPT;
@@ -206,7 +305,7 @@ export default {
         return jsonResponse({ error: 'Prompt is required' }, 400, cors);
       }
 
-      const contextHash = await sha256Short(sectionContext.slice(0, 600));
+      const contextHash = await sha256Short(sectionContext);
       const cacheKey = `analysis:${await sha256Short(`${prompt.toLowerCase()}:${contextHash}`)}`;
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
@@ -221,27 +320,23 @@ export default {
         );
       }
 
-      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${
-        env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
-      }:generateContent?key=${env.GEMINI_API_KEY}`;
-
-      const geminiRes = await fetch(geminiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
-          tools: [{ google_search: {} }],
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: `Analyze this 49ers topic in depth using ONLY verified live real-time roster/injury/trade/standings facts (never stale model weights), film tendencies, EPA/NGS metrics, and CBA cap numbers:\n\nTOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
-                }
-              ]
-            }
-          ]
-        })
+      const geminiRes = await callGeminiTextWithFallback(env, {
+        systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
+        tools: [{ google_search: {} }],
+        generationConfig: {
+          temperature: 0.15,
+          thinkingConfig: { thinkingBudget: 16384 }
+        },
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              {
+                text: `Analyze this 49ers topic in depth using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts (never stale model weights), All-22 film tendencies, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nBefore writing your final Markdown report, verify internally that every player's current team, cap figure, draft pick round, and playoff probability matches the snapshot and live Google Search Grounding.\n\nTOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+              }
+            ]
+          }
+        ]
       });
 
       if (!geminiRes.ok) {
@@ -250,9 +345,7 @@ export default {
       }
 
       const geminiJson = await geminiRes.json();
-      const rawMarkdown =
-        geminiJson.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') ||
-        'No synthesis generated.';
+      const rawMarkdown = extractNonThoughtText(geminiJson) || 'No synthesis generated.';
       const markdown = scrubStaleWeightHallucinations(rawMarkdown, sectionContext);
       const groundingChunks =
         geminiJson.candidates?.[0]?.groundingMetadata?.groundingChunks
@@ -271,7 +364,8 @@ export default {
       };
 
       if (env.SHARED_CACHE) {
-        await env.SHARED_CACHE.put(cacheKey, JSON.stringify(item), { expirationTtl: 60 * 60 * 24 * 30 });
+        // 6-hour TTL ensures AI synthesis stays synchronized with daily cap/roster/standings updates
+        await env.SHARED_CACHE.put(cacheKey, JSON.stringify(item), { expirationTtl: 60 * 60 * 6 });
         const list = (await env.SHARED_CACHE.get('index:analyses', 'json')) || [];
         const updated = [item, ...list.filter(x => x.id !== item.id)].slice(0, 50);
         await env.SHARED_CACHE.put('index:analyses', JSON.stringify(updated));
@@ -288,8 +382,8 @@ export default {
       const topic = String(body.topic || '').trim();
       const durationMinutes = Math.max(2, Math.min(20, Number(body.durationMinutes || 5)));
       const format = body.format === 'solo' ? 'Solo Executive Briefing' : 'Two-Host Analytical Banter';
-      const contextSummary = String(body.contextSummary || '').slice(0, 14000);
-      const clientSystemPrompt = String(body.systemPrompt || '').slice(0, 4000);
+      const contextSummary = String(body.contextSummary || '').slice(0, 28000);
+      const clientSystemPrompt = String(body.systemPrompt || '').slice(0, 6000);
       const effectiveSystemPrompt = clientSystemPrompt
         ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystemPrompt}`
         : EDITORIAL_SYSTEM_PROMPT;
@@ -299,7 +393,7 @@ export default {
         return jsonResponse({ error: 'Topic is required' }, 400, cors);
       }
 
-      const contextHash = await sha256Short(contextSummary.slice(0, 600));
+      const contextHash = await sha256Short(contextSummary);
       const epId = `live_${await sha256Short(`${topic}:${durationMinutes}:${format}:${contextHash}`)}`;
       const existing = await env.SHARED_CACHE?.get(`episode:${epId}`, 'json');
       if (existing && !body.forceRefresh) {
@@ -314,24 +408,20 @@ export default {
         );
       }
 
-      // Step 1: Generate tightly timed analytical script strictly grounded in live roster/injury/trade/W-L data
-      const scriptUrl = `https://generativelanguage.googleapis.com/v1beta/models/${
-        env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
-      }:generateContent?key=${env.GEMINI_API_KEY}`;
-
+      // Step 1: Generate deeply reasoned, search-grounded analytical script strictly anchored to live snapshot
       const scriptPrompt =
         format === 'Solo Executive Briefing'
-          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output STRICT JSON array of objects [{"speaker":"Marcus","text":"..."}]. Zero fluff. Anchor 100% of roster names, trades, injuries, and W-L records to the LIVE REAL-TIME DATA SNAPSHOT below (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
-          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & EPA Data Insider) on: "${topic}". Output STRICT JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}]. Zero morning-zoo fluff. Anchor 100% of roster names, trades, injuries, and W-L records to the LIVE REAL-TIME DATA SNAPSHOT below (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
+          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Zero fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Zero morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
 
-      const scriptRes = await fetch(scriptUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
-          contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }],
-          generationConfig: { responseMimeType: 'application/json' }
-        })
+      const scriptRes = await callGeminiTextWithFallback(env, {
+        systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
+        tools: [{ google_search: {} }],
+        generationConfig: {
+          temperature: 0.2,
+          thinkingConfig: { thinkingBudget: 16384 }
+        },
+        contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
       });
 
       if (!scriptRes.ok) {
@@ -339,7 +429,7 @@ export default {
       }
 
       const scriptJson = await scriptRes.json();
-      const rawScriptText = scriptJson.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+      const rawScriptText = extractNonThoughtText(scriptJson) || '[]';
       const turns = parseScriptTurnsSafe(rawScriptText).map(t => ({
         ...t,
         text: scrubStaleWeightHallucinations(t.text || '', contextSummary)
@@ -419,7 +509,7 @@ export default {
       };
 
       if (env.SHARED_CACHE) {
-        await env.SHARED_CACHE.put(`episode:${epId}`, JSON.stringify(episode));
+        await env.SHARED_CACHE.put(`episode:${epId}`, JSON.stringify(episode), { expirationTtl: 60 * 60 * 12 });
         const list = (await env.SHARED_CACHE.get('index:episodes', 'json')) || [];
         const updated = [episode, ...list.filter(x => x.id !== episode.id)].slice(0, 40);
         await env.SHARED_CACHE.put('index:episodes', JSON.stringify(updated));

@@ -6,6 +6,8 @@
 
 import {
   esc,
+  escJargon,
+  jargonTerm,
   relTime,
   playProbBadgeClass,
   renderPlayerAvatarHtml,
@@ -15,6 +17,7 @@ import {
 } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
@@ -150,7 +153,7 @@ function renderSingleDashboardCard({
                   <div class="${hasHeroImg ? 'media-split-row' : ''}">
                     <div style="min-width:0">
                       <div style="font-weight:700;font-size:13.5px;line-height:1.35">${esc(c.headline)}</div>
-                      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${esc(c.hardFacts?.[0] || '')}</div>
+                      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(c.hardFacts?.[0] || '')}</div>
                     </div>
                     ${
                       hasHeroImg
@@ -343,17 +346,14 @@ function renderSingleDashboardCard({
           </div>
           <span class="badge badge-positive mono">${esc(um.betting?.spread || 'Pick')} • O/U ${esc(um.betting?.overUnder || '—')}</span>
         </div>
-        <div class="subcard-panel" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;margin-bottom:7px">
-          <div style="min-width:0;flex:1">
-            <strong>Coaching Matchup:</strong> ${esc(um.coachingMatchup?.headline || '')}
-          </div>
-          ${um.featuredPlayers?.length ? renderAvatarStackHtml(um.featuredPlayers, 26, 5) : ''}
+        <div class="subcard-panel" style="font-size:12.5px;margin-bottom:7px">
+          <strong>Coaching Matchup:</strong> ${escJargon(um.coachingMatchup?.headline || '')}
         </div>
         ${
           oppInj.length
             ? `<div class="subcard-panel" style="font-size:12px">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:5px">
-                  <strong style="color:var(--text-primary)">${esc(um.oppName)} Health &amp; Play Likelihood</strong>
+                  <strong style="color:var(--text-primary)">${esc(um.oppName)} Health &amp; Play Likelihood${oppHealth.summary?.overallAvailabilityScore != null ? ` <span class="mono" style="color:var(--gold-bright);font-size:11px">(${oppHealth.summary.overallAvailabilityScore}/100 Avail.)</span>` : ''}</strong>
                   <a href="${esc(oppHealth.teamInjuriesUrl || um.injurySourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
                     <span>Injury Wire</span>${iconSvg('external', 10)}
                   </a>
@@ -448,7 +448,12 @@ function renderSingleDashboardCard({
 
     case 'trade_deadline': {
       const tw = appData?.seasonal?.tradeWarRoom || {};
-      const moves = (tw.completed2026Moves || []).slice(0, 2);
+      const { recentTrades } = partitionCompletedTradesByWindow(
+        tw.completed2026Moves || [],
+        appData?.meta?.updatedAt || Date.now(),
+        30
+      );
+      const moves = recentTrades.slice(0, 2);
       externalHeaderLink = `<a href="${esc(tw.transactionsUrl || 'https://www.espn.com/nfl/transactions')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Wire</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div class="kpi-grid kpi-grid-2">
@@ -457,8 +462,8 @@ function renderSingleDashboardCard({
             <div class="kpi-val" style="font-size:13px">Tue Nov 10 • 1PM PT</div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">2026 Gross Cap Room</div>
-            <div class="kpi-val mono">${formatCompactDollars(tw.availableGrossCap)}</div>
+            <div class="kpi-label">2026 Cap / 2027 Horizon</div>
+            <div class="kpi-val mono" style="font-size:12.5px">${formatCompactDollars(tw.availableGrossCap)}${tw.projected2027CapSpace != null ? ` <span style="color:var(--crimson)">(${formatCompactDollars(tw.projected2027CapSpace, true)} '27)</span>` : ''}</div>
           </div>
         </div>
         ${
@@ -488,7 +493,7 @@ function renderSingleDashboardCard({
             : ''
         }
         <div style="font-size:12px;color:var(--text-secondary)">
-          <strong>Top Remaining Watch:</strong> ${esc(tw.topNeeds?.[0]?.positionGroup || 'WR Insurance')}
+          <strong>Top Remaining Watch:</strong> ${esc(tw.topNeeds?.[0]?.positionGroup || 'WR / 12-Personnel TE & Left Guard')}
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="trade"`;
@@ -497,9 +502,9 @@ function renderSingleDashboardCard({
 
     case 'playoff_picture': {
       const sf = mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
-      const berthPct = sf.makePlayoffsPct ?? 99.7;
-      const divPct = sf.winDivisionPct ?? 97.7;
-      const byePct = sf.seed1ByePct ?? 54.8;
+      const berthPct = sf.makePlayoffsPct ?? 93.7;
+      const divPct = sf.winDivisionPct ?? 83.7;
+      const byePct = sf.seed1ByePct ?? 36.9;
       externalHeaderLink = `<a href="https://www.nfl.com/standings/playoff-picture" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Standings</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div class="kpi-grid">
@@ -572,7 +577,7 @@ function renderSingleDashboardCard({
             .map(
               r => `
             <div class="kpi-box">
-              <div class="kpi-label">${esc(r.label.replace('Offensive ', ''))}</div>
+              <div class="kpi-label">${escJargon(r.label.replace('Offensive ', ''))}</div>
               <div class="kpi-val mono" style="font-size:13px">#${r.rank} (${esc(r.displayValue)})</div>
               ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : 'gold')}
             </div>
@@ -601,7 +606,7 @@ function renderSingleDashboardCard({
           <span class="mono" style="font-size:11px;color:var(--gold-bright)">Tap headshot for 5-tab Dossier</span>
         </div>
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          Explore all <strong>${count} players</strong> (${activeCnt} Active + IR + Practice Squad) sorted by Name or Jersey #, with EPA, NextGen Stats, NFL Combine percentiles, Contracts &amp; ${depthWk ? `Week ${depthWk} ` : ''}Active Depth Chart.
+          Explore all <strong>${count} players</strong> (${activeCnt} Active + IR + Practice Squad) sorted by Name or Jersey #, with ${jargonTerm('EPA', 'epa')}, NextGen Stats, NFL Combine percentiles, Contracts &amp; ${depthWk ? `Week ${depthWk} ` : ''}Active Depth Chart.
         </div>
       `;
       deepDiveAttr = `data-action="jump-view" data-target-tab="roster"`;
@@ -624,16 +629,16 @@ function renderSingleDashboardCard({
       bodyHtml = `
         <div class="kpi-grid">
           <div class="kpi-box">
-            <div class="kpi-label">2026 Cap Space</div>
-            <div class="kpi-val mono" style="color:var(--emerald)">${formatCompactDollars(sum.updatedCapSpace)}</div>
+            <div class="kpi-label">2026 Gross Space</div>
+            <div class="kpi-val mono" style="color:${(sum.updatedCapSpace ?? 0) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(sum.updatedCapSpace ?? y26.teamCapSpace)}</div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">Effective Space</div>
-            <div class="kpi-val mono">${formatCompactDollars(sum.effectiveCapSpace)}</div>
+            <div class="kpi-label">2026 ${jargonTerm('Dead Cap', 'dead_cap')}</div>
+            <div class="kpi-val mono" style="color:var(--amber)">${formatCompactDollars(deadCap)}</div>
           </div>
           <div class="kpi-box">
             <div class="kpi-label">2027 Projected</div>
-            <div class="kpi-val mono">${formatCompactDollars(sum.updatedNextYearCapSpace)}</div>
+            <div class="kpi-val mono" style="color:${(sum.updatedNextYearCapSpace ?? 0) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(sum.updatedNextYearCapSpace)}</div>
           </div>
         </div>
         <div class="cap-alloc-wrap">

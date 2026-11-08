@@ -2,6 +2,11 @@
  * Shared UI Formatting & Safe HTML/Markdown Helpers
  */
 
+import { annotateJargonPlainText, jargonTerm } from '../engine/jargonGlossary.js';
+
+export { jargonTerm };
+export const escJargon = annotateJargonPlainText;
+
 export function esc(str = '') {
   return String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -41,11 +46,32 @@ export function renderMarkdownSafe(md = '') {
   const lines = String(md || '').split(/\r?\n/);
   const html = [];
   let inList = false;
+  const seenJargon = new Set();
 
-  const formatInline = text =>
-    esc(text)
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>');
+  const formatSegmentWithBoldAndJargon = seg => {
+    // Split on **bold** markers, preserving jargon links inside or outside bold safely
+    const parts = String(seg || '').split(/(\*\*[^*]+\*\*)/g);
+    return parts
+      .map(part => {
+        if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+          return `<strong>${annotateJargonPlainText(part.slice(2, -2), { maxTerms: 4, seenKeys: seenJargon })}</strong>`;
+        }
+        return annotateJargonPlainText(part, { maxTerms: 6, seenKeys: seenJargon });
+      })
+      .join('');
+  };
+
+  const formatInline = text => {
+    const codeSplit = String(text || '').split(/(`[^`]+`)/g);
+    return codeSplit
+      .map(chunk => {
+        if (chunk.startsWith('`') && chunk.endsWith('`') && chunk.length > 2) {
+          return `<code>${esc(chunk.slice(1, -1))}</code>`;
+        }
+        return formatSegmentWithBoldAndJargon(chunk);
+      })
+      .join('');
+  };
 
   for (const rawLine of lines) {
     const line = rawLine.trim();

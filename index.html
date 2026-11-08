@@ -73,8 +73,8 @@
   </header>
 
   <div class="app-shell">
-    <!-- Dynamic Season Phase Banner -->
-    <section id="phaseBanner" class="phase-banner" aria-label="Active NFL Season Phase"></section>
+    <!-- Dynamic Season Phase Banner (Shown only in Game & Season -> Trade Window) -->
+    <section id="phaseBanner" class="phase-banner" hidden aria-label="Active NFL Season Phase"></section>
 
     <!-- Primary Dynamic View Container -->
     <main id="mainView" class="main-view" role="main" aria-live="polite">
@@ -211,6 +211,9 @@
     </div>
   </div>
 
-  <script type="module" src="./src/app.js?v=6"></script>
+  <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
+  <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
+
+  <script type="module" src="./src/app.js?v=7"></script>
 </body>
 </html>

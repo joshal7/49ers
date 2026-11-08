@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T16:37:41.930Z",
+  "updatedAt": "2026-11-08T01:14:29.296Z",
   "week": 9,
   "units": [
     {
@@ -31,20 +31,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "3043116",
-              "name": "Demarcus Robinson",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
+              "playerId": "3047876",
+              "name": "KhaDarel Hodge",
+              "jersey": 86,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3047876.png",
               "baselineRank": 3,
-              "playProbabilityPct": 84,
-              "statusBadge": "84% • True GTD",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4360438",
-              "name": "Brandon Aiyuk",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
@@ -63,13 +63,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "3043116",
-              "name": "Demarcus Robinson",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
+              "playerId": "3047876",
+              "name": "KhaDarel Hodge",
+              "jersey": 86,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3047876.png",
               "baselineRank": 3,
-              "playProbabilityPct": 84,
-              "statusBadge": "84% • True GTD",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -84,10 +84,10 @@
               "demotedDueToInjury": true
             },
             {
-              "playerId": "4360438",
-              "name": "Brandon Aiyuk",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
@@ -122,11 +122,21 @@
               "isAvailable": true
             },
             {
-              "playerId": "4710714",
-              "name": "De'Zhaun Stribling",
-              "jersey": 7,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
               "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4360438",
+              "name": "Brandon Aiyuk",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false
@@ -155,11 +165,22 @@
               "demotedDueToInjury": true
             },
             {
-              "playerId": "4710714",
-              "name": "De'Zhaun Stribling",
-              "jersey": 7,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
               "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4360438",
+              "name": "Brandon Aiyuk",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false,
@@ -173,14 +194,14 @@
           "slotLabel": "SLWR (11 Pers)",
           "baselineChain": [
             {
-              "playerId": "3895856",
-              "name": "Christian Kirk",
-              "jersey": 3,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
+              "playerId": "3043116",
+              "name": "Demarcus Robinson",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
             },
             {
               "playerId": "4575665",
@@ -193,10 +214,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4428209",
-              "name": "Ricky Pearsall",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
+              "playerId": "4710714",
+              "name": "De'Zhaun Stribling",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
@@ -205,6 +226,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "3043116",
+              "name": "Demarcus Robinson",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Probable",
+              "isAvailable": true
+            },
+            {
               "playerId": "4575665",
               "name": "Jacob Cowing",
               "jersey": 4,
@@ -215,21 +246,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "3895856",
-              "name": "Christian Kirk",
-              "jersey": 3,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
-              "playerId": "4428209",
-              "name": "Ricky Pearsall",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
+              "playerId": "4710714",
+              "name": "De'Zhaun Stribling",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
@@ -237,7 +257,7 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "lt",

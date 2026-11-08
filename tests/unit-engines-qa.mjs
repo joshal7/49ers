@@ -13,8 +13,14 @@ import { fileURLToPath } from 'node:url';
 import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
-  resolveOrderedDashboardBlocks
+  resolveOrderedDashboardBlocks,
+  partitionCompletedTradesByWindow
 } from '../src/engine/seasonStateMachine.js';
+import {
+  JARGON_GLOSSARY,
+  getJargonEntry,
+  annotateJargonPlainText
+} from '../src/engine/jargonGlossary.js';
 import {
   ROSTER_SORT_FIELDS,
   normalizeRosterSort
@@ -1591,6 +1597,118 @@ test('Exhaustive URL audit across all 11 compiled JSON feeds & all 88 roster pla
   assert.ok(khalilDinkins, 'Khalil Dinkins present on roster');
   assert.equal(khalilDinkins.otcId, '13810');
   assert.equal(khalilDinkins.otcUrl, 'https://overthecap.com/player/khalil-dinkins/13810/');
+});
+
+console.log('\n=== [10/10] 5-Year OTC Cap Horizon, Multi-Year Simulator, Jargon Glossary, Opponent Health Parity & 30d Trade Cutoff QA ===');
+
+test('5-Year OverTheCap summary (2026–2030) has exact gross space, effective space, liabilities, Top-51 & non-double-counted dead cap', () => {
+  const yrs = Object.keys(capData.years).sort();
+  assert.deepEqual(yrs, ['2026', '2027', '2028', '2029', '2030']);
+  for (const y of yrs) {
+    const row = capData.years[y];
+    assert.ok(Number.isFinite(row.capCeiling) && row.capCeiling > 250_000_000, `Invalid capCeiling for ${y}`);
+    assert.ok(Number.isFinite(row.totalCapLiabilities) && row.totalCapLiabilities > 50_000_000, `Invalid liabilities for ${y}`);
+    assert.ok(Number.isFinite(row.top51) && row.top51 > 50_000_000, `Invalid top51 for ${y}`);
+    assert.ok(Number.isFinite(row.teamCapSpace), `Invalid teamCapSpace for ${y}`);
+    assert.ok(Number.isFinite(row.effectiveCapSpace), `Invalid effectiveCapSpace for ${y}`);
+    assert.ok(Number.isFinite(row.deadMoneyTotal) && row.deadMoneyTotal >= 0, `Invalid deadMoneyTotal for ${y}`);
+  }
+  assert.equal(capData.years['2026'].deadMoneyTotal, 46020699, '2026 OTC Dead Money must match exact $46,020,699 without footer double-counting');
+  assert.equal(capData.years['2027'].teamCapSpace, -31540066, '2027 OTC Team Cap Space must parse negative ($31,540,066)');
+});
+
+test('Multi-Year Salary Cap Simulator (2026–2030) combines Prorated & Current-Yr Bonuses, defaults Dead Money & Cap Savings to $0, and computes OTC moves per year', () => {
+  for (const yr of ['2026', '2027', '2028', '2029', '2030']) {
+    const baseline = simulateCapScenario(capData, {}, { baseYear: yr });
+    assert.equal(baseline.baseYear, yr);
+    assert.equal(baseline.simulatedPlayers.length, capData.years[yr].contractedCount);
+    for (const sp of baseline.simulatedPlayers) {
+      assert.equal(sp.proratedBonus, sp.proratedSigning + sp.proratedOption);
+      assert.equal(
+        sp.currentYearBonuses,
+        sp.rosterBonusRegular + sp.rosterBonusPerGame + sp.workoutBonus + sp.otherBonus
+      );
+      assert.equal(sp.moveDeadMoney, 0, `Nominal dead money must be $0 when move is none (${sp.name} ${yr})`);
+      assert.equal(sp.moveCapSavings, 0, `Nominal cap savings must be $0 when move is none (${sp.name} ${yr})`);
+    }
+  }
+
+  // Verify Brock Purdy & Fred Warner 2026 Post-June 1 Cut numbers match OverTheCap screenshot penny-for-penny
+  const purdy = capData.players.find(p => p.name === 'Brock Purdy');
+  const warner = capData.players.find(p => p.name === 'Fred Warner');
+  const sim26 = simulateCapScenario(
+    capData,
+    { [purdy.id]: 'june_1_cut', [warner.id]: 'june_1_cut' },
+    { baseYear: '2026' }
+  );
+  const simPurdy = sim26.simulatedPlayers.find(p => p.id === purdy.id);
+  const simWarner = sim26.simulatedPlayers.find(p => p.id === warner.id);
+  assert.equal(simPurdy.proratedBonus, 7313530 + 7550000);
+  assert.equal(simPurdy.currentYearBonuses, 850000 + 100000);
+  assert.equal(simPurdy.guaranteedSalary, 46996000);
+  assert.equal(simPurdy.capNumber, 23709530);
+  assert.equal(simPurdy.moveDeadMoney, 66213530);
+  assert.equal(simPurdy.moveCapSavings, -42504000);
+  assert.equal(simWarner.moveDeadMoney, 11739000);
+  assert.equal(simWarner.moveCapSavings, 6126471);
+
+  // Verify simulating in 2027 and 2028 works independently
+  const sim27 = simulateCapScenario(capData, { [purdy.id]: 'restructure' }, { baseYear: '2027' });
+  assert.equal(sim27.baseYear, '2027');
+  assert.equal(sim27.summary.baseYearNetCapDelta, 8112000);
+
+  const sim28 = simulateCapScenario(capData, { [purdy.id]: 'restructure' }, { baseYear: '2028' });
+  assert.equal(sim28.baseYear, '2028');
+  assert.equal(sim28.summary.baseYearNetCapDelta, 26316000);
+});
+
+test('Jargon Glossary annotates EPA, CPOE, Jet motion, inside zone, Wide-9 & Post-June 1 while escaping XSS', () => {
+  assert.ok(Object.keys(JARGON_GLOSSARY).length >= 45);
+  assert.ok(getJargonEntry('epa')?.term.includes('Expected Points'));
+  assert.ok(getJargonEntry('epa')?.definition.includes('expected scoring'));
+  assert.ok(getJargonEntry('cpoe')?.definition.includes('completion'));
+  assert.ok(getJargonEntry('jet_motion')?.definition.includes('motion'));
+  assert.ok(getJargonEntry('inside_zone')?.term.includes('Inside Zone') && getJargonEntry('inside_zone')?.definition.includes('double-teams'));
+
+  const annotated = annotateJargonPlainText(
+    'Purdy posted +0.28 EPA and +4.2% CPOE off jet motion and inside zone <img src=x onerror=alert(1)>.'
+  );
+  assert.ok(annotated.includes('data-jargon="epa"'));
+  assert.ok(annotated.includes('data-jargon="cpoe"'));
+  assert.ok(annotated.includes('data-jargon="jet_motion"'));
+  assert.ok(annotated.includes('data-jargon="inside_zone"'));
+  assert.ok(!annotated.includes('<img'), 'XSS payload must be HTML-escaped');
+});
+
+test('Opponent Health & Play Likelihood has full parity with 49ers Health (Availability Index, Offense+Defense starters, priors & 4-game IR timeline)', () => {
+  const sched = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const oh = sched.upcomingMatchup?.opponentHealth;
+  assert.ok(oh, 'opponentHealth present');
+  assert.ok(oh.summary.overallAvailabilityScore >= 50 && oh.summary.overallAvailabilityScore <= 100);
+  assert.equal(oh.summary.totalStarters, 22);
+  assert.ok(oh.keyStartersHealthy.some(s => s.name === 'Maxx Crosby'), 'Defensive star Maxx Crosby included in healthy starters');
+  assert.ok(oh.injuryReport.length >= 3);
+  for (const p of oh.injuryReport) {
+    assert.ok(typeof p.archetypeNote === 'string' && p.archetypeNote.length > 5);
+    assert.ok(Array.isArray(p.factors) && p.factors.length >= 1);
+  }
+  assert.ok(oh.irReserve.length >= 1);
+  for (const ir of oh.irReserve) {
+    assert.ok(ir.earliestEligibleWeek >= 5);
+    assert.ok(
+      (typeof ir.projectedReturnWeek === 'number' && ir.projectedReturnWeek >= 5) ||
+        (typeof ir.projectedReturnWeek === 'string' && ir.projectedReturnWeek.length >= 4)
+    );
+  }
+});
+
+test('Trade Window 30-day cutoff keeps recent acquisitions (<=30d) in Trade Window and moves older trades (>30d) to Archive', () => {
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const moves = seasonal.tradeWarRoom?.completed2026Moves || [];
+  const { recentTrades, archivedTrades } = partitionCompletedTradesByWindow(moves, '2026-11-07T18:00:00Z', 30);
+  assert.ok(recentTrades.some(m => m.player === 'DeForest Buckner'), 'DeForest Buckner (Nov 3 trade) must be in recentTrades');
+  assert.ok(!recentTrades.some(m => m.player === 'Osa Odighizuwa'), 'Osa Odighizuwa (March trade) must NOT be in recentTrades');
+  assert.ok(archivedTrades.some(m => m.player === 'Osa Odighizuwa'), 'Osa Odighizuwa (>30d old) must be in archivedTrades');
 });
 
 console.log(`\n======================================================`);

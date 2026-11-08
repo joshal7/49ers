@@ -3,8 +3,14 @@
  */
 
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
-import { computePlayerPlayProbability } from '../engine/injuryProbabilityModel.js';
-import { runPlayoffMonteCarlo } from '../engine/playoffMonteCarlo.js';
+import {
+  computePlayerPlayProbability,
+  extractPracticeDaysFromText
+} from '../engine/injuryProbabilityModel.js';
+import {
+  runPlayoffMonteCarlo,
+  computeCalibratedTeamPowerRating
+} from '../engine/playoffMonteCarlo.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   classifyBreakingItem,
@@ -192,7 +198,9 @@ export const DEFAULT_USER_PREFS = {
   groupPasscode: '',
   authorName: 'Josh',
   workerBaseUrl: '',
-  capMoves: {}, // playerId -> action
+  capSelectedYear: null,
+  capMoves: {}, // playerId -> action (primary year backward-compatible)
+  capMovesByYear: {}, // year -> { playerId -> action }
   playoffForcedWinners: {}, // gameId -> 'HOME' | 'AWAY'
   localCustomAnalyses: [],
   localCustomEpisodes: []
@@ -214,7 +222,12 @@ export function loadUserPrefs() {
       dashboardOrder: orderIsV2 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
       disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
       disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
+      capSelectedYear: typeof parsed.capSelectedYear === 'string' ? parsed.capSelectedYear : null,
       capMoves: parsed.capMoves && typeof parsed.capMoves === 'object' ? parsed.capMoves : {},
+      capMovesByYear:
+        parsed.capMovesByYear && typeof parsed.capMovesByYear === 'object' && !Array.isArray(parsed.capMovesByYear)
+          ? parsed.capMovesByYear
+          : {},
       playoffForcedWinners:
         parsed.playoffForcedWinners && typeof parsed.playoffForcedWinners === 'object'
           ? parsed.playoffForcedWinners
@@ -651,6 +664,13 @@ export async function hydrateLiveEspnOverlay(appData) {
       appData.meta.pointDifferential = newPdDisp;
       mutated = true;
 
+      const parseWltRecord = str => {
+        const parts = String(str || '0-0')
+          .split('-')
+          .map(x => Number(x) || 0);
+        return { w: parts[0] || 0, l: parts[1] || 0, t: parts[2] || 0 };
+      };
+
       const nfcInputs = appData.seasonal?.playoffPicture?.simulatorInputs?.nfcTeams || [];
       for (const nt of nfcInputs) {
         const liveT = teamRecords.get(normalizeTeamAbbrClient(nt.abbr));
@@ -658,6 +678,27 @@ export async function hydrateLiveEspnOverlay(appData) {
           nt.wins = liveT.wins;
           nt.losses = liveT.losses;
           nt.ties = liveT.ties;
+          nt.pointDiff = liveT.pd;
+          if (liveT.divRec && liveT.divRec !== '0-0') {
+            const dParsed = parseWltRecord(liveT.divRec);
+            nt.divWins = dParsed.w;
+            nt.divLosses = dParsed.l;
+            nt.divTies = dParsed.t;
+          }
+          if (liveT.confRec && liveT.confRec !== '0-0') {
+            const cParsed = parseWltRecord(liveT.confRec);
+            nt.confWins = cParsed.w;
+            nt.confLosses = cParsed.l;
+            nt.confTies = cParsed.t;
+          }
+          nt.powerRating = computeCalibratedTeamPowerRating({
+            wins: liveT.wins,
+            losses: liveT.losses,
+            ties: liveT.ties,
+            pointDiff: liveT.pd,
+            netEpaPerGame: nt.netEpaPerGame ?? null,
+            sosSpreadAdj: nt.sosSpreadAdj ?? 0
+          });
         }
       }
     }
@@ -767,9 +808,42 @@ export async function hydrateLiveEspnOverlay(appData) {
   if (standingsOrScoresChanged && appData.seasonal?.playoffPicture?.simulatorInputs) {
     try {
       const simIn = appData.seasonal.playoffPicture.simulatorInputs;
+      // Ensure newly completed SF schedule games are moved out of remainingGames so SF never exceeds 17 games
+      const completedSfWeeks = new Set(
+        (appData.scheduleMatchup?.schedule || []).filter(g => g.completed).map(g => Number(g.week))
+      );
+      if (Array.isArray(simIn.remainingGames) && completedSfWeeks.size > 0) {
+        const newlyDone = simIn.remainingGames.filter(
+          rg => (rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week))
+        );
+        if (newlyDone.length > 0) {
+          simIn.remainingGames = simIn.remainingGames.filter(
+            rg => !((rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week)))
+          );
+          for (const nd of newlyDone) {
+            const schedItem = (appData.scheduleMatchup?.schedule || []).find(s => Number(s.week) === Number(nd.week));
+            if (schedItem && schedItem.sfScore != null && schedItem.oppScore != null) {
+              const homeScore = nd.home === 'SF' ? Number(schedItem.sfScore) : Number(schedItem.oppScore);
+              const awayScore = nd.home === 'SF' ? Number(schedItem.oppScore) : Number(schedItem.sfScore);
+              simIn.completedGames = [
+                ...(simIn.completedGames || []),
+                { id: nd.id, week: nd.week, home: nd.home, away: nd.away, homeScore, awayScore }
+              ];
+            }
+          }
+        }
+      }
       const freshMc = runPlayoffMonteCarlo({ ...simIn, iterations: 10000, seed: 492026 });
       if (freshMc?.sfOdds) {
         appData.seasonal.playoffPicture.baselineSimulation = freshMc;
+        if (Array.isArray(appData.seasonal.playoffPicture.seedPathCards)) {
+          const sf = freshMc.sfOdds;
+          for (const card of appData.seasonal.playoffPicture.seedPathCards) {
+            if (/bye|#1\s*seed/i.test(card.target)) card.probabilityPct = sf.seed1ByePct;
+            else if (/division|nfc\s*west/i.test(card.target)) card.probabilityPct = sf.winDivisionPct;
+            else if (/wild\s*card/i.test(card.target)) card.probabilityPct = sf.wildCardPct;
+          }
+        }
       }
     } catch {
       // Keep baseline simulation on error
@@ -853,63 +927,93 @@ export async function hydrateLiveEspnOverlay(appData) {
     }
 
     if (oppTeamInj?.injuries && appData.scheduleMatchup.upcomingMatchup?.opponentHealth) {
+      const oh = appData.scheduleMatchup.upcomingMatchup.opponentHealth;
+      const prevByName = new Map(
+        [...(oh.injuryReport || []), ...(oh.keyStartersHealthy || []), ...(oh.irReserve || [])].map(p => [
+          String(p.name || '').toLowerCase(),
+          p
+        ])
+      );
       const liveOppReport = [];
       for (const item of oppTeamInj.injuries) {
         const ath = item.athlete || {};
         const nm = ath.displayName || '';
         if (!nm) continue;
+        const prevEntry = prevByName.get(nm.toLowerCase()) || null;
         const rawSt = item.status || 'Active';
         const stLower = rawSt.toLowerCase();
-        if (stLower.includes('injured reserve')) continue;
         const shortC = cleanSensationalistText(item.shortComment || '');
-        const bodyPart = item.details?.type || extractBodyPartSafe(shortC);
+        const longC = cleanSensationalistText(item.longComment || shortC);
+        const combinedLower = `${shortC} ${longC}`.toLowerCase();
+        const isIrRetQ =
+          stLower.includes('injured reserve') &&
+          /listed as questionable|questionable for sunday|questionable ahead of|expected to be activated|likely will be activated/i.test(
+            combinedLower
+          ) &&
+          !/ruled out|will miss/i.test(combinedLower);
+        if (stLower.includes('injured reserve') && !isIrRetQ) continue;
+
+        const bodyPart = item.details?.type || extractBodyPartSafe(shortC) || prevEntry?.injuryType || '';
         const isReportWorthy =
+          isIrRetQ ||
           ['out', 'doubtful', 'questionable'].includes(stLower) ||
           (Boolean(bodyPart) && /(designation|questionable|ruled out|will miss|doubtful)/i.test(shortC));
         if (!isReportWorthy) continue;
 
-        const headshot = ath.headshot?.href || '';
+        const headshot = ath.headshot?.href || prevEntry?.headshotUrl || '';
         const espnIdM = headshot.match(/\/(\d+)\.png/);
         const espnId = espnIdM ? espnIdM[1] : '';
-        const wed = stLower === 'out' ? 'DNP' : 'LP';
-        const thu = stLower === 'out' ? 'DNP' : stLower === 'active' ? 'FP' : 'LP';
-        const fri = stLower === 'out' ? 'DNP' : stLower === 'active' ? 'FP' : 'LP';
+        const { wed, thu, fri } = extractPracticeDaysFromText({
+          statusRaw: isIrRetQ ? 'Questionable' : rawSt,
+          injuryType: bodyPart,
+          shortComment: shortC,
+          longComment: longC
+        });
         const prob = computePlayerPlayProbability({
           name: nm,
-          position: ath.position?.abbreviation || 'ATH',
-          gameStatus: rawSt,
+          position: ath.position?.abbreviation || prevEntry?.position || 'ATH',
+          snapPct: prevEntry?.snapPct ?? null,
+          gameStatus: isIrRetQ ? 'Questionable' : rawSt,
+          rosterBucket: isIrRetQ ? 'ir' : 'active',
           injuryType: bodyPart,
           wed,
           thu,
           fri,
-          beatNote: shortC
+          beatNote: `${shortC} ${longC}`
         });
 
         liveOppReport.push({
           name: nm,
-          position: ath.position?.abbreviation || 'ATH',
-          jersey: null,
+          position: ath.position?.abbreviation || prevEntry?.position || 'ATH',
+          unit: prevEntry?.unit || 'Active',
+          jersey: prevEntry?.jersey ?? null,
           headshotUrl: headshot.startsWith('http://') ? `https://${headshot.slice(7)}` : headshot,
-          espnUrl: buildEspnPlayerUrl(espnId, nm),
+          espnUrl: prevEntry?.espnUrl || buildEspnPlayerUrl(espnId, nm),
+          snapPct: prevEntry?.snapPct ?? null,
           wed,
           thu,
           fri,
           injuryType: bodyPart || 'Undisclosed',
-          gameStatus: stLower === 'active' ? 'No Designation (Cleared)' : rawSt,
+          gameStatus: isIrRetQ ? 'IR Return Window (Q)' : stLower === 'active' ? 'No Designation (Cleared)' : rawSt,
           shortComment: shortC,
+          longComment: longC,
+          isStarter: Boolean(prevEntry?.isStarter),
+          isIrReturnQuestionable: isIrRetQ,
           playProbabilityPct: prob.probabilityPct,
-          playBadgeLabel: prob.badgeLabel
+          playTier: prob.tier,
+          playBadgeLabel: prob.badgeLabel,
+          factors: prob.factors || [],
+          archetypeNote: prob.priorUsed?.archetypeNote || ''
         });
       }
       if (liveOppReport.length > 0) {
         liveOppReport.sort((a, b) => a.playProbabilityPct - b.playProbabilityPct);
-        const oh = appData.scheduleMatchup.upcomingMatchup.opponentHealth;
         oh.injuryReport = liveOppReport;
         oh.summary = {
           ...(oh.summary || {}),
           ruledOutCount: liveOppReport.filter(p => p.playProbabilityPct === 0).length,
-          questionableOrDoubtfulCount: liveOppReport.filter(p => p.playProbabilityPct > 0 && p.playProbabilityPct < 90).length,
-          clearedCount: liveOppReport.filter(p => p.playProbabilityPct >= 90).length
+          questionableOrDoubtfulCount: liveOppReport.filter(p => p.playProbabilityPct > 0 && p.playProbabilityPct < 85).length,
+          clearedCount: liveOppReport.filter(p => p.playProbabilityPct >= 85).length
         };
         mutated = true;
       }

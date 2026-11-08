@@ -25,9 +25,9 @@ concurrency:
 
 jobs:
   refresh-feeds:
-    name: Fetch ESPN, OverTheCap, nflverse, Beat Wire & Validate
+    name: Fetch ESPN, OverTheCap, Tankathon, nflverse, Beat Wire & Validate
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     outputs:
       pages_workflow_mode: ${{ steps.check_pages.outputs.workflow_mode }}
     steps:
@@ -42,7 +42,10 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Run Live 49ers Data Ingestion Pipeline
+      - name: Run Live 49ers Data Ingestion & Grounded AI Synthesis Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_PRO_MODEL: gemini-2.5-pro
         run: node scripts/fetch-live-49ers-data.mjs
 
       - name: Validate JSON Integrity & Unit Engine Suite Before Commit

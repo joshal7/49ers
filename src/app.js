@@ -24,6 +24,7 @@ import {
 } from './services/aiWorkerClient.js';
 
 import { esc, formatRelativeAge } from './views/uiHelpers.js';
+import { getJargonEntry } from './engine/jargonGlossary.js';
 import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
 import { renderNewsViewHtml } from './views/newsView.js';
@@ -57,6 +58,7 @@ const state = {
   rosterSort: 'name',
   rosterSortDir: 'asc',
   depthMode: 'projected',
+  capSelectedYear: '2026',
 
   // Season & Temporal state
   seasonSubTab: 'matchup',
@@ -87,6 +89,86 @@ const state = {
 let audioController = null;
 let cachedMonteCarloKey = '';
 let cachedMonteCarloResult = null;
+let activeJargonAnchor = null;
+
+function getCapMovesForYear(yearKey = '2026') {
+  const yr = String(yearKey || '2026');
+  const byYr = state.prefs?.capMovesByYear;
+  if (byYr && typeof byYr === 'object' && byYr[yr] && typeof byYr[yr] === 'object') {
+    return byYr[yr];
+  }
+  if (yr === '2026' && state.prefs?.capMoves && typeof state.prefs.capMoves === 'object') {
+    return state.prefs.capMoves;
+  }
+  return {};
+}
+
+function setCapMovesForYear(yearKey, nextMoves) {
+  const yr = String(yearKey || '2026');
+  const clean = nextMoves && typeof nextMoves === 'object' ? { ...nextMoves } : {};
+  if (!state.prefs.capMovesByYear || typeof state.prefs.capMovesByYear !== 'object') {
+    state.prefs.capMovesByYear = {};
+  }
+  state.prefs.capMovesByYear[yr] = clean;
+  if (yr === '2026') {
+    state.prefs.capMoves = clean;
+  }
+}
+
+function closeJargonPopover() {
+  const pop = document.getElementById('jargonPopover');
+  if (pop) {
+    pop.hidden = true;
+    pop.innerHTML = '';
+  }
+  activeJargonAnchor = null;
+}
+
+function openJargonPopover(anchorEl, jargonKey) {
+  const pop = document.getElementById('jargonPopover');
+  if (!pop || !anchorEl) return;
+
+  if (!pop.hidden && activeJargonAnchor === anchorEl) {
+    closeJargonPopover();
+    return;
+  }
+
+  const entry = getJargonEntry(jargonKey);
+  if (!entry) return;
+
+  activeJargonAnchor = anchorEl;
+  pop.setAttribute('aria-label', `${entry.term} definition`);
+  pop.innerHTML = `
+    <div class="jargon-popover-header">
+      <div>
+        <div class="jargon-popover-cat">${esc(entry.category)}</div>
+        <div class="jargon-popover-term">${esc(entry.term)}</div>
+      </div>
+      <button type="button" class="jargon-popover-close" data-action="close-jargon-popover" aria-label="Close definition">✕</button>
+    </div>
+    <div class="jargon-popover-body">${esc(entry.definition)}</div>
+  `;
+  pop.style.left = '10px';
+  pop.style.top = '10px';
+  pop.hidden = false;
+
+  const anchorRect = anchorEl.getBoundingClientRect();
+  const popRect = pop.getBoundingClientRect();
+  const vw = window.innerWidth || document.documentElement.clientWidth || 390;
+  const vh = window.innerHeight || document.documentElement.clientHeight || 844;
+
+  let left = anchorRect.left + anchorRect.width / 2 - popRect.width / 2;
+  left = Math.max(10, Math.min(left, vw - popRect.width - 10));
+
+  let top = anchorRect.bottom + 8;
+  if (top + popRect.height > vh - 12 && anchorRect.top - popRect.height - 8 >= 10) {
+    top = anchorRect.top - popRect.height - 8;
+  }
+  top = Math.max(10, Math.min(top, vh - popRect.height - 10));
+
+  pop.style.left = `${Math.round(left)}px`;
+  pop.style.top = `${Math.round(top)}px`;
+}
 
 function applyTheme(theme) {
   const clean = theme === 'light' ? 'light' : 'dark';
@@ -192,28 +274,34 @@ function renderHeaderAndPhaseBanner() {
 
   const bannerEl = document.getElementById('phaseBanner');
   if (bannerEl && state.seasonState) {
-    const hp = state.seasonState.headlinePhase;
-    const isTrade = state.seasonState.activePhases?.includes('TRADE_WINDOW');
-    const targetSub = isTrade ? 'trade' : 'matchup';
-    bannerEl.innerHTML = `
-      <div class="phase-banner-left" style="cursor:pointer" data-action="jump-season-sub" data-season-sub="${targetSub}">
-        <div class="phase-icon-badge" aria-hidden="true">
-          ${iconSvg(isTrade ? 'trade' : 'football', 16)}
+    const isTradeActive = Boolean(state.seasonState.activePhases?.includes('TRADE_WINDOW'));
+    const isInTradeSection = state.activeNavTab === 'season' && state.seasonSubTab === 'trade';
+    if (!isTradeActive || !isInTradeSection) {
+      bannerEl.hidden = true;
+      bannerEl.innerHTML = '';
+    } else {
+      const hp = state.seasonState.headlinePhase;
+      bannerEl.hidden = false;
+      bannerEl.innerHTML = `
+        <div class="phase-banner-left" style="cursor:pointer" data-action="jump-season-sub" data-season-sub="trade">
+          <div class="phase-icon-badge" aria-hidden="true">
+            ${iconSvg('trade', 16)}
+          </div>
+          <div class="phase-banner-main">
+            <div class="phase-eyebrow">${esc(hp.label)}</div>
+            <div class="phase-detail">${esc(hp.detail)}</div>
+          </div>
         </div>
-        <div class="phase-banner-main">
-          <div class="phase-eyebrow">${esc(hp.label)}</div>
-          <div class="phase-detail">${esc(hp.detail)}</div>
-        </div>
-      </div>
-      ${
-        hp.countdownText
-          ? `<button type="button" class="phase-countdown mono" data-action="jump-season-sub" data-season-sub="${targetSub}">
-               ${iconSvg('clock', 12)}
-               <span>${esc(hp.countdownText)}</span>
-             </button>`
-          : ''
-      }
-    `;
+        ${
+          hp.countdownText
+            ? `<button type="button" class="phase-countdown mono" data-action="jump-season-sub" data-season-sub="trade">
+                 ${iconSvg('clock', 12)}
+                 <span>${esc(hp.countdownText)}</span>
+               </button>`
+            : ''
+        }
+      `;
+    }
   }
 }
 
@@ -229,6 +317,17 @@ function renderMain() {
   const mainEl = document.getElementById('mainView');
   if (!mainEl) return;
 
+  closeJargonPopover();
+  renderHeaderAndPhaseBanner();
+
+  const sortedCapYears = Object.keys(state.appData.cap?.years || {}).sort();
+  const primaryCapYear = sortedCapYears[0] || '2026';
+  const activeCapYear =
+    state.capSelectedYear && state.appData.cap?.years?.[state.capSelectedYear]
+      ? String(state.capSelectedYear)
+      : primaryCapYear;
+  state.capSelectedYear = activeCapYear;
+
   const reportersMap = getReportersMap();
   const filteredClusters = filterNewsByUserPrefs(
     state.appData.news?.clusteredBriefs || [],
@@ -240,7 +339,16 @@ function renderMain() {
     reportersMap,
     state.prefs
   );
-  const simCapResult = simulateCapScenario(state.appData.cap, state.prefs.capMoves);
+  const homeSimCapResult = simulateCapScenario(
+    state.appData.cap,
+    getCapMovesForYear(primaryCapYear),
+    { baseYear: primaryCapYear }
+  );
+  const activeYearMoves = getCapMovesForYear(activeCapYear);
+  const rosterSimCapResult =
+    activeCapYear === primaryCapYear
+      ? homeSimCapResult
+      : simulateCapScenario(state.appData.cap, activeYearMoves, { baseYear: activeCapYear });
   const mcSimResult = getMonteCarloResult();
 
   preserveFocusAroundRender(() => {
@@ -253,7 +361,7 @@ function renderMain() {
         orderedBlocks,
         archivedBlocks: state.seasonState.archivedBlocks,
         appData: state.appData,
-        simCapResult,
+        simCapResult: homeSimCapResult,
         mcSimResult,
         filteredClusters,
         filteredRawItems,
@@ -282,9 +390,10 @@ function renderMain() {
         rosterSort: state.rosterSort,
         rosterSortDir: state.rosterSortDir,
         depthMode: state.depthMode,
+        capSelectedYear: activeCapYear,
         appData: state.appData,
-        simCapResult,
-        userCapMoves: state.prefs.capMoves
+        simCapResult: rosterSimCapResult,
+        userCapMoves: activeYearMoves
       });
     } else if (state.activeNavTab === 'season') {
       mainEl.innerHTML = renderSeasonMatchupViewHtml({
@@ -352,10 +461,11 @@ function renderSheet() {
         reporterSearch: state.reporterSearch
       });
     } else if (state.sheetMode === 'vault') {
-      if (eyebrow) eyebrow.textContent = 'Seasonal Schedule';
+      if (eyebrow) eyebrow.textContent = 'Seasonal Schedule & Trade Archive';
       if (title) title.textContent = 'Off-Cycle Archive';
       body.innerHTML = renderArchiveVaultSheetHtml({
-        seasonState: state.seasonState
+        seasonState: state.seasonState,
+        appData: state.appData
       });
     }
   });
@@ -489,11 +599,33 @@ function bindEvents() {
   });
 
   document.addEventListener('keydown', e => {
+    const pop = document.getElementById('jargonPopover');
+    if (e.key === 'Escape' && pop && !pop.hidden) {
+      closeJargonPopover();
+      return;
+    }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target?.closest?.('[data-jargon]')) {
+      const jt = e.target.closest('[data-jargon]');
+      e.preventDefault();
+      e.stopPropagation();
+      openJargonPopover(jt, jt.getAttribute('data-jargon'));
+      return;
+    }
     if (e.key === 'Escape' && state.sheetMode) {
       state.sheetMode = null;
       renderSheet();
     }
   });
+
+  window.addEventListener('resize', () => closeJargonPopover(), { passive: true });
+  document.addEventListener(
+    'scroll',
+    e => {
+      if (e.target && e.target.closest && e.target.closest('#jargonPopover')) return;
+      closeJargonPopover();
+    },
+    { passive: true, capture: true }
+  );
 
   // Sticky Mini-Player Controls
   document.getElementById('miniPlayerExpandTrigger')?.addEventListener('click', () => {
@@ -507,8 +639,29 @@ function bindEvents() {
   document.getElementById('mpSpeedBtn')?.addEventListener('click', () => audioController?.cycleSpeed());
   document.getElementById('mpCloseBtn')?.addEventListener('click', () => audioController?.closePlayer());
 
-  // Delegated Click Handler across Main View & Bottom Sheet
+  // Delegated Click Handler across Main View, Jargon Bubbles & Bottom Sheet
   document.addEventListener('click', async e => {
+    const closePop = e.target.closest('[data-action="close-jargon-popover"]');
+    if (closePop) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeJargonPopover();
+      return;
+    }
+
+    const jargonTrigger = e.target.closest('[data-jargon]');
+    if (jargonTrigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      openJargonPopover(jargonTrigger, jargonTrigger.getAttribute('data-jargon'));
+      return;
+    }
+
+    const pop = document.getElementById('jargonPopover');
+    if (pop && !pop.hidden && !e.target.closest('#jargonPopover')) {
+      closeJargonPopover();
+    }
+
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
     const action = btn.getAttribute('data-action');
@@ -564,6 +717,11 @@ function bindEvents() {
 
       case 'open-settings':
         state.sheetMode = 'settings';
+        renderSheet();
+        break;
+
+      case 'open-archive':
+        state.sheetMode = 'vault';
         renderSheet();
         break;
 
@@ -628,6 +786,17 @@ function bindEvents() {
         renderMain();
         break;
 
+      case 'set-cap-year': {
+        const nextYr = btn.getAttribute('data-cap-year');
+        if (nextYr && state.appData?.cap?.years?.[nextYr]) {
+          state.capSelectedYear = String(nextYr);
+          state.prefs.capSelectedYear = String(nextYr);
+          saveUserPrefs(state.prefs);
+          renderMain();
+        }
+        break;
+      }
+
       case 'open-player':
       case 'open-player-sheet': {
         const pid = btn.getAttribute('data-player-id');
@@ -657,21 +826,36 @@ function bindEvents() {
         break;
 
       case 'apply-ai-cap-blueprint': {
+        const targetYr = state.capSelectedYear || '2026';
         const nextMoves = {};
         for (const r of (state.appData?.cap?.blueprint?.restructureCandidates || []).slice(0, 2)) {
-          nextMoves[r.id] = 'restructure';
+          const p = (state.appData?.cap?.players || []).find(x => x.id === r.id);
+          if (!p || p.contractsByYear?.[targetYr]?.transactions?.restructure?.capSavings > 0) {
+            nextMoves[r.id] = 'restructure';
+          }
         }
-        state.prefs.capMoves = nextMoves;
+        if (Object.keys(nextMoves).length === 0) {
+          state.capSelectedYear = '2026';
+          state.prefs.capSelectedYear = '2026';
+          for (const r of (state.appData?.cap?.blueprint?.restructureCandidates || []).slice(0, 2)) {
+            nextMoves[r.id] = 'restructure';
+          }
+          setCapMovesForYear('2026', nextMoves);
+        } else {
+          setCapMovesForYear(targetYr, nextMoves);
+        }
         saveUserPrefs(state.prefs);
         renderMain();
         break;
       }
 
-      case 'reset-cap-moves':
-        state.prefs.capMoves = {};
+      case 'reset-cap-moves': {
+        const targetYr = state.capSelectedYear || '2026';
+        setCapMovesForYear(targetYr, {});
         saveUserPrefs(state.prefs);
         renderMain();
         break;
+      }
 
       case 'set-season-sub':
         state.seasonSubTab = btn.getAttribute('data-season-sub') || 'matchup';
@@ -928,9 +1112,12 @@ function bindEvents() {
       renderMain();
     } else if (t.classList.contains('gm-move-select')) {
       const pid = t.getAttribute('data-player-id');
+      const yr = t.getAttribute('data-cap-year') || state.capSelectedYear || '2026';
       if (pid) {
-        if (t.value === 'none') delete state.prefs.capMoves[pid];
-        else state.prefs.capMoves[pid] = t.value;
+        const curMoves = { ...getCapMovesForYear(yr) };
+        if (t.value === 'none') delete curMoves[pid];
+        else curMoves[pid] = t.value;
+        setCapMovesForYear(yr, curMoves);
         saveUserPrefs(state.prefs);
         renderMain();
       }
@@ -1126,6 +1313,9 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 
 async function init() {
   applyTheme(state.prefs.theme);
+  if (state.prefs?.capSelectedYear) {
+    state.capSelectedYear = String(state.prefs.capSelectedYear);
+  }
   audioController = new PodcastAudioController(renderMiniPlayer);
   bindEvents();
 

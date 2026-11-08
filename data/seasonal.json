@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T16:37:41.930Z",
+  "updatedAt": "2026-11-08T01:14:29.296Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -15,7 +15,8 @@
         "position": "IDL (3-Tech)",
         "acquiredFrom": "IND",
         "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
-        "timing": "Pre-Deadline Reunion (Nov 2026)",
+        "tradeDateIso": "2026-11-03T16:00:00Z",
+        "timing": "Pre-Deadline Reunion (Nov 3, 2026)",
         "costSummary": "Conditional Day-3 Pick Package",
         "schemeGrade": "A",
         "sourceUrl": "https://overthecap.com/player/deforest-buckner/4720/",
@@ -29,6 +30,7 @@
         "position": "IDL (DT)",
         "acquiredFrom": "DAL",
         "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
+        "tradeDateIso": "2026-03-11T16:00:00Z",
         "timing": "March 11, 2026 Trade",
         "costSummary": "2026 3rd-Round Pick",
         "schemeGrade": "A-",

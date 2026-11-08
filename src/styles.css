@@ -288,6 +288,10 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.phase-banner[hidden] {
+  display: none !important;
+}
+
 .phase-banner-left {
   display: flex;
   align-items: center;
@@ -2568,4 +2572,204 @@ button.featured-player-chip:active {
     width: 64px;
     height: 64px;
   }
+}
+
+/* Subtle Inline Football / Analytics / Cap Jargon Links & Quick-Bubble Popover */
+.jargon-term {
+  display: inline;
+  border-bottom: 1px dotted rgba(231, 210, 155, 0.55);
+  cursor: pointer;
+  color: inherit;
+  padding-bottom: 0.5px;
+  transition: color 0.14s ease, border-bottom-color 0.14s ease, background-color 0.14s ease;
+}
+
+[data-theme="light"] .jargon-term {
+  border-bottom-color: rgba(140, 112, 52, 0.62);
+}
+
+.jargon-term:hover,
+.jargon-term:focus-visible,
+.jargon-term.active {
+  color: var(--gold-bright);
+  border-bottom-color: var(--gold-bright);
+  border-bottom-style: solid;
+  outline: none;
+}
+
+.jargon-popover {
+  position: fixed;
+  z-index: 150;
+  width: min(316px, calc(100vw - 20px));
+  max-width: calc(100vw - 20px);
+  padding: 11px 13px;
+  border-radius: 13px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--gold);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.jargon-popover[hidden] {
+  display: none !important;
+}
+
+.jargon-popover-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.jargon-popover-cat {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-bright);
+  margin-bottom: 1px;
+}
+
+.jargon-popover-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.jargon-popover-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.jargon-popover-close:hover {
+  color: var(--text-primary);
+  border-color: var(--gold-border);
+}
+
+.jargon-popover-body {
+  font-size: 12.4px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* OverTheCap 5-Year Tabs & Multi-Year Salary Cap Simulator Table */
+.otc-year-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 3px;
+  margin-bottom: 10px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.otc-year-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.otc-year-tab {
+  flex: 1 1 auto;
+  min-width: 62px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  transition: all 0.15s ease;
+}
+
+.otc-year-tab:hover {
+  border-color: var(--gold-border);
+  color: var(--text-primary);
+}
+
+.otc-year-tab.active {
+  background: linear-gradient(180deg, var(--scarlet-bright), var(--scarlet));
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(170, 0, 0, 0.35);
+}
+
+.otc-year-tab-sub {
+  font-size: 9.5px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.cap-sim-table th,
+.cap-sim-table td {
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 7px 8px;
+}
+
+.cap-sim-table th {
+  background: linear-gradient(180deg, rgba(170, 0, 0, 0.32), rgba(170, 0, 0, 0.16));
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--gold-border);
+}
+
+[data-theme="light"] .cap-sim-table th {
+  background: linear-gradient(180deg, rgba(170, 0, 0, 0.14), rgba(170, 0, 0, 0.06));
+}
+
+.cap-sim-table tr.has-active-move {
+  background: rgba(179, 153, 93, 0.09);
+}
+
+.cap-cell-sub {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  margin-top: 1px;
+}
+
+.cap-cell-dead-active {
+  background: rgba(239, 68, 68, 0.13);
+  color: var(--crimson);
+  font-weight: 700;
+}
+
+.cap-cell-save-pos {
+  background: rgba(16, 185, 129, 0.14);
+  color: var(--emerald);
+  font-weight: 800;
+}
+
+.cap-cell-save-neg {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--crimson);
+  font-weight: 800;
+}
+
+.gm-move-select {
+  min-width: 156px;
+  max-width: 210px;
+  min-height: 34px;
+  padding: 4px 8px;
+  font-size: 16px; /* Prevents iOS Safari auto-zoom on focus */
 }

@@ -2,9 +2,9 @@
  * Roster Explorer, Dual-Mode Depth Chart & Interactive GM Salary Cap View
  */
 
-import { esc, playProbBadgeClass, renderPlayerAvatarHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, playProbBadgeClass, renderPlayerAvatarHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
-import { formatCompactDollars } from '../engine/capSimulator.js';
+import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.js';
 
 export const ROSTER_SORT_FIELDS = [
   { key: 'name', label: 'Name', shortLabel: 'Name', defaultDir: 'asc' },
@@ -39,6 +39,7 @@ export function renderRosterCapViewHtml({
   rosterSort = 'name',
   rosterSortDir = 'asc',
   depthMode = 'projected', // 'baseline' | 'projected'
+  capSelectedYear = '2026',
   appData,
   simCapResult,
   userCapMoves = {}
@@ -78,7 +79,15 @@ export function renderRosterCapViewHtml({
   if (subTab === 'depth') {
     return topSwitcher + renderDualDepthChart({ appData, depthMode });
   }
-  return topSwitcher + renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves });
+  return (
+    topSwitcher +
+    renderSalaryCapAndSimulator({
+      appData,
+      simCapResult,
+      userCapMoves,
+      capSelectedYear
+    })
+  );
 }
 
 function renderRosterExplorer({
@@ -216,7 +225,7 @@ function renderRosterExplorer({
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
-        <span>Showing <strong>${filtered.length}</strong> players — tap any row for Stats, EPA, Athletic Chart &amp; Contract details.</span>
+        <span>Showing <strong>${filtered.length}</strong> players — tap any row for Stats, ${jargonTerm('EPA', 'epa')}, ${jargonTerm('RAS', 'ras')} &amp; Contract details.</span>
         <div class="source-link-strip">
           <a href="https://www.espn.com/nfl/team/roster/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://www.49ers.com/team/players-roster/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com</span>${iconSvg('externalLink', 10)}</a>
@@ -271,7 +280,7 @@ function renderDualDepthChart({ appData, depthMode }) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('layers', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">11/21 Offense • Wide-9 Base &amp; Nickel 4-2-5 Defense</div>
+            <div class="card-eyebrow">${jargonTerm('11 personnel', '11_personnel')} / ${jargonTerm('21 personnel', '21_personnel')} Offense • ${jargonTerm('Wide-9', 'wide_9')} Base &amp; Nickel 4-2-5 Defense</div>
             <h2 class="card-title">49ers Depth Chart</h2>
           </div>
         </div>
@@ -350,45 +359,210 @@ function renderDualDepthChart({ appData, depthMode }) {
   return `${headerCard}${unitCards}`;
 }
 
-function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
+function renderOtcYearTabs(yrKeys, selectedYr, yearsMap, ariaLabel) {
+  return `
+    <div class="otc-year-tabs" role="tablist" aria-label="${esc(ariaLabel)}">
+      ${yrKeys
+        .map(y => {
+          const row = yearsMap[y] || {};
+          const active = y === selectedYr;
+          return `
+            <button type="button" role="tab" aria-selected="${active}"
+                    class="otc-year-tab mono ${active ? 'active' : ''}"
+                    data-action="set-cap-year" data-cap-year="${esc(y)}">
+              <span>${esc(y)}</span>
+              <span class="otc-year-tab-sub">${formatCompactDollars(row.teamCapSpace || 0, true)}</span>
+            </button>
+          `;
+        })
+        .join('')}
+    </div>
+  `;
+}
+
+function formatCurrentBonusSubLabel(p) {
+  const parts = [];
+  if (p.rosterBonusRegular > 0) parts.push(`Reg ${formatCompactDollars(p.rosterBonusRegular)}`);
+  if (p.rosterBonusPerGame > 0) parts.push(`PG ${formatCompactDollars(p.rosterBonusPerGame)}`);
+  if (p.workoutBonus > 0) parts.push(`Wk ${formatCompactDollars(p.workoutBonus)}`);
+  if (p.otherBonus > 0) parts.push(`Oth ${formatCompactDollars(p.otherBonus)}`);
+  return parts.join(' • ');
+}
+
+function formatProratedSubLabel(p) {
+  const parts = [];
+  if (p.proratedSigning > 0) parts.push(`Sign ${formatCompactDollars(p.proratedSigning)}`);
+  if (p.proratedOption > 0) parts.push(`Opt ${formatCompactDollars(p.proratedOption)}`);
+  return parts.join(' • ');
+}
+
+function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {}, capSelectedYear }) {
   const years = appData?.cap?.years || {};
-  const sortedYrKeys = Object.keys(years).sort();
-  const baseYrKey = sortedYrKeys[0] || String(appData?.meta?.seasonYear || 2026);
-  const nextYrKey = sortedYrKeys[1] || String(Number(baseYrKey) + 1);
-  const horizonEndKey = sortedYrKeys[3] || String(Number(baseYrKey) + 3);
+  const sortedYrKeys = Object.keys(years).sort().slice(0, 5);
+  const firstYrKey = sortedYrKeys[0] || String(appData?.meta?.seasonYear || 2026);
+  const horizonEndKey = sortedYrKeys[sortedYrKeys.length - 1] || String(Number(firstYrKey) + 4);
+
+  const selectedYrKey =
+    capSelectedYear && years[String(capSelectedYear)]
+      ? String(capSelectedYear)
+      : simCapResult?.baseYear && years[String(simCapResult.baseYear)]
+        ? String(simCapResult.baseYear)
+        : firstYrKey;
+
+  const nextYrNum = Number(selectedYrKey) + 1;
+  const nextYrKey = String(nextYrNum);
+  const hasNextYrInLedger = Boolean(years[nextYrKey]);
+
   const blueprint = appData?.cap?.blueprint || {};
-  const capPlayers = (appData?.cap?.players || []).slice(0, 32);
-  const sum = simCapResult?.summary || {};
-  const y26 = years[baseYrKey] || {};
-  const ceiling = Math.max(1, Number(y26.capCeiling || 304000000));
-  const openSpace = Math.max(0, Number(sum.updatedCapSpace ?? y26.teamCapSpace ?? 0));
-  const deadCap = Math.max(0, Number(y26.deadMoneyTotal || 0) + Number(sum.baseYearDeadMoneyAdded || 0));
-  const activeUsed = Math.max(0, ceiling - openSpace - deadCap);
-  const activePct = Math.min(100, (activeUsed / ceiling) * 100);
-  const deadPct = Math.min(100 - activePct, (deadCap / ceiling) * 100);
+  const yrRow = years[selectedYrKey] || {};
+  const isSimForSelectedYr = String(simCapResult?.baseYear || firstYrKey) === selectedYrKey;
+  const sum = isSimForSelectedYr ? simCapResult?.summary || {} : {};
+  const activeMoveCount = isSimForSelectedYr ? Number(simCapResult?.moveCount || 0) : 0;
+
+  const yrCeiling = Math.max(1, Number(yrRow.capCeiling || 304000000));
+  const yrGrossSpace =
+    activeMoveCount > 0 && sum.updatedCapSpace !== undefined
+      ? Number(sum.updatedCapSpace)
+      : Number(yrRow.teamCapSpace || 0);
+  const yrEffectiveSpace =
+    activeMoveCount > 0 && sum.updatedEffectiveCapSpace !== undefined
+      ? Number(sum.updatedEffectiveCapSpace)
+      : Number(yrRow.effectiveCapSpace ?? yrRow.teamCapSpace ?? 0);
+  const yrLiabilities =
+    activeMoveCount > 0 && sum.updatedTotalLiabilities !== undefined
+      ? Number(sum.updatedTotalLiabilities)
+      : Number(yrRow.totalCapLiabilities ?? yrRow.totalLiabilities ?? 0);
+  const yrTop51 =
+    activeMoveCount > 0 && sum.updatedTop51 !== undefined
+      ? Number(sum.updatedTop51)
+      : Number(yrRow.top51 || 0);
+  const simAddedDead = activeMoveCount > 0 ? Number(sum.baseYearDeadMoneyAdded || 0) : 0;
+  const yrDeadMoney = Number(yrRow.deadMoneyTotal || 0) + simAddedDead;
+  const yrActiveRosterCount =
+    activeMoveCount > 0 && sum.activeContractedCount !== undefined
+      ? Number(sum.activeContractedCount)
+      : Number(yrRow.contractedCount || 0);
+
+  const openSpaceForBar = Math.max(0, yrGrossSpace);
+  const deadCapForBar = Math.max(0, yrDeadMoney);
+  const activeUsedForBar = Math.max(0, yrCeiling - openSpaceForBar - deadCapForBar);
+  const activePct = Math.min(100, (activeUsedForBar / yrCeiling) * 100);
+  const deadPct = Math.min(100 - activePct, (deadCapForBar / yrCeiling) * 100);
   const spacePct = Math.max(0, 100 - activePct - deadPct);
+
   const otcTeamUrl = appData?.cap?.sourceUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers';
   const spotracUrl = appData?.cap?.spotracUrl || 'https://www.spotrac.com/nfl/san-francisco-49ers/cap/';
   const nflpaUrl = appData?.cap?.nflpaUrl || 'https://nflpa.com/reports/public-salary-cap-report';
 
+  // Fallback player list if simCapResult wasn't computed for selectedYrKey
+  const simPlayers =
+    isSimForSelectedYr && Array.isArray(simCapResult?.simulatedPlayers)
+      ? simCapResult.simulatedPlayers
+      : (appData?.cap?.players || [])
+          .filter(p => Boolean(p?.contractsByYear?.[selectedYrKey]))
+          .sort(
+            (a, b) =>
+              (b.contractsByYear?.[selectedYrKey]?.capNumber || 0) -
+              (a.contractsByYear?.[selectedYrKey]?.capNumber || 0)
+          )
+          .map(p => {
+            const c = p.contractsByYear[selectedYrKey];
+            const proratedSigning = Number(c.proratedSigning) || 0;
+            const proratedOption = Number(c.proratedOption) || 0;
+            const rosterBonusRegular = Number(c.rosterBonusRegular) || 0;
+            const rosterBonusPerGame = Number(c.rosterBonusPerGame) || 0;
+            const workoutBonus = Number(c.workoutBonus) || 0;
+            const otherBonus = Number(c.otherBonus) || 0;
+            return {
+              id: p.id,
+              name: p.name,
+              position: p.position,
+              jersey: p.jersey,
+              headshotUrl: p.headshotUrl,
+              otcUrl: p.otcUrl,
+              year: Number(selectedYrKey),
+              isVoidYear: Boolean(c.isVoidYear),
+              baseSalary: Number(c.baseSalary) || 0,
+              proratedSigning,
+              proratedOption,
+              proratedBonus: proratedSigning + proratedOption,
+              rosterBonusRegular,
+              rosterBonusPerGame,
+              workoutBonus,
+              otherBonus,
+              currentYearBonuses:
+                rosterBonusRegular + rosterBonusPerGame + workoutBonus + otherBonus,
+              guaranteedSalary: Number(c.guaranteedSalary) || 0,
+              capNumber: Number(c.capNumber) || 0,
+              effectiveCapNumber: Number(c.capNumber) || 0,
+              selectedMove: userCapMoves?.[p.id] || 'none',
+              moveDeadMoney: 0,
+              moveCapSavings: 0,
+              transactions: c.transactions || {}
+            };
+          });
+
   const horizonRows = sortedYrKeys
-    .slice(0, 4)
     .map(y => {
-      const row = years[y];
+      const row = years[y] || {};
+      const isSel = y === selectedYrKey;
+      const grossVal = Number(row.teamCapSpace || 0);
+      const effVal = Number(row.effectiveCapSpace ?? grossVal);
+      const liabVal = Number(row.totalCapLiabilities ?? row.totalLiabilities ?? 0);
       return `
-        <tr>
-          <td><strong>${y}</strong></td>
+        <tr style="cursor:pointer;${isSel ? 'background:var(--gold-soft)' : ''}"
+            data-action="set-cap-year" data-cap-year="${esc(y)}">
+          <td><strong>${esc(y)}</strong>${row.capCeilingProjected ? ' <span style="font-size:10px;color:var(--text-muted)">(Est.)</span>' : ''}</td>
           <td>${formatCompactDollars(row.capCeiling)}</td>
-          <td>${formatCompactDollars(row.totalLiabilities)}</td>
-          <td style="color:var(--emerald)"><strong>${formatCompactDollars(row.teamCapSpace)}</strong></td>
-          <td>${formatCompactDollars(row.deadMoneyTotal)}</td>
-          <td>${row.contractedCount}</td>
+          <td>${formatCompactDollars(liabVal)}</td>
+          <td>${formatCompactDollars(row.top51 || 0)}</td>
+          <td style="color:${grossVal >= 0 ? 'var(--emerald)' : 'var(--crimson)'}"><strong>${formatCompactDollars(grossVal, true)}</strong></td>
+          <td style="color:${effVal >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(effVal, true)}</td>
+          <td>${formatCompactDollars(row.deadMoneyTotal || 0)}</td>
+          <td>${row.contractedCount || 0}</td>
         </tr>
       `;
     })
     .join('');
 
-  const warningsHtml = (simCapResult?.warnings || [])
+  const topDeadItems = yrRow.topDeadMoneyEntries || [];
+  const hasNonActiveCharges =
+    yrDeadMoney > 0 ||
+    Number(yrRow.injuredReserveTotal || 0) > 0 ||
+    Number(yrRow.practiceSquadTotal || 0) > 0 ||
+    Number(yrRow.pupTotal || 0) > 0 ||
+    Number(yrRow.suspendedTotal || 0) > 0;
+
+  const nonActiveLedgerHtml = hasNonActiveCharges
+    ? `
+      <div class="subcard-panel" style="margin-top:10px;font-size:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <strong style="color:var(--gold-bright)">${esc(selectedYrKey)} Non-Active &amp; Dead Cap Breakdown (OverTheCap)</strong>
+          <span class="mono" style="color:var(--amber)">Dead Money: ${formatOtcDollars(yrDeadMoney)}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;color:var(--text-secondary);font-size:11.5px;margin-bottom:${topDeadItems.length ? '6px' : '0'}">
+          ${Number(yrRow.injuredReserveTotal || 0) > 0 ? `<span>Injured Reserve: <strong class="mono">${formatCompactDollars(yrRow.injuredReserveTotal)}</strong></span>` : ''}
+          ${Number(yrRow.practiceSquadTotal || 0) > 0 ? `<span>Practice Squad: <strong class="mono">${formatCompactDollars(yrRow.practiceSquadTotal)}</strong></span>` : ''}
+          ${Number(yrRow.pupTotal || 0) > 0 ? `<span>PUP: <strong class="mono">${formatCompactDollars(yrRow.pupTotal)}</strong></span>` : ''}
+          ${Number(yrRow.suspendedTotal || 0) > 0 ? `<span>Suspended: <strong class="mono">${formatCompactDollars(yrRow.suspendedTotal)}</strong></span>` : ''}
+          ${simAddedDead > 0 ? `<span style="color:var(--crimson)">Sim Added Dead Cap: <strong class="mono">+${formatCompactDollars(simAddedDead)}</strong></span>` : ''}
+        </div>
+        ${
+          topDeadItems.length > 0
+            ? `<div style="font-size:11.5px;color:var(--text-muted)">
+                <strong>Largest ${esc(selectedYrKey)} Dead Charges:</strong>
+                ${topDeadItems
+                  .slice(0, 6)
+                  .map(d => `${esc(d.name)} (<span class="mono">${formatCompactDollars(d.capCharge)}</span>)`)
+                  .join(' • ')}
+              </div>`
+            : ''
+        }
+      </div>
+    `
+    : '';
+
+  const warningsHtml = (isSimForSelectedYr ? simCapResult?.warnings || [] : [])
     .map(
       w => `
       <div class="alert-banner-danger">
@@ -400,18 +574,18 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
     .join('');
 
   return `
-    <!-- Multi-Year Cap Horizon -->
-    <section class="card">
+    <!-- OverTheCap 5-Year Cap Summary (This Year + Next 4 Years) -->
+    <section class="card" id="capHorizonSummaryCard">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('cap', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">OverTheCap &amp; NFLPA Ledger • ${baseYrKey}–${horizonEndKey}</div>
-            <h2 class="card-title">Multi-Year Salary Cap Horizon</h2>
+            <div class="card-eyebrow">OverTheCap &amp; NFLPA Ledger • ${esc(firstYrKey)}–${esc(horizonEndKey)} (5-Year Horizon)</div>
+            <h2 class="card-title">49ers Salary Cap Summary (${esc(selectedYrKey)})</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
-                data-prompt="Analyze the 49ers 2026-2028 salary cap rollover strategy, option bonus proration on Purdy and Bosa, and Brandon Aiyuk cap scenarios">
+                data-prompt="Analyze the 49ers ${esc(firstYrKey)}-${esc(horizonEndKey)} salary cap rollover strategy, option bonus proration on Purdy and Bosa, and multi-year cap flexibility">
           ${iconSvg('sparkles', 13)}
           <span>AI Cap Audit</span>
         </button>
@@ -423,11 +597,66 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
         <a href="${esc(nflpaUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFLPA Public Cap</span>${iconSvg('externalLink', 11)}</a>
       </div>
 
+      ${renderOtcYearTabs(sortedYrKeys, selectedYrKey, years, 'Select Salary Cap Summary Year')}
+
+      <!-- Selected Year OverTheCap Top-of-Page Summary Metrics -->
+      <div class="kpi-grid" style="margin-bottom:8px">
+        <div class="kpi-box">
+          <div class="kpi-label">${esc(selectedYrKey)} Projected Gross Space</div>
+          <div class="kpi-val mono" style="color:${yrGrossSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
+            ${formatOtcDollars(yrGrossSpace)}
+          </div>
+          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+            ${yrRow.capCeilingProjected ? 'Proj. CBA Cap Ceiling' : 'OTC Team Cap Space'}
+          </div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">${jargonTerm('Effective Cap Space', 'effective_cap_space')}</div>
+          <div class="kpi-val mono" style="color:${yrEffectiveSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
+            ${formatOtcDollars(yrEffectiveSpace)}
+          </div>
+          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">After Top-51 / Rookie Pool</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Total Cap Liabilities</div>
+          <div class="kpi-val mono">${formatOtcDollars(yrLiabilities)}</div>
+          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+            Ceiling: ${formatCompactDollars(yrCeiling)}${yrRow.capCeilingProjected ? ' (Est.)' : ''}
+          </div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">${jargonTerm('Top-51', 'top_51')} Cap Charge</div>
+          <div class="kpi-val mono">${formatOtcDollars(yrTop51)}</div>
+          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+            ${yrActiveRosterCount} Active / ${yrRow.totalSignedCount || yrActiveRosterCount} Signed
+          </div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">${esc(selectedYrKey)} ${jargonTerm('Dead Cap', 'dead_cap')}</div>
+          <div class="kpi-val mono" style="color:${yrDeadMoney > 0 ? 'var(--amber)' : 'var(--text-primary)'}">
+            ${formatOtcDollars(yrDeadMoney)}
+          </div>
+          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+            ${yrDeadMoney > 0 ? `${((yrDeadMoney / yrCeiling) * 100).toFixed(1)}% of Team Cap` : 'Clean Ledger ($0)'}
+          </div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Active Roster Spend</div>
+          <div class="kpi-val mono">${formatCompactDollars(yrRow.activeCapSpending || 0)}</div>
+          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+            Off ${formatCompactDollars(yrRow.offenseSpend || 0)} • Def ${formatCompactDollars(yrRow.defenseSpend || 0)}
+          </div>
+        </div>
+      </div>
+
+      ${nonActiveLedgerHtml}
+
+      <div class="sub-label" style="margin:12px 0 6px">${esc(firstYrKey)}–${esc(horizonEndKey)} Multi-Year OverTheCap Comparison (Tap Any Year)</div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead>
             <tr>
-              <th>Year</th><th>Projected Cap</th><th>Liabilities</th><th>Gross Space</th><th>Dead Cap</th><th>Signed</th>
+              <th>Year</th><th>Cap Ceiling</th><th>Total Liabilities</th><th>Top-51</th><th>Gross Space</th><th>Effective Space</th><th>Dead Cap</th><th>Signed</th>
             </tr>
           </thead>
           <tbody>${horizonRows}</tbody>
@@ -435,7 +664,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
       </div>
 
       <div style="margin-top:10px;font-size:12.5px;color:var(--text-secondary)">
-        <strong style="color:var(--gold-bright)">Front Office Blueprint:</strong> ${esc(blueprint.executiveSummary || '')}
+        <strong style="color:var(--gold-bright)">Front Office Blueprint:</strong> ${escJargon(blueprint.executiveSummary || '')}
       </div>
 
       <div style="display:flex;flex-direction:column;gap:7px;margin-top:9px">
@@ -443,7 +672,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
           .map(
             sp => `
           <div class="subcard-panel" style="font-size:12.5px">
-            <strong>${esc(sp.title)}:</strong> <span style="color:var(--text-secondary)">${esc(sp.detail)}</span>
+            <strong>${esc(sp.title)}:</strong> <span style="color:var(--text-secondary)">${escJargon(sp.detail)}</span>
           </div>
         `
           )
@@ -451,50 +680,58 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
       </div>
     </section>
 
-    <!-- Interactive GM Cap Simulator -->
-    <section class="card">
+    <!-- Multi-Year Interactive OverTheCap Salary Cap Simulator -->
+    <section class="card" id="capSimulatorCard">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('bolt', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">CBA Cap Calculator • Top-53 Replacement Rule Applied</div>
-            <h2 class="card-title">GM Salary Cap Simulator</h2>
+            <div class="card-eyebrow">CBA Cap Calculator • ${jargonTerm('Post-June 1', 'post_june_1')} &amp; Replacement Rules Applied</div>
+            <h2 class="card-title">Salary Cap Simulator (${esc(selectedYrKey)})</h2>
           </div>
         </div>
-        <div style="display:flex;gap:6px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
           <button type="button" class="btn-secondary" data-action="apply-ai-cap-blueprint">${iconSvg('sparkles', 13)}<span>Blueprint</span></button>
-          <button type="button" class="btn-ghost" data-action="reset-cap-moves">${iconSvg('reset', 13)}<span>Reset</span></button>
+          <button type="button" class="btn-ghost" data-action="reset-cap-moves">${iconSvg('reset', 13)}<span>Reset ${esc(selectedYrKey)}</span></button>
         </div>
       </div>
+
+      ${renderOtcYearTabs(sortedYrKeys, selectedYrKey, years, 'Select Salary Cap Simulator Year')}
 
       <div class="gm-summary-banner">
         <div class="kpi-grid">
           <div class="kpi-box">
-            <div class="kpi-label">${baseYrKey} Cap Space</div>
-            <div class="kpi-val mono" style="color:${sum.updatedCapSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
-              ${formatCompactDollars(sum.updatedCapSpace)}
+            <div class="kpi-label">${esc(selectedYrKey)} Simulated Gross Space</div>
+            <div class="kpi-val mono" style="color:${yrGrossSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
+              ${formatCompactDollars(yrGrossSpace)}
             </div>
             <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              Delta: ${formatCompactDollars(sum.baseYearNetCapDelta, true)}
-            </div>
-          </div>
-          <div class="kpi-box">
-            <div class="kpi-label">${nextYrKey} Projected Space</div>
-            <div class="kpi-val mono">${formatCompactDollars(sum.updatedNextYearCapSpace)}</div>
-            <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              ${nextYrKey} Delta: ${formatCompactDollars(sum.nextYearCapDelta, true)}
+              Sim Delta: ${formatCompactDollars(sum.baseYearNetCapDelta || 0, true)}
             </div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">New ${baseYrKey} Dead Cap</div>
-            <div class="kpi-val mono" style="color:var(--amber)">${formatCompactDollars(sum.baseYearDeadMoneyAdded, true)}</div>
+            <div class="kpi-label">${hasNextYrInLedger ? `${esc(nextYrKey)} Projected Space` : `${esc(selectedYrKey)} Effective Space`}</div>
+            <div class="kpi-val mono" style="color:${(hasNextYrInLedger ? (sum.updatedNextYearCapSpace ?? years[nextYrKey]?.teamCapSpace ?? 0) : yrEffectiveSpace) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
+              ${
+                hasNextYrInLedger
+                  ? formatCompactDollars(sum.updatedNextYearCapSpace ?? years[nextYrKey]?.teamCapSpace ?? 0)
+                  : formatCompactDollars(yrEffectiveSpace)
+              }
+            </div>
             <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              ${simCapResult?.moveCount || 0} move(s) active
+              ${hasNextYrInLedger ? `${esc(nextYrKey)} Delta: ${formatCompactDollars(sum.nextYearCapDelta || 0, true)}` : 'After Replacement Rule'}
+            </div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-label">New ${esc(selectedYrKey)} Dead Cap</div>
+            <div class="kpi-val mono" style="color:var(--amber)">${formatCompactDollars(simAddedDead, true)}</div>
+            <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
+              ${activeMoveCount} move(s) active in ${esc(selectedYrKey)}
             </div>
           </div>
         </div>
         <div class="cap-alloc-wrap">
-          <div class="cap-alloc-bar" aria-label="2026 Cap Allocation">
+          <div class="cap-alloc-bar" aria-label="${esc(selectedYrKey)} Cap Allocation">
             <span class="cap-seg-active" style="width:${activePct.toFixed(1)}%"></span>
             <span class="cap-seg-dead" style="width:${deadPct.toFixed(1)}%"></span>
             <span class="cap-seg-space" style="width:${spacePct.toFixed(1)}%"></span>
@@ -508,59 +745,123 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves }) {
         ${warningsHtml}
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${capPlayers
-          .map(p => {
-            const c26 = p.contractsByYear?.['2026'] || {};
-            const selected = userCapMoves?.[p.id] || 'none';
-            const tx = c26.transactions || {};
-            return `
-              <div class="gm-player-card ${selected !== 'none' ? 'modified' : ''}">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-                  <div style="display:flex;align-items:center;gap:9px;min-width:0">
-                    <span style="cursor:pointer;display:inline-flex" data-action="open-player-sheet" data-player-id="${esc(p.id)}">
-                      ${renderPlayerAvatarHtml(p, 36, { showJerseyBadge: true })}
-                    </span>
-                    <div style="min-width:0">
-                      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-                        <span style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.id)}">
-                          <strong>${esc(p.name)}</strong> <span style="color:var(--gold-bright);font-size:11.5px">${esc(p.position)}</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <div class="sub-label" style="margin:0">Active Roster (${simPlayers.length} total) — ${esc(selectedYrKey)} Ledger</div>
+        <span style="font-size:11.5px;color:var(--text-muted)">
+          Dead Money &amp; Cap Savings are nominally <strong class="mono">$0</strong> when keeping a player; select any roster move to model CBA impact.
+        </span>
+      </div>
+
+      <div class="table-scroll">
+        <table class="data-table cap-sim-table mono" aria-label="${esc(selectedYrKey)} OverTheCap Player Salary Cap Simulator">
+          <thead>
+            <tr>
+              <th style="font-family:var(--font-sans)">Player</th>
+              <th>Base Salary</th>
+              <th>${jargonTerm('Prorated Bonuses', 'prorated_bonus')}</th>
+              <th>Current Yr Bonuses</th>
+              <th>${jargonTerm('Guaranteed Salary', 'guaranteed_salary')}</th>
+              <th>Cap Number</th>
+              <th style="font-family:var(--font-sans)">Roster Move</th>
+              <th>${jargonTerm('Dead Money', 'dead_cap')}</th>
+              <th>Cap Savings</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${simPlayers
+              .map(p => {
+                const selected = p.selectedMove || 'none';
+                const tx = p.transactions || {};
+                const proratedSub = formatProratedSubLabel(p);
+                const curBonusSub = formatCurrentBonusSubLabel(p);
+                const isModified = selected !== 'none';
+                const deadCls = isModified && p.moveDeadMoney > 0 ? 'cap-cell-dead-active' : '';
+                const saveCls = isModified
+                  ? p.moveCapSavings > 0
+                    ? 'cap-cell-save-pos'
+                    : p.moveCapSavings < 0
+                      ? 'cap-cell-save-neg'
+                      : ''
+                  : '';
+
+                return `
+                  <tr class="${isModified ? 'has-active-move' : ''}" data-sim-player-row="${esc(p.id)}">
+                    <td style="font-family:var(--font-sans)">
+                      <div style="display:flex;align-items:center;gap:8px;min-width:165px">
+                        <span style="cursor:pointer;display:inline-flex;flex-shrink:0" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">
+                          ${renderPlayerAvatarHtml(p, 30)}
                         </span>
-                        ${
-                          p.otcUrl
-                            ? `<a href="${esc(p.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">OTC ${iconSvg('externalLink', 10)}</a>`
-                            : ''
-                        }
+                        <div style="min-width:0">
+                          <div style="display:flex;align-items:center;gap:5px">
+                            <span style="cursor:pointer;font-weight:700;color:var(--text-primary)" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">${esc(p.name)}</span>
+                            <span style="color:var(--gold-bright);font-size:11px;font-weight:700">${esc(p.position)}</span>
+                            ${
+                              p.otcUrl
+                                ? `<a href="${esc(p.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:10.5px" title="OverTheCap Contract">${iconSvg('externalLink', 10)}</a>`
+                                : ''
+                            }
+                          </div>
+                        </div>
                       </div>
-                      <div class="mono" style="font-size:11px;color:var(--text-secondary)">
-                        2026 Cap: ${formatCompactDollars(c26.capNumber)} • Base: ${formatCompactDollars(c26.baseSalary)}
-                      </div>
-                    </div>
-                  </div>
-                  <select class="select-input gm-move-select" style="width:auto;max-width:184px;padding:6px 8px"
-                          data-player-id="${esc(p.id)}" aria-label="Cap Action for ${esc(p.name)}">
-                    <option value="none" ${selected === 'none' ? 'selected' : ''}>Keep Contract</option>
-                    <option value="restructure" ${selected === 'restructure' ? 'selected' : ''}>
-                      Restructure (${formatCompactDollars(tx.restructure?.capSavings || 0, true)})
-                    </option>
-                    <option value="june_1_cut" ${selected === 'june_1_cut' ? 'selected' : ''}>
-                      Post-6/1 Cut (${formatCompactDollars(tx.june_1_cut?.capSavings || 0, true)})
-                    </option>
-                    <option value="cut" ${selected === 'cut' ? 'selected' : ''}>
-                      Pre-6/1 Cut (${formatCompactDollars(tx.cut?.capSavings || 0, true)})
-                    </option>
-                    <option value="june_1_trade" ${selected === 'june_1_trade' ? 'selected' : ''}>
-                      Post-6/1 Trade (${formatCompactDollars(tx.june_1_trade?.capSavings || 0, true)})
-                    </option>
-                    <option value="extension" ${selected === 'extension' ? 'selected' : ''}>
-                      Extend (${formatCompactDollars(tx.extension?.capSavings || 0, true)})
-                    </option>
-                  </select>
-                </div>
-              </div>
-            `;
-          })
-          .join('')}
+                    </td>
+                    <td>
+                      ${
+                        p.isVoidYear
+                          ? `<span class="badge badge-neutral" title="Void Year">${jargonTerm('Void', 'void_years')}</span>`
+                          : formatOtcDollars(p.baseSalary)
+                      }
+                    </td>
+                    <td>
+                      ${formatOtcDollars(p.proratedBonus)}
+                      ${proratedSub ? `<span class="cap-cell-sub">${esc(proratedSub)}</span>` : ''}
+                    </td>
+                    <td>
+                      ${formatOtcDollars(p.currentYearBonuses)}
+                      ${curBonusSub ? `<span class="cap-cell-sub">${esc(curBonusSub)}</span>` : ''}
+                    </td>
+                    <td>${formatOtcDollars(p.guaranteedSalary)}</td>
+                    <td>
+                      <strong>${formatOtcDollars(p.capNumber)}</strong>
+                      ${isModified ? `<span class="cap-cell-sub">Sim: ${formatOtcDollars(p.effectiveCapNumber)}</span>` : ''}
+                    </td>
+                    <td style="font-family:var(--font-sans)">
+                      <select class="select-input gm-move-select"
+                              data-player-id="${esc(p.id)}"
+                              data-cap-year="${esc(selectedYrKey)}"
+                              aria-label="Roster Move for ${esc(p.name)} (${esc(selectedYrKey)})">
+                        <option value="none" ${selected === 'none' ? 'selected' : ''}>Do Nothing ($0 / $0)</option>
+                        <option value="cut" ${selected === 'cut' ? 'selected' : ''}>
+                          Cut Pre-6/1 (${formatCompactDollars(tx.cut?.capSavings || 0, true)})
+                        </option>
+                        <option value="june_1_cut" ${selected === 'june_1_cut' ? 'selected' : ''}>
+                          Cut Post-6/1 (${formatCompactDollars(tx.june_1_cut?.capSavings || 0, true)})
+                        </option>
+                        <option value="trade" ${selected === 'trade' ? 'selected' : ''}>
+                          Trade Pre-6/1 (${formatCompactDollars(tx.trade?.capSavings || 0, true)})
+                        </option>
+                        <option value="june_1_trade" ${selected === 'june_1_trade' ? 'selected' : ''}>
+                          Trade Post-6/1 (${formatCompactDollars(tx.june_1_trade?.capSavings || 0, true)})
+                        </option>
+                        <option value="restructure" ${selected === 'restructure' ? 'selected' : ''}>
+                          Restructure (${formatCompactDollars(tx.restructure?.capSavings || 0, true)})
+                        </option>
+                        <option value="extension" ${selected === 'extension' ? 'selected' : ''}>
+                          Extension (${formatCompactDollars(tx.extension?.capSavings || 0, true)})
+                        </option>
+                      </select>
+                    </td>
+                    <td class="${deadCls}" data-col="dead-money">
+                      ${isModified ? formatOtcDollars(p.moveDeadMoney) : '$0'}
+                    </td>
+                    <td class="${saveCls}" data-col="cap-savings">
+                      ${isModified ? formatOtcDollars(p.moveCapSavings) : '$0'}
+                    </td>
+                  </tr>
+                `;
+              })
+              .join('')}
+          </tbody>
+        </table>
       </div>
     </section>
   `;

@@ -52,7 +52,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
   const rosterPlayers = appData?.roster?.players || [];
 
   if (baseUrl) {
-    emit(2, 'Step 2/3: Querying Cloudflare Edge Worker + Gemini Live Search Grounding...');
+    emit(2, 'Step 2/3: Querying Cloudflare Edge Worker + Gemini 2.5 Pro Deep Thinking & Live Search Grounding...');
     const res = await fetch(`${baseUrl}/api/analyze`, {
       method: 'POST',
       headers: {
@@ -153,13 +153,17 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
   const q = prompt.toLowerCase();
   const players = appData?.roster?.players || [];
   const cap26 = appData?.cap?.years?.['2026'] || {};
+  const cap27 = appData?.cap?.years?.['2027'] || {};
   const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
-  const mc = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
+  const tw = appData?.seasonal?.tradeWarRoom || {};
+  const dp = appData?.seasonal?.draftPrep2027 || {};
+  const mcSim = appData?.seasonal?.playoffPicture?.baselineSimulation || {};
+  const mc = mcSim.sfOdds || {};
 
   // Check if the user asked about a retired or departed former 49er not on the live roster
   const disallowedAsked = getDisallowedFormer49ers(players).filter(nm => q.includes(nm.toLowerCase()));
 
-  // Match mentioned players directly from our 88-player live roster!
+  // Match mentioned players directly from our live roster!
   const matchedPlayers = players.filter(
     p =>
       q.includes(p.name.toLowerCase()) ||
@@ -195,7 +199,38 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
     sections.push(`#### Matched Player Intelligence (Live 2026 Ledger)\n${pBullets.join('\n')}`);
   }
 
-  if (q.includes('cap') || q.includes('contract') || q.includes('restructure') || q.includes('cut') || q.includes('trade') || q.includes('aiyuk')) {
+  const isTradeQuery =
+    q.includes('trade') ||
+    q.includes('deadline') ||
+    q.includes('need') ||
+    q.includes('target') ||
+    q.includes('fit') ||
+    q.includes('acquire') ||
+    q.includes('buyer') ||
+    q.includes('seller');
+
+  if (isTradeQuery && (tw.topNeeds?.length || tw.realisticTargets?.length)) {
+    const needsMd = (tw.topNeeds || [])
+      .map(n => `* **[${n.urgency}] ${n.position}**: ${n.rationale}`)
+      .join('\n');
+    const targetsMd = (tw.realisticTargets || [])
+      .slice(0, 5)
+      .map(
+        t =>
+          `* **${t.name} (${t.position} • ${t.currentTeam || t.archetype || ''} • Fit \`${t.fitScore}/100\`)**: Est. Cost \`${t.projectedPickCost}\` • 2026 Buyer Proration \`${t.acquiring2026CapHit}\` • 2027 Horizon \`${t.cap2027Impact || '—'}\`. ${t.schemeFit}`
+      )
+      .join('\n');
+    const pitfallsMd = (tw.pitfallsToAvoid || [])
+      .slice(0, 3)
+      .map(pf => `* **Avoid ${pf.category} (${pf.targetExample})**: ${pf.reason}`)
+      .join('\n');
+
+    sections.push(
+      `#### Trade Window Needs, Realistic Fits & Rental Cap Math\n* **Midseason Purchasing Power vs. 2027 Constraint**: Acquiring clubs absorb only 9/18ths of remaining 2026 base salary while bonus proration stays with the seller—giving SF's \`${formatCompactDollars(cap26.teamCapSpace || 35_164_858)}\` 2026 space >\`$65M\` in annualized base-salary capacity **without** forcing sellers to eat salary. However, SF projects at \`${formatCompactDollars(cap27.teamCapSpace ?? -31_540_066)}\` in 2027 cap space and holds only **${dp.pickInventory?.length || 6} total 2027 draft picks** (after sending its 2027 Rd 4 pick to IND for DeForest Buckner), demanding disciplined Day-3 cost control.\n${needsMd}\n\n#### Top Verified Trade Candidates\n${targetsMd}${pitfallsMd ? `\n\n#### Front-Office Pitfalls to Avoid\n${pitfallsMd}` : ''}`
+    );
+  }
+
+  if (q.includes('cap') || q.includes('contract') || q.includes('restructure') || q.includes('cut') || q.includes('rollover') || q.includes('aiyuk')) {
     const topRestructures = (appData?.cap?.blueprint?.restructureCandidates || [])
       .slice(0, 4)
       .map(
@@ -204,26 +239,42 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
       )
       .join('\n');
     sections.push(
-      `#### CBA Salary Cap & Rollover Mechanics\n* **2026 Gross Cap Space**: \`${formatCompactDollars(cap26.teamCapSpace)}\` (\`${formatCompactDollars(cap26.effectiveCapSpace)}\` effective after in-season buffer).\n* **Article 13 Rollover Impact**: Carrying unused 2026 cap space into 2027 offsets rising option proration without adding dead-cap void-year tail risk.\n${topRestructures}`
+      `#### CBA Salary Cap & 2026 → 2027 Rollover Bridge\n* **2026 Top-51 Cap Space**: \`${formatCompactDollars(cap26.teamCapSpace || 35_164_858)}\` (\`${formatCompactDollars(cap26.effectiveCapSpace || 28_664_858)}\` effective after in-season operating reserve; \`${formatCompactDollars(cap26.deadMoney || 71_016_721)}\` 2026 dead money).\n* **2027 Cap Horizon**: Projected \`${formatCompactDollars(cap27.teamCapSpace ?? -31_540_066)}\` deficit on a \`$327.0M\` estimated 2027 cap ceiling—meaning Article 13 dollar-for-dollar rollover of unused 2026 space is the primary structural bridge to 2027 compliance.\n${topRestructures}`
     );
+  }
+
+  if (q.includes('draft') || q.includes('pick') || q.includes('2027') || q.includes('combine') || q.includes('tankathon')) {
+    const pickSummary = (dp.pickInventory || [])
+      .map(pk => `* **Round ${pk.round}${pk.overall ? ` (#${pk.overall})` : ''} — ${pk.origin}** (\`~${pk.estValuePts} Rich Hill pts\`): ${pk.note}`)
+      .join('\n');
+    if (pickSummary) {
+      sections.push(
+        `#### 2027 Draft Capital Inventory (${dp.pickInventory.length} Total Picks)\n${dp.tradedPicksNote ? `* **Capital Ledger Note**: ${dp.tradedPicksNote}\n` : ''}${pickSummary}`
+      );
+    }
   }
 
   const oppSearchTerm = (matchup.oppName || '').split(' ').slice(-1)[0]?.toLowerCase() || 'matchup';
-  if (q.includes(oppSearchTerm) || q.includes('week') || q.includes('matchup') || q.includes('line') || q.includes('pass') || q.includes('protection')) {
+  if (q.includes(oppSearchTerm) || q.includes('week') || q.includes('matchup') || q.includes('line') || q.includes('pass') || q.includes('protection') || q.includes('bosa') || q.includes('buckner') || q.includes('purdy')) {
     const keyTrenchNote =
       matchup.keyMatchupsMatrix?.[0]?.tacticalDetail ||
-      'Expect 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk on passing downs, while Nick Bosa, DeForest Buckner, and Osa Odighizuwa force interior slide conflicts.';
+      'Expect 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk on passing downs, while DC Raheem Morris pairs Nick Bosa, DeForest Buckner, and Osa Odighizuwa to force interior slide conflicts.';
     sections.push(
-      `#### Film & Scheme Breakdown (Week ${matchup.week || appData?.meta?.currentWeek || ''} vs. ${matchup.oppName || 'Opponent'})\n* **Market & Rest Context**: \`${matchup.betting?.spread || 'Pick'}\` (\`O/U ${matchup.betting?.overUnder || '—'}\`), Implied \`${matchup.betting?.impliedScore || '—'}\`, \`${matchup.betting?.restAdvantage || 'Even Rest'}\`.\n* **Coaching Chess Match**: ${matchup.coachingMatchup?.summary || matchup.coachingMatchup?.headline || ''}\n* **Protection & Trench Keys**: ${keyTrenchNote}`
+      `#### Film & Scheme Breakdown (Week ${matchup.week || appData?.meta?.currentWeek || ''} vs. ${matchup.oppName || 'Opponent'})\n* **Market & Rest Context**: \`${matchup.betting?.spread || 'Pick'}\` (\`O/U ${matchup.betting?.overUnder || '—'}\`), Implied \`${matchup.betting?.impliedScore || '—'}\`, \`${matchup.betting?.restAdvantage || 'Even Rest'}\`.\n* **Coaching Chess Match (Shanahan & DC Raheem Morris)**: ${matchup.coachingMatchup?.summary || matchup.coachingMatchup?.headline || ''}\n* **Protection & Trench Keys**: ${keyTrenchNote}`
     );
   }
 
-  if (q.includes('playoff') || q.includes('seed') || q.includes('bye') || q.includes('nfc') || sections.length <= 2) {
-    const rec = appData?.meta?.teamRecord || '—';
-    const stand = appData?.meta?.standingSummary || 'NFC Contender';
-    const ptDiff = appData?.meta?.pointDifferential || '—';
+  if (q.includes('playoff') || q.includes('seed') || q.includes('bye') || q.includes('nfc') || q.includes('simulat') || sections.length <= 2) {
+    const rec = appData?.meta?.teamRecord || '6-1';
+    const stand = appData?.meta?.standingSummary || '1st in NFC West • #1 Seed in NFC';
+    const ptDiff = appData?.meta?.pointDifferential || '+58';
+    const topRivals = (mcSim.allTeamOdds || [])
+      .filter(t => t.abbr !== 'SF')
+      .slice(0, 3)
+      .map(t => `${t.abbr} (\`${t.seed1ByePct}%\` #1 Bye, \`${t.winDivisionPct}%\` Div)`)
+      .join(', ');
     sections.push(
-      `#### Quantitative Season Outlook (10,000 Monte Carlo Runs)\n* **Current Standing**: \`${rec}\` (${stand}, \`${ptDiff}\` point differential).\n* **Simulated Odds**: Playoff Berth \`${mc.makePlayoffsPct ?? 95}%\` • Win NFC West \`${mc.winDivisionPct ?? 75}%\` • **#1 Seed First-Round Bye \`${mc.seed1ByePct ?? 45}%\`**.`
+      `#### Calibrated Season Outlook (10,000 Empirical-Bayes + EPA + SOS Runs)\n* **Current Standing**: \`${rec}\` (${stand}, \`${ptDiff}\` point differential) • **Projected Finish**: \`${mc.projectedWins ?? 12.0} Wins\`.\n* **Calibrated Probabilities**: Playoff Berth \`${mc.makePlayoffsPct ?? 93.7}%\` • Win NFC West \`${mc.winDivisionPct ?? 83.7}%\` • **#1 Seed First-Round Bye \`${mc.seed1ByePct ?? 36.9}%\`**.\n* **NFC Contender Context**: ${topRivals || 'MIN, CHI, and DET cannibalize inside the NFC North while SF holds a Week 11 Mexico City neutral-site tiebreaker showdown vs. Minnesota.'}`
     );
   }
 
@@ -236,6 +287,7 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
     sourcesCited: [
       { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
       { label: 'OverTheCap 49ers Cap', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'Tankathon 49ers Draft Picks', url: 'https://www.tankathon.com/nfl/49ers' },
       { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
     ],
     markdown: sections.join('\n\n')
@@ -243,35 +295,43 @@ function synthesizeDataGroundedReport(prompt, category, appData, author) {
 }
 
 function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, author) {
+  const tLower = String(topic || '').toLowerCase();
   const meta = appData?.meta || {};
   const cap26 = appData?.cap?.years?.['2026'] || {};
+  const cap27 = appData?.cap?.years?.['2027'] || {};
   const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
   const upcomingGames = (appData?.scheduleMatchup?.schedule || []).filter(g => !g.completed).slice(0, 4);
   const mc = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
+  const dp = appData?.seasonal?.draftPrep2027 || {};
   const purdy = (appData?.roster?.players || []).find(p => p.name === 'Brock Purdy');
-  const purdyEpa = purdy?.current2026Stats?.passingEpa != null ? purdy.current2026Stats.passingEpa.toFixed(1) : '63.2';
-  const capSpaceM = ((cap26.teamCapSpace || 35164858) / 1_000_000).toFixed(2);
+  const rawPurdyEpa = purdy?.stats2026?.passing?.epa ?? purdy?.current2026Stats?.passingEpa ?? 52.08;
+  const purdyEpa = Number(rawPurdyEpa).toFixed(1);
+  const capSpaceM = ((cap26.teamCapSpace || 35_164_858) / 1_000_000).toFixed(2);
+  const cap27DeficitM = Math.abs((cap27.teamCapSpace ?? -31_540_066) / 1_000_000).toFixed(2);
+  const pickCount = dp.pickInventory?.length || 6;
   const curWk = matchup.week || meta.currentWeek || 9;
   const rec = meta.teamRecord || '6-1';
-  const stand = meta.standingSummary || '#1 Seed in NFC';
+  const stand = meta.standingSummary || '1st in NFC West • #1 Seed in NFC';
   const solo = format === 'solo';
 
   const baseTurns = [
     {
       speaker: 'Marcus',
-      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is grounded directly in live ${meta.seasonYear || 2026} roster status, play-by-play numbers, OverTheCap contract mechanics, and Santa Clara beat reporting.`
+      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is anchored directly to live ${meta.seasonYear || 2026} roster status, nflverse play-by-play EPA, OverTheCap multi-year ledgers, and Santa Clara beat reporting.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `Let's start with the hard baseline numbers entering Week ${curWk}. San Francisco sits at ${rec} (${stand}), with a ${mc.seed1ByePct ?? 54.8} percent probability of locking up the NFC first-round bye in our ten-thousand-run Monte Carlo model, and ${capSpaceM} million dollars in gross 2026 salary cap space.`
+      text: `Let's set the verified numbers entering Week ${curWk}. San Francisco sits at ${rec} (${stand}), projecting for ${mc.projectedWins ?? 12.0} wins with a ${mc.makePlayoffsPct ?? 93.7} percent playoff probability, ${mc.winDivisionPct ?? 83.7} percent NFC West equity, and a calibrated ${mc.seed1ByePct ?? 36.9} percent shot at the NFC #1 seed bye across ten thousand Empirical-Bayes and EPA simulations.`
     },
     {
       speaker: 'Marcus',
-      text: `When you connect ${topic} to what is happening on tape right now, two things jump off the screen. Offensively, Brock Purdy has generated plus ${purdyEpa} passing EPA while keeping pressure-to-sack rates among the lowest in the NFL. Defensively, pairing Nick Bosa on the Wide-9 rail alongside DeForest Buckner, Osa Odighizuwa, Keion White, and Mykel Williams forces slide-protection conflicts on every passing down.`
+      text: tLower.includes('trade')
+        ? `On the trade-window tape, San Francisco's real priorities are perimeter receiver and 12-personnel tight end separation, left guard pass protection next to Trent Williams, rotational speed edge rush, and dime corner depth—targeting cost-controlled fits like Adonai Mitchell, Josh Downs, Rashod Bateman, Greg Dulcich, or Khalil Mack while avoiding declining age-cliff traps like Cameron Jordan.`
+        : `On tape right now, Brock Purdy has generated plus ${purdyEpa} passing EPA while keeping sack avoidance near the top of the league. Defensively, coordinator Raheem Morris pairs Nick Bosa on the Wide-9 rail with DeForest Buckner, Osa Odighizuwa, Keion White, and Mykel Williams to force interior slide conflicts on passing downs.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `And look at the multi-year roster and cap discipline behind it. Every dollar of 2026 cap room that John Lynch and Paraag Marathe carry forward rolls over one-for-one into 2027 under Article 13 of the CBA—cushioning option bonus proration while the 2025 and 2026 draft classes supply cost-controlled snaps.`
+      text: `And here is the CBA cap and draft discipline governing every decision: while ${capSpaceM} million dollars in 2026 Top-51 space gives San Francisco huge midseason 9/18ths base-salary purchasing power, the 49ers face a projected ${cap27DeficitM} million dollar cap deficit in 2027 and hold ${pickCount} picks in the 2027 draft after sending their fourth-rounder to Indianapolis for Buckner. Rolling unused 2026 space forward under Article 13 is essential.`
     }
   ];
 
@@ -282,11 +342,11 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     baseTurns.push(
       {
         speaker: 'Marcus',
-        text: `Zooming deeper into the upcoming schedule slate: San Francisco faces ${nextOpps || `the ${matchup.oppName || 'upcoming slate'}`}, where conference and division tiebreakers carry massive January leverage.`
+        text: `Zooming deeper into the upcoming schedule slate: San Francisco faces ${nextOpps || `the ${matchup.oppName || 'upcoming slate'}`}, including neutral-site NFC tiebreaker leverage in Mexico City against Minnesota while NFC North contenders cannibalize each other.`
       },
       {
         speaker: solo ? 'Marcus' : 'Elena',
-        text: `That is why player-specific health management—like respecting Trent Williams' veteran rest cadence while managing snap counts across Christian McCaffrey, George Kittle, and Nick Bosa—is the single highest-leverage variable for securing home-field advantage through January.`
+        text: `That is why veteran maintenance—respecting Trent Williams' Wednesday rest cadence while managing high-leverage snaps across Christian McCaffrey, George Kittle, Fred Warner, and Nick Bosa—remains the highest-leverage lever for January seeding.`
       }
     );
   }
@@ -319,7 +379,8 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     durationSec: cursor,
     sourceLinks: [
       { label: 'nflverse EPA & PBP', url: 'https://github.com/nflverse/nflverse-data/releases' },
-      { label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' }
+      { label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'Tankathon 49ers Picks', url: 'https://www.tankathon.com/nfl/49ers' }
     ],
     transcript
   };

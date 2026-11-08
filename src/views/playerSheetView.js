@@ -8,10 +8,10 @@
  * 5. health    — Week 9 Practice Progression, Player Toughness/Vet-Rest Priors & 2026 Injury Log
  */
 
-import { esc, formatRelativeAge, playProbBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
-import { formatDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
+import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
@@ -232,7 +232,7 @@ function renderOverviewTab(p) {
     ${
       p.publicEfficiencyNote
         ? `<div style="padding:9px 11px;border-radius:9px;background:var(--gold-soft);border:1px solid var(--gold-border);font-size:12.5px">
-            <strong style="color:var(--gold-bright)">Beat &amp; Film Efficiency Callout:</strong> ${esc(p.publicEfficiencyNote)}
+            <strong style="color:var(--gold-bright)">Beat &amp; Film Efficiency Callout:</strong> ${escJargon(p.publicEfficiencyNote)}
            </div>`
         : ''
     }
@@ -278,12 +278,12 @@ function renderStatsTab(p, statsMode) {
       const blocks = [snapBannerHtml];
       if (s26.passing.attempts > 0) {
         blocks.push(`
-          <div class="sub-label">2026 Passing &amp; EPA (${s26.games} GP)</div>
+          <div class="sub-label">2026 Passing &amp; ${jargonTerm('EPA', 'epa')} (${s26.games} GP)</div>
           <div class="kpi-grid">
             <div class="kpi-box"><div class="kpi-label">Comp / Att</div><div class="kpi-val mono">${s26.passing.completions}/${s26.passing.attempts}</div></div>
             <div class="kpi-box"><div class="kpi-label">Pass Yds / TD / INT</div><div class="kpi-val mono">${s26.passing.yards} / ${s26.passing.tds} / ${s26.passing.ints}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Passing EPA</div><div class="kpi-val mono" style="color:var(--emerald)">${s26.passing.epa >= 0 ? '+' : ''}${s26.passing.epa}</div></div>
-            <div class="kpi-box"><div class="kpi-label">CPOE</div><div class="kpi-val mono">${s26.passing.cpoe >= 0 ? '+' : ''}${s26.passing.cpoe}%</div></div>
+            <div class="kpi-box"><div class="kpi-label">Passing ${jargonTerm('EPA', 'epa')}</div><div class="kpi-val mono" style="color:var(--emerald)">${s26.passing.epa >= 0 ? '+' : ''}${s26.passing.epa}</div></div>
+            <div class="kpi-box"><div class="kpi-label">${jargonTerm('CPOE', 'cpoe')}</div><div class="kpi-val mono">${s26.passing.cpoe >= 0 ? '+' : ''}${s26.passing.cpoe}%</div></div>
             <div class="kpi-box"><div class="kpi-label">Air Yards</div><div class="kpi-val mono">${s26.passing.airYards}</div></div>
             <div class="kpi-box"><div class="kpi-label">Sacks Taken</div><div class="kpi-val mono">${s26.passing.sacks}</div></div>
           </div>
@@ -291,11 +291,11 @@ function renderStatsTab(p, statsMode) {
       }
       if (s26.rushing.carries > 0) {
         blocks.push(`
-          <div class="sub-label">2026 Rushing &amp; EPA</div>
+          <div class="sub-label">2026 Rushing &amp; ${jargonTerm('EPA', 'epa')}</div>
           <div class="kpi-grid">
             <div class="kpi-box"><div class="kpi-label">Carries / Yds</div><div class="kpi-val mono">${s26.rushing.carries} / ${s26.rushing.yards}</div></div>
             <div class="kpi-box"><div class="kpi-label">Rush TD / 10+ Yd</div><div class="kpi-val mono">${s26.rushing.tds} / ${s26.rushing.explosive10Plus}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Rushing EPA</div><div class="kpi-val mono">${s26.rushing.epa >= 0 ? '+' : ''}${s26.rushing.epa}</div></div>
+            <div class="kpi-box"><div class="kpi-label">Rushing ${jargonTerm('EPA', 'epa')}</div><div class="kpi-val mono">${s26.rushing.epa >= 0 ? '+' : ''}${s26.rushing.epa}</div></div>
           </div>
         `);
       }
@@ -304,8 +304,8 @@ function renderStatsTab(p, statsMode) {
           <div class="sub-label">2026 Receiving &amp; Opportunity Share</div>
           <div class="kpi-grid">
             <div class="kpi-box"><div class="kpi-label">Rec / Tgt / Yds</div><div class="kpi-val mono">${s26.receiving.receptions}/${s26.receiving.targets} • ${s26.receiving.yards}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Rec TD / EPA</div><div class="kpi-val mono">${s26.receiving.tds} TD (${s26.receiving.epa >= 0 ? '+' : ''}${s26.receiving.epa})</div></div>
-            <div class="kpi-box"><div class="kpi-label">Target Share / WOPR</div><div class="kpi-val mono">${s26.receiving.targetSharePct}% / ${s26.receiving.wopr}</div></div>
+            <div class="kpi-box"><div class="kpi-label">Rec TD / ${jargonTerm('EPA', 'epa')}</div><div class="kpi-val mono">${s26.receiving.tds} TD (${s26.receiving.epa >= 0 ? '+' : ''}${s26.receiving.epa})</div></div>
+            <div class="kpi-box"><div class="kpi-label">Target Share / ${jargonTerm('WOPR', 'wopr')}</div><div class="kpi-val mono">${s26.receiving.targetSharePct}% / ${s26.receiving.wopr}</div></div>
           </div>
         `);
       }
@@ -315,7 +315,7 @@ function renderStatsTab(p, statsMode) {
           <div class="kpi-grid">
             <div class="kpi-box"><div class="kpi-label">Tackles (Solo)</div><div class="kpi-val mono">${s26.defense.totalTackles} (${s26.defense.soloTackles})</div></div>
             <div class="kpi-box"><div class="kpi-label">Sacks / QB Hits</div><div class="kpi-val mono">${s26.defense.sacks} / ${s26.defense.qbHits}</div></div>
-            <div class="kpi-box"><div class="kpi-label">TFL / INT / PD</div><div class="kpi-val mono">${s26.defense.tfl} / ${s26.defense.ints} / ${s26.defense.passDefended}</div></div>
+            <div class="kpi-box"><div class="kpi-label">${jargonTerm('TFL', 'tfl')} / INT / PD</div><div class="kpi-val mono">${s26.defense.tfl} / ${s26.defense.ints} / ${s26.defense.passDefended}</div></div>
           </div>
         `);
       }
@@ -459,7 +459,7 @@ function renderContractTab(p, txScenario) {
         <table class="data-table mono">
           <thead>
             <tr>
-              <th>Year</th><th>Base Salary</th><th>Signing Pror.</th><th>Option Pror.</th><th>Bonuses</th><th>Guaranteed</th><th>Cap Hit</th>
+              <th>Year</th><th>Base Salary</th><th>${jargonTerm('Prorated Bonuses', 'prorated_bonus')}</th><th>Current Yr Bonuses</th><th>${jargonTerm('Guaranteed', 'guaranteed_salary')}</th><th>Cap Hit</th>
             </tr>
           </thead>
           <tbody>
@@ -468,12 +468,11 @@ function renderContractTab(p, txScenario) {
                 y => `
               <tr>
                 <td><strong>${y.year}</strong></td>
-                <td>${formatCompactDollars(y.baseSalary)}</td>
-                <td>${formatCompactDollars(y.proratedSigning)}</td>
-                <td>${formatCompactDollars(y.proratedOption)}</td>
-                <td>${formatCompactDollars((y.rosterBonusRegular || 0) + (y.rosterBonusPerGame || 0) + (y.workoutBonus || 0))}</td>
-                <td>${formatCompactDollars(y.guaranteedSalary)}</td>
-                <td><strong>${formatCompactDollars(y.capNumber)}</strong></td>
+                <td>${y.isVoidYear ? `<span class="badge badge-neutral">${jargonTerm('Void', 'void_years')}</span>` : formatOtcDollars(y.baseSalary)}</td>
+                <td>${formatOtcDollars((y.proratedSigning || 0) + (y.proratedOption || 0))}</td>
+                <td>${formatOtcDollars((y.rosterBonusRegular || 0) + (y.rosterBonusPerGame || 0) + (y.workoutBonus || 0) + (y.otherBonus || 0))}</td>
+                <td>${formatOtcDollars(y.guaranteedSalary)}</td>
+                <td><strong>${formatOtcDollars(y.capNumber)}</strong></td>
               </tr>
             `
               )
@@ -484,7 +483,7 @@ function renderContractTab(p, txScenario) {
     </div>
 
     <div>
-      <div class="sub-label" style="margin-bottom:6px">2026 Dead Money &amp; Cap Savings Scenario Explorer</div>
+      <div class="sub-label" style="margin-bottom:6px">2026 ${jargonTerm('Dead Cap', 'dead_cap')} &amp; Cap Savings Scenario Explorer</div>
       <div class="pill-bar" style="margin-bottom:8px">${txButtons}</div>
       <div class="kpi-grid kpi-grid-2">
         <div class="kpi-box">
@@ -523,20 +522,20 @@ function renderHealthTab(p) {
     </div>
 
     <div class="subcard-panel" style="border-color:var(--gold-border);font-size:12.5px">
-      <strong style="color:var(--gold-bright)">Player Availability Prior:</strong> ${esc(h.archetypeNote || 'Standard positional prior.')}
+      <strong style="color:var(--gold-bright)">Player Availability Prior:</strong> ${escJargon(h.archetypeNote || 'Standard positional prior.')}
     </div>
 
     <div>
       <div class="sub-label" style="margin-bottom:4px">Model Factors</div>
       <ul class="brief-bullets">
-        ${(h.factors || []).map(f => `<li>${esc(f)}</li>`).join('')}
+        ${(h.factors || []).map(f => `<li>${escJargon(f)}</li>`).join('')}
       </ul>
     </div>
 
     ${
       h.longComment
         ? `<div class="subcard-panel" style="font-size:12.5px">
-            <strong>Beat &amp; Medical Note:</strong> ${esc(h.longComment)}
+            <strong>Beat &amp; Medical Note:</strong> ${escJargon(h.longComment)}
            </div>`
         : ''
     }

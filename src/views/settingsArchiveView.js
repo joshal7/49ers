@@ -3,9 +3,10 @@
  * & Seasonal Off-Cycle Archive Sheet Renderers
  */
 
-import { esc } from './uiHelpers.js';
+import { esc, escJargon, renderPlayerAvatarHtml, renderTeamLogoHtml } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
 
 export function renderSettingsSheetHtml({
   userPrefs,
@@ -144,9 +145,14 @@ export function renderSettingsSheetHtml({
   `;
 }
 
-export function renderArchiveVaultSheetHtml({ seasonState }) {
+export function renderArchiveVaultSheetHtml({ seasonState, appData }) {
   const active = seasonState?.activeBlocks || [];
   const archived = seasonState?.archivedBlocks || [];
+  const { archivedTrades } = partitionCompletedTradesByWindow(
+    appData?.seasonal?.tradeWarRoom?.completed2026Moves || [],
+    appData?.meta?.updatedAt || Date.now(),
+    30
+  );
 
   const jumpMap = {
     playoff_picture: 'playoffs',
@@ -160,7 +166,46 @@ export function renderArchiveVaultSheetHtml({ seasonState }) {
 
   return `
     <div style="font-size:12.5px;color:var(--text-secondary)">
-      Seasonal modules surface on your Home Dashboard during their active NFL calendar window and move to the archive afterward. You can open any off-cycle module anytime below:
+      Seasonal modules surface on your Home Dashboard during their active NFL calendar window and move to the archive afterward. Completed trades older than 30 days are also archived below:
+    </div>
+
+    <div id="archiveOlderTradesSection">
+      <div class="sub-label" style="margin-bottom:6px">Older Completed Trades (&gt;30 Days) (${archivedTrades.length})</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${
+          archivedTrades.length === 0
+            ? `<div style="font-size:12.5px;color:var(--text-muted)">No completed trades older than 30 days.</div>`
+            : archivedTrades
+                .map(
+                  m => `
+              <div class="subcard-panel" style="border-color:var(--border-strong)">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:9px;min-width:0">
+                    ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 34, { showJerseyBadge: m.jersey != null })}
+                    <div style="min-width:0">
+                      <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                        <strong style="cursor:${m.playerId ? 'pointer' : 'default'}" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>${esc(m.player)} (${esc(m.position)})</strong>
+                        <span style="color:var(--text-muted)">←</span>
+                        ${m.acquiredFrom ? renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 17) : ''}
+                        <strong>${esc(m.acquiredFrom)}</strong>
+                        ${
+                          m.sourceUrl
+                            ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">Source ${iconSvg('externalLink', 10)}</a>`
+                            : ''
+                        }
+                      </div>
+                      <div style="font-size:11.5px;color:var(--gold-bright)">${esc(m.timing)} • Cost: ${esc(m.costSummary)}</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-neutral mono">Grade ${esc(m.schemeGrade)}</span>
+                </div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis)}</div>
+              </div>
+            `
+                )
+                .join('')
+        }
+      </div>
     </div>
 
     <div>

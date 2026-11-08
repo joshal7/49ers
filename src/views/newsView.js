@@ -3,7 +3,7 @@
  * Modes: "Beat Synthesis Briefs" (Default) vs. "Live Tweets, Articles & Video"
  */
 
-import { esc, formatRelativeAge, renderPlayerChipsStripHtml } from './uiHelpers.js';
+import { esc, escJargon, formatRelativeAge, renderPlayerChipsStripHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -234,21 +234,21 @@ export function renderNewsViewHtml({
             <div>
               <div class="brief-section-label">Key Developments</div>
               <ul class="brief-bullets">
-                ${(c.hardFacts || []).map(f => `<li>${esc(f)}</li>`).join('')}
+                ${(c.hardFacts || []).map(f => `<li>${escJargon(f)}</li>`).join('')}
               </ul>
             </div>
 
             <div>
               <div class="brief-section-label">Scheme &amp; Salary Cap Breakdown</div>
               <ul class="brief-bullets">
-                ${(c.schemeAndCapTakeaways || []).map(t => `<li>${esc(t)}</li>`).join('')}
+                ${(c.schemeAndCapTakeaways || []).map(t => `<li>${escJargon(t)}</li>`).join('')}
               </ul>
             </div>
 
             ${
               c.consensusVsDissent
                 ? `<div class="subcard-panel" style="font-size:12.5px">
-                    <strong style="color:var(--gold-bright)">Beat Consensus:</strong> ${esc(c.consensusVsDissent)}
+                    <strong style="color:var(--gold-bright)">Beat Consensus:</strong> ${escJargon(c.consensusVsDissent)}
                    </div>`
                 : ''
             }
@@ -354,7 +354,7 @@ export function renderNewsViewHtml({
                             : esc(displayTitle)
                         }
                       </div>
-                      ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${esc(cleanSummary)}</div>` : ''}
+                      ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(cleanSummary)}</div>` : ''}
                     </div>
                     ${
                       hasThumb && sanitizeExternalUrl(item.url || item.externalUrl, null)

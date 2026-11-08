@@ -355,7 +355,8 @@ async function main() {
     await runStep('Home Dashboard renders exact requested default module order, top tweets & articles, opponent health, source links, and zero PRD callouts', async () => {
       await cdp.assertNoOverflow('Home Dashboard (iPhone 16 393x852)');
       const homeInfo = await cdp.eval(() => {
-        const bannerText = document.getElementById('phaseBanner')?.textContent || '';
+        const bannerEl = document.getElementById('phaseBanner');
+        const bannerHiddenOnHome = Boolean(bannerEl?.hidden);
         const recordText = document.getElementById('headerRecordPill')?.textContent?.trim();
         const customizeBtn = document.querySelector('[data-action="toggle-customize-layout"]');
         const reorderBarText = document.querySelector('.reorder-bar')?.textContent || '';
@@ -369,9 +370,11 @@ async function main() {
         const tweetLinks = newsCard ? newsCard.querySelectorAll('.home-wire-item a[href^="https://"]').length : 0;
         const articleLinks = newsCard ? newsCard.querySelectorAll('a.home-article-row[href^="https://"]').length : 0;
         const externalLinksCount = document.querySelectorAll('#mainView a[href^="https://"]').length;
-        const matchupText = document.querySelector('[data-dashboard-block="upcoming_matchup"]')?.textContent || '';
+        const matchupCard = document.querySelector('[data-dashboard-block="upcoming_matchup"]');
+        const matchupText = matchupCard?.textContent || '';
+        const matchupPlayerAvatars = matchupCard ? matchupCard.querySelectorAll('.player-avatar').length : 0;
         return {
-          bannerText,
+          bannerHiddenOnHome,
           recordText,
           hasCustomize: Boolean(customizeBtn),
           reorderBarText,
@@ -383,12 +386,14 @@ async function main() {
           tweetLinks,
           articleLinks,
           externalLinksCount,
+          matchupPlayerAvatars,
           hasOpponentHealthPreview: matchupText.includes('Las Vegas Raiders') && matchupText.includes('Health')
         };
       });
 
       assert(homeInfo.recordText === '6-1', `Expected header record 6-1, got ${homeInfo.recordText}`);
-      assert(homeInfo.bannerText.length > 10, 'Phase banner should display active NFL window');
+      assert(homeInfo.bannerHiddenOnHome === true, 'Phase banner ("Active NFL Trade Window") must be hidden on Home tab');
+      assert(homeInfo.matchupPlayerAvatars === 0, `Expected 0 player avatars in Home Upcoming Matchup box, got ${homeInfo.matchupPlayerAvatars}`);
       assert(homeInfo.hasCustomize, 'Missing Customize Order button');
       assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
       assert(homeInfo.navSvgCount === 5, `Expected 5 SVG icons in bottom nav, got ${homeInfo.navSvgCount}`);
@@ -1672,6 +1677,202 @@ async function main() {
         edgeAudit.leakedBlockedTriggers.length === 0,
         `Embed-blocked videoIds rendered inline iframe triggers: ${JSON.stringify(edgeAudit.leakedBlockedTriggers)}`
       );
+    });
+
+    await runStep('Verify 6 new functional upgrades: Trade Banner exclusivity, Jargon Popover bubbles, 5-Yr OTC Cap Summary & Simulator, Matchup Avatars/Opponent Parity & 30d Trade Archive', async () => {
+      const upgradesAudit = await cdp.eval(() => {
+        // 1. Verify #phaseBanner ("Active NFL Trade Window") ONLY shows in Game & Season > Trade Window
+        const bannerStates = {};
+        for (const nav of ['home', 'news', 'roster', 'audio']) {
+          document.querySelector(`[data-nav-tab="${nav}"]`).click();
+          const b = document.getElementById('phaseBanner');
+          bannerStates[nav] = { hidden: b.hidden, display: window.getComputedStyle(b).display };
+        }
+        document.querySelector('[data-nav-tab="season"]').click();
+        for (const sSub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
+          document.querySelector(`[data-action="set-season-sub"][data-season-sub="${sSub}"]`)?.click();
+          const b = document.getElementById('phaseBanner');
+          bannerStates[`season:${sSub}`] = {
+            hidden: b.hidden,
+            display: window.getComputedStyle(b).display,
+            text: b.textContent.trim()
+          };
+        }
+
+        // 2. Verify Upcoming Matchup hero card has zero 49ers player avatars & Opponent Health has full parity
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+        const matchupCards = document.querySelectorAll('#mainView > section.card');
+        const heroMatchupCard = matchupCards[0];
+        const heroPlayerAvatars = heroMatchupCard ? heroMatchupCard.querySelectorAll('.player-avatar').length : -1;
+        const oppSec = document.getElementById('opponentHealthSection');
+        const oppSecText = oppSec?.textContent || '';
+        const oppHasParity =
+          oppSecText.includes('Availability Index') &&
+          oppSecText.includes('Starters Cleared') &&
+          oppSecText.includes('Maxx Crosby') &&
+          oppSecText.includes('4-Game Return Window Tracker');
+
+        // 3. Verify Trade Window 30-day cutoff + Older Trades in Archive
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"]').click();
+        const recentTradesText = document.getElementById('recentCompletedTradesList')?.textContent || '';
+        const tradeHasBucknerOnly =
+          recentTradesText.includes('DeForest Buckner') && !recentTradesText.includes('Osa Odighizuwa');
+
+        document.querySelector('[data-action="open-archive"]')?.click();
+        const archiveTradesText = document.getElementById('archiveOlderTradesSection')?.textContent || '';
+        const archiveHasOsa = archiveTradesText.includes('Osa Odighizuwa');
+        document.getElementById('closeSheetBtn')?.click();
+
+        // 4. Verify Jargon Quick-Bubble Popover opens, stays inside viewport, and closes cleanly
+        document.querySelector('[data-nav-tab="news"]').click();
+        const jargonTermsFound = document.querySelectorAll('#mainView .jargon-term[data-jargon]').length;
+        const firstJargon = document.querySelector('#mainView .jargon-term[data-jargon]');
+        let jargonPopInfo = { opened: false };
+        if (firstJargon) {
+          firstJargon.click();
+          const pop = document.getElementById('jargonPopover');
+          const rect = pop.getBoundingClientRect();
+          jargonPopInfo = {
+            opened: !pop.hidden && pop.textContent.length > 25,
+            withinLeft: rect.left >= 8,
+            withinRight: rect.right <= window.innerWidth - 8,
+            withinTop: rect.top >= 8,
+            withinBottom: rect.bottom <= window.innerHeight - 8
+          };
+          document.querySelector('[data-action="close-jargon-popover"]')?.click();
+          jargonPopInfo.closedCleanly = pop.hidden;
+        }
+
+        // 5. Verify 5-Year OTC Summary & 5-Year Salary Cap Simulator (2026–2030) + combined columns + nominal $0/$0
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]').click();
+        document.querySelector('[data-action="reset-cap-moves"]')?.click();
+
+        const yearTabButtons = Array.from(
+          document.querySelectorAll('#capHorizonSummaryCard .otc-year-tab[data-action="set-cap-year"]')
+        ).map(b => b.getAttribute('data-cap-year'));
+
+        // Check baseline 2026 simulator table
+        const simHeaders = Array.from(document.querySelectorAll('#capSimulatorCard table thead th')).map(th =>
+          th.textContent.trim()
+        );
+        const rows2026 = document.querySelectorAll('#capSimulatorCard table tbody tr');
+        const firstDeadNominal = rows2026[0]?.querySelector('[data-col="dead-money"]')?.textContent?.trim();
+        const firstSaveNominal = rows2026[0]?.querySelector('[data-col="cap-savings"]')?.textContent?.trim();
+
+        // Select Post-June 1 Cut on Brock Purdy (row 0) & verify OTC Dead Money ($66,213,530) & Cap Savings (($42,504,000))
+        const purdySelect = rows2026[0]?.querySelector('.gm-move-select');
+        purdySelect.value = 'june_1_cut';
+        purdySelect.dispatchEvent(new Event('change', { bubbles: true }));
+        const rowsAfterMove = document.querySelectorAll('#capSimulatorCard table tbody tr');
+        const purdyDeadAfter = rowsAfterMove[0]?.querySelector('[data-col="dead-money"]')?.textContent?.trim();
+        const purdySaveAfter = rowsAfterMove[0]?.querySelector('[data-col="cap-savings"]')?.textContent?.trim();
+        document.querySelector('[data-action="reset-cap-moves"]')?.click();
+
+        // Switch across all 5 years (2026..2030) and verify each renders its summary & simulator rows cleanly
+        const countsByYear = {};
+        for (const yr of ['2026', '2027', '2028', '2029', '2030']) {
+          document.querySelector(`#capSimulatorCard [data-action="set-cap-year"][data-cap-year="${yr}"]`)?.click();
+          countsByYear[yr] = {
+            rows: document.querySelectorAll('#capSimulatorCard table tbody tr').length,
+            summaryTitle: document.querySelector('#capHorizonSummaryCard .card-title')?.textContent?.trim() || '',
+            hasNoNaN: !document.getElementById('mainView').textContent.includes('NaN')
+          };
+        }
+        // Return to 2026
+        document.querySelector('#capSimulatorCard [data-action="set-cap-year"][data-cap-year="2026"]')?.click();
+
+        return {
+          bannerStates,
+          heroPlayerAvatars,
+          oppHasParity,
+          tradeHasBucknerOnly,
+          archiveHasOsa,
+          jargonTermsFound,
+          jargonPopInfo,
+          yearTabButtons,
+          simHeaders,
+          rows2026Count: rows2026.length,
+          firstDeadNominal,
+          firstSaveNominal,
+          purdyDeadAfter,
+          purdySaveAfter,
+          countsByYear
+        };
+      });
+
+      // Assert #1: Trade banner exclusivity
+      for (const [k, v] of Object.entries(upgradesAudit.bannerStates)) {
+        if (k === 'season:trade') {
+          assert(
+            v.hidden === false && v.display !== 'none' && v.text.includes('Active NFL Trade Window'),
+            `Expected Active NFL Trade Window banner visible in season:trade, got ${JSON.stringify(v)}`
+          );
+        } else {
+          assert(
+            v.hidden === true && v.display === 'none',
+            `Expected Active NFL Trade Window banner hidden in ${k}, got ${JSON.stringify(v)}`
+          );
+        }
+      }
+
+      // Assert #5A & #5B
+      assert(upgradesAudit.heroPlayerAvatars === 0, `Expected 0 player avatars in Upcoming Matchup hero box, got ${upgradesAudit.heroPlayerAvatars}`);
+      assert(upgradesAudit.oppHasParity, 'Opponent Health section missing parity metrics (Availability Index, Starters Cleared, Maxx Crosby, 4-Game IR Tracker)');
+
+      // Assert #6
+      assert(upgradesAudit.tradeHasBucknerOnly, 'Trade Window Completed Impact Acquisitions failed 30-day filter');
+      assert(upgradesAudit.archiveHasOsa, 'Archive missing older (>30d) trade Osa Odighizuwa');
+
+      // Assert #2
+      assert(upgradesAudit.jargonTermsFound >= 5, `Expected >=5 subtle jargon links on News view, got ${upgradesAudit.jargonTermsFound}`);
+      assert(
+        upgradesAudit.jargonPopInfo.opened &&
+          upgradesAudit.jargonPopInfo.withinLeft &&
+          upgradesAudit.jargonPopInfo.withinRight &&
+          upgradesAudit.jargonPopInfo.withinTop &&
+          upgradesAudit.jargonPopInfo.withinBottom &&
+          upgradesAudit.jargonPopInfo.closedCleanly,
+        `Jargon popover failed bounds/lifecycle check: ${JSON.stringify(upgradesAudit.jargonPopInfo)}`
+      );
+
+      // Assert #3, #4A, #4B
+      assert(
+        JSON.stringify(upgradesAudit.yearTabButtons) === JSON.stringify(['2026', '2027', '2028', '2029', '2030']),
+        `Expected 5 cap year tabs (2026..2030), got ${JSON.stringify(upgradesAudit.yearTabButtons)}`
+      );
+      assert(
+        JSON.stringify(upgradesAudit.simHeaders) ===
+          JSON.stringify([
+            'Player',
+            'Base Salary',
+            'Prorated Bonuses',
+            'Current Yr Bonuses',
+            'Guaranteed Salary',
+            'Cap Number',
+            'Roster Move',
+            'Dead Money',
+            'Cap Savings'
+          ]),
+        `Unexpected Simulator headers: ${JSON.stringify(upgradesAudit.simHeaders)}`
+      );
+      assert(upgradesAudit.rows2026Count === 53, `Expected all 53 active roster players in 2026 simulator, got ${upgradesAudit.rows2026Count}`);
+      assert(
+        upgradesAudit.firstDeadNominal === '$0' && upgradesAudit.firstSaveNominal === '$0',
+        `Expected nominal $0 / $0 Dead Money & Cap Savings when doing nothing, got ${upgradesAudit.firstDeadNominal} / ${upgradesAudit.firstSaveNominal}`
+      );
+      assert(
+        upgradesAudit.purdyDeadAfter === '$66,213,530' && upgradesAudit.purdySaveAfter === '($42,504,000)',
+        `Purdy Post-June 1 Cut simulator mismatch: dead=${upgradesAudit.purdyDeadAfter}, save=${upgradesAudit.purdySaveAfter}`
+      );
+      for (const yr of ['2026', '2027', '2028', '2029', '2030']) {
+        const info = upgradesAudit.countsByYear[yr];
+        assert(
+          info.rows >= 15 && info.summaryTitle.includes(yr) && info.hasNoNaN,
+          `Year ${yr} cap summary/simulator check failed: ${JSON.stringify(info)}`
+        );
+      }
+      await cdp.assertNoOverflow('Upgrades Verification');
     });
 
     console.log('\n=== [9/9] Multi-Viewport Responsive Overflow Sweep & Zero Runtime Error Audit ===');

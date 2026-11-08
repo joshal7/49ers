@@ -319,3 +319,48 @@ export function formatRemainingTime(nowMs, targetMs, label) {
   }
   return `${label}: ${hours}h ${mins}m`;
 }
+
+/**
+ * Partitions completed trade acquisitions into recent (`<= maxAgeDays`, default 30 days)
+ * vs older trades (`> maxAgeDays`) that belong in the Archive section.
+ */
+export function partitionCompletedTradesByWindow(moves = [], referenceTime = undefined, maxAgeDays = 30) {
+  const refDate =
+    referenceTime instanceof Date
+      ? referenceTime
+      : referenceTime !== undefined && referenceTime !== null
+        ? new Date(referenceTime)
+        : new Date();
+  const refMs = Number.isFinite(refDate.getTime()) ? refDate.getTime() : Date.now();
+  const cutoffMs = maxAgeDays * 86_400_000;
+
+  const recentTrades = [];
+  const archivedTrades = [];
+
+  for (const m of Array.isArray(moves) ? moves : []) {
+    if (!m) continue;
+    const rawIso = m.tradeDateIso || m.acquiredDateIso || m.dateIso || null;
+    let tradeMs = rawIso ? Date.parse(rawIso) : NaN;
+    if (!Number.isFinite(tradeMs) && typeof m.compensation === 'string') {
+      const dateMatch = m.compensation.match(
+        /\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2},\s*\d{4})/i
+      );
+      if (dateMatch) {
+        tradeMs = Date.parse(dateMatch[1]);
+      }
+    }
+
+    if (Number.isFinite(tradeMs)) {
+      const ageMs = refMs - tradeMs;
+      if (ageMs <= cutoffMs) {
+        recentTrades.push({ ...m, ageDays: Math.max(0, Math.floor(ageMs / 86_400_000)) });
+      } else {
+        archivedTrades.push({ ...m, ageDays: Math.floor(ageMs / 86_400_000) });
+      }
+    } else {
+      recentTrades.push(m);
+    }
+  }
+
+  return { recentTrades, archivedTrades, maxAgeDays };
+}
