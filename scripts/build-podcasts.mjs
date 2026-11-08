@@ -402,8 +402,9 @@ function parseWavInt16Mono(buf) {
   throw new Error('WAV data chunk not found');
 }
 
-function writeWavInt16Mono(filePath, samples, sampleRate) {
-  const dataBytes = samples.length * 2;
+function writeWavInt16Stereo(filePath, monoSamples, sampleRate) {
+  const numChannels = 2;
+  const dataBytes = monoSamples.length * numChannels * 2;
   const buf = Buffer.alloc(44 + dataBytes);
   buf.write('RIFF', 0, 'ascii');
   buf.writeUInt32LE(36 + dataBytes, 4);
@@ -411,15 +412,18 @@ function writeWavInt16Mono(filePath, samples, sampleRate) {
   buf.write('fmt ', 12, 'ascii');
   buf.writeUInt32LE(16, 16);
   buf.writeUInt16LE(1, 20);
-  buf.writeUInt16LE(1, 22);
+  buf.writeUInt16LE(numChannels, 22);
   buf.writeUInt32LE(sampleRate, 24);
-  buf.writeUInt32LE(sampleRate * 2, 28);
-  buf.writeUInt16LE(2, 32);
+  buf.writeUInt32LE(sampleRate * numChannels * 2, 28);
+  buf.writeUInt16LE(numChannels * 2, 32);
   buf.writeUInt16LE(16, 34);
   buf.write('data', 36, 'ascii');
   buf.writeUInt32LE(dataBytes, 40);
-  for (let i = 0; i < samples.length; i++) {
-    buf.writeInt16LE(samples[i], 44 + i * 2);
+  for (let i = 0; i < monoSamples.length; i++) {
+    const s = monoSamples[i];
+    const off = 44 + i * 4;
+    buf.writeInt16LE(s, off);
+    buf.writeInt16LE(s, off + 2);
   }
   fs.writeFileSync(filePath, buf);
 }
@@ -552,13 +556,15 @@ async function main() {
       const masteredInt16 = masterPodcastEpisodePcm(floatTimeline, SAMPLE_RATE);
       const masterWav = path.join(tmpDir, 'master.wav');
       const outM4a = path.join(podcastDir, `${ep.id}.m4a`);
-      writeWavInt16Mono(masterWav, masteredInt16, SAMPLE_RATE);
+      writeWavInt16Stereo(masterWav, masteredInt16, SAMPLE_RATE);
 
       execFileSync('/usr/bin/afconvert', [
         '-f',
         'm4af',
         '-d',
         'aac',
+        '-c',
+        '2',
         '-b',
         String(AAC_BITRATE),
         masterWav,

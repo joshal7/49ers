@@ -648,7 +648,10 @@ function bindEvents() {
     state.studioSubTab = 'podcast';
     renderMain();
   });
-  document.getElementById('mpPlayPauseBtn')?.addEventListener('click', () => audioController?.togglePlayPause());
+  document.getElementById('mpPlayPauseBtn')?.addEventListener('click', () => {
+    audioController?.primeForUserGesture();
+    audioController?.togglePlayPause();
+  });
   document.getElementById('mpBack15Btn')?.addEventListener('click', () => audioController?.skip(-15));
   document.getElementById('mpFwd30Btn')?.addEventListener('click', () => audioController?.skip(30));
   document.getElementById('mpSpeedBtn')?.addEventListener('click', () => audioController?.cycleSpeed());
@@ -954,6 +957,7 @@ function bindEvents() {
         break;
 
       case 'play-episode': {
+        audioController?.primeForUserGesture();
         const epId = btn.getAttribute('data-episode-id');
         const ep = getAllEpisodes().find(x => x.id === epId);
         if (ep) {
@@ -968,6 +972,7 @@ function bindEvents() {
       }
 
       case 'seek-podcast-turn': {
+        audioController?.primeForUserGesture();
         const sec = Number(btn.getAttribute('data-seek-sec') || 0);
         audioController?.seekTo(sec);
         break;
@@ -985,6 +990,9 @@ function bindEvents() {
           renderMain();
           break;
         }
+        // Unlock iOS Playback audio session & speechSynthesis synchronously inside the tap gesture
+        // BEFORE awaiting async podcast generation so the iPhone speaker is never muted!
+        audioController?.primeForUserGesture();
         const startedAtMs = Date.now();
         const waitEst = estimateGenerationWait({
           kind: 'podcast',

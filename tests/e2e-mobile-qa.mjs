@@ -1442,6 +1442,19 @@ async function main() {
         beforeEpCount,
         6000
       );
+      const phoneSpeakerState = await cdp.eval(async () => {
+        const mod = await import('/src/components/audioPlayer.js');
+        const uri = mod.buildSilentPlaybackCarrierWavDataUri();
+        const miniOpen = !document.getElementById('miniPlayer')?.hidden;
+        return {
+          hasValidCarrierUri: uri.startsWith('data:audio/wav;base64,'),
+          miniOpen
+        };
+      });
+      assert(
+        phoneSpeakerState.hasValidCarrierUri && phoneSpeakerState.miniOpen,
+        `Auto-created podcast iPhone speaker carrier check failed: ${JSON.stringify(phoneSpeakerState)}`
+      );
       await cdp.eval(() => document.getElementById('mpCloseBtn')?.click());
 
       // 3. Switch to Deep Analysis Runner, test empty validation, then verify live processing banner + generate custom report

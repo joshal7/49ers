@@ -301,28 +301,38 @@ async function sha256Short(input) {
 }
 
 function pcm16ToWav(pcmBytes, sampleRate = 24000) {
-  const header = new ArrayBuffer(44);
-  const view = new DataView(header);
+  // Duplicate mono 16-bit PCM frames into 2-channel Stereo (L+R in-phase) so iOS/Android
+  // hardware speakers always receive a standard Stereo (L R) channel layout.
+  const numFrames = Math.floor(pcmBytes.byteLength / 2);
+  const numChannels = 2;
+  const stereoDataBytes = numFrames * numChannels * 2;
+  const wav = new Uint8Array(44 + stereoDataBytes);
+  const view = new DataView(wav.buffer);
+  const srcView = new DataView(pcmBytes.buffer, pcmBytes.byteOffset, pcmBytes.byteLength);
   const writeStr = (off, str) => {
     for (let i = 0; i < str.length; i++) view.setUint8(off + i, str.charCodeAt(i));
   };
   writeStr(0, 'RIFF');
-  view.setUint32(4, 36 + pcmBytes.byteLength, true);
+  view.setUint32(4, 36 + stereoDataBytes, true);
   writeStr(8, 'WAVE');
   writeStr(12, 'fmt ');
   view.setUint32(16, 16, true);
   view.setUint16(20, 1, true);
-  view.setUint16(22, 1, true);
+  view.setUint16(22, numChannels, true);
   view.setUint32(24, sampleRate, true);
-  view.setUint32(28, sampleRate * 2, true);
-  view.setUint16(32, 2, true);
+  view.setUint32(28, sampleRate * numChannels * 2, true);
+  view.setUint16(32, numChannels * 2, true);
   view.setUint16(34, 16, true);
   writeStr(36, 'data');
-  view.setUint32(40, pcmBytes.byteLength, true);
+  view.setUint32(40, stereoDataBytes, true);
 
-  const wav = new Uint8Array(44 + pcmBytes.byteLength);
-  wav.set(new Uint8Array(header), 0);
-  wav.set(pcmBytes, 44);
+  let outOff = 44;
+  for (let i = 0; i < numFrames; i++) {
+    const sample = srcView.getInt16(i * 2, true);
+    view.setInt16(outOff, sample, true);
+    view.setInt16(outOff + 2, sample, true);
+    outOff += 4;
+  }
   return wav;
 }
 

@@ -13,11 +13,91 @@ import {
 
 const SPEEDS = [1.0, 1.25, 1.5, 2.0];
 
+let _cachedCarrierDataUri = null;
+
+/**
+ * Generates a valid 1-second 2-channel Stereo 16-bit PCM WAV data URI with -84 dBFS (±2 LSB)
+ * inaudible dither. Playing this in a looping `<audio playsinline>` element while
+ * `window.speechSynthesis` is active forces iOS Safari / Home Screen PWA out of the
+ * `Ambient` audio session (which mutes the built-in iPhone speaker when Silent Mode is ON
+ * unless AirPods are connected) and locks it into `AVAudioSessionCategoryPlayback` so audio
+ * always plays out loud through the iPhone speaker.
+ */
+export function buildSilentPlaybackCarrierWavDataUri(sampleRate = 8000, durationSec = 1) {
+  if (_cachedCarrierDataUri && sampleRate === 8000 && durationSec === 1) {
+    return _cachedCarrierDataUri;
+  }
+  const numChannels = 2;
+  const numFrames = Math.max(64, Math.floor(sampleRate * durationSec));
+  const dataBytes = numFrames * numChannels * 2;
+  const totalBytes = 44 + dataBytes;
+  const buf = new ArrayBuffer(totalBytes);
+  const view = new DataView(buf);
+  const writeAscii = (offset, str) => {
+    for (let i = 0; i < str.length; i++) {
+      view.setUint8(offset + i, str.charCodeAt(i));
+    }
+  };
+
+  writeAscii(0, 'RIFF');
+  view.setUint32(4, 36 + dataBytes, true);
+  writeAscii(8, 'WAVE');
+  writeAscii(12, 'fmt ');
+  view.setUint32(16, 16, true); // PCM chunk size
+  view.setUint16(20, 1, true); // PCM format = 1
+  view.setUint16(22, numChannels, true); // 2 channels (Stereo L+R)
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * numChannels * 2, true);
+  view.setUint16(32, numChannels * 2, true);
+  view.setUint16(34, 16, true); // 16-bit
+  writeAscii(36, 'data');
+  view.setUint32(40, dataBytes, true);
+
+  // Write ±2 LSB (-84 dBFS) alternating dither so iOS CoreAudio never gates the stream as digital zero
+  let byteOffset = 44;
+  for (let i = 0; i < numFrames; i++) {
+    const sample = i % 2 === 0 ? 2 : -2;
+    view.setInt16(byteOffset, sample, true);
+    view.setInt16(byteOffset + 2, sample, true);
+    byteOffset += 4;
+  }
+
+  const bytes = new Uint8Array(buf);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  const b64 =
+    typeof btoa === 'function'
+      ? btoa(binary)
+      : Buffer.from(bytes).toString('base64');
+  const uri = `data:audio/wav;base64,${b64}`;
+  if (sampleRate === 8000 && durationSec === 1) {
+    _cachedCarrierDataUri = uri;
+  }
+  return uri;
+}
+
+function configureInlineAudioElement(el) {
+  if (!el) return el;
+  el.preload = 'auto';
+  el.playsInline = true;
+  el.muted = false;
+  el.volume = 1.0;
+  try {
+    el.setAttribute('playsinline', '');
+    el.setAttribute('webkit-playsinline', '');
+  } catch {}
+  return el;
+}
+
 export class PodcastAudioController {
   constructor(onStateChange) {
     this.onStateChange = onStateChange;
-    this.audio = new Audio();
-    this.audio.preload = 'metadata';
+    this.audio = configureInlineAudioElement(new Audio());
+    this.carrierAudio = configureInlineAudioElement(new Audio(buildSilentPlaybackCarrierWavDataUri()));
+    this.carrierAudio.loop = true;
+    this._audioCtx = null;
 
     this.currentEpisode = null;
     this.isPlaying = false;
@@ -27,6 +107,7 @@ export class PodcastAudioController {
     this.usingSpeechSynthesis = false;
     this._speechTimer = null;
     this._speechGapTimeout = null;
+    this._turnWatchdogTimer = null;
     this._speechSessionId = 0;
     this._speechStartRealMs = 0;
     this._speechOffsetSec = 0;
@@ -34,6 +115,92 @@ export class PodcastAudioController {
 
     this._bindAudioEvents();
     this._preloadBrowserVoices();
+  }
+
+  /**
+   * Forces iOS 16.4+ / 17 / 18 Safari & Home Screen PWA into `playback` audio session
+   * (`AVAudioSessionCategoryPlayback`) so audio plays through the iPhone's built-in speakers
+   * even when the hardware Ring/Silent switch is on Silent Mode (without requiring AirPods).
+   */
+  _enforcePlaybackSession() {
+    if (typeof navigator !== 'undefined' && navigator.audioSession) {
+      try {
+        navigator.audioSession.type = 'playback';
+      } catch {}
+    }
+    if (typeof window !== 'undefined') {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) {
+          if (!this._audioCtx) {
+            this._audioCtx = new Ctx();
+          }
+          if (this._audioCtx.state === 'suspended') {
+            this._audioCtx.resume().catch(() => {});
+          }
+        }
+      } catch {}
+    }
+  }
+
+  _startCarrierAudio() {
+    this._enforcePlaybackSession();
+    if (!this.carrierAudio) return;
+    try {
+      this.carrierAudio.muted = false;
+      this.carrierAudio.volume = 1.0;
+      if (!this.carrierAudio.src) {
+        this.carrierAudio.src = buildSilentPlaybackCarrierWavDataUri();
+      }
+      if (this.carrierAudio.paused) {
+        const p = this.carrierAudio.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      }
+    } catch {}
+  }
+
+  _stopCarrierAudio() {
+    if (!this.carrierAudio) return;
+    try {
+      if (!this.carrierAudio.paused) {
+        this.carrierAudio.pause();
+      }
+    } catch {}
+  }
+
+  /**
+   * Must be called synchronously inside a user `click` / `touchend` handler before any
+   * `await` (such as `await generateOnDemandAutopodcast(...)`). Unlocks:
+   * 1. `navigator.audioSession.type = 'playback'`
+   * 2. The HTML5 `<audio>` carrier stream (`AVAudioSessionCategoryPlayback` on iPhone speaker)
+   * 3. Web Audio `AudioContext`
+   * 4. `window.speechSynthesis` user-activation token so speech after a 1.2s+ async wait
+   *    is never blocked or muted by iOS WebKit.
+   */
+  primeForUserGesture() {
+    this._enforcePlaybackSession();
+    this._startCarrierAudio();
+    try {
+      if (this._audioCtx) {
+        const buf = this._audioCtx.createBuffer(1, 1, 22050);
+        const src = this._audioCtx.createBufferSource();
+        src.buffer = buf;
+        src.connect(this._audioCtx.destination);
+        src.start(0);
+      }
+    } catch {}
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.resume();
+        if (!window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
+          const warm = new SpeechSynthesisUtterance(' ');
+          warm.volume = 0.01;
+          warm.rate = 2.0;
+          warm.lang = 'en-US';
+          window.speechSynthesis.speak(warm);
+        }
+      } catch {}
+    }
   }
 
   _preloadBrowserVoices() {
@@ -136,6 +303,7 @@ export class PodcastAudioController {
   async loadAndPlay(episode, startSec = 0) {
     if (!episode) return;
     this._stopSpeechSynthesis();
+    this._enforcePlaybackSession();
 
     const isSameEpisode = this.currentEpisode && this.currentEpisode.id === episode.id;
     this.currentEpisode = episode;
@@ -144,6 +312,9 @@ export class PodcastAudioController {
 
     if (episode.audioUrl) {
       this.usingSpeechSynthesis = false;
+      this._stopCarrierAudio();
+      this.audio.muted = false;
+      this.audio.volume = 1.0;
       if (!isSameEpisode || !this.audio.src.endsWith(episode.audioUrl.replace(/^\.\//, ''))) {
         this.audio.src = episode.audioUrl;
       }
@@ -161,9 +332,11 @@ export class PodcastAudioController {
       }
       this._emit();
     } else {
-      // Browser multi-voice Web Speech synthesis for instant custom client-generated episodes
+      // Browser multi-voice Web Speech synthesis for instant custom client-generated episodes.
+      // Keep `this.carrierAudio` looping in Playback mode so iOS does not mute built-in speakers!
       this.audio.pause();
       this.usingSpeechSynthesis = true;
+      this._startCarrierAudio();
       this._startSpeechSynthesisFrom(startSec);
     }
   }
@@ -171,15 +344,20 @@ export class PodcastAudioController {
   _startSpeechSynthesisFrom(startSec = 0) {
     this._stopSpeechSynthesis();
     if (!this.currentEpisode) return;
+    this._enforcePlaybackSession();
+    this._startCarrierAudio();
+
     const sessionId = ++this._speechSessionId;
     this._speechOffsetSec = Math.max(0, Math.min(this.durationSec, startSec));
     this.currentTimeSec = this._speechOffsetSec;
     this.isPlaying = true;
     this._speechStartRealMs = Date.now();
+    this._updateMediaSessionState('playing');
 
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
         const allTurns = this.currentEpisode.transcript || [];
         const startIdx = allTurns.findIndex(t => t.endSec > startSec);
         const liveVoices = window.speechSynthesis.getVoices();
@@ -187,7 +365,7 @@ export class PodcastAudioController {
           Array.isArray(liveVoices) && liveVoices.length > 0 ? liveVoices : this._cachedVoices;
         const { maleVoice, femaleVoice } = selectBestBrowserVoices(voices);
 
-        const speakTurnAt = turnIdx => {
+        const speakTurnAt = (turnIdx, forceDefaultVoice = false) => {
           if (sessionId !== this._speechSessionId || !this.isPlaying) return;
           if (turnIdx < 0 || turnIdx >= allTurns.length) return;
 
@@ -199,11 +377,45 @@ export class PodcastAudioController {
           const rateAdj = dyn.rate === '+2%' ? 1.02 : dyn.rate === '-1%' ? 0.98 : 1.0;
           utt.rate = Math.max(0.75, Math.min(2.2, this.playbackRate * rateAdj));
           utt.pitch = turn.speaker === 'Elena' ? 1.03 : 0.97;
+          utt.volume = 1.0;
 
-          if (turn.speaker === 'Elena' && femaleVoice) utt.voice = femaleVoice;
-          else if (maleVoice) utt.voice = maleVoice;
+          const chosenVoice = !forceDefaultVoice
+            ? turn.speaker === 'Elena'
+              ? femaleVoice || maleVoice
+              : maleVoice || femaleVoice
+            : null;
+          if (chosenVoice) {
+            try {
+              utt.voice = chosenVoice;
+            } catch {}
+          }
+          utt.lang = chosenVoice?.lang || 'en-US';
+
+          let hasStarted = false;
+          if (this._turnWatchdogTimer) {
+            clearTimeout(this._turnWatchdogTimer);
+            this._turnWatchdogTimer = null;
+          }
+
+          // iOS speaker watchdog: if a selected voice object fails to fire `onstart` within
+          // 900ms (e.g. un-downloaded cloud voice stub on iPhone speaker), retry with system default.
+          if (chosenVoice && !forceDefaultVoice) {
+            this._turnWatchdogTimer = setTimeout(() => {
+              if (sessionId !== this._speechSessionId || !this.isPlaying || hasStarted) return;
+              try {
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.resume();
+              } catch {}
+              speakTurnAt(turnIdx, true);
+            }, 900);
+          }
 
           utt.onstart = () => {
+            hasStarted = true;
+            if (this._turnWatchdogTimer) {
+              clearTimeout(this._turnWatchdogTimer);
+              this._turnWatchdogTimer = null;
+            }
             if (sessionId !== this._speechSessionId || !this.isPlaying) return;
             this._speechOffsetSec = turn.startSec;
             this._speechStartRealMs = Date.now();
@@ -211,31 +423,57 @@ export class PodcastAudioController {
             this._emit();
           };
 
+          utt.onerror = () => {
+            if (this._turnWatchdogTimer) {
+              clearTimeout(this._turnWatchdogTimer);
+              this._turnWatchdogTimer = null;
+            }
+            if (sessionId !== this._speechSessionId || !this.isPlaying) return;
+            if (!forceDefaultVoice && chosenVoice) {
+              speakTurnAt(turnIdx, true);
+            }
+          };
+
           utt.onend = () => {
+            if (this._turnWatchdogTimer) {
+              clearTimeout(this._turnWatchdogTimer);
+              this._turnWatchdogTimer = null;
+            }
             if (sessionId !== this._speechSessionId || !this.isPlaying) return;
             const nextIdx = turnIdx + 1;
             if (nextIdx >= allTurns.length) return;
             const pauseMs = Math.max(90, Math.round(dyn.gapAfterMs / this.playbackRate));
-            this._speechGapTimeout = setTimeout(() => speakTurnAt(nextIdx), pauseMs);
+            this._speechGapTimeout = setTimeout(() => speakTurnAt(nextIdx, forceDefaultVoice), pauseMs);
           };
 
+          window.speechSynthesis.resume();
           window.speechSynthesis.speak(utt);
+          window.speechSynthesis.resume();
         };
 
         if (startIdx >= 0) {
-          speakTurnAt(startIdx);
+          speakTurnAt(startIdx, false);
         }
       } catch {}
     }
 
     this._speechTimer = setInterval(() => {
       if (!this.isPlaying) return;
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        try {
+          if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+          }
+        } catch {}
+      }
       const elapsed = ((Date.now() - this._speechStartRealMs) / 1000) * this.playbackRate;
       this.currentTimeSec = Math.min(this.durationSec, this._speechOffsetSec + elapsed);
       if (this.currentTimeSec >= this.durationSec) {
         this._stopSpeechSynthesis();
+        this._stopCarrierAudio();
         this.isPlaying = false;
         this.currentTimeSec = 0;
+        this._updateMediaSessionState('none');
       }
       this._emit();
     }, 250);
@@ -245,6 +483,10 @@ export class PodcastAudioController {
 
   _stopSpeechSynthesis() {
     this._speechSessionId++;
+    if (this._turnWatchdogTimer) {
+      clearTimeout(this._turnWatchdogTimer);
+      this._turnWatchdogTimer = null;
+    }
     if (this._speechGapTimeout) {
       clearTimeout(this._speechGapTimeout);
       this._speechGapTimeout = null;
@@ -271,11 +513,16 @@ export class PodcastAudioController {
 
   async play() {
     if (!this.currentEpisode) return;
+    this._enforcePlaybackSession();
     if (this.usingSpeechSynthesis) {
+      this._startCarrierAudio();
       this._startSpeechSynthesisFrom(this.currentTimeSec);
       return;
     }
     try {
+      this._stopCarrierAudio();
+      this.audio.muted = false;
+      this.audio.volume = 1.0;
       this.audio.playbackRate = this.playbackRate;
       await this.audio.play();
       this.isPlaying = true;
@@ -286,9 +533,11 @@ export class PodcastAudioController {
   }
 
   pause() {
+    this._stopCarrierAudio();
     if (this.usingSpeechSynthesis) {
       this._stopSpeechSynthesis();
       this.isPlaying = false;
+      this._updateMediaSessionState('paused');
       this._emit();
       return;
     }

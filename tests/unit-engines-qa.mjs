@@ -551,6 +551,7 @@ import {
   estimateGenerationWait,
   resolveActiveHighQualityModelLabel
 } from '../src/services/aiWorkerClient.js';
+import { buildSilentPlaybackCarrierWavDataUri } from '../src/components/audioPlayer.js';
 
 function createMockWorkerEnv(overrides = {}) {
   const kvStore = new Map();
@@ -2550,9 +2551,31 @@ await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking ver
     assert.equal(podJson.episode.audioModelUsed, 'gemini-2.5-flash-preview-tts');
     assert.ok(calledUrls.some(u => u.includes('gemini-2.5-pro-preview-tts')), 'Must try Studio Pro TTS first');
     assert.ok(podJson.episode.audioUrl?.startsWith('https://worker.example/api/audio/live_'));
+
+    // Verify R2 WAV stream has 2-channel Stereo (L+R) RIFF header for iPhone speaker compatibility
+    const wavStreamRes = await edgeWorker.fetch(new Request(podJson.episode.audioUrl), env);
+    assert.equal(wavStreamRes.status, 200);
+    const wavBuf = Buffer.from(await wavStreamRes.arrayBuffer());
+    assert.equal(wavBuf.toString('ascii', 0, 4), 'RIFF');
+    assert.equal(wavBuf.readUInt16LE(22), 2, 'Worker R2 WAV must be 2-channel Stereo');
   } finally {
     globalThis.fetch = origFetch;
   }
+});
+
+test('iPhone speaker playback carrier WAV builds valid 2-channel Stereo PCM with non-zero dither', () => {
+  const uri = buildSilentPlaybackCarrierWavDataUri(8000, 1);
+  assert.ok(uri.startsWith('data:audio/wav;base64,'));
+  const raw = Buffer.from(uri.replace('data:audio/wav;base64,', ''), 'base64');
+  assert.equal(raw.toString('ascii', 0, 4), 'RIFF');
+  assert.equal(raw.toString('ascii', 8, 12), 'WAVE');
+  assert.equal(raw.readUInt16LE(20), 1, 'PCM format');
+  assert.equal(raw.readUInt16LE(22), 2, '2-channel Stereo carrier');
+  assert.equal(raw.readUInt32LE(24), 8000, '8000 Hz sample rate');
+  // Verify non-zero LSB dither (±2) so iOS CoreAudio never gates the Playback audio session
+  assert.equal(raw.readInt16LE(44), 2);
+  assert.equal(raw.readInt16LE(46), 2);
+  assert.equal(raw.readInt16LE(48), -2);
 });
 
 console.log(`\n======================================================`);
