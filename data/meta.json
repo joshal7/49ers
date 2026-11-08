@@ -28,19 +28,20 @@
     "eliminatedAt": null
   },
   "aiEngine": {
-    "activeModel": "gemini-3.1-pro-preview",
+    "activeModel": "gemini-3.8-flash",
     "thinkingLevel": "HIGH",
-    "thinkingBudget": 32768,
+    "thinkingBudget": 24576,
     "autoPollEnabled": true,
     "pollIntervalHours": 2,
     "candidateCascade": [
-      "gemini-3.1-pro-preview",
-      "gemini-2.5-pro",
       "gemini-3.8-flash",
+      "gemini-3.6-flash",
       "gemini-3-flash-preview",
+      "gemini-3.5-flash-lite",
+      "gemini-3.1-flash-lite-preview",
       "gemini-2.5-flash"
     ],
-    "source": "frontier-pro-cascade (gemini-3.1-pro-preview HIGH)",
+    "source": "free-tier-high-thinking-cascade (gemini-3.8-flash HIGH)",
     "lastCheckedAt": "2026-11-08T03:32:19.880Z"
   }
 }

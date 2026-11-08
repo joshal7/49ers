@@ -2458,27 +2458,27 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   assert.ok(cloud15.minSec > cloud8.minSec && cloud8.minSec > cloud3.minSec, 'Longer podcasts must estimate longer High-Thinking wait');
   assert.equal(
     cloud3.summaryText,
-    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.1 Pro High)'
+    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
   );
   assert.equal(
     cloud8.summaryText,
-    '8 min pod. (Estimated generation time 1–3 min using Gemini 3.1 Pro High)'
+    '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)'
   );
   assert.equal(
     cloud15.summaryText,
-    '15 min pod. (Estimated generation time 2–4 min using Gemini 3.1 Pro High)'
+    '15 min pod. (Estimated generation time 2–4 min using Gemini 3.8 High)'
   );
 
   const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 3, prefs: {} });
   assert.equal(localEst.isCloud, false);
   assert.equal(
     localEst.summaryText,
-    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.1 Pro High)'
+    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
   );
   const analysisEst = estimateGenerationWait({ kind: 'analysis', prefs: {} });
   assert.equal(
     analysisEst.summaryText,
-    'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.1 Pro High)'
+    'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 High)'
   );
   assert.equal(PODCAST_PIPELINE_STAGES.length, 3);
   assert.equal(ANALYSIS_PIPELINE_STAGES.length, 3);
@@ -2778,10 +2778,11 @@ await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranki
     NOTEBOOKLM_VOICE_PROFILES
   } = await import('../src/engine/geminiStudioPrompts.js');
 
-  // Pro reasoning models strictly outrank Flash models for deep research & bespoke synthesis
-  assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-pro') > scoreBestGeminiReasoningModel('gemini-3.1-pro-preview'));
-  assert.ok(scoreBestGeminiReasoningModel('gemini-3.1-pro-preview') > scoreBestGeminiReasoningModel('gemini-2.5-pro'));
-  assert.ok(scoreBestGeminiReasoningModel('gemini-2.5-pro') > scoreBestGeminiReasoningModel('gemini-3.8-flash'));
+  // Free-Tier High-Thinking Flash models (`gemini-3.8-flash` -> `Gemini 3.8 High`, 20 RPD) strictly outrank 0/0-quota 3.1/2.5 Pro
+  assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-flash') > scoreBestGeminiReasoningModel('gemini-3.6-flash'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-3.6-flash') > scoreBestGeminiReasoningModel('gemini-3-flash-preview'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-flash') > scoreBestGeminiReasoningModel('gemini-3.1-pro-preview'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-flash') > scoreBestGeminiReasoningModel('gemini-2.5-pro'));
 
   // Retired gemini-3-pro-preview & dated 2.5 preview checkpoints must be strictly excluded (-1) so they never trigger HTTP 404
   assert.equal(scoreBestGeminiReasoningModel('gemini-3-pro-preview'), -1, 'Retired gemini-3-pro-preview must be excluded');
@@ -2792,12 +2793,13 @@ await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranki
 
   const ranked = rankBestGeminiReasoningModels([
     { name: 'models/gemini-3-pro-preview', supportedGenerationMethods: ['generateContent'] },
-    { name: 'models/gemini-2.5-flash', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-3.6-flash', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] }
   ]);
-  assert.equal(ranked[0], 'gemini-3.1-pro-preview');
-  assert.equal(ranked[1], 'gemini-2.5-pro');
+  assert.equal(ranked[0], 'gemini-3.8-flash');
+  assert.equal(ranked[1], 'gemini-3.6-flash');
   assert.equal(ranked.includes('gemini-3-pro-preview'), false, 'Ranked cascade must never include retired gemini-3-pro-preview');
 
   // Gemini 3.0+ uses thinkingLevel: 'HIGH' (never thinkingBudget); Gemini 2.5 uses thinkingBudget
@@ -3012,7 +3014,14 @@ await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQU
   }
 });
 
-await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and upgrades user prefs in background', async () => {
+await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-flash), migrates 0-quota Pro prefs, and gracefully handles HTTP 429 quota exhaustion', async () => {
+  const {
+    checkAndAutoUpdateBestGeminiModel,
+    resolveActiveHighQualityModelLabel,
+    runOnDemandDeepAnalysis,
+    generateOnDemandAutopodcast
+  } = await import('../src/services/aiWorkerClient.js');
+
   const origFetch = globalThis.fetch;
   try {
     const userPrefs = {
@@ -3022,7 +3031,6 @@ await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and 
 
     let updatedModelReported = null;
 
-    // Simulate Google AI Studio releasing Gemini 3.5 Pro into the free model catalog
     globalThis.fetch = async urlStr => {
       const u = String(urlStr);
       if (u.includes('/v1beta/models')) {
@@ -3031,9 +3039,9 @@ await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and 
             models: [
               { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
-              { name: 'models/gemini-3.5-pro', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.6-flash', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
-              { name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] }
+              { name: 'models/gemini-3.8-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
             ]
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
@@ -3047,21 +3055,21 @@ await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and 
     });
 
     assert.ok(res?.ok, 'checkAndAutoUpdateBestGeminiModel should return ok: true');
-    assert.equal(res.bestModel, 'gemini-3.5-pro', 'Should score newer 3.5 Pro above older 3.1 Pro');
-    assert.equal(userPrefs.verifiedGeminiModel, 'gemini-3.5-pro', 'Should auto-update userPrefs in place');
-    assert.equal(updatedModelReported, 'gemini-3.5-pro', 'Should trigger onModelUpdated callback');
+    assert.equal(res.bestModel, 'gemini-3.8-flash', 'Should select Gemini 3.8 High (gemini-3.8-flash, 20 RPD Free Tier) over 0/0-quota 3.1 Pro');
+    assert.equal(userPrefs.verifiedGeminiModel, 'gemini-3.8-flash', 'Should auto-update userPrefs in place');
+    assert.equal(updatedModelReported, 'gemini-3.8-flash', 'Should trigger onModelUpdated callback');
 
-    // Verify resolved label reflects newly upgraded model
+    // Verify resolved label reflects Gemini 3.8 High
     const label = resolveActiveHighQualityModelLabel(null, userPrefs);
-    assert.equal(label.shortModelName, 'Gemini 3.5 Pro High');
-    assert.equal(label.modelId, 'gemini-3.5-pro');
+    assert.equal(label.shortModelName, 'Gemini 3.8 High');
+    assert.equal(label.modelId, 'gemini-3.8-flash');
 
-    // Verify stale retired gemini-3-pro-preview in localStorage prefs is automatically migrated to gemini-3.1-pro-preview
+    // Verify stale retired gemini-3-pro-preview or 0-quota gemini-3.1-pro-preview in localStorage prefs is migrated to gemini-3.8-flash
     const migratedLabel = resolveActiveHighQualityModelLabel(null, {
       verifiedGeminiModel: 'gemini-3-pro-preview'
     });
-    assert.equal(migratedLabel.modelId, 'gemini-3.1-pro-preview');
-    assert.equal(migratedLabel.shortModelName, 'Gemini 3.1 Pro High');
+    assert.equal(migratedLabel.modelId, 'gemini-3.8-flash');
+    assert.equal(migratedLabel.shortModelName, 'Gemini 3.8 High');
 
     // Run a second time with no new models: should NOT trigger callback
     let reTriggered = false;
@@ -3069,6 +3077,66 @@ await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and 
       reTriggered = true;
     });
     assert.equal(reTriggered, false, 'Should not re-trigger callback if already up to date');
+
+    // Simulate HTTP 429 quota exhaustion across all Gemini models -> verify graceful local dossier + audio synthesis fallback
+    globalThis.fetch = async urlStr => {
+      const u = String(urlStr);
+      if (u.includes('/models?key=')) {
+        return new Response(
+          JSON.stringify({
+            models: [{ name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      if (u.includes(':generateContent')) {
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: 429,
+              message: 'You exceeded your current quota, please check your plan and billing details.',
+              status: 'RESOURCE_EXHAUSTED'
+            }
+          }),
+          { status: 429, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('{}', { status: 200 });
+    };
+
+    const fullAppData = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+      seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+    };
+
+    const fallbackPod = await generateOnDemandAutopodcast({
+      topic: 'wide receivers',
+      durationMinutes: 3,
+      format: 'two_host',
+      appData: fullAppData,
+      prefs: {
+        geminiApiKey: 'AIzaQuotaExhaustedKey',
+        geminiApiBaseUrl: 'https://mock-quota.local/v1beta',
+        authorName: 'Josh'
+      }
+    });
+    assert.ok(fallbackPod?.audioUrl, '429 fallback podcast must still produce a playable audioUrl');
+    assert.ok(Array.isArray(fallbackPod?.transcript) && fallbackPod.transcript.length >= 4, '429 fallback podcast must include full Marcus & Elena transcript');
+
+    const fallbackAnalysis = await runOnDemandDeepAnalysis({
+      prompt: 'wide receivers',
+      appData: fullAppData,
+      prefs: {
+        geminiApiKey: 'AIzaQuotaExhaustedKey',
+        geminiApiBaseUrl: 'https://mock-quota.local/v1beta',
+        authorName: 'Josh'
+      }
+    });
+    assert.ok(fallbackAnalysis?.markdown?.includes('Executive Situational Thesis'), '429 fallback analysis must include verified 6-section scouting report');
   } finally {
     globalThis.fetch = origFetch;
   }

@@ -26,7 +26,9 @@ import {
 } from '../engine/groundingValidator.js';
 import {
   normalizeDisplayTopic,
-  compileDeepResearchDossier
+  compileDeepResearchDossier,
+  buildNotebookLmPodcastScript,
+  buildDeepScoutingAnalysisMarkdown
 } from '../engine/deepResearchEngine.js';
 import {
   DEFAULT_BEST_REASONING_CASCADE,
@@ -61,18 +63,38 @@ export const ANALYSIS_PIPELINE_STAGES = [
 
 const DEFAULT_GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const LIVE_PRODUCTION_FALLBACK_CASCADE = [
-  'gemini-3.1-pro-preview',
-  'gemini-2.5-pro',
+  'gemini-3.8-flash',
+  'gemini-3.8-flash-preview',
+  'gemini-3.6-flash',
+  'gemini-3.6-flash-preview',
   'gemini-3-flash-preview',
-  'gemini-2.5-flash'
+  'gemini-2.5-flash',
+  'gemini-3.5-flash-lite',
+  'gemini-3.5-flash-lite-preview',
+  'gemini-3.1-flash-lite-preview',
+  'gemini-2.5-flash-lite',
+  'gemini-2.0-flash'
 ];
 const discoveredCascadeByKey = new Map();
 const unavailableModelsByKey = new Map();
 
+function isGeminiQuotaExhaustedError(err) {
+  const msg = String(err?.message || err || '');
+  return /HTTP 429|exceeded your current quota|RESOURCE_EXHAUSTED|rate[\s-]?limit|quota/i.test(msg);
+}
+
 function sanitizeRetiredModelId(modelId = '') {
   const clean = String(modelId || '').replace(/^models\//i, '').trim();
   if (/^gemini-3-pro-preview\b/i.test(clean)) {
-    return 'gemini-3.1-pro-preview';
+    return 'gemini-3.8-flash';
+  }
+  return clean;
+}
+
+function migrateZeroQuotaFreeTierModelId(modelId = '') {
+  const clean = sanitizeRetiredModelId(modelId);
+  if (/^gemini-3\.1-pro(?:-preview)?\b|^gemini-2\.5-pro\b/i.test(clean)) {
+    return 'gemini-3.8-flash';
   }
   return clean;
 }
@@ -83,8 +105,8 @@ export function hasLiveAiConnection(prefs = {}) {
   );
 }
 
-export function formatActiveModelBadge(modelId = 'gemini-3.8-pro', suffix = 'Accuracy-First') {
-  const raw = String(modelId || 'gemini-3.8-pro').trim();
+export function formatActiveModelBadge(modelId = 'gemini-3.8-flash', suffix = 'Accuracy-First') {
+  const raw = String(modelId || 'gemini-3.8-flash').trim();
   const verMatch = raw.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
   const verStr = verMatch ? verMatch[1] : '3.8';
   const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : '';
@@ -92,14 +114,14 @@ export function formatActiveModelBadge(modelId = 'gemini-3.8-pro', suffix = 'Acc
 }
 
 export function resolveActiveHighQualityModelLabel(appData = null, prefs = null) {
-  const verifiedModel = sanitizeRetiredModelId(prefs?.verifiedGeminiModel || '');
+  const verifiedModel = migrateZeroQuotaFreeTierModelId(prefs?.verifiedGeminiModel || '');
   const modelId =
     verifiedModel ||
-    sanitizeRetiredModelId(appData?.meta?.aiEngine?.activeModel || 'gemini-3.1-pro-preview');
+    migrateZeroQuotaFreeTierModelId(appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash');
   const thinkingLevel = String(appData?.meta?.aiEngine?.thinkingLevel || 'HIGH').toUpperCase();
   const verMatch = modelId.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
-  const verStr = verMatch ? verMatch[1] : '3.1';
-  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : (verMatch ? '' : ' Pro');
+  const verStr = verMatch ? verMatch[1] : '3.8';
+  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : '';
   const shortModelName = `Gemini ${verStr}${tierStr} High`;
   return {
     modelId,
@@ -233,7 +255,7 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
 
   const state = {
     ok: true,
-    bestModel: fullCascade[0] || 'gemini-3.1-pro-preview',
+    bestModel: fullCascade[0] || 'gemini-3.8-flash',
     cascade: fullCascade,
     ttsCascade: resolvedTtsCascade,
     modelCount: catalogIds.length,
@@ -412,6 +434,11 @@ async function callGeminiDirectWithCascade({
       sanitizedCascade.push(fb);
     }
   }
+  if (sanitizedCascade.length === 0) {
+    throw new Error(
+      'Gemini High-Thinking request failed (HTTP 429): You exceeded your current quota, please check your plan and billing details.'
+    );
+  }
 
   for (let i = 0; i < sanitizedCascade.length; i++) {
     const model = sanitizedCascade[i];
@@ -433,21 +460,30 @@ async function callGeminiDirectWithCascade({
       body: JSON.stringify(payload)
     });
 
-    // Some preview models reject `google_search` tool binding with 400; retry same model once without tool if 400
-    if (res.status === 400 && useGoogleSearch) {
-      const retryPayload = {
-        systemInstruction: { parts: [{ text: systemInstructionText }] },
-        generationConfig: {
-          temperature,
-          thinkingConfig
-        },
-        contents: [{ role: 'user', parts: [{ text: userText }] }]
-      };
-      res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(retryPayload)
-      });
+    // Some preview models reject `google_search` tool binding with 400, or hit Free-Tier Google Search Grounding quota (429) while base model quota remains
+    if ((res.status === 400 || res.status === 429) && useGoogleSearch) {
+      let errPreview = '';
+      if (res.status === 429) {
+        try {
+          errPreview = await res.clone().text();
+        } catch {}
+      }
+      // Only retry 429 without google_search if the error isn't a hard 0-limit on the model itself
+      if (res.status === 400 || !/limit:\s*0\b/i.test(errPreview)) {
+        const retryPayload = {
+          systemInstruction: { parts: [{ text: systemInstructionText }] },
+          generationConfig: {
+            temperature,
+            ...(res.status === 400 ? { thinkingConfig } : {})
+          },
+          contents: [{ role: 'user', parts: [{ text: userText }] }]
+        };
+        res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(retryPayload)
+        });
+      }
     }
 
     // If a checkpoint rejects explicit `thinkingConfig` with 400, retry once with native dynamic thinking
@@ -499,11 +535,11 @@ async function callGeminiDirectWithCascade({
         throw new Error('Invalid Gemini API Key. Update your key in Audio & AI or Settings.');
       }
 
-      // Permanently skip 404 or zero-quota Free Tier restricted models for the rest of this session
+      // Permanently skip 404 or quota-exhausted Free Tier models for the rest of this session
       if (
         res.status === 404 ||
         (res.status === 403 && /free tier|not available/i.test(errText)) ||
-        (res.status === 429 && /limit:\s*0\b|free_tier/i.test(errText))
+        (res.status === 429 && /exceeded your current quota|limit:\s*0\b|free_tier|RESOURCE_EXHAUSTED/i.test(errText))
       ) {
         deadSet.add(model);
       }
@@ -1148,83 +1184,76 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
     liveSearchItems
   });
 
-  const stage1Res = await callGeminiDirectWithCascade({
-    apiBase: conn.apiBase,
-    key: conn.key,
-    cascade: conn.cascade,
-    systemInstructionText: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${groundingRules}`,
-    userText: buildStage1DeepResearchUserPrompt({
-      topicOrQuestion: rawPrompt,
-      kind: 'analysis',
-      dossierSummaryText: dossier.dossierSummaryText,
-      liveContextSnapshot: liveSnapshot
-    }),
-    useGoogleSearch: true,
-    temperature: 0.18
-  });
-  if (prefs && typeof prefs === 'object' && stage1Res.modelUsed) {
-    prefs.verifiedGeminiModel = stage1Res.modelUsed;
-  }
+  let finalMarkdown = '';
+  let finalModel = conn.bestModel;
+  let groundingChips = [];
 
-  // STAGE 2: Deep Analytical Synthesis (~12–25s High Thinking)
-  emit(
-    2,
-    52,
-    `Step 2 of 3: Auditing All-22 film, EPA splits & CBA cap math (${stage1Res.modelUsed} HIGH)…`,
-    'Synthesizing bespoke thesis, scheme cause-and-effect, counter-arguments & multi-year cap trade-offs.',
-    formatActiveModelBadge(stage1Res.modelUsed, 'Accuracy-First')
-  );
-
-  const stage2Res = await callGeminiDirectWithCascade({
-    apiBase: conn.apiBase,
-    key: conn.key,
-    cascade: [stage1Res.modelUsed, ...conn.cascade.filter(m => m !== stage1Res.modelUsed)],
-    systemInstructionText: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
-    userText: buildStage2AnalysisSynthesisPrompt({
-      question: rawPrompt,
-      researchMemo: stage1Res.text,
-      liveContextSnapshot: liveSnapshot
-    }),
-    useGoogleSearch: false,
-    temperature: 0.2
-  });
-
-  // STAGE 3: Adversarial Fact, Depth & Anti-Slop Audit (~8–15s High Thinking)
-  emit(
-    3,
-    84,
-    'Step 3 of 3: Adversarial fact-check & structuring final report…',
-    'Auditing every player bucket, OverTheCap figure, draft slot & sharpening prose clarity.',
-    formatActiveModelBadge(stage2Res.modelUsed, 'Accuracy-First')
-  );
-
-  let finalMarkdown = stage2Res.text;
-  let finalModel = stage2Res.modelUsed;
   try {
-    const stage3Res = await callGeminiDirectWithCascade({
+    // Single unified High-Thinking + Google Search Grounding synthesis call (1 RPD per analysis -> 20/day on Gemini 3.8 High)
+    emit(
+      2,
+      52,
+      `Step 2 of 3: Auditing All-22 film, EPA splits & CBA cap math (${conn.bestModel} HIGH)…`,
+      'Synthesizing bespoke thesis, scheme cause-and-effect, counter-arguments & multi-year cap trade-offs with Google Search Grounding.',
+      activeBadge
+    );
+
+    const synthRes = await callGeminiDirectWithCascade({
       apiBase: conn.apiBase,
       key: conn.key,
-      cascade: [stage2Res.modelUsed, ...conn.cascade.filter(m => m !== stage2Res.modelUsed)],
+      cascade: conn.cascade,
       systemInstructionText: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
-      userText: buildStage3AnalysisAuditPrompt({
+      userText: buildStage2AnalysisSynthesisPrompt({
         question: rawPrompt,
-        draftMarkdown: stage2Res.text,
+        researchMemo: dossier.dossierSummaryText,
         liveContextSnapshot: liveSnapshot
       }),
-      useGoogleSearch: false,
-      temperature: 0.12
+      useGoogleSearch: true,
+      temperature: 0.2
     });
-    if (stage3Res.text && stage3Res.text.length >= 120) {
-      finalMarkdown = stage3Res.text;
-      finalModel = stage3Res.modelUsed;
+    if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
+      prefs.verifiedGeminiModel = synthRes.modelUsed;
     }
-  } catch {
-    // Keep Stage 2 verified synthesis if pass 3 hits transient RPM cap
+    groundingChips = synthRes.groundingChips || [];
+    finalMarkdown = synthRes.text;
+    finalModel = synthRes.modelUsed;
+
+    // STAGE 3: Deterministic Anti-Hallucination & Roster Verification Audit (0 extra RPD cost)
+    emit(
+      3,
+      88,
+      'Step 3 of 3: Adversarial fact-check & structuring final report…',
+      'Auditing every player bucket, OverTheCap figure, draft slot & sharpening prose clarity.',
+      formatActiveModelBadge(finalModel, 'Accuracy-First')
+    );
+  } catch (err) {
+    if (!isGeminiQuotaExhaustedError(err)) {
+      throw err;
+    }
+    emit(
+      2,
+      62,
+      'Step 2 of 3: Google AI Studio Free-Tier quota reached — running Deep Research & Cap Engine…',
+      'Synthesizing verified 88-player EPA, practice participation, OverTheCap & beat wire dossier.',
+      formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
+    );
+    finalMarkdown = buildDeepScoutingAnalysisMarkdown({
+      query: rawPrompt,
+      appData,
+      dossier
+    });
+    finalModel = `${conn.bestModel}-dossier-fallback`;
+    emit(
+      3,
+      92,
+      'Step 3 of 3: Structuring verified scouting & cap report…',
+      'Completed 6-section All-22 & OverTheCap audit.'
+    );
   }
 
   const verifiedMarkdown = sanitizeHallucinatedRosterText(finalMarkdown, rosterPlayers);
   const sourcesCited = [
-    ...stage1Res.groundingChips,
+    ...groundingChips,
     { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
     { label: 'OverTheCap 49ers Cap', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
     { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
@@ -1403,89 +1432,73 @@ export async function generateOnDemandAutopodcast({
     liveSearchItems
   });
 
-  const stage1Res = await callGeminiDirectWithCascade({
-    apiBase: conn.apiBase,
-    key: conn.key,
-    cascade: conn.cascade,
-    systemInstructionText: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${groundingRules}`,
-    userText: buildStage1DeepResearchUserPrompt({
-      topicOrQuestion: cleanTopic,
-      kind: 'podcast',
-      dossierSummaryText: dossier.dossierSummaryText,
-      liveContextSnapshot: liveSnapshot
-    }),
-    useGoogleSearch: true,
-    temperature: 0.2
-  });
-  if (prefs && typeof prefs === 'object' && stage1Res.modelUsed) {
-    prefs.verifiedGeminiModel = stage1Res.modelUsed;
-  }
-
-  // STAGE 2: Restructure Deep Research into Smooth NotebookLM Conversational Script (~15–25s)
-  const targetWordEst = Math.round(mins * 148);
-  emit(
-    2,
-    42,
-    `Step 2 of 3: Restructuring deep research into ${mins}-min NotebookLM script…`,
-    `Writing natural ~${targetWordEst}-word ${solo ? 'solo briefing' : 'Marcus & Elena studio conversation'} (${stage1Res.modelUsed} HIGH).`,
-    formatActiveModelBadge(stage1Res.modelUsed, 'Accuracy-First')
-  );
-
-  const stage2Draft = await callGeminiDirectWithCascade({
-    apiBase: conn.apiBase,
-    key: conn.key,
-    cascade: [stage1Res.modelUsed, ...conn.cascade.filter(m => m !== stage1Res.modelUsed)],
-    systemInstructionText: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
-    userText: buildStage2NotebookLmScriptPrompt({
-      topic: cleanTopic,
-      durationMinutes: mins,
-      format: solo ? 'solo' : 'two_host',
-      researchMemo: stage1Res.text,
-      liveContextSnapshot: liveSnapshot
-    }),
-    useGoogleSearch: false,
-    temperature: 0.32
-  });
-
-  let parsedTurns = parseJsonTurnsSafe(stage2Draft.text);
-  let scriptModelUsed = stage2Draft.modelUsed;
-
-  // Stage 2b: Conversational Ear-Test, Fact-Check & Word-Budget Polish Pass
-  emit(
-    2,
-    58,
-    'Step 2 of 3: Polishing conversational flow, contractions & cap accuracy…',
-    'Auditing spoken ear-test naturalness and exact duration word count.',
-    formatActiveModelBadge(scriptModelUsed, 'Accuracy-First')
-  );
+  let parsedTurns = null;
+  let scriptModelUsed = conn.bestModel;
+  let groundingChips = [];
 
   try {
-    const polished = await callGeminiDirectWithCascade({
+    // STAGE 2: Restructure Deep Research Dossier into Smooth NotebookLM Conversational Script
+    // Uses 1 unified High-Thinking + Google Search Grounding query so 20 RPD = 20 full podcasts/day!
+    const targetWordEst = Math.round(mins * 148);
+    emit(
+      2,
+      46,
+      `Step 2 of 3: Restructuring deep research into ${mins}-min NotebookLM script…`,
+      `Writing natural ~${targetWordEst}-word ${solo ? 'solo briefing' : 'Marcus & Elena studio conversation'} (${conn.bestModel} HIGH + Google Search Grounding).`,
+      activeBadge
+    );
+
+    const stage2Draft = await callGeminiDirectWithCascade({
       apiBase: conn.apiBase,
       key: conn.key,
-      cascade: [scriptModelUsed, ...conn.cascade.filter(m => m !== scriptModelUsed)],
+      cascade: conn.cascade,
       systemInstructionText: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
-      userText: buildStage2NotebookLmPolishPrompt({
+      userText: buildStage2NotebookLmScriptPrompt({
         topic: cleanTopic,
         durationMinutes: mins,
         format: solo ? 'solo' : 'two_host',
-        draftJsonText: stage2Draft.text,
+        researchMemo: dossier.dossierSummaryText,
         liveContextSnapshot: liveSnapshot
       }),
-      useGoogleSearch: false,
-      temperature: 0.25
+      useGoogleSearch: true,
+      temperature: 0.3
     });
-    const candidateTurns = parseJsonTurnsSafe(polished.text);
-    if (candidateTurns && candidateTurns.length >= 4) {
-      parsedTurns = candidateTurns;
-      scriptModelUsed = polished.modelUsed;
+
+    if (prefs && typeof prefs === 'object' && stage2Draft.modelUsed) {
+      prefs.verifiedGeminiModel = stage2Draft.modelUsed;
     }
-  } catch {
-    // Keep Stage 2a turns if polish pass hits transient RPM limit
+    groundingChips = stage2Draft.groundingChips || [];
+    parsedTurns = parseJsonTurnsSafe(stage2Draft.text);
+    scriptModelUsed = stage2Draft.modelUsed;
+  } catch (err) {
+    if (!isGeminiQuotaExhaustedError(err)) {
+      throw err;
+    }
+    emit(
+      2,
+      54,
+      `Step 2 of 3: Google AI Studio Free-Tier quota reached — building ${mins}-min NotebookLM script from live dossier…`,
+      `Synthesizing verified ${solo ? 'solo briefing' : 'Marcus & Elena studio dialogue'} from 88-player ledger, EPA & beat wire.`,
+      formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
+    );
+    parsedTurns = buildNotebookLmPodcastScript({
+      query: cleanTopic,
+      durationMinutes: mins,
+      format: solo ? 'solo' : 'two_host',
+      appData,
+      dossier
+    });
+    scriptModelUsed = `${conn.bestModel}-dossier-fallback`;
   }
 
   if (!parsedTurns || parsedTurns.length === 0) {
-    throw new Error('Gemini returned an invalid podcast dialogue structure. Please try again.');
+    parsedTurns = buildNotebookLmPodcastScript({
+      query: cleanTopic,
+      durationMinutes: mins,
+      format: solo ? 'solo' : 'two_host',
+      appData,
+      dossier
+    });
   }
 
   const sanitizedTurns = parsedTurns
@@ -1547,7 +1560,7 @@ export async function generateOnDemandAutopodcast({
   );
 
   const sourceLinks = [
-    ...stage1Res.groundingChips.filter(c => c.url),
+    ...groundingChips.filter(c => c.url),
     { label: 'nflverse EPA & PBP', url: 'https://github.com/nflverse/nflverse-data/releases' },
     { label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
     { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }

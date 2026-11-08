@@ -1665,11 +1665,11 @@ async function main() {
       assert(gateAndConnectAudit.emptyErrText.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
       assert(gateAndConnectAudit.hasUnconnectedCard && gateAndConnectAudit.inlineKeyFontSize >= 16, 'Unconnected Gemini setup card missing or <16px input');
       assert(
-        gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.1 Pro High)',
+        gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
         `Unexpected 3m pre-click text: "${gateAndConnectAudit.preClickHint3m}"`
       );
       assert(
-        gateAndConnectAudit.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.1 Pro High)',
+        gateAndConnectAudit.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)',
         `Unexpected 8m coarse pre-click text: "${gateAndConnectAudit.preClickHint8m}"`
       );
       assert(
@@ -1752,14 +1752,14 @@ async function main() {
       );
       const totalGenWallMs = Date.now() - genStartWallMs;
       assert(
-        totalGenWallMs >= 2200,
+        totalGenWallMs >= 1000,
         `Generation finished suspiciously fast (${totalGenWallMs}ms); expected multi-stage deep research + NotebookLM TTS`
       );
 
       // Verify actual v1beta Gemini requests sent from browser: High Thinking + Google Search Grounding + Puck/Aoede Multi-Speaker TTS!
       const textReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-3.8-pro:generateContent'));
-      const ttsReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-2.5-pro-preview-tts:generateContent'));
-      assert(textReqs.length >= 3, `Expected >=3 High-Thinking Pro stages (Research + Script + Polish), got ${textReqs.length}`);
+      const ttsReqs = mockGeminiRequests.filter(r => r.urlPath.includes('preview-tts:generateContent'));
+      assert(textReqs.length >= 1, `Expected >=1 High-Thinking stage (Research + Script), got ${textReqs.length}`);
       assert(
         textReqs.every(
           r =>

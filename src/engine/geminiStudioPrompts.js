@@ -20,23 +20,28 @@
  */
 
 /**
- * Ordered default cascade prioritizing the strongest reasoning Pro models first,
- * with seamless automatic failover to High-Thinking 3.x / 2.5 Flash models if a preview
- * or Pro tier is unavailable or rate-limited on the caller's key.
- * Note: `gemini-3-pro-preview` was retired by Google in favor of `gemini-3.1-pro-preview` and is excluded.
+ * Ordered default cascade prioritizing `gemini-3.8-flash` (`Gemini 3.8 High`, 20 RPD Free-Tier quota
+ * with `thinkingLevel: "HIGH"`), followed by `gemini-3.6-flash` (20 RPD), `gemini-3-flash-preview` (20 RPD),
+ * `gemini-2.5-flash`, and high-quota Flash-Lite fallbacks (500 RPD).
+ * Note: `gemini-3-pro-preview` was retired by Google and is excluded; `gemini-3.1-pro` and `gemini-2.5-pro`
+ * have `0/0` Free-Tier quota on Google AI Studio unless billing is enabled.
  */
 export const DEFAULT_BEST_REASONING_CASCADE = [
-  'gemini-3.8-pro',
-  'gemini-3.1-pro-preview',
-  'gemini-2.5-pro',
   'gemini-3.8-flash',
+  'gemini-3.6-flash',
   'gemini-3-flash-preview',
-  'gemini-2.5-flash'
+  'gemini-2.5-flash',
+  'gemini-3.5-flash-lite',
+  'gemini-3.1-flash-lite-preview'
 ];
 
 export const DEFAULT_NOTEBOOKLM_TTS_CASCADE = [
-  'gemini-2.5-pro-preview-tts',
-  'gemini-2.5-flash-preview-tts'
+  'gemini-3.8-flash-preview-tts',
+  'gemini-3.8-flash-tts',
+  'gemini-3.1-flash-preview-tts',
+  'gemini-3.1-flash-tts',
+  'gemini-2.5-flash-preview-tts',
+  'gemini-2.5-pro-preview-tts'
 ];
 
 /**
@@ -59,8 +64,10 @@ export const PRO_MAX_THINKING_BUDGET = 32768;
 export const FLASH_HIGH_THINKING_BUDGET = 24576;
 
 /**
- * Scores a Gemini model ID or `/v1beta/models` catalog object for deep football & cap reasoning.
- * Strictly prioritizes frontier Pro reasoning models above Flash models, and newer generations above older.
+ * Scores a Gemini model ID or `/v1beta/models` catalog object for deep football & cap reasoning
+ * on Google AI Studio Free-Tier keys.
+ * Prioritizes newer High-Thinking Flash models (`gemini-3.8-flash` -> `Gemini 3.8 High`) which carry
+ * active Free-Tier quota (20 RPD / 5 RPM / 250K TPM) over 0-quota legacy 3.1/2.5 Pro tiers.
  */
 export function scoreBestGeminiReasoningModel(modelEntryOrId) {
   const rawName =
@@ -103,11 +110,12 @@ export function scoreBestGeminiReasoningModel(modelEntryOrId) {
   const isFlash = /\bflash\b/.test(id);
   if (!isPro && !isFlash) return -1;
 
-  // Pro models get a substantial reasoning bonus so deep research & cap math always try Pro first
-  const tierBonus = isPro ? 420 : 240;
-  const versionScore = Math.round(versionNum * 110);
-  const stabilityAdj = id.includes('exp') ? -22 : id.includes('preview') ? -5 : 12;
-  const latestAliasPenalty = id.endsWith('-latest') ? -6 : 0;
+  // On Google AI Studio Free Tier, 3.8+ Flash (`Gemini 3.8 High`) has active 20 RPD quota,
+  // whereas 3.1 Pro and 2.5 Pro have 0/0 Free-Tier quota.
+  const tierBonus = isFlash ? 260 : versionNum >= 3.8 ? 275 : 80;
+  const versionScore = Math.round(versionNum * 100);
+  const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
+  const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
 
   return tierBonus + versionScore + stabilityAdj + latestAliasPenalty;
 }
