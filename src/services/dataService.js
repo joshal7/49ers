@@ -410,20 +410,105 @@ function parseInsiderAttributionClient(rawText = '', defaultAcct = {}) {
   };
 }
 
-function matchPlayersClient(text = '', rosterPlayers = [], max = 12) {
+const AMBIGUOUS_BEAT_SURNAMES = new Set([
+  'ward',
+  'cook',
+  'west',
+  'long',
+  'hill',
+  'king',
+  'reed',
+  'hall',
+  'gray',
+  'wood',
+  'park',
+  'white',
+  'green',
+  'brown',
+  'young',
+  'scott',
+  'stout',
+  'height',
+  'bell',
+  'ford',
+  'grant',
+  'james',
+  'miles',
+  'price',
+  'smith',
+  'stone',
+  'williams',
+  'robinson',
+  'thomas',
+  'johnson',
+  'jones',
+  'davis',
+  'wilson',
+  'moore',
+  'taylor',
+  'anderson',
+  'jackson',
+  'harris',
+  'martin',
+  'evans',
+  'campbell',
+  'collins',
+  'turner',
+  'walker'
+]);
+
+function escapeClientRegex(s = '') {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+export function matchPlayersClient(
+  text = '',
+  rosterPlayers = [],
+  max = 12,
+  { allowUniqueSurnames = true } = {}
+) {
   const hay = String(text || '').toLowerCase();
-  if (!hay) return [];
-  const hits = [];
-  for (const p of rosterPlayers) {
-    if (hits.length >= max) break;
-    const fullLower = p.name.toLowerCase();
-    const strippedLower = fullLower.replace(/\s+(sr\.?|jr\.?|ii|iii|iv)$/i, '').trim();
-    if (hay.includes(fullLower) || (strippedLower.length >= 6 && hay.includes(strippedLower))) {
-      const cleanParts = p.name
+  if (!hay || !Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return [];
+
+  const surnameCounts = new Map();
+  if (allowUniqueSurnames) {
+    for (const p of rosterPlayers) {
+      const cleanParts = String(p.name || '')
         .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
         .trim()
         .split(/\s+/);
-      const surname = cleanParts[cleanParts.length - 1] || p.name;
+      const sLower = (cleanParts[cleanParts.length - 1] || '').toLowerCase();
+      if (sLower) surnameCounts.set(sLower, (surnameCounts.get(sLower) || 0) + 1);
+    }
+  }
+
+  const hits = [];
+  for (const p of rosterPlayers) {
+    if (hits.length >= max) break;
+    const fullLower = String(p.name || '').toLowerCase().trim();
+    if (!fullLower) continue;
+    const strippedLower = fullLower.replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '').trim();
+    const cleanParts = String(p.name || '')
+      .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
+      .trim()
+      .split(/\s+/);
+    const surname = cleanParts[cleanParts.length - 1] || p.name;
+    const surnameLower = surname.toLowerCase();
+
+    const matchedFull =
+      new RegExp(`\\b${escapeClientRegex(fullLower)}\\b`, 'i').test(hay) ||
+      (strippedLower.length >= 6 &&
+        new RegExp(`\\b${escapeClientRegex(strippedLower)}\\b`, 'i').test(hay));
+
+    const matchedUniqueSurname =
+      !matchedFull &&
+      allowUniqueSurnames &&
+      surnameLower.length >= 4 &&
+      surnameCounts.get(surnameLower) === 1 &&
+      !AMBIGUOUS_BEAT_SURNAMES.has(surnameLower) &&
+      new RegExp(`\\b${escapeClientRegex(surnameLower)}\\b`, 'i').test(hay);
+
+    if (matchedFull || matchedUniqueSurname) {
       hits.push({
         id: p.id,
         name: p.name,
@@ -517,9 +602,12 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
           const cleanFull = cleanSensationalistText(parsedAttr.text);
           const extEmbed = post?.embed?.external || rec?.embed?.external || null;
           const combinedCheck = `${cleanFull} ${extEmbed?.title || ''}`;
-          const mentioned = matchPlayersClient(combinedCheck, rosterPlayers, 12);
+          const hasExplicitSfKeyword = sfKeywordsRe.test(combinedCheck);
+          const mentioned = matchPlayersClient(combinedCheck, rosterPlayers, 12, {
+            allowUniqueSurnames: !acct.isNationalInsider || hasExplicitSfKeyword
+          });
 
-          if (acct.isNationalInsider && !sfKeywordsRe.test(combinedCheck) && mentioned.length === 0) {
+          if (acct.isNationalInsider && !hasExplicitSfKeyword && mentioned.length === 0) {
             continue;
           }
 

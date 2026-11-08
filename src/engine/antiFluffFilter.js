@@ -12,6 +12,10 @@ const CLICKBAIT_PATTERNS = [
   /\bunfollowed.*instagram\b/i,
   /\bcryptic\s+(post|tweet|message|emoji)\b/i,
   /\bblockbuster\s+mock\s+trade\s+sends\b/i,
+  /\b(?:wild|insane|massive|crazy)\s+(?:mock\s+)?trade\s+(?:proposal|idea|pitch|scenario)\b/i,
+  /\bmock\s+trade\s+(?:proposal|idea|pitch)\b/i,
+  /\burges?\s+(?:the\s+)?(?:49ers|niners|shanahan|lynch)\s+to\s+(?:bench|trade|cut|move on from)\b/i,
+  /\b(?:twitter|x|nfl\s+world)\s+reacts\s+to\b/i,
   /\bpanic\s+button\b/i,
   /\bis\s+it\s+time\s+to\s+(fire|bench)\b/i,
   /\bhot\s+seat\b/i,
@@ -19,16 +23,30 @@ const CLICKBAIT_PATTERNS = [
 ];
 
 const ANALYTICAL_SIGNAL_PATTERNS = [
-  /\b(epa|cpoe|dvoa|success rate|pressure rate|win rate|ryoe|yac|target share|wopr|adot|dadot|ras)\b/i,
-  /\b(11 personnel|12 personnel|21 personnel|22 personnel|wide-9|nickel|dime|quarters|cover [12346]|two-high|single-high|sim pressure|stunt|duo|outside zone)\b/i,
-  /\b(cap hit|dead money|dead cap|restructure|void year|post-june 1|pre-june 1|prorat|option bonus|base salary|sixth-round|comp pick)\b/i,
-  /\b(dnp|limited participation|full participation|injured reserve|practice window|21-day|questionable|doubtful)\b/i,
+  /\b(epa|cpoe|dvoa|success rate|pressure rate|win rate|pbwr|rswr|ryoe|yac|yprr|target share|wopr|adot|dadot|ras|separation|explosive play rate)\b/i,
+  /\b(11 personnel|12 personnel|21 personnel|22 personnel|wide-9|nickel|dime|quarters|cover [12346]|two-high|single-high|sim pressure|stunt|duo|outside zone|play-action|motion rate|box count|neutral script|early-down|red-zone)\b/i,
+  /\b(cap hit|dead money|dead cap|restructure|void year|post-june 1|pre-june 1|prorat|option bonus|base salary|sixth-round|comp pick|article 13|top-51|fifth-year option|franchise tag|practice squad elevation)\b/i,
+  /\b(dnp|limited participation|full participation|injured reserve|practice window|21-day|questionable|doubtful|concussion protocol|syndesmosis)\b/i,
   /\b(all-22|film|tape|snap count|snaps|pass block|run block)\b/i
 ];
 
+const PRIMARY_BEAT_REPORTER_IDS = new Set([
+  'matt_maiocco',
+  'matt_barrows',
+  'nick_wagoner',
+  'david_lombardi',
+  'eric_branch',
+  'vic_tafur',
+  'adam_schefter',
+  'ian_rapoport',
+  'tom_pelissero',
+  'field_yates',
+  'kyle_shanahan'
+]);
+
 /**
  * Scores a headline + body text for sensationalism vs. football signal.
- * Returns { fluffScore (0..100), signalScore (0..100), isClickbait, matchedClickbaitFlags }
+ * Returns { fluffScore (0..100), signalScore (0..100), isClickbait, matchedFlags }
  */
 export function scoreContentSignal(title = '', body = '') {
   const combined = `${title} ${body}`.trim();
@@ -46,8 +64,29 @@ export function scoreContentSignal(title = '', body = '') {
     }
   }
 
-  // Penalize excessive ALL-CAPS shouting words (>3 words of 5+ uppercase letters, excluding NFL acronyms)
-  const allowedAcronyms = new Set(['NFL', 'NFC', 'AFC', 'ESPN', 'CBS', 'NBC', 'DVOA', 'CPOE', 'RYOE', 'WOPR', 'OTAs', 'UDFA', 'EDGE', 'PFF']);
+  // Penalize excessive ALL-CAPS shouting words (5+ uppercase letters, excluding NFL/analytics/outlet acronyms)
+  const allowedAcronyms = new Set([
+    'NFL',
+    'NFC',
+    'AFC',
+    'ESPN',
+    'CBS',
+    'NBC',
+    'NFLPA',
+    'NBCSBA',
+    'DVOA',
+    'CPOE',
+    'RYOE',
+    'WOPR',
+    'YPRR',
+    'PBWR',
+    'RSWR',
+    'ADOT',
+    'OTAs',
+    'UDFA',
+    'EDGE',
+    'PFF'
+  ]);
   const shoutWords = (title.match(/\b[A-Z]{5,}\b/g) || []).filter(w => !allowedAcronyms.has(w));
   if (shoutWords.length >= 1) {
     fluffScore += shoutWords.length * 18;
@@ -147,4 +186,51 @@ export function filterNewsByUserPrefs(items = [], reportersById = new Map(), use
 
     return true;
   });
+}
+
+/**
+ * Computes a calibrated 0-100 salience score for ranking news items, beat posts, and synthesis sources.
+ * Weighs analytical signal vs. fluff, primary beat/insider authority, multi-source corroboration,
+ * breaking/injury urgency, and smooth exponential recency decay.
+ */
+export function computeNewsSalienceScore(
+  item = {},
+  { nowMs = Date.now(), reportersById = null, halfLifeHours = 18 } = {}
+) {
+  const title = item.headline || item.title || '';
+  const body = item.fullText || item.summary || item.text || '';
+  const scored =
+    typeof item.signalScore === 'number' && typeof item.fluffScore === 'number'
+      ? { signalScore: item.signalScore, fluffScore: item.fluffScore, isClickbait: Boolean(item.isClickbait) }
+      : scoreContentSignal(title, body);
+
+  if (scored.isClickbait || item.isClickbait) return 0;
+
+  let salience = scored.signalScore - scored.fluffScore * 0.55;
+
+  const repId = item.reporterId || item.citedReporterIds?.[0] || '';
+  const repObj = reportersById instanceof Map && repId ? reportersById.get(repId) : null;
+  if (repObj?.styleTag === 'opinion-hot-take') {
+    salience -= 12;
+  } else if (repObj?.styleTag === 'analytics-film' || repObj?.tier === 1 || PRIMARY_BEAT_REPORTER_IDS.has(repId)) {
+    salience += 10;
+  }
+
+  const corroboration =
+    Number(item.synthesizedFromCount) ||
+    (Array.isArray(item.citedReporterIds) ? item.citedReporterIds.length : 0) ||
+    (Array.isArray(item.mentionedPlayers) && item.mentionedPlayers.length > 0 ? 2 : 1);
+  salience += Math.min(12, Math.max(0, corroboration - 1) * 2.5);
+
+  if (item.isInGameInjury) salience += 24;
+  else if (item.isBreaking) salience += 14;
+
+  const pubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;
+  if (Number.isFinite(pubMs) && halfLifeHours > 0) {
+    const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
+    const decayFactor = Math.pow(0.5, ageHours / halfLifeHours);
+    salience = salience * (0.68 + 0.32 * decayFactor);
+  }
+
+  return Math.max(0, Math.min(100, Math.round(salience * 10) / 10));
 }

@@ -174,18 +174,71 @@ export function normalizeDisplayTopic(rawQuery = '') {
     .replace(/\breciever\b/gi, 'receiver');
 }
 
+const COMMON_ENGLISH_SURNAME_STOPLIST = new Set([
+  'ward',
+  'cook',
+  'west',
+  'long',
+  'hill',
+  'king',
+  'reed',
+  'hall',
+  'gray',
+  'wood',
+  'park',
+  'white',
+  'green',
+  'brown',
+  'young',
+  'scott',
+  'stout',
+  'height',
+  'bell',
+  'ford',
+  'grant',
+  'james',
+  'miles',
+  'price',
+  'smith',
+  'stone'
+]);
+
+function escapeRegexLiteral(s = '') {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export function parseTopicIntent(rawQuery = '', appData = {}) {
   const q = String(rawQuery || '').trim();
   const qLower = q.toLowerCase();
   const players = appData?.roster?.players || [];
 
+  const surnameCounts = new Map();
+  for (const p of players) {
+    const cleanParts = String(p.name || '')
+      .toLowerCase()
+      .replace(/\b(jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+      .trim()
+      .split(/\s+/);
+    const last = cleanParts[cleanParts.length - 1] || '';
+    if (last) surnameCounts.set(last, (surnameCounts.get(last) || 0) + 1);
+  }
+
   const matchedGroups = POSITION_GROUP_DEFINITIONS.filter(g => g.regex.test(qLower));
   const explicitlyNamedPlayers = players.filter(p => {
-    const full = String(p.name || '').toLowerCase();
-    const parts = full.replace(/\b(jr\.?|sr\.?|ii|iii|iv)\b/g, '').trim().split(/\s+/);
+    const full = String(p.name || '').toLowerCase().trim();
+    const strippedFull = full.replace(/\s+\b(jr\.?|sr\.?|ii|iii|iv|v)\b$/g, '').trim();
+    const parts = strippedFull.split(/\s+/);
     const last = parts[parts.length - 1] || '';
-    if (full && qLower.includes(full)) return true;
-    if (last.length >= 5 && new RegExp(`\\b${last.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(qLower)) {
+    if (
+      (full && new RegExp(`\\b${escapeRegexLiteral(full)}\\b`, 'i').test(qLower)) ||
+      (strippedFull.length >= 6 && new RegExp(`\\b${escapeRegexLiteral(strippedFull)}\\b`, 'i').test(qLower))
+    ) {
+      return true;
+    }
+    const isDistinctiveSurname =
+      !COMMON_ENGLISH_SURNAME_STOPLIST.has(last) &&
+      (last.length >= 5 || (last.length === 4 && surnameCounts.get(last) === 1));
+    if (isDistinctiveSurname && new RegExp(`\\b${escapeRegexLiteral(last)}\\b`, 'i').test(qLower)) {
       return true;
     }
     return false;
@@ -325,12 +378,28 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
     ...(appData?.news?.articles || []),
     ...(appData?.news?.socialPosts || [])
   ];
+  const seenNewsKeys = new Set();
   const matchedNews = [...liveSearchItems, ...staticFeedItems]
-    .filter(item => {
+    .map(item => {
       const hay = `${item.headline || ''} ${item.title || ''} ${item.summary || ''} ${item.text || ''}`.toLowerCase();
-      return keywords.length === 0 ? true : keywords.some(kw => hay.includes(kw));
+      const kwHits =
+        keywords.length === 0
+          ? 1
+          : keywords.reduce((cnt, kw) => (hay.includes(kw) ? cnt + 1 : cnt), 0);
+      const salience =
+        kwHits * 18 +
+        Number(item.signalScore || 68) +
+        (item.isInGameInjury ? 24 : item.isBreaking ? 14 : 0);
+      return { item, kwHits, salience, dedupeKey: (item.headline || item.title || item.text || '').toLowerCase().slice(0, 72) };
     })
-    .slice(0, 8);
+    .filter(row => {
+      if (row.kwHits <= 0 || !row.dedupeKey || seenNewsKeys.has(row.dedupeKey)) return false;
+      seenNewsKeys.add(row.dedupeKey);
+      return true;
+    })
+    .sort((a, b) => b.salience - a.salience)
+    .slice(0, 8)
+    .map(row => row.item);
 
   const cap26 = appData?.cap?.years?.['2026'] || {};
   const cap27 = appData?.cap?.years?.['2027'] || {};
@@ -849,14 +918,20 @@ export function buildDeepScoutingAnalysisMarkdown({
   }
 
   // Section 4: Multi-Year CBA Cap, Trade Fits & 2027 Horizon
+  const cap26Space = Number(d.cap26?.teamCapSpace ?? 35_164_858);
+  const cap27Space = Number(d.cap27?.teamCapSpace ?? -31_540_066);
+  const postRollover2027 = cap27Space + Math.max(0, cap26Space);
   const capLines = [
     `* **2026 → 2027 CBA Rollover Bridge**: San Francisco holds \`${formatCompactDollars(
-      d.cap26?.teamCapSpace || 35_164_858
+      cap26Space
     )}\` in 2026 Top-51 space (\`${formatCompactDollars(
       d.cap26?.effectiveCapSpace || 28_664_858
-    )}\` effective), which provides >\`$65M\` in annualized midseason 9/18ths base-salary trade capacity—but projects at \`${formatCompactDollars(
-      d.cap27?.teamCapSpace ?? -31_540_066
-    )}\` in 2027 cap space, making Article 13 dollar-for-dollar rollover essential.`,
+    )}\` effective), which provides >\`$65M\` in annualized midseason 9/18ths base-salary trade capacity—and converts a \`${formatCompactDollars(
+      cap27Space
+    )}\` nominal 2027 cap deficit into a **\`${formatCompactDollars(
+      postRollover2027,
+      true
+    )}\` net 2027 post-rollover balance** under CBA Article 13.`,
     `* **2027 Draft Capital**: **${d.draftPrep?.pickInventory?.length || 6} total picks** (${
       d.draftPrep?.tradedPicksNote || '2027 Rd 4 traded to IND for DT DeForest Buckner'
     }).`
@@ -884,11 +959,23 @@ export function buildDeepScoutingAnalysisMarkdown({
   const keyMatchup =
     d.matchup?.keyMatchupsMatrix?.[0]?.tacticalDetail ||
     'Leverage 21-personnel motion and four-man Wide-9 rush pressure to dictate third-down spacing.';
+  const rawSpread = String(d.matchup?.betting?.spread || '');
+  const rawOu = Number(d.matchup?.betting?.overUnder);
+  const spreadNumMatch = rawSpread.match(/([+-]?\d+(?:\.\d+)?)/);
+  let impliedScoreClause = '';
+  if (spreadNumMatch && Number.isFinite(rawOu) && rawOu > 25) {
+    const lineVal = Number(spreadNumMatch[1]);
+    const sfFav = /sf/i.test(rawSpread) ? lineVal < 0 : lineVal > 0;
+    const absSpread = Math.abs(lineVal);
+    const sfImplied = ((rawOu + (sfFav ? absSpread : -absSpread)) / 2).toFixed(1);
+    const oppImplied = ((rawOu - (sfFav ? absSpread : -absSpread)) / 2).toFixed(1);
+    impliedScoreClause = ` • Implied Score \`SF ${sfImplied} – ${oppImplied}\``;
+  }
   sections.push(
     `#### ${d.matchedNews.length > 0 ? '6' : '5'}. Week ${curWk} Matchup & Calibrated NFC Seeding Impact\n` +
       `* **Vs. ${oppName} (\`${d.matchup?.betting?.spread || 'SF Favored'}\`, O/U \`${
         d.matchup?.betting?.overUnder || '—'
-      }\`)**: ${keyMatchup}\n` +
+      }\`${impliedScoreClause})**: ${keyMatchup}\n` +
       `* **10,000-Run Calibrated Simulation**: Projected \`${d.sfOdds?.projectedWins ?? 12.0} Wins\` • Playoff Berth \`${
         d.sfOdds?.makePlayoffsPct ?? 93.0
       }%\` • Win NFC West \`${d.sfOdds?.winDivisionPct ?? 82.6}%\` • **#1 Seed Bye \`${

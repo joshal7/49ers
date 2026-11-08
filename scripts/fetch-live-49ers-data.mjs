@@ -1108,16 +1108,20 @@ async function main() {
   for (const p of rosterPlayers) {
     const cleanFull = stripSuffixName(p.name);
     const last = cleanFull.split(/\s+/).slice(-1)[0]?.replace(/[^a-zA-Z']/g, '').toLowerCase() || '';
-    if (last.length >= 5 && !COMMON_SURNAME_REQUIRE_FULL.has(last)) {
+    if (last.length >= 4 && !COMMON_SURNAME_REQUIRE_FULL.has(last)) {
       lastNameCounts.set(last, (lastNameCounts.get(last) || 0) + 1);
     }
   }
   for (const p of rosterPlayers) {
     const cleanFull = stripSuffixName(p.name);
     const last = cleanFull.split(/\s+/).slice(-1)[0]?.replace(/[^a-zA-Z']/g, '').toLowerCase() || '';
-    if (last.length >= 5 && lastNameCounts.get(last) === 1 && !COMMON_SURNAME_REQUIRE_FULL.has(last)) {
+    if (last.length >= 4 && lastNameCounts.get(last) === 1 && !COMMON_SURNAME_REQUIRE_FULL.has(last)) {
       uniqueLastNameIndex.set(last, p);
     }
+  }
+
+  function escapeMatchRegex(s = '') {
+    return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   function matchMentionedPlayers(text = '', maxCount = 3) {
@@ -1125,6 +1129,7 @@ async function main() {
       .replace(/[’‘]/g, "'")
       .toLowerCase();
     if (!hay) return [];
+    const hayNoApos = hay.replace(/'/g, '');
     const found = [];
     const seen = new Set();
     const pushPlayer = p => {
@@ -1144,10 +1149,17 @@ async function main() {
       const fullLower = p.name.toLowerCase();
       const strippedLower = stripSuffixName(p.name).toLowerCase();
       const noAposLower = strippedLower.replace(/'/g, '');
+      const fullRe = new RegExp(`\\b${escapeMatchRegex(fullLower)}\\b`, 'i');
+      const strippedRe = strippedLower.includes(' ')
+        ? new RegExp(`\\b${escapeMatchRegex(strippedLower)}\\b`, 'i')
+        : null;
+      const noAposRe = noAposLower.includes(' ')
+        ? new RegExp(`\\b${escapeMatchRegex(noAposLower)}\\b`, 'i')
+        : null;
       if (
-        hay.includes(fullLower) ||
-        (strippedLower.includes(' ') && hay.includes(strippedLower)) ||
-        (noAposLower.includes(' ') && hay.replace(/'/g, '').includes(noAposLower)) ||
+        fullRe.test(hay) ||
+        (strippedRe && strippedRe.test(hay)) ||
+        (noAposRe && noAposRe.test(hayNoApos)) ||
         (p.name === 'Deebo Samuel Sr.' && /\bdeebo\b/i.test(hay)) ||
         (p.name === 'Christian McCaffrey' && /\bcmc\b/i.test(hay))
       ) {
@@ -1670,9 +1682,16 @@ async function main() {
     if (!title || !link || isPaywalledPublisher(resolvedOutlet, sourceDomainUrl)) continue;
 
     const lowerCombined = `${title} ${resolvedOutlet}`.toLowerCase();
-    const matchedRep = reportersList.find(
-      r => lowerCombined.includes(r.name.toLowerCase()) || lowerCombined.includes(r.name.split(' ').slice(-1)[0].toLowerCase())
-    );
+    const AMBIGUOUS_REPORTER_SURNAMES = new Set(['branch', 'chan', 'lee', 'grant', 'young', 'posey', 'cohn', 'king']);
+    const matchedRep = reportersList.find(r => {
+      const fullLower = r.name.toLowerCase();
+      if (new RegExp(`\\b${escapeMatchRegex(fullLower)}\\b`, 'i').test(lowerCombined)) return true;
+      const surname = fullLower.split(/\s+/).slice(-1)[0] || '';
+      if (surname.length >= 6 && !AMBIGUOUS_REPORTER_SURNAMES.has(surname)) {
+        return new RegExp(`\\b${escapeMatchRegex(surname)}\\b`, 'i').test(lowerCombined);
+      }
+      return false;
+    });
     const resolvedAuthor = matchedRep?.name || resolvedOutlet;
     const pubIso = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
     const sig = scoreContentSignal(title, resolvedOutlet);

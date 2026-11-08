@@ -52,6 +52,48 @@ export const JARGON_GLOSSARY = {
     definition:
       'Average air-yard distance downfield of passes thrown into a defender’s coverage area.'
   },
+  yprr: {
+    term: 'YPRR (Yards Per Route Run)',
+    category: 'Analytics',
+    definition:
+      'Total receiving yards divided by pass routes run. Isolates per-route separation and efficiency independent of team pass volume or run-blocking snaps.'
+  },
+  pbwr: {
+    term: 'PBWR (Pass Block Win Rate)',
+    category: 'Analytics',
+    definition:
+      'Player-tracking trench metric measuring the percentage of pass-rush snaps an offensive lineman sustains his block for at least 2.5 seconds.'
+  },
+  rswr: {
+    term: 'RSWR (Run Stop Win Rate)',
+    category: 'Analytics',
+    definition:
+      'Player-tracking trench metric measuring how often a defender beats his run block, disrupts the point of attack, or contains the edge within 2.5 seconds.'
+  },
+  sov: {
+    term: 'SOV (Strength of Victory)',
+    category: 'Analytics',
+    definition:
+      'Official NFL tiebreaker (Step 5 in division, Step 4 in Wild Card) equal to the combined won-lost-tied percentage of all opponents a team has defeated.'
+  },
+  sos: {
+    term: 'SOS (Strength of Schedule)',
+    category: 'Analytics',
+    definition:
+      'Official NFL tiebreaker equal to the combined won-lost-tied percentage of all 17 opponents on a team’s regular-season schedule.'
+  },
+  article_13: {
+    term: 'CBA Article 13 (Cap Rollover)',
+    category: 'Salary Cap / CBA',
+    definition:
+      'NFL Collective Bargaining Agreement rule allowing clubs to carry over 100% of unused prior-year salary cap room dollar-for-dollar onto next season’s adjusted cap ceiling.'
+  },
+  concussion_protocol: {
+    term: 'NFL 5-Step Concussion Protocol',
+    category: 'Health & Roster',
+    definition:
+      'Mandatory NFL/NFLPA 5-phase return-to-participation progression requiring symptom-free exercise, full football practice, and Independent Neurological Consultant (INC) clearance before game action.'
+  },
   tfl: {
     term: 'TFL (Tackle for Loss)',
     category: 'Film & Box',
@@ -452,6 +494,14 @@ const PHRASE_ALIASES = [
   ['RACR', 'racr'],
   ['RYOE', 'ryoe'],
   ['DADOT', 'dadot'],
+  ['YPRR', 'yprr'],
+  ['PBWR', 'pbwr'],
+  ['RSWR', 'rswr'],
+  ['SOV', 'sov'],
+  ['SOS', 'sos'],
+  ['Article 13', 'article_13'],
+  ['concussion protocol', 'concussion_protocol'],
+  ['Concussion Protocol', 'concussion_protocol'],
   ['YAC', 'yac'],
   ['RAS', 'ras'],
   ['TFL', 'tfl'],

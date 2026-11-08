@@ -23,6 +23,7 @@ import {
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
+import { computeNewsSalienceScore } from '../engine/antiFluffFilter.js';
 import {
   buildMockDraftTeamUrl,
   buildPfrTeamDraftUrl,
@@ -121,8 +122,16 @@ function renderSingleDashboardCard({
   switch (block.id) {
     case 'news_briefs': {
       const top2 = (filteredClusters || []).slice(0, 2);
+      const rankHomeSalience = (a, b) => {
+        const bpDiff = Number(b.breakingPriority || 0) - Number(a.breakingPriority || 0);
+        if (bpDiff !== 0) return bpDiff;
+        const salDiff = computeNewsSalienceScore(b) - computeNewsSalienceScore(a);
+        if (Math.abs(salDiff) >= 1.5) return salDiff;
+        return new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime();
+      };
       const topTweets = rawList
         .filter(it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null))
+        .sort(rankHomeSalience)
         .slice(0, 3);
       const topArticles = rawList
         .filter(
@@ -131,6 +140,7 @@ function renderSingleDashboardCard({
             sanitizeExternalUrl(it.url, null) &&
             !isPaywalledPublisher(it.outletName, it.url)
         )
+        .sort(rankHomeSalience)
         .slice(0, 3);
 
       bodyHtml = `

@@ -3191,6 +3191,325 @@ test('New-user 1-time Gemini API key step-by-step guide renders above setup box 
   }
 });
 
+console.log('\n=== [8/8] Algorithmic Precision, Statistical Calibration & Salience Audit QA ===');
+
+test('Injury model handles beat-note negations, NFL 5-Step Concussion Protocol & late-week FP->LP downgrades', () => {
+  const negatedExpected = computePlayerPlayProbability({
+    name: 'Ricky Pearsall',
+    gameStatus: 'Questionable',
+    injuryType: 'Hamstring',
+    wed: 'DNP',
+    thu: 'LP',
+    fri: 'LP',
+    beatNote: 'Ricky Pearsall is not expected to play Sunday despite logging limited reps.'
+  });
+  assert.ok(
+    negatedExpected.probabilityPct <= 20,
+    `Negated "not expected to play" must cap <=20%, got ${negatedExpected.probabilityPct}%`
+  );
+
+  const negatedMiss = computePlayerPlayProbability({
+    name: 'Nick Bosa',
+    injuryType: 'Hip',
+    wed: 'LP',
+    thu: 'FP',
+    fri: 'FP',
+    beatNote: 'Neither Nick Bosa nor Fred Warner will miss Sunday against Las Vegas.'
+  });
+  assert.ok(
+    negatedMiss.probabilityPct >= 85,
+    `"Neither ... will miss" must not trigger 0% Out, got ${negatedMiss.probabilityPct}%`
+  );
+
+  // NFL 5-Step Concussion Protocol: ironman toughness prior cannot override Step-5 INC clearance
+  const warnerConcussionLp = computePlayerPlayProbability({
+    name: 'Fred Warner',
+    gameStatus: 'Questionable',
+    injuryType: 'Concussion',
+    wed: 'DNP',
+    thu: 'LP',
+    fri: 'LP'
+  });
+  assert.ok(
+    warnerConcussionLp.probabilityPct <= 45,
+    `Concussion Friday LP without INC clearance must stay <=45%, got ${warnerConcussionLp.probabilityPct}%`
+  );
+
+  const warnerConcussionCleared = computePlayerPlayProbability({
+    name: 'Fred Warner',
+    gameStatus: 'Questionable',
+    injuryType: 'Concussion',
+    wed: 'DNP',
+    thu: 'LP',
+    fri: 'FP',
+    beatNote: 'Fred Warner cleared the NFL concussion protocol on Friday.'
+  });
+  assert.ok(warnerConcussionCleared.probabilityPct >= 90);
+
+  // Practice trajectory directionality: FP -> FP -> LP downgrade vs DNP -> LP -> LP upward ramp
+  const fridayDowngrade = computePlayerPlayProbability({
+    name: 'Jauan Jennings',
+    gameStatus: 'Questionable',
+    injuryType: 'Groin',
+    wed: 'FP',
+    thu: 'FP',
+    fri: 'LP'
+  });
+  const upwardRamp = computePlayerPlayProbability({
+    name: 'Jauan Jennings',
+    gameStatus: 'Questionable',
+    injuryType: 'Groin',
+    wed: 'DNP',
+    thu: 'LP',
+    fri: 'LP'
+  });
+  assert.ok(
+    fridayDowngrade.probabilityPct + 12 <= upwardRamp.probabilityPct,
+    `Friday downgrade (${fridayDowngrade.probabilityPct}%) must be >=12% lower than upward ramp (${upwardRamp.probabilityPct}%)`
+  );
+});
+
+await testAsync('Playoff Monte Carlo enforces truncated-normal upset margins, exact combined-record SOV, Pythagorean blend & Rooting Guide salience', async () => {
+  const { sampleConditionalVictoryMargin } = await import('../src/engine/playoffMonteCarlo.js');
+
+  // Heavy favorite (+12) winning should average a much larger margin than a 12-pt underdog (-12) pulling an upset
+  const favWinMid = sampleConditionalVictoryMargin(12, 0.5);
+  const dogUpsetMid = sampleConditionalVictoryMargin(-12, 0.5);
+  assert.ok(favWinMid >= 13, `Expected favorite win margin >=13, got ${favWinMid}`);
+  assert.ok(dogUpsetMid >= 1 && dogUpsetMid <= 7, `Expected tight underdog upset margin 1..7, got ${dogUpsetMid}`);
+  assert.ok(favWinMid > dogUpsetMid + 7);
+
+  // Morey 2.37 Pythagorean power rating blend works cleanly when pointsFor/pointsAgainst are provided
+  const pythElo = computeCalibratedTeamPowerRating({
+    wins: 6,
+    losses: 1,
+    pointDiff: 58,
+    pointsFor: 205,
+    pointsAgainst: 147,
+    netEpaPerGame: 6.4
+  });
+  assert.ok(pythElo > 1540 && pythElo < 1640, `Unexpected Pythagorean Elo: ${pythElo}`);
+
+  // Rooting Guide Leverage includes homeWinProbPct, expectedImpactScore, leverageTag & leverageReason
+  const lev = computeRootingGuideLeverage(simInputs, 6);
+  assert.ok(lev.length >= 3);
+  for (const row of lev) {
+    assert.ok(row.homeWinProbPct > 1 && row.homeWinProbPct < 99);
+    assert.ok(typeof row.expectedImpactScore === 'number' && row.expectedImpactScore >= 0);
+    assert.ok(row.leverageTag && row.leverageReason);
+  }
+});
+
+test('Cap Simulator computes CBA Article 13 Post-Rollover 2027 net space, 2028 cut/trade deltas & Post-June 1 timing notes', () => {
+  const baseSim = simulateCapScenario(capData, {});
+  const expectedPostRoll =
+    capData.years['2027'].teamCapSpace + Math.max(0, capData.years['2026'].teamCapSpace);
+  assert.equal(baseSim.summary.updatedNextYearWithRollover, expectedPostRoll);
+  assert.ok(baseSim.summary.updatedNextYearWithRollover > 0, 'SF 2026 rollover turns 2027 net balance positive');
+
+  const purdy = capData.players.find(p => p.name === 'Brock Purdy');
+  const save26 = purdy.contractsByYear['2026'].transactions.restructure.capSavings;
+  const restSim = simulateCapScenario(capData, { [purdy.id]: 'restructure' });
+  assert.equal(
+    restSim.summary.netTwoYearHorizonDelta,
+    save26 - Math.round(save26 / 4),
+    'Article 13 rollover carries 100% of 2026 restructure savings while 2027 absorbs 25% proration'
+  );
+
+  // Post-June 1 single cut records cbaTimingNotes without triggering >2 rule warning, and credits 2028 cleared cap
+  const candidate = capData.players.find(
+    p =>
+      p.contractsByYear?.['2026']?.transactions?.june_1_cut?.capSavings > 0 &&
+      (p.contractsByYear?.['2028']?.capNumber || 0) > 0
+  );
+  if (candidate) {
+    const j1Sim = simulateCapScenario(capData, { [candidate.id]: 'june_1_cut' });
+    assert.equal(j1Sim.warnings.length, 0);
+    assert.ok(j1Sim.cbaTimingNotes.length >= 1);
+    assert.equal(j1Sim.summary.yearPlus2CapDelta, candidate.contractsByYear['2028'].capNumber);
+  }
+});
+
+await testAsync('Anti-Fluff Salience Scorer & Breaking Classifier block mock-trade and media-release false positives', async () => {
+  const { computeNewsSalienceScore } = await import('../src/engine/antiFluffFilter.js');
+  const nowMs = Date.now();
+  const recentIso = new Date(nowMs - 20 * 60_000).toISOString();
+
+  // Media / PR "released" and "mock trade" must NOT trigger BREAKING
+  const mediaRelease = classifyBreakingItem(
+    { title: '49ers released Week 9 hype video and uniform schedule ahead of Sunday', publishedAt: recentIso },
+    nowMs
+  );
+  assert.equal(mediaRelease.isBreaking, false);
+
+  const mockTrade = classifyBreakingItem(
+    { title: 'Blockbuster mock trade proposal: 49ers acquiring Myles Garrett in wild pitch', publishedAt: recentIso },
+    nowMs
+  );
+  assert.equal(mockTrade.isBreaking, false);
+
+  // Genuine roster transaction "released WR" and in-game medical tent DO trigger BREAKING
+  const realRelease = classifyBreakingItem(
+    { title: '49ers have released WR Chris Conley from the active roster per source', publishedAt: recentIso },
+    nowMs
+  );
+  assert.equal(realRelease.isBreaking, true);
+
+  // Acronym check: NFLPA & NBCSBA should not trigger ALL-CAPS shouting fluff penalty
+  const acronymClean = scoreContentSignal(
+    'NBCSBA & NFLPA ledger breakdown: 49ers carry $35.16M in Top-51 space under Article 13',
+    'PBWR and YPRR splits in 21 personnel.'
+  );
+  assert.equal(acronymClean.fluffScore, 0);
+  assert.ok(acronymClean.signalScore >= 75);
+
+  const highSalience = computeNewsSalienceScore(
+    {
+      title: 'Brock Purdy posts +0.31 EPA/play vs two-high shells on All-22 film',
+      reporterId: 'matt_maiocco',
+      publishedAt: recentIso,
+      synthesizedFromCount: 4
+    },
+    { nowMs }
+  );
+  const staleHotTake = computeNewsSalienceScore(
+    {
+      title: 'Why everyone is overreacting this week',
+      publishedAt: new Date(nowMs - 72 * 3_600_000).toISOString()
+    },
+    { nowMs }
+  );
+  assert.ok(highSalience > staleHotTake + 35, `Expected highSalience (${highSalience}) >> staleHotTake (${staleHotTake})`);
+});
+
+await testAsync('Deep Research 4-letter surname resolution, client entity word-boundary guard, Combine Spider & word-boundary source links', async () => {
+  const { parseTopicIntent, buildDeepScoutingAnalysisMarkdown } = await import('../src/engine/deepResearchEngine.js');
+  const { matchPlayersClient } = await import('../src/services/dataService.js');
+  const { buildCombineIndexer } = await import('../scripts/lib/combineSpider.mjs');
+
+  const appDataBundle = {
+    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+    cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+  };
+
+  // 4-letter unique roster surnames (Bosa, Puni) resolve while English common words ("white", "west") do not
+  const bosaIntent = parseTopicIntent('Bosa Wide-9 pass rush win rate', appDataBundle);
+  assert.ok(bosaIntent.explicitlyNamedPlayers.some(p => p.name === 'Nick Bosa'));
+
+  const puniIntent = parseTopicIntent('Puni run blocking at right guard', appDataBundle);
+  assert.ok(puniIntent.explicitlyNamedPlayers.some(p => p.name === 'Dominick Puni'));
+
+  const commonWordsIntent = parseTopicIntent('white jersey in NFC West', appDataBundle);
+  assert.ok(!commonWordsIntent.explicitlyNamedPlayers.some(p => p.name === 'Keion White'));
+
+  const md = buildDeepScoutingAnalysisMarkdown({ query: 'Bosa and cap rollover', appData: appDataBundle });
+  assert.ok(md.includes('net 2027 post-rollover balance'), 'Markdown must surface CBA Article 13 net post-rollover balance');
+  assert.ok(md.includes('Implied Score'), 'Markdown must surface Vegas implied score');
+
+  // Client tweet entity matcher: 49ers beat post resolves unique surnames; non-SF national insider post avoids surname homonyms
+  const beatMatches = matchPlayersClient(
+    'Purdy connected with Kittle and Pearsall while Puni anchored RG.',
+    appDataBundle.roster.players,
+    12,
+    { allowUniqueSurnames: true }
+  );
+  const beatNames = beatMatches.map(m => m.name);
+  assert.ok(beatNames.includes('Brock Purdy') && beatNames.includes('George Kittle') && beatNames.includes('Dominick Puni'));
+
+  const nationalNonSfMatches = matchPlayersClient(
+    'Bills pass rusher Bosa logged two sacks on Sunday.',
+    appDataBundle.roster.players,
+    12,
+    { allowUniqueSurnames: false }
+  );
+  assert.equal(nationalNonSfMatches.length, 0, 'National non-SF post must not match Nick Bosa on bare surname');
+
+  // Combine Spider suffix normalization & position disambiguation
+  const indexer = buildCombineIndexer([
+    { player_name: 'Deebo Samuel', pos: 'WR', draft_year: 2019, school: 'South Carolina', ht: '5-11', wt: 214, forty: 4.48, vertical: 39.0, broad_jump: 122, cone: 7.03, shuttle: 4.14, bench: 15 },
+    { player_name: 'Deebo Samuel', pos: 'DT', draft_year: 2001, school: 'State', ht: '6-3', wt: 305, forty: 5.15, vertical: 27.0, broad_jump: 102, cone: 7.80, shuttle: 4.75, bench: 28 },
+    { player_name: 'AJ Brown', pos: 'WR', draft_year: 2019, school: 'Ole Miss', ht: '6-0', wt: 226, forty: 4.49, vertical: 36.5, broad_jump: 120, cone: 7.0, shuttle: 4.25, bench: 19 },
+    { player_name: 'DJ Moore', pos: 'WR', draft_year: 2018, school: 'Maryland', ht: '6-0', wt: 210, forty: 4.42, vertical: 39.5, broad_jump: 132, cone: 6.95, shuttle: 4.07, bench: 15 },
+    { player_name: 'Terry McLaurin', pos: 'WR', draft_year: 2019, school: 'Ohio State', ht: '6-0', wt: 208, forty: 4.35, vertical: 37.5, broad_jump: 125, cone: 7.01, shuttle: 4.15, bench: 18 },
+    { player_name: 'Average Wideout', pos: 'WR', draft_year: 2020, school: 'Tech', ht: '5-10', wt: 190, forty: 4.62, vertical: 32.0, broad_jump: 114, cone: 7.22, shuttle: 4.38, bench: 11 }
+  ]);
+  const deeboProfile = indexer.buildPlayerSpiderProfile({
+    name: 'Deebo Samuel Sr.',
+    position: 'WR',
+    heightIn: 71,
+    weightLb: 215
+  });
+  assert.equal(deeboProfile.sourceType, 'NFL Combine Official', 'Suffix Sr. must still match Combine WR Deebo Samuel');
+  assert.equal(deeboProfile.axes.find(a => a.key === 'forty').value, 4.48, 'Must pick WR Combine entry over homonym DT');
+
+  // Word-boundary source-link matching in seasonalContentBuilder ('cap' must NOT match 'recap' or 'captain')
+  const dynamicBriefs = await buildClusteredNewsBriefs(
+    [],
+    [
+      {
+        type: 'article',
+        title: 'Week 9 game recap: team captain praises effort',
+        summary: 'Full locker room recap.',
+        url: 'https://www.espn.com/nfl/story/_/id/111/recap-only',
+        outletName: 'ESPN',
+        signalScore: 70
+      },
+      {
+        type: 'article',
+        title: '49ers salary cap rollover and Lynch contract blueprint',
+        summary: 'Article 13 cap analysis.',
+        url: 'https://www.espn.com/nfl/story/_/id/222/real-cap-story',
+        outletName: 'ESPN',
+        signalScore: 90
+      }
+    ],
+    appDataBundle.roster.players,
+    { seasonYear: 2026, currentWeek: 10, teamRecord: '7-1', upcomingMatchup: { oppAbbr: 'SEA', oppName: 'Seattle Seahawks', betting: { spread: 'SF -4.5', overUnder: 47.5 } } }
+  );
+  const capCluster = dynamicBriefs.find(c => c.id.startsWith('cluster_cap_horizon'));
+  assert.ok(capCluster, 'Expected dynamic cap cluster for Week 10');
+  assert.ok(
+    !capCluster.sourceLinks.some(l => l.url.includes('recap-only')),
+    '"cap" keyword must NOT match "recap" or "captain"'
+  );
+  assert.ok(
+    capCluster.sourceLinks.some(l => l.url.includes('real-cap-story')),
+    '"cap" keyword must match genuine salary cap article'
+  );
+
+  // Jargon Glossary & TTS Speech Humanizer expanded analytical/CBA/medical coverage
+  for (const key of ['yprr', 'pbwr', 'rswr', 'sov', 'sos', 'article_13', 'concussion_protocol']) {
+    assert.ok(getJargonEntry(key), `Missing glossary entry for ${key}`);
+  }
+  const annotated = annotateJargonPlainText(
+    'Pearsall posted 2.4 YPRR behind 68% PBWR while Article 13 rollover and concussion protocol shape SOV.'
+  );
+  assert.ok(
+    annotated.includes('data-jargon="yprr"') &&
+      annotated.includes('data-jargon="pbwr"') &&
+      annotated.includes('data-jargon="article_13"') &&
+      annotated.includes('data-jargon="concussion_protocol"') &&
+      annotated.includes('data-jargon="sov"'),
+    `Expected inline jargon annotations for new terms, got: ${annotated}`
+  );
+  const spokenSample = humanizeNflTextForTts(
+    'Mustapha and Guerendo give SF +$3.62M post-rollover, 2.4 YPRR, 68% PBWR, and tiebreaker SOV.'
+  );
+  assert.ok(
+    spokenSample.includes('Moo-stah-fuh') &&
+      spokenSample.includes('Guh-ren-doh') &&
+      spokenSample.includes('plus 3.62 million dollars') &&
+      spokenSample.includes('yards per route run') &&
+      spokenSample.includes('pass block win rate') &&
+      spokenSample.includes('strength of victory'),
+    `Unexpected spoken humanization output: ${spokenSample}`
+  );
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

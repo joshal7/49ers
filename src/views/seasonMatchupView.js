@@ -980,7 +980,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
                   </div>
                   <div style="font-size:11.5px;color:var(--text-secondary)">
                     Root for <strong style="color:var(--emerald)">${esc(g.rootForTeam)}</strong> •
-                    <span class="mono">+${g.primaryDeltaPct}% ${esc(g.primaryMetric)} swing</span>
+                    <span class="mono">+${g.primaryDeltaPct}% ${esc(g.primaryMetric)} swing</span>${g.leverageTag ? ` <span style="color:var(--text-muted)">(${esc(g.leverageTag)})</span>` : ''}
                   </div>
                 </div>
                 <div class="scenario-toggle-pair">

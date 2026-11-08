@@ -9,8 +9,14 @@ export const SHORT_TWEET_FULL_TEXT_LIMIT = 320;
 const IN_GAME_INJURY_RETURN_REGEX =
   /\b(questionable to return|probable to return|doubtful to return|ruled out for the rest|out for the rest of the game|will not return|cleared to return|back in the game|returning to the game|returned to the game|headed to the locker room|going to the locker room|went to the locker room|blue medical tent|medical tent|evaluated for a concussion|concussion evaluation|carted off|limped off|helped off the field|in-game injury|injury update)\b/i;
 
+const SPECULATIVE_OR_RETROSPECTIVE_EXCLUSION_REGEX =
+  /\b(mock trade|trade proposal|trade idea|trade pitch|hypothetical|what if|flashback|on this day|\d+\s+years ago|way-too-early|mailbag|merch|promo code)\b/i;
+
+const NON_TRANSACTION_RELEASE_REGEX =
+  /\breleased\s+(?:a\s+|an\s+|their\s+|the\s+|its\s+|his\s+|her\s+|new\s+|official\s+|week\s+\d+\s+)?(?:statement|video|hype video|trailer|podcast|episode|schedule|depth chart|uniform|uniforms|jersey|renderings|report|rankings|grades|mock|list|photos|highlights|mic'd up)\b/i;
+
 const BREAKING_ROSTER_OR_STATUS_REGEX =
-  /(\bbreaking\b|just in:|per source|per sources|\btrade:|traded to|acquiring|re-acquiring|has been traded|seeking reinstatement|reinstated|activated from ir|activated off ir|placed on injured reserve|placed on ir|game status report|officially active|officially inactive|ruled out|unlikely to play|expected to play|good to go|signed to the active roster|elevated from the practice squad|waived|released)/i;
+  /(\bbreaking\b|just in:|per source|per sources|\btrade:|traded to|acquiring|re-acquiring|has been traded|seeking reinstatement|reinstated|activated from ir|activated off ir|placed on injured reserve|placed on ir|game status report|officially active|officially inactive|ruled out|unlikely to play|expected to play|good to go|signed to the active roster|elevated from the practice squad|\bwaived\b|has been released|have released|officially released|released from (?:ir|injured reserve|the practice squad)|\breleased\s+(?:veteran\s+|rookie\s+)?(?:qb|rb|fb|wr|te|ol|ot|og|c|dl|de|dt|nt|edge|lb|ilb|olb|cb|db|s|k|p|ls)\b)/i;
 
 /**
  * Classifies a tweet or news item for breaking / in-game injury priority.
@@ -20,8 +26,12 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
   const pubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;
   const ageHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 999;
 
-  const matchesInGame = IN_GAME_INJURY_RETURN_REGEX.test(combined);
-  const matchesBreaking = BREAKING_ROSTER_OR_STATUS_REGEX.test(combined);
+  const isSpeculative = SPECULATIVE_OR_RETROSPECTIVE_EXCLUSION_REGEX.test(combined);
+  const matchesInGame = !isSpeculative && IN_GAME_INJURY_RETURN_REGEX.test(combined);
+  const matchesBreaking =
+    !isSpeculative &&
+    !NON_TRANSACTION_RELEASE_REGEX.test(combined) &&
+    BREAKING_ROSTER_OR_STATUS_REGEX.test(combined);
 
   if (matchesInGame && ageHours <= 18) {
     return {
@@ -43,8 +53,8 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
     };
   }
 
-  // Respect explicit upstream flag if still fresh (<24h)
-  if (item.isBreaking && ageHours <= 24) {
+  // Respect explicit upstream flag if still fresh (<24h) and non-speculative
+  if (item.isBreaking && !isSpeculative && ageHours <= 24) {
     return {
       isBreaking: true,
       isInGameInjury: Boolean(item.isInGameInjury),
@@ -65,7 +75,8 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
 
 /**
  * Sorts a list of tweets/articles so fresh breaking news & in-game injury return updates
- * rise straight to the top, followed by newest-first chronological ordering.
+ * rise straight to the top, followed by newest-first ordering (with signalScore tie-breaking
+ * for nearly simultaneous posts within 5 minutes).
  */
 export function sortNewsWithBreakingPriority(items = [], nowMs = Date.now(), { activeWindowHours = 18 } = {}) {
   return [...items]
@@ -84,6 +95,10 @@ export function sortNewsWithBreakingPriority(items = [], nowMs = Date.now(), { a
       if (prioDiff !== 0) return prioDiff;
       const aMs = new Date(a.publishedAt || 0).getTime() || 0;
       const bMs = new Date(b.publishedAt || 0).getTime() || 0;
+      if (Math.abs(bMs - aMs) <= 300_000) {
+        const sigDiff = (Number(b.signalScore) || 0) - (Number(a.signalScore) || 0);
+        if (Math.abs(sigDiff) >= 8) return sigDiff;
+      }
       return bMs - aMs;
     });
 }

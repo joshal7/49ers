@@ -238,8 +238,58 @@ export const CURATED_NFL_PLAYER_PRIORS = {
   ...CURATED_49ERS_PLAYER_PRIORS
 };
 
-const SOFT_TISSUE_KEYWORDS = ['hamstring', 'calf', 'groin', 'quad', 'achilles', 'oblique', 'high ankle'];
+const SOFT_TISSUE_KEYWORDS = ['hamstring', 'calf', 'groin', 'quad', 'achilles', 'oblique', 'adductor', 'hip flexor'];
+const HIGH_CAUTION_STRUCTURAL_KEYWORDS = [
+  'high ankle',
+  'high-ankle',
+  'syndesmosis',
+  'turf toe',
+  'lisfranc',
+  'mcl',
+  'pcl',
+  'meniscus',
+  'pectoral'
+];
 const MINOR_PAIN_TOLERANCE_KEYWORDS = ['finger', 'thumb', 'hand', 'wrist', 'rib', 'shoulder', 'nose', 'illness'];
+
+function hasAffirmativeRuledOutSignal(beatNote = '') {
+  if (!beatNote) return false;
+  if (/\bplaced on injured reserve\b/i.test(beatNote)) return true;
+  if (/\bruled out\b/i.test(beatNote) && !/\b(?:not|n't|hasn't been|has not been|haven't|never)\s+ruled out\b/i.test(beatNote)) {
+    return true;
+  }
+  if (
+    /\bwill miss\s+/i.test(beatNote) &&
+    !/\b(?:neither\b[^.;]{0,50}\bwill miss|(?:unlikely|doubtful|not|never)\b[^.;]{0,28}\bwill miss|won't miss|will not miss)\b/i.test(
+      beatNote
+    )
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function hasNegativePlayConsensusSignal(beatNote = '') {
+  if (!beatNote) return false;
+  return /\b(?:long shot|unlikely to (?:play|suit up|be activated)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be activated)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
+    beatNote
+  );
+}
+
+function hasAffirmativePlayOrActivationSignal(beatNote = '') {
+  if (!beatNote || hasNegativePlayConsensusSignal(beatNote)) return false;
+  return /\b(?:expected to play|on track to play|expected to suit up|likely will be activated|expected to be activated)\b/i.test(
+    beatNote
+  );
+}
+
+function hasClearedConcussionProtocolSignal(beatNote = '') {
+  if (!beatNote) return false;
+  return (
+    /\b(?:cleared|exited|passed|out of)\s+(?:the\s+)?(?:nfl'?s?\s+)?concussion protocol\b/i.test(beatNote) &&
+    !/\b(?:not|n't|yet to be|hasn't|has not)\s+(?:cleared|exited|passed)\b/i.test(beatNote)
+  );
+}
 
 /**
  * Normalizes a single day's practice string into a canonical code:
@@ -466,18 +516,19 @@ export function computePlayerPlayProbability(input = {}) {
     statusRaw === 'injured reserve';
 
   const beatNoteSignalsQuestionableActivation =
-    beatNote.includes('listed as questionable') ||
-    beatNote.includes('questionable for sunday') ||
-    beatNote.includes('questionable ahead of') ||
-    beatNote.includes('likely will be activated') ||
-    beatNote.includes('expected to be activated');
+    !hasNegativePlayConsensusSignal(beatNote) &&
+    (beatNote.includes('listed as questionable') ||
+      beatNote.includes('questionable for sunday') ||
+      beatNote.includes('questionable ahead of') ||
+      hasAffirmativePlayOrActivationSignal(beatNote));
+
+  const affirmativeRuledOut = hasAffirmativeRuledOutSignal(beatNote);
 
   // 21-day practice window opened + officially Questionable (via explicit caller flag, official Questionable tag, or beat note)
   const isIrReturnQuestionable =
     !isSeasonEndingFlag &&
     !isReinstatementFlag &&
-    !beatNote.includes('ruled out') &&
-    !beatNote.includes('will miss') &&
+    !affirmativeRuledOut &&
     statusRaw !== 'out' &&
     statusRaw !== 'doubtful' &&
     (Boolean(input.isIrReturnQuestionable) ||
@@ -497,9 +548,7 @@ export function computePlayerPlayProbability(input = {}) {
       statusRaw.includes('reserve / pup') ||
       statusRaw === 'pup' ||
       statusRaw === 'suspended' ||
-      beatNote.includes('ruled out') ||
-      beatNote.includes('will miss ') ||
-      beatNote.includes('placed on injured reserve'))
+      affirmativeRuledOut)
   ) {
     let badgeLabel = '0% • Out';
     if (isSeasonEndingFlag) {
@@ -537,7 +586,10 @@ export function computePlayerPlayProbability(input = {}) {
 
   if (isIrReturnQuestionable) {
     factors.push('21-day IR practice window active; officially listed Questionable for activation');
-    if (beatNote.includes('likely will be activated') || beatNote.includes('expected to be activated')) {
+    if (
+      !hasNegativePlayConsensusSignal(beatNote) &&
+      (beatNote.includes('likely will be activated') || beatNote.includes('expected to be activated'))
+    ) {
       factors.push('Coaching staff signaled likely roster activation ahead of kickoff');
     }
   }
@@ -554,7 +606,8 @@ export function computePlayerPlayProbability(input = {}) {
     thu === 'NONE' &&
     fri === 'NONE' &&
     !beatNote.includes('questionable') &&
-    !beatNote.includes('doubtful')
+    !beatNote.includes('doubtful') &&
+    !hasNegativePlayConsensusSignal(beatNote)
   ) {
     return {
       probabilityPct: 99,
@@ -572,7 +625,7 @@ export function computePlayerPlayProbability(input = {}) {
     (prior.isVeteranRestHabitual &&
       (wed === 'DNP_REST' || (wed === 'DNP' && (thu === 'FP' || fri === 'FP') && !injuryType)));
 
-  if (isPureVetRest && statusRaw !== 'doubtful') {
+  if (isPureVetRest && statusRaw !== 'doubtful' && !hasNegativePlayConsensusSignal(beatNote)) {
     factors.push(`Habitual Veteran Rest prior (${name || 'Veteran'} maintenance schedule)`);
     return {
       probabilityPct: 98,
@@ -583,27 +636,59 @@ export function computePlayerPlayProbability(input = {}) {
     };
   }
 
-  // 4. Base Probability from Game Designation or Practice Progression
+  const isConcussion =
+    injuryLower.includes('concussion') || /\bconcussion protocol\b/i.test(beatNote);
+  const clearedConcussion = hasClearedConcussionProtocolSignal(beatNote);
+
+  // 4. Base Probability from Game Designation, NFL 5-Step Concussion Protocol, or Practice Progression
   let prob = 0.78;
 
   if (statusRaw === 'doubtful') {
     prob = 0.10 + (prior.questionablePlayRate - 0.78) * 0.25;
     factors.push('Official Doubtful tag (NFL historical base ~10–14%)');
   } else if (
-    statusRaw === 'active' ||
-    statusRaw === 'healthy' ||
-    beatNote.includes('does not have a designation') ||
-    beatNote.includes("doesn't have a designation") ||
-    beatNote.includes('does not carry an official injury designation') ||
-    beatNote.includes('no injury designation') ||
-    beatNote.includes('good to go') ||
-    beatNote.includes('set to return') ||
-    beatNote.includes('prepared to return')
+    !hasNegativePlayConsensusSignal(beatNote) &&
+    (statusRaw === 'active' ||
+      statusRaw === 'healthy' ||
+      beatNote.includes('does not have a designation') ||
+      beatNote.includes("doesn't have a designation") ||
+      beatNote.includes('does not carry an official injury designation') ||
+      beatNote.includes('no injury designation') ||
+      beatNote.includes('good to go') ||
+      beatNote.includes('set to return') ||
+      beatNote.includes('prepared to return'))
   ) {
     prob = 0.95;
     factors.push('Cleared without restrictive game-day designation');
+  } else if (isConcussion) {
+    // Official NFL/NFLPA 5-Step Return-to-Participation Protocol:
+    // Step 4 = non-contact football drills (LP); Step 5 = Full Football Activity (FP) + Independent Neurological Consultant (INC) clearance.
+    if (clearedConcussion || fri === 'FP') {
+      prob = 0.93;
+      factors.push('Cleared Step-5 full-contact practice / NFL Concussion Protocol gate');
+    } else if (fri === 'DNP') {
+      prob = 0.06;
+      factors.push('NFL Concussion Protocol: Friday DNP rarely clears Step-5 Independent Neurological exam (<7%)');
+    } else if (fri === 'LP') {
+      if (wed === 'DNP' && thu === 'DNP') {
+        prob = 0.24;
+        factors.push('NFL Concussion Protocol: first Limited non-contact session on Friday leaves narrow INC clearance window');
+      } else {
+        prob = 0.36;
+        factors.push('NFL Concussion Protocol: Friday Limited (Step-4 non-contact); requires Saturday/pre-game Independent Neurological Consultant clearance');
+      }
+    } else if (thu === 'FP' || wed === 'FP') {
+      prob = 0.86;
+      factors.push('Logged mid-week Full Participation in NFL Concussion Protocol progression');
+    } else if (thu === 'LP' || wed === 'LP') {
+      prob = 0.44;
+      factors.push('Mid-week Step-4 Limited non-contact participation in NFL Concussion Protocol');
+    } else {
+      prob = 0.18;
+      factors.push('Remains in early stages of NFL 5-Step Concussion Protocol');
+    }
   } else {
-    // Derive base from Wed/Thu/Fri practice progression
+    // Derive base from Wed/Thu/Fri practice progression (including trajectory directionality)
     if (fri === 'FP') {
       prob = 0.93;
       factors.push('Logged Full Participation (FP) on Friday');
@@ -611,6 +696,14 @@ export function computePlayerPlayProbability(input = {}) {
       if (wed === 'DNP' && thu === 'DNP') {
         prob = 0.56;
         factors.push('Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance');
+      } else if (wed === 'FP' || thu === 'FP') {
+        prob = Math.max(0.35, prior.questionablePlayRate - 0.14);
+        factors.push('Late-week practice downgrade (FP earlier in week -> Friday LP); elevated flare-up caution');
+      } else if (wed === 'DNP' && thu === 'LP') {
+        prob = Math.min(0.89, prior.questionablePlayRate + 0.03);
+        factors.push(
+          `Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+        );
       } else {
         prob = prior.questionablePlayRate;
         factors.push(
@@ -653,9 +746,9 @@ export function computePlayerPlayProbability(input = {}) {
     }
   }
 
-  // 5. Player-Specific Toughness vs. Chronic Body-Part Adjustment
+  // 5. Player-Specific Toughness vs. Chronic Body-Part Adjustment (never overrides neurological protocol)
   const matchesChronicPart = prior.chronicParts.some(part => injuryLower.includes(part.toLowerCase()));
-  if (matchesChronicPart && prob < 0.93) {
+  if (!isConcussion && matchesChronicPart && prob < 0.93) {
     if (name === 'Trent Williams' && injuryLower.includes('ankle') && fri !== 'FP') {
       prob = Math.min(prob, prior.acuteAnklePlayRate || 0.56);
       factors.push('Trent Williams acute ankle adjustment (historically lower active rate than NIR-Rest)');
@@ -663,33 +756,31 @@ export function computePlayerPlayProbability(input = {}) {
       prob -= 0.07;
       factors.push(`Matches player's documented chronic history (${injuryType})`);
     }
-  } else if (prior.questionablePlayRate >= 0.88 && prob >= 0.45 && prob < 0.93) {
+  } else if (!isConcussion && prior.questionablePlayRate >= 0.88 && prob >= 0.45 && prob < 0.93) {
     prob += 0.05;
     factors.push('High pain-tolerance / toughness prior (+5% boost)');
   }
 
-  // 6. Injury Biomechanics Modifier (Soft-tissue speed risk vs upper-extremity pain management)
-  if (SOFT_TISSUE_KEYWORDS.some(k => injuryLower.includes(k)) && prob < 0.92) {
+  // 6. Injury Biomechanics Modifier (High-caution structural joint vs soft-tissue speed risk vs pain management)
+  if (!isConcussion && HIGH_CAUTION_STRUCTURAL_KEYWORDS.some(k => injuryLower.includes(k)) && fri !== 'FP' && prob < 0.92) {
+    prob -= 0.08;
+    factors.push(`High-caution structural joint/ligament stability profile (${injuryType})`);
+  } else if (!isConcussion && SOFT_TISSUE_KEYWORDS.some(k => injuryLower.includes(k)) && prob < 0.92) {
     prob -= 0.05;
     factors.push(`Soft-tissue re-aggravation caution (${injuryType})`);
-  } else if (MINOR_PAIN_TOLERANCE_KEYWORDS.some(k => injuryLower.includes(k)) && prob >= 0.50 && prob < 0.95) {
+  } else if (!isConcussion && MINOR_PAIN_TOLERANCE_KEYWORDS.some(k => injuryLower.includes(k)) && prob >= 0.50 && prob < 0.95) {
     prob += 0.04;
     factors.push(`Manageable pain-tolerance injury profile (${injuryType})`);
   }
 
-  // 7. Beat Context Refinements
-  if (beatNote.includes('long shot') || beatNote.includes('unlikely to play')) {
-    prob = Math.min(prob, 0.22);
-    factors.push('Beat consensus: unlikely / long shot for kickoff');
+  // 7. Beat Context Refinements (Negation-Aware)
+  if (hasNegativePlayConsensusSignal(beatNote)) {
+    prob = Math.min(prob, 0.20);
+    factors.push('Beat consensus: unlikely / not expected to suit up');
   } else if (beatNote.includes('game-time decision') || beatNote.includes('50-50')) {
     prob = Math.max(0.42, Math.min(0.64, prob));
     factors.push('Coaching/beat note: true pre-game warmup decision');
-  } else if (
-    beatNote.includes('expected to play') ||
-    beatNote.includes('on track to play') ||
-    beatNote.includes('likely will be activated') ||
-    beatNote.includes('expected to be activated')
-  ) {
+  } else if (hasAffirmativePlayOrActivationSignal(beatNote)) {
     prob = Math.max(prob, 0.84);
     factors.push('Beat/podium consensus: on track to suit up');
   }

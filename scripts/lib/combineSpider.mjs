@@ -59,25 +59,92 @@ const POS_BASELINES = {
   SPEC: { heightIn: 73.0, weightLb: 206, armIn: 31.5, forty: 4.82, tenSplit: 1.67, vertical: 31.0, broad: 113, threeCone: 7.25, shuttle: 4.40, bench: 15 }
 };
 
+const POSITION_AXIS_WEIGHTS = {
+  QB: { heightIn: 1.15, weightLb: 1.05, armIn: 0.9, forty: 1.25, tenSplit: 1.3, vertical: 1.0, broad: 1.05, threeCone: 1.25, shuttle: 1.25, bench: 0.4 },
+  RB: { heightIn: 0.75, weightLb: 1.15, armIn: 0.75, forty: 1.45, tenSplit: 1.5, vertical: 1.15, broad: 1.25, threeCone: 1.35, shuttle: 1.25, bench: 0.85 },
+  FB: { heightIn: 0.9, weightLb: 1.25, armIn: 0.9, forty: 1.15, tenSplit: 1.35, vertical: 1.0, broad: 1.1, threeCone: 1.15, shuttle: 1.2, bench: 1.3 },
+  WR: { heightIn: 1.0, weightLb: 0.95, armIn: 1.0, forty: 1.55, tenSplit: 1.45, vertical: 1.3, broad: 1.2, threeCone: 1.35, shuttle: 1.2, bench: 0.55 },
+  TE: { heightIn: 1.15, weightLb: 1.15, armIn: 1.1, forty: 1.35, tenSplit: 1.35, vertical: 1.2, broad: 1.2, threeCone: 1.3, shuttle: 1.2, bench: 1.05 },
+  OT: { heightIn: 1.2, weightLb: 1.2, armIn: 1.6, forty: 0.75, tenSplit: 1.5, vertical: 0.8, broad: 1.15, threeCone: 1.3, shuttle: 1.35, bench: 1.15 },
+  IOL: { heightIn: 0.95, weightLb: 1.25, armIn: 1.15, forty: 0.75, tenSplit: 1.5, vertical: 0.85, broad: 1.15, threeCone: 1.25, shuttle: 1.4, bench: 1.3 },
+  EDGE: { heightIn: 1.05, weightLb: 1.15, armIn: 1.35, forty: 1.2, tenSplit: 1.65, vertical: 1.15, broad: 1.4, threeCone: 1.55, shuttle: 1.25, bench: 1.0 },
+  IDL: { heightIn: 1.0, weightLb: 1.35, armIn: 1.2, forty: 0.95, tenSplit: 1.6, vertical: 1.0, broad: 1.25, threeCone: 1.15, shuttle: 1.2, bench: 1.3 },
+  LB: { heightIn: 0.95, weightLb: 1.1, armIn: 1.05, forty: 1.4, tenSplit: 1.45, vertical: 1.2, broad: 1.25, threeCone: 1.35, shuttle: 1.35, bench: 0.95 },
+  CB: { heightIn: 1.0, weightLb: 0.9, armIn: 1.15, forty: 1.6, tenSplit: 1.45, vertical: 1.3, broad: 1.25, threeCone: 1.35, shuttle: 1.25, bench: 0.55 },
+  S: { heightIn: 1.0, weightLb: 1.0, armIn: 1.05, forty: 1.45, tenSplit: 1.4, vertical: 1.25, broad: 1.25, threeCone: 1.3, shuttle: 1.25, bench: 0.75 },
+  SPEC: { heightIn: 1.0, weightLb: 1.0, armIn: 1.0, forty: 1.0, tenSplit: 1.0, vertical: 1.0, broad: 1.0, threeCone: 1.0, shuttle: 1.0, bench: 1.0 }
+};
+
+export function normalizeCombineNameKey(rawName = '') {
+  return String(rawName || '')
+    .toLowerCase()
+    .replace(/\b(jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+    .replace(/[^a-z0-9]/g, '')
+    .trim();
+}
+
+function arePosGroupsCompatible(targetGroup, candidateGroup) {
+  if (targetGroup === candidateGroup) return true;
+  const families = [
+    new Set(['OT', 'IOL']),
+    new Set(['EDGE', 'IDL', 'LB']),
+    new Set(['CB', 'S']),
+    new Set(['RB', 'FB', 'WR']),
+    new Set(['WR', 'TE'])
+  ];
+  return families.some(f => f.has(targetGroup) && f.has(candidateGroup));
+}
+
+function erfApprox(x) {
+  const sign = x < 0 ? -1 : 1;
+  const ax = Math.abs(x);
+  const t = 1 / (1 + 0.3275911 * ax);
+  const y =
+    1 -
+    (((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t) *
+      Math.exp(-ax * ax);
+  return sign * y;
+}
+
+function normalCdf(z) {
+  return 0.5 * (1 + erfApprox(z / Math.SQRT2));
+}
+
 function computeEmpiricalPercentile(sortedArr, val, invert) {
   if (!sortedArr || sortedArr.length === 0 || val == null || Number.isNaN(val)) return null;
-  // Count how many values are worse + 0.5 * equal
-  let below = 0;
-  let equal = 0;
-  for (let i = 0; i < sortedArr.length; i++) {
-    const v = sortedArr[i];
-    if (Math.abs(v - val) < 1e-6) equal += 1;
-    else if (!invert && v < val) below += 1;
-    else if (invert && v > val) below += 1;
+  const n = sortedArr.length;
+  const tol = 1e-6;
+
+  // Binary search lowerBound: first index where sortedArr[idx] >= val - tol
+  let lo = 0;
+  let hi = n;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (sortedArr[mid] < val - tol) lo = mid + 1;
+    else hi = mid;
   }
-  const pct = ((below + 0.5 * equal) / sortedArr.length) * 100;
+  const firstEqualOrGreater = lo;
+
+  // Binary search upperBound: first index where sortedArr[idx] > val + tol
+  lo = firstEqualOrGreater;
+  hi = n;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (sortedArr[mid] <= val + tol) lo = mid + 1;
+    else hi = mid;
+  }
+  const firstStrictlyGreater = lo;
+
+  const equal = firstStrictlyGreater - firstEqualOrGreater;
+  const below = invert ? n - firstStrictlyGreater : firstEqualOrGreater;
+  const pct = ((below + 0.5 * equal) / n) * 100;
   return Math.max(1, Math.min(99, Math.round(pct)));
 }
 
 export function buildCombineIndexer(combineRows = []) {
   const byPos = new Map();
   const byPfrId = new Map();
-  const byName = new Map();
+  const byNameList = new Map();
 
   for (const r of combineRows) {
     const posGroup = mapToSpiderPosGroup(r.pos);
@@ -117,7 +184,11 @@ export function buildCombineIndexer(combineRows = []) {
     if (!byPos.has(posGroup)) byPos.set(posGroup, []);
     byPos.get(posGroup).push(entry);
     if (entry.pfrId) byPfrId.set(entry.pfrId, entry);
-    if (entry.name) byName.set(entry.name.toLowerCase().trim(), entry);
+    const normKey = normalizeCombineNameKey(entry.name);
+    if (normKey) {
+      if (!byNameList.has(normKey)) byNameList.set(normKey, []);
+      byNameList.get(normKey).push(entry);
+    }
   }
 
   // Pre-sort metric distributions per position group
@@ -148,11 +219,26 @@ export function buildCombineIndexer(combineRows = []) {
     const posGroup = mapToSpiderPosGroup(position);
     const dist = distributions.get(posGroup) || distributions.get('WR');
     const base = POS_BASELINES[posGroup] || POS_BASELINES.WR;
+    const posWeights = POSITION_AXIS_WEIGHTS[posGroup] || POSITION_AXIS_WEIGHTS.SPEC;
 
-    const matchedCombine =
-      (pfrId && byPfrId.get(pfrId)) ||
-      byName.get(String(name || '').toLowerCase().trim()) ||
-      null;
+    let matchedCombine = (pfrId && byPfrId.get(pfrId)) || null;
+    if (!matchedCombine) {
+      const normKey = normalizeCombineNameKey(name);
+      const nameCandidates = (normKey && byNameList.get(normKey)) || [];
+      if (nameCandidates.length === 1 && arePosGroupsCompatible(posGroup, nameCandidates[0].posGroup)) {
+        matchedCombine = nameCandidates[0];
+      } else if (nameCandidates.length > 1) {
+        const compatible = nameCandidates.filter(c => c.posGroup === posGroup);
+        const pool =
+          compatible.length > 0
+            ? compatible
+            : nameCandidates.filter(c => arePosGroupsCompatible(posGroup, c.posGroup));
+        if (pool.length > 0) {
+          pool.sort((a, b) => Number(b.draftYear || 0) - Number(a.draftYear || 0));
+          matchedCombine = pool[0];
+        }
+      }
+    }
 
     const rawMetrics = {};
     let verifiedCount = 0;
@@ -212,28 +298,44 @@ export function buildCombineIndexer(combineRows = []) {
       };
     });
 
-    const avgPct = axes.reduce((acc, a) => acc + a.percentile, 0) / axes.length;
-    const compositeRas = Number(Math.min(10.0, Math.max(1.5, (avgPct / 10) * 1.04)).toFixed(2));
+    // Position-weighted composite percentile + CLT variance calibration for realistic 0-10.00 RAS
+    let weightedPctSum = 0;
+    let weightTotal = 0;
+    for (const ax of axes) {
+      const w = posWeights[ax.key] ?? 1.0;
+      weightedPctSum += ax.percentile * w;
+      weightTotal += w;
+    }
+    const weightedAvgPct = weightTotal > 0 ? weightedPctSum / weightTotal : 50;
+    const zComposite = (weightedAvgPct - 50) / 16.2;
+    const cdfRas = normalCdf(zComposite) * 10;
+    const linearRas = weightedAvgPct / 10;
+    const compositeRas = Number(
+      Math.min(10.0, Math.max(1.5, 0.7 * cdfRas + 0.3 * linearRas)).toFixed(2)
+    );
 
-    // Find Top 3 Historical NFL Athletic Comps in the same position group
+    // Find Top 3 Historical NFL Athletic Comps in the same position group using position-weighted RMSD
     const candidates = byPos.get(posGroup) || [];
     const scoredComps = [];
-    const targetNameLower = String(name || '').toLowerCase().trim();
+    const targetNormKey = normalizeCombineNameKey(name);
 
     for (const cand of candidates) {
-      if (!cand.name || cand.name.toLowerCase().trim() === targetNameLower) continue;
-      let sumSq = 0;
+      if (!cand.name || normalizeCombineNameKey(cand.name) === targetNormKey) continue;
+      let weightedSq = 0;
+      let sharedWeight = 0;
       let shared = 0;
       for (const ax of axes) {
         const cPct = cand.percentiles?.[ax.key];
         if (cPct != null) {
+          const w = posWeights[ax.key] ?? 1.0;
           const d = ax.percentile - cPct;
-          sumSq += d * d;
+          weightedSq += w * d * d;
+          sharedWeight += w;
           shared += 1;
         }
       }
-      if (shared >= 4) {
-        const rmsd = Math.sqrt(sumSq / shared);
+      if (shared >= 4 && sharedWeight > 0) {
+        const rmsd = Math.sqrt(weightedSq / sharedWeight);
         const similarityPct = Math.max(60, Math.min(99, Math.round(100 - rmsd * 0.85)));
         scoredComps.push({
           name: cand.name,

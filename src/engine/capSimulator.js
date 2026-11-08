@@ -76,6 +76,7 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
 
   const appliedMoves = [];
   const warnings = [];
+  const cbaTimingNotes = [];
   const validMoveIds = new Set(GM_MOVES.map(m => m.id));
 
   // Build simulated player rows for all players contracted in `baseYear`
@@ -112,6 +113,7 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
     let moveCapSavings = 0;
     let netSavingsAfterReplacement = 0;
     let nextYrImpact = 0;
+    let yearPlus2Impact = 0;
     let effectiveCapNumber = capNumber;
 
     if (move !== 'none') {
@@ -148,22 +150,40 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
           postJune1CutCount += 1;
         }
 
+        const scheduledNextCap = Number(player.contractsByYear?.[nextYear]?.capNumber) || 0;
+        const scheduledYearPlus2Cap = Number(player.contractsByYear?.[yearPlus2]?.capNumber) || 0;
+
         if (move === 'june_1_cut' || move === 'june_1_trade') {
           const preKey = move === 'june_1_cut' ? 'cut' : 'trade';
           const preDead = c.transactions?.[preKey]?.deadMoney ?? moveDeadMoney;
           const deferredDead = Math.max(0, preDead - moveDeadMoney);
-          const scheduledNextCap = player.contractsByYear?.[nextYear]?.capNumber || 0;
           nextYrImpact = scheduledNextCap - deferredDead;
+          yearPlus2Impact = scheduledYearPlus2Cap;
           nextYearDelta += nextYrImpact;
+          yearPlus2Delta += yearPlus2Impact;
         } else if (move === 'cut' || move === 'trade') {
-          const scheduledNextCap = player.contractsByYear?.[nextYear]?.capNumber || 0;
           nextYrImpact = scheduledNextCap;
+          yearPlus2Impact = scheduledYearPlus2Cap;
           nextYearDelta += nextYrImpact;
+          yearPlus2Delta += yearPlus2Impact;
         } else if (move === 'restructure' && moveCapSavings > 0) {
-          const annualAddedProration = Math.round(moveCapSavings / 4);
+          const futureContractYears = Object.keys(player.contractsByYear || {}).filter(
+            yr => Number(yr) > baseYearNum
+          ).length;
+          const maxConvertibleBase = Math.max(1, baseSalary - minReplacementSalary);
+          const impliesFiveYearVoidProration = moveCapSavings / maxConvertibleBase >= 0.72;
+          const futureProrationYears = impliesFiveYearVoidProration
+            ? 4
+            : Math.min(4, Math.max(1, futureContractYears || 4));
+          const annualAddedProration = Math.round(moveCapSavings / futureProrationYears);
           nextYrImpact = -annualAddedProration;
+          yearPlus2Impact = futureProrationYears >= 2 ? -annualAddedProration : 0;
           nextYearDelta += nextYrImpact;
-          yearPlus2Delta -= annualAddedProration;
+          yearPlus2Delta += yearPlus2Impact;
+        } else if (move === 'extension') {
+          const annualExtOffset = Math.round(Math.max(moveCapSavings, 1_500_000) * 0.35);
+          nextYrImpact = scheduledNextCap > 0 ? Math.round(moveCapSavings * 0.15) : -annualExtOffset;
+          nextYearDelta += nextYrImpact;
         }
 
         appliedMoves.push({
@@ -177,7 +197,8 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
           grossCapSavings: moveCapSavings,
           replacementOffset: replacementCost,
           netCapDeltaThisYear: netSavingsAfterReplacement,
-          nextYearCapDelta: nextYrImpact
+          nextYearCapDelta: nextYrImpact,
+          yearPlus2CapDelta: yearPlus2Impact
         });
       }
     }
@@ -217,6 +238,11 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
       `NFL CBA Rule Alert: Teams may designate a maximum of 2 players as Post-June 1 releases prior to June 1 (you selected ${postJune1CutCount}). Moves #3+ must occur on or after June 2.`
     );
   }
+  if (postJune1CutCount > 0) {
+    cbaTimingNotes.push(
+      `Post-June 1 Timing Rule: Early Post-June 1 designations carry the player's full ${baseYear} cap charge on the Top-51 ledger through June 1 before unlocking cap savings on June 2.`
+    );
+  }
 
   const baselineCapSpace = Number(baseYearSummary.teamCapSpace) || 0;
   const updatedCapSpace = baselineCapSpace + baseYearDelta;
@@ -236,7 +262,15 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
   const baselineTop51 = Number(baseYearSummary.top51) || 0;
   const updatedTop51 = Math.max(0, baselineTop51 - baseYearDelta);
 
-  const updatedNextYearSpace = (Number(nextYearSummary.teamCapSpace) || 0) + nextYearDelta;
+  const baselineNextYearSpace = Number(nextYearSummary.teamCapSpace) || 0;
+  const updatedNextYearSpace = baselineNextYearSpace + nextYearDelta;
+
+  // NFL CBA Article 13, Section 6(b)(v): Unused current-year cap space rolls over 1-for-1 to next season
+  const baselineRolloverToNextYear = Math.max(0, baselineCapSpace);
+  const projectedRolloverToNextYear = Math.max(0, updatedCapSpace);
+  const baselineNextYearWithRollover = baselineNextYearSpace + baselineRolloverToNextYear;
+  const updatedNextYearWithRollover = updatedNextYearSpace + projectedRolloverToNextYear;
+  const netTwoYearHorizonDelta = updatedNextYearWithRollover - baselineNextYearWithRollover;
 
   if (updatedCapSpace < 0) {
     warnings.push(
@@ -267,10 +301,15 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
       updatedDeadMoneyTotal: updatedDeadMoney,
       updatedDeadMoney,
       baseYearNetCapDelta: baseYearDelta,
-      originalNextYearCapSpace: Number(nextYearSummary.teamCapSpace) || 0,
-      baselineNextYearSpace: Number(nextYearSummary.teamCapSpace) || 0,
+      originalNextYearCapSpace: baselineNextYearSpace,
+      baselineNextYearSpace,
       updatedNextYearCapSpace: updatedNextYearSpace,
       updatedNextYearSpace,
+      baselineRolloverToNextYear,
+      projectedRolloverToNextYear,
+      baselineNextYearWithRollover,
+      updatedNextYearWithRollover,
+      netTwoYearHorizonDelta,
       nextYearCapDelta: nextYearDelta,
       yearPlus2CapDelta: yearPlus2Delta,
       rosterSpotsOpened,
@@ -281,6 +320,7 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
     appliedMoves,
     moveCount: appliedMoves.length,
     postJune1CutCount,
+    cbaTimingNotes,
     warnings
   };
 }

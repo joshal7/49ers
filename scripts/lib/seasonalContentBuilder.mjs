@@ -687,36 +687,59 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     };
   }
 
+  function escapeKwRegex(s = '') {
+    return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
   function matchSourceLinks(keywords = [], extraLinks = []) {
-    const kwLower = keywords.map(k => k.toLowerCase());
+    const compiledKws = keywords
+      .map(k => String(k || '').toLowerCase().trim())
+      .filter(Boolean)
+      .map(k => ({ raw: k, rx: new RegExp(`\\b${escapeKwRegex(k)}\\b`, 'i') }));
+
     const seenUrls = new Set();
-    const matched = [];
+    const scoredCandidates = [];
 
     for (const it of rawItems) {
       const safeItemUrl = sanitizeExternalUrl(it.url, null);
       if (!safeItemUrl || seenUrls.has(safeItemUrl) || isPaywalledPublisher(it.outletName, safeItemUrl)) continue;
-      const hay = `${it.title || ''} ${it.summary || ''}`.toLowerCase();
-      if (kwLower.some(k => hay.includes(k))) {
+      const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''}`.toLowerCase();
+      let kwHitCount = 0;
+      for (const kw of compiledKws) {
+        if (kw.rx.test(hay)) kwHitCount += 1;
+      }
+      if (kwHitCount > 0) {
         seenUrls.add(safeItemUrl);
+        const salience =
+          kwHitCount * 22 +
+          Number(it.signalScore || 68) +
+          (it.type === 'article' ? 8 : 0) +
+          (it.isBreaking ? 10 : 0);
         const shortLabel =
           it.type === 'tweet'
             ? `${it.authorHandle || it.reporterName || 'Beat Post'}: ${(it.title || '').slice(0, 62)}${(it.title || '').length > 62 ? '…' : ''}`
             : (it.title || '').slice(0, 72) + ((it.title || '').length > 72 ? '…' : '');
-        matched.push({
-          title: shortLabel,
-          url: safeItemUrl,
-          outlet: it.outletName || 'Source',
-          type: it.type || 'article',
-          publishedAt: it.publishedAt || null
+        scoredCandidates.push({
+          salience,
+          link: {
+            title: shortLabel,
+            url: safeItemUrl,
+            outlet: it.outletName || 'Source',
+            type: it.type || 'article',
+            publishedAt: it.publishedAt || null
+          }
         });
       }
-      if (matched.length >= 4) break;
     }
+
+    scoredCandidates.sort((a, b) => b.salience - a.salience);
+    const matched = scoredCandidates.slice(0, 4).map(c => c.link);
+    const finalSeen = new Set(matched.map(m => m.url));
 
     for (const ex of extraLinks) {
       const safeExUrl = sanitizeExternalUrl(ex?.url, null);
-      if (safeExUrl && !seenUrls.has(safeExUrl) && matched.length < 5) {
-        seenUrls.add(safeExUrl);
+      if (safeExUrl && !finalSeen.has(safeExUrl) && matched.length < 5) {
+        finalSeen.add(safeExUrl);
         matched.push({ ...ex, url: safeExUrl });
       }
     }
@@ -742,7 +765,13 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     currentWeek === 9 &&
     (!um.oppAbbr || um.oppAbbr === 'LV');
   if (!is2026Week9Raiders) {
-    const leadArticles = rawItems.filter(it => it.type === 'article' || it.type === 'tweet');
+    const leadArticles = [...rawItems]
+      .filter(it => it.type === 'article' || it.type === 'tweet')
+      .sort(
+        (a, b) =>
+          (Number(b.isBreaking ? 15 : 0) + Number(b.signalScore || 68)) -
+          (Number(a.isBreaking ? 15 : 0) + Number(a.signalScore || 68))
+      );
     const matchupLinks = matchSourceLinks([oppShort.toLowerCase(), `week ${currentWeek}`, 'shanahan', 'purdy'], [
       {
         title: `${oppName} vs. 49ers Week ${currentWeek} Gamecast — ESPN`,
@@ -768,6 +797,35 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       }
     ]);
 
+    // Extract live quantitative leaders & CBA Article 13 post-rollover net balance
+    const passLeader = rosterPlayers
+      .filter(p => p.stats2026?.passing?.attempts >= 20)
+      .sort((a, b) => (b.stats2026.passing.epa || 0) - (a.stats2026.passing.epa || 0))[0];
+    const sackLeader = rosterPlayers
+      .filter(p => (p.stats2026?.defense?.sacks || 0) > 0)
+      .sort((a, b) => (b.stats2026.defense.sacks || 0) - (a.stats2026.defense.sacks || 0))[0];
+    const sfOutCount = rosterPlayers.filter(
+      p => p.rosterBucket === 'active' && p.health?.playProbabilityPct === 0
+    ).length;
+    const sfQCount = rosterPlayers.filter(
+      p => p.rosterBucket === 'active' && p.health?.playProbabilityPct > 0 && p.health?.playProbabilityPct < 85
+    ).length;
+    const postRolloverNetRaw = Math.max(0, Number(liveCtx.capSpaceGross || 35_164_858)) + cap2027Raw;
+    const postRolloverLabel = `${postRolloverNetRaw >= 0 ? '+' : '-'}$${(Math.abs(postRolloverNetRaw) / 1e6).toFixed(2)}M`;
+
+    const rawSpreadStr = String(um.betting?.spread || '');
+    const rawOuNum = Number(um.betting?.overUnder);
+    const spMatch = rawSpreadStr.match(/([+-]?\d+(?:\.\d+)?)/);
+    let impliedTotalsNote = '';
+    if (spMatch && Number.isFinite(rawOuNum) && rawOuNum > 25) {
+      const sv = Number(spMatch[1]);
+      const sfFav = /sf/i.test(rawSpreadStr) ? sv < 0 : sv > 0;
+      const absSv = Math.abs(sv);
+      const sfImp = ((rawOuNum + (sfFav ? absSv : -absSv)) / 2).toFixed(1);
+      const oppImp = ((rawOuNum - (sfFav ? absSv : -absSv)) / 2).toFixed(1);
+      impliedTotalsNote = ` (implied score SF ${sfImp} – ${oppShort} ${oppImp})`;
+    }
+
     const topVid = embeddableLive[0] || liveVideos[0] || null;
     const secondVid = embeddableLive[1] || liveVideos[1] || null;
 
@@ -789,14 +847,16 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         hardFacts: [
           `San Francisco enters Week ${currentWeek} at ${teamRecord} (${standingSummary}, ${pointDiffDisplay}).`,
           um.kickoffDisplay
-            ? `Kickoff vs. ${oppName}: ${um.kickoffDisplay} at ${um.venue || "Levi's Stadium"} (${um.betting?.spread || 'Pick'}, O/U ${um.betting?.overUnder || '—'}).`
+            ? `Kickoff vs. ${oppName}: ${um.kickoffDisplay} at ${um.venue || "Levi's Stadium"} (${um.betting?.spread || 'Pick'}, O/U ${um.betting?.overUnder || '—'}${impliedTotalsNote}).`
             : `Upcoming slate focus shifts directly to ${oppName}.`,
           ...(leadArticles.slice(0, 2).map(a => a.title).filter(Boolean))
         ].slice(0, 3),
         schemeAndCapTakeaways: [
-          um.coachingMatchup?.summary ||
-            `Kyle Shanahan's play-action and outside-zone sequencing remains anchored by Brock Purdy, Christian McCaffrey, and George Kittle.`,
-          `Salary Cap Position: San Francisco carries $${capGrossM}M in gross 2026 cap space on OverTheCap's live ledger.`
+          passLeader
+            ? `${passLeader.name} anchors Kyle Shanahan's early-down play-action & motion sequencing (${passLeader.stats2026.passing.epa >= 0 ? '+' : ''}${Number(passLeader.stats2026.passing.epa).toFixed(1)} passing EPA, ${passLeader.stats2026.passing.yards} yds)${sackLeader ? ` while ${sackLeader.name} paces the Wide-9 rush (${sackLeader.stats2026.defense.sacks} sacks)` : ''}.`
+            : um.coachingMatchup?.summary ||
+              `Kyle Shanahan's play-action and outside-zone sequencing remains anchored by Brock Purdy, Christian McCaffrey, and George Kittle.`,
+          `CBA Rollover Bridge: San Francisco's $${capGrossM}M in gross 2026 space converts the ${cap2027Label} 2027 projection into a ${postRolloverLabel} net post-rollover balance.`
         ],
         consensusVsDissent:
           'Beat reporting emphasizes trench health, red-zone efficiency, and clean turnover margin as the decisive Week-to-Week swing variables.',
@@ -830,12 +890,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
           (liveCtx.practiceSummaryBullets && liveCtx.practiceSummaryBullets.length > 0
             ? liveCtx.practiceSummaryBullets
             : [
-                `Official 49ers & ESPN injury designations updated dynamically for Week ${currentWeek}.`,
+                `Active-53 availability check for Week ${currentWeek}: ${sfOutCount} player(s) ruled Out and ${sfQCount} player(s) carrying Questionable/Doubtful play-probability tags.`,
                 `Opponent check: ${oppName} carries ${um.opponentHealth?.summary?.ruledOutCount ?? 0} Out and ${um.opponentHealth?.summary?.questionableOrDoubtfulCount ?? 0} Questionable players.`
               ]),
         schemeAndCapTakeaways: [
-          'Player-specific veteran rest days (Trent Williams, Christian McCaffrey, Nick Bosa) are separated from acute soft-tissue tags in our availability model.',
-          `Multi-Year Cap Rollover: Preserving unused portion of SF's $${capGrossM}M 2026 cap space offsets 2027 option bonus proration.`
+          'Player-specific veteran rest days (Trent Williams, Christian McCaffrey, Nick Bosa) and NFL 5-Step Concussion Protocol gates are separated from acute soft-tissue tags in our availability model.',
+          `Multi-Year Cap Rollover: Carrying SF's $${capGrossM}M 2026 space into 2027 produces a ${postRolloverLabel} net post-rollover cap balance.`
         ],
         consensusVsDissent: 'Friday practice participation remains the primary clearance gate for soft-tissue game-time decisions.',
         videoClip: secondVid

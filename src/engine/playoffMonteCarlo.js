@@ -98,6 +98,8 @@ export function computeCalibratedTeamPowerRating({
   losses = 0,
   ties = 0,
   pointDiff = 0,
+  pointsFor = null,
+  pointsAgainst = null,
   netEpaPerGame = null,
   sosSpreadAdj = 0
 } = {}) {
@@ -106,7 +108,23 @@ export function computeCalibratedTeamPowerRating({
 
   const winPct = (Number(wins || 0) + 0.5 * Number(ties || 0)) / gp;
   const rawPdGm = Number(pointDiff || 0) / gp;
-  const cappedPdGm = Math.tanh(rawPdGm / 15) * 15;
+  let cappedPdGm = Math.tanh(rawPdGm / 15) * 15;
+
+  // Optional Morey 2.37 NFL Pythagorean expectation blend when PF & PA are supplied
+  if (
+    pointsFor !== null &&
+    pointsAgainst !== null &&
+    Number.isFinite(Number(pointsFor)) &&
+    Number.isFinite(Number(pointsAgainst)) &&
+    (Number(pointsFor) > 0 || Number(pointsAgainst) > 0)
+  ) {
+    const pfPow = Math.pow(Math.max(1, Number(pointsFor)), 2.37);
+    const paPow = Math.pow(Math.max(1, Number(pointsAgainst)), 2.37);
+    const pythWinPct = pfPow / (pfPow + paPow);
+    const pythSpreadPts = Math.tanh(((pythWinPct - 0.5) * 26) / 15) * 15;
+    cappedPdGm = 0.65 * cappedPdGm + 0.35 * pythSpreadPts;
+  }
+
   const hasNetEpa = netEpaPerGame !== null && netEpaPerGame !== undefined && Number.isFinite(Number(netEpaPerGame));
   const cappedEpaGm = hasNetEpa ? Math.tanh(Number(netEpaPerGame) / 15) * 15 : cappedPdGm;
   const recordSignalPts = (winPct - 0.5) * 5.5;
@@ -119,6 +137,19 @@ export function computeCalibratedTeamPowerRating({
   const regressedSpreadPts = unregressedSpreadPts * shrinkage;
 
   return Math.round(Math.max(1340, Math.min(1650, 1500 + regressedSpreadPts * ELO_PER_SPREAD_POINT)));
+}
+
+/**
+ * Samples a realistic positive integer victory margin conditional on the winner (`M_winner > 0`).
+ * Uses a fast closed-form truncated-normal expectation approximation (`0.5 * (mu + sqrt(mu^2 + 196))`)
+ * so heavy favorites win by wider margins on average (~14-18 pts) while heavy underdogs pulling an
+ * upset win tight games (~1-7 pts) rather than inverted blowouts.
+ */
+export function sampleConditionalVictoryMargin(winnerExpectedMargin = 0, uMargin = 0.5) {
+  const mu = Number(winnerExpectedMargin) || 0;
+  const condMean = 0.5 * (mu + Math.sqrt(mu * mu + 196));
+  const sampled = condMean + (Number(uMargin) - 0.35) * 8;
+  return Math.max(1, Math.round(sampled));
 }
 
 function winProbabilityHome(homeElo, awayElo, isNeutral = false) {
@@ -219,6 +250,8 @@ export function runPlayoffMonteCarlo(config = {}) {
         losses: baseL[i],
         ties: baseT[i],
         pointDiff: basePD[i],
+        pointsFor: t.pointsFor ?? null,
+        pointsAgainst: t.pointsAgainst ?? null,
         netEpaPerGame: t.netEpaPerGame ?? null
       });
   });
@@ -401,30 +434,42 @@ export function runPlayoffMonteCarlo(config = {}) {
 
   function computeStrengthOfVictory(c) {
     const baseOff = c * STRIDE;
-    let weightedWins = 0;
-    let totalVictories = 0;
+    let combinedWinUnits = 0;
+    let combinedGames = 0;
     for (let opp = 0; opp < totalTeams; opp++) {
       const bw = h2hBeatWins[baseOff + opp];
       if (bw > 0) {
-        weightedWins += bw * oppWinPct[opp];
-        totalVictories += bw;
+        const oppGms = w[opp] + l[opp] + t[opp];
+        if (oppGms > 0) {
+          combinedWinUnits += bw * (w[opp] + 0.5 * t[opp]);
+          combinedGames += bw * oppGms;
+        } else {
+          combinedWinUnits += bw * oppWinPct[opp] * 17;
+          combinedGames += bw * 17;
+        }
       }
     }
-    return totalVictories > 0 ? weightedWins / totalVictories : 0;
+    return combinedGames > 0 ? combinedWinUnits / combinedGames : 0;
   }
 
   function computeStrengthOfSchedule(c) {
     const baseOff = c * STRIDE;
-    let weightedGames = 0;
-    let totalGames = 0;
+    let combinedWinUnits = 0;
+    let combinedGames = 0;
     for (let opp = 0; opp < totalTeams; opp++) {
       const gm = h2hGames[baseOff + opp];
       if (gm > 0) {
-        weightedGames += gm * oppWinPct[opp];
-        totalGames += gm;
+        const oppGms = w[opp] + l[opp] + t[opp];
+        if (oppGms > 0) {
+          combinedWinUnits += gm * (w[opp] + 0.5 * t[opp]);
+          combinedGames += gm * oppGms;
+        } else {
+          combinedWinUnits += gm * oppWinPct[opp] * 17;
+          combinedGames += gm * 17;
+        }
       }
     }
-    return totalGames > 0 ? weightedGames / totalGames : 0.5;
+    return combinedGames > 0 ? combinedWinUnits / combinedGames : 0.5;
   }
 
   /**
@@ -688,7 +733,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       if (outcome === 1) {
         w[hi]++;
         l[ai]++;
-        const margin = Math.max(1, Math.round(Math.abs(expectedMargin) + uMargin * 9));
+        const margin = sampleConditionalVictoryMargin(expectedMargin, uMargin);
         if (hi < nTeams) {
           pd[hi] += margin;
           h2hGames[hi * STRIDE + ai]++;
@@ -710,7 +755,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       } else if (outcome === 2) {
         w[ai]++;
         l[hi]++;
-        const margin = Math.max(1, Math.round(Math.abs(-expectedMargin) + uMargin * 9));
+        const margin = sampleConditionalVictoryMargin(-expectedMargin, uMargin);
         if (ai < nTeams) {
           pd[ai] += margin;
           h2hGames[ai * STRIDE + hi]++;
@@ -876,6 +921,28 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     });
   }
 
+  const teamEloMap = new Map();
+  for (const t of baseConfig?.nfcTeams || []) {
+    const ab = normalizeTeamAbbr(t.abbr);
+    teamEloMap.set(
+      ab,
+      t.powerRating ||
+        computeCalibratedTeamPowerRating({
+          wins: t.wins || 0,
+          losses: t.losses || 0,
+          ties: t.ties || 0,
+          pointDiff: t.pointDiff || 0,
+          pointsFor: t.pointsFor ?? null,
+          pointsAgainst: t.pointsAgainst ?? null,
+          netEpaPerGame: t.netEpaPerGame ?? null
+        })
+    );
+  }
+  const afcMap = baseConfig?.afcPowerRatings || baseConfig?.afcRatings || {};
+  for (const [k, v] of Object.entries(afcMap)) {
+    teamEloMap.set(normalizeTeamAbbr(k), Number(v) || 1500);
+  }
+
   const results = [];
   for (const g of candidateGames) {
     const home = normalizeTeamAbbr(g.home);
@@ -928,6 +995,34 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     }
     const maxSwingPct = Math.max(byeSwing, divSwing, playSwing);
 
+    const homeElo = teamEloMap.get(home) || 1500;
+    const awayElo = teamEloMap.get(away) || 1500;
+    const pHome = winProbabilityHome(homeElo, awayElo, Boolean(g.neutral));
+    const homeWinProbPct = Math.round(pHome * 1000) / 10;
+    const uncertaintyFactor = 4 * pHome * (1 - pHome);
+    const expectedImpactScore = Math.round(maxSwingPct * (0.55 + 0.45 * uncertaintyFactor) * 10) / 10;
+
+    const rootAgainstIsNfcWest = NFC_DIVISIONS[rootAgainst] === 'NFC West';
+    const rootForIsAfc = !nfcSet.has(rootFor);
+    let leverageTag = 'Conf. Seeding';
+    let leverageReason = `Shapes NFC conference tiebreakers for ${primaryMetric}`;
+    if (is49ersGame) {
+      leverageTag = 'Direct Control';
+      leverageReason = '49ers head-to-head result directly controls NFC West & #1 Seed Bye trajectory';
+    } else if (rootAgainstIsNfcWest) {
+      leverageTag = 'NFC West Race';
+      leverageReason = `Hands division rival ${rootAgainst} a loss in the NFC West crown & tiebreaker race`;
+    } else if (rootForIsAfc && nfcSet.has(rootAgainst)) {
+      leverageTag = 'Inter-Conf Help';
+      leverageReason = `AFC club ${rootFor} hands NFC contender ${rootAgainst} a loss without adding an NFC rival win`;
+    } else if (primaryMetric === '#1 Seed Bye') {
+      leverageTag = '#1 Bye Race';
+      leverageReason = `Drops NFC top-seed contender ${rootAgainst} in the #1 Seed Bye chase`;
+    } else if (maxSwingPct <= 1.2) {
+      leverageTag = 'SOV / Tiebreaker';
+      leverageReason = `Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. ${rootAgainst}`;
+    }
+
     results.push({
       gameId: g.id,
       week: g.week,
@@ -940,6 +1035,10 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
       rootAgainstTeam: rootAgainst,
       rootFor,
       rootSide,
+      homeWinProbPct,
+      expectedImpactScore,
+      leverageTag,
+      leverageReason,
       maxSwingPct,
       primaryMetric,
       primaryDeltaPct,
@@ -953,6 +1052,11 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
   }
 
   return results
-    .sort((a, b) => b.maxSwingPct - a.maxSwingPct || b.totalLeverageScore - a.totalLeverageScore)
+    .sort(
+      (a, b) =>
+        b.maxSwingPct - a.maxSwingPct ||
+        b.expectedImpactScore - a.expectedImpactScore ||
+        b.totalLeverageScore - a.totalLeverageScore
+    )
     .slice(0, maxOut);
 }

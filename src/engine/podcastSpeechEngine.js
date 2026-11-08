@@ -151,7 +151,7 @@ export function humanizeNflTextForTts(rawText = '') {
   text = text.replace(/\b(\d+\.5)\s+total\b/gi, (_, tot) => `${formatHalfPointSpoken(tot)} total`);
   text = text.replace(/\bO\/U\s*(\d+(?:\.5|\.0)?)\b/gi, (_, tot) => `over under ${formatHalfPointSpoken(tot)}`);
 
-  // 3. Compact dollar & cap figures: "-$31.54M", "$35.16M", "~$0.79M", "$65M+"
+  // 3. Compact dollar & cap figures: "-$31.54M", "+$3.62M", "$35.16M", "~$0.79M", "$65M+"
   text = text.replace(
     /([~+-]?)\$(\d+(?:\.\d+)?)\s*M(\+?)/gi,
     (_, prefix, numStr, plusSuffix) => {
@@ -159,11 +159,13 @@ export function humanizeNflTextForTts(rawText = '') {
       const lead =
         prefix === '-'
           ? 'minus '
-          : prefix === '~'
-            ? 'roughly '
-            : plusSuffix === '+'
-              ? 'over '
-              : '';
+          : prefix === '+'
+            ? 'plus '
+            : prefix === '~'
+              ? 'roughly '
+              : plusSuffix === '+'
+                ? 'over '
+                : '';
       if (val > 0 && val < 1) {
         const thousands = Math.round(val * 1000);
         return `${lead}${thousands} thousand dollars`;
@@ -222,6 +224,13 @@ export function humanizeNflTextForTts(rawText = '') {
     .replace(/\bEPA\b/g, 'E-P-A')
     .replace(/\bCPOE\b/g, 'C-P-O-E')
     .replace(/\bRYOE\b/g, 'R-Y-O-E')
+    .replace(/\bYPRR\b/g, 'yards per route run')
+    .replace(/\bPBWR\b/g, 'pass block win rate')
+    .replace(/\bRSWR\b/g, 'run stop win rate')
+    .replace(/\bWOPR\b/g, 'W-O-P-R')
+    .replace(/\bADOT\b/gi, 'average depth of target')
+    .replace(/\bSOV\b/g, 'strength of victory')
+    .replace(/\bSOS\b/g, 'strength of schedule')
     .replace(/\bYPA\b/g, 'yards per attempt')
     .replace(/\bQB1\b/g, 'Q-B-1')
     .replace(/\bWR1\b/g, 'W-R-1')
@@ -233,6 +242,10 @@ export function humanizeNflTextForTts(rawText = '') {
     .replace(/\bNFLPA\b/g, 'N-F-L-P-A')
     .replace(/\bNFL\b/g, 'N-F-L')
     .replace(/\bIR\b/g, 'I-R')
+    .replace(/\bPUP\b/g, 'P-U-P')
+    .replace(/\bUDFA\b/g, 'U-D-F-A')
+    .replace(/\bDNP\b/g, 'D-N-P')
+    .replace(/\bGTD\b/g, 'game-time decision')
     .replace(/\bSAP\s+Performance/g, 'S-A-P Performance')
     .replace(/\bFOX\b/g, 'Fox');
 
@@ -251,6 +264,11 @@ export function humanizeNflTextForTts(rawText = '') {
     .replace(/\bHufanga\b/gi, 'Hoo-fahng-guh')
     .replace(/\bParaag Marathe\b/gi, 'Puh-rahg Muh-rah-thee')
     .replace(/\bPuni\b/gi, 'Poo-nee')
+    .replace(/\bMustapha\b/gi, 'Moo-stah-fuh')
+    .replace(/\bGuerendo\b/gi, 'Guh-ren-doh')
+    .replace(/\bGross-Matos\b/gi, 'Groce Mah-tose')
+    .replace(/\bOkoronkwo\b/gi, 'Oh-koh-rahnk-woh')
+    .replace(/\bJi['’]Ayir\b/gi, 'Jee-eye-ear')
     .replace(/\bKubiak\b/gi, 'Koo-bee-ack')
     .replace(/\bJeanty\b/gi, 'Jen-tee');
 

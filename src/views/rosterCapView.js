@@ -731,7 +731,15 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
               }
             </div>
             <div class="mono" style="font-size:10px;color:var(--text-secondary)">
-              ${hasNextYrInLedger ? `${esc(nextYrKey)} Δ: ${formatCompactDollars(sum.nextYearCapDelta || 0, true)}` : 'Post Replacement'}
+              ${
+                hasNextYrInLedger
+                  ? `${esc(nextYrKey)} Δ: ${formatCompactDollars(sum.nextYearCapDelta || 0, true)} · Roll: ${formatCompactDollars(
+                      sum.updatedNextYearWithRollover ??
+                        (Number(years[nextYrKey]?.teamCapSpace || 0) + Math.max(0, yrGrossSpace)),
+                      true
+                    )}`
+                  : 'Post Replacement'
+              }
             </div>
           </div>
           <div class="kpi-box">
