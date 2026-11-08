@@ -1761,6 +1761,134 @@ a:hover {
   overflow-wrap: anywhere;
 }
 
+.job-progress-subdetail {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+
+.job-stage-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: rgba(11, 13, 16, 0.42);
+  border: 1px solid var(--border-subtle);
+}
+
+[data-theme='light'] .job-stage-stepper {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.job-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  min-width: 0;
+}
+
+.job-stage-row.pending {
+  opacity: 0.56;
+}
+
+.job-stage-row.current {
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.job-stage-row.done {
+  color: var(--text-primary);
+}
+
+.stage-step-icon {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.stage-step-icon.done {
+  background: rgba(46, 204, 113, 0.2);
+  color: #3fe085;
+  border: 1px solid rgba(46, 204, 113, 0.45);
+}
+
+[data-theme='light'] .stage-step-icon.done {
+  color: #167942;
+}
+
+.stage-step-icon.current {
+  border: 2px solid rgba(179, 153, 93, 0.35);
+  border-top-color: var(--gold-bright);
+  animation: jobSpin 0.85s linear infinite;
+}
+
+.stage-step-icon.pending {
+  background: var(--bg-card-alt);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.job-stage-label {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.job-stage-status {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.job-stage-row.current .job-stage-status {
+  color: var(--gold-bright);
+}
+
+.job-stage-row.done .job-stage-status {
+  color: #3fe085;
+}
+
+[data-theme='light'] .job-stage-row.done .job-stage-status {
+  color: #167942;
+}
+
+.podcast-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.podcast-secondary-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.share-action-btn {
+  padding: 5px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.podcast-transcript-drawer {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
 .job-progress-track {
   width: 100%;
   height: 6px;

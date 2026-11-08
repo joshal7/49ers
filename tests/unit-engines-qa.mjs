@@ -548,9 +548,24 @@ import edgeWorker, {
   DEFAULT_AUDIO_TTS_CASCADE
 } from '../worker/index.js';
 import {
+  PODCAST_PIPELINE_STAGES,
+  ANALYSIS_PIPELINE_STAGES,
   estimateGenerationWait,
   resolveActiveHighQualityModelLabel
 } from '../src/services/aiWorkerClient.js';
+import {
+  normalizeDisplayTopic,
+  compileDeepResearchDossier,
+  buildNotebookLmPodcastScript,
+  buildDeepScoutingAnalysisMarkdown
+} from '../src/engine/deepResearchEngine.js';
+import {
+  CANONICAL_SITE_ORIGIN,
+  buildShareablePodcastUrl,
+  buildShareableAnalysisUrl,
+  extractIncomingSharedRoute,
+  shareItemNatively
+} from '../src/services/shareService.js';
 import { buildSilentPlaybackCarrierWavDataUri } from '../src/components/audioPlayer.js';
 
 function createMockWorkerEnv(overrides = {}) {
@@ -2440,10 +2455,32 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   });
   assert.equal(cloud3.isCloud, true);
   assert.ok(cloud15.minSec > cloud8.minSec && cloud8.minSec > cloud3.minSec, 'Longer podcasts must estimate longer High-Thinking wait');
+  assert.equal(
+    cloud3.summaryText,
+    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
+  );
+  assert.equal(
+    cloud8.summaryText,
+    '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)'
+  );
+  assert.equal(
+    cloud15.summaryText,
+    '15 min pod. (Estimated generation time 2–4 min using Gemini 3.8 High)'
+  );
 
-  const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 8, prefs: {} });
+  const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 3, prefs: {} });
   assert.equal(localEst.isCloud, false);
-  assert.ok(localEst.estLabel.includes('~2–4 sec') && localEst.estLabel.includes('Cloud 3.8 High'));
+  assert.equal(
+    localEst.summaryText,
+    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
+  );
+  const analysisEst = estimateGenerationWait({ kind: 'analysis', prefs: {} });
+  assert.equal(
+    analysisEst.summaryText,
+    'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 High)'
+  );
+  assert.equal(PODCAST_PIPELINE_STAGES.length, 3);
+  assert.equal(ANALYSIS_PIPELINE_STAGES.length, 3);
 });
 
 await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking verification (verifyPass=true) and cascade Pro TTS -> Flash TTS', async () => {
@@ -2576,6 +2613,155 @@ test('iPhone speaker playback carrier WAV builds valid 2-channel Stereo PCM with
   assert.equal(raw.readInt16LE(44), 2);
   assert.equal(raw.readInt16LE(46), 2);
   assert.equal(raw.readInt16LE(48), -2);
+});
+
+test('Deep Research Engine audits all 14 rostered WRs on "wide recievers" and calibrates 3m/8m NotebookLM podcast word counts', () => {
+  assert.equal(normalizeDisplayTopic('wide recievers'), 'wide receivers');
+
+  const fullAppData = {
+    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+    cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+  };
+
+  const wrDossier = compileDeepResearchDossier({ query: 'wide recievers', appData: fullAppData });
+  assert.equal(wrDossier.primaryGroup?.id, 'WR');
+  const totalWrs =
+    wrDossier.activeHealthy.length +
+    wrDossier.activeSidelined.length +
+    wrDossier.irReserve.length +
+    wrDossier.practiceSquad.length;
+  assert.ok(totalWrs >= 12, `Expected >=12 rostered 49ers WRs in deep dossier, got ${totalWrs}`);
+
+  const script3m = buildNotebookLmPodcastScript({
+    query: 'wide recievers',
+    durationMinutes: 3,
+    format: 'two_host',
+    appData: fullAppData,
+    dossier: wrDossier
+  });
+  const words3m = script3m.reduce((s, t) => s + t.text.split(/\s+/).filter(Boolean).length, 0);
+  assert.ok(words3m >= 380 && words3m <= 510, `Expected ~438 words for 3m pod, got ${words3m}`);
+  assert.ok(script3m.length >= 10, `Expected >=10 conversational turns for 3m pod, got ${script3m.length}`);
+
+  // Verify natural alternation between Marcus and Elena in two_host mode
+  for (let i = 1; i < script3m.length; i++) {
+    assert.notEqual(
+      script3m[i].speaker,
+      script3m[i - 1].speaker,
+      `Consecutive duplicate speaker at turn ${i}`
+    );
+  }
+
+  const script8m = buildNotebookLmPodcastScript({
+    query: 'wide recievers',
+    durationMinutes: 8,
+    format: 'two_host',
+    appData: fullAppData,
+    dossier: wrDossier
+  });
+  const words8m = script8m.reduce((s, t) => s + t.text.split(/\s+/).filter(Boolean).length, 0);
+  assert.ok(words8m >= 1020 && words8m <= 1320, `Expected ~1168 words for 8m pod, got ${words8m}`);
+
+  const reportMd = buildDeepScoutingAnalysisMarkdown({
+    query: 'wide recievers',
+    appData: fullAppData,
+    dossier: wrDossier
+  });
+  assert.ok(reportMd.includes('Jordan Watkins') && reportMd.includes('Ricky Pearsall'));
+  assert.ok(reportMd.includes('Article 13'));
+});
+
+await testAsync('Share Service compresses custom podcasts/analyses into 49ers.joshal.com deep links and uses native navigator.share with clipboard fallback', async () => {
+  const customEp = {
+    id: 'custom_ep_wr_test',
+    title: 'Wide Receivers',
+    topic: 'wide receivers',
+    format: 'Two-Host Analytical Banter',
+    presetLabel: '3m On-Demand Pod',
+    modelUsed: 'gemini-3.8-flash',
+    createdBy: 'Josh',
+    createdAt: '2026-11-08T01:00:00.000Z',
+    durationSec: 184,
+    audioUrl: 'blob:https://49ers.joshal.com/local-uuid',
+    sourceLinks: [{ label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' }],
+    transcript: [
+      { idx: 0, speaker: 'Marcus', startSec: 0, endSec: 12, text: 'Welcome in to 49ers Faithful.' },
+      { idx: 1, speaker: 'Elena', startSec: 12, endSec: 26, text: 'Let us break down the wide receiver room.' }
+    ]
+  };
+
+  const podShareUrl = await buildShareablePodcastUrl(customEp, {
+    origin: 'https://49ers.joshal.com',
+    hostname: '49ers.joshal.com',
+    pathname: '/'
+  });
+  assert.ok(podShareUrl.startsWith(`${CANONICAL_SITE_ORIGIN}/?pod=custom_ep_wr_test#shared-pod=z.`));
+
+  const parsedUrl = new URL(podShareUrl);
+  const hydratedRoute = await extractIncomingSharedRoute(parsedUrl);
+  assert.equal(hydratedRoute?.type, 'podcast');
+  assert.equal(hydratedRoute?.episode?.id, 'custom_ep_wr_test');
+  assert.equal(hydratedRoute?.episode?.title, 'Wide Receivers');
+  assert.equal(hydratedRoute?.episode?.durationSec, 184);
+  assert.equal(hydratedRoute?.episode?.audioUrl, null, 'Local blob: URL must not leak into shared payload');
+  assert.equal(hydratedRoute?.episode?.transcript?.length, 2);
+
+  // Built-in static `.m4a` episode uses short canonical query link
+  const builtInUrl = await buildShareablePodcastUrl(
+    { id: 'ep-week9-raiders-film', audioUrl: './data/podcasts/ep-week9-raiders-film.m4a' },
+    null
+  );
+  assert.equal(builtInUrl, 'https://49ers.joshal.com/?pod=ep-week9-raiders-film');
+
+  // Native Web Share API vs Clipboard fallback
+  let sharedPayload = null;
+  const nativeRes = await shareItemNatively({
+    title: '49ers Faithful Podcast',
+    text: 'Listen now:',
+    url: podShareUrl,
+    navigatorObj: {
+      share: async data => {
+        sharedPayload = data;
+      }
+    }
+  });
+  assert.equal(nativeRes.method, 'native');
+  assert.equal(sharedPayload?.url, podShareUrl);
+
+  let copiedText = '';
+  const clipRes = await shareItemNatively({
+    title: '49ers Faithful Podcast',
+    text: 'Listen now:',
+    url: podShareUrl,
+    navigatorObj: {
+      clipboard: {
+        writeText: async t => {
+          copiedText = t;
+        }
+      }
+    }
+  });
+  assert.equal(clipRes.method, 'clipboard');
+  assert.equal(copiedText, podShareUrl);
+
+  // Analysis deep-link round-trip
+  const reportUrl = await buildShareableAnalysisUrl(
+    {
+      id: 'local_analysis_wr',
+      title: 'WR Cap & Film',
+      category: 'Wide Receivers Deep Dive',
+      createdBy: 'Josh',
+      markdown: '### WR Report\n* Jordan Watkins 45% snaps'
+    },
+    null
+  );
+  const hydratedAnalysis = await extractIncomingSharedRoute(new URL(reportUrl));
+  assert.equal(hydratedAnalysis?.type, 'analysis');
+  assert.ok(hydratedAnalysis?.analysis?.markdown.includes('Jordan Watkins'));
 });
 
 console.log(`\n======================================================`);

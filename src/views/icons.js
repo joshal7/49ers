@@ -275,6 +275,18 @@ const SVG_PATHS = {
   plus: `
     <line x1="12" y1="5" x2="12" y2="19"/>
     <line x1="5" y1="12" x2="19" y2="12"/>
+  `,
+  share: `
+    <path d="M4.5 12.5V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V12.5"/>
+    <polyline points="16 7 12 3 8 7"/>
+    <line x1="12" y1="3" x2="12" y2="15"/>
+  `,
+  transcript: `
+    <rect x="4" y="3.5" width="16" height="17" rx="2.2" fill="currentColor" fill-opacity="0.14"/>
+    <rect x="4" y="3.5" width="16" height="17" rx="2.2"/>
+    <line x1="8" y1="8.5" x2="16" y2="8.5"/>
+    <line x1="8" y1="12.5" x2="16" y2="12.5"/>
+    <line x1="8" y1="16.5" x2="13" y2="16.5"/>
   `
 };
 

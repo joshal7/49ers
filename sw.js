@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v14';
+const CACHE_NAME = '49ers-faithful-v15';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -15,10 +15,14 @@ const CORE_ASSETS = [
   './src/engine/linkIntegrity.js',
   './src/engine/jargonGlossary.js',
   './src/engine/podcastSpeechEngine.js',
+  './src/engine/deepResearchEngine.js',
   './src/components/spiderChart.js',
   './src/components/audioPlayer.js',
   './src/services/dataService.js',
   './src/services/aiWorkerClient.js',
+  './src/services/podcastAudioStore.js',
+  './src/services/shareService.js',
+  './src/workers/neuralTtsWorker.js',
   './src/views/icons.js',
   './src/views/uiHelpers.js',
   './src/views/homeView.js',

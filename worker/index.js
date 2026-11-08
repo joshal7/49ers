@@ -659,10 +659,15 @@ export default {
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+      const researchDossier = String(body.researchDossier || '').slice(0, 14000);
+      const fullGroundingBlock = researchDossier
+        ? `STAGE-1 TOPIC DEEP RESEARCH DOSSIER:\n${researchDossier}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+        : `AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
+
       const scriptPrompt =
         format === 'Solo Executive Briefing'
-          ? `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exact CBA cap math, and authentic spoken broadcast quality over generation speed.\n\nWrite a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Sound genuinely human and conversational—use natural contractions ("let's", "that's", "can't", "here's"), crisp 12-to-22-word spoken sentences, and natural breath rhythm rather than stiff essay prose, while maintaining zero clickbait fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
-          : `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exact CBA cap math, and authentic spoken studio chemistry over generation speed.\n\nWrite a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Make their chemistry sound genuinely human and natural: mix quick 1-sentence reactions or follow-up questions ("Right, and look at what that does to the center slide...", "Hold on—connect those two ledgers for a second.") with sharp 2-to-3-sentence breakdowns, use spoken contractions ("they're", "can't", "doesn't", "it's"), and avoid long run-on written paragraphs or morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
+          ? `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exhaustive deep research, exact CBA cap math, and authentic NotebookLM-grade spoken broadcast quality over generation speed.\n\nPHASE 1 (INTERNAL DEEP RESEARCH): Cross-examine Google Search Grounding and the STAGE-1 TOPIC DEEP RESEARCH DOSSIER below across every rostered player in the unit (Active, Sidelined/Out, Injured Reserve, Practice Squad), 2026 EPA/snap metrics, injury timelines, external trade fits, and 2026->2027 CBA rollover math.\nPHASE 2 (AUDIO SCRIPT RESTRUCTURING): Restructure your deep research into a ${targetWords}-word (${durationMinutes}-minute) solo analytical 49ers podcast script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Calibrate total word count closely to ~${targetWords} words (~146 words/min) so the spoken episode runs ~${durationMinutes} minutes. Sound genuinely human and conversational—use natural contractions ("let's", "that's", "can't", "here's"), crisp 12-to-22-word spoken sentences, and zero clickbait fluff.\n\n${fullGroundingBlock}`
+          : `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exhaustive deep research, exact CBA cap math, and authentic NotebookLM Audio Overview studio chemistry over generation speed.\n\nPHASE 1 (INTERNAL DEEP RESEARCH): Cross-examine Google Search Grounding and the STAGE-1 TOPIC DEEP RESEARCH DOSSIER below across every rostered player in the unit (Active, Sidelined/Out, Injured Reserve, Practice Squad), 2026 EPA/snap metrics, injury timelines, external trade fits, and 2026->2027 CBA rollover math.\nPHASE 2 (NOTEBOOKLM-STYLE CONVERSATIONAL SCRIPT RESTRUCTURING): Restructure your deep research into a ${targetWords}-word (${durationMinutes}-minute) two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Calibrate total word count closely to ~${targetWords} words (~146 words/min) so the spoken episode runs ~${durationMinutes} minutes. Make their chemistry sound genuinely human like Gemini NotebookLM Audio Overviews: mix quick 1-sentence reactions or follow-up questions ("Right, and look at what that does to the target share...", "Hold on—connect those two ledgers for a second.") with sharp 2-to-3-sentence breakdowns, spoken contractions, and zero morning-zoo fluff.\n\n${fullGroundingBlock}`;
 
       const { res: scriptRes, modelUsed: initialScriptModel } = await callGeminiTextWithFallback(env, {
         systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
@@ -695,7 +700,7 @@ export default {
               role: 'user',
               parts: [
                 {
-                  text: `ADVERSARIAL PODCAST SCRIPT FACT-CHECK & PROSODY POLISH (ACCURACY OVER LATENCY):\nAudit every player name, team assignment, injury designation, W-L record, playoff probability, 2027 draft pick slot, and CBA cap figure in this JSON script against the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT. Fix any subtle inaccuracy and refine any stiff written sentence so it sounds 100% like natural human studio dialogue with crisp breath cadence. Output ONLY the valid raw JSON array [{"speaker":"...","text":"..."}].\n\nDRAFT JSON SCRIPT:\n${rawScriptText}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+                  text: `NOTEBOOKLM AUDIO OVERVIEW RESTRUCTURING, DURATION CALIBRATION & FACT-CHECK PASS (ACCURACY OVER LATENCY):\n1. Audit every player name, team assignment, injury designation, W-L record, playoff probability, 2027 draft pick slot, and CBA cap figure in this JSON script against the DEEP RESEARCH DOSSIER & LIVE SNAPSHOT.\n2. Ensure total spoken length sits near ~${targetWords} words (~${durationMinutes} minutes at 146 words/min) and every turn reads like effortless, natural human two-host podcast banter with crisp breath cadence.\n3. Output ONLY the valid raw JSON array [{"speaker":"...","text":"..."}].\n\nDRAFT JSON SCRIPT:\n${rawScriptText}\n\n${fullGroundingBlock}`
                 }
               ]
             }
@@ -707,7 +712,7 @@ export default {
           const candidateTurns = parseScriptTurnsSafe(auditedScriptText || '');
           if (
             candidateTurns.length > 0 &&
-            !(candidateTurns.length === 1 && candidateTurns[0].text === '49ers briefing ready.')
+            !(candidateTurns.length === 1 && candidateTurns[0].text === 'Briefing generated.')
           ) {
             rawScriptText = auditedScriptText;
             modelUsed = verifyScriptModel || modelUsed;
@@ -721,9 +726,10 @@ export default {
         text: scrubStaleWeightHallucinations(t.text || '', contextSummary)
       }));
 
-      // Step 2: Render Multi-Speaker Native Audio via Highest-Quality Studio Pro TTS Cascade
+      // Step 3: Render Multi-Speaker Native Audio via Highest-Quality Studio Pro TTS Cascade
       let audioUrl = null;
       let audioModelUsed = null;
+      let measuredAudioSec = 0;
       if (env.PODCAST_BUCKET) {
         const directorHeader =
           'Audio Profile: Warm, authentic NFL film and salary-cap podcast recorded in an intimate broadcast studio.\n' +
@@ -755,6 +761,8 @@ export default {
             const binaryStr = atob(b64);
             const pcm = new Uint8Array(binaryStr.length);
             for (let i = 0; i < binaryStr.length; i++) pcm[i] = binaryStr.charCodeAt(i);
+            const pcmSec = Math.floor(pcm.byteLength / 2 / 24000);
+            if (pcmSec >= 5) measuredAudioSec = pcmSec;
             const wavBytes = pcm16ToWav(pcm, 24000);
             await env.PODCAST_BUCKET.put(`episodes/${epId}.wav`, wavBytes, {
               httpMetadata: { contentType: 'audio/wav' }
@@ -765,9 +773,9 @@ export default {
       }
 
       let cursor = 0;
-      const timedTranscript = turns.map((t, idx) => {
+      const rawTimedTranscript = turns.map((t, idx) => {
         const words = String(t.text || '').split(/\s+/).length;
-        const dur = Math.max(3, Math.round((words / 150) * 60));
+        const dur = Math.max(3, Math.round((words / 146) * 60));
         const seg = {
           idx,
           speaker: t.speaker || 'Marcus',
@@ -779,6 +787,14 @@ export default {
         cursor += dur;
         return seg;
       });
+
+      const finalDurationSec = measuredAudioSec >= 5 ? measuredAudioSec : cursor;
+      const scaleFactor = cursor > 0 && measuredAudioSec >= 5 ? measuredAudioSec / cursor : 1;
+      const timedTranscript = rawTimedTranscript.map(seg => ({
+        ...seg,
+        startSec: Math.round(seg.startSec * scaleFactor),
+        endSec: Math.max(Math.round(seg.startSec * scaleFactor) + 1, Math.round(seg.endSec * scaleFactor))
+      }));
 
       const episode = {
         id: epId,
@@ -794,7 +810,7 @@ export default {
         createdBy: String(body.author || 'Friend Group'),
         createdAt: new Date().toISOString(),
         audioUrl,
-        durationSec: cursor,
+        durationSec: finalDurationSec,
         transcript: timedTranscript
       };
 

@@ -1313,9 +1313,15 @@ async function main() {
       await cdp.waitFor(() => !document.getElementById('miniPlayer').hidden);
       await cdp.assertNoOverflow('Autopodcast Active + Sticky Mini-Player');
 
-      // Test +30s skip, transcript turn tap seek, real .m4a media decode health, and speed cycling (1x -> 1.25x -> 1.5x -> 2x -> 1x)
+      // Test default-hidden transcript -> click to expand -> +30s skip, turn tap seek, speed cycling -> click to collapse
       const playerControls = await cdp.eval(async () => {
         const { humanizeNflTextForTts, selectBestBrowserVoices } = await import('/src/engine/podcastSpeechEngine.js');
+        const defaultHiddenTurnCount = document.querySelectorAll('[data-action="seek-podcast-turn"]').length;
+
+        // Expand transcript on click
+        const toggleBtn = document.querySelector('[data-podcast-ready-card] [data-action="toggle-podcast-transcript"]');
+        toggleBtn?.click();
+
         document.getElementById('mpFwd30Btn').click();
         const speeds = [];
         for (let i = 0; i < 4; i++) {
@@ -1326,6 +1332,11 @@ async function main() {
         if (turns[2]) turns[2].click();
         const timeText = document.getElementById('miniPlayerTime').textContent;
         const activeTurnCount = document.querySelectorAll('.transcript-turn.active-turn').length;
+
+        // Collapse transcript back on second click
+        document.querySelector('[data-podcast-ready-card] [data-action="toggle-podcast-transcript"]')?.click();
+        const collapsedAgainCount = document.querySelectorAll('[data-action="seek-podcast-turn"]').length;
+
         const sampleSpoken = humanizeNflTextForTts('The 6-1 Niners are SF -9.5 with 9/18ths base proration.');
         const voicePick = selectBestBrowserVoices([
           { name: 'Fred', lang: 'en-US', localService: true },
@@ -1333,6 +1344,8 @@ async function main() {
           { name: 'Ava (Premium)', lang: 'en-US', localService: true }
         ]);
         return {
+          defaultHiddenTurnCount,
+          collapsedAgainCount,
           speeds,
           turnCount: turns.length,
           activeTurnCount,
@@ -1342,6 +1355,10 @@ async function main() {
           pickedFemale: voicePick.femaleVoice?.name
         };
       });
+      assert(
+        playerControls.defaultHiddenTurnCount === 0 && playerControls.collapsedAgainCount === 0,
+        `Transcripts must be hidden by default and collapse on click: ${JSON.stringify(playerControls)}`
+      );
       assert(
         JSON.stringify(playerControls.speeds) === JSON.stringify(['1.25x', '1.5x', '2x', '1x']),
         `Unexpected speed cycle: ${JSON.stringify(playerControls.speeds)}`
@@ -1375,7 +1392,7 @@ async function main() {
       );
     });
 
-    await runStep('On-Demand Autopodcast & Deep Analysis Runner validate empty inputs and synthesize new persistent items', async () => {
+    await runStep('3-min "wide recievers" Autopodcast + Deep Analysis run full 3-stage workflow, real Stereo WAV audio (>2.3s continuous play), hidden transcripts & native Share links', async () => {
       // 1. Empty podcast topic validation
       const emptyPodErr = await cdp.eval(() => {
         const inp = document.getElementById('podTopicInput');
@@ -1386,17 +1403,28 @@ async function main() {
       });
       assert(emptyPodErr.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
 
-      // 2. Generate custom 8m Solo Autopodcast & verify live Processing Spinner + Rough Estimated Time UI
-      const beforeEpCount = await cdp.eval(() => document.querySelectorAll('[data-action="play-episode"]').length);
+      // 2. Configure exact user scenario: 3 min Two-Host podcast on "wide recievers"
+      const genStartWallMs = Date.now();
       const podSetupAndProgress = await cdp.eval(async () => {
+        document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
+        document.querySelector('[data-action="set-pod-format"][data-format="two_host"]').click();
+        const preClickHint3m = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
+
+        // Also verify coarse 8m estimate format before switching back to 3m
         document.querySelector('[data-action="set-pod-duration"][data-mins="8"]').click();
-        document.querySelector('[data-action="set-pod-format"][data-format="solo"]').click();
-        document.querySelector('[data-action="fill-pod-topic"]').click();
-        const preClickHint = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent || '';
+        const preClickHint8m = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
+        document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
+
+        const inp = document.getElementById('podTopicInput');
+        inp.value = 'wide recievers';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
         document.querySelector('[data-action="generate-autopodcast"]').click();
 
-        await new Promise(r => setTimeout(r, 120));
+        await new Promise(r => setTimeout(r, 150));
         const banner = document.querySelector('[data-job-progress="active"]');
+        const stageLabels = Array.from(banner?.querySelectorAll('.job-stage-label') || []).map(el =>
+          el.textContent.trim()
+        );
         const spinner = banner?.querySelector('.job-spinner-ring');
         const spinnerRect = spinner?.getBoundingClientRect();
         const waveBars = banner?.querySelectorAll('.job-wave-bars span')?.length || 0;
@@ -1405,8 +1433,10 @@ async function main() {
         const genBtn = document.querySelector('[data-action="generate-autopodcast"]');
 
         return {
-          preClickHint,
+          preClickHint3m,
+          preClickHint8m,
           hasBanner: Boolean(banner),
+          stageLabels,
           bannerText: banner?.textContent || '',
           spinnerVisible: Boolean(spinnerRect && spinnerRect.width >= 18 && spinnerRect.height >= 18),
           waveBars,
@@ -1418,9 +1448,21 @@ async function main() {
       });
 
       assert(
-        podSetupAndProgress.preClickHint.includes('Rough time (8m pod):') &&
-          podSetupAndProgress.preClickHint.includes('gemini-3.8-flash • HIGH'),
-        `Missing pre-click podcast rough time or 3.8 High model hint: ${podSetupAndProgress.preClickHint}`
+        podSetupAndProgress.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
+        `Unexpected 3m pre-click text: "${podSetupAndProgress.preClickHint3m}"`
+      );
+      assert(
+        podSetupAndProgress.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)',
+        `Unexpected 8m coarse pre-click text: "${podSetupAndProgress.preClickHint8m}"`
+      );
+      assert(
+        JSON.stringify(podSetupAndProgress.stageLabels) ===
+          JSON.stringify([
+            '1. Deep research on the topic',
+            '2. Restructure into audio script',
+            '3. Convert to podcast'
+          ]),
+        `Missing 3-stage pipeline labels: ${JSON.stringify(podSetupAndProgress.stageLabels)}`
       );
       assert(
         podSetupAndProgress.hasBanner &&
@@ -1428,36 +1470,151 @@ async function main() {
           podSetupAndProgress.waveBars === 4 &&
           podSetupAndProgress.hasProgressBar &&
           podSetupAndProgress.bannerText.includes('Est. wait:') &&
-          podSetupAndProgress.bannerText.includes('Accuracy prioritized over speed') &&
+          podSetupAndProgress.bannerText.includes('Quality prioritized over speed') &&
           podSetupAndProgress.bannerText.includes('Gemini 3.8 High') &&
           podSetupAndProgress.elapsedClock.startsWith('Elapsed') &&
           podSetupAndProgress.btnDisabled &&
           podSetupAndProgress.btnSpinIcon,
-        `Podcast processing spinner / rough estimated time check failed: ${JSON.stringify(podSetupAndProgress)}`
+        `Podcast 3-stage wait bar check failed: ${JSON.stringify(podSetupAndProgress)}`
       );
-      await cdp.assertNoOverflow('Active Podcast Processing Indicator');
+      await cdp.assertNoOverflow('Active 3-Stage Podcast Wait Bar');
 
+      // Wait for real background VITS ONNX Neural TTS + Studio Mastering to complete (up to 110s on first model cache)
       await cdp.waitFor(
-        prev => document.querySelectorAll('[data-action="play-episode"]').length > prev,
-        beforeEpCount,
-        6000
+        () => !document.querySelector('[data-job-progress="active"]') && Boolean(document.querySelector('[data-podcast-ready-card]')),
+        null,
+        110_000
       );
-      const phoneSpeakerState = await cdp.eval(async () => {
-        const mod = await import('/src/components/audioPlayer.js');
-        const uri = mod.buildSilentPlaybackCarrierWavDataUri();
-        const miniOpen = !document.getElementById('miniPlayer')?.hidden;
+      const totalGenWallMs = Date.now() - genStartWallMs;
+      assert(
+        totalGenWallMs >= 4500,
+        `Generation finished suspiciously fast (${totalGenWallMs}ms); expected real deep research + neural audio synthesis`
+      );
+
+      // Verify "Podcast Ready to Play" state, ~3:00 duration (NOT 1:21!), hidden-by-default transcript, and real Stereo WAV audio!
+      const readyAndPlaybackAudit = await cdp.eval(async () => {
+        const readyCard = document.querySelector('[data-podcast-ready-card]');
+        const readyCardText = readyCard?.textContent || '';
+        const hiddenTurnsBeforeClick = document.querySelectorAll('[data-action="seek-podcast-turn"]').length;
+
+        const st = window.__49ersDiagnostics.getState();
+        const ep = st.audioState?.episode;
+        const { getEpisodeAudioUrl } = await import('/src/services/podcastAudioStore.js');
+        const wavBlobUrl = await getEpisodeAudioUrl(ep?.id);
+        let wavHeader = '';
+        let wavChannels = 0;
+        let wavByteLength = 0;
+        let wavNonZeroSamples = 0;
+        if (wavBlobUrl) {
+          const buf = await (await fetch(wavBlobUrl)).arrayBuffer();
+          wavByteLength = buf.byteLength;
+          const view = new DataView(buf);
+          wavHeader = String.fromCharCode(view.getUint8(0), view.getUint8(1), view.getUint8(2), view.getUint8(3));
+          wavChannels = view.getUint16(22, true);
+          for (let off = 44; off < Math.min(buf.byteLength - 2, 44000); off += 20) {
+            if (Math.abs(view.getInt16(off, true)) > 150) wavNonZeroSamples++;
+          }
+        }
+
+        // Hit Play on the Ready-to-Play card and verify it stays playing past 2.3 seconds (never pauses at 1s!)
+        readyCard?.querySelector('[data-action="play-episode"]')?.click();
+        await new Promise(r => setTimeout(r, 2300));
+        const afterPlayState = window.__49ersDiagnostics.getState().audioState;
+        const stillPlayingAt2s = Boolean(afterPlayState?.isPlaying);
+        const currentTimeAt2s = Number(afterPlayState?.currentTimeSec || 0);
+
+        // Expand transcript on click and inspect WR deep-research content
+        document.querySelector('[data-podcast-ready-card] [data-action="toggle-podcast-transcript"]')?.click();
+        const expandedTurnCount = document.querySelectorAll('[data-action="seek-podcast-turn"]').length;
+        const fullTranscriptText = (ep?.transcript || []).map(t => t.text).join(' ');
+
+        // Pause cleanly
+        document.getElementById('mpPlayPauseBtn')?.click();
+
         return {
-          hasValidCarrierUri: uri.startsWith('data:audio/wav;base64,'),
-          miniOpen
+          readyCardText,
+          hiddenTurnsBeforeClick,
+          expandedTurnCount,
+          epTitle: ep?.title,
+          durationSec: ep?.durationSec,
+          wavHeader,
+          wavChannels,
+          wavByteLength,
+          wavNonZeroSamples,
+          stillPlayingAt2s,
+          currentTimeAt2s,
+          mentionsWatkinsOrRobinson:
+            fullTranscriptText.includes('Jordan Watkins') || fullTranscriptText.includes('Demarcus Robinson'),
+          mentionsPearsallOrAiyuk:
+            fullTranscriptText.includes('Ricky Pearsall') || fullTranscriptText.includes('Brandon Aiyuk')
+        };
+      });
+
+      assert(
+        readyAndPlaybackAudit.readyCardText.includes('Podcast Ready to Play'),
+        `Missing "Podcast Ready to Play" header: ${readyAndPlaybackAudit.readyCardText.slice(0, 160)}`
+      );
+      assert(
+        readyAndPlaybackAudit.hiddenTurnsBeforeClick === 0 && readyAndPlaybackAudit.expandedTurnCount >= 10,
+        `Transcript default-hidden / expand behavior failed: ${JSON.stringify(readyAndPlaybackAudit)}`
+      );
+      assert(
+        readyAndPlaybackAudit.durationSec >= 145 && readyAndPlaybackAudit.durationSec <= 235,
+        `Expected ~3:00 duration (145s..235s) for 3m WR podcast, got ${readyAndPlaybackAudit.durationSec}s`
+      );
+      assert(
+        readyAndPlaybackAudit.wavHeader === 'RIFF' &&
+          readyAndPlaybackAudit.wavChannels === 2 &&
+          readyAndPlaybackAudit.wavByteLength > 4_000_000 &&
+          readyAndPlaybackAudit.wavNonZeroSamples > 50,
+        `Expected real 2-channel Stereo WAV audio (>4MB non-silent speech), got: ${JSON.stringify(readyAndPlaybackAudit)}`
+      );
+      assert(
+        readyAndPlaybackAudit.stillPlayingAt2s && readyAndPlaybackAudit.currentTimeAt2s >= 1.5,
+        `Podcast paused prematurely or failed to advance past 1.5s: ${JSON.stringify(readyAndPlaybackAudit)}`
+      );
+      assert(
+        readyAndPlaybackAudit.mentionsWatkinsOrRobinson && readyAndPlaybackAudit.mentionsPearsallOrAiyuk,
+        `WR Deep Research script missed live 2026 49ers WR room players: ${JSON.stringify(readyAndPlaybackAudit)}`
+      );
+      await cdp.assertNoOverflow('Custom 3m WR Podcast Ready to Play + Expanded Transcript');
+
+      // 3. Test Share Icon + Colleague Deep-Link Import & Playback on 49ers.joshal.com
+      const shareRoundTrip = await cdp.eval(async () => {
+        let nativeShareCaptured = null;
+        const origShare = navigator.share;
+        navigator.share = async payload => {
+          nativeShareCaptured = payload;
+        };
+        try {
+          document.querySelector('[data-podcast-ready-card] [data-action="share-podcast"]')?.click();
+          await new Promise(r => setTimeout(r, 200));
+        } finally {
+          navigator.share = origShare;
+        }
+
+        const sharedUrl = window.__lastSharedUrl || nativeShareCaptured?.url || '';
+        // Simulate colleague opening the shared URL (audio already cached in IDB for same ID, so instant ready!)
+        document.getElementById('mpCloseBtn')?.click();
+        await window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
+        const loadedSharedEp = window.__49ersDiagnostics.getState().audioState?.episode;
+        return {
+          sharedUrl,
+          nativeTitle: nativeShareCaptured?.title || '',
+          loadedTitle: loadedSharedEp?.title || '',
+          loadedTurns: loadedSharedEp?.transcript?.length || 0
         };
       });
       assert(
-        phoneSpeakerState.hasValidCarrierUri && phoneSpeakerState.miniOpen,
-        `Auto-created podcast iPhone speaker carrier check failed: ${JSON.stringify(phoneSpeakerState)}`
+        shareRoundTrip.sharedUrl.includes('?pod=custom_ep_') &&
+          shareRoundTrip.sharedUrl.includes('#shared-pod=z.') &&
+          shareRoundTrip.nativeTitle.includes('49ers Faithful Podcast') &&
+          shareRoundTrip.loadedTurns >= 10,
+        `Podcast native share & colleague deep-link hydration failed: ${JSON.stringify(shareRoundTrip)}`
       );
       await cdp.eval(() => document.getElementById('mpCloseBtn')?.click());
 
-      // 3. Switch to Deep Analysis Runner, test empty validation, then verify live processing banner + generate custom report
+      // 4. Switch to AI Analysis Tab, verify parallel 3-step wait bar, coarse estimate, grounding & Share icon
       const emptyAnalysisErr = await cdp.eval(() => {
         document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
         const area = document.getElementById('analysisPromptInput');
@@ -1470,36 +1627,62 @@ async function main() {
 
       const beforeReportCount = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
       const analysisProgress = await cdp.eval(async () => {
-        const preHint = document.querySelector('[data-est-wait-preview="analysis"]')?.textContent || '';
+        const preHint = document.querySelector('[data-est-wait-preview="analysis"]')?.textContent?.trim() || '';
         const area = document.getElementById('analysisPromptInput');
-        area.value = 'Analyze Brock Purdy EPA, Nick Bosa pass rush, and Brandon Aiyuk cap math';
+        area.value = 'wide recievers';
         area.dispatchEvent(new Event('input', { bubbles: true }));
         document.querySelector('[data-action="run-deep-analysis"]').click();
-        await new Promise(r => setTimeout(r, 120));
+        await new Promise(r => setTimeout(r, 140));
         const banner = document.querySelector('[data-job-progress="active"]');
+        const stageLabels = Array.from(banner?.querySelectorAll('.job-stage-label') || []).map(el =>
+          el.textContent.trim()
+        );
         return {
           preHint,
           hasBanner: Boolean(banner),
+          stageLabels,
           bannerText: banner?.textContent || '',
           hasSpinner: Boolean(banner?.querySelector('.job-spinner-ring'))
         };
       });
       assert(
-        analysisProgress.preHint.includes('Rough time:') &&
+        analysisProgress.preHint ===
+          'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 High)' &&
           analysisProgress.hasBanner &&
           analysisProgress.hasSpinner &&
+          analysisProgress.stageLabels.length === 3 &&
           analysisProgress.bannerText.includes('Est. wait:') &&
           analysisProgress.bannerText.includes('Gemini 3.8 High'),
-        `Analysis processing spinner / rough time check failed: ${JSON.stringify(analysisProgress)}`
+        `Analysis 3-stage wait bar / estimate check failed: ${JSON.stringify(analysisProgress)}`
       );
 
       await cdp.waitFor(
         prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
         beforeReportCount,
-        6000
+        12_000
       );
 
-      // 4. Ask about retired former 49er Bryce Huff and verify Live Roster Grounding Verification explicitly flags him as non-rostered
+      // Verify Share icon on AI Analysis report card
+      const analysisShareCheck = await cdp.eval(async () => {
+        let shared = null;
+        const origShare = navigator.share;
+        navigator.share = async d => {
+          shared = d;
+        };
+        try {
+          document.querySelector('[data-action="share-analysis"]')?.click();
+          await new Promise(r => setTimeout(r, 150));
+        } finally {
+          navigator.share = origShare;
+        }
+        return shared?.url || window.__lastSharedUrl || '';
+      });
+      assert(
+        analysisShareCheck.includes('?analysis=') && analysisShareCheck.includes('#shared-analysis=z.'),
+        `AI Analysis Share button failed: ${analysisShareCheck}`
+      );
+
+      // 5. Ask about retired former 49er Bryce Huff and verify Live Roster Grounding Verification explicitly flags him as non-rostered
       const countBeforeHuffQuery = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
       await cdp.eval(() => {
         const area = document.getElementById('analysisPromptInput');
@@ -1510,7 +1693,7 @@ async function main() {
       await cdp.waitFor(
         prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
         countBeforeHuffQuery,
-        6000
+        12_000
       );
       const topGeneratedCardText = await cdp.eval(
         () => document.querySelector('#mainView article.brief-card')?.textContent || ''
@@ -1625,7 +1808,11 @@ async function main() {
           .map(el => parseFloat(window.getComputedStyle(el).fontSize));
         document.querySelector('[data-action="run-deep-analysis"]').click();
 
-        await new Promise(r => setTimeout(r, 1450));
+        const waitStart = Date.now();
+        while (document.querySelector('[data-job-progress="active"]') && Date.now() - waitStart < 9000) {
+          await new Promise(r => setTimeout(r, 150));
+        }
+        await new Promise(r => setTimeout(r, 120));
 
         // Check Settings inputs >= 16px
         document.getElementById('openSettingsBtn').click();

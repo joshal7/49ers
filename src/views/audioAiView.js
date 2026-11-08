@@ -7,6 +7,8 @@ import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
+  PODCAST_PIPELINE_STAGES,
+  ANALYSIS_PIPELINE_STAGES,
   estimateGenerationWait,
   resolveActiveHighQualityModelLabel
 } from '../services/aiWorkerClient.js';
@@ -98,7 +100,6 @@ function filterEpisodesLast7Days(episodes = [], referenceUpdatedAt = '') {
   if (liveWindow.length > 0) {
     return liveWindow.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
   }
-  // Offline fallback relative to snapshot capture timestamp
   const refMs = referenceUpdatedAt ? new Date(referenceUpdatedAt).getTime() : nowMs;
   return episodes
     .filter(ep => {
@@ -129,7 +130,13 @@ function renderSourceChips(items = []) {
 }
 
 function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = true }) {
-  const pct = Math.max(12, Math.min(98, Number(jobStatus?.percent || 24)));
+  const pct = Math.max(8, Math.min(99, Number(jobStatus?.percent || 14)));
+  const activeStep = Math.max(1, Math.min(3, Number(jobStatus?.stepIdx || 1)));
+  const stages = Array.isArray(jobStatus?.stages) && jobStatus.stages.length === 3
+    ? jobStatus.stages
+    : isPodcast
+      ? PODCAST_PIPELINE_STAGES
+      : ANALYSIS_PIPELINE_STAGES;
   const estText = jobStatus?.estLabel || waitEst.estLabel;
   const modelBadge = jobStatus?.modelLabel || modelInfo.displayLabel;
   const elapsedSec = jobStatus?.startedAtMs
@@ -137,8 +144,31 @@ function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = 
     : 0;
   const elapsedLabel = `Elapsed ${formatTimeMmSs(elapsedSec)}`;
   const heading = isPodcast
-    ? 'Synthesizing Studio Podcast…'
-    : 'Running Unhurried High-Thinking Analysis…';
+    ? 'Creating Studio Podcast…'
+    : 'Running Deep Research & Scouting Analysis…';
+
+  const stepperRows = stages
+    .map((label, idx) => {
+      const stepNum = idx + 1;
+      const stateClass =
+        stepNum < activeStep ? 'done' : stepNum === activeStep ? 'current' : 'pending';
+      const indicator =
+        stepNum < activeStep
+          ? `<span class="stage-step-icon done" aria-hidden="true">${iconSvg('check', 11)}</span>`
+          : stepNum === activeStep
+            ? `<span class="stage-step-icon current" aria-hidden="true"></span>`
+            : `<span class="stage-step-icon pending" aria-hidden="true">${stepNum}</span>`;
+      return `
+        <div class="job-stage-row ${stateClass}" data-pipeline-step="${stepNum}" data-step-state="${stateClass}">
+          ${indicator}
+          <span class="job-stage-label">${esc(label)}</span>
+          <span class="job-stage-status mono">${
+            stepNum < activeStep ? 'Done' : stepNum === activeStep ? 'In progress' : 'Queued'
+          }</span>
+        </div>
+      `;
+    })
+    .join('');
 
   return `
     <div class="job-progress-box" data-job-progress="active" role="status" aria-live="polite" style="margin-bottom:10px">
@@ -154,13 +184,53 @@ function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = 
         </div>
         <span class="badge badge-gold mono">${esc(modelBadge)}</span>
       </div>
-      <div class="job-progress-step">${esc(jobStatus?.message || 'Verifying live 2026 49ers snapshot…')}</div>
+
+      <div class="job-stage-stepper" aria-label="Generation Pipeline Progress">
+        ${stepperRows}
+      </div>
+
+      <div class="job-progress-step">${esc(jobStatus?.message || 'Step 1 of 3: Deep research on the topic…')}</div>
+      ${
+        jobStatus?.subDetail
+          ? `<div class="job-progress-subdetail">${esc(jobStatus.subDetail)}</div>`
+          : ''
+      }
       <div class="job-progress-track" aria-hidden="true">
         <div class="job-progress-fill" style="width:${pct}%"></div>
       </div>
       <div class="job-eta-strip">
-        <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Est. wait:</strong> ${esc(estText)} • Accuracy prioritized over speed</span></span>
+        <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Est. wait:</strong> ${esc(estText)} • Quality prioritized over speed</span></span>
         <span class="mono" id="jobElapsedClock" style="color:var(--gold-bright);font-weight:700">${esc(elapsedLabel)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderTranscriptTurnsList(episode, activeTurnIdx = -1) {
+  const turns = episode?.transcript || [];
+  if (turns.length === 0) return '';
+  return `
+    <div class="podcast-transcript-drawer" data-transcript-for="${esc(episode.id)}">
+      <div class="mono" style="font-size:11px;color:var(--text-muted);margin-bottom:6px">
+        Interactive Transcript • Tap any turn to jump audio
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        ${turns
+          .map(
+            (seg, idx) => `
+          <div class="transcript-turn ${activeTurnIdx === idx ? 'active-turn' : ''}"
+               data-action="seek-podcast-turn"
+               data-episode-id="${esc(episode.id)}"
+               data-seek-sec="${seg.startSec}">
+            <div class="speaker-tag">
+              <span class="inline-icon-meta">${iconSvg('mic', 12)}<span>${esc(seg.speaker)} <span style="font-weight:500;color:var(--text-muted)">(${esc(seg.speakerRole || '')})</span></span></span>
+              <span class="mono">${formatTimeMmSs(seg.startSec)}</span>
+            </div>
+            <div>${esc(seg.text)}</div>
+          </div>
+        `
+          )
+          .join('')}
       </div>
     </div>
   `;
@@ -176,10 +246,12 @@ export function renderAudioAiViewHtml({
   podFormat = 'two_host', // 'two_host' | 'solo'
   podTopicDraft = '',
   analysisPromptDraft = '',
-  jobStatus = null, // { active: boolean, message: string, error?: string }
+  jobStatus = null,
   allEpisodes = [],
   allAnalyses = [],
-  audioState = {}
+  audioState = {},
+  expandedTranscriptIds = new Set(),
+  shareToastTargetId = null
 }) {
   const beatPodBundle = appData?.beatPodcasts || { shows: [], episodes: [] };
   const recentBeatEpisodes = filterEpisodesLast7Days(beatPodBundle.episodes || [], beatPodBundle.updatedAt);
@@ -227,7 +299,9 @@ export function renderAudioAiViewHtml({
         podTopicDraft,
         jobStatus,
         allEpisodes,
-        audioState
+        audioState,
+        expandedTranscriptIds,
+        shareToastTargetId
       })
     );
   }
@@ -239,7 +313,8 @@ export function renderAudioAiViewHtml({
       userPrefs,
       analysisPromptDraft,
       jobStatus,
-      allAnalyses
+      allAnalyses,
+      shareToastTargetId
     })
   );
 }
@@ -381,7 +456,6 @@ function renderBeatPodcastsDirectory({
     return `${headerCard}${listBody}`;
   }
 
-  // Grouped By Podcast, and sorted newest-first by date within each podcast
   const groupedHtml = defaultShows
     .map(show => {
       const showEps = episodes
@@ -444,14 +518,17 @@ function renderPodcastStudio({
   podTopicDraft,
   jobStatus,
   allEpisodes,
-  audioState
+  audioState,
+  expandedTranscriptIds = new Set(),
+  shareToastTargetId = null
 }) {
   const activeEp = audioState?.episode || null;
   const modelInfo = resolveActiveHighQualityModelLabel(appData);
   const waitEst = estimateGenerationWait({
     kind: 'podcast',
     durationMinutes: podDurationMin,
-    prefs: userPrefs
+    prefs: userPrefs,
+    appData
   });
   const isPodBusy = Boolean(jobStatus?.active && (!jobStatus.kind || jobStatus.kind === 'podcast'));
   const podError = !jobStatus?.active && (!jobStatus?.kind || jobStatus?.kind === 'podcast') ? jobStatus?.error : '';
@@ -460,41 +537,63 @@ function renderPodcastStudio({
   const oppShort = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || 'Matchup';
   const topicChips = [
     `${wkLabel} ${oppShort} Film & Trench Protection Plan`.trim(),
-    '2026 Trade Window Needs, Realistic Targets & 2027 Cap Horizon',
+    '49ers Wide Receivers: Injury Timeline, Target Share & Cap Math',
     'DeForest Buckner + Nick Bosa Wide-9 Stunt Geometry',
     `Calibrated #1 NFC Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%) & Conference Tiebreakers`
   ];
 
-  const transcriptHtml = activeEp
+  const isActiveExpanded = Boolean(activeEp && expandedTranscriptIds.has(activeEp.id));
+  const activeTurnCount = activeEp?.transcript?.length || 0;
+  const isActiveSharedToast = Boolean(activeEp && shareToastTargetId === activeEp.id);
+  const activeEyebrow = audioState?.isBufferingAudio
+    ? 'Preparing Studio Audio…'
+    : audioState?.isPlaying
+      ? 'Now Playing • Studio Stereo Audio'
+      : activeEp?.isSharedImport && !audioState?.currentTimeSec
+        ? 'Shared Podcast Ready to Play'
+        : 'Podcast Ready to Play';
+
+  const readyOrPlayingCardHtml = activeEp
     ? `
-      <section class="card temporal-highlight">
-        <div class="card-header">
+      <section class="card temporal-highlight" data-podcast-ready-card="${esc(activeEp.id)}">
+        <div class="card-header" style="margin-bottom:8px">
           <div class="card-header-left">
-            <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
+            <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg(audioState?.isPlaying ? 'audio' : 'check', 18)}</div>
             <div class="card-title-group">
-              <div class="card-eyebrow">Now Loaded • Tap Any Turn to Seek Audio</div>
+              <div class="card-eyebrow">${esc(activeEyebrow)}</div>
               <h3 class="card-title">${esc(activeEp.title)}</h3>
             </div>
           </div>
           <span class="badge badge-gold mono">${formatTimeMmSs(audioState.currentTimeSec)} / ${formatTimeMmSs(audioState.durationSec || activeEp.durationSec)}</span>
         </div>
 
-        <div style="display:flex;flex-direction:column;gap:7px">
-          ${(activeEp.transcript || [])
-            .map(
-              (seg, idx) => `
-            <div class="transcript-turn ${audioState.activeTurnIdx === idx ? 'active-turn' : ''}"
-                 data-action="seek-podcast-turn" data-seek-sec="${seg.startSec}">
-              <div class="speaker-tag">
-                <span class="inline-icon-meta">${iconSvg('mic', 12)}<span>${esc(seg.speaker)} <span style="font-weight:500;color:var(--text-muted)">(${esc(seg.speakerRole || '')})</span></span></span>
-                <span class="mono">${formatTimeMmSs(seg.startSec)}</span>
-              </div>
-              <div>${esc(seg.text)}</div>
-            </div>
-          `
-            )
-            .join('')}
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
+          ${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || '49ers Faithful')}
         </div>
+
+        <div class="podcast-action-row">
+          <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(activeEp.id)}">
+            ${iconSvg(audioState?.isPlaying ? 'pause' : 'play', 14)}
+            <span>${audioState?.isPlaying ? 'Pause Podcast' : 'Play Podcast'}</span>
+          </button>
+
+          <div class="podcast-secondary-actions">
+            ${
+              activeTurnCount > 0
+                ? `<button type="button" class="btn-ghost" data-action="toggle-podcast-transcript" data-episode-id="${esc(activeEp.id)}" aria-expanded="${isActiveExpanded ? 'true' : 'false'}">
+                     ${iconSvg('transcript', 13)}
+                     <span>${isActiveExpanded ? 'Hide Transcript' : `Show Transcript (${activeTurnCount})`}</span>
+                   </button>`
+                : ''
+            }
+            <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Share podcast link" title="Share link to play on 49ers.joshal.com">
+              ${iconSvg(isActiveSharedToast ? 'check' : 'share', 14)}
+              <span>${isActiveSharedToast ? 'Link Copied' : 'Share'}</span>
+            </button>
+          </div>
+        </div>
+
+        ${isActiveExpanded ? renderTranscriptTurnsList(activeEp, audioState.activeTurnIdx) : ''}
       </section>
     `
     : '';
@@ -506,7 +605,7 @@ function renderPodcastStudio({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Multi-Speaker Studio TTS</div>
+            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Deep Research → Script → Studio Pod</div>
             <h2 class="card-title">Generate Custom Autopodcast</h2>
           </div>
         </div>
@@ -564,15 +663,14 @@ function renderPodcastStudio({
       </div>
 
       <input type="text" id="podTopicInput" class="text-input" style="margin-bottom:10px"
-             placeholder="e.g., How should SF structure Nick Bosa & Purdy's 2027 cap hits?"
+             placeholder="e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure"
              value="${esc(podTopicDraft)}" aria-label="Podcast Topic" />
 
       ${
         isPodBusy
           ? renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast: true })
           : `<div class="est-wait-hint" data-est-wait-preview="podcast">
-               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Rough time (${podDurationMin}m pod):</strong> ${esc(waitEst.estLabel)}</span></span>
-               <span class="mono" style="color:var(--gold-bright);font-weight:700">${esc(modelInfo.modelId)} • HIGH</span>
+               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span>${esc(waitEst.summaryText)}</span></span>
              </div>`
       }
       ${
@@ -583,15 +681,15 @@ function renderPodcastStudio({
 
       <button type="button" class="btn-primary" style="width:100%" data-action="generate-autopodcast" ${isPodBusy ? 'disabled' : ''}>
         ${isPodBusy ? iconSvg('loader', 15, 'btn-spin-icon') : iconSvg('mic', 15)}
-        <span>${isPodBusy ? `Generating ${podDurationMin}-Min Podcast (${waitEst.estLabel})…` : `Generate ${podDurationMin}-Min Audio Briefing`}</span>
+        <span>${isPodBusy ? `Creating ${podDurationMin}-Min Podcast…` : `Generate ${podDurationMin}-Min Audio Briefing`}</span>
       </button>
     </section>
 
-    ${transcriptHtml}
+    ${readyOrPlayingCardHtml}
 
     <!-- Audio Briefing Library -->
     <section class="card">
-      <div class="card-eyebrow">Instant Play • Lock-Screen Controls</div>
+      <div class="card-eyebrow">Instant Play • Shareable Links • Lock-Screen Controls</div>
       <h3 class="card-title" style="margin-bottom:9px">Audio Briefing Library (${allEpisodes.length})</h3>
 
       <div style="display:flex;flex-direction:column;gap:8px">
@@ -599,6 +697,9 @@ function renderPodcastStudio({
           .map(ep => {
             const isCurrent = activeEp?.id === ep.id;
             const isPlayingNow = isCurrent && audioState?.isPlaying;
+            const turnCnt = ep.transcript?.length || 0;
+            const isCardTranscriptExpanded = expandedTranscriptIds.has(ep.id);
+            const isCopied = shareToastTargetId === ep.id;
             return `
               <div class="brief-card" style="border-color:${isCurrent ? 'var(--gold)' : 'var(--border-subtle)'}">
                 <div class="episode-row-head">
@@ -614,7 +715,7 @@ function renderPodcastStudio({
                   </div>
                   <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:4px">
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                      <span class="badge ${ep.audioUrl ? 'badge-positive' : 'badge-gold'}">${esc(ep.presetLabel || ep.format)}</span>
+                      <span class="badge badge-positive">${esc(ep.presetLabel || ep.format)}</span>
                       <span class="mono" style="font-size:11px;color:var(--text-muted)">
                         ${formatTimeMmSs(ep.durationSec)} • ${esc(ep.createdBy)} • ${formatRelativeAge(ep.createdAt)}
                       </span>
@@ -624,13 +725,31 @@ function renderPodcastStudio({
                   </div>
                 </div>
                 ${renderSourceChips(ep.sourceLinks || [])}
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
-                  <span style="font-size:11.5px;color:var(--gold-bright)">${esc(ep.format)}</span>
+                <div class="podcast-action-row" style="margin-top:4px">
+                  <div class="podcast-secondary-actions">
+                    <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on 49ers.joshal.com">
+                      ${iconSvg(isCopied ? 'check' : 'share', 13)}
+                      <span>${isCopied ? 'Link Copied' : 'Share'}</span>
+                    </button>
+                    ${
+                      turnCnt > 0
+                        ? `<button type="button" class="btn-ghost" data-action="toggle-podcast-transcript" data-episode-id="${esc(ep.id)}" aria-expanded="${isCardTranscriptExpanded ? 'true' : 'false'}">
+                             ${iconSvg('transcript', 12)}
+                             <span>${isCardTranscriptExpanded ? 'Hide Transcript' : 'Transcript'}</span>
+                           </button>`
+                        : ''
+                    }
+                  </div>
                   <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(ep.id)}">
                     ${iconSvg(isPlayingNow ? 'pause' : 'play', 13)}
-                    <span>${isPlayingNow ? 'Playing' : 'Play Episode'}</span>
+                    <span>${isPlayingNow ? 'Pause' : isCurrent ? 'Play Ready' : 'Play Episode'}</span>
                   </button>
                 </div>
+                ${
+                  isCardTranscriptExpanded && !isCurrent
+                    ? renderTranscriptTurnsList(ep, -1)
+                    : ''
+                }
               </div>
             `;
           })
@@ -640,9 +759,16 @@ function renderPodcastStudio({
   `;
 }
 
-function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft, jobStatus, allAnalyses }) {
+function renderDeepAnalysisRunner({
+  appData,
+  userPrefs = {},
+  analysisPromptDraft,
+  jobStatus,
+  allAnalyses,
+  shareToastTargetId = null
+}) {
   const modelInfo = resolveActiveHighQualityModelLabel(appData);
-  const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs });
+  const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs, appData });
   const isAnalysisBusy = Boolean(jobStatus?.active && (!jobStatus.kind || jobStatus.kind === 'analysis'));
   const analysisError =
     !jobStatus?.active && (!jobStatus?.kind || jobStatus?.kind === 'analysis') ? jobStatus?.error : '';
@@ -650,8 +776,8 @@ function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft
   const wkLabel = um.week ? `Week ${um.week}` : 'upcoming';
   const oppLabel = um.oppName || 'opponent';
   const quickPrompts = [
+    'Deep dive on 49ers Wide Receivers: active depth, IR/Out timelines, target share & 2027 cap math',
     'Assess 49ers 2026 trade window needs, realistic seller targets, 9/18ths rental math & 2027 -$31.54M cap horizon',
-    `Evaluate calibrated 10,000-run NFC #1 seed bye odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%), NFC North cannibalization & Week 11 MIN tiebreaker`,
     'Evaluate Brock Purdy 2026 EPA/play, CPOE, and pressure-to-sack avoidance vs. two-high shells',
     `How DC Raheem Morris pairs DeForest Buckner, Keion White & Nick Bosa in ${wkLabel} vs. ${oppLabel}`
   ];
@@ -662,13 +788,13 @@ function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Live EPA &amp; Cap Grounded</div>
+            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • 3-Stage Deep Research Workflow</div>
             <h2 class="card-title">AI Scouting &amp; Cap Analysis</h2>
           </div>
         </div>
       </div>
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
-        Unhurried High-Thinking synthesis prioritizing 100% accuracy over speed—grounded in live ${esc(appData?.meta?.teamRecord || '2026')} standings, active 53-man roster, injury designations, and OverTheCap ledgers.
+        Multi-stage deep research prioritizing accuracy over speed: live beat &amp; ESPN research, full 88-player roster/EPA/injury verification, and CBA salary cap math.
       </div>
 
       <div class="pill-bar" style="margin-bottom:8px">
@@ -685,15 +811,14 @@ function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any 49ers scheme, EPA, injury, cap, trade, or draft question…"
+                placeholder="Ask any 49ers position room, scheme, EPA, injury, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
         isAnalysisBusy
           ? renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast: false })
           : `<div class="est-wait-hint" data-est-wait-preview="analysis">
-               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span><strong>Rough time:</strong> ${esc(waitEst.estLabel)}</span></span>
-               <span class="mono" style="color:var(--gold-bright);font-weight:700">${esc(modelInfo.modelId)} • HIGH</span>
+               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span>${esc(waitEst.summaryText)}</span></span>
              </div>`
       }
       ${
@@ -704,7 +829,7 @@ function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft
 
       <button type="button" class="btn-primary" style="width:100%" data-action="run-deep-analysis" ${isAnalysisBusy ? 'disabled' : ''}>
         ${isAnalysisBusy ? iconSvg('loader', 15, 'btn-spin-icon') : iconSvg('sparkles', 15)}
-        <span>${isAnalysisBusy ? `Running High-Thinking Analysis (${waitEst.estLabel})…` : 'Run Deep Analysis'}</span>
+        <span>${isAnalysisBusy ? 'Running Deep Research & Scouting Analysis…' : 'Run Deep Analysis'}</span>
       </button>
     </section>
 
@@ -714,22 +839,29 @@ function renderDeepAnalysisRunner({ appData, userPrefs = {}, analysisPromptDraft
 
       <div style="display:flex;flex-direction:column;gap:10px">
         ${allAnalyses
-          .map(
-            rep => `
-          <article class="brief-card">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-              <span class="badge badge-gold">${esc(rep.category)}</span>
-              <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
-            </div>
-            <h4 style="margin:2px 0;font-size:14.5px">${esc(rep.title)}</h4>
-            ${renderMarkdownSafe(rep.markdown)}
-            <div style="border-top:1px solid var(--border-subtle);padding-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-              <span style="font-size:11px;color:var(--text-muted)">Sources:</span>
-              ${renderSourceChips(rep.sourcesCited || [])}
-            </div>
-          </article>
-        `
-          )
+          .map(rep => {
+            const isCopied = shareToastTargetId === rep.id;
+            return `
+              <article class="brief-card" data-analysis-card="${esc(rep.id)}">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+                  <span class="badge badge-gold">${esc(rep.category)}</span>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                    <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
+                    <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on 49ers.joshal.com">
+                      ${iconSvg(isCopied ? 'check' : 'share', 13)}
+                      <span>${isCopied ? 'Link Copied' : 'Share'}</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 style="margin:2px 0;font-size:14.5px">${esc(rep.title)}</h4>
+                ${renderMarkdownSafe(rep.markdown)}
+                <div style="border-top:1px solid var(--border-subtle);padding-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                  <span style="font-size:11px;color:var(--text-muted)">Sources:</span>
+                  ${renderSourceChips(rep.sourcesCited || [])}
+                </div>
+              </article>
+            `;
+          })
           .join('')}
       </div>
     </section>

@@ -18,12 +18,21 @@ import {
   saveUserPrefs
 } from './services/dataService.js';
 import {
+  PODCAST_PIPELINE_STAGES,
+  ANALYSIS_PIPELINE_STAGES,
   fetchSharedWorkerFeed,
   runOnDemandDeepAnalysis,
   generateOnDemandAutopodcast,
+  synthesizeMissingEpisodeAudio,
   estimateGenerationWait,
   resolveActiveHighQualityModelLabel
 } from './services/aiWorkerClient.js';
+import {
+  buildShareablePodcastUrl,
+  buildShareableAnalysisUrl,
+  extractIncomingSharedRoute,
+  shareItemNatively
+} from './services/shareService.js';
 
 import { esc, formatRelativeAge } from './views/uiHelpers.js';
 import { getJargonEntry } from './engine/jargonGlossary.js';
@@ -78,6 +87,8 @@ const state = {
   jobStatus: null,
   workerSharedFeed: { analyses: [], episodes: [] },
   audioState: {},
+  expandedTranscriptIds: new Set(),
+  shareToastTargetId: null,
 
   // Bottom Sheet state
   sheetMode: null, // 'player' | 'settings' | 'vault' | null
@@ -426,7 +437,9 @@ function renderMain() {
         jobStatus: state.jobStatus,
         allEpisodes: getAllEpisodes(),
         allAnalyses: getAllAnalyses(),
-        audioState: state.audioState
+        audioState: state.audioState,
+        expandedTranscriptIds: state.expandedTranscriptIds,
+        shareToastTargetId: state.shareToastTargetId
       });
     }
   });
@@ -488,7 +501,9 @@ function renderSheet() {
 
 function renderMiniPlayer(audioSnapshot) {
   const prevEpId = state.audioState?.episode?.id || null;
+  const prevPlaying = Boolean(state.audioState?.isPlaying);
   const nextEpId = audioSnapshot?.episode?.id || null;
+  const nextPlaying = Boolean(audioSnapshot?.isPlaying);
   state.audioState = audioSnapshot || {};
   const miniEl = document.getElementById('miniPlayer');
   if (!miniEl) return;
@@ -505,8 +520,13 @@ function renderMiniPlayer(audioSnapshot) {
   miniEl.hidden = false;
   document.body.classList.add('has-mini-player');
 
-  // If a new episode just loaded while viewing Podcast Studio, immediately mount its interactive transcript
-  if (prevEpId !== nextEpId && state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+  // Keep Ready-to-Play / Library cards in sync when episode or play/pause state changes
+  if (
+    (prevEpId !== nextEpId || prevPlaying !== nextPlaying) &&
+    state.activeNavTab === 'audio' &&
+    state.studioSubTab === 'podcast' &&
+    !state.jobStatus?.active
+  ) {
     renderMain();
   }
 
@@ -526,11 +546,14 @@ function renderMiniPlayer(audioSnapshot) {
   const waveEl = miniEl.querySelector('.mini-player-wave');
   if (waveEl) waveEl.classList.toggle('playing', Boolean(audioSnapshot.isPlaying));
 
-  // Update active transcript turn highlight in place if on Audio tab
-  if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
-    document.querySelectorAll('.transcript-turn').forEach((el, idx) => {
-      el.classList.toggle('active-turn', idx === audioSnapshot.activeTurnIdx);
-    });
+  // Update active transcript turn highlight in place for the currently loaded episode
+  if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast' && nextEpId) {
+    const drawer = document.querySelector(`[data-transcript-for="${CSS.escape(nextEpId)}"]`);
+    if (drawer) {
+      drawer.querySelectorAll('.transcript-turn').forEach((el, idx) => {
+        el.classList.toggle('active-turn', idx === audioSnapshot.activeTurnIdx);
+      });
+    }
   }
 }
 
@@ -974,7 +997,81 @@ function bindEvents() {
       case 'seek-podcast-turn': {
         audioController?.primeForUserGesture();
         const sec = Number(btn.getAttribute('data-seek-sec') || 0);
+        const turnEpId = btn.getAttribute('data-episode-id');
+        if (turnEpId && state.audioState?.episode?.id !== turnEpId) {
+          const targetEp = getAllEpisodes().find(x => x.id === turnEpId);
+          if (targetEp) {
+            await audioController.loadAndPlay(targetEp, sec);
+            renderMain();
+            break;
+          }
+        }
         audioController?.seekTo(sec);
+        break;
+      }
+
+      case 'toggle-podcast-transcript': {
+        const epId = btn.getAttribute('data-episode-id');
+        if (epId) {
+          if (state.expandedTranscriptIds.has(epId)) {
+            state.expandedTranscriptIds.delete(epId);
+          } else {
+            state.expandedTranscriptIds.add(epId);
+          }
+          renderMain();
+        }
+        break;
+      }
+
+      case 'share-podcast': {
+        const epId = btn.getAttribute('data-episode-id');
+        const ep =
+          getAllEpisodes().find(x => x.id === epId) ||
+          (state.audioState?.episode?.id === epId ? state.audioState.episode : null);
+        if (ep) {
+          const shareUrl = await buildShareablePodcastUrl(ep, window.location);
+          window.__lastSharedUrl = shareUrl;
+          const shareRes = await shareItemNatively({
+            title: `49ers Faithful Podcast: ${ep.title}`,
+            text: `Listen to "${ep.title}" (${formatTimeMmSs(ep.durationSec)}) on 49ers Faithful:`,
+            url: shareUrl
+          });
+          if (shareRes.method === 'clipboard') {
+            state.shareToastTargetId = ep.id;
+            renderMain();
+            setTimeout(() => {
+              if (state.shareToastTargetId === ep.id) {
+                state.shareToastTargetId = null;
+                renderMain();
+              }
+            }, 2400);
+          }
+        }
+        break;
+      }
+
+      case 'share-analysis': {
+        const analysisId = btn.getAttribute('data-analysis-id');
+        const rep = getAllAnalyses().find(x => x.id === analysisId);
+        if (rep) {
+          const shareUrl = await buildShareableAnalysisUrl(rep, window.location);
+          window.__lastSharedUrl = shareUrl;
+          const shareRes = await shareItemNatively({
+            title: `49ers Scouting & Cap Brief: ${rep.title}`,
+            text: `Read "${rep.title}" on 49ers Faithful:`,
+            url: shareUrl
+          });
+          if (shareRes.method === 'clipboard') {
+            state.shareToastTargetId = rep.id;
+            renderMain();
+            setTimeout(() => {
+              if (state.shareToastTargetId === rep.id) {
+                state.shareToastTargetId = null;
+                renderMain();
+              }
+            }, 2400);
+          }
+        }
         break;
       }
 
@@ -990,14 +1087,13 @@ function bindEvents() {
           renderMain();
           break;
         }
-        // Unlock iOS Playback audio session & speechSynthesis synchronously inside the tap gesture
-        // BEFORE awaiting async podcast generation so the iPhone speaker is never muted!
         audioController?.primeForUserGesture();
         const startedAtMs = Date.now();
         const waitEst = estimateGenerationWait({
           kind: 'podcast',
           durationMinutes: state.podDurationMin,
-          prefs: state.prefs
+          prefs: state.prefs,
+          appData: state.appData
         });
         const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
         const elapsedTicker = setInterval(() => {
@@ -1014,10 +1110,12 @@ function bindEvents() {
             startedAtMs,
             stepIdx: 1,
             totalSteps: 3,
-            percent: 18,
+            stages: PODCAST_PIPELINE_STAGES,
+            percent: 10,
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
-            message: 'Initializing High-Thinking Autopodcast generator…'
+            message: 'Step 1 of 3: Deep research on the topic…',
+            subDetail: 'Querying live 49ers beat wire, ESPN headlines & 88-player roster/EPA/cap ledger.'
           };
           renderMain();
           const episode = await generateOnDemandAutopodcast({
@@ -1033,22 +1131,35 @@ function bindEvents() {
                 startedAtMs,
                 stepIdx: p.stepIdx || 1,
                 totalSteps: p.totalSteps || 3,
+                stages: p.stages || PODCAST_PIPELINE_STAGES,
                 percent: p.percent || 30,
                 estLabel: p.estLabel || waitEst.estLabel,
                 modelLabel: p.modelLabel || modelInfo.displayLabel,
-                message: p.message
+                message: p.message,
+                subDetail: p.subDetail || ''
               };
               renderMain();
             }
           });
+          // Store clean metadata in localStorage (real WAV audio blob is persisted in IndexedDB)
+          const persistableEpisode = {
+            ...episode,
+            audioUrl:
+              typeof episode.audioUrl === 'string' && episode.audioUrl.startsWith('blob:')
+                ? null
+                : episode.audioUrl
+          };
           state.prefs.localCustomEpisodes = [
-            episode,
+            persistableEpisode,
             ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== episode.id)
           ].slice(0, 20);
           saveUserPrefs(state.prefs);
+          // Collapse transcript by default on newly generated episodes
+          state.expandedTranscriptIds.delete(episode.id);
           state.jobStatus = null;
           state.podTopicDraft = '';
-          await audioController.loadAndPlay(episode, 0);
+          // Present episode cleanly in "Podcast Ready to Play" state with preloaded Stereo WAV!
+          await audioController.loadEpisodeReady(episode);
           renderMain();
         } catch (err) {
           state.jobStatus = {
@@ -1076,7 +1187,11 @@ function bindEvents() {
           break;
         }
         const startedAtMs = Date.now();
-        const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: state.prefs });
+        const waitEst = estimateGenerationWait({
+          kind: 'analysis',
+          prefs: state.prefs,
+          appData: state.appData
+        });
         const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
         const elapsedTicker = setInterval(() => {
           const clockEl = document.getElementById('jobElapsedClock');
@@ -1092,10 +1207,12 @@ function bindEvents() {
             startedAtMs,
             stepIdx: 1,
             totalSteps: 3,
-            percent: 20,
+            stages: ANALYSIS_PIPELINE_STAGES,
+            percent: 14,
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
-            message: 'Starting unhurried High-Thinking multi-source analysis…'
+            message: 'Step 1 of 3: Deep research on the topic…',
+            subDetail: 'Querying live ESPN NFL Nation, Bluesky beat wire & 88-player roster/EPA/cap ledger.'
           };
           renderMain();
           const report = await runOnDemandDeepAnalysis({
@@ -1110,10 +1227,12 @@ function bindEvents() {
                 startedAtMs,
                 stepIdx: p.stepIdx || 1,
                 totalSteps: p.totalSteps || 3,
+                stages: p.stages || ANALYSIS_PIPELINE_STAGES,
                 percent: p.percent || 35,
                 estLabel: p.estLabel || waitEst.estLabel,
                 modelLabel: p.modelLabel || modelInfo.displayLabel,
-                message: p.message
+                message: p.message,
+                subDetail: p.subDetail || ''
               };
               renderMain();
             }
@@ -1418,12 +1537,94 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
   }
 }
 
+async function handleIncomingSharedLink(locationLike = window.location) {
+  const sharedRoute = await extractIncomingSharedRoute(locationLike);
+  if (!sharedRoute) return false;
+
+  if (sharedRoute.type === 'podcast') {
+    state.activeNavTab = 'audio';
+    state.studioSubTab = 'podcast';
+
+    let targetEp = getAllEpisodes().find(ep => ep.id === sharedRoute.id) || null;
+    if (!targetEp && sharedRoute.episode) {
+      targetEp = sharedRoute.episode;
+      state.prefs.localCustomEpisodes = [
+        targetEp,
+        ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== targetEp.id)
+      ].slice(0, 20);
+      saveUserPrefs(state.prefs);
+    }
+
+    renderMain();
+    if (targetEp) {
+      state.expandedTranscriptIds.delete(targetEp.id);
+      await audioController.loadEpisodeReady(targetEp);
+      renderMain();
+    }
+    return true;
+  }
+
+  if (sharedRoute.type === 'analysis') {
+    state.activeNavTab = 'audio';
+    state.studioSubTab = 'analysis';
+
+    let targetReport = getAllAnalyses().find(a => a.id === sharedRoute.id) || null;
+    if (!targetReport && sharedRoute.analysis) {
+      targetReport = sharedRoute.analysis;
+      state.prefs.localCustomAnalyses = [
+        targetReport,
+        ...(state.prefs.localCustomAnalyses || []).filter(a => a.id !== targetReport.id)
+      ].slice(0, 25);
+      saveUserPrefs(state.prefs);
+    }
+    renderMain();
+    return true;
+  }
+
+  return false;
+}
+
 async function init() {
   applyTheme(state.prefs.theme);
   if (state.prefs?.capSelectedYear) {
     state.capSelectedYear = String(state.prefs.capSelectedYear);
   }
-  audioController = new PodcastAudioController(renderMiniPlayer);
+  audioController = new PodcastAudioController(renderMiniPlayer, {
+    onSynthesizeMissingAudio: async ep => {
+      const startedAtMs = Date.now();
+      const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
+      state.jobStatus = {
+        active: true,
+        kind: 'podcast',
+        startedAtMs,
+        stepIdx: 3,
+        totalSteps: 3,
+        stages: PODCAST_PIPELINE_STAGES,
+        percent: 52,
+        estLabel: `30–60 sec using ${modelInfo.shortModelName}`,
+        modelLabel: modelInfo.displayLabel,
+        message: 'Step 3 of 3: Preparing shared podcast studio audio…',
+        subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'
+      };
+      if (state.activeNavTab === 'audio') renderMain();
+      try {
+        return await synthesizeMissingEpisodeAudio(ep, p => {
+          state.jobStatus = {
+            ...state.jobStatus,
+            ...p,
+            active: true,
+            kind: 'podcast',
+            startedAtMs,
+            modelLabel: modelInfo.displayLabel
+          };
+          if (state.activeNavTab === 'audio') renderMain();
+        });
+      } finally {
+        state.jobStatus = null;
+        if (state.activeNavTab === 'audio') renderMain();
+      }
+    }
+  });
   bindEvents();
 
   try {
@@ -1446,6 +1647,7 @@ async function init() {
         lastWireSyncAt: state.lastWireSyncAt
       }),
       getState: () => state,
+      openSharedUrl: loc => handleIncomingSharedLink(loc),
       forceRender: () => {
         renderMain();
         if (state.sheetMode) renderSheet();
@@ -1454,6 +1656,12 @@ async function init() {
 
     renderHeaderAndPhaseBanner();
     renderMain();
+
+    // Check if colleague arrived via a shared `?pod=...` / `#shared-pod=...` or `?analysis=...` deep link
+    handleIncomingSharedLink(window.location).catch(() => {});
+    window.addEventListener('hashchange', () => {
+      handleIncomingSharedLink(window.location).catch(() => {});
+    });
 
     // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire + 6 podcasts)
     refreshLiveFeedsInBackground(false);
