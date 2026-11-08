@@ -139,10 +139,10 @@ function openJargonPopover(anchorEl, jargonKey) {
   activeJargonAnchor = anchorEl;
   pop.setAttribute('aria-label', `${entry.term} definition`);
   pop.innerHTML = `
-    <div class="jargon-popover-header">
+    <div class="jargon-popover-head">
       <div>
         <div class="jargon-popover-cat">${esc(entry.category)}</div>
-        <div class="jargon-popover-term">${esc(entry.term)}</div>
+        <div class="jargon-popover-title">${esc(entry.term)}</div>
       </div>
       <button type="button" class="jargon-popover-close" data-action="close-jargon-popover" aria-label="Close definition">✕</button>
     </div>

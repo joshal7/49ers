@@ -61,7 +61,7 @@ export function renderSeasonMatchupViewHtml({
   subTabs.sort((a, b) => Number(b.activeNow) - Number(a.activeNow));
 
   const switcherCard = `
-    <div class="card">
+    <div class="card subnav-card">
       <div class="pill-bar" role="tablist" aria-label="Game Week and Seasonal Views">
         ${subTabs
           .map(
@@ -101,8 +101,8 @@ function renderUpcomingMatchup(appData) {
   const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
   const oppShortName = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || um.oppName || 'Opponent';
   const matchupHeadline = sfIsAway
-    ? `49ers (${um.sfRecord || sfRecShort}) @ ${um.oppName} (${um.oppRecord})`
-    : `${um.oppName} (${um.oppRecord}) @ 49ers (${um.sfRecord || sfRecShort})`;
+    ? `49ers (${sfRecShort}) @ ${um.oppName} (${um.oppRecord})`
+    : `${um.oppName} (${um.oppRecord}) @ 49ers (${sfRecShort})`;
   const awayColHtml = sfIsAway
     ? `<div class="sb-team-col">
         ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
@@ -172,10 +172,10 @@ function renderUpcomingMatchup(appData) {
         </div>
       </div>
 
-      <div class="kpi-grid">
-        <div class="kpi-box"><div class="kpi-label">Consensus Line</div><div class="kpi-val mono" style="color:var(--emerald)">${esc(bet.spread)}</div></div>
+      <div class="kpi-grid" style="grid-template-columns:0.82fr 0.8fr 1.38fr">
+        <div class="kpi-box"><div class="kpi-label">Spread</div><div class="kpi-val mono" style="color:var(--emerald)">${esc(bet.spread)}</div></div>
         <div class="kpi-box"><div class="kpi-label">Total (O/U)</div><div class="kpi-val mono">${esc(bet.overUnder)}</div></div>
-        <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12.5px">${esc(bet.impliedScore)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12px;letter-spacing:-0.03em">${esc(String(bet.impliedScore || '').replace(/\s+[–—-]\s+/g, ' · '))}</div></div>
       </div>
 
       <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
@@ -203,7 +203,7 @@ function renderUpcomingMatchup(appData) {
         Modeled at full parity with 49ers Health: combines Wed/Thu/Fri practice progression (${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}), veteran rest adjustments, snap share, and player toughness priors.
       </div>
 
-      <div class="kpi-grid" style="margin-bottom:10px">
+      <div class="kpi-grid kpi-grid-2" style="margin-bottom:10px">
         <div class="kpi-box">
           <div class="kpi-label">Availability Index</div>
           <div class="kpi-val mono" style="color:var(--emerald)">${oppHealth.summary?.overallAvailabilityScore ?? 85}/100</div>
@@ -541,7 +541,7 @@ function renderTeamStatsAndPower(appData) {
       </div>
 
       <div class="table-scroll">
-        <table class="data-table">
+        <table class="data-table team-stats-table">
           <thead>
             <tr><th>Metric</th><th>Category</th><th class="mono">49ers Value</th><th class="mono">NFL Rank</th><th class="mono">NFL Avg</th></tr>
           </thead>
@@ -854,8 +854,8 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
           .map(s => {
             const pct = seeds[s] ?? 0;
             return `
-              <div class="spider-drill-row" style="grid-template-columns:86px 1fr 46px">
-                <span class="mono" style="font-size:12px;font-weight:700">Seed #${s}${s === 1 ? ' (Bye)' : ''}</span>
+              <div class="spider-drill-row" style="grid-template-columns:98px 1fr 44px">
+                <span class="mono" style="font-size:11.5px;font-weight:700;white-space:nowrap">Seed #${s}${s === 1 ? ' (Bye)' : ''}</span>
                 <div class="spider-bar-track"><div class="spider-bar-fill" style="width:${Math.min(100, pct)}%;background:${s === 1 ? 'var(--emerald)' : s <= 4 ? 'var(--gold)' : 'var(--scarlet-bright)'}"></div></div>
                 <span class="mono" style="font-size:12px;text-align:right">${pct}%</span>
               </div>

@@ -49,7 +49,7 @@ export function renderHomeDashboardHtml({
             isCustomizingLayout
               ? '<strong>Layout Mode Active:</strong> Drag cards or tap arrows to reorder modules.'
               : `Showing <strong>${orderedBlocks.length} active modules</strong>${
-                  archivedBlocks.length ? ` <span class="text-muted-inline">(${archivedBlocks.length} off-cycle in Archive)</span>` : ''
+                  archivedBlocks.length ? ` <span class="text-muted-inline" style="white-space:nowrap">(${archivedBlocks.length} in Archive)</span>` : ''
                 }`
           }
         </span>

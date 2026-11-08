@@ -45,7 +45,7 @@ export function renderRosterCapViewHtml({
   userCapMoves = {}
 }) {
   const topSwitcher = `
-    <div class="card">
+    <div class="card subnav-card">
       <div class="pill-bar" role="tablist" aria-label="Roster and Salary Cap Modes">
         <button type="button" class="pill-btn ${subTab === 'roster' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="roster">
           ${iconSvg('football', 14)}
@@ -57,7 +57,7 @@ export function renderRosterCapViewHtml({
         </button>
         <button type="button" class="pill-btn ${subTab === 'cap' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="cap">
           ${iconSvg('cap', 14)}
-          <span>Salary Cap &amp; GM Sim</span>
+          <span>Cap &amp; GM Sim</span>
         </button>
       </div>
     </div>
@@ -242,13 +242,13 @@ function renderRosterExplorer({
               <button type="button" class="player-row" data-action="open-player-sheet" data-player-id="${esc(p.id)}">
                 <div class="player-row-left">
                   <div class="jersey-chip mono">${p.jersey !== null && p.jersey !== undefined ? `#${p.jersey}` : '—'}</div>
-                  ${renderPlayerAvatarHtml(p, 34)}
+                  ${renderPlayerAvatarHtml(p, 30)}
                   <div class="player-meta-main">
-                    <div class="player-name-line">${esc(p.name)} <span style="color:var(--gold-bright);font-size:12px">${esc(p.position)}</span></div>
+                    <div class="player-name-line">${esc(p.name)} <span style="color:var(--gold-bright);font-size:11.5px">${esc(p.position)}</span></div>
                     <div class="player-sub-line">
-                      ${esc(p.rosterBucket === 'active' ? '53-Man' : p.rosterBucket === 'ir' ? 'IR/Out' : 'Prac. Squad')} •
-                      Snaps <span class="mono">${p.primarySnapPct}%</span> •
-                      RAS <span class="mono">${Number(p.spiderProfile?.compositeRas || 0).toFixed(1)}</span>${p.age ? ` • Age <span class="mono">${p.age}</span>` : ''}
+                      ${esc(p.rosterBucket === 'active' ? '53-Man' : p.rosterBucket === 'ir' ? 'IR/Out' : 'Prac. Squad')} ·
+                      Snaps <span class="mono">${p.primarySnapPct}%</span> ·
+                      RAS <span class="mono">${Number(p.spiderProfile?.compositeRas || 0).toFixed(1)}</span>${p.age ? ` · <span class="mono">${p.age}y</span>` : ''}
                     </div>
                   </div>
                 </div>
@@ -289,14 +289,14 @@ function renderDualDepthChart({ appData, depthMode }) {
           <a href="https://www.ourlads.com/nfldepthcharts/depthchart/SF" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
         </div>
       </div>
-      <div class="segmented-control" role="tablist" aria-label="Depth Chart Mode">
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Depth Chart Mode" style="margin-bottom:0">
         <button type="button" class="pill-btn seg-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
-          ${iconSvg('bolt', 14)}
-          <span>Projected ${depthWk ? `Week ${depthWk} ` : ''}Active (Injury-Adjusted)</span>
+          ${iconSvg('bolt', 13)}
+          <span>${depthWk ? `Wk ${depthWk} ` : ''}Active (Injury-Adj.)</span>
         </button>
         <button type="button" class="pill-btn seg-btn ${depthMode === 'baseline' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="baseline">
-          ${iconSvg('layers', 14)}
-          <span>Full-Roster Hierarchy</span>
+          ${iconSvg('layers', 13)}
+          <span>Full Hierarchy</span>
         </button>
       </div>
     </div>
@@ -600,14 +600,14 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
       ${renderOtcYearTabs(sortedYrKeys, selectedYrKey, years, 'Select Salary Cap Summary Year')}
 
       <!-- Selected Year OverTheCap Top-of-Page Summary Metrics -->
-      <div class="kpi-grid" style="margin-bottom:8px">
+      <div class="kpi-grid cap-summary-kpi-grid" style="margin-bottom:8px">
         <div class="kpi-box">
-          <div class="kpi-label">${esc(selectedYrKey)} Projected Gross Space</div>
+          <div class="kpi-label">${esc(selectedYrKey)} Gross Space</div>
           <div class="kpi-val mono" style="color:${yrGrossSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
             ${formatOtcDollars(yrGrossSpace)}
           </div>
-          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
-            ${yrRow.capCeilingProjected ? 'Proj. CBA Cap Ceiling' : 'OTC Team Cap Space'}
+          <div class="mono" style="font-size:10px;color:var(--text-muted)">
+            ${yrRow.capCeilingProjected ? 'Proj. CBA Ceiling' : 'OTC Team Space'}
           </div>
         </div>
         <div class="kpi-box">
@@ -615,19 +615,19 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
           <div class="kpi-val mono" style="color:${yrEffectiveSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
             ${formatOtcDollars(yrEffectiveSpace)}
           </div>
-          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">After Top-51 / Rookie Pool</div>
+          <div class="mono" style="font-size:10px;color:var(--text-muted)">Post Top-51 &amp; Rookies</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Total Cap Liabilities</div>
+          <div class="kpi-label">Total Liabilities</div>
           <div class="kpi-val mono">${formatOtcDollars(yrLiabilities)}</div>
-          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+          <div class="mono" style="font-size:10px;color:var(--text-muted)">
             Ceiling: ${formatCompactDollars(yrCeiling)}${yrRow.capCeilingProjected ? ' (Est.)' : ''}
           </div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">${jargonTerm('Top-51', 'top_51')} Cap Charge</div>
+          <div class="kpi-label">${jargonTerm('Top-51', 'top_51')} Charge</div>
           <div class="kpi-val mono">${formatOtcDollars(yrTop51)}</div>
-          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+          <div class="mono" style="font-size:10px;color:var(--text-muted)">
             ${yrActiveRosterCount} Active / ${yrRow.totalSignedCount || yrActiveRosterCount} Signed
           </div>
         </div>
@@ -636,15 +636,15 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
           <div class="kpi-val mono" style="color:${yrDeadMoney > 0 ? 'var(--amber)' : 'var(--text-primary)'}">
             ${formatOtcDollars(yrDeadMoney)}
           </div>
-          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
+          <div class="mono" style="font-size:10px;color:var(--text-muted)">
             ${yrDeadMoney > 0 ? `${((yrDeadMoney / yrCeiling) * 100).toFixed(1)}% of Team Cap` : 'Clean Ledger ($0)'}
           </div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Active Roster Spend</div>
+          <div class="kpi-label">Active Spend</div>
           <div class="kpi-val mono">${formatCompactDollars(yrRow.activeCapSpending || 0)}</div>
-          <div class="mono" style="font-size:10.5px;color:var(--text-muted)">
-            Off ${formatCompactDollars(yrRow.offenseSpend || 0)} • Def ${formatCompactDollars(yrRow.defenseSpend || 0)}
+          <div class="mono" style="font-size:10px;color:var(--text-muted)">
+            Off ${formatCompactDollars(yrRow.offenseSpend || 0)} · Def ${formatCompactDollars(yrRow.defenseSpend || 0)}
           </div>
         </div>
       </div>
@@ -701,16 +701,16 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
       <div class="gm-summary-banner">
         <div class="kpi-grid">
           <div class="kpi-box">
-            <div class="kpi-label">${esc(selectedYrKey)} Simulated Gross Space</div>
+            <div class="kpi-label">${esc(selectedYrKey)} Space</div>
             <div class="kpi-val mono" style="color:${yrGrossSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
               ${formatCompactDollars(yrGrossSpace)}
             </div>
-            <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              Sim Delta: ${formatCompactDollars(sum.baseYearNetCapDelta || 0, true)}
+            <div class="mono" style="font-size:10px;color:var(--text-secondary)">
+              Delta: ${formatCompactDollars(sum.baseYearNetCapDelta || 0, true)}
             </div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">${hasNextYrInLedger ? `${esc(nextYrKey)} Projected Space` : `${esc(selectedYrKey)} Effective Space`}</div>
+            <div class="kpi-label">${hasNextYrInLedger ? `${esc(nextYrKey)} Space` : `${esc(selectedYrKey)} Eff. Space`}</div>
             <div class="kpi-val mono" style="color:${(hasNextYrInLedger ? (sum.updatedNextYearCapSpace ?? years[nextYrKey]?.teamCapSpace ?? 0) : yrEffectiveSpace) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
               ${
                 hasNextYrInLedger
@@ -718,15 +718,15 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
                   : formatCompactDollars(yrEffectiveSpace)
               }
             </div>
-            <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              ${hasNextYrInLedger ? `${esc(nextYrKey)} Delta: ${formatCompactDollars(sum.nextYearCapDelta || 0, true)}` : 'After Replacement Rule'}
+            <div class="mono" style="font-size:10px;color:var(--text-secondary)">
+              ${hasNextYrInLedger ? `${esc(nextYrKey)} Δ: ${formatCompactDollars(sum.nextYearCapDelta || 0, true)}` : 'Post Replacement'}
             </div>
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">New ${esc(selectedYrKey)} Dead Cap</div>
+            <div class="kpi-label">Sim Dead Cap</div>
             <div class="kpi-val mono" style="color:var(--amber)">${formatCompactDollars(simAddedDead, true)}</div>
-            <div class="mono" style="font-size:10.5px;color:var(--text-secondary)">
-              ${activeMoveCount} move(s) active in ${esc(selectedYrKey)}
+            <div class="mono" style="font-size:10px;color:var(--text-secondary)">
+              ${activeMoveCount} move(s) active
             </div>
           </div>
         </div>
@@ -786,21 +786,18 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
 
                 return `
                   <tr class="${isModified ? 'has-active-move' : ''}" data-sim-player-row="${esc(p.id)}">
-                    <td style="font-family:var(--font-sans)">
-                      <div style="display:flex;align-items:center;gap:8px;min-width:165px">
-                        <span style="cursor:pointer;display:inline-flex;flex-shrink:0" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">
-                          ${renderPlayerAvatarHtml(p, 30)}
+                    <td class="cap-player-td" style="font-family:var(--font-sans)">
+                      <div class="cap-player-cell">
+                        <span class="cap-player-av" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">
+                          ${renderPlayerAvatarHtml(p, 22)}
                         </span>
-                        <div style="min-width:0">
-                          <div style="display:flex;align-items:center;gap:5px">
-                            <span style="cursor:pointer;font-weight:700;color:var(--text-primary)" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">${esc(p.name)}</span>
-                            <span style="color:var(--gold-bright);font-size:11px;font-weight:700">${esc(p.position)}</span>
-                            ${
-                              p.otcUrl
-                                ? `<a href="${esc(p.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:10.5px" title="OverTheCap Contract">${iconSvg('externalLink', 10)}</a>`
-                                : ''
-                            }
-                          </div>
+                        <div class="cap-player-meta">
+                          <span class="cap-player-name" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">${esc(p.name)}</span>
+                          <span class="cap-player-pos">${esc(p.position)}${
+                            p.otcUrl
+                              ? ` <a href="${esc(p.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" title="OverTheCap Contract">${iconSvg('externalLink', 9)}</a>`
+                              : ''
+                          }</span>
                         </div>
                       </div>
                     </td>
@@ -829,7 +826,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
                               data-player-id="${esc(p.id)}"
                               data-cap-year="${esc(selectedYrKey)}"
                               aria-label="Roster Move for ${esc(p.name)} (${esc(selectedYrKey)})">
-                        <option value="none" ${selected === 'none' ? 'selected' : ''}>Do Nothing ($0 / $0)</option>
+                        <option value="none" ${selected === 'none' ? 'selected' : ''}>Keep</option>
                         <option value="cut" ${selected === 'cut' ? 'selected' : ''}>
                           Cut Pre-6/1 (${formatCompactDollars(tx.cut?.capSavings || 0, true)})
                         </option>

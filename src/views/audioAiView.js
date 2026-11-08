@@ -142,19 +142,19 @@ export function renderAudioAiViewHtml({
   const recentBeatEpisodes = filterEpisodesLast7Days(beatPodBundle.episodes || [], beatPodBundle.updatedAt);
 
   const modeSwitcher = `
-    <div class="card">
-      <div class="segmented-control" role="tablist" aria-label="Audio, 49ers Podcasts, and Deep Analysis Modes">
+    <div class="card subnav-card">
+      <div class="segmented-control compact-seg-3" role="tablist" aria-label="Audio, 49ers Podcasts, and Deep Analysis Modes">
         <button type="button" class="pill-btn seg-btn ${studioSub === 'beat_podcasts' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="beat_podcasts">
-          ${iconSvg('audio', 14)}
-          <span>49ers Podcasts (${recentBeatEpisodes.length})</span>
+          ${iconSvg('audio', 13)}
+          <span>Podcasts (${recentBeatEpisodes.length})</span>
         </button>
         <button type="button" class="pill-btn seg-btn ${studioSub === 'podcast' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="podcast">
-          ${iconSvg('mic', 14)}
-          <span>Auto Podcast (${allEpisodes.length})</span>
+          ${iconSvg('mic', 13)}
+          <span>Auto Pod (${allEpisodes.length})</span>
         </button>
         <button type="button" class="pill-btn seg-btn ${studioSub === 'analysis' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="analysis">
-          ${iconSvg('sparkles', 14)}
-          <span>Deep Analysis (${allAnalyses.length})</span>
+          ${iconSvg('sparkles', 13)}
+          <span>AI Analysis (${allAnalyses.length})</span>
         </button>
       </div>
     </div>
@@ -484,14 +484,14 @@ function renderPodcastStudio({
       </div>
 
       <div class="sub-label" style="margin-bottom:6px">2. Host Format</div>
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-        <button type="button" class="pill-btn ${podFormat === 'two_host' ? 'active' : ''}" data-action="set-pod-format" data-format="two_host">
+      <div class="segmented-control compact-seg" style="margin-bottom:10px" role="group" aria-label="Host Format">
+        <button type="button" class="pill-btn seg-btn ${podFormat === 'two_host' ? 'active' : ''}" data-action="set-pod-format" data-format="two_host">
           ${iconSvg('mic', 13)}
-          <span>Two-Host Analytical Banter (Marcus &amp; Elena)</span>
+          <span>Two-Host (Marcus &amp; Elena)</span>
         </button>
-        <button type="button" class="pill-btn ${podFormat === 'solo' ? 'active' : ''}" data-action="set-pod-format" data-format="solo">
+        <button type="button" class="pill-btn seg-btn ${podFormat === 'solo' ? 'active' : ''}" data-action="set-pod-format" data-format="solo">
           ${iconSvg('target', 13)}
-          <span>Solo Executive Briefing</span>
+          <span>Solo Briefing</span>
         </button>
       </div>
 

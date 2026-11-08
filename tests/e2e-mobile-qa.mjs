@@ -1881,7 +1881,9 @@ async function main() {
       { name: 'Ultra-Narrow Mobile (320x640)', w: 320, h: 640, mobile: true, dpr: 2 },
       { name: 'Compact Mobile (360x780)', w: 360, h: 780, mobile: true, dpr: 3 },
       { name: 'iPhone SE / Small Mobile (375x667)', w: 375, h: 667, mobile: true, dpr: 2 },
+      { name: 'iPhone 16 Pro Portrait (402x874)', w: 402, h: 874, mobile: true, dpr: 3 },
       { name: 'iPhone 16 Pro Max (430x932)', w: 430, h: 932, mobile: true, dpr: 3 },
+      { name: 'iPhone 16 Pro Landscape (874x402)', w: 874, h: 402, mobile: true, dpr: 3 },
       { name: 'iPad / Tablet (768x1024)', w: 768, h: 1024, mobile: false, dpr: 2 },
       { name: 'Desktop Widescreen (1280x900)', w: 1280, h: 900, mobile: false, dpr: 2 }
     ];
@@ -1895,6 +1897,66 @@ async function main() {
         }
       });
     }
+
+    await runStep('iPhone 16 Pro UX Geometry: Landscape Cap Table shows all 9 columns without scrolling; Portrait News header & Dossier tabs stay compact', async () => {
+      // 1. iPhone 16 Pro Landscape (874x402) & iPhone 16 Landscape (852x393): All 9 Cap Simulator columns visible simultaneously
+      for (const [lw, lh] of [[874, 402], [852, 393]]) {
+        await cdp.setViewport(lw, lh, true, 3);
+        const capGeo = await cdp.eval(() => {
+          document.querySelector('[data-nav-tab="roster"]').click();
+          document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]').click();
+          const simScroll = document.querySelector('#capSimulatorCard .table-scroll');
+          const sumScroll = document.querySelector('#capHorizonSummaryCard .table-scroll');
+          const thRects = Array.from(document.querySelectorAll('#capSimulatorCard table.cap-sim-table thead th')).map(th => {
+            const r = th.getBoundingClientRect();
+            return { text: th.textContent.trim(), left: Math.round(r.left), right: Math.round(r.right), w: Math.round(r.width) };
+          });
+          return {
+            vw: window.innerWidth,
+            thCount: thRects.length,
+            simClientW: simScroll.clientWidth,
+            simScrollW: simScroll.scrollWidth,
+            sumClientW: sumScroll.clientWidth,
+            sumScrollW: sumScroll.scrollWidth,
+            allThInViewport: thRects.every(t => t.w >= 45 && t.left >= 0 && t.right <= window.innerWidth + 1),
+            thRects
+          };
+        });
+        assert(
+          capGeo.thCount === 9 &&
+            capGeo.simScrollW <= capGeo.simClientW + 1 &&
+            capGeo.sumScrollW <= capGeo.sumClientW + 1 &&
+            capGeo.allThInViewport,
+          `Cap table overflowed in ${lw}x${lh} landscape: ${JSON.stringify(capGeo)}`
+        );
+      }
+
+      // 2. iPhone 16 Pro Portrait (402x874): News toolbar header compact (<68px) & Player Dossier pill-bar un-squished (>=30px)
+      await cdp.setViewport(402, 874, true, 3);
+      const portraitGeo = await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="news"]').click();
+        const newsCard = document.querySelector('#mainView > .news-toolbar-card');
+        const newsHead = newsCard?.querySelector('.news-toolbar-head');
+        const newsCardH = Math.round(newsCard?.getBoundingClientRect()?.height || 999);
+        const newsHeadH = Math.round(newsHead?.getBoundingClientRect()?.height || 999);
+
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
+        document.querySelector('.player-row').click();
+        const pillBarH = Math.round(document.querySelector('#sheetBody .pill-bar')?.getBoundingClientRect()?.height || 0);
+        document.getElementById('closeSheetBtn').click();
+
+        return { newsCardH, newsHeadH, pillBarH };
+      });
+      assert(
+        portraitGeo.newsHeadH <= 68 && portraitGeo.newsCardH <= 180,
+        `News toolbar header too tall on mobile portrait: ${JSON.stringify(portraitGeo)}`
+      );
+      assert(
+        portraitGeo.pillBarH >= 30,
+        `Player Dossier pill-bar squished on mobile portrait: ${JSON.stringify(portraitGeo)}`
+      );
+    });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(

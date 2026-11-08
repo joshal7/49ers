@@ -36,39 +36,42 @@ export function renderNewsViewHtml({
   );
   const tweetCount = prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social').length;
   const activeBreakingItems = prioritizedRaw.filter(i => (i.breakingPriority || 0) > 0).slice(0, 3);
-  const pollLabel = isGameLive ? '20s Game-Day Live Poll' : '<1m Live Poll (45s)';
-  const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'just now';
+  const pollLabel = isGameLive ? '20s Game-Day Live Poll' : '45s Live Poll';
+  const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'now';
 
   const topToolbar = `
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-icon-badge" aria-hidden="true">${iconSvg('news', 18)}</div>
-          <div class="card-title-group">
-            <div class="card-eyebrow">${totalReportersCount} Tracked Beat &amp; National Sources • ${pollLabel}</div>
-            <h2 class="card-title">Team News, Beat Wire &amp; Film</h2>
+    <div class="card news-toolbar-card">
+      <div class="news-toolbar-head">
+        <div class="news-toolbar-title-row">
+          <div class="news-toolbar-brand">
+            <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('news', 15)}</div>
+            <h2 class="card-title">News, Wire &amp; Film</h2>
+          </div>
+          <div class="news-toolbar-actions">
+            <button type="button" class="btn-ghost btn-compact" data-action="sync-live-wire-now" ${isSyncingWire ? 'disabled' : ''} title="Check live beat tweets and injury wire immediately">
+              ${iconSvg('bolt', 12)}
+              <span>${isSyncingWire ? 'Sync…' : esc(syncAge)}</span>
+            </button>
+            <button type="button" class="btn-ghost btn-compact" data-action="open-settings" title="Filter Beat Sources &amp; Reporters">
+              ${iconSvg('settings', 13)}
+              <span>Sources${mutedCount > 0 ? ` (${mutedCount})` : ''}</span>
+            </button>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <button type="button" class="btn-ghost" data-action="sync-live-wire-now" ${isSyncingWire ? 'disabled' : ''} title="Check live beat tweets and injury wire immediately">
-            ${iconSvg('bolt', 13)}
-            <span>${isSyncingWire ? 'Syncing…' : `Live (${esc(syncAge)})`}</span>
-          </button>
-          <button type="button" class="btn-ghost" data-action="open-settings">
-            ${iconSvg('settings', 14)}
-            <span>Sources${mutedCount > 0 ? ` (${mutedCount} muted)` : ''}</span>
-          </button>
+        <div class="news-toolbar-meta">
+          <span class="live-pulse-dot" aria-hidden="true"></span>
+          <span><strong>${totalReportersCount}</strong> Beat &amp; National Sources • ${pollLabel}</span>
         </div>
       </div>
 
-      <div class="segmented-control" role="tablist" aria-label="News Feed Mode" style="margin-bottom:10px">
+      <div class="segmented-control compact-seg" role="tablist" aria-label="News Feed Mode">
         <button type="button" class="pill-btn seg-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
-          ${iconSvg('sparkles', 14)}
+          ${iconSvg('sparkles', 13)}
           <span>Synthesis Briefs (${filteredClusters.length})</span>
         </button>
         <button type="button" class="pill-btn seg-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
-          ${iconSvg('bolt', 14)}
-          <span>Tweets, Articles &amp; Video (${prioritizedRaw.length})</span>
+          ${iconSvg('bolt', 13)}
+          <span>Wire &amp; Video (${prioritizedRaw.length})</span>
         </button>
       </div>
 
@@ -105,14 +108,14 @@ export function renderNewsViewHtml({
     newsMode === 'clustered' && activeBreakingItems.length > 0
       ? `
         <section class="card breaking-wire-card" aria-label="Breaking and Live Injury Alerts">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-            <div style="display:flex;align-items:center;gap:7px">
-              <span class="badge badge-danger live-breaking-pill">${iconSvg('bolt', 12)}<span>Breaking &amp; Live Injury Wire</span></span>
-              <span class="mono" style="font-size:11px;color:var(--text-muted)">Auto-elevated • &lt;1m latency</span>
+          <div class="breaking-wire-head">
+            <div style="display:flex;align-items:center;gap:6px;min-width:0">
+              <span class="badge badge-danger live-breaking-pill">${iconSvg('bolt', 11)}<span>Breaking &amp; Injury Wire</span></span>
+              <span class="mono" style="font-size:10.5px;color:var(--text-muted);white-space:nowrap">&lt;1m poll</span>
             </div>
-            <button type="button" class="btn-ghost" data-action="set-news-mode" data-mode="raw">
-              <span>All Live Posts</span>
-              ${iconSvg('arrowRight', 12)}
+            <button type="button" class="btn-ghost btn-compact" data-action="set-news-mode" data-mode="raw">
+              <span>All Live</span>
+              ${iconSvg('arrowRight', 11)}
             </button>
           </div>
           <div style="display:flex;flex-direction:column;gap:7px">

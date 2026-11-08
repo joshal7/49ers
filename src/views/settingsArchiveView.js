@@ -28,14 +28,14 @@ export function renderSettingsSheetHtml({
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:10px">
       <div class="sub-label">1. Display &amp; Feed Preferences</div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-        <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="min-width:0;flex:1 1 170px">
           <strong>App Theme</strong>
           <div style="font-size:11.5px;color:var(--text-secondary)">Levi's Night Game (Dark) vs. '94 Throwback (Light)</div>
         </div>
-        <button type="button" class="btn-secondary" data-action="toggle-theme">
+        <button type="button" class="btn-secondary" style="white-space:nowrap;flex-shrink:0" data-action="toggle-theme">
           ${iconSvg(userPrefs.theme === 'light' ? 'moon' : 'sun', 14)}
-          <span>${userPrefs.theme === 'light' ? 'Switch to Night Game Dark' : "Switch to '94 White & Gold"}</span>
+          <span>${userPrefs.theme === 'light' ? 'Night Game Dark' : "'94 White & Gold"}</span>
         </button>
       </div>
 
@@ -84,7 +84,7 @@ export function renderSettingsSheetHtml({
     <!-- Outlet Toggles -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:7px">
       <div class="sub-label">3. News Outlets &amp; Channels (${outlets.length})</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <div class="settings-outlets-grid">
         ${outlets
           .map(o => {
             const enabled = !disabledOutlets.has(o.id);
