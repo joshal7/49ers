@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T02:49:58.088Z",
+  "updatedAt": "2026-11-08T03:33:12.609Z",
   "episodes": [
     {
       "id": "ep-week9-raiders-film",
@@ -8,7 +8,7 @@
       "format": "Two-Host Analytical Banter",
       "presetLabel": "3m Quick Hit",
       "createdBy": "49ers Faithful Desk",
-      "createdAt": "2026-11-08T00:49:49.708Z",
+      "createdAt": "2026-11-08T01:32:36.292Z",
       "sourceLinks": [
         {
           "label": "ESPN Raiders @ 49ers Matchup",
@@ -25,7 +25,7 @@
       ],
       "audioUrl": "./data/podcasts/ep-week9-raiders-film.m4a",
       "durationSec": 147,
-      "fileSizeBytes": 1207676,
+      "fileSizeBytes": 1206724,
       "transcript": [
         {
           "idx": 0,
@@ -63,17 +63,17 @@
           "idx": 4,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "The one game-wrecker we have to neutralize for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to align over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick rhythm throws to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus Demarcus Robinson if activated from IR.",
+          "text": "The one game-wrecker we have to neutralize for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to align over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick rhythm throws to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus newly activated Demarcus Robinson off IR.",
           "startSec": 111.66,
-          "endSec": 133.82
+          "endSec": 134.13
         },
         {
           "idx": 5,
           "speaker": "Elena",
           "speakerRole": "Cap & Quantitative Insider",
           "text": "Neutralize Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market projection of SF 30.5 to LV 21.0 tracks right on the numbers.",
-          "startSec": 134.1,
-          "endSec": 147.1
+          "startSec": 134.41,
+          "endSec": 147.42
         }
       ]
     },
@@ -84,7 +84,7 @@
       "format": "Two-Host Analytical Banter",
       "presetLabel": "4m Cap Dive",
       "createdBy": "49ers Faithful Desk",
-      "createdAt": "2026-11-07T22:49:49.709Z",
+      "createdAt": "2026-11-07T23:32:36.292Z",
       "sourceLinks": [
         {
           "label": "OverTheCap 49ers Cap Table",
@@ -97,7 +97,7 @@
       ],
       "audioUrl": "./data/podcasts/ep-cap-aiyuk-blueprint.m4a",
       "durationSec": 120,
-      "fileSizeBytes": 983221,
+      "fileSizeBytes": 984167,
       "transcript": [
         {
           "idx": 0,
@@ -143,9 +143,9 @@
           "idx": 5,
           "speaker": "Marcus",
           "speakerRole": "X's & O's Film Analyst",
-          "text": "Which makes hitting on cost-controlled rookie-scale contributors—Mykel Williams, Alfred Collins, Upton Stout, De'Zhaun Stribling, Gracen Halton, and Romello Height—the structural engine keeping this championship window open.",
+          "text": "Which makes hitting on cost-controlled rookie-scale contributors—Mykel Williams, Upton Stout, Renardo Green, Dominick Puni, Gracen Halton, and Romello Height—the structural engine keeping this championship window open.",
           "startSec": 106.83,
-          "endSec": 120.42
+          "endSec": 120.44
         }
       ]
     },
@@ -156,7 +156,7 @@
       "format": "Two-Host Analytical Banter",
       "presetLabel": "4m Strategy Brief",
       "createdBy": "49ers Faithful Analytics",
-      "createdAt": "2026-11-07T20:49:49.709Z",
+      "createdAt": "2026-11-07T21:32:36.292Z",
       "sourceLinks": [
         {
           "label": "OverTheCap 49ers Contracts",
@@ -173,7 +173,7 @@
       ],
       "audioUrl": "./data/podcasts/ep-trade-deadline-seeding.m4a",
       "durationSec": 166,
-      "fileSizeBytes": 1358660,
+      "fileSizeBytes": 1360007,
       "transcript": [
         {
           "idx": 0,
@@ -231,7 +231,7 @@
       "id": "analysis_trade_window_and_calibrated_seeding",
       "title": "2026 Trade Window & Calibrated 10,000-Run Playoff Blueprint: Ranked Needs, Rental Math, -$31.54M 2027 Cap Horizon & 34.5% #1 Bye Odds",
       "category": "Trade Window & Quantitative Seeding",
-      "createdAt": "2026-11-08T01:49:49.709Z",
+      "createdAt": "2026-11-08T02:32:36.292Z",
       "createdBy": "49ers Faithful Quantitative Desk",
       "sourcesCited": [
         {
@@ -247,13 +247,13 @@
           "url": "https://github.com/nflverse/nflverse-data"
         }
       ],
-      "markdown": "### 1. Midseason CBA Purchasing Power vs. 2027 Cap & Draft Reality\n* **9/18ths Proration Purchasing Power**: Acquiring teams absorb only the remaining **9/18ths** of a player's 2026 base salary while signing/option bonus proration stays on the seller's cap. With **`$35.16M`** in 2026 Top-51 space, San Francisco holds **>`$65M` in annualized base-salary purchasing power** and does **not** need sellers to eat 2026 salary.\n* **The True Front-Office Constraints**:\n  1. **`-$31.54M` Projected 2027 Cap Deficit** (on an estimated `$327.0M` ceiling): Every 2026 dollar spent reduces 1-for-1 CBA Article 13 rollover needed for 2027 compliance.\n  2. **6 Total 2027 Draft Picks**: After trading SF's own 2027 4th-rounder to Indianapolis for **DeForest Buckner**, San Francisco owns **Rd 1 (#31), Rd 2 (#63), Rd 3 (#95), Rd 5 (#170), Rd 6 (#193 via BAL), and Rd 7 (#245 via KC)**—leaving a 75-pick gap between #95 and #170.\n\n### 2. Verified Ranked Needs, Targets & Traps to Avoid\n1. **Perimeter WR / 12-Personnel Move TE (Critical)**: With Mike Evans, Ricky Pearsall, and Demarcus Robinson on IR and Brandon Aiyuk inactive, top cost-controlled fits are **Adonai Mitchell** (NYJ, `~$0.79M` prorated), **Josh Downs** (IND, `~$1.72M`), **Rashod Bateman** (BAL), and **Greg Dulcich** (MIA, `~$0.60M` expiring). *Note on **Quentin Johnston** (LAC): viable only if LAC restructures/retains his guaranteed `$18.0M` 2027 5th-year option.*\n2. **Left Guard Pass Protection (High)**: Upgrade interior anchor next to **Trent Williams** via rookie-scale **Kingsley Suamataia** (KC, `~$0.65M` prorated).\n3. **Rotational Speed EDGE & Dime DB (Targeted Rentals)**: Expiring one-year rentals on 0-7 LAC—**Khalil Mack** (`$4.0M` prorated, `$0` in 2027) and **Donte Jackson** (`$3.0M` prorated)—or **Jessie Bates III** (ATL, played under DC **Raheem Morris** in 2024–2025, contract voids after 2026).\n* **Traps to Reject**: Zero-sack age-37 edge **Cameron Jordan** (0.0 sacks in 7 games), recently extended **Michael Mayer** (LV 3-yr/`$45M` deal), and burning Day-2 picks (#63/#95) on contender starters.\n\n### 3. Calibrated 10,000-Run Playoff Probabilities (Why SF Sits at `34.5%` for the #1 Bye)\n* **Empirical-Bayes + Net EPA + SOS Calibration**: Shrinking 7-game sample variance toward league priors (`gp / (gp + 9.5)`) with per-game posterior uncertainty and full NFL Section 16 multi-club tiebreakers places the **6-1** 49ers at **`12` projected wins**, **`93%` Playoff Berth**, **`82.6%` NFC West Title**, and **`34.5%` #1 Seed First-Round Bye**—leading **Minnesota (`6-1`, `29.6%`)** and **Chicago (`6-2`, `15.1%`)** entering the pivotal Week 11 neutral-site H2H clash vs. Minnesota in Mexico City."
+      "markdown": "### 1. Midseason CBA Purchasing Power vs. 2027 Cap & Draft Reality\n* **9/18ths Proration Purchasing Power**: Acquiring teams absorb only the remaining **9/18ths** of a player's 2026 base salary while signing/option bonus proration stays on the seller's cap. With **`$35.16M`** in 2026 Top-51 space, San Francisco holds **>`$65M` in annualized base-salary purchasing power** and does **not** need sellers to eat 2026 salary.\n* **The True Front-Office Constraints**:\n  1. **`-$31.54M` Projected 2027 Cap Deficit** (on an estimated `$327.0M` ceiling): Every 2026 dollar spent reduces 1-for-1 CBA Article 13 rollover needed for 2027 compliance.\n  2. **6 Total 2027 Draft Picks**: After trading SF's own 2027 4th-rounder to Indianapolis for **DeForest Buckner**, San Francisco owns **Rd 1 (#31), Rd 2 (#63), Rd 3 (#95), Rd 5 (#170), Rd 6 (#193 via BAL), and Rd 7 (#245 via KC)**—leaving a 75-pick gap between #95 and #170.\n\n### 2. Verified Ranked Needs, Targets & Traps to Avoid\n1. **Perimeter WR / 12-Personnel Move TE (Critical)**: With Ricky Pearsall (Season-Ending IR), Christian Kirk (IR — Meniscus), and De'Zhaun Stribling (IR — Ankle) on Injured Reserve, Mike Evans and Deebo Samuel Sr. ruled Out on the active roster, and Brandon Aiyuk on Reserve/Left Squad, top cost-controlled fits are **Adonai Mitchell** (NYJ, `~$0.79M` prorated), **Josh Downs** (IND, `~$1.72M`), **Rashod Bateman** (BAL), and **Greg Dulcich** (MIA, `~$0.60M` expiring). *Note on **Quentin Johnston** (LAC): viable only if LAC restructures/retains his guaranteed `$18.0M` 2027 5th-year option.*\n2. **Left Guard Pass Protection (High)**: Upgrade interior anchor next to **Trent Williams** via rookie-scale **Kingsley Suamataia** (KC, `~$0.65M` prorated).\n3. **Rotational Speed EDGE & Dime DB (Targeted Rentals)**: Expiring one-year rentals on 0-7 LAC—**Khalil Mack** (`$4.0M` prorated, `$0` in 2027) and **Donte Jackson** (`$3.0M` prorated)—or **Jessie Bates III** (ATL, played under DC **Raheem Morris** in 2024–2025, contract voids after 2026).\n* **Traps to Reject**: Zero-sack age-37 edge **Cameron Jordan** (0.0 sacks in 7 games), recently extended **Michael Mayer** (LV 3-yr/`$45M` deal), and burning Day-2 picks (#63/#95) on contender starters.\n\n### 3. Calibrated 10,000-Run Playoff Probabilities (Why SF Sits at `34.5%` for the #1 Bye)\n* **Empirical-Bayes + Net EPA + SOS Calibration**: Shrinking 7-game sample variance toward league priors (`gp / (gp + 9.5)`) with per-game posterior uncertainty and full NFL Section 16 multi-club tiebreakers places the **6-1** 49ers at **`12` projected wins**, **`93%` Playoff Berth**, **`82.6%` NFC West Title**, and **`34.5%` #1 Seed First-Round Bye**—leading **Minnesota (`6-1`, `29.6%`)** and **Chicago (`6-2`, `15.1%`)** entering the pivotal Week 11 neutral-site H2H clash vs. Minnesota in Mexico City."
     },
     {
       "id": "analysis_wide9_buckner_bosa",
       "title": "Scheme & EPA Deep Dive: How DC Raheem Morris, DeForest Buckner & Osa Odighizuwa Transform Nick Bosa’s Pass-Rush Geometry",
       "category": "Film & Trench Analytics",
-      "createdAt": "2026-11-07T23:49:49.709Z",
+      "createdAt": "2026-11-08T00:32:36.292Z",
       "createdBy": "49ers Faithful Film Desk",
       "sourcesCited": [
         {
@@ -275,7 +275,7 @@
       "id": "analysis_purdy_2026_cpoe_epa",
       "title": "Brock Purdy 2026 Through 7 Games: Why +4.25% CPOE & 3.2% Sack Avoidance Sustain Top-3 NFL Offense",
       "category": "QB & Passing Analytics",
-      "createdAt": "2026-11-07T21:49:49.709Z",
+      "createdAt": "2026-11-07T22:32:36.292Z",
       "createdBy": "49ers Faithful Analytics",
       "sourcesCited": [
         {
@@ -291,7 +291,7 @@
           "url": "https://rbsdm.com/stats/stats/"
         }
       ],
-      "markdown": "### 2026 Statistical Snapshot (6-1 Record)\n* **Passing Efficiency**: `146/211 (69.2%)`, `1,748 Yards (8.28 YPA)`, `15 TD`, `4 INT`\n* **Total Passing EPA**: `+63.23` (plus `+14.38` rushing EPA on `161` scramble/zone-read yards)\n* **Completion % Over Expected (CPOE)**: `+4.25%`\n* **Sacks Taken**: Only `7 sacks` across `218 dropbacks` (`3.2% sack rate`)\n\n### What Changed on Film in 2026\n1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting low-percentage hero throws when two-high shells bracket the deep over route, Purdy has slashed his pressure-to-sack conversion by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets within `3s`.\n2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even with Brandon Aiyuk inactive and Mike Evans and Ricky Pearsall moved to Injured Reserve after early-season snaps, Purdy has sustained elite intermediate efficiency (`85` passing first downs) by trusting **Brandin Cooks**, **Jordan Watkins**, and **Jacob Cowing** before they clear linebacker leverage."
+      "markdown": "### 2026 Statistical Snapshot (6-1 Record)\n* **Passing Efficiency**: `146/211 (69.2%)`, `1,748 Yards (8.28 YPA)`, `15 TD`, `4 INT`\n* **Total Passing EPA**: `+63.23` (plus `+14.38` rushing EPA on `161` scramble/zone-read yards)\n* **Completion % Over Expected (CPOE)**: `+4.25%`\n* **Sacks Taken**: Only `7 sacks` across `218 dropbacks` (`3.2% sack rate`)\n\n### What Changed on Film in 2026\n1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting low-percentage hero throws when two-high shells bracket the deep over route, Purdy has slashed his pressure-to-sack conversion by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets within `3s`.\n2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even with Brandon Aiyuk on Reserve/Left Squad, Ricky Pearsall on season-ending IR since August, Christian Kirk on IR, and veteran wideouts Mike Evans and Deebo Samuel Sr. missing time, Purdy has sustained elite intermediate efficiency (`85` passing first downs) by trusting **Brandin Cooks**, **Jordan Watkins**, and **Jacob Cowing** before they clear linebacker leverage."
     }
   ]
 }

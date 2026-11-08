@@ -28,8 +28,19 @@ import {
 import { simulateCapScenario } from '../src/engine/capSimulator.js';
 import {
   computePlayerPlayProbability,
-  calculateIrReturnTimeline
+  calculateIrReturnTimeline,
+  parseFlexibleIsoMs,
+  resolvePlacedBeforeWeekFromDate,
+  isSeasonEndingIrRecord,
+  classifyIrAndReserveTimeline
 } from '../src/engine/injuryProbabilityModel.js';
+import {
+  canonicalPlayerKey,
+  parseOfficial49ersRosterHtml,
+  parseOfficial49ersInjuryReportHtml,
+  parseCbsTeamInjuriesHtml,
+  analyzeTeamTransactions
+} from '../scripts/lib/liveHealthAndRosterResolver.mjs';
 import {
   runPlayoffMonteCarlo,
   computeRootingGuideLeverage,
@@ -1703,7 +1714,12 @@ test('Opponent Health & Play Likelihood has full parity with 49ers Health (Avail
   }
   assert.ok(oh.irReserve.length >= 1);
   for (const ir of oh.irReserve) {
-    assert.ok(ir.earliestEligibleWeek >= 5);
+    if (ir.isSeasonEnding) {
+      assert.equal(ir.earliestEligibleWeek, null, `Season-ending opp IR ${ir.name} must have null earliestEligibleWeek`);
+      assert.equal(ir.projectedReturnWeek, 'Out for Season', `Season-ending opp IR ${ir.name} must be Out for Season`);
+    } else if (!/Reinstatement/i.test(String(ir.projectedReturnWeek || ''))) {
+      assert.ok(ir.earliestEligibleWeek >= 5, `Return-eligible opp IR ${ir.name} expected earliestEligibleWeek >= 5, got ${ir.earliestEligibleWeek}`);
+    }
     assert.ok(
       (typeof ir.projectedReturnWeek === 'number' && ir.projectedReturnWeek >= 5) ||
         (typeof ir.projectedReturnWeek === 'string' && ir.projectedReturnWeek.length >= 4)
@@ -1925,6 +1941,267 @@ await testAsync('Free-tier model discovery & Worker /api/model-status automatica
     assert.ok(analyzeRes.item.markdown.includes('Verified Failover Synthesis'));
     assert.ok(calledUrls.some(u => u.includes('models/gemini-4.0-flash:generateContent')));
     assert.ok(calledUrls.some(u => u.includes('models/gemini-3.8-flash:generateContent')));
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+console.log('\n=== [8/8] Deep Health, Season-Ending IR, Official 49ers.com Reconciliation & Roster Hygiene QA ===');
+
+test('parseFlexibleIsoMs & classifyIrAndReserveTimeline detect Season-Ending IR, rolling-date traps, and open 21-day windows', () => {
+  // 1. Full ISO timestamp with offset must NOT produce NaN (previously broken by appending T12:00:00Z)
+  const fullIsoMs = parseFlexibleIsoMs('2027-02-15T00:00:00.000+00:00');
+  assert.ok(Number.isFinite(fullIsoMs) && fullIsoMs > Date.UTC(2027, 1, 14), 'Full ISO timestamp parsed cleanly');
+  const ymdMs = parseFlexibleIsoMs('2026-11-15');
+  assert.ok(Number.isFinite(ymdMs), 'YYYY-MM-DD parsed cleanly');
+
+  const sampleSchedule = [
+    { week: { number: 1 }, date: '2026-09-13T20:25Z' },
+    { week: { number: 4 }, date: '2026-10-04T20:05Z' },
+    { week: { number: 9 }, date: '2026-11-08T21:25Z' },
+    { week: { number: 10 }, date: '2026-11-15T21:25Z' }
+  ];
+
+  // 2. Alfred Collins Season-Ending IR (patellar tendon tear + 2027-02-15 post-Super-Bowl returnDate + OFS fantasyStatus)
+  const collins = classifyIrAndReserveTimeline({
+    statusRaw: 'Injured Reserve',
+    fantasyStatusAbbr: 'OFS',
+    injuryType: 'Knee',
+    injuryDetail: 'Surgery',
+    returnDateIso: '2027-02-15',
+    placedDateIso: '2026-08-19T18:00:00Z',
+    beatNote: 'Collins is set to miss the entire 2026 campaign as a result of tearing his patellar tendon.',
+    currentWeek: 9,
+    byeWeek: 8,
+    seasonYear: 2026,
+    scheduleEvents: sampleSchedule
+  });
+  assert.equal(collins.isSeasonEnding, true);
+  assert.equal(collins.status, 'Season-Ending IR');
+  assert.equal(collins.earliestEligibleWeek, null);
+  assert.equal(collins.projectedReturnWeek, 'Out for Season');
+  assert.equal(collins.injuryType, 'Knee (Surgery)');
+
+  // 3. ESPN rolling upcoming-Sunday placeholder date on unopened 21-day window must yield TBD (21d Window Not Open) + strip "Not Specified"
+  const unopened = classifyIrAndReserveTimeline({
+    statusRaw: 'Injured Reserve',
+    fantasyStatusAbbr: 'IR',
+    injuryType: 'Knee',
+    injuryDetail: 'Not Specified',
+    returnDateIso: '2026-11-08',
+    placedDateIso: '2026-09-23T18:00:00Z',
+    beatNote: 'West will need to miss at least four games on IR before becoming eligible to return.',
+    isDesignatedToReturnOpen: false,
+    currentWeek: 9,
+    byeWeek: 8,
+    seasonYear: 2026,
+    scheduleEvents: sampleSchedule
+  });
+  assert.equal(unopened.isSeasonEnding, false);
+  assert.equal(unopened.injuryType, 'Knee', '"Not Specified" detail must never leak into injuryType');
+  assert.equal(unopened.projectedReturnWeek, 'TBD (21d Window Not Open)');
+
+  // 4. Open 21-day practice window with fresh Saturday blurb timestamp enforces CBA 4-game invariant (placedBeforeWeek = 4, eligWk = 9, Est. Week 10)
+  const hobbs = classifyIrAndReserveTimeline({
+    statusRaw: 'Injured Reserve',
+    fantasyStatusAbbr: 'IR-R',
+    injuryType: 'Adductor',
+    returnDateIso: '2026-11-15',
+    placedDateIso: '2026-11-07T21:00:00Z', // Fresh Saturday blurb timestamp (NOT original placement!)
+    designatedDateIso: '2026-11-04T19:00:00Z',
+    beatNote: "Hobbs had his practice window opened Wednesday. Since he wasn't activated Saturday, his next chance is Nov. 15.",
+    isDesignatedToReturnOpen: true,
+    currentWeek: 9,
+    byeWeek: 8,
+    seasonYear: 2026,
+    scheduleEvents: sampleSchedule
+  });
+  assert.equal(hobbs.status, 'IR — 21-Day Window Open');
+  assert.equal(hobbs.isPracticeWindowOpen, true);
+  assert.equal(hobbs.placedBeforeWeek, 4);
+  assert.equal(hobbs.earliestEligibleWeek, 9);
+  assert.ok(hobbs.projectedReturnWeek.startsWith('Est. Week 10'), `Expected Est. Week 10, got ${hobbs.projectedReturnWeek}`);
+});
+
+test('Official 49ers.com Roster/Injury HTML parsers and ESPN transaction analyzer enforce strict guards', () => {
+  // 1. Stale prior-week injury report page (e.g. Falcons when playing Las Vegas Raiders) must be completely rejected so prior-week practice codes never bleed into a new week
+  const staleOppHtml = `
+    <h2>San Francisco 49ers</h2>
+    <table><thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Game Status</th></tr></thead>
+    <tbody><tr><td>Siran Neal</td><td>S</td><td>Knee</td><td>DNP</td><td>DNP</td><td>LP</td><td>Questionable</td></tr></tbody></table>
+    <h2>Atlanta Falcons</h2>
+    <table><thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Game Status</th></tr></thead>
+    <tbody><tr><td>Drake London</td><td>WR</td><td>Hip</td><td>LP</td><td>LP</td><td>FP</td><td>(-)</td></tr></tbody></table>
+  `;
+  const staleParsed = parseOfficial49ersInjuryReportHtml(staleOppHtml, 'Las Vegas Raiders');
+  assert.equal(staleParsed.reportMatchesCurrentOpponent, false, 'Stale Falcons table must NOT match Las Vegas Raiders');
+  assert.equal(staleParsed.hasSfReport, false, 'Stale prior-week SF practice report must be rejected on Mon/Tue rollover');
+  assert.equal(staleParsed.oppByKey.size, 0);
+
+  // 2. Matching current-week injury report parses both 49ers and Raiders Wed/Thu/Fri & Game Status accurately
+  const currentWeekHtml = staleOppHtml
+    .replace('Atlanta Falcons', 'Las Vegas Raiders')
+    .replace('Drake London', 'Darien Porter')
+    .replace('<td>LP</td><td>LP</td><td>FP</td>', '<td>DNP</td><td>LP</td><td>FP</td>');
+  const parsedInj = parseOfficial49ersInjuryReportHtml(currentWeekHtml, 'Las Vegas Raiders');
+  assert.equal(parsedInj.reportMatchesCurrentOpponent, true);
+  assert.equal(parsedInj.hasSfReport, true);
+  assert.equal(parsedInj.hasOppReport, true);
+  assert.equal(parsedInj.sfByKey.get(canonicalPlayerKey('Siran Neal'))?.wed, 'DNP');
+  assert.equal(parsedInj.sfByKey.get(canonicalPlayerKey('Siran Neal'))?.fri, 'LP');
+  assert.equal(parsedInj.sfByKey.get(canonicalPlayerKey('Siran Neal'))?.gameStatus, 'Questionable');
+  assert.equal(parsedInj.oppByKey.get(canonicalPlayerKey('Darien Porter'))?.wed, 'DNP');
+  assert.equal(parsedInj.oppByKey.get(canonicalPlayerKey('Darien Porter'))?.thu, 'LP');
+  assert.equal(parsedInj.oppByKey.get(canonicalPlayerKey('Darien Porter'))?.fri, 'FP');
+
+  // Transaction analyzer tracks injury settlements, PS elevations -> revert to PS, and IR-R designation counts
+  const txSummary = analyzeTeamTransactions(
+    [
+      { date: '2026-10-19T20:00Z', description: 'Released OL Brett Toth from injured reserve with an injury settlement.' },
+      { date: '2026-10-17T20:00Z', description: 'Elevated TE Jack Stoll from the practice squad for Sunday’s game.' },
+      { date: '2026-11-04T18:00Z', description: 'Opened the Injured Reserve practice window for CB Nate Hobbs and WR Demarcus Robinson.' },
+      { date: '2026-11-07T20:00Z', description: 'Activated WR Demarcus Robinson from Injured Reserve. Placed WR Christian Kirk on Injured Reserve.' }
+    ],
+    2026
+  );
+  assert.equal(txSummary.byKey.get(canonicalPlayerKey('Brett Toth'))?.releasedInjurySettlement, true);
+  assert.equal(txSummary.byKey.get(canonicalPlayerKey('Jack Stoll'))?.latestRosterMoveBucket, 'practice_squad');
+  assert.equal(txSummary.byKey.get(canonicalPlayerKey('Nate Hobbs'))?.designatedToReturnOpen, true);
+  assert.equal(txSummary.byKey.get(canonicalPlayerKey('Demarcus Robinson'))?.designatedToReturnOpen, false);
+  assert.ok(txSummary.byKey.get(canonicalPlayerKey('Demarcus Robinson'))?.activatedFromIrDate);
+  assert.equal(txSummary.regularSeasonIrDesignationsCount, 2);
+});
+
+test('Live 2026 Health, Roster & Depth Chart datasets eliminate Alfred Collins bug, synthetic placeholders, and roster ghosts', () => {
+  const healthRaw = fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8');
+  const matchupRaw = fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8');
+  assert.ok(!/Rehabbing on side field/i.test(healthRaw), 'Synthetic "Rehabbing on side field" placeholder forbidden in health.json');
+  assert.ok(!/Rehabbing on side field/i.test(matchupRaw), 'Synthetic "Rehabbing on side field" placeholder forbidden in schedule-matchup.json');
+
+  const health = JSON.parse(healthRaw);
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const depth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8'));
+
+  // Remaining IR designations must reflect real regular-season designations used (< 8)
+  assert.ok(health.usedIrDesignations >= 1 && health.remainingIrDesignations < 8, `Expected used IR designations tracked, got remaining=${health.remainingIrDesignations}`);
+
+  // All 7 confirmed season-ending SF IR players must be Out for Season (never Week 10-11)
+  const expectedSeasonEnding = [
+    'Alfred Collins',
+    'Ricky Pearsall',
+    'Jake Tonges',
+    'Andrew Farmer II',
+    'Darrick Forrest',
+    'Mikail Kamara',
+    'Nick Zakelj'
+  ];
+  for (const name of expectedSeasonEnding) {
+    const irRec = health.irAndReserveTracker.find(p => p.name === name);
+    assert.ok(irRec, `Expected ${name} in irAndReserveTracker`);
+    assert.equal(irRec.isSeasonEnding, true, `${name} must have isSeasonEnding: true`);
+    assert.equal(irRec.earliestEligibleWeek, null, `${name} must have earliestEligibleWeek: null`);
+    assert.equal(irRec.projectedReturnWeek, 'Out for Season', `${name} must be Out for Season, got ${irRec.projectedReturnWeek}`);
+
+    const rosRec = roster.players.find(p => p.name === name);
+    assert.ok(rosRec, `Expected ${name} in roster.json`);
+    assert.equal(rosRec.health.status, 'Season-Ending IR', `${name} roster status must be Season-Ending IR`);
+    assert.equal(rosRec.health.playBadgeLabel, '0% • Out for Season', `${name} badge must be 0% • Out for Season`);
+  }
+
+  // Nate Hobbs has open 21-day window targeting Week 10
+  const hobbs = health.irAndReserveTracker.find(p => p.name === 'Nate Hobbs');
+  assert.ok(hobbs && hobbs.isPracticeWindowOpen === true && hobbs.projectedReturnWeek.startsWith('Est. Week 10'));
+
+  // Released / non-rostered ghosts must be completely purged
+  for (const ghost of ['Brett Toth', 'Vincent Anthony Jr.']) {
+    assert.ok(!roster.players.some(p => p.name === ghost), `Ghost ${ghost} must not appear in roster.json`);
+    assert.ok(!health.irAndReserveTracker.some(p => p.name === ghost), `Ghost ${ghost} must not appear in irAndReserveTracker`);
+    assert.ok(!JSON.stringify(depth).includes(ghost), `Ghost ${ghost} must not appear in depth-chart.json`);
+  }
+
+  // Practice Squad game-day elevations must reside in practice_squad, Guerendo on Reserve / PUP, Aiyuk on Reserve / Left Squad (and not duplicated in practiceReport)
+  for (const psName of ['Jack Stoll', 'Jalen Graham', 'Ogbo Okoronkwo']) {
+    const p = roster.players.find(x => x.name === psName);
+    assert.equal(p?.rosterBucket, 'practice_squad', `${psName} must be in practice_squad bucket`);
+  }
+  const guerendo = roster.players.find(x => x.name === 'Isaac Guerendo');
+  assert.equal(guerendo?.health?.status, 'Reserve / PUP');
+  const aiyuk = roster.players.find(x => x.name === 'Brandon Aiyuk');
+  assert.equal(aiyuk?.rosterBucket, 'ir');
+  assert.equal(aiyuk?.health?.status, 'Reserve / Left Squad');
+  assert.ok(!health.practiceReport.some(p => p.name === 'Brandon Aiyuk'), 'Brandon Aiyuk must not be duplicated onto active practiceReport');
+
+  // Official 49ers.com practice participation verification
+  const neal = health.practiceReport.find(p => p.name === 'Siran Neal');
+  assert.ok(neal && neal.wed === 'DNP' && neal.thu === 'DNP' && neal.fri === 'LP', `Expected Siran Neal DNP/DNP/LP, got ${JSON.stringify(neal)}`);
+  const cmc = health.practiceReport.find(p => p.name === 'Christian McCaffrey');
+  assert.ok(cmc && cmc.wed === 'DNP' && cmc.thu === 'LP' && cmc.fri === 'FP', `Expected CMC DNP/LP/FP, got ${JSON.stringify(cmc)}`);
+});
+
+await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses and official Opponent Wed/Thu/Fri participation', async () => {
+  const origFetch = globalThis.fetch;
+  try {
+    const appData = {
+      meta: { updatedAt: '2026-11-08T00:00:00Z' },
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'))
+    };
+
+    const porterBefore = appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport.find(p =>
+      p.name.includes('Darien Porter')
+    );
+    assert.ok(porterBefore && porterBefore.wed === 'DNP' && porterBefore.thu === 'LP' && porterBefore.fri === 'FP');
+
+    globalThis.fetch = async reqUrl => {
+      const u = String(reqUrl);
+      if (u.includes('/injuries')) {
+        return new Response(
+          JSON.stringify({
+            injuries: [
+              {
+                id: '25',
+                injuries: [
+                  {
+                    athlete: { id: '4430835', displayName: 'Alfred Collins' },
+                    status: 'Injured Reserve',
+                    details: { type: 'Knee' },
+                    shortComment: 'Collins is out for the season.'
+                  }
+                ]
+              },
+              {
+                id: '13',
+                injuries: [
+                  {
+                    athlete: { id: '5123456', displayName: 'Darien Porter', position: { abbreviation: 'CB' } },
+                    status: 'Active',
+                    details: { type: 'Back' },
+                    shortComment: 'Porter carries no injury designation into Sunday.'
+                  }
+                ]
+              }
+            ]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response(JSON.stringify({ events: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    };
+
+    await hydrateLiveEspnOverlay(appData);
+
+    const collinsAfter = appData.roster.players.find(p => p.name === 'Alfred Collins');
+    assert.equal(collinsAfter.health.status, 'Season-Ending IR', 'Browser overlay must not overwrite Season-Ending IR to generic Injured Reserve');
+    assert.equal(collinsAfter.health.playBadgeLabel, '0% • Out for Season');
+
+    const porterAfter = appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport.find(p =>
+      p.name.includes('Darien Porter')
+    );
+    assert.ok(
+      porterAfter && porterAfter.wed === 'DNP' && porterAfter.thu === 'LP' && porterAfter.fri === 'FP',
+      `Browser overlay must preserve official 49ers.com opponent Wed/Thu/Fri codes, got ${JSON.stringify(porterAfter)}`
+    );
   } finally {
     globalThis.fetch = origFetch;
   }

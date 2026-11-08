@@ -786,6 +786,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           um.opponentHealth.teamAbbr = oppAbbr;
           um.opponentHealth.teamName = um.oppName;
           um.opponentHealth.teamInjuriesUrl = buildEspnTeamInjuriesUrl(oppAbbr);
+          um.opponentHealth.injuryReport = [];
           um.opponentHealth.keyStartersHealthy = [];
           um.opponentHealth.irReserve = [];
         }
@@ -868,37 +869,66 @@ export async function hydrateLiveEspnOverlay(appData) {
         const rp = rosterByNorm.get(normPlayerNameKey(nm));
         if (!rp || !rp.health) continue;
         const rawStatus = item.status || rp.health.status || 'Active';
+        const rawLower = rawStatus.toLowerCase();
         const shortC = cleanSensationalistText(item.shortComment || '');
         const longC = cleanSensationalistText(item.longComment || shortC);
-        const bodyPart = item.details?.type || extractBodyPartSafe(shortC) || rp.health.injuryType || '';
+        const combinedText = `${shortC} ${longC}`.trim();
+        const bodyPart = rp.health.injuryType || item.details?.type || extractBodyPartSafe(shortC) || '';
+        const notActivated =
+          /not activated|didn't activate|did not activate|remains on injured reserve|ruled out|will miss /i.test(
+            combinedText
+          );
         const isIrReturnQ =
           rp.rosterBucket === 'ir' &&
-          /(listed as questionable|questionable for sunday|likely will be activated|expected to be activated)/i.test(`${shortC} ${longC}`);
-        const isRealReport =
-          ['out', 'doubtful', 'questionable'].includes(rawStatus.toLowerCase()) ||
-          Boolean(bodyPart) ||
-          isIrReturnQ;
-        if (!isRealReport && rp.rosterBucket === 'active') continue;
+          !rp.health.isSeasonEnding &&
+          !notActivated &&
+          /(listed as questionable|questionable for sunday|likely will be activated|expected to be activated)/i.test(
+            combinedText
+          );
+
+        const hasExplicitGameDesignation = ['out', 'doubtful', 'questionable'].includes(rawLower);
+        const wasOnOfficialReport = Boolean(rp.health.isOnPracticeReport);
+
+        if (rp.rosterBucket === 'active' && !wasOnOfficialReport && !hasExplicitGameDesignation) {
+          continue;
+        }
+
+        const effectiveStatusForModel = isIrReturnQ
+          ? 'Questionable'
+          : rp.rosterBucket === 'ir' || rp.rosterBucket === 'suspended'
+            ? rp.health.status || rawStatus
+            : hasExplicitGameDesignation
+              ? rawStatus
+              : rp.health.status || rawStatus;
 
         const playProb = computePlayerPlayProbability({
           name: rp.name,
           position: rp.position,
-          gameStatus: isIrReturnQ ? 'Questionable' : rawStatus,
+          rosterBucket: rp.rosterBucket,
+          isSeasonEnding: Boolean(rp.health.isSeasonEnding),
+          gameStatus: effectiveStatusForModel,
           isIrReturnQuestionable: isIrReturnQ,
           injuryType: bodyPart,
           wed: rp.health.wed,
           thu: rp.health.thu,
           fri: rp.health.fri,
-          beatNote: `${shortC} ${longC}`.trim()
+          beatNote: combinedText
         });
-        rp.health.status = isIrReturnQ ? 'Questionable (IR Return Window)' : rawStatus;
-        rp.health.injuryType = bodyPart;
-        rp.health.shortComment = shortC;
-        rp.health.longComment = longC;
+
+        // Preserve authoritative IR sub-status ('Season-Ending IR', 'IR — 21-Day Window Open', 'Reserve / PUP', etc.)
+        if (rp.rosterBucket === 'active') {
+          rp.health.status = hasExplicitGameDesignation ? rawStatus : rp.health.status;
+        } else if (isIrReturnQ) {
+          rp.health.status = 'Questionable (IR Return Window)';
+        }
+        if (bodyPart) rp.health.injuryType = bodyPart;
+        if (shortC) rp.health.shortComment = shortC;
+        if (longC) rp.health.longComment = longC;
         rp.health.playProbabilityPct = playProb.probabilityPct;
         rp.health.playTier = playProb.tier;
         rp.health.playBadgeLabel = playProb.badgeLabel;
-        rp.health.isOnPracticeReport = rp.rosterBucket === 'active' || isIrReturnQ;
+        rp.health.isOnPracticeReport =
+          (rp.rosterBucket === 'active' && (wasOnOfficialReport || hasExplicitGameDesignation)) || isIrReturnQ;
       }
 
       if (appData.health) {
@@ -928,18 +958,24 @@ export async function hydrateLiveEspnOverlay(appData) {
 
     if (oppTeamInj?.injuries && appData.scheduleMatchup.upcomingMatchup?.opponentHealth) {
       const oh = appData.scheduleMatchup.upcomingMatchup.opponentHealth;
+      const existingReportByKey = new Map(
+        (oh.injuryReport || []).map(p => [normPlayerNameKey(p.name), p])
+      );
       const prevByName = new Map(
         [...(oh.injuryReport || []), ...(oh.keyStartersHealthy || []), ...(oh.irReserve || [])].map(p => [
-          String(p.name || '').toLowerCase(),
+          normPlayerNameKey(p.name),
           p
         ])
       );
-      const liveOppReport = [];
+      const mergedByKey = new Map(existingReportByKey);
+
       for (const item of oppTeamInj.injuries) {
         const ath = item.athlete || {};
         const nm = ath.displayName || '';
-        if (!nm) continue;
-        const prevEntry = prevByName.get(nm.toLowerCase()) || null;
+        const nKey = normPlayerNameKey(nm);
+        if (!nKey) continue;
+        const prevEntry = prevByName.get(nKey) || null;
+        const existingRep = existingReportByKey.get(nKey) || null;
         const rawSt = item.status || 'Active';
         const stLower = rawSt.toLowerCase();
         const shortC = cleanSensationalistText(item.shortComment || '');
@@ -950,30 +986,47 @@ export async function hydrateLiveEspnOverlay(appData) {
           /listed as questionable|questionable for sunday|questionable ahead of|expected to be activated|likely will be activated/i.test(
             combinedLower
           ) &&
-          !/ruled out|will miss/i.test(combinedLower);
+          !/not activated|didn't activate|did not activate|remains on injured reserve|ruled out|will miss/i.test(
+            combinedLower
+          );
         if (stLower.includes('injured reserve') && !isIrRetQ) continue;
 
-        const bodyPart = item.details?.type || extractBodyPartSafe(shortC) || prevEntry?.injuryType || '';
+        const bodyPart = existingRep?.injuryType || item.details?.type || extractBodyPartSafe(shortC) || prevEntry?.injuryType || '';
         const isReportWorthy =
+          Boolean(existingRep) ||
           isIrRetQ ||
           ['out', 'doubtful', 'questionable'].includes(stLower) ||
-          (Boolean(bodyPart) && /(designation|questionable|ruled out|will miss|doubtful)/i.test(shortC));
+          (existingReportByKey.size === 0 &&
+            Boolean(bodyPart) &&
+            /(designation|questionable|ruled out|will miss|doubtful)/i.test(shortC));
         if (!isReportWorthy) continue;
 
         const headshot = ath.headshot?.href || prevEntry?.headshotUrl || '';
         const espnIdM = headshot.match(/\/(\d+)\.png/);
         const espnId = espnIdM ? espnIdM[1] : '';
-        const { wed, thu, fri } = extractPracticeDaysFromText({
-          statusRaw: isIrRetQ ? 'Questionable' : rawSt,
-          injuryType: bodyPart,
-          shortComment: shortC,
-          longComment: longC
-        });
+        const hasOfficialDays =
+          existingRep && (existingRep.wed !== '-' || existingRep.thu !== '-' || existingRep.fri !== '-');
+        const { wed, thu, fri } = hasOfficialDays
+          ? { wed: existingRep.wed, thu: existingRep.thu, fri: existingRep.fri }
+          : extractPracticeDaysFromText({
+              statusRaw: isIrRetQ ? 'Questionable' : rawSt,
+              injuryType: bodyPart,
+              shortComment: shortC,
+              longComment: longC
+            });
+        const effectiveOppGameSt = isIrRetQ
+          ? 'Questionable'
+          : ['out', 'doubtful', 'questionable'].includes(stLower)
+            ? rawSt
+            : existingRep?.gameStatus && ['Out', 'Doubtful', 'Questionable'].includes(existingRep.gameStatus)
+              ? existingRep.gameStatus
+              : rawSt;
+
         const prob = computePlayerPlayProbability({
           name: nm,
           position: ath.position?.abbreviation || prevEntry?.position || 'ATH',
           snapPct: prevEntry?.snapPct ?? null,
-          gameStatus: isIrRetQ ? 'Questionable' : rawSt,
+          gameStatus: effectiveOppGameSt,
           rosterBucket: isIrRetQ ? 'ir' : 'active',
           injuryType: bodyPart,
           wed,
@@ -982,8 +1035,8 @@ export async function hydrateLiveEspnOverlay(appData) {
           beatNote: `${shortC} ${longC}`
         });
 
-        liveOppReport.push({
-          name: nm,
+        mergedByKey.set(nKey, {
+          name: existingRep?.name || nm,
           position: ath.position?.abbreviation || prevEntry?.position || 'ATH',
           unit: prevEntry?.unit || 'Active',
           jersey: prevEntry?.jersey ?? null,
@@ -994,9 +1047,13 @@ export async function hydrateLiveEspnOverlay(appData) {
           thu,
           fri,
           injuryType: bodyPart || 'Undisclosed',
-          gameStatus: isIrRetQ ? 'IR Return Window (Q)' : stLower === 'active' ? 'No Designation (Cleared)' : rawSt,
-          shortComment: shortC,
-          longComment: longC,
+          gameStatus: isIrRetQ
+            ? 'IR Return Window (Q)'
+            : effectiveOppGameSt.toLowerCase() === 'active'
+              ? 'No Designation (Cleared)'
+              : effectiveOppGameSt,
+          shortComment: shortC || existingRep?.shortComment || '',
+          longComment: longC || existingRep?.longComment || '',
           isStarter: Boolean(prevEntry?.isStarter),
           isIrReturnQuestionable: isIrRetQ,
           playProbabilityPct: prob.probabilityPct,
@@ -1006,6 +1063,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           archetypeNote: prob.priorUsed?.archetypeNote || ''
         });
       }
+      const liveOppReport = [...mergedByKey.values()];
       if (liveOppReport.length > 0) {
         liveOppReport.sort((a, b) => a.playProbabilityPct - b.playProbabilityPct);
         oh.injuryReport = liveOppReport;

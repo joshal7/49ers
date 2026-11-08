@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-11-08T02:49:49.456Z",
+  "updatedAt": "2026-11-08T03:32:19.880Z",
   "clusteredBriefs": [
     {
       "id": "cluster_bosa_buckner_week9",
-      "publishedAt": "2026-11-07T23:49:35.685Z",
+      "publishedAt": "2026-11-08T00:32:04.738Z",
       "category": "film",
       "categoryLabel": "Trench & Health Briefing",
       "headline": "Nick Bosa & Christian McCaffrey Cleared for Week 9; Full Wide-9 Front Debuts Under DC Raheem Morris With DeForest Buckner & Osa Odighizuwa",
@@ -66,18 +66,18 @@
       ],
       "sourceLinks": [
         {
-          "title": "Kyle Shanahan Talks DeForest Buckner Trade, WR Search Ahead of Deadline …",
-          "url": "https://www.youtube.com/watch?v=pb6-G63jccQ",
-          "outlet": "San Francisco 49ers",
-          "type": "video",
-          "publishedAt": "2026-11-07T23:49:35.685Z"
-        },
-        {
           "title": "Kyle Shanahan discusses reunion with DeForest Buckner, impact on 49ers' …",
           "url": "https://www.youtube.com/watch?v=RYtcCkJp4hA",
           "outlet": "NBC Sports Bay Area & California",
           "type": "video",
-          "publishedAt": "2026-11-07T23:49:35.684Z"
+          "publishedAt": "2026-11-08T00:32:04.738Z"
+        },
+        {
+          "title": "Kyle Shanahan Talks DeForest Buckner Trade, WR Search Ahead of Deadline …",
+          "url": "https://www.youtube.com/watch?v=pb6-G63jccQ",
+          "outlet": "San Francisco 49ers",
+          "type": "video",
+          "publishedAt": "2026-11-08T00:32:04.738Z"
         },
         {
           "title": "@49erswebzone: Kyle Shanahan identifies what DeForest Buckner can bring to th…",
@@ -101,8 +101,8 @@
         }
       ],
       "hardFacts": [
-        "Nick Bosa returns Sunday vs. Las Vegas for the first time since Week 2 without a restrictive game designation after clearing post-Bye full-speed pass-rush reps.",
-        "Christian McCaffrey exited the Week 8 Bye off the injury report and is a full go for Sunday at Levi's Stadium (1:25 PM PT, FOX).",
+        "Nick Bosa returns Sunday vs. Las Vegas for the first time since Week 2 without a restrictive game designation (LP/LP/FP) after clearing post-Bye full-speed pass-rush reps.",
+        "Christian McCaffrey (Hamstring — DNP/LP/FP) progressed cleanly to a full participant Friday and carries no game status designation for Sunday at Levi's Stadium (1:25 PM PT, FOX).",
         "Week 9 marks the first snap sequence under DC Raheem Morris pairing Nick Bosa and Keion White (3.5 sacks) on the edges with newly re-acquired DeForest Buckner (4.0 sacks, 8 QB hits) and Osa Odighizuwa (#92, 2.0 sacks, 7 QB hits) at 3-tech / 2i interior alignments."
       ],
       "schemeAndCapTakeaways": [
@@ -124,7 +124,7 @@
     },
     {
       "id": "cluster_aiyuk_reinstatement_cap",
-      "publishedAt": "2026-11-07T23:49:35.685Z",
+      "publishedAt": "2026-11-08T00:32:04.738Z",
       "category": "cap",
       "categoryLabel": "Cap & Roster Mechanics",
       "headline": "Brandon Aiyuk Meets With 49ers Brass Seeking Reinstatement: Contract, Cap & WR Depth Implications",
@@ -187,18 +187,18 @@
       ],
       "sourceLinks": [
         {
-          "title": "49ers' Kyle Shanahan addresses Brandon Aiyuk's reinstatement | NBC Sport…",
-          "url": "https://www.youtube.com/watch?v=jcDvL3OeMY4",
-          "outlet": "NBC Sports Bay Area & California",
-          "type": "video",
-          "publishedAt": "2026-11-07T23:49:35.685Z"
-        },
-        {
           "title": "49er's coach Kyle Shanahan doesn't mince words about Aiyuk",
           "url": "https://www.youtube.com/watch?v=iSImE2ZtboA",
           "outlet": "ABC7 News Bay Area",
           "type": "video",
-          "publishedAt": "2026-11-07T23:49:35.684Z"
+          "publishedAt": "2026-11-08T00:32:04.738Z"
+        },
+        {
+          "title": "49ers' Kyle Shanahan addresses Brandon Aiyuk's reinstatement | NBC Sport…",
+          "url": "https://www.youtube.com/watch?v=jcDvL3OeMY4",
+          "outlet": "NBC Sports Bay Area & California",
+          "type": "video",
+          "publishedAt": "2026-11-08T00:32:04.738Z"
         },
         {
           "title": "@49erswebzone: #49ers, Brandon Aiyuk divorce could take months to resolve Rea…",
@@ -223,12 +223,12 @@
       ],
       "hardFacts": [
         "Brandon Aiyuk and agent Drew Rosenhaus met with 49ers leadership at SAP Performance Facility on Friday, Nov 6, stating he is physically healthy and seeking reinstatement; NFL Network notes ~$13M in bonus forfeiture complicates a simple release.",
-        "With Aiyuk (Personal), Mike Evans (27 rec, 420 yds, +40.9 EPA — Out, Achilles), Deebo Samuel Sr. (16 rec, 206 yds — Out, Hamstring), and Christian Kirk (Knee - Meniscus) ruled Out—and Ricky Pearsall + rookie De'Zhaun Stribling on IR—Kyle Shanahan signaled Demarcus Robinson (Questionable, Ankle) is likely to be activated from IR.",
+        "With Aiyuk on Reserve/Left Squad, Mike Evans (27 rec, 420 yds, +40.9 EPA — Out, Ribs/Achilles) and Deebo Samuel Sr. (16 rec, 206 yds — Out, Hamstring) ruled Out on the active roster, and Christian Kirk (placed on IR Saturday, Knee - Meniscus, earliest eligible Week 13), Ricky Pearsall (Season-Ending IR, PCL surgery), and rookie De'Zhaun Stribling (IR, Ankle) on Injured Reserve, San Francisco activated Demarcus Robinson from IR ahead of Sunday.",
         "Under OverTheCap's 2026 ledger ($35.16M gross cap space vs. -$31.54M projected in 2027), any Post-June 1 trade or release keeps current-year proration on 2026 while deferring remaining future bonus acceleration into 2027."
       ],
       "schemeAndCapTakeaways": [
         "Cap Math Reality: Because prorated signing/option bonus acceleration after June 1 splits remaining future-year proration into 2027 dead money, resolving Aiyuk's contract preserves 2026 cap room ($35.16M) for CBA Article 13 rollover into 2027.",
-        "On-Field Week 9 WR Rotation: Jordan Watkins (6/9, 138 yds), Brandin Cooks (#84), Jacob Cowing (#4), and likely IR-activation Demarcus Robinson handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey."
+        "On-Field Week 9 WR Rotation: Jordan Watkins (6/9, 138 yds), Brandin Cooks (#84), Jacob Cowing (#4), and newly activated Demarcus Robinson off IR handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey."
       ],
       "consensusVsDissent": "National insiders (Schefter/Pelissero/Maiocco/Barrows) note Friday's NFL personnel notice included no immediate reinstatement, pointing toward a structured trade or settlement rather than immediate snap reintegration.",
       "videoClip": {
@@ -319,7 +319,14 @@
           "url": "https://www.youtube.com/watch?v=VWX0P42zKdk",
           "outlet": "San Francisco 49ers",
           "type": "video",
-          "publishedAt": "2026-11-07T23:49:35.684Z"
+          "publishedAt": "2026-11-08T00:32:04.738Z"
+        },
+        {
+          "title": "Kyle Shanahan Previews Week 9 Matchup vs. Raiders| 49ers",
+          "url": "https://www.youtube.com/watch?v=VMViT-SSXTY",
+          "outlet": "San Francisco 49ers",
+          "type": "video",
+          "publishedAt": "2026-11-08T00:32:04.738Z"
         },
         {
           "title": "@49erswebzone: #49ers announce roster moves ahead of Sunday's game with Raide…",
@@ -327,13 +334,6 @@
           "outlet": "49ers Webzone",
           "type": "tweet",
           "publishedAt": "2026-11-07T13:40:02-08:00"
-        },
-        {
-          "title": "@49erswebzone: #49ers vs. Raiders: 5 Players to Watch in Week 9 matchup Read:",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3mzqbdbsflv2z",
-          "outlet": "49ers Webzone",
-          "type": "tweet",
-          "publishedAt": "2026-11-07T08:00:02-08:00"
         },
         {
           "title": "Raiders vs. 49ers Week 9 Matchup & Injury Gamecast — ESPN",
@@ -366,7 +366,7 @@
     },
     {
       "id": "cluster_trade_deadline_countdown",
-      "publishedAt": "2026-11-07T23:49:35.685Z",
+      "publishedAt": "2026-11-08T00:32:04.738Z",
       "category": "roster",
       "categoryLabel": "Trade Window Intel",
       "headline": "Countdown to the Nov 10 Trade Deadline: Evaluating 49ers WR/12-Personnel TE, Left Guard & Expiring Edge Rentals",
@@ -424,7 +424,7 @@
           "url": "https://www.youtube.com/watch?v=pb6-G63jccQ",
           "outlet": "San Francisco 49ers",
           "type": "video",
-          "publishedAt": "2026-11-07T23:49:35.685Z"
+          "publishedAt": "2026-11-08T00:32:04.738Z"
         },
         {
           "title": "Sources: Colts among several NFL teams mulling trade offers as deadline …",
@@ -532,135 +532,13 @@
       "isClickbait": false
     },
     {
-      "id": "yt_jcDvL3OeMY4",
-      "type": "video",
-      "title": "49ers' Kyle Shanahan addresses Brandon Aiyuk's reinstatement | NBC Sports Bay Area",
-      "summary": "Video (9:10) • NBC Sports Bay Area & California • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/jcDvL3OeMY4/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "4360438",
-          "name": "Brandon Aiyuk",
-          "shortName": "B. Aiyuk",
-          "position": "WR",
-          "jersey": 11,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png"
-        }
-      ],
-      "publishedAt": "2026-11-07T23:49:35.685Z",
-      "url": "https://www.youtube.com/watch?v=jcDvL3OeMY4",
-      "videoId": "jcDvL3OeMY4",
-      "embeddable": true,
-      "duration": "9:10",
-      "outletId": "youtube_film",
-      "outletName": "NBC Sports Bay Area & California",
-      "reporterId": "guy_haberman",
-      "reporterName": "NBC Sports Bay Area & California",
-      "author": "NBC Sports Bay Area & California",
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 68,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "isInGameInjury": false,
-      "breakingPriority": 0,
-      "breakingBadge": null
-    },
-    {
-      "id": "yt_aidsFSwaPMs",
-      "type": "video",
-      "title": "San Francisco 49ers Draft 2026",
-      "summary": "Video (40:00) • marvin49 • 6mo ago",
-      "imageUrl": "https://i.ytimg.com/vi/aidsFSwaPMs/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-07T23:49:35.685Z",
-      "url": "https://www.youtube.com/watch?v=aidsFSwaPMs",
-      "videoId": "aidsFSwaPMs",
-      "embeddable": false,
-      "duration": "40:00",
-      "outletId": "youtube_film",
-      "outletName": "marvin49",
-      "reporterId": "guy_haberman",
-      "reporterName": "marvin49",
-      "author": "marvin49",
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 68,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "isInGameInjury": false,
-      "breakingPriority": 0,
-      "breakingBadge": null
-    },
-    {
-      "id": "yt_pb6-G63jccQ",
-      "type": "video",
-      "title": "Kyle Shanahan Talks DeForest Buckner Trade, WR Search Ahead of Deadline | 49ers",
-      "summary": "Video (9:28) • San Francisco 49ers • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/pb6-G63jccQ/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "2971282",
-          "name": "DeForest Buckner",
-          "shortName": "D. Buckner",
-          "position": "DT",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
-        }
-      ],
-      "publishedAt": "2026-11-07T23:49:35.685Z",
-      "url": "https://www.youtube.com/watch?v=pb6-G63jccQ",
-      "videoId": "pb6-G63jccQ",
-      "embeddable": false,
-      "duration": "9:28",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "kyle_shanahan",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 68,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "isInGameInjury": false,
-      "breakingPriority": 0,
-      "breakingBadge": null
-    },
-    {
-      "id": "yt_JurLesPT-IA",
-      "type": "video",
-      "title": "Kyle Shanahan’s 49ers Offense is TERRIFYING",
-      "summary": "Video (12:37) • Olis Two Minute Drill • 1mo ago",
-      "imageUrl": "https://i.ytimg.com/vi/JurLesPT-IA/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-07T23:49:35.685Z",
-      "url": "https://www.youtube.com/watch?v=JurLesPT-IA",
-      "videoId": "JurLesPT-IA",
-      "embeddable": true,
-      "duration": "12:37",
-      "outletId": "youtube_film",
-      "outletName": "Olis Two Minute Drill",
-      "reporterId": "guy_haberman",
-      "reporterName": "Olis Two Minute Drill",
-      "author": "Olis Two Minute Drill",
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 68,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "isInGameInjury": false,
-      "breakingPriority": 0,
-      "breakingBadge": null
-    },
-    {
       "id": "yt_1c4nEjSF5wk",
       "type": "video",
       "title": "Kyle Shanahan on the 2026 Season | 49ers",
       "summary": "Video (20:12) • San Francisco 49ers • 2mo ago",
       "imageUrl": "https://i.ytimg.com/vi/1c4nEjSF5wk/hqdefault.jpg",
       "mentionedPlayers": [],
-      "publishedAt": "2026-11-07T23:49:35.684Z",
+      "publishedAt": "2026-11-08T00:32:04.738Z",
       "url": "https://www.youtube.com/watch?v=1c4nEjSF5wk",
       "videoId": "1c4nEjSF5wk",
       "embeddable": false,
@@ -670,41 +548,6 @@
       "reporterId": "kyle_shanahan",
       "reporterName": "San Francisco 49ers",
       "author": "San Francisco 49ers",
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 68,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "isInGameInjury": false,
-      "breakingPriority": 0,
-      "breakingBadge": null
-    },
-    {
-      "id": "yt_RYtcCkJp4hA",
-      "type": "video",
-      "title": "Kyle Shanahan discusses reunion with DeForest Buckner, impact on 49ers' defense | NBC Sports BA",
-      "summary": "Video (19:19) • NBC Sports Bay Area & California • 10h ago",
-      "imageUrl": "https://i.ytimg.com/vi/RYtcCkJp4hA/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "2971282",
-          "name": "DeForest Buckner",
-          "shortName": "D. Buckner",
-          "position": "DT",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
-        }
-      ],
-      "publishedAt": "2026-11-07T23:49:35.684Z",
-      "url": "https://www.youtube.com/watch?v=RYtcCkJp4hA",
-      "videoId": "RYtcCkJp4hA",
-      "embeddable": true,
-      "duration": "19:19",
-      "outletId": "youtube_film",
-      "outletName": "NBC Sports Bay Area & California",
-      "reporterId": "guy_haberman",
-      "reporterName": "NBC Sports Bay Area & California",
-      "author": "NBC Sports Bay Area & California",
       "isBreaking": false,
       "category": "film",
       "signalScore": 68,
@@ -730,7 +573,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png"
         }
       ],
-      "publishedAt": "2026-11-07T23:49:35.684Z",
+      "publishedAt": "2026-11-08T00:32:04.738Z",
       "url": "https://www.youtube.com/watch?v=iSImE2ZtboA",
       "videoId": "iSImE2ZtboA",
       "embeddable": true,
@@ -740,6 +583,41 @@
       "reporterId": "guy_haberman",
       "reporterName": "ABC7 News Bay Area",
       "author": "ABC7 News Bay Area",
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 68,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "isInGameInjury": false,
+      "breakingPriority": 0,
+      "breakingBadge": null
+    },
+    {
+      "id": "yt_RYtcCkJp4hA",
+      "type": "video",
+      "title": "Kyle Shanahan discusses reunion with DeForest Buckner, impact on 49ers' defense | NBC Sports BA",
+      "summary": "Video (19:19) • NBC Sports Bay Area & California • 11h ago",
+      "imageUrl": "https://i.ytimg.com/vi/RYtcCkJp4hA/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "2971282",
+          "name": "DeForest Buckner",
+          "shortName": "D. Buckner",
+          "position": "DT",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
+        }
+      ],
+      "publishedAt": "2026-11-08T00:32:04.738Z",
+      "url": "https://www.youtube.com/watch?v=RYtcCkJp4hA",
+      "videoId": "RYtcCkJp4hA",
+      "embeddable": true,
+      "duration": "19:19",
+      "outletId": "youtube_film",
+      "outletName": "NBC Sports Bay Area & California",
+      "reporterId": "guy_haberman",
+      "reporterName": "NBC Sports Bay Area & California",
+      "author": "NBC Sports Bay Area & California",
       "isBreaking": false,
       "category": "film",
       "signalScore": 68,
@@ -765,7 +643,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
         }
       ],
-      "publishedAt": "2026-11-07T23:49:35.684Z",
+      "publishedAt": "2026-11-08T00:32:04.738Z",
       "url": "https://www.youtube.com/watch?v=VWX0P42zKdk",
       "videoId": "VWX0P42zKdk",
       "embeddable": false,
@@ -779,6 +657,128 @@
       "category": "film",
       "signalScore": 68,
       "fluffScore": 0,
+      "isClickbait": false,
+      "isInGameInjury": false,
+      "breakingPriority": 0,
+      "breakingBadge": null
+    },
+    {
+      "id": "yt_pb6-G63jccQ",
+      "type": "video",
+      "title": "Kyle Shanahan Talks DeForest Buckner Trade, WR Search Ahead of Deadline | 49ers",
+      "summary": "Video (9:28) • San Francisco 49ers • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/pb6-G63jccQ/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "2971282",
+          "name": "DeForest Buckner",
+          "shortName": "D. Buckner",
+          "position": "DT",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
+        }
+      ],
+      "publishedAt": "2026-11-08T00:32:04.738Z",
+      "url": "https://www.youtube.com/watch?v=pb6-G63jccQ",
+      "videoId": "pb6-G63jccQ",
+      "embeddable": false,
+      "duration": "9:28",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "kyle_shanahan",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 68,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "isInGameInjury": false,
+      "breakingPriority": 0,
+      "breakingBadge": null
+    },
+    {
+      "id": "yt_jcDvL3OeMY4",
+      "type": "video",
+      "title": "49ers' Kyle Shanahan addresses Brandon Aiyuk's reinstatement | NBC Sports Bay Area",
+      "summary": "Video (9:10) • NBC Sports Bay Area & California • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/jcDvL3OeMY4/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "4360438",
+          "name": "Brandon Aiyuk",
+          "shortName": "B. Aiyuk",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png"
+        }
+      ],
+      "publishedAt": "2026-11-08T00:32:04.738Z",
+      "url": "https://www.youtube.com/watch?v=jcDvL3OeMY4",
+      "videoId": "jcDvL3OeMY4",
+      "embeddable": true,
+      "duration": "9:10",
+      "outletId": "youtube_film",
+      "outletName": "NBC Sports Bay Area & California",
+      "reporterId": "guy_haberman",
+      "reporterName": "NBC Sports Bay Area & California",
+      "author": "NBC Sports Bay Area & California",
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 68,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "isInGameInjury": false,
+      "breakingPriority": 0,
+      "breakingBadge": null
+    },
+    {
+      "id": "yt_VMViT-SSXTY",
+      "type": "video",
+      "title": "Kyle Shanahan Previews Week 9 Matchup vs. Raiders| 49ers",
+      "summary": "Video (11:30) • San Francisco 49ers • Streamed 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/VMViT-SSXTY/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-08T00:32:04.738Z",
+      "url": "https://www.youtube.com/watch?v=VMViT-SSXTY",
+      "videoId": "VMViT-SSXTY",
+      "embeddable": false,
+      "duration": "11:30",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "kyle_shanahan",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 68,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "isInGameInjury": false,
+      "breakingPriority": 0,
+      "breakingBadge": null
+    },
+    {
+      "id": "yt_JurLesPT-IA",
+      "type": "video",
+      "title": "Kyle Shanahan’s 49ers Offense is TERRIFYING",
+      "summary": "Video (12:37) • Olis Two Minute Drill • 1mo ago",
+      "imageUrl": "https://i.ytimg.com/vi/JurLesPT-IA/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-08T00:32:04.738Z",
+      "url": "https://www.youtube.com/watch?v=JurLesPT-IA",
+      "videoId": "JurLesPT-IA",
+      "embeddable": true,
+      "duration": "12:37",
+      "outletId": "youtube_film",
+      "outletName": "Olis Two Minute Drill",
+      "reporterId": "guy_haberman",
+      "reporterName": "Olis Two Minute Drill",
+      "author": "Olis Two Minute Drill",
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 68,
+      "fluffScore": 18,
       "isClickbait": false,
       "isInGameInjury": false,
       "breakingPriority": 0,
@@ -4008,39 +4008,6 @@
       "isClickbait": false
     },
     {
-      "id": "espn_50384399",
-      "type": "article",
-      "title": "Is the 49ers and Brandon Aiyuk saga almost over?",
-      "summary": "Nick Wagoner reports on Brandon Aiyuk filing for reinstatement and planning to report to the 49ers on Friday.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1104/dm_261104_IA_49ers_16x9/dm_261104_IA_49ers_16x9.jpg",
-      "imageAlt": "Nick Wagoner reports on Brandon Aiyuk filing for reinstatement and planning to report to the 49ers on Friday.",
-      "mentionedPlayers": [
-        {
-          "id": "4360438",
-          "name": "Brandon Aiyuk",
-          "shortName": "B. Aiyuk",
-          "position": "WR",
-          "jersey": 11,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png"
-        }
-      ],
-      "publishedAt": "2026-11-05T02:39:16Z",
-      "url": "https://www.espn.com/video/clip/_/id/50384399/is-49ers-brandon-aiyuk-saga-almost-over",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "nick_wagoner",
-      "reporterName": "Nick Wagoner",
-      "author": "Nick Wagoner",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 35,
-      "fluffScore": 0,
-      "isClickbait": false
-    },
-    {
       "id": "tweet_mattbarrows_3mzjnlfsetk2r",
       "type": "tweet",
       "title": "49ers’ Nick Bosa eyes return; Christian McCaffrey could play despite hamstring injury www.nytimes.com/athletic/775...",
@@ -5612,6 +5579,47 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 45,
+      "fluffScore": 0,
+      "isClickbait": false
+    },
+    {
+      "id": "espn_50239053",
+      "type": "article",
+      "title": "NFL execs, coaches rank the league's top five MVP candidates entering Week 7",
+      "summary": "Brock Purdy? Josh Allen? Or maybe even a non-QB? Sixteen execs and coaches voted on the top five contenders for the MVP award through six weeks.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1021/r1734042_608x342_16-9.jpg",
+      "imageAlt": "NFL execs, coaches rank the league's top five MVP candidates entering Week 7",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        },
+        {
+          "id": "13729",
+          "name": "Jon Weeks",
+          "shortName": "J. Weeks",
+          "position": "LS",
+          "jersey": 46,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13729.png"
+        }
+      ],
+      "publishedAt": "2026-10-25T10:00:01Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50239053/2026-nfl-season-mvp-early-ranking-watch-list-execs-coaches",
+      "outletId": "espn",
+      "outletName": "ESPN",
+      "reporterId": "nick_wagoner",
+      "reporterName": "Cameron Wolfe",
+      "author": "Cameron Wolfe",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 35,
       "fluffScore": 0,
       "isClickbait": false
     }

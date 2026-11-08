@@ -138,7 +138,7 @@ const EPISODES_SPEC = [
       },
       {
         speaker: 'Marcus',
-        text: `The one game-wrecker we have to neutralize for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to align over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick rhythm throws to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus Demarcus Robinson if activated from IR.`
+        text: `The one game-wrecker we have to neutralize for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to align over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick rhythm throws to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus newly activated Demarcus Robinson off IR.`
       },
       {
         speaker: 'Elena',
@@ -181,7 +181,7 @@ const EPISODES_SPEC = [
       },
       {
         speaker: 'Marcus',
-        text: `Which makes hitting on cost-controlled rookie-scale contributors—Mykel Williams, Alfred Collins, Upton Stout, De'Zhaun Stribling, Gracen Halton, and Romello Height—the structural engine keeping this championship window open.`
+        text: `Which makes hitting on cost-controlled rookie-scale contributors—Mykel Williams, Upton Stout, Renardo Green, Dominick Puni, Gracen Halton, and Romello Height—the structural engine keeping this championship window open.`
       }
     ]
   },
@@ -246,7 +246,7 @@ const PRE_CACHED_ANALYSES = [
   2. **${pickCount2027} Total ${nextSeasonYear} Draft Picks**: After trading SF's own ${nextSeasonYear} 4th-rounder to Indianapolis for **DeForest Buckner**, San Francisco owns **Rd 1 (#31), Rd 2 (#63), Rd 3 (#95), Rd 5 (#170), Rd 6 (#193 via BAL), and Rd 7 (#245 via KC)**—leaving a 75-pick gap between #95 and #170.
 
 ### 2. Verified Ranked Needs, Targets & Traps to Avoid
-1. **Perimeter WR / 12-Personnel Move TE (Critical)**: With Mike Evans, Ricky Pearsall, and Demarcus Robinson on IR and Brandon Aiyuk inactive, top cost-controlled fits are **Adonai Mitchell** (NYJ, \`~$0.79M\` prorated), **Josh Downs** (IND, \`~$1.72M\`), **Rashod Bateman** (BAL), and **Greg Dulcich** (MIA, \`~$0.60M\` expiring). *Note on **Quentin Johnston** (LAC): viable only if LAC restructures/retains his guaranteed \`$18.0M\` ${nextSeasonYear} 5th-year option.*
+1. **Perimeter WR / 12-Personnel Move TE (Critical)**: With Ricky Pearsall (Season-Ending IR), Christian Kirk (IR — Meniscus), and De'Zhaun Stribling (IR — Ankle) on Injured Reserve, Mike Evans and Deebo Samuel Sr. ruled Out on the active roster, and Brandon Aiyuk on Reserve/Left Squad, top cost-controlled fits are **Adonai Mitchell** (NYJ, \`~$0.79M\` prorated), **Josh Downs** (IND, \`~$1.72M\`), **Rashod Bateman** (BAL), and **Greg Dulcich** (MIA, \`~$0.60M\` expiring). *Note on **Quentin Johnston** (LAC): viable only if LAC restructures/retains his guaranteed \`$18.0M\` ${nextSeasonYear} 5th-year option.*
 2. **Left Guard Pass Protection (High)**: Upgrade interior anchor next to **Trent Williams** via rookie-scale **Kingsley Suamataia** (KC, \`~$0.65M\` prorated).
 3. **Rotational Speed EDGE & Dime DB (Targeted Rentals)**: Expiring one-year rentals on 0-7 LAC—**Khalil Mack** (\`$4.0M\` prorated, \`$0\` in ${nextSeasonYear}) and **Donte Jackson** (\`$3.0M\` prorated)—or **Jessie Bates III** (ATL, played under DC **Raheem Morris** in 2024–2025, contract voids after ${activeSeasonYear}).
 * **Traps to Reject**: Zero-sack age-37 edge **Cameron Jordan** (0.0 sacks in 7 games), recently extended **Michael Mayer** (LV 3-yr/\`$45M\` deal), and burning Day-2 picks (#63/#95) on contender starters.
@@ -296,7 +296,7 @@ Under Defensive Coordinator **Raheem Morris**, pairing **DeForest Buckner** (6'7
 
 ### What Changed on Film in ${activeSeasonYear}
 1. **Faster Backside Checkdowns vs. Simulated Pressures**: Rather than hunting low-percentage hero throws when two-high shells bracket the deep over route, Purdy has slashed his pressure-to-sack conversion by hitting **Christian McCaffrey** and **George Kittle** on hot option/angle outlets within \`${purdyPlayer?.nextGenStats?.avgTimeToThrow ?? 3.0}s\`.
-2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even with Brandon Aiyuk inactive and Mike Evans and Ricky Pearsall moved to Injured Reserve after early-season snaps, Purdy has sustained elite intermediate efficiency (\`${purdyPass.firstDowns ?? 85}\` passing first downs) by trusting **Brandin Cooks**, **Jordan Watkins**, and **Jacob Cowing** before they clear linebacker leverage.`
+2. **Anticipation Window Between the Numbers (10–19 Air Yards)**: Even with Brandon Aiyuk on Reserve/Left Squad, Ricky Pearsall on season-ending IR since August, Christian Kirk on IR, and veteran wideouts Mike Evans and Deebo Samuel Sr. missing time, Purdy has sustained elite intermediate efficiency (\`${purdyPass.firstDowns ?? 85}\` passing first downs) by trusting **Brandin Cooks**, **Jordan Watkins**, and **Jacob Cowing** before they clear linebacker leverage.`
   }
 ];
 

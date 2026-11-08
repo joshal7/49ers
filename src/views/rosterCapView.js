@@ -246,7 +246,19 @@ function renderRosterExplorer({
                   <div class="player-meta-main">
                     <div class="player-name-line">${esc(p.name)} <span style="color:var(--gold-bright);font-size:11.5px">${esc(p.position)}</span></div>
                     <div class="player-sub-line">
-                      ${esc(p.rosterBucket === 'active' ? '53-Man' : p.rosterBucket === 'ir' ? 'IR/Out' : 'Prac. Squad')} ·
+                      ${esc(
+                        p.rosterBucket === 'active'
+                          ? '53-Man'
+                          : p.rosterBucket === 'ir'
+                            ? p.health?.isSeasonEnding
+                              ? 'Season-Ending IR'
+                              : p.health?.status === 'Reserve / PUP'
+                                ? 'Reserve/PUP'
+                                : p.health?.status === 'Reserve / Left Squad'
+                                  ? 'Reserve/Left Sq.'
+                                  : 'IR/Reserve'
+                            : 'Prac. Squad'
+                      )} ·
                       Snaps <span class="mono">${p.primarySnapPct}%</span> ·
                       RAS <span class="mono">${Number(p.spiderProfile?.compositeRas || 0).toFixed(1)}</span>${p.age ? ` · <span class="mono">${p.age}y</span>` : ''}
                     </div>

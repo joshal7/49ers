@@ -1017,6 +1017,67 @@ async function main() {
         assert(!/war\s*room/i.test(text), `Sub-tab ${sub} still contains "War Room" text`);
       }
 
+      // Deep Health & IR Return Window Tracker DOM regression audit (Alfred Collins Season-Ending IR, Nate Hobbs 21d Window, zero synthetic notes)
+      const irDomAudit = await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
+        const mainEl = document.getElementById('mainView');
+        const mainText = mainEl?.textContent || '';
+        const irItems = Array.from(mainEl.querySelectorAll('.subcard-panel[data-action="open-player-sheet"]'));
+        const collinsCard = irItems.find(el => el.textContent.includes('Alfred Collins'));
+        const collinsBadge = collinsCard?.querySelector('.badge');
+        const hobbsCard = irItems.find(el => el.textContent.includes('Nate Hobbs'));
+        const hobbsBadge = hobbsCard?.querySelector('.badge');
+
+        // Also open Alfred Collins Player Dossier -> Health tab to verify Reserve List / Ineligible / Out for Season boxes
+        const collinsTrigger = collinsCard?.querySelector('[data-action="open-player-sheet"]') || collinsCard;
+        if (collinsTrigger?.getAttribute?.('data-player-id')) {
+          collinsTrigger.click();
+        } else {
+          const appState = window.__49ersDiagnostics.getState();
+          const ac = appState.appData.roster.players.find(p => p.name === 'Alfred Collins');
+          appState.sheetMode = 'player';
+          appState.sheetPlayerId = ac.id;
+          window.__49ersDiagnostics.forceRender();
+        }
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="health"]')?.click();
+        const sheetHealthText = document.getElementById('sheetBody')?.textContent || '';
+        document.getElementById('closeSheetBtn')?.click();
+
+        return {
+          hasSyntheticRehabNote: /Rehabbing on side field/i.test(mainText),
+          collinsCardText: collinsCard?.textContent || '',
+          collinsBadgeText: collinsBadge?.textContent?.trim() || '',
+          collinsBadgeIsDanger: Boolean(collinsBadge?.classList?.contains('badge-danger')),
+          hobbsCardText: hobbsCard?.textContent || '',
+          hobbsBadgeText: hobbsBadge?.textContent?.trim() || '',
+          hobbsBadgeIsPositive: Boolean(hobbsBadge?.classList?.contains('badge-positive')),
+          sheetHealthText
+        };
+      });
+      assert(!irDomAudit.hasSyntheticRehabNote, 'Team Health DOM still contains synthetic "Rehabbing on side field" placeholder');
+      assert(
+        irDomAudit.collinsBadgeText === 'Out for 2026 Season' && irDomAudit.collinsBadgeIsDanger,
+        `Alfred Collins IR badge should be danger "Out for 2026 Season", got "${irDomAudit.collinsBadgeText}"`
+      );
+      assert(
+        !/Week 10[–-]11/i.test(irDomAudit.collinsCardText),
+        `Alfred Collins IR card still shows bogus Week 10–11 return window: ${irDomAudit.collinsCardText}`
+      );
+      assert(
+        irDomAudit.hobbsBadgeText.startsWith('Est. Week 10') &&
+          irDomAudit.hobbsBadgeIsPositive &&
+          irDomAudit.hobbsCardText.includes('21-Day Window Open'),
+        `Nate Hobbs IR card should highlight open 21-day window + Est. Week 10 badge, got "${irDomAudit.hobbsBadgeText}" / "${irDomAudit.hobbsCardText}"`
+      );
+      assert(
+        irDomAudit.sheetHealthText.includes('Season-Ending IR') &&
+          irDomAudit.sheetHealthText.includes('Ineligible') &&
+          irDomAudit.sheetHealthText.includes('Out for Season') &&
+          !irDomAudit.sheetHealthText.includes('NaN') &&
+          !irDomAudit.sheetHealthText.includes('undefined'),
+        `Alfred Collins Dossier Health tab failed verification: ${irDomAudit.sheetHealthText}`
+      );
+
       // Check International Schedule venues (Melbourne & Mexico City)
       const intlVerified = await cdp.eval(() => {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="schedule"]').click();

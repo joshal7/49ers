@@ -324,8 +324,9 @@ function renderUpcomingMatchup(appData) {
             <div class="sub-label" style="margin-bottom:6px">${esc(um.oppAbbr || 'OPP')} IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</div>
             <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
               ${oppIrList
-                .map(
-                  ir => `
+                .map(ir => {
+                  const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026);
+                  return `
                 <div class="subcard-panel" style="font-size:12px">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                     <div style="display:flex;align-items:center;gap:8px;min-width:0">
@@ -339,15 +340,15 @@ function renderUpcomingMatchup(appData) {
                         <span style="color:var(--gold-bright)"> (${esc(ir.position)}${ir.injuryType ? ` • ${esc(ir.injuryType)}` : ''})</span>
                       </div>
                     </div>
-                    <span class="badge badge-neutral mono">Est. Return: ${esc(typeof ir.projectedReturnWeek === 'number' ? `Wk ${ir.projectedReturnWeek}` : ir.projectedReturnWeek || 'TBD')}</span>
+                    <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
                   </div>
                   <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
-                    ${esc(ir.status || 'Injured Reserve')} • Earliest Eligible: Wk ${ir.earliestEligibleWeek || '—'}${ir.byeWeekNote ? ` (${esc(ir.byeWeekNote)})` : ''}
+                    ${meta.subtitleHtml}
                   </div>
                   ${ir.beatNote ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(ir.beatNote)}</div>` : ''}
                 </div>
-              `
-                )
+              `;
+                })
                 .join('')}
             </div>
           `
@@ -431,6 +432,56 @@ function renderUpcomingMatchup(appData) {
   `;
 }
 
+function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
+  const projRaw =
+    typeof ir.projectedReturnWeek === 'number'
+      ? `Est. Week ${ir.projectedReturnWeek}`
+      : String(ir.projectedReturnWeek || 'TBD').trim();
+  const isSeasonEnd = Boolean(ir.isSeasonEnding) || /^out for (?:the )?(?:\d{4} )?season$/i.test(projRaw);
+
+  if (isSeasonEnd) {
+    return {
+      badgeClass: 'badge-danger',
+      badgeText: `Out for ${seasonYear} Season`,
+      subtitleHtml: `${esc(ir.status || 'Season-Ending IR')} • ${esc(ir.byeWeekNote || `Ineligible to return in ${seasonYear}`)}`
+    };
+  }
+
+  if (ir.isPracticeWindowOpen) {
+    const badgeLabel = /^est\.|^week\s/i.test(projRaw) ? projRaw : `Est. Return: ${projRaw}`;
+    return {
+      badgeClass: 'badge-positive',
+      badgeText: badgeLabel,
+      subtitleHtml: `${esc(ir.status || 'IR — 21-Day Window Open')}${
+        ir.earliestEligibleWeek ? ` • Earliest Eligible: Wk ${ir.earliestEligibleWeek}` : ''
+      }${ir.byeWeekNote ? ` (${esc(ir.byeWeekNote)})` : ''}`
+    };
+  }
+
+  if (!ir.earliestEligibleWeek) {
+    return {
+      badgeClass: 'badge-neutral',
+      badgeText: projRaw,
+      subtitleHtml: `${esc(ir.status || 'Reserve')}${ir.byeWeekNote ? ` • ${esc(ir.byeWeekNote)}` : ''}`
+    };
+  }
+
+  const isTbd = /^tbd\b/i.test(projRaw);
+  const badgeText = isTbd
+    ? projRaw
+    : /^est\.|^week\s/i.test(projRaw)
+      ? projRaw
+      : `Est. Return: ${projRaw}`;
+
+  return {
+    badgeClass: isTbd ? 'badge-neutral' : 'badge-gold',
+    badgeText,
+    subtitleHtml: `${esc(ir.status || 'Injured Reserve')} • Earliest Eligible: Wk ${ir.earliestEligibleWeek}${
+      ir.byeWeekNote ? ` (${esc(ir.byeWeekNote)})` : ''
+    }`
+  };
+}
+
 function renderTeamHealthAndIr(appData) {
   const h = appData?.health || {};
   return `
@@ -489,28 +540,33 @@ function renderTeamHealthAndIr(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">NFL 4-Game Minimum Rule (Week 8 Bye Excluded)</div>
+      <div class="card-eyebrow">NFL 4-Game Minimum Rule (Week ${h.byeWeek || 8} Bye Excluded)</div>
       <h3 class="card-title" style="margin-bottom:8px">IR &amp; Reserve Return Window Tracker (${(h.irAndReserveTracker || []).length})</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(h.irAndReserveTracker || [])
-          .map(
-            ir => `
+          .map(ir => {
+            const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026);
+            const showInj =
+              ir.injuryType &&
+              ir.injuryType.toLowerCase() !== String(ir.status || '').toLowerCase() &&
+              ir.injuryType !== 'Undisclosed';
+            return `
           <div class="subcard-panel" style="cursor:pointer"
                data-action="open-player-sheet" data-player-id="${esc(ir.playerId)}" data-initial-tab="health">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:8px;min-width:0">
                 ${renderPlayerAvatarHtml(ir, 34, { showJerseyBadge: ir.jersey != null })}
-                <strong>${esc(ir.name)} <span style="color:var(--gold-bright)">(${esc(ir.position)})</span></strong>
+                <strong>${esc(ir.name)} <span style="color:var(--gold-bright)">(${esc(ir.position)}${showInj ? ` • ${esc(ir.injuryType)}` : ''})</span></strong>
               </div>
-              <span class="badge badge-gold mono">Est. Return: ${esc(ir.projectedReturnWeek)}</span>
+              <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
             </div>
             <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">
-              ${esc(ir.status)} • Earliest Eligible: Wk ${ir.earliestEligibleWeek} (${esc(ir.byeWeekNote)})
+              ${meta.subtitleHtml}
             </div>
-            <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(ir.beatNote)}</div>
+            ${ir.beatNote ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(ir.beatNote)}</div>` : ''}
           </div>
-        `
-          )
+        `;
+          })
           .join('')}
       </div>
     </section>

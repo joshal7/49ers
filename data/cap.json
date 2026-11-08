@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T02:49:49.456Z",
+  "updatedAt": "2026-11-08T03:32:19.880Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -201,7 +201,7 @@
       },
       {
         "title": "3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks",
-        "detail": "With SF's 2027 4th-round pick traded for DeForest Buckner (6 picks left: Rd 1, 2, 3, 5, 6-BAL, 7-KC), protecting Round 1–3 capital alongside 2025–2026 draftees (Mykel Williams, Alfred Collins, Omar Cooper Jr., Keionte Scott, Romello Height) is mandatory against 2027 cap tightness."
+        "detail": "With SF's 2027 4th-round pick traded for DeForest Buckner (6 picks left: Rd 1, 2, 3, 5, 6-BAL, 7-KC), protecting Round 1–3 capital alongside 2025–2026 draftees (Mykel Williams, Upton Stout, Omar Cooper Jr., Keionte Scott, Romello Height, plus Alfred Collins returning in 2027 from season-ending IR) is mandatory against 2027 cap tightness."
       }
     ],
     "restructureCandidates": [
@@ -8354,7 +8354,7 @@
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
       "unit": "Offense",
-      "rosterBucket": "active",
+      "rosterBucket": "ir",
       "contractsByYear": {
         "2027": {
           "year": 2027,

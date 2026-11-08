@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-08T02:49:32.661Z",
+  "updatedAt": "2026-11-08T03:32:00.661Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-22T02:49:32.661Z",
+  "nextAutoReviewAt": "2026-11-22T03:32:00.662Z",
   "totalTrackedReporters": 45,
   "outlets": [
     {
@@ -158,7 +158,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/nwagoner",
       "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-      "liveWeeklyMentions": 82,
+      "liveWeeklyMentions": 78,
       "popularityScore": 96,
       "defaultEnabled": true
     },

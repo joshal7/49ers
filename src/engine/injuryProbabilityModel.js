@@ -461,26 +461,65 @@ export function computePlayerPlayProbability(input = {}) {
     !beatNote.includes('will miss');
 
   // 2. Hard Roster / Official Ruling Exclusions
+  const isSeasonEndingFlag =
+    Boolean(input.isSeasonEnding) ||
+    statusRaw.includes('season-ending') ||
+    statusRaw.includes('out for season') ||
+    /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|spend the entire (?:\d{4} )?season|stay on (?:the (?:team's )?)?(?:ir|injured reserve) (?:list )?for the (?:year|season))\b/i.test(
+      beatNote
+    );
+  const isReinstatementFlag =
+    beatNote.includes('looking to get reinstated') ||
+    statusRaw.includes('left squad') ||
+    statusRaw.includes('reinstatement');
+
   if (
     !isIrReturnQuestionable &&
-    (rosterBucket === 'ir' ||
+    (isSeasonEndingFlag ||
+      isReinstatementFlag ||
+      rosterBucket === 'ir' ||
       rosterBucket === 'injuredreserveorout' ||
       rosterBucket === 'pup' ||
       rosterBucket === 'suspended' ||
       statusRaw === 'out' ||
       statusRaw === 'ir' ||
       statusRaw === 'injured reserve' ||
+      statusRaw.includes('reserve / pup') ||
+      statusRaw === 'pup' ||
       statusRaw === 'suspended' ||
       beatNote.includes('ruled out') ||
       beatNote.includes('will miss ') ||
-      beatNote.includes('placed on injured reserve') ||
-      beatNote.includes('looking to get reinstated'))
+      beatNote.includes('placed on injured reserve'))
   ) {
-    factors.push('Officially inactive (Out / Reserve / Reinstatement pending)');
+    let badgeLabel = '0% • Out';
+    if (isSeasonEndingFlag) {
+      badgeLabel = '0% • Out for Season';
+      factors.push('Season-ending Injured Reserve — ineligible to return this season');
+    } else if (isReinstatementFlag) {
+      badgeLabel = '0% • Reinstatement';
+      factors.push('Reserve / Left Squad — requires formal NFL & club reinstatement');
+    } else if (rosterBucket === 'suspended' || statusRaw === 'suspended') {
+      badgeLabel = '0% • Suspended';
+      factors.push('Reserve / Suspended — ineligible until suspension concludes');
+    } else if (rosterBucket === 'pup' || statusRaw === 'pup' || statusRaw.includes('physically unable')) {
+      badgeLabel = '0% • Reserve/PUP';
+      factors.push('Reserve / Physically Unable to Perform — 21-day window required before activation');
+    } else if (
+      rosterBucket === 'ir' ||
+      rosterBucket === 'injuredreserveorout' ||
+      statusRaw === 'ir' ||
+      statusRaw.includes('injured reserve')
+    ) {
+      badgeLabel = '0% • IR';
+      factors.push('On Injured Reserve — requires 21-day window & 53-man activation');
+    } else {
+      factors.push('Officially ruled Out on weekly game status report');
+    }
+
     return {
       probabilityPct: 0,
       tier: 'OUT',
-      badgeLabel: '0% • Out',
+      badgeLabel,
       priorUsed: prior,
       factors
     };
@@ -722,5 +761,378 @@ export function calculateIrReturnTimeline(placedBeforeWeek, teamByeWeek = 8, est
     earliestEligibleWeek,
     projectedReturnWeek: projWk,
     byeWeekExcluded: startWeek <= teamByeWeek && projWk > teamByeWeek
+  };
+}
+
+/**
+ * Safely parses YYYY-MM-DD or full ISO-8601 timestamps (including +00:00 offsets) into epoch ms.
+ * Prevents the `NaN` bug caused by blindly appending `T12:00:00Z` to full ISO timestamps.
+ */
+export function parseFlexibleIsoMs(rawIso) {
+  if (!rawIso) return null;
+  const s = String(rawIso).trim();
+  if (!s) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const ms = Date.parse(`${s}T12:00:00Z`);
+    return Number.isNaN(ms) ? null : ms;
+  }
+  const ms = Date.parse(s);
+  return Number.isNaN(ms) ? null : ms;
+}
+
+/**
+ * Builds an 18-week NFL calendar lookup (interpolating any missing Bye week Sunday) from schedule events.
+ */
+function buildNormalizedNflWeekTimeline(scheduleEvents = []) {
+  const byWeek = new Map();
+  for (const ev of scheduleEvents || []) {
+    const wk = Number(ev?.week?.number ?? ev?.week ?? 0);
+    const ms = parseFlexibleIsoMs(ev?.date || ev?.dateIso);
+    if (wk >= 1 && wk <= 18 && ms !== null && !byWeek.has(wk)) {
+      byWeek.set(wk, ms);
+    }
+  }
+  if (byWeek.size === 0) return [];
+
+  // Fill in missing regular-season weeks (such as the club's Bye week) at +7d cadence
+  for (let w = 1; w <= 18; w++) {
+    if (!byWeek.has(w)) {
+      if (byWeek.has(w - 1)) {
+        byWeek.set(w, byWeek.get(w - 1) + 7 * 86_400_000);
+      } else if (byWeek.has(w + 1)) {
+        byWeek.set(w, byWeek.get(w + 1) - 7 * 86_400_000);
+      }
+    }
+  }
+
+  return [...byWeek.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([week, ms]) => ({ week, ms }));
+}
+
+/**
+ * Resolves the first NFL regular-season week missed (`placedBeforeWeek`, 1..18)
+ * from an official transaction or injury placement date.
+ */
+export function resolvePlacedBeforeWeekFromDate(placedDateIso, scheduleEvents = [], fallbackWeek = 1) {
+  const placedMs = parseFlexibleIsoMs(placedDateIso);
+  const timeline = buildNormalizedNflWeekTimeline(scheduleEvents);
+  if (placedMs === null || timeline.length === 0) {
+    return Math.max(1, Math.min(18, Number(fallbackWeek) || 1));
+  }
+
+  // Allow up to 12h grace so game-day/Saturday placements resolve to that week's game
+  for (const item of timeline) {
+    if (placedMs <= item.ms + 12 * 3_600_000) {
+      return item.week;
+    }
+  }
+  return timeline[timeline.length - 1].week;
+}
+
+const SEASON_ENDING_PROSE_REGEX =
+  /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|spend the entire (?:\d{4} )?season|stay on (?:the (?:team's )?)?(?:ir|injured reserve) (?:list )?for the (?:year|season)|placed on season-ending|ending (?:his|their) (?:\d{4} )?(?:rookie )?season)\b/i;
+
+/**
+ * Determines whether an IR/Reserve record is season-ending using 3 deterministic NFL/CBA signals:
+ *  1. Verified medical/beat/transaction prose ("out for the season", "season-ending", "without a designation to return", etc.)
+ *  2. ESPN post-Super-Bowl returnDate sentinel (`>= Feb 1` of `seasonYear + 1`, e.g. `2027-02-15`)
+ *  3. NFL CBA Preseason IR rule: placed/reverted to IR between May 1 and Aug 24 (prior to final 53-man cutdowns)
+ *     without an active return designation (`IR-R` / `PUP-R` / 21-day window) or CBS expected return week.
+ */
+export function isSeasonEndingIrRecord({
+  statusRaw = '',
+  fantasyStatusAbbr = '',
+  returnDateIso = null,
+  placedDateIso = null,
+  beatNote = '',
+  txNote = '',
+  cbsStatusText = '',
+  isDesignatedToReturnOpen = false,
+  seasonYear = 2026
+} = {}) {
+  if (isDesignatedToReturnOpen) return false;
+  const stLower = String(statusRaw || '').toLowerCase();
+  const combinedProse = `${beatNote || ''} ${txNote || ''}`;
+  if (
+    stLower.includes('left squad') ||
+    stLower.includes('suspended') ||
+    /looking to get reinstated/i.test(combinedProse)
+  ) {
+    return false;
+  }
+
+  if (SEASON_ENDING_PROSE_REGEX.test(combinedProse)) {
+    return true;
+  }
+
+  const returnMs = parseFlexibleIsoMs(returnDateIso);
+  const postSeasonSentinelMs = Date.UTC(Number(seasonYear) + 1, 1, 1); // Feb 1 of next calendar year
+  if (returnMs !== null && returnMs >= postSeasonSentinelMs) {
+    return true;
+  }
+
+  const placedMs = parseFlexibleIsoMs(placedDateIso);
+  const preseasonStartMs = Date.UTC(Number(seasonYear), 4, 1); // May 1
+  const preCutdownCutoffMs = Date.UTC(Number(seasonYear), 7, 24, 23, 59, 59); // Aug 24 (pre-cutdown)
+  const abbrUpper = String(fantasyStatusAbbr || '').toUpperCase();
+  const hasReturnTag = abbrUpper === 'IR-R' || abbrUpper === 'PUP-R' || /expected return/i.test(cbsStatusText || '');
+
+  if (
+    placedMs !== null &&
+    placedMs >= preseasonStartMs &&
+    placedMs <= preCutdownCutoffMs &&
+    !hasReturnTag &&
+    !stLower.includes('physically unable') &&
+    abbrUpper !== 'PUP'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Classifies an IR / PUP / Reserve player's return eligibility, 4-game CBA minimum timeline,
+ * projected return label, and grounded factual note — with ZERO synthetic modulo math or fake rehab notes.
+ */
+export function classifyIrAndReserveTimeline({
+  statusRaw = 'Injured Reserve',
+  fantasyStatusAbbr = '',
+  injuryType = 'Undisclosed',
+  injuryDetail = '',
+  returnDateIso = null,
+  placedDateIso = null,
+  txPlacedDateIso = null,
+  designatedDateIso = null,
+  beatNote = '',
+  txNote = '',
+  cbsStatusText = '',
+  isDesignatedToReturnOpen = false,
+  isActivated = false,
+  currentWeek = 1,
+  byeWeek = 8,
+  seasonYear = 2026,
+  scheduleEvents = []
+} = {}) {
+  const cleanInj = String(injuryType || 'Undisclosed').trim() || 'Undisclosed';
+  const cleanDetail = String(injuryDetail || '').trim();
+  const fullInjuryType =
+    cleanDetail &&
+    !cleanInj.toLowerCase().includes(cleanDetail.toLowerCase()) &&
+    !/^(unspecified|undisclosed|not\s*specified|none)$/i.test(cleanDetail)
+      ? `${cleanInj} (${cleanDetail})`
+      : cleanInj;
+
+  const stLower = String(statusRaw || '').toLowerCase();
+  const combinedNote = String(beatNote || '').trim();
+  const abbrUpper = String(fantasyStatusAbbr || '').toUpperCase();
+
+  // 1. Reserve / Left Squad or Reserve / Suspended
+  const isLeftSquad =
+    stLower.includes('left squad') || /looking to get reinstated/i.test(combinedNote);
+  const isSuspended = stLower.includes('suspended') || abbrUpper === 'SUSP';
+
+  if (isLeftSquad || isSuspended) {
+    return {
+      status: isLeftSquad ? 'Reserve / Left Squad' : 'Reserve / Suspended',
+      injuryType: isLeftSquad ? 'Reserve / Left Squad' : 'Suspension',
+      isSeasonEnding: false,
+      isPracticeWindowOpen: false,
+      placedBeforeWeek: 1,
+      earliestEligibleWeek: null,
+      missedGameWeeks: [],
+      projectedReturnWeek: isLeftSquad ? 'Reinstatement Pending' : 'Suspension Window',
+      byeWeekNote: isLeftSquad
+        ? 'Reserve/Left Squad — requires formal NFL & club reinstatement'
+        : 'Reserve/Suspended — ineligible until league reinstatement',
+      beatNote:
+        combinedNote ||
+        (isLeftSquad
+          ? 'On Reserve/Left Squad list; requires formal club and league reinstatement before returning to active roster.'
+          : 'On Reserve/Suspended list.')
+    };
+  }
+
+  // 2. Season-Ending IR Check
+  const effectivePlacedIso = txPlacedDateIso || placedDateIso;
+  const seasonEnding = isSeasonEndingIrRecord({
+    statusRaw,
+    fantasyStatusAbbr,
+    returnDateIso,
+    placedDateIso: effectivePlacedIso,
+    beatNote: combinedNote,
+    txNote,
+    cbsStatusText,
+    isDesignatedToReturnOpen,
+    seasonYear
+  });
+
+  const timeline = buildNormalizedNflWeekTimeline(scheduleEvents);
+  const cbsWkMatch = String(cbsStatusText || '').match(/Expected Return\s*-\s*Week\s*(\d{1,2})/i);
+  const cbsWeek = cbsWkMatch ? Number(cbsWkMatch[1]) : null;
+
+  // Resolve `placedBeforeWeek` without letting a late-season blurb timestamp masquerade as IR placement date
+  let placedBeforeWeek = 1;
+  if (txPlacedDateIso) {
+    placedBeforeWeek = resolvePlacedBeforeWeekFromDate(txPlacedDateIso, scheduleEvents, currentWeek);
+  } else if (/opened the (?:regular )?season on (?:injured reserve|ir\b|pup\b|the pup list)/i.test(combinedNote)) {
+    placedBeforeWeek = 1;
+  } else if (placedDateIso) {
+    placedBeforeWeek = resolvePlacedBeforeWeekFromDate(placedDateIso, scheduleEvents, currentWeek);
+    // CBA invariant: if 21-day return window was opened ahead of `desigWk`, player MUST have missed >=4 games prior to `desigWk`
+    if (isDesignatedToReturnOpen) {
+      const desigWk = designatedDateIso
+        ? resolvePlacedBeforeWeekFromDate(designatedDateIso, scheduleEvents, currentWeek)
+        : Number(currentWeek) || 1;
+      while (
+        placedBeforeWeek > 1 &&
+        calculateIrReturnTimeline(placedBeforeWeek, byeWeek, 4).earliestEligibleWeek > desigWk
+      ) {
+        placedBeforeWeek -= 1;
+      }
+    } else if (
+      cbsWeek !== null &&
+      !/placed .* on (?:injured reserve|ir\b)/i.test(combinedNote)
+    ) {
+      // Blurb date is a mid-rehab status update rather than original IR placement date
+      while (
+        placedBeforeWeek > 1 &&
+        calculateIrReturnTimeline(placedBeforeWeek, byeWeek, 4).earliestEligibleWeek > cbsWeek
+      ) {
+        placedBeforeWeek -= 1;
+      }
+    }
+  }
+
+  if (seasonEnding) {
+    let factualNote = combinedNote;
+    if (!factualNote) {
+      const placedMs = parseFlexibleIsoMs(effectivePlacedIso);
+      const placedFmt = placedMs
+        ? new Date(placedMs).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            timeZone: 'America/Los_Angeles'
+          })
+        : `${seasonYear} preseason`;
+      factualNote = `Placed on Injured Reserve (${fullInjuryType}) on ${placedFmt}; ineligible to return in ${seasonYear} under NFL CBA rules.`;
+    }
+    return {
+      status: 'Season-Ending IR',
+      injuryType: fullInjuryType,
+      isSeasonEnding: true,
+      isPracticeWindowOpen: false,
+      placedBeforeWeek,
+      earliestEligibleWeek: null,
+      missedGameWeeks: [],
+      projectedReturnWeek: 'Out for Season',
+      byeWeekNote: `Season-ending IR — ineligible to return in ${seasonYear}`,
+      beatNote: factualNote
+    };
+  }
+
+  // 3. Return-Eligible IR / Reserve-PUP Calculation
+  const isPup =
+    abbrUpper === 'PUP-R' ||
+    abbrUpper === 'PUP' ||
+    stLower.includes('physically unable') ||
+    stLower === 'reserve / pup';
+
+  const statusLabel = isPup
+    ? 'Reserve / PUP'
+    : isDesignatedToReturnOpen && !isActivated
+      ? 'IR — 21-Day Window Open'
+      : abbrUpper === 'IR-R'
+        ? 'Injured Reserve (Designated)'
+        : 'Injured Reserve';
+
+  const irCalc = calculateIrReturnTimeline(placedBeforeWeek, byeWeek, 4);
+  const earliestWk = irCalc.earliestEligibleWeek;
+
+  let espnWeek = null;
+  let espnDateShort = '';
+  const returnMs = parseFlexibleIsoMs(returnDateIso);
+  if (returnMs !== null && timeline.length > 0) {
+    const matchedEv =
+      timeline.find(item => item.ms >= returnMs - 36 * 3_600_000) || null;
+    if (matchedEv) {
+      espnWeek = matchedEv.week;
+      espnDateShort = new Date(matchedEv.ms).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'America/Los_Angeles'
+      });
+    }
+  }
+
+  const formatTargetWeek = wkNum => {
+    const ev = timeline.find(item => item.week === wkNum);
+    const dtLabel = ev
+      ? new Date(ev.ms).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          timeZone: 'America/Los_Angeles'
+        })
+      : '';
+    return dtLabel ? `Est. Week ${wkNum} (${dtLabel})` : `Est. Week ${wkNum}`;
+  };
+
+  let projectedReturnWeek = '';
+  const curWk = Number(currentWeek) || 1;
+  const rawEstWeek = Math.max(cbsWeek || 0, espnWeek || 0);
+
+  if (isDesignatedToReturnOpen) {
+    // 21-day practice window IS open
+    const ruledOutCurrentWeek =
+      /not activated|didn't activate|did not activate|remains on injured reserve|ruled out|will not play|wait at least another week/i.test(
+        combinedNote
+      ) || (cbsWeek !== null && cbsWeek > curWk);
+    const minOpenWk = ruledOutCurrentWeek ? Math.max(curWk + 1, earliestWk) : Math.max(curWk, earliestWk);
+    const targetWk = Math.max(minOpenWk, rawEstWeek);
+    if (targetWk === byeWeek) {
+      projectedReturnWeek = formatTargetWeek(targetWk + 1);
+    } else if (targetWk === curWk && !ruledOutCurrentWeek) {
+      projectedReturnWeek = espnDateShort
+        ? `Week ${curWk} Activation Window (${espnDateShort})`
+        : `Week ${curWk} Activation Window`;
+    } else {
+      projectedReturnWeek = formatTargetWeek(targetWk);
+    }
+  } else if (rawEstWeek > curWk) {
+    // Concrete future week beyond currentWeek (e.g., Stribling Wk 13, Kirk Wk 13, Okuayinonu Wk 15, Patrick Johnson Wk 13)
+    let targetWk = Math.max(rawEstWeek, earliestWk);
+    if (targetWk === byeWeek) targetWk += 1;
+    projectedReturnWeek = formatTargetWeek(targetWk);
+  } else if (earliestWk > curWk) {
+    // Recently placed on IR; 4-game minimum extends past currentWeek
+    projectedReturnWeek = formatTargetWeek(earliestWk);
+  } else {
+    // ESPN rolling current-week trap: 4-game minimum has elapsed, but 21-day practice window has NOT been opened
+    projectedReturnWeek = 'TBD (21d Window Not Open)';
+  }
+
+  const byeWeekNote = irCalc.byeWeekExcluded
+    ? `Week ${byeWeek} Bye excluded from NFL 4-game minimum count`
+    : '4-game NFL minimum requirement';
+
+  const factualFallback = isDesignatedToReturnOpen
+    ? `21-day practice window opened; eligible for 53-man roster activation (${fullInjuryType}).`
+    : earliestWk <= curWk
+      ? `4-game minimum satisfied on ${statusLabel} (${fullInjuryType}); awaiting 21-day practice window designation.`
+      : `Placed on ${statusLabel} (${fullInjuryType}) ahead of Week ${placedBeforeWeek}; must miss at least 4 games (earliest eligible Week ${earliestWk}).`;
+
+  return {
+    status: statusLabel,
+    injuryType: fullInjuryType,
+    isSeasonEnding: false,
+    isPracticeWindowOpen: Boolean(isDesignatedToReturnOpen),
+    placedBeforeWeek,
+    earliestEligibleWeek: earliestWk,
+    missedGameWeeks: irCalc.missedGameWeeks,
+    projectedReturnWeek,
+    byeWeekNote,
+    beatNote: combinedNote || factualFallback
   };
 }

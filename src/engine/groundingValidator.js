@@ -221,13 +221,18 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
     .slice(0, 2)
     .map(u => {
       const starters = (u.rows || [])
-        .map(r => `${r.position}: ${r.projectedActiveChain?.[0]?.name || r.baselineChain?.[0]?.name || '—'}`)
+        .map(r => `${r.slotLabel || r.position}: ${r.projectedActiveChain?.[0]?.name || r.baselineChain?.[0]?.name || '—'}`)
         .join(', ');
       return `  - ${u.unitName}: ${starters}`;
     })
     .join('\n');
 
-  const irNames = irList.map(p => `${p.name} (${p.position} - ${p.injuryType}, ${p.status})`).join('; ');
+  const irNames = irList
+    .map(
+      p =>
+        `${p.name} (${p.position} - ${p.injuryType}, ${p.status}${p.projectedReturnWeek ? ` • ${p.projectedReturnWeek}` : ''})`
+    )
+    .join('; ');
 
   const injuryLines = practiceReport
     .slice(0, 16)

@@ -503,6 +503,36 @@ function renderContractTab(p, txScenario) {
 
 function renderHealthTab(p) {
   const h = p.health || {};
+  const isIrOrReserve = p.rosterBucket === 'ir' || p.rosterBucket === 'suspended';
+  const irDetailHtml = isIrOrReserve
+    ? `
+    <div class="kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-label">Reserve List</div>
+        <div class="kpi-val" style="font-size:12.5px">${esc(h.status || 'Injured Reserve')}</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Earliest Eligible</div>
+        <div class="kpi-val mono">${h.isSeasonEnding ? 'Ineligible' : h.earliestEligibleWeek ? `Week ${h.earliestEligibleWeek}` : '—'}</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Return Window</div>
+        <div class="kpi-val mono" style="font-size:12px;color:${h.isSeasonEnding ? 'var(--crimson)' : 'var(--gold-bright)'}">
+          ${esc(h.isSeasonEnding ? 'Out for Season' : h.projectedReturnWeek || 'TBD')}
+        </div>
+      </div>
+    </div>
+    `
+    : `
+    <div class="kpi-grid">
+      <div class="kpi-box"><div class="kpi-label">Wednesday</div><div class="kpi-val mono">${esc(h.wed || '-')}</div></div>
+      <div class="kpi-box"><div class="kpi-label">Thursday</div><div class="kpi-val mono">${esc(h.thu || '-')}</div></div>
+      <div class="kpi-box"><div class="kpi-label">Friday</div><div class="kpi-val mono">${esc(h.fri || '-')}</div></div>
+    </div>
+    `;
+
+  const noteBody = h.irBeatNote || h.longComment || h.shortComment || '';
+
   return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
       <div>
@@ -515,11 +545,7 @@ function renderHealthTab(p) {
       </div>
     </div>
 
-    <div class="kpi-grid">
-      <div class="kpi-box"><div class="kpi-label">Wednesday</div><div class="kpi-val mono">${esc(h.wed || '-')}</div></div>
-      <div class="kpi-box"><div class="kpi-label">Thursday</div><div class="kpi-val mono">${esc(h.thu || '-')}</div></div>
-      <div class="kpi-box"><div class="kpi-label">Friday</div><div class="kpi-val mono">${esc(h.fri || '-')}</div></div>
-    </div>
+    ${irDetailHtml}
 
     <div class="subcard-panel" style="border-color:var(--gold-border);font-size:12.5px">
       <strong style="color:var(--gold-bright)">Player Availability Prior:</strong> ${escJargon(h.archetypeNote || 'Standard positional prior.')}
@@ -533,9 +559,9 @@ function renderHealthTab(p) {
     </div>
 
     ${
-      h.longComment
+      noteBody
         ? `<div class="subcard-panel" style="font-size:12.5px">
-            <strong>Beat &amp; Medical Note:</strong> ${escJargon(h.longComment)}
+            <strong>Beat &amp; Medical Note:</strong> ${escJargon(noteBody)}
            </div>`
         : ''
     }

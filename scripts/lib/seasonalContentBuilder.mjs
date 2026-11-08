@@ -960,8 +960,8 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       featuredPlayers: pickPlayers(['Nick Bosa', 'Christian McCaffrey', 'DeForest Buckner', 'Osa Odighizuwa', 'Fred Warner']),
       sourceLinks: bosaLinks,
       hardFacts: [
-        'Nick Bosa returns Sunday vs. Las Vegas for the first time since Week 2 without a restrictive game designation after clearing post-Bye full-speed pass-rush reps.',
-        "Christian McCaffrey exited the Week 8 Bye off the injury report and is a full go for Sunday at Levi's Stadium (1:25 PM PT, FOX).",
+        'Nick Bosa returns Sunday vs. Las Vegas for the first time since Week 2 without a restrictive game designation (LP/LP/FP) after clearing post-Bye full-speed pass-rush reps.',
+        "Christian McCaffrey (Hamstring — DNP/LP/FP) progressed cleanly to a full participant Friday and carries no game status designation for Sunday at Levi's Stadium (1:25 PM PT, FOX).",
         'Week 9 marks the first snap sequence under DC Raheem Morris pairing Nick Bosa and Keion White (3.5 sacks) on the edges with newly re-acquired DeForest Buckner (4.0 sacks, 8 QB hits) and Osa Odighizuwa (#92, 2.0 sacks, 7 QB hits) at 3-tech / 2i interior alignments.'
       ],
       schemeAndCapTakeaways: [
@@ -995,12 +995,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       sourceLinks: aiyukLinks,
       hardFacts: [
         'Brandon Aiyuk and agent Drew Rosenhaus met with 49ers leadership at SAP Performance Facility on Friday, Nov 6, stating he is physically healthy and seeking reinstatement; NFL Network notes ~$13M in bonus forfeiture complicates a simple release.',
-        'With Aiyuk (Personal), Mike Evans (27 rec, 420 yds, +40.9 EPA — Out, Achilles), Deebo Samuel Sr. (16 rec, 206 yds — Out, Hamstring), and Christian Kirk (Knee - Meniscus) ruled Out—and Ricky Pearsall + rookie De\'Zhaun Stribling on IR—Kyle Shanahan signaled Demarcus Robinson (Questionable, Ankle) is likely to be activated from IR.',
+        'With Aiyuk on Reserve/Left Squad, Mike Evans (27 rec, 420 yds, +40.9 EPA — Out, Ribs/Achilles) and Deebo Samuel Sr. (16 rec, 206 yds — Out, Hamstring) ruled Out on the active roster, and Christian Kirk (placed on IR Saturday, Knee - Meniscus, earliest eligible Week 13), Ricky Pearsall (Season-Ending IR, PCL surgery), and rookie De\'Zhaun Stribling (IR, Ankle) on Injured Reserve, San Francisco activated Demarcus Robinson from IR ahead of Sunday.',
         `Under OverTheCap's 2026 ledger ($${capGrossM}M gross cap space vs. ${cap2027Label} projected in 2027), any Post-June 1 trade or release keeps current-year proration on 2026 while deferring remaining future bonus acceleration into 2027.`
       ],
       schemeAndCapTakeaways: [
         `Cap Math Reality: Because prorated signing/option bonus acceleration after June 1 splits remaining future-year proration into 2027 dead money, resolving Aiyuk's contract preserves 2026 cap room ($${capGrossM}M) for CBA Article 13 rollover into 2027.`,
-        'On-Field Week 9 WR Rotation: Jordan Watkins (6/9, 138 yds), Brandin Cooks (#84), Jacob Cowing (#4), and likely IR-activation Demarcus Robinson handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey.'
+        'On-Field Week 9 WR Rotation: Jordan Watkins (6/9, 138 yds), Brandin Cooks (#84), Jacob Cowing (#4), and newly activated Demarcus Robinson off IR handle 11-personnel WR snaps alongside high-volume 21/12-personnel focal points George Kittle and Christian McCaffrey.'
       ],
       consensusVsDissent: "National insiders (Schefter/Pelissero/Maiocco/Barrows) note Friday's NFL personnel notice included no immediate reinstatement, pointing toward a structured trade or settlement rather than immediate snap reintegration.",
       videoClip: {
@@ -1170,7 +1170,7 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = [], sea
       },
       {
         title: '3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks',
-        detail: `With SF's 2027 4th-round pick traded for DeForest Buckner (6 picks left: Rd 1, 2, 3, 5, 6-BAL, 7-KC), protecting Round 1–3 capital alongside 2025–2026 draftees (Mykel Williams, Alfred Collins, Omar Cooper Jr., Keionte Scott, Romello Height) is mandatory against ${nextYrNum} cap tightness.`
+        detail: `With SF's 2027 4th-round pick traded for DeForest Buckner (6 picks left: Rd 1, 2, 3, 5, 6-BAL, 7-KC), protecting Round 1–3 capital alongside 2025–2026 draftees (Mykel Williams, Upton Stout, Omar Cooper Jr., Keionte Scott, Romello Height, plus Alfred Collins returning in 2027 from season-ending IR) is mandatory against ${nextYrNum} cap tightness.`
       }
     ],
     restructureCandidates,
@@ -1273,7 +1273,7 @@ export function buildTradeDeadlineWarRoom(
         rank: 1,
         positionGroup: 'Wide Receiver & Pass-Catching Tight End (12-Personnel)',
         urgency: 'High',
-        epaContext: 'Mike Evans (27 rec, 420 yds, +40.9 EPA — Achilles), Deebo Samuel Sr. (16 rec, 206 yds — Hamstring), Christian Kirk (Meniscus), Ricky Pearsall (IR), De\'Zhaun Stribling (IR), and Brandon Aiyuk (Out - Personal) are sidelined, while depth WRs Jacob Cowing (-5.4 EPA) and Brandin Cooks (-2.3 EPA) have struggled. Schefter & Rapoport confirm SF is canvassing both vertical/slot WRs and 12-personnel move TEs alongside George Kittle.'
+        epaContext: 'Mike Evans (27 rec, 420 yds, +40.9 EPA — Out, Ribs/Achilles) and Deebo Samuel Sr. (16 rec, 206 yds — Out, Hamstring) are ruled Out on the active roster, while Christian Kirk (IR — Meniscus), Ricky Pearsall (Season-Ending IR — PCL), De\'Zhaun Stribling (IR — Ankle), and Brandon Aiyuk (Reserve/Left Squad) remain sidelined and depth WRs Jacob Cowing (-5.4 EPA) and Brandin Cooks (-2.3 EPA) have struggled. Schefter & Rapoport confirm SF is canvassing both vertical/slot WRs and 12-personnel move TEs alongside George Kittle.'
       },
       {
         rank: 2,
