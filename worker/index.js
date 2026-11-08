@@ -10,6 +10,8 @@
  * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
  */
 
+import { humanizeNflTextForTts } from '../src/engine/podcastSpeechEngine.js';
+
 export const DEFAULT_FREE_MODEL_CASCADE = [
   'gemini-3.8-flash',
   'gemini-3.5-flash',
@@ -580,14 +582,14 @@ export default {
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
       const scriptPrompt =
         format === 'Solo Executive Briefing'
-          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Zero fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
-          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Zero morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
+          ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Sound genuinely human and conversational—use natural contractions ("let's", "that's", "can't", "here's"), crisp 12-to-22-word spoken sentences, and natural breath rhythm rather than stiff essay prose, while maintaining zero clickbait fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
+          : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Make their chemistry sound genuinely human and natural: mix quick 1-sentence reactions or follow-up questions ("Right, and look at what that does to the center slide...", "Hold on—connect those two ledgers for a second.") with sharp 2-to-3-sentence breakdowns, use spoken contractions ("they're", "can't", "doesn't", "it's"), and avoid long run-on written paragraphs or morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
 
       const { res: scriptRes, modelUsed } = await callGeminiTextWithFallback(env, {
         systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
-          temperature: 0.2,
+          temperature: 0.25,
           thinkingConfig: { thinkingBudget }
         },
         contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
@@ -607,7 +609,12 @@ export default {
       // Step 2: Render Multi-Speaker Native Audio via Gemini TTS Free Tier
       let audioUrl = null;
       if (env.PODCAST_BUCKET) {
-        const ttsDialogue = turns.map(t => `${t.speaker}: ${t.text}`).join('\n');
+        const directorHeader =
+          'Audio Profile: Warm, authentic NFL film and salary-cap podcast recorded in an intimate broadcast studio.\n' +
+          'Director Notes: Speak naturally like two sharp human football insiders who know each other well—relaxed conversational pacing, natural breaths between clauses, subtle vocal warmth, crisp articulation on football terms, and zero robotic announcer stiffness.\n\n';
+        const ttsDialogue =
+          directorHeader +
+          turns.map(t => `${t.speaker}: ${humanizeNflTextForTts(t.text)}`).join('\n');
         const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/${
           env.GEMINI_AUDIO_MODEL || 'gemini-2.5-flash-preview-tts'
         }:generateContent?key=${env.GEMINI_API_KEY}`;

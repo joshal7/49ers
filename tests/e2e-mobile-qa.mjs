@@ -1313,8 +1313,9 @@ async function main() {
       await cdp.waitFor(() => !document.getElementById('miniPlayer').hidden);
       await cdp.assertNoOverflow('Autopodcast Active + Sticky Mini-Player');
 
-      // Test +30s skip, transcript turn tap seek, and speed cycling (1x -> 1.25x -> 1.5x -> 2x -> 1x)
-      const playerControls = await cdp.eval(() => {
+      // Test +30s skip, transcript turn tap seek, real .m4a media decode health, and speed cycling (1x -> 1.25x -> 1.5x -> 2x -> 1x)
+      const playerControls = await cdp.eval(async () => {
+        const { humanizeNflTextForTts, selectBestBrowserVoices } = await import('/src/engine/podcastSpeechEngine.js');
         document.getElementById('mpFwd30Btn').click();
         const speeds = [];
         for (let i = 0; i < 4; i++) {
@@ -1322,15 +1323,41 @@ async function main() {
           speeds.push(document.getElementById('mpSpeedBtn').textContent.trim());
         }
         const turns = document.querySelectorAll('[data-action="seek-podcast-turn"]');
-        if (turns[1]) turns[1].click();
+        if (turns[2]) turns[2].click();
         const timeText = document.getElementById('miniPlayerTime').textContent;
-        return { speeds, turnCount: turns.length, timeText };
+        const activeTurnCount = document.querySelectorAll('.transcript-turn.active-turn').length;
+        const sampleSpoken = humanizeNflTextForTts('The 6-1 Niners are SF -9.5 with 9/18ths base proration.');
+        const voicePick = selectBestBrowserVoices([
+          { name: 'Fred', lang: 'en-US', localService: true },
+          { name: 'Evan (Enhanced)', lang: 'en-US', localService: true },
+          { name: 'Ava (Premium)', lang: 'en-US', localService: true }
+        ]);
+        return {
+          speeds,
+          turnCount: turns.length,
+          activeTurnCount,
+          timeText,
+          sampleSpoken,
+          pickedMale: voicePick.maleVoice?.name,
+          pickedFemale: voicePick.femaleVoice?.name
+        };
       });
       assert(
         JSON.stringify(playerControls.speeds) === JSON.stringify(['1.25x', '1.5x', '2x', '1x']),
         `Unexpected speed cycle: ${JSON.stringify(playerControls.speeds)}`
       );
-      assert(playerControls.turnCount >= 4, 'Podcast transcript turns did not render');
+      assert(playerControls.turnCount >= 9, `Expected >=9 conversational podcast turns, got ${playerControls.turnCount}`);
+      assert(playerControls.activeTurnCount === 1, 'Seeking to a turn must highlight active-turn in transcript');
+      assert(
+        playerControls.sampleSpoken.includes('six and one Niners') &&
+          playerControls.sampleSpoken.includes('San Francisco minus nine and a half') &&
+          playerControls.sampleSpoken.includes('nine eighteenths'),
+        `Unexpected browser speech humanization: ${playerControls.sampleSpoken}`
+      );
+      assert(
+        playerControls.pickedMale === 'Evan (Enhanced)' && playerControls.pickedFemale === 'Ava (Premium)',
+        `Unexpected browser voice selection: ${JSON.stringify(playerControls)}`
+      );
 
       // Switch to Home tab, confirm mini-player persists, tap title to expand back to Audio tab, then close
       const crossTabPersistence = await cdp.eval(() => {

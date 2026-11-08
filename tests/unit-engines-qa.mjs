@@ -105,6 +105,14 @@ import {
 } from '../src/engine/breakingClassifier.js';
 import { buildNativePodcastAppHref } from '../src/views/audioAiView.js';
 import { SEASON_NAV_CLUSTERS, renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
+import {
+  humanizeNflTextForTts,
+  computeConversationalTurnDynamics,
+  selectBestBrowserVoices,
+  trimAndFadeTurnPcm,
+  conditionTurnVoicePcm,
+  masterPodcastEpisodePcm
+} from '../src/engine/podcastSpeechEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -2255,6 +2263,128 @@ test('Team Stats view omits Category (Advanced/Standard Offense) column while pr
   assert.ok(!statsHtml.includes(' (Archive)'), 'Season sub-tabs must not append noisy (Archive) suffixes');
   for (const r of scheduleMatchup.teamStatRankings) {
     assert.ok(statsHtml.includes(r.displayValue), `Missing stat displayValue ${r.displayValue}`);
+  }
+});
+
+console.log('\n=== [10/10] Natural Podcast Speech, Conversational Prosody & Broadcast DSP Mastering QA ===');
+
+test('humanizeNflTextForTts converts NFL records, spreads, fractions, compact dollars, schemes & names into natural spoken English', () => {
+  const raw =
+    'The 6-1 Niners opened at SF -8.5 and steamed to SF -9.5 with a 51.5 total vs. the 4-4 Las Vegas Raiders (implied SF 30.5 – LV 21.0). With 9/18ths base proration, -$31.54M in 2027, and ~$0.79M for Adonai Mitchell, Raheem Morris lines up Osa Odighizuwa at 2i in Wide-9 against 21-personnel while Kyle Juszczyk and Brandon Aiyuk use Post-June-1 rules.';
+  const spoken = humanizeNflTextForTts(raw);
+
+  assert.ok(spoken.includes('six and one Niners'), `Expected spoken record "six and one Niners", got: ${spoken}`);
+  assert.ok(spoken.includes('four and four Las Vegas Raiders'), `Expected "four and four Las Vegas Raiders", got: ${spoken}`);
+  assert.ok(spoken.includes('San Francisco minus nine and a half'), `Expected spoken spread, got: ${spoken}`);
+  assert.ok(spoken.includes('fifty-one and a half total'), `Expected spoken half-point total, got: ${spoken}`);
+  assert.ok(
+    spoken.includes('San Francisco thirty and a half to Las Vegas twenty-one'),
+    `Expected spoken implied score without ".0", got: ${spoken}`
+  );
+  assert.ok(spoken.includes('nine eighteenths'), `Expected spoken fraction "nine eighteenths", got: ${spoken}`);
+  assert.ok(spoken.includes('minus 31.54 million dollars'), `Expected spoken negative millions, got: ${spoken}`);
+  assert.ok(spoken.includes('roughly 790 thousand dollars'), `Expected sub-million thousands phrasing, got: ${spoken}`);
+  assert.ok(spoken.includes('Wide nine') && spoken.includes('twenty-one personnel'), `Expected spoken scheme phrasing, got: ${spoken}`);
+  assert.ok(spoken.includes('Post June first'), `Expected spoken Post June first, got: ${spoken}`);
+  assert.ok(
+    spoken.includes('Oh-diggy-zoo-wah') && spoken.includes('Yooz-check') && spoken.includes('Eye-yook'),
+    `Expected phonetic NFL pronunciations, got: ${spoken}`
+  );
+});
+
+test('computeConversationalTurnDynamics tightens co-host latches and varies prosody naturally across turn lengths', () => {
+  const sampleTurns = [
+    { speaker: 'Marcus', text: 'Walk through that protection bind—what happens if Vegas slides the center?' },
+    { speaker: 'Elena', text: 'Right, Buckner gets singled up on a guard immediately.' },
+    {
+      speaker: 'Marcus',
+      text: 'And when you combine that interior push with Nick Bosa and Keion White on the Wide-9 edges plus Fred Warner disguising Cover-3 Buzz rotations behind the line, quarterbacks lose their hot outlet.'
+    }
+  ];
+  const d0 = computeConversationalTurnDynamics(sampleTurns, 0);
+  const d1 = computeConversationalTurnDynamics(sampleTurns, 1);
+  const d2 = computeConversationalTurnDynamics(sampleTurns, 2);
+
+  assert.equal(d0.gapAfterMs, 125, 'Quick agreement latch ("Right, ...") should use tight ~125ms gap');
+  assert.equal(d1.rate, '+2%', 'Short reactive interjection should get livelier +2% rate');
+  assert.equal(d2.gapAfterMs, 0, 'Final turn should have 0ms trailing inter-turn gap');
+});
+
+test('selectBestBrowserVoices prioritizes Neural/Premium/Enhanced voices and rejects robotic formant voices like Fred', () => {
+  const mockVoices = [
+    { name: 'Albert', lang: 'en-US', localService: true },
+    { name: 'Fred', lang: 'en-US', localService: true },
+    { name: 'Daniel', lang: 'en-GB', localService: true },
+    { name: 'Samantha', lang: 'en-US', localService: true },
+    { name: 'Evan (Enhanced)', lang: 'en-US', localService: true },
+    { name: 'Ava (Premium)', lang: 'en-US', localService: true }
+  ];
+  const { maleVoice, femaleVoice } = selectBestBrowserVoices(mockVoices);
+  assert.equal(maleVoice?.name, 'Evan (Enhanced)');
+  assert.equal(femaleVoice?.name, 'Ava (Premium)');
+
+  const onlyRoboticPlusSamantha = [
+    { name: 'Fred', lang: 'en-US', localService: true },
+    { name: 'Zarvox', lang: 'en-US', localService: true },
+    { name: 'Samantha', lang: 'en-US', localService: true }
+  ];
+  const fallback = selectBestBrowserVoices(onlyRoboticPlusSamantha);
+  assert.notEqual(fallback.maleVoice?.name, 'Fred');
+  assert.notEqual(fallback.maleVoice?.name, 'Zarvox');
+});
+
+test('Broadcast DSP pipeline trims dead TTS silence, equalizes host loudness, and limits peaks cleanly below 0 dBFS', () => {
+  const sr = 24000;
+  // Simulate a turn with 200ms leading zeros, 400ms active voice wave, and 350ms trailing zeros
+  const leadZeros = Math.round(sr * 0.2);
+  const voiceLen = Math.round(sr * 0.4);
+  const trailZeros = Math.round(sr * 0.35);
+  const quietRaw = new Int16Array(leadZeros + voiceLen + trailZeros);
+  const loudRaw = new Int16Array(leadZeros + voiceLen + trailZeros);
+  for (let i = 0; i < voiceLen; i++) {
+    const wave = Math.sin((2 * Math.PI * 210 * i) / sr);
+    quietRaw[leadZeros + i] = Math.round(wave * 3200);
+    loudRaw[leadZeros + i] = Math.round(wave * 9600);
+  }
+
+  const trimQ = trimAndFadeTurnPcm(quietRaw, sr);
+  const trimL = trimAndFadeTurnPcm(loudRaw, sr);
+  assert.ok(trimQ.length < quietRaw.length - Math.round(sr * 0.4), 'Should trim excess leading/trailing silence');
+
+  const condQ = conditionTurnVoicePcm(trimQ, sr, 0.115);
+  const condL = conditionTurnVoicePcm(trimL, sr, 0.115);
+  const rms = arr => Math.sqrt(arr.reduce((s, v) => s + v * v, 0) / arr.length);
+  assert.ok(
+    Math.abs(rms(condQ) - rms(condL)) < 0.015,
+    `Host loudness leveling should match quiet & loud turns closely: ${rms(condQ)} vs ${rms(condL)}`
+  );
+
+  const timeline = new Float64Array(condQ.length + Math.round(sr * 0.15) + condL.length);
+  timeline.set(condQ, 0);
+  timeline.set(condL, condQ.length + Math.round(sr * 0.15));
+  // Add a hot plosive transient spike (1.35 > 0 dBFS) to verify true-peak soft limiting
+  timeline[Math.floor(condQ.length / 2)] = 1.35;
+  const mastered = masterPodcastEpisodePcm(timeline, sr);
+  let maxAbs = 0;
+  for (let i = 0; i < mastered.length; i++) {
+    const a = Math.abs(mastered[i]);
+    if (a > maxAbs) maxAbs = a;
+  }
+  assert.ok(maxAbs > 5500 && maxAbs <= 30000, `Mastered peak (${maxAbs}) should sit in clean broadcast headroom without clipping`);
+});
+
+test('Studio podcast episodes feature >=9 natural conversational turns, tight human handoffs (<=0.32s), and 96kbps AAC mastering', () => {
+  const podIdx = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'podcasts', 'index.json'), 'utf8'));
+  assert.equal(podIdx.episodes.length, 3);
+  for (const ep of podIdx.episodes) {
+    assert.ok(ep.transcript.length >= 9, `Expected >=9 natural back-and-forth turns in ${ep.id}, got ${ep.transcript.length}`);
+    for (let i = 0; i < ep.transcript.length - 1; i++) {
+      const gap = Number((ep.transcript[i + 1].startSec - ep.transcript[i].endSec).toFixed(2));
+      assert.ok(
+        gap >= 0.1 && gap <= 0.32,
+        `Expected natural conversational inter-turn gap (0.10s..0.32s) in ${ep.id} turn ${i}->${i + 1}, got ${gap}s`
+      );
+    }
   }
 });
 

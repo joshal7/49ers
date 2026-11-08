@@ -312,27 +312,42 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
   const pickCount = dp.pickInventory?.length || 6;
   const curWk = matchup.week || meta.currentWeek || 9;
   const rec = meta.teamRecord || '6-1';
-  const stand = meta.standingSummary || '1st in NFC West • #1 Seed in NFC';
   const solo = format === 'solo';
 
   const baseTurns = [
     {
       speaker: 'Marcus',
-      text: `Welcome into 49ers Faithful for a focused ${durationMinutes}-minute breakdown on ${topic}. Everything here is anchored directly to live ${meta.seasonYear || 2026} roster status, nflverse play-by-play EPA, OverTheCap multi-year ledgers, and Santa Clara beat reporting.`
+      text: solo
+        ? `Welcome in to 49ers Faithful. Let's take ${durationMinutes} minutes to break down ${topic}, grounded straight in our live ${meta.seasonYear || 2026} roster, nflverse play-by-play EPA, and OverTheCap's multi-year books.`
+        : `Welcome in to 49ers Faithful. Elena, let's take ${durationMinutes} minutes on ${topic}—strictly off the live ${meta.seasonYear || 2026} tape, injury report, and OverTheCap ledger.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `Let's set the verified numbers entering Week ${curWk}. San Francisco sits at ${rec} (${stand}), projecting for ${mc.projectedWins ?? 12.0} wins with a ${mc.makePlayoffsPct ?? 93.0} percent playoff probability, ${mc.winDivisionPct ?? 82.6} percent NFC West equity, and a calibrated ${mc.seed1ByePct ?? 34.5} percent shot at the NFC #1 seed bye across ten thousand Empirical-Bayes and EPA simulations.`
+      text: `Yeah, let's start with where the Niners stand heading into Week ${curWk}. San Francisco sits at ${rec} atop the NFC West, projecting for ${mc.projectedWins ?? 12.0} wins—that's a ${mc.makePlayoffsPct ?? 93.0}% playoff berth, ${mc.winDivisionPct ?? 82.6}% to take the division, and a calibrated ${mc.seed1ByePct ?? 34.5}% shot at the #1 seed bye across ten thousand simulations.`
     },
     {
       speaker: 'Marcus',
       text: tLower.includes('trade')
-        ? `On the trade-window tape, San Francisco's real priorities are perimeter receiver and 12-personnel tight end separation, left guard pass protection next to Trent Williams, rotational speed edge rush, and dime corner depth—targeting cost-controlled fits like Adonai Mitchell, Josh Downs, Rashod Bateman, Greg Dulcich, or Khalil Mack while avoiding declining age-cliff traps like Cameron Jordan.`
-        : `On tape right now, Brock Purdy has generated plus ${purdyEpa} passing EPA while keeping sack avoidance near the top of the league. Defensively, coordinator Raheem Morris pairs Nick Bosa on the Wide-9 rail with DeForest Buckner, Osa Odighizuwa, Keion White, and Mykel Williams to force interior slide conflicts on passing downs.`
+        ? `And when you put on the film, our real deadline needs jump right off the screen. It's perimeter receiver and 12-personnel tight end juice first, then left guard pass protection next to Trent Williams, plus rotational speed edge—targeting smart rookie-deal fits like Adonai Mitchell, Josh Downs, Rashod Bateman, Greg Dulcich, or an expiring rental like Khalil Mack.`
+        : `On film, Brock Purdy is dealing—sitting at +${purdyEpa} passing EPA while keeping sacks near the bottom of the league. And on the other side of the ball, Raheem Morris gets to line up Nick Bosa on the Wide-9 rail next to DeForest Buckner, Osa Odighizuwa, Keion White, and Mykel Williams.`
     },
+    ...(solo
+      ? []
+      : [
+          {
+            speaker: 'Elena',
+            text: tLower.includes('trade')
+              ? `Right, and staying disciplined on age and contract horizon is the whole game—you don't burn draft picks on a zero-sack 37-year-old like Cameron Jordan.`
+              : `Which completely breaks the half-slide protection math offenses used against us all October.`
+          },
+          {
+            speaker: 'Marcus',
+            text: `Exactly. Now tie that into the cap and draft guardrails for next spring.`
+          }
+        ]),
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `And here is the CBA cap and draft discipline governing every decision: while ${capSpaceM} million dollars in 2026 Top-51 space gives San Francisco huge midseason 9/18ths base-salary purchasing power, the 49ers face a projected ${cap27DeficitM} million dollar cap deficit in 2027 and hold ${pickCount} picks in the 2027 draft after sending their fourth-rounder to Indianapolis for Buckner. Rolling unused 2026 space forward under Article 13 is essential.`
+      text: `Here's the constraint every fan has to keep in mind. Yes, $${capSpaceM}M in 2026 Top-51 space gives us huge midseason 9/18ths base-salary buying power—we don't need sellers eating cash. But San Francisco faces a -$${cap27DeficitM}M cap deficit in 2027 and owns just ${pickCount} picks in the 2027 draft after sending our fourth-rounder to Indy for Buckner. Rolling unused 2026 space forward under Article 13 is what keeps 2027 clean.`
     }
   ];
 
@@ -343,11 +358,11 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
     baseTurns.push(
       {
         speaker: 'Marcus',
-        text: `Zooming deeper into the upcoming schedule slate: San Francisco faces ${nextOpps || `the ${matchup.oppName || 'upcoming slate'}`}, including neutral-site NFC tiebreaker leverage in Mexico City against Minnesota while NFC North contenders cannibalize each other.`
+        text: `Look at how the upcoming stretch sets up, too: ${nextOpps || `starting with the ${matchup.oppName || 'next matchup'}`}, highlighted by that neutral-site showdown against Minnesota in Mexico City while the NFC North beats itself up.`
       },
       {
         speaker: solo ? 'Marcus' : 'Elena',
-        text: `That is why veteran maintenance—respecting Trent Williams' Wednesday rest cadence while managing high-leverage snaps across Christian McCaffrey, George Kittle, Fred Warner, and Nick Bosa—remains the highest-leverage lever for January seeding.`
+        text: `100 percent. Keeping Trent Williams on his Wednesday rest plan and managing high-leverage snaps for Christian McCaffrey, George Kittle, Fred Warner, and Nick Bosa is how you cash in that #1 seed come January.`
       }
     );
   }
@@ -355,7 +370,7 @@ function synthesizeLocalPodcastEpisode(topic, durationMinutes, format, appData, 
   let cursor = 0;
   const transcript = baseTurns.map((t, idx) => {
     const words = t.text.split(/\s+/).length;
-    const dur = Math.max(8, Math.round((words / 152) * 60));
+    const dur = Math.max(5, Math.round((words / 148) * 60));
     const seg = {
       idx,
       speaker: t.speaker,

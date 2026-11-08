@@ -1,8 +1,15 @@
 /**
  * Sticky Podcast Audio Player + iOS Safari Lock-Screen MediaSession Controller
- * Supports both real neural AAC/M4A/MP3 audio files AND instant browser multi-voice
- * Web Speech playback for custom on-the-fly topics when offline or without a Worker URL!
+ * Supports both studio-mastered neural AAC/M4A/MP3 audio files AND natural multi-voice
+ * Web Speech playback (with Premium/Enhanced/Neural voice ranking, spoken-football
+ * text humanization, and conversational breath pacing) for instant custom topics!
  */
+
+import {
+  humanizeNflTextForTts,
+  computeConversationalTurnDynamics,
+  selectBestBrowserVoices
+} from '../engine/podcastSpeechEngine.js';
 
 const SPEEDS = [1.0, 1.25, 1.5, 2.0];
 
@@ -19,10 +26,34 @@ export class PodcastAudioController {
     this.speedIdx = 0;
     this.usingSpeechSynthesis = false;
     this._speechTimer = null;
+    this._speechGapTimeout = null;
+    this._speechSessionId = 0;
     this._speechStartRealMs = 0;
     this._speechOffsetSec = 0;
+    this._cachedVoices = [];
 
     this._bindAudioEvents();
+    this._preloadBrowserVoices();
+  }
+
+  _preloadBrowserVoices() {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    try {
+      const refresh = () => {
+        try {
+          const list = window.speechSynthesis.getVoices();
+          if (Array.isArray(list) && list.length > 0) {
+            this._cachedVoices = list;
+          }
+        } catch {}
+      };
+      refresh();
+      if (typeof window.speechSynthesis.addEventListener === 'function') {
+        window.speechSynthesis.addEventListener('voiceschanged', refresh);
+      } else {
+        window.speechSynthesis.onvoiceschanged = refresh;
+      }
+    } catch {}
   }
 
   _bindAudioEvents() {
@@ -140,6 +171,7 @@ export class PodcastAudioController {
   _startSpeechSynthesisFrom(startSec = 0) {
     this._stopSpeechSynthesis();
     if (!this.currentEpisode) return;
+    const sessionId = ++this._speechSessionId;
     this._speechOffsetSec = Math.max(0, Math.min(this.durationSec, startSec));
     this.currentTimeSec = this._speechOffsetSec;
     this.isPlaying = true;
@@ -148,17 +180,50 @@ export class PodcastAudioController {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
-        const turns = (this.currentEpisode.transcript || []).filter(t => t.endSec > startSec);
-        const voices = window.speechSynthesis.getVoices() || [];
-        const maleVoice = voices.find(v => /daniel|alex|fred|guy|aaron|male/i.test(v.name) && v.lang.startsWith('en'));
-        const femaleVoice = voices.find(v => /samantha|ava|victoria|allison|karen/i.test(v.name) && v.lang.startsWith('en'));
+        const allTurns = this.currentEpisode.transcript || [];
+        const startIdx = allTurns.findIndex(t => t.endSec > startSec);
+        const liveVoices = window.speechSynthesis.getVoices();
+        const voices =
+          Array.isArray(liveVoices) && liveVoices.length > 0 ? liveVoices : this._cachedVoices;
+        const { maleVoice, femaleVoice } = selectBestBrowserVoices(voices);
 
-        for (const turn of turns) {
-          const utt = new SpeechSynthesisUtterance(turn.text);
-          utt.rate = this.playbackRate;
+        const speakTurnAt = turnIdx => {
+          if (sessionId !== this._speechSessionId || !this.isPlaying) return;
+          if (turnIdx < 0 || turnIdx >= allTurns.length) return;
+
+          const turn = allTurns[turnIdx];
+          const dyn = computeConversationalTurnDynamics(allTurns, turnIdx);
+          const spoken = humanizeNflTextForTts(turn.text);
+          const utt = new SpeechSynthesisUtterance(spoken);
+
+          const rateAdj = dyn.rate === '+2%' ? 1.02 : dyn.rate === '-1%' ? 0.98 : 1.0;
+          utt.rate = Math.max(0.75, Math.min(2.2, this.playbackRate * rateAdj));
+          utt.pitch = turn.speaker === 'Elena' ? 1.03 : 0.97;
+
           if (turn.speaker === 'Elena' && femaleVoice) utt.voice = femaleVoice;
           else if (maleVoice) utt.voice = maleVoice;
+
+          utt.onstart = () => {
+            if (sessionId !== this._speechSessionId || !this.isPlaying) return;
+            this._speechOffsetSec = turn.startSec;
+            this._speechStartRealMs = Date.now();
+            this.currentTimeSec = turn.startSec;
+            this._emit();
+          };
+
+          utt.onend = () => {
+            if (sessionId !== this._speechSessionId || !this.isPlaying) return;
+            const nextIdx = turnIdx + 1;
+            if (nextIdx >= allTurns.length) return;
+            const pauseMs = Math.max(90, Math.round(dyn.gapAfterMs / this.playbackRate));
+            this._speechGapTimeout = setTimeout(() => speakTurnAt(nextIdx), pauseMs);
+          };
+
           window.speechSynthesis.speak(utt);
+        };
+
+        if (startIdx >= 0) {
+          speakTurnAt(startIdx);
         }
       } catch {}
     }
@@ -179,6 +244,11 @@ export class PodcastAudioController {
   }
 
   _stopSpeechSynthesis() {
+    this._speechSessionId++;
+    if (this._speechGapTimeout) {
+      clearTimeout(this._speechGapTimeout);
+      this._speechGapTimeout = null;
+    }
     if (this._speechTimer) {
       clearInterval(this._speechTimer);
       this._speechTimer = null;
@@ -266,7 +336,9 @@ export class PodcastAudioController {
   getActiveTurnIndex() {
     if (!this.currentEpisode?.transcript) return -1;
     const t = this.currentTimeSec;
-    return this.currentEpisode.transcript.findIndex(seg => t >= seg.startSec && t <= seg.endSec + 0.35);
+    return this.currentEpisode.transcript.findIndex(
+      seg => t >= seg.startSec && t <= seg.endSec + 0.35
+    );
   }
 
   _emit() {

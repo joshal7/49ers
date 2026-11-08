@@ -1,9 +1,15 @@
 #!/usr/bin/env node
 /**
  * Studio-Grade Multi-Speaker Neural Autopodcast & Deep Analysis Builder for 49ers Faithful
+ *
  * Dynamically reads verified live datasets (`data/*.json`), enforces anti-hallucination
- * roster grounding, and uses edge-tts (AndrewNeural + AvaNeural) + macOS afconvert
- * to synthesize compact 24kHz AAC (.m4a) episodes with exact per-segment seek timestamps.
+ * roster grounding, converts NFL/CBA notation into natural spoken English, synthesizes
+ * conversational neural dialogue via Microsoft Multilingual Dragon/Flow voices
+ * (`en-US-AndrewMultilingualNeural` + `en-US-AvaMultilingualNeural`), applies broadcast
+ * studio DSP mastering (smart breath-preserving silence trim, cosine cross-fades, 75 Hz HPF,
+ * 180 Hz studio mic warmth, 3.85 kHz neural de-harshness dip, per-turn loudness matching,
+ * soft-knee compression, -58.8 dBFS studio room-tone glue, and -1 dBFS true-peak limiting),
+ * and encodes 96 kbps AAC (.m4a) episodes with exact per-turn seek timestamps.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -16,6 +22,13 @@ import {
   validateNoHallucinatedRosterClaims,
   sanitizeHallucinatedRosterText
 } from '../src/engine/groundingValidator.js';
+import {
+  humanizeNflTextForTts,
+  computeConversationalTurnDynamics,
+  trimAndFadeTurnPcm,
+  conditionTurnVoicePcm,
+  masterPodcastEpisodePcm
+} from '../src/engine/podcastSpeechEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -49,8 +62,8 @@ const oppShort = oppName.split(' ').slice(-1)[0] || 'Raiders';
 const oppRecord = oppMatchup.oppRecord || '4-4';
 const spreadDisplay = oppMatchup.betting?.spread || 'SF -9.5';
 const openingSpreadDisplay = oppMatchup.betting?.openingSpread || 'SF -8.5';
-const overUnderVal = oppMatchup.betting?.overUnder ?? 49.5;
-const impliedScoreDisplay = oppMatchup.betting?.impliedScore || 'SF 29.5 – LV 20.0';
+const overUnderVal = oppMatchup.betting?.overUnder ?? 51.5;
+const impliedScoreDisplay = oppMatchup.betting?.impliedScore || 'SF 30.5 – LV 21.0';
 
 const cap26 = capData?.years?.[String(activeSeasonYear)] || capData?.years?.['2026'] || {};
 const cap27 = capData?.years?.[String(nextSeasonYear)] || capData?.years?.['2027'] || {};
@@ -66,7 +79,9 @@ const purdyTds = purdyPass.tds ?? 15;
 const purdyInts = purdyPass.ints ?? 4;
 const purdySacks = purdyPass.sacks ?? 7;
 const purdyEpa = Number(purdyPass.epa ?? 63.23).toFixed(2);
+const purdyEpaSpoken = Number(purdyPass.epa ?? 63.23).toFixed(1);
 const purdyCpoe = Number(purdyPass.cpoe ?? 4.25).toFixed(2);
+const purdyCpoeSpoken = Number(purdyPass.cpoe ?? 4.25).toFixed(1);
 const purdyCompPct = ((purdyComp / Math.max(1, purdyAtt)) * 100).toFixed(1);
 const purdyYpa = (purdyYds / Math.max(1, purdyAtt)).toFixed(2);
 const purdyDropbacks = purdyAtt + purdySacks;
@@ -99,10 +114,17 @@ const chiOdds = (mcSim.allTeamOdds || []).find(t => t.abbr === 'CHI') || {
 
 const pickCount2027 = seasonalData?.draftPrep2027?.pickInventory?.length || 6;
 
-const SAMPLE_RATE = 24000;
+const SAMPLE_RATE = 44100;
+const AAC_BITRATE = 96000;
 const HOST_VOICES = {
-  Marcus: { voice: 'en-US-AndrewNeural', role: "X's & O's Film Analyst", rate: '+4%' },
-  Elena: { voice: 'en-US-AvaNeural', role: 'Cap & Quantitative Insider', rate: '+4%' }
+  Marcus: {
+    voice: 'en-US-AndrewMultilingualNeural',
+    role: "X's & O's Film Analyst"
+  },
+  Elena: {
+    voice: 'en-US-AvaMultilingualNeural',
+    role: 'Cap & Quantitative Insider'
+  }
 };
 
 const EPISODES_SPEC = [
@@ -122,27 +144,43 @@ const EPISODES_SPEC = [
     turns: [
       {
         speaker: 'Marcus',
-        text: `Welcome into 49ers Faithful. Sunday afternoon on FOX at Levi's Stadium, the ${sfRecord} Niners come out of the Week 8 bye holding the number one seed in the NFC—opening at eight and a half and steamed to ${spreadDisplay.replace('SF -', 'minus ')} with a ${overUnderVal} total against the ${oppRecord} ${oppName}. And for the first time since Week 2, Nick Bosa is off the injury designation list and cleared to hunt alongside DeForest Buckner and Osa Odighizuwa.`
+        text: `Welcome in to 49ers Faithful. Elena, it feels like we've been circling this Sunday at Levi's Stadium for a month. The ${sfRecord} Niners come out of the Week 8 bye holding the #1 seed in the NFC, and Nick Bosa is officially off the injury report—cleared to hunt next to DeForest Buckner for the very first time.`
       },
       {
         speaker: 'Elena',
-        text: `The math behind defensive coordinator Raheem Morris's front is staggering, Marcus. Even without Bosa from Weeks 3 through 7, Osa Odighizuwa kept interior disruption afloat. Now Morris drops six-foot-seven DeForest Buckner into the three-technique next to Odighizuwa, with Bosa and Keion White on the Wide-9 edges. Opposing centers cannot slide protection toward Bosa without leaving Buckner singled up on a guard.`
+        text: `Yeah, and the betting market noticed immediately. San Francisco opened at ${openingSpreadDisplay} and steamed to ${spreadDisplay} with a ${overUnderVal} total against the ${oppRecord} ${oppName}. Think about the protection math Raheem Morris can throw at offenses now.`
       },
       {
         speaker: 'Marcus',
-        text: `Exactly. And look across the sideline at who calls plays for Las Vegas: first-year Raiders head coach Klint Kubiak, who spent all of 2023 inside Kyle Shanahan's building as our Passing Game Specialist. Kubiak marries outside zone with Ashton Jeanty to deep play-action crossers for Kirk Cousins and Brock Bowers—the exact route spacing Raheem Morris, Fred Warner, and Deommodore Lenoir disguise split-safety rotations against every week.`
+        text: `Walk through that front-four geometry for a second. Because from Weeks 3 through 7 without Bosa, Osa Odighizuwa basically carried our interior pass rush on his back.`
       },
       {
         speaker: 'Elena',
-        text: `Plus San Francisco enters with a plus-seven-day rest advantage coming off the bye. Under Shanahan since 2017, when QB1 is healthy post-bye, the 49ers average plus 0.21 EPA per play on their opening fifteen scripted snaps, and Brock Purdy sits among the NFL leaders at plus ${purdyEpa} passing EPA, plus ${purdyCpoe} percent completion percentage over expected, and just a ${purdySackRate} percent sack rate.`
+        text: `Right, and he was terrific doing it. Now Morris drops six-foot-seven DeForest Buckner into the 3-technique weak, shades Odighizuwa at the 2i strong, and puts Bosa and Keion White out on the Wide-9 rails. If Vegas slides the center toward Bosa, Buckner gets singled up on a guard. You just can't block both.`
       },
       {
         speaker: 'Marcus',
-        text: `The one game-wrecker we have to neutralize for sixty minutes is Maxx Crosby. Whenever he flips away from Trent Williams to align over right tackle Colton McKivitz, watch for 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk, paired with quick rhythm throws to Brandin Cooks, Jordan Watkins, and Jacob Cowing—plus newly activated Demarcus Robinson off IR.`
+        text: `Exactly. And look across the sideline at who's calling plays for Las Vegas. First-year head coach Klint Kubiak spent all of 2023 right here in Santa Clara as Kyle Shanahan's Passing Game Specialist.`
       },
       {
         speaker: 'Elena',
-        text: `Neutralize Crosby on third-and-medium, keep Bosa on a smart 45-snap pitch count in his return, and the implied market projection of ${impliedScoreDisplay.replace('–', 'to')} tracks right on the numbers.`
+        text: `So there are zero secrets on the tendencies tape.`
+      },
+      {
+        speaker: 'Marcus',
+        text: `None at all. Kubiak wants outside zone with Ashton Jeanty to set up deep play-action crossers for Kirk Cousins and Brock Bowers. That's the exact intermediate route spacing Fred Warner and Deommodore Lenoir bait with disguised split-safety rotations every single day in practice.`
+      },
+      {
+        speaker: 'Elena',
+        text: `Plus we've got a full seven-day rest edge coming off the bye. Under Shanahan, when QB1 is healthy post-bye, the Niners average +0.21 EPA/play on their opening fifteen scripted snaps. And Brock Purdy has been surgical—+${purdyEpaSpoken} passing EPA, +${purdyCpoeSpoken}% CPOE, and just a ${purdySackRate}% sack rate.`
+      },
+      {
+        speaker: 'Marcus',
+        text: `The one guy who can wreck the script is Maxx Crosby. Whenever he flips away from Trent Williams to line up over Colton McKivitz at right tackle, expect heavy 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk—plus quick rhythm throws to Brandin Cooks, Jordan Watkins, Jacob Cowing, and Demarcus Robinson back off IR.`
+      },
+      {
+        speaker: 'Elena',
+        text: `Keep Crosby off Purdy's spot on third-and-medium, keep Bosa on a smart 45-snap pitch count in his first game back, and that implied projection of ${impliedScoreDisplay} feels right on the money.`
       }
     ]
   },
@@ -161,27 +199,39 @@ const EPISODES_SPEC = [
     turns: [
       {
         speaker: 'Elena',
-        text: `Let's open the live OverTheCap multi-year ledger, because the biggest misconception around the 49ers right now is treating San Francisco's ${cap26SpaceM} million dollars in ${activeSeasonYear} cap space like free money. When you flip one tab forward to ${nextSeasonYear}, San Francisco is currently projected ${cap27DeficitM} million dollars over an estimated 327 million dollar cap ceiling.`
+        text: `Let's clear up the single biggest misconception floating around Niners Twitter this week, Marcus. People look at OverTheCap, see $${cap26SpaceM}M in ${activeSeasonYear} cap space, and treat it like free spending cash.`
       },
       {
         speaker: 'Marcus',
-        text: `Connect those two numbers, Elena. That explains immediately why John Lynch and Paraag Marathe refuse to take on bloated multi-year contracts this week.`
+        text: `Yeah—until you click one tab forward to ${nextSeasonYear}. Connect those two ledgers for everyone.`
       },
       {
         speaker: 'Elena',
-        text: `Precisely. Under Article 13 of the NFL Collective Bargaining Agreement, every unused dollar of ${activeSeasonYear} cap space rolls over one-for-one into ${nextSeasonYear}. Brock Purdy carries a ${purdyCap26M} million dollar cap number this season while Nick Bosa sits at ${bosaCap26M} million before both contracts escalate sharply next spring. Rolling roughly 28 to 31 million dollars forward erases almost the entire ${nextSeasonYear} deficit without touching aging veteran restructures.`
+        text: `The moment you flip to ${nextSeasonYear}, San Francisco sits -$${cap27DeficitM}M in the red against an estimated $327M cap ceiling. Under Article 13 of the CBA, every unused dollar from ${activeSeasonYear} rolls over one-for-one into next spring.`
       },
       {
         speaker: 'Marcus',
-        text: `Now layer in Brandon Aiyuk meeting with team brass at SAP Performance Facility seeking reinstatement as both sides work toward a clean offseason exit.`
+        text: `So that surplus isn't extra money—it's already spoken for.`
       },
       {
         speaker: 'Elena',
-        text: `Any trade or release executed after June first—including right now in November—functions under Post-June-1 accounting: only the current ${activeSeasonYear} bonus proration stays on this year's cap, while remaining unamortized bonus proration accelerates onto the ${nextSeasonYear} dead-money ledger. Structuring a bilateral settlement on unaccrued guarantees is critical so Aiyuk's exit does not compound that ${cap27DeficitM} million dollar ${nextSeasonYear} crunch.`
+        text: `100 percent. Brock Purdy's cap hit is $${purdyCap26M}M right now, and Nick Bosa sits at $${bosaCap26M}M, right before both deals jump sharply in ${nextSeasonYear}. If John Lynch and Paraag Marathe roll roughly $28M to $31M forward, they wipe out almost that entire ${nextSeasonYear} deficit without kicking dead money down the road on older veterans.`
       },
       {
         speaker: 'Marcus',
-        text: `Which makes hitting on cost-controlled rookie-scale contributors—Mykel Williams, Upton Stout, Renardo Green, Dominick Puni, Gracen Halton, and Romello Height—the structural engine keeping this championship window open.`
+        text: `Okay, so how does Brandon Aiyuk factor into that math? He met with team brass at SAP Performance Facility looking for reinstatement so both sides can map out an offseason exit.`
+      },
+      {
+        speaker: 'Elena',
+        text: `Because we're past June first, any trade or release right now automatically uses Post-June-1 accounting. Only this season's bonus proration stays on the ${activeSeasonYear} books, while the rest of his unamortized signing and option bonus accelerates onto ${nextSeasonYear}.`
+      },
+      {
+        speaker: 'Marcus',
+        text: `Which means a clean settlement on unaccrued guarantees is huge—otherwise an Aiyuk exit piles right on top of next year's crunch.`
+      },
+      {
+        speaker: 'Elena',
+        text: `Exactly. And that's why hitting on cost-controlled rookie deals—Mykel Williams, Upton Stout, Renardo Green, Dominick Puni, Gracen Halton, and Romello Height—isn't just a nice bonus. It's the structural engine keeping this title window wide open.`
       }
     ]
   },
@@ -201,27 +251,43 @@ const EPISODES_SPEC = [
     turns: [
       {
         speaker: 'Marcus',
-        text: `We are inside the final stretch before Tuesday's November 10th, 1 PM Pacific NFL Trade Deadline. John Lynch already sent our ${nextSeasonYear} fourth-round pick to Indianapolis to bring DeForest Buckner back home alongside Osa Odighizuwa. Looking strictly at the tape and injury wire, what are San Francisco's true ranked needs?`
+        text: `We're inside the final countdown to Tuesday's November 10th, 1 PM Pacific trade deadline. John Lynch already sent our ${nextSeasonYear} fourth-rounder to Indy to bring DeForest Buckner home. Looking strictly at the film and the injury wire, Elena, how do you stack our remaining needs?`
       },
       {
         speaker: 'Elena',
-        text: `Number one is perimeter receiver and 12-personnel move tight end—with six receivers on reserve or restricted lists, targeting rookie-contract separators like Adonai Mitchell on the Jets, Josh Downs in Indianapolis, Rashod Bateman in Baltimore, or Greg Dulcich from Miami. Number two is left guard pass-protection stability next to Trent Williams, like Kingsley Suamataia. Number three is rotational speed edge—where winless Los Angeles Chargers veteran Khalil Mack is an ideal expiring one-year rental—followed by dime corner depth like Donte Jackson.`
+        text: `Number one is perimeter receiver or a 12-personnel move tight end. With six wideouts on reserve or sidelined lists, rookie-contract separators like Adonai Mitchell on the Jets, Josh Downs in Indy, Rashod Bateman in Baltimore, or Greg Dulcich from Miami make a ton of sense.`
       },
       {
         speaker: 'Marcus',
-        text: `And let's clear up the cap and draft math on those targets. With ${cap26SpaceM} million dollars in ${activeSeasonYear} space and nine eighteenths of the regular season remaining, do the 49ers ever need a seller to eat salary?`
+        text: `And right behind receiver, it's got to be left guard pass protection next to Trent Williams, plus a true speed edge rusher.`
       },
       {
         speaker: 'Elena',
-        text: `Not at all—and getting that direction right matters. Because signing bonus proration stays with the seller and acquiring teams only absorb nine eighteenths of remaining ${activeSeasonYear} base salary, San Francisco actually holds over 65 million dollars in annualized base-salary purchasing power right now. Our real constraints are next year's ${cap27DeficitM} million dollar cap deficit and owning just ${pickCount2027} total picks in the ${nextSeasonYear} draft after trading our fourth-rounder for Buckner. That means targeting expiring rentals or cheap rookie deals for Day-3 picks, while steering clear of zero-sack age-37 traps like Cameron Jordan or extended starters like Michael Mayer.`
+        text: `Spot on. Someone like Kingsley Suamataia on a rookie deal at guard, or Khalil Mack from the 0-7 Chargers as a pure expiring one-year pass-rush rental—with Donte Jackson in that same Chargers boat if you want dime corner speed.`
       },
       {
         speaker: 'Marcus',
-        text: `Now connect that deadline discipline to our calibrated ten-thousand-run NFC playoff model, Elena—because raw un-regressed models wildly overstate early six-and-one records.`
+        text: `Let's clear up the cap mechanics on a guy like Mack, though. With 9/18ths of the season left, do the Niners actually need a seller to eat salary?`
       },
       {
         speaker: 'Elena',
-        text: `Right. When you blend Empirical-Bayes regressed team power ratings with net offensive and defensive EPA, strength of schedule, and official NFL Rulebook multi-club tiebreakers, the ${sfRecord} 49ers project for ${projWins} wins—giving San Francisco a ${makePlayoffsPct} percent playoff probability, ${winDivPct} percent odds to win the NFC West, and a calibrated ${seed1ByePct} percent shot at the number-one seed bye, just ahead of ${minOdds.currentRecord} Minnesota at ${minOdds.seed1ByePct} percent and ${chiOdds.currentRecord} Chicago at ${chiOdds.seed1ByePct} percent. That Week 11 neutral-site showdown against Minnesota in Mexico City is the single biggest swing game in the conference.`
+        text: `Not at all—and getting that direction right really matters. Signing bonus proration stays with the seller, and the buyer only takes on 9/18ths of remaining ${activeSeasonYear} base pay. So our $${cap26SpaceM}M in ${activeSeasonYear} space is actually worth over $65M+ in annualized base-salary buying power right now.`
+      },
+      {
+        speaker: 'Marcus',
+        text: `So the bottleneck isn't ${activeSeasonYear} cash—it's next year's -$${cap27DeficitM}M cap horizon and having only ${pickCount2027} total picks left in the ${nextSeasonYear} draft.`
+      },
+      {
+        speaker: 'Elena',
+        text: `Bingo. That's why you target cheap rookie contracts or true expiring rentals for Day-3 picks, and steer way clear of zero-sack age-37 traps like Cameron Jordan or pricey extended starters like Michael Mayer.`
+      },
+      {
+        speaker: 'Marcus',
+        text: `Tie that back to our 10,000-run NFC playoff simulator before we wrap—because raw un-regressed models always overhype early ${sfRecord} starts.`
+      },
+      {
+        speaker: 'Elena',
+        text: `Right. Once you blend Empirical-Bayes regressed team power with net EPA, strength of schedule, and NFL tiebreakers, the ${sfRecord} Niners project for ${projWins} wins. That's a ${makePlayoffsPct}% playoff berth, ${winDivPct}% to take the NFC West, and a calibrated ${seed1ByePct}% shot at the #1 seed bye—just ahead of ${minOdds.currentRecord} Minnesota at ${minOdds.seed1ByePct}% and ${chiOdds.currentRecord} Chicago at ${chiOdds.seed1ByePct}%. Circle Week 11 against Minnesota in Mexico City—that's the swing game for the whole conference.`
       }
     ]
   }
@@ -361,13 +427,13 @@ function writeWavInt16Mono(filePath, samples, sampleRate) {
 const PY_RENDER_TURNS = `
 import asyncio, json, os, subprocess, sys, edge_tts
 
-async def render_one(sem, idx, text, voice, rate, tmp_dir, sr):
+async def render_one(sem, idx, text, voice, rate, pitch, tmp_dir, sr):
     mp3_p = os.path.join(tmp_dir, f"turn-{idx}.mp3")
     wav_p = os.path.join(tmp_dir, f"turn-{idx}.wav")
     async with sem:
         for attempt in range(4):
             try:
-                comm = edge_tts.Communicate(text, voice, rate=rate)
+                comm = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
                 await comm.save(mp3_p)
                 break
             except Exception as e:
@@ -380,32 +446,13 @@ async def main():
     spec = json.loads(sys.stdin.read())
     sem = asyncio.Semaphore(4)
     tasks = [
-        render_one(sem, t["idx"], t["ttsText"], t["voice"], t["rate"], spec["tmpDir"], spec["sampleRate"])
+        render_one(sem, t["idx"], t["ttsText"], t["voice"], t["rate"], t["pitch"], spec["tmpDir"], spec["sampleRate"])
         for t in spec["turns"]
     ]
     await asyncio.gather(*tasks)
 
 asyncio.run(main())
 `;
-
-function pronounceableNflText(text = '') {
-  return text
-    .replace(/\bEPA\b/g, 'E-P-A')
-    .replace(/\bCPOE\b/g, 'C-P-O-E')
-    .replace(/\b2i\b/g, 'two-eye')
-    .replace(/\bQB1\b/g, 'Q-B-1')
-    .replace(/\bH2H\b/g, 'head-to-head')
-    .replace(/\bRaheem\b/gi, 'Rah-heem')
-    .replace(/\bSuamataia\b/gi, 'Soo-ah-mah-tye-ah')
-    .replace(/\bDulcich\b/gi, 'Dull-sitch')
-    .replace(/\bAdonai\b/gi, 'Ad-oh-nye')
-    .replace(/\bOdighizuwa\b/gi, 'Oh-diggy-zoo-wah')
-    .replace(/\bJuszczyk\b/gi, 'Yooz-check')
-    .replace(/\bAiyuk\b/gi, 'Eye-yook')
-    .replace(/\bDe'Zhaun\b/gi, 'Day-zhon')
-    .replace(/\bLenoir\b/gi, 'Luh-nor')
-    .replace(/\bParaag Marathe\b/gi, 'Puh-rahg Muh-rah-thee');
-}
 
 async function main() {
   fs.mkdirSync(podcastDir, { recursive: true });
@@ -435,20 +482,23 @@ async function main() {
   });
 
   const episodesMeta = [];
-  const interTurnPauseSamples = Math.round(SAMPLE_RATE * 0.28); // natural 280ms breath pause between hosts
+  const introPadSamples = Math.round(SAMPLE_RATE * 0.08);
+  const outroPadSamples = Math.round(SAMPLE_RATE * 0.24);
 
   for (const ep of EPISODES_SPEC) {
-    console.log(`[podcast] Rendering multi-speaker neural audio for: ${ep.id}...`);
+    console.log(`[podcast] Synthesizing & mastering conversational neural audio for: ${ep.id}...`);
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `49ers-pod-${ep.id}-`));
     try {
+      const turnDynamics = ep.turns.map((_, idx) => computeConversationalTurnDynamics(ep.turns, idx));
       const pyInput = {
         tmpDir,
         sampleRate: SAMPLE_RATE,
         turns: ep.turns.map((t, idx) => ({
           idx,
-          ttsText: pronounceableNflText(t.text),
+          ttsText: humanizeNflTextForTts(t.spokenText || t.text),
           voice: HOST_VOICES[t.speaker].voice,
-          rate: HOST_VOICES[t.speaker].rate
+          rate: turnDynamics[idx].rate,
+          pitch: turnDynamics[idx].pitch
         }))
       };
 
@@ -457,16 +507,34 @@ async function main() {
         stdio: ['pipe', 'inherit', 'inherit']
       });
 
-      const chunks = [];
-      const timedTranscript = [];
-      let cursorSamples = 0;
+      const conditionedChunks = [];
+      const gapSamplesAfter = [];
+      let totalSamples = introPadSamples + outroPadSamples;
 
       for (let i = 0; i < ep.turns.length; i++) {
         const wavPath = path.join(tmpDir, `turn-${i}.wav`);
-        const samples = parseWavInt16Mono(fs.readFileSync(wavPath));
+        const rawInt16 = parseWavInt16Mono(fs.readFileSync(wavPath));
+        const trimmedFloat = trimAndFadeTurnPcm(rawInt16, SAMPLE_RATE);
+        const conditionedFloat = conditionTurnVoicePcm(trimmedFloat, SAMPLE_RATE, 0.115);
+        conditionedChunks.push(conditionedFloat);
+
+        const gapSamples =
+          i < ep.turns.length - 1
+            ? Math.round((turnDynamics[i].gapAfterMs / 1000) * SAMPLE_RATE)
+            : 0;
+        gapSamplesAfter.push(gapSamples);
+        totalSamples += conditionedFloat.length + gapSamples;
+      }
+
+      const floatTimeline = new Float64Array(totalSamples);
+      const timedTranscript = [];
+      let cursorSamples = introPadSamples;
+
+      for (let i = 0; i < ep.turns.length; i++) {
+        const chunk = conditionedChunks[i];
         const startSec = Number((cursorSamples / SAMPLE_RATE).toFixed(2));
-        chunks.push(samples);
-        cursorSamples += samples.length;
+        floatTimeline.set(chunk, cursorSamples);
+        cursorSamples += chunk.length;
         const endSec = Number((cursorSamples / SAMPLE_RATE).toFixed(2));
 
         timedTranscript.push({
@@ -478,32 +546,26 @@ async function main() {
           endSec
         });
 
-        if (i < ep.turns.length - 1) {
-          chunks.push(new Int16Array(interTurnPauseSamples));
-          cursorSamples += interTurnPauseSamples;
-        }
+        cursorSamples += gapSamplesAfter[i];
       }
 
-      const fullPcm = new Int16Array(cursorSamples);
-      let writeOffset = 0;
-      for (const ch of chunks) {
-        fullPcm.set(ch, writeOffset);
-        writeOffset += ch.length;
-      }
-
+      const masteredInt16 = masterPodcastEpisodePcm(floatTimeline, SAMPLE_RATE);
       const masterWav = path.join(tmpDir, 'master.wav');
       const outM4a = path.join(podcastDir, `${ep.id}.m4a`);
-      writeWavInt16Mono(masterWav, fullPcm, SAMPLE_RATE);
+      writeWavInt16Mono(masterWav, masteredInt16, SAMPLE_RATE);
 
       execFileSync('/usr/bin/afconvert', [
-        '-f', 'm4af',
-        '-d', 'aac',
-        '-b', '64000',
+        '-f',
+        'm4af',
+        '-d',
+        'aac',
+        '-b',
+        String(AAC_BITRATE),
         masterWav,
         outM4a
       ]);
 
-      const durationSec = Math.round(cursorSamples / SAMPLE_RATE);
+      const durationSec = Math.round(totalSamples / SAMPLE_RATE);
       const fileSizeBytes = fs.statSync(outM4a).size;
 
       episodesMeta.push({
@@ -520,7 +582,9 @@ async function main() {
         fileSizeBytes,
         transcript: timedTranscript
       });
-      console.log(`  -> Saved ${ep.id}.m4a (${durationSec}s, ${(fileSizeBytes / 1024).toFixed(0)} KB)`);
+      console.log(
+        `  -> Saved ${ep.id}.m4a (${durationSec}s, ${timedTranscript.length} conversational turns, ${(fileSizeBytes / 1024).toFixed(0)} KB @ 96kbps AAC)`
+      );
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
@@ -533,7 +597,9 @@ async function main() {
   };
 
   fs.writeFileSync(path.join(podcastDir, 'index.json'), JSON.stringify(indexPayload, null, 2));
-  console.log(`[podcast] Wrote ${episodesMeta.length} studio neural episodes & ${verifiedAnalyses.length} deep analyses -> data/podcasts/index.json`);
+  console.log(
+    `[podcast] Wrote ${episodesMeta.length} studio-mastered neural episodes & ${verifiedAnalyses.length} deep analyses -> data/podcasts/index.json`
+  );
 }
 
 main().catch(err => {
