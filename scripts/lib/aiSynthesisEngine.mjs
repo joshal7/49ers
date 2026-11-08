@@ -22,6 +22,7 @@ import {
   sanitizeHallucinatedRosterText,
   validateNoHallucinatedRosterClaims
 } from '../../src/engine/groundingValidator.js';
+import { buildGeminiThinkingConfig } from '../../src/engine/geminiStudioPrompts.js';
 
 /**
  * Default ordered cascade of best available Free-Tier Gemini models (all run on HIGH thinking).
@@ -166,7 +167,7 @@ export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_AP
             generationConfig: {
               maxOutputTokens: 8,
               temperature: 0,
-              thinkingConfig: { thinkingBudget: 1024 }
+              thinkingConfig: buildGeminiThinkingConfig(candidate, 1024)
             },
             contents: [{ role: 'user', parts: [{ text: 'Reply OK' }] }]
           })
@@ -302,14 +303,24 @@ export function parseGroundedJsonSafe(rawText = '', fallback = null) {
 }
 
 async function callGeminiCascade(apiKey, modelsCascade, payload, timeoutMs) {
+  const requestedBudget =
+    payload?.generationConfig?.thinkingConfig?.thinkingBudget || HIGH_THINKING_BUDGET;
   for (const model of modelsCascade) {
     try {
+      const modelThinkingConfig = buildGeminiThinkingConfig(model, requestedBudget);
+      const modelPayload = {
+        ...payload,
+        generationConfig: {
+          ...(payload.generationConfig || {}),
+          thinkingConfig: modelThinkingConfig
+        }
+      };
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: AbortSignal.timeout(timeoutMs),
-        body: JSON.stringify(payload)
+        body: JSON.stringify(modelPayload)
       });
       if (res.ok) {
         return { ok: true, modelUsed: model, json: await res.json() };

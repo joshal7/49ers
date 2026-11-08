@@ -58,10 +58,10 @@ export function renderSettingsSheetHtml({
       </label>
     </div>
 
-    <!-- Display Name & Sync Endpoint -->
+    <!-- Display Name, Gemini AI Key & Cloud Sync -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
-      <div class="sub-label">2. Display Name &amp; Cloud Sync</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="sub-label">2. Display Name, Gemini Studio AI &amp; Cloud Sync</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px">
         <div>
           <label style="font-size:11px;color:var(--text-secondary)" for="prefAuthorInput">Your Display Name</label>
           <input type="text" id="prefAuthorInput" class="text-input" value="${esc(userPrefs.authorName || 'Josh')}" />
@@ -72,13 +72,30 @@ export function renderSettingsSheetHtml({
         </div>
       </div>
       <div>
-        <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Cloudflare Worker URL (Optional — Leave blank for built-in local engine)</label>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Google Gemini API Key (Private on This Device • Enables Pro Deep Research &amp; NotebookLM Voices)</label>
+          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free AI Studio Key ${iconSvg('externalLink', 10)}</a>
+        </div>
+        <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Cloudflare Worker URL (Optional Shared Group Cache)</label>
         <input type="url" id="prefWorkerUrlInput" class="text-input" placeholder="https://49ers-worker.<subdomain>.workers.dev" value="${esc(userPrefs.workerBaseUrl || '')}" />
       </div>
-      <button type="button" class="btn-secondary" data-action="save-group-config">
-        ${iconSvg('save', 14)}
-        <span>Save Sync Settings</span>
-      </button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button type="button" class="btn-secondary" style="flex:1 1 160px" data-action="save-group-config">
+          ${iconSvg('save', 14)}
+          <span>Save AI &amp; Sync Settings</span>
+        </button>
+        ${
+          userPrefs.geminiApiKey
+            ? `<button type="button" class="btn-ghost" data-action="clear-gemini-key">
+                 ${iconSvg('trash', 13)}
+                 <span>Clear Key</span>
+               </button>`
+            : ''
+        }
+      </div>
     </div>
 
     <!-- Outlet Toggles -->
@@ -145,7 +162,12 @@ export function renderSettingsSheetHtml({
   `;
 }
 
-export function renderArchiveVaultSheetHtml({ seasonState, appData }) {
+export function renderArchiveVaultSheetHtml({
+  seasonState,
+  appData,
+  archivedEpisodes = [],
+  archivedAnalyses = []
+}) {
   const active = seasonState?.activeBlocks || [];
   const archived = seasonState?.archivedBlocks || [];
   const { archivedTrades } = partitionCompletedTradesByWindow(
@@ -166,7 +188,71 @@ export function renderArchiveVaultSheetHtml({ seasonState, appData }) {
 
   return `
     <div style="font-size:12.5px;color:var(--text-secondary)">
-      Seasonal modules surface on your Home Dashboard during their active NFL calendar window and move to the archive afterward. Completed trades older than 30 days are also archived below:
+      Archived podcasts, AI analyses, completed trades older than 30 days, and off-cycle NFL seasonal modules are stored here:
+    </div>
+
+    <div id="archivePodcastsSection">
+      <div class="sub-label" style="margin-bottom:6px">Archived Podcasts (${archivedEpisodes.length})</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${
+          archivedEpisodes.length === 0
+            ? `<div style="font-size:12.5px;color:var(--text-muted)">No archived podcasts. Tap Archive on any episode in Audio &amp; AI when you're done listening.</div>`
+            : archivedEpisodes
+                .map(
+                  ep => `
+              <div class="subcard-panel" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                <div style="min-width:0;flex:1 1 180px">
+                  <div style="font-weight:800;font-size:13.5px">${esc(ep.title)}</div>
+                  <div style="font-size:11.5px;color:var(--text-secondary)">${esc(ep.presetLabel || ep.format || 'Podcast')} • ${esc(ep.createdBy || 'Josh')}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                  <button type="button" class="icon-btn" data-action="unarchive-podcast" data-episode-id="${esc(ep.id)}">
+                    ${iconSvg('restore', 13)}
+                    <span>Restore</span>
+                  </button>
+                  <button type="button" class="icon-btn danger-action-btn" data-action="delete-podcast" data-episode-id="${esc(ep.id)}">
+                    ${iconSvg('trash', 13)}
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </div>
+            `
+                )
+                .join('')
+        }
+      </div>
+    </div>
+
+    <div id="archiveAnalysesSection">
+      <div class="sub-label" style="margin-bottom:6px">Archived AI Analyses (${archivedAnalyses.length})</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${
+          archivedAnalyses.length === 0
+            ? `<div style="font-size:12.5px;color:var(--text-muted)">No archived AI analyses. Tap Archive on any scouting/cap report in Audio &amp; AI when finished.</div>`
+            : archivedAnalyses
+                .map(
+                  rep => `
+              <div class="subcard-panel" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                <div style="min-width:0;flex:1 1 180px">
+                  <div style="font-weight:800;font-size:13.5px">${esc(rep.title)}</div>
+                  <div style="font-size:11.5px;color:var(--text-secondary)">${esc(rep.category || 'Deep Analysis')} • ${esc(rep.createdBy || 'Josh')}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                  <button type="button" class="icon-btn" data-action="unarchive-analysis" data-analysis-id="${esc(rep.id)}">
+                    ${iconSvg('restore', 13)}
+                    <span>Restore</span>
+                  </button>
+                  <button type="button" class="icon-btn danger-action-btn" data-action="delete-analysis" data-analysis-id="${esc(rep.id)}">
+                    ${iconSvg('trash', 13)}
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </div>
+            `
+                )
+                .join('')
+        }
+      </div>
     </div>
 
     <div id="archiveOlderTradesSection">

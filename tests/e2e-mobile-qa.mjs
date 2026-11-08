@@ -48,6 +48,74 @@ function assert(cond, msg) {
   if (!cond) throw new Error(msg || 'Assertion failed');
 }
 
+const mockGeminiRequests = [];
+
+function buildMockNotebookLmScript12Turns() {
+  return [
+    {
+      speaker: 'Marcus',
+      text: "Alright, let's get right into this 49ers wide receiver room because if you just glance at the injury report on paper, it looks chaotic—but when you actually watch the All-22 tape from the first eight weeks, there's a really clear structural reason Brock Purdy is still sitting near the top of the league in EPA per dropback."
+    },
+    {
+      speaker: 'Elena',
+      text: "Yeah, and honestly that's the part casual takes miss. With Brandon Aiyuk on season-ending IR and Mike Evans rehabbing on injured reserve, everybody assumed defenses would just play press-man across the board and suffocate the intermediate middle. Instead, look at how Kyle Shanahan is using Jordan Watkins and Ricky Pearsall."
+    },
+    {
+      speaker: 'Marcus',
+      text: "Exactly! Jordan Watkins isn't just running clear-out go routes—Shanahan's motioning him into reduced splits so safeties in two-high quarters can't trigger downhill early on the dagger and dig windows. When Ricky Pearsall works that weakside glance or deep over off play-action, Purdy's hitting the back of his drop in rhythm."
+    },
+    {
+      speaker: 'Elena',
+      text: "Wait—and look at how Demarcus Robinson changes the third-down math when his ankle is right. Having a veteran boundary receiver who understands leverage against Cover-3 buzz means you aren't forcing rookie route runners to beat disguised cloud corners on third-and-seven."
+    },
+    {
+      speaker: 'Marcus',
+      text: "That's huge heading into Sunday against Las Vegas, too. Because if the Raiders try totilt coverage toward George Kittle and Christian McCaffrey on choice routes, Watkins and Robinson get isolated one-on-one outside the numbers with zero safety overlap."
+    },
+    {
+      speaker: 'Elena',
+      text: "Now let's flip to the front-office ledger, because people keep asking why John Lynch doesn't just burn all 35.16 million dollars of 2026 cap space on an expensive veteran wideout rental before the November 10th trade deadline."
+    },
+    {
+      speaker: 'Marcus',
+      text: "Right—on the surface 35 million sounds like a blank check. Walk through why spending that on a big receiver contract right now would actually blow up 2027."
+    },
+    {
+      speaker: 'Elena',
+      text: "Under Article 13 of the CBA, every single dollar of unused 2026 cap space rolls over one-for-one into 2027, where San Francisco is currently projected at minus 31.54 million dollars. That 2026 cushion isn't luxury spending cash—it's literally the bridge keeping the 2027 roster compliant without gutting core starters."
+    },
+    {
+      speaker: 'Marcus',
+      text: "Plus, even if you acquire a receiver midseason, you're absorbing nine eighteenths of his remaining 2026 base salary AND inheriting whatever unguaranteed 2027 cap hit sits on that deal—not to mention San Francisco only holds six picks in the 2027 draft after sending their fourth-rounder for DeForest Buckner."
+    },
+    {
+      speaker: 'Elena',
+      text: "Spot on. That's why getting cost-controlled separation snaps from rookie and second-year wideouts like Ricky Pearsall and Jordan Watkins is worth its weight in gold on OverTheCap."
+    },
+    {
+      speaker: 'Marcus',
+      text: "And the counter-argument we have to stay honest about is red-zone physicality against tight press in January. Until Mike Evans or Ricky Pearsall are back at full throttle inside the twenty, Shanahan has to manufacture condensed bunches and motion stacks so nobody gets jammed cleanly at the line."
+    },
+    {
+      speaker: 'Elena',
+      text: "That's the exact chessboard to watch: protect that 35.16 million Article 13 rollover for 2027, lean on Pearsall, Watkins, and Demarcus Robinson in rhythm spacing, and let Purdy dissect two-high shells from clean pockets."
+    }
+  ];
+}
+
+function buildMockHarmonicPcmBase64(durationSec = 90, sampleRate = 24000) {
+  const totalSamples = Math.max(2400, Math.round(durationSec * sampleRate));
+  const buf = Buffer.allocUnsafe(totalSamples * 2);
+  for (let i = 0; i < totalSamples; i++) {
+    const env = i < 1200 ? i / 1200 : i > totalSamples - 1200 ? (totalSamples - i) / 1200 : 1;
+    const sample = Math.round(
+      env * (Math.sin(i * 0.058) * 5800 + Math.sin(i * 0.087) * 2900)
+    );
+    buf.writeInt16LE(sample, i * 2);
+  }
+  return buf.toString('base64');
+}
+
 function startStaticServer(port) {
   const mime = {
     '.html': 'text/html; charset=utf-8',
@@ -65,6 +133,152 @@ function startStaticServer(port) {
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
       const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+
+      // Local Mock Gemini v1beta API for deterministic E2E testing of Browser -> Gemini Pro High + NotebookLM TTS
+      if (urlPath === '/v1beta/models' && req.method === 'GET') {
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'no-store'
+        });
+        res.end(
+          JSON.stringify({
+            models: [
+              { name: 'models/gemini-3.8-pro', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
+            ]
+          })
+        );
+        return;
+      }
+
+      if (urlPath.startsWith('/v1beta/models/') && urlPath.endsWith(':generateContent') && req.method === 'POST') {
+        let rawBody = '';
+        req.on('data', chunk => {
+          rawBody += chunk;
+        });
+        req.on('end', async () => {
+          let parsed = {};
+          try {
+            parsed = JSON.parse(rawBody || '{}');
+          } catch {}
+          mockGeminiRequests.push({ urlPath, body: parsed });
+
+          if (urlPath.includes('preview-tts:generateContent')) {
+            await new Promise(r => setTimeout(r, 750));
+            const fullText = String(parsed?.contents?.[0]?.parts?.[0]?.text || '');
+            const afterHeader = fullText.includes('Transcript:\n')
+              ? fullText.split('Transcript:\n')[1]
+              : fullText;
+            const spokenWords = afterHeader
+              .trim()
+              .split(/\s+/)
+              .filter(Boolean).length;
+            const segSeconds = Math.max(25, Math.min(130, (spokenWords / 148) * 60));
+            const b64Audio = buildMockHarmonicPcmBase64(segSeconds, 24000);
+            res.writeHead(200, {
+              'Content-Type': 'application/json; charset=utf-8',
+              'Cache-Control': 'no-store'
+            });
+            res.end(
+              JSON.stringify({
+                candidates: [
+                  {
+                    content: {
+                      parts: [{ inlineData: { mimeType: 'audio/L16;rate=24000', data: b64Audio } }]
+                    }
+                  }
+                ]
+              })
+            );
+            return;
+          }
+
+          // Text reasoning stages (Stage 1 Deep Research / Stage 2 Synthesis / Stage 3 Audit)
+          await new Promise(r => setTimeout(r, 450));
+          const userPrompt = String(parsed?.contents?.[0]?.parts?.[0]?.text || '');
+
+          if (
+            userPrompt.includes('raw JSON array') ||
+            userPrompt.includes('DRAFT JSON SCRIPT:')
+          ) {
+            res.writeHead(200, {
+              'Content-Type': 'application/json; charset=utf-8',
+              'Cache-Control': 'no-store'
+            });
+            res.end(
+              JSON.stringify({
+                candidates: [
+                  {
+                    content: {
+                      parts: [
+                        { thought: true, text: 'Auditing conversational cadence, contractions, and WR cap math...' },
+                        { text: JSON.stringify(buildMockNotebookLmScript12Turns()) }
+                      ]
+                    }
+                  }
+                ]
+              })
+            );
+            return;
+          }
+
+          // Extract user question for tailored response (including retired Bryce Huff check & XSS escaping check)
+          const qMatch =
+            userPrompt.match(/USER(?:'S EXACT QUESTION| TOPIC \/ QUESTION TO INVESTIGATE IN DEPTH):\s*"([^"]+)"/) ||
+            userPrompt.match(/specifically answer "([^"]+)"/);
+          const extractedQ = qMatch ? qMatch[1] : userPrompt.slice(0, 180);
+
+          let mdText = `### Executive Thesis: 49ers Wide Receiver Spacing & 2027 Cap Discipline
+With **Brandon Aiyuk** on season-ending IR and **Mike Evans** rehabbing on IR, Kyle Shanahan keeps **Brock Purdy** operating in rhythm by pairing **Jordan Watkins**, **Ricky Pearsall**, and **Demarcus Robinson** in condensed motion stacks against two-high shells.
+
+### All-22 Film Mechanics & Route Distribution
+* **Jordan Watkins** stretches quarters safeties vertically from reduced splits so intermediate dig and glance windows stay clean.
+* **Ricky Pearsall** and **Demarcus Robinson** handle high-leverage third-down isolation and sight adjustments outside the numbers.
+
+### Multi-Year CBA Article 13 Cap Verdict
+* San Francisco's **$35.16M** in 2026 Top-51 space must roll over 1-for-1 under **CBA Article 13** to offset the projected **-$31.54M** 2027 cap deficit rather than overpaying for a long-term veteran WR contract.`;
+
+          if (/Bryce Huff/i.test(extractedQ) || /Bryce Huff/i.test(userPrompt.slice(0, 500))) {
+            mdText = `### Live Roster Grounding Verification
+* **Bryce Huff** is a **retired/departed** former NFL edge rusher and is **not on the live 2026 San Francisco 49ers** active 53-man roster, Injured Reserve, or Practice Squad.
+* San Francisco's active 2026 defensive end rotation under DC Raheem Morris features **Nick Bosa**, **Keion White**, and **Mykel Williams** alongside interior trade acquisition **DeForest Buckner**.`;
+          } else if (extractedQ.includes('<img') || extractedQ.includes('<script') || userPrompt.includes('<img src=x')) {
+            mdText = `### Security Escaping Audit: <img src=x onerror="window.__xssTriggered=true"><script>window.__xssTriggered=true</script>\n* **Brock Purdy** posts elite efficiency against two-high shells while preserving **$35.16M** in 2026 Article 13 rollover.`;
+          }
+
+          res.writeHead(200, {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Cache-Control': 'no-store'
+          });
+          res.end(
+            JSON.stringify({
+              candidates: [
+                {
+                  content: {
+                    parts: [
+                      { thought: true, text: 'Deep Stage-1/2/3 reasoning scratchpad...' },
+                      { text: mdText }
+                    ]
+                  },
+                  groundingMetadata: {
+                    groundingChunks: [
+                      {
+                        web: {
+                          title: 'OverTheCap 49ers Salary Cap',
+                          uri: 'https://overthecap.com/salary-cap/san-francisco-49ers'
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            })
+          );
+        });
+        return;
+      }
+
       const rel = urlPath === '/' ? 'index.html' : urlPath.replace(/^\/+/, '');
       const fullPath = path.resolve(rootDir, rel);
 
@@ -1392,29 +1606,90 @@ async function main() {
       );
     });
 
-    await runStep('3-min "wide recievers" Autopodcast + Deep Analysis run full 3-stage workflow, real Stereo WAV audio (>2.3s continuous play), hidden transcripts & native Share links', async () => {
-      // 1. Empty podcast topic validation
-      const emptyPodErr = await cdp.eval(() => {
+    await runStep('3-min "wide recievers" Autopodcast + Deep Analysis run full 3-stage Gemini Pro High + NotebookLM TTS workflow, Archive/Restore/Delete & native Share links', async () => {
+      // 1. Empty podcast topic validation & Unconnected Gemini API Key Gate (never a silent 1-second template!)
+      const gateAndConnectAudit = await cdp.eval(async portNum => {
         const inp = document.getElementById('podTopicInput');
         inp.value = '   ';
         inp.dispatchEvent(new Event('input', { bubbles: true }));
         document.querySelector('[data-action="generate-autopodcast"]').click();
-        return document.getElementById('mainView').textContent;
-      });
-      assert(emptyPodErr.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
+        const emptyErrText = document.getElementById('mainView').textContent || '';
 
-      // 2. Configure exact user scenario: 3 min Two-Host podcast on "wide recievers"
-      const genStartWallMs = Date.now();
-      const podSetupAndProgress = await cdp.eval(async () => {
+        // Verify unconnected setup card & >=16px inline key input
+        const unconnectedCard = document.querySelector('[data-gemini-setup-card="unconnected"]');
+        const keyInput = document.getElementById('inlineGeminiApiKeyInput');
+        const inlineKeyFontSize = keyInput ? parseFloat(window.getComputedStyle(keyInput).fontSize) : 0;
+
+        // Pre-click coarse estimates before connecting key
         document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
-        document.querySelector('[data-action="set-pod-format"][data-format="two_host"]').click();
         const preClickHint3m = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
-
-        // Also verify coarse 8m estimate format before switching back to 3m
         document.querySelector('[data-action="set-pod-duration"][data-mins="8"]').click();
         const preClickHint8m = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
         document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
 
+        // Attempting generation without a key must immediately prompt to connect Gemini key & focus #inlineGeminiApiKeyInput
+        const topicEl = document.getElementById('podTopicInput');
+        topicEl.value = 'wide recievers';
+        topicEl.dispatchEvent(new Event('input', { bubbles: true }));
+        document.querySelector('[data-action="generate-autopodcast"]').click();
+        await new Promise(r => setTimeout(r, 80));
+        const missingKeyErrText = document.getElementById('mainView').textContent || '';
+        const focusedKeyInput = document.activeElement?.id === 'inlineGeminiApiKeyInput';
+
+        // Point geminiApiBaseUrl to our local mock v1beta server and connect inline Gemini API key
+        const st = window.__49ersDiagnostics.getState();
+        st.prefs.geminiApiBaseUrl = `http://127.0.0.1:${portNum}/v1beta`;
+        const liveKeyInput = document.getElementById('inlineGeminiApiKeyInput');
+        liveKeyInput.value = 'AIzaMockE2EStudioKey49ers';
+        document.querySelector('[data-action="save-inline-gemini-key"]').click();
+
+        const waitStart = Date.now();
+        while (!document.querySelector('[data-gemini-setup-card="connected"]') && Date.now() - waitStart < 4000) {
+          await new Promise(r => setTimeout(r, 60));
+        }
+        const connectedStripText =
+          document.querySelector('[data-gemini-setup-card="connected"]')?.textContent?.trim() || '';
+
+        return {
+          emptyErrText,
+          hasUnconnectedCard: Boolean(unconnectedCard),
+          inlineKeyFontSize,
+          preClickHint3m,
+          preClickHint8m,
+          missingKeyErrText,
+          focusedKeyInput,
+          connectedStripText
+        };
+      }, PORT);
+
+      assert(gateAndConnectAudit.emptyErrText.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
+      assert(gateAndConnectAudit.hasUnconnectedCard && gateAndConnectAudit.inlineKeyFontSize >= 16, 'Unconnected Gemini setup card missing or <16px input');
+      assert(
+        gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
+        `Unexpected 3m pre-click text: "${gateAndConnectAudit.preClickHint3m}"`
+      );
+      assert(
+        gateAndConnectAudit.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)',
+        `Unexpected 8m coarse pre-click text: "${gateAndConnectAudit.preClickHint8m}"`
+      );
+      assert(
+        gateAndConnectAudit.missingKeyErrText.includes('Connect your free Google AI Studio Gemini API Key') &&
+          gateAndConnectAudit.focusedKeyInput,
+        `Unconnected Gemini key gate failed: ${JSON.stringify(gateAndConnectAudit)}`
+      );
+      assert(
+        gateAndConnectAudit.connectedStripText.includes('Gemini 3.8 Pro High') &&
+          gateAndConnectAudit.connectedStripText.includes('NotebookLM Voices'),
+        `Inline Gemini API Key connection strip mismatch: "${gateAndConnectAudit.connectedStripText}"`
+      );
+      await cdp.assertNoOverflow('Audio & AI Connected Gemini Strip');
+
+      // 2. Configure exact user scenario: 3 min Two-Host podcast on "wide recievers"
+      mockGeminiRequests.length = 0;
+      const genStartWallMs = Date.now();
+      const podSetupAndProgress = await cdp.eval(async () => {
+        document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
+        document.querySelector('[data-action="set-pod-format"][data-format="two_host"]').click();
         const inp = document.getElementById('podTopicInput');
         inp.value = 'wide recievers';
         inp.dispatchEvent(new Event('input', { bubbles: true }));
@@ -1433,8 +1708,6 @@ async function main() {
         const genBtn = document.querySelector('[data-action="generate-autopodcast"]');
 
         return {
-          preClickHint3m,
-          preClickHint8m,
           hasBanner: Boolean(banner),
           stageLabels,
           bannerText: banner?.textContent || '',
@@ -1447,14 +1720,6 @@ async function main() {
         };
       });
 
-      assert(
-        podSetupAndProgress.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
-        `Unexpected 3m pre-click text: "${podSetupAndProgress.preClickHint3m}"`
-      );
-      assert(
-        podSetupAndProgress.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)',
-        `Unexpected 8m coarse pre-click text: "${podSetupAndProgress.preClickHint8m}"`
-      );
       assert(
         JSON.stringify(podSetupAndProgress.stageLabels) ===
           JSON.stringify([
@@ -1471,7 +1736,7 @@ async function main() {
           podSetupAndProgress.hasProgressBar &&
           podSetupAndProgress.bannerText.includes('Est. wait:') &&
           podSetupAndProgress.bannerText.includes('Quality prioritized over speed') &&
-          podSetupAndProgress.bannerText.includes('Gemini 3.8 High') &&
+          podSetupAndProgress.bannerText.includes('Gemini 3.8 Pro High') &&
           podSetupAndProgress.elapsedClock.startsWith('Elapsed') &&
           podSetupAndProgress.btnDisabled &&
           podSetupAndProgress.btnSpinIcon,
@@ -1479,16 +1744,41 @@ async function main() {
       );
       await cdp.assertNoOverflow('Active 3-Stage Podcast Wait Bar');
 
-      // Wait for real background VITS ONNX Neural TTS + Studio Mastering to complete (up to 110s on first model cache)
+      // Wait for 3-stage Gemini Pro High + Multi-Speaker NotebookLM TTS + Stereo WAV Mastering to complete
       await cdp.waitFor(
         () => !document.querySelector('[data-job-progress="active"]') && Boolean(document.querySelector('[data-podcast-ready-card]')),
         null,
-        110_000
+        45_000
       );
       const totalGenWallMs = Date.now() - genStartWallMs;
       assert(
-        totalGenWallMs >= 4500,
-        `Generation finished suspiciously fast (${totalGenWallMs}ms); expected real deep research + neural audio synthesis`
+        totalGenWallMs >= 2200,
+        `Generation finished suspiciously fast (${totalGenWallMs}ms); expected multi-stage deep research + NotebookLM TTS`
+      );
+
+      // Verify actual v1beta Gemini requests sent from browser: High Thinking + Google Search Grounding + Puck/Aoede Multi-Speaker TTS!
+      const textReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-3.8-pro:generateContent'));
+      const ttsReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-2.5-pro-preview-tts:generateContent'));
+      assert(textReqs.length >= 3, `Expected >=3 High-Thinking Pro stages (Research + Script + Polish), got ${textReqs.length}`);
+      assert(
+        textReqs.every(
+          r =>
+            r.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH' &&
+            !('thinkingBudget' in (r.body?.generationConfig?.thinkingConfig || {}))
+        ),
+        'Gemini 3+ requests must send thinkingConfig: { thinkingLevel: "HIGH" } without thinkingBudget'
+      );
+      assert(
+        Array.isArray(textReqs[0].body?.tools) && Boolean(textReqs[0].body.tools[0]?.google_search),
+        'Stage 1 Deep Research must enable live google_search grounding tool'
+      );
+      assert(ttsReqs.length >= 1, 'Expected Gemini 2.5 Pro Preview Multi-Speaker NotebookLM TTS call');
+      const speakerCfgs =
+        ttsReqs[0].body?.generationConfig?.speechConfig?.multiSpeakerVoiceConfig?.speakerVoiceConfigs || [];
+      assert(
+        speakerCfgs.some(s => s.speaker === 'Marcus' && s.voiceConfig?.prebuiltVoiceConfig?.voiceName === 'Puck') &&
+          speakerCfgs.some(s => s.speaker === 'Elena' && s.voiceConfig?.prebuiltVoiceConfig?.voiceName === 'Aoede'),
+        `Expected NotebookLM Puck + Aoede speakerVoiceConfigs, got: ${JSON.stringify(speakerCfgs)}`
       );
 
       // Verify "Podcast Ready to Play" state, ~3:00 duration (NOT 1:21!), hidden-by-default transcript, and real Stereo WAV audio!
@@ -1511,7 +1801,7 @@ async function main() {
           const view = new DataView(buf);
           wavHeader = String.fromCharCode(view.getUint8(0), view.getUint8(1), view.getUint8(2), view.getUint8(3));
           wavChannels = view.getUint16(22, true);
-          for (let off = 44; off < Math.min(buf.byteLength - 2, 44000); off += 20) {
+          for (let off = 24000; off < Math.min(buf.byteLength - 2, 96000); off += 20) {
             if (Math.abs(view.getInt16(off, true)) > 150) wavNonZeroSamples++;
           }
         }
@@ -1532,6 +1822,7 @@ async function main() {
         document.getElementById('mpPlayPauseBtn')?.click();
 
         return {
+          epId: ep?.id,
           readyCardText,
           hiddenTurnsBeforeClick,
           expandedTurnCount,
@@ -1594,7 +1885,6 @@ async function main() {
         }
 
         const sharedUrl = window.__lastSharedUrl || nativeShareCaptured?.url || '';
-        // Simulate colleague opening the shared URL (audio already cached in IDB for same ID, so instant ready!)
         document.getElementById('mpCloseBtn')?.click();
         await window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
         const loadedSharedEp = window.__49ersDiagnostics.getState().audioState?.episode;
@@ -1612,9 +1902,59 @@ async function main() {
           shareRoundTrip.loadedTurns >= 10,
         `Podcast native share & colleague deep-link hydration failed: ${JSON.stringify(shareRoundTrip)}`
       );
-      await cdp.eval(() => document.getElementById('mpCloseBtn')?.click());
 
-      // 4. Switch to AI Analysis Tab, verify parallel 3-step wait bar, coarse estimate, grounding & Share icon
+      // 4. Test Podcast Archive -> Active/Archived Filter -> Archive Vault Sheet -> Restore -> Delete (+ IDB & Mini-Player cleanup!)
+      const podArchiveAndDeleteAudit = await cdp.eval(async customEpId => {
+        // Archive custom podcast from Ready-to-Play / Library
+        document.querySelector(`[data-episode-card="${customEpId}"] [data-action="archive-podcast"]`)?.click();
+        const absentFromActive = !document.querySelector(`[data-episode-card="${customEpId}"]`);
+
+        // Switch library filter to Archived (1)
+        document.querySelector('[data-action="set-pod-library-filter"][data-filter="archived"]')?.click();
+        const visibleInArchivedTab = Boolean(document.querySelector(`[data-episode-card="${customEpId}"]`));
+
+        // Open Top-Bar Archive Vault sheet and confirm it appears under #archivePodcastsSection
+        document.getElementById('openArchiveBtn')?.click();
+        const vaultPodText = document.getElementById('archivePodcastsSection')?.textContent || '';
+        // Restore directly from Archive Vault sheet!
+        document.querySelector(`#archivePodcastsSection [data-action="unarchive-podcast"][data-episode-id="${customEpId}"]`)?.click();
+        document.getElementById('closeSheetBtn')?.click();
+
+        // Switch back to Active filter and confirm restored episode is back
+        document.querySelector('[data-action="set-pod-library-filter"][data-filter="active"]')?.click();
+        const restoredToActive = Boolean(document.querySelector(`[data-episode-card="${customEpId}"]`));
+
+        // Now Delete the custom episode and confirm Mini-Player closes + IndexedDB WAV blob is purged!
+        document.querySelector(`[data-episode-card="${customEpId}"] [data-action="delete-podcast"]`)?.click();
+        await new Promise(r => setTimeout(r, 150));
+        const goneAfterDelete = !document.querySelector(`[data-episode-card="${customEpId}"]`);
+        const miniPlayerHiddenAfterDelete = document.getElementById('miniPlayer').hidden;
+        const { getEpisodeAudioUrl } = await import('/src/services/podcastAudioStore.js');
+        const idbUrlAfterDelete = await getEpisodeAudioUrl(customEpId);
+
+        return {
+          absentFromActive,
+          visibleInArchivedTab,
+          inVaultSheet: vaultPodText.includes('wide receivers'),
+          restoredToActive,
+          goneAfterDelete,
+          miniPlayerHiddenAfterDelete,
+          idbPurged: idbUrlAfterDelete === null
+        };
+      }, readyAndPlaybackAudit.epId);
+
+      assert(
+        podArchiveAndDeleteAudit.absentFromActive &&
+          podArchiveAndDeleteAudit.visibleInArchivedTab &&
+          podArchiveAndDeleteAudit.inVaultSheet &&
+          podArchiveAndDeleteAudit.restoredToActive &&
+          podArchiveAndDeleteAudit.goneAfterDelete &&
+          podArchiveAndDeleteAudit.miniPlayerHiddenAfterDelete &&
+          podArchiveAndDeleteAudit.idbPurged,
+        `Podcast Archive / Restore / Delete lifecycle failed: ${JSON.stringify(podArchiveAndDeleteAudit)}`
+      );
+
+      // 5. Switch to AI Analysis Tab, verify parallel 3-step wait bar, Pro High estimate, grounding, Share, Archive & Delete
       const emptyAnalysisErr = await cdp.eval(() => {
         document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
         const area = document.getElementById('analysisPromptInput');
@@ -1647,42 +1987,78 @@ async function main() {
       });
       assert(
         analysisProgress.preHint ===
-          'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 High)' &&
+          'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 Pro High)' &&
           analysisProgress.hasBanner &&
           analysisProgress.hasSpinner &&
           analysisProgress.stageLabels.length === 3 &&
           analysisProgress.bannerText.includes('Est. wait:') &&
-          analysisProgress.bannerText.includes('Gemini 3.8 High'),
+          analysisProgress.bannerText.includes('Gemini 3.8 Pro High'),
         `Analysis 3-stage wait bar / estimate check failed: ${JSON.stringify(analysisProgress)}`
       );
 
       await cdp.waitFor(
         prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
         beforeReportCount,
-        12_000
+        20_000
       );
 
-      // Verify Share icon on AI Analysis report card
-      const analysisShareCheck = await cdp.eval(async () => {
+      // Verify Share icon + Archive / Restore / Delete lifecycle on AI Analysis report card
+      const analysisShareAndLifecycle = await cdp.eval(async () => {
+        const firstCard = document.querySelector('#mainView article.brief-card[data-analysis-card]');
+        const analysisId = firstCard?.getAttribute('data-analysis-card') || '';
+
         let shared = null;
         const origShare = navigator.share;
         navigator.share = async d => {
           shared = d;
         };
         try {
-          document.querySelector('[data-action="share-analysis"]')?.click();
+          firstCard?.querySelector('[data-action="share-analysis"]')?.click();
           await new Promise(r => setTimeout(r, 150));
         } finally {
           navigator.share = origShare;
         }
-        return shared?.url || window.__lastSharedUrl || '';
+        const sharedUrl = shared?.url || window.__lastSharedUrl || '';
+
+        // Archive report -> check Archived filter & Vault -> Restore -> Delete
+        firstCard?.querySelector('[data-action="archive-analysis"]')?.click();
+        const hiddenFromActive = !document.querySelector(`[data-analysis-card="${analysisId}"]`);
+
+        document.querySelector('[data-action="set-analysis-library-filter"][data-filter="archived"]')?.click();
+        const shownInArchived = Boolean(document.querySelector(`[data-analysis-card="${analysisId}"]`));
+
+        document.getElementById('openArchiveBtn')?.click();
+        const vaultAnalysisText = document.getElementById('archiveAnalysesSection')?.textContent || '';
+        document.querySelector(`#archiveAnalysesSection [data-action="unarchive-analysis"][data-analysis-id="${analysisId}"]`)?.click();
+        document.getElementById('closeSheetBtn')?.click();
+
+        document.querySelector('[data-action="set-analysis-library-filter"][data-filter="active"]')?.click();
+        const restoredOk = Boolean(document.querySelector(`[data-analysis-card="${analysisId}"]`));
+
+        document.querySelector(`[data-analysis-card="${analysisId}"] [data-action="delete-analysis"]`)?.click();
+        const deletedOk = !document.querySelector(`[data-analysis-card="${analysisId}"]`);
+
+        return {
+          sharedUrl,
+          hiddenFromActive,
+          shownInArchived,
+          inVault: vaultAnalysisText.includes('wide recievers'),
+          restoredOk,
+          deletedOk
+        };
       });
       assert(
-        analysisShareCheck.includes('?analysis=') && analysisShareCheck.includes('#shared-analysis=z.'),
-        `AI Analysis Share button failed: ${analysisShareCheck}`
+        analysisShareAndLifecycle.sharedUrl.includes('?analysis=') &&
+          analysisShareAndLifecycle.sharedUrl.includes('#shared-analysis=z.') &&
+          analysisShareAndLifecycle.hiddenFromActive &&
+          analysisShareAndLifecycle.shownInArchived &&
+          analysisShareAndLifecycle.inVault &&
+          analysisShareAndLifecycle.restoredOk &&
+          analysisShareAndLifecycle.deletedOk,
+        `AI Analysis Share / Archive / Restore / Delete failed: ${JSON.stringify(analysisShareAndLifecycle)}`
       );
 
-      // 5. Ask about retired former 49er Bryce Huff and verify Live Roster Grounding Verification explicitly flags him as non-rostered
+      // 6. Ask about retired former 49er Bryce Huff and verify Live Roster Grounding Verification explicitly flags him as non-rostered
       const countBeforeHuffQuery = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
       await cdp.eval(() => {
         const area = document.getElementById('analysisPromptInput');
@@ -1693,7 +2069,7 @@ async function main() {
       await cdp.waitFor(
         prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
         countBeforeHuffQuery,
-        12_000
+        20_000
       );
       const topGeneratedCardText = await cdp.eval(
         () => document.querySelector('#mainView article.brief-card')?.textContent || ''
@@ -1771,9 +2147,16 @@ async function main() {
       });
       await cdp.send('Page.reload');
       await cdp.waitFor(() => document.querySelector('[data-action="toggle-customize-layout"]'));
-      const healthyAfterCorrupt = await cdp.eval(() =>
-        document.getElementById('headerRecordPill')?.textContent?.trim()
-      );
+      const healthyAfterCorrupt = await cdp.eval(portNum => {
+        const rec = document.getElementById('headerRecordPill')?.textContent?.trim();
+        // Restore mock v1beta connection so subsequent Deep Analysis XSS test exercises real LLM Markdown rendering
+        const st = window.__49ersDiagnostics.getState();
+        st.prefs.geminiApiKey = 'AIzaMockE2EStudioKey49ers';
+        st.prefs.verifiedGeminiModel = 'gemini-3.8-pro';
+        st.prefs.geminiApiBaseUrl = `http://127.0.0.1:${portNum}/v1beta`;
+        window.__49ersDiagnostics.forceRender();
+        return rec;
+      }, PORT);
       assert(healthyAfterCorrupt === '6-1', 'App failed to recover from corrupted localStorage');
     });
 

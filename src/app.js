@@ -25,8 +25,10 @@ import {
   generateOnDemandAutopodcast,
   synthesizeMissingEpisodeAudio,
   estimateGenerationWait,
-  resolveActiveHighQualityModelLabel
+  resolveActiveHighQualityModelLabel,
+  verifyGeminiApiKey
 } from './services/aiWorkerClient.js';
+import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
 import {
   buildShareablePodcastUrl,
   buildShareableAnalysisUrl,
@@ -84,6 +86,9 @@ const state = {
   podFormat: 'two_host',
   podTopicDraft: '',
   analysisPromptDraft: '',
+  podLibraryFilter: 'active',
+  analysisLibraryFilter: 'active',
+  geminiKeyNotice: '',
   jobStatus: null,
   workerSharedFeed: { analyses: [], episodes: [] },
   audioState: {},
@@ -232,26 +237,48 @@ function getAllEpisodes() {
   const base = state.appData?.podcastIndex?.episodes || [];
   const workerEps = state.workerSharedFeed?.episodes || [];
   const localEps = state.prefs.localCustomEpisodes || [];
+  const deletedSet = new Set(state.prefs.deletedEpisodeIds || []);
   const merged = [...localEps, ...workerEps, ...base];
   const seen = new Set();
   return merged.filter(ep => {
-    if (!ep?.id || seen.has(ep.id)) return false;
+    if (!ep?.id || seen.has(ep.id) || deletedSet.has(ep.id)) return false;
     seen.add(ep.id);
     return true;
   });
+}
+
+function getActiveEpisodes() {
+  const archivedSet = new Set(state.prefs.archivedEpisodeIds || []);
+  return getAllEpisodes().filter(ep => !archivedSet.has(ep.id));
+}
+
+function getArchivedEpisodes() {
+  const archivedSet = new Set(state.prefs.archivedEpisodeIds || []);
+  return getAllEpisodes().filter(ep => archivedSet.has(ep.id));
 }
 
 function getAllAnalyses() {
   const base = state.appData?.podcastIndex?.sharedAnalyses || [];
   const workerItems = state.workerSharedFeed?.analyses || [];
   const localItems = state.prefs.localCustomAnalyses || [];
+  const deletedSet = new Set(state.prefs.deletedAnalysisIds || []);
   const merged = [...localItems, ...workerItems, ...base];
   const seen = new Set();
   return merged.filter(item => {
-    if (!item?.id || seen.has(item.id)) return false;
+    if (!item?.id || seen.has(item.id) || deletedSet.has(item.id)) return false;
     seen.add(item.id);
     return true;
   });
+}
+
+function getActiveAnalyses() {
+  const archivedSet = new Set(state.prefs.archivedAnalysisIds || []);
+  return getAllAnalyses().filter(item => !archivedSet.has(item.id));
+}
+
+function getArchivedAnalyses() {
+  const archivedSet = new Set(state.prefs.archivedAnalysisIds || []);
+  return getAllAnalyses().filter(item => archivedSet.has(item.id));
 }
 
 function preserveFocusAroundRender(renderFn) {
@@ -435,11 +462,16 @@ function renderMain() {
         podTopicDraft: state.podTopicDraft,
         analysisPromptDraft: state.analysisPromptDraft,
         jobStatus: state.jobStatus,
-        allEpisodes: getAllEpisodes(),
-        allAnalyses: getAllAnalyses(),
+        allEpisodes: getActiveEpisodes(),
+        archivedEpisodes: getArchivedEpisodes(),
+        podLibraryFilter: state.podLibraryFilter,
+        allAnalyses: getActiveAnalyses(),
+        archivedAnalyses: getArchivedAnalyses(),
+        analysisLibraryFilter: state.analysisLibraryFilter,
         audioState: state.audioState,
         expandedTranscriptIds: state.expandedTranscriptIds,
-        shareToastTargetId: state.shareToastTargetId
+        shareToastTargetId: state.shareToastTargetId,
+        geminiKeyNotice: state.geminiKeyNotice
       });
     }
   });
@@ -489,11 +521,13 @@ function renderSheet() {
         reporterSearch: state.reporterSearch
       });
     } else if (state.sheetMode === 'vault') {
-      if (eyebrow) eyebrow.textContent = 'Seasonal Schedule & Trade Archive';
-      if (title) title.textContent = 'Off-Cycle Archive';
+      if (eyebrow) eyebrow.textContent = 'Podcasts, Analyses, Trades & Seasonal Archive';
+      if (title) title.textContent = 'Archive Vault';
       body.innerHTML = renderArchiveVaultSheetHtml({
         seasonState: state.seasonState,
-        appData: state.appData
+        appData: state.appData,
+        archivedEpisodes: getArchivedEpisodes(),
+        archivedAnalyses: getArchivedAnalyses()
       });
     }
   });
@@ -647,6 +681,11 @@ function bindEvents() {
       e.preventDefault();
       e.stopPropagation();
       openJargonPopover(jt, jt.getAttribute('data-jargon'));
+      return;
+    }
+    if (e.key === 'Enter' && e.target?.id === 'inlineGeminiApiKeyInput') {
+      e.preventDefault();
+      document.querySelector('[data-action="save-inline-gemini-key"]')?.click();
       return;
     }
     if (e.key === 'Escape' && state.sheetMode) {
@@ -1075,6 +1114,151 @@ function bindEvents() {
         break;
       }
 
+      case 'save-inline-gemini-key': {
+        const keyInput = document.getElementById('inlineGeminiApiKeyInput');
+        const rawKey = String(keyInput?.value || '').trim();
+        if (!rawKey) {
+          state.geminiKeyNotice = 'Paste your Gemini API Key from Google AI Studio first.';
+          renderMain();
+          document.getElementById('inlineGeminiApiKeyInput')?.focus();
+          break;
+        }
+        btn.disabled = true;
+        btn.innerHTML = `${iconSvg('loader', 14, 'btn-spin-icon')}<span>Verifying…</span>`;
+        try {
+          const verified = await verifyGeminiApiKey(rawKey, state.prefs.geminiApiBaseUrl);
+          state.prefs.geminiApiKey = rawKey;
+          state.prefs.verifiedGeminiModel = verified.bestModel || '';
+          saveUserPrefs(state.prefs);
+          state.geminiKeyNotice = '';
+          if (state.jobStatus?.error) state.jobStatus = null;
+          renderMain();
+        } catch (err) {
+          state.geminiKeyNotice = err.message || 'Unable to verify Gemini API Key.';
+          renderMain();
+        }
+        break;
+      }
+
+      case 'clear-gemini-key': {
+        state.prefs.geminiApiKey = '';
+        state.prefs.verifiedGeminiModel = '';
+        saveUserPrefs(state.prefs);
+        state.geminiKeyNotice = '';
+        renderSheet();
+        renderMain();
+        break;
+      }
+
+      case 'set-pod-library-filter': {
+        state.podLibraryFilter =
+          btn.getAttribute('data-filter') === 'archived' ? 'archived' : 'active';
+        renderMain();
+        break;
+      }
+
+      case 'archive-podcast': {
+        const epId = btn.getAttribute('data-episode-id');
+        if (epId) {
+          const set = new Set(state.prefs.archivedEpisodeIds || []);
+          set.add(epId);
+          state.prefs.archivedEpisodeIds = Array.from(set);
+          saveUserPrefs(state.prefs);
+          renderMain();
+          if (state.sheetMode === 'vault') renderSheet();
+        }
+        break;
+      }
+
+      case 'unarchive-podcast': {
+        const epId = btn.getAttribute('data-episode-id');
+        if (epId) {
+          state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
+            id => id !== epId
+          );
+          saveUserPrefs(state.prefs);
+          renderMain();
+          if (state.sheetMode === 'vault') renderSheet();
+        }
+        break;
+      }
+
+      case 'delete-podcast': {
+        const epId = btn.getAttribute('data-episode-id');
+        if (epId) {
+          const delSet = new Set(state.prefs.deletedEpisodeIds || []);
+          delSet.add(epId);
+          state.prefs.deletedEpisodeIds = Array.from(delSet);
+          state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
+            id => id !== epId
+          );
+          state.prefs.localCustomEpisodes = (state.prefs.localCustomEpisodes || []).filter(
+            ep => ep.id !== epId
+          );
+          state.expandedTranscriptIds.delete(epId);
+          if (state.audioState?.episode?.id === epId) {
+            audioController?.closePlayer();
+          }
+          saveUserPrefs(state.prefs);
+          await deleteEpisodeAudioBlob(epId);
+          renderMain();
+          if (state.sheetMode === 'vault') renderSheet();
+        }
+        break;
+      }
+
+      case 'set-analysis-library-filter': {
+        state.analysisLibraryFilter =
+          btn.getAttribute('data-filter') === 'archived' ? 'archived' : 'active';
+        renderMain();
+        break;
+      }
+
+      case 'archive-analysis': {
+        const analysisId = btn.getAttribute('data-analysis-id');
+        if (analysisId) {
+          const set = new Set(state.prefs.archivedAnalysisIds || []);
+          set.add(analysisId);
+          state.prefs.archivedAnalysisIds = Array.from(set);
+          saveUserPrefs(state.prefs);
+          renderMain();
+          if (state.sheetMode === 'vault') renderSheet();
+        }
+        break;
+      }
+
+      case 'unarchive-analysis': {
+        const analysisId = btn.getAttribute('data-analysis-id');
+        if (analysisId) {
+          state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
+            id => id !== analysisId
+          );
+          saveUserPrefs(state.prefs);
+          renderMain();
+          if (state.sheetMode === 'vault') renderSheet();
+        }
+        break;
+      }
+
+      case 'delete-analysis': {
+        const analysisId = btn.getAttribute('data-analysis-id');
+        if (analysisId) {
+          const delSet = new Set(state.prefs.deletedAnalysisIds || []);
+          delSet.add(analysisId);
+          state.prefs.deletedAnalysisIds = Array.from(delSet);
+          state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
+            id => id !== analysisId
+          );
+          state.prefs.localCustomAnalyses = (state.prefs.localCustomAnalyses || []).filter(
+            a => a.id !== analysisId
+          );
+          saveUserPrefs(state.prefs);
+          renderMain();
+          if (state.sheetMode === 'vault') renderSheet();
+        }
+        break;
+      }
+
       case 'generate-autopodcast': {
         const inputEl = document.getElementById('podTopicInput');
         if (inputEl) state.podTopicDraft = inputEl.value;
@@ -1095,7 +1279,7 @@ function bindEvents() {
           prefs: state.prefs,
           appData: state.appData
         });
-        const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
+        const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
         const elapsedTicker = setInterval(() => {
           const clockEl = document.getElementById('jobElapsedClock');
           if (clockEl) {
@@ -1149,11 +1333,18 @@ function bindEvents() {
                 ? null
                 : episode.audioUrl
           };
+          state.prefs.deletedEpisodeIds = (state.prefs.deletedEpisodeIds || []).filter(
+            id => id !== episode.id
+          );
+          state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
+            id => id !== episode.id
+          );
           state.prefs.localCustomEpisodes = [
             persistableEpisode,
             ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== episode.id)
           ].slice(0, 20);
           saveUserPrefs(state.prefs);
+          state.podLibraryFilter = 'active';
           // Collapse transcript by default on newly generated episodes
           state.expandedTranscriptIds.delete(episode.id);
           state.jobStatus = null;
@@ -1168,6 +1359,9 @@ function bindEvents() {
             error: err.message || 'Failed to generate podcast.'
           };
           renderMain();
+          if (err?.code === 'GEMINI_KEY_REQUIRED') {
+            document.getElementById('inlineGeminiApiKeyInput')?.focus();
+          }
         } finally {
           clearInterval(elapsedTicker);
         }
@@ -1192,7 +1386,7 @@ function bindEvents() {
           prefs: state.prefs,
           appData: state.appData
         });
-        const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
+        const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
         const elapsedTicker = setInterval(() => {
           const clockEl = document.getElementById('jobElapsedClock');
           if (clockEl) {
@@ -1237,11 +1431,18 @@ function bindEvents() {
               renderMain();
             }
           });
+          state.prefs.deletedAnalysisIds = (state.prefs.deletedAnalysisIds || []).filter(
+            id => id !== report.id
+          );
+          state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
+            id => id !== report.id
+          );
           state.prefs.localCustomAnalyses = [
             report,
             ...(state.prefs.localCustomAnalyses || []).filter(a => a.id !== report.id)
           ].slice(0, 25);
           saveUserPrefs(state.prefs);
+          state.analysisLibraryFilter = 'active';
           state.jobStatus = null;
           state.analysisPromptDraft = '';
           renderMain();
@@ -1252,6 +1453,9 @@ function bindEvents() {
             error: err.message || 'Analysis failed.'
           };
           renderMain();
+          if (err?.code === 'GEMINI_KEY_REQUIRED') {
+            document.getElementById('inlineGeminiApiKeyInput')?.focus();
+          }
         } finally {
           clearInterval(elapsedTicker);
         }
@@ -1291,12 +1495,30 @@ function bindEvents() {
         const authEl = document.getElementById('prefAuthorInput');
         const passEl = document.getElementById('prefPasscodeInput');
         const urlEl = document.getElementById('prefWorkerUrlInput');
+        const geminiKeyEl = document.getElementById('prefGeminiKeyInput');
         if (authEl) state.prefs.authorName = authEl.value.trim() || 'Josh';
         if (passEl) state.prefs.groupPasscode = passEl.value.trim();
         if (urlEl) state.prefs.workerBaseUrl = urlEl.value.trim();
+        if (geminiKeyEl) {
+          const nextKey = geminiKeyEl.value.trim();
+          state.prefs.geminiApiKey = nextKey;
+          if (!nextKey) {
+            state.prefs.verifiedGeminiModel = '';
+          } else {
+            try {
+              const verified = await verifyGeminiApiKey(nextKey, state.prefs.geminiApiBaseUrl);
+              state.prefs.verifiedGeminiModel = verified.bestModel || '';
+            } catch {
+              // Keep user's key saved even if offline or verifying later
+            }
+          }
+        }
         saveUserPrefs(state.prefs);
+        state.geminiKeyNotice = '';
+        if (state.jobStatus?.error) state.jobStatus = null;
         const shared = await fetchSharedWorkerFeed(state.prefs);
         if (shared) state.workerSharedFeed = shared;
+        renderMain();
         btn.innerHTML = `${iconSvg('check', 14)}<span>Saved!</span>`;
         setTimeout(() => {
           if (state.sheetMode === 'settings') renderSheet();
@@ -1544,6 +1766,16 @@ async function handleIncomingSharedLink(locationLike = window.location) {
   if (sharedRoute.type === 'podcast') {
     state.activeNavTab = 'audio';
     state.studioSubTab = 'podcast';
+    state.podLibraryFilter = 'active';
+
+    if (sharedRoute.id) {
+      state.prefs.deletedEpisodeIds = (state.prefs.deletedEpisodeIds || []).filter(
+        id => id !== sharedRoute.id
+      );
+      state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
+        id => id !== sharedRoute.id
+      );
+    }
 
     let targetEp = getAllEpisodes().find(ep => ep.id === sharedRoute.id) || null;
     if (!targetEp && sharedRoute.episode) {
@@ -1552,8 +1784,8 @@ async function handleIncomingSharedLink(locationLike = window.location) {
         targetEp,
         ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== targetEp.id)
       ].slice(0, 20);
-      saveUserPrefs(state.prefs);
     }
+    saveUserPrefs(state.prefs);
 
     renderMain();
     if (targetEp) {
@@ -1567,6 +1799,16 @@ async function handleIncomingSharedLink(locationLike = window.location) {
   if (sharedRoute.type === 'analysis') {
     state.activeNavTab = 'audio';
     state.studioSubTab = 'analysis';
+    state.analysisLibraryFilter = 'active';
+
+    if (sharedRoute.id) {
+      state.prefs.deletedAnalysisIds = (state.prefs.deletedAnalysisIds || []).filter(
+        id => id !== sharedRoute.id
+      );
+      state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
+        id => id !== sharedRoute.id
+      );
+    }
 
     let targetReport = getAllAnalyses().find(a => a.id === sharedRoute.id) || null;
     if (!targetReport && sharedRoute.analysis) {
@@ -1575,8 +1817,8 @@ async function handleIncomingSharedLink(locationLike = window.location) {
         targetReport,
         ...(state.prefs.localCustomAnalyses || []).filter(a => a.id !== targetReport.id)
       ].slice(0, 25);
-      saveUserPrefs(state.prefs);
     }
+    saveUserPrefs(state.prefs);
     renderMain();
     return true;
   }
@@ -1592,7 +1834,7 @@ async function init() {
   audioController = new PodcastAudioController(renderMiniPlayer, {
     onSynthesizeMissingAudio: async ep => {
       const startedAtMs = Date.now();
-      const modelInfo = resolveActiveHighQualityModelLabel(state.appData);
+      const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
       state.jobStatus = {
         active: true,
         kind: 'podcast',
@@ -1608,17 +1850,21 @@ async function init() {
       };
       if (state.activeNavTab === 'audio') renderMain();
       try {
-        return await synthesizeMissingEpisodeAudio(ep, p => {
-          state.jobStatus = {
-            ...state.jobStatus,
-            ...p,
-            active: true,
-            kind: 'podcast',
-            startedAtMs,
-            modelLabel: modelInfo.displayLabel
-          };
-          if (state.activeNavTab === 'audio') renderMain();
-        });
+        return await synthesizeMissingEpisodeAudio(
+          ep,
+          p => {
+            state.jobStatus = {
+              ...state.jobStatus,
+              ...p,
+              active: true,
+              kind: 'podcast',
+              startedAtMs,
+              modelLabel: modelInfo.displayLabel
+            };
+            if (state.activeNavTab === 'audio') renderMain();
+          },
+          state.prefs
+        );
       } finally {
         state.jobStatus = null;
         if (state.activeNavTab === 'audio') renderMain();

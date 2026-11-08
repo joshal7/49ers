@@ -10,6 +10,7 @@ import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
   estimateGenerationWait,
+  hasLiveAiConnection,
   resolveActiveHighQualityModelLabel
 } from '../services/aiWorkerClient.js';
 
@@ -236,6 +237,56 @@ function renderTranscriptTurnsList(episode, activeTurnIdx = -1) {
   `;
 }
 
+function renderGeminiConnectionStatusCard(userPrefs = {}, modelInfo = {}, keyFeedback = '') {
+  const connected = hasLiveAiConnection(userPrefs);
+  if (connected) {
+    const modeLabel = userPrefs?.workerBaseUrl
+      ? 'Shared Cloud Worker + NotebookLM Voices'
+      : `${modelInfo.shortModelName} + NotebookLM Voices (Puck & Aoede)`;
+    return `
+      <div class="gemini-connected-strip" data-gemini-setup-card="connected">
+        <span class="inline-icon-meta" style="min-width:0">
+          <span class="gemini-live-dot" aria-hidden="true"></span>
+          <span>Live AI Connected: <strong>${esc(modeLabel)}</strong></span>
+        </span>
+        <button type="button" class="btn-ghost" data-action="open-settings" style="padding:3px 8px;font-size:11px;flex-shrink:0">
+          ${iconSvg('settings', 12)}
+          <span>Key</span>
+        </button>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="gemini-connect-box" data-gemini-setup-card="unconnected">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+        <span class="inline-icon-meta" style="font-weight:800;color:var(--gold-bright);font-size:12.5px">
+          ${iconSvg('key', 14)}
+          <span>Connect Gemini API Key (1-Time Device Setup)</span>
+        </span>
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+          <span>Get Free AI Studio Key</span>
+          ${iconSvg('externalLink', 10)}
+        </a>
+      </div>
+      <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
+        Saved privately on this device (never committed to GitHub). Unlocks genuine <strong>25–60s High-Thinking Deep Research</strong> + live Google Search Grounding + smooth <strong>Gemini NotebookLM Studio Voices</strong>.
+      </div>
+      <div class="gemini-key-row">
+        <input type="password" id="inlineGeminiApiKeyInput" class="text-input"
+               style="flex:1 1 175px;min-width:0;font-size:16px"
+               placeholder="Paste AIza... Gemini API Key" autocomplete="off"
+               aria-label="Google Gemini API Key" />
+        <button type="button" class="btn-secondary" data-action="save-inline-gemini-key" style="flex-shrink:0">
+          ${iconSvg('check', 14)}
+          <span>Connect Gemini</span>
+        </button>
+      </div>
+      ${keyFeedback ? `<div style="font-size:11.5px;color:var(--gold-bright)">${esc(keyFeedback)}</div>` : ''}
+    </div>
+  `;
+}
+
 export function renderAudioAiViewHtml({
   appData = null,
   userPrefs = {},
@@ -248,10 +299,15 @@ export function renderAudioAiViewHtml({
   analysisPromptDraft = '',
   jobStatus = null,
   allEpisodes = [],
+  archivedEpisodes = [],
+  podLibraryFilter = 'active',
   allAnalyses = [],
+  archivedAnalyses = [],
+  analysisLibraryFilter = 'active',
   audioState = {},
   expandedTranscriptIds = new Set(),
-  shareToastTargetId = null
+  shareToastTargetId = null,
+  geminiKeyNotice = ''
 }) {
   const beatPodBundle = appData?.beatPodcasts || { shows: [], episodes: [] };
   const recentBeatEpisodes = filterEpisodesLast7Days(beatPodBundle.episodes || [], beatPodBundle.updatedAt);
@@ -299,9 +355,12 @@ export function renderAudioAiViewHtml({
         podTopicDraft,
         jobStatus,
         allEpisodes,
+        archivedEpisodes,
+        podLibraryFilter,
         audioState,
         expandedTranscriptIds,
-        shareToastTargetId
+        shareToastTargetId,
+        geminiKeyNotice
       })
     );
   }
@@ -314,7 +373,10 @@ export function renderAudioAiViewHtml({
       analysisPromptDraft,
       jobStatus,
       allAnalyses,
-      shareToastTargetId
+      archivedAnalyses,
+      analysisLibraryFilter,
+      shareToastTargetId,
+      geminiKeyNotice
     })
   );
 }
@@ -517,13 +579,16 @@ function renderPodcastStudio({
   podFormat,
   podTopicDraft,
   jobStatus,
-  allEpisodes,
+  allEpisodes = [],
+  archivedEpisodes = [],
+  podLibraryFilter = 'active',
   audioState,
   expandedTranscriptIds = new Set(),
-  shareToastTargetId = null
+  shareToastTargetId = null,
+  geminiKeyNotice = ''
 }) {
   const activeEp = audioState?.episode || null;
-  const modelInfo = resolveActiveHighQualityModelLabel(appData);
+  const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
   const waitEst = estimateGenerationWait({
     kind: 'podcast',
     durationMinutes: podDurationMin,
@@ -545,6 +610,7 @@ function renderPodcastStudio({
   const isActiveExpanded = Boolean(activeEp && expandedTranscriptIds.has(activeEp.id));
   const activeTurnCount = activeEp?.transcript?.length || 0;
   const isActiveSharedToast = Boolean(activeEp && shareToastTargetId === activeEp.id);
+  const isActiveEpArchived = Boolean(activeEp && archivedEpisodes.some(e => e.id === activeEp.id));
   const activeEyebrow = audioState?.isBufferingAudio
     ? 'Preparing Studio Audio…'
     : audioState?.isPlaying
@@ -590,6 +656,21 @@ function renderPodcastStudio({
               ${iconSvg(isActiveSharedToast ? 'check' : 'share', 14)}
               <span>${isActiveSharedToast ? 'Link Copied' : 'Share'}</span>
             </button>
+            ${
+              isActiveEpArchived
+                ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Restore podcast" title="Restore to active library">
+                     ${iconSvg('restore', 13)}
+                     <span>Restore</span>
+                   </button>`
+                : `<button type="button" class="icon-btn share-action-btn" data-action="archive-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Archive podcast" title="Archive podcast">
+                     ${iconSvg('archive', 13)}
+                     <span>Archive</span>
+                   </button>`
+            }
+            <button type="button" class="icon-btn share-action-btn danger-action-btn" data-action="delete-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Delete podcast" title="Delete podcast">
+              ${iconSvg('trash', 13)}
+              <span>Delete</span>
+            </button>
           </div>
         </div>
 
@@ -598,6 +679,9 @@ function renderPodcastStudio({
     `
     : '';
 
+  const showingArchivedPods = podLibraryFilter === 'archived';
+  const visibleEpisodes = showingArchivedPods ? archivedEpisodes : allEpisodes;
+
   return `
     <!-- On-Demand Autopodcast Generator -->
     <section class="card">
@@ -605,11 +689,13 @@ function renderPodcastStudio({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Deep Research → Script → Studio Pod</div>
+            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Deep Research → NotebookLM Script → Studio Pod</div>
             <h2 class="card-title">Generate Custom Autopodcast</h2>
           </div>
         </div>
       </div>
+
+      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice)}
 
       <div class="sub-label" style="margin-bottom:6px">1. Select Duration (${podDurationMin} min)</div>
       <div class="pill-bar" style="margin-bottom:8px">
@@ -688,73 +774,113 @@ function renderPodcastStudio({
     ${readyOrPlayingCardHtml}
 
     <!-- Audio Briefing Library -->
-    <section class="card">
-      <div class="card-eyebrow">Instant Play • Shareable Links • Lock-Screen Controls</div>
-      <h3 class="card-title" style="margin-bottom:9px">Audio Briefing Library (${allEpisodes.length})</h3>
-
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${allEpisodes
-          .map(ep => {
-            const isCurrent = activeEp?.id === ep.id;
-            const isPlayingNow = isCurrent && audioState?.isPlaying;
-            const turnCnt = ep.transcript?.length || 0;
-            const isCardTranscriptExpanded = expandedTranscriptIds.has(ep.id);
-            const isCopied = shareToastTargetId === ep.id;
-            return `
-              <div class="brief-card" style="border-color:${isCurrent ? 'var(--gold)' : 'var(--border-subtle)'}">
-                <div class="episode-row-head">
-                  <div class="studio-cover-art" aria-hidden="true">
-                    ${iconSvg('mic', 17)}
-                    <span class="studio-wave-bars">
-                      <span style="height:${isPlayingNow ? '9px' : '4px'}"></span>
-                      <span style="height:${isPlayingNow ? '5px' : '9px'}"></span>
-                      <span style="height:10px"></span>
-                      <span style="height:${isPlayingNow ? '8px' : '5px'}"></span>
-                      <span style="height:6px"></span>
-                    </span>
-                  </div>
-                  <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:4px">
-                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                      <span class="badge badge-positive">${esc(ep.presetLabel || ep.format)}</span>
-                      <span class="mono" style="font-size:11px;color:var(--text-muted)">
-                        ${formatTimeMmSs(ep.durationSec)} • ${esc(ep.createdBy)} • ${formatRelativeAge(ep.createdAt)}
-                      </span>
-                    </div>
-                    <div style="font-weight:800;font-size:14px">${esc(ep.title)}</div>
-                    <div style="font-size:12px;color:var(--text-secondary)">${esc(ep.topic)}</div>
-                  </div>
-                </div>
-                ${renderSourceChips(ep.sourceLinks || [])}
-                <div class="podcast-action-row" style="margin-top:4px">
-                  <div class="podcast-secondary-actions">
-                    <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on 49ers.joshal.com">
-                      ${iconSvg(isCopied ? 'check' : 'share', 13)}
-                      <span>${isCopied ? 'Link Copied' : 'Share'}</span>
-                    </button>
-                    ${
-                      turnCnt > 0
-                        ? `<button type="button" class="btn-ghost" data-action="toggle-podcast-transcript" data-episode-id="${esc(ep.id)}" aria-expanded="${isCardTranscriptExpanded ? 'true' : 'false'}">
-                             ${iconSvg('transcript', 12)}
-                             <span>${isCardTranscriptExpanded ? 'Hide Transcript' : 'Transcript'}</span>
-                           </button>`
-                        : ''
-                    }
-                  </div>
-                  <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(ep.id)}">
-                    ${iconSvg(isPlayingNow ? 'pause' : 'play', 13)}
-                    <span>${isPlayingNow ? 'Pause' : isCurrent ? 'Play Ready' : 'Play Episode'}</span>
-                  </button>
-                </div>
-                ${
-                  isCardTranscriptExpanded && !isCurrent
-                    ? renderTranscriptTurnsList(ep, -1)
-                    : ''
-                }
-              </div>
-            `;
-          })
-          .join('')}
+    <section class="card" data-podcast-library-section="${esc(podLibraryFilter)}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px">
+        <div style="min-width:0">
+          <div class="card-eyebrow">Instant Play • Share • Archive or Delete</div>
+          <h3 class="card-title">Audio Briefing Library (${visibleEpisodes.length})</h3>
+        </div>
+        <div class="library-filter-toggle" role="group" aria-label="Filter Audio Briefing Library">
+          <button type="button" class="pill-btn ${!showingArchivedPods ? 'active' : ''}"
+                  data-action="set-pod-library-filter" data-filter="active">
+            <span>Active (${allEpisodes.length})</span>
+          </button>
+          <button type="button" class="pill-btn ${showingArchivedPods ? 'active' : ''}"
+                  data-action="set-pod-library-filter" data-filter="archived">
+            ${iconSvg('archive', 12)}
+            <span>Archived (${archivedEpisodes.length})</span>
+          </button>
+        </div>
       </div>
+
+      ${
+        visibleEpisodes.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
+               ${
+                 showingArchivedPods
+                   ? 'No archived podcasts yet. Tap Archive on any episode when you are finished listening to keep your active queue clean.'
+                   : 'No active podcasts in your library. Generate a custom episode above or restore one from Archived.'
+               }
+             </div>`
+          : `<div style="display:flex;flex-direction:column;gap:8px">
+              ${visibleEpisodes
+                .map(ep => {
+                  const isCurrent = activeEp?.id === ep.id;
+                  const isPlayingNow = isCurrent && audioState?.isPlaying;
+                  const turnCnt = ep.transcript?.length || 0;
+                  const isCardTranscriptExpanded = expandedTranscriptIds.has(ep.id);
+                  const isCopied = shareToastTargetId === ep.id;
+                  return `
+                    <div class="brief-card" data-episode-card="${esc(ep.id)}" style="border-color:${isCurrent ? 'var(--gold)' : 'var(--border-subtle)'}">
+                      <div class="episode-row-head">
+                        <div class="studio-cover-art" aria-hidden="true">
+                          ${iconSvg('mic', 17)}
+                          <span class="studio-wave-bars">
+                            <span style="height:${isPlayingNow ? '9px' : '4px'}"></span>
+                            <span style="height:${isPlayingNow ? '5px' : '9px'}"></span>
+                            <span style="height:10px"></span>
+                            <span style="height:${isPlayingNow ? '8px' : '5px'}"></span>
+                            <span style="height:6px"></span>
+                          </span>
+                        </div>
+                        <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:4px">
+                          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+                            <span class="badge ${showingArchivedPods ? 'badge-neutral' : 'badge-positive'}">${esc(ep.presetLabel || ep.format)}</span>
+                            <span class="mono" style="font-size:11px;color:var(--text-muted)">
+                              ${formatTimeMmSs(ep.durationSec)} • ${esc(ep.createdBy)} • ${formatRelativeAge(ep.createdAt)}
+                            </span>
+                          </div>
+                          <div style="font-weight:800;font-size:14px">${esc(ep.title)}</div>
+                          <div style="font-size:12px;color:var(--text-secondary)">${esc(ep.topic)}</div>
+                        </div>
+                      </div>
+                      ${renderSourceChips(ep.sourceLinks || [])}
+                      <div class="podcast-action-row" style="margin-top:4px">
+                        <div class="podcast-secondary-actions">
+                          <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on 49ers.joshal.com">
+                            ${iconSvg(isCopied ? 'check' : 'share', 13)}
+                            <span>${isCopied ? 'Link Copied' : 'Share'}</span>
+                          </button>
+                          ${
+                            turnCnt > 0
+                              ? `<button type="button" class="btn-ghost" data-action="toggle-podcast-transcript" data-episode-id="${esc(ep.id)}" aria-expanded="${isCardTranscriptExpanded ? 'true' : 'false'}">
+                                   ${iconSvg('transcript', 12)}
+                                   <span>${isCardTranscriptExpanded ? 'Hide Transcript' : 'Transcript'}</span>
+                                 </button>`
+                              : ''
+                          }
+                          ${
+                            showingArchivedPods
+                              ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-podcast" data-episode-id="${esc(ep.id)}" aria-label="Restore ${esc(ep.title)}" title="Restore to active library">
+                                   ${iconSvg('restore', 13)}
+                                   <span>Restore</span>
+                                 </button>`
+                              : `<button type="button" class="icon-btn share-action-btn" data-action="archive-podcast" data-episode-id="${esc(ep.id)}" aria-label="Archive ${esc(ep.title)}" title="Archive podcast">
+                                   ${iconSvg('archive', 13)}
+                                   <span>Archive</span>
+                                 </button>`
+                          }
+                          <button type="button" class="icon-btn share-action-btn danger-action-btn" data-action="delete-podcast" data-episode-id="${esc(ep.id)}" aria-label="Delete ${esc(ep.title)}" title="Delete podcast">
+                            ${iconSvg('trash', 13)}
+                            <span>Delete</span>
+                          </button>
+                        </div>
+                        <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(ep.id)}">
+                          ${iconSvg(isPlayingNow ? 'pause' : 'play', 13)}
+                          <span>${isPlayingNow ? 'Pause' : isCurrent ? 'Play Ready' : 'Play Episode'}</span>
+                        </button>
+                      </div>
+                      ${
+                        isCardTranscriptExpanded && !isCurrent
+                          ? renderTranscriptTurnsList(ep, -1)
+                          : ''
+                      }
+                    </div>
+                  `;
+                })
+                .join('')}
+            </div>`
+      }
     </section>
   `;
 }
@@ -764,10 +890,13 @@ function renderDeepAnalysisRunner({
   userPrefs = {},
   analysisPromptDraft,
   jobStatus,
-  allAnalyses,
-  shareToastTargetId = null
+  allAnalyses = [],
+  archivedAnalyses = [],
+  analysisLibraryFilter = 'active',
+  shareToastTargetId = null,
+  geminiKeyNotice = ''
 }) {
-  const modelInfo = resolveActiveHighQualityModelLabel(appData);
+  const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
   const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs, appData });
   const isAnalysisBusy = Boolean(jobStatus?.active && (!jobStatus.kind || jobStatus.kind === 'analysis'));
   const analysisError =
@@ -782,19 +911,25 @@ function renderDeepAnalysisRunner({
     `How DC Raheem Morris pairs DeForest Buckner, Keion White & Nick Bosa in ${wkLabel} vs. ${oppLabel}`
   ];
 
+  const showingArchivedAnalyses = analysisLibraryFilter === 'archived';
+  const visibleAnalyses = showingArchivedAnalyses ? archivedAnalyses : allAnalyses;
+
   return `
     <section class="card">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • 3-Stage Deep Research Workflow</div>
+            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • 3-Stage High-Thinking Deep Research</div>
             <h2 class="card-title">AI Scouting &amp; Cap Analysis</h2>
           </div>
         </div>
       </div>
+
+      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice)}
+
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
-        Multi-stage deep research prioritizing accuracy over speed: live beat &amp; ESPN research, full 88-player roster/EPA/injury verification, and CBA salary cap math.
+        Multi-stage deep research prioritizing analytical depth over speed: live Google Search Grounding + beat wire, All-22 X's &amp; O's film mechanics, and verified OverTheCap multi-year math.
       </div>
 
       <div class="pill-bar" style="margin-bottom:8px">
@@ -811,7 +946,7 @@ function renderDeepAnalysisRunner({
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any 49ers position room, scheme, EPA, injury, cap, trade, or draft question…"
+                placeholder="Ask any nuanced 49ers position room, film, EPA, injury, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
@@ -833,37 +968,77 @@ function renderDeepAnalysisRunner({
       </button>
     </section>
 
-    <section class="card">
-      <div class="card-eyebrow">Film &amp; Salary Cap Breakdowns</div>
-      <h3 class="card-title" style="margin-bottom:10px">Saved Scouting &amp; Cap Reports (${allAnalyses.length})</h3>
-
-      <div style="display:flex;flex-direction:column;gap:10px">
-        ${allAnalyses
-          .map(rep => {
-            const isCopied = shareToastTargetId === rep.id;
-            return `
-              <article class="brief-card" data-analysis-card="${esc(rep.id)}">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                  <span class="badge badge-gold">${esc(rep.category)}</span>
-                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-                    <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
-                    <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on 49ers.joshal.com">
-                      ${iconSvg(isCopied ? 'check' : 'share', 13)}
-                      <span>${isCopied ? 'Link Copied' : 'Share'}</span>
-                    </button>
-                  </div>
-                </div>
-                <h4 style="margin:2px 0;font-size:14.5px">${esc(rep.title)}</h4>
-                ${renderMarkdownSafe(rep.markdown)}
-                <div style="border-top:1px solid var(--border-subtle);padding-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-                  <span style="font-size:11px;color:var(--text-muted)">Sources:</span>
-                  ${renderSourceChips(rep.sourcesCited || [])}
-                </div>
-              </article>
-            `;
-          })
-          .join('')}
+    <section class="card" data-analysis-library-section="${esc(analysisLibraryFilter)}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <div style="min-width:0">
+          <div class="card-eyebrow">Film &amp; Salary Cap Breakdowns • Share, Archive or Delete</div>
+          <h3 class="card-title">Saved Scouting &amp; Cap Reports (${visibleAnalyses.length})</h3>
+        </div>
+        <div class="library-filter-toggle" role="group" aria-label="Filter Saved Scouting Reports">
+          <button type="button" class="pill-btn ${!showingArchivedAnalyses ? 'active' : ''}"
+                  data-action="set-analysis-library-filter" data-filter="active">
+            <span>Active (${allAnalyses.length})</span>
+          </button>
+          <button type="button" class="pill-btn ${showingArchivedAnalyses ? 'active' : ''}"
+                  data-action="set-analysis-library-filter" data-filter="archived">
+            ${iconSvg('archive', 12)}
+            <span>Archived (${archivedAnalyses.length})</span>
+          </button>
+        </div>
       </div>
+
+      ${
+        visibleAnalyses.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
+               ${
+                 showingArchivedAnalyses
+                   ? 'No archived scouting or cap reports yet. Tap Archive on any report when finished.'
+                   : 'No active reports in your library. Run a Deep Analysis above or restore a report from Archived.'
+               }
+             </div>`
+          : `<div style="display:flex;flex-direction:column;gap:10px">
+              ${visibleAnalyses
+                .map(rep => {
+                  const isCopied = shareToastTargetId === rep.id;
+                  return `
+                    <article class="brief-card" data-analysis-card="${esc(rep.id)}">
+                      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+                        <span class="badge ${showingArchivedAnalyses ? 'badge-neutral' : 'badge-gold'}">${esc(rep.category)}</span>
+                        <div class="podcast-secondary-actions">
+                          <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
+                          <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on 49ers.joshal.com">
+                            ${iconSvg(isCopied ? 'check' : 'share', 13)}
+                            <span>${isCopied ? 'Link Copied' : 'Share'}</span>
+                          </button>
+                          ${
+                            showingArchivedAnalyses
+                              ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Restore ${esc(rep.title)}" title="Restore to active reports">
+                                   ${iconSvg('restore', 13)}
+                                   <span>Restore</span>
+                                 </button>`
+                              : `<button type="button" class="icon-btn share-action-btn" data-action="archive-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Archive ${esc(rep.title)}" title="Archive report">
+                                   ${iconSvg('archive', 13)}
+                                   <span>Archive</span>
+                                 </button>`
+                          }
+                          <button type="button" class="icon-btn share-action-btn danger-action-btn" data-action="delete-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Delete ${esc(rep.title)}" title="Delete report">
+                            ${iconSvg('trash', 13)}
+                            <span>Delete</span>
+                          </button>
+                        </div>
+                      </div>
+                      <h4 style="margin:2px 0;font-size:14.5px">${esc(rep.title)}</h4>
+                      ${renderMarkdownSafe(rep.markdown)}
+                      <div style="border-top:1px solid var(--border-subtle);padding-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                        <span style="font-size:11px;color:var(--text-muted)">Sources:</span>
+                        ${renderSourceChips(rep.sourcesCited || [])}
+                      </div>
+                    </article>
+                  `;
+                })
+                .join('')}
+            </div>`
+      }
     </section>
   `;
 }

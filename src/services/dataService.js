@@ -199,12 +199,19 @@ export const DEFAULT_USER_PREFS = {
   groupPasscode: '',
   authorName: 'Josh',
   workerBaseUrl: '',
+  geminiApiKey: '',
+  verifiedGeminiModel: '',
+  geminiApiBaseUrl: '',
   capSelectedYear: null,
   capMoves: {}, // playerId -> action (primary year backward-compatible)
   capMovesByYear: {}, // year -> { playerId -> action }
   playoffForcedWinners: {}, // gameId -> 'HOME' | 'AWAY'
   localCustomAnalyses: [],
-  localCustomEpisodes: []
+  localCustomEpisodes: [],
+  archivedEpisodeIds: [],
+  deletedEpisodeIds: [],
+  archivedAnalysisIds: [],
+  deletedAnalysisIds: []
 };
 
 export function loadUserPrefs() {
@@ -223,6 +230,11 @@ export function loadUserPrefs() {
       dashboardOrder: orderIsV2 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
       disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
       disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
+      geminiApiKey: typeof parsed.geminiApiKey === 'string' ? parsed.geminiApiKey.trim() : '',
+      verifiedGeminiModel:
+        typeof parsed.verifiedGeminiModel === 'string' ? parsed.verifiedGeminiModel.trim() : '',
+      geminiApiBaseUrl:
+        typeof parsed.geminiApiBaseUrl === 'string' ? parsed.geminiApiBaseUrl.trim() : '',
       capSelectedYear: typeof parsed.capSelectedYear === 'string' ? parsed.capSelectedYear : null,
       capMoves: parsed.capMoves && typeof parsed.capMoves === 'object' ? parsed.capMoves : {},
       capMovesByYear:
@@ -234,7 +246,11 @@ export function loadUserPrefs() {
           ? parsed.playoffForcedWinners
           : {},
       localCustomAnalyses: Array.isArray(parsed.localCustomAnalyses) ? parsed.localCustomAnalyses : [],
-      localCustomEpisodes: Array.isArray(parsed.localCustomEpisodes) ? parsed.localCustomEpisodes : []
+      localCustomEpisodes: Array.isArray(parsed.localCustomEpisodes) ? parsed.localCustomEpisodes : [],
+      archivedEpisodeIds: Array.isArray(parsed.archivedEpisodeIds) ? parsed.archivedEpisodeIds : [],
+      deletedEpisodeIds: Array.isArray(parsed.deletedEpisodeIds) ? parsed.deletedEpisodeIds : [],
+      archivedAnalysisIds: Array.isArray(parsed.archivedAnalysisIds) ? parsed.archivedAnalysisIds : [],
+      deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : []
     };
   } catch {
     return structuredCloneFallback(DEFAULT_USER_PREFS);

@@ -10,7 +10,20 @@
  * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
  */
 
-import { humanizeNflTextForTts } from '../src/engine/podcastSpeechEngine.js';
+import {
+  buildGeminiThinkingConfig,
+  DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
+  buildStage1DeepResearchUserPrompt,
+  DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT,
+  buildStage2AnalysisSynthesisPrompt,
+  buildStage3AnalysisAuditPrompt,
+  NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT,
+  buildStage2NotebookLmScriptPrompt,
+  buildStage2NotebookLmPolishPrompt,
+  buildNotebookLmTtsDirectorHeader,
+  chunkTurnsForGeminiTts,
+  NOTEBOOKLM_VOICE_PROFILES
+} from '../src/engine/geminiStudioPrompts.js';
 
 export const DEFAULT_FREE_MODEL_CASCADE = [
   'gemini-3.8-flash',
@@ -354,15 +367,36 @@ async function resolveModelCascade(env) {
 async function callGeminiTextWithFallback(env, payload) {
   const cascade = await resolveModelCascade(env);
   let lastRes = null;
+  const requestedBudget =
+    payload?.generationConfig?.thinkingConfig?.thinkingBudget ||
+    Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
 
   for (let i = 0; i < cascade.length; i++) {
     const model = cascade[i];
+    const modelThinkingConfig = buildGeminiThinkingConfig(model, requestedBudget);
+    const modelPayload = {
+      ...payload,
+      generationConfig: {
+        ...(payload.generationConfig || {}),
+        thinkingConfig: modelThinkingConfig
+      }
+    };
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
-    const res = await fetch(url, {
+    let res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(modelPayload)
     });
+
+    if (res.status === 400 && Array.isArray(modelPayload.tools) && modelPayload.tools.length > 0) {
+      const { tools: _omitTools, ...withoutToolsPayload } = modelPayload;
+      res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(withoutToolsPayload)
+      });
+    }
+
     lastRes = res;
 
     if (res.ok) {
@@ -383,9 +417,9 @@ async function callGeminiTextWithFallback(env, payload) {
       return { res, modelUsed: model };
     }
 
-    // Only cascade to the next free-tier model if the model endpoint was not found (404),
-    // restricted on the free tier (403/429), or temporarily overloaded (503).
-    if (![403, 404, 429, 503].includes(res.status)) {
+    // Cascade to the next model if the endpoint returned 400 (unsupported tool/param),
+    // 404 (not found), 403/429 (quota/restricted), or 503 (temporarily overloaded).
+    if (![400, 403, 404, 429, 503].includes(res.status)) {
       break;
     }
   }
@@ -535,40 +569,20 @@ export default {
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
-      const { res: geminiRes, modelUsed: initialModelUsed } = await callGeminiTextWithFallback(env, {
-        systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
-        tools: [{ google_search: {} }],
-        generationConfig: {
-          temperature: 0.15,
-          thinkingConfig: { thinkingBudget }
-        },
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              {
-                text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nAnalyze this 49ers topic in depth using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts (never stale model weights), All-22 film tendencies, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nBefore writing your final Markdown report, verify internally that every player's current team, cap figure, draft pick round, and playoff probability matches the snapshot and live Google Search Grounding.\n\nTOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
-              }
-            ]
-          }
-        ]
-      });
-
-      if (!geminiRes.ok) {
-        const errText = await geminiRes.text();
-        return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 300)}` }, 502, cors);
-      }
-
-      const geminiJson = await geminiRes.json();
-      let modelUsed = initialModelUsed;
+      let modelUsed = DEFAULT_FREE_MODEL_CASCADE[0];
       let verifiedPasses = 1;
-      let rawMarkdown = extractNonThoughtText(geminiJson) || 'No synthesis generated.';
+      let rawMarkdown = '';
+      let primaryGroundingJson = null;
 
-      if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
-        const { res: verifyRes, modelUsed: verifyModel } = await callGeminiTextWithFallback(env, {
-          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
+      if (body.deepResearchPass === true) {
+        // Stage 1: Exhaustive Deep Research Investigation + Live Google Search Grounding
+        const { res: researchRes, modelUsed: researchModel } = await callGeminiTextWithFallback(env, {
+          systemInstruction: {
+            parts: [{ text: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          },
+          tools: [{ google_search: {} }],
           generationConfig: {
-            temperature: 0.1,
+            temperature: 0.18,
             thinkingConfig: { thinkingBudget }
           },
           contents: [
@@ -576,26 +590,164 @@ export default {
               role: 'user',
               parts: [
                 {
-                  text: `ADVERSARIAL QUALITY & FACT-CHECK AUDIT PASS (ACCURACY OVER LATENCY):\nCarefully audit every single player team assignment, injury status, W-L record, playoff probability, 2027 draft pick slot, and CBA cap figure in the draft report below against the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT. Correct any subtle discrepancy, eliminate any generic filler, and sharpen the All-22 film and CBA cap mechanics. Output ONLY the final verified Markdown report.\n\nTOPIC: ${prompt}\n\nDRAFT REPORT TO AUDIT & POLISH:\n${rawMarkdown}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+                  text: buildStage1DeepResearchUserPrompt({
+                    topicOrQuestion: prompt,
+                    kind: 'analysis',
+                    dossierSummaryText: '',
+                    liveContextSnapshot: sectionContext
+                  })
                 }
               ]
             }
           ]
         });
-        if (verifyRes && verifyRes.ok) {
-          const verifyJson = await verifyRes.json();
-          const auditedText = extractNonThoughtText(verifyJson);
-          if (auditedText && auditedText.trim().length >= 80) {
-            rawMarkdown = auditedText;
-            modelUsed = verifyModel || modelUsed;
-            verifiedPasses = 2;
+
+        if (!researchRes.ok) {
+          const errText = await researchRes.text();
+          return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 300)}` }, 502, cors);
+        }
+        primaryGroundingJson = await researchRes.json();
+        const researchMemo = extractNonThoughtText(primaryGroundingJson) || '';
+
+        // Stage 2: Bespoke Thesis-First Film & Cap Synthesis
+        const { res: synthRes, modelUsed: synthModel } = await callGeminiTextWithFallback(env, {
+          systemInstruction: {
+            parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          },
+          generationConfig: {
+            temperature: 0.2,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: buildStage2AnalysisSynthesisPrompt({
+                    question: prompt,
+                    researchMemo,
+                    liveContextSnapshot: sectionContext
+                  })
+                }
+              ]
+            }
+          ]
+        });
+
+        if (!synthRes.ok) {
+          const errText = await synthRes.text();
+          return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 300)}` }, 502, cors);
+        }
+        const synthJson = await synthRes.json();
+        modelUsed = synthModel || researchModel;
+        verifiedPasses = 2;
+        rawMarkdown = extractNonThoughtText(synthJson) || researchMemo || 'No synthesis generated.';
+
+        if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
+          const { res: auditRes, modelUsed: auditModel } = await callGeminiTextWithFallback(env, {
+            systemInstruction: {
+              parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            generationConfig: {
+              temperature: 0.1,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: buildStage3AnalysisAuditPrompt({
+                      question: prompt,
+                      draftMarkdown: rawMarkdown,
+                      liveContextSnapshot: sectionContext
+                    })
+                  }
+                ]
+              }
+            ]
+          });
+          if (auditRes && auditRes.ok) {
+            const auditJson = await auditRes.json();
+            const auditedText = extractNonThoughtText(auditJson);
+            if (auditedText && auditedText.trim().length >= 80) {
+              rawMarkdown = auditedText;
+              modelUsed = auditModel || modelUsed;
+              verifiedPasses = 3;
+            }
+          }
+        }
+      } else {
+        const { res: geminiRes, modelUsed: initialModelUsed } = await callGeminiTextWithFallback(env, {
+          systemInstruction: {
+            parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          },
+          tools: [{ google_search: {} }],
+          generationConfig: {
+            temperature: 0.15,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nDirectly and thoughtfully answer this exact 49ers question with zero generic AI throat-clearing, using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts, All-22 film mechanics, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nQUESTION / TOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+                }
+              ]
+            }
+          ]
+        });
+
+        if (!geminiRes.ok) {
+          const errText = await geminiRes.text();
+          return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 300)}` }, 502, cors);
+        }
+
+        primaryGroundingJson = await geminiRes.json();
+        modelUsed = initialModelUsed;
+        verifiedPasses = 1;
+        rawMarkdown = extractNonThoughtText(primaryGroundingJson) || 'No synthesis generated.';
+
+        if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
+          const { res: verifyRes, modelUsed: verifyModel } = await callGeminiTextWithFallback(env, {
+            systemInstruction: {
+              parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            generationConfig: {
+              temperature: 0.1,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: buildStage3AnalysisAuditPrompt({
+                      question: prompt,
+                      draftMarkdown: rawMarkdown,
+                      liveContextSnapshot: sectionContext
+                    })
+                  }
+                ]
+              }
+            ]
+          });
+          if (verifyRes && verifyRes.ok) {
+            const verifyJson = await verifyRes.json();
+            const auditedText = extractNonThoughtText(verifyJson);
+            if (auditedText && auditedText.trim().length >= 80) {
+              rawMarkdown = auditedText;
+              modelUsed = verifyModel || modelUsed;
+              verifiedPasses = 2;
+            }
           }
         }
       }
 
       const markdown = scrubStaleWeightHallucinations(rawMarkdown, sectionContext);
       const groundingChunks =
-        geminiJson.candidates?.[0]?.groundingMetadata?.groundingChunks
+        primaryGroundingJson?.candidates?.[0]?.groundingMetadata?.groundingChunks
           ?.map(c => c.web?.title)
           .filter(Boolean)
           .slice(0, 6) || ['Google Search Grounding', 'nflverse / OverTheCap'];
@@ -660,39 +812,20 @@ export default {
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
       const researchDossier = String(body.researchDossier || '').slice(0, 14000);
-      const fullGroundingBlock = researchDossier
-        ? `STAGE-1 TOPIC DEEP RESEARCH DOSSIER:\n${researchDossier}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
-        : `AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
-
-      const scriptPrompt =
-        format === 'Solo Executive Briefing'
-          ? `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exhaustive deep research, exact CBA cap math, and authentic NotebookLM-grade spoken broadcast quality over generation speed.\n\nPHASE 1 (INTERNAL DEEP RESEARCH): Cross-examine Google Search Grounding and the STAGE-1 TOPIC DEEP RESEARCH DOSSIER below across every rostered player in the unit (Active, Sidelined/Out, Injured Reserve, Practice Squad), 2026 EPA/snap metrics, injury timelines, external trade fits, and 2026->2027 CBA rollover math.\nPHASE 2 (AUDIO SCRIPT RESTRUCTURING): Restructure your deep research into a ${targetWords}-word (${durationMinutes}-minute) solo analytical 49ers podcast script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Calibrate total word count closely to ~${targetWords} words (~146 words/min) so the spoken episode runs ~${durationMinutes} minutes. Sound genuinely human and conversational—use natural contractions ("let's", "that's", "can't", "here's"), crisp 12-to-22-word spoken sentences, and zero clickbait fluff.\n\n${fullGroundingBlock}`
-          : `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, exhaustive deep research, exact CBA cap math, and authentic NotebookLM Audio Overview studio chemistry over generation speed.\n\nPHASE 1 (INTERNAL DEEP RESEARCH): Cross-examine Google Search Grounding and the STAGE-1 TOPIC DEEP RESEARCH DOSSIER below across every rostered player in the unit (Active, Sidelined/Out, Injured Reserve, Practice Squad), 2026 EPA/snap metrics, injury timelines, external trade fits, and 2026->2027 CBA rollover math.\nPHASE 2 (NOTEBOOKLM-STYLE CONVERSATIONAL SCRIPT RESTRUCTURING): Restructure your deep research into a ${targetWords}-word (${durationMinutes}-minute) two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Calibrate total word count closely to ~${targetWords} words (~146 words/min) so the spoken episode runs ~${durationMinutes} minutes. Make their chemistry sound genuinely human like Gemini NotebookLM Audio Overviews: mix quick 1-sentence reactions or follow-up questions ("Right, and look at what that does to the target share...", "Hold on—connect those two ledgers for a second.") with sharp 2-to-3-sentence breakdowns, spoken contractions, and zero morning-zoo fluff.\n\n${fullGroundingBlock}`;
-
-      const { res: scriptRes, modelUsed: initialScriptModel } = await callGeminiTextWithFallback(env, {
-        systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
-        tools: [{ google_search: {} }],
-        generationConfig: {
-          temperature: 0.2,
-          thinkingConfig: { thinkingBudget }
-        },
-        contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
-      });
-
-      if (!scriptRes.ok) {
-        return jsonResponse({ error: 'Failed to synthesize podcast script' }, 502, cors);
-      }
-
-      const scriptJson = await scriptRes.json();
-      let modelUsed = initialScriptModel;
+      const solo = body.format === 'solo';
+      let modelUsed = DEFAULT_FREE_MODEL_CASCADE[0];
       let verifiedPasses = 1;
-      let rawScriptText = extractNonThoughtText(scriptJson) || '[]';
+      let rawScriptText = '[]';
 
-      if (body.verifyPass === true) {
-        const { res: verifyScriptRes, modelUsed: verifyScriptModel } = await callGeminiTextWithFallback(env, {
-          systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
+      if (body.deepResearchPass === true) {
+        // Stage 1: Exhaustive Deep Research Investigation on the Podcast Topic
+        const { res: researchRes, modelUsed: researchModel } = await callGeminiTextWithFallback(env, {
+          systemInstruction: {
+            parts: [{ text: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          },
+          tools: [{ google_search: {} }],
           generationConfig: {
-            temperature: 0.15,
+            temperature: 0.2,
             thinkingConfig: { thinkingBudget }
           },
           contents: [
@@ -700,75 +833,258 @@ export default {
               role: 'user',
               parts: [
                 {
-                  text: `NOTEBOOKLM AUDIO OVERVIEW RESTRUCTURING, DURATION CALIBRATION & FACT-CHECK PASS (ACCURACY OVER LATENCY):\n1. Audit every player name, team assignment, injury designation, W-L record, playoff probability, 2027 draft pick slot, and CBA cap figure in this JSON script against the DEEP RESEARCH DOSSIER & LIVE SNAPSHOT.\n2. Ensure total spoken length sits near ~${targetWords} words (~${durationMinutes} minutes at 146 words/min) and every turn reads like effortless, natural human two-host podcast banter with crisp breath cadence.\n3. Output ONLY the valid raw JSON array [{"speaker":"...","text":"..."}].\n\nDRAFT JSON SCRIPT:\n${rawScriptText}\n\n${fullGroundingBlock}`
+                  text: buildStage1DeepResearchUserPrompt({
+                    topicOrQuestion: topic,
+                    kind: 'podcast',
+                    dossierSummaryText: researchDossier,
+                    liveContextSnapshot: contextSummary
+                  })
                 }
               ]
             }
           ]
         });
-        if (verifyScriptRes && verifyScriptRes.ok) {
-          const verifyScriptJson = await verifyScriptRes.json();
-          const auditedScriptText = extractNonThoughtText(verifyScriptJson);
-          const candidateTurns = parseScriptTurnsSafe(auditedScriptText || '');
-          if (
-            candidateTurns.length > 0 &&
-            !(candidateTurns.length === 1 && candidateTurns[0].text === 'Briefing generated.')
-          ) {
-            rawScriptText = auditedScriptText;
-            modelUsed = verifyScriptModel || modelUsed;
-            verifiedPasses = 2;
+
+        if (!researchRes.ok) {
+          return jsonResponse({ error: 'Failed Stage-1 Deep Research for podcast' }, 502, cors);
+        }
+        const researchJson = await researchRes.json();
+        const researchMemo = extractNonThoughtText(researchJson) || researchDossier;
+
+        // Stage 2: Restructure into Smooth Gemini NotebookLM Audio Overview Script
+        const { res: scriptRes, modelUsed: stage2Model } = await callGeminiTextWithFallback(env, {
+          systemInstruction: {
+            parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          },
+          generationConfig: {
+            temperature: 0.3,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: buildStage2NotebookLmScriptPrompt({
+                    topic,
+                    durationMinutes,
+                    format: solo ? 'solo' : 'two_host',
+                    researchMemo,
+                    liveContextSnapshot: contextSummary
+                  })
+                }
+              ]
+            }
+          ]
+        });
+
+        if (!scriptRes.ok) {
+          return jsonResponse({ error: 'Failed to synthesize podcast script' }, 502, cors);
+        }
+        const scriptJson = await scriptRes.json();
+        modelUsed = stage2Model || researchModel;
+        verifiedPasses = 2;
+        rawScriptText = extractNonThoughtText(scriptJson) || '[]';
+
+        if (body.verifyPass === true) {
+          const { res: polishRes, modelUsed: polishModel } = await callGeminiTextWithFallback(env, {
+            systemInstruction: {
+              parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            generationConfig: {
+              temperature: 0.22,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: buildStage2NotebookLmPolishPrompt({
+                      topic,
+                      durationMinutes,
+                      format: solo ? 'solo' : 'two_host',
+                      draftJsonText: rawScriptText,
+                      liveContextSnapshot: contextSummary
+                    })
+                  }
+                ]
+              }
+            ]
+          });
+          if (polishRes && polishRes.ok) {
+            const polishJson = await polishRes.json();
+            const auditedScriptText = extractNonThoughtText(polishJson);
+            const candidateTurns = parseScriptTurnsSafe(auditedScriptText || '');
+            if (
+              candidateTurns.length > 0 &&
+              !(candidateTurns.length === 1 && candidateTurns[0].text === 'Briefing generated.')
+            ) {
+              rawScriptText = auditedScriptText;
+              modelUsed = polishModel || modelUsed;
+              verifiedPasses = 3;
+            }
+          }
+        }
+      } else {
+        const scriptPrompt = buildStage2NotebookLmScriptPrompt({
+          topic,
+          durationMinutes,
+          format: solo ? 'solo' : 'two_host',
+          researchMemo: researchDossier || `Investigate "${topic}" across active/injured roster, All-22 film, and CBA cap math.`,
+          liveContextSnapshot: contextSummary
+        });
+
+        const { res: scriptRes, modelUsed: initialScriptModel } = await callGeminiTextWithFallback(env, {
+          systemInstruction: {
+            parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          },
+          tools: [{ google_search: {} }],
+          generationConfig: {
+            temperature: 0.25,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
+        });
+
+        if (!scriptRes.ok) {
+          return jsonResponse({ error: 'Failed to synthesize podcast script' }, 502, cors);
+        }
+
+        const scriptJson = await scriptRes.json();
+        modelUsed = initialScriptModel;
+        verifiedPasses = 1;
+        rawScriptText = extractNonThoughtText(scriptJson) || '[]';
+
+        if (body.verifyPass === true) {
+          const { res: verifyScriptRes, modelUsed: verifyScriptModel } = await callGeminiTextWithFallback(env, {
+            systemInstruction: {
+              parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            generationConfig: {
+              temperature: 0.2,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: buildStage2NotebookLmPolishPrompt({
+                      topic,
+                      durationMinutes,
+                      format: solo ? 'solo' : 'two_host',
+                      draftJsonText: rawScriptText,
+                      liveContextSnapshot: contextSummary
+                    })
+                  }
+                ]
+              }
+            ]
+          });
+          if (verifyScriptRes && verifyScriptRes.ok) {
+            const verifyScriptJson = await verifyScriptRes.json();
+            const auditedScriptText = extractNonThoughtText(verifyScriptJson);
+            const candidateTurns = parseScriptTurnsSafe(auditedScriptText || '');
+            if (
+              candidateTurns.length > 0 &&
+              !(candidateTurns.length === 1 && candidateTurns[0].text === 'Briefing generated.')
+            ) {
+              rawScriptText = auditedScriptText;
+              modelUsed = verifyScriptModel || modelUsed;
+              verifiedPasses = 2;
+            }
           }
         }
       }
 
       const turns = parseScriptTurnsSafe(rawScriptText).map(t => ({
         ...t,
+        speaker: solo ? 'Marcus' : t.speaker === 'Elena' ? 'Elena' : 'Marcus',
         text: scrubStaleWeightHallucinations(t.text || '', contextSummary)
       }));
 
-      // Step 3: Render Multi-Speaker Native Audio via Highest-Quality Studio Pro TTS Cascade
+      // Step 3: Render Multi-Speaker Native Audio via Gemini NotebookLM Studio Voices (`Puck` + `Aoede` / `Charon`)
       let audioUrl = null;
       let audioModelUsed = null;
       let measuredAudioSec = 0;
       if (env.PODCAST_BUCKET) {
-        const directorHeader =
-          'Audio Profile: Warm, authentic NFL film and salary-cap podcast recorded in an intimate broadcast studio.\n' +
-          'Director Notes: Speak naturally like two sharp human football insiders who know each other well—relaxed conversational pacing, natural breaths between clauses, subtle vocal warmth, crisp articulation on football terms, and zero robotic announcer stiffness.\n\n';
-        const ttsDialogue =
-          directorHeader +
-          turns.map(t => `${t.speaker}: ${humanizeNflTextForTts(t.text)}`).join('\n');
-
-        const { res: ttsRes, audioModelUsed: resolvedAudioModel } = await callGeminiAudioTtsWithFallback(env, {
-          contents: [{ parts: [{ text: ttsDialogue }] }],
-          generationConfig: {
-            responseModalities: ['AUDIO'],
-            speechConfig: {
-              multiSpeakerVoiceConfig: {
-                speakerVoiceConfigs: [
-                  { speaker: 'Marcus', voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Orus' } } },
-                  { speaker: 'Elena', voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } } }
-                ]
+        const ttsBlocks = chunkTurnsForGeminiTts(turns, 2400);
+        const directorHeader = buildNotebookLmTtsDirectorHeader({
+          format: solo ? 'solo' : 'two_host'
+        });
+        const speechConfig = solo
+          ? {
+              voiceConfig: {
+                prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.solo.Marcus }
               }
             }
-          }
-        });
+          : {
+              multiSpeakerVoiceConfig: {
+                speakerVoiceConfigs: [
+                  {
+                    speaker: 'Marcus',
+                    voiceConfig: {
+                      prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.twoHost.Marcus }
+                    }
+                  },
+                  {
+                    speaker: 'Elena',
+                    voiceConfig: {
+                      prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.twoHost.Elena }
+                    }
+                  }
+                ]
+              }
+            };
 
-        if (ttsRes && ttsRes.ok) {
-          audioModelUsed = resolvedAudioModel;
-          const ttsJson = await ttsRes.json();
-          const b64 = ttsJson.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-          if (b64) {
-            const binaryStr = atob(b64);
-            const pcm = new Uint8Array(binaryStr.length);
-            for (let i = 0; i < binaryStr.length; i++) pcm[i] = binaryStr.charCodeAt(i);
-            const pcmSec = Math.floor(pcm.byteLength / 2 / 24000);
-            if (pcmSec >= 5) measuredAudioSec = pcmSec;
-            const wavBytes = pcm16ToWav(pcm, 24000);
-            await env.PODCAST_BUCKET.put(`episodes/${epId}.wav`, wavBytes, {
-              httpMetadata: { contentType: 'audio/wav' }
-            });
-            audioUrl = `${url.origin}/api/audio/${epId}`;
+        const pcmBuffers = [];
+        for (const block of ttsBlocks) {
+          const ttsDialogue = directorHeader + block.map(t => t.spokenLine).join('\n');
+          const { res: ttsRes, audioModelUsed: resolvedAudioModel } = await callGeminiAudioTtsWithFallback(env, {
+            contents: [{ parts: [{ text: ttsDialogue }] }],
+            generationConfig: {
+              responseModalities: ['AUDIO'],
+              speechConfig
+            }
+          });
+
+          if (ttsRes && ttsRes.ok) {
+            audioModelUsed = resolvedAudioModel;
+            const ttsJson = await ttsRes.json();
+            const b64 = ttsJson.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data)?.inlineData?.data;
+            if (b64) {
+              const binaryStr = atob(b64);
+              const pcm = new Uint8Array(binaryStr.length - (binaryStr.length % 2));
+              for (let i = 0; i < pcm.length; i++) pcm[i] = binaryStr.charCodeAt(i);
+              pcmBuffers.push(pcm);
+            } else {
+              break;
+            }
+          } else {
+            break;
           }
+        }
+
+        if (pcmBuffers.length > 0 && pcmBuffers.length === ttsBlocks.length) {
+          const pauseBytes = pcmBuffers.length > 1 ? Math.round(24000 * 0.14) * 2 : 0;
+          const totalBytes =
+            pcmBuffers.reduce((s, b) => s + b.byteLength, 0) +
+            Math.max(0, pcmBuffers.length - 1) * pauseBytes;
+          const combinedPcm = new Uint8Array(totalBytes);
+          let writeOff = 0;
+          for (let i = 0; i < pcmBuffers.length; i++) {
+            combinedPcm.set(pcmBuffers[i], writeOff);
+            writeOff += pcmBuffers[i].byteLength;
+            if (i < pcmBuffers.length - 1) writeOff += pauseBytes;
+          }
+          const pcmSec = Math.floor(combinedPcm.byteLength / 2 / 24000);
+          if (pcmSec >= 5) measuredAudioSec = pcmSec;
+          const wavBytes = pcm16ToWav(combinedPcm, 24000);
+          await env.PODCAST_BUCKET.put(`episodes/${epId}.wav`, wavBytes, {
+            httpMetadata: { contentType: 'audio/wav' }
+          });
+          audioUrl = `${url.origin}/api/audio/${epId}`;
         }
       }
 

@@ -1886,7 +1886,7 @@ await testAsync('Worker defaults to best free model (gemini-3.8-flash on High Th
     ).json();
 
     assert.ok(capturedUrl.includes('models/gemini-3.8-flash:generateContent'), `Expected gemini-3.8-flash URL, got ${capturedUrl}`);
-    assert.ok(capturedBody.generationConfig?.thinkingConfig?.thinkingBudget >= 24576, 'Expected HIGH thinkingBudget (24576)');
+    assert.deepEqual(capturedBody.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' }, 'Expected Gemini 3+ HIGH thinkingLevel');
     assert.ok(!res.item.markdown.includes('INTERNAL_SECRET_THOUGHT_SCRATCHPAD'), 'Thought part must never leak into output');
     assert.ok(!/Bryce Huff/i.test(res.item.markdown), 'Active-49er Bryce Huff hallucination must be scrubbed');
     assert.ok(/Javon Hargrave/i.test(res.item.markdown), 'Legitimate 2026 dead-cap mention of Javon Hargrave must be preserved');
@@ -2762,6 +2762,244 @@ await testAsync('Share Service compresses custom podcasts/analyses into 49ers.jo
   const hydratedAnalysis = await extractIncomingSharedRoute(new URL(reportUrl));
   assert.equal(hydratedAnalysis?.type, 'analysis');
   assert.ok(hydratedAnalysis?.analysis?.markdown.includes('Jordan Watkins'));
+});
+
+await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranking, v1beta thinkingLevel/thinkingBudget exclusivity, and anti-robotic NotebookLM TTS preparation', async () => {
+  const {
+    scoreBestGeminiReasoningModel,
+    rankBestGeminiReasoningModels,
+    buildGeminiThinkingConfig,
+    prepareConversationalTextForModernNeuralTts,
+    chunkTurnsForGeminiTts,
+    DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
+    DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT,
+    NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT,
+    NOTEBOOKLM_VOICE_PROFILES
+  } = await import('../src/engine/geminiStudioPrompts.js');
+
+  // Pro reasoning models strictly outrank Flash models for deep research & bespoke synthesis
+  assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-pro') > scoreBestGeminiReasoningModel('gemini-3.1-pro-preview'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-3.1-pro-preview') > scoreBestGeminiReasoningModel('gemini-2.5-pro'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-2.5-pro') > scoreBestGeminiReasoningModel('gemini-3.8-flash'));
+
+  const ranked = rankBestGeminiReasoningModels([
+    { name: 'models/gemini-2.5-flash', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] }
+  ]);
+  assert.equal(ranked[0], 'gemini-3.1-pro-preview');
+  assert.equal(ranked[1], 'gemini-2.5-pro');
+
+  // Gemini 3.0+ uses thinkingLevel: 'HIGH' (never thinkingBudget); Gemini 2.5 uses thinkingBudget
+  const cfg38 = buildGeminiThinkingConfig('gemini-3.8-pro');
+  assert.deepEqual(cfg38, { thinkingLevel: 'HIGH' });
+  assert.equal('thinkingBudget' in cfg38, false);
+
+  const cfg31 = buildGeminiThinkingConfig('gemini-3.1-pro-preview');
+  assert.deepEqual(cfg31, { thinkingLevel: 'HIGH' });
+
+  const cfg25Pro = buildGeminiThinkingConfig('gemini-2.5-pro');
+  assert.deepEqual(cfg25Pro, { thinkingBudget: 32768 });
+  assert.equal('thinkingLevel' in cfg25Pro, false);
+
+  const cfg25Flash = buildGeminiThinkingConfig('gemini-2.5-flash');
+  assert.deepEqual(cfg25Flash, { thinkingBudget: 24576 });
+
+  // Modern neural TTS prep cleans visual shorthand WITHOUT inserting robotic syllable hyphens
+  const spoken = prepareConversationalTextForModernNeuralTts(
+    "Ricky Pearsall and Kyle Juszczyk help SF -9.5 navigate -$31.54M in 2027 cap with 9/18ths proration."
+  );
+  assert.ok(spoken.includes('Ricky Pearsall') && spoken.includes('Kyle Juszczyk'), 'Names must stay natural without spelling-bee hyphens');
+  assert.ok(!spoken.includes('Pears-ull') && !spoken.includes('Joose-check'));
+  assert.ok(spoken.includes('San Francisco minus 9.5'));
+  assert.ok(spoken.includes('minus 31.54 million dollars'));
+  assert.ok(spoken.includes('nine eighteenths'));
+
+  // Multi-turn chunking for Gemini Native Multi-Speaker TTS
+  const longTurns = Array.from({ length: 16 }, (_, idx) => ({
+    speaker: idx % 2 === 0 ? 'Marcus' : 'Elena',
+    text: `Turn ${idx + 1}: ${'Detailed conversational 49ers film and cap breakdown with contractions. '.repeat(5)}`
+  }));
+  const chunks = chunkTurnsForGeminiTts(longTurns, 1200);
+  assert.ok(chunks.length >= 3, `Expected multi-chunk split for long script, got ${chunks.length}`);
+  assert.equal(chunks.reduce((sum, c) => sum + c.length, 0), 16);
+
+  // Triple-check system prompts & voice profiles
+  assert.ok(
+    DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT.includes(
+      'THINK DEEPLY & INVESTIGATE THOROUGHLY (ACCURACY & DEPTH OVER SPEED)'
+    )
+  );
+  assert.ok(DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT.includes('ANTI-SLOP'));
+  assert.ok(NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT.includes('Google Gemini NotebookLM'));
+  assert.equal(NOTEBOOKLM_VOICE_PROFILES.twoHost.Marcus, 'Puck');
+  assert.equal(NOTEBOOKLM_VOICE_PROFILES.twoHost.Elena, 'Aoede');
+  assert.equal(NOTEBOOKLM_VOICE_PROFILES.solo.Marcus, 'Charon');
+});
+
+await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQUIRED gate, cascades on 400, and synthesizes NotebookLM Puck & Aoede audio', async () => {
+  const {
+    hasLiveAiConnection,
+    verifyGeminiApiKey,
+    runOnDemandDeepAnalysis,
+    generateOnDemandAutopodcast
+  } = await import('../src/services/aiWorkerClient.js');
+
+  assert.equal(hasLiveAiConnection({}), false);
+  assert.equal(hasLiveAiConnection({ geminiApiKey: 'AIzaTestKey123' }), true);
+  assert.equal(hasLiveAiConnection({ workerBaseUrl: 'https://worker.example' }), true);
+
+  // Unconnected calls must immediately throw GEMINI_KEY_REQUIRED (never a silent 1-second template!)
+  await assert.rejects(
+    () => runOnDemandDeepAnalysis({ prompt: 'wide receivers', prefs: {} }),
+    err => err?.code === 'GEMINI_KEY_REQUIRED'
+  );
+  await assert.rejects(
+    () => generateOnDemandAutopodcast({ topic: 'wide receivers', durationMinutes: 3, format: 'two_host', prefs: {} }),
+    err => err?.code === 'GEMINI_KEY_REQUIRED'
+  );
+
+  // Test direct browser v1beta 3-stage execution + worker 3-stage deepResearchPass + solo Charon voiceConfig
+  const origFetch = globalThis.fetch;
+  const capturedPayloads = [];
+  globalThis.fetch = async (urlStr, init) => {
+    const u = String(urlStr);
+    const bodyObj = init?.body ? JSON.parse(init.body) : null;
+    capturedPayloads.push({ url: u, body: bodyObj });
+
+    if (u.includes('/models?key=')) {
+      return new Response(
+        JSON.stringify({
+          models: [
+            { name: 'models/gemini-3.8-pro', supportedGenerationMethods: ['generateContent'] },
+            { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
+            { name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] }
+          ]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    if (u.includes('public.api.bsky.app') || u.includes('site.api.espn.com')) {
+      return new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }
+    // Simulate preview 400 on gemini-3.8-pro so cascade falls over cleanly to gemini-3.1-pro-preview!
+    if (u.includes('models/gemini-3.8-pro:generateContent')) {
+      return new Response(JSON.stringify({ error: { message: 'Model preview gated' } }), { status: 400 });
+    }
+    if (u.includes('preview-tts:generateContent')) {
+      const pcm = Buffer.alloc(24000 * 4, 12); // 2 seconds of 16-bit 24kHz mono PCM
+      return new Response(
+        JSON.stringify({
+          candidates: [{ content: { parts: [{ inlineData: { data: pcm.toString('base64') } }] } }]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    const promptTxt = bodyObj?.contents?.[0]?.parts?.[0]?.text || '';
+    if (promptTxt.includes('JSON array') || promptTxt.includes('DRAFT JSON DIALOGUE')) {
+      return new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              content: {
+                parts: [
+                  {
+                    text: JSON.stringify([
+                      { speaker: 'Marcus', text: "Look at how Jordan Watkins and Ricky Pearsall stretch quarters coverage when Purdy hits the back of his drop." },
+                      { speaker: 'Elena', text: "Right, and keeping 35.16 million in 2026 cap space to roll over under Article 13 is what makes that rookie deal so valuable." },
+                      { speaker: 'Marcus', text: "Exactly—you're getting vertical separation without touching your 2027 restructure levers." },
+                      { speaker: 'Elena', text: "That's the whole blueprint heading into Sunday against Las Vegas." }
+                    ])
+                  }
+                ]
+              }
+            }
+          ]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    return new Response(
+      JSON.stringify({
+        candidates: [
+          {
+            content: {
+              parts: [
+                {
+                  text: '### Executive Thesis\nJordan Watkins and Ricky Pearsall give Brock Purdy high-efficiency intermediate spacing while preserving $35.16M in 2026 Article 13 rollover.'
+                }
+              ]
+            },
+            groundingMetadata: {
+              groundingChunks: [{ web: { title: 'OverTheCap 49ers', uri: 'https://overthecap.com/salary-cap/san-francisco-49ers' } }]
+            }
+          }
+        ]
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+  try {
+    const verified = await verifyGeminiApiKey('AIzaMockUnitKey', 'https://mock-gemini.local/v1beta');
+    assert.equal(verified.bestModel, 'gemini-3.8-pro');
+
+    const fullAppData = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+      seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+    };
+
+    const directReport = await runOnDemandDeepAnalysis({
+      prompt: 'wide receivers',
+      appData: fullAppData,
+      prefs: {
+        geminiApiKey: 'AIzaMockUnitKey',
+        geminiApiBaseUrl: 'https://mock-gemini.local/v1beta',
+        authorName: 'Josh'
+      }
+    });
+    assert.equal(directReport.modelUsed, 'gemini-3.1-pro-preview', 'Must cascade cleanly from 400 on 3.8-pro to 3.1-pro-preview');
+    assert.equal(directReport.verifiedPasses, 3);
+    assert.ok(directReport.markdown.includes('Jordan Watkins'));
+
+    // Verify Gemini 3+ payload sent thinkingLevel: 'HIGH' and NEVER thinkingBudget
+    const g3Call = capturedPayloads.find(c => c.url.includes('gemini-3.1-pro-preview:generateContent'));
+    assert.deepEqual(g3Call?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+
+    // Also test Worker 3-stage deepResearchPass=true + solo format voiceConfig ('Charon')
+    const env = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-worker-3pass-key' });
+    const soloPodRes = await edgeWorker.fetch(
+      new Request('https://worker.example/api/podcast', {
+        method: 'POST',
+        headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic: 'wide receivers',
+          durationMinutes: 3,
+          format: 'solo',
+          deepResearchPass: true,
+          verifyPass: true,
+          author: 'Josh'
+        })
+      }),
+      env
+    );
+    assert.equal(soloPodRes.status, 200);
+    const soloPodJson = await soloPodRes.json();
+    assert.equal(soloPodJson.episode.verifiedPasses, 3);
+    const ttsCalls = capturedPayloads.filter(c => c.url.includes('preview-tts:generateContent'));
+    const lastTtsSpeechCfg = ttsCalls[ttsCalls.length - 1]?.body?.generationConfig?.speechConfig;
+    assert.equal(
+      lastTtsSpeechCfg?.voiceConfig?.prebuiltVoiceConfig?.voiceName,
+      'Charon',
+      'Solo podcast TTS must use single-speaker voiceConfig (Charon) instead of multiSpeakerVoiceConfig'
+    );
+  } finally {
+    globalThis.fetch = origFetch;
+  }
 });
 
 console.log(`\n======================================================`);

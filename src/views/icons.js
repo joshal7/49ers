@@ -287,6 +287,35 @@ const SVG_PATHS = {
     <line x1="8" y1="8.5" x2="16" y2="8.5"/>
     <line x1="8" y1="12.5" x2="16" y2="12.5"/>
     <line x1="8" y1="16.5" x2="13" y2="16.5"/>
+  `,
+  archive: `
+    <rect x="3" y="4" width="18" height="4.5" rx="1.4" fill="currentColor" fill-opacity="0.18"/>
+    <rect x="3" y="4" width="18" height="4.5" rx="1.4"/>
+    <path d="M4.5 8.5V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V8.5"/>
+    <line x1="12" y1="11.5" x2="12" y2="17"/>
+    <polyline points="9.5 14.5 12 17 14.5 14.5"/>
+  `,
+  restore: `
+    <rect x="3" y="4" width="18" height="4.5" rx="1.4" fill="currentColor" fill-opacity="0.18"/>
+    <rect x="3" y="4" width="18" height="4.5" rx="1.4"/>
+    <path d="M4.5 8.5V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V8.5"/>
+    <line x1="12" y1="17" x2="12" y2="11.5"/>
+    <polyline points="9.5 14 12 11.5 14.5 14"/>
+  `,
+  trash: `
+    <path d="M4 6.5H20"/>
+    <path d="M9 6.5V4.5C9 3.95 9.45 3.5 10 3.5H14C14.55 3.5 15 3.95 15 4.5V6.5"/>
+    <path d="M6.5 6.5L7.3 19C7.36 19.85 8.06 20.5 8.9 20.5H15.1C15.94 20.5 16.64 19.85 16.7 19L17.5 6.5" fill="currentColor" fill-opacity="0.12"/>
+    <path d="M6.5 6.5L7.3 19C7.36 19.85 8.06 20.5 8.9 20.5H15.1C15.94 20.5 16.64 19.85 16.7 19L17.5 6.5"/>
+    <line x1="10" y1="10.5" x2="10" y2="16.5"/>
+    <line x1="14" y1="10.5" x2="14" y2="16.5"/>
+  `,
+  key: `
+    <circle cx="8" cy="15" r="4.5" fill="currentColor" fill-opacity="0.18"/>
+    <circle cx="8" cy="15" r="4.5"/>
+    <path d="M11.3 11.7L20.5 2.5"/>
+    <path d="M16.5 6.5L19 9"/>
+    <path d="M19 4L21.5 6.5"/>
   `
 };
 

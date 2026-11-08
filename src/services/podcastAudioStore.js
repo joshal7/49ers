@@ -169,3 +169,36 @@ export async function getEpisodeAudioUrl(episodeId) {
 
   return null;
 }
+
+/**
+ * Permanently removes a synthesized podcast's cached audio Blob & Object URL
+ * from memory and IndexedDB when the user deletes the episode.
+ */
+export async function deleteEpisodeAudioBlob(episodeId) {
+  if (!episodeId) return false;
+  const id = String(episodeId);
+
+  const prevUrl = objectUrlCache.get(id);
+  if (prevUrl && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
+    try {
+      URL.revokeObjectURL(prevUrl);
+    } catch {}
+  }
+  objectUrlCache.delete(id);
+  memoryBlobFallback.delete(id);
+
+  const db = await openAudioDb();
+  if (!db) return true;
+
+  try {
+    await new Promise(resolve => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      store.delete(id);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    });
+  } catch {}
+
+  return true;
+}
