@@ -216,11 +216,29 @@ export function isPaywalledOrBlockedUrl(rawUrl) {
   return false;
 }
 
+const DIRECT_FREE_PUBLIC_HOST_REGEX =
+  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com)$/i;
+
 /**
  * Detects whether an RSS or syndication publisher is paywalled (even when wrapped in a redirect URL).
+ * Direct public social/wire posts (e.g. X, Bluesky, ESPN Player Wire, RotoWire, YouTube) from beat writers
+ * at paywalled papers remain allowed because the linked post itself is free to read.
  */
 export function isPaywalledPublisher(outletName = '', sourceDomainUrl = '') {
-  if (sourceDomainUrl && isPaywalledOrBlockedUrl(sourceDomainUrl)) return true;
+  if (sourceDomainUrl) {
+    if (isPaywalledOrBlockedUrl(sourceDomainUrl)) return true;
+    try {
+      const normalized = sourceDomainUrl.trim().startsWith('http://')
+        ? `https://${sourceDomainUrl.trim().slice(7)}`
+        : sourceDomainUrl.trim();
+      const host = new URL(normalized).hostname.toLowerCase();
+      if (DIRECT_FREE_PUBLIC_HOST_REGEX.test(host)) {
+        return false;
+      }
+    } catch {
+      // Fall through to outlet-name check if URL parsing fails
+    }
+  }
   if (outletName && PAYWALLED_OUTLET_NAME_REGEX.test(String(outletName))) return true;
   return false;
 }

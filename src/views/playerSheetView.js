@@ -22,6 +22,7 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
+import { buildXPlayerScoopSearchUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderPlayerDossierSheetHtml({
   player,
@@ -128,6 +129,7 @@ function renderOverviewTab(p) {
                   <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0">
                     ${breakingPill}
                     ${typePill}
+                    ${n.isFirstMoverInjuryScoop ? `<span class="badge badge-gold">First to Report</span>` : ''}
                     <span class="player-mention-author">
                       by ${
                         sanitizeExternalUrl(n.authorProfileUrl, null)
@@ -145,10 +147,19 @@ function renderOverviewTab(p) {
                       isTweet
                         ? `<a href="${esc(sanitizeExternalUrl(n.url, '#'))}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
                            ${
+                             n.corroboratedBy?.length
+                               ? `<div class="corroboration-meta-row">Confirmed by <strong>${esc(n.corroboratedBy.slice(0, 2).join(', '))}</strong></div>`
+                               : ''
+                           }
+                           ${
                              sanitizeExternalUrl(n.externalUrl, null)
                                ? `<div style="margin-top:5px">
                                     <a href="${esc(sanitizeExternalUrl(n.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                                      <span>Linked: ${esc((n.summary || n.outletName || 'Read Story').slice(0, 56))}</span>
+                                      <span>${
+                                        /^https:\/\/x\.com\//i.test(n.externalUrl) && !/\/status\//i.test(n.externalUrl)
+                                          ? `View ${esc(n.authorHandle || authorName)} on X`
+                                          : `Linked: ${esc((n.summary || n.outletName || 'Read Story').slice(0, 56))}`
+                                      }</span>
                                       ${iconSvg('externalLink', 10)}
                                     </a>
                                   </div>`
@@ -178,7 +189,9 @@ function renderOverviewTab(p) {
   const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
   const safeOtcUrl = sanitizeExternalUrl(p.otcUrl, null);
   const safePfrUrl = sanitizeExternalUrl(p.pfrUrl, null);
+  const safeXBeatUrl = sanitizeExternalUrl(buildXPlayerScoopSearchUrl(p.name), null);
   const profileLinks = [
+    safeXBeatUrl ? { label: 'Live X Beat', url: safeXBeatUrl } : null,
     safeEspnUrl ? { label: 'ESPN Profile', url: safeEspnUrl } : null,
     safeOtcUrl
       ? {

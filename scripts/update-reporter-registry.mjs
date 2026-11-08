@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { sanitizeExternalUrl } from '../src/engine/linkIntegrity.js';
+import { getReporterTrustTier, TRUST_TIER_LABELS } from '../src/engine/beatAttributionEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -18,7 +19,7 @@ const dataDir = path.join(rootDir, 'data');
 export const OUTLETS = [
   { id: '49ers_official', name: '49ers.com / Official Team', tier: 1, type: 'official', url: 'https://www.49ers.com/news/' },
   { id: 'nbcsba', name: 'NBC Sports Bay Area', tier: 1, type: 'beat', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/' },
-  { id: 'athletic', name: 'The Athletic (Public Beat Wire)', tier: 1, type: 'beat', url: 'https://bsky.app/profile/mattbarrows.bsky.social' },
+  { id: 'athletic', name: 'The Athletic (Public Beat Wire)', tier: 1, type: 'beat', url: 'https://x.com/mattbarrows' },
   { id: 'espn', name: 'ESPN NFL & 49ers Beat', tier: 1, type: 'national_beat', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' },
   { id: 'sf_standard', name: 'The San Francisco Standard', tier: 1, type: 'beat', url: 'https://sfstandard.com/sports/' },
   { id: 'sf_chronicle', name: 'San Francisco Chronicle (Public Beat Wire)', tier: 1, type: 'beat', url: 'https://x.com/Eric_Branch' },
@@ -35,9 +36,11 @@ const BSKY_HANDLES = {
   matt_barrows: 'mattbarrows.bsky.social',
   jennifer_lee_chan: 'jenniferleechan.bsky.social',
   vic_tafur: 'victafur.bsky.social',
+  tim_kawakami: 'timkawakami.bsky.social',
   al_sacco: '49erswebzone.bsky.social',
   adam_schefter: 'adamscheftermirror.bsky.social',
   ian_rapoport: 'rapsheet.bsky.social',
+  tom_pelissero: 'tompelissero.bsky.social',
   mina_kimes: 'minakimes.bsky.social'
 };
 
@@ -56,6 +59,9 @@ const SEEDED_REPORTERS = [
   { id: 'jennifer_lee_chan', name: 'Jennifer Lee Chan', handle: '@jenniferleechan', outletId: 'nbcsba', role: '49ers Beat Reporter & Locker Room Coverage', category: 'beat', styleTag: 'factual-beat', baseScore: 92 },
   { id: 'eric_branch', name: 'Eric Branch', handle: '@Eric_Branch', outletId: 'sf_chronicle', role: '49ers Beat Writer (SF Chronicle)', category: 'beat', styleTag: 'factual-beat', baseScore: 91 },
   { id: 'cam_inman', name: 'Cam Inman', handle: '@CamInman', outletId: 'bay_area_news', role: '49ers Beat Writer (Mercury News)', category: 'beat', styleTag: 'factual-beat', baseScore: 90 },
+  { id: 'sam_warren', name: 'Sam Warren', handle: '@SamWarren_SF', outletId: 'athletic', role: '49ers Beat Writer (The Athletic)', category: 'beat', styleTag: 'factual-beat', baseScore: 90 },
+  { id: 'noah_furtado', name: 'Noah Furtado', handle: '@noah_furtado', outletId: 'sf_chronicle', role: '49ers Beat Writer (SF Chronicle)', category: 'beat', styleTag: 'factual-beat', baseScore: 89 },
+  { id: 'chris_biderman', name: 'Chris Biderman', handle: '@ChrisBiderman', outletId: 'bay_area_news', role: '49ers Beat Writer (Sacramento Bee)', category: 'beat', styleTag: 'factual-beat', baseScore: 88 },
   { id: 'vic_tafur', name: 'Vic Tafur', handle: '@VicTafur', outletId: 'athletic', role: 'Bay Area NFL Senior Writer', category: 'beat', styleTag: 'factual-beat', baseScore: 86 },
   { id: 'tim_kawakami', name: 'Tim Kawakami', handle: '@timkawakami', outletId: 'sf_standard', role: 'Editor-at-Large • TK Show', category: 'beat', styleTag: 'columnist-insider', baseScore: 88 },
   { id: 'dieter_kurtenbach', name: 'Dieter Kurtenbach', handle: '@dkurtenbach', outletId: 'bay_area_news', role: 'Sports Columnist & Cap/Scheme Takes', category: 'beat', styleTag: 'opinion-hot-take', baseScore: 82 },
@@ -100,6 +106,8 @@ async function fetchLiveMentionCounts() {
   const counts = new Map();
   const urls = [
     'https://www.ninersnation.com/rss/current.xml',
+    'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1',
+    'https://www.rotowire.com/rss/news.php?sport=NFL',
     'https://news.google.com/rss/search?q=%2249ers%22+when:7d&hl=en-US&gl=US&ceid=US:en',
     'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=40'
   ];
@@ -142,13 +150,16 @@ export async function buildReporterRegistry() {
     const xUrl = cleanHandle ? `https://x.com/${cleanHandle}` : null;
     const bskyUrl = bskyHandle ? `https://bsky.app/profile/${bskyHandle}` : null;
     const outlet = outletMap.get(rep.outletId);
-    const safeOutletUrl = sanitizeExternalUrl(outlet?.url, bskyUrl || xUrl || 'https://www.49ers.com/news/');
+    const safeOutletUrl = sanitizeExternalUrl(outlet?.url, xUrl || bskyUrl || 'https://www.49ers.com/news/');
     const safeProfileUrl = sanitizeExternalUrl(
-      bskyUrl || xUrl || safeOutletUrl,
+      xUrl || bskyUrl || safeOutletUrl,
       'https://www.49ers.com/news/'
     );
+    const trustTier = getReporterTrustTier(rep.id);
     return {
       ...rep,
+      trustTier,
+      trustTierLabel: TRUST_TIER_LABELS[trustTier] || TRUST_TIER_LABELS[2],
       xUrl,
       bskyHandle,
       bskyUrl,
@@ -158,7 +169,7 @@ export async function buildReporterRegistry() {
       popularityScore,
       defaultEnabled: true
     };
-  }).sort((a, b) => b.popularityScore - a.popularityScore || a.name.localeCompare(b.name));
+  }).sort((a, b) => a.trustTier - b.trustTier || b.popularityScore - a.popularityScore || a.name.localeCompare(b.name));
 
   const payload = {
     updatedAt: new Date().toISOString(),

@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v20';
+const CACHE_NAME = '49ers-faithful-v21';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const CORE_ASSETS = [
   './src/engine/injuryProbabilityModel.js',
   './src/engine/playoffMonteCarlo.js',
   './src/engine/antiFluffFilter.js',
+  './src/engine/beatAttributionEngine.js',
   './src/engine/groundingValidator.js',
   './src/engine/breakingClassifier.js',
   './src/engine/linkIntegrity.js',

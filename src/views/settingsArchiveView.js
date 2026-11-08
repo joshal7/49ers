@@ -6,6 +6,7 @@
 import { esc, escJargon, renderPlayerAvatarHtml, renderTeamLogoHtml } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import { getReporterTrustTier } from '../engine/beatAttributionEngine.js';
 import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
 import {
   AI_STUDIO_DIRECT_KEY_URL,
@@ -152,12 +153,16 @@ export function renderSettingsSheetHtml({
         ${visibleReporters
           .map(r => {
             const enabled = !disabledReps.has(r.id);
-            const repLink = sanitizeExternalUrl(r.bskyUrl || r.profileUrl || r.xUrl, null);
+            const repLink = sanitizeExternalUrl(r.xUrl || r.profileUrl || r.bskyUrl, null);
+            const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
+            const tierCls = tier === 1 ? 'badge-gold' : 'badge-neutral';
+            const tierShort = tier === 1 ? 'Tier 1 Trusted' : tier === 2 ? 'Tier 2 Beat/Film' : 'Tier 3 Viable';
             return `
               <label style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer">
                 <div style="min-width:0">
                   <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
                     <span>${esc(r.name)}</span>
+                    <span class="badge ${tierCls}" style="font-size:9.5px;padding:1px 6px">${esc(tierShort)}</span>
                     ${
                       repLink
                         ? `<a href="${esc(repLink)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:var(--gold-bright);font-size:11px;display:inline-flex;align-items:center;gap:3px">${esc(r.handle)} ${iconSvg('externalLink', 10)}</a>`

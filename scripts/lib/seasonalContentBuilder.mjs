@@ -18,6 +18,7 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../../src/engine/linkIntegrity.js';
+import { extractBeatAttributionFromText } from '../../src/engine/beatAttributionEngine.js';
 
 const embedCheckCache = new Map();
 
@@ -193,6 +194,16 @@ export async function fetchLiveBeatSocialPosts() {
       requireKeyword: false
     },
     {
+      actor: 'timkawakami.bsky.social',
+      reporterId: 'tim_kawakami',
+      reporterName: 'Tim Kawakami',
+      authorHandle: '@timkawakami',
+      outletId: 'sf_standard',
+      outletName: 'The SF Standard',
+      tier: 2,
+      requireKeyword: false
+    },
+    {
       actor: 'nbcs49ers.bsky.social',
       reporterId: 'matt_maiocco',
       reporterName: '49ers on NBCSBA',
@@ -251,6 +262,27 @@ export async function fetchLiveBeatSocialPosts() {
       outletName: 'NFL Network',
       tier: 1,
       requireKeyword: true
+    },
+    {
+      actor: 'tompelissero.bsky.social',
+      reporterId: 'tom_pelissero',
+      reporterName: 'Tom Pelissero',
+      authorHandle: '@TomPelissero',
+      outletId: 'nfl_network',
+      outletName: 'NFL Network',
+      tier: 1,
+      requireKeyword: true
+    },
+    {
+      actor: 'nfltraderumors.bsky.social',
+      reporterId: 'adam_schefter',
+      reporterName: 'NFL Trade Rumors Wire',
+      authorHandle: '@nflrums',
+      outletId: 'nfl_network',
+      outletName: 'NFL Beat & Transaction Wire',
+      tier: 1,
+      requireKeyword: true,
+      parseInsiderPrefix: true
     },
     {
       actor: 'insidenflnews.bsky.social',
@@ -312,20 +344,13 @@ export async function fetchLiveBeatSocialPosts() {
             ? `https://bsky.app/profile/${post.author?.handle || acc.actor}/post/${rkey}`
             : `https://bsky.app/profile/${acc.actor}`;
 
-          const attr = acc.parseInsiderPrefix
-            ? resolveMirroredInsiderAttribution(rawText, acc)
-            : {
-                reporterId: acc.reporterId,
-                reporterName: acc.reporterName,
-                authorHandle: acc.authorHandle,
-                outletId: acc.outletId,
-                outletName: acc.outletName,
-                cleanedBody: rawText
-              };
+          const attr = extractBeatAttributionFromText(rawText, acc);
+          const cleanedBody = attr.cleanedText || rawText;
 
-          const formatted = formatTweetBodyForDisplay(attr.cleanedBody);
+          const formatted = formatTweetBodyForDisplay(cleanedBody);
           const brk = classifyBreakingItem({
             title: formatted.text,
+            fullText: cleanedBody,
             summary: extTitle,
             publishedAt: pubIso
           });
@@ -337,11 +362,12 @@ export async function fetchLiveBeatSocialPosts() {
             type: 'tweet',
             outletId: attr.outletId,
             outletName: attr.outletName,
-            tier: acc.tier,
+            tier: attr.trustTier || acc.tier,
+            trustTier: attr.trustTier || acc.tier,
             reporterId: attr.reporterId,
             reporterName: attr.reporterName,
             authorHandle: attr.authorHandle,
-            authorProfileUrl: `https://bsky.app/profile/${post.author?.handle || acc.actor}`,
+            authorProfileUrl: attr.xUrl || `https://bsky.app/profile/${post.author?.handle || acc.actor}`,
             title: formatted.text,
             fullText: formatted.text,
             isFullTweet: formatted.isFullTweet,

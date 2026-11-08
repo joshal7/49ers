@@ -11,6 +11,7 @@ import {
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import { buildXBeatListSearchUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderNewsViewHtml({
   newsMode, // 'clustered' | 'raw'
@@ -104,6 +105,21 @@ export function renderNewsViewHtml({
     </div>
   `;
 
+  const xBeatSearchStrip = `
+    <div class="x-beat-launch-strip" aria-label="Live X Beat Search">
+      <span class="x-beat-strip-label">${iconSvg('bolt', 11)}<span>Live X Search:</span></span>
+      <a href="${esc(buildXBeatListSearchUrl('trusted'))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip">
+        <span>Trusted Beat</span>${iconSvg('externalLink', 10)}
+      </a>
+      <a href="${esc(buildXBeatListSearchUrl('injuries'))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip">
+        <span>Injury Scoops</span>${iconSvg('externalLink', 10)}
+      </a>
+      <a href="${esc(buildXBeatListSearchUrl('insiders'))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip">
+        <span>NFL Insiders</span>${iconSvg('externalLink', 10)}
+      </a>
+    </div>
+  `;
+
   const breakingAlertStrip =
     newsMode === 'clustered' && activeBreakingItems.length > 0
       ? `
@@ -131,6 +147,7 @@ export function renderNewsViewHtml({
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
                       <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
                         <span class="badge ${item.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}">${esc(item.breakingBadge || 'BREAKING')}</span>
+                        ${item.isFirstMoverInjuryScoop ? `<span class="badge badge-gold">First to Report</span>` : ''}
                         <span>by <strong>${esc(authorName)}</strong>${isTw && item.authorHandle ? ` <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(item.authorHandle)}</span>` : ` <span style="color:var(--text-muted)">• ${esc(item.outletName || '')}</span>`}</span>
                       </div>
                       <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(formatRelativeAge(item.publishedAt))}</span>
@@ -138,6 +155,11 @@ export function renderNewsViewHtml({
                     <a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:600;line-height:1.42;color:var(--text-primary)">
                       ${esc(bodyText)} ${iconSvg('externalLink', 11)}
                     </a>
+                    ${
+                      item.corroboratedBy?.length
+                        ? `<div class="corroboration-meta-row">Confirmed by <strong>${esc(item.corroboratedBy.slice(0, 2).join(', '))}</strong></div>`
+                        : ''
+                    }
                   </div>
                 `;
               })
@@ -154,7 +176,7 @@ export function renderNewsViewHtml({
         : filteredClusters.filter(c => c.category === newsCategoryFilter);
 
     if (visibleClusters.length === 0) {
-      return `${topToolbar}${breakingAlertStrip}<div class="card">No synthesis briefs match your active category or source filters.</div>`;
+      return `${topToolbar}${xBeatSearchStrip}${breakingAlertStrip}<div class="card">No synthesis briefs match your active category or source filters.</div>`;
     }
 
     const clustersHtml = visibleClusters
@@ -265,7 +287,7 @@ export function renderNewsViewHtml({
                 <span>Voices:</span>
                 ${citedReporters
                   .map(rep => {
-                    const href = sanitizeExternalUrl(rep.bskyUrl || rep.profileUrl || rep.xUrl, null);
+                    const href = sanitizeExternalUrl(rep.xUrl || rep.profileUrl || rep.bskyUrl, null);
                     return href
                       ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px">${esc(rep.name)}</a>`
                       : `<strong>${esc(rep.name)}</strong>`;
@@ -282,7 +304,7 @@ export function renderNewsViewHtml({
       })
       .join('');
 
-    return `${topToolbar}${breakingAlertStrip}${clustersHtml}`;
+    return `${topToolbar}${xBeatSearchStrip}${breakingAlertStrip}${clustersHtml}`;
   }
 
   // Raw Stream Mode (Breaking-Prioritized Tweets, Articles & Videos)
@@ -339,6 +361,8 @@ export function renderNewsViewHtml({
                         ${iconSvg(badgeIcon, 12)}
                         <span>${esc(badgeText)}</span>
                       </span>
+                      ${item.isFirstMoverInjuryScoop ? `<span class="badge badge-gold">First to Report</span>` : ''}
+                      ${Number(item.trustTier) === 1 && item.breakingPriority > 0 ? `<span class="badge badge-neutral">Tier 1 Trusted</span>` : ''}
                     </div>
                     <span style="font-size:11.5px;color:var(--text-muted)">
                       by ${
@@ -358,6 +382,13 @@ export function renderNewsViewHtml({
                         }
                       </div>
                       ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(cleanSummary)}</div>` : ''}
+                      ${
+                        item.corroboratedBy?.length
+                          ? `<div class="corroboration-meta-row">Confirmed by <strong>${esc(item.corroboratedBy.slice(0, 2).join(', '))}</strong>${item.firstReportedBy ? ` • First reported by <strong>${esc(item.firstReportedBy)}</strong>` : ''}</div>`
+                          : item.firstReportedBy
+                            ? `<div class="corroboration-meta-row">First reported by <strong>${esc(item.firstReportedBy)}</strong></div>`
+                            : ''
+                      }
                     </div>
                     ${
                       hasThumb && sanitizeExternalUrl(item.url || item.externalUrl, null)
@@ -375,7 +406,11 @@ export function renderNewsViewHtml({
                     sanitizeExternalUrl(item.externalUrl, null)
                       ? `<div>
                           <a href="${esc(sanitizeExternalUrl(item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                            <span>Linked Story: ${esc((item.externalTitle || item.outletName || 'Open Article').slice(0, 62))}</span>
+                            <span>${
+                              /^https:\/\/x\.com\//i.test(item.externalUrl) && !/\/status\//i.test(item.externalUrl)
+                                ? `View ${esc(item.authorHandle || authorName)} on X`
+                                : `Linked Story: ${esc((item.externalTitle || item.outletName || 'Open Article').slice(0, 62))}`
+                            }</span>
                             ${iconSvg('externalLink', 11)}
                           </a>
                         </div>`
@@ -402,7 +437,7 @@ export function renderNewsViewHtml({
         </div>
       `;
 
-  return `${topToolbar}${rawListHtml}`;
+  return `${topToolbar}${xBeatSearchStrip}${rawListHtml}`;
 }
 
 export function renderVideoEmbedOrFacade(

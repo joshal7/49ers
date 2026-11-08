@@ -57,8 +57,16 @@ import {
 import {
   scoreContentSignal,
   cleanSensationalistText,
-  filterNewsByUserPrefs
+  filterNewsByUserPrefs,
+  computeNewsSalienceScore
 } from '../src/engine/antiFluffFilter.js';
+import {
+  extractBeatAttributionFromText,
+  corroborateAndAnnotateWireStream,
+  buildXBeatListSearchUrl,
+  buildXPlayerScoopSearchUrl,
+  getReporterTrustTier
+} from '../src/engine/beatAttributionEngine.js';
 import {
   buildClusteredNewsBriefs,
   buildFrontOfficeCapBlueprint,
@@ -67,7 +75,11 @@ import {
   build2026DraftAndUdfaClass
 } from '../scripts/lib/seasonalContentBuilder.mjs';
 import { parseOverTheCapHtml } from '../scripts/lib/otcParser.mjs';
-import { hydrateLiveEspnOverlay, hydrateLiveBlueskyBeatWire } from '../src/services/dataService.js';
+import {
+  hydrateLiveEspnOverlay,
+  hydrateLiveBlueskyBeatWire,
+  hydrateLiveMultiSourceBeatWire
+} from '../src/services/dataService.js';
 import {
   OTC_TEAM_CAP_URL,
   isPaywalledOrBlockedUrl,
@@ -3508,6 +3520,235 @@ await testAsync('Deep Research 4-letter surname resolution, client entity word-b
       spokenSample.includes('strength of victory'),
     `Unexpected spoken humanization output: ${spokenSample}`
   );
+});
+
+await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranking & Multi-Source Live Wire QA', async () => {
+  // 1. Prose & emoji-mirror X beat reporter extraction
+  const wagAttr = extractBeatAttributionFromText(
+    'Purdy (shoulder) practiced in full Thursday, Nick Wagoner of ESPN.com reports.'
+  );
+  assert.equal(wagAttr.reporterId, 'nick_wagoner');
+  assert.equal(wagAttr.authorHandle, '@nwagoner');
+  assert.equal(wagAttr.xUrl, 'https://x.com/nwagoner');
+  assert.equal(wagAttr.trustTier, 1);
+
+  const maioccoAttr = extractBeatAttributionFromText(
+    'McCaffrey logged a full workload Friday, per Matt Maiocco of NBC Sports Bay Area.'
+  );
+  assert.equal(maioccoAttr.reporterId, 'matt_maiocco');
+  assert.equal(maioccoAttr.authorHandle, '@MaioccoNBCS');
+  assert.equal(maioccoAttr.trustTier, 1);
+
+  const warrenAttr = extractBeatAttributionFromText(
+    'Pearsall worked on a side field Wednesday, Sam Warren of The Athletic reports.'
+  );
+  assert.equal(warrenAttr.reporterId, 'sam_warren');
+  assert.equal(warrenAttr.authorHandle, '@SamWarren_SF');
+  assert.equal(warrenAttr.trustTier, 2);
+
+  const schefterEmoji = extractBeatAttributionFromText(
+    '‼️ Schefter: 49ers are activating LB Tatum Bethune from injured reserve ahead of Sunday.'
+  );
+  assert.equal(schefterEmoji.reporterId, 'adam_schefter');
+  assert.equal(schefterEmoji.authorHandle, '@AdamSchefter');
+  assert.ok(!schefterEmoji.cleanedText.includes('Schefter:'), `Expected stripped prefix, got ${schefterEmoji.cleanedText}`);
+
+  // 2. Paywall guard allows free social/wire hosts even when reporter's employer is paywalled
+  assert.equal(isPaywalledPublisher('The Athletic', 'https://x.com/mattbarrows'), false);
+  assert.equal(isPaywalledPublisher('The Athletic', 'https://bsky.app/profile/mattbarrows.bsky.social/post/abc'), false);
+  assert.equal(isPaywalledPublisher('San Francisco Chronicle', 'https://www.espn.com/nfl/player/_/id/4361741/brock-purdy'), false);
+  assert.equal(isPaywalledPublisher('The Athletic', 'https://www.nytimes.com/athletic/12345/49ers/'), true);
+
+  // 3. First-Mover Injury Scoop elevation (Tier-3 viable writer breaking an acute sideline injury) + Tier-1 Corroboration
+  const nowMs = Date.parse('2026-11-08T18:30:00Z');
+  const soloFirstMoverStream = sortNewsWithBreakingPriority(
+    [
+      {
+        id: 'tier1_general',
+        type: 'tweet',
+        reporterId: 'matt_maiocco',
+        author: 'Matt Maiocco',
+        authorHandle: '@MaioccoNBCS',
+        title: '49ers offensive line film review from Week 9 win.',
+        fullText: '49ers offensive line film review from Week 9 win.',
+        publishedAt: '2026-11-08T18:25:00Z'
+      },
+      {
+        id: 'tier3_injury_scoop',
+        type: 'tweet',
+        reporterId: 'grant_cohn',
+        author: 'Grant Cohn',
+        authorHandle: '@grantcohn',
+        title: 'Fred Warner just walked off with trainers during pregame warmups.',
+        fullText: 'Fred Warner just walked off with trainers during pregame warmups.',
+        mentionedPlayers: [{ id: '3139477', name: 'Fred Warner' }],
+        publishedAt: '2026-11-08T18:20:00Z'
+      }
+    ],
+    nowMs
+  );
+  assert.equal(
+    soloFirstMoverStream[0].id,
+    'tier3_injury_scoop',
+    'First viable writer to tweet an acute sideline/warmup injury must immediately rise to #1'
+  );
+  assert.equal(soloFirstMoverStream[0].isFirstMoverInjuryScoop, true);
+
+  // Once Tier-1 beat reporters corroborate the injury, Tier-1 leads while preserving firstReportedBy + corroboratedBy
+  const corroboratedStream = sortNewsWithBreakingPriority(
+    [
+      ...soloFirstMoverStream,
+      {
+        id: 'tier1_injury_confirm',
+        type: 'tweet',
+        reporterId: 'nick_wagoner',
+        author: 'Nick Wagoner',
+        authorHandle: '@nwagoner',
+        title: 'Fred Warner is questionable to return with an ankle injury.',
+        fullText: 'Fred Warner is questionable to return with an ankle injury.',
+        mentionedPlayers: [{ id: '3139477', name: 'Fred Warner' }],
+        publishedAt: '2026-11-08T18:28:00Z'
+      }
+    ],
+    nowMs
+  );
+  const wagConfirm = corroboratedStream.find(x => x.id === 'tier1_injury_confirm');
+  const cohnOrig = corroboratedStream.find(x => x.id === 'tier3_injury_scoop');
+  assert.equal(corroboratedStream[0].id, 'tier1_injury_confirm', 'Tier-1 confirmation of live in-game return status should rank #1');
+  assert.equal(wagConfirm.firstReportedBy, 'Grant Cohn', 'Must preserve First-Mover credit for the writer who tweeted first');
+  assert.equal(wagConfirm.corroborationCount, 2);
+  assert.ok(cohnOrig.corroboratedBy?.includes('Nick Wagoner'), 'Original scoop should show Tier-1 corroboration');
+
+  // Non-injury opinion takes still favor Tier-1 Trusted Beat over Tier-3 hot-take columnists
+  const tier1BeatSalience = computeNewsSalienceScore(
+    {
+      title: 'Kyle Shanahan explains Wide-9 stunt mechanics and EPA efficiency',
+      reporterId: 'matt_barrows',
+      trustTier: getReporterTrustTier('matt_barrows'),
+      publishedAt: '2026-11-08T17:00:00Z',
+      signalScore: 84
+    },
+    { styleTag: 'factual-beat' },
+    nowMs
+  );
+  const tier3OpinionSalience = computeNewsSalienceScore(
+    {
+      title: 'Why the coaching staff needs a wake-up call this month',
+      reporterId: 'dieter_kurtenbach',
+      trustTier: getReporterTrustTier('dieter_kurtenbach'),
+      publishedAt: '2026-11-08T17:00:00Z',
+      signalScore: 62
+    },
+    { styleTag: 'opinion-hot-take' },
+    nowMs
+  );
+  assert.ok(tier1BeatSalience > tier3OpinionSalience + 20, 'Tier-1 factual beat must strongly outscore Tier-3 opinion');
+
+  // 4. Live X Search URLs
+  const xInjUrl = buildXBeatListSearchUrl('injuries');
+  const xPlayerUrl = buildXPlayerScoopSearchUrl('Brock Purdy');
+  assert.ok(xInjUrl.startsWith('https://x.com/search?q=') && xInjUrl.includes('f=live') && xInjUrl.includes('MaioccoNBCS'));
+  assert.ok(xPlayerUrl.startsWith('https://x.com/search?q=') && xPlayerUrl.includes('Brock%20Purdy') && xPlayerUrl.includes('f=live'));
+
+  // 5. Multi-source live wire orchestrator (ESPN Player Wire + RotoWire RSS + Official Transactions + Bluesky)
+  const origFetch = globalThis.fetch;
+  try {
+    const freshIso = new Date(Date.now() - 4 * 60_000).toISOString();
+    globalThis.fetch = async reqUrl => {
+      const u = String(reqUrl);
+      if (u.includes('apis/fantasy/v2/games/ffl/news/players?playerId=4361741')) {
+        return {
+          ok: true,
+          json: async () => ({
+            feed: [
+              {
+                id: 99112233,
+                type: 'PlayerNews',
+                published: freshIso,
+                headline: 'Full go at practice',
+                description: 'Purdy (shoulder) was a full participant in practice Friday, Nick Wagoner of ESPN.com reports.',
+                story: 'Purdy has no game status designation for Sunday.'
+              }
+            ]
+          })
+        };
+      }
+      if (u.includes('apis/fantasy/v2/games/ffl/news/players')) {
+        return { ok: true, json: async () => ({ feed: [] }) };
+      }
+      if (u.includes('rotowire.com/rss/news.php')) {
+        return {
+          ok: true,
+          text: async () => `<?xml version="1.0"?><rss><channel><item>
+            <title>George Kittle: Cleared after sideline check</title>
+            <description>49ers TE George Kittle returned to the game after a brief medical tent visit, Matt Maiocco of NBC Sports Bay Area reports.</description>
+            <link>https://www.rotowire.com/football/headlines/george-kittle-injury-9988</link>
+            <pubDate>${new Date(Date.now() - 2 * 60_000).toUTCString()}</pubDate>
+            <guid>rw-kittle-9988</guid>
+          </item></channel></rss>`
+        };
+      }
+      if (u.includes('transactions?team=25')) {
+        return {
+          ok: true,
+          json: async () => ({
+            transactions: [
+              {
+                date: freshIso,
+                description: 'Activated WR Ricky Pearsall from injured reserve.'
+              }
+            ]
+          })
+        };
+      }
+      if (u.includes('mattbarrows.bsky.social')) {
+        return {
+          ok: true,
+          json: async () => ({
+            feed: [
+              {
+                post: {
+                  uri: 'at://did:plc:barrows/app.bsky.feed.post/multisrc777',
+                  record: {
+                    text: '49ers defensive line rotation getting extra Wide-9 stunt reps today in Santa Clara.',
+                    createdAt: freshIso
+                  }
+                }
+              }
+            ]
+          })
+        };
+      }
+      return { ok: true, json: async () => ({ feed: [] }) };
+    };
+
+    const mockAppData = {
+      roster: {
+        players: [
+          { id: '4361741', name: 'Brock Purdy', position: 'QB', jersey: 13, rosterBucket: 'active', capHit2026: 12000000, health: { status: 'Questionable', isOnPracticeReport: true }, recentNews: [] },
+          { id: '3040151', name: 'George Kittle', position: 'TE', jersey: 85, rosterBucket: 'active', capHit2026: 22000000, health: { status: 'Active' }, recentNews: [] },
+          { id: '4428209', name: 'Ricky Pearsall', position: 'WR', jersey: 14, rosterBucket: 'active', capHit2026: 3500000, health: { status: 'Active' }, recentNews: [] }
+        ]
+      },
+      news: { rawStream: [] }
+    };
+
+    const firstPass = await hydrateLiveMultiSourceBeatWire(mockAppData, { isGameLive: true });
+    assert.equal(firstPass.bySource.espnPlayerWire, 1, 'Expected 1 ESPN X-Beat Player Wire item');
+    assert.equal(firstPass.bySource.rotowireRss, 1, 'Expected 1 RotoWire Live RSS item');
+    assert.equal(firstPass.bySource.transactions, 1, 'Expected 1 Official 49ers Transaction item');
+    assert.equal(firstPass.bySource.bluesky, 1, 'Expected 1 Bluesky beat post');
+    assert.equal(firstPass.totalAdded, 4);
+    assert.equal(mockAppData.news.rawStream[0].isInGameInjury, true, 'Kittle medical tent return update must rank #1');
+    assert.equal(mockAppData.news.rawStream[0].authorHandle, '@MaioccoNBCS');
+    assert.equal(mockAppData.news.rawStream[0].authorProfileUrl, 'https://x.com/MaioccoNBCS');
+    assert.ok(mockAppData.roster.players[0].recentNews.length >= 1, 'Purdy recentNews must be hydrated live');
+
+    const secondPass = await hydrateLiveMultiSourceBeatWire(mockAppData, { isGameLive: true });
+    assert.equal(secondPass.totalAdded, 0, 'Idempotent second poll must add 0 duplicate items');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
 });
 
 console.log(`\n======================================================`);

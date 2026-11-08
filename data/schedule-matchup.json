@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T03:32:19.880Z",
+  "updatedAt": "2026-11-08T19:16:46.859Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -239,8 +239,8 @@
         "abbr": "ATL",
         "name": "Atlanta Falcons",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
-        "record": "3-5",
-        "pointDiff": -18,
+        "record": "3-6",
+        "pointDiff": -35,
         "coach": "Raheem Morris"
       },
       "venue": {
@@ -287,7 +287,7 @@
         "surface": "Natural Grass"
       },
       "restAdvantageDays": 7,
-      "spreadLineSf": -9.5,
+      "spreadLineSf": -8.5,
       "totalLine": 51.5,
       "broadcast": "FOX"
     },
@@ -321,8 +321,8 @@
         "surface": "Synthetic Turf"
       },
       "restAdvantageDays": 0,
-      "spreadLineSf": -3.5,
-      "totalLine": 53.5,
+      "spreadLineSf": null,
+      "totalLine": null,
       "broadcast": "FOX"
     },
     {
@@ -1205,11 +1205,11 @@
     },
     "betting": {
       "favorite": "San Francisco 49ers",
-      "spread": "SF -9.5",
+      "spread": "SF -8.5",
       "openingSpread": "Opened SF -8.5 (Draft Kings)",
       "overUnder": 51.5,
-      "moneyline": "SF -500 | LV +380",
-      "impliedScore": "SF 30.5 – LV 21.0",
+      "moneyline": "SF -440 | LV +340",
+      "impliedScore": "SF 30.0 – LV 21.5",
       "restAdvantage": "+7 Days Rest Advantage (SF off Week 8 Bye)"
     },
     "franchiseHistory": {

@@ -11,7 +11,8 @@ import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
-  hydrateLiveBlueskyBeatWire,
+  hydrateLiveMultiSourceBeatWire,
+  LIVE_WIRE_SOURCE_LABELS,
   hydrateLiveEspnOverlay,
   hydrateLive49ersPodcasts,
   loadUserPrefs,
@@ -1686,10 +1687,12 @@ async function pollLowLatencyTweetAndInjuryWire(manual = false) {
     wirePollCount += 1;
     const shouldCheckEspn = manual || gameLive || wirePollCount % 2 === 0;
 
-    const [addedTweets, espnChanged] = await Promise.all([
-      hydrateLiveBlueskyBeatWire(state.appData),
+    const [wireResult, espnChanged] = await Promise.all([
+      hydrateLiveMultiSourceBeatWire(state.appData, { isGameLive: gameLive }),
       shouldCheckEspn ? hydrateLiveEspnOverlay(state.appData) : Promise.resolve(false)
     ]);
+    const addedTweets = Number(wireResult?.totalAdded || 0);
+    state.lastWireSourceCounts = wireResult?.bySource || null;
 
     state.lastWireSyncAt = new Date().toISOString();
     lastWirePollMs = Date.now();
@@ -1747,11 +1750,15 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
       hasNewUpstreamData = true;
     }
 
-    const [addedLivePosts, espnMutated, podsMutated] = await Promise.all([
-      hydrateLiveBlueskyBeatWire(state.appData),
+    const [wireResult, espnMutated, podsMutated] = await Promise.all([
+      hydrateLiveMultiSourceBeatWire(state.appData, {
+        isGameLive: is49ersGameLiveWindow(state.appData)
+      }),
       hydrateLiveEspnOverlay(state.appData),
       hydrateLive49ersPodcasts(state.appData)
     ]);
+    const addedLivePosts = Number(wireResult?.totalAdded || 0);
+    state.lastWireSourceCounts = wireResult?.bySource || null;
     state.lastWireSyncAt = new Date().toISOString();
     lastWirePollMs = Date.now();
 
@@ -1919,7 +1926,9 @@ async function init() {
         gameLivePollMs: GAME_LIVE_WIRE_POLL_MS,
         standardPollMs: STANDARD_WIRE_POLL_MS,
         isGameLive: is49ersGameLiveWindow(state.appData),
-        lastWireSyncAt: state.lastWireSyncAt
+        lastWireSyncAt: state.lastWireSyncAt,
+        sourcesPolled: LIVE_WIRE_SOURCE_LABELS,
+        lastWireSourceCounts: state.lastWireSourceCounts || null
       }),
       getState: () => state,
       openSharedUrl: loc => handleIncomingSharedLink(loc),

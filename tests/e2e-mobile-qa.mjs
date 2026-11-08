@@ -339,6 +339,7 @@ async function launchHeadlessChrome(userDataDir) {
       '--no-default-browser-check',
       '--autoplay-policy=no-user-gesture-required',
       '--mute-audio',
+      '--disable-audio-output',
       `--user-data-dir=${userDataDir}`,
       BASE_URL
     ],
@@ -2881,6 +2882,67 @@ async function main() {
           `[${vp.name}] Entire Team Stats & NFL Rankings card did not fit in one portrait screen above bottom nav: ${JSON.stringify(audit.statsGeo)}`
         );
       }
+    });
+
+    await runStep('Live X-Beat Multi-Source Telemetry, Live X Search Strip & X-First Reporter Links', async () => {
+      await cdp.setViewport(402, 874, true);
+      const xAudit = await cdp.eval(() => {
+        const cfg = window.__49ersDiagnostics?.getLiveWireConfig?.() || {};
+        document.querySelector('.nav-tab-btn[data-nav-tab="news"]')?.click();
+        const strip = document.querySelector('.x-beat-launch-strip');
+        const stripLinks = Array.from(strip?.querySelectorAll('a.x-beat-chip') || []).map(a => ({
+          label: a.textContent.trim(),
+          href: a.getAttribute('href') || ''
+        }));
+        const headH = Math.round(document.querySelector('.news-toolbar-head')?.getBoundingClientRect().height || 0);
+        const cardH = Math.round(document.querySelector('.news-toolbar-card')?.getBoundingClientRect().height || 0);
+
+        // Open Settings and verify X-first reporter links + Trust Tier badges
+        document.getElementById('openSettingsBtn')?.click();
+        const sheetBody = document.getElementById('sheetBody');
+        const repAnchorHrefs = Array.from(sheetBody?.querySelectorAll('label a[href]') || [])
+          .map(a => a.getAttribute('href') || '')
+          .slice(0, 8);
+        const hasTierBadges = (sheetBody?.textContent || '').includes('Tier 1 Trusted');
+        document.getElementById('closeSheetBtn')?.click();
+
+        // Open Roster -> first player dossier -> verify Live X Beat link chip
+        document.querySelector('.nav-tab-btn[data-nav-tab="roster"]')?.click();
+        document.querySelector('.player-row')?.click();
+        const dossierLinks = Array.from(document.querySelectorAll('#sheetBody .source-link-strip a.source-chip-link')).map(a => ({
+          label: a.textContent.trim(),
+          href: a.getAttribute('href') || ''
+        }));
+        document.getElementById('closeSheetBtn')?.click();
+        document.querySelector('.nav-tab-btn[data-nav-tab="home"]')?.click();
+
+        return { cfg, stripExists: Boolean(strip), stripLinks, headH, cardH, repAnchorHrefs, hasTierBadges, dossierLinks };
+      });
+
+      assert(
+        Array.isArray(xAudit.cfg.sourcesPolled) && xAudit.cfg.sourcesPolled.length >= 5,
+        `Expected >=5 live wire sources in diagnostics, got ${JSON.stringify(xAudit.cfg)}`
+      );
+      assert(
+        xAudit.stripExists &&
+          xAudit.stripLinks.length === 3 &&
+          xAudit.stripLinks.every(l => l.href.startsWith('https://x.com/search?q=') && l.href.includes('f=live')),
+        `Live X Search strip missing or invalid links: ${JSON.stringify(xAudit.stripLinks)}`
+      );
+      assert(
+        xAudit.headH <= 68 && xAudit.cardH <= 180,
+        `News toolbar compact geometry regressed: head=${xAudit.headH}px, card=${xAudit.cardH}px`
+      );
+      assert(
+        xAudit.repAnchorHrefs.length >= 5 && xAudit.repAnchorHrefs.every(h => h.startsWith('https://x.com/')),
+        `Expected X-first reporter links in Settings, got ${JSON.stringify(xAudit.repAnchorHrefs)}`
+      );
+      assert(xAudit.hasTierBadges, 'Expected Tier 1 Trusted badges in Settings reporter directory');
+      assert(
+        xAudit.dossierLinks.some(l => l.label.includes('Live X Beat') && l.href.startsWith('https://x.com/search?q=')),
+        `Expected Live X Beat link chip in Player Dossier, got ${JSON.stringify(xAudit.dossierLinks)}`
+      );
+      await cdp.assertNoOverflow('Live X-Beat Telemetry & Search Strip Audit');
     });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {

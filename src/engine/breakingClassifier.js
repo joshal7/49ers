@@ -4,10 +4,18 @@
  * so critical updates rise immediately to #1 in both News & Film and Player Mentions.
  */
 
+import {
+  corroborateAndAnnotateWireStream,
+  resolveReporterFromNameOrHandle
+} from './beatAttributionEngine.js';
+
 export const SHORT_TWEET_FULL_TEXT_LIMIT = 320;
 
 const IN_GAME_INJURY_RETURN_REGEX =
-  /\b(questionable to return|probable to return|doubtful to return|ruled out for the rest|out for the rest of the game|will not return|cleared to return|back in the game|returning to the game|returned to the game|headed to the locker room|going to the locker room|went to the locker room|blue medical tent|medical tent|evaluated for a concussion|concussion evaluation|carted off|limped off|helped off the field|in-game injury|injury update)\b/i;
+  /\b(questionable to return|probable to return|doubtful to return|ruled out for the rest|out for the rest of the game|will not return|cleared to return|back in the game|returning to the game|returned to the game|headed to the locker room|going to the locker room|went to the locker room|blue medical tent|medical tent|evaluated for a concussion|concussion evaluation|carted off|limped off|limping off|helped off the field|helped off|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|left practice early|in-game injury|injury update)\b/i;
+
+const PRACTICE_WARMUP_INJURY_SCOOP_REGEX =
+  /\b(not practicing|not seen at practice|working on a side field|rehab field|blue non-contact|non-contact jersey|walking boot|suffered a setback|aggravated his|underwent an mri|scheduled for an mri|high-ankle sprain|torn acl|torn achilles|torn pectoral|meniscus|21-day practice window|designated to return from|didn't activate|did not activate|game-time decision|full workload)\b/i;
 
 const SPECULATIVE_OR_RETROSPECTIVE_EXCLUSION_REGEX =
   /\b(mock trade|trade proposal|trade idea|trade pitch|hypothetical|what if|flashback|on this day|\d+\s+years ago|way-too-early|mailbag|merch|promo code)\b/i;
@@ -16,10 +24,10 @@ const NON_TRANSACTION_RELEASE_REGEX =
   /\breleased\s+(?:a\s+|an\s+|their\s+|the\s+|its\s+|his\s+|her\s+|new\s+|official\s+|week\s+\d+\s+)?(?:statement|video|hype video|trailer|podcast|episode|schedule|depth chart|uniform|uniforms|jersey|renderings|report|rankings|grades|mock|list|photos|highlights|mic'd up)\b/i;
 
 const BREAKING_ROSTER_OR_STATUS_REGEX =
-  /(\bbreaking\b|just in:|per source|per sources|\btrade:|traded to|acquiring|re-acquiring|has been traded|seeking reinstatement|reinstated|activated from ir|activated off ir|placed on injured reserve|placed on ir|game status report|officially active|officially inactive|ruled out|unlikely to play|expected to play|good to go|signed to the active roster|elevated from the practice squad|\bwaived\b|has been released|have released|officially released|released from (?:ir|injured reserve|the practice squad)|\breleased\s+(?:veteran\s+|rookie\s+)?(?:qb|rb|fb|wr|te|ol|ot|og|c|dl|de|dt|nt|edge|lb|ilb|olb|cb|db|s|k|p|ls)\b)/i;
+  /(\bbreaking\b|just in:|per source|per sources|\btrade:|traded to|acquiring|re-acquiring|has been traded|seeking reinstatement|reinstated|activated from ir|activated off ir|activated from injured reserve|placed on injured reserve|placed on ir|game status report|officially active|officially inactive|ruled out|unlikely to play|expected to play|good to go|signed to the active roster|signed to the practice squad|elevated from the practice squad|standard elevation|\bwaived\b|has been released|have released|officially released|released from (?:ir|injured reserve|the practice squad)|\breleased\s+(?:veteran\s+|rookie\s+)?(?:qb|rb|fb|wr|te|ol|ot|og|c|dl|de|dt|nt|edge|lb|ilb|olb|cb|db|s|k|p|ls)\b)/i;
 
 /**
- * Classifies a tweet or news item for breaking / in-game injury priority.
+ * Classifies a tweet or news item for breaking / in-game injury / first-mover scoop priority.
  */
 export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
   const combined = `${item.title || item.headline || ''} ${item.fullText || ''} ${item.summary || ''}`.trim();
@@ -28,6 +36,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
 
   const isSpeculative = SPECULATIVE_OR_RETROSPECTIVE_EXCLUSION_REGEX.test(combined);
   const matchesInGame = !isSpeculative && IN_GAME_INJURY_RETURN_REGEX.test(combined);
+  const matchesPracticeInjuryScoop = !isSpeculative && PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(combined);
   const matchesBreaking =
     !isSpeculative &&
     !NON_TRANSACTION_RELEASE_REGEX.test(combined) &&
@@ -39,6 +48,16 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
       isInGameInjury: ageHours <= 8,
       breakingPriority: ageHours <= 8 ? 2 : 1,
       breakingBadge: ageHours <= 8 ? 'LIVE INJURY UPDATE' : 'INJURY ALERT',
+      ageHours
+    };
+  }
+
+  if (matchesPracticeInjuryScoop && ageHours <= 14) {
+    return {
+      isBreaking: true,
+      isInGameInjury: false,
+      breakingPriority: item.isFirstMoverInjuryScoop && ageHours <= 6 ? 1.85 : ageHours <= 8 ? 1.6 : 1,
+      breakingBadge: item.isFirstMoverInjuryScoop && ageHours <= 6 ? 'INJURY SCOOP' : 'INJURY ALERT',
       ageHours
     };
   }
@@ -74,16 +93,25 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now()) {
 }
 
 /**
- * Sorts a list of tweets/articles so fresh breaking news & in-game injury return updates
- * rise straight to the top, followed by newest-first ordering (with signalScore tie-breaking
- * for nearly simultaneous posts within 5 minutes).
+ * Sorts a list of tweets/articles so:
+ * 1. Fresh in-game & sideline injury updates rise immediately to #1 — INCLUDING First-Mover
+ *    injury scoops from ANY viable tracked beat/sideline writer.
+ * 2. When multiple reporters cover the same story within a tight window, Tier-1 Trusted Reporters
+ *    (Maiocco, Wagoner, Barrows, Schefter, Rapoport, Pelissero, Garafolo, Lombardi, Shanahan/49ers)
+ *    and corroborated multi-reporter updates rank highest while preserving first-mover attribution.
+ * 3. Remaining items sort newest-first with trust-tier & signalScore tie-breaking.
  */
 export function sortNewsWithBreakingPriority(items = [], nowMs = Date.now(), { activeWindowHours = 18 } = {}) {
-  return [...items]
+  const corroborated = corroborateAndAnnotateWireStream(items, nowMs);
+
+  return corroborated
     .map(it => {
       const cls = classifyBreakingItem(it, nowMs);
+      const repEntry = resolveReporterFromNameOrHandle(it.reporterId || it.author || it.reporterName || it.authorHandle);
+      const trustTier = Number(it.trustTier) || repEntry?.trustTier || 2;
       return {
         ...it,
+        trustTier,
         isBreaking: cls.isBreaking,
         isInGameInjury: cls.isInGameInjury,
         breakingPriority: cls.ageHours <= activeWindowHours ? cls.breakingPriority : 0,
@@ -95,7 +123,19 @@ export function sortNewsWithBreakingPriority(items = [], nowMs = Date.now(), { a
       if (prioDiff !== 0) return prioDiff;
       const aMs = new Date(a.publishedAt || 0).getTime() || 0;
       const bMs = new Date(b.publishedAt || 0).getTime() || 0;
-      if (Math.abs(bMs - aMs) <= 300_000) {
+
+      // Within a 20-minute window on corroborated/breaking news, prefer Tier-1 Trusted Reporters
+      // UNLESS the earlier item is an uncorroborated First-Mover acute injury scoop.
+      const windowMs = (a.breakingPriority || 0) > 0 ? 20 * 60_000 : 8 * 60_000;
+      if (Math.abs(bMs - aMs) <= windowMs) {
+        if (a.isFirstMoverInjuryScoop && !b.isFirstMoverInjuryScoop && (a.corroborationCount || 1) === 1) {
+          return -1;
+        }
+        if (b.isFirstMoverInjuryScoop && !a.isFirstMoverInjuryScoop && (b.corroborationCount || 1) === 1) {
+          return 1;
+        }
+        const tierDiff = (a.trustTier || 2) - (b.trustTier || 2);
+        if (tierDiff !== 0) return tierDiff;
         const sigDiff = (Number(b.signalScore) || 0) - (Number(a.signalScore) || 0);
         if (Math.abs(sigDiff) >= 8) return sigDiff;
       }

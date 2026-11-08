@@ -3,6 +3,11 @@
  * Enforces the 49ers Faithful Editorial Charter: facts, X's & O's, and cap math — zero rage-bait.
  */
 
+import {
+  isAcuteInjuryOrAvailabilityScoop,
+  resolveReporterFromNameOrHandle
+} from './beatAttributionEngine.js';
+
 const CLICKBAIT_PATTERNS = [
   /\byou won'?t believe\b/i,
   /\bshock(s|ed|ing)?\s+the\s+(nfl|world|internet)\b/i,
@@ -210,19 +215,30 @@ export function computeNewsSalienceScore(
 
   const repId = item.reporterId || item.citedReporterIds?.[0] || '';
   const repObj = reportersById instanceof Map && repId ? reportersById.get(repId) : null;
-  if (repObj?.styleTag === 'opinion-hot-take') {
+  const dirEntry = resolveReporterFromNameOrHandle(repId || item.author || item.reporterName || item.authorHandle);
+  const trustTier = Number(item.trustTier) || repObj?.trustTier || dirEntry?.trustTier || (PRIMARY_BEAT_REPORTER_IDS.has(repId) ? 1 : 2);
+  const isAcuteInjuryScoop =
+    Boolean(item.isInGameInjury || item.isFirstMoverInjuryScoop) ||
+    isAcuteInjuryOrAvailabilityScoop(`${title} ${body}`);
+
+  if ((repObj?.styleTag === 'opinion-hot-take' || trustTier === 3) && !isAcuteInjuryScoop) {
     salience -= 12;
-  } else if (repObj?.styleTag === 'analytics-film' || repObj?.tier === 1 || PRIMARY_BEAT_REPORTER_IDS.has(repId)) {
-    salience += 10;
+  } else if (trustTier === 1 || repObj?.styleTag === 'analytics-film' || repObj?.tier === 1 || PRIMARY_BEAT_REPORTER_IDS.has(repId)) {
+    salience += 11;
+  } else if (trustTier === 2) {
+    salience += 4;
   }
 
   const corroboration =
     Number(item.synthesizedFromCount) ||
+    Number(item.corroborationCount) ||
+    (Array.isArray(item.corroboratedBy) ? item.corroboratedBy.length + 1 : 0) ||
     (Array.isArray(item.citedReporterIds) ? item.citedReporterIds.length : 0) ||
     (Array.isArray(item.mentionedPlayers) && item.mentionedPlayers.length > 0 ? 2 : 1);
-  salience += Math.min(12, Math.max(0, corroboration - 1) * 2.5);
+  salience += Math.min(14, Math.max(0, corroboration - 1) * 3);
 
   if (item.isInGameInjury) salience += 24;
+  else if (item.isFirstMoverInjuryScoop) salience += 18;
   else if (item.isBreaking) salience += 14;
 
   const pubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;

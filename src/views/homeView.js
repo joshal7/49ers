@@ -30,6 +30,7 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
+import { buildXBeatListSearchUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -211,7 +212,10 @@ function renderSingleDashboardCard({
             <div>
               <div class="home-wire-heading">
                 <span>Top Beat Tweets</span>
-                <span class="mono" style="font-size:10.5px;color:var(--emerald)">Live Wire (&lt;1m)</span>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                  <a href="${esc(buildXBeatListSearchUrl('injuries'))}" target="_blank" rel="noopener noreferrer" class="ext-link mono" style="font-size:10.5px">Live X Beat ${iconSvg('external', 10)}</a>
+                  <span class="mono" style="font-size:10.5px;color:var(--emerald)">Live Wire (&lt;1m)</span>
+                </div>
               </div>
               <div class="home-wire-list">
                 ${topTweets
@@ -230,6 +234,11 @@ function renderSingleDashboardCard({
                             ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
+                        ${
+                          tw.isFirstMoverInjuryScoop
+                            ? `<span class="badge badge-gold" style="font-size:9.5px;padding:1.5px 6px">First to Report</span>`
+                            : ''
+                        }
                         <a href="${esc(sanitizeExternalUrl(tw.authorProfileUrl, sanitizeExternalUrl(tw.url, '#')))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
                           <strong>${esc(authorName)}</strong>
                           <span class="mono">${esc(tw.authorHandle || '')}</span>
@@ -242,10 +251,19 @@ function renderSingleDashboardCard({
                       <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                     </a>
                     ${
+                      tw.corroboratedBy?.length
+                        ? `<div class="corroboration-meta-row">Confirmed by <strong>${esc(tw.corroboratedBy.slice(0, 2).join(', '))}</strong></div>`
+                        : ''
+                    }
+                    ${
                       sanitizeExternalUrl(tw.externalUrl, null)
                         ? `<div style="margin-top:3px">
                             <a href="${esc(sanitizeExternalUrl(tw.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                              <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
+                              <span>${
+                                /^https:\/\/x\.com\//i.test(tw.externalUrl) && !/\/status\//i.test(tw.externalUrl)
+                                  ? `View ${esc(tw.authorHandle || authorName)} on X`
+                                  : `Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}`
+                              }</span>
                               ${iconSvg('external', 10)}
                             </a>
                           </div>`

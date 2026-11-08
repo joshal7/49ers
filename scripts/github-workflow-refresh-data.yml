@@ -2,8 +2,9 @@ name: Refresh Live 49ers Data Feeds
 
 on:
   schedule:
-    # Runs every 2 hours UTC (covers morning practice reports, Friday injury designations,
-    # Sunday post-game scores & week rollover, trade deadline, and offseason transactions)
+    # Runs every 30 minutes during NFL game, Friday injury-designation, and practice windows (UTC),
+    # plus every 2 hours around the clock for year-round roster, cap, and beat wire coverage.
+    - cron: '*/30 16-23,0-4 * * 0,1,2,4,5'
     - cron: '23 */2 * * *'
   workflow_dispatch:
   push:
@@ -25,7 +26,7 @@ concurrency:
 
 jobs:
   refresh-feeds:
-    name: Fetch ESPN, OverTheCap, Tankathon, nflverse, Beat Wire & Validate
+    name: Fetch ESPN, OverTheCap, Tankathon, nflverse, X Beat Wire & Validate
     runs-on: ubuntu-latest
     timeout-minutes: 20
     outputs:
