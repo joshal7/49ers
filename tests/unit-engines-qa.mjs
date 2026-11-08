@@ -103,7 +103,13 @@ import {
   formatTweetBodyForDisplay,
   is49ersGameLiveWindow
 } from '../src/engine/breakingClassifier.js';
-import { buildNativePodcastAppHref } from '../src/views/audioAiView.js';
+import {
+  buildNativePodcastAppHref,
+  AI_STUDIO_DIRECT_KEY_URL,
+  AI_STUDIO_RATE_LIMIT_URL,
+  renderGeminiApiKeyStepByStepGuideHtml,
+  renderAudioAiViewHtml
+} from '../src/views/audioAiView.js';
 import { SEASON_NAV_CLUSTERS, renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
 import {
   humanizeNflTextForTts,
@@ -3139,6 +3145,49 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
     assert.ok(fallbackAnalysis?.markdown?.includes('Executive Situational Thesis'), '429 fallback analysis must include verified 6-section scouting report');
   } finally {
     globalThis.fetch = origFetch;
+  }
+});
+
+test('New-user 1-time Gemini API key step-by-step guide renders above setup box on Auto Pod & AI Analysis with direct AI Studio deep links', () => {
+  assert.equal(AI_STUDIO_DIRECT_KEY_URL, 'https://aistudio.google.com/app/apikey');
+  assert.equal(AI_STUDIO_RATE_LIMIT_URL, 'https://aistudio.google.com/rate-limit');
+  assert.equal(sanitizeExternalUrl(AI_STUDIO_DIRECT_KEY_URL, null), AI_STUDIO_DIRECT_KEY_URL);
+  assert.equal(sanitizeExternalUrl(AI_STUDIO_RATE_LIMIT_URL, null), AI_STUDIO_RATE_LIMIT_URL);
+
+  const guideWithFocus = renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: true });
+  assert.ok(guideWithFocus.includes(AI_STUDIO_DIRECT_KEY_URL), 'Guide must deep-link straight to aistudio.google.com/app/apikey');
+  assert.ok(guideWithFocus.includes(AI_STUDIO_RATE_LIMIT_URL), 'Guide must link to aistudio.google.com/rate-limit');
+  assert.ok(guideWithFocus.includes('both Auto Pod &amp; AI Analysis'), 'Guide must confirm 1-time key unlocks both Auto Pod & AI Analysis');
+  assert.ok(guideWithFocus.includes('data-action="focus-inline-gemini-key"'), 'Inline guide must include jump-to-paste-box button');
+
+  const guideSettings = renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: false });
+  assert.ok(!guideSettings.includes('data-action="focus-inline-gemini-key"'), 'Settings variant omits inline jump button');
+
+  for (const subSection of ['auto_podcast', 'deep_analysis']) {
+    const collapsedHtml = renderAudioAiViewHtml({
+      subSection,
+      userPrefs: { geminiApiKey: '' },
+      showGeminiKeyGuide: false
+    });
+    const bannerIdx = collapsedHtml.indexOf('data-gemini-guide-banner');
+    const setupIdx = collapsedHtml.indexOf('data-gemini-setup-card="unconnected"');
+    assert.ok(bannerIdx > -1 && setupIdx > -1 && bannerIdx < setupIdx, `Guide banner must render above unconnected setup box on ${subSection}`);
+    assert.ok(!collapsedHtml.includes('data-gemini-guide-steps'), 'Collapsed guide hides expanded step list by default');
+
+    const expandedHtml = renderAudioAiViewHtml({
+      subSection,
+      userPrefs: { geminiApiKey: '' },
+      showGeminiKeyGuide: true
+    });
+    assert.ok(expandedHtml.includes('data-gemini-guide-steps'), `Expanded guide renders 4-step walkthrough on ${subSection}`);
+
+    const connectedHtml = renderAudioAiViewHtml({
+      subSection,
+      userPrefs: { geminiApiKey: 'AIzaConnectedTestKey123456' },
+      showGeminiKeyGuide: true
+    });
+    assert.ok(!connectedHtml.includes('data-gemini-guide-banner'), `Connected users must not see new-user guide banner on ${subSection}`);
+    assert.ok(connectedHtml.includes('data-gemini-setup-card="connected"'), `Connected users see live connected badge on ${subSection}`);
   }
 });
 

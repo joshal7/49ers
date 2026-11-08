@@ -1615,8 +1615,30 @@ async function main() {
         document.querySelector('[data-action="generate-autopodcast"]').click();
         const emptyErrText = document.getElementById('mainView').textContent || '';
 
-        // Verify unconnected setup card & >=16px inline key input
+        // Verify new-user guide link sits OVER the 1-time API key setup card, expands 4-step instructions + direct AI Studio deep links, and has 0 overflow
+        const guideBanner = document.querySelector('[data-gemini-guide-banner]');
         const unconnectedCard = document.querySelector('[data-gemini-setup-card="unconnected"]');
+        const guideRect = guideBanner?.getBoundingClientRect();
+        const cardRect = unconnectedCard?.getBoundingClientRect();
+        const guidePositionedAboveCard = Boolean(
+          guideRect && cardRect && guideRect.height > 0 && guideRect.bottom <= cardRect.top + 4
+        );
+
+        document.querySelector('[data-action="toggle-gemini-key-guide"]')?.click();
+        await new Promise(r => setTimeout(r, 40));
+        const guideStepsEl = document.querySelector('[data-gemini-guide-steps]');
+        const stepCount = guideStepsEl?.querySelectorAll('.gemini-guide-step-item')?.length || 0;
+        const hasDirectAppApiKeyLink = Boolean(
+          guideStepsEl?.querySelector('a[href="https://aistudio.google.com/app/apikey"]')
+        );
+        const hasRateLimitLink = Boolean(
+          guideStepsEl?.querySelector('a[href="https://aistudio.google.com/rate-limit"]')
+        );
+        const guideExpandedNoOverflow =
+          document.documentElement.scrollWidth <= window.innerWidth + 1;
+        document.querySelector('[data-action="focus-inline-gemini-key"]')?.click();
+        const jumpBtnFocusedInput = document.activeElement?.id === 'inlineGeminiApiKeyInput';
+
         const keyInput = document.getElementById('inlineGeminiApiKeyInput');
         const inlineKeyFontSize = keyInput ? parseFloat(window.getComputedStyle(keyInput).fontSize) : 0;
 
@@ -1649,10 +1671,18 @@ async function main() {
         }
         const connectedStripText =
           document.querySelector('[data-gemini-setup-card="connected"]')?.textContent?.trim() || '';
+        const guideHiddenOnceConnected = !document.querySelector('[data-gemini-guide-banner]');
 
         return {
           emptyErrText,
           hasUnconnectedCard: Boolean(unconnectedCard),
+          guidePositionedAboveCard,
+          stepCount,
+          hasDirectAppApiKeyLink,
+          hasRateLimitLink,
+          guideExpandedNoOverflow,
+          jumpBtnFocusedInput,
+          guideHiddenOnceConnected,
           inlineKeyFontSize,
           preClickHint3m,
           preClickHint8m,
@@ -1664,6 +1694,16 @@ async function main() {
 
       assert(gateAndConnectAudit.emptyErrText.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
       assert(gateAndConnectAudit.hasUnconnectedCard && gateAndConnectAudit.inlineKeyFontSize >= 16, 'Unconnected Gemini setup card missing or <16px input');
+      assert(
+        gateAndConnectAudit.guidePositionedAboveCard &&
+          gateAndConnectAudit.stepCount === 4 &&
+          gateAndConnectAudit.hasDirectAppApiKeyLink &&
+          gateAndConnectAudit.hasRateLimitLink &&
+          gateAndConnectAudit.guideExpandedNoOverflow &&
+          gateAndConnectAudit.jumpBtnFocusedInput &&
+          gateAndConnectAudit.guideHiddenOnceConnected,
+        `New-user Gemini API key guide audit failed: ${JSON.stringify(gateAndConnectAudit)}`
+      );
       assert(
         gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
         `Unexpected 3m pre-click text: "${gateAndConnectAudit.preClickHint3m}"`

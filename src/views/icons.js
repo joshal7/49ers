@@ -316,6 +316,12 @@ const SVG_PATHS = {
     <path d="M11.3 11.7L20.5 2.5"/>
     <path d="M16.5 6.5L19 9"/>
     <path d="M19 4L21.5 6.5"/>
+  `,
+  helpCircle: `
+    <circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity="0.15"/>
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M9.6 9.3C9.9 8.1 11 7.4 12.2 7.5C13.4 7.6 14.3 8.5 14.3 9.7C14.3 11.1 12.5 11.5 12 12.8"/>
+    <circle cx="12" cy="16.4" r="0.85" fill="currentColor"/>
   `
 };
 

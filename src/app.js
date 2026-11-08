@@ -90,6 +90,7 @@ const state = {
   podLibraryFilter: 'active',
   analysisLibraryFilter: 'active',
   geminiKeyNotice: '',
+  showGeminiKeyGuide: false,
   jobStatus: null,
   workerSharedFeed: { analyses: [], episodes: [] },
   audioState: {},
@@ -472,7 +473,8 @@ function renderMain() {
         audioState: state.audioState,
         expandedTranscriptIds: state.expandedTranscriptIds,
         shareToastTargetId: state.shareToastTargetId,
-        geminiKeyNotice: state.geminiKeyNotice
+        geminiKeyNotice: state.geminiKeyNotice,
+        showGeminiKeyGuide: state.showGeminiKeyGuide
       });
     }
   });
@@ -1121,6 +1123,25 @@ function bindEvents() {
         break;
       }
 
+      case 'toggle-gemini-key-guide': {
+        const podInp = document.getElementById('podTopicInput');
+        if (podInp) state.podTopicDraft = podInp.value;
+        const anInp = document.getElementById('analysisPromptInput');
+        if (anInp) state.analysisPromptDraft = anInp.value;
+        state.showGeminiKeyGuide = !state.showGeminiKeyGuide;
+        renderMain();
+        break;
+      }
+
+      case 'focus-inline-gemini-key': {
+        const keyInput = document.getElementById('inlineGeminiApiKeyInput');
+        if (keyInput) {
+          keyInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          keyInput.focus();
+        }
+        break;
+      }
+
       case 'save-inline-gemini-key': {
         const keyInput = document.getElementById('inlineGeminiApiKeyInput');
         const rawKey = String(keyInput?.value || '').trim();
@@ -1138,6 +1159,7 @@ function bindEvents() {
           state.prefs.verifiedGeminiModel = verified.bestModel || '';
           saveUserPrefs(state.prefs);
           state.geminiKeyNotice = '';
+          state.showGeminiKeyGuide = false;
           if (state.jobStatus?.error) state.jobStatus = null;
           renderMain();
         } catch (err) {

@@ -7,6 +7,10 @@ import { esc, escJargon, renderPlayerAvatarHtml, renderTeamLogoHtml } from './ui
 import { iconSvg, blockIconName } from './icons.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
+import {
+  AI_STUDIO_DIRECT_KEY_URL,
+  renderGeminiApiKeyStepByStepGuideHtml
+} from './audioAiView.js';
 
 export function renderSettingsSheetHtml({
   userPrefs,
@@ -72,9 +76,20 @@ export function renderSettingsSheetHtml({
         </div>
       </div>
       <div>
+        ${
+          !userPrefs.geminiApiKey
+            ? `<details class="gemini-guide-banner" style="margin-bottom:6px">
+                 <summary class="gemini-guide-link-btn" style="list-style:none">
+                   ${iconSvg('helpCircle', 14)}
+                   <span>New here? Step-by-step instructions to get your free 1-time Gemini API key</span>
+                 </summary>
+                 ${renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: false })}
+               </details>`
+            : ''
+        }
         <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Google Gemini API Key (Private on This Device • Enables Pro Deep Research &amp; NotebookLM Voices)</label>
-          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free AI Studio Key ${iconSvg('externalLink', 10)}</a>
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Google Gemini API Key (Private on This Device • Unlocks Both Auto Pod &amp; AI Analysis)</label>
+          <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free AI Studio Key ${iconSvg('externalLink', 10)}</a>
         </div>
         <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />
       </div>

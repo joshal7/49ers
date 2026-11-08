@@ -237,7 +237,68 @@ function renderTranscriptTurnsList(episode, activeTurnIdx = -1) {
   `;
 }
 
-function renderGeminiConnectionStatusCard(userPrefs = {}, modelInfo = {}, keyFeedback = '') {
+export const AI_STUDIO_DIRECT_KEY_URL = 'https://aistudio.google.com/app/apikey';
+export const AI_STUDIO_RATE_LIMIT_URL = 'https://aistudio.google.com/rate-limit';
+
+export function renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton = true } = {}) {
+  return `
+    <div class="gemini-guide-steps" data-gemini-guide-steps>
+      <div class="gemini-guide-step-item">
+        <span class="gemini-guide-step-num" aria-hidden="true">1</span>
+        <div style="min-width:0">
+          <strong style="color:var(--text-primary)">Open Google AI Studio's API Key Generator ($0, no credit card needed):</strong>
+          Tap <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:700">Open AI Studio API Keys Page ${iconSvg('externalLink', 10)}</a> and sign in with your Google/Gmail account. <em>(This direct link skips the homepage and lands straight on the key generator; first-time visitors just check the Terms box &amp; tap Continue.)</em>
+        </div>
+      </div>
+
+      <div class="gemini-guide-step-item">
+        <span class="gemini-guide-step-num" aria-hidden="true">2</span>
+        <div style="min-width:0">
+          <strong style="color:var(--text-primary)">Create your free API key in 2 taps:</strong>
+          On <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link">aistudio.google.com/app/apikey ${iconSvg('externalLink', 10)}</a>, tap the blue <strong>&ldquo;Create API key&rdquo;</strong> button. If prompted to choose a project, pick <strong>&ldquo;Create API key in new project&rdquo;</strong> (or select the default Gemini project)—Google sets it up automatically in ~2 seconds.
+        </div>
+      </div>
+
+      <div class="gemini-guide-step-item">
+        <span class="gemini-guide-step-num" aria-hidden="true">3</span>
+        <div style="min-width:0">
+          <strong style="color:var(--text-primary)">Copy your <code>AIza...</code> key string:</strong>
+          When your newly generated key appears on screen, tap <strong>&ldquo;Copy&rdquo;</strong> next to the <code>AIza...</code> key.
+        </div>
+      </div>
+
+      <div class="gemini-guide-step-item">
+        <span class="gemini-guide-step-num" aria-hidden="true">4</span>
+        <div style="min-width:0">
+          <strong style="color:var(--text-primary)">Paste right below &amp; tap &ldquo;Connect Gemini&rdquo;:</strong>
+          Switch back here, paste the key into the box directly below, and tap <strong>Connect Gemini</strong>. One 1-time paste saves privately in your device browser and unlocks <strong>both Auto Pod &amp; AI Analysis</strong> (20 <code>Gemini 3.8 High</code> queries/day + automatic rollover; check daily usage anytime on <a href="${AI_STUDIO_RATE_LIMIT_URL}" target="_blank" rel="noopener noreferrer" class="ext-link">AI Studio Rate Limits ${iconSvg('externalLink', 10)}</a>).
+        </div>
+      </div>
+
+      ${
+        includeFocusButton
+          ? `<div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:2px">
+               <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size:11.5px;padding:5px 10px;text-decoration:none">
+                 <span>1. Launch AI Studio Key Generator</span>
+                 ${iconSvg('externalLink', 11)}
+               </a>
+               <button type="button" class="btn-ghost" data-action="focus-inline-gemini-key" style="font-size:11.5px;padding:5px 10px">
+                 ${iconSvg('arrowDown', 11)}
+                 <span>2. Jump to Paste Box Below</span>
+               </button>
+             </div>`
+          : ''
+      }
+    </div>
+  `;
+}
+
+function renderGeminiConnectionStatusCard(
+  userPrefs = {},
+  modelInfo = {},
+  keyFeedback = '',
+  showGeminiKeyGuide = false
+) {
   const connected = hasLiveAiConnection(userPrefs);
   if (connected) {
     const modeLabel = userPrefs?.workerBaseUrl
@@ -258,19 +319,37 @@ function renderGeminiConnectionStatusCard(userPrefs = {}, modelInfo = {}, keyFee
   }
 
   return `
+    <div class="gemini-guide-banner" data-gemini-guide-banner>
+      <div class="gemini-guide-header-row">
+        <button type="button" class="gemini-guide-link-btn"
+                data-action="toggle-gemini-key-guide"
+                data-gemini-guide-trigger
+                aria-expanded="${showGeminiKeyGuide ? 'true' : 'false'}">
+          ${iconSvg('helpCircle', 14)}
+          <span>New here? How to get &amp; install your free 1-time Gemini API key (60-sec guide)</span>
+          ${iconSvg(showGeminiKeyGuide ? 'chevronUp' : 'chevronDown', 13)}
+        </button>
+        <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="flex-shrink:0">
+          <span>AI Studio Key Page</span>
+          ${iconSvg('externalLink', 10)}
+        </a>
+      </div>
+      ${showGeminiKeyGuide ? renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: true }) : ''}
+    </div>
+
     <div class="gemini-connect-box" data-gemini-setup-card="unconnected">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
         <span class="inline-icon-meta" style="font-weight:800;color:var(--gold-bright);font-size:12.5px">
           ${iconSvg('key', 14)}
           <span>Connect Gemini API Key (1-Time Device Setup)</span>
         </span>
-        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+        <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>Get Free AI Studio Key</span>
           ${iconSvg('externalLink', 10)}
         </a>
       </div>
       <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
-        Saved privately on this device (never committed to GitHub). Unlocks genuine <strong>25–60s High-Thinking Deep Research</strong> + live Google Search Grounding + smooth <strong>Gemini NotebookLM Studio Voices</strong>.
+        Saved privately on this device (never committed to GitHub). Entering your key once unlocks <strong>both Auto Pod &amp; AI Analysis</strong> with <strong>${esc(modelInfo.shortModelName)} Deep Research</strong>, live Google Search Grounding &amp; <strong>Gemini NotebookLM Studio Voices</strong>.
       </div>
       <div class="gemini-key-row">
         <input type="password" id="inlineGeminiApiKeyInput" class="text-input"
@@ -307,7 +386,8 @@ export function renderAudioAiViewHtml({
   audioState = {},
   expandedTranscriptIds = new Set(),
   shareToastTargetId = null,
-  geminiKeyNotice = ''
+  geminiKeyNotice = '',
+  showGeminiKeyGuide = false
 }) {
   const beatPodBundle = appData?.beatPodcasts || { shows: [], episodes: [] };
   const recentBeatEpisodes = filterEpisodesLast7Days(beatPodBundle.episodes || [], beatPodBundle.updatedAt);
@@ -360,7 +440,8 @@ export function renderAudioAiViewHtml({
         audioState,
         expandedTranscriptIds,
         shareToastTargetId,
-        geminiKeyNotice
+        geminiKeyNotice,
+        showGeminiKeyGuide
       })
     );
   }
@@ -376,7 +457,8 @@ export function renderAudioAiViewHtml({
       archivedAnalyses,
       analysisLibraryFilter,
       shareToastTargetId,
-      geminiKeyNotice
+      geminiKeyNotice,
+      showGeminiKeyGuide
     })
   );
 }
@@ -585,7 +667,8 @@ function renderPodcastStudio({
   audioState,
   expandedTranscriptIds = new Set(),
   shareToastTargetId = null,
-  geminiKeyNotice = ''
+  geminiKeyNotice = '',
+  showGeminiKeyGuide = false
 }) {
   const activeEp = audioState?.episode || null;
   const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
@@ -695,7 +778,7 @@ function renderPodcastStudio({
         </div>
       </div>
 
-      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice)}
+      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide)}
 
       <div class="sub-label" style="margin-bottom:6px">1. Select Duration (${podDurationMin} min)</div>
       <div class="pill-bar" style="margin-bottom:8px">
@@ -894,7 +977,8 @@ function renderDeepAnalysisRunner({
   archivedAnalyses = [],
   analysisLibraryFilter = 'active',
   shareToastTargetId = null,
-  geminiKeyNotice = ''
+  geminiKeyNotice = '',
+  showGeminiKeyGuide = false
 }) {
   const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
   const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs, appData });
@@ -926,7 +1010,7 @@ function renderDeepAnalysisRunner({
         </div>
       </div>
 
-      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice)}
+      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide)}
 
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
         Multi-stage deep research prioritizing analytical depth over speed: live Google Search Grounding + beat wire, All-22 X's &amp; O's film mechanics, and verified OverTheCap multi-year math.
