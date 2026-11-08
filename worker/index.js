@@ -1,12 +1,24 @@
 /**
  * 49ers Faithful — Zero-Cost Serverless Edge Worker (Cloudflare Free Tier)
  *
- * Endpoints:
+ * Endpoints & Scheduled Tasks:
  * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts
+ * - GET  /api/model-status       -> Returns active Free-Tier Gemini model & cascade (`?poll=1` forces live `/v1beta/models` poll)
  * - GET  /api/audio/:episodeId   -> Streams cached MP3/WAV from Cloudflare R2 (supports HTTP Range for iOS Safari)
- * - POST /api/analyze            -> Runs Gemini 2.5 Pro (Deep Thinking + Google Search Grounding) synthesis & caches for group
+ * - POST /api/analyze            -> Runs best available Free-Tier Gemini model (3.8 Flash HIGH Thinking + Google Search Grounding)
  * - POST /api/podcast            -> Generates verified script + Gemini Multi-Speaker TTS audio, stores in R2 & indexes in KV
+ * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
  */
+
+export const DEFAULT_FREE_MODEL_CASCADE = [
+  'gemini-3.8-flash',
+  'gemini-3.5-flash',
+  'gemini-3-flash-preview',
+  'gemini-2.5-flash',
+  'gemini-2.5-pro'
+];
+
+export const HIGH_THINKING_BUDGET = 24576;
 
 const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
 PRIZE ACCURACY OVER VELOCITY — DEEP CHAIN-OF-VERIFICATION DIRECTIVE:
@@ -21,6 +33,110 @@ PRIZE ACCURACY OVER VELOCITY — DEEP CHAIN-OF-VERIFICATION DIRECTIVE:
 4. NEVER attribute retired, cut, or departed former 49ers (such as Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the current active 49ers rotation unless explicitly marked as Active on the LIVE 49ERS ROSTER snapshot. You MAY discuss departed players strictly in verified historical, 2026 dead-cap, opponent, or external trade-target context (e.g., Javon Hargrave dead cap or Chase Young on the Saints).
 5. INTERNAL SELF-AUDIT BEFORE OUTPUT: Silently verify every player's current team, contract figure, pick round, and probability against the snapshot and Google Search Grounding before emitting a single word of output.
 6. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, T-E stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math.`;
+
+export function scoreFreeTierGeminiModel(modelEntryOrId) {
+  const rawName =
+    typeof modelEntryOrId === 'string'
+      ? modelEntryOrId
+      : String(modelEntryOrId?.name || modelEntryOrId?.id || '');
+  const id = rawName.replace(/^models\//i, '').trim().toLowerCase();
+  if (!id.startsWith('gemini-')) return -1;
+
+  if (
+    /\b(tts|audio|imagen|image|veo|video|embedding|aqa|vision|robotics|computer-use|learnlm|gemma|lite|8b|nano)\b/i.test(
+      id
+    )
+  ) {
+    return -1;
+  }
+
+  if (
+    typeof modelEntryOrId === 'object' &&
+    modelEntryOrId !== null &&
+    Array.isArray(modelEntryOrId.supportedGenerationMethods) &&
+    !modelEntryOrId.supportedGenerationMethods.includes('generateContent')
+  ) {
+    return -1;
+  }
+
+  const verMatch = id.match(/^gemini-(\d+(?:\.\d+)?)/);
+  const versionNum = verMatch ? parseFloat(verMatch[1]) : 2.0;
+  if (!Number.isFinite(versionNum) || versionNum < 2.5) return -1;
+
+  const isFlash = /\bflash\b/.test(id);
+  const isPro = /\bpro\b/.test(id);
+  if (!isFlash && !isPro) return -1;
+
+  const freeTierBonus = isFlash ? 260 : 80;
+  const versionScore = Math.round(versionNum * 100);
+  const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
+  const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
+
+  return freeTierBonus + versionScore + stabilityAdj + latestAliasPenalty;
+}
+
+export function rankFreeTierModelsFromCatalog(catalogModels = []) {
+  const scored = new Map();
+
+  for (const entry of catalogModels) {
+    const rawName = typeof entry === 'string' ? entry : String(entry?.name || '');
+    const cleanId = rawName.replace(/^models\//i, '').trim();
+    if (!cleanId) continue;
+    const sc = scoreFreeTierGeminiModel(entry);
+    if (sc > 0) {
+      scored.set(cleanId, Math.max(scored.get(cleanId) || 0, sc));
+    }
+  }
+
+  for (const fallbackId of DEFAULT_FREE_MODEL_CASCADE) {
+    if (!scored.has(fallbackId)) {
+      scored.set(fallbackId, scoreFreeTierGeminiModel(fallbackId));
+    }
+  }
+
+  return [...scored.entries()]
+    .filter(([, sc]) => sc > 0)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => id);
+}
+
+export async function pollAndCacheBestFreeModel(env) {
+  const nowIso = new Date().toISOString();
+  let catalogModels = [];
+  let source = 'default-free-tier-cascade';
+
+  if (env.GEMINI_API_KEY) {
+    try {
+      const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}`;
+      const res = await fetch(listUrl);
+      if (res.ok) {
+        const json = await res.json();
+        if (Array.isArray(json?.models)) {
+          catalogModels = json.models;
+          source = 'google-ai-studio-v1beta-models-poll';
+        }
+      }
+    } catch {}
+  }
+
+  const rankedCascade = rankFreeTierModelsFromCatalog(catalogModels);
+  const bestModel = rankedCascade[0] || DEFAULT_FREE_MODEL_CASCADE[0];
+  const state = {
+    bestModel,
+    thinkingLevel: 'HIGH',
+    thinkingBudget: Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET),
+    rankedCascade,
+    source,
+    checkedAt: nowIso
+  };
+
+  if (env.SHARED_CACHE) {
+    await env.SHARED_CACHE.put('meta:best_free_model', JSON.stringify(state), {
+      expirationTtl: 60 * 60 * 6
+    });
+  }
+  return state;
+}
 
 function corsHeaders(origin, allowedOrigin) {
   const allow =
@@ -130,7 +246,6 @@ function scrubStaleWeightHallucinations(text = '', contextSummary = '') {
   const nonActiveContextRe =
     /\b(retired|former|departed|no longer|not on the active|not currently on|dead\s*cap|dead\s*money|post-june|void\s*year|trade\s*target|trade\s*candidate|trade\s*fit|seller|acquire|saints|new\s*orleans|colts|indianapolis|vikings|minnesota|texans|houston|falcons|atlanta|bears|chicago|titans|tennessee|jaguars|jacksonville|seahawks|seattle|packers|green\s*bay)\b/i;
 
-  // Strip the "DO NOT CITE" warning line when checking whether a player is legitimately on the active roster snapshot
   const activeRosterSection = (ctxLower.split('do not cite')[0] || '')
     .split('trade window')[0]
     .split('dead cap')[0];
@@ -142,7 +257,6 @@ function scrubStaleWeightHallucinations(text = '', contextSummary = '') {
     const re = new RegExp(`\\b${escaped}\\b`, 'gi');
     if (!re.test(out)) continue;
 
-    // Inspect every occurrence window (±140 chars); scrub only occurrences that falsely treat them as active 49ers
     re.lastIndex = 0;
     let hasActiveHallucination = false;
     let match;
@@ -204,39 +318,73 @@ function pcm16ToWav(pcmBytes, sampleRate = 24000) {
   return wav;
 }
 
-async function callGeminiTextWithFallback(env, payload) {
-  const primaryModel = env.GEMINI_TEXT_MODEL || 'gemini-2.5-pro';
-  const primaryUrl = `https://generativelanguage.googleapis.com/v1beta/models/${primaryModel}:generateContent?key=${env.GEMINI_API_KEY}`;
-  const res = await fetch(primaryUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+async function resolveModelCascade(env) {
+  const explicitModel =
+    env.GEMINI_TEXT_MODEL && env.GEMINI_TEXT_MODEL !== 'auto' ? env.GEMINI_TEXT_MODEL : null;
+  const cachedState = (await env.SHARED_CACHE?.get('meta:best_free_model', 'json')) || null;
+  const baseCascade = Array.isArray(cachedState?.rankedCascade) && cachedState.rankedCascade.length > 0
+    ? cachedState.rankedCascade
+    : DEFAULT_FREE_MODEL_CASCADE;
+  const primary =
+    explicitModel ||
+    cachedState?.bestModel ||
+    env.GEMINI_DEFAULT_FREE_MODEL ||
+    DEFAULT_FREE_MODEL_CASCADE[0];
+  return [primary, ...baseCascade.filter(m => m !== primary)];
+}
 
-  if (
-    !res.ok &&
-    (res.status === 429 || res.status === 503) &&
-    primaryModel !== 'gemini-2.5-flash'
-  ) {
-    const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
-    const fallbackPayload = {
-      ...payload,
-      generationConfig: {
-        ...(payload.generationConfig || {}),
-        thinkingConfig: { thinkingBudget: 8192 }
-      }
-    };
-    return fetch(fallbackUrl, {
+async function callGeminiTextWithFallback(env, payload) {
+  const cascade = await resolveModelCascade(env);
+  let lastRes = null;
+
+  for (let i = 0; i < cascade.length; i++) {
+    const model = cascade[i];
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(fallbackPayload)
+      body: JSON.stringify(payload)
     });
+    lastRes = res;
+
+    if (res.ok) {
+      if (i > 0 && env.SHARED_CACHE) {
+        await env.SHARED_CACHE.put(
+          'meta:best_free_model',
+          JSON.stringify({
+            bestModel: model,
+            thinkingLevel: 'HIGH',
+            thinkingBudget: Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET),
+            rankedCascade: [model, ...cascade.filter(m => m !== model)],
+            source: 'auto-failover-promotion',
+            checkedAt: new Date().toISOString()
+          }),
+          { expirationTtl: 60 * 60 * 6 }
+        );
+      }
+      return { res, modelUsed: model };
+    }
+
+    // Only cascade to the next free-tier model if the model endpoint was not found (404),
+    // restricted on the free tier (403/429), or temporarily overloaded (503).
+    if (![403, 404, 429, 503].includes(res.status)) {
+      break;
+    }
   }
 
-  return res;
+  return { res: lastRes, modelUsed: cascade[0] };
 }
 
 export default {
+  async scheduled(_event, env, ctx) {
+    const task = pollAndCacheBestFreeModel(env);
+    if (ctx && typeof ctx.waitUntil === 'function') {
+      ctx.waitUntil(task);
+    } else {
+      await task;
+    }
+  },
+
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     const cors = corsHeaders(origin, env.ALLOWED_ORIGIN);
@@ -269,7 +417,17 @@ export default {
     }
 
     if (request.method === 'GET' && url.pathname === '/api/health') {
-      return jsonResponse({ ok: true, service: '49ers-worker' }, 200, cors);
+      return jsonResponse(
+        {
+          ok: true,
+          service: '49ers-worker',
+          defaultFreeModel: env.GEMINI_DEFAULT_FREE_MODEL || DEFAULT_FREE_MODEL_CASCADE[0],
+          thinkingLevel: 'HIGH',
+          thinkingBudget: HIGH_THINKING_BUDGET
+        },
+        200,
+        cors
+      );
     }
 
     // Authenticate sync passcode on API endpoints
@@ -280,6 +438,15 @@ export default {
         401,
         cors
       );
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/model-status') {
+      const forcePoll = url.searchParams.get('poll') === '1';
+      let state = !forcePoll ? await env.SHARED_CACHE?.get('meta:best_free_model', 'json') : null;
+      if (!state) {
+        state = await pollAndCacheBestFreeModel(env);
+      }
+      return jsonResponse(state, 200, cors);
     }
 
     if (request.method === 'GET' && url.pathname === '/api/shared-feed') {
@@ -320,12 +487,13 @@ export default {
         );
       }
 
-      const geminiRes = await callGeminiTextWithFallback(env, {
+      const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(env, {
         systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
           temperature: 0.15,
-          thinkingConfig: { thinkingBudget: 16384 }
+          thinkingConfig: { thinkingBudget }
         },
         contents: [
           {
@@ -357,6 +525,8 @@ export default {
         id: cacheKey.replace(':', '_'),
         title: prompt.length > 88 ? `${prompt.slice(0, 85)}...` : prompt,
         category: body.category || 'On-Demand Deep Dive',
+        modelUsed,
+        thinkingLevel: 'HIGH',
         createdAt: new Date().toISOString(),
         createdBy: author,
         sourcesCited: groundingChunks,
@@ -364,7 +534,6 @@ export default {
       };
 
       if (env.SHARED_CACHE) {
-        // 6-hour TTL ensures AI synthesis stays synchronized with daily cap/roster/standings updates
         await env.SHARED_CACHE.put(cacheKey, JSON.stringify(item), { expirationTtl: 60 * 60 * 6 });
         const list = (await env.SHARED_CACHE.get('index:analyses', 'json')) || [];
         const updated = [item, ...list.filter(x => x.id !== item.id)].slice(0, 50);
@@ -408,18 +577,18 @@ export default {
         );
       }
 
-      // Step 1: Generate deeply reasoned, search-grounded analytical script strictly anchored to live snapshot
+      const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
       const scriptPrompt =
         format === 'Solo Executive Briefing'
           ? `Write a ${targetWords}-word solo analytical 49ers briefing script by speaker "Marcus" on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."}] with no markdown prose outside the array. Zero fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`
           : `Write a ${targetWords}-word two-host analytical 49ers podcast dialogue between "Marcus" (X's & O's Film Analyst) and "Elena" (Salary Cap & Quantitative EPA Insider) on: "${topic}". Output ONLY a raw JSON array of objects [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}] with no markdown prose outside the array. Zero morning-zoo fluff. Anchor 100% of roster names, trades, injuries, draft picks, cap figures (including 2026 rollover into 2027), and W-L records to the LIVE REAL-TIME DATA SNAPSHOT and Google Search Grounding (NEVER use stale model weights or retired/departed players).\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${contextSummary}`;
 
-      const scriptRes = await callGeminiTextWithFallback(env, {
+      const { res: scriptRes, modelUsed } = await callGeminiTextWithFallback(env, {
         systemInstruction: { parts: [{ text: effectiveSystemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
           temperature: 0.2,
-          thinkingConfig: { thinkingBudget: 16384 }
+          thinkingConfig: { thinkingBudget }
         },
         contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
       });
@@ -478,7 +647,6 @@ export default {
         }
       }
 
-      // Build estimated timestamps per turn
       let cursor = 0;
       const timedTranscript = turns.map((t, idx) => {
         const words = String(t.text || '').split(/\s+/).length;
@@ -501,6 +669,8 @@ export default {
         topic,
         format,
         presetLabel: `${durationMinutes}m Custom Pod`,
+        modelUsed,
+        thinkingLevel: 'HIGH',
         createdBy: String(body.author || 'Friend Group'),
         createdAt: new Date().toISOString(),
         audioUrl,

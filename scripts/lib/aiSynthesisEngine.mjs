@@ -1,16 +1,19 @@
 /**
  * Deep Thinking & Chain-of-Verification AI Synthesis Engine for 49ers Faithful
  *
- * Design Principles (Accuracy > Velocity):
- * 1. Asynchronous / build-time AI synthesis uses `gemini-2.5-pro` with deep thinking
- *    (`thinkingBudget: 24576`) + Google Search Grounding (`google_search`) when
- *    `GEMINI_API_KEY` is configured in CI or local env.
- * 2. Strips Gemini 2.5 internal reasoning parts (`!part.thought`) before parsing output.
- * 3. Runs a two-stage Chain-of-Verification (Generator -> Adversarial Fact-Checker)
+ * Design Principles (Accuracy > Velocity + Automatic Free-Tier Model Upgrading):
+ * 1. Newer Gemini 3.x Flash models on HIGH thinking (`gemini-3.8-flash` / `gemini-3.5-flash`
+ *    with `thinkingBudget: 24576`) outperform older `gemini-2.5-pro` architectures on
+ *    multi-step NFL math, CBA salary cap proration, and Google Search Grounding while
+ *    remaining 100% eligible on the Google AI Studio Free Tier.
+ * 2. Periodically polls `GET https://generativelanguage.googleapis.com/v1beta/models`
+ *    via `discoverBestFreeGeminiModel()` to detect newly released free-tier Gemini models
+ *    (e.g. `gemini-3.9-flash`, `gemini-4.0-flash`) and automatically upgrades to the
+ *    highest-ranked free model that passes a live quota check.
+ * 3. Strips internal reasoning parts (`!part.thought`) before parsing output.
+ * 4. Runs a two-stage Chain-of-Verification (Generator -> Adversarial Fact-Checker)
  *    plus deterministic programmatic validation against OverTheCap cap tables,
  *    ESPN active/IR rosters, Tankathon pick capital, and calibrated Monte Carlo odds.
- * 4. Degrades gracefully to deterministic, primary-source-verified builders when
- *    running without an API key.
  */
 
 import {
@@ -19,6 +22,175 @@ import {
   sanitizeHallucinatedRosterText,
   validateNoHallucinatedRosterClaims
 } from '../../src/engine/groundingValidator.js';
+
+/**
+ * Default ordered cascade of best available Free-Tier Gemini models (all run on HIGH thinking).
+ * Newer 3.x Flash models on High Thinking beat legacy 2.5 Pro and have active Free Tier quota.
+ */
+export const DEFAULT_FREE_MODEL_CASCADE = [
+  'gemini-3.8-flash',
+  'gemini-3.5-flash',
+  'gemini-3-flash-preview',
+  'gemini-2.5-flash',
+  'gemini-2.5-pro'
+];
+
+export const HIGH_THINKING_BUDGET = 24576;
+
+/**
+ * Scores a Gemini model identifier or `/v1beta/models` catalog entry for Free-Tier
+ * high-reasoning suitability. Higher score = better free-tier reasoning model.
+ * Automatically ranks future versions (e.g. `gemini-3.9-flash`, `gemini-4.0-flash`) above 3.8.
+ */
+export function scoreFreeTierGeminiModel(modelEntryOrId) {
+  const rawName =
+    typeof modelEntryOrId === 'string'
+      ? modelEntryOrId
+      : String(modelEntryOrId?.name || modelEntryOrId?.id || '');
+  const id = rawName.replace(/^models\//i, '').trim().toLowerCase();
+  if (!id.startsWith('gemini-')) return -1;
+
+  // Exclude non-text, audio-only, image/video, embedding, or ultra-small lite/8b models
+  if (
+    /\b(tts|audio|imagen|image|veo|video|embedding|aqa|vision|robotics|computer-use|learnlm|gemma|lite|8b|nano)\b/i.test(
+      id
+    )
+  ) {
+    return -1;
+  }
+
+  if (
+    typeof modelEntryOrId === 'object' &&
+    modelEntryOrId !== null &&
+    Array.isArray(modelEntryOrId.supportedGenerationMethods) &&
+    !modelEntryOrId.supportedGenerationMethods.includes('generateContent')
+  ) {
+    return -1;
+  }
+
+  const verMatch = id.match(/^gemini-(\d+(?:\.\d+)?)/);
+  const versionNum = verMatch ? parseFloat(verMatch[1]) : 2.0;
+  if (!Number.isFinite(versionNum) || versionNum < 2.5) return -1;
+
+  const isFlash = /\bflash\b/.test(id);
+  const isPro = /\bpro\b/.test(id);
+  if (!isFlash && !isPro) return -1;
+
+  // Google AI Studio Free Tier prioritizes the Flash family (3.x/4.x Flash on High Thinking);
+  // Pro models are restricted/rate-limited on unbilled Free Tier keys.
+  const freeTierBonus = isFlash ? 260 : 80;
+  const versionScore = Math.round(versionNum * 100);
+  const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
+  const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
+
+  return freeTierBonus + versionScore + stabilityAdj + latestAliasPenalty;
+}
+
+/**
+ * Ranks a list of `/v1beta/models` entries (or model IDs) from best to worst free-tier model,
+ * merging with `DEFAULT_FREE_MODEL_CASCADE` so known fallbacks are always present.
+ */
+export function rankFreeTierModelsFromCatalog(catalogModels = []) {
+  const scored = new Map();
+
+  for (const entry of catalogModels) {
+    const rawName = typeof entry === 'string' ? entry : String(entry?.name || '');
+    const cleanId = rawName.replace(/^models\//i, '').trim();
+    if (!cleanId) continue;
+    const sc = scoreFreeTierGeminiModel(entry);
+    if (sc > 0) {
+      scored.set(cleanId, Math.max(scored.get(cleanId) || 0, sc));
+    }
+  }
+
+  for (const fallbackId of DEFAULT_FREE_MODEL_CASCADE) {
+    if (!scored.has(fallbackId)) {
+      scored.set(fallbackId, scoreFreeTierGeminiModel(fallbackId));
+    }
+  }
+
+  return [...scored.entries()]
+    .filter(([, sc]) => sc > 0)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => id);
+}
+
+/**
+ * Polls `GET https://generativelanguage.googleapis.com/v1beta/models` to discover all
+ * available Gemini models on the user's key, ranks them by generation + Free-Tier High-Thinking
+ * capability, and optionally probes the top candidates to verify live Free-Tier quota (>0 RPM).
+ */
+export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_API_KEY, options = {}) {
+  const { probeQuota = true, timeoutMs = 10000 } = options;
+  const nowIso = new Date().toISOString();
+
+  if (!apiKey) {
+    return {
+      activeModel: DEFAULT_FREE_MODEL_CASCADE[0],
+      thinkingLevel: 'HIGH',
+      thinkingBudget: HIGH_THINKING_BUDGET,
+      autoPollEnabled: true,
+      pollIntervalHours: 2,
+      candidateCascade: [...DEFAULT_FREE_MODEL_CASCADE],
+      source: 'default-free-tier-cascade (gemini-3.8-flash HIGH)',
+      lastCheckedAt: nowIso
+    };
+  }
+
+  let catalogModels = [];
+  let catalogSource = 'fallback-cascade';
+  try {
+    const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+    const res = await fetch(listUrl, { signal: AbortSignal.timeout(timeoutMs) });
+    if (res.ok) {
+      const json = await res.json();
+      if (Array.isArray(json?.models)) {
+        catalogModels = json.models;
+        catalogSource = 'google-ai-studio-v1beta-models-poll';
+      }
+    }
+  } catch {}
+
+  const rankedCascade = rankFreeTierModelsFromCatalog(catalogModels);
+  let selectedModel = rankedCascade[0] || DEFAULT_FREE_MODEL_CASCADE[0];
+
+  if (probeQuota && catalogModels.length > 0) {
+    for (const candidate of rankedCascade.slice(0, 5)) {
+      try {
+        const probeUrl = `https://generativelanguage.googleapis.com/v1beta/models/${candidate}:generateContent?key=${apiKey}`;
+        const probeRes = await fetch(probeUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: AbortSignal.timeout(timeoutMs),
+          body: JSON.stringify({
+            generationConfig: {
+              maxOutputTokens: 8,
+              temperature: 0,
+              thinkingConfig: { thinkingBudget: 1024 }
+            },
+            contents: [{ role: 'user', parts: [{ text: 'Reply OK' }] }]
+          })
+        });
+        if (probeRes.ok) {
+          selectedModel = candidate;
+          catalogSource = 'verified-live-free-tier-probe';
+          break;
+        }
+      } catch {}
+    }
+  }
+
+  return {
+    activeModel: selectedModel,
+    thinkingLevel: 'HIGH',
+    thinkingBudget: HIGH_THINKING_BUDGET,
+    autoPollEnabled: true,
+    pollIntervalHours: 2,
+    candidateCascade: [selectedModel, ...rankedCascade.filter(m => m !== selectedModel)],
+    source: catalogSource,
+    lastCheckedAt: nowIso
+  };
+}
 
 /**
  * Rich Hill NFL Draft Trade Value Chart (Picks 1–262).
@@ -84,7 +256,7 @@ export function parseTankathonTeamPicksHtml(html = '') {
 }
 
 /**
- * Extracts non-thought text from a Gemini 2.5 response object.
+ * Extracts non-thought text from a Gemini response object.
  * Critical when `thinkingConfig` is enabled so `part.thought === true` blocks never leak.
  */
 export function extractGeminiResponseText(geminiJson) {
@@ -129,32 +301,61 @@ export function parseGroundedJsonSafe(rawText = '', fallback = null) {
   return fallback;
 }
 
+async function callGeminiCascade(apiKey, modelsCascade, payload, timeoutMs) {
+  for (const model of modelsCascade) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(timeoutMs),
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        return { ok: true, modelUsed: model, json: await res.json() };
+      }
+      if (![400, 403, 404, 429, 503].includes(res.status)) break;
+    } catch {}
+  }
+  return { ok: false, modelUsed: null, json: null };
+}
+
 /**
  * Executes a two-pass Deep Thinking + Adversarial Fact-Check Gemini synthesis when
- * `process.env.GEMINI_API_KEY` is configured. Returns `null` cleanly if no key is set.
+ * `process.env.GEMINI_API_KEY` is configured, automatically polling and selecting
+ * the best available Free-Tier Gemini model on HIGH thinking (`thinkingBudget: 24576`).
  */
 export async function runVerifiedDeepGeminiSynthesis({
+  apiKey = process.env.GEMINI_API_KEY,
   taskPrompt,
+  userPrompt,
+  groundingFacts,
+  rosterPlayers = [],
   appData,
   expectJson = true,
-  thinkingBudget = 24576,
+  thinkingBudget = HIGH_THINKING_BUDGET,
   timeoutMs = 90000
 }) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || !taskPrompt) return null;
+  const effectivePrompt = taskPrompt || userPrompt;
+  if (!apiKey || !effectivePrompt) return { ok: false, data: null };
 
-  const model = process.env.GEMINI_SYNTHESIS_MODEL || 'gemini-2.5-pro';
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  const discovery = await discoverBestFreeGeminiModel(apiKey, { probeQuota: false });
+  const cascade =
+    process.env.GEMINI_SYNTHESIS_MODEL && process.env.GEMINI_SYNTHESIS_MODEL !== 'auto'
+      ? [process.env.GEMINI_SYNTHESIS_MODEL, ...discovery.candidateCascade]
+      : discovery.candidateCascade;
+
   const systemPrompt = buildLiveGroundingSystemPrompt(appData);
-  const contextSnapshot = buildAuthoritativeLiveContextSnapshot(appData);
+  const contextSnapshot = groundingFacts
+    ? JSON.stringify(groundingFacts, null, 2)
+    : buildAuthoritativeLiveContextSnapshot(appData);
 
   try {
-    // Pass 1: Deep Thinking + Google Search Grounded Generation
-    const genRes = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      signal: AbortSignal.timeout(timeoutMs),
-      body: JSON.stringify({
+    // Pass 1: Deep Thinking (HIGH) + Google Search Grounded Generation
+    const genCall = await callGeminiCascade(
+      apiKey,
+      cascade,
+      {
         systemInstruction: { parts: [{ text: systemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
@@ -166,19 +367,19 @@ export async function runVerifiedDeepGeminiSynthesis({
             role: 'user',
             parts: [
               {
-                text: `${taskPrompt}\n\nAUTHORITATIVE LIVE GROUND-TRUTH SNAPSHOT:\n${contextSnapshot}`
+                text: `${effectivePrompt}\n\nAUTHORITATIVE LIVE GROUND-TRUTH SNAPSHOT:\n${contextSnapshot}`
               }
             ]
           }
         ]
-      })
-    });
-    if (!genRes.ok) return null;
-    const genJson = await genRes.json();
-    const draftText = extractGeminiResponseText(genJson);
-    if (!draftText) return null;
+      },
+      timeoutMs
+    );
+    if (!genCall.ok || !genCall.json) return { ok: false, data: null };
+    const draftText = extractGeminiResponseText(genCall.json);
+    if (!draftText) return { ok: false, data: null };
 
-    // Pass 2: Adversarial Fact-Check & Consistency Verifier
+    // Pass 2: Adversarial Fact-Check & Consistency Verifier on the winning model
     const verifyPrompt = [
       'ACT AS AN ADVERSARIAL NFL CAP, ROSTER & ANALYTICS AUDITOR.',
       'Audit the DRAFT SYNTHESIS below line-by-line against the AUTHORITATIVE LIVE GROUND-TRUTH SNAPSHOT and live Google Search.',
@@ -195,11 +396,10 @@ export async function runVerifiedDeepGeminiSynthesis({
       `\nAUTHORITATIVE LIVE GROUND-TRUTH SNAPSHOT:\n${contextSnapshot}`
     ].join('\n');
 
-    const verRes = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      signal: AbortSignal.timeout(timeoutMs),
-      body: JSON.stringify({
+    const verCall = await callGeminiCascade(
+      apiKey,
+      [genCall.modelUsed, ...cascade],
+      {
         systemInstruction: { parts: [{ text: systemPrompt }] },
         tools: [{ google_search: {} }],
         generationConfig: {
@@ -207,13 +407,22 @@ export async function runVerifiedDeepGeminiSynthesis({
           thinkingConfig: { thinkingBudget: Math.min(16384, thinkingBudget) }
         },
         contents: [{ role: 'user', parts: [{ text: verifyPrompt }] }]
-      })
-    });
+      },
+      timeoutMs
+    );
 
-    const finalRaw = verRes.ok ? extractGeminiResponseText(await verRes.json()) || draftText : draftText;
-    return expectJson ? parseGroundedJsonSafe(finalRaw, null) : finalRaw;
+    const finalRaw = verCall.ok
+      ? extractGeminiResponseText(verCall.json) || draftText
+      : draftText;
+    const sanitizedRaw = auditAndSanitizeTextBlock(finalRaw, rosterPlayers);
+    const parsedData = expectJson ? parseGroundedJsonSafe(sanitizedRaw, null) : sanitizedRaw;
+    return {
+      ok: Boolean(parsedData),
+      modelUsed: genCall.modelUsed,
+      data: parsedData
+    };
   } catch {
-    return null;
+    return { ok: false, data: null };
   }
 }
 

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T02:22:38.089Z",
+  "updatedAt": "2026-11-08T02:49:49.456Z",
   "seasonYear": 2026,
   "currentWeek": 9,
   "teamRecord": "6-1",
@@ -26,5 +26,21 @@
     "currentWeek": 9,
     "mathematicallyEliminated": false,
     "eliminatedAt": null
+  },
+  "aiEngine": {
+    "activeModel": "gemini-3.8-flash",
+    "thinkingLevel": "HIGH",
+    "thinkingBudget": 24576,
+    "autoPollEnabled": true,
+    "pollIntervalHours": 2,
+    "candidateCascade": [
+      "gemini-3.8-flash",
+      "gemini-3.5-flash",
+      "gemini-3-flash-preview",
+      "gemini-2.5-flash",
+      "gemini-2.5-pro"
+    ],
+    "source": "default-free-tier-cascade (gemini-3.8-flash HIGH)",
+    "lastCheckedAt": "2026-11-08T02:49:49.456Z"
   }
 }

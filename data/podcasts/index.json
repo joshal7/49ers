@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T02:27:23.673Z",
+  "updatedAt": "2026-11-08T02:49:58.088Z",
   "episodes": [
     {
       "id": "ep-week9-raiders-film",
@@ -8,7 +8,7 @@
       "format": "Two-Host Analytical Banter",
       "presetLabel": "3m Quick Hit",
       "createdBy": "49ers Faithful Desk",
-      "createdAt": "2026-11-08T00:26:14.369Z",
+      "createdAt": "2026-11-08T00:49:49.708Z",
       "sourceLinks": [
         {
           "label": "ESPN Raiders @ 49ers Matchup",
@@ -25,7 +25,7 @@
       ],
       "audioUrl": "./data/podcasts/ep-week9-raiders-film.m4a",
       "durationSec": 147,
-      "fileSizeBytes": 1207124,
+      "fileSizeBytes": 1207676,
       "transcript": [
         {
           "idx": 0,
@@ -84,7 +84,7 @@
       "format": "Two-Host Analytical Banter",
       "presetLabel": "4m Cap Dive",
       "createdBy": "49ers Faithful Desk",
-      "createdAt": "2026-11-07T22:26:14.370Z",
+      "createdAt": "2026-11-07T22:49:49.709Z",
       "sourceLinks": [
         {
           "label": "OverTheCap 49ers Cap Table",
@@ -97,7 +97,7 @@
       ],
       "audioUrl": "./data/podcasts/ep-cap-aiyuk-blueprint.m4a",
       "durationSec": 120,
-      "fileSizeBytes": 983828,
+      "fileSizeBytes": 983221,
       "transcript": [
         {
           "idx": 0,
@@ -156,7 +156,7 @@
       "format": "Two-Host Analytical Banter",
       "presetLabel": "4m Strategy Brief",
       "createdBy": "49ers Faithful Analytics",
-      "createdAt": "2026-11-07T20:26:14.370Z",
+      "createdAt": "2026-11-07T20:49:49.709Z",
       "sourceLinks": [
         {
           "label": "OverTheCap 49ers Contracts",
@@ -173,7 +173,7 @@
       ],
       "audioUrl": "./data/podcasts/ep-trade-deadline-seeding.m4a",
       "durationSec": 166,
-      "fileSizeBytes": 1359822,
+      "fileSizeBytes": 1358660,
       "transcript": [
         {
           "idx": 0,
@@ -231,7 +231,7 @@
       "id": "analysis_trade_window_and_calibrated_seeding",
       "title": "2026 Trade Window & Calibrated 10,000-Run Playoff Blueprint: Ranked Needs, Rental Math, -$31.54M 2027 Cap Horizon & 34.5% #1 Bye Odds",
       "category": "Trade Window & Quantitative Seeding",
-      "createdAt": "2026-11-08T01:26:14.370Z",
+      "createdAt": "2026-11-08T01:49:49.709Z",
       "createdBy": "49ers Faithful Quantitative Desk",
       "sourcesCited": [
         {
@@ -253,7 +253,7 @@
       "id": "analysis_wide9_buckner_bosa",
       "title": "Scheme & EPA Deep Dive: How DC Raheem Morris, DeForest Buckner & Osa Odighizuwa Transform Nick Bosa’s Pass-Rush Geometry",
       "category": "Film & Trench Analytics",
-      "createdAt": "2026-11-07T23:26:14.370Z",
+      "createdAt": "2026-11-07T23:49:49.709Z",
       "createdBy": "49ers Faithful Film Desk",
       "sourcesCited": [
         {
@@ -275,7 +275,7 @@
       "id": "analysis_purdy_2026_cpoe_epa",
       "title": "Brock Purdy 2026 Through 7 Games: Why +4.25% CPOE & 3.2% Sack Avoidance Sustain Top-3 NFL Offense",
       "category": "QB & Passing Analytics",
-      "createdAt": "2026-11-07T21:26:14.370Z",
+      "createdAt": "2026-11-07T21:49:49.709Z",
       "createdBy": "49ers Faithful Analytics",
       "sourcesCited": [
         {

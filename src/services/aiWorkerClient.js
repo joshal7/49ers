@@ -52,7 +52,8 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
   const rosterPlayers = appData?.roster?.players || [];
 
   if (baseUrl) {
-    emit(2, 'Step 2/3: Querying Cloudflare Edge Worker + Gemini 2.5 Pro Deep Thinking & Live Search Grounding...');
+    const activeModelLabel = appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash';
+    emit(2, `Step 2/3: Querying Cloudflare Edge Worker + ${activeModelLabel} (High Thinking) & Live Search Grounding...`);
     const res = await fetch(`${baseUrl}/api/analyze`, {
       method: 'POST',
       headers: {

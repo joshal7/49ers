@@ -45,7 +45,7 @@ jobs:
       - name: Run Live 49ers Data Ingestion & Grounded AI Synthesis Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_PRO_MODEL: gemini-2.5-pro
+          GEMINI_SYNTHESIS_MODEL: auto
         run: node scripts/fetch-live-49ers-data.mjs
 
       - name: Validate JSON Integrity & Unit Engine Suite Before Commit

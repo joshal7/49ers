@@ -37,7 +37,11 @@ import {
 } from '../src/engine/playoffMonteCarlo.js';
 import {
   parseTankathonTeamPicksHtml,
-  extractGeminiResponseText
+  extractGeminiResponseText,
+  DEFAULT_FREE_MODEL_CASCADE,
+  scoreFreeTierGeminiModel,
+  rankFreeTierModelsFromCatalog,
+  discoverBestFreeGeminiModel
 } from '../scripts/lib/aiSynthesisEngine.mjs';
 import {
   scoreContentSignal,
@@ -1790,7 +1794,7 @@ test('Trade Window purchasing power, real targets, pitfalls to avoid, and 6-pick
   assert.equal(parsedSample[1].fromTeam, 'BAL');
 });
 
-await testAsync('Worker defaults to gemini-2.5-pro with deep thinking, strips internal thought parts, and preserves external trade/dead-cap context', async () => {
+await testAsync('Worker defaults to best free model (gemini-3.8-flash on High Thinking), strips internal thought parts, and preserves external trade/dead-cap context', async () => {
   const origFetch = globalThis.fetch;
   let capturedUrl = '';
   let capturedBody = null;
@@ -1818,7 +1822,7 @@ await testAsync('Worker defaults to gemini-2.5-pro with deep thinking, strips in
 
   try {
     const envPro = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-key' });
-    delete envPro.GEMINI_TEXT_MODEL; // verify default fallback is gemini-2.5-pro!
+    delete envPro.GEMINI_TEXT_MODEL; // verify default fallback is gemini-3.8-flash on HIGH thinking!
     const res = await (
       await edgeWorker.fetch(
         new Request('https://worker.example/api/analyze', {
@@ -1833,12 +1837,94 @@ await testAsync('Worker defaults to gemini-2.5-pro with deep thinking, strips in
       )
     ).json();
 
-    assert.ok(capturedUrl.includes('models/gemini-2.5-pro:generateContent'), `Expected gemini-2.5-pro URL, got ${capturedUrl}`);
-    assert.ok(capturedBody.generationConfig?.thinkingConfig?.thinkingBudget >= 8192, 'Expected deep thinkingBudget');
+    assert.ok(capturedUrl.includes('models/gemini-3.8-flash:generateContent'), `Expected gemini-3.8-flash URL, got ${capturedUrl}`);
+    assert.ok(capturedBody.generationConfig?.thinkingConfig?.thinkingBudget >= 24576, 'Expected HIGH thinkingBudget (24576)');
     assert.ok(!res.item.markdown.includes('INTERNAL_SECRET_THOUGHT_SCRATCHPAD'), 'Thought part must never leak into output');
     assert.ok(!/Bryce Huff/i.test(res.item.markdown), 'Active-49er Bryce Huff hallucination must be scrubbed');
     assert.ok(/Javon Hargrave/i.test(res.item.markdown), 'Legitimate 2026 dead-cap mention of Javon Hargrave must be preserved');
     assert.ok(/Chase Young/i.test(res.item.markdown), 'Legitimate Saints trade-target mention of Chase Young must be preserved');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+await testAsync('Free-tier model discovery & Worker /api/model-status automatically rank newer Flash High-Thinking models and fail over cleanly', async () => {
+  assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-3.8-flash');
+  assert.ok(
+    scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-2.5-pro'),
+    'Newer gemini-3.8-flash on High Thinking must outscore older restricted gemini-2.5-pro for free-tier synthesis'
+  );
+  assert.ok(
+    scoreFreeTierGeminiModel('gemini-4.0-flash') > scoreFreeTierGeminiModel('gemini-3.8-flash'),
+    'Future gemini-4.0-flash release must automatically outscore gemini-3.8-flash'
+  );
+  assert.equal(scoreFreeTierGeminiModel('gemini-2.5-flash-preview-tts'), -1, 'TTS models must be excluded from text synthesis');
+  assert.equal(scoreFreeTierGeminiModel('gemini-2.5-flash-lite'), -1, 'Lite models must be excluded from High-Thinking synthesis');
+
+  const ranked = rankFreeTierModelsFromCatalog([
+    { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-3.9-flash', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
+  ]);
+  assert.equal(ranked[0], 'gemini-3.9-flash', 'Catalog poll must auto-upgrade to newly released gemini-3.9-flash');
+  assert.equal(ranked[1], 'gemini-3.8-flash');
+
+  const origFetch = globalThis.fetch;
+  const calledUrls = [];
+  globalThis.fetch = async reqUrl => {
+    const u = String(reqUrl);
+    calledUrls.push(u);
+    if (u.includes('/v1beta/models?key=')) {
+      return new Response(
+        JSON.stringify({
+          models: [
+            { name: 'models/gemini-4.0-flash', supportedGenerationMethods: ['generateContent'] },
+            { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }
+          ]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    if (u.includes('models/gemini-4.0-flash:generateContent')) {
+      // Simulate quota exhaustion / 429 on 4.0-flash to verify automatic failover to 3.8-flash
+      return new Response(JSON.stringify({ error: { message: 'Quota exceeded' } }), { status: 429 });
+    }
+    return new Response(
+      JSON.stringify({
+        candidates: [{ content: { parts: [{ text: '### Verified Failover Synthesis\n* Active DE Nick Bosa leads the pass rush.' }] } }]
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+  try {
+    const envAuto = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-key', GEMINI_TEXT_MODEL: 'auto' });
+    const statusRes = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/model-status?poll=1', {
+          headers: { 'X-Group-Passcode': 'faithful49' }
+        }),
+        envAuto
+      )
+    ).json();
+    assert.equal(statusRes.bestModel, 'gemini-4.0-flash', 'Polling /api/model-status?poll=1 must discover gemini-4.0-flash');
+    assert.equal(statusRes.thinkingLevel, 'HIGH');
+    assert.equal(statusRes.thinkingBudget, 24576);
+
+    const analyzeRes = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/analyze', {
+          method: 'POST',
+          headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: 'Pass rush check', contextSummary: 'Active DE: Nick Bosa' })
+        }),
+        envAuto
+      )
+    ).json();
+    assert.ok(analyzeRes.item.markdown.includes('Verified Failover Synthesis'));
+    assert.ok(calledUrls.some(u => u.includes('models/gemini-4.0-flash:generateContent')));
+    assert.ok(calledUrls.some(u => u.includes('models/gemini-3.8-flash:generateContent')));
   } finally {
     globalThis.fetch = origFetch;
   }

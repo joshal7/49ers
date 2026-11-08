@@ -3,7 +3,7 @@ main = "index.js"
 compatibility_date = "2026-11-01"
 
 # 100% Free-Tier Cloudflare Bindings:
-# 1. KV Namespace for shared friend-group caching of Deep Analyses & Episode metadata
+# 1. KV Namespace for shared friend-group caching of Deep Analyses, Episode metadata & Auto-Upgraded Model state
 [[kv_namespaces]]
 binding = "SHARED_CACHE"
 id = "REPLACE_WITH_YOUR_FREE_KV_NAMESPACE_ID"
@@ -13,9 +13,16 @@ id = "REPLACE_WITH_YOUR_FREE_KV_NAMESPACE_ID"
 binding = "PODCAST_BUCKET"
 bucket_name = "49ers-autopodcasts"
 
+# 3. Periodic Free-Model Auto-Discovery Cron (every 6 hours, polls /v1beta/models for newer free Gemini Flash/Pro tiers)
+[triggers]
+crons = ["15 */6 * * *"]
+
 [vars]
 ALLOWED_ORIGIN = "https://49ers.joshal.com"
-GEMINI_TEXT_MODEL = "gemini-2.5-pro"
+GEMINI_TEXT_MODEL = "auto"
+GEMINI_DEFAULT_FREE_MODEL = "gemini-3.8-flash"
+GEMINI_THINKING_LEVEL = "HIGH"
+GEMINI_THINKING_BUDGET = "24576"
 GEMINI_AUDIO_MODEL = "gemini-2.5-flash-preview-tts"
 
 # Secrets configured via `npx wrangler secret put <NAME>`:

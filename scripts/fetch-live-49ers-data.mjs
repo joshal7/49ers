@@ -28,6 +28,7 @@ import {
 } from './lib/seasonalContentBuilder.mjs';
 import {
   parseTankathonTeamPicksHtml,
+  discoverBestFreeGeminiModel,
   runVerifiedDeepGeminiSynthesis
 } from './lib/aiSynthesisEngine.mjs';
 import { buildReporterRegistry } from './update-reporter-registry.mjs';
@@ -2956,11 +2957,18 @@ async function main() {
     }
   );
 
+  // Poll Google AI Studio /v1beta/models to resolve the highest-ranked Free-Tier High-Thinking model
+  const aiModelDiscovery = await discoverBestFreeGeminiModel(process.env.GEMINI_API_KEY);
+  console.log(
+    `[AI Model Discovery] Active free model: ${aiModelDiscovery.activeModel} (${aiModelDiscovery.thinkingLevel} thinking, budget ${aiModelDiscovery.thinkingBudget}, source: ${aiModelDiscovery.source})`
+  );
+
   // Optional 2-Pass Deep Gemini Synthesis (when GEMINI_API_KEY is present in CI/scheduled refresh)
   if (process.env.GEMINI_API_KEY) {
     try {
       const aiTradeAudit = await runVerifiedDeepGeminiSynthesis({
         apiKey: process.env.GEMINI_API_KEY,
+        preferredModel: aiModelDiscovery.activeModel,
         taskName: 'Trade Window Cap & Roster Verification',
         groundingFacts: {
           seasonYear,
@@ -3033,7 +3041,8 @@ async function main() {
       currentWeek,
       mathematicallyEliminated: isMathematicallyEliminated,
       eliminatedAt: isMathematicallyEliminated ? nowIso : null
-    }
+    },
+    aiEngine: aiModelDiscovery
   };
 
   // Final anti-hallucination roster verification gate across synthesized briefs
