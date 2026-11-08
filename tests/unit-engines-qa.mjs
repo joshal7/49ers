@@ -104,6 +104,7 @@ import {
   is49ersGameLiveWindow
 } from '../src/engine/breakingClassifier.js';
 import { buildNativePodcastAppHref } from '../src/views/audioAiView.js';
+import { SEASON_NAV_CLUSTERS, renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -2204,6 +2205,56 @@ await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses and 
     );
   } finally {
     globalThis.fetch = origFetch;
+  }
+});
+
+console.log('\n=== [9/9] Bottom Nav Swap, Two-Cluster Season Nav, Trade Banner Placement & Compact Team Stats QA ===');
+
+test('index.html places Game & Season before Roster & Cap in the 5-tab bottom navigation bar', () => {
+  const indexHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+  const navTabMatches = [...indexHtml.matchAll(/class="nav-tab-btn[^"]*"\s+data-nav-tab="([^"]+)"/g)].map(m => m[1]);
+  assert.deepEqual(navTabMatches, ['home', 'news', 'season', 'roster', 'audio']);
+});
+
+test('SEASON_NAV_CLUSTERS groups Matchup/Health/Schedule/Stats in Bar 1 and Trade/Playoffs/Draft/Draft Recap in Bar 2', () => {
+  assert.equal(SEASON_NAV_CLUSTERS.length, 2);
+  assert.deepEqual(
+    SEASON_NAV_CLUSTERS[0].tabs.map(t => ({ key: t.key, label: t.label })),
+    [
+      { key: 'matchup', label: 'Matchup' },
+      { key: 'health', label: 'Health' },
+      { key: 'schedule', label: 'Schedule' },
+      { key: 'stats', label: 'Stats' }
+    ]
+  );
+  assert.deepEqual(
+    SEASON_NAV_CLUSTERS[1].tabs.map(t => ({ key: t.key, label: t.label })),
+    [
+      { key: 'trade', label: 'Trade' },
+      { key: 'playoffs', label: 'Playoffs' },
+      { key: 'draft_prep', label: 'Draft' },
+      { key: 'draft_class', label: 'Draft Recap' }
+    ]
+  );
+});
+
+test('Team Stats view omits Category (Advanced/Standard Offense) column while preserving all 11 NFL rankings', () => {
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const statsHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'stats',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON', 'TRADE_WINDOW'],
+    appData: {
+      meta: { seasonYear: 2026 },
+      scheduleMatchup
+    },
+    activeVideosSet: new Set()
+  });
+  assert.ok(!statsHtml.includes('<th>Category</th>'), 'Team Stats table must not render Category header');
+  assert.ok(!statsHtml.includes('Advanced Offense'), 'Team Stats table must hide Advanced Offense category text');
+  assert.ok(!statsHtml.includes('Standard Offense'), 'Team Stats table must hide Standard Offense category text');
+  assert.ok(!statsHtml.includes(' (Archive)'), 'Season sub-tabs must not append noisy (Archive) suffixes');
+  for (const r of scheduleMatchup.teamStatRankings) {
+    assert.ok(statsHtml.includes(r.displayValue), `Missing stat displayValue ${r.displayValue}`);
   }
 });
 

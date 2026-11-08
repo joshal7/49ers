@@ -32,6 +32,29 @@ import {
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 
+export const SEASON_NAV_CLUSTERS = [
+  {
+    id: 'gameday_core',
+    ariaLabel: 'Weekly Game and Team Views',
+    tabs: [
+      { key: 'matchup', icon: 'swords', label: 'Matchup', fullTitle: 'Upcoming Matchup', phase: 'IN_SEASON', temporal: false },
+      { key: 'health', icon: 'heartPulse', label: 'Health', fullTitle: 'Team Health', phase: 'IN_SEASON', temporal: false },
+      { key: 'schedule', icon: 'calendar', label: 'Schedule', fullTitle: 'Schedule', phase: 'YEAR_ROUND', temporal: false },
+      { key: 'stats', icon: 'season', label: 'Stats', fullTitle: 'Team Stats', phase: 'IN_SEASON', temporal: false }
+    ]
+  },
+  {
+    id: 'seasonal_horizon',
+    ariaLabel: 'Trade, Playoffs and Draft Views',
+    tabs: [
+      { key: 'trade', icon: 'trade', label: 'Trade', fullTitle: 'Trade Window', phase: 'TRADE_WINDOW', temporal: true },
+      { key: 'playoffs', icon: 'trophy', label: 'Playoffs', fullTitle: 'Playoff Odds', phase: 'PLAYOFF_PUSH', temporal: true },
+      { key: 'draft_prep', icon: 'compass', label: 'Draft', fullTitle: '2027 NFL Draft', phase: 'DRAFT_PREP', temporal: true },
+      { key: 'draft_class', icon: 'radar', label: 'Draft Recap', fullTitle: '2026 Draft Recap', phase: 'DRAFT_LIVE_UDFA', temporal: true }
+    ]
+  }
+];
+
 export function renderSeasonMatchupViewHtml({
   seasonSub = 'matchup',
   activePhases = [],
@@ -44,37 +67,30 @@ export function renderSeasonMatchupViewHtml({
 }) {
   const phaseSet = new Set(activePhases || []);
 
-  // Ordered to match Home Dashboard priority:
-  // Matchup -> Team Health -> Schedule -> Time-Specific (Trade Window -> Playoff Odds -> Draft -> Draft Recap) -> Team Stats
-  const subTabs = [
-    { key: 'matchup', icon: 'swords', label: 'Upcoming Matchup', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'health', icon: 'heartPulse', label: 'Team Health', activeNow: phaseSet.has('IN_SEASON') },
-    { key: 'schedule', icon: 'calendar', label: 'Schedule', activeNow: true },
-    { key: 'trade', icon: 'trade', label: 'Trade Window', activeNow: phaseSet.has('TRADE_WINDOW') },
-    { key: 'playoffs', icon: 'trophy', label: 'Playoff Odds', activeNow: phaseSet.has('PLAYOFF_PUSH') },
-    { key: 'draft_prep', icon: 'compass', label: 'Draft', activeNow: phaseSet.has('DRAFT_PREP') },
-    { key: 'draft_class', icon: 'radar', label: 'Draft Recap', activeNow: phaseSet.has('DRAFT_LIVE_UDFA') },
-    { key: 'stats', icon: 'season', label: 'Team Stats', activeNow: phaseSet.has('IN_SEASON') }
-  ];
-
-  // Keep active-phase tabs first while preserving natural relative order
-  subTabs.sort((a, b) => Number(b.activeNow) - Number(a.activeNow));
-
   const switcherCard = `
-    <div class="card subnav-card">
-      <div class="pill-bar" role="tablist" aria-label="Game Week and Seasonal Views">
-        ${subTabs
-          .map(
-            t => `
-          <button type="button" class="pill-btn ${seasonSub === t.key ? 'active' : ''}"
-                  data-action="set-season-sub" data-season-sub="${t.key}">
-            ${iconSvg(t.icon, 14)}
-            <span>${esc(t.label)}${!t.activeNow ? ' (Archive)' : ''}</span>
-          </button>
-        `
-          )
-          .join('')}
-      </div>
+    <div class="card subnav-card season-subnav-card" role="navigation" aria-label="Game and Season Views">
+      ${SEASON_NAV_CLUSTERS.map(
+        cluster => `
+        <div class="segmented-control season-cluster-bar" data-season-cluster="${esc(cluster.id)}" role="tablist" aria-label="${esc(cluster.ariaLabel)}">
+          ${cluster.tabs
+            .map(t => {
+              const isSelected = seasonSub === t.key;
+              const isLiveTemporal = Boolean(t.temporal && phaseSet.has(t.phase));
+              return `
+            <button type="button" role="tab" aria-selected="${isSelected ? 'true' : 'false'}"
+                    title="${esc(t.fullTitle)}${isLiveTemporal ? ' • Active NFL Window' : ''}"
+                    class="pill-btn seg-btn season-tab-btn ${isSelected ? 'active' : ''} ${t.temporal && !isLiveTemporal ? 'off-cycle' : ''}"
+                    data-action="set-season-sub" data-season-sub="${t.key}">
+              ${iconSvg(t.icon, 13)}
+              <span>${esc(t.label)}</span>
+              ${isLiveTemporal ? `<span class="season-live-dot" aria-hidden="true"></span>` : ''}
+            </button>
+          `;
+            })
+            .join('')}
+        </div>
+      `
+      ).join('')}
     </div>
   `;
 
@@ -573,6 +589,20 @@ function renderTeamHealthAndIr(appData) {
   `;
 }
 
+const COMPACT_STAT_LABELS = {
+  total_off_epa_game: 'Total Offensive EPA / Gm',
+  passing_epa_game: 'Passing EPA / Game',
+  passing_cpoe: 'Completion CPOE',
+  rushing_epa_game: 'Rushing EPA / Game',
+  yards_per_pass_att: 'Net Yards / Pass Att',
+  sack_rate_allowed: 'Sacks Allowed Rate',
+  explosive_plays_game: 'Explosive Plays / Game',
+  rush_yds_game: 'Rushing Yards / Game',
+  def_sacks_game: 'Defensive Sacks / Game',
+  def_tfl_game: 'Tackles For Loss (TFL) / Gm',
+  def_takeaways_game: 'Def. Takeaways / Game'
+};
+
 function renderTeamStatsAndPower(appData) {
   const ranks = appData?.scheduleMatchup?.teamStatRankings || [];
   const pwr = appData?.scheduleMatchup?.powerRankings || {};
@@ -580,46 +610,54 @@ function renderTeamStatsAndPower(appData) {
   const pfrSeasonUrl = buildPfrTeamSeasonUrl('SF', seasonYear);
 
   return `
-    <section class="card">
-      <div class="card-header">
+    <section class="card team-stats-card" id="teamStatsRankingsCard">
+      <div class="card-header team-stats-header">
         <div class="card-header-left">
-          <div class="card-icon-badge" aria-hidden="true">${iconSvg('season', 18)}</div>
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('season', 16)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">nflverse ${seasonYear} Regular Season • 32-Team Benchmarks</div>
+            <div class="card-eyebrow">nflverse ${seasonYear} • 32-Team Benchmarks</div>
             <h2 class="card-title">49ers Team Stats &amp; NFL Rankings</h2>
           </div>
-        </div>
-        <div class="source-link-strip">
-          <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 11)}</a>
-          <a href="${esc(pfrSeasonUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
-          <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
         </div>
       </div>
 
       <div class="table-scroll">
         <table class="data-table team-stats-table">
           <thead>
-            <tr><th>Metric</th><th>Category</th><th class="mono">49ers Value</th><th class="mono">NFL Rank</th><th class="mono">NFL Avg</th></tr>
+            <tr>
+              <th>Metric</th>
+              <th class="mono num-col">49ers</th>
+              <th class="mono rank-col">Rank</th>
+              <th class="mono num-col">NFL Avg</th>
+            </tr>
           </thead>
           <tbody>
             ${ranks
-              .map(
-                r => `
-              <tr>
-                <td><strong>${escJargon(r.label)}</strong></td>
-                <td style="color:var(--text-secondary);font-size:11.5px">${esc(r.category)}</td>
-                <td class="mono"><strong>${esc(r.displayValue)}</strong></td>
-                <td style="min-width:86px">
-                  <span class="badge ${rankBadgeClass(r.rank)} mono">#${r.rank}</span>
-                  ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : r.rank <= 18 ? 'gold' : 'scarlet')}
+              .map(r => {
+                const metricLabel = COMPACT_STAT_LABELS[r.key] || r.label;
+                return `
+              <tr title="${esc(r.label)}">
+                <td><strong>${escJargon(metricLabel)}</strong></td>
+                <td class="mono num-col"><strong>${esc(r.displayValue)}</strong></td>
+                <td class="rank-col">
+                  <div class="team-rank-cell">
+                    <span class="badge ${rankBadgeClass(r.rank)} mono">#${r.rank}</span>
+                    ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : r.rank <= 18 ? 'gold' : 'scarlet')}
+                  </div>
                 </td>
-                <td class="mono" style="color:var(--text-muted)">${esc(r.leagueAvgDisplay)}</td>
+                <td class="mono num-col" style="color:var(--text-muted)">${esc(r.leagueAvgDisplay)}</td>
               </tr>
-            `
-              )
+            `;
+              })
               .join('')}
           </tbody>
         </table>
+      </div>
+
+      <div class="source-link-strip team-stats-sources">
+        <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 11)}</a>
+        <a href="${esc(pfrSeasonUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
+        <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
       </div>
     </section>
 

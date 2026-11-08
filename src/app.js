@@ -317,8 +317,12 @@ function renderMain() {
   const mainEl = document.getElementById('mainView');
   if (!mainEl) return;
 
+  const bannerEl = document.getElementById('phaseBanner');
+  if (bannerEl && mainEl.contains(bannerEl)) {
+    mainEl.parentNode?.insertBefore(bannerEl, mainEl);
+  }
+
   closeJargonPopover();
-  renderHeaderAndPhaseBanner();
 
   const sortedCapYears = Object.keys(state.appData.cap?.years || {}).sort();
   const primaryCapYear = sortedCapYears[0] || '2026';
@@ -424,6 +428,14 @@ function renderMain() {
     }
   });
 
+  if (bannerEl && state.activeNavTab === 'season') {
+    const subnavEl = mainEl.querySelector('.subnav-card');
+    if (subnavEl) {
+      subnavEl.insertAdjacentElement('afterend', bannerEl);
+    }
+  }
+
+  renderHeaderAndPhaseBanner();
   renderNavTabs();
 }
 

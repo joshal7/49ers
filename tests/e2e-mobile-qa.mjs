@@ -2019,6 +2019,161 @@ async function main() {
       );
     });
 
+    await runStep('UX Navigation & Layout Upgrades: Bottom Nav swap, Two-Cluster Season Bars (0px scroll), Trade Banner below bars & Single-Screen Portrait Team Stats', async () => {
+      // Test across Compact Mobile (360x780), iPhone SE (375x667), iPhone 16 (393x852), and iPhone 16 Pro (402x874)
+      const portraitViewports = [
+        { name: 'Compact 360x780', w: 360, h: 780 },
+        { name: 'iPhone SE 375x667', w: 375, h: 667 },
+        { name: 'iPhone 16 393x852', w: 393, h: 852 },
+        { name: 'iPhone 16 Pro 402x874', w: 402, h: 874 }
+      ];
+
+      for (const vp of portraitViewports) {
+        await cdp.setViewport(vp.w, vp.h, true, 3);
+
+        const audit = await cdp.eval(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+
+          // 1. Bottom Nav tab order & visual left-to-right X positions
+          const navBtns = Array.from(document.querySelectorAll('.bottom-nav .nav-tab-btn'));
+          const navTabs = navBtns.map(b => b.getAttribute('data-nav-tab'));
+          const navX = navBtns.map(b => Math.round(b.getBoundingClientRect().left));
+
+          // 2. Navigate to Game & Season and inspect Two-Cluster Bars
+          document.querySelector('[data-nav-tab="season"]').click();
+          window.scrollTo({ top: 0, behavior: 'instant' });
+
+          const clusterBars = Array.from(document.querySelectorAll('.season-subnav-card .season-cluster-bar'));
+          const barDetails = clusterBars.map(bar => {
+            const r = bar.getBoundingClientRect();
+            const btns = Array.from(bar.querySelectorAll('.season-tab-btn'));
+            return {
+              clusterId: bar.getAttribute('data-season-cluster'),
+              top: Math.round(r.top),
+              bottom: Math.round(r.bottom),
+              clientW: bar.clientWidth,
+              scrollW: bar.scrollWidth,
+              keys: btns.map(b => b.getAttribute('data-season-sub')),
+              labels: btns.map(b => b.querySelector('span')?.textContent?.trim() || ''),
+              allBtnsVisibleInViewport: btns.every(b => {
+                const br = b.getBoundingClientRect();
+                return br.width >= 42 && br.left >= 0 && br.right <= window.innerWidth + 1;
+              })
+            };
+          });
+
+          // 3. Switch to Trade sub-tab & verify Active NFL Trade Window (#phaseBanner) is BELOW .season-subnav-card and ABOVE .card.temporal-highlight
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"]').click();
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          const subnavRect = document.querySelector('.season-subnav-card')?.getBoundingClientRect();
+          const bannerEl = document.getElementById('phaseBanner');
+          const tradeBannerHidden = Boolean(bannerEl?.hidden);
+          const bannerRect = bannerEl?.getBoundingClientRect();
+          const tradeCardRect = document.querySelector('#mainView > section.card.temporal-highlight')?.getBoundingClientRect();
+          const tradeLiveDot = Boolean(
+            document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"] .season-live-dot')
+          );
+
+          // 4. Switch to Stats sub-tab & verify Category column is hidden, zero horizontal scroll, and rankings fit in one portrait screen
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]').click();
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          const statsCard = document.getElementById('teamStatsRankingsCard');
+          const statsScroll = statsCard?.querySelector('.table-scroll');
+          const statsTable = statsCard?.querySelector('table.team-stats-table');
+          const statsHeaders = Array.from(statsTable?.querySelectorAll('thead th') || []).map(th =>
+            th.textContent.trim()
+          );
+          const statsRows = Array.from(statsTable?.querySelectorAll('tbody tr') || []);
+          const statsCardText = statsCard?.textContent || '';
+          const lastRowRect = statsRows[statsRows.length - 1]?.getBoundingClientRect();
+          const statsCardRect = statsCard?.getBoundingClientRect();
+          const bottomNavRect = document.querySelector('.bottom-nav')?.getBoundingClientRect();
+
+          return {
+            navTabs,
+            navStrictlyLeftToRight: navX.every((x, idx) => idx === 0 || x > navX[idx - 1]),
+            barDetails,
+            tradeBannerGeo: {
+              hidden: tradeBannerHidden,
+              subnavBottom: Math.round(subnavRect?.bottom || 0),
+              bannerTop: Math.round(bannerRect?.top || 0),
+              bannerBottom: Math.round(bannerRect?.bottom || 0),
+              tradeCardTop: Math.round(tradeCardRect?.top || 0),
+              tradeLiveDot
+            },
+            statsGeo: {
+              headers: statsHeaders,
+              rowCount: statsRows.length,
+              hasCategoryText:
+                statsCardText.includes('Advanced Offense') ||
+                statsCardText.includes('Standard Offense') ||
+                statsCardText.includes('Standard Defense'),
+              scrollW: statsScroll?.scrollWidth || 999,
+              clientW: statsScroll?.clientWidth || 0,
+              lastRowBottom: Math.round(lastRowRect?.bottom || 9999),
+              cardBottom: Math.round(statsCardRect?.bottom || 9999),
+              bottomNavTop: Math.round(bottomNavRect?.top || 0)
+            }
+          };
+        });
+
+        // Assert #1: Swapped Game & Season and Roster & Cap icons in bottom bar
+        assert(
+          JSON.stringify(audit.navTabs) === JSON.stringify(['home', 'news', 'season', 'roster', 'audio']) &&
+            audit.navStrictlyLeftToRight,
+          `[${vp.name}] Bottom nav order mismatch: ${JSON.stringify(audit.navTabs)}`
+        );
+
+        // Assert #2 & #5: Two-bar clustered Game & Season navigation with swapped Stats/Trade, shortened labels & 0px scroll
+        assert(audit.barDetails.length === 2, `[${vp.name}] Expected 2 season cluster bars, got ${audit.barDetails.length}`);
+        assert(
+          JSON.stringify(audit.barDetails[0].keys) === JSON.stringify(['matchup', 'health', 'schedule', 'stats']) &&
+            JSON.stringify(audit.barDetails[0].labels) === JSON.stringify(['Matchup', 'Health', 'Schedule', 'Stats']),
+          `[${vp.name}] Cluster Bar 1 mismatch: ${JSON.stringify(audit.barDetails[0])}`
+        );
+        assert(
+          JSON.stringify(audit.barDetails[1].keys) === JSON.stringify(['trade', 'playoffs', 'draft_prep', 'draft_class']) &&
+            JSON.stringify(audit.barDetails[1].labels) === JSON.stringify(['Trade', 'Playoffs', 'Draft', 'Draft Recap']),
+          `[${vp.name}] Cluster Bar 2 mismatch: ${JSON.stringify(audit.barDetails[1])}`
+        );
+        assert(
+          audit.barDetails[0].bottom <= audit.barDetails[1].top + 1,
+          `[${vp.name}] Cluster Bar 1 should stack cleanly above Cluster Bar 2: ${JSON.stringify(audit.barDetails)}`
+        );
+        for (const bar of audit.barDetails) {
+          assert(
+            bar.scrollW <= bar.clientW + 1 && bar.allBtnsVisibleInViewport,
+            `[${vp.name}] Cluster bar ${bar.clusterId} overflowed horizontally: ${JSON.stringify(bar)}`
+          );
+        }
+
+        // Assert #4: Active NFL Trade Window block positioned BELOW the Game & Season navigation bars and ABOVE Trade Window card
+        assert(
+          audit.tradeBannerGeo.hidden === false &&
+            audit.tradeBannerGeo.bannerTop >= audit.tradeBannerGeo.subnavBottom &&
+            audit.tradeBannerGeo.bannerBottom <= audit.tradeBannerGeo.tradeCardTop &&
+            audit.tradeBannerGeo.tradeLiveDot,
+          `[${vp.name}] Active NFL Trade Window banner placement wrong: ${JSON.stringify(audit.tradeBannerGeo)}`
+        );
+
+        // Assert #3: Category column hidden, zero horizontal scroll, and all 11 rankings fit in one portrait screen above bottom nav!
+        assert(
+          JSON.stringify(audit.statsGeo.headers) === JSON.stringify(['Metric', '49ers', 'Rank', 'NFL Avg']) &&
+            !audit.statsGeo.hasCategoryText &&
+            audit.statsGeo.rowCount === 11,
+          `[${vp.name}] Team Stats columns/category mismatch: ${JSON.stringify(audit.statsGeo)}`
+        );
+        assert(
+          audit.statsGeo.scrollW <= audit.statsGeo.clientW + 1,
+          `[${vp.name}] Team Stats table overflowed horizontally in portrait: ${JSON.stringify(audit.statsGeo)}`
+        );
+        assert(
+          audit.statsGeo.cardBottom <= audit.statsGeo.bottomNavTop,
+          `[${vp.name}] Entire Team Stats & NFL Rankings card did not fit in one portrait screen above bottom nav: ${JSON.stringify(audit.statsGeo)}`
+        );
+      }
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,

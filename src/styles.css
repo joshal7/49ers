@@ -2998,12 +2998,181 @@ button.featured-player-chip:active {
   }
 }
 
-/* Team Stats Metric Wrapping & Settings Outlet Pills */
+/* Game & Season Two-Bar Clustered Sub-Navigation */
+.card.subnav-card.season-subnav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 7px;
+}
+
+.season-cluster-bar {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2.5px;
+  border-radius: 9.5px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.season-cluster-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.pill-btn.seg-btn.season-tab-btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 30px;
+  padding: 4px 6px;
+  gap: 4px;
+  border-radius: 7.5px;
+  font-size: 11.6px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.pill-btn.seg-btn.season-tab-btn.off-cycle:not(.active) {
+  color: var(--text-muted);
+}
+
+.pill-btn.seg-btn.season-tab-btn.off-cycle:not(.active):hover {
+  color: var(--text-secondary);
+}
+
+.season-live-dot {
+  width: 5.5px;
+  height: 5.5px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.24);
+  flex-shrink: 0;
+}
+
+.season-tab-btn.active .season-live-dot {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.main-view > .phase-banner {
+  margin: 0;
+}
+
+/* Team Stats & NFL Rankings Single-Screen Portrait Optimization */
+.team-stats-card .team-stats-header {
+  margin-bottom: 7px;
+}
+
+.team-stats-table th,
+.team-stats-table td {
+  padding: 5.5px 7px;
+  vertical-align: middle;
+}
+
 .team-stats-table td:first-child {
   white-space: normal;
-  min-width: 132px;
-  max-width: 175px;
-  line-height: 1.25;
+  min-width: 120px;
+  line-height: 1.2;
+}
+
+.team-stats-table th.num-col,
+.team-stats-table td.num-col {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.team-stats-table th.rank-col,
+.team-stats-table td.rank-col {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.team-rank-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.team-rank-cell .mini-meter-track {
+  width: 42px;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.team-stats-sources {
+  margin-top: 7px;
+}
+
+@media (max-width: 559px) {
+  .team-rank-cell .mini-meter-track {
+    display: none;
+  }
+  .card.team-stats-card {
+    padding: 9px 10px;
+  }
+  .team-stats-card .team-stats-header {
+    margin-bottom: 6px;
+  }
+  .team-stats-card .data-table.team-stats-table th,
+  .team-stats-card .data-table.team-stats-table td {
+    padding: 3.5px 5.5px;
+    font-size: 11.3px;
+  }
+  .team-stats-card .data-table.team-stats-table th {
+    font-size: 9.8px;
+  }
+  .team-stats-table .badge {
+    padding: 1.5px 6px;
+    font-size: 10.5px;
+  }
+  .team-stats-sources {
+    margin-top: 6px;
+    gap: 5px;
+  }
+  .team-stats-sources .source-chip-link {
+    padding: 2.5px 7px;
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 559px) and (max-height: 720px) {
+  .card.team-stats-card {
+    padding: 7px 9px;
+  }
+  .team-stats-card .team-stats-header {
+    margin-bottom: 4px;
+  }
+  .team-stats-card .card-icon-badge {
+    width: 26px;
+    height: 26px;
+  }
+  .team-stats-card .data-table.team-stats-table th,
+  .team-stats-card .data-table.team-stats-table td {
+    padding: 2.3px 5px;
+    line-height: 1.15;
+  }
+  .team-stats-sources {
+    margin-top: 4px;
+  }
+  .team-stats-sources .source-chip-link {
+    padding: 1.5px 6px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 358px) {
+  .pill-btn.seg-btn.season-tab-btn {
+    padding: 4px 4px;
+    font-size: 10.8px;
+    gap: 3px;
+  }
+  .pill-btn.seg-btn.season-tab-btn .ui-icon {
+    display: none;
+  }
 }
 
 .settings-outlets-grid {
@@ -3042,6 +3211,13 @@ button.featured-player-chip:active {
   .phase-banner {
     margin: 9px 10px 0;
     padding: 8px 10px;
+  }
+  .main-view > .phase-banner {
+    margin: 0;
+  }
+  .card.subnav-card.season-subnav-card {
+    padding: 5px 6px;
+    gap: 4px;
   }
   .main-view {
     padding: 9px 10px;
