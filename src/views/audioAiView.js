@@ -242,7 +242,7 @@ function renderGeminiConnectionStatusCard(userPrefs = {}, modelInfo = {}, keyFee
   if (connected) {
     const modeLabel = userPrefs?.workerBaseUrl
       ? 'Shared Cloud Worker + NotebookLM Voices'
-      : `${modelInfo.shortModelName} + NotebookLM Voices (Puck & Aoede)`;
+      : `${modelInfo.shortModelName} (Auto-Updating) + NotebookLM Voices (Puck & Aoede)`;
     return `
       <div class="gemini-connected-strip" data-gemini-setup-card="connected">
         <span class="inline-icon-meta" style="min-width:0">

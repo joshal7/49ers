@@ -551,7 +551,8 @@ import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
   estimateGenerationWait,
-  resolveActiveHighQualityModelLabel
+  resolveActiveHighQualityModelLabel,
+  checkAndAutoUpdateBestGeminiModel
 } from '../src/services/aiWorkerClient.js';
 import {
   normalizeDisplayTopic,
@@ -2457,27 +2458,27 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   assert.ok(cloud15.minSec > cloud8.minSec && cloud8.minSec > cloud3.minSec, 'Longer podcasts must estimate longer High-Thinking wait');
   assert.equal(
     cloud3.summaryText,
-    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
+    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.1 Pro High)'
   );
   assert.equal(
     cloud8.summaryText,
-    '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)'
+    '8 min pod. (Estimated generation time 1–3 min using Gemini 3.1 Pro High)'
   );
   assert.equal(
     cloud15.summaryText,
-    '15 min pod. (Estimated generation time 2–4 min using Gemini 3.8 High)'
+    '15 min pod. (Estimated generation time 2–4 min using Gemini 3.1 Pro High)'
   );
 
   const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 3, prefs: {} });
   assert.equal(localEst.isCloud, false);
   assert.equal(
     localEst.summaryText,
-    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
+    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.1 Pro High)'
   );
   const analysisEst = estimateGenerationWait({ kind: 'analysis', prefs: {} });
   assert.equal(
     analysisEst.summaryText,
-    'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 High)'
+    'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.1 Pro High)'
   );
   assert.equal(PODCAST_PIPELINE_STAGES.length, 3);
   assert.equal(ANALYSIS_PIPELINE_STAGES.length, 3);
@@ -2997,6 +2998,61 @@ await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQU
       'Charon',
       'Solo podcast TTS must use single-speaker voiceConfig (Charon) instead of multiSpeakerVoiceConfig'
     );
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+await testAsync('Dynamic Gemini Pro Auto-Update discovers newer free models and upgrades user prefs in background', async () => {
+  const origFetch = globalThis.fetch;
+  try {
+    const userPrefs = {
+      geminiApiKey: 'AIzaMockAutoUpdateKey',
+      verifiedGeminiModel: 'gemini-3.1-pro-preview'
+    };
+
+    let updatedModelReported = null;
+
+    // Simulate Google AI Studio releasing Gemini 3.5 Pro into the free model catalog
+    globalThis.fetch = async urlStr => {
+      const u = String(urlStr);
+      if (u.includes('/v1beta/models')) {
+        return new Response(
+          JSON.stringify({
+            models: [
+              { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.5-pro', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] }
+            ]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('{}', { status: 200 });
+    };
+
+    const res = await checkAndAutoUpdateBestGeminiModel(userPrefs, newModel => {
+      updatedModelReported = newModel;
+    });
+
+    assert.ok(res?.ok, 'checkAndAutoUpdateBestGeminiModel should return ok: true');
+    assert.equal(res.bestModel, 'gemini-3.5-pro', 'Should score newer 3.5 Pro above older 3.1 Pro');
+    assert.equal(userPrefs.verifiedGeminiModel, 'gemini-3.5-pro', 'Should auto-update userPrefs in place');
+    assert.equal(updatedModelReported, 'gemini-3.5-pro', 'Should trigger onModelUpdated callback');
+
+    // Verify resolved label reflects newly upgraded model
+    const label = resolveActiveHighQualityModelLabel(null, userPrefs);
+    assert.equal(label.shortModelName, 'Gemini 3.5 Pro High');
+    assert.equal(label.modelId, 'gemini-3.5-pro');
+
+    // Run a second time with no new models: should NOT trigger callback
+    let reTriggered = false;
+    await checkAndAutoUpdateBestGeminiModel(userPrefs, () => {
+      reTriggered = true;
+    });
+    assert.equal(reTriggered, false, 'Should not re-trigger callback if already up to date');
   } finally {
     globalThis.fetch = origFetch;
   }

@@ -1665,11 +1665,11 @@ async function main() {
       assert(gateAndConnectAudit.emptyErrText.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
       assert(gateAndConnectAudit.hasUnconnectedCard && gateAndConnectAudit.inlineKeyFontSize >= 16, 'Unconnected Gemini setup card missing or <16px input');
       assert(
-        gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
+        gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.1 Pro High)',
         `Unexpected 3m pre-click text: "${gateAndConnectAudit.preClickHint3m}"`
       );
       assert(
-        gateAndConnectAudit.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)',
+        gateAndConnectAudit.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.1 Pro High)',
         `Unexpected 8m coarse pre-click text: "${gateAndConnectAudit.preClickHint8m}"`
       );
       assert(

@@ -26,7 +26,8 @@ import {
   synthesizeMissingEpisodeAudio,
   estimateGenerationWait,
   resolveActiveHighQualityModelLabel,
-  verifyGeminiApiKey
+  verifyGeminiApiKey,
+  checkAndAutoUpdateBestGeminiModel
 } from './services/aiWorkerClient.js';
 import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
 import {
@@ -637,6 +638,12 @@ function bindEvents() {
     btn.addEventListener('click', () => {
       state.activeNavTab = btn.getAttribute('data-nav-tab') || 'home';
       window.scrollTo({ top: 0, behavior: 'instant' });
+      if (state.activeNavTab === 'audio' && state.prefs.geminiApiKey) {
+        checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
+          saveUserPrefs(state.prefs);
+          renderMain();
+        });
+      }
       renderMain();
     });
   });
@@ -1922,6 +1929,14 @@ async function init() {
         if (state.activeNavTab === 'audio') renderMain();
       }
     });
+
+    // Auto-update to newer, more capable free Gemini models in the background as Google releases them
+    if (state.prefs.geminiApiKey) {
+      checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
+        saveUserPrefs(state.prefs);
+        if (state.activeNavTab === 'audio') renderMain();
+      });
+    }
 
     // Live countdown & relative timestamp ticker (every 60s while tab is visible)
     setInterval(() => {

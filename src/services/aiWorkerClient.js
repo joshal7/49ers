@@ -79,11 +79,11 @@ export function formatActiveModelBadge(modelId = 'gemini-3.8-pro', suffix = 'Acc
 export function resolveActiveHighQualityModelLabel(appData = null, prefs = null) {
   const verifiedModel = String(prefs?.verifiedGeminiModel || '').trim();
   const modelId =
-    verifiedModel || String(appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash').trim();
+    verifiedModel || String(appData?.meta?.aiEngine?.activeModel || 'gemini-3.1-pro-preview').trim();
   const thinkingLevel = String(appData?.meta?.aiEngine?.thinkingLevel || 'HIGH').toUpperCase();
   const verMatch = modelId.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
-  const verStr = verMatch ? verMatch[1] : '3.8';
-  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : '';
+  const verStr = verMatch ? verMatch[1] : '3.1';
+  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : (verMatch ? '' : ' Pro');
   const shortModelName = `Gemini ${verStr}${tierStr} High`;
   return {
     modelId,
@@ -210,13 +210,36 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
 
   const state = {
     ok: true,
-    bestModel: fullCascade[0] || 'gemini-2.5-pro',
+    bestModel: fullCascade[0] || 'gemini-3.1-pro-preview',
     cascade: fullCascade,
     ttsCascade: resolvedTtsCascade,
-    modelCount: catalogIds.length
+    modelCount: catalogIds.length,
+    checkedAtMs: Date.now()
   };
   discoveredCascadeByKey.set(`${apiBase}:${key}`, state);
   return state;
+}
+
+/**
+ * Checks Google AI Studio in the background to automatically upgrade to newer, more capable
+ * free Gemini models (e.g. Gemini 3.5 Pro, 4.0 Pro) as Google deploys them to the user's key.
+ */
+export async function checkAndAutoUpdateBestGeminiModel(prefs = {}, onModelUpdated = null) {
+  const key = String(prefs?.geminiApiKey || '').trim();
+  if (!key) return null;
+  const apiBase = String(prefs?.geminiApiBaseUrl || DEFAULT_GEMINI_API_BASE)
+    .trim()
+    .replace(/\/+$/, '');
+  try {
+    const verified = await verifyGeminiApiKey(key, apiBase);
+    if (verified?.bestModel && verified.bestModel !== prefs.verifiedGeminiModel) {
+      prefs.verifiedGeminiModel = verified.bestModel;
+      onModelUpdated?.(verified.bestModel);
+    }
+    return verified;
+  } catch {
+    return null;
+  }
 }
 
 async function resolveDirectGeminiCascades(prefs = {}) {
@@ -226,14 +249,20 @@ async function resolveDirectGeminiCascades(prefs = {}) {
     .replace(/\/+$/, '');
   const cacheKey = `${apiBase}:${key}`;
 
-  if (discoveredCascadeByKey.has(cacheKey)) {
-    return { apiBase, key, ...discoveredCascadeByKey.get(cacheKey) };
+  const cached = discoveredCascadeByKey.get(cacheKey);
+  // Auto-refresh model catalog if cache is older than 20 minutes to pick up newly released models
+  if (cached && Date.now() - Number(cached.checkedAtMs || 0) < 20 * 60 * 1000) {
+    return { apiBase, key, ...cached };
   }
 
   try {
     const verified = await verifyGeminiApiKey(key, apiBase);
+    if (verified?.bestModel && prefs && typeof prefs === 'object' && verified.bestModel !== prefs.verifiedGeminiModel) {
+      prefs.verifiedGeminiModel = verified.bestModel;
+    }
     return { apiBase, key, ...verified };
   } catch {
+    if (cached) return { apiBase, key, ...cached };
     return {
       apiBase,
       key,
