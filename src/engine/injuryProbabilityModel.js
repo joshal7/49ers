@@ -756,9 +756,19 @@ export function computePlayerPlayProbability(input = {}) {
       prob -= 0.07;
       factors.push(`Matches player's documented chronic history (${injuryType})`);
     }
-  } else if (!isConcussion && prior.questionablePlayRate >= 0.88 && prob >= 0.45 && prob < 0.93) {
+  } else if (
+    !isConcussion &&
+    (wed !== 'NONE' || thu !== 'NONE' || fri !== 'NONE') &&
+    prior.questionablePlayRate >= 0.88 &&
+    prob >= 0.45 &&
+    prob < 0.93
+  ) {
     prob += 0.05;
     factors.push('High pain-tolerance / toughness prior (+5% boost)');
+  }
+
+  if (wed === 'NONE' && thu === 'NONE' && fri === 'NONE' && statusRaw === 'questionable' && !isIrReturnQuestionable) {
+    prob = Math.min(prob, 0.84);
   }
 
   // 6. Injury Biomechanics Modifier (High-caution structural joint vs soft-tissue speed risk vs pain management)
@@ -777,6 +787,15 @@ export function computePlayerPlayProbability(input = {}) {
   if (hasNegativePlayConsensusSignal(beatNote)) {
     prob = Math.min(prob, 0.20);
     factors.push('Beat consensus: unlikely / not expected to suit up');
+  } else if (
+    beatNote.includes('questionable at best') ||
+    (wed === 'NONE' &&
+      thu === 'NONE' &&
+      fri === 'NONE' &&
+      /\b(hasn't been able to practice|has not been able to practice|yet to return to practice)\b/i.test(beatNote))
+  ) {
+    prob = Math.min(prob, 0.48);
+    factors.push('Has not yet returned to practice following multi-week injury absence');
   } else if (beatNote.includes('game-time decision') || beatNote.includes('50-50')) {
     prob = Math.max(0.42, Math.min(0.64, prob));
     factors.push('Coaching/beat note: true pre-game warmup decision');

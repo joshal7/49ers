@@ -159,6 +159,54 @@ export function evaluateGameDayWindow(scheduleOrGame = [], upcomingMatchupOrNow 
   };
 }
 
+const PT_PARTS_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/Los_Angeles',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  weekday: 'short',
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23'
+});
+
+function extractPacificParts(epochMs) {
+  const parts = PT_PARTS_FORMATTER.formatToParts(new Date(epochMs));
+  let year = 1970;
+  let month = 1;
+  let day = 1;
+  let weekday = 'Sun';
+  let hour = 0;
+  let minute = 0;
+  for (const p of parts) {
+    if (p.type === 'year') year = Number(p.value);
+    else if (p.type === 'month') month = Number(p.value);
+    else if (p.type === 'day') day = Number(p.value);
+    else if (p.type === 'weekday') weekday = p.value;
+    else if (p.type === 'hour') hour = Number(p.value) % 24;
+    else if (p.type === 'minute') minute = Number(p.value);
+  }
+  return {
+    weekday,
+    dayIndex: Math.floor(Date.UTC(year, month - 1, day) / 86_400_000),
+    minutesOfDay: hour * 60 + minute
+  };
+}
+
+const PLAYER_MATCH_REGEX_CACHE = new Map();
+
+function getCachedPlayerRegex(cleanEscapedName) {
+  let rx = PLAYER_MATCH_REGEX_CACHE.get(cleanEscapedName);
+  if (!rx) {
+    if (PLAYER_MATCH_REGEX_CACHE.size >= 512) {
+      PLAYER_MATCH_REGEX_CACHE.clear();
+    }
+    rx = new RegExp(`\\b${cleanEscapedName}\\b`, 'i');
+    PLAYER_MATCH_REGEX_CACHE.set(cleanEscapedName, rx);
+  }
+  return rx;
+}
+
 /**
  * Determines whether the upcoming game's weekly practice report window has started yet.
  * NFL teams release their first weekly practice report on Wednesday afternoon (~12:30-1:30 PM PT)
@@ -169,29 +217,27 @@ export function isBeforeWeeklyPracticeWindow(upcomingGameDateIso = '', nowMs = D
   const kickoffMs = Date.parse(upcomingGameDateIso || '');
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
   if (!Number.isFinite(kickoffMs)) return false;
+  if (ts >= kickoffMs) return false;
 
-  const hoursUntilKickoff = (kickoffMs - ts) / 3600_000;
-  // Determine game day of week in Pacific Time (4 = Thursday, 0 = Sunday, 1 = Monday, 6 = Saturday)
-  const kickoffUtcDay = new Date(kickoffMs - 8 * 3600_000).getUTCDay();
-  if (kickoffUtcDay === 4) {
-    // Thursday game: first estimation walkthrough report drops Monday afternoon (~78h before TNF kickoff)
-    return hoursUntilKickoff > 78;
-  }
-  if (kickoffUtcDay === 6) {
-    // Saturday game: first practice report drops Tuesday afternoon (~90h before Sat kickoff)
-    return hoursUntilKickoff > 90;
-  }
-  if (kickoffUtcDay === 1) {
-    // Monday Night Football: first practice report drops Thursday afternoon (~102h before MNF kickoff)
-    return hoursUntilKickoff > 102;
-  }
-  // Standard Sunday game: Wednesday 1:00 PM PT is ~96-99h before 1:05/1:25/5:20 PM PT Sunday kickoff
-  return hoursUntilKickoff > 98;
+  // DST-accurate Pacific calendar day & time-of-day check:
+  // First weekly practice report drops ~12:15 PM PT on Wednesday for Sunday games
+  // (Monday for Thursday games, Tuesday for Saturday games, Thursday for Monday games).
+  const koPt = extractPacificParts(kickoffMs);
+  const nowPt = extractPacificParts(ts);
+  const leadDays = koPt.weekday === 'Thu' ? 3 : 4;
+  const firstReportOpenMinutesPt = 12 * 60 + 15; // 12:15 PM PT
+  const daysUntilGamePt = koPt.dayIndex - nowPt.dayIndex;
+
+  if (daysUntilGamePt > leadDays) return true;
+  if (daysUntilGamePt === leadDays) return nowPt.minutesOfDay < firstReportOpenMinutesPt;
+  return false;
 }
 
 /**
  * Parses recent wire items (tweets/blurbs near kickoff) to detect official inactive lists,
  * individual inactive scratches, active confirmations, and rare emergency/GTD active tags.
+ * Evaluates status per-clause so mixed tweets ("Bosa is active today, while Evans is inactive")
+ * never cross-contaminate active and inactive players.
  */
 export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [], kickoffMs = 0) {
   const inactiveKeys = new Set();
@@ -208,10 +254,10 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
       const key = normalizeLookupName(name);
       if (!key || name.length < 4) return null;
       const escaped = name
-        .replace(/\b(Jr\.?|Sr\.?|II|III|IV)\b/gi, '')
+        .replace(/\b(Jr\.?|Sr\.?|II|III|IV|V)\b\.?/gi, '')
         .trim()
         .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return escaped.length >= 4 ? { key, regex: new RegExp(`\\b${escaped}\\b`, 'i') } : null;
+      return escaped.length >= 4 ? { key, regex: getCachedPlayerRegex(escaped) } : null;
     })
     .filter(Boolean);
 
@@ -226,23 +272,39 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
       hasOfficialListSignal = true;
     }
 
-    for (const pm of playerMatchers) {
-      if (!pm.regex.test(text)) continue;
-      if (
-        /\b(is inactive|officially inactive|among .*inactives|ruled out for today|will not play today|healthy scratch)\b/i.test(
-          text
-        )
-      ) {
-        inactiveKeys.add(pm.key);
-      } else if (
-        /\b(available only in an emergency|emergency (?:third )?qb|active.*game-time decision|snap count limit)\b/i.test(
-          text
-        )
-      ) {
-        activeKeys.add(pm.key);
-        gtdActiveKeys.add(pm.key);
-      } else if (/\b(officially active|is active today|active for today|will play today|cleared to play)\b/i.test(text)) {
-        activeKeys.add(pm.key);
+    const clauses = text
+      .split(/[.;!\n]+|\b(?:while|whereas|but|however|meanwhile)\b/i)
+      .map(c => c.trim())
+      .filter(Boolean);
+
+    for (const clause of clauses) {
+      const isInactiveListClause = /\b(?:today'?s |game[\s-]?day |49ers |official )?inactives\s*:/i.test(clause);
+      const isInactiveProse =
+        isInactiveListClause ||
+        /\b(is inactive|are inactive|officially inactive|among .*inactives|ruled out for today|will not play today|healthy scratch)\b/i.test(
+          clause
+        );
+      const isEmergencyGtdProse =
+        /\b(available only in an emergency|emergency (?:third )?qb|active.*game-time decision|game-time decision.*active|snap count limit)\b/i.test(
+          clause
+        );
+      const isActiveProse =
+        /\b(officially active|is active today|are active today|active for today|will play today|cleared to play)\b/i.test(
+          clause
+        );
+
+      if (!isInactiveProse && !isEmergencyGtdProse && !isActiveProse) continue;
+
+      for (const pm of playerMatchers) {
+        if (!pm.regex.test(clause)) continue;
+        if (isInactiveProse && !isActiveProse) {
+          inactiveKeys.add(pm.key);
+        } else if (isEmergencyGtdProse) {
+          activeKeys.add(pm.key);
+          gtdActiveKeys.add(pm.key);
+        } else if (isActiveProse && !isInactiveProse) {
+          activeKeys.add(pm.key);
+        }
       }
     }
   }
@@ -406,7 +468,7 @@ export function buildTeamGameDayRosterModel({
   for (const [k, player] of mergedRosterMap.entries()) {
     const injRow = injByKey.get(k) || null;
     const compRow = compByKey.get(k) || null;
-    const rawStatus = String(injRow?.gameStatus || player.gameStatus || '').trim();
+    const rawStatus = String(injRow?.preGameStatus || injRow?.gameStatus || player.gameStatus || '').trim();
     const statusLower = rawStatus.toLowerCase();
     const injuryType = injRow?.injuryType || player.injuryType || compRow?.reason || '';
     const combinedNote = `${injRow?.beatComment || injRow?.beatNote || ''} ${player.beatNote || ''}`;
@@ -538,11 +600,13 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null) {
   return rows.map(row => {
     const k = normalizeLookupName(row?.name || '');
     const isInactive = inactiveSet.has(k);
-    const statusLower = String(row?.gameStatus || '').toLowerCase();
+    const origStatus = row?.preGameStatus || row?.gameStatus || '';
+    const statusLower = String(origStatus).toLowerCase();
 
     if (isInactive || statusLower === 'out' || statusLower === 'inactive') {
       return {
         ...row,
+        preGameStatus: origStatus,
         gameStatus: 'Inactive',
         playProbabilityPct: 0,
         tier: 'OUT',
@@ -566,6 +630,7 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null) {
     if (isRareActiveGtd) {
       return {
         ...row,
+        preGameStatus: origStatus,
         gameStatus: 'Active (GTD)',
         playProbabilityPct: 65,
         tier: 'QUESTIONABLE',
@@ -577,6 +642,7 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null) {
 
     return {
       ...row,
+      preGameStatus: origStatus,
       gameStatus: 'Active',
       playProbabilityPct: 99,
       tier: 'ACTIVE',
@@ -584,6 +650,60 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null) {
       badgeLabel: '99% • In (Active)',
       playBadgeLabel: '99% • In (Active)'
     };
+  });
+}
+
+/**
+ * Shared synchronous game-day model resolver for UI views (`Home` and `Game & Season`).
+ * Evaluates `[T-90m, Final)` live against `nowMs` so the block activates immediately at T-90m
+ * (even offline before network hydration) and retires the instant the game completes.
+ */
+export function resolveTeamGameDayModel(appData, { is49ers = false, windowState = null, nowMs = Date.now() } = {}) {
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const sched = appData?.scheduleMatchup?.schedule || [];
+  const win = windowState || evaluateGameDayWindow(sched, um, nowMs);
+  if (!win?.isActive) return null;
+
+  const preHydrated = is49ers
+    ? appData?.health?.gameDayRoster
+    : um?.opponentHealth?.gameDayRoster;
+
+  if (preHydrated?.isActive) {
+    return {
+      ...preHydrated,
+      windowInfo: preHydrated.windowInfo || preHydrated.windowState || win
+    };
+  }
+
+  if (is49ers) {
+    const active53 = (appData?.roster?.players || []).filter(
+      p => !p.rosterBucket || p.rosterBucket === 'active'
+    );
+    return buildTeamGameDayRosterModel({
+      teamAbbr: 'SF',
+      teamName: 'San Francisco 49ers',
+      activeRosterPlayers: active53,
+      injuryReport: appData?.health?.practiceReport || [],
+      newsItems: appData?.news?.rawStream || [],
+      liveFeedData: appData?.liveGameDay?.sf || null,
+      windowState: win
+    });
+  }
+
+  const oppHealth = um?.opponentHealth || {};
+  const oppPool =
+    Array.isArray(oppHealth.activeRoster) && oppHealth.activeRoster.length > 0
+      ? oppHealth.activeRoster
+      : [...(oppHealth.keyStartersHealthy || []), ...(oppHealth.injuryReport || [])];
+
+  return buildTeamGameDayRosterModel({
+    teamAbbr: um?.oppAbbr || 'OPP',
+    teamName: um?.oppName || um?.oppAbbr || 'Opponent',
+    activeRosterPlayers: oppPool,
+    injuryReport: oppHealth.injuryReport || [],
+    newsItems: appData?.news?.rawStream || [],
+    liveFeedData: appData?.liveGameDay?.opp || null,
+    windowState: win
   });
 }
 
@@ -619,6 +739,47 @@ export function resolveEarlyWeekRolloverInput({
       effectiveStatus: 'Active',
       beatNoteForModel: ''
     };
+  }
+
+  // Drop players who were already cleared ahead of the completed game with zero newly sustained in-game or post-game injury
+  if (
+    (statusLower === 'active' ||
+      statusLower === 'healthy' ||
+      statusLower === '' ||
+      statusLower === 'questionable') &&
+    !/^inactive\b/i.test(shortTrim)
+  ) {
+    const wasExplicitlyClearedInHeadline =
+      /\b(does not (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|doesn'?t (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|has no (?:official )?(?:injury )?designation|no official injury designation|off the injury report)\b/i.test(
+        shortTrim
+      );
+    if (wasExplicitlyClearedInHeadline) {
+      return {
+        skip: true,
+        effectiveStatus: 'Active',
+        beatNoteForModel: ''
+      };
+    }
+
+    const sanitizedCombinedForAcuteCheck = combined.replace(
+      /\b(?:sustained|suffered)\s+back\s+in\s+week\s*\d+\b/gi,
+      'prior injury'
+    );
+    const hasPostOrInGameInjury =
+      /\b(sustained|suffered|injured (?:in|during)|left (?:sunday|monday|thursday|saturday|the)[a-z ']* (?:game|win|loss|contest)|exited (?:sunday|monday|thursday|saturday|the)|questionable to return|doubtful to return|did not return|will not return|didn'?t leave unscathed|after the game|following the (?:game|win|loss)|underwent an mri|scheduled for an mri|broken|fracture|torn|placed on injured reserve|ruled out for week)\b/i.test(
+        sanitizedCombinedForAcuteCheck
+      );
+    const wasClearedPreGame =
+      /\b(does not (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|doesn'?t (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|has no (?:official )?(?:injury )?designation|no official injury designation|off the injury report|designation now a thing of the past|return(?:ing)? to action|he'?ll return to action|set to get back on the field|all set to suit up|now set to go|appears to have done him well|gave him some extra recovery time|cleared (?:the league'?s )?concussion protocol)\b/i.test(
+        combined
+      );
+    if (!hasPostOrInGameInjury && wasClearedPreGame) {
+      return {
+        skip: true,
+        effectiveStatus: 'Active',
+        beatNoteForModel: ''
+      };
+    }
   }
 
   const negatedUpcomingWeekOut =
@@ -671,7 +832,7 @@ export function resolveEarlyWeekRolloverInput({
     // Strip prior-game availability rulings so computePlayerPlayProbability models Week N+1 rather than clamping to 0%
     beatNoteForModel = beatNoteForModel
       .replace(
-        /\b(is inactive|was inactive|officially inactive|ruled out|will not play|won't play|is out for|missing (?:a |his )?[a-z0-9 -]*contest|miss(?:ing)? sunday'?s|inactive sunday|inactive for (?:sunday|monday|thursday|saturday))\b/gi,
+        /\b(is inactive|was inactive|officially inactive|ruled out|will not play|won't play|is out for|will miss (?:his |a )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|missing (?:a |his )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|miss(?:ing)? (?:sunday|monday|thursday|saturday)'?s?|inactive (?:sunday|monday|thursday|saturday)|inactive for (?:sunday|monday|thursday|saturday))\b/gi,
         'sidelined previously'
       )
       .replace(/^inactive\.?$/i, '');

@@ -34,7 +34,11 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
-import { resolveGameDayInjuryRows } from '../engine/gameDayRosterEngine.js';
+import {
+  evaluateGameDayWindow,
+  resolveGameDayInjuryRows,
+  resolveTeamGameDayModel
+} from '../engine/gameDayRosterEngine.js';
 import {
   buildXBeatListSearchUrl,
   resolveItemAuthorProfileUrl,
@@ -343,9 +347,10 @@ function renderSingleDashboardCard({
       const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
       const oppHealth = um.opponentHealth || {};
       const rawOppInj = oppHealth.injuryReport || [];
+      const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false });
       const oppInj = (
-        oppHealth.gameDayRoster?.isActive
-          ? resolveGameDayInjuryRows(rawOppInj, oppHealth.gameDayRoster)
+        oppGameDay?.isActive
+          ? resolveGameDayInjuryRows(rawOppInj, oppGameDay)
           : rawOppInj
       ).slice(0, 3);
       externalHeaderLink = um.gameUrl
@@ -430,9 +435,10 @@ function renderSingleDashboardCard({
 
     case 'team_health': {
       const rawPr = appData?.health?.practiceReport || [];
+      const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
       const pr = (
-        appData?.health?.gameDayRoster?.isActive
-          ? resolveGameDayInjuryRows(rawPr, appData.health.gameDayRoster)
+        sfGameDay?.isActive
+          ? resolveGameDayInjuryRows(rawPr, sfGameDay)
           : rawPr
       ).slice(0, 4);
       const sfInjUrl = appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/';

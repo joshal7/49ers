@@ -400,7 +400,7 @@ async function main() {
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${prevSeasonYear}.csv.gz`
     ),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/injuries/injuries_${seasonYear}.csv.gz`),
-    fetchCsvWithFallback(`${NFLVERSE_BASE}/combine/combine.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/combine/combine.csv.gz`, `${NFLVERSE_BASE}/combine/combine.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/draft_picks/draft_picks.csv.gz`, `${NFLVERSE_BASE}/draft_picks/draft_picks.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/schedules/games.csv.gz`, 'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv')
   ]);
@@ -3554,6 +3554,7 @@ async function main() {
     injurySourceUrl: 'https://www.espn.com/nfl/injuries',
     sfInjuryReportUrl: 'https://www.49ers.com/team/injury-report/',
     statsSourceUrl: 'https://github.com/nflverse/nflverse-data',
+    dateIso: nextScheduledGame?.dateIso || kickoffDateObj.toISOString(),
     kickoffIso: nextScheduledGame?.dateIso || kickoffDateObj.toISOString(),
     kickoffDisplay: kickoffDisplayDynamic,
     broadcast: liveTvNetwork,
@@ -4087,6 +4088,19 @@ async function main() {
         }
         if (combineRows.length === 0 && prev.spiderProfile) {
           p.spiderProfile = prev.spiderProfile;
+        }
+        if (statsPlayerCurrent.length === 0 && prev.stats2026) {
+          p.stats2026 = prev.stats2026;
+        }
+        if (snaps2026.length === 0 && prev.snapSummary) {
+          p.snapSummary = prev.snapSummary;
+          if (prev.primarySnapPct != null) p.primarySnapPct = prev.primarySnapPct;
+        }
+        if (!p.nextGenStats && prev.nextGenStats && ngsPassing.length === 0 && ngsReceiving.length === 0 && ngsRushing.length === 0) {
+          p.nextGenStats = prev.nextGenStats;
+        }
+        if (!p.pfrAdvStats && prev.pfrAdvStats && pfrPass.length === 0 && pfrDef.length === 0) {
+          p.pfrAdvStats = prev.pfrAdvStats;
         }
       }
     }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T07:52:30.264Z",
+  "updatedAt": "2026-11-09T08:26:08.035Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -85,8 +85,8 @@
     "realisticTargets": [
       {
         "name": "Adonai Mitchell",
-        "jersey": 10,
-        "headshotUrl": "",
+        "jersey": 15,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hwwacoa3pqapd7pgahfx",
         "teamAbbr": "NYJ",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png",
         "currentTeam": "NYJ (2-7 Seller)",
@@ -101,8 +101,8 @@
       },
       {
         "name": "Josh Downs",
-        "jersey": 1,
-        "headshotUrl": "",
+        "jersey": 2,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/zniq20yhnxjqajqcgfc5",
         "teamAbbr": "IND",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
         "currentTeam": "IND (2-7 Fire Sale)",
@@ -118,7 +118,7 @@
       {
         "name": "Rashod Bateman",
         "jersey": 7,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gtktmsfcxc1eijwpwzyq",
         "teamAbbr": "BAL",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
         "currentTeam": "BAL (4-5 QB Injury Pivot)",
@@ -133,8 +133,8 @@
       },
       {
         "name": "Greg Dulcich",
-        "jersey": 80,
-        "headshotUrl": "",
+        "jersey": 85,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/nzqdkcpzcnspgfpflxcu",
         "teamAbbr": "MIA",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
         "currentTeam": "MIA (1-7 Seller)",
@@ -150,7 +150,7 @@
       {
         "name": "Khalil Mack",
         "jersey": 52,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/t9j95jylmjpevgbkvmqn",
         "teamAbbr": "LAC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
         "currentTeam": "LAC (0-8 Seller)",
@@ -166,7 +166,7 @@
       {
         "name": "Kingsley Suamataia",
         "jersey": 76,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/qsrtrpvdbnrhjgoqck5x",
         "teamAbbr": "KC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
         "currentTeam": "KC (6-2 OL Surplus)",
@@ -182,7 +182,7 @@
       {
         "name": "Jermaine Johnson II",
         "jersey": 11,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/jj3gmudznyutylbkkqbu",
         "teamAbbr": "TEN",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
         "currentTeam": "TEN (1-7 Seller)",
@@ -198,7 +198,7 @@
       {
         "name": "Quentin Johnston",
         "jersey": 1,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lyvsrjh4mjb4dqwp6shm",
         "teamAbbr": "LAC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
         "currentTeam": "LAC (0-8 Seller)",
@@ -214,7 +214,7 @@
       {
         "name": "Donte Jackson",
         "jersey": 26,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ptrcpfheqfuuyiqexmsq",
         "teamAbbr": "LAC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
         "currentTeam": "LAC (0-8 Seller)",
@@ -230,7 +230,7 @@
       {
         "name": "Jessie Bates III",
         "jersey": 3,
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/eego6d6svadhqg1dyacg",
         "teamAbbr": "ATL",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
         "currentTeam": "ATL (3-6 Bubble)",
@@ -304,22 +304,22 @@
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
         "division": "NFC West",
         "currentRecord": "7-1",
-        "powerRating": 1543,
-        "projectedWins": 11.9,
-        "makePlayoffsPct": 90.5,
-        "winDivisionPct": 76,
-        "seed1ByePct": 30.2,
-        "wildCardPct": 14.5,
+        "powerRating": 1582,
+        "projectedWins": 12.5,
+        "makePlayoffsPct": 95.1,
+        "winDivisionPct": 85.7,
+        "seed1ByePct": 39.3,
+        "wildCardPct": 9.4,
         "seedDistribution": {
-          "1": 30.2,
-          "2": 35.3,
-          "3": 9.3,
-          "4": 1.2,
-          "5": 3.6,
-          "6": 4.9,
-          "7": 6
+          "1": 39.3,
+          "2": 35.7,
+          "3": 9.7,
+          "4": 1,
+          "5": 2.2,
+          "6": 3.4,
+          "7": 3.8
         },
-        "missedPlayoffsPct": 9.5
+        "missedPlayoffsPct": 4.9
       },
       "allTeamOdds": [
         {
@@ -328,22 +328,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
           "division": "NFC West",
           "currentRecord": "7-1",
-          "powerRating": 1543,
-          "projectedWins": 11.9,
-          "makePlayoffsPct": 90.5,
-          "winDivisionPct": 76,
-          "seed1ByePct": 30.2,
-          "wildCardPct": 14.5,
+          "powerRating": 1582,
+          "projectedWins": 12.5,
+          "makePlayoffsPct": 95.1,
+          "winDivisionPct": 85.7,
+          "seed1ByePct": 39.3,
+          "wildCardPct": 9.4,
           "seedDistribution": {
-            "1": 30.2,
-            "2": 35.3,
-            "3": 9.3,
-            "4": 1.2,
-            "5": 3.6,
-            "6": 4.9,
-            "7": 6
+            "1": 39.3,
+            "2": 35.7,
+            "3": 9.7,
+            "4": 1,
+            "5": 2.2,
+            "6": 3.4,
+            "7": 3.8
           },
-          "missedPlayoffsPct": 9.5
+          "missedPlayoffsPct": 4.9
         },
         {
           "abbr": "MIN",
@@ -351,22 +351,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
           "division": "NFC North",
           "currentRecord": "6-1",
-          "powerRating": 1524,
-          "projectedWins": 11.4,
-          "makePlayoffsPct": 84.5,
-          "winDivisionPct": 35.3,
-          "seed1ByePct": 23.4,
-          "wildCardPct": 49.2,
+          "powerRating": 1544,
+          "projectedWins": 11.6,
+          "makePlayoffsPct": 86.8,
+          "winDivisionPct": 39.4,
+          "seed1ByePct": 23.2,
+          "wildCardPct": 47.5,
           "seedDistribution": {
-            "1": 23.4,
-            "2": 10.8,
-            "3": 1.1,
-            "4": 0,
-            "5": 22.7,
-            "6": 15.3,
-            "7": 11.1
+            "1": 23.2,
+            "2": 14.3,
+            "3": 1.9,
+            "4": 0.1,
+            "5": 22.4,
+            "6": 14.8,
+            "7": 10.3
           },
-          "missedPlayoffsPct": 15.5
+          "missedPlayoffsPct": 13.2
         },
         {
           "abbr": "CHI",
@@ -374,45 +374,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png",
           "division": "NFC North",
           "currentRecord": "7-2",
-          "powerRating": 1547,
+          "powerRating": 1551,
           "projectedWins": 11.3,
-          "makePlayoffsPct": 83.4,
-          "winDivisionPct": 26.6,
-          "seed1ByePct": 17.1,
-          "wildCardPct": 56.8,
+          "makePlayoffsPct": 84.4,
+          "winDivisionPct": 26,
+          "seed1ByePct": 14.6,
+          "wildCardPct": 58.4,
           "seedDistribution": {
-            "1": 17.1,
-            "2": 8.8,
-            "3": 0.7,
+            "1": 14.6,
+            "2": 10.3,
+            "3": 1.1,
             "4": 0,
-            "5": 23.4,
+            "5": 24.7,
             "6": 19.4,
-            "7": 14.1
+            "7": 14.4
           },
-          "missedPlayoffsPct": 16.6
-        },
-        {
-          "abbr": "DET",
-          "name": "Detroit Lions",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
-          "division": "NFC North",
-          "currentRecord": "6-2",
-          "powerRating": 1536,
-          "projectedWins": 10.8,
-          "makePlayoffsPct": 77.9,
-          "winDivisionPct": 27.2,
-          "seed1ByePct": 16.8,
-          "wildCardPct": 50.7,
-          "seedDistribution": {
-            "1": 16.8,
-            "2": 9.1,
-            "3": 1.2,
-            "4": 0,
-            "5": 20,
-            "6": 17.3,
-            "7": 13.5
-          },
-          "missedPlayoffsPct": 22.1
+          "missedPlayoffsPct": 15.6
         },
         {
           "abbr": "NYG",
@@ -420,22 +397,45 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
           "division": "NFC East",
           "currentRecord": "5-2-1",
-          "powerRating": 1489,
-          "projectedWins": 9.8,
-          "makePlayoffsPct": 75,
-          "winDivisionPct": 72.7,
-          "seed1ByePct": 4.2,
-          "wildCardPct": 2.4,
+          "powerRating": 1510,
+          "projectedWins": 10.1,
+          "makePlayoffsPct": 79.1,
+          "winDivisionPct": 76.2,
+          "seed1ByePct": 5,
+          "wildCardPct": 2.9,
           "seedDistribution": {
-            "1": 4.2,
-            "2": 12,
-            "3": 43.3,
-            "4": 13.3,
+            "1": 5,
+            "2": 12.5,
+            "3": 47.6,
+            "4": 11.1,
             "5": 0.2,
-            "6": 0.6,
-            "7": 1.6
+            "6": 0.9,
+            "7": 1.8
           },
-          "missedPlayoffsPct": 25
+          "missedPlayoffsPct": 20.9
+        },
+        {
+          "abbr": "DET",
+          "name": "Detroit Lions",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
+          "division": "NFC North",
+          "currentRecord": "6-2",
+          "powerRating": 1525,
+          "projectedWins": 10.6,
+          "makePlayoffsPct": 73.8,
+          "winDivisionPct": 22.1,
+          "seed1ByePct": 11.4,
+          "wildCardPct": 51.7,
+          "seedDistribution": {
+            "1": 11.4,
+            "2": 9.2,
+            "3": 1.4,
+            "4": 0.1,
+            "5": 19.2,
+            "6": 17.7,
+            "7": 14.8
+          },
+          "missedPlayoffsPct": 26.3
         },
         {
           "abbr": "GB",
@@ -443,68 +443,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
           "division": "NFC North",
           "currentRecord": "6-3",
-          "powerRating": 1531,
-          "projectedWins": 10.2,
-          "makePlayoffsPct": 63.6,
-          "winDivisionPct": 10.9,
-          "seed1ByePct": 4.9,
-          "wildCardPct": 52.7,
+          "powerRating": 1544,
+          "projectedWins": 10.4,
+          "makePlayoffsPct": 68.7,
+          "winDivisionPct": 12.6,
+          "seed1ByePct": 4.8,
+          "wildCardPct": 56.1,
           "seedDistribution": {
-            "1": 4.9,
-            "2": 5.3,
-            "3": 0.7,
+            "1": 4.8,
+            "2": 6.6,
+            "3": 1.1,
             "4": 0.1,
-            "5": 16.3,
-            "6": 18.8,
-            "7": 17.7
+            "5": 17.8,
+            "6": 20.5,
+            "7": 17.8
           },
-          "missedPlayoffsPct": 36.4
-        },
-        {
-          "abbr": "LAR",
-          "name": "Los Angeles Rams",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
-          "division": "NFC West",
-          "currentRecord": "5-4",
-          "powerRating": 1555,
-          "projectedWins": 9.4,
-          "makePlayoffsPct": 43.7,
-          "winDivisionPct": 10.3,
-          "seed1ByePct": 1.9,
-          "wildCardPct": 33.5,
-          "seedDistribution": {
-            "1": 1.9,
-            "2": 5.9,
-            "3": 2.3,
-            "4": 0.2,
-            "5": 8.6,
-            "6": 11.8,
-            "7": 13.1
-          },
-          "missedPlayoffsPct": 56.3
-        },
-        {
-          "abbr": "SEA",
-          "name": "Seattle Seahawks",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
-          "division": "NFC West",
-          "currentRecord": "5-4",
-          "powerRating": 1556,
-          "projectedWins": 9.5,
-          "makePlayoffsPct": 43.2,
-          "winDivisionPct": 13.5,
-          "seed1ByePct": 1.4,
-          "wildCardPct": 29.7,
-          "seedDistribution": {
-            "1": 1.4,
-            "2": 8.5,
-            "3": 3.1,
-            "4": 0.5,
-            "5": 4.9,
-            "6": 10,
-            "7": 14.9
-          },
-          "missedPlayoffsPct": 56.9
+          "missedPlayoffsPct": 31.3
         },
         {
           "abbr": "TB",
@@ -512,45 +466,68 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
           "division": "NFC South",
           "currentRecord": "3-6",
-          "powerRating": 1504,
-          "projectedWins": 7.1,
-          "makePlayoffsPct": 31.2,
-          "winDivisionPct": 30.6,
+          "powerRating": 1531,
+          "projectedWins": 7.6,
+          "makePlayoffsPct": 41.7,
+          "winDivisionPct": 40.6,
           "seed1ByePct": 0,
-          "wildCardPct": 0.6,
+          "wildCardPct": 1.1,
           "seedDistribution": {
             "1": 0,
             "2": 0.4,
-            "3": 6.8,
-            "4": 23.4,
-            "5": 0,
-            "6": 0.1,
-            "7": 0.5
-          },
-          "missedPlayoffsPct": 68.8
-        },
-        {
-          "abbr": "NO",
-          "name": "New Orleans Saints",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
-          "division": "NFC South",
-          "currentRecord": "3-5",
-          "powerRating": 1479,
-          "projectedWins": 7.3,
-          "makePlayoffsPct": 28.1,
-          "winDivisionPct": 27,
-          "seed1ByePct": 0.1,
-          "wildCardPct": 1.1,
-          "seedDistribution": {
-            "1": 0.1,
-            "2": 0.8,
-            "3": 7.8,
-            "4": 18.3,
+            "3": 8.2,
+            "4": 31.9,
             "5": 0,
             "6": 0.2,
             "7": 0.8
           },
-          "missedPlayoffsPct": 71.9
+          "missedPlayoffsPct": 58.4
+        },
+        {
+          "abbr": "LAR",
+          "name": "Los Angeles Rams",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
+          "division": "NFC West",
+          "currentRecord": "5-4",
+          "powerRating": 1550,
+          "projectedWins": 9.3,
+          "makePlayoffsPct": 40.7,
+          "winDivisionPct": 6.6,
+          "seed1ByePct": 1.1,
+          "wildCardPct": 34.1,
+          "seedDistribution": {
+            "1": 1.1,
+            "2": 3.7,
+            "3": 1.6,
+            "4": 0.2,
+            "5": 8.9,
+            "6": 11.6,
+            "7": 13.6
+          },
+          "missedPlayoffsPct": 59.3
+        },
+        {
+          "abbr": "SEA",
+          "name": "Seattle Seahawks",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
+          "division": "NFC West",
+          "currentRecord": "5-4",
+          "powerRating": 1531,
+          "projectedWins": 9.1,
+          "makePlayoffsPct": 35.4,
+          "winDivisionPct": 7.6,
+          "seed1ByePct": 0.6,
+          "wildCardPct": 27.8,
+          "seedDistribution": {
+            "1": 0.6,
+            "2": 4.7,
+            "3": 2,
+            "4": 0.3,
+            "5": 4.1,
+            "6": 9.1,
+            "7": 14.6
+          },
+          "missedPlayoffsPct": 64.6
         },
         {
           "abbr": "CAR",
@@ -558,22 +535,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
           "division": "NFC South",
           "currentRecord": "3-5",
-          "powerRating": 1467,
-          "projectedWins": 7.1,
-          "makePlayoffsPct": 26.1,
-          "winDivisionPct": 25,
+          "powerRating": 1484,
+          "projectedWins": 7.3,
+          "makePlayoffsPct": 28.8,
+          "winDivisionPct": 27.6,
           "seed1ByePct": 0.1,
-          "wildCardPct": 1,
+          "wildCardPct": 1.2,
           "seedDistribution": {
             "1": 0.1,
-            "2": 0.7,
-            "3": 6.7,
-            "4": 17.6,
+            "2": 0.6,
+            "3": 6.3,
+            "4": 20.6,
             "5": 0.1,
             "6": 0.2,
-            "7": 0.8
+            "7": 1
           },
-          "missedPlayoffsPct": 74
+          "missedPlayoffsPct": 71.2
         },
         {
           "abbr": "DAL",
@@ -581,22 +558,45 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
           "division": "NFC East",
           "currentRecord": "4-5",
-          "powerRating": 1486,
-          "projectedWins": 7.8,
-          "makePlayoffsPct": 21.9,
-          "winDivisionPct": 18.5,
-          "seed1ByePct": 0.1,
-          "wildCardPct": 3.4,
+          "powerRating": 1504,
+          "projectedWins": 8,
+          "makePlayoffsPct": 22.2,
+          "winDivisionPct": 17.4,
+          "seed1ByePct": 0,
+          "wildCardPct": 4.8,
           "seedDistribution": {
-            "1": 0.1,
-            "2": 1.9,
-            "3": 8.4,
-            "4": 8.2,
-            "5": 0.2,
-            "6": 0.7,
-            "7": 2.6
+            "1": 0,
+            "2": 1.5,
+            "3": 9,
+            "4": 6.9,
+            "5": 0.3,
+            "6": 1.1,
+            "7": 3.4
           },
-          "missedPlayoffsPct": 78.1
+          "missedPlayoffsPct": 77.8
+        },
+        {
+          "abbr": "NO",
+          "name": "New Orleans Saints",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
+          "division": "NFC South",
+          "currentRecord": "3-5",
+          "powerRating": 1461,
+          "projectedWins": 6.9,
+          "makePlayoffsPct": 19.6,
+          "winDivisionPct": 18.8,
+          "seed1ByePct": 0,
+          "wildCardPct": 0.8,
+          "seedDistribution": {
+            "1": 0,
+            "2": 0.3,
+            "3": 4.3,
+            "4": 14.3,
+            "5": 0,
+            "6": 0.2,
+            "7": 0.6
+          },
+          "missedPlayoffsPct": 80.4
         },
         {
           "abbr": "ATL",
@@ -604,22 +604,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
           "division": "NFC South",
           "currentRecord": "3-6",
-          "powerRating": 1479,
-          "projectedWins": 6.8,
-          "makePlayoffsPct": 18.5,
-          "winDivisionPct": 17.4,
+          "powerRating": 1467,
+          "projectedWins": 6.6,
+          "makePlayoffsPct": 14.2,
+          "winDivisionPct": 13.1,
           "seed1ByePct": 0,
           "wildCardPct": 1.1,
           "seedDistribution": {
             "1": 0,
-            "2": 0.3,
-            "3": 4,
-            "4": 13.1,
+            "2": 0.1,
+            "3": 2.2,
+            "4": 10.8,
             "5": 0.1,
             "6": 0.2,
             "7": 0.9
           },
-          "missedPlayoffsPct": 81.5
+          "missedPlayoffsPct": 85.8
         },
         {
           "abbr": "WAS",
@@ -627,22 +627,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
           "division": "NFC East",
           "currentRecord": "2-5-1",
-          "powerRating": 1453,
-          "projectedWins": 6.4,
-          "makePlayoffsPct": 8.1,
-          "winDivisionPct": 7,
+          "powerRating": 1468,
+          "projectedWins": 6.5,
+          "makePlayoffsPct": 7.1,
+          "winDivisionPct": 5.9,
           "seed1ByePct": 0,
-          "wildCardPct": 1.1,
+          "wildCardPct": 1.2,
           "seedDistribution": {
             "1": 0,
-            "2": 0.2,
-            "3": 4,
-            "4": 2.8,
+            "2": 0.1,
+            "3": 3.5,
+            "4": 2.3,
             "5": 0,
-            "6": 0.2,
-            "7": 0.9
+            "6": 0.3,
+            "7": 1
           },
-          "missedPlayoffsPct": 92
+          "missedPlayoffsPct": 92.9
         },
         {
           "abbr": "ARI",
@@ -650,22 +650,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
           "division": "NFC West",
           "currentRecord": "3-6",
-          "powerRating": 1442,
-          "projectedWins": 6.7,
-          "makePlayoffsPct": 2.2,
+          "powerRating": 1437,
+          "projectedWins": 6.5,
+          "makePlayoffsPct": 1.9,
           "winDivisionPct": 0.2,
           "seed1ByePct": 0,
-          "wildCardPct": 2,
+          "wildCardPct": 1.7,
           "seedDistribution": {
             "1": 0,
-            "2": 0.1,
-            "3": 0.2,
+            "2": 0,
+            "3": 0.1,
             "4": 0,
             "5": 0.1,
             "6": 0.4,
-            "7": 1.5
+            "7": 1.2
           },
-          "missedPlayoffsPct": 97.8
+          "missedPlayoffsPct": 98.1
         },
         {
           "abbr": "PHI",
@@ -673,22 +673,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
           "division": "NFC East",
           "currentRecord": "2-7",
-          "powerRating": 1487,
-          "projectedWins": 5.8,
-          "makePlayoffsPct": 2.2,
-          "winDivisionPct": 1.8,
+          "powerRating": 1419,
+          "projectedWins": 5.1,
+          "makePlayoffsPct": 0.7,
+          "winDivisionPct": 0.6,
           "seed1ByePct": 0,
-          "wildCardPct": 0.3,
+          "wildCardPct": 0.1,
           "seedDistribution": {
             "1": 0,
             "2": 0,
-            "3": 0.6,
-            "4": 1.2,
+            "3": 0.1,
+            "4": 0.4,
             "5": 0,
             "6": 0,
-            "7": 0.3
+            "7": 0.1
           },
-          "missedPlayoffsPct": 97.9
+          "missedPlayoffsPct": 99.3
         }
       ]
     },
@@ -705,21 +705,77 @@
         "rootAgainstTeam": "DAL",
         "rootFor": "SF",
         "rootSide": "AWAY",
-        "homeWinProbPct": 47,
-        "expectedImpactScore": 22.1,
+        "homeWinProbPct": 44,
+        "expectedImpactScore": 24.1,
         "leverageTag": "Direct Control",
         "leverageReason": "49ers head-to-head result directly controls NFC West & #1 Seed Bye trajectory",
-        "maxSwingPct": 22.1,
+        "maxSwingPct": 24.3,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 22.1,
-        "seed1SwingPct": 22.1,
-        "divSwingPct": 15.6,
-        "berthSwingPct": 11.6,
-        "byeLeveragePct": 22.1,
-        "divisionLeveragePct": 15.6,
-        "totalLeverageScore": 49.1,
+        "primaryDeltaPct": 24.3,
+        "seed1SwingPct": 24.3,
+        "divSwingPct": 11.6,
+        "berthSwingPct": 7.2,
+        "byeLeveragePct": 24.3,
+        "divisionLeveragePct": 11.6,
+        "totalLeverageScore": 45.1,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
+      },
+      {
+        "gameId": "2026_09_BUF_MIN",
+        "week": 9,
+        "matchupLabel": "BUF @ MIN",
+        "away": "BUF",
+        "home": "MIN",
+        "is49ersGame": false,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "BUF",
+        "rootAgainstTeam": "MIN",
+        "rootFor": "BUF",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 53.7,
+        "expectedImpactScore": 6.4,
+        "leverageTag": "Inter-Conf Help",
+        "leverageReason": "AFC club BUF hands NFC contender MIN a loss without adding an NFC rival win",
+        "maxSwingPct": 6.4,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 6.4,
+        "seed1SwingPct": 6.4,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.3,
+        "byeLeveragePct": 6.4,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 8.1,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
+      },
+      {
+        "gameId": "2026_10_MIN_GB",
+        "week": 10,
+        "matchupLabel": "MIN @ GB",
+        "away": "MIN",
+        "home": "GB",
+        "is49ersGame": false,
+        "recommendedWinner": "HOME",
+        "rootForTeam": "GB",
+        "rootAgainstTeam": "MIN",
+        "rootFor": "GB",
+        "rootSide": "HOME",
+        "homeWinProbPct": 55.2,
+        "expectedImpactScore": 5.1,
+        "leverageTag": "#1 Bye Race",
+        "leverageReason": "Drops NFC top-seed contender MIN in the #1 Seed Bye chase",
+        "maxSwingPct": 5.1,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 5.1,
+        "seed1SwingPct": 5.1,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.7,
+        "byeLeveragePct": 5.1,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 6.7,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png"
       },
       {
         "gameId": "2026_10_SEA_LV",
@@ -733,21 +789,49 @@
         "rootAgainstTeam": "SEA",
         "rootFor": "LV",
         "rootSide": "HOME",
-        "homeWinProbPct": 38.8,
-        "expectedImpactScore": 6.5,
+        "homeWinProbPct": 45.1,
+        "expectedImpactScore": 4.6,
         "leverageTag": "NFC West Race",
         "leverageReason": "Hands division rival SEA a loss in the NFC West crown & tiebreaker race",
-        "maxSwingPct": 6.7,
+        "maxSwingPct": 4.6,
         "primaryMetric": "NFC West",
-        "primaryDeltaPct": 6.7,
-        "seed1SwingPct": 0.8,
-        "divSwingPct": 6.7,
-        "berthSwingPct": 1.8,
-        "byeLeveragePct": 0.8,
-        "divisionLeveragePct": 6.7,
-        "totalLeverageScore": 8.7,
+        "primaryDeltaPct": 4.6,
+        "seed1SwingPct": 0.6,
+        "divSwingPct": 4.6,
+        "berthSwingPct": 1.1,
+        "byeLeveragePct": 0.6,
+        "divisionLeveragePct": 4.6,
+        "totalLeverageScore": 6,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png"
+      },
+      {
+        "gameId": "2026_10_NE_DET",
+        "week": 10,
+        "matchupLabel": "NE @ DET",
+        "away": "NE",
+        "home": "DET",
+        "is49ersGame": false,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "NE",
+        "rootAgainstTeam": "DET",
+        "rootFor": "NE",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 52.2,
+        "expectedImpactScore": 4.5,
+        "leverageTag": "Inter-Conf Help",
+        "leverageReason": "AFC club NE hands NFC contender DET a loss without adding an NFC rival win",
+        "maxSwingPct": 4.5,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 4.5,
+        "seed1SwingPct": 4.5,
+        "divSwingPct": 0.1,
+        "berthSwingPct": 0.6,
+        "byeLeveragePct": 4.5,
+        "divisionLeveragePct": 0.1,
+        "totalLeverageScore": 5.9,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png"
       },
       {
         "gameId": "2026_10_LA_ARI",
@@ -762,104 +846,20 @@
         "rootFor": "ARI",
         "rootSide": "HOME",
         "homeWinProbPct": 39.1,
-        "expectedImpactScore": 6.1,
+        "expectedImpactScore": 4.3,
         "leverageTag": "NFC West Race",
         "leverageReason": "Hands division rival LAR a loss in the NFC West crown & tiebreaker race",
-        "maxSwingPct": 6.2,
+        "maxSwingPct": 4.4,
         "primaryMetric": "NFC West",
-        "primaryDeltaPct": 6.2,
-        "seed1SwingPct": 0.2,
-        "divSwingPct": 6.2,
-        "berthSwingPct": 1.5,
-        "byeLeveragePct": 0.2,
-        "divisionLeveragePct": 6.2,
-        "totalLeverageScore": 7.3,
+        "primaryDeltaPct": 4.4,
+        "seed1SwingPct": 0.1,
+        "divSwingPct": 4.4,
+        "berthSwingPct": 0.6,
+        "byeLeveragePct": 0.1,
+        "divisionLeveragePct": 4.4,
+        "totalLeverageScore": 4.9,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png"
-      },
-      {
-        "gameId": "2026_09_BUF_MIN",
-        "week": 9,
-        "matchupLabel": "BUF @ MIN",
-        "away": "BUF",
-        "home": "MIN",
-        "is49ersGame": false,
-        "recommendedWinner": "AWAY",
-        "rootForTeam": "BUF",
-        "rootAgainstTeam": "MIN",
-        "rootFor": "BUF",
-        "rootSide": "AWAY",
-        "homeWinProbPct": 49.6,
-        "expectedImpactScore": 5.2,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "AFC club BUF hands NFC contender MIN a loss without adding an NFC rival win",
-        "maxSwingPct": 5.2,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 5.2,
-        "seed1SwingPct": 5.2,
-        "divSwingPct": 0.3,
-        "berthSwingPct": 1.3,
-        "byeLeveragePct": 5.2,
-        "divisionLeveragePct": 0.3,
-        "totalLeverageScore": 7.3,
-        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
-        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
-      },
-      {
-        "gameId": "2026_10_NE_DET",
-        "week": 10,
-        "matchupLabel": "NE @ DET",
-        "away": "NE",
-        "home": "DET",
-        "is49ersGame": false,
-        "recommendedWinner": "AWAY",
-        "rootForTeam": "NE",
-        "rootAgainstTeam": "DET",
-        "rootFor": "NE",
-        "rootSide": "AWAY",
-        "homeWinProbPct": 48.7,
-        "expectedImpactScore": 4.1,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "AFC club NE hands NFC contender DET a loss without adding an NFC rival win",
-        "maxSwingPct": 4.1,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.1,
-        "seed1SwingPct": 4.1,
-        "divSwingPct": 0,
-        "berthSwingPct": 1.1,
-        "byeLeveragePct": 4.1,
-        "divisionLeveragePct": 0,
-        "totalLeverageScore": 5.6,
-        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
-        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png"
-      },
-      {
-        "gameId": "2026_10_MIN_GB",
-        "week": 10,
-        "matchupLabel": "MIN @ GB",
-        "away": "MIN",
-        "home": "GB",
-        "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "GB",
-        "rootAgainstTeam": "MIN",
-        "rootFor": "GB",
-        "rootSide": "HOME",
-        "homeWinProbPct": 56.2,
-        "expectedImpactScore": 3.7,
-        "leverageTag": "#1 Bye Race",
-        "leverageReason": "Drops NFC top-seed contender MIN in the #1 Seed Bye chase",
-        "maxSwingPct": 3.7,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 3.7,
-        "seed1SwingPct": 3.7,
-        "divSwingPct": 0.2,
-        "berthSwingPct": 1.4,
-        "byeLeveragePct": 3.7,
-        "divisionLeveragePct": 0.2,
-        "totalLeverageScore": 5.5,
-        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
-        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png"
       },
       {
         "gameId": "2026_10_WAS_NYG",
@@ -873,19 +873,19 @@
         "rootAgainstTeam": "NYG",
         "rootFor": "WAS",
         "rootSide": "AWAY",
-        "homeWinProbPct": 60.2,
-        "expectedImpactScore": 1.7,
+        "homeWinProbPct": 61,
+        "expectedImpactScore": 1.4,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops NFC top-seed contender NYG in the #1 Seed Bye chase",
-        "maxSwingPct": 1.7,
+        "maxSwingPct": 1.4,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 1.7,
-        "seed1SwingPct": 1.7,
-        "divSwingPct": 0.5,
-        "berthSwingPct": 0.5,
-        "byeLeveragePct": 1.7,
-        "divisionLeveragePct": 0.5,
-        "totalLeverageScore": 2.8,
+        "primaryDeltaPct": 1.4,
+        "seed1SwingPct": 1.4,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.3,
+        "byeLeveragePct": 1.4,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 2.1,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png"
       },
@@ -901,19 +901,19 @@
         "rootAgainstTeam": "KC",
         "rootFor": "ATL",
         "rootSide": "HOME",
-        "homeWinProbPct": 45.8,
-        "expectedImpactScore": 0.3,
-        "leverageTag": "SOV / Tiebreaker",
-        "leverageReason": "Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. KC",
-        "maxSwingPct": 0.3,
-        "primaryMetric": "NFC West",
-        "primaryDeltaPct": 0.3,
-        "seed1SwingPct": 0.2,
-        "divSwingPct": 0.3,
-        "berthSwingPct": 0.1,
-        "byeLeveragePct": 0.2,
-        "divisionLeveragePct": 0.3,
-        "totalLeverageScore": 0.6,
+        "homeWinProbPct": 41.5,
+        "expectedImpactScore": 0.5,
+        "leverageTag": "#1 Bye Race",
+        "leverageReason": "Drops NFC top-seed contender KC in the #1 Seed Bye chase",
+        "maxSwingPct": 0.5,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 0.5,
+        "seed1SwingPct": 0.5,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.4,
+        "byeLeveragePct": 0.5,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 1,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png"
       },
@@ -924,24 +924,24 @@
         "away": "CAR",
         "home": "NO",
         "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "NO",
-        "rootAgainstTeam": "CAR",
-        "rootFor": "NO",
-        "rootSide": "HOME",
-        "homeWinProbPct": 56.9,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "CAR",
+        "rootAgainstTeam": "NO",
+        "rootFor": "CAR",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 51.9,
         "expectedImpactScore": 0.1,
-        "leverageTag": "#1 Bye Race",
-        "leverageReason": "Drops NFC top-seed contender CAR in the #1 Seed Bye chase",
+        "leverageTag": "SOV / Tiebreaker",
+        "leverageReason": "Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. NO",
         "maxSwingPct": 0.1,
-        "primaryMetric": "#1 Seed Bye",
+        "primaryMetric": "NFC West",
         "primaryDeltaPct": 0.1,
-        "seed1SwingPct": 0.1,
+        "seed1SwingPct": 0,
         "divSwingPct": 0.1,
         "berthSwingPct": 0.1,
-        "byeLeveragePct": 0.1,
+        "byeLeveragePct": 0,
         "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 0.3,
+        "totalLeverageScore": 0.2,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png"
       }
@@ -949,18 +949,18 @@
     "seedPathCards": [
       {
         "target": "#1 Seed & First-Round Bye",
-        "currentProbPct": 30.2,
-        "pathSummary": "At 7-1 (3-0 NFC West, 4-1 NFC; 11.9 projected wins), SF leads a deep NFC field at 30.2% in Empirical-Bayes + EPA + SOS simulations—ahead of Minnesota, Chicago, and Detroit—with direct head-to-head NFC tiebreaker leverage across its 9 remaining games."
+        "currentProbPct": 39.3,
+        "pathSummary": "At 7-1 (3-0 NFC West, 4-1 NFC; 12.5 projected wins), SF leads a deep NFC field at 39.3% in Empirical-Bayes + EPA + SOS simulations—ahead of Minnesota, Chicago, and Detroit—with direct head-to-head NFC tiebreaker leverage across its 9 remaining games."
       },
       {
         "target": "NFC West Division Title (Seeds #1–#4)",
-        "currentProbPct": 76,
-        "pathSummary": "Sitting at 7-1 overall and 3-0 inside the NFC West (+79 (235 PF / 156 PA)), banked divisional head-to-head tiebreakers anchor NFC West division equity at 76%."
+        "currentProbPct": 85.7,
+        "pathSummary": "Sitting at 7-1 overall and 3-0 inside the NFC West (+79 (235 PF / 156 PA)), banked divisional head-to-head tiebreakers anchor NFC West division equity at 85.7%."
       },
       {
         "target": "Playoff Berth (Seeds #1–#7)",
-        "currentProbPct": 90.5,
-        "pathSummary": "With 7 wins banked through 8 games (4-1 conference record), reaching 10+ total wins across the remaining 9 games yields 90.5% overall postseason probability."
+        "currentProbPct": 95.1,
+        "pathSummary": "With 7 wins banked through 8 games (4-1 conference record), reaching 10+ total wins across the remaining 9 games yields 95.1% overall postseason probability."
       }
     ],
     "simulatorInputs": {
@@ -980,9 +980,9 @@
           "confLosses": 1,
           "confTies": 0,
           "pointDiff": 79,
-          "netEpaPerGame": 0.897,
-          "sosSpreadAdj": -0.525,
-          "powerRating": 1543
+          "netEpaPerGame": 13.824,
+          "sosSpreadAdj": -0.79,
+          "powerRating": 1582
         },
         {
           "abbr": "MIN",
@@ -999,9 +999,9 @@
           "confLosses": 1,
           "confTies": 0,
           "pointDiff": 47,
-          "netEpaPerGame": -1.46,
-          "sosSpreadAdj": 0.137,
-          "powerRating": 1524
+          "netEpaPerGame": 4.491,
+          "sosSpreadAdj": -0.223,
+          "powerRating": 1544
         },
         {
           "abbr": "CHI",
@@ -1018,9 +1018,9 @@
           "confLosses": 2,
           "confTies": 0,
           "pointDiff": 57,
-          "netEpaPerGame": 3.688,
-          "sosSpreadAdj": 0.049,
-          "powerRating": 1547
+          "netEpaPerGame": 4.837,
+          "sosSpreadAdj": -0.08,
+          "powerRating": 1551
         },
         {
           "abbr": "DET",
@@ -1037,9 +1037,9 @@
           "confLosses": 1,
           "confTies": 0,
           "pointDiff": 33,
-          "netEpaPerGame": 5.019,
-          "sosSpreadAdj": -0.695,
-          "powerRating": 1536
+          "netEpaPerGame": 1.844,
+          "sosSpreadAdj": -0.42,
+          "powerRating": 1525
         },
         {
           "abbr": "GB",
@@ -1056,9 +1056,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": 25,
-          "netEpaPerGame": 3.902,
-          "sosSpreadAdj": 0.053,
-          "powerRating": 1531
+          "netEpaPerGame": 6.696,
+          "sosSpreadAdj": 0.351,
+          "powerRating": 1544
         },
         {
           "abbr": "NYG",
@@ -1075,9 +1075,9 @@
           "confLosses": 2,
           "confTies": 1,
           "pointDiff": 10,
-          "netEpaPerGame": -3.562,
-          "sosSpreadAdj": -0.74,
-          "powerRating": 1489
+          "netEpaPerGame": 1.988,
+          "sosSpreadAdj": -0.98,
+          "powerRating": 1510
         },
         {
           "abbr": "SEA",
@@ -1094,9 +1094,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": 40,
-          "netEpaPerGame": 8.876,
-          "sosSpreadAdj": 0.04,
-          "powerRating": 1556
+          "netEpaPerGame": 2.623,
+          "sosSpreadAdj": -0.173,
+          "powerRating": 1531
         },
         {
           "abbr": "LAR",
@@ -1113,9 +1113,9 @@
           "confLosses": 2,
           "confTies": 0,
           "pointDiff": 33,
-          "netEpaPerGame": 10.724,
-          "sosSpreadAdj": -0.36,
-          "powerRating": 1555
+          "netEpaPerGame": 9.591,
+          "sosSpreadAdj": -0.676,
+          "powerRating": 1550
         },
         {
           "abbr": "DAL",
@@ -1132,9 +1132,9 @@
           "confLosses": 4,
           "confTies": 0,
           "pointDiff": 10,
-          "netEpaPerGame": -3.967,
-          "sosSpreadAdj": -0.458,
-          "powerRating": 1486
+          "netEpaPerGame": 1.002,
+          "sosSpreadAdj": -0.862,
+          "powerRating": 1504
         },
         {
           "abbr": "CAR",
@@ -1151,9 +1151,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": -20,
-          "netEpaPerGame": -6.032,
-          "sosSpreadAdj": 0.445,
-          "powerRating": 1467
+          "netEpaPerGame": -0.965,
+          "sosSpreadAdj": -0.01,
+          "powerRating": 1484
         },
         {
           "abbr": "NO",
@@ -1170,9 +1170,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": -31,
-          "netEpaPerGame": -0.267,
-          "sosSpreadAdj": -0.295,
-          "powerRating": 1479
+          "netEpaPerGame": -5.224,
+          "sosSpreadAdj": -0.185,
+          "powerRating": 1461
         },
         {
           "abbr": "TB",
@@ -1189,9 +1189,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": 24,
-          "netEpaPerGame": -1.753,
-          "sosSpreadAdj": 0.116,
-          "powerRating": 1504
+          "netEpaPerGame": 3.663,
+          "sosSpreadAdj": 0.667,
+          "powerRating": 1531
         },
         {
           "abbr": "ATL",
@@ -1208,9 +1208,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": -35,
-          "netEpaPerGame": -0.744,
-          "sosSpreadAdj": 0.4,
-          "powerRating": 1479
+          "netEpaPerGame": -4.354,
+          "sosSpreadAdj": 0.898,
+          "powerRating": 1467
         },
         {
           "abbr": "ARI",
@@ -1227,9 +1227,9 @@
           "confLosses": 5,
           "confTies": 0,
           "pointDiff": -77,
-          "netEpaPerGame": -6.225,
-          "sosSpreadAdj": 1.062,
-          "powerRating": 1442
+          "netEpaPerGame": -7.175,
+          "sosSpreadAdj": 0.747,
+          "powerRating": 1437
         },
         {
           "abbr": "WAS",
@@ -1246,9 +1246,9 @@
           "confLosses": 4,
           "confTies": 1,
           "pointDiff": -30,
-          "netEpaPerGame": -8.797,
-          "sosSpreadAdj": 0.49,
-          "powerRating": 1453
+          "netEpaPerGame": -3.203,
+          "sosSpreadAdj": -0.23,
+          "powerRating": 1468
         },
         {
           "abbr": "PHI",
@@ -1265,46 +1265,46 @@
           "confLosses": 6,
           "confTies": 0,
           "pointDiff": -73,
-          "netEpaPerGame": 6.539,
-          "sosSpreadAdj": -0.213,
-          "powerRating": 1487
+          "netEpaPerGame": -13.104,
+          "sosSpreadAdj": 0.4,
+          "powerRating": 1419
         }
       ],
       "afcPowerRatings": {
-        "BUF": 1563,
-        "DEN": 1547,
-        "JAX": 1581,
-        "PIT": 1523,
-        "KC": 1544,
-        "CIN": 1508,
-        "NE": 1545,
-        "CLE": 1458,
-        "LV": 1441,
-        "BAL": 1481,
-        "HOU": 1530,
-        "NYJ": 1424,
-        "IND": 1485,
-        "MIA": 1440,
-        "TEN": 1418,
-        "LAC": 1467
+        "BUF": 1554,
+        "DEN": 1511,
+        "JAX": 1595,
+        "PIT": 1524,
+        "KC": 1563,
+        "CIN": 1562,
+        "NE": 1510,
+        "CLE": 1466,
+        "LV": 1461,
+        "BAL": 1459,
+        "HOU": 1520,
+        "NYJ": 1466,
+        "IND": 1428,
+        "MIA": 1433,
+        "TEN": 1435,
+        "LAC": 1410
       },
       "afcRatings": {
-        "BUF": 1563,
-        "DEN": 1547,
-        "JAX": 1581,
-        "PIT": 1523,
-        "KC": 1544,
-        "CIN": 1508,
-        "NE": 1545,
-        "CLE": 1458,
-        "LV": 1441,
-        "BAL": 1481,
-        "HOU": 1530,
-        "NYJ": 1424,
-        "IND": 1485,
-        "MIA": 1440,
-        "TEN": 1418,
-        "LAC": 1467
+        "BUF": 1554,
+        "DEN": 1511,
+        "JAX": 1595,
+        "PIT": 1524,
+        "KC": 1563,
+        "CIN": 1562,
+        "NE": 1510,
+        "CLE": 1466,
+        "LV": 1461,
+        "BAL": 1459,
+        "HOU": 1520,
+        "NYJ": 1466,
+        "IND": 1428,
+        "MIA": 1433,
+        "TEN": 1435,
+        "LAC": 1410
       },
       "afcStandings": {
         "BUF": {
@@ -3603,7 +3603,7 @@
     "combineLeaderboard": [
       {
         "name": "Nick Emmanwori",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pmy1sehsvo596a7si0i0",
         "pos": "SAF",
         "school": "South Carolina",
         "season": 2025,
@@ -3737,7 +3737,7 @@
       },
       {
         "name": "Jihaad Campbell",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/njvl2eabvfekcqqa4jmq",
         "pos": "LB",
         "school": "Alabama",
         "season": 2025,
@@ -3871,7 +3871,7 @@
       },
       {
         "name": "Teddye Buchanan",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ktowwliocunqxlxfznev",
         "pos": "LB",
         "school": "California",
         "season": 2025,
@@ -4005,7 +4005,7 @@
       },
       {
         "name": "DJ Giddens",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/rfn0ulc1rs7ejcuc1f6j",
         "pos": "RB",
         "school": "Kansas St.",
         "season": 2025,
@@ -4139,7 +4139,7 @@
       },
       {
         "name": "Will Campbell",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/iwhxbgyjofmceiu0sess",
         "pos": "OT",
         "school": "LSU",
         "season": 2025,
@@ -4273,7 +4273,7 @@
       },
       {
         "name": "Miles Frazier",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/picu4brr7vqypp3fdxtf",
         "pos": "G",
         "school": "LSU",
         "season": 2025,
@@ -4407,7 +4407,7 @@
       },
       {
         "name": "Terrance Ferguson",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/w5o0s5yf6j5dsmiwdtfg",
         "pos": "TE",
         "school": "Oregon",
         "season": 2025,
@@ -4541,7 +4541,7 @@
       },
       {
         "name": "Elic Ayomanor",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/xozpynzjbuorn6ixdjh3",
         "pos": "WR",
         "school": "Stanford",
         "season": 2025,
@@ -4675,7 +4675,7 @@
       },
       {
         "name": "Kitan Crawford",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/puy0uqictbwcojpkmmrr",
         "pos": "SAF",
         "school": "Nevada",
         "season": 2025,
@@ -4809,7 +4809,7 @@
       },
       {
         "name": "Chimere Dike",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/jcxkarajirurpxlxl1rj",
         "pos": "WR",
         "school": "Florida",
         "season": 2025,
@@ -5077,7 +5077,7 @@
       },
       {
         "name": "Tai Felton",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gylfmv9ivsu0rsc1g5uo",
         "pos": "WR",
         "school": "Maryland",
         "season": 2025,
@@ -5211,7 +5211,7 @@
       },
       {
         "name": "Zeek Biggers",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/suxeeie7m0bmqjrgwsmv",
         "pos": "DT",
         "school": "Georgia Tech",
         "season": 2025,
@@ -5345,7 +5345,7 @@
       },
       {
         "name": "Warren Brinson",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lv56fxgmoabt9ecuu8eb",
         "pos": "DT",
         "school": "Georgia",
         "season": 2025,
@@ -5479,7 +5479,7 @@
       },
       {
         "name": "Eli Cox",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/uhtlmj9acfquzglsfld8",
         "pos": "C",
         "school": "Kentucky",
         "season": 2025,
@@ -5613,7 +5613,7 @@
       },
       {
         "name": "CJ Dippre",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hotvqpccxfpqqxujoo9g",
         "pos": "TE",
         "school": "Alabama",
         "season": 2025,
@@ -5747,7 +5747,7 @@
       },
       {
         "name": "Donovan Edwards",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/f92eymxwjffhifro5ckw",
         "pos": "RB",
         "school": "Michigan",
         "season": 2025,
@@ -5881,7 +5881,7 @@
       },
       {
         "name": "Jaydon Blue",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/unb7f3lnt0ggohvovjpw",
         "pos": "RB",
         "school": "Texas",
         "season": 2025,
@@ -6015,7 +6015,7 @@
       },
       {
         "name": "Brady Cook",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/cnek1ugisgarhb16fusi",
         "pos": "QB",
         "school": "Missouri",
         "season": 2025,
@@ -6149,7 +6149,7 @@
       },
       {
         "name": "Aireontae Ersery",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ww6vasew8bjgvcnxe2zp",
         "pos": "OT",
         "school": "Minnesota",
         "season": 2025,
@@ -6283,7 +6283,7 @@
       },
       {
         "name": "Tyler Baron",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/v9mbzoaeie7jm6jt4gdx",
         "pos": "EDGE",
         "school": "Miami",
         "season": 2025,
@@ -6417,7 +6417,7 @@
       },
       {
         "name": "Zah Frazier",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/fu824naxjrnfhc9jgsab",
         "pos": "CB",
         "school": "Texas-San Antonio",
         "season": 2025,
@@ -6551,7 +6551,7 @@
       },
       {
         "name": "Jordan Burch",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/e1l9bvbtlmy2ea7izknj",
         "pos": "EDGE",
         "school": "Oregon",
         "season": 2025,
@@ -6685,7 +6685,7 @@
       },
       {
         "name": "Logan Brown",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lebjztgitjbfjryhkcu1",
         "pos": "OT",
         "school": "Kansas",
         "season": 2025,
@@ -6819,7 +6819,7 @@
       },
       {
         "name": "Fadil Diggs",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vdvzbolu1azzbtexeyfl",
         "pos": "EDGE",
         "school": "Syracuse",
         "season": 2025,
@@ -6953,7 +6953,7 @@
       },
       {
         "name": "Trey Amos",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/cxabcu8nz9p6k6sqsw4t",
         "pos": "CB",
         "school": "Mississippi",
         "season": 2025,
@@ -7087,7 +7087,7 @@
       },
       {
         "name": "Eugene Asante",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vnznj77vaii7meied6pi",
         "pos": "LB",
         "school": "Auburn",
         "season": 2025,
@@ -7221,7 +7221,7 @@
       },
       {
         "name": "Jalin Conyers",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/zm7n2t2kghsjgkfvguq8",
         "pos": "TE",
         "school": "Texas Tech",
         "season": 2025,
@@ -7355,7 +7355,7 @@
       },
       {
         "name": "Darius Alexander",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/upwtqewimo1hydyqwznv",
         "pos": "DT",
         "school": "Toledo",
         "season": 2025,
@@ -7489,7 +7489,7 @@
       },
       {
         "name": "Isaiah Bond",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pmbagsijcdb8hxdnwovq",
         "pos": "WR",
         "school": "Texas",
         "season": 2025,
@@ -7623,7 +7623,7 @@
       },
       {
         "name": "Andrew Armstrong",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hkw32xqnimm6dvx2qfvl",
         "pos": "WR",
         "school": "Arkansas",
         "season": 2025,
@@ -7757,7 +7757,7 @@
       },
       {
         "name": "Anthony Belton",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pk9a1riaxi1hhtjq3ma3",
         "pos": "OT",
         "school": "North Carolina St.",
         "season": 2025,
@@ -7891,7 +7891,7 @@
       },
       {
         "name": "Carson Bruener",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/xtklcumklpj2uytkbd6r",
         "pos": "LB",
         "school": "Washington",
         "season": 2025,
@@ -8025,7 +8025,7 @@
       },
       {
         "name": "Trevor Etienne",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pcuzq84x7ia5yvmikltb",
         "pos": "RB",
         "school": "Georgia",
         "season": 2025,
@@ -8159,7 +8159,7 @@
       },
       {
         "name": "Jahdae Barron",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ashvve6dr35gtgdyjo10",
         "pos": "CB",
         "school": "Texas",
         "season": 2025,
@@ -8293,7 +8293,7 @@
       },
       {
         "name": "Tyler Batty",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/v1yovhiv6fae0af83hou",
         "pos": "EDGE",
         "school": "BYU",
         "season": 2025,
@@ -8427,7 +8427,7 @@
       },
       {
         "name": "Gavin Bartholomew",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/amlveslginvwifpkih1q",
         "pos": "TE",
         "school": "Pittsburgh",
         "season": 2025,
@@ -8695,7 +8695,7 @@
       },
       {
         "name": "Denzel Burke",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ertjghbr5dldlhzml7jh",
         "pos": "CB",
         "school": "Ohio St.",
         "season": 2025,
@@ -8829,7 +8829,7 @@
       },
       {
         "name": "Joshua Conerly",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q9vrq43u3qh6nw3rcajo",
         "pos": "OT",
         "school": "Oregon",
         "season": 2025,
@@ -8963,7 +8963,7 @@
       },
       {
         "name": "Tahj Brooks",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/s89clgkij0ytcmrkdydt",
         "pos": "RB",
         "school": "Texas Tech",
         "season": 2025,
@@ -9097,7 +9097,7 @@
       },
       {
         "name": "Alijah Clark",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/sr5sjigohu5fufu4yxm7",
         "pos": "SAF",
         "school": "Syracuse",
         "season": 2025,
@@ -9231,7 +9231,7 @@
       },
       {
         "name": "Jake Briningstool",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q7n84oth87v1glz5a5sz",
         "pos": "TE",
         "school": "Clemson",
         "season": 2025,
@@ -9365,7 +9365,7 @@
       },
       {
         "name": "Ethan Downs",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/h5fu33cdzislp78bpqwl",
         "pos": "EDGE",
         "school": "Oklahoma",
         "season": 2025,
@@ -9499,7 +9499,7 @@
       },
       {
         "name": "Tommy Akingbesote",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/bgyqqzyyprqdpjhhufqf",
         "pos": "DT",
         "school": "Maryland",
         "season": 2025,
@@ -9633,7 +9633,7 @@
       },
       {
         "name": "Jeffrey Bassa",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/tckcuuegqdkzkglz6ywg",
         "pos": "LB",
         "school": "Oregon",
         "season": 2025,
@@ -9767,7 +9767,7 @@
       },
       {
         "name": "Da'Quan Felton",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/sg0t3s0irndtl7zeodfk",
         "pos": "WR",
         "school": "Virginia Tech",
         "season": 2025,
@@ -9901,7 +9901,7 @@
       },
       {
         "name": "Mitchell Evans",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/yruhsxdnyfaa7iswn1dp",
         "pos": "TE",
         "school": "Notre Dame",
         "season": 2025,
@@ -10035,7 +10035,7 @@
       },
       {
         "name": "Jacobee Bryant",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/krehmn2g4cxokjpcr6iw",
         "pos": "CB",
         "school": "Kansas",
         "season": 2025,
@@ -10169,7 +10169,7 @@
       },
       {
         "name": "Pat Bryant",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/n91hznzkfpftxhqt1qd9",
         "pos": "WR",
         "school": "Illinois",
         "season": 2025,
@@ -10303,7 +10303,7 @@
       },
       {
         "name": "Joshua Farmer",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/qjxdixlsyuy3ph9m43to",
         "pos": "DT",
         "school": "Florida St.",
         "season": 2025,
@@ -10571,7 +10571,7 @@
       },
       {
         "name": "Yahya Black",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ndy8wevnmpdrin3espb5",
         "pos": "DT",
         "school": "Iowa",
         "season": 2025,
@@ -10839,7 +10839,7 @@
       },
       {
         "name": "Jamaree Caldwell",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/o6zilnte5jibvs84wshv",
         "pos": "DT",
         "school": "Oregon",
         "season": 2025,
@@ -10973,7 +10973,7 @@
       },
       {
         "name": "Tyler Booker",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/rcqpeq8ahdoqt1xejjjp",
         "pos": "G",
         "school": "Alabama",
         "season": 2025,
@@ -11241,7 +11241,7 @@
       },
       {
         "name": "Brandon Crenshaw-Dickson",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/chy7qc0smbahskwuk774",
         "pos": "OT",
         "school": "Florida",
         "season": 2025,
@@ -11375,7 +11375,7 @@
       },
       {
         "name": "Power Echols",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ptq9m3ohqianoex14gzx",
         "pos": "LB",
         "school": "North Carolina",
         "season": 2025,
@@ -11509,7 +11509,7 @@
       },
       {
         "name": "Sebastian Castro",
-        "headshotUrl": "",
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/df4sh5ddoseg7d5bbl6q",
         "pos": "SAF",
         "school": "Iowa",
         "season": 2025,
@@ -11672,45 +11672,45 @@
         ],
         "spiderProfile": {
           "posGroup": "WR",
-          "sourceType": "Pro Day / Calibrated Athletic Profile",
-          "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 8.4,
           "axes": [
             {
               "key": "heightIn",
               "label": "Height",
-              "value": 72.4,
-              "displayValue": "6'0.5\"",
+              "value": 74,
+              "displayValue": "6'2\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 70,
+              "isCombineVerified": true
             },
             {
               "key": "weightLb",
               "label": "Weight",
-              "value": 199,
-              "displayValue": "199 lbs",
+              "value": 207,
+              "displayValue": "207 lbs",
               "unit": "lbs",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 64,
+              "isCombineVerified": true
             },
             {
               "key": "armIn",
               "label": "Arm Length",
-              "value": 31.55,
-              "displayValue": "31.6\"",
+              "value": 32.21,
+              "displayValue": "32.2\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 70,
               "isCombineVerified": false
             },
             {
               "key": "forty",
               "label": "40-Yd Dash",
-              "value": 4.38,
-              "displayValue": "4.38s",
+              "value": 4.36,
+              "displayValue": "4.36s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 92,
+              "isCombineVerified": true
             },
             {
               "key": "tenSplit",
@@ -11718,26 +11718,26 @@
               "value": 1.52,
               "displayValue": "1.52s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 90,
+              "isCombineVerified": true
             },
             {
               "key": "vertical",
               "label": "Vertical",
-              "value": 36.4,
-              "displayValue": "36.4\"",
+              "value": 36,
+              "displayValue": "36.0\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 56,
+              "isCombineVerified": true
             },
             {
               "key": "broad",
               "label": "Broad Jump",
-              "value": 125,
-              "displayValue": "10'5\"",
+              "value": 127,
+              "displayValue": "10'7\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 83,
+              "isCombineVerified": true
             },
             {
               "key": "threeCone",
@@ -11754,7 +11754,7 @@
               "value": 4.23,
               "displayValue": "4.23s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 49,
               "isCombineVerified": false
             },
             {
@@ -11763,11 +11763,30 @@
               "value": 16,
               "displayValue": "16 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 64,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "De'Zhaun-Ryan Stribling",
+              "draftYear": 2026,
+              "school": "Mississippi",
+              "similarityPct": 99
+            },
+            {
+              "name": "Charles Rogers",
+              "draftYear": 2003,
+              "school": "Michigan State",
+              "similarityPct": 95
+            },
+            {
+              "name": "DeMarco Sampson",
+              "draftYear": 2011,
+              "school": "San Diego State",
+              "similarityPct": 93
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "2YtUn7Aoj3A",
@@ -11805,72 +11824,72 @@
         ],
         "spiderProfile": {
           "posGroup": "EDGE",
-          "sourceType": "Pro Day / Calibrated Athletic Profile",
-          "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 7.8,
           "axes": [
             {
               "key": "heightIn",
               "label": "Height",
-              "value": 75.7,
-              "displayValue": "6'3.5\"",
+              "value": 75,
+              "displayValue": "6'3\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 49,
+              "isCombineVerified": true
             },
             {
               "key": "weightLb",
               "label": "Weight",
-              "value": 256,
-              "displayValue": "256 lbs",
+              "value": 239,
+              "displayValue": "239 lbs",
               "unit": "lbs",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 19,
+              "isCombineVerified": true
             },
             {
               "key": "armIn",
               "label": "Arm Length",
-              "value": 33.37,
-              "displayValue": "33.4\"",
+              "value": 33.13,
+              "displayValue": "33.1\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 49,
               "isCombineVerified": false
             },
             {
               "key": "forty",
               "label": "40-Yd Dash",
-              "value": 4.58,
-              "displayValue": "4.58s",
+              "value": 4.64,
+              "displayValue": "4.64s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 77,
+              "isCombineVerified": true
             },
             {
               "key": "tenSplit",
               "label": "10-Yd Split",
-              "value": 1.59,
-              "displayValue": "1.59s",
+              "value": 1.61,
+              "displayValue": "1.61s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 79,
+              "isCombineVerified": true
             },
             {
               "key": "vertical",
               "label": "Vertical",
-              "value": 35,
-              "displayValue": "35.0\"",
+              "value": 39,
+              "displayValue": "39.0\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 93,
+              "isCombineVerified": true
             },
             {
               "key": "broad",
               "label": "Broad Jump",
-              "value": 122,
-              "displayValue": "10'2\"",
+              "value": 125,
+              "displayValue": "10'5\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 89,
+              "isCombineVerified": true
             },
             {
               "key": "threeCone",
@@ -11878,7 +11897,7 @@
               "value": 7.09,
               "displayValue": "7.09s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 68,
               "isCombineVerified": false
             },
             {
@@ -11887,7 +11906,7 @@
               "value": 4.3,
               "displayValue": "4.30s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 64,
               "isCombineVerified": false
             },
             {
@@ -11896,11 +11915,30 @@
               "value": 24,
               "displayValue": "24 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 58,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "DeAngelo Malone",
+              "draftYear": 2022,
+              "school": "Western Kentucky",
+              "similarityPct": 95
+            },
+            {
+              "name": "Raynoch Thompson",
+              "draftYear": 2000,
+              "school": "Tennessee",
+              "similarityPct": 93
+            },
+            {
+              "name": "Boss Bailey",
+              "draftYear": 2003,
+              "school": "Georgia",
+              "similarityPct": 93
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "Y-z6w-E84Bo",
@@ -11939,7 +11977,7 @@
           "posGroup": "RB",
           "sourceType": "Pro Day / Calibrated Athletic Profile",
           "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "compositeRas": 8.66,
           "axes": [
             {
               "key": "heightIn",
@@ -11947,7 +11985,7 @@
               "value": 70.2,
               "displayValue": "5'10\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 50,
               "isCombineVerified": false
             },
             {
@@ -11956,7 +11994,7 @@
               "value": 211,
               "displayValue": "211 lbs",
               "unit": "lbs",
-              "percentile": 55,
+              "percentile": 44,
               "isCombineVerified": false
             },
             {
@@ -11965,7 +12003,7 @@
               "value": 30.96,
               "displayValue": "31.0\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 50,
               "isCombineVerified": false
             },
             {
@@ -11974,7 +12012,7 @@
               "value": 4.38,
               "displayValue": "4.38s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 94,
               "isCombineVerified": false
             },
             {
@@ -11983,7 +12021,7 @@
               "value": 1.52,
               "displayValue": "1.52s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 96,
               "isCombineVerified": false
             },
             {
@@ -11992,7 +12030,7 @@
               "value": 35.7,
               "displayValue": "35.7\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 67,
               "isCombineVerified": false
             },
             {
@@ -12001,7 +12039,7 @@
               "value": 124,
               "displayValue": "10'4\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 83,
               "isCombineVerified": false
             },
             {
@@ -12010,7 +12048,7 @@
               "value": 6.85,
               "displayValue": "6.85s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 86,
               "isCombineVerified": false
             },
             {
@@ -12019,7 +12057,7 @@
               "value": 4.16,
               "displayValue": "4.16s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 75,
               "isCombineVerified": false
             },
             {
@@ -12028,11 +12066,30 @@
               "value": 19,
               "displayValue": "19 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 48,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "Pierre Strong",
+              "draftYear": 2022,
+              "school": "South Dakota St.",
+              "similarityPct": 94
+            },
+            {
+              "name": "Antonio Pittman",
+              "draftYear": 2007,
+              "school": "Ohio State",
+              "similarityPct": 92
+            },
+            {
+              "name": "Darrynton Evans",
+              "draftYear": 2020,
+              "school": "Appalachian State",
+              "similarityPct": 91
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "BNMI2jqhOas",
@@ -12069,90 +12126,90 @@
         ],
         "spiderProfile": {
           "posGroup": "IDL",
-          "sourceType": "Pro Day / Calibrated Athletic Profile",
-          "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 7,
+          "compositeRas": 6.58,
           "axes": [
             {
               "key": "heightIn",
               "label": "Height",
-              "value": 75.2,
+              "value": 75,
               "displayValue": "6'3\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 49,
+              "isCombineVerified": true
             },
             {
               "key": "weightLb",
               "label": "Weight",
-              "value": 302,
-              "displayValue": "302 lbs",
+              "value": 293,
+              "displayValue": "293 lbs",
               "unit": "lbs",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 23,
+              "isCombineVerified": true
             },
             {
               "key": "armIn",
               "label": "Arm Length",
-              "value": 33.34,
-              "displayValue": "33.3\"",
+              "value": 33.22,
+              "displayValue": "33.2\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 49,
               "isCombineVerified": false
             },
             {
               "key": "forty",
               "label": "40-Yd Dash",
-              "value": 5.05,
-              "displayValue": "5.05s",
+              "value": 4.82,
+              "displayValue": "4.82s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 93,
+              "isCombineVerified": true
             },
             {
               "key": "tenSplit",
               "label": "10-Yd Split",
-              "value": 1.76,
-              "displayValue": "1.76s",
+              "value": 1.68,
+              "displayValue": "1.68s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 92,
+              "isCombineVerified": true
             },
             {
               "key": "vertical",
               "label": "Vertical",
-              "value": 29.9,
-              "displayValue": "29.9\"",
+              "value": 36.5,
+              "displayValue": "36.5\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 99,
+              "isCombineVerified": true
             },
             {
               "key": "broad",
               "label": "Broad Jump",
-              "value": 111,
-              "displayValue": "9'3\"",
+              "value": 114,
+              "displayValue": "9'6\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 87,
+              "isCombineVerified": true
             },
             {
               "key": "threeCone",
               "label": "3-Cone",
-              "value": 7.48,
-              "displayValue": "7.48s",
+              "value": 8.09,
+              "displayValue": "8.09s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 9,
+              "isCombineVerified": true
             },
             {
               "key": "shuttle",
               "label": "20-Yd Shuttle",
-              "value": 4.57,
-              "displayValue": "4.57s",
+              "value": 4.79,
+              "displayValue": "4.79s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 22,
+              "isCombineVerified": true
             },
             {
               "key": "bench",
@@ -12160,11 +12217,30 @@
               "value": 28,
               "displayValue": "28 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 60,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "Ron Edwards",
+              "draftYear": 2001,
+              "school": "Texas A&M",
+              "similarityPct": 98
+            },
+            {
+              "name": "Robert Nkemdiche",
+              "draftYear": 2016,
+              "school": "Mississippi",
+              "similarityPct": 97
+            },
+            {
+              "name": "Payton Page",
+              "draftYear": 2025,
+              "school": "Clemson",
+              "similarityPct": 94
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "1Zfw4pl5YHo",
@@ -12201,72 +12277,72 @@
         ],
         "spiderProfile": {
           "posGroup": "IOL",
-          "sourceType": "Pro Day / Calibrated Athletic Profile",
-          "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 8.02,
           "axes": [
             {
               "key": "heightIn",
               "label": "Height",
-              "value": 75.8,
-              "displayValue": "6'4\"",
+              "value": 77,
+              "displayValue": "6'5\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 79,
+              "isCombineVerified": true
             },
             {
               "key": "weightLb",
               "label": "Weight",
-              "value": 308,
-              "displayValue": "308 lbs",
+              "value": 303,
+              "displayValue": "303 lbs",
               "unit": "lbs",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 24,
+              "isCombineVerified": true
             },
             {
               "key": "armIn",
               "label": "Arm Length",
-              "value": 33.07,
-              "displayValue": "33.1\"",
+              "value": 33.97,
+              "displayValue": "34.0\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 97,
               "isCombineVerified": false
             },
             {
               "key": "forty",
               "label": "40-Yd Dash",
-              "value": 5.06,
-              "displayValue": "5.06s",
+              "value": 5.11,
+              "displayValue": "5.11s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 78,
+              "isCombineVerified": true
             },
             {
               "key": "tenSplit",
               "label": "10-Yd Split",
-              "value": 1.76,
-              "displayValue": "1.76s",
+              "value": 1.78,
+              "displayValue": "1.78s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 77,
+              "isCombineVerified": true
             },
             {
               "key": "vertical",
               "label": "Vertical",
-              "value": 28.5,
-              "displayValue": "28.5\"",
+              "value": 26.5,
+              "displayValue": "26.5\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 32,
+              "isCombineVerified": true
             },
             {
               "key": "broad",
               "label": "Broad Jump",
-              "value": 107,
-              "displayValue": "8'11\"",
+              "value": 108,
+              "displayValue": "9'0\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 77,
+              "isCombineVerified": true
             },
             {
               "key": "threeCone",
@@ -12274,7 +12350,7 @@
               "value": 7.61,
               "displayValue": "7.61s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 72,
               "isCombineVerified": false
             },
             {
@@ -12283,7 +12359,7 @@
               "value": 4.62,
               "displayValue": "4.62s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 72,
               "isCombineVerified": false
             },
             {
@@ -12292,11 +12368,30 @@
               "value": 27,
               "displayValue": "27 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 62,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "Chris Myers",
+              "draftYear": 2005,
+              "school": "Miami (FL)",
+              "similarityPct": 91
+            },
+            {
+              "name": "John Saint Clair",
+              "draftYear": 2000,
+              "school": "Virginia",
+              "similarityPct": 89
+            },
+            {
+              "name": "Graham Glasgow",
+              "draftYear": 2016,
+              "school": "Michigan",
+              "similarityPct": 89
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "VDkuIBpwlWs",
@@ -12333,45 +12428,45 @@
         ],
         "spiderProfile": {
           "posGroup": "CB",
-          "sourceType": "Pro Day / Calibrated Athletic Profile",
-          "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 8.67,
           "axes": [
             {
               "key": "heightIn",
               "label": "Height",
-              "value": 71.4,
-              "displayValue": "5'11.5\"",
+              "value": 75,
+              "displayValue": "6'3\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 98,
+              "isCombineVerified": true
             },
             {
               "key": "weightLb",
               "label": "Weight",
-              "value": 193,
-              "displayValue": "193 lbs",
+              "value": 196,
+              "displayValue": "196 lbs",
               "unit": "lbs",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 66,
+              "isCombineVerified": true
             },
             {
               "key": "armIn",
               "label": "Arm Length",
-              "value": 31.33,
-              "displayValue": "31.3\"",
+              "value": 32.67,
+              "displayValue": "32.7\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 98,
               "isCombineVerified": false
             },
             {
               "key": "forty",
               "label": "40-Yd Dash",
-              "value": 4.46,
-              "displayValue": "4.46s",
+              "value": 4.45,
+              "displayValue": "4.45s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 65,
+              "isCombineVerified": true
             },
             {
               "key": "tenSplit",
@@ -12379,26 +12474,26 @@
               "value": 1.55,
               "displayValue": "1.55s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 66,
+              "isCombineVerified": true
             },
             {
               "key": "vertical",
               "label": "Vertical",
-              "value": 37.6,
-              "displayValue": "37.6\"",
+              "value": 39,
+              "displayValue": "39.0\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 83,
+              "isCombineVerified": true
             },
             {
               "key": "broad",
               "label": "Broad Jump",
-              "value": 123,
-              "displayValue": "10'3\"",
+              "value": 124,
+              "displayValue": "10'4\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 62,
+              "isCombineVerified": true
             },
             {
               "key": "threeCone",
@@ -12406,7 +12501,7 @@
               "value": 6.81,
               "displayValue": "6.81s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 76,
               "isCombineVerified": false
             },
             {
@@ -12415,7 +12510,7 @@
               "value": 4.12,
               "displayValue": "4.12s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 66,
               "isCombineVerified": false
             },
             {
@@ -12424,11 +12519,30 @@
               "value": 14,
               "displayValue": "14 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 43,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "Lance Boykin",
+              "draftYear": 2023,
+              "school": "Coastal Carolina",
+              "similarityPct": 94
+            },
+            {
+              "name": "Ahkello Witherspoon",
+              "draftYear": 2017,
+              "school": "Colorado",
+              "similarityPct": 92
+            },
+            {
+              "name": "Azareye'h Thomas",
+              "draftYear": 2025,
+              "school": "Florida St.",
+              "similarityPct": 92
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "bbQQy92iVrw",
@@ -12467,7 +12581,7 @@
           "posGroup": "EDGE",
           "sourceType": "Pro Day / Calibrated Athletic Profile",
           "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "compositeRas": 7.15,
           "axes": [
             {
               "key": "heightIn",
@@ -12475,7 +12589,7 @@
               "value": 75.7,
               "displayValue": "6'3.5\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 61,
               "isCombineVerified": false
             },
             {
@@ -12484,7 +12598,7 @@
               "value": 256,
               "displayValue": "256 lbs",
               "unit": "lbs",
-              "percentile": 55,
+              "percentile": 53,
               "isCombineVerified": false
             },
             {
@@ -12493,7 +12607,7 @@
               "value": 33.42,
               "displayValue": "33.4\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 61,
               "isCombineVerified": false
             },
             {
@@ -12502,7 +12616,7 @@
               "value": 4.71,
               "displayValue": "4.71s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 57,
               "isCombineVerified": false
             },
             {
@@ -12511,7 +12625,7 @@
               "value": 1.64,
               "displayValue": "1.64s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 57,
               "isCombineVerified": false
             },
             {
@@ -12520,7 +12634,7 @@
               "value": 34.8,
               "displayValue": "34.8\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 63,
               "isCombineVerified": false
             },
             {
@@ -12529,7 +12643,7 @@
               "value": 119,
               "displayValue": "9'11\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 64,
               "isCombineVerified": false
             },
             {
@@ -12538,7 +12652,7 @@
               "value": 7.1,
               "displayValue": "7.10s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 67,
               "isCombineVerified": false
             },
             {
@@ -12547,7 +12661,7 @@
               "value": 4.27,
               "displayValue": "4.27s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 71,
               "isCombineVerified": false
             },
             {
@@ -12556,11 +12670,30 @@
               "value": 24,
               "displayValue": "24 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 58,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "William Bradley-King",
+              "draftYear": 2021,
+              "school": "Baylor",
+              "similarityPct": 94
+            },
+            {
+              "name": "Kyle Kennard",
+              "draftYear": 2025,
+              "school": "South Carolina",
+              "similarityPct": 93
+            },
+            {
+              "name": "Alex Brown",
+              "draftYear": 2002,
+              "school": "Florida",
+              "similarityPct": 92
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "5KDk7UFC72w",
@@ -12597,72 +12730,72 @@
         ],
         "spiderProfile": {
           "posGroup": "IOL",
-          "sourceType": "Pro Day / Calibrated Athletic Profile",
-          "verifiedDrillCount": 0,
-          "compositeRas": 6,
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 9.19,
           "axes": [
             {
               "key": "heightIn",
               "label": "Height",
-              "value": 75.8,
-              "displayValue": "6'4\"",
+              "value": 78,
+              "displayValue": "6'6\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 93,
+              "isCombineVerified": true
             },
             {
               "key": "weightLb",
               "label": "Weight",
-              "value": 308,
-              "displayValue": "308 lbs",
+              "value": 313,
+              "displayValue": "313 lbs",
               "unit": "lbs",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 63,
+              "isCombineVerified": true
             },
             {
               "key": "armIn",
               "label": "Arm Length",
-              "value": 33.08,
-              "displayValue": "33.1\"",
+              "value": 34.35,
+              "displayValue": "34.4\"",
               "unit": "in",
-              "percentile": 55,
+              "percentile": 99,
               "isCombineVerified": false
             },
             {
               "key": "forty",
               "label": "40-Yd Dash",
-              "value": 5.07,
-              "displayValue": "5.07s",
+              "value": 4.94,
+              "displayValue": "4.94s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 96,
+              "isCombineVerified": true
             },
             {
               "key": "tenSplit",
               "label": "10-Yd Split",
-              "value": 1.76,
-              "displayValue": "1.76s",
+              "value": 1.72,
+              "displayValue": "1.72s",
               "unit": "s",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 96,
+              "isCombineVerified": true
             },
             {
               "key": "vertical",
               "label": "Vertical",
-              "value": 28.2,
-              "displayValue": "28.2\"",
+              "value": 35,
+              "displayValue": "35.0\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 98,
+              "isCombineVerified": true
             },
             {
               "key": "broad",
               "label": "Broad Jump",
-              "value": 106,
-              "displayValue": "8'10\"",
+              "value": 116,
+              "displayValue": "9'8\"",
               "unit": "in",
-              "percentile": 55,
-              "isCombineVerified": false
+              "percentile": 98,
+              "isCombineVerified": true
             },
             {
               "key": "threeCone",
@@ -12670,7 +12803,7 @@
               "value": 7.69,
               "displayValue": "7.69s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 65,
               "isCombineVerified": false
             },
             {
@@ -12679,7 +12812,7 @@
               "value": 4.72,
               "displayValue": "4.72s",
               "unit": "s",
-              "percentile": 55,
+              "percentile": 52,
               "isCombineVerified": false
             },
             {
@@ -12688,11 +12821,30 @@
               "value": 27,
               "displayValue": "27 reps",
               "unit": "reps",
-              "percentile": 55,
+              "percentile": 62,
               "isCombineVerified": false
             }
           ],
-          "historicalComps": []
+          "historicalComps": [
+            {
+              "name": "Alex Leatherwood",
+              "draftYear": 2021,
+              "school": "Alabama",
+              "similarityPct": 92
+            },
+            {
+              "name": "Brandon Coleman",
+              "draftYear": 2024,
+              "school": "TCU",
+              "similarityPct": 92
+            },
+            {
+              "name": "Frank Ragnow",
+              "draftYear": 2018,
+              "school": "Arkansas",
+              "similarityPct": 89
+            }
+          ]
         },
         "highlightVideo": {
           "videoId": "0Pp8cZ5_5Gg",

@@ -3445,8 +3445,8 @@ async function main() {
         // 5. Audio & AI (Podcasts + Auto Pod + AI Analysis)
         document.querySelector('[data-nav-tab="audio"]')?.click();
         await sleep(60);
-        for (const amode of ['podcasts', 'autopod', 'analysis']) {
-          document.querySelector('[data-action="set-audio-mode"][data-mode="' + amode + '"]')?.click();
+        for (const amode of ['beat_podcasts', 'podcast', 'analysis']) {
+          document.querySelector('[data-action="set-studio-sub"][data-studio-sub="' + amode + '"]')?.click();
           await sleep(45);
           auditVisibleAnchors('audio:' + amode);
         }
@@ -3459,6 +3459,128 @@ async function main() {
       assert(
         linkScrubResult.totalChecked >= 120 && linkScrubResult.badLinks.length === 0,
         `Site-wide DOM link scrub failed (checked=${linkScrubResult.totalChecked}): ${JSON.stringify(linkScrubResult.badLinks.slice(0, 10))}`
+      );
+    });
+
+    await runStep('News mode filter reset, in-place touch-safe podcast duration slider, and Dark/Light sticky Column 1 opaque surface QA', async () => {
+      const qaSweepCheck = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        // 1. News mode switch resets incompatible category filters so user never lands on an empty filter state
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-news-category"][data-category="cap"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        await sleep(50);
+        const rawActivePillCat = document
+          .querySelector('[data-action="set-news-category"].active')
+          ?.getAttribute('data-category');
+        const rawModeTabAria = document
+          .querySelector('[data-action="set-news-mode"][data-mode="raw"]')
+          ?.getAttribute('aria-selected');
+        const rawVisibleItems = document.querySelectorAll('[data-raw-type]').length;
+
+        // 2. Podcast duration slider updates in-place without replacing <input id="podDurationSlider"> DOM node
+        document.querySelector('[data-nav-tab="audio"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="podcast"]')?.click();
+        await sleep(50);
+        const slBefore = document.getElementById('podDurationSlider');
+        slBefore.value = '11';
+        slBefore.dispatchEvent(new Event('input', { bubbles: true }));
+        const slAfter = document.getElementById('podDurationSlider');
+        const sliderPreservedDomNode = Boolean(slBefore && slBefore === slAfter);
+        const badgeText = document.getElementById('podDurationBadge')?.textContent?.trim() || '';
+        const btnText = document.querySelector('[data-action="generate-autopodcast"]')?.textContent?.trim() || '';
+        const waitPreviewText = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
+
+        // 3. Sticky Column 1 computed position & opaque background in Dark Mode AND '94 Throwback Light Mode
+        const inspectStickyCol = () => {
+          const th = document.querySelector('th.sticky-first-col');
+          const td = document.querySelector('td.sticky-first-col');
+          if (!th || !td) return { found: false };
+          const thCs = getComputedStyle(th);
+          const tdCs = getComputedStyle(td);
+          const isOpaque = bg => Boolean(bg && bg !== 'transparent' && !/^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*0(?:\.0+)?\s*\)$/.test(bg));
+          return {
+            found: true,
+            thSticky: thCs.position === 'sticky' && thCs.left === '0px',
+            tdSticky: tdCs.position === 'sticky' && tdCs.left === '0px',
+            thBg: thCs.backgroundColor,
+            tdBg: tdCs.backgroundColor,
+            opaque: isOpaque(thCs.backgroundColor) && isOpaque(tdCs.backgroundColor)
+          };
+        };
+
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-season-subview"][data-subview="health"]')?.click();
+        await sleep(50);
+        const darkHealthSticky = inspectStickyCol();
+        document.querySelector('[data-action="set-season-subview"][data-subview="matchup"]')?.click();
+        await sleep(50);
+        const darkMatchupSticky = inspectStickyCol();
+
+        // Switch to Light Mode and verify sticky Column 1 stays opaque light surface
+        document.getElementById('openSettingsBtn')?.click();
+        await sleep(40);
+        document.querySelector('[data-action="toggle-theme"]')?.click();
+        await sleep(50);
+        document.getElementById('closeSheetBtn')?.click();
+        await sleep(40);
+        const lightMatchupSticky = inspectStickyCol();
+
+        // Restore Dark Mode
+        document.getElementById('openSettingsBtn')?.click();
+        await sleep(40);
+        document.querySelector('[data-action="toggle-theme"]')?.click();
+        await sleep(40);
+        document.getElementById('closeSheetBtn')?.click();
+        await sleep(40);
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(40);
+
+        return {
+          rawActivePillCat,
+          rawModeTabAria,
+          rawVisibleItems,
+          sliderPreservedDomNode,
+          badgeText,
+          btnText,
+          waitPreviewText,
+          darkHealthSticky,
+          darkMatchupSticky,
+          lightMatchupSticky
+        };
+      });
+
+      assert(
+        qaSweepCheck.rawActivePillCat === 'all' &&
+          qaSweepCheck.rawModeTabAria === 'true' &&
+          qaSweepCheck.rawVisibleItems > 0,
+        `News mode switch filter reset failed: ${JSON.stringify(qaSweepCheck)}`
+      );
+      assert(
+        qaSweepCheck.sliderPreservedDomNode &&
+          qaSweepCheck.badgeText === '11 min' &&
+          /11[\s-]min/i.test(qaSweepCheck.btnText) &&
+          qaSweepCheck.waitPreviewText.startsWith('11 min pod'),
+        `In-place podcast slider DOM preservation failed: ${JSON.stringify(qaSweepCheck)}`
+      );
+      assert(
+        qaSweepCheck.darkHealthSticky.found &&
+          qaSweepCheck.darkHealthSticky.thSticky &&
+          qaSweepCheck.darkHealthSticky.tdSticky &&
+          qaSweepCheck.darkHealthSticky.opaque &&
+          qaSweepCheck.darkMatchupSticky.found &&
+          qaSweepCheck.darkMatchupSticky.opaque &&
+          qaSweepCheck.lightMatchupSticky.found &&
+          qaSweepCheck.lightMatchupSticky.opaque &&
+          qaSweepCheck.lightMatchupSticky.tdBg !== qaSweepCheck.darkMatchupSticky.tdBg,
+        `Sticky Column 1 Dark/Light opaque surface audit failed: ${JSON.stringify(qaSweepCheck)}`
       );
     });
 

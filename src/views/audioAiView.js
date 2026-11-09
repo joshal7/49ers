@@ -766,7 +766,7 @@ function renderPodcastStudio({
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
         <label for="podDurationSlider" style="font-size:12px;color:var(--text-secondary);font-weight:700" class="mono">Length</label>
         <input type="range" id="podDurationSlider" min="2" max="20" step="1" value="${Number(podDurationMin)}" style="flex:1" aria-label="Custom Podcast Duration Minutes" />
-        <span class="badge badge-gold mono">${podDurationMin} min</span>
+        <span class="badge badge-gold mono" id="podDurationBadge">${podDurationMin} min</span>
       </div>
 
       <div class="sub-label" style="margin-bottom:6px">Topic or Football Question</div>

@@ -38,8 +38,15 @@ import {
 } from '../src/engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
-  resolveItemAuthorProfileUrl
+  resolveItemAuthorProfileUrl,
+  corroborateAndAnnotateWireStream
 } from '../src/engine/beatAttributionEngine.js';
+import {
+  extractWireGameDaySignals,
+  isBeforeWeeklyPracticeWindow,
+  resolveEarlyWeekRolloverInput,
+  rolloverPracticeReportForUpcomingWeek
+} from '../src/engine/gameDayRosterEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -516,6 +523,106 @@ await testAsync('Link scrub & attribution integrity: zero dead 404s, zero opaque
       assert.ok(!/^(Kyle Shanahan|John Lynch)$/i.test(rn.author || ''), `Coach/GM misattributed as author in ${p.name} recentNews: ${rn.author}`);
     }
   }
+});
+
+test('Game-day clause isolation, DST practice-window accuracy, early-week rollover pruning & unpracticed play-probability calibration', () => {
+  // 1. Multi-player mixed active/inactive tweet must never cross-contaminate active players as inactive
+  const signals = extractWireGameDaySignals(
+    [
+      {
+        title: '49ers gameday status',
+        fullText: 'Nick Bosa and Christian McCaffrey are officially active today, while Mike Evans is inactive vs. Dallas.',
+        publishedAt: '2026-11-15T19:45:00Z'
+      }
+    ],
+    [{ name: 'Nick Bosa' }, { name: 'Christian McCaffrey' }, { name: 'Mike Evans' }],
+    Date.parse('2026-11-15T21:25:00Z')
+  );
+  assert.equal(signals.activeKeys.has('nickbosa'), true);
+  assert.equal(signals.activeKeys.has('christianmccaffrey'), true);
+  assert.equal(signals.inactiveKeys.has('nickbosa'), false, 'Active player Nick Bosa must not leak into inactiveKeys');
+  assert.equal(signals.inactiveKeys.has('christianmccaffrey'), false);
+  assert.equal(signals.inactiveKeys.has('mikeevans'), true);
+  assert.equal(signals.activeKeys.has('mikeevans'), false);
+
+  // 2. DST-exact Pacific weekday evaluation (September PDT UTC-7 vs November PST UTC-8)
+  // Sept 20, 2026 1:05 PM PDT = 2026-09-20T20:05:00Z -> Wednesday practice opens Sept 16, 2026 12:00 PM PDT (19:00Z)
+  const pdtKickoff = '2026-09-20T20:05:00Z';
+  assert.equal(isBeforeWeeklyPracticeWindow(pdtKickoff, Date.parse('2026-09-16T18:30:00Z')), true);
+  assert.equal(isBeforeWeeklyPracticeWindow(pdtKickoff, Date.parse('2026-09-16T19:30:00Z')), false);
+
+  // Nov 15, 2026 1:25 PM PST = 2026-11-15T21:25:00Z -> Wednesday practice opens Nov 11, 2026 12:00 PM PST (20:00Z)
+  const pstKickoff = '2026-11-15T21:25:00Z';
+  assert.equal(isBeforeWeeklyPracticeWindow(pstKickoff, Date.parse('2026-11-11T19:30:00Z')), true);
+  assert.equal(isBeforeWeeklyPracticeWindow(pstKickoff, Date.parse('2026-11-11T20:30:00Z')), false);
+
+  // 3. Pre-game cleared players ("does not carry an official injury designation") skip Week N+1 rollover
+  const clearedSigle = resolveEarlyWeekRolloverInput({
+    rawStatus: 'Questionable',
+    injuryType: 'Ankle',
+    shortComment: "Sigle (ankle) does not carry an official injury designation ahead of Sunday's game versus the Raiders.",
+    longComment: "He's now set to get back on the field in Week 9.",
+    upcomingWeek: 10
+  });
+  assert.equal(clearedSigle.skip, true, 'Pre-game cleared player with zero in-game injury must skip rollover');
+
+  // 4. Prior-game "will miss his second straight game" + unpracticed multi-week / new injury calibration
+  const rolled = rolloverPracticeReportForUpcomingWeek(
+    [
+      {
+        name: 'Luke Schoonmaker',
+        position: 'TE',
+        snapPct: 50,
+        injuryType: 'Groin',
+        gameStatus: 'Out',
+        shortComment: "Schoonmaker (groin) is inactive for Sunday's clash against the Colts.",
+        beatNote:
+          'Schoonmaker continues to tend to a groin issue and will miss his second straight game. He did manage a trio of limited practices during the week, so the tight end may be able to play next Sunday, Nov. 15, against San Francisco.'
+      },
+      {
+        name: 'Mike Evans',
+        position: 'WR',
+        snapPct: 80,
+        injuryType: 'Achilles',
+        gameStatus: 'Out',
+        shortComment: `Evans (Achilles), who won't play in Sunday's game against the Raiders, appears to be "questionable at best" for next Sunday's road matchup with the Cowboys.`,
+        beatNote: "Evans is missing a second straight contest Sunday. He hasn't been able to practice in the meantime."
+      },
+      {
+        name: 'Deommodore Lenoir',
+        position: 'CB',
+        snapPct: 96,
+        injuryType: 'Foot',
+        gameStatus: 'Questionable',
+        sustainedInLastGame: true,
+        shortComment: "Lenoir sustained a foot injury during Sunday's 38-17 win against Las Vegas.",
+        beatNote: "Head coach Kyle Shanahan explained after the game that the cornerback hasn't been ruled out for Week 10."
+      }
+    ],
+    { clearPracticeDays: true, upcomingWeek: 10 }
+  );
+
+  const schoonmaker = rolled.find(r => r.name === 'Luke Schoonmaker');
+  const evans = rolled.find(r => r.name === 'Mike Evans');
+  const lenoir = rolled.find(r => r.name === 'Deommodore Lenoir');
+  assert.ok(schoonmaker && schoonmaker.playProbabilityPct >= 65, `Expected Schoonmaker >=65%, got ${schoonmaker?.playProbabilityPct}%`);
+  assert.ok(evans && evans.playProbabilityPct <= 50, `Expected unpracticed multi-week Evans <=50%, got ${evans?.playProbabilityPct}%`);
+  assert.ok(lenoir && lenoir.playProbabilityPct <= 84, `Expected unpracticed injured Lenoir <=84% True GTD, got ${lenoir?.playProbabilityPct}%`);
+
+  // 5. Corroboration pass preserves safe author profile URLs and never assigns coach/cross-reporter X URLs
+  const corroborated = corroborateAndAnnotateWireStream([
+    {
+      id: 'c1',
+      author: 'Dan Graziano',
+      outletId: 'espn',
+      authorProfileUrl: 'https://x.com/nwagoner',
+      url: 'https://www.espn.com/nfl/story/_/id/555/test',
+      title: '49ers DT Gracen Halton out for season per Kyle Shanahan',
+      publishedAt: '2026-11-08T23:00:00Z'
+    }
+  ]);
+  assert.equal(corroborated[0].author, 'Dan Graziano');
+  assert.equal(corroborated[0].authorProfileUrl, 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers');
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

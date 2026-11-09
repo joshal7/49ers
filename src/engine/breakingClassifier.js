@@ -585,6 +585,30 @@ export function deduplicateAndGroupWireItems(items = []) {
   return grouped;
 }
 
+const AUTHOR_BOILERPLATE_REGEX_CACHE = new Map();
+
+function getCachedAuthorBoilerplateRegexes(cleanAuthor) {
+  let pair = AUTHOR_BOILERPLATE_REGEX_CACHE.get(cleanAuthor);
+  if (!pair) {
+    if (AUTHOR_BOILERPLATE_REGEX_CACHE.size >= 256) {
+      AUTHOR_BOILERPLATE_REGEX_CACHE.clear();
+    }
+    const escapedFull = cleanAuthor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    pair = {
+      midClauseRegex: new RegExp(
+        `,\\s*(?:per\\s+)?${escapedFull}(?:\\s+of\\s+[A-Za-z0-9 .&'-]{2,32})?\\s+(?:reports|reported|notes|writes)(?=\\.|,|;|$)`,
+        'gi'
+      ),
+      leadClauseRegex: new RegExp(
+        `^(?:per\\s+${escapedFull}(?:\\s+of\\s+[A-Za-z0-9 .&'-]{2,28})?,\\s*|${escapedFull}\\s+reports:\\s*)`,
+        'i'
+      )
+    };
+    AUTHOR_BOILERPLATE_REGEX_CACHE.set(cleanAuthor, pair);
+  }
+  return pair;
+}
+
 /**
  * Strips redundant inline wire attribution like ", Mike Garafolo of NFL Network reports."
  * when `authorName` ("Mike Garafolo") is already rendered once in the card header.
@@ -596,19 +620,9 @@ export function stripRedundantAuthorBoilerplate(rawText = '', authorName = '') {
     .trim();
   if (!cleaned || !cleanAuthor || cleanAuthor.length < 4) return cleaned;
 
-  const escapedFull = cleanAuthor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  // Remove ", Mike Garafolo of NFL Network reports." or ", per Mike Garafolo of NFL Network."
-  const midClauseRegex = new RegExp(
-    `,\\s*(?:per\\s+)?${escapedFull}(?:\\s+of\\s+[A-Za-z0-9 .&'-]{2,32})?\\s+(?:reports|reported|notes|writes)(?=\\.|,|;|$)`,
-    'gi'
-  );
+  const { midClauseRegex, leadClauseRegex } = getCachedAuthorBoilerplateRegexes(cleanAuthor);
+  midClauseRegex.lastIndex = 0;
   cleaned = cleaned.replace(midClauseRegex, '');
-
-  // Remove leading "Per Mike Garafolo, " or "Mike Garafolo reports: "
-  const leadClauseRegex = new RegExp(
-    `^(?:per\\s+${escapedFull}(?:\\s+of\\s+[A-Za-z0-9 .&'-]{2,28})?,\\s*|${escapedFull}\\s+reports:\\s*)`,
-    'i'
-  );
   cleaned = cleaned.replace(leadClauseRegex, '');
   if (cleaned.length > 1) {
     cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);

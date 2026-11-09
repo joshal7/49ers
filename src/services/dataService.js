@@ -1295,10 +1295,18 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now()) {
     let cleared = false;
     if (appData.health?.gameDayRoster?.isActive) {
       appData.health.gameDayRoster = null;
+      if (Array.isArray(appData.health._preGamePracticeReport)) {
+        appData.health.practiceReport = appData.health._preGamePracticeReport;
+        delete appData.health._preGamePracticeReport;
+      }
       cleared = true;
     }
     if (um?.opponentHealth?.gameDayRoster?.isActive) {
       um.opponentHealth.gameDayRoster = null;
+      if (Array.isArray(um.opponentHealth._preGameInjuryReport)) {
+        um.opponentHealth.injuryReport = um.opponentHealth._preGameInjuryReport;
+        delete um.opponentHealth._preGameInjuryReport;
+      }
       cleared = true;
     }
     return cleared;
@@ -1340,40 +1348,48 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now()) {
   const oppCompEntries = oppAbbr ? parseEspnSummaryCompetitorRoster(summaryRaw, oppAbbr) : [];
 
   if (appData.health) {
+    if (!Array.isArray(appData.health._preGamePracticeReport) && Array.isArray(appData.health.practiceReport)) {
+      appData.health._preGamePracticeReport = appData.health.practiceReport.map(r => ({ ...r }));
+    }
+    const baseSfReport = appData.health._preGamePracticeReport || appData.health.practiceReport || [];
     const sfActivePlayers = (appData.roster?.players || []).filter(p => p.rosterBucket === 'active');
     const sfModel = buildTeamGameDayRosterModel({
       teamAbbr: 'SF',
       teamName: 'San Francisco 49ers',
       activeRosterPlayers: sfActivePlayers,
-      injuryReport: appData.health.practiceReport || [],
+      injuryReport: baseSfReport,
       competitorEntries: sfCompEntries,
       newsItems: appData.news?.rawStream || [],
       windowState
     });
     appData.health.gameDayRoster = sfModel;
     if (Array.isArray(appData.health.practiceReport)) {
-      appData.health.practiceReport = resolveGameDayInjuryRows(appData.health.practiceReport, sfModel);
+      appData.health.practiceReport = resolveGameDayInjuryRows(baseSfReport, sfModel);
     }
   }
 
   if (oh && oppAbbr) {
+    if (!Array.isArray(oh._preGameInjuryReport) && Array.isArray(oh.injuryReport)) {
+      oh._preGameInjuryReport = oh.injuryReport.map(r => ({ ...r }));
+    }
+    const baseOppReport = oh._preGameInjuryReport || oh.injuryReport || [];
     const fallbackOppPlayers = [
       ...(oh.activeRoster || []),
       ...(oh.keyStartersHealthy || []),
-      ...(oh.injuryReport || [])
+      ...baseOppReport
     ];
     const oppModel = buildTeamGameDayRosterModel({
       teamAbbr: oppAbbr,
       teamName: oppName,
       activeRosterPlayers: fallbackOppPlayers,
-      injuryReport: oh.injuryReport || [],
+      injuryReport: baseOppReport,
       competitorEntries: oppCompEntries,
       newsItems: appData.news?.rawStream || [],
       windowState
     });
     oh.gameDayRoster = oppModel;
     if (Array.isArray(oh.injuryReport)) {
-      oh.injuryReport = resolveGameDayInjuryRows(oh.injuryReport, oppModel);
+      oh.injuryReport = resolveGameDayInjuryRows(baseOppReport, oppModel);
     }
   }
 
@@ -1631,7 +1647,11 @@ export async function hydrateLiveEspnOverlay(appData) {
         um.oppName = nextGame.opponent?.name || oppAbbr;
         um.oppLogoUrl = nextGame.opponent?.logoUrl || buildEspnTeamLogoUrl(oppAbbr);
         um.homeAway = nextGame.homeAway || 'home';
+        um.dateIso = nextGame.dateIso || um.dateIso || um.kickoffIso;
         um.kickoffIso = nextGame.dateIso || um.kickoffIso;
+        um.liveState = 'pre';
+        um.isGameInProgress = false;
+        um.completed = false;
         um.kickoffDisplay = kickoffFmt;
         um.venue = `${nextGame.venue?.name || ''}${nextGame.venue?.city ? ` (${nextGame.venue.city})` : ''} • ${nextGame.venue?.surface || 'Grass'}`;
         um.coachingMatchup = {
@@ -1868,15 +1888,15 @@ export async function hydrateLiveEspnOverlay(appData) {
         for (const p of appData.roster.players) {
           if (!p?.health) continue;
           const k = normPlayerNameKey(p.name);
+          const wasVetRest =
+            p.health.wed === 'Vet Rest' ||
+            /not injury related|nir\s*-?\s*rest|\brest\b/i.test(p.health.injuryType || '');
           if (earlyWeekBlankPractice) {
             p.health.wed = '-';
             p.health.thu = '-';
             p.health.fri = '-';
           }
           if (p.rosterBucket === 'active' && !liveInjuredKeys.has(k)) {
-            const wasVetRest =
-              p.health.wed === 'Vet Rest' ||
-              /not injury related|nir\s*-?\s*rest|\brest\b/i.test(p.health.injuryType || '');
             const hasActiveDesig = ['out', 'doubtful', 'questionable'].includes(
               String(p.health.status || '').toLowerCase()
             );
@@ -2028,10 +2048,10 @@ export async function hydrateLiveEspnOverlay(appData) {
         (oh.injuryReport || [])
           .filter(p => {
             if (!earlyWeekBlankPractice && !weekAdvancedFlag) return true;
-            const stL = String(p.gameStatus || '').toLowerCase();
+            const stL = String(p.preGameStatus || p.gameStatus || '').toLowerCase();
             const injL = String(p.injuryType || '').toLowerCase();
             if (/not injury related|nir\s*-?\s*rest|\brest\b/i.test(injL) || p.wed === 'Vet Rest') return false;
-            return ['out', 'doubtful', 'questionable'].includes(stL) || Boolean(p.isIrReturnQuestionable);
+            return ['out', 'inactive', 'doubtful', 'questionable'].includes(stL) || Boolean(p.isIrReturnQuestionable);
           })
           .map(p => [
             normPlayerNameKey(p.name),

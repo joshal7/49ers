@@ -193,11 +193,11 @@ export function renderNewsViewHtml({
       </div>
 
       <div class="segmented-control compact-seg" role="tablist" aria-label="News Feed Mode">
-        <button type="button" class="pill-btn seg-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
+        <button type="button" role="tab" aria-selected="${newsMode === 'raw' ? 'true' : 'false'}" class="pill-btn seg-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
           ${iconSvg('bolt', 13)}
           <span>Wire &amp; Video (${dedupedRaw.length})</span>
         </button>
-        <button type="button" class="pill-btn seg-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
+        <button type="button" role="tab" aria-selected="${newsMode === 'clustered' ? 'true' : 'false'}" class="pill-btn seg-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
           ${iconSvg('sparkles', 13)}
           <span>Synthesis Briefs (${filteredClusters.length})</span>
         </button>

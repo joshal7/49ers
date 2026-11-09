@@ -379,31 +379,27 @@ function renderMain() {
       : primaryCapYear;
   state.capSelectedYear = activeCapYear;
 
-  const reportersMap = getReportersMap();
-  const filteredClusters = filterNewsByUserPrefs(
-    state.appData.news?.clusteredBriefs || [],
-    reportersMap,
-    state.prefs
-  );
-  const filteredRawItems = filterNewsByUserPrefs(
-    state.appData.news?.rawStream || [],
-    reportersMap,
-    state.prefs
-  );
-  const homeSimCapResult = simulateCapScenario(
-    state.appData.cap,
-    getCapMovesForYear(primaryCapYear),
-    { baseYear: primaryCapYear }
-  );
-  const activeYearMoves = getCapMovesForYear(activeCapYear);
-  const rosterSimCapResult =
-    activeCapYear === primaryCapYear
-      ? homeSimCapResult
-      : simulateCapScenario(state.appData.cap, activeYearMoves, { baseYear: activeCapYear });
-  const mcSimResult = getMonteCarloResult();
+  const tab = state.activeNavTab;
+  const reportersMap = tab === 'home' || tab === 'news' ? getReportersMap() : null;
 
   preserveFocusAroundRender(() => {
-    if (state.activeNavTab === 'home') {
+    if (tab === 'home') {
+      const filteredClusters = filterNewsByUserPrefs(
+        state.appData.news?.clusteredBriefs || [],
+        reportersMap,
+        state.prefs
+      );
+      const filteredRawItems = filterNewsByUserPrefs(
+        state.appData.news?.rawStream || [],
+        reportersMap,
+        state.prefs
+      );
+      const homeSimCapResult = simulateCapScenario(
+        state.appData.cap,
+        getCapMovesForYear(primaryCapYear),
+        { baseYear: primaryCapYear }
+      );
+      const mcSimResult = getMonteCarloResult();
       const orderedBlocks = resolveOrderedDashboardBlocks(
         state.seasonState.activeBlocks,
         state.prefs.dashboardOrder
@@ -418,7 +414,17 @@ function renderMain() {
         filteredRawItems,
         isCustomizingLayout: state.isCustomizingLayout
       });
-    } else if (state.activeNavTab === 'news') {
+    } else if (tab === 'news') {
+      const filteredClusters = filterNewsByUserPrefs(
+        state.appData.news?.clusteredBriefs || [],
+        reportersMap,
+        state.prefs
+      );
+      const filteredRawItems = filterNewsByUserPrefs(
+        state.appData.news?.rawStream || [],
+        reportersMap,
+        state.prefs
+      );
       mainEl.innerHTML = renderNewsViewHtml({
         appData: state.appData,
         newsMode: state.newsMode,
@@ -431,7 +437,9 @@ function renderMain() {
         lastWireSyncAt: state.lastWireSyncAt || state.appData.meta?.updatedAt,
         isSyncingWire: state.isSyncingWire
       });
-    } else if (state.activeNavTab === 'roster') {
+    } else if (tab === 'roster') {
+      const activeYearMoves = getCapMovesForYear(activeCapYear);
+      const rosterSimCapResult = simulateCapScenario(state.appData.cap, activeYearMoves, { baseYear: activeCapYear });
       mainEl.innerHTML = renderRosterCapViewHtml({
         subTab: state.rosterSubTab,
         rosterSearch: state.rosterSearch,
@@ -445,7 +453,8 @@ function renderMain() {
         simCapResult: rosterSimCapResult,
         userCapMoves: activeYearMoves
       });
-    } else if (state.activeNavTab === 'season') {
+    } else if (tab === 'season') {
+      const mcSimResult = state.seasonSubTab === 'playoffs' ? getMonteCarloResult() : null;
       mainEl.innerHTML = renderSeasonMatchupViewHtml({
         seasonSub: state.seasonSubTab,
         activePhases: state.seasonState.activePhases,
@@ -456,7 +465,7 @@ function renderMain() {
         expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
         activeVideosSet: state.activeVideosSet
       });
-    } else if (state.activeNavTab === 'audio') {
+    } else if (tab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
         appData: state.appData,
         userPrefs: state.prefs,
@@ -838,10 +847,20 @@ function bindEvents() {
         renderSheet();
         break;
 
-      case 'set-news-mode':
-        state.newsMode = btn.getAttribute('data-mode') || 'raw';
+      case 'set-news-mode': {
+        const nextMode = btn.getAttribute('data-mode') || 'raw';
+        state.newsMode = nextMode;
+        if (nextMode === 'raw' && (state.newsCategoryFilter === 'cap' || state.newsCategoryFilter === 'scheme')) {
+          state.newsCategoryFilter = 'all';
+        } else if (
+          nextMode === 'clustered' &&
+          (state.newsCategoryFilter === 'tweets' || state.newsCategoryFilter === 'articles' || state.newsCategoryFilter === 'videos')
+        ) {
+          state.newsCategoryFilter = 'all';
+        }
         renderMain();
         break;
+      }
 
       case 'set-news-category':
         state.newsCategoryFilter = btn.getAttribute('data-category') || 'all';
@@ -1596,8 +1615,19 @@ function bindEvents() {
       state.combineSearch = t.value;
       renderMain();
     } else if (t.id === 'podDurationSlider') {
-      state.podDurationMin = Number(t.value || 3);
-      renderMain();
+      const nextMins = Math.max(2, Math.min(20, Number(t.value || 3)));
+      state.podDurationMin = nextMins;
+      const badgeEl = document.getElementById('podDurationBadge');
+      if (badgeEl) badgeEl.textContent = `${nextMins} min`;
+      const waitEl = document.querySelector('[data-est-wait-preview="podcast"] span span');
+      if (waitEl) {
+        const waitEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: nextMins, prefs: state.prefs });
+        waitEl.textContent = waitEst.summaryText;
+      }
+      const genBtnSpan = document.querySelector('[data-action="generate-autopodcast"] span');
+      if (genBtnSpan && !state.jobStatus) {
+        genBtnSpan.textContent = `Generate ${nextMins}-Min Audio Briefing`;
+      }
     } else if (t.id === 'prefPodDurationSlider') {
       const nextDur = Math.max(2, Math.min(20, Number(t.value || 3)));
       state.prefs.defaultPodDurationMin = nextDur;

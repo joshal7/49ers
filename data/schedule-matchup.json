@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T07:52:30.264Z",
+  "updatedAt": "2026-11-09T08:26:08.035Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -740,6 +740,7 @@
     "injurySourceUrl": "https://www.espn.com/nfl/injuries",
     "sfInjuryReportUrl": "https://www.49ers.com/team/injury-report/",
     "statsSourceUrl": "https://github.com/nflverse/nflverse-data",
+    "dateIso": "2026-11-15T21:25Z",
     "kickoffIso": "2026-11-15T21:25Z",
     "kickoffDisplay": "Sunday, Nov 15, 2026 • 1:25 PM PT (FOX)",
     "broadcast": "FOX",
@@ -807,12 +808,12 @@
       "teamInjuriesUrl": "https://www.espn.com/nfl/team/injuries/_/name/dal",
       "byeWeek": 14,
       "summary": {
-        "overallAvailabilityScore": 70,
+        "overallAvailabilityScore": 72,
         "activeStartersHealthy": 22,
         "totalStarters": 22,
-        "ruledOutCount": 1,
+        "ruledOutCount": 0,
         "questionableOrDoubtfulCount": 9,
-        "clearedCount": 1,
+        "clearedCount": 0,
         "irCount": 7
       },
       "activeRoster": [
@@ -1515,31 +1516,6 @@
       ],
       "injuryReport": [
         {
-          "name": "Luke Schoonmaker",
-          "position": "TE",
-          "unit": "Offense",
-          "jersey": 86,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
-          "snapPct": 51,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Groin",
-          "gameStatus": "Questionable",
-          "shortComment": "Schoonmaker (groin) is inactive for Sunday's clash against the Colts.",
-          "longComment": "Schoonmaker continues to tend to a groin issue and will miss his second straight game. He did manage a trio of limited practices during the week, so the tight end may be able to play next Sunday, Nov. 15, against San Francisco. Dallas' tight-end corps will consist of Jake Ferguson, Brevyn Spann-Ford and James Mitchell in Week 9.",
-          "isStarter": false,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 0,
-          "playTier": "OUT",
-          "playBadgeLabel": "0% • Out",
-          "factors": [
-            "Officially ruled Out on weekly game status report"
-          ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
-        },
-        {
           "name": "P.J. Locke",
           "position": "S",
           "unit": "Defense",
@@ -1561,6 +1537,32 @@
           "playBadgeLabel": "18% • Doubtful",
           "factors": [
             "Remains in early stages of NFL 5-Step Concussion Protocol"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+        },
+        {
+          "name": "Luke Schoonmaker",
+          "position": "TE",
+          "unit": "Offense",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
+          "snapPct": 51,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Groin",
+          "gameStatus": "Questionable",
+          "shortComment": "Schoonmaker (groin) is inactive for Sunday's clash against the Colts.",
+          "longComment": "Schoonmaker continues to tend to a groin issue and will miss his second straight game. He did manage a trio of limited practices during the week, so the tight end may be able to play next Sunday, Nov. 15, against San Francisco. Dallas' tight-end corps will consist of Jake Ferguson, Brevyn Spann-Ford and James Mitchell in Week 9.",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 73,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "73% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (78%)",
+            "Soft-tissue re-aggravation caution (Groin)"
           ],
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
@@ -1741,56 +1743,6 @@
             "Questionable tag adjusted by player career prior (81%)"
           ],
           "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
-        },
-        {
-          "name": "Tyler Smith",
-          "position": "G",
-          "unit": "Offense",
-          "jersey": 73,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568652.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4568652/tyler-smith",
-          "snapPct": 100,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Ankle",
-          "gameStatus": "Questionable",
-          "shortComment": "Smith (ankle) does not have any injury designation ahead of Sunday's game against the Colts, Tommy Yarrish of the Cowboys' official site reports.",
-          "longComment": "Smith upgraded to a full participant in Friday's practice after being limited in consecutive sessions to start Week 9 prep. The star left guard is all set to suit up for Sunday's contest to defend Dak Prescott against the Colts' pass rush.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 82,
-          "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "82% • True GTD",
-          "factors": [
-            "Questionable tag adjusted by player career prior (82%)"
-          ],
-          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps."
-        },
-        {
-          "name": "Caleb Downs",
-          "position": "S",
-          "unit": "Defense",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870706.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4870706/caleb-downs",
-          "snapPct": 93,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Concussion",
-          "gameStatus": "Questionable",
-          "shortComment": "Downs (concussion) has no injury designation ahead of Sunday's game against the Colts, Tommy Yarrish of the Cowboys' official site reports.",
-          "longComment": "Downs upgraded to a full participant in Friday's practice, clearing the league's concussion protocol ahead of Sunday's game against the Colts. The rookie first-rounder is all set to suit up for the contest as the starting slot cornerback and reserve punt returner for the Cowboys.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 95,
-          "playTier": "LIKELY",
-          "playBadgeLabel": "95% • Probable",
-          "factors": [
-            "Cleared without restrictive game-day designation"
-          ],
-          "archetypeNote": "Every-down starter workload (93% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         }
       ],
       "keyStartersHealthy": [
@@ -1837,6 +1789,20 @@
           "shortComment": "1st-string Offense (100% snaps) • Off injury report."
         },
         {
+          "name": "Tyler Smith",
+          "position": "G",
+          "unit": "Offense",
+          "jersey": 73,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568652.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4568652/tyler-smith",
+          "snapPct": 100,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
+        },
+        {
           "name": "Terence Steele",
           "position": "OT",
           "unit": "Offense",
@@ -1865,20 +1831,6 @@
           "shortComment": "1st-string Offense (98% snaps) • Off injury report."
         },
         {
-          "name": "CeeDee Lamb",
-          "position": "WR",
-          "unit": "Offense",
-          "jersey": 88,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241389.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4241389/ceedee-lamb",
-          "snapPct": 78,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "High-volume alpha WR with strong track record of suiting up through Questionable/LP tags.",
-          "shortComment": "1st-string Offense (78% snaps) • Off injury report."
-        },
-        {
           "name": "DaRon Bland",
           "position": "CB",
           "unit": "Defense",
@@ -1891,6 +1843,20 @@
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
           "shortComment": "1st-string Defense (97% snaps) • Off injury report."
+        },
+        {
+          "name": "Caleb Downs",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870706.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4870706/caleb-downs",
+          "snapPct": 93,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (93% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Defense (93% snaps) • Off injury report."
         },
         {
           "name": "Kenny Clark",
@@ -1946,20 +1912,6 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-          "shortComment": "1st-string Defense (61% snaps) • Off injury report."
-        },
-        {
-          "name": "Dee Winters",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 53,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4428914/dee-winters",
-          "snapPct": 61,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
           "shortComment": "1st-string Defense (61% snaps) • Off injury report."
         }
       ],
@@ -2181,7 +2133,7 @@
     },
     "coachingMatchup": {
       "headline": "Kyle Shanahan & DC Raheem Morris vs. Dallas Cowboys HC Brian Schottenheimer",
-      "summary": "San Francisco (7-1) matches its #2 NFL passing EPA offense (+8.81/gm) and #1 pass protection (3.3% sack rate) against Dallas Cowboys (4-5), led on the field by Dak Prescott, CeeDee Lamb, and Kenny Clark.",
+      "summary": "San Francisco (7-1) matches its #2 NFL passing EPA offense (+8.81/gm) and #1 pass protection (3.3% sack rate) against Dallas Cowboys (4-5), led on the field by Dak Prescott, Cowboys Skill Corps, and Kenny Clark.",
       "bullets": [
         "Pass-Game Efficiency Delta: SF enters ranked #2 in Passing EPA/game vs. DAL's #7 offensive passing EPA mark (+7.09/gm).",
         "Raheem Morris Trench Plan: DAL allows sacks on 4.0% of dropbacks (#5 NFL) entering its matchup with Nick Bosa, DeForest Buckner, and Osa Odighizuwa.",

@@ -448,9 +448,10 @@ export function corroborateAndAnnotateWireStream(items = [], nowMs = Date.now(),
   if (!Array.isArray(items) || items.length === 0) return [];
 
   const annotated = items.map(it => {
-    const dirEntry = resolveReporterFromNameOrHandle(it.reporterId || it.author || it.reporterName || it.authorHandle);
-    const trustTier = Number(it.trustTier) || dirEntry?.trustTier || 2;
-    const credibilityScore = Number(it.credibilityScore) || dirEntry?.credibilityScore || 86;
+    const rawDirEntry = resolveReporterFromNameOrHandle(it.author || it.reporterName || it.authorHandle || it.reporterId);
+    const dirEntry = rawDirEntry && !PODIUM_SUBJECT_IDS.has(rawDirEntry.id) ? rawDirEntry : null;
+    const trustTier = Number(it.trustTier) || rawDirEntry?.trustTier || 2;
+    const credibilityScore = Number(it.credibilityScore) || rawDirEntry?.credibilityScore || 86;
     const combinedText = `${it.title || it.headline || ''} ${it.fullText || ''} ${it.summary || ''}`.trim();
     const eventTopic = classifyWireEventTopic(combinedText);
     const explicitPlayerKeys = Array.isArray(it.mentionedPlayers)
@@ -463,7 +464,7 @@ export function corroborateAndAnnotateWireStream(items = [], nowMs = Date.now(),
       trustTier,
       credibilityScore,
       authorHandle: it.authorHandle || dirEntry?.handle || '',
-      authorProfileUrl: dirEntry?.xUrl || it.authorProfileUrl || null,
+      authorProfileUrl: resolveItemAuthorProfileUrl(it, it.url || null),
       _eventTopic: eventTopic,
       _playerKeys: playerKeys,
       _pubMs: Number.isFinite(pubMs) ? pubMs : 0

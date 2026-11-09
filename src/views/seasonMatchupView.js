@@ -33,8 +33,8 @@ import {
 } from '../engine/linkIntegrity.js';
 import {
   evaluateGameDayWindow,
-  buildTeamGameDayRosterModel,
-  resolveGameDayInjuryRows
+  resolveGameDayInjuryRows,
+  resolveTeamGameDayModel
 } from '../engine/gameDayRosterEngine.js';
 
 function formatPracCell(val) {
@@ -50,68 +50,6 @@ function formatOppImportanceTag(op) {
   if (snap >= 25) return `Rotation · ${snap}%`;
   if (snap > 0) return `${snap}% snaps`;
   return 'Depth';
-}
-
-function resolveActiveGameScheduleEntry(appData, um) {
-  const sched = appData?.scheduleMatchup?.schedule || [];
-  if (um?.gameId) {
-    const byId = sched.find(g => String(g.gameId) === String(um.gameId));
-    if (byId) return byId;
-  }
-  if (um?.week != null) {
-    const byWk = sched.find(g => Number(g.week) === Number(um.week));
-    if (byWk) return byWk;
-  }
-  return um || null;
-}
-
-function resolveTeamGameDayModel(appData, { is49ers = false } = {}) {
-  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
-  const sched = appData?.scheduleMatchup?.schedule || [];
-  const win = evaluateGameDayWindow(sched, um, Date.now());
-  if (!win.isActive) return null;
-
-  const preHydrated = is49ers
-    ? appData?.health?.gameDayRoster
-    : um?.opponentHealth?.gameDayRoster;
-
-  if (preHydrated?.isActive) {
-    return {
-      ...preHydrated,
-      windowInfo: preHydrated.windowInfo || preHydrated.windowState || win
-    };
-  }
-
-  if (is49ers) {
-    const active53 = (appData?.roster?.players || []).filter(
-      p => !p.rosterBucket || p.rosterBucket === 'active'
-    );
-    return buildTeamGameDayRosterModel({
-      teamAbbr: 'SF',
-      teamName: 'San Francisco 49ers',
-      activeRosterPlayers: active53,
-      injuryReport: appData?.health?.practiceReport || [],
-      newsItems: appData?.news?.rawStream || [],
-      liveFeedData: appData?.liveGameDay?.sf || null,
-      windowState: win
-    });
-  }
-
-  const oppHealth = um?.opponentHealth || {};
-  const oppPool =
-    Array.isArray(oppHealth.activeRoster) && oppHealth.activeRoster.length > 0
-      ? oppHealth.activeRoster
-      : [...(oppHealth.keyStartersHealthy || []), ...(oppHealth.injuryReport || [])];
-
-  return buildTeamGameDayRosterModel({
-    teamAbbr: um?.oppAbbr || 'OPP',
-    teamName: um?.oppName || um?.oppAbbr || 'Opponent',
-    activeRosterPlayers: oppPool,
-    injuryReport: oppHealth.injuryReport || [],
-    newsItems: appData?.news?.rawStream || [],
-    liveFeedData: appData?.liveGameDay?.opp || null,
-    windowState: win
-  });
 }
 
 function renderGameDayRosterCard(
@@ -325,14 +263,15 @@ function renderUpcomingMatchup(appData) {
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const bet = um.betting || {};
   const oppHealth = um.opponentHealth || {};
-  const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false });
+  const sharedWin = evaluateGameDayWindow(appData?.scheduleMatchup?.schedule || [], um, Date.now());
+  const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false, windowState: sharedWin });
   const rawOppInjReport = oppHealth.injuryReport || [];
   const oppInjReport = oppGameDay?.isActive
     ? resolveGameDayInjuryRows(rawOppInjReport, oppGameDay)
     : rawOppInjReport;
   const oppHealthyStarters = oppHealth.keyStartersHealthy || [];
   const oppIrList = oppHealth.irReserve || [];
-  const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
+  const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true, windowState: sharedWin });
   const rawSfPr = appData?.health?.practiceReport || [];
   const sfPr = (sfGameDay?.isActive ? resolveGameDayInjuryRows(rawSfPr, sfGameDay) : rawSfPr).slice(0, 5);
 
@@ -344,7 +283,9 @@ function renderUpcomingMatchup(appData) {
         ).length,
         ruledOutCount: Math.max(
           oppHealth.summary?.ruledOutCount ?? 0,
-          oppInjReport.filter(r => /^out/i.test(String(r.gameStatus || ''))).length
+          oppInjReport.filter(
+            r => /^(?:out|inactive)/i.test(String(r.gameStatus || '')) || r.playProbabilityPct === 0
+          ).length
         )
       }
     : oppHealth.summary;

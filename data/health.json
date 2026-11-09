@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T07:52:30.264Z",
+  "updatedAt": "2026-11-09T08:26:08.035Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -28,6 +28,27 @@
       "beatComment": "Halton sustained a broken left ankle in the fourth quarter, and he is now set to miss the rest of the 2026 campaign. With Halton unavailable, Osa Odighizuwa and DeForest Buckner will operate as San Francisco's primary options at defensive tackle moving forward."
     },
     {
+      "playerId": "16737",
+      "name": "Mike Evans",
+      "position": "WR",
+      "jersey": 5,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Achilles",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 48,
+      "playBadgeLabel": "48% • Long Shot",
+      "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue sprint clearance.",
+      "factors": [
+        "Questionable tag adjusted by player career prior (84%)",
+        "Soft-tissue re-aggravation caution (Achilles)",
+        "Has not yet returned to practice following multi-week injury absence"
+      ],
+      "beatComment": "Evans is missing a second straight contest Sunday after aggravating a right Achilles injury during a Week 6 win against the Commanders. He hasn't been able to practice in the meantime, and while he's the type of player that doesn't require practice reps during the week to be available on game days, even work on the side Wednesday through Friday would be a welcome sign. In any case, with fellow WR Deebo Samuel (hamstring) also sidelined this weekend and Christian Kirk (knee) being placed on IR on Saturday, Demarcus Robinson, Jordan Watkins, Brandin Cooks, Jacob Cowing and KhaDarel Hodge are the options at the position to be active in Week 9."
+    },
+    {
       "playerId": "3126486",
       "name": "Deebo Samuel Sr.",
       "position": "WR",
@@ -49,45 +70,6 @@
       "beatComment": "inactive"
     },
     {
-      "playerId": "3043116",
-      "name": "Demarcus Robinson",
-      "position": "WR",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 76,
-      "playBadgeLabel": "76% • True GTD",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Questionable tag adjusted by player career prior (76%)"
-      ],
-      "beatComment": "Robinson was carted off the field during the 49ers' Week 2 win against the Dolphins and was diagnosed with a high-ankle sprain, receiving a corresponding prognosis of 3-to-6 weeks on the sideline. After his placement on IR on Sept. 26, he missed the next five contests, but following a Week 8 bye, he was designated for return Wednesday and logged three straight limited sessions before being tagged as questionable. With his designation now a thing of the past, Robinson may immediately step into a prominent role in San Francisco's passing game Sunday due to fellow WRs Mike Evans (Achilles) and Deebo Samuel (hamstring) being out and Christian Kirk (knee) getting moved to IR."
-    },
-    {
-      "playerId": "16737",
-      "name": "Mike Evans",
-      "position": "WR",
-      "jersey": 5,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Achilles",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 79,
-      "playBadgeLabel": "79% • True GTD",
-      "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue sprint clearance.",
-      "factors": [
-        "Questionable tag adjusted by player career prior (84%)",
-        "Soft-tissue re-aggravation caution (Achilles)"
-      ],
-      "beatComment": "Evans is missing a second straight contest Sunday after aggravating a right Achilles injury during a Week 6 win against the Commanders. He hasn't been able to practice in the meantime, and while he's the type of player that doesn't require practice reps during the week to be available on game days, even work on the side Wednesday through Friday would be a welcome sign. In any case, with fellow WR Deebo Samuel (hamstring) also sidelined this weekend and Christian Kirk (knee) being placed on IR on Saturday, Demarcus Robinson, Jordan Watkins, Brandin Cooks, Jacob Cowing and KhaDarel Hodge are the options at the position to be active in Week 9."
-    },
-    {
       "playerId": "4427325",
       "name": "Renardo Green",
       "position": "CB",
@@ -107,82 +89,6 @@
       "beatComment": "Green sustained the injury in the second half of the victory, and head coach Kyle Shanahan said after the game that the cornerback has not been ruled out for Week 10, suggesting that the injury is relatively minor. Green's status at practice will be worth monitoring when San Francisco returns to the field Wednesday, and if he can't play against the Cowboys on Nov. 15, Ephesians Prysock would be a top candidate to draw a start at cornerback."
     },
     {
-      "playerId": "4040605",
-      "name": "Nick Bosa",
-      "position": "DE",
-      "jersey": 97,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 95,
-      "playBadgeLabel": "95% • Probable",
-      "archetypeNote": "Regularly takes lighter Wednesday load; high active conversion once cleared for Thursday/Friday pass-rush reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Bosa was sidelined for the 49ers' last five contests before their bye in Week 8 because of a nagging knee injury, but after an extra week of rest, he'll return to action in Week 9. He might not get his full regular workload right away, but he should play a significant role on the edge Sunday."
-    },
-    {
-      "playerId": "3116097",
-      "name": "Luke Gifford",
-      "position": "LB",
-      "jersey": 51,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116097.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Groin",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 95,
-      "playBadgeLabel": "95% • Probable",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Gifford hurt his groin in Week 6 against Washington and didn't play in Week 7 versus Atlanta. However, San Francisco's Week 8 bye appears to have done him well, as the veteran linebacker returned to practice this week with an LP/LP/FP progression. Gifford has played primarily on special teams when healthy this season and will probably continue in that role against Las Vegas."
-    },
-    {
-      "playerId": "4693337",
-      "name": "Marques Sigle",
-      "position": "S",
-      "jersey": 36,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4693337.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 95,
-      "playBadgeLabel": "95% • Probable",
-      "archetypeNote": "Every-down starter workload (88% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Sigle missed the 49ers' last three games before their bye in Week 8 due to an ankle injury he sustained back in Week 4 versus the Broncos, but he's now set to get back on the field in Week 9. He projects to start at safety next to Ji'Ayir Brown against Las Vegas on Sunday."
-    },
-    {
-      "playerId": "4241807",
-      "name": "Garret Wallow",
-      "position": "LB",
-      "jersey": 49,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241807.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 95,
-      "playBadgeLabel": "95% • Probable",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Wallow was sidelined due to a strained hamstring in Weeks 6 and 7, but San Francisco's Week 8 bye gave him some extra recovery time. With an LP/LP/FP practice progression under his belt this week, the veteran linebacker is set to return to action against the Raiders. Wallow typically plays less than a quarter of the 49ers' defensive snaps, so he's not a recommended IDP option in fantasy."
-    },
-    {
       "playerId": "4242488",
       "name": "Deommodore Lenoir",
       "position": "CB",
@@ -193,12 +99,11 @@
       "fri": "-",
       "injuryType": "Foot",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 97,
-      "playBadgeLabel": "97% • Probable",
+      "playProbabilityPct": 84,
+      "playBadgeLabel": "84% • True GTD",
       "archetypeNote": "High snap durability across boundary and slot corner alignments.",
       "factors": [
-        "Questionable tag adjusted by player career prior (92%)",
-        "High pain-tolerance / toughness prior (+5% boost)"
+        "Questionable tag adjusted by player career prior (92%)"
       ],
       "beatComment": "Lenoir notched three solo tackles, one of which was for a loss, in the contest, but he didn't leave unscathed. Head coach Kyle Shanahan explained after the game that the cornerback hasn't been ruled out for Week 10, suggesting that Lenoir may have avoided a major injury. If he is forced to miss any action moving forward, Ashtyn Davis and Ephesians Prysock are both candidates to see increased workload in the secondary."
     }
