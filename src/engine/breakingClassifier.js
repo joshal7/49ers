@@ -31,6 +31,20 @@ const NON_TRANSACTION_RELEASE_REGEX =
 const BREAKING_ROSTER_OR_STATUS_REGEX =
   /(\bbreaking\b|just in:|per source|per sources|\btrade:|traded to|acquiring|re-acquiring|has been traded|seeking reinstatement|reinstated|activated from ir|activated off ir|activated from injured reserve|placed on injured reserve|placed on ir|game status report|officially active|officially inactive|ruled out|unlikely to play|expected to play|good to go|signed to the active roster|signed to the practice squad|elevated from the practice squad|standard elevation|\bwaived\b|has been released|have released|officially released|released from (?:ir|injured reserve|the practice squad)|\breleased\s+(?:veteran\s+|rookie\s+)?(?:qb|rb|fb|wr|te|ol|ot|og|c|dl|de|dt|nt|edge|lb|ilb|olb|cb|db|s|k|p|ls)\b)/i;
 
+const MAJOR_NON_INJURY_BREAKING_REGEX =
+  /\b(arrested|taken into custody|charged with|indicted|arraigned|felony|misdemeanor|\bdui\b|\bdwi\b|suspended (?:by the nfl|without pay|\d+\s+games?)|commissioner'?s exempt|under (?:nfl |league |police |federal )?investigation|lawsuit|sued\b|\btrade:|traded (?:to|for)|acquiring|re-acquiring|has been traded|finalizing a trade|agreed to a trade|agreed to terms|contract extension|signed a \d+-year|signs a \d+-year|restructured his contract|fired|relieved of (?:his|their) duties|parted ways with|stepping down|announced his retirement)\b/i;
+
+const CREDIBLE_TRADE_RUMOR_REGEX =
+  /\b(trade talks|trade discussions|in talks to acquire|discussing a trade|fielding calls|making calls|calling teams|exploring a trade|shopping\b|expected to pursue|trade interest in|trade target|trade rumor|trade market for|gauging the (?:trade )?market|in the mix for)\b/i;
+
+const SALIENT_INTERVIEW_OR_FEATURE_REGEX =
+  /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|spoke candidly|reflects on|mic'?d up|joined knbr|players'? tribune|explained (?:why|how)|shared a (?:hilarious|story|moment)|candid interview)\b/i;
+
+function decayPriority(base, ageHours, halfLifeHours = 10) {
+  if (!Number.isFinite(ageHours) || ageHours <= 0) return Number(base.toFixed(3));
+  return Number((base * Math.pow(0.5, ageHours / halfLifeHours)).toFixed(3));
+}
+
 /**
  * Resolves live in-game vs. 48-hour post-game context from schedule & matchup telemetry.
  */
@@ -128,15 +142,34 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const matchesPostGameInjury = !isSpeculative && POST_GAME_INJURY_FOLLOWUP_REGEX.test(combined);
   const matchesPracticeInjuryScoop = !isSpeculative && PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(combined);
   const matchesPreGameAvailabilityNoise = PRE_GAME_AVAILABILITY_NOISE_REGEX.test(combined);
+  const matchesMajorNonInjury =
+    !isSpeculative && !NON_TRANSACTION_RELEASE_REGEX.test(combined) && MAJOR_NON_INJURY_BREAKING_REGEX.test(combined);
+  const matchesCredibleTradeRumor = !isSpeculative && CREDIBLE_TRADE_RUMOR_REGEX.test(combined);
+  const matchesSalientInterview = !isSpeculative && SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(combined);
   const matchesBreaking =
     !isSpeculative &&
     !NON_TRANSACTION_RELEASE_REGEX.test(combined) &&
     BREAKING_ROSTER_OR_STATUS_REGEX.test(combined);
 
+  const repEntry = resolveReporterFromNameOrHandle(
+    item.reporterId || item.author || item.reporterName || item.authorHandle
+  );
+  const effectiveTrustTier = Number(item.trustTier) || repEntry?.trustTier || 2;
+
   // 1. LIVE IN-GAME MODE: Prioritize in-game tweets & especially in-game injuries; demote pre-game inactives/availability
   if (gameContext?.inGame && Number.isFinite(gameContext.activeKickoffMs)) {
     const koMs = gameContext.activeKickoffMs;
     const isDuringGame = Number.isFinite(pubMs) && pubMs >= koMs - 5 * 60_000;
+
+    if (matchesMajorNonInjury && ageHours <= 6) {
+      return {
+        isBreaking: true,
+        isInGameInjury: false,
+        breakingPriority: decayPriority(2.9, ageHours, 8),
+        breakingBadge: 'BREAKING',
+        ageHours
+      };
+    }
 
     if (!isDuringGame || (matchesPreGameAvailabilityNoise && !matchesInGame)) {
       return {
@@ -158,6 +191,16 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       };
     }
 
+    if (matchesCredibleTradeRumor && effectiveTrustTier <= 2) {
+      return {
+        isBreaking: true,
+        isInGameInjury: false,
+        breakingPriority: 2.15,
+        breakingBadge: 'TRADE INTEL',
+        ageHours
+      };
+    }
+
     if ((item.type === 'tweet' || item.type === 'social') && !isSpeculative) {
       return {
         isBreaking: true,
@@ -169,7 +212,8 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     }
   }
 
-  // 2. 48-HOUR POST-GAME MODE: Prioritize meaningful updates on in-game injuries; demote stale pre-game workload/inactive notes
+  // 2. 48-HOUR POST-GAME MODE: Prioritize meaningful updates on in-game injuries with smooth recency decay
+  //    so major breaking news (arrests, trades, extensions), credible trade rumors, and salient interviews are NEVER crowded out
   if (gameContext?.postGame48h && Number.isFinite(gameContext.completedKickoffMs)) {
     const koMs = gameContext.completedKickoffMs;
     const isPreFinishedGame = Number.isFinite(pubMs) && pubMs < koMs;
@@ -180,6 +224,16 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
         isInGameInjury: false,
         breakingPriority: -0.25,
         breakingBadge: null,
+        ageHours
+      };
+    }
+
+    if (matchesMajorNonInjury && ageHours <= 36) {
+      return {
+        isBreaking: true,
+        isInGameInjury: false,
+        breakingPriority: decayPriority(2.9, ageHours, 12),
+        breakingBadge: 'BREAKING',
         ageHours
       };
     }
@@ -198,24 +252,65 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       const hasNewDiagnosticDetail = /\b(mri|x-ray|ct scan|day-to-day|week-to-week|high-ankle|sprain|strain|placed on ir|shanahan)\b/i.test(
         combined
       );
+      const basePrio = hasNewDiagnosticDetail ? 2.55 : 2.25;
       return {
         isBreaking: true,
         isInGameInjury: ageHours <= 6,
         isPostGameInjuryUpdate: true,
-        breakingPriority: hasNewDiagnosticDetail ? 2.45 : 2.2,
+        breakingPriority: decayPriority(basePrio, ageHours, 10),
         breakingBadge: 'INJURY UPDATE',
+        ageHours
+      };
+    }
+
+    if (matchesCredibleTradeRumor && ageHours <= 24 && effectiveTrustTier <= 2) {
+      return {
+        isBreaking: true,
+        isInGameInjury: false,
+        breakingPriority: decayPriority(2.35, ageHours, 10),
+        breakingBadge: 'TRADE INTEL',
+        ageHours
+      };
+    }
+
+    if (matchesSalientInterview && ageHours <= 18) {
+      return {
+        isBreaking: false,
+        isInGameInjury: false,
+        breakingPriority: decayPriority(0.95, ageHours, 9),
+        breakingBadge: null,
         ageHours
       };
     }
   }
 
-  // 3. STANDARD / ALL-WEEK BREAKING CLASSIFICATION
+  // 3. STANDARD / ALL-WEEK BREAKING & SALIENT CLASSIFICATION
+  if (matchesMajorNonInjury && ageHours <= 24) {
+    return {
+      isBreaking: true,
+      isInGameInjury: false,
+      breakingPriority: decayPriority(2.85, ageHours, 12),
+      breakingBadge: 'BREAKING',
+      ageHours
+    };
+  }
+
   if (matchesInGame && ageHours <= 18) {
     return {
       isBreaking: true,
       isInGameInjury: ageHours <= 8,
-      breakingPriority: ageHours <= 8 ? 2 : 1,
+      breakingPriority: ageHours <= 8 ? decayPriority(2.7, ageHours, 8) : decayPriority(1.6, ageHours, 10),
       breakingBadge: ageHours <= 8 ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
+      ageHours
+    };
+  }
+
+  if (matchesCredibleTradeRumor && ageHours <= 24 && effectiveTrustTier <= 2) {
+    return {
+      isBreaking: true,
+      isInGameInjury: false,
+      breakingPriority: decayPriority(2.25, ageHours, 10),
+      breakingBadge: 'TRADE INTEL',
       ageHours
     };
   }
@@ -224,7 +319,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     return {
       isBreaking: true,
       isInGameInjury: false,
-      breakingPriority: item.isFirstMoverInjuryScoop && ageHours <= 6 ? 1.85 : ageHours <= 8 ? 1.6 : 1,
+      breakingPriority: decayPriority(item.isFirstMoverInjuryScoop && ageHours <= 6 ? 2.15 : 1.85, ageHours, 8),
       breakingBadge: item.isFirstMoverInjuryScoop && ageHours <= 6 ? 'INJURY SCOOP' : 'INJURY UPDATE',
       ageHours
     };
@@ -234,8 +329,18 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     return {
       isBreaking: true,
       isInGameInjury: false,
-      breakingPriority: ageHours <= 12 ? 1.5 : 1,
+      breakingPriority: decayPriority(1.75, ageHours, 10),
       breakingBadge: 'BREAKING',
+      ageHours
+    };
+  }
+
+  if (matchesSalientInterview && ageHours <= 18) {
+    return {
+      isBreaking: false,
+      isInGameInjury: false,
+      breakingPriority: decayPriority(0.85, ageHours, 9),
+      breakingBadge: null,
       ageHours
     };
   }
@@ -244,7 +349,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     return {
       isBreaking: true,
       isInGameInjury: Boolean(item.isInGameInjury),
-      breakingPriority: item.isInGameInjury ? 2 : 1,
+      breakingPriority: item.isInGameInjury ? decayPriority(2.2, ageHours, 8) : decayPriority(1.3, ageHours, 10),
       breakingBadge: item.breakingBadge || (item.isInGameInjury ? 'LIVE INJURY UPDATE' : 'BREAKING'),
       ageHours
     };
@@ -288,12 +393,16 @@ export function sortNewsWithBreakingPriority(
       };
     })
     .sort((a, b) => {
-      const prioDiff = (b.breakingPriority || 0) - (a.breakingPriority || 0);
-      if (prioDiff !== 0) return prioDiff;
+      const aPrio = a.breakingPriority || 0;
+      const bPrio = b.breakingPriority || 0;
+      const prioDiff = bPrio - aPrio;
       const aMs = new Date(a.publishedAt || 0).getTime() || 0;
       const bMs = new Date(b.publishedAt || 0).getTime() || 0;
 
-      const windowMs = (a.breakingPriority || 0) > 0 ? 20 * 60_000 : 8 * 60_000;
+      const samePositiveBand = aPrio > 0 && bPrio > 0 && Math.abs(prioDiff) < 0.12 && Math.abs(bMs - aMs) <= 20 * 60_000;
+      if (!samePositiveBand && prioDiff !== 0) return prioDiff;
+
+      const windowMs = aPrio > 0 && bPrio > 0 ? 20 * 60_000 : 8 * 60_000;
       if (Math.abs(bMs - aMs) <= windowMs) {
         if (a.isFirstMoverInjuryScoop && !b.isFirstMoverInjuryScoop && (a.corroborationCount || 1) === 1) {
           return -1;
@@ -306,8 +415,78 @@ export function sortNewsWithBreakingPriority(
         const sigDiff = (Number(b.signalScore) || 0) - (Number(a.signalScore) || 0);
         if (Math.abs(sigDiff) >= 8) return sigDiff;
       }
+      if (prioDiff !== 0) return prioDiff;
       return bMs - aMs;
     });
+}
+
+function isPureInjuryCard(item) {
+  if (!item) return false;
+  const text = `${item.fullText || ''} ${item.title || ''} ${item.headline || ''} ${item.summary || ''}`;
+  if (MAJOR_NON_INJURY_BREAKING_REGEX.test(text) || CREDIBLE_TRADE_RUMOR_REGEX.test(text)) {
+    return false;
+  }
+  return Boolean(
+    item.isInGameInjury ||
+      item.isPostGameInjuryUpdate ||
+      item.category === 'injury' ||
+      /^(?:LIVE )?INJURY\b/i.test(String(item.breakingBadge || '')) ||
+      resolveInjuryMilestoneBucket(text)
+  );
+}
+
+/**
+ * Ensures injury prioritization never completely crowds out other salient news (credible trade rumors,
+ * off-field/owner/player news, film breakdowns, or standout player interviews) outside live game action.
+ * Preserves 100% of items while surfacing a fresh, salient non-injury item after `maxConsecutiveInjuries`.
+ */
+export function balanceFeedTopSalience(
+  items = [],
+  { nowMs = Date.now(), gameContext = null, appData = null, maxConsecutiveInjuries = 2 } = {}
+) {
+  if (!Array.isArray(items) || items.length <= maxConsecutiveInjuries) return items;
+  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
+  if (ctx?.inGame) return items;
+
+  const remaining = [...items];
+  const result = [];
+  let consecutiveInj = 0;
+
+  while (remaining.length > 0) {
+    if (consecutiveInj >= maxConsecutiveInjuries && result.length < 10) {
+      const nonInjIdx = remaining.findIndex((cand, idx) => {
+        if (idx > 14 || isPureInjuryCard(cand) || cand?.isClickbait) return false;
+        const pubMs = Date.parse(cand?.publishedAt || '');
+        const ageHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 999;
+        if (ageHours > 36) return false;
+        const text = `${cand.fullText || ''} ${cand.title || ''} ${cand.headline || ''} ${cand.summary || ''}`;
+        return (
+          (cand.breakingPriority || 0) > 0 ||
+          Number(cand.signalScore || 0) >= 48 ||
+          SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(text) ||
+          CREDIBLE_TRADE_RUMOR_REGEX.test(text) ||
+          MAJOR_NON_INJURY_BREAKING_REGEX.test(text)
+        );
+      });
+
+      if (nonInjIdx >= 0) {
+        const [picked] = remaining.splice(nonInjIdx, 1);
+        result.push(picked);
+        consecutiveInj = 0;
+        continue;
+      }
+    }
+
+    const next = remaining.shift();
+    result.push(next);
+    if (isPureInjuryCard(next)) {
+      consecutiveInj += 1;
+    } else {
+      consecutiveInj = 0;
+    }
+  }
+
+  return result;
 }
 
 function resolveInjuryMilestoneBucket(text = '') {
@@ -322,7 +501,7 @@ function resolveInjuryMilestoneBucket(text = '') {
     return 'recovery_timeline';
   }
   if (
-    /\b(questionable to return|doubtful to return|ruled out for the rest|will not return|did not return|exited|left .*game|locker room|medical tent|carted off|suffered a|sustained a)\b/.test(
+    /\b(questionable to return|doubtful to return|ruled out for the rest|will not return|did not return|exited|left .*game|(?:headed|going|went|walked|taken) to the locker room|medical tent|carted off|suffered a|sustained a)\b/.test(
       t
     )
   ) {

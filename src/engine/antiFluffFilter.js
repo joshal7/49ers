@@ -32,7 +32,9 @@ const ANALYTICAL_SIGNAL_PATTERNS = [
   /\b(11 personnel|12 personnel|21 personnel|22 personnel|wide-9|nickel|dime|quarters|cover [12346]|two-high|single-high|sim pressure|stunt|duo|outside zone|play-action|motion rate|box count|neutral script|early-down|red-zone)\b/i,
   /\b(cap hit|dead money|dead cap|restructure|void year|post-june 1|pre-june 1|prorat|option bonus|base salary|sixth-round|comp pick|article 13|top-51|fifth-year option|franchise tag|practice squad elevation)\b/i,
   /\b(dnp|limited participation|full participation|injured reserve|practice window|21-day|questionable|doubtful|concussion protocol|syndesmosis)\b/i,
-  /\b(all-22|film|tape|snap count|snaps|pass block|run block)\b/i
+  /\b(all-22|film|tape|snap count|snaps|pass block|run block)\b/i,
+  /\b(trade talks|trade discussions|in talks to acquire|fielding calls|exploring a trade|agreed to terms|contract extension|arrested|charged with|suspended|commissioner'?s exempt|under investigation)\b/i,
+  /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|spoke candidly|mic'?d up|players'? tribune|candid interview)\b/i
 ];
 
 const PRIMARY_BEAT_REPORTER_IDS = new Set([
@@ -109,6 +111,11 @@ export function scoreContentSignal(title = '', body = '') {
   const numericFacts = combined.match(/(\$\d+(\.\d+)?[MK]?|\d+(\.\d+)?%|\b\d+-\d+\b|\b\d{1,2}:\d{2}\b)/g);
   if (numericFacts) {
     signalScore += Math.min(25, numericFacts.length * 5);
+  }
+
+  // Direct substantive player/coach quotes add genuine human & locker-room signal
+  if (/[“"][^”"]{28,}[”"]/.test(combined)) {
+    signalScore += 12;
   }
 
   fluffScore = Math.min(100, fluffScore);
@@ -238,8 +245,12 @@ export function computeNewsSalienceScore(
   salience += Math.min(14, Math.max(0, corroboration - 1) * 3);
 
   if (item.isInGameInjury) salience += 24;
-  else if (item.isFirstMoverInjuryScoop) salience += 18;
+  else if (item.breakingBadge === 'BREAKING') salience += 22;
+  else if (item.isFirstMoverInjuryScoop || item.breakingBadge === 'TRADE INTEL') salience += 18;
   else if (item.isBreaking) salience += 14;
+  else if (/\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|mic'?d up)\b/i.test(`${title} ${body}`)) {
+    salience += 10;
+  }
 
   const pubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;
   if (Number.isFinite(pubMs) && halfLifeHours > 0) {

@@ -22,6 +22,7 @@ import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
+  balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
   formatTweetBodyForDisplay
@@ -136,19 +137,23 @@ function renderSingleDashboardCard({
         if (Math.abs(salDiff) >= 1.5) return salDiff;
         return new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime();
       };
-      const topTweets = rawList
-        .filter(it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null))
-        .sort(rankHomeSalience)
-        .slice(0, 3);
-      const topArticles = rawList
-        .filter(
-          it =>
-            (it.type === 'article' || it.type === 'post') &&
-            sanitizeExternalUrl(it.url, null) &&
-            !isPaywalledPublisher(it.outletName, it.url)
-        )
-        .sort(rankHomeSalience)
-        .slice(0, 3);
+      const topTweets = balanceFeedTopSalience(
+        rawList
+          .filter(it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null))
+          .sort(rankHomeSalience),
+        { appData, maxConsecutiveInjuries: 2 }
+      ).slice(0, 3);
+      const topArticles = balanceFeedTopSalience(
+        rawList
+          .filter(
+            it =>
+              (it.type === 'article' || it.type === 'post') &&
+              sanitizeExternalUrl(it.url, null) &&
+              !isPaywalledPublisher(it.outletName, it.url)
+          )
+          .sort(rankHomeSalience),
+        { appData, maxConsecutiveInjuries: 2 }
+      ).slice(0, 3);
 
       bodyHtml = `
         <div style="display:flex;flex-direction:column;gap:10px">

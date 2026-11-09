@@ -120,6 +120,7 @@ import {
   is49ersGameLiveWindow,
   resolveGameNewsContext,
   deduplicateAndGroupWireItems,
+  balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink
 } from '../src/engine/breakingClassifier.js';
@@ -4142,6 +4143,135 @@ test('News Classifier prioritizes live in-game injuries, demotes stale pre-game 
   });
   assert.ok(settingsHtml.includes('data-action="set-pod-format"'), 'Host Format toggle must live inside Settings');
   assert.ok(settingsHtml.includes('id="prefPodDurationSlider"'), 'Default Podcast Length slider must live inside Settings');
+
+  // 5. Editorial Balance QA: Injury prioritization NEVER completely excludes major non-injury breaking news
+  //    (arrests / suspensions / trades), credible insider trade rumors, or fun & salient player interviews!
+  const balancedNow = koMs + 16 * 3600_000; // Monday morning inside 48h post-game window
+
+  // 5a. Major breaking non-injury news (e.g., arrest / suspension / trade) ranks #1 even during 48h post-game window
+  const arrestVsInjuries = sortNewsWithBreakingPriority(
+    [
+      {
+        id: 'inj_lenoir_mri',
+        type: 'tweet',
+        author: 'Nick Wagoner',
+        trustTier: 1,
+        category: 'injury',
+        title: 'Kyle Shanahan said CB Deommodore Lenoir underwent an MRI on his foot and is day-to-day.',
+        fullText: 'Kyle Shanahan said CB Deommodore Lenoir underwent an MRI on his foot and is day-to-day.',
+        publishedAt: new Date(balancedNow - 45 * 60_000).toISOString()
+      },
+      {
+        id: 'major_legal_breaking',
+        type: 'tweet',
+        author: 'Adam Schefter',
+        trustTier: 1,
+        category: 'beat',
+        title: '49ers reserve defender was arrested early Monday morning and is under NFL investigation, per league source.',
+        fullText: '49ers reserve defender was arrested early Monday morning and is under NFL investigation, per league source.',
+        publishedAt: new Date(balancedNow - 15 * 60_000).toISOString()
+      }
+    ],
+    balancedNow,
+    { appData: postGameSchedule }
+  );
+  assert.equal(arrestVsInjuries[0].id, 'major_legal_breaking', 'Fresh major arrest/legal breaking news must rank #1 even in 48h post-game window');
+  assert.equal(arrestVsInjuries[0].breakingBadge, 'BREAKING');
+
+  // 5b. Credible Tier-1 trade rumor gets TRADE INTEL elevation while clickbait mock trade remains blocked
+  const credibleRumorCls = classifyBreakingItem(
+    {
+      type: 'tweet',
+      author: 'Matt Barrows',
+      trustTier: 1,
+      title: '49ers have held trade discussions and are making calls on edge rusher depth ahead of Tuesday’s deadline.',
+      publishedAt: new Date(balancedNow - 20 * 60_000).toISOString()
+    },
+    balancedNow,
+    ctx48
+  );
+  assert.equal(credibleRumorCls.isBreaking, true);
+  assert.equal(credibleRumorCls.breakingBadge, 'TRADE INTEL');
+  assert.ok(credibleRumorCls.breakingPriority >= 2.2, `Expected credible trade rumor priority >= 2.2, got ${credibleRumorCls.breakingPriority}`);
+
+  const mockTradeNoise = scoreContentSignal(
+    'Wild blockbuster mock trade proposal sends 3 first-round picks!!',
+    'Hypothetical trade pitch for fun'
+  );
+  assert.equal(mockTradeNoise.isClickbait, true, 'Clickbait mock trade proposals must still be rejected');
+
+  // 5c. Salient player 1-on-1 locker-room interview scores strong signal AND surfaces in Top 3 alongside injuries (never crowded out by 4+ injury items!)
+  const interviewSignal = scoreContentSignal(
+    'George Kittle 1-on-1 locker room interview: Inside DeForest Buckner’s return to San Francisco',
+    'Kittle opened up about Buckner in a candid sit-down: "Having DeFo back in the huddle next to Bosa completely changes the energy in our building."'
+  );
+  assert.equal(interviewSignal.isClickbait, false);
+  assert.ok(interviewSignal.signalScore >= 55, `Expected salient player interview signalScore >= 55, got ${interviewSignal.signalScore}`);
+
+  const multiInjuryPlusSalientStream = sortNewsWithBreakingPriority(
+    [
+      {
+        id: 'inj_1',
+        type: 'article',
+        author: 'Nick Wagoner',
+        category: 'injury',
+        title: 'Kyle Shanahan confirms Nick Bosa MRI clean after Week 9 win',
+        publishedAt: new Date(balancedNow - 30 * 60_000).toISOString(),
+        url: 'https://www.espn.com/nfl/story/_/id/1'
+      },
+      {
+        id: 'inj_2',
+        type: 'article',
+        author: 'Matt Maiocco',
+        category: 'injury',
+        title: 'Deommodore Lenoir day-to-day after foot X-rays come back negative',
+        publishedAt: new Date(balancedNow - 35 * 60_000).toISOString(),
+        url: 'https://www.nbcsportsbayarea.com/nfl/2'
+      },
+      {
+        id: 'inj_3',
+        type: 'article',
+        author: 'Matt Barrows',
+        category: 'injury',
+        title: 'Deebo Samuel hamstring strain progressing heading into Week 10',
+        publishedAt: new Date(balancedNow - 40 * 60_000).toISOString(),
+        url: 'https://www.espn.com/nfl/story/_/id/3'
+      },
+      {
+        id: 'inj_4',
+        type: 'article',
+        author: 'David Lombardi',
+        category: 'injury',
+        title: 'Renardo Green back strain considered minor by Shanahan',
+        publishedAt: new Date(balancedNow - 45 * 60_000).toISOString(),
+        url: 'https://www.espn.com/nfl/story/_/id/4'
+      },
+      {
+        id: 'kittle_interview',
+        type: 'article',
+        author: 'Matt Maiocco',
+        category: 'beat',
+        signalScore: interviewSignal.signalScore,
+        title: 'George Kittle 1-on-1 locker room interview on DeForest Buckner’s return and Week 10 mindset',
+        summary: 'Kittle opened up about Buckner in a candid sit-down: "Having DeFo back in the huddle completely changes the energy."',
+        publishedAt: new Date(balancedNow - 50 * 60_000).toISOString(),
+        url: 'https://www.nbcsportsbayarea.com/nfl/kittle-1on1'
+      }
+    ],
+    balancedNow,
+    { appData: postGameSchedule }
+  );
+  const balancedFeed = balanceFeedTopSalience(deduplicateAndGroupWireItems(multiInjuryPlusSalientStream), {
+    nowMs: balancedNow,
+    appData: postGameSchedule,
+    maxConsecutiveInjuries: 2
+  });
+  assert.equal(balancedFeed.length, 5, 'All 5 stories (4 distinct injuries + 1 interview) must remain in feed');
+  const top3Ids = balancedFeed.slice(0, 3).map(x => x.id);
+  assert.ok(
+    top3Ids.includes('kittle_interview'),
+    `Salient player interview must surface in Top 3 instead of being buried behind 4 consecutive injury items; got ${JSON.stringify(top3Ids)}`
+  );
 });
 
 console.log(`\n======================================================`);

@@ -9,6 +9,7 @@ import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
+  balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
   formatTweetBodyForDisplay
@@ -39,7 +40,7 @@ export function renderNewsViewHtml({
     Date.now(),
     { appData }
   );
-  const dedupedRaw = deduplicateAndGroupWireItems(prioritizedRaw);
+  const dedupedRaw = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritizedRaw), { appData });
   const tweetCount = dedupedRaw.filter(i => i.type === 'tweet' || i.type === 'social').length;
   const activeBreakingItems = dedupedRaw.filter(i => (i.breakingPriority || 0) > 0).slice(0, 3);
   const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'now';
