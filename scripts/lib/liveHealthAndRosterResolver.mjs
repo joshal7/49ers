@@ -133,18 +133,13 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
 
   const oppLower = String(oppTeamName || '').toLowerCase();
   const oppMascot = oppLower.split(/\s+/).filter(Boolean).pop() || '';
-  const htmlLower = html.toLowerCase();
-  const reportMatchesCurrentOpponent = !oppMascot || htmlLower.includes(oppMascot);
-  if (!reportMatchesCurrentOpponent) {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
-  }
   const tableRegex = /<table[\s\S]*?<\/table>/gi;
+  const candidateTables = [];
   let match;
-  let tableIdx = 0;
 
   while ((match = tableRegex.exec(html)) !== null) {
     const tableHtml = match[0];
-    const precedingContext = stripTags(html.slice(Math.max(0, match.index - 800), match.index)).toLowerCase();
+    const precedingContext = stripTags(html.slice(Math.max(0, match.index - 650), match.index)).toLowerCase();
     const headers = [
       ...(tableHtml.match(/<thead[\s\S]*?<\/thead>/i)?.[0] || '').matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)
     ].map(m => stripTags(m[1]).toLowerCase());
@@ -152,7 +147,23 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
     if (!headers.includes('player') || (!headers.includes('wed') && !headers.includes('thu') && !headers.includes('fri'))) {
       continue;
     }
+    candidateTables.push({ tableHtml, precedingContext, headers });
+  }
 
+  if (candidateTables.length === 0) {
+    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
+  }
+
+  // Verify the opponent practice table heading itself matches the current week's opponent
+  // (never match schedule/footer chrome elsewhere in the HTML document!)
+  const reportMatchesCurrentOpponent =
+    !oppMascot || candidateTables.some(t => t.precedingContext.includes(oppMascot));
+  if (!reportMatchesCurrentOpponent) {
+    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
+  }
+
+  let tableIdx = 0;
+  for (const { tableHtml, precedingContext, headers } of candidateTables) {
     const isSf =
       precedingContext.includes('san francisco 49ers') &&
       (!oppMascot || precedingContext.lastIndexOf('49ers') > precedingContext.lastIndexOf(oppMascot));

@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v22';
+const CACHE_NAME = '49ers-faithful-v23';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const CORE_ASSETS = [
   './src/engine/seasonStateMachine.js',
   './src/engine/capSimulator.js',
   './src/engine/injuryProbabilityModel.js',
+  './src/engine/gameDayRosterEngine.js',
   './src/engine/playoffMonteCarlo.js',
   './src/engine/antiFluffFilter.js',
   './src/engine/beatAttributionEngine.js',

@@ -723,21 +723,25 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
         </table>
       </div>
 
-      <div style="margin-top:10px;font-size:12.5px;color:var(--text-secondary)">
-        <strong style="color:var(--gold-bright)">Front Office Blueprint:</strong> ${escJargon(blueprint.executiveSummary || '')}
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:7px;margin-top:9px">
-        ${(blueprint.strategicPillars || [])
-          .map(
-            sp => `
-          <div class="subcard-panel" style="font-size:12.5px">
-            <strong>${esc(sp.title)}:</strong> <span style="color:var(--text-secondary)">${escJargon(sp.detail)}</span>
-          </div>
-        `
-          )
-          .join('')}
-      </div>
+      <details class="compact-details" style="margin-top:10px">
+        <summary class="compact-details-summary">
+          <span>Front Office Cap Blueprint &amp; Multi-Year Strategy</span>
+        </summary>
+        <div style="margin-top:8px;font-size:12.5px;color:var(--text-secondary)">
+          <strong style="color:var(--gold-bright)">Executive Summary:</strong> ${escJargon(blueprint.executiveSummary || '')}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+          ${(blueprint.strategicPillars || [])
+            .map(
+              sp => `
+            <div class="subcard-panel" style="font-size:12.5px">
+              <strong>${esc(sp.title)}:</strong> <span style="color:var(--text-secondary)">${escJargon(sp.detail)}</span>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      </details>
     </section>
 
     <!-- Multi-Year Interactive OverTheCap Salary Cap Simulator -->

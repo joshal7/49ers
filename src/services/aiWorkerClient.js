@@ -105,12 +105,8 @@ export function hasLiveAiConnection(prefs = {}) {
   );
 }
 
-export function formatActiveModelBadge(modelId = 'gemini-3.8-flash', suffix = 'Accuracy-First') {
-  const raw = String(modelId || 'gemini-3.8-flash').trim();
-  const verMatch = raw.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
-  const verStr = verMatch ? verMatch[1] : '3.8';
-  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : '';
-  return `Gemini ${verStr}${tierStr} High • ${suffix}`;
+export function formatActiveModelBadge(_modelId = 'gemini-3.8-flash', suffix = 'Accuracy-First') {
+  return suffix || 'Accuracy-First';
 }
 
 export function resolveActiveHighQualityModelLabel(appData = null, prefs = null) {
@@ -119,26 +115,20 @@ export function resolveActiveHighQualityModelLabel(appData = null, prefs = null)
     verifiedModel ||
     migrateZeroQuotaFreeTierModelId(appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash');
   const thinkingLevel = String(appData?.meta?.aiEngine?.thinkingLevel || 'HIGH').toUpperCase();
-  const verMatch = modelId.match(/gemini-(\d+(?:\.\d+)?)(?:-(pro|flash))?/i);
-  const verStr = verMatch ? verMatch[1] : '3.8';
-  const tierStr = verMatch?.[2] && /pro/i.test(verMatch[2]) ? ' Pro' : '';
-  const shortModelName = `Gemini ${verStr}${tierStr} High`;
   return {
     modelId,
     thinkingLevel,
-    shortModelName,
-    displayLabel: `${shortModelName} • Accuracy-First`
+    shortModelName: 'Deep Research',
+    displayLabel: 'Accuracy-First'
   };
 }
 
 export function estimateGenerationWait({
   kind = 'podcast',
   durationMinutes = 3,
-  prefs = {},
-  appData = null
+  prefs = {}
 } = {}) {
   const isCloud = hasLiveAiConnection(prefs);
-  const modelInfo = resolveActiveHighQualityModelLabel(appData, prefs);
 
   if (kind === 'analysis') {
     const minSec = 25;
@@ -149,9 +139,9 @@ export function estimateGenerationWait({
       minSec,
       maxSec,
       rangeLabel,
-      estLabel: `${rangeLabel} using ${modelInfo.shortModelName}`,
-      summaryText: `Deep scouting & cap analysis. (Estimated generation time ${rangeLabel} using ${modelInfo.shortModelName})`,
-      detailLabel: `Estimated generation time ${rangeLabel} using ${modelInfo.shortModelName}`
+      estLabel: rangeLabel,
+      summaryText: `Est. ${rangeLabel}`,
+      detailLabel: `Estimated generation time ${rangeLabel}`
     };
   }
 
@@ -175,9 +165,9 @@ export function estimateGenerationWait({
     minSec,
     maxSec,
     rangeLabel,
-    estLabel: `${rangeLabel} using ${modelInfo.shortModelName}`,
-    summaryText: `${mins} min pod. (Estimated generation time ${rangeLabel} using ${modelInfo.shortModelName})`,
-    detailLabel: `${mins} min pod. (Estimated generation time ${rangeLabel} using ${modelInfo.shortModelName})`
+    estLabel: rangeLabel,
+    summaryText: `${mins} min pod • Est. ${rangeLabel}`,
+    detailLabel: `${mins} min pod • Est. ${rangeLabel}`
   };
 }
 

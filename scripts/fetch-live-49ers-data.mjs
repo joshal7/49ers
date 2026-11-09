@@ -62,8 +62,14 @@ import {
 import {
   classifyBreakingItem,
   sortNewsWithBreakingPriority,
-  formatTweetBodyForDisplay
+  formatTweetBodyForDisplay,
+  resolveGameNewsContext
 } from '../src/engine/breakingClassifier.js';
+import {
+  isBeforeWeeklyPracticeWindow,
+  classifyRosterUnit,
+  resolveEarlyWeekRolloverInput
+} from '../src/engine/gameDayRosterEngine.js';
 import {
   validateNoHallucinatedRosterClaims,
   sanitizeHallucinatedRosterText
@@ -133,16 +139,58 @@ function parseCsv(text = '') {
   return rows;
 }
 
-async function fetchCsv(url) {
-  const res = await fetch(url, {
-    redirect: 'follow',
-    headers: { 'User-Agent': 'Mozilla/5.0 (49ers Data Pipeline)' },
-    signal: AbortSignal.timeout(20000)
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  const text = url.endsWith('.gz') ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
-  return parseCsv(text);
+let activeCsvDownloads = 0;
+const csvWaitQueue = [];
+const MAX_CONCURRENT_CSV = 2;
+
+async function acquireCsvSlot() {
+  if (activeCsvDownloads < MAX_CONCURRENT_CSV) {
+    activeCsvDownloads += 1;
+    return;
+  }
+  await new Promise(resolve => csvWaitQueue.push(resolve));
+  activeCsvDownloads += 1;
+}
+
+function releaseCsvSlot() {
+  activeCsvDownloads = Math.max(0, activeCsvDownloads - 1);
+  const next = csvWaitQueue.shift();
+  if (next) next();
+}
+
+async function fetchCsv(url, retries = 6) {
+  await acquireCsvSlot();
+  try {
+    let lastErr = null;
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        const res = await fetch(url, {
+          redirect: 'follow',
+          headers: { 'User-Agent': 'Mozilla/5.0 (49ers Data Pipeline)' },
+          signal: AbortSignal.timeout(35000)
+        });
+        if (!res.ok) {
+          if ((res.status >= 500 || res.status === 429) && attempt < retries) {
+            await new Promise(r => setTimeout(r, 1800 * attempt));
+            continue;
+          }
+          throw new Error(`HTTP ${res.status} fetching ${url}`);
+        }
+        const buf = Buffer.from(await res.arrayBuffer());
+        const text = url.endsWith('.gz') ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
+        return parseCsv(text);
+      } catch (err) {
+        lastErr = err;
+        if (attempt < retries) {
+          await new Promise(r => setTimeout(r, 1800 * attempt));
+          continue;
+        }
+      }
+    }
+    throw lastErr || new Error(`Failed fetching ${url}`);
+  } finally {
+    releaseCsvSlot();
+  }
 }
 
 async function fetchCsvWithFallback(primaryUrl, fallbackUrl = null) {
@@ -310,7 +358,7 @@ async function main() {
     draftPicksRows,
     gamesRows
   ] = await Promise.all([
-    fetchCsv(`${NFLVERSE_BASE}/players/players.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/players/players.csv.gz`, `${NFLVERSE_BASE}/players/players.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 1}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 2}.csv.gz`),
@@ -323,19 +371,19 @@ async function main() {
       `${NFLVERSE_BASE}/stats_team/stats_team_week_${seasonYear}.csv.gz`,
       `${NFLVERSE_BASE}/stats_team/stats_team_week_${prevSeasonYear}.csv.gz`
     ),
-    fetchCsv(`${NFLVERSE_BASE}/nextgen_stats/ngs_passing.csv.gz`),
-    fetchCsv(`${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv.gz`),
-    fetchCsv(`${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv.gz`),
-    fetchCsv(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv.gz`),
-    fetchCsv(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_passing.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_passing.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv`),
     fetchCsvWithFallback(
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${seasonYear}.csv.gz`,
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${prevSeasonYear}.csv.gz`
     ),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/injuries/injuries_${seasonYear}.csv.gz`),
-    fetchCsv(`${NFLVERSE_BASE}/combine/combine.csv`),
-    fetchCsv(`${NFLVERSE_BASE}/draft_picks/draft_picks.csv.gz`),
-    fetchCsv(`${NFLVERSE_BASE}/schedules/games.csv.gz`)
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/combine/combine.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/draft_picks/draft_picks.csv.gz`, `${NFLVERSE_BASE}/draft_picks/draft_picks.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/schedules/games.csv.gz`, 'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv')
   ]);
 
   // 4. Parse OverTheCap Contracts & Homonym-Safe Player Identity Resolver
@@ -609,6 +657,16 @@ async function main() {
     (espnSchedule.events || [])[espnSchedule.events.length - 1] ||
     null;
   const detectedCurrentWeek = Number(nextEspnEvent?.week?.number || 9);
+  const sfBeforePracticeWindow = isBeforeWeeklyPracticeWindow(nextEspnEvent?.date || '');
+  const pipelineScheduleStub = (espnSchedule.events || []).map(ev => ({
+    week: Number(ev.week?.number || 0),
+    dateIso: ev.date,
+    completed: Boolean(ev.competitions?.[0]?.status?.type?.completed),
+    statusState: String(ev.competitions?.[0]?.status?.type?.state || '').toLowerCase()
+  }));
+  const pipelineGameContext = resolveGameNewsContext({
+    scheduleMatchup: { schedule: pipelineScheduleStub }
+  });
   const nextEspnOppCompetitor = (nextEspnEvent?.competitions?.[0]?.competitors || []).find(
     c => String(c.team?.id) !== '25' && c.team?.abbreviation !== 'SF'
   );
@@ -839,16 +897,30 @@ async function main() {
         Boolean(txRec?.activatedFromIrDate) &&
         Date.now() - Date.parse(txRec.activatedFromIrDate) <= 5 * 86_400_000;
 
+      const sfEarlyRoll =
+        !officialInjReport.hasSfReport && sfBeforePracticeWindow && bucket === 'active'
+          ? resolveEarlyWeekRolloverInput({
+              rawStatus,
+              injuryType: explicitInjType || leadParenBodyPart,
+              shortComment: rawShortComment,
+              longComment: rawLongComment,
+              upcomingWeek: detectedCurrentWeek
+            })
+          : null;
+
+      const isEarlyRestEntry = Boolean(sfEarlyRoll?.skip);
+
       const isGenuineInjuryReportEntry =
         bucket === 'active'
           ? officialInjReport.hasSfReport
             ? Boolean(offInjRec)
-            : ['out', 'doubtful', 'questionable'].includes(rawStatus.toLowerCase()) ||
-              Boolean(explicitInjType) ||
-              Boolean(leadParenBodyPart) ||
-              /(designation|questionable|doubtful|ruled out|will miss|limited in practice|did not practice)/i.test(
-                rawShortComment
-              )
+            : !isEarlyRestEntry &&
+              (['out', 'doubtful', 'questionable'].includes(rawStatus.toLowerCase()) ||
+                Boolean(explicitInjType) ||
+                Boolean(leadParenBodyPart) ||
+                /(designation|questionable|doubtful|ruled out|will miss|limited in practice|did not practice)/i.test(
+                  rawShortComment
+                ))
           : true;
 
       const injuryType =
@@ -858,7 +930,8 @@ async function main() {
       const shortComment = isGenuineInjuryReportEntry ? rawShortComment : '';
       const longComment = isGenuineInjuryReportEntry ? rawLongComment : '';
 
-      // Practice participation: prefer official 49ers.com Wed/Thu/Fri report when available
+      // Practice participation: prefer official 49ers.com Wed/Thu/Fri report when available;
+      // before Wednesday's first practice report of the upcoming week, keep W / T / F blank ('-')!
       let wed = '-';
       let thu = '-';
       let fri = '-';
@@ -866,7 +939,7 @@ async function main() {
         wed = offInjRec.wed;
         thu = offInjRec.thu;
         fri = offInjRec.fri;
-      } else if (bucket === 'active' && isGenuineInjuryReportEntry) {
+      } else if (!sfBeforePracticeWindow && bucket === 'active' && isGenuineInjuryReportEntry) {
         const extracted = extractPracticeDaysFromText({
           statusRaw: rawStatus,
           injuryType,
@@ -876,7 +949,7 @@ async function main() {
         wed = extracted.wed;
         thu = extracted.thu;
         fri = extracted.fri;
-      } else if (isIrReturnQuestionable) {
+      } else if (!sfBeforePracticeWindow && isIrReturnQuestionable) {
         wed = 'LP';
         thu = 'LP';
         fri = 'LP';
@@ -890,9 +963,11 @@ async function main() {
             ? 'Active'
             : offInjRec
               ? offInjRec.gameStatus || 'Active'
-              : isGenuineInjuryReportEntry
-                ? rawStatus
-                : '';
+              : sfEarlyRoll && isGenuineInjuryReportEntry
+                ? sfEarlyRoll.effectiveStatus
+                : isGenuineInjuryReportEntry
+                  ? rawStatus
+                  : '';
 
       const playProb = computePlayerPlayProbability({
         name: fullName,
@@ -907,7 +982,11 @@ async function main() {
         wed,
         thu,
         fri,
-        beatNote: isGenuineInjuryReportEntry ? `${shortComment} ${longComment}` : ''
+        beatNote: isGenuineInjuryReportEntry
+          ? sfEarlyRoll
+            ? sfEarlyRoll.beatNoteForModel
+            : `${shortComment} ${longComment}`
+          : ''
       });
 
       const spiderProfile = buildPlayerSpiderProfile({
@@ -992,13 +1071,15 @@ async function main() {
               ? irClassification.status
               : offInjRec?.gameStatus
                 ? offInjRec.gameStatus
-                : isGenuineInjuryReportEntry && rawStatus
-                  ? rawStatus === 'Active'
-                    ? 'No Designation (Cleared)'
-                    : rawStatus
-                  : bucket === 'active'
-                    ? 'Active'
-                    : bucket.toUpperCase(),
+                : sfEarlyRoll && isGenuineInjuryReportEntry
+                  ? sfEarlyRoll.effectiveStatus
+                  : isGenuineInjuryReportEntry && rawStatus
+                    ? rawStatus === 'Active'
+                      ? 'No Designation (Cleared)'
+                      : rawStatus
+                    : bucket === 'active'
+                      ? 'Active'
+                      : bucket.toUpperCase(),
           injuryType,
           returnDate: returnDateStr,
           isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
@@ -1460,8 +1541,8 @@ async function main() {
               primaryPlayer: p,
               publishedAt: new Date(pubMs).toISOString(),
               url: itemUrl,
-              externalUrl: attr.xUrl || null,
-              externalTitle: attr.authorHandle ? `${attr.author} (${attr.authorHandle}) on X` : null,
+              externalUrl: null,
+              externalTitle: null,
               outletId: attr.outletId || 'espn',
               outletName: attr.outletName || 'ESPN / X Beat Wire',
               reporterId: attr.reporterId,
@@ -1661,8 +1742,8 @@ async function main() {
       mentionedPlayers: mentioned,
       publishedAt: pubIso,
       url: txUrl,
-      externalUrl: 'https://x.com/49ers',
-      externalTitle: 'San Francisco 49ers (@49ers) on X',
+      externalUrl: null,
+      externalTitle: null,
       outletId: '49ers_official',
       outletName: '49ers.com Official',
       reporterId: '49ers_news',
@@ -1788,8 +1869,8 @@ async function main() {
         mentionedPlayers: matchMentionedPlayers(`${title} ${desc}`, 20),
         publishedAt: pubIso,
         url: link,
-        externalUrl: attr.xUrl || null,
-        externalTitle: attr.authorHandle ? `${attr.author} (${attr.authorHandle}) on X` : null,
+        externalUrl: null,
+        externalTitle: null,
         outletId: attr.outletId,
         outletName: attr.outletName || fallbackOutlet,
         reporterId: attr.reporterId,
@@ -2104,8 +2185,11 @@ async function main() {
     });
   }
 
-  // Sort raw stream so breaking / live in-game injury news rises directly to #1!
-  const sortedStream = sortNewsWithBreakingPriority(rawNewsStream, Date.now(), { activeWindowHours: 18 });
+  // Sort raw stream so breaking / live in-game & 48h post-game injury news rises directly to #1!
+  const sortedStream = sortNewsWithBreakingPriority(rawNewsStream, Date.now(), {
+    activeWindowHours: 18,
+    gameContext: pipelineGameContext
+  });
   rawNewsStream.length = 0;
   rawNewsStream.push(...sortedStream);
 
@@ -2757,8 +2841,11 @@ async function main() {
     if (nm) oppInjByName.set(normName(nm), item);
   }
 
+  const oppBeforePracticeWindow =
+    !officialInjReport.hasOppReport && isBeforeWeeklyPracticeWindow(nextScheduledGame?.dateIso || '');
   const oppInjuryReportPlayers = [];
   const oppIrPlayers = [];
+  const oppActiveRosterPlayers = [];
   const oppHealthyOffCandidates = [];
   const oppHealthyDefCandidates = [];
   const seenOppNames = new Set();
@@ -2790,6 +2877,21 @@ async function main() {
       const jersey = ath.jersey !== undefined && ath.jersey !== null && ath.jersey !== '' ? Number(ath.jersey) : null;
       const expYears = Number.isFinite(Number(ath.experience?.years)) ? Number(ath.experience.years) : null;
       const snapPct = getOppSnapPct(nk);
+
+      if (!isIrGroup) {
+        oppActiveRosterPlayers.push({
+          id: espnId,
+          name: nm,
+          position: pos,
+          unit: classifyRosterUnit(pos, unitLabel),
+          rosterBucket: 'active',
+          jersey,
+          headshotUrl,
+          espnUrl,
+          snapPct,
+          isStarter: dynamicOppStarterNames.has(nk)
+        });
+      }
       const nflInjRec = oppNflInjByName.get(nk) || null;
       const offOppInjRec = officialInjReport.oppByKey.get(oppCanonKey) || null;
       const oppWebInj = oppWebAthleteDetails.get(espnId)?.injury || null;
@@ -2906,23 +3008,72 @@ async function main() {
       }
 
       if (hasExplicitInjuryDesignation) {
+        const oppEarlyRoll =
+          !offOppInjRec && oppBeforePracticeWindow && !isIrReturnQuestionable
+            ? resolveEarlyWeekRolloverInput({
+                rawStatus,
+                injuryType: specificInjuryType,
+                shortComment: rawShort,
+                longComment: rawLong,
+                upcomingWeek: currentWeek
+              })
+            : null;
+        if (oppEarlyRoll?.skip) {
+          if (dynamicOppStarterNames.has(nk)) {
+            seenOppNames.add(nk);
+            const healthyStarterProb = computePlayerPlayProbability({
+              name: nm,
+              position: pos,
+              experienceYears: expYears,
+              snapPct,
+              rosterBucket: 'active'
+            });
+            const starterEntry = {
+              name: nm,
+              position: pos,
+              unit: oppDefStarterNames.has(nk) ? 'Defense' : 'Offense',
+              jersey,
+              headshotUrl,
+              espnUrl,
+              snapPct,
+              gameStatus: 'Active • Off Injury Report',
+              playProbabilityPct: healthyStarterProb.probabilityPct,
+              playBadgeLabel: healthyStarterProb.badgeLabel,
+              archetypeNote: healthyStarterProb.priorUsed?.archetypeNote || '',
+              shortComment:
+                snapPct != null
+                  ? `1st-string ${oppDefStarterNames.has(nk) ? 'Defense' : 'Offense'} (${snapPct}% snaps) • Off injury report.`
+                  : 'Listed 1st-string on depth chart; active without game designation.'
+            };
+            if (oppDefStarterNames.has(nk)) {
+              oppHealthyDefCandidates.push(starterEntry);
+            } else {
+              oppHealthyOffCandidates.push(starterEntry);
+            }
+          }
+          continue;
+        }
         seenOppNames.add(nk);
         const extractedDays = offOppInjRec
           ? { wed: offOppInjRec.wed, thu: offOppInjRec.thu, fri: offOppInjRec.fri }
-          : extractPracticeDaysFromText({
-              statusRaw: isIrReturnQuestionable ? 'Questionable' : rawStatus,
-              injuryType: specificInjuryType,
-              shortComment: rawShort,
-              longComment: rawLong,
-              nflversePracticeStatus: nflInjRec?.week === currentWeek ? nflInjRec.practiceStatus : ''
-            });
+          : oppBeforePracticeWindow
+            ? { wed: '-', thu: '-', fri: '-' }
+            : extractPracticeDaysFromText({
+                statusRaw: isIrReturnQuestionable ? 'Questionable' : rawStatus,
+                injuryType: specificInjuryType,
+                shortComment: rawShort,
+                longComment: rawLong,
+                nflversePracticeStatus: nflInjRec?.week === currentWeek ? nflInjRec.practiceStatus : ''
+              });
         const { wed, thu, fri } = extractedDays;
 
         const effectiveOppStatus = isIrReturnQuestionable
           ? 'Questionable'
           : offOppInjRec
             ? offOppInjRec.gameStatus || 'Active'
-            : rawStatus;
+            : oppEarlyRoll
+              ? oppEarlyRoll.effectiveStatus
+              : rawStatus;
 
         const prob = computePlayerPlayProbability({
           name: nm,
@@ -2936,7 +3087,7 @@ async function main() {
           wed,
           thu,
           fri,
-          beatNote: `${rawShort} ${rawLong}`
+          beatNote: oppEarlyRoll ? oppEarlyRoll.beatNoteForModel : `${rawShort} ${rawLong}`
         });
 
         oppInjuryReportPlayers.push({
@@ -3021,29 +3172,47 @@ async function main() {
         Boolean(item.details?.type) ||
         (Boolean(leadPart) && /(designation|questionable|ruled out|will miss|doubtful)/i.test(rawShort));
     if (!hasDesignation) continue;
-    seenOppNames.add(nk);
     const injuryType = item.details?.type || leadPart || '';
+    const oppFallbackEarlyRoll = oppBeforePracticeWindow
+      ? resolveEarlyWeekRolloverInput({
+          rawStatus,
+          injuryType,
+          shortComment: rawShort,
+          longComment: rawLong,
+          upcomingWeek: currentWeek
+        })
+      : null;
+    if (oppFallbackEarlyRoll?.skip) continue;
+    seenOppNames.add(nk);
     const pos = item.athlete?.position?.abbreviation || 'ATH';
     const snapPct = getOppSnapPct(nk);
-    const { wed, thu, fri } = extractPracticeDaysFromText({
-      statusRaw: rawStatus,
-      injuryType,
-      shortComment: rawShort,
-      longComment: rawLong
-    });
+    const { wed, thu, fri } = oppBeforePracticeWindow
+      ? { wed: '-', thu: '-', fri: '-' }
+      : extractPracticeDaysFromText({
+          statusRaw: rawStatus,
+          injuryType,
+          shortComment: rawShort,
+          longComment: rawLong
+        });
+    const effectiveFallbackStatus = oppFallbackEarlyRoll ? oppFallbackEarlyRoll.effectiveStatus : rawStatus;
     const prob = computePlayerPlayProbability({
       name: nm,
       position: pos,
       snapPct,
-      gameStatus: rawStatus,
+      gameStatus: effectiveFallbackStatus,
       rosterBucket: 'active',
       injuryType,
       wed,
       thu,
       fri,
-      beatNote: `${rawShort} ${rawLong}`
+      beatNote: oppFallbackEarlyRoll ? oppFallbackEarlyRoll.beatNoteForModel : `${rawShort} ${rawLong}`
     });
-    const oppFallbackEspnId = String(item.athlete?.id || '');
+    const oppFallbackEspnId = String(
+      item.athlete?.id ||
+        item.athlete?.headshot?.href?.match(/\/(\d+)\.png/)?.[1] ||
+        item.athlete?.links?.[0]?.href?.match(/\/id\/(\d+)/)?.[1] ||
+        ''
+    );
     oppInjuryReportPlayers.push({
       name: nm,
       position: pos,
@@ -3058,7 +3227,7 @@ async function main() {
       thu,
       fri,
       injuryType: injuryType || 'Injury Report',
-      gameStatus: rawStatus === 'Active' ? 'No Designation (Cleared)' : rawStatus,
+      gameStatus: effectiveFallbackStatus === 'Active' ? 'No Designation (Cleared)' : effectiveFallbackStatus,
       shortComment: rawShort,
       longComment: rawLong,
       isStarter: dynamicOppStarterNames.has(nk),
@@ -3224,6 +3393,7 @@ async function main() {
 
   const upcomingMatchup = {
     week: currentWeek,
+    gameId: nextScheduledGame?.id || null,
     homeAway: sfIsHome ? 'home' : 'away',
     gameUrl: nextScheduledGame?.gameUrl || 'https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers',
     injurySourceUrl: 'https://www.espn.com/nfl/injuries',
@@ -3255,6 +3425,7 @@ async function main() {
         clearedCount: oppInjuryReportPlayers.filter(p => p.playProbabilityPct >= 85).length,
         irCount: oppIrPlayers.length
       },
+      activeRoster: oppActiveRosterPlayers,
       injuryReport: oppInjuryReportPlayers,
       keyStartersHealthy: oppKeyHealthyStarters,
       irReserve: oppIrPlayers
@@ -3320,7 +3491,7 @@ async function main() {
   const intlSfWeeks = new Set(
     scheduleItems.filter(s => s.venue?.isInternational).map(s => Number(s.week))
   );
-  const completed2026Games = nflGames2026
+  let completed2026Games = nflGames2026
     .filter(g => g.home_score !== '' && g.away_score !== '')
     .map(g => ({
       id: g.game_id,
@@ -3331,7 +3502,7 @@ async function main() {
       awayScore: Number(g.away_score)
     }));
 
-  const remaining2026Games = nflGames2026
+  let remaining2026Games = nflGames2026
     .filter(g => g.home_score === '' || g.away_score === '')
     .map(g => {
       const home = normalizeTeamAbbr(g.home_team);
@@ -3347,6 +3518,47 @@ async function main() {
           ((home === 'SF' || away === 'SF') && intlSfWeeks.has(wk))
       };
     });
+
+  // Fallback to existing seasonal.json schedule tables if upstream nflverse schedule CSV was transiently unavailable
+  if (completed2026Games.length === 0 && remaining2026Games.length === 0) {
+    try {
+      const prevSeasonal = JSON.parse(fs.readFileSync(path.join(dataDir, 'seasonal.json'), 'utf8'));
+      const prevIn = prevSeasonal?.playoffPicture?.simulatorInputs;
+      if (Array.isArray(prevIn?.completedGames)) completed2026Games = prevIn.completedGames;
+      if (Array.isArray(prevIn?.remainingGames)) remaining2026Games = prevIn.remainingGames;
+    } catch {
+      // ignore
+    }
+  }
+
+  // Reconcile newly completed SF games from live ESPN schedule so SF never simulates 18 games right after Final
+  const completedSfByWeek = new Map(
+    scheduleItems.filter(s => s.completed).map(s => [Number(s.week), s])
+  );
+  if (completedSfByWeek.size > 0 && remaining2026Games.length > 0) {
+    const stillRemaining = [];
+    for (const rg of remaining2026Games) {
+      const isSf = rg.home === 'SF' || rg.away === 'SF';
+      const doneSf = isSf ? completedSfByWeek.get(Number(rg.week)) : null;
+      if (doneSf && doneSf.sfScore != null && doneSf.oppScore != null) {
+        const homeScore = rg.home === 'SF' ? Number(doneSf.sfScore) : Number(doneSf.oppScore);
+        const awayScore = rg.home === 'SF' ? Number(doneSf.oppScore) : Number(doneSf.sfScore);
+        if (!completed2026Games.some(cg => cg.id === rg.id)) {
+          completed2026Games.push({
+            id: rg.id,
+            week: rg.week,
+            home: rg.home,
+            away: rg.away,
+            homeScore,
+            awayScore
+          });
+        }
+      } else {
+        stillRemaining.push(rg);
+      }
+    }
+    remaining2026Games = stillRemaining;
+  }
 
   // Compute 32-team Net EPA/game (Offense EPA - Defense EPA Allowed) from nflverse weekly team stats
   const netEpaByTeam = new Map();
@@ -3687,6 +3899,27 @@ async function main() {
     }
   }
 
+  // Preserve previously resolved nflverse IDs (`gsisId`, `pfrId`, `pfrUrl`) if `players.csv.gz` had a transient 504
+  try {
+    const prevRosterPath = path.join(dataDir, 'roster.json');
+    if (fs.existsSync(prevRosterPath)) {
+      const prevRoster = JSON.parse(fs.readFileSync(prevRosterPath, 'utf8'));
+      const prevById = new Map((prevRoster?.players || []).map(p => [String(p.id), p]));
+      const prevByName = new Map((prevRoster?.players || []).map(p => [normName(p.name), p]));
+      for (const p of rosterPlayers) {
+        const prev = prevById.get(String(p.id)) || prevByName.get(normName(p.name));
+        if (!prev) continue;
+        if (!p.gsisId && prev.gsisId) p.gsisId = prev.gsisId;
+        if (!p.pfrId && prev.pfrId) {
+          p.pfrId = prev.pfrId;
+          p.pfrUrl = prev.pfrUrl || buildPfrPlayerUrl(prev.pfrId);
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+
   writeCleanJson(path.join(dataDir, 'meta.json'), metaJson);
   writeCleanJson(path.join(dataDir, 'roster.json'), {
     updatedAt: nowIso,
@@ -3784,73 +4017,13 @@ async function main() {
     draftClass2026: draft2026Payload
   });
 
-  // Keep `data/podcasts/index.json` fresh automatically as weeks advance in CI
+  // Preserve mastered `.m4a` studio episodes in `data/podcasts/index.json` (built by `scripts/build-podcasts.mjs`)
   const podcastIndexPath = path.join(dataDir, 'podcasts', 'index.json');
   if (fs.existsSync(podcastIndexPath)) {
     try {
       const podIdx = JSON.parse(fs.readFileSync(podcastIndexPath, 'utf8'));
-      const episodes = Array.isArray(podIdx.episodes) ? podIdx.episodes : [];
-      const weekTagRegex = new RegExp(`\\bweek\\s*${currentWeek}\\b`, 'i');
-      const hasCurrentWeekEp = episodes.some(
-        ep => ep.id === `ep-week${currentWeek}-live-brief` || weekTagRegex.test(`${ep.title} ${ep.topic || ''}`)
-      );
-
-      if (!hasCurrentWeekEp) {
-        const autoEpId = `ep-week${currentWeek}-live-brief`;
-        const capM = (((otcParsed.years[capPrimaryYrKey]?.teamCapSpace || 0)) / 1_000_000).toFixed(2);
-        const cap27M = Math.abs(((otcParsed.years[nextCapYrKey]?.teamCapSpace ?? -31_540_066)) / 1_000_000).toFixed(2);
-        const rawTurns = [
-          {
-            speaker: 'Marcus',
-            text: `Welcome to the 49ers Faithful Briefing for Week ${currentWeek}. San Francisco sits at ${sfStandingsDetail.record} (${sfStandingsDetail.standingSummary}) heading into ${upcomingMatchup.homeAway === 'away' ? 'a road test against' : 'a home matchup with'} the ${upcomingMatchup.oppName} (${upcomingMatchup.oppRecord}).`
-          },
-          {
-            speaker: 'Elena',
-            text: `From the tape and numbers desk: ${clusteredBriefs[0]?.hardFacts?.[0] || `San Francisco enters Week ${currentWeek} priced at ${upcomingMatchup.betting?.spread || 'pick'} with a ${upcomingMatchup.betting?.overUnder || '—'} total.`} On the cap ledger, San Francisco holds $${capM} million in ${capPrimaryYrKey} Top-51 space—which must roll over via Article 13 to offset a projected $${cap27M} million ${nextCapYrKey} cap deficit.`
-          },
-          {
-            speaker: 'Marcus',
-            text: `Checking the injury and availability wire: ${practiceReportPlayers.slice(0, 4).map(p => `${p.name} is ${p.playBadgeLabel}`).join('; ') || 'the active 53-man core is cleared for kickoff'}.`
-          },
-          {
-            speaker: 'Elena',
-            text: `And in our calibrated 10,000-trial Empirical-Bayes and EPA Monte Carlo model, San Francisco projects for ${baselineMonteCarlo.sfOdds?.projectedWins ?? 12.0} wins—${baselineMonteCarlo.sfOdds?.makePlayoffsPct}% to make the postseason, ${baselineMonteCarlo.sfOdds?.winDivisionPct}% to win the NFC West, and ${baselineMonteCarlo.sfOdds?.seed1ByePct}% to secure the #1 seed first-round bye.`
-          }
-        ];
-        let cursor = 0;
-        const transcript = rawTurns.map((t, idx) => {
-          const words = t.text.split(/\s+/).length;
-          const dur = Math.max(9, Math.round((words / 150) * 60));
-          const seg = {
-            idx,
-            speaker: t.speaker,
-            speakerRole: t.speaker === 'Elena' ? 'Cap & Quantitative Insider' : "X's & O's Film Analyst",
-            text: t.text,
-            startSec: cursor,
-            endSec: cursor + dur
-          };
-          cursor += dur;
-          return seg;
-        });
-        const filteredEps = episodes.filter(ep => !String(ep.id || '').startsWith('ep-week') || ep.audioUrl);
-        filteredEps.unshift({
-          id: autoEpId,
-          title: `Week ${currentWeek} Live Briefing: ${sfStandingsDetail.record} 49ers vs. ${upcomingMatchup.oppName} Film, Health & Cap`,
-          topic: `Week ${currentWeek} ${upcomingMatchup.oppAbbr} Matchup, Injury Play Likelihood & CBA Cap Ledger`,
-          format: 'Two-Host Analytical Banter',
-          presetLabel: '2m Live Brief',
-          createdBy: '49ers Faithful Desk',
-          createdAt: nowIso,
-          sourceLinks: [
-            { label: 'ESPN Matchup Gamecast', url: upcomingMatchup.gameUrl || 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' },
-            { label: 'nflverse EPA Dataset', url: 'https://github.com/nflverse/nflverse-data' },
-            { label: 'OverTheCap 49ers Cap', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' }
-          ],
-          audioUrl: null,
-          durationSec: cursor,
-          transcript
-        });
-        podIdx.episodes = filteredEps.slice(0, 6);
+      if (Array.isArray(podIdx.episodes)) {
+        podIdx.episodes = podIdx.episodes.filter(ep => Boolean(ep?.audioUrl));
       }
       podIdx.updatedAt = nowIso;
       fs.writeFileSync(podcastIndexPath, JSON.stringify(podIdx, null, 2));

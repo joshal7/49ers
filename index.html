@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon" sizes="512x512" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png?v=6" />
-  <link rel="stylesheet" href="./src/styles.css?v=19" />
+  <link rel="stylesheet" href="./src/styles.css?v=20" />
 </head>
 <body>
   <!-- Full-Bleed Sticky Glass Header -->
@@ -199,7 +199,7 @@
           <div class="card-eyebrow" id="sheetEyebrow">49ers Dossier</div>
           <h2 class="card-title" id="sheetTitle" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Details</h2>
         </div>
-        <button type="button" id="closeSheetBtn" class="icon-btn" aria-label="Close Sheet">
+        <button type="button" id="closeSheetBtn" data-action="close-sheet" class="icon-btn" aria-label="Close Sheet">
           <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18"/>
             <line x1="6" y1="6" x2="18" y2="18"/>
@@ -214,6 +214,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=19"></script>
+  <script type="module" src="./src/app.js?v=20"></script>
 </body>
 </html>

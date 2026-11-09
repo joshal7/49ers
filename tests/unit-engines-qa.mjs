@@ -117,8 +117,24 @@ import {
   classifyBreakingItem,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
-  is49ersGameLiveWindow
+  is49ersGameLiveWindow,
+  resolveGameNewsContext,
+  deduplicateAndGroupWireItems,
+  stripRedundantAuthorBoilerplate,
+  isRedundantProfileSelfLink
 } from '../src/engine/breakingClassifier.js';
+import {
+  evaluateGameDayWindow,
+  isBeforeWeeklyPracticeWindow,
+  classifyRosterUnit,
+  extractWireGameDaySignals,
+  buildTeamGameDayRosterModel,
+  resolveGameDayInjuryRows,
+  resolveEarlyWeekRolloverInput,
+  rolloverPracticeReportForUpcomingWeek
+} from '../src/engine/gameDayRosterEngine.js';
+import { renderNewsViewHtml } from '../src/views/newsView.js';
+import { renderSettingsSheetHtml } from '../src/views/settingsArchiveView.js';
 import {
   buildNativePodcastAppHref,
   AI_STUDIO_DIRECT_KEY_URL,
@@ -565,8 +581,13 @@ test('Upcoming Matchup includes opponent health report & play likelihood percent
   const sm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
   const oppHealth = sm.upcomingMatchup?.opponentHealth;
   assert.ok(oppHealth, 'Missing upcomingMatchup.opponentHealth');
-  assert.ok(oppHealth.teamName?.includes('Raiders'), `Expected Raiders opponent health, got ${oppHealth.teamName}`);
-  assert.ok(Array.isArray(oppHealth.injuryReport) && oppHealth.injuryReport.length >= 3, 'Expected opponent injuryReport entries');
+  assert.equal(
+    oppHealth.teamName,
+    sm.upcomingMatchup.oppName,
+    `Expected opponent health for ${sm.upcomingMatchup.oppName}, got ${oppHealth.teamName}`
+  );
+  assert.ok(Array.isArray(oppHealth.activeRoster) && oppHealth.activeRoster.length >= 40, 'Expected opponent activeRoster >= 40');
+  assert.ok(Array.isArray(oppHealth.injuryReport) && oppHealth.injuryReport.length >= 1, 'Expected opponent injuryReport entries');
   for (const p of oppHealth.injuryReport) {
     assert.ok(typeof p.playProbabilityPct === 'number' && p.playProbabilityPct >= 0 && p.playProbabilityPct <= 99);
   }
@@ -1796,12 +1817,19 @@ test('Opponent Health & Play Likelihood has full parity with 49ers Health (Avail
   const oh = sched.upcomingMatchup?.opponentHealth;
   assert.ok(oh, 'opponentHealth present');
   assert.ok(oh.summary.overallAvailabilityScore >= 50 && oh.summary.overallAvailabilityScore <= 100);
-  assert.equal(oh.summary.totalStarters, 22);
-  assert.ok(oh.keyStartersHealthy.some(s => s.name === 'Maxx Crosby'), 'Defensive star Maxx Crosby included in healthy starters');
-  assert.ok(oh.injuryReport.length >= 3);
+  assert.ok(oh.summary.totalStarters >= 22);
+  assert.ok(oh.keyStartersHealthy.some(s => s.unit === 'Offense'), 'Offensive healthy starters included');
+  assert.ok(oh.keyStartersHealthy.some(s => s.unit === 'Defense'), 'Defensive healthy starters included');
+  assert.ok(oh.injuryReport.length >= 1);
+  const earlyWeek = isBeforeWeeklyPracticeWindow(sched.upcomingMatchup?.kickoffIso || '');
   for (const p of oh.injuryReport) {
     assert.ok(typeof p.archetypeNote === 'string' && p.archetypeNote.length > 5);
     assert.ok(Array.isArray(p.factors) && p.factors.length >= 1);
+    if (earlyWeek) {
+      assert.equal(p.wed, '-', `Early-week opponent row ${p.name} must have blank wed ('-')`);
+      assert.equal(p.thu, '-', `Early-week opponent row ${p.name} must have blank thu ('-')`);
+      assert.equal(p.fri, '-', `Early-week opponent row ${p.name} must have blank fri ('-')`);
+    }
   }
   assert.ok(oh.irReserve.length >= 1);
   for (const ir of oh.irReserve) {
@@ -2129,6 +2157,12 @@ test('Official 49ers.com Roster/Injury HTML parsers and ESPN transaction analyze
   assert.equal(staleParsed.hasSfReport, false, 'Stale prior-week SF practice report must be rejected on Mon/Tue rollover');
   assert.equal(staleParsed.oppByKey.size, 0);
 
+  // Footer/nav chrome mentioning next week's opponent must NEVER trick parser into accepting a prior-week table!
+  const staleWithFooterChrome = `${staleOppHtml}\n${'<div>Schedule Chrome Filler</div>\n'.repeat(40)}<footer>Next Up: Las Vegas Raiders &amp; Dallas Cowboys</footer>`;
+  const footerRejected = parseOfficial49ersInjuryReportHtml(staleWithFooterChrome, 'Dallas Cowboys');
+  assert.equal(footerRejected.reportMatchesCurrentOpponent, false, 'Footer mention of Cowboys must not validate Falcons table');
+  assert.equal(footerRejected.hasSfReport, false);
+
   // 2. Matching current-week injury report parses both 49ers and Raiders Wed/Thu/Fri & Game Status accurately
   const currentWeekHtml = staleOppHtml
     .replace('Atlanta Falcons', 'Las Vegas Raiders')
@@ -2201,7 +2235,7 @@ test('Live 2026 Health, Roster & Depth Chart datasets eliminate Alfred Collins b
 
   // Nate Hobbs has open 21-day window targeting Week 10
   const hobbs = health.irAndReserveTracker.find(p => p.name === 'Nate Hobbs');
-  assert.ok(hobbs && hobbs.isPracticeWindowOpen === true && hobbs.projectedReturnWeek.startsWith('Est. Week 10'));
+  assert.ok(hobbs && hobbs.isPracticeWindowOpen === true && /Week 10/i.test(hobbs.projectedReturnWeek));
 
   // Released / non-rostered ghosts must be completely purged
   for (const ghost of ['Brett Toth', 'Vincent Anthony Jr.']) {
@@ -2222,14 +2256,23 @@ test('Live 2026 Health, Roster & Depth Chart datasets eliminate Alfred Collins b
   assert.equal(aiyuk?.health?.status, 'Reserve / Left Squad');
   assert.ok(!health.practiceReport.some(p => p.name === 'Brandon Aiyuk'), 'Brandon Aiyuk must not be duplicated onto active practiceReport');
 
-  // Official 49ers.com practice participation verification
-  const neal = health.practiceReport.find(p => p.name === 'Siran Neal');
-  assert.ok(neal && neal.wed === 'DNP' && neal.thu === 'DNP' && neal.fri === 'LP', `Expected Siran Neal DNP/DNP/LP, got ${JSON.stringify(neal)}`);
-  const cmc = health.practiceReport.find(p => p.name === 'Christian McCaffrey');
-  assert.ok(cmc && cmc.wed === 'DNP' && cmc.thu === 'LP' && cmc.fri === 'FP', `Expected CMC DNP/LP/FP, got ${JSON.stringify(cmc)}`);
+  // Official 49ers.com practice participation & early-week blank W/T/F rollover verification
+  const matchupJson = JSON.parse(matchupRaw);
+  assert.equal(health.week, matchupJson.upcomingMatchup.week, 'health.json week must match upcomingMatchup.week');
+  const sfEarlyWeek = isBeforeWeeklyPracticeWindow(matchupJson.upcomingMatchup.kickoffIso || '');
+  if (sfEarlyWeek) {
+    for (const row of health.practiceReport) {
+      assert.equal(row.wed, '-', `Early-week SF row ${row.name} must have blank wed ('-')`);
+      assert.equal(row.thu, '-', `Early-week SF row ${row.name} must have blank thu ('-')`);
+      assert.equal(row.fri, '-', `Early-week SF row ${row.name} must have blank fri ('-')`);
+      assert.ok(!/coach'?s decision|nir\s*-?\s*rest/i.test(row.injuryType || ''), `Non-injury scratch forbidden on upcoming week report: ${row.name}`);
+    }
+  } else {
+    assert.ok(health.practiceReport.some(p => p.wed !== '-' || p.thu !== '-' || p.fri !== '-'));
+  }
 });
 
-await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses and official Opponent Wed/Thu/Fri participation', async () => {
+await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses, official in-week Opponent Wed/Thu/Fri codes, and blanks W/T/F on post-game rollover', async () => {
   const origFetch = globalThis.fetch;
   try {
     const appData = {
@@ -2239,10 +2282,33 @@ await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses and 
       scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'))
     };
 
-    const porterBefore = appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport.find(p =>
-      p.name.includes('Darien Porter')
-    );
-    assert.ok(porterBefore && porterBefore.wed === 'DNP' && porterBefore.thu === 'LP' && porterBefore.fri === 'FP');
+    // Case A: Friday in-week practice window (~48h before kickoff) — preserve official Opponent Wed/Thu/Fri codes!
+    const friKickoffIso = new Date(Date.now() + 48 * 3600_000).toISOString();
+    appData.scheduleMatchup.upcomingMatchup.kickoffIso = friKickoffIso;
+    appData.scheduleMatchup.upcomingMatchup.oppAbbr = 'LV';
+    appData.scheduleMatchup.upcomingMatchup.oppName = 'Las Vegas Raiders';
+    const nextUnplayed = appData.scheduleMatchup.schedule.find(g => !g.completed);
+    if (nextUnplayed) {
+      nextUnplayed.dateIso = friKickoffIso;
+      nextUnplayed.opponent = { ...nextUnplayed.opponent, abbr: 'LV', name: 'Las Vegas Raiders' };
+    }
+    appData.scheduleMatchup.upcomingMatchup.opponentHealth.teamAbbr = 'LV';
+    appData.scheduleMatchup.upcomingMatchup.opponentHealth.teamName = 'Las Vegas Raiders';
+    appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport = [
+      {
+        name: 'Darien Porter',
+        position: 'CB',
+        unit: 'Defense',
+        jersey: 25,
+        wed: 'DNP',
+        thu: 'LP',
+        fri: 'FP',
+        injuryType: 'Back',
+        gameStatus: 'Questionable',
+        playProbabilityPct: 86,
+        playBadgeLabel: '86% • Likely'
+      }
+    ];
 
     globalThis.fetch = async reqUrl => {
       const u = String(reqUrl);
@@ -2263,9 +2329,15 @@ await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses and 
               },
               {
                 id: '13',
+                displayName: 'Las Vegas Raiders',
                 injuries: [
                   {
-                    athlete: { id: '5123456', displayName: 'Darien Porter', position: { abbreviation: 'CB' } },
+                    athlete: {
+                      id: '5123456',
+                      displayName: 'Darien Porter',
+                      position: { abbreviation: 'CB' },
+                      team: { abbreviation: 'LV' }
+                    },
                     status: 'Active',
                     details: { type: 'Back' },
                     shortComment: 'Porter carries no injury designation into Sunday.'
@@ -2291,8 +2363,22 @@ await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses and 
     );
     assert.ok(
       porterAfter && porterAfter.wed === 'DNP' && porterAfter.thu === 'LP' && porterAfter.fri === 'FP',
-      `Browser overlay must preserve official 49ers.com opponent Wed/Thu/Fri codes, got ${JSON.stringify(porterAfter)}`
+      `Browser overlay must preserve official 49ers.com opponent Wed/Thu/Fri codes during practice window, got ${JSON.stringify(porterAfter)}`
     );
+
+    // Case B: Monday early-week rollover (~144h before next Sunday kickoff) — blank W/T/F to '-'!
+    const nextSunIso = new Date(Date.now() + 144 * 3600_000).toISOString();
+    appData.scheduleMatchup.upcomingMatchup.kickoffIso = nextSunIso;
+    if (nextUnplayed) nextUnplayed.dateIso = nextSunIso;
+    await hydrateLiveEspnOverlay(appData);
+    const porterRolled = appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport.find(p =>
+      p.name.includes('Darien Porter')
+    );
+    if (porterRolled) {
+      assert.equal(porterRolled.wed, '-');
+      assert.equal(porterRolled.thu, '-');
+      assert.equal(porterRolled.fri, '-');
+    }
   } finally {
     globalThis.fetch = origFetch;
   }
@@ -2491,11 +2577,13 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   assert.ok(scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-2.5-pro'));
   assert.deepEqual(DEFAULT_AUDIO_TTS_CASCADE, ['gemini-2.5-pro-preview-tts', 'gemini-2.5-flash-preview-tts']);
 
-  // Model label & rough estimated generation time scaling
+  // Clutter-free model label & rough estimated generation time scaling
   const labelInfo = resolveActiveHighQualityModelLabel({
     meta: { aiEngine: { activeModel: 'gemini-3.8-flash', thinkingLevel: 'HIGH' } }
   });
-  assert.equal(labelInfo.displayLabel, 'Gemini 3.8 High • Accuracy-First');
+  assert.equal(labelInfo.modelId, 'gemini-3.8-flash');
+  assert.equal(labelInfo.displayLabel, 'Accuracy-First');
+  assert.ok(!/gemini/i.test(labelInfo.displayLabel), 'UI displayLabel must omit internal Gemini model branding');
 
   const cloud3 = estimateGenerationWait({
     kind: 'podcast',
@@ -2514,30 +2602,15 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   });
   assert.equal(cloud3.isCloud, true);
   assert.ok(cloud15.minSec > cloud8.minSec && cloud8.minSec > cloud3.minSec, 'Longer podcasts must estimate longer High-Thinking wait');
-  assert.equal(
-    cloud3.summaryText,
-    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
-  );
-  assert.equal(
-    cloud8.summaryText,
-    '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)'
-  );
-  assert.equal(
-    cloud15.summaryText,
-    '15 min pod. (Estimated generation time 2–4 min using Gemini 3.8 High)'
-  );
+  assert.equal(cloud3.summaryText, '3 min pod • Est. 45–90 sec');
+  assert.equal(cloud8.summaryText, '8 min pod • Est. 1–3 min');
+  assert.equal(cloud15.summaryText, '15 min pod • Est. 2–4 min');
 
   const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 3, prefs: {} });
   assert.equal(localEst.isCloud, false);
-  assert.equal(
-    localEst.summaryText,
-    '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)'
-  );
+  assert.equal(localEst.summaryText, '3 min pod • Est. 45–90 sec');
   const analysisEst = estimateGenerationWait({ kind: 'analysis', prefs: {} });
-  assert.equal(
-    analysisEst.summaryText,
-    'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 High)'
-  );
+  assert.equal(analysisEst.summaryText, 'Est. 25–60 sec');
   assert.equal(PODCAST_PIPELINE_STAGES.length, 3);
   assert.equal(ANALYSIS_PIPELINE_STAGES.length, 3);
 });
@@ -3117,9 +3190,9 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
     assert.equal(userPrefs.verifiedGeminiModel, 'gemini-3.8-flash', 'Should auto-update userPrefs in place');
     assert.equal(updatedModelReported, 'gemini-3.8-flash', 'Should trigger onModelUpdated callback');
 
-    // Verify resolved label reflects Gemini 3.8 High
+    // Verify resolved label migrates modelId internally while keeping UI shortModelName clutter-free
     const label = resolveActiveHighQualityModelLabel(null, userPrefs);
-    assert.equal(label.shortModelName, 'Gemini 3.8 High');
+    assert.equal(label.shortModelName, 'Deep Research');
     assert.equal(label.modelId, 'gemini-3.8-flash');
 
     // Verify stale retired gemini-3-pro-preview or 0-quota gemini-3.1-pro-preview in localStorage prefs is migrated to gemini-3.8-flash
@@ -3127,7 +3200,7 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
       verifiedGeminiModel: 'gemini-3-pro-preview'
     });
     assert.equal(migratedLabel.modelId, 'gemini-3.8-flash');
-    assert.equal(migratedLabel.shortModelName, 'Gemini 3.8 High');
+    assert.equal(migratedLabel.shortModelName, 'Deep Research');
 
     // Run a second time with no new models: should NOT trigger callback
     let reTriggered = false;
@@ -3239,7 +3312,8 @@ test('New-user 1-time Gemini API key step-by-step guide renders above setup box 
       showGeminiKeyGuide: true
     });
     assert.ok(!connectedHtml.includes('data-gemini-guide-banner'), `Connected users must not see new-user guide banner on ${subSection}`);
-    assert.ok(connectedHtml.includes('data-gemini-setup-card="connected"'), `Connected users see live connected badge on ${subSection}`);
+    assert.ok(!connectedHtml.includes('data-gemini-setup-card'), `Connected users see zero setup/model clutter banner on ${subSection}`);
+    assert.ok(!connectedHtml.includes('Live AI Connected') && !connectedHtml.includes('NotebookLM Voices'), 'Excess model/voice plumbing text stripped');
   }
 });
 
@@ -3789,6 +3863,285 @@ await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranki
   } finally {
     globalThis.fetch = origFetch;
   }
+});
+
+console.log('\n=== [11/11] Game-Day Roster [T-90m, Final), Questionable->In/Out, Post-Game Rollover, In-Game/48h News Priority & Clutter Scrub QA ===');
+
+test('Game-Day Roster Engine activates strictly from T-90m until Final, tolerates posting delays, groups Offense->Defense->ST, and resolves Questionable->In/Out', () => {
+  const koIso = '2026-11-15T21:25:00Z';
+  const koMs = Date.parse(koIso);
+  const baseSchedule = [
+    {
+      id: '401873063',
+      week: 10,
+      dateIso: koIso,
+      completed: false,
+      statusDetail: '1:25 PM PT',
+      opponent: { abbr: 'DAL', name: 'Dallas Cowboys' }
+    }
+  ];
+
+  // T-95m: Not yet in 90-minute window
+  assert.equal(evaluateGameDayWindow(baseSchedule, null, koMs - 95 * 60_000).isActive, false);
+
+  // T-89m: Active in 90-minute pre-game window!
+  const tMinus89 = evaluateGameDayWindow(baseSchedule, null, koMs - 89 * 60_000);
+  assert.equal(tMinus89.isActive, true);
+  assert.equal(tMinus89.hasKickoffStarted, false);
+  assert.equal(tMinus89.minutesUntilKickoff, 89);
+
+  // Mid-game (Kickoff + 75m): Still active!
+  const midGame = evaluateGameDayWindow(baseSchedule, null, koMs + 75 * 60_000);
+  assert.equal(midGame.isActive, true);
+  assert.equal(midGame.hasKickoffStarted, true);
+
+  // Final (completed: true): Immediately disappears!
+  const finalSchedule = [{ ...baseSchedule[0], completed: true, statusDetail: 'Final' }];
+  assert.equal(evaluateGameDayWindow(finalSchedule, null, koMs + 195 * 60_000).isActive, false);
+
+  // Build roster model: Pending at T-88m (slight posting delay) vs Official Declared once >=5 inactives post
+  const sampleRoster = [
+    { id: '1', name: 'Brock Purdy', position: 'QB', jersey: 13, rosterBucket: 'active', isStarter: true },
+    { id: '2', name: 'Christian McCaffrey', position: 'RB', jersey: 23, rosterBucket: 'active', isStarter: true, health: { status: 'Questionable', injuryType: 'Achilles' } },
+    { id: '3', name: 'Deebo Samuel Sr.', position: 'WR', jersey: 19, rosterBucket: 'active', isStarter: true, health: { status: 'Out', injuryType: 'Hamstring' } },
+    { id: '4', name: 'Nick Bosa', position: 'DE', jersey: 97, rosterBucket: 'active', isStarter: true },
+    { id: '5', name: 'Fred Warner', position: 'LB', jersey: 54, rosterBucket: 'active', isStarter: true },
+    { id: '6', name: 'Jake Moody', position: 'PK', jersey: 4, rosterBucket: 'active', isStarter: true },
+    { id: '7', name: 'Mitch Wishnowsky', position: 'P', jersey: 18, rosterBucket: 'active', isStarter: true },
+    { id: '8', name: 'Siran Neal', position: 'S', jersey: 33, rosterBucket: 'active', health: { status: 'Questionable', injuryType: 'Knee' } },
+    { id: '9', name: 'Upton Stout', position: 'CB', jersey: 20, rosterBucket: 'active', health: { status: 'Questionable', injuryType: 'Shoulder' } },
+    { id: '10', name: 'Isaac Guerendo', position: 'RB', jersey: 31, rosterBucket: 'ir', health: { status: 'Reserve / PUP' } }
+  ];
+  const sampleReport = [
+    { playerId: '3', name: 'Deebo Samuel Sr.', position: 'WR', jersey: 19, gameStatus: 'Out', injuryType: 'Hamstring', playProbabilityPct: 0, playBadgeLabel: '0% • Out' },
+    { playerId: '2', name: 'Christian McCaffrey', position: 'RB', jersey: 23, gameStatus: 'Questionable', injuryType: 'Achilles', playProbabilityPct: 82, playBadgeLabel: '82% • Likely' },
+    { playerId: '8', name: 'Siran Neal', position: 'S', jersey: 33, gameStatus: 'Questionable', injuryType: 'Knee', playProbabilityPct: 56, playBadgeLabel: '56% • True GTD' },
+    { playerId: '9', name: 'Upton Stout', position: 'CB', jersey: 20, gameStatus: 'Questionable', injuryType: 'Shoulder', playProbabilityPct: 78, playBadgeLabel: '78% • True GTD', beatComment: 'Stout is active as an emergency backup CB and remains a game-time decision on snaps.' }
+  ];
+
+  // Delay-tolerant pending state (T-88m, before official 5-7 scratch list drops)
+  const pendingModel = buildTeamGameDayRosterModel({
+    teamAbbr: 'SF',
+    teamName: 'San Francisco 49ers',
+    is49ers: true,
+    windowInfo: tMinus89,
+    rosterPlayers: sampleRoster,
+    injuryReportRows: sampleReport
+  });
+  assert.equal(pendingModel.isActive, true);
+  assert.equal(pendingModel.officialPosted, false, 'Only 1 pre-declared Out should stay in Pending state before kickoff');
+  assert.equal(pendingModel.inactives.length, 1);
+  assert.equal(pendingModel.inactives[0].name, 'Deebo Samuel Sr.');
+
+  // Official inactives announced via wire / live feed -> flips officialPosted=true & resolves Questionable -> In/Out!
+  const wireNews = [
+    {
+      title: '49ers official Week 10 inactives: WR Deebo Samuel Sr., S Siran Neal, OL Spencer Burford, DL Yetur Gross-Matos, RB Jordan James.',
+      publishedAt: new Date(koMs - 82 * 60_000).toISOString()
+    }
+  ];
+  const wireSignals = extractWireGameDaySignals(wireNews, sampleRoster, koMs);
+  assert.equal(wireSignals.hasOfficialListSignal, true);
+
+  const declaredModel = buildTeamGameDayRosterModel({
+    teamAbbr: 'SF',
+    teamName: 'San Francisco 49ers',
+    is49ers: true,
+    windowInfo: tMinus89,
+    rosterPlayers: sampleRoster,
+    injuryReportRows: sampleReport,
+    newsItems: wireNews,
+    liveFeedData: {
+      officialPosted: true,
+      inactives: [
+        { name: 'Deebo Samuel Sr.', position: 'WR', jersey: 19, reason: 'Hamstring' },
+        { name: 'Siran Neal', position: 'S', jersey: 33, reason: 'Knee' },
+        { name: 'Spencer Burford', position: 'OL', jersey: 74, reason: 'Healthy Scratch' },
+        { name: 'Yetur Gross-Matos', position: 'DL', jersey: 94, reason: 'Healthy Scratch' },
+        { name: 'Jordan James', position: 'RB', jersey: 28, reason: 'Healthy Scratch' }
+      ]
+    }
+  });
+  assert.equal(declaredModel.officialPosted, true);
+  assert.equal(declaredModel.inactives.length, 5);
+  assert.deepEqual(Object.keys(declaredModel.activesByUnit), ['Offense', 'Defense', 'Special Teams']);
+  assert.ok(declaredModel.activesByUnit.Offense.some(p => p.name === 'Brock Purdy' && p.isActive));
+  assert.ok(declaredModel.activesByUnit.Defense.some(p => p.name === 'Nick Bosa'));
+  assert.ok(declaredModel.activesByUnit['Special Teams'].some(p => p.name === 'Jake Moody'));
+  assert.ok(!declaredModel.activesByUnit.Defense.some(p => p.name === 'Siran Neal'), 'Declared inactive Siran Neal excluded from active roster');
+
+  const resolvedRows = resolveGameDayInjuryRows(sampleReport, declaredModel);
+  const cmcRow = resolvedRows.find(r => r.name === 'Christian McCaffrey');
+  const nealRow = resolvedRows.find(r => r.name === 'Siran Neal');
+  const stoutRow = resolvedRows.find(r => r.name === 'Upton Stout');
+  assert.equal(cmcRow.playBadgeLabel, '99% • In (Active)', 'Active Questionable player flips to 99% • In (Active)');
+  assert.equal(nealRow.playBadgeLabel, '0% • Out (Inactive)', 'Inactive Questionable player flips to 0% • Out (Inactive)');
+  assert.equal(stoutRow.playBadgeLabel, 'Active • GTD', 'Explicit rare emergency/snap-limited active GTD retains Active • GTD');
+
+  // Post-game rollover blanks W/T/F, drops Coach's Decision/Vet Rest, and converts prior-game Out to upcoming-week Questionable
+  const rolled = rolloverPracticeReportForUpcomingWeek(
+    [
+      { name: 'Trent Williams', position: 'OT', wed: 'Vet Rest', thu: 'FP', fri: 'FP', injuryType: 'NIR - Rest', gameStatus: 'Active' },
+      { name: 'Tyrus Wheat', position: 'LB', wed: 'DNP', thu: 'DNP', fri: 'DNP', injuryType: "Coach's Decision", gameStatus: 'Out', shortComment: 'inactive' },
+      { name: 'Luke Schoonmaker', position: 'TE', wed: 'DNP', thu: 'DNP', fri: 'DNP', injuryType: 'Groin', gameStatus: 'Out', shortComment: 'Schoonmaker is inactive for Sunday.' }
+    ],
+    { clearPracticeDays: true, upcomingWeek: 10 }
+  );
+  assert.equal(rolled.length, 1);
+  assert.equal(rolled[0].name, 'Luke Schoonmaker');
+  assert.equal(rolled[0].wed, '-');
+  assert.equal(rolled[0].thu, '-');
+  assert.equal(rolled[0].fri, '-');
+  assert.equal(rolled[0].gameStatus, 'Questionable');
+  assert.ok(rolled[0].playProbabilityPct > 0, 'Prior-week Out player must receive >0% modeled play likelihood for upcoming week');
+});
+
+test('News Classifier prioritizes live in-game injuries, demotes stale pre-game Mike Evans inactive notes, prioritizes 48h post-game injury updates, groups duplicates, and strips triple attribution', () => {
+  const koIso = '2026-11-08T21:25:00Z';
+  const koMs = Date.parse(koIso);
+
+  // 1. Live In-Game Context (Kickoff + 60m): In-game injury beats pre-game Mike Evans inactive report!
+  const inGameSchedule = {
+    scheduleMatchup: {
+      schedule: [{ id: 'g9', week: 9, dateIso: koIso, completed: false, statusDetail: 'Q2 08:14' }]
+    }
+  };
+  const inGameNow = koMs + 60 * 60_000;
+  const inGameSorted = sortNewsWithBreakingPriority(
+    [
+      {
+        id: 'pregame_evans_out',
+        type: 'tweet',
+        author: 'Adam Schefter',
+        authorHandle: '@AdamSchefter',
+        title: '49ers WR Mike Evans is officially inactive today and will not play against the Raiders.',
+        fullText: '49ers WR Mike Evans is officially inactive today and will not play against the Raiders.',
+        publishedAt: new Date(koMs - 75 * 60_000).toISOString()
+      },
+      {
+        id: 'ingame_play_tweet',
+        type: 'tweet',
+        author: 'Matt Barrows',
+        authorHandle: '@mattbarrows',
+        title: 'Brock Purdy hits George Kittle up the seam for 29 yards on 3rd-and-7.',
+        fullText: 'Brock Purdy hits George Kittle up the seam for 29 yards on 3rd-and-7.',
+        publishedAt: new Date(koMs + 42 * 60_000).toISOString()
+      },
+      {
+        id: 'ingame_bosa_tent',
+        type: 'tweet',
+        author: 'Nick Wagoner',
+        authorHandle: '@nwagoner',
+        title: 'Nick Bosa is in the blue medical tent and questionable to return with a hip injury.',
+        fullText: 'Nick Bosa is in the blue medical tent and questionable to return with a hip injury.',
+        publishedAt: new Date(koMs + 55 * 60_000).toISOString()
+      }
+    ],
+    inGameNow,
+    { appData: inGameSchedule }
+  );
+  assert.equal(inGameSorted[0].id, 'ingame_bosa_tent', 'Live in-game injury update must rank #1');
+  assert.equal(inGameSorted[0].breakingBadge, 'LIVE INJURY UPDATE');
+  assert.equal(inGameSorted[1].id, 'ingame_play_tweet', 'Live in-game beat tweet must rank #2 ahead of stale pre-game inactives');
+  assert.equal(inGameSorted[2].id, 'pregame_evans_out', 'Pre-game Mike Evans inactive report must be demoted once game starts');
+
+  // 2. 48-Hour Post-Game Context (Kickoff + 18h): Meaningful post-game MRI update ranks #1; duplicate injury echoes collapse into confirmingReports!
+  const postGameSchedule = {
+    scheduleMatchup: {
+      schedule: [{ id: 'g9', week: 9, dateIso: koIso, completed: true, statusDetail: 'Final' }]
+    }
+  };
+  const postGameNow = koMs + 18 * 3600_000;
+  const ctx48 = resolveGameNewsContext(postGameSchedule, postGameNow);
+  assert.equal(ctx48.postGame48h, true);
+
+  const postGameSorted = sortNewsWithBreakingPriority(
+    [
+      {
+        id: 'monday_opinion',
+        type: 'article',
+        author: 'Matt Maiocco',
+        title: '49ers Week 9 snap count observations and NFC West standings lookahead',
+        publishedAt: new Date(postGameNow - 30 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_mri_1',
+        type: 'tweet',
+        author: 'Nick Wagoner',
+        title: 'Kyle Shanahan said Nick Bosa MRI on his hip came back clean and he is day-to-day for Week 10.',
+        fullText: 'Kyle Shanahan said Nick Bosa MRI on his hip came back clean and he is day-to-day for Week 10.',
+        mentionedPlayers: [{ id: '4040605', name: 'Nick Bosa' }],
+        publishedAt: new Date(postGameNow - 90 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_mri_2',
+        type: 'tweet',
+        author: 'Matt Barrows',
+        title: 'MRI on Nick Bosa hip showed no structural damage per Shanahan.',
+        fullText: 'MRI on Nick Bosa hip showed no structural damage per Shanahan.',
+        mentionedPlayers: [{ id: '4040605', name: 'Nick Bosa' }],
+        publishedAt: new Date(postGameNow - 85 * 60_000).toISOString()
+      }
+    ],
+    postGameNow,
+    { appData: postGameSchedule }
+  );
+  assert.ok(
+    ['bosa_mri_1', 'bosa_mri_2'].includes(postGameSorted[0].id),
+    'Meaningful post-game MRI injury update must rank #1 within 48h window ahead of general Monday column'
+  );
+  const deduped = deduplicateAndGroupWireItems(postGameSorted);
+  assert.equal(deduped.length, 2, 'Duplicate MRI tweet on same player/milestone must group into confirmingReports');
+  assert.ok(['bosa_mri_1', 'bosa_mri_2'].includes(deduped[0].id), 'MRI update card leads the feed');
+  assert.equal(deduped[0].confirmingReports?.length, 1);
+
+  // 3. Single-attribution boilerplate cleaner & self-link guard (Mike Garafolo screenshot regression test!)
+  const garafoloCleaned = stripRedundantAuthorBoilerplate(
+    "McCaffrey is expected to take on a full workload Sunday against the Raiders, Mike Garafolo of NFL Network reports. McCaffrey was limited to a 52 percent snap share...",
+    'Mike Garafolo'
+  );
+  assert.ok(!garafoloCleaned.includes('Mike Garafolo of NFL Network reports'), `Expected inline author stripped, got: ${garafoloCleaned}`);
+  assert.equal(isRedundantProfileSelfLink('https://x.com/MikeGarafolo', 'https://www.espn.com/nfl/player/_/id/3117251#wire'), true);
+  assert.equal(isRedundantProfileSelfLink('https://www.espn.com/nfl/story/_/id/999/real-story', 'https://x.com/MikeGarafolo/status/123'), false);
+
+  // 4. News View tab order (Wire & Video LEFT + active by default), Sticky first column, and Settings Host Format
+  const newsHtml = renderNewsViewHtml({
+    newsMode: 'raw',
+    newsCategoryFilter: 'all',
+    filteredClusters: [],
+    filteredRawItems: [
+      {
+        id: 'garafolo_card',
+        type: 'tweet',
+        title: "McCaffrey is expected to take on a full workload Sunday against the Raiders, Mike Garafolo of NFL Network reports.",
+        fullText: "McCaffrey is expected to take on a full workload Sunday against the Raiders, Mike Garafolo of NFL Network reports.",
+        author: 'Mike Garafolo',
+        authorHandle: '@MikeGarafolo',
+        authorProfileUrl: 'https://x.com/MikeGarafolo',
+        url: 'https://www.espn.com/nfl/player/_/id/3117251/christian-mccaffrey#wire-1',
+        externalUrl: 'https://x.com/MikeGarafolo',
+        externalTitle: 'Mike Garafolo (@MikeGarafolo) on X',
+        publishedAt: new Date().toISOString()
+      }
+    ],
+    reportersById: new Map(),
+    userPrefs: { disabledReporterIds: [], disabledOutlets: [] },
+    activeVideosSet: new Set()
+  });
+  const rawIdx = newsHtml.indexOf('data-mode="raw"');
+  const clusIdx = newsHtml.indexOf('data-mode="clustered"');
+  assert.ok(rawIdx > -1 && clusIdx > -1 && rawIdx < clusIdx, 'Wire & Video tab must sit to the LEFT of Synthesis Briefs');
+  const garafoloCount = (newsHtml.match(/Mike Garafolo/g) || []).length;
+  assert.equal(garafoloCount, 1, `Tweeter name must appear ONLY ONCE on tweet card, got ${garafoloCount}`);
+  assert.ok(!newsHtml.includes('Tweet • @'), 'Redundant Tweet • @handle pill must be removed');
+  assert.ok(!newsHtml.includes('Linked Story:'), 'Redundant X profile Linked Story pill must be removed');
+
+  const settingsHtml = renderSettingsSheetHtml({
+    userPrefs: { podFormat: 'two_host', defaultPodDurationMin: 5, disabledReporterIds: [], disabledOutlets: [] },
+    reportersData: { reporters: [], outlets: [] }
+  });
+  assert.ok(settingsHtml.includes('data-action="set-pod-format"'), 'Host Format toggle must live inside Settings');
+  assert.ok(settingsHtml.includes('id="prefPodDurationSlider"'), 'Default Podcast Length slider must live inside Settings');
 });
 
 console.log(`\n======================================================`);

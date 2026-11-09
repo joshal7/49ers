@@ -21,6 +21,9 @@ import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.j
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
+  deduplicateAndGroupWireItems,
+  stripRedundantAuthorBoilerplate,
+  isRedundantProfileSelfLink,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import { computeNewsSalienceScore } from '../engine/antiFluffFilter.js';
@@ -30,6 +33,7 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
+import { resolveGameDayInjuryRows } from '../engine/gameDayRosterEngine.js';
 import { buildXBeatListSearchUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderHomeDashboardHtml({
@@ -118,7 +122,9 @@ function renderSingleDashboardCard({
   let deepDiveAttr = '';
   let externalHeaderLink = '';
 
-  const rawList = sortNewsWithBreakingPriority(filteredRawItems || appData?.news?.rawStream || []);
+  const rawList = deduplicateAndGroupWireItems(
+    sortNewsWithBreakingPriority(filteredRawItems || appData?.news?.rawStream || [], Date.now(), { appData })
+  );
 
   switch (block.id) {
     case 'news_briefs': {
@@ -221,10 +227,19 @@ function renderSingleDashboardCard({
                 ${topTweets
                   .map(tw => {
                     const authorName = tw.author || tw.reporterName || tw.outletName || '49ers Beat';
-                    const fullShortTweet = formatTweetBodyForDisplay(
+                    const cleanedTweetBody = stripRedundantAuthorBoilerplate(
                       tw.fullText || tw.title || '',
+                      authorName
+                    );
+                    const fullShortTweet = formatTweetBodyForDisplay(
+                      cleanedTweetBody,
                       SHORT_TWEET_FULL_TEXT_LIMIT
                     ).text;
+                    const safeTwExt = sanitizeExternalUrl(tw.externalUrl, null);
+                    const showExtChip =
+                      Boolean(safeTwExt) &&
+                      !isRedundantProfileSelfLink(safeTwExt, tw.url) &&
+                      !/\bon X$/i.test(String(tw.externalTitle || ''));
                     return `
                   <div class="home-wire-item ${tw.breakingPriority > 0 ? 'breaking-elevated' : ''}">
                     <div class="home-wire-meta">
@@ -234,14 +249,8 @@ function renderSingleDashboardCard({
                             ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
-                        ${
-                          tw.isFirstMoverInjuryScoop
-                            ? `<span class="badge badge-gold" style="font-size:9.5px;padding:1.5px 6px">First to Report</span>`
-                            : ''
-                        }
                         <a href="${esc(sanitizeExternalUrl(tw.authorProfileUrl, sanitizeExternalUrl(tw.url, '#')))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
                           <strong>${esc(authorName)}</strong>
-                          <span class="mono">${esc(tw.authorHandle || '')}</span>
                         </a>
                       </div>
                       <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
@@ -251,19 +260,10 @@ function renderSingleDashboardCard({
                       <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                     </a>
                     ${
-                      tw.corroboratedBy?.length
-                        ? `<div class="corroboration-meta-row">Confirmed by <strong>${esc(tw.corroboratedBy.slice(0, 2).join(', '))}</strong></div>`
-                        : ''
-                    }
-                    ${
-                      sanitizeExternalUrl(tw.externalUrl, null)
+                      showExtChip
                         ? `<div style="margin-top:3px">
-                            <a href="${esc(sanitizeExternalUrl(tw.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                              <span>${
-                                /^https:\/\/x\.com\//i.test(tw.externalUrl) && !/\/status\//i.test(tw.externalUrl)
-                                  ? `View ${esc(tw.authorHandle || authorName)} on X`
-                                  : `Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}`
-                              }</span>
+                            <a href="${esc(safeTwExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                              <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
                               ${iconSvg('external', 10)}
                             </a>
                           </div>`
@@ -327,7 +327,12 @@ function renderSingleDashboardCard({
       const sfIsAway = um.homeAway === 'away';
       const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
       const oppHealth = um.opponentHealth || {};
-      const oppInj = (oppHealth.injuryReport || []).slice(0, 3);
+      const rawOppInj = oppHealth.injuryReport || [];
+      const oppInj = (
+        oppHealth.gameDayRoster?.isActive
+          ? resolveGameDayInjuryRows(rawOppInj, oppHealth.gameDayRoster)
+          : rawOppInj
+      ).slice(0, 3);
       externalHeaderLink = um.gameUrl
         ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
         : '';
@@ -377,16 +382,16 @@ function renderSingleDashboardCard({
         <div class="subcard-panel" style="font-size:12.5px;margin-bottom:7px">
           <strong>Coaching Matchup:</strong> ${escJargon(um.coachingMatchup?.headline || '')}
         </div>
-        ${
-          oppInj.length
-            ? `<div class="subcard-panel" style="font-size:12px">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:5px">
-                  <strong style="color:var(--text-primary)">${esc(um.oppName)} Health &amp; Play Likelihood${oppHealth.summary?.overallAvailabilityScore != null ? ` <span class="mono" style="color:var(--gold-bright);font-size:11px">(${oppHealth.summary.overallAvailabilityScore}/100 Avail.)</span>` : ''}</strong>
-                  <a href="${esc(oppHealth.teamInjuriesUrl || um.injurySourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                    <span>Injury Wire</span>${iconSvg('external', 10)}
-                  </a>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="subcard-panel" style="font-size:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:${oppInj.length ? '5px' : '0'}">
+            <strong style="color:var(--text-primary)">${esc(um.oppName)} Health &amp; Play Likelihood${oppHealth.summary?.overallAvailabilityScore != null ? ` <span class="mono" style="color:var(--gold-bright);font-size:11px">(${oppHealth.summary.overallAvailabilityScore}/100 Avail.)</span>` : ''}</strong>
+            <a href="${esc(oppHealth.teamInjuriesUrl || um.injurySourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+              <span>Injury Wire</span>${iconSvg('external', 10)}
+            </a>
+          </div>
+          ${
+            oppInj.length
+              ? `<div style="display:flex;flex-direction:column;gap:4px">
                   ${oppInj
                     .map(
                       op => `
@@ -399,17 +404,22 @@ function renderSingleDashboardCard({
                   `
                     )
                     .join('')}
-                </div>
-              </div>`
-            : ''
-        }
+                </div>`
+              : `<div style="font-size:11.5px;color:var(--text-muted);margin-top:3px">Active starters cleared (${oppHealth.summary?.activeStartersHealthy ?? 20}/${oppHealth.summary?.totalStarters ?? 22}) • ${oppHealth.summary?.irCount ?? (oppHealth.irReserve || []).length} on IR</div>`
+          }
+        </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="matchup"`;
       break;
     }
 
     case 'team_health': {
-      const pr = (appData?.health?.practiceReport || []).slice(0, 4);
+      const rawPr = appData?.health?.practiceReport || [];
+      const pr = (
+        appData?.health?.gameDayRoster?.isActive
+          ? resolveGameDayInjuryRows(rawPr, appData.health.gameDayRoster)
+          : rawPr
+      ).slice(0, 4);
       const sfInjUrl = appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/';
       externalHeaderLink = `<a href="${esc(sfInjUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `

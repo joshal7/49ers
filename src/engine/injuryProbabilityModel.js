@@ -1186,11 +1186,16 @@ export function classifyIrAndReserveTimeline({
   const rawEstWeek = Math.max(cbsWeek || 0, espnWeek || 0);
 
   if (isDesignatedToReturnOpen) {
-    // 21-day practice window IS open
+    // 21-day practice window IS open; ignore "wasn't activated Saturday" notes written before the completed prior week's game
+    const lastPlayedEv = [...timeline].reverse().find(item => item.week < curWk);
+    const blurbMs = parseFlexibleIsoMs(placedDateIso);
+    const blurbPredatesCurrentWeek = Boolean(lastPlayedEv && blurbMs !== null && blurbMs < lastPlayedEv.ms);
     const ruledOutCurrentWeek =
-      /not activated|didn't activate|did not activate|remains on injured reserve|ruled out|will not play|wait at least another week/i.test(
-        combinedNote
-      ) || (cbsWeek !== null && cbsWeek > curWk);
+      (!blurbPredatesCurrentWeek &&
+        /not activated|didn't activate|did not activate|remains on injured reserve|ruled out|will not play|wait at least another week/i.test(
+          combinedNote
+        )) ||
+      (cbsWeek !== null && cbsWeek > curWk);
     const minOpenWk = ruledOutCurrentWeek ? Math.max(curWk + 1, earliestWk) : Math.max(curWk, earliestWk);
     const targetWk = Math.max(minOpenWk, rawEstWeek);
     if (targetWk === byeWeek) {

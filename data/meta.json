@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-08T19:16:46.859Z",
+  "updatedAt": "2026-11-09T05:47:21.133Z",
   "seasonYear": 2026,
-  "currentWeek": 9,
-  "teamRecord": "6-1",
+  "currentWeek": 10,
+  "teamRecord": "7-1",
   "divisionRecord": "3-0",
   "conferenceRecord": "4-1",
   "standingSummary": "1st in NFC West • #1 Seed in NFC",
-  "pointDifferential": "+58 (197 PF / 139 PA)",
+  "pointDifferential": "+79 (235 PF / 156 PA)",
   "byeWeek": 8,
   "calendar": {
     "seasonYear": 2026,
@@ -23,7 +23,7 @@
     "prevPostUdfaEnd": "2026-05-17T23:59:59-07:00"
   },
   "teamStatus": {
-    "currentWeek": 9,
+    "currentWeek": 10,
     "mathematicallyEliminated": false,
     "eliminatedAt": null
   },
@@ -41,6 +41,6 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-3.8-flash HIGH)",
-    "lastCheckedAt": "2026-11-08T19:16:46.859Z"
+    "lastCheckedAt": "2026-11-09T05:47:21.133Z"
   }
 }

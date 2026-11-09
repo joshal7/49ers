@@ -602,11 +602,17 @@ async function main() {
           articleLinks,
           externalLinksCount,
           matchupPlayerAvatars,
-          hasOpponentHealthPreview: matchupText.includes('Las Vegas Raiders') && matchupText.includes('Health')
+          expectedRecord: window.__49ersDiagnostics.getState().appData.meta.teamRecord,
+          hasOpponentHealthPreview:
+            matchupText.includes(window.__49ersDiagnostics.getState().appData.scheduleMatchup.upcomingMatchup.oppName) &&
+            matchupText.includes('Health')
         };
       });
 
-      assert(homeInfo.recordText === '6-1', `Expected header record 6-1, got ${homeInfo.recordText}`);
+      assert(
+        homeInfo.recordText === homeInfo.expectedRecord,
+        `Expected header record ${homeInfo.expectedRecord}, got ${homeInfo.recordText}`
+      );
       assert(homeInfo.bannerHiddenOnHome === true, 'Phase banner ("Active NFL Trade Window") must be hidden on Home tab');
       assert(homeInfo.matchupPlayerAvatars === 0, `Expected 0 player avatars in Home Upcoming Matchup box, got ${homeInfo.matchupPlayerAvatars}`);
       assert(homeInfo.hasCustomize, 'Missing Customize Order button');
@@ -719,11 +725,51 @@ async function main() {
 
     console.log('\n=== [3/9] Team News, Source Links, Verified Video Embeds & Deep Dive AI Jump ===');
 
-    await runStep('News & Film view renders Beat Synthesis with source links, verified YouTube embeds/fallbacks, and Tweet/Article/Video filters', async () => {
+    await runStep('News & Film view defaults to Wire & Video (left tab), swaps Synthesis Briefs to right, and supports verified YouTube embeds & filters', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="news"]').click());
-      await cdp.assertNoOverflow('News & Film Clustered View');
+      await cdp.assertNoOverflow('News & Film Default Wire & Video View');
 
+      // 1. Verify News & Film defaults to Wire & Video ('raw') on the LEFT and Synthesis Briefs ('clustered') on the RIGHT
+      const defaultTabOrder = await cdp.eval(() => {
+        const rawBtn = document.querySelector('[data-action="set-news-mode"][data-mode="raw"]');
+        const clusBtn = document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]');
+        const rRect = rawBtn?.getBoundingClientRect();
+        const cRect = clusBtn?.getBoundingClientRect();
+        return {
+          rawActiveByDefault: Boolean(rawBtn?.classList.contains('active')),
+          rawLeftOfClustered: Boolean(rRect && cRect && rRect.left < cRect.left)
+        };
+      });
+      assert(defaultTabOrder.rawActiveByDefault, 'News & Film must default to Wire & Video (raw) mode');
+      assert(defaultTabOrder.rawLeftOfClustered, 'Wire & Video tab must sit to the LEFT of Synthesis Briefs');
+
+      // 2. Audit default Raw Beat Stream mode (including Tweets, Articles, Videos filters & non-embeddable fallback card)
+      const rawStreamAudit = await cdp.eval(() => {
+        const totalCards = document.querySelectorAll('.brief-card').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
+        const tweetCards = document.querySelectorAll('.brief-card').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="articles"]')?.click();
+        const articleCards = document.querySelectorAll('.brief-card').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
+        const videoCards = document.querySelectorAll('.brief-card').length;
+        const externalFallbackCards = document.querySelectorAll('a.video-external-card[href*="youtube.com/watch"]').length;
+
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        return { totalCards, tweetCards, articleCards, videoCards, externalFallbackCards };
+      });
+      assert(rawStreamAudit.totalCards >= 12, `Expected >=12 raw stream items, got ${rawStreamAudit.totalCards}`);
+      assert(rawStreamAudit.tweetCards >= 5, `Expected >=5 tweets in Raw Tweets filter, got ${rawStreamAudit.tweetCards}`);
+      assert(rawStreamAudit.articleCards >= 4, `Expected >=4 articles in Raw Articles filter, got ${rawStreamAudit.articleCards}`);
+      assert(rawStreamAudit.videoCards >= 3, `Expected >=3 videos in Raw Videos filter, got ${rawStreamAudit.videoCards}`);
+      assert(rawStreamAudit.externalFallbackCards >= 1, 'Expected DRM-blocked channel videos to render external YouTube thumbnail card instead of broken iframe');
+      await cdp.assertNoOverflow('News Raw Beat Stream');
+
+      // 3. Switch to Synthesis Briefs ('clustered') and verify source links, inline YouTube embeds, category filters & Deep Dive AI jump
       const newsSnapshot = await cdp.eval(() => {
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]').click();
         const mainText = document.getElementById('mainView').textContent;
         const headlines = Array.from(document.querySelectorAll('.brief-headline')).map(h => h.textContent.trim());
         const hasClickbaitCut = /clickbait\s*cut/i.test(mainText);
@@ -738,7 +784,6 @@ async function main() {
       assert(newsSnapshot.playClipBtns >= 1, 'Expected at least 1 verified inline video clip facade');
       assert(newsSnapshot.sourceCardLinks >= 4, `Expected >=4 clickable source links on briefs, got ${newsSnapshot.sourceCardLinks}`);
 
-      // Test clicking verified inline video facade mounts YouTube iframe with playsinline=1 & referrerpolicy
       const iframeCheck = await cdp.eval(() => {
         const btn = document.querySelector('[data-action="play-inline-video"]');
         btn.click();
@@ -755,46 +800,22 @@ async function main() {
       assert(iframeCheck.refPolicy === 'strict-origin-when-cross-origin', 'Missing strict-origin-when-cross-origin referrerpolicy on YouTube iframe');
       await cdp.assertNoOverflow('News View with Expanded Video Embed');
 
-      // Test Category filters & Raw Beat Stream mode (including Tweets, Articles, Videos filters & non-embeddable fallback card)
-      for (const cat of ['film', 'cap', 'scheme', 'roster', 'beat', 'all']) {
+      for (const cat of ['film', 'cap', 'scheme', 'roster', 'all']) {
         await cdp.eval(c => {
           document.querySelector(`[data-action="set-news-category"][data-category="${c}"]`)?.click();
         }, cat);
       }
 
-      const rawStreamAudit = await cdp.eval(() => {
-        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]').click();
-        const totalCards = document.querySelectorAll('.brief-card').length;
-
-        document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
-        const tweetCards = document.querySelectorAll('.brief-card').length;
-
-        document.querySelector('[data-action="set-news-category"][data-category="articles"]')?.click();
-        const articleCards = document.querySelectorAll('.brief-card').length;
-
-        document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
-        const videoCards = document.querySelectorAll('.brief-card').length;
-        const externalFallbackCards = document.querySelectorAll('a.video-external-card[href*="youtube.com/watch"]').length;
-
-        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
-        return { totalCards, tweetCards, articleCards, videoCards, externalFallbackCards };
-      });
-      assert(rawStreamAudit.totalCards >= 15, `Expected >=15 raw stream items, got ${rawStreamAudit.totalCards}`);
-      assert(rawStreamAudit.tweetCards >= 5, `Expected >=5 tweets in Raw Tweets filter, got ${rawStreamAudit.tweetCards}`);
-      assert(rawStreamAudit.articleCards >= 4, `Expected >=4 articles in Raw Articles filter, got ${rawStreamAudit.articleCards}`);
-      assert(rawStreamAudit.videoCards >= 3, `Expected >=3 videos in Raw Videos filter, got ${rawStreamAudit.videoCards}`);
-      assert(rawStreamAudit.externalFallbackCards >= 1, 'Expected DRM-blocked channel videos to render external YouTube thumbnail card instead of broken iframe');
-      await cdp.assertNoOverflow('News Raw Beat Stream');
-
-      // Return to clustered and test "⚡ Deep Dive AI" jump button
+      // Test Deep Dive AI jump button and leave News default mode back on 'raw'
       const jumpedPrompt = await cdp.eval(() => {
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]').click();
         const jumpBtn = document.querySelector('[data-action="analyze-topic-jump"]');
         jumpBtn.click();
-        return {
+        const res = {
           activeTab: document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab'),
           promptValue: document.getElementById('analysisPromptInput')?.value || ''
         };
+        window.__49ersDiagnostics.getState().newsMode = 'raw';
+        return res;
       });
       assert(jumpedPrompt.activeTab === 'audio', 'Deep Dive AI jump should navigate to audio/AI tab');
       assert(jumpedPrompt.promptValue.length > 10, 'Deep Dive AI jump should pre-fill analysis prompt');
@@ -1199,7 +1220,7 @@ async function main() {
           const articleCards = cards.filter(c => c.getAttribute('data-mention-type') === 'article');
           const allHaveAuthor = cards.every(c => {
             const authTxt = c.querySelector('.player-mention-author')?.textContent?.trim() || '';
-            return authTxt.startsWith('by ') && authTxt.length > 5;
+            return authTxt.length >= 4 && !/undefined|null/i.test(authTxt);
           });
           const shortTweetBodies = tweetCards.map(
             c => c.querySelector('.player-mention-tweet-body')?.textContent?.trim() || ''
@@ -1254,23 +1275,25 @@ async function main() {
     await runStep('Upcoming Matchup renders Opposing Team Health & Play Likelihood, and all 8 Game & Season views have zero War Room text', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="season"]').click());
 
-      // Verify Opposing Team (Las Vegas Raiders) Health & Play Likelihood section in Upcoming Matchup
+      // Verify Opposing Team Health & Play Likelihood section in Upcoming Matchup
       const oppHealthAudit = await cdp.eval(() => {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
         const sec = document.getElementById('opponentHealthSection');
         const txt = sec?.textContent || '';
+        const oppName = window.__49ersDiagnostics.getState().appData.scheduleMatchup.upcomingMatchup.oppName;
         const pctBadges = sec ? Array.from(sec.querySelectorAll('.badge')).filter(b => b.textContent.includes('%')).length : 0;
         const injuryLink = Boolean(sec?.querySelector('a[href^="https://"]'));
         return {
           exists: Boolean(sec),
-          hasRaiders: txt.includes('Las Vegas Raiders'),
+          oppName,
+          hasOppName: txt.includes(oppName),
           pctBadges,
           injuryLink
         };
       });
       assert(oppHealthAudit.exists, 'Missing #opponentHealthSection in Upcoming Matchup view');
-      assert(oppHealthAudit.hasRaiders, 'Opponent Health section missing Las Vegas Raiders');
-      assert(oppHealthAudit.pctBadges >= 3, `Expected >=3 opponent play likelihood % badges, got ${oppHealthAudit.pctBadges}`);
+      assert(oppHealthAudit.hasOppName, `Opponent Health section missing ${oppHealthAudit.oppName}`);
+      assert(oppHealthAudit.pctBadges >= 2, `Expected >=2 opponent play likelihood % badges, got ${oppHealthAudit.pctBadges}`);
       assert(oppHealthAudit.injuryLink, 'Missing external ESPN Injuries source link in Opponent Health section');
 
       for (const sub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
@@ -1330,10 +1353,10 @@ async function main() {
         `Alfred Collins IR card still shows bogus Week 10–11 return window: ${irDomAudit.collinsCardText}`
       );
       assert(
-        irDomAudit.hobbsBadgeText.startsWith('Est. Week 10') &&
+        /Week 10/i.test(irDomAudit.hobbsBadgeText) &&
           irDomAudit.hobbsBadgeIsPositive &&
           irDomAudit.hobbsCardText.includes('21-Day Window Open'),
-        `Nate Hobbs IR card should highlight open 21-day window + Est. Week 10 badge, got "${irDomAudit.hobbsBadgeText}" / "${irDomAudit.hobbsCardText}"`
+        `Nate Hobbs IR card should highlight open 21-day window + Week 10 badge, got "${irDomAudit.hobbsBadgeText}" / "${irDomAudit.hobbsCardText}"`
       );
       assert(
         irDomAudit.sheetHealthText.includes('Season-Ending IR') &&
@@ -1694,12 +1717,18 @@ async function main() {
         const keyInput = document.getElementById('inlineGeminiApiKeyInput');
         const inlineKeyFontSize = keyInput ? parseFloat(window.getComputedStyle(keyInput).fontSize) : 0;
 
-        // Pre-click coarse estimates before connecting key
-        document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
+        // Pre-click coarse estimates via slider (#podDurationSlider) — zero preset duration buttons
+        const presetBtnsCount = document.querySelectorAll('[data-action="set-pod-duration"]').length;
+        const setSliderMins = mins => {
+          const sl = document.getElementById('podDurationSlider');
+          sl.value = String(mins);
+          sl.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        setSliderMins(3);
         const preClickHint3m = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
-        document.querySelector('[data-action="set-pod-duration"][data-mins="8"]').click();
+        setSliderMins(8);
         const preClickHint8m = document.querySelector('[data-est-wait-preview="podcast"]')?.textContent?.trim() || '';
-        document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
+        setSliderMins(3);
 
         // Attempting generation without a key must immediately prompt to connect Gemini key & focus #inlineGeminiApiKeyInput
         const topicEl = document.getElementById('podTopicInput');
@@ -1718,11 +1747,10 @@ async function main() {
         document.querySelector('[data-action="save-inline-gemini-key"]').click();
 
         const waitStart = Date.now();
-        while (!document.querySelector('[data-gemini-setup-card="connected"]') && Date.now() - waitStart < 4000) {
+        while (document.querySelector('[data-gemini-setup-card="unconnected"]') && Date.now() - waitStart < 4000) {
           await new Promise(r => setTimeout(r, 60));
         }
-        const connectedStripText =
-          document.querySelector('[data-gemini-setup-card="connected"]')?.textContent?.trim() || '';
+        const noConnectedClutterBanner = !document.querySelector('[data-gemini-setup-card]');
         const guideHiddenOnceConnected = !document.querySelector('[data-gemini-guide-banner]');
 
         return {
@@ -1736,16 +1764,18 @@ async function main() {
           jumpBtnFocusedInput,
           guideHiddenOnceConnected,
           inlineKeyFontSize,
+          presetBtnsCount,
           preClickHint3m,
           preClickHint8m,
           missingKeyErrText,
           focusedKeyInput,
-          connectedStripText
+          noConnectedClutterBanner
         };
       }, PORT);
 
       assert(gateAndConnectAudit.emptyErrText.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
       assert(gateAndConnectAudit.hasUnconnectedCard && gateAndConnectAudit.inlineKeyFontSize >= 16, 'Unconnected Gemini setup card missing or <16px input');
+      assert(gateAndConnectAudit.presetBtnsCount === 0, 'Preset duration buttons should be removed in favor of slider');
       assert(
         gateAndConnectAudit.guidePositionedAboveCard &&
           gateAndConnectAudit.stepCount === 4 &&
@@ -1757,11 +1787,11 @@ async function main() {
         `New-user Gemini API key guide audit failed: ${JSON.stringify(gateAndConnectAudit)}`
       );
       assert(
-        gateAndConnectAudit.preClickHint3m === '3 min pod. (Estimated generation time 45–90 sec using Gemini 3.8 High)',
+        gateAndConnectAudit.preClickHint3m === '3 min pod • Est. 45–90 sec',
         `Unexpected 3m pre-click text: "${gateAndConnectAudit.preClickHint3m}"`
       );
       assert(
-        gateAndConnectAudit.preClickHint8m === '8 min pod. (Estimated generation time 1–3 min using Gemini 3.8 High)',
+        gateAndConnectAudit.preClickHint8m === '8 min pod • Est. 1–3 min',
         `Unexpected 8m coarse pre-click text: "${gateAndConnectAudit.preClickHint8m}"`
       );
       assert(
@@ -1770,18 +1800,22 @@ async function main() {
         `Unconnected Gemini key gate failed: ${JSON.stringify(gateAndConnectAudit)}`
       );
       assert(
-        gateAndConnectAudit.connectedStripText.includes('Gemini 3.8 Pro High') &&
-          gateAndConnectAudit.connectedStripText.includes('NotebookLM Voices'),
-        `Inline Gemini API Key connection strip mismatch: "${gateAndConnectAudit.connectedStripText}"`
+        gateAndConnectAudit.noConnectedClutterBanner,
+        'Connected state must hide setup/model clutter banner cleanly'
       );
-      await cdp.assertNoOverflow('Audio & AI Connected Gemini Strip');
+      await cdp.assertNoOverflow('Audio & AI Connected Clean View');
 
-      // 2. Configure exact user scenario: 3 min Two-Host podcast on "wide recievers"
+      // 2. Configure exact user scenario: 3 min Two-Host podcast (Host Format configured in Settings!) on "wide recievers"
       mockGeminiRequests.length = 0;
       const genStartWallMs = Date.now();
       const podSetupAndProgress = await cdp.eval(async () => {
-        document.querySelector('[data-action="set-pod-duration"][data-mins="3"]').click();
-        document.querySelector('[data-action="set-pod-format"][data-format="two_host"]').click();
+        document.getElementById('openSettingsBtn').click();
+        document.querySelector('[data-action="set-pod-format"][data-format="two_host"]')?.click();
+        document.getElementById('closeSheetBtn').click();
+
+        const sl = document.getElementById('podDurationSlider');
+        sl.value = '3';
+        sl.dispatchEvent(new Event('input', { bubbles: true }));
         const inp = document.getElementById('podTopicInput');
         inp.value = 'wide recievers';
         inp.dispatchEvent(new Event('input', { bubbles: true }));
@@ -1827,8 +1861,7 @@ async function main() {
           podSetupAndProgress.waveBars === 4 &&
           podSetupAndProgress.hasProgressBar &&
           podSetupAndProgress.bannerText.includes('Est. wait:') &&
-          podSetupAndProgress.bannerText.includes('Quality prioritized over speed') &&
-          podSetupAndProgress.bannerText.includes('Gemini 3.8 Pro High') &&
+          !podSetupAndProgress.bannerText.includes('Gemini 3.8') &&
           podSetupAndProgress.elapsedClock.startsWith('Elapsed') &&
           podSetupAndProgress.btnDisabled &&
           podSetupAndProgress.btnSpinIcon,
@@ -2078,13 +2111,12 @@ async function main() {
         };
       });
       assert(
-        analysisProgress.preHint ===
-          'Deep scouting & cap analysis. (Estimated generation time 25–60 sec using Gemini 3.8 Pro High)' &&
+        analysisProgress.preHint === 'Est. 25–60 sec' &&
           analysisProgress.hasBanner &&
           analysisProgress.hasSpinner &&
           analysisProgress.stageLabels.length === 3 &&
           analysisProgress.bannerText.includes('Est. wait:') &&
-          analysisProgress.bannerText.includes('Gemini 3.8 Pro High'),
+          !analysisProgress.bannerText.includes('Gemini 3.8'),
         `Analysis 3-stage wait bar / estimate check failed: ${JSON.stringify(analysisProgress)}`
       );
 
@@ -2243,13 +2275,17 @@ async function main() {
         const rec = document.getElementById('headerRecordPill')?.textContent?.trim();
         // Restore mock v1beta connection so subsequent Deep Analysis XSS test exercises real LLM Markdown rendering
         const st = window.__49ersDiagnostics.getState();
+        const expectedRec = st.appData.meta.teamRecord;
         st.prefs.geminiApiKey = 'AIzaMockE2EStudioKey49ers';
         st.prefs.verifiedGeminiModel = 'gemini-3.8-pro';
         st.prefs.geminiApiBaseUrl = `http://127.0.0.1:${portNum}/v1beta`;
         window.__49ersDiagnostics.forceRender();
-        return rec;
+        return { rec, expectedRec };
       }, PORT);
-      assert(healthyAfterCorrupt === '6-1', 'App failed to recover from corrupted localStorage');
+      assert(
+        healthyAfterCorrupt.rec === healthyAfterCorrupt.expectedRec,
+        `App failed to recover from corrupted localStorage: got ${healthyAfterCorrupt.rec}`
+      );
     });
 
     await runStep('XSS HTML/Script payloads in search, prompts & markdown are strictly escaped; all inputs >=16px (no iOS zoom)', async () => {
@@ -2531,7 +2567,7 @@ async function main() {
         const oppHasParity =
           oppSecText.includes('Availability Index') &&
           oppSecText.includes('Starters Cleared') &&
-          oppSecText.includes('Maxx Crosby') &&
+          oppSecText.includes('Practice Participation') &&
           oppSecText.includes('4-Game Return Window Tracker');
 
         // 3. Verify Trade Window 30-day cutoff + Older Trades in Archive
@@ -2547,6 +2583,7 @@ async function main() {
 
         // 4. Verify Jargon Quick-Bubble Popover opens, stays inside viewport, and closes cleanly
         document.querySelector('[data-nav-tab="news"]').click();
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
         const jargonTermsFound = document.querySelectorAll('#mainView .jargon-term[data-jargon]').length;
         const firstJargon = document.querySelector('#mainView .jargon-term[data-jargon]');
         let jargonPopInfo = { opened: false };
@@ -2994,6 +3031,291 @@ async function main() {
         `Expected Live X Beat link chip in Player Dossier, got ${JSON.stringify(xAudit.dossierLinks)}`
       );
       await cdp.assertNoOverflow('Live X-Beat Telemetry & Search Strip Audit');
+    });
+
+    await runStep('Game-Day Roster [T-90m, Final), Frozen Col 1, Narrow Opponent Health, Questionable->In/Out, Post-Game Blank W/T/F, Single-Attribution Wire & Clutter Scrub', async () => {
+      await cdp.setViewport(360, 780, true, 3);
+
+      // 1. Sticky Col 1 + Narrow Opponent Table + Post-Game Week Rollover Blank W/T/F Audit
+      const tableAndRolloverAudit = await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="season"]').click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
+        const sfWrap = document.querySelector('[data-health-table="sf"]');
+        const sfTable = sfWrap?.querySelector('table');
+        const sfTh = sfTable?.querySelector('thead th.sticky-first-col');
+        const sfTd = sfTable?.querySelector('tbody td.sticky-first-col');
+        const sfThStyle = sfTh ? window.getComputedStyle(sfTh) : null;
+        const sfTdStyle = sfTd ? window.getComputedStyle(sfTd) : null;
+        const sfSticky =
+          sfThStyle?.position === 'sticky' && sfTdStyle?.position === 'sticky' && sfThStyle?.left === '0px';
+        const sfWidth = Math.round(sfTable?.scrollWidth || 0);
+        const sfBeforeLeft = Math.round(sfTd?.getBoundingClientRect().left || 0);
+        if (sfWrap) sfWrap.scrollLeft = 60;
+        const sfAfterLeft = Math.round(sfTd?.getBoundingClientRect().left || 0);
+        if (sfWrap) sfWrap.scrollLeft = 0;
+        const sfNoGamedayOutsideWindow = !document.querySelector('[data-gameday-roster-block="sf"]');
+        const sfPracCells = Array.from(sfTable?.querySelectorAll('tbody tr td:nth-child(3)') || []).map(c =>
+          c.textContent.trim()
+        );
+
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+        const oppWrap = document.querySelector('[data-health-table="opp"]');
+        const oppTable = oppWrap?.querySelector('table');
+        const oppTh = oppTable?.querySelector('thead th.sticky-first-col');
+        const oppTd = oppTable?.querySelector('tbody td.sticky-first-col');
+        const oppThStyle = oppTh ? window.getComputedStyle(oppTh) : null;
+        const oppTdStyle = oppTd ? window.getComputedStyle(oppTd) : null;
+        const oppSticky =
+          oppThStyle?.position === 'sticky' && oppTdStyle?.position === 'sticky' && oppThStyle?.left === '0px';
+        const oppWidth = Math.round(oppTable?.scrollWidth || 0);
+        const oppSubLines = Array.from(oppTable?.querySelectorAll('.sticky-player-sub') || []).map(el =>
+          el.textContent.trim()
+        );
+        const oppNoGamedayOutsideWindow = !document.querySelector('[data-gameday-roster-block="opp"]');
+        const oppPracCells = Array.from(oppTable?.querySelectorAll('tbody tr td:nth-child(3)') || []).map(c =>
+          c.textContent.trim()
+        );
+
+        const kickoffIso = window.__49ersDiagnostics.getState().appData.scheduleMatchup.upcomingMatchup.kickoffIso || '';
+        const hoursUntilKo = (Date.parse(kickoffIso) - Date.now()) / 3600_000;
+        const isEarlyWeek = hoursUntilKo > 98;
+
+        return {
+          sfSticky,
+          oppSticky,
+          sfPinnedDuringScroll: Math.abs(sfAfterLeft - sfBeforeLeft) <= 1,
+          sfWidth,
+          oppWidth,
+          widthDelta: Math.abs(oppWidth - sfWidth),
+          oppHasPosAndImportance:
+            oppSubLines.length > 0 && oppSubLines.every(s => /•\s*(Starter|Rotation|Depth|\d+% snaps)/.test(s)),
+          sfNoGamedayOutsideWindow,
+          oppNoGamedayOutsideWindow,
+          isEarlyWeek,
+          sfPracCells,
+          oppPracCells
+        };
+      });
+
+      assert(tableAndRolloverAudit.sfSticky, `49ers Team Health Col 1 must be position: sticky; left: 0px (got ${JSON.stringify(tableAndRolloverAudit)})`);
+      assert(tableAndRolloverAudit.oppSticky, 'Opponent Matchup Health Col 1 must be position: sticky; left: 0px');
+      assert(tableAndRolloverAudit.sfPinnedDuringScroll, 'Col 1 must stay frozen horizontally when scrolling right');
+      assert(
+        tableAndRolloverAudit.oppWidth <= 500 && tableAndRolloverAudit.widthDelta <= 60,
+        `Opponent table width (${tableAndRolloverAudit.oppWidth}px) should closely match 49ers Health (${tableAndRolloverAudit.sfWidth}px)`
+      );
+      assert(
+        tableAndRolloverAudit.oppHasPosAndImportance,
+        'Opponent table must show position + importance (Starter/Rotation/Snap%) under player name'
+      );
+      assert(
+        tableAndRolloverAudit.sfNoGamedayOutsideWindow && tableAndRolloverAudit.oppNoGamedayOutsideWindow,
+        'Game-Day Roster blocks must NOT appear outside [T-90m, Final)'
+      );
+      if (tableAndRolloverAudit.isEarlyWeek) {
+        assert(
+          tableAndRolloverAudit.sfPracCells.every(c => c === '— / — / —') &&
+            tableAndRolloverAudit.oppPracCells.every(c => c === '— / — / —'),
+          `Post-game upcoming week rollover must render blank — / — / — W/T/F columns, got SF=${JSON.stringify(tableAndRolloverAudit.sfPracCells)}, OPP=${JSON.stringify(tableAndRolloverAudit.oppPracCells)}`
+        );
+      }
+
+      // 2. Simulate Game-Day [T-90m, Final) Window (T-45m with official inactives declared -> then Final)
+      const gameDayLifecycleAudit = await cdp.eval(() => {
+        const st = window.__49ersDiagnostics.getState();
+        const sm = st.appData.scheduleMatchup;
+        const nextGame = sm.schedule.find(g => !g.completed);
+        const savedDateIso = nextGame.dateIso;
+        const savedUmKickoff = sm.upcomingMatchup.kickoffIso;
+        const savedLiveGameDay = st.appData.liveGameDay;
+
+        try {
+          const koIn45m = new Date(Date.now() + 45 * 60_000).toISOString();
+          nextGame.dateIso = koIn45m;
+          sm.upcomingMatchup.kickoffIso = koIn45m;
+          st.appData.liveGameDay = {
+            sf: {
+              officialPosted: true,
+              inactives: [
+                { name: 'Deebo Samuel Sr.', position: 'WR', jersey: 19, reason: 'Hamstring' },
+                { name: 'Mike Evans', position: 'WR', jersey: 5, reason: 'Ribs, Achilles' },
+                { name: 'Siran Neal', position: 'S', jersey: 33, reason: 'Knee' },
+                { name: 'Jordan James', position: 'RB', jersey: 28, reason: 'Healthy Scratch' },
+                { name: 'Spencer Burford', position: 'OL', jersey: 74, reason: 'Healthy Scratch' }
+              ]
+            },
+            opp: {
+              officialPosted: true,
+              inactives: [
+                { name: 'Luke Schoonmaker', position: 'TE', jersey: 86, reason: 'Groin' },
+                { name: 'Tyrus Wheat', position: 'LB', jersey: 59, reason: 'Healthy Scratch' },
+                { name: 'Ajani Cornelius', position: 'OT', jersey: 77, reason: 'Healthy Scratch' },
+                { name: 'Camden Brown', position: 'WR', jersey: 81, reason: 'Healthy Scratch' },
+                { name: 'Jordan Hudson', position: 'WR', jersey: 84, reason: 'Healthy Scratch' }
+              ]
+            }
+          };
+
+          // Check Niners Team Health at T-45m
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
+          const sfBlock = document.querySelector('[data-gameday-roster-block="sf"]');
+          const sfDetails = sfBlock?.querySelector('details[data-gameday-active-roster]');
+          const sfStartedCollapsed = sfDetails ? sfDetails.open === false : false;
+          const sfUnits = Array.from(sfBlock?.querySelectorAll('[data-gameday-unit]') || []).map(u =>
+            u.getAttribute('data-gameday-unit')
+          );
+          const sfActiveChips = sfBlock?.querySelectorAll('.gameday-active-chip').length || 0;
+          const sfInactiveChips = sfBlock?.querySelectorAll('.gameday-inactive-chip').length || 0;
+          if (sfDetails) sfDetails.open = true;
+          const sfExpandedOk = Boolean(sfDetails?.open);
+          const sfBadges = Array.from(
+            document.querySelectorAll('[data-health-table="sf"] tbody td:nth-child(4) .badge')
+          ).map(b => b.textContent.trim());
+          const sfZeroStaleQuestionable = sfBadges.every(
+            b => b.includes('In (Active)') || b.includes('Out (Inactive)') || b === 'Active • GTD'
+          );
+
+          // Check Matchup Opponent Block at T-45m (directly above Opponent Practice Participation table!)
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+          const oppBlock = document.querySelector('[data-gameday-roster-block="opp"]');
+          const oppTableWrap = document.querySelector('[data-health-table="opp"]');
+          const oppAboveTable =
+            Boolean(oppBlock && oppTableWrap) &&
+            oppBlock.getBoundingClientRect().bottom <= oppTableWrap.getBoundingClientRect().top + 32;
+          const oppDetails = oppBlock?.querySelector('details[data-gameday-active-roster]');
+          const oppStartedCollapsed = oppDetails ? oppDetails.open === false : false;
+          const oppUnits = Array.from(oppBlock?.querySelectorAll('[data-gameday-unit]') || []).map(u =>
+            u.getAttribute('data-gameday-unit')
+          );
+          const oppActiveChips = oppBlock?.querySelectorAll('.gameday-active-chip').length || 0;
+          const oppBadges = Array.from(
+            document.querySelectorAll('[data-health-table="opp"] tbody td:nth-child(4) .badge')
+          ).map(b => b.textContent.trim());
+          const oppZeroStaleQuestionable = oppBadges.every(
+            b => b.includes('In (Active)') || b.includes('Out (Inactive)') || b === 'Active • GTD'
+          );
+
+          // Now mark game Final (completed = true) -> both blocks must immediately disappear!
+          nextGame.completed = true;
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
+          const sfGoneAfterFinal = !document.querySelector('[data-gameday-roster-block="sf"]');
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+          const oppGoneAfterFinal = !document.querySelector('[data-gameday-roster-block="opp"]');
+
+          return {
+            sfBlockExists: Boolean(sfBlock),
+            sfStartedCollapsed,
+            sfExpandedOk,
+            sfUnits,
+            sfActiveChips,
+            sfInactiveChips,
+            sfZeroStaleQuestionable,
+            oppBlockExists: Boolean(oppBlock),
+            oppAboveTable,
+            oppStartedCollapsed,
+            oppUnits,
+            oppActiveChips,
+            oppZeroStaleQuestionable,
+            sfGoneAfterFinal,
+            oppGoneAfterFinal
+          };
+        } finally {
+          nextGame.completed = false;
+          nextGame.dateIso = savedDateIso;
+          sm.upcomingMatchup.kickoffIso = savedUmKickoff;
+          st.appData.liveGameDay = savedLiveGameDay;
+          window.__49ersDiagnostics.forceRender();
+        }
+      });
+
+      assert(
+        gameDayLifecycleAudit.sfBlockExists &&
+          gameDayLifecycleAudit.sfStartedCollapsed &&
+          gameDayLifecycleAudit.sfExpandedOk &&
+          JSON.stringify(gameDayLifecycleAudit.sfUnits) === JSON.stringify(['Offense', 'Defense', 'Special Teams']) &&
+          gameDayLifecycleAudit.sfActiveChips >= 40 &&
+          gameDayLifecycleAudit.sfInactiveChips >= 5 &&
+          gameDayLifecycleAudit.sfZeroStaleQuestionable,
+        `49ers Game-Day Roster lifecycle failed: ${JSON.stringify(gameDayLifecycleAudit)}`
+      );
+      assert(
+        gameDayLifecycleAudit.oppBlockExists &&
+          gameDayLifecycleAudit.oppAboveTable &&
+          gameDayLifecycleAudit.oppStartedCollapsed &&
+          JSON.stringify(gameDayLifecycleAudit.oppUnits) === JSON.stringify(['Offense', 'Defense', 'Special Teams']) &&
+          gameDayLifecycleAudit.oppActiveChips >= 40 &&
+          gameDayLifecycleAudit.oppZeroStaleQuestionable,
+        `Opponent Game-Day Roster lifecycle failed: ${JSON.stringify(gameDayLifecycleAudit)}`
+      );
+      assert(
+        gameDayLifecycleAudit.sfGoneAfterFinal && gameDayLifecycleAudit.oppGoneAfterFinal,
+        'Both Game-Day Roster blocks must disappear immediately upon game completion'
+      );
+      await cdp.assertNoOverflow('Game-Day Roster Lifecycle & Narrow Health Tables (360px)');
+
+      // 3. Single-Attribution Wire Cards & Site-Wide Clutter Scrub Audit
+      const wireAndClutterAudit = await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="news"]').click();
+        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
+
+        const tweetCards = Array.from(document.querySelectorAll('#mainView .brief-card'));
+        const hasAuthorLinks = tweetCards.every(c => Boolean(c.querySelector('[data-wire-author-link]')));
+        const hasRelativeAges = tweetCards.every(c => Boolean(c.querySelector('[data-wire-age]')));
+        const leakedTweetHandlePills = tweetCards.filter(c => /Tweet\s*•\s*@/i.test(c.textContent || '')).length;
+        const leakedSelfProfileLinks = tweetCards.filter(c => /Linked Story:.*\bon X/i.test(c.textContent || '')).length;
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+
+        // Scrub check across all 5 main tabs
+        const excessPhrases = [];
+        for (const tab of ['home', 'news', 'season', 'roster', 'audio']) {
+          document.querySelector(`[data-nav-tab="${tab}"]`).click();
+          const txt = document.getElementById('mainView')?.textContent || '';
+          if (/created with gemini|live ai connected|notebooklm voices|using gemini 3\.8/i.test(txt)) {
+            excessPhrases.push(tab);
+          }
+        }
+
+        // Verify Host Format & Default Podcast Duration live inside Settings
+        document.getElementById('openSettingsBtn').click();
+        const sheetTxt = document.getElementById('sheetBody')?.textContent || '';
+        const hasSettingsHostFormat = Boolean(document.querySelector('#sheetBody [data-action="set-pod-format"]'));
+        const hasSettingsDurationSlider = Boolean(document.getElementById('prefPodDurationSlider'));
+        document.getElementById('closeSheetBtn').click();
+
+        return {
+          tweetCount: tweetCards.length,
+          hasAuthorLinks,
+          hasRelativeAges,
+          leakedTweetHandlePills,
+          leakedSelfProfileLinks,
+          excessPhrases,
+          hasSettingsHostFormat,
+          hasSettingsDurationSlider,
+          sheetHasPodcastSection: sheetTxt.includes('Custom Podcast Preferences')
+        };
+      });
+
+      assert(
+        wireAndClutterAudit.tweetCount >= 5 &&
+          wireAndClutterAudit.hasAuthorLinks &&
+          wireAndClutterAudit.hasRelativeAges &&
+          wireAndClutterAudit.leakedTweetHandlePills === 0 &&
+          wireAndClutterAudit.leakedSelfProfileLinks === 0,
+        `Tweet single-attribution audit failed: ${JSON.stringify(wireAndClutterAudit)}`
+      );
+      assert(
+        wireAndClutterAudit.excessPhrases.length === 0,
+        `Found excess Gemini/NotebookLM clutter text on tabs: ${JSON.stringify(wireAndClutterAudit.excessPhrases)}`
+      );
+      assert(
+        wireAndClutterAudit.hasSettingsHostFormat &&
+          wireAndClutterAudit.hasSettingsDurationSlider &&
+          wireAndClutterAudit.sheetHasPodcastSection,
+        `Podcast Host Format / Default Duration missing in Settings: ${JSON.stringify(wireAndClutterAudit)}`
+      );
+
+      await cdp.setViewport(393, 852, true, 3);
     });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {

@@ -31,6 +31,223 @@ import {
   buildPfrTeamSeasonUrl,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
+import {
+  evaluateGameDayWindow,
+  buildTeamGameDayRosterModel,
+  resolveGameDayInjuryRows
+} from '../engine/gameDayRosterEngine.js';
+
+function formatPracCell(val) {
+  const s = String(val ?? '').trim();
+  return !s || s === '-' ? '—' : s;
+}
+
+function formatOppImportanceTag(op) {
+  const snap = Number(op?.snapPct || 0);
+  const isStarter = Boolean(op?.isStarter) || snap >= 58 || /starter|pro bowl|all-pro|wr1|wr2|qb1|rb1|te1|cb1|lt|rt/i.test(String(op?.archetypeNote || ''));
+  if (isStarter && snap > 0) return `Starter · ${snap}%`;
+  if (isStarter) return 'Starter';
+  if (snap >= 25) return `Rotation · ${snap}%`;
+  if (snap > 0) return `${snap}% snaps`;
+  return 'Depth';
+}
+
+function resolveActiveGameScheduleEntry(appData, um) {
+  const sched = appData?.scheduleMatchup?.schedule || [];
+  if (um?.gameId) {
+    const byId = sched.find(g => String(g.gameId) === String(um.gameId));
+    if (byId) return byId;
+  }
+  if (um?.week != null) {
+    const byWk = sched.find(g => Number(g.week) === Number(um.week));
+    if (byWk) return byWk;
+  }
+  return um || null;
+}
+
+function resolveTeamGameDayModel(appData, { is49ers = false } = {}) {
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const sched = appData?.scheduleMatchup?.schedule || [];
+  const win = evaluateGameDayWindow(sched, um, Date.now());
+  if (!win.isActive) return null;
+
+  const preHydrated = is49ers
+    ? appData?.health?.gameDayRoster
+    : um?.opponentHealth?.gameDayRoster;
+
+  if (preHydrated?.isActive) {
+    return {
+      ...preHydrated,
+      windowInfo: preHydrated.windowInfo || preHydrated.windowState || win
+    };
+  }
+
+  if (is49ers) {
+    const active53 = (appData?.roster?.players || []).filter(
+      p => !p.rosterBucket || p.rosterBucket === 'active'
+    );
+    return buildTeamGameDayRosterModel({
+      teamAbbr: 'SF',
+      teamName: 'San Francisco 49ers',
+      activeRosterPlayers: active53,
+      injuryReport: appData?.health?.practiceReport || [],
+      newsItems: appData?.news?.rawStream || [],
+      liveFeedData: appData?.liveGameDay?.sf || null,
+      windowState: win
+    });
+  }
+
+  const oppHealth = um?.opponentHealth || {};
+  const oppPool =
+    Array.isArray(oppHealth.activeRoster) && oppHealth.activeRoster.length > 0
+      ? oppHealth.activeRoster
+      : [...(oppHealth.keyStartersHealthy || []), ...(oppHealth.injuryReport || [])];
+
+  return buildTeamGameDayRosterModel({
+    teamAbbr: um?.oppAbbr || 'OPP',
+    teamName: um?.oppName || um?.oppAbbr || 'Opponent',
+    activeRosterPlayers: oppPool,
+    injuryReport: oppHealth.injuryReport || [],
+    newsItems: appData?.news?.rawStream || [],
+    liveFeedData: appData?.liveGameDay?.opp || null,
+    windowState: win
+  });
+}
+
+function renderGameDayRosterCard(
+  gameDayModel,
+  { is49ers = false, asSubcard = false, teamName = '49ers', teamAbbr = 'SF', teamLogoUrl = null } = {}
+) {
+  if (!gameDayModel?.isActive) return '';
+
+  const inactives = gameDayModel.inactives || [];
+  const activesByUnit = gameDayModel.activesByUnit || {
+    Offense: [],
+    Defense: [],
+    'Special Teams': []
+  };
+  const unitOrder = ['Offense', 'Defense', 'Special Teams'];
+  const totalActives =
+    gameDayModel.totalActives ||
+    unitOrder.reduce((acc, u) => acc + (activesByUnit[u]?.length || 0), 0);
+
+  const win = gameDayModel.windowInfo || {};
+  const timingLabel =
+    win.phase === 'in_game'
+      ? 'Live Game'
+      : typeof win.minutesToKickoff === 'number' && win.minutesToKickoff > 0
+        ? `Kickoff in ${win.minutesToKickoff}m`
+        : 'Pre-Kickoff';
+
+  const statusBadgeCls = gameDayModel.officialPosted ? 'badge-positive' : 'badge-warning';
+  const statusLabel =
+    gameDayModel.statusLabel ||
+    (gameDayModel.officialPosted ? 'Official Inactives Declared' : 'Official Inactives Pending');
+
+  const tagName = asSubcard ? 'div' : 'section';
+  const outerCls = asSubcard
+    ? 'subcard-panel gameday-roster-card gameday-subcard'
+    : 'card temporal-highlight gameday-roster-card';
+
+  return `
+    <${tagName} class="${outerCls}" data-gameday-roster-block="${is49ers ? 'sf' : 'opp'}">
+      <div class="gameday-roster-head">
+        <div class="gameday-roster-title-wrap">
+          ${renderTeamLogoHtml(teamAbbr, teamLogoUrl, 24)}
+          <div>
+            <div class="card-eyebrow">${esc(teamAbbr)} Game-Day Availability • ${esc(timingLabel)}</div>
+            <div class="gameday-roster-title">${esc(teamName)} Inactives &amp; Active Roster</div>
+          </div>
+        </div>
+        <span class="badge ${statusBadgeCls} mono">${esc(statusLabel)}</span>
+      </div>
+
+      ${
+        !gameDayModel.officialPosted
+          ? `<div class="gameday-pending-note">
+              Official game-day inactives are due ~90 min pre-kickoff (auto-updating live as announced).${
+                (gameDayModel.pendingQuestionables || []).length > 0
+                  ? ` Watching ${gameDayModel.pendingQuestionables.length} GTD designation${gameDayModel.pendingQuestionables.length > 1 ? 's' : ''}.`
+                  : ''
+              }
+            </div>`
+          : ''
+      }
+
+      <div class="gameday-inactives-section" data-gameday-inactives>
+        <div class="sub-label" style="margin-bottom:5px">
+          ${gameDayModel.officialPosted ? `Declared Inactives (${inactives.length})` : `Pre-Declared Out / Inactives (${inactives.length})`}
+        </div>
+        ${
+          inactives.length > 0
+            ? `<div class="gameday-inactives-grid">
+                ${inactives
+                  .map(p => {
+                    const clickAttrs =
+                      is49ers && p.playerId
+                        ? `style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health"`
+                        : '';
+                    const nameHtml =
+                      !is49ers && p.espnUrl
+                        ? `<a href="${esc(p.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(p.name)}</strong></a>`
+                        : `<strong>${esc(p.name)}</strong>`;
+                    return `
+                      <div class="gameday-inactive-chip" ${clickAttrs}>
+                        ${renderPlayerAvatarHtml(p, 24)}
+                        <div class="gameday-inactive-meta">
+                          <div class="gameday-inactive-name">${nameHtml} <span class="gameday-pos">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</span></div>
+                          <div class="gameday-inactive-reason">${esc(p.injuryType || p.reason || 'Inactive')}</div>
+                        </div>
+                      </div>
+                    `;
+                  })
+                  .join('')}
+              </div>`
+            : `<div style="font-size:12px;color:var(--text-muted)">Awaiting official game-day scratch list from stadium press box…</div>`
+        }
+      </div>
+
+      <details class="gameday-active-collapsible" data-gameday-active-roster>
+        <summary class="gameday-active-summary">
+          <span>Active Game-Day Roster (${totalActives} Players)</span>
+          <span class="gameday-summary-sub mono">Offense • Defense • ST</span>
+        </summary>
+        <div class="gameday-units-wrap">
+          ${unitOrder
+            .map(unitName => {
+              const list = activesByUnit[unitName] || [];
+              return `
+                <div class="gameday-unit-group" data-gameday-unit="${esc(unitName)}">
+                  <div class="gameday-unit-title">${esc(unitName)} (${list.length})</div>
+                  ${
+                    list.length > 0
+                      ? `<div class="gameday-active-chips">
+                          ${list
+                            .map(ap => {
+                              const clickAttrs =
+                                is49ers && ap.playerId
+                                  ? `data-action="open-player-sheet" data-player-id="${esc(ap.playerId)}"`
+                                  : '';
+                              const tag = is49ers && ap.playerId ? 'button type="button"' : 'span';
+                              return `<${tag} class="gameday-active-pill gameday-active-chip" ${clickAttrs}>${
+                                ap.jersey != null ? `<span class="mono gameday-pill-num">#${ap.jersey}</span>` : ''
+                              }<span>${esc(ap.name)}</span><span class="gameday-pos">${esc(ap.position)}</span>${
+                                ap.isExplicitActiveGtd ? `<span class="badge badge-warning mono" style="font-size:9px;padding:1px 4px">GTD</span>` : ''
+                              }</${is49ers && ap.playerId ? 'button' : 'span'}>`;
+                            })
+                            .join('')}
+                        </div>`
+                      : `<div style="font-size:11.5px;color:var(--text-muted)">Roster unit populating…</div>`
+                  }
+                </div>
+              `;
+            })
+            .join('')}
+        </div>
+      </details>
+    </${tagName}>
+  `;
+}
 
 export const SEASON_NAV_CLUSTERS = [
   {
@@ -108,10 +325,29 @@ function renderUpcomingMatchup(appData) {
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const bet = um.betting || {};
   const oppHealth = um.opponentHealth || {};
-  const oppInjReport = oppHealth.injuryReport || [];
+  const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false });
+  const rawOppInjReport = oppHealth.injuryReport || [];
+  const oppInjReport = oppGameDay?.isActive
+    ? resolveGameDayInjuryRows(rawOppInjReport, oppGameDay)
+    : rawOppInjReport;
   const oppHealthyStarters = oppHealth.keyStartersHealthy || [];
   const oppIrList = oppHealth.irReserve || [];
-  const sfPr = (appData?.health?.practiceReport || []).slice(0, 5);
+  const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
+  const rawSfPr = appData?.health?.practiceReport || [];
+  const sfPr = (sfGameDay?.isActive ? resolveGameDayInjuryRows(rawSfPr, sfGameDay) : rawSfPr).slice(0, 5);
+
+  const resolvedOppSummary = oppGameDay?.isActive
+    ? {
+        ...oppHealth.summary,
+        questionableOrDoubtfulCount: oppInjReport.filter(r =>
+          /questionable|doubtful|gtd/i.test(String(r.gameStatus || ''))
+        ).length,
+        ruledOutCount: Math.max(
+          oppHealth.summary?.ruledOutCount ?? 0,
+          oppInjReport.filter(r => /^out/i.test(String(r.gameStatus || ''))).length
+        )
+      }
+    : oppHealth.summary;
 
   const sfIsAway = um.homeAway === 'away';
   const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
@@ -195,7 +431,7 @@ function renderUpcomingMatchup(appData) {
       </div>
 
       <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
-        <strong>Line Movement &amp; Rest:</strong> ${esc(bet.openingSpread)} • Moneyline <span class="mono">${esc(bet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(bet.restAdvantage)}</strong>
+        <strong>Line &amp; Rest:</strong> ${esc(bet.openingSpread)} • ML <span class="mono">${esc(bet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(bet.restAdvantage)}</strong>
       </div>
     </section>
 
@@ -204,52 +440,56 @@ function renderUpcomingMatchup(appData) {
         <div class="card-header-left">
           ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 28)}
           <div class="card-title-group">
-            <div class="card-eyebrow">Opposing Team Availability &amp; Play Likelihood • Bye Wk ${oppHealth.byeWeek || 13}</div>
-            <h3 class="card-title">${esc(um.oppName)} Practice, Priors &amp; Play Odds</h3>
+            <div class="card-eyebrow">Opponent Availability • Bye Wk ${oppHealth.byeWeek || 13}</div>
+            <h3 class="card-title">${esc(um.oppName)} Health &amp; Play Odds</h3>
           </div>
         </div>
         <div class="source-link-strip">
           <a href="${esc(oppHealth.teamInjuriesUrl || um.injurySourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-            <span>${esc(um.oppAbbr || 'OPP')} Injury Wire</span>${iconSvg('externalLink', 11)}
+            <span>${esc(um.oppAbbr || 'OPP')} Injuries</span>${iconSvg('externalLink', 11)}
           </a>
         </div>
-      </div>
-
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
-        Modeled at full parity with 49ers Health: combines Wed/Thu/Fri practice progression (${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}), veteran rest adjustments, snap share, and player toughness priors.
       </div>
 
       <div class="kpi-grid kpi-grid-2" style="margin-bottom:10px">
         <div class="kpi-box">
           <div class="kpi-label">Availability Index</div>
-          <div class="kpi-val mono" style="color:var(--emerald)">${oppHealth.summary?.overallAvailabilityScore ?? 85}/100</div>
-          ${renderMiniMeterHtml(oppHealth.summary?.overallAvailabilityScore ?? 85, 'emerald')}
+          <div class="kpi-val mono" style="color:var(--emerald)">${resolvedOppSummary?.overallAvailabilityScore ?? 85}/100</div>
+          ${renderMiniMeterHtml(resolvedOppSummary?.overallAvailabilityScore ?? 85, 'emerald')}
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Starters Cleared</div>
-          <div class="kpi-val mono">${oppHealth.summary?.activeStartersHealthy ?? 19}/${oppHealth.summary?.totalStarters ?? 22}</div>
+          <div class="kpi-val mono">${resolvedOppSummary?.activeStartersHealthy ?? 19}/${resolvedOppSummary?.totalStarters ?? 22}</div>
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Questionable / GTD</div>
-          <div class="kpi-val mono" style="color:var(--gold-bright)">${oppHealth.summary?.questionableOrDoubtfulCount ?? 0}</div>
+          <div class="kpi-val mono" style="color:var(--gold-bright)">${resolvedOppSummary?.questionableOrDoubtfulCount ?? 0}</div>
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Ruled Out / ${jargonTerm('IR', 'ir')}</div>
-          <div class="kpi-val mono" style="color:var(--crimson)">${oppHealth.summary?.ruledOutCount ?? 0} Out • ${oppHealth.summary?.irCount ?? oppIrList.length} IR</div>
+          <div class="kpi-val mono" style="color:var(--crimson)">${resolvedOppSummary?.ruledOutCount ?? 0} Out • ${resolvedOppSummary?.irCount ?? oppIrList.length} IR</div>
         </div>
       </div>
+
+      ${renderGameDayRosterCard(oppGameDay, {
+        is49ers: false,
+        asSubcard: true,
+        teamName: um.oppName || 'Opponent',
+        teamAbbr: um.oppAbbr || 'OPP',
+        teamLogoUrl: um.oppLogoUrl
+      })}
 
       ${
         oppInjReport.length > 0
           ? `
             <div class="sub-label" style="margin-bottom:6px">Week ${um.week || 9} Practice Participation &amp; Modeled Play Likelihood</div>
-            <div class="table-scroll" style="margin-bottom:10px">
-              <table class="data-table">
+            <div class="table-scroll health-table-scroll" data-health-table="opp" style="margin-bottom:10px">
+              <table class="data-table sticky-col-table narrow-health-table">
                 <thead>
                   <tr>
-                    <th>${esc(um.oppAbbr || 'OPP')} Player</th>
-                    <th>Injury / Status</th>
-                    <th class="mono">W / T / F</th>
+                    <th class="sticky-first-col">${esc(um.oppAbbr || 'OPP')} Player</th>
+                    <th>Injury</th>
+                    <th class="mono">${jargonTerm('W', 'dnp')} / ${jargonTerm('T', 'lp')} / ${jargonTerm('F', 'fp')}</th>
                     <th>Play Likelihood</th>
                   </tr>
                 </thead>
@@ -258,33 +498,31 @@ function renderUpcomingMatchup(appData) {
                     .map(
                       op => `
                     <tr>
-                      <td>
-                        <div style="display:flex;align-items:center;gap:7px">
-                          ${renderPlayerAvatarHtml(op, 28)}
-                          <div>
-                            <div>
+                      <td class="sticky-first-col">
+                        <div class="sticky-player-cell">
+                          ${renderPlayerAvatarHtml(op, 26)}
+                          <div class="sticky-player-meta">
+                            <div class="sticky-player-name">
                               ${
                                 op.espnUrl
-                                  ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                                  ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
                                   : `<strong>${esc(op.name)}</strong>`
                               }
-                              <span style="color:var(--gold-bright);font-size:11px"> ${esc(op.position)}${op.jersey != null ? ` #${op.jersey}` : ''}</span>
                             </div>
-                            <div style="font-size:10.5px;color:var(--text-muted)">
-                              ${op.snapPct ? `<span class="mono">Snaps ${op.snapPct}%</span>` : 'Rotational / Depth'}${op.archetypeNote ? ` • ${esc(op.archetypeNote)}` : ''}
-                            </div>
+                            <div class="sticky-player-sub">${esc(op.position)}${op.jersey != null ? ` #${op.jersey}` : ''} • ${esc(formatOppImportanceTag(op))}</div>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <div><strong>${esc(op.injuryType)}</strong></div>
-                        <div style="font-size:11px;color:var(--text-muted)">${esc(op.gameStatus)}</div>
+                        <div>${esc(op.injuryType || op.gameStatus || 'Undisclosed')}</div>
+                        ${
+                          op.gameStatus && !/^(?:active|in\b)/i.test(String(op.gameStatus))
+                            ? `<div style="font-size:10.5px;color:var(--text-muted)">${esc(op.gameStatus)}</div>`
+                            : ''
+                        }
                       </td>
-                      <td class="mono">${esc(op.wed)} / ${esc(op.thu)} / ${esc(op.fri)}</td>
-                      <td style="min-width:112px">
-                        <span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span>
-                        ${renderMiniMeterHtml(op.playProbabilityPct ?? 0, (op.playProbabilityPct ?? 0) >= 75 ? 'emerald' : (op.playProbabilityPct ?? 0) >= 35 ? 'amber' : 'scarlet')}
-                      </td>
+                      <td class="mono">${esc(formatPracCell(op.wed))} / ${esc(formatPracCell(op.thu))} / ${esc(formatPracCell(op.fri))}</td>
+                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span></td>
                     </tr>
                   `
                     )
@@ -293,43 +531,51 @@ function renderUpcomingMatchup(appData) {
               </table>
             </div>
 
-            <div class="sub-label" style="margin-bottom:6px">${esc(um.oppAbbr || 'OPP')} Player Availability Priors &amp; Beat Notes</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
-              ${oppInjReport
-                .map(
-                  op => `
-                <div class="subcard-panel" style="font-size:12px">
-                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-                    <strong>${esc(op.name)} <span style="color:var(--gold-bright)">(${esc(op.position)} • ${esc(op.injuryType)})</span></strong>
-                    <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc((op.factors || [])[0] || `${op.wed}/${op.thu}/${op.fri} progression`)}</span>
+            <details class="compact-details" style="margin-bottom:10px">
+              <summary class="compact-details-summary">
+                <span>${esc(um.oppAbbr || 'OPP')} Beat Notes &amp; Availability Context (${oppInjReport.length})</span>
+              </summary>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+                ${oppInjReport
+                  .map(
+                    op => `
+                  <div class="subcard-panel" style="font-size:12px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+                      <strong>${esc(op.name)} <span style="color:var(--gold-bright)">(${esc(op.position)} • ${esc(op.injuryType)})</span></strong>
+                      <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc((op.factors || [])[0] || `${formatPracCell(op.wed)}/${formatPracCell(op.thu)}/${formatPracCell(op.fri)}`)}</span>
+                    </div>
+                    <div style="color:var(--text-secondary)">${escJargon(op.longComment || op.shortComment || op.archetypeNote || '')}</div>
                   </div>
-                  <div style="color:var(--text-secondary)">${escJargon(op.longComment || op.shortComment || op.archetypeNote || '')}</div>
-                </div>
-              `
-                )
-                .join('')}
-            </div>
+                `
+                  )
+                  .join('')}
+              </div>
+            </details>
           `
-          : `<div class="subcard-panel" style="font-size:12.5px;margin-bottom:10px">No active-roster ${esc(um.oppName)} players currently carry a restricted game designation.</div>`
+          : `<div class="subcard-panel" style="font-size:12.5px;margin-bottom:10px">No active-roster ${esc(um.oppName)} players currently carry an injury designation for Week ${um.week || ''}.</div>`
       }
 
       ${
         oppHealthyStarters.length > 0
           ? `
-            <div class="sub-label" style="margin-bottom:6px">Key ${esc(um.oppName)} Starters Cleared (Offense &amp; Defense)</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
-              ${oppHealthyStarters
-                .map(
-                  st => `
-                <a href="${esc(st.espnUrl || oppHealth.sourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="padding:5px 9px">
-                  <strong>${esc(st.name)}</strong>
-                  <span style="color:var(--text-muted)">(${esc(st.position)}${st.snapPct ? ` • ${st.snapPct}% snaps` : ''})</span>
-                  <span class="mono" style="color:var(--emerald);font-weight:700">${st.playProbabilityPct}%</span>
-                </a>
-              `
-                )
-                .join('')}
-            </div>
+            <details class="compact-details" style="margin-bottom:10px">
+              <summary class="compact-details-summary">
+                <span>Key ${esc(um.oppName)} Starters Cleared (${oppHealthyStarters.length})</span>
+              </summary>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+                ${oppHealthyStarters
+                  .map(
+                    st => `
+                  <a href="${esc(st.espnUrl || oppHealth.sourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="padding:5px 9px">
+                    <strong>${esc(st.name)}</strong>
+                    <span style="color:var(--text-muted)">(${esc(st.position)}${st.snapPct ? ` • ${st.snapPct}% snaps` : ''})</span>
+                    <span class="mono" style="color:var(--emerald);font-weight:700">${st.playProbabilityPct}%</span>
+                  </a>
+                `
+                  )
+                  .join('')}
+              </div>
+            </details>
           `
           : ''
       }
@@ -337,36 +583,40 @@ function renderUpcomingMatchup(appData) {
       ${
         oppIrList.length > 0
           ? `
-            <div class="sub-label" style="margin-bottom:6px">${esc(um.oppAbbr || 'OPP')} IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
-              ${oppIrList
-                .map(ir => {
-                  const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026);
-                  return `
-                <div class="subcard-panel" style="font-size:12px">
-                  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-                    <div style="display:flex;align-items:center;gap:8px;min-width:0">
-                      ${renderPlayerAvatarHtml(ir, 28)}
-                      <div>
-                        ${
-                          ir.espnUrl
-                            ? `<a href="${esc(ir.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(ir.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
-                            : `<strong>${esc(ir.name)}</strong>`
-                        }
-                        <span style="color:var(--gold-bright)"> (${esc(ir.position)}${ir.injuryType ? ` • ${esc(ir.injuryType)}` : ''})</span>
+            <details class="compact-details" style="margin-bottom:10px">
+              <summary class="compact-details-summary">
+                <span>${esc(um.oppAbbr || 'OPP')} IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</span>
+              </summary>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+                ${oppIrList
+                  .map(ir => {
+                    const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026);
+                    return `
+                  <div class="subcard-panel" style="font-size:12px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                      <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                        ${renderPlayerAvatarHtml(ir, 28)}
+                        <div>
+                          ${
+                            ir.espnUrl
+                              ? `<a href="${esc(ir.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(ir.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                              : `<strong>${esc(ir.name)}</strong>`
+                          }
+                          <span style="color:var(--gold-bright)"> (${esc(ir.position)}${ir.injuryType ? ` • ${esc(ir.injuryType)}` : ''})</span>
+                        </div>
                       </div>
+                      <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
                     </div>
-                    <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
+                      ${meta.subtitleHtml}
+                    </div>
+                    ${ir.beatNote ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(ir.beatNote)}</div>` : ''}
                   </div>
-                  <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
-                    ${meta.subtitleHtml}
-                  </div>
-                  ${ir.beatNote ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(ir.beatNote)}</div>` : ''}
-                </div>
-              `;
-                })
-                .join('')}
-            </div>
+                `;
+                  })
+                  .join('')}
+              </div>
+            </details>
           `
           : ''
       }
@@ -500,7 +750,21 @@ function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
 
 function renderTeamHealthAndIr(appData) {
   const h = appData?.health || {};
+  const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
+  const rawSfReport = h.practiceReport || [];
+  const sfReport = sfGameDay?.isActive
+    ? resolveGameDayInjuryRows(rawSfReport, sfGameDay)
+    : rawSfReport;
+
   return `
+    ${renderGameDayRosterCard(sfGameDay, {
+      is49ers: true,
+      asSubcard: false,
+      teamName: '49ers',
+      teamAbbr: 'SF',
+      teamLogoUrl: appData?.scheduleMatchup?.upcomingMatchup?.sfLogoUrl
+    })}
+
     <section class="card">
       <div class="card-header">
         <div class="card-header-left">
@@ -512,39 +776,45 @@ function renderTeamHealthAndIr(appData) {
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <a href="${esc(h.sourceUrl || 'https://www.49ers.com/team/injury-report/')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-            <span>49ers.com Report</span>${iconSvg('externalLink', 11)}
+            <span>49ers.com</span>${iconSvg('externalLink', 11)}
           </a>
           <a href="${esc(h.espnInjuryUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-            <span>ESPN Injuries</span>${iconSvg('externalLink', 11)}
+            <span>ESPN</span>${iconSvg('externalLink', 11)}
           </a>
           <span class="badge badge-gold mono">${jargonTerm('IR', 'ir')} Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
         </div>
       </div>
 
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
-        Accounts for veteran rest days (e.g., Trent Williams / CMC) vs. acute injury designations (${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}) and historical play-through rates. Tap any player for full injury and contract details.
+      <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
+        Tap any player for full injury &amp; contract dossier • ${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}
       </div>
 
-      <div class="table-scroll">
-        <table class="data-table">
+      <div class="table-scroll health-table-scroll" data-health-table="sf">
+        <table class="data-table sticky-col-table narrow-health-table">
           <thead>
             <tr>
-              <th>Player</th><th>Injury / Context</th><th class="mono">W / T / F</th><th>Play Likelihood</th>
+              <th class="sticky-first-col">Player</th>
+              <th>Injury</th>
+              <th class="mono">W / T / F</th>
+              <th>Play Likelihood</th>
             </tr>
           </thead>
           <tbody>
-            ${(h.practiceReport || [])
+            ${sfReport
               .map(
                 p => `
               <tr style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health">
-                <td>
-                  <div style="display:flex;align-items:center;gap:8px">
-                    ${renderPlayerAvatarHtml(p, 30)}
-                    <span><strong>${esc(p.name)}</strong> <span style="color:var(--gold-bright);font-size:11px">${esc(p.position)}</span></span>
+                <td class="sticky-first-col">
+                  <div class="sticky-player-cell">
+                    ${renderPlayerAvatarHtml(p, 26)}
+                    <div class="sticky-player-meta">
+                      <div class="sticky-player-name"><strong>${esc(p.name)}</strong></div>
+                      <div class="sticky-player-sub">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</div>
+                    </div>
                   </div>
                 </td>
                 <td>${esc(p.injuryType)}</td>
-                <td class="mono">${esc(p.wed)} / ${esc(p.thu)} / ${esc(p.fri)}</td>
+                <td class="mono">${esc(formatPracCell(p.wed))} / ${esc(formatPracCell(p.thu))} / ${esc(formatPracCell(p.fri))}</td>
                 <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(p.playBadgeLabel)}</span></td>
               </tr>
             `

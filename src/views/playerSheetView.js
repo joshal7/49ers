@@ -15,6 +15,9 @@ import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionL
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
+  deduplicateAndGroupWireItems,
+  stripRedundantAuthorBoilerplate,
+  isRedundantProfileSelfLink,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import {
@@ -76,9 +79,11 @@ export function renderPlayerDossierSheetHtml({
 
 function renderOverviewTab(p) {
   const sortedMentions = Array.isArray(p.recentNews)
-    ? sortNewsWithBreakingPriority(
-        p.recentNews.filter(
-          n => sanitizeExternalUrl(n?.url, null) && !isPaywalledPublisher(n?.outletName, n?.url)
+    ? deduplicateAndGroupWireItems(
+        sortNewsWithBreakingPriority(
+          p.recentNews.filter(
+            n => sanitizeExternalUrl(n?.url, null) && !isPaywalledPublisher(n?.outletName, n?.url)
+          )
         )
       )
     : [];
@@ -89,7 +94,7 @@ function renderOverviewTab(p) {
         <div class="player-mentions-section">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px">
             <div class="sub-label" style="margin:0">Recent Beat &amp; Roster Mentions (7d)</div>
-            <span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} tweets &amp; articles</span>
+            <span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} updates</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:7px">
             ${sortedMentions
@@ -97,14 +102,17 @@ function renderOverviewTab(p) {
                 const isTweet = n.type === 'tweet' || n.type === 'social';
                 const hasImg = n.imageUrl && /^https:\/\//i.test(n.imageUrl);
                 const authorName = n.author || n.reporterName || n.outletName || '49ers Beat';
-                const outletLabel =
-                  n.outletName && n.outletName.toLowerCase() !== authorName.toLowerCase()
-                    ? n.outletName
-                    : '';
+                const authorHref = sanitizeExternalUrl(
+                  n.authorProfileUrl,
+                  sanitizeExternalUrl(n.url, null)
+                );
                 const ageStr = n.publishedAt ? formatRelativeAge(n.publishedAt) : '';
 
                 const tweetFormatted = isTweet
-                  ? formatTweetBodyForDisplay(n.fullText || n.headline || '', SHORT_TWEET_FULL_TEXT_LIMIT)
+                  ? formatTweetBodyForDisplay(
+                      stripRedundantAuthorBoilerplate(n.fullText || n.headline || '', authorName),
+                      SHORT_TWEET_FULL_TEXT_LIMIT
+                    )
                   : null;
 
                 const cleanSummary =
@@ -112,30 +120,31 @@ function renderOverviewTab(p) {
                   n.summary &&
                   !n.summary.startsWith('Published via ') &&
                   n.summary.toLowerCase() !== `${authorName} • ${n.outletName || ''}`.toLowerCase()
-                    ? n.summary
+                    ? stripRedundantAuthorBoilerplate(n.summary, authorName)
                     : '';
 
                 const breakingPill = n.breakingBadge
                   ? `<span class="badge ${n.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill'}">${iconSvg('bolt', 11)}<span>${esc(n.breakingBadge)}</span></span>`
                   : '';
 
-                const typePill = isTweet
-                  ? `<span class="badge badge-gold">${iconSvg('tweet', 11)}<span>Tweet</span></span>`
-                  : `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>Article</span></span>`;
+                const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
+                const showMentionExt =
+                  Boolean(safeMentionExt) &&
+                  !isRedundantProfileSelfLink(safeMentionExt, n.url) &&
+                  !/\bon X$/i.test(String(n.externalTitle || ''));
 
                 return `
               <div class="subcard-panel player-mention-card ${n.breakingPriority > 0 ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
                 <div class="player-mention-meta">
-                  <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0">
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
                     ${breakingPill}
-                    ${typePill}
-                    ${n.isFirstMoverInjuryScoop ? `<span class="badge badge-gold">First to Report</span>` : ''}
+                    ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>Article</span></span>` : ''}
                     <span class="player-mention-author">
-                      by ${
-                        sanitizeExternalUrl(n.authorProfileUrl, null)
-                          ? `<a href="${esc(sanitizeExternalUrl(n.authorProfileUrl))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(authorName)}</strong></a>`
+                      ${
+                        authorHref
+                          ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(authorName)}</strong></a>`
                           : `<strong>${esc(authorName)}</strong>`
-                      }${isTweet && n.authorHandle ? ` <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(n.authorHandle)}</span>` : ''}${outletLabel ? ` <span style="color:var(--text-muted)">• ${esc(outletLabel)}</span>` : ''}
+                      }
                     </span>
                   </div>
                   ${ageStr ? `<span class="mono" style="font-size:11px;color:var(--text-muted);flex-shrink:0">${esc(ageStr)}</span>` : ''}
@@ -147,19 +156,10 @@ function renderOverviewTab(p) {
                       isTweet
                         ? `<a href="${esc(sanitizeExternalUrl(n.url, '#'))}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
                            ${
-                             n.corroboratedBy?.length
-                               ? `<div class="corroboration-meta-row">Confirmed by <strong>${esc(n.corroboratedBy.slice(0, 2).join(', '))}</strong></div>`
-                               : ''
-                           }
-                           ${
-                             sanitizeExternalUrl(n.externalUrl, null)
+                             showMentionExt
                                ? `<div style="margin-top:5px">
-                                    <a href="${esc(sanitizeExternalUrl(n.externalUrl))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                                      <span>${
-                                        /^https:\/\/x\.com\//i.test(n.externalUrl) && !/\/status\//i.test(n.externalUrl)
-                                          ? `View ${esc(n.authorHandle || authorName)} on X`
-                                          : `Linked: ${esc((n.summary || n.outletName || 'Read Story').slice(0, 56))}`
-                                      }</span>
+                                    <a href="${esc(safeMentionExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                                      <span>Article: ${esc((n.summary || n.outletName || 'Read Story').slice(0, 56))}</span>
                                       ${iconSvg('externalLink', 10)}
                                     </a>
                                   </div>`

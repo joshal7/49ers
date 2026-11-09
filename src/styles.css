@@ -3788,3 +3788,356 @@ button.featured-player-chip:active {
   color: var(--text-primary);
   font-weight: 700;
 }
+
+/* ============================================================================
+   Sticky First-Column Health Tables, Game-Day Inactives/Active Roster &
+   Streamlined Collapsible Details
+   ============================================================================ */
+.data-table.sticky-col-table,
+.sticky-col-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.narrow-health-table {
+  width: 100%;
+  min-width: 440px;
+}
+
+.narrow-health-table th,
+.narrow-health-table td {
+  padding: 6.5px 8px;
+  vertical-align: middle;
+}
+
+.sticky-col-table th.sticky-first-col,
+.sticky-col-table td.sticky-first-col {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  border-right: 1px solid var(--border-strong);
+  box-shadow: 3px 0 8px rgba(0, 0, 0, 0.22);
+}
+
+.sticky-col-table th.sticky-first-col {
+  z-index: 3;
+  background: var(--bg-card-alt);
+}
+
+.sticky-col-table td.sticky-first-col {
+  background: var(--bg-elevated);
+}
+
+.gameday-subcard .sticky-col-table td.sticky-first-col {
+  background: var(--bg-card-alt);
+}
+
+[data-theme="light"] .sticky-col-table th.sticky-first-col,
+[data-theme="light"] .sticky-col-table td.sticky-first-col {
+  box-shadow: 3px 0 8px rgba(20, 16, 8, 0.07);
+}
+
+.sticky-player-cell {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 128px;
+  max-width: 184px;
+}
+
+.sticky-player-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sticky-player-name {
+  font-size: 12.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sticky-player-sub {
+  font-size: 10.3px;
+  line-height: 1.2;
+  color: var(--gold-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 420px) {
+  .narrow-health-table {
+    min-width: 420px;
+  }
+  .sticky-player-cell {
+    min-width: 118px;
+    max-width: 154px;
+    gap: 6px;
+  }
+  .sticky-player-name {
+    font-size: 12px;
+  }
+  .sticky-player-sub {
+    font-size: 9.8px;
+  }
+}
+
+/* Game-Day Inactives & Collapsible Active Roster Block */
+.gameday-roster-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.gameday-subcard {
+  margin-bottom: 10px;
+  border-color: var(--gold-border);
+}
+
+.gameday-roster-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gameday-roster-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.gameday-roster-title {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.gameday-pending-note {
+  font-size: 11.5px;
+  color: var(--gold-bright);
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-border);
+  border-radius: 8px;
+  padding: 6px 9px;
+}
+
+.gameday-inactives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 6px;
+}
+
+.gameday-inactive-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  border-radius: 9px;
+  background: var(--crimson-soft);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  min-width: 0;
+}
+
+.gameday-inactive-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.gameday-inactive-name {
+  font-size: 12px;
+  line-height: 1.22;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gameday-pos {
+  font-size: 10.5px;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.gameday-inactive-reason {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gameday-active-collapsible {
+  border-radius: 10px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-strong);
+  padding: 7px 10px;
+}
+
+.gameday-subcard .gameday-active-collapsible {
+  background: var(--bg-elevated);
+}
+
+.gameday-active-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.gameday-active-summary::-webkit-details-marker {
+  display: none;
+}
+
+.gameday-active-summary::before {
+  content: '▸';
+  color: var(--gold-bright);
+  font-size: 12px;
+  margin-right: 2px;
+  transition: transform 0.15s ease;
+}
+
+.gameday-active-collapsible[open] > .gameday-active-summary::before {
+  transform: rotate(90deg);
+}
+
+.gameday-summary-sub {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+
+.gameday-units-wrap {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.gameday-unit-title {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gold-bright);
+  margin-bottom: 5px;
+}
+
+.gameday-active-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.gameday-active-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3.5px 7px;
+  border-radius: 7px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  font-size: 11.2px;
+  color: var(--text-primary);
+  line-height: 1.2;
+  max-width: 100%;
+}
+
+button.gameday-active-pill {
+  cursor: pointer;
+}
+
+button.gameday-active-pill:hover {
+  border-color: var(--gold-border);
+}
+
+.gameday-subcard .gameday-active-pill {
+  background: var(--bg-card-alt);
+}
+
+.gameday-pill-num {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Streamlined Collapsible Toggles & Single-Author Wire Attribution */
+.compact-details {
+  border-radius: 9px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-alt);
+  padding: 5px 9px;
+}
+
+.news-toolbar-card .compact-details {
+  margin-top: 6px;
+  padding: 4px 8px;
+}
+
+.compact-details-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.3px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.compact-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.compact-details-summary::before {
+  content: '▸';
+  color: var(--gold-bright);
+  font-size: 11px;
+  transition: transform 0.15s ease;
+}
+
+.compact-details[open] > .compact-details-summary {
+  color: var(--text-primary);
+}
+
+.compact-details[open] > .compact-details-summary::before {
+  transform: rotate(90deg);
+}
+
+.wire-author-link {
+  color: var(--gold-bright);
+  font-size: 11.8px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.wire-author-link:hover {
+  text-decoration: underline;
+}
+
+.confirming-reports-details {
+  margin-top: 5px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+
+[data-theme="light"] .confirming-reports-details {
+  background: rgba(0, 0, 0, 0.025);
+}

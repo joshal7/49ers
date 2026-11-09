@@ -59,7 +59,7 @@ const state = {
   draggedBlockId: null,
 
   // News state
-  newsMode: 'clustered',
+  newsMode: 'raw',
   newsCategoryFilter: 'all',
   activeVideosSet: new Set(),
   lastWireSyncAt: null,
@@ -416,6 +416,7 @@ function renderMain() {
       });
     } else if (state.activeNavTab === 'news') {
       mainEl.innerHTML = renderNewsViewHtml({
+        appData: state.appData,
         newsMode: state.newsMode,
         newsCategoryFilter: state.newsCategoryFilter,
         filteredClusters,
@@ -423,8 +424,6 @@ function renderMain() {
         reportersById: reportersMap,
         activeVideosSet: state.activeVideosSet,
         userPrefs: state.prefs,
-        totalReportersCount: state.appData.reporters?.reporters?.length || 45,
-        isGameLive: is49ersGameLiveWindow(state.appData),
         lastWireSyncAt: state.lastWireSyncAt || state.appData.meta?.updatedAt,
         isSyncingWire: state.isSyncingWire
       });
@@ -815,8 +814,13 @@ function bindEvents() {
         renderSheet();
         break;
 
+      case 'close-sheet':
+        state.sheetMode = null;
+        renderSheet();
+        break;
+
       case 'set-news-mode':
-        state.newsMode = btn.getAttribute('data-mode') || 'clustered';
+        state.newsMode = btn.getAttribute('data-mode') || 'raw';
         renderMain();
         break;
 
@@ -1005,10 +1009,15 @@ function bindEvents() {
         renderMain();
         break;
 
-      case 'set-pod-format':
-        state.podFormat = btn.getAttribute('data-format') || 'two_host';
+      case 'set-pod-format': {
+        const nextFmt = btn.getAttribute('data-format') === 'solo' ? 'solo' : 'two_host';
+        state.podFormat = nextFmt;
+        state.prefs.podFormat = nextFmt;
+        saveUserPrefs(state.prefs);
+        if (state.sheetMode === 'settings') renderSheet();
         renderMain();
         break;
+      }
 
       case 'fill-pod-topic':
         state.podTopicDraft = btn.getAttribute('data-topic') || '';
@@ -1568,8 +1577,16 @@ function bindEvents() {
       state.combineSearch = t.value;
       renderMain();
     } else if (t.id === 'podDurationSlider') {
-      state.podDurationMin = Number(t.value || 5);
+      state.podDurationMin = Number(t.value || 3);
       renderMain();
+    } else if (t.id === 'prefPodDurationSlider') {
+      const nextDur = Math.max(2, Math.min(20, Number(t.value || 3)));
+      state.prefs.defaultPodDurationMin = nextDur;
+      state.podDurationMin = nextDur;
+      saveUserPrefs(state.prefs);
+      const badgeEl = document.getElementById('prefPodDurationBadge');
+      if (badgeEl) badgeEl.textContent = `${nextDur} min`;
+      if (state.activeNavTab === 'audio') renderMain();
     } else if (t.id === 'podTopicInput') {
       state.podTopicDraft = t.value;
     } else if (t.id === 'analysisPromptInput') {
@@ -1863,10 +1880,13 @@ async function handleIncomingSharedLink(locationLike = window.location) {
 }
 
 async function init() {
+  state.prefs = loadUserPrefs();
   applyTheme(state.prefs.theme);
   if (state.prefs?.capSelectedYear) {
     state.capSelectedYear = String(state.prefs.capSelectedYear);
   }
+  state.podFormat = state.prefs?.podFormat === 'solo' ? 'solo' : 'two_host';
+  state.podDurationMin = Math.max(2, Math.min(20, Number(state.prefs?.defaultPodDurationMin || 3)));
   audioController = new PodcastAudioController(renderMiniPlayer, {
     onSynthesizeMissingAudio: async ep => {
       const startedAtMs = Date.now();
@@ -1879,7 +1899,7 @@ async function init() {
         totalSteps: 3,
         stages: PODCAST_PIPELINE_STAGES,
         percent: 52,
-        estLabel: `30–60 sec using ${modelInfo.shortModelName}`,
+        estLabel: '30–60 sec',
         modelLabel: modelInfo.displayLabel,
         message: 'Step 3 of 3: Preparing shared podcast studio audio…',
         subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'

@@ -63,9 +63,34 @@ export function renderSettingsSheetHtml({
       </label>
     </div>
 
-    <!-- Display Name, Gemini AI Key & Cloud Sync -->
+    <!-- Podcast Preferences (Host Format & Default Duration) -->
+    <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px" data-settings-podcast-prefs>
+      <div class="sub-label">2. Custom Podcast Preferences</div>
+      <div>
+        <div style="font-size:11.5px;color:var(--text-secondary);margin-bottom:5px">Host Format</div>
+        <div class="segmented-control compact-seg" role="group" aria-label="Podcast Host Format">
+          <button type="button" class="pill-btn seg-btn ${(userPrefs.podFormat || 'two_host') === 'two_host' ? 'active' : ''}" data-action="set-pod-format" data-format="two_host">
+            ${iconSvg('mic', 13)}
+            <span>Two-Host (Marcus &amp; Elena)</span>
+          </button>
+          <button type="button" class="pill-btn seg-btn ${userPrefs.podFormat === 'solo' ? 'active' : ''}" data-action="set-pod-format" data-format="solo">
+            ${iconSvg('target', 13)}
+            <span>Solo Briefing</span>
+          </button>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px">
+          <label style="font-size:11.5px;color:var(--text-secondary)" for="prefPodDurationSlider">Default Podcast Length</label>
+          <span class="badge badge-gold mono" id="prefPodDurationBadge">${Number(userPrefs.defaultPodDurationMin || 3)} min</span>
+        </div>
+        <input type="range" id="prefPodDurationSlider" min="2" max="20" step="1" value="${Number(userPrefs.defaultPodDurationMin || 3)}" style="width:100%" aria-label="Default Podcast Length Minutes" />
+      </div>
+    </div>
+
+    <!-- Display Name, API Key & Cloud Sync -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
-      <div class="sub-label">2. Display Name, Gemini Studio AI &amp; Cloud Sync</div>
+      <div class="sub-label">3. Profile, API Key &amp; Cloud Sync</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px">
         <div>
           <label style="font-size:11px;color:var(--text-secondary)" for="prefAuthorInput">Your Display Name</label>
@@ -116,7 +141,7 @@ export function renderSettingsSheetHtml({
 
     <!-- Outlet Toggles -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:7px">
-      <div class="sub-label">3. News Outlets &amp; Channels (${outlets.length})</div>
+      <div class="sub-label">4. News Outlets &amp; Channels (${outlets.length})</div>
       <div class="settings-outlets-grid">
         ${outlets
           .map(o => {
@@ -136,7 +161,7 @@ export function renderSettingsSheetHtml({
     <!-- Individual Beat Reporters & Insiders -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="sub-label">4. Beat Reporters &amp; Analysts (${reporters.length})</div>
+        <div class="sub-label">5. Beat Reporters &amp; Analysts (${reporters.length})</div>
         <div style="display:flex;gap:6px">
           <button type="button" class="btn-ghost" data-action="enable-all-reporters">${iconSvg('check', 12)}<span>Enable All</span></button>
         </div>

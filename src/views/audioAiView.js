@@ -295,27 +295,13 @@ export function renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton = tru
 
 function renderGeminiConnectionStatusCard(
   userPrefs = {},
-  modelInfo = {},
+  _modelInfo = {},
   keyFeedback = '',
   showGeminiKeyGuide = false
 ) {
   const connected = hasLiveAiConnection(userPrefs);
   if (connected) {
-    const modeLabel = userPrefs?.workerBaseUrl
-      ? 'Shared Cloud Worker + NotebookLM Voices'
-      : `${modelInfo.shortModelName} (Auto-Updating) + NotebookLM Voices (Puck & Aoede)`;
-    return `
-      <div class="gemini-connected-strip" data-gemini-setup-card="connected">
-        <span class="inline-icon-meta" style="min-width:0">
-          <span class="gemini-live-dot" aria-hidden="true"></span>
-          <span>Live AI Connected: <strong>${esc(modeLabel)}</strong></span>
-        </span>
-        <button type="button" class="btn-ghost" data-action="open-settings" style="padding:3px 8px;font-size:11px;flex-shrink:0">
-          ${iconSvg('settings', 12)}
-          <span>Key</span>
-        </button>
-      </div>
-    `;
+    return '';
   }
 
   return `
@@ -326,11 +312,11 @@ function renderGeminiConnectionStatusCard(
                 data-gemini-guide-trigger
                 aria-expanded="${showGeminiKeyGuide ? 'true' : 'false'}">
           ${iconSvg('helpCircle', 14)}
-          <span>New here? How to get &amp; install your free 1-time Gemini API key (60-sec guide)</span>
+          <span>How to get &amp; save your free 1-time API key (60-sec guide)</span>
           ${iconSvg(showGeminiKeyGuide ? 'chevronUp' : 'chevronDown', 13)}
         </button>
         <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="flex-shrink:0">
-          <span>AI Studio Key Page</span>
+          <span>AI Studio Key</span>
           ${iconSvg('externalLink', 10)}
         </a>
       </div>
@@ -341,24 +327,24 @@ function renderGeminiConnectionStatusCard(
       <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
         <span class="inline-icon-meta" style="font-weight:800;color:var(--gold-bright);font-size:12.5px">
           ${iconSvg('key', 14)}
-          <span>Connect Gemini API Key (1-Time Device Setup)</span>
+          <span>Connect API Key (1-Time Device Setup)</span>
         </span>
         <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-          <span>Get Free AI Studio Key</span>
+          <span>Get Free Key</span>
           ${iconSvg('externalLink', 10)}
         </a>
       </div>
       <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
-        Saved privately on this device (never committed to GitHub). Entering your key once unlocks <strong>both Auto Pod &amp; AI Analysis</strong> with <strong>${esc(modelInfo.shortModelName)} Deep Research</strong>, live Google Search Grounding &amp; <strong>Gemini NotebookLM Studio Voices</strong>.
+        Saved privately on this device. Unlocks custom Auto Pod episodes and on-demand scouting &amp; cap reports.
       </div>
       <div class="gemini-key-row">
         <input type="password" id="inlineGeminiApiKeyInput" class="text-input"
                style="flex:1 1 175px;min-width:0;font-size:16px"
-               placeholder="Paste AIza... Gemini API Key" autocomplete="off"
+               placeholder="Paste AIza... API Key" autocomplete="off"
                aria-label="Google Gemini API Key" />
         <button type="button" class="btn-secondary" data-action="save-inline-gemini-key" style="flex-shrink:0">
           ${iconSvg('check', 14)}
-          <span>Connect Gemini</span>
+          <span>Connect</span>
         </button>
       </div>
       ${keyFeedback ? `<div style="font-size:11.5px;color:var(--gold-bright)">${esc(keyFeedback)}</div>` : ''}
@@ -537,16 +523,9 @@ function renderBeatPodcastsDirectory({
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Last 7 Days • Launches Native iOS / Android Podcast App</div>
-            <h2 class="card-title">Latest 49ers Beat Podcasts</h2>
+            <div class="card-eyebrow">Last 7 Days</div>
+            <h2 class="card-title">Latest 49ers Beat Podcasts (${episodes.length})</h2>
           </div>
-        </div>
-        ${updatedAt ? `<span class="mono" style="font-size:11px;color:var(--text-muted)">Synced ${esc(formatRelativeAge(updatedAt))}</span>` : ''}
-      </div>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <div style="font-size:12.5px;color:var(--text-secondary)">
-          <strong>${episodes.length} episodes</strong> from the past 7 days across <strong>${defaultShows.length} flagship shows</strong>. Tap any episode to launch your native podcast player.
         </div>
         <div class="podcast-view-toggle" role="group" aria-label="Organize Podcasts By">
           <button type="button" class="pill-btn ${viewMode === 'date' ? 'active' : ''}"
@@ -772,52 +751,25 @@ function renderPodcastStudio({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • Deep Research → NotebookLM Script → Studio Pod</div>
-            <h2 class="card-title">Generate Custom Autopodcast</h2>
+            <div class="card-eyebrow">Custom Audio Briefing</div>
+            <h2 class="card-title">Generate Autopodcast</h2>
           </div>
         </div>
+        <button type="button" class="btn-ghost" data-action="open-settings" title="Change Host Format in Settings" style="font-size:11px;padding:4px 8px">
+          ${iconSvg('settings', 12)}
+          <span>${podFormat === 'solo' ? 'Solo Host' : 'Two-Host'}</span>
+        </button>
       </div>
 
       ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide)}
 
-      <div class="sub-label" style="margin-bottom:6px">1. Select Duration (${podDurationMin} min)</div>
-      <div class="pill-bar" style="margin-bottom:8px">
-        ${[
-          [3, 'bolt', '3m Quick Hit'],
-          [8, 'clock', '8m Commute Brief'],
-          [15, 'sparkles', '15m Deep Film/Cap Dive']
-        ]
-          .map(
-            ([mins, ic, label]) => `
-          <button type="button" class="pill-btn ${Number(podDurationMin) === mins ? 'active' : ''}"
-                  data-action="set-pod-duration" data-mins="${mins}">
-            ${iconSvg(ic, 13)}
-            <span>${esc(label)}</span>
-          </button>
-        `
-          )
-          .join('')}
-      </div>
-
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <span style="font-size:12px;color:var(--text-secondary)" class="mono">Custom:</span>
+        <label for="podDurationSlider" style="font-size:12px;color:var(--text-secondary);font-weight:700" class="mono">Length</label>
         <input type="range" id="podDurationSlider" min="2" max="20" step="1" value="${Number(podDurationMin)}" style="flex:1" aria-label="Custom Podcast Duration Minutes" />
         <span class="badge badge-gold mono">${podDurationMin} min</span>
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">2. Host Format</div>
-      <div class="segmented-control compact-seg" style="margin-bottom:10px" role="group" aria-label="Host Format">
-        <button type="button" class="pill-btn seg-btn ${podFormat === 'two_host' ? 'active' : ''}" data-action="set-pod-format" data-format="two_host">
-          ${iconSvg('mic', 13)}
-          <span>Two-Host (Marcus &amp; Elena)</span>
-        </button>
-        <button type="button" class="pill-btn seg-btn ${podFormat === 'solo' ? 'active' : ''}" data-action="set-pod-format" data-format="solo">
-          ${iconSvg('target', 13)}
-          <span>Solo Briefing</span>
-        </button>
-      </div>
-
-      <div class="sub-label" style="margin-bottom:6px">3. Topic or Specific Football Question</div>
+      <div class="sub-label" style="margin-bottom:6px">Topic or Football Question</div>
       <div class="pill-bar" style="margin-bottom:8px">
         ${topicChips
           .map(
@@ -1004,17 +956,13 @@ function renderDeepAnalysisRunner({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(modelInfo.displayLabel)} • 3-Stage High-Thinking Deep Research</div>
-            <h2 class="card-title">AI Scouting &amp; Cap Analysis</h2>
+            <div class="card-eyebrow">Film, Analytics &amp; Salary Cap</div>
+            <h2 class="card-title">Scouting &amp; Cap Analysis</h2>
           </div>
         </div>
       </div>
 
       ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide)}
-
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">
-        Multi-stage deep research prioritizing analytical depth over speed: live Google Search Grounding + beat wire, All-22 X's &amp; O's film mechanics, and verified OverTheCap multi-year math.
-      </div>
 
       <div class="pill-bar" style="margin-bottom:8px">
         ${quickPrompts
