@@ -864,7 +864,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       return kwLower.some(k => hay.includes(k));
     });
     if (!match) {
-      match = articlePhotos.find(it => !usedHeroUrls.has(it.imageUrl));
+      match =
+        articlePhotos.find(
+          it =>
+            !usedHeroUrls.has(it.imageUrl) &&
+            !/\b(brawl|fight|arrest|jail)\b/i.test(`${it.title || ''} ${it.imageAlt || ''}`)
+        ) || articlePhotos.find(it => !usedHeroUrls.has(it.imageUrl));
     }
     if (match) {
       usedHeroUrls.add(match.imageUrl);
@@ -1127,12 +1132,14 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         id: `cluster_health_roster_wk${currentWeek}`,
         publishedAt: latestPublishedFromSources(healthLinks, 65),
         category: 'film',
-        categoryLabel: 'Practice & Roster Wire',
-        headline: `Week ${currentWeek} Practice & Availability Report: Key 49ers Injury Designations & Rotation Notes`,
+        categoryLabel: liveCtx.isBeforePracticeWindow ? 'Injury & Roster Wire' : 'Practice & Roster Wire',
+        headline: liveCtx.isBeforePracticeWindow
+          ? `Week ${currentWeek} Medical & Roster Ledger: Post-Game Evaluations & 21-Day Return Windows`
+          : `Week ${currentWeek} Practice & Availability Report: Key 49ers Injury Designations & Rotation Notes`,
         synthesizedFromCount: healthLinks.length,
         signalScore: 93,
         citedReporterIds: ['nick_wagoner', 'matt_maiocco', 'matt_barrows', 'david_lombardi'],
-        ...selectClusterPhoto(['practice', 'injury', 'bosa', 'williams', 'mccaffrey'], secondVid?.videoId || ''),
+        ...selectClusterPhoto(['injury', 'halton', 'lenoir', 'bosa', 'williams'], secondVid?.videoId || ''),
         featuredPlayers: pickPlayers(['Trent Williams', 'Nick Bosa', 'Christian McCaffrey', 'DeForest Buckner', 'Deommodore Lenoir']),
         sourceLinks: healthLinks,
         hardFacts:
@@ -1146,7 +1153,9 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
           'Player-specific veteran rest days (Trent Williams, Christian McCaffrey, Nick Bosa) and NFL 5-Step Concussion Protocol gates are separated from acute soft-tissue tags in our availability model.',
           `Multi-Year Cap Rollover: Carrying SF's $${capGrossM}M 2026 space into 2027 produces a ${postRolloverLabel} net post-rollover cap balance.`
         ],
-        consensusVsDissent: 'Friday practice participation remains the primary clearance gate for soft-tissue game-time decisions.',
+        consensusVsDissent: liveCtx.isBeforePracticeWindow
+          ? `Official Week ${currentWeek} practice participation opens Wednesday afternoon at SAP Performance Facility.`
+          : 'Friday practice participation remains the primary clearance gate for soft-tissue game-time decisions.',
         videoClip: secondVid
           ? {
               videoId: secondVid.videoId,

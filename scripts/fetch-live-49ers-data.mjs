@@ -64,7 +64,8 @@ import {
   classifyBreakingItem,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
-  resolveGameNewsContext
+  resolveGameNewsContext,
+  filterOutCompletedGameAvailabilityItems
 } from '../src/engine/breakingClassifier.js';
 import {
   isBeforeWeeklyPracticeWindow,
@@ -677,19 +678,38 @@ async function main() {
     null;
   const detectedCurrentWeek = Number(nextEspnEvent?.week?.number || 9);
   const sfBeforePracticeWindow = isBeforeWeeklyPracticeWindow(nextEspnEvent?.date || '');
-  const pipelineScheduleStub = (espnSchedule.events || []).map(ev => ({
-    week: Number(ev.week?.number || 0),
-    dateIso: ev.date,
-    completed: Boolean(ev.competitions?.[0]?.status?.type?.completed),
-    statusState: String(ev.competitions?.[0]?.status?.type?.state || '').toLowerCase()
-  }));
-  const pipelineGameContext = resolveGameNewsContext({
-    scheduleMatchup: { schedule: pipelineScheduleStub }
-  });
   const nextEspnOppCompetitor = (nextEspnEvent?.competitions?.[0]?.competitors || []).find(
     c => String(c.team?.id) !== '25' && c.team?.abbreviation !== 'SF'
   );
   const nextOppDisplayNamePre = nextEspnOppCompetitor?.team?.displayName || '';
+  const pipelineScheduleStub = (espnSchedule.events || []).map(ev => {
+    const oppC = (ev.competitions?.[0]?.competitors || []).find(
+      c => String(c.team?.id) !== '25' && c.team?.abbreviation !== 'SF'
+    );
+    return {
+      week: Number(ev.week?.number || 0),
+      dateIso: ev.date,
+      completed: Boolean(ev.competitions?.[0]?.status?.type?.completed),
+      statusState: String(ev.competitions?.[0]?.status?.type?.state || '').toLowerCase(),
+      opponent: {
+        abbr: normalizeTeamAbbr(oppC?.team?.abbreviation || ''),
+        name: oppC?.team?.displayName || ''
+      }
+    };
+  });
+  const pipelineAppDataStub = {
+    meta: { currentWeek: detectedCurrentWeek },
+    scheduleMatchup: {
+      schedule: pipelineScheduleStub,
+      upcomingMatchup: {
+        week: detectedCurrentWeek,
+        oppAbbr: normalizeTeamAbbr(nextEspnOppCompetitor?.team?.abbreviation || ''),
+        oppName: nextOppDisplayNamePre,
+        kickoffIso: nextEspnEvent?.date || ''
+      }
+    }
+  };
+  const pipelineGameContext = resolveGameNewsContext(pipelineAppDataStub);
 
   // Parse authoritative 49ers.com Roster & Injury Report, CBS Injuries, ESPN Transactions & Athlete Web v3
   const officialSfRoster = parseOfficial49ersRosterHtml(official49ersRosterHtml);
@@ -2317,10 +2337,24 @@ async function main() {
     }
   }
 
-  // Add live YouTube clips to raw stream with verified domain embeddability flag
+  // Add live YouTube clips to raw stream with verified domain embeddability flag & parsed relative publish time
   for (const vid of liveYtClips) {
     const sig = scoreContentSignal(vid.title, vid.channel);
     const cleanVidTitle = cleanSensationalistText(vid.title);
+    const agoRaw = String(vid.publishedAgo || '');
+    const dM = agoRaw.match(/(\d+)\s*d(?:ays?)?\s+ago/i);
+    const hM = agoRaw.match(/(\d+)\s*h(?:ours?|rs?)?\s+ago/i);
+    const mM = agoRaw.match(/(\d+)\s*m(?:in(?:ute)?s?)?\s+ago/i);
+    const wM = agoRaw.match(/(\d+)\s*w(?:eeks?|ks?)?\s+ago/i);
+    const offsetMs = wM
+      ? Number(wM[1]) * 7 * 86_400_000
+      : dM
+        ? Number(dM[1]) * 86_400_000
+        : hM
+          ? Number(hM[1]) * 3_600_000
+          : mM
+            ? Number(mM[1]) * 60_000
+            : 3 * 3_600_000;
     rawNewsStream.push({
       id: `yt_${vid.videoId}`,
       type: 'video',
@@ -2328,7 +2362,7 @@ async function main() {
       summary: `Video (${vid.duration || 'Clip'}) • ${vid.channel} • ${vid.publishedAgo || 'Recent'}`,
       imageUrl: vid.thumbnailUrl || `https://i.ytimg.com/vi/${vid.videoId}/hqdefault.jpg`,
       mentionedPlayers: matchMentionedPlayers(cleanVidTitle, 10),
-      publishedAt: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),
+      publishedAt: new Date(Date.now() - offsetMs).toISOString(),
       url: `https://www.youtube.com/watch?v=${vid.videoId}`,
       videoId: vid.videoId,
       embeddable: Boolean(vid.embeddable),
@@ -2346,8 +2380,9 @@ async function main() {
     });
   }
 
-  // Sort raw stream so breaking / live in-game & 48h post-game injury news rises directly to #1!
-  const sortedStream = sortNewsWithBreakingPriority(rawNewsStream, Date.now(), {
+  // Prune stale pre-game player availability items from completed games & sort breaking/post-game injury updates to #1!
+  const prunedRawStream = filterOutCompletedGameAvailabilityItems(rawNewsStream, pipelineAppDataStub);
+  const sortedStream = sortNewsWithBreakingPriority(prunedRawStream, Date.now(), {
     activeWindowHours: 18,
     gameContext: pipelineGameContext
   });
@@ -2488,10 +2523,16 @@ async function main() {
     );
   }
 
-  // Finalize `p.recentNews` for every roster player: sorted with breaking tweets/news first, capped at 10 items in 7d window
+  // Finalize `p.recentNews` for every roster player: pruned of completed-game availability noise, sorted with breaking first, capped at 10 items in 7d window
   for (const p of rosterPlayers) {
-    const collected = mentionsByPlayerId.get(p.id) || [];
-    p.recentNews = sortNewsWithBreakingPriority(collected, Date.now(), { activeWindowHours: 24 }).slice(0, 10);
+    const collected = filterOutCompletedGameAvailabilityItems(
+      mentionsByPlayerId.get(p.id) || [],
+      pipelineAppDataStub
+    );
+    p.recentNews = sortNewsWithBreakingPriority(collected, Date.now(), {
+      activeWindowHours: 24,
+      gameContext: pipelineGameContext
+    }).slice(0, 10);
   }
 
   // 9. Build Schedule, 1st-32nd Team Stats, Power Rankings & Upcoming Matchup (`data/schedule-matchup.json`)
@@ -3618,9 +3659,24 @@ async function main() {
   };
 
   // Build AI Beat Synthesis Clusters now that full live Matchup, Standings & Cap context is ready!
-  const practiceSummaryBullets = practiceReportPlayers
-    .slice(0, 3)
-    .map(p => `${p.name} (${p.position} — ${p.injuryType}): ${p.playBadgeLabel} [${p.wed}/${p.thu}/${p.fri}].`);
+  const openWindowIrNames = irTrackerPlayers
+    .filter(ir => ir.isPracticeWindowOpen)
+    .map(ir => `${ir.name} (${ir.position})`);
+  const postGameInjuryHeadlines = rawNewsStream
+    .filter(it => it.type !== 'video' && (it.isPostGameInjuryUpdate || it.category === 'injury'))
+    .map(it => String(it.title || '').trim())
+    .filter(Boolean)
+    .slice(0, 2);
+  const practiceSummaryBullets = sfBeforePracticeWindow
+    ? [
+        ...postGameInjuryHeadlines,
+        openWindowIrNames.length > 0
+          ? `Active 21-Day IR Return Windows entering Week ${currentWeek}: ${openWindowIrNames.join(', ')} (${remainingIrDesignations}/8 regular-season return designations remaining).`
+          : `Official Week ${currentWeek} practice participation opens Wednesday at SAP Performance Facility (${remainingIrDesignations}/8 IR return designations remaining).`
+      ].slice(0, 3)
+    : practiceReportPlayers
+        .slice(0, 3)
+        .map(p => `${p.name} (${p.position} — ${p.injuryType}): ${p.playBadgeLabel} [${p.wed}/${p.thu}/${p.fri}].`);
 
   const activeSeasonCalendar = buildNflCalendarForSeasonYear(seasonYear);
   const nextCapYrKey = String(Number(capPrimaryYrKey) + 1);
@@ -3635,6 +3691,7 @@ async function main() {
     capSpaceEffective: otcParsed.years[capPrimaryYrKey]?.effectiveCapSpace || 28_664_858,
     capSpace2027: otcParsed.years[nextCapYrKey]?.teamCapSpace ?? -31_540_066,
     tradeDeadlineIso: activeSeasonCalendar.tradeDeadline,
+    isBeforePracticeWindow: sfBeforePracticeWindow,
     practiceSummaryBullets
   });
 

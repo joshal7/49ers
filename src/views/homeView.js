@@ -28,7 +28,9 @@ import {
   balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
-  formatTweetBodyForDisplay
+  formatTweetBodyForDisplay,
+  filterOutCompletedGameAvailabilityItems,
+  filterAndCleanSynthesisClusters
 } from '../engine/breakingClassifier.js';
 import { computeNewsSalienceScore } from '../engine/antiFluffFilter.js';
 import {
@@ -137,12 +139,19 @@ function renderSingleDashboardCard({
   let externalHeaderLink = '';
 
   const rawList = deduplicateAndGroupWireItems(
-    sortNewsWithBreakingPriority(filteredRawItems || appData?.news?.rawStream || [], Date.now(), { appData })
+    sortNewsWithBreakingPriority(
+      filterOutCompletedGameAvailabilityItems(
+        filteredRawItems || appData?.news?.rawStream || [],
+        appData
+      ),
+      Date.now(),
+      { appData }
+    )
   );
 
   switch (block.id) {
     case 'news_briefs': {
-      const top2 = (filteredClusters || []).slice(0, 2);
+      const top2 = filterAndCleanSynthesisClusters(filteredClusters || [], appData).slice(0, 2);
       const rankHomeSalience = (a, b) => {
         const bpDiff = Number(b.breakingPriority || 0) - Number(a.breakingPriority || 0);
         if (bpDiff !== 0) return bpDiff;
@@ -179,7 +188,7 @@ function renderSingleDashboardCard({
               ${top2
                 .map(c => {
                   const hasHeroImg = c.heroImageUrl && /^https:\/\//i.test(c.heroImageUrl);
-                  const safeReports = resolveClusterSafeReports(c, rawList);
+                  const safeReports = resolveClusterSafeReports(c, rawList, appData);
                   const reportCount = safeReports.length || Number(c.synthesizedFromCount) || 0;
                   return `
                 <div class="subcard-panel">

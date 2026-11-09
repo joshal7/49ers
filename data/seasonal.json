@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T09:06:25.130Z",
+  "updatedAt": "2026-11-09T14:35:16.920Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -339,7 +339,7 @@
         "seedDistribution": {
           "1": 39.3,
           "2": 35.7,
-          "3": 9.7,
+          "3": 9.6,
           "4": 1,
           "5": 2.2,
           "6": 3.4,
@@ -363,7 +363,7 @@
           "seedDistribution": {
             "1": 39.3,
             "2": 35.7,
-            "3": 9.7,
+            "3": 9.6,
             "4": 1,
             "5": 2.2,
             "6": 3.4,
@@ -379,7 +379,7 @@
           "currentRecord": "6-1",
           "powerRating": 1544,
           "projectedWins": 11.6,
-          "makePlayoffsPct": 86.8,
+          "makePlayoffsPct": 86.9,
           "winDivisionPct": 39.4,
           "seed1ByePct": 23.2,
           "wildCardPct": 47.5,
@@ -390,7 +390,7 @@
             "4": 0.1,
             "5": 22.4,
             "6": 14.8,
-            "7": 10.3
+            "7": 10.4
           },
           "missedPlayoffsPct": 13.2
         },
@@ -400,22 +400,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png",
           "division": "NFC North",
           "currentRecord": "7-2",
-          "powerRating": 1551,
+          "powerRating": 1550,
           "projectedWins": 11.3,
-          "makePlayoffsPct": 84.4,
-          "winDivisionPct": 26,
-          "seed1ByePct": 14.6,
+          "makePlayoffsPct": 84.2,
+          "winDivisionPct": 25.8,
+          "seed1ByePct": 14.5,
           "wildCardPct": 58.4,
           "seedDistribution": {
-            "1": 14.6,
+            "1": 14.5,
             "2": 10.3,
             "3": 1.1,
             "4": 0,
-            "5": 24.7,
-            "6": 19.4,
-            "7": 14.4
+            "5": 24.6,
+            "6": 19.3,
+            "7": 14.5
           },
-          "missedPlayoffsPct": 15.6
+          "missedPlayoffsPct": 15.8
         },
         {
           "abbr": "NYG",
@@ -448,8 +448,8 @@
           "currentRecord": "6-2",
           "powerRating": 1525,
           "projectedWins": 10.6,
-          "makePlayoffsPct": 73.8,
-          "winDivisionPct": 22.1,
+          "makePlayoffsPct": 73.9,
+          "winDivisionPct": 22.2,
           "seed1ByePct": 11.4,
           "wildCardPct": 51.7,
           "seedDistribution": {
@@ -457,11 +457,11 @@
             "2": 9.2,
             "3": 1.4,
             "4": 0.1,
-            "5": 19.2,
+            "5": 19.3,
             "6": 17.7,
             "7": 14.8
           },
-          "missedPlayoffsPct": 26.3
+          "missedPlayoffsPct": 26.1
         },
         {
           "abbr": "GB",
@@ -492,22 +492,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
           "division": "NFC South",
           "currentRecord": "3-6",
-          "powerRating": 1531,
-          "projectedWins": 7.6,
-          "makePlayoffsPct": 41.7,
-          "winDivisionPct": 40.6,
+          "powerRating": 1528,
+          "projectedWins": 7.5,
+          "makePlayoffsPct": 41,
+          "winDivisionPct": 40,
           "seed1ByePct": 0,
-          "wildCardPct": 1.1,
+          "wildCardPct": 1,
           "seedDistribution": {
             "1": 0,
             "2": 0.4,
-            "3": 8.2,
-            "4": 31.9,
+            "3": 8.1,
+            "4": 31.5,
             "5": 0,
             "6": 0.2,
             "7": 0.8
           },
-          "missedPlayoffsPct": 58.4
+          "missedPlayoffsPct": 59
         },
         {
           "abbr": "LAR",
@@ -517,7 +517,7 @@
           "currentRecord": "5-4",
           "powerRating": 1550,
           "projectedWins": 9.3,
-          "makePlayoffsPct": 40.7,
+          "makePlayoffsPct": 40.8,
           "winDivisionPct": 6.6,
           "seed1ByePct": 1.1,
           "wildCardPct": 34.1,
@@ -527,10 +527,10 @@
             "3": 1.6,
             "4": 0.2,
             "5": 8.9,
-            "6": 11.6,
-            "7": 13.6
+            "6": 11.8,
+            "7": 13.5
           },
-          "missedPlayoffsPct": 59.3
+          "missedPlayoffsPct": 59.2
         },
         {
           "abbr": "SEA",
@@ -563,20 +563,20 @@
           "currentRecord": "3-5",
           "powerRating": 1484,
           "projectedWins": 7.3,
-          "makePlayoffsPct": 28.8,
-          "winDivisionPct": 27.6,
+          "makePlayoffsPct": 29.1,
+          "winDivisionPct": 27.9,
           "seed1ByePct": 0.1,
           "wildCardPct": 1.2,
           "seedDistribution": {
             "1": 0.1,
             "2": 0.6,
             "3": 6.3,
-            "4": 20.6,
+            "4": 20.9,
             "5": 0.1,
             "6": 0.2,
             "7": 1
           },
-          "missedPlayoffsPct": 71.2
+          "missedPlayoffsPct": 70.9
         },
         {
           "abbr": "DAL",
@@ -593,11 +593,11 @@
           "seedDistribution": {
             "1": 0,
             "2": 1.5,
-            "3": 9,
+            "3": 9.1,
             "4": 6.9,
             "5": 0.3,
             "6": 1.1,
-            "7": 3.4
+            "7": 3.5
           },
           "missedPlayoffsPct": 77.8
         },
@@ -609,20 +609,20 @@
           "currentRecord": "3-5",
           "powerRating": 1461,
           "projectedWins": 6.9,
-          "makePlayoffsPct": 19.6,
-          "winDivisionPct": 18.8,
+          "makePlayoffsPct": 19.8,
+          "winDivisionPct": 19,
           "seed1ByePct": 0,
           "wildCardPct": 0.8,
           "seedDistribution": {
             "1": 0,
             "2": 0.3,
             "3": 4.3,
-            "4": 14.3,
+            "4": 14.5,
             "5": 0,
             "6": 0.2,
-            "7": 0.6
+            "7": 0.5
           },
-          "missedPlayoffsPct": 80.4
+          "missedPlayoffsPct": 80.2
         },
         {
           "abbr": "ATL",
@@ -632,7 +632,7 @@
           "currentRecord": "3-6",
           "powerRating": 1467,
           "projectedWins": 6.6,
-          "makePlayoffsPct": 14.2,
+          "makePlayoffsPct": 14.3,
           "winDivisionPct": 13.1,
           "seed1ByePct": 0,
           "wildCardPct": 1.1,
@@ -788,18 +788,18 @@
         "rootFor": "GB",
         "rootSide": "HOME",
         "homeWinProbPct": 55.2,
-        "expectedImpactScore": 5.1,
+        "expectedImpactScore": 5.2,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops NFC top-seed contender MIN in the #1 Seed Bye chase",
-        "maxSwingPct": 5.1,
+        "maxSwingPct": 5.2,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 5.1,
-        "seed1SwingPct": 5.1,
-        "divSwingPct": 0.2,
+        "primaryDeltaPct": 5.2,
+        "seed1SwingPct": 5.2,
+        "divSwingPct": 0.3,
         "berthSwingPct": 0.7,
-        "byeLeveragePct": 5.1,
-        "divisionLeveragePct": 0.2,
-        "totalLeverageScore": 6.7,
+        "byeLeveragePct": 5.2,
+        "divisionLeveragePct": 0.3,
+        "totalLeverageScore": 7,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png"
       },
@@ -844,17 +844,17 @@
         "rootFor": "NE",
         "rootSide": "AWAY",
         "homeWinProbPct": 52.2,
-        "expectedImpactScore": 4.5,
+        "expectedImpactScore": 4.6,
         "leverageTag": "Inter-Conf Help",
         "leverageReason": "AFC club NE hands NFC contender DET a loss without adding an NFC rival win",
-        "maxSwingPct": 4.5,
+        "maxSwingPct": 4.6,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.5,
-        "seed1SwingPct": 4.5,
-        "divSwingPct": 0.1,
+        "primaryDeltaPct": 4.6,
+        "seed1SwingPct": 4.6,
+        "divSwingPct": 0,
         "berthSwingPct": 0.6,
-        "byeLeveragePct": 4.5,
-        "divisionLeveragePct": 0.1,
+        "byeLeveragePct": 4.6,
+        "divisionLeveragePct": 0,
         "totalLeverageScore": 5.9,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png"
@@ -900,18 +900,18 @@
         "rootFor": "WAS",
         "rootSide": "AWAY",
         "homeWinProbPct": 61,
-        "expectedImpactScore": 1.4,
+        "expectedImpactScore": 1.2,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops NFC top-seed contender NYG in the #1 Seed Bye chase",
-        "maxSwingPct": 1.4,
+        "maxSwingPct": 1.2,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 1.4,
-        "seed1SwingPct": 1.4,
+        "primaryDeltaPct": 1.2,
+        "seed1SwingPct": 1.2,
         "divSwingPct": 0.2,
         "berthSwingPct": 0.3,
-        "byeLeveragePct": 1.4,
+        "byeLeveragePct": 1.2,
         "divisionLeveragePct": 0.2,
-        "totalLeverageScore": 2.1,
+        "totalLeverageScore": 1.8,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png"
       },
@@ -956,18 +956,18 @@
         "rootFor": "CAR",
         "rootSide": "AWAY",
         "homeWinProbPct": 51.9,
-        "expectedImpactScore": 0.1,
+        "expectedImpactScore": 0.2,
         "leverageTag": "SOV / Tiebreaker",
         "leverageReason": "Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. NO",
-        "maxSwingPct": 0.1,
+        "maxSwingPct": 0.2,
         "primaryMetric": "NFC West",
-        "primaryDeltaPct": 0.1,
+        "primaryDeltaPct": 0.2,
         "seed1SwingPct": 0,
-        "divSwingPct": 0.1,
+        "divSwingPct": 0.2,
         "berthSwingPct": 0.1,
         "byeLeveragePct": 0,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 0.2,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 0.3,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png"
       }
@@ -1026,7 +1026,7 @@
           "confTies": 0,
           "pointDiff": 47,
           "netEpaPerGame": 4.491,
-          "sosSpreadAdj": -0.223,
+          "sosSpreadAdj": -0.246,
           "powerRating": 1544
         },
         {
@@ -1044,9 +1044,9 @@
           "confLosses": 2,
           "confTies": 0,
           "pointDiff": 57,
-          "netEpaPerGame": 4.837,
-          "sosSpreadAdj": -0.08,
-          "powerRating": 1551
+          "netEpaPerGame": 4.59,
+          "sosSpreadAdj": -0.093,
+          "powerRating": 1550
         },
         {
           "abbr": "DET",
@@ -1083,7 +1083,7 @@
           "confTies": 0,
           "pointDiff": 25,
           "netEpaPerGame": 6.696,
-          "sosSpreadAdj": 0.351,
+          "sosSpreadAdj": 0.333,
           "powerRating": 1544
         },
         {
@@ -1121,7 +1121,7 @@
           "confTies": 0,
           "pointDiff": 40,
           "netEpaPerGame": 2.623,
-          "sosSpreadAdj": -0.173,
+          "sosSpreadAdj": -0.178,
           "powerRating": 1531
         },
         {
@@ -1159,7 +1159,7 @@
           "confTies": 0,
           "pointDiff": 10,
           "netEpaPerGame": 1.002,
-          "sosSpreadAdj": -0.862,
+          "sosSpreadAdj": -0.876,
           "powerRating": 1504
         },
         {
@@ -1178,7 +1178,7 @@
           "confTies": 0,
           "pointDiff": -20,
           "netEpaPerGame": -0.965,
-          "sosSpreadAdj": -0.01,
+          "sosSpreadAdj": -0.03,
           "powerRating": 1484
         },
         {
@@ -1215,9 +1215,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": 24,
-          "netEpaPerGame": 3.663,
-          "sosSpreadAdj": 0.667,
-          "powerRating": 1531
+          "netEpaPerGame": 2.966,
+          "sosSpreadAdj": 0.662,
+          "powerRating": 1528
         },
         {
           "abbr": "ATL",
@@ -1235,7 +1235,7 @@
           "confTies": 0,
           "pointDiff": -35,
           "netEpaPerGame": -4.354,
-          "sosSpreadAdj": 0.898,
+          "sosSpreadAdj": 0.88,
           "powerRating": 1467
         },
         {
@@ -1292,7 +1292,7 @@
           "confTies": 0,
           "pointDiff": -73,
           "netEpaPerGame": -13.104,
-          "sosSpreadAdj": 0.4,
+          "sosSpreadAdj": 0.396,
           "powerRating": 1419
         }
       ],

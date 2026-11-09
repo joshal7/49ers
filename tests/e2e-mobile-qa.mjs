@@ -1226,6 +1226,7 @@ async function main() {
             c => c.querySelector('.player-mention-tweet-body')?.textContent?.trim() || ''
           );
 
+          const allText = cards.map(c => c.textContent || '').join(' ');
           document.getElementById('closeSheetBtn').click();
           inp.value = '';
           inp.dispatchEvent(new Event('input', { bubbles: true }));
@@ -1236,27 +1237,38 @@ async function main() {
             tweetCount: tweetCards.length,
             articleCount: articleCards.length,
             allHaveAuthor,
-            shortTweetBodies
+            shortTweetBodies,
+            hasStaleWk9WontPlay: /\b(won['’]?t play|inactives\b|before raiders game)\b/i.test(allText)
           };
         };
 
         return {
           mikeEvans: inspectPlayer('Mike Evans'),
+          brockPurdy: inspectPlayer('Brock Purdy'),
           nickBosa: inspectPlayer('Nick Bosa')
         };
       });
 
       assert(mentionsAudit.mikeEvans.found, 'Mike Evans not found on Roster');
-      assert(
-        mentionsAudit.mikeEvans.totalCards >= 5 &&
-          mentionsAudit.mikeEvans.tweetCount >= 1 &&
-          mentionsAudit.mikeEvans.articleCount >= 1,
-        `Mike Evans 7d mentions incomplete: ${JSON.stringify(mentionsAudit.mikeEvans)}`
-      );
       assert(mentionsAudit.mikeEvans.allHaveAuthor, 'Mike Evans mentions missing author attribution');
       assert(
-        mentionsAudit.mikeEvans.shortTweetBodies.some(t => t.length >= 60 && !t.endsWith('…')),
-        `Expected full untruncated short tweet on Mike Evans dossier, got: ${JSON.stringify(mentionsAudit.mikeEvans.shortTweetBodies)}`
+        !mentionsAudit.mikeEvans.hasStaleWk9WontPlay,
+        `Mike Evans dossier still rendered stale completed-game availability blurb: ${JSON.stringify(mentionsAudit.mikeEvans)}`
+      );
+
+      assert(
+        mentionsAudit.brockPurdy.found &&
+          mentionsAudit.brockPurdy.totalCards >= 5 &&
+          mentionsAudit.brockPurdy.tweetCount >= 1 &&
+          mentionsAudit.brockPurdy.articleCount >= 1 &&
+          mentionsAudit.brockPurdy.allHaveAuthor,
+        `Brock Purdy 7d mentions incomplete: ${JSON.stringify(mentionsAudit.brockPurdy)}`
+      );
+      assert(
+        [...mentionsAudit.brockPurdy.shortTweetBodies, ...mentionsAudit.nickBosa.shortTweetBodies].some(
+          t => t.length >= 60 && !t.endsWith('…')
+        ),
+        `Expected full untruncated short tweet on player dossiers, got: ${JSON.stringify(mentionsAudit.brockPurdy.shortTweetBodies)}`
       );
 
       assert(
@@ -3760,6 +3772,90 @@ async function main() {
           qaSweepCheck.lightMatchupSticky.opaque &&
           qaSweepCheck.lightMatchupSticky.tdBg !== qaSweepCheck.darkMatchupSticky.tdBg,
         `Sticky Column 1 Dark/Light opaque surface audit failed: ${JSON.stringify(qaSweepCheck)}`
+      );
+    });
+
+    await runStep('Schedule Previous Games collapsible box starts collapsed (only current/future visible) & post-game availability news/synthesis briefs hidden', async () => {
+      const schedAndNewsAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const staleRe = /\b(inactives\s+week\s+9|active\s+vs\.\s+raiders|before\s+raiders\s+game|won['’]?t\s+play\s+in\s+sunday['’]?s\s+game\s+against\s+the\s+raiders)\b/i;
+
+        // 1. Home check
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(50);
+        const homeText = document.getElementById('mainView')?.textContent || '';
+        const homeStaleHit = staleRe.test(homeText);
+
+        // 2. News Wire & Video + Synthesis Briefs check
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        await sleep(50);
+        const rawText = document.getElementById('mainView')?.textContent || '';
+        const rawStaleHit = staleRe.test(rawText);
+
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        await sleep(50);
+        const clusteredText = document.getElementById('mainView')?.textContent || '';
+        const clusteredStaleHit = staleRe.test(clusteredText);
+
+        // 3. Schedule Previous Games collapsible box check
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(50);
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="schedule"]')?.click();
+        await sleep(50);
+
+        const prevDetails = document.querySelector('[data-schedule-previous-games]');
+        const prevSummary = document.querySelector('[data-schedule-previous-summary]');
+        const prevRows = [...document.querySelectorAll('[data-schedule-previous-list] [data-schedule-game-row="previous"]')];
+        const upcomingRows = [...document.querySelectorAll('[data-schedule-upcoming-list] [data-schedule-game-row="upcoming"]')];
+        const anyPrevInUpcoming = Boolean(document.querySelector('[data-schedule-upcoming-list] [data-schedule-game-row="previous"]'));
+
+        const startsCollapsed = Boolean(prevDetails && prevDetails.open === false);
+        const prevHiddenByDefault = prevRows.length > 0 && prevRows.every(r => r.getClientRects().length === 0);
+        const upcomingVisibleByDefault = upcomingRows.length > 0 && upcomingRows.every(r => r.getClientRects().length > 0);
+
+        prevSummary?.click();
+        await sleep(40);
+        const expandsOnClick = Boolean(prevDetails && prevDetails.open === true);
+        const prevVisibleWhenExpanded = prevRows.length > 0 && prevRows.every(r => r.getClientRects().length > 0);
+
+        prevSummary?.click();
+        await sleep(40);
+        const collapsesAgain = Boolean(prevDetails && prevDetails.open === false);
+
+        return {
+          homeStaleHit,
+          rawStaleHit,
+          clusteredStaleHit,
+          prevCount: prevRows.length,
+          upcomingCount: upcomingRows.length,
+          anyPrevInUpcoming,
+          startsCollapsed,
+          prevHiddenByDefault,
+          upcomingVisibleByDefault,
+          expandsOnClick,
+          prevVisibleWhenExpanded,
+          collapsesAgain
+        };
+      });
+
+      await cdp.assertNoOverflow('Game & Season: Schedule Collapsible Previous Games');
+      assert(
+        !schedAndNewsAudit.homeStaleHit &&
+          !schedAndNewsAudit.rawStaleHit &&
+          !schedAndNewsAudit.clusteredStaleHit,
+        `Stale completed-game availability headline leaked into rendered DOM: ${JSON.stringify(schedAndNewsAudit)}`
+      );
+      assert(
+        schedAndNewsAudit.startsCollapsed &&
+          schedAndNewsAudit.prevHiddenByDefault &&
+          schedAndNewsAudit.upcomingVisibleByDefault &&
+          !schedAndNewsAudit.anyPrevInUpcoming &&
+          schedAndNewsAudit.expandsOnClick &&
+          schedAndNewsAudit.prevVisibleWhenExpanded &&
+          schedAndNewsAudit.collapsesAgain,
+        `Schedule Previous Games collapsible box audit failed: ${JSON.stringify(schedAndNewsAudit)}`
       );
     });
 

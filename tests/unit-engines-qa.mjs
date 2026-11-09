@@ -122,7 +122,13 @@ import {
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
-  isRedundantProfileSelfLink
+  isRedundantProfileSelfLink,
+  isPreGamePlayAvailabilityItem,
+  isStaleCompletedGameAvailabilityItem,
+  filterOutCompletedGameAvailabilityItems,
+  isCompletedGameAvailabilityCluster,
+  isActiveInGameAvailabilityCluster,
+  filterAndCleanSynthesisClusters
 } from '../src/engine/breakingClassifier.js';
 import {
   evaluateGameDayWindow,
@@ -1235,16 +1241,19 @@ await testAsync('Worker /api/analyze scrubs hallucinated retired players from LL
   }
 });
 
-test('Deep 7-day player mentions populate Mike Evans & Nick Bosa with tweets + articles, 100% author attribution, and full short tweets', () => {
+test('Deep 7-day player mentions populate core 49ers with tweets + articles, prune stale completed-game Mike Evans won’t-play notes, and preserve 100% author attribution + full short tweets', () => {
   const ros = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
   const news = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
 
   const mikeEvans = ros.players.find(p => p.name === 'Mike Evans');
+  const brockPurdy = ros.players.find(p => p.name === 'Brock Purdy');
   const nickBosa = ros.players.find(p => p.name === 'Nick Bosa');
   assert.ok(mikeEvans, 'Mike Evans present on 2026 49ers roster');
-  assert.ok(mikeEvans.recentNews.length >= 5, `Expected >=5 recent 7d mentions for Mike Evans, got ${mikeEvans.recentNews.length}`);
-  assert.ok(mikeEvans.recentNews.some(n => n.type === 'tweet'), 'Mike Evans must include salient recent tweets');
-  assert.ok(mikeEvans.recentNews.some(n => n.type === 'article'), 'Mike Evans must include recent articles');
+  assert.ok(
+    !mikeEvans.recentNews.some(n => /\b(won['’]?t play|inactives?\b|before raiders game)\b/i.test(`${n.headline || ''} ${n.fullText || ''}`)),
+    'Completed-game Mike Evans won’t-play / inactives notes must be pruned after Week 9 finishes'
+  );
+  assert.ok(brockPurdy.recentNews.length >= 5 && brockPurdy.recentNews.some(n => n.type === 'tweet') && brockPurdy.recentNews.some(n => n.type === 'article'));
   assert.ok(nickBosa.recentNews.length >= 5 && nickBosa.recentNews.some(n => n.type === 'tweet'));
 
   // 100% author attribution across every player mention and every rawStream item
@@ -4285,6 +4294,227 @@ test('News Classifier prioritizes live in-game injuries, demotes stale pre-game 
     top3Ids.includes('kittle_interview'),
     `Salient player interview must surface in Top 3 instead of being buried behind 4 consecutive injury items; got ${JSON.stringify(top3Ids)}`
   );
+});
+
+test('Completed-game play-likelihood articles & AI synthesis briefs are demoted to bottom during game and hidden once game completes; Schedule Previous Games starts collapsed', () => {
+  const wk9KoIso = '2026-11-08T21:25:00Z';
+  const wk9KoMs = Date.parse(wk9KoIso);
+  const wk10KoIso = '2026-11-15T21:25:00Z';
+
+  const makeMockAppData = wk9Completed => ({
+    meta: { seasonYear: 2026, currentWeek: wk9Completed ? 10 : 9, teamRecord: wk9Completed ? '7-1' : '6-1' },
+    scheduleMatchup: {
+      schedule: [
+        {
+          id: 'g1',
+          week: 1,
+          dateIso: '2026-09-11T00:35:00Z',
+          completed: true,
+          statusDetail: 'Final',
+          result: 'W',
+          sfScore: 27,
+          oppScore: 7,
+          homeAway: 'away',
+          opponent: { abbr: 'LAR', name: 'Los Angeles Rams', record: '5-4' },
+          venue: { name: 'Melbourne Cricket Ground', city: 'Melbourne', surface: 'Natural Grass', isInternational: true }
+        },
+        {
+          id: 'g9',
+          week: 9,
+          dateIso: wk9KoIso,
+          completed: wk9Completed,
+          statusDetail: wk9Completed ? 'Final' : 'Q3 11:05',
+          result: wk9Completed ? 'W' : null,
+          sfScore: wk9Completed ? 38 : 21,
+          oppScore: wk9Completed ? 17 : 10,
+          homeAway: 'home',
+          opponent: { abbr: 'LV', name: 'Las Vegas Raiders', record: '4-5' },
+          venue: { name: "Levi's Stadium", city: 'Santa Clara', surface: 'Grass', isInternational: false }
+        },
+        {
+          id: 'g10',
+          week: 10,
+          dateIso: wk10KoIso,
+          completed: false,
+          statusDetail: '11/15 - 4:25 PM EST',
+          result: null,
+          sfScore: null,
+          oppScore: null,
+          homeAway: 'away',
+          opponent: { abbr: 'DAL', name: 'Dallas Cowboys', record: '4-5' },
+          venue: { name: 'AT&T Stadium', city: 'Arlington', surface: 'Synthetic Turf', isInternational: false }
+        }
+      ],
+      upcomingMatchup: wk9Completed
+        ? { week: 10, oppAbbr: 'DAL', oppName: 'Dallas Cowboys', kickoffIso: wk10KoIso }
+        : { week: 9, oppAbbr: 'LV', oppName: 'Las Vegas Raiders', kickoffIso: wk9KoIso, liveState: 'in', isGameInProgress: true }
+    }
+  });
+
+  const sampleItems = [
+    {
+      id: 'brk_evans_wk9',
+      type: 'tweet',
+      author: 'Mike Garafolo',
+      title: `BREAKING: Evans (Achilles), who won't play in Sunday's Week 9 game against the Raiders, appears questionable at best for next week.`,
+      fullText: `Evans (Achilles), who won't play in Sunday's Week 9 game against the Raiders, appears questionable at best for next week. Christian Kirk was placed on IR on Saturday.`,
+      url: 'https://x.com/MikeGarafolo/status/1999999999999999991',
+      publishedAt: new Date(wk9KoMs - 6 * 3600_000).toISOString(),
+      isBreaking: true,
+      breakingBadge: 'BREAKING'
+    },
+    {
+      id: 'inactives_wk9_art',
+      type: 'article',
+      author: '49ers.com Staff',
+      title: 'Bosa, Sigle Active vs. Raiders; Inactives Week 9 #LVvsSF',
+      summary: 'Take a look at players who have been ruled out for the San Francisco 49ers Week 9 matchup.',
+      url: 'https://www.49ers.com/news/bosa-sigle-active-vs-raiders-inactives-week-9-lvvssf',
+      publishedAt: new Date(wk9KoMs - 85 * 60_000).toISOString(),
+      isBreaking: true,
+      breakingBadge: 'BREAKING'
+    },
+    {
+      id: 'normal_feature_pre',
+      type: 'article',
+      author: 'Matt Barrows',
+      title: 'How DeForest Buckner trade reshaped the 49ers defensive room',
+      summary: 'Inside the locker room reaction.',
+      url: 'https://www.espn.com/nfl/story/_/id/501/buckner-room',
+      publishedAt: new Date(wk9KoMs - 20 * 3600_000).toISOString()
+    },
+    {
+      id: 'kirk_ir_tx',
+      type: 'tweet',
+      author: 'David Lombardi',
+      title: 'The 49ers placed WR Christian Kirk (knee) on injured reserve Saturday.',
+      fullText: 'The 49ers placed WR Christian Kirk (knee) on injured reserve Saturday.',
+      url: 'https://x.com/LombardiHimself/status/1999999999999999992',
+      publishedAt: new Date(wk9KoMs - 24 * 3600_000).toISOString()
+    },
+    {
+      id: 'halton_postgame_inj',
+      type: 'article',
+      author: 'Nick Wagoner',
+      title: '49ers lose DT Gracen Halton to season-ending ankle fracture',
+      summary: 'Halton suffered a broken left ankle late in the fourth quarter against the Raiders.',
+      url: 'https://www.espn.com/nfl/story/_/id/50428583/halton',
+      publishedAt: new Date(wk9KoMs + 5 * 3600_000).toISOString()
+    },
+    {
+      id: 'wk10_dallas_status',
+      type: 'tweet',
+      author: 'Matt Barrows',
+      title: 'Renardo Green (back) and Deommodore Lenoir (foot) both suffered injuries today. Kyle Shanahan said neither has been ruled out for Dallas next week.',
+      fullText: 'Renardo Green (back) and Deommodore Lenoir (foot) both suffered injuries today. Kyle Shanahan said neither has been ruled out for Dallas next week.',
+      url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3mztrviaqec27',
+      publishedAt: new Date(wk9KoMs + 4 * 3600_000).toISOString()
+    }
+  ];
+
+  // A. During Week 9 Game (after kickoff): Mike Evans won't play & Inactives drop BELOW normal 0-priority feature articles!
+  const inGameData = makeMockAppData(false);
+  const duringGameNow = wk9KoMs + 90 * 60_000;
+  const inGameRanked = sortNewsWithBreakingPriority(
+    sampleItems.slice(0, 4),
+    duringGameNow,
+    { appData: inGameData }
+  );
+  const featureIdx = inGameRanked.findIndex(x => x.id === 'normal_feature_pre');
+  const evansIdx = inGameRanked.findIndex(x => x.id === 'brk_evans_wk9');
+  const inactIdx = inGameRanked.findIndex(x => x.id === 'inactives_wk9_art');
+  assert.ok(evansIdx > featureIdx && inactIdx > featureIdx, 'Pre-game availability items must rank much lower than normal articles once game starts');
+  assert.equal(inGameRanked[evansIdx].isBreaking, false);
+  assert.equal(inGameRanked[evansIdx].breakingBadge, null);
+
+  // B. After Week 9 Completes: Pre-game availability articles/tweets AND AI synthesis briefs for Week 9 are hidden!
+  const postGameData = makeMockAppData(true);
+  const postGameNow = wk9KoMs + 10 * 3600_000;
+  assert.equal(isPreGamePlayAvailabilityItem(sampleItems[0]), true);
+  assert.equal(isStaleCompletedGameAvailabilityItem(sampleItems[0], postGameData, postGameNow), true);
+  assert.equal(isStaleCompletedGameAvailabilityItem(sampleItems[1], postGameData, postGameNow), true);
+  assert.equal(isStaleCompletedGameAvailabilityItem(sampleItems[3], postGameData, postGameNow), false, 'Permanent IR placement must remain visible');
+  assert.equal(isStaleCompletedGameAvailabilityItem(sampleItems[4], postGameData, postGameNow), false, 'Post-game season-ending injury must remain visible');
+  assert.equal(isStaleCompletedGameAvailabilityItem(sampleItems[5], postGameData, postGameNow), false, 'Post-game injury + Week 10 Dallas status must remain visible');
+
+  const postFiltered = filterOutCompletedGameAvailabilityItems(sampleItems, postGameData, postGameNow);
+  assert.ok(!postFiltered.some(x => x.id === 'brk_evans_wk9' || x.id === 'inactives_wk9_art'));
+  assert.equal(postFiltered.length, 4);
+
+  // AI Synthesized Clusters & Analyses check (both in-game demotion and post-game hiding + sourceLinks/heroImage scrub)
+  const sampleClusters = [
+    {
+      id: 'cluster_bosa_buckner_week9',
+      publishedAt: new Date(wk9KoMs - 3 * 3600_000).toISOString(),
+      category: 'film',
+      categoryLabel: 'Trench & Health Briefing',
+      headline: 'Nick Bosa & Christian McCaffrey Cleared for Week 9 vs. Raiders',
+      sourceLinks: [{ title: 'Official Injury Report', url: 'https://www.49ers.com/team/injury-report/' }]
+    },
+    {
+      id: 'cluster_matchup_wk10',
+      publishedAt: new Date(wk9KoMs + 5 * 3600_000).toISOString(),
+      category: 'scheme',
+      categoryLabel: 'Week 10 Matchup Briefing',
+      headline: 'Week 10 Preparation: 49ers (7-1) Shift Focus to Dallas Cowboys (4-5)',
+      heroImageUrl: 'https://static.clubs.nfl.com/inactives-wk9.png',
+      heroImageAlt: 'Bosa, Sigle Active vs. Raiders; Inactives Week 9 #LVvsSF',
+      heroImageLink: 'https://www.49ers.com/news/bosa-sigle-active-vs-raiders-inactives-week-9-lvvssf',
+      heroImageIsEditorial: true,
+      sourceLinks: [
+        {
+          title: '49ers Receive Injury Update on Mike Evans Before Raiders Game',
+          url: 'https://heavy.com/sports/nfl/san-francisco-49ers/mike-evans-injury-update-raiders-game/',
+          publishedAt: new Date(wk9KoMs - 7 * 3600_000).toISOString()
+        },
+        {
+          title: 'Dallas Cowboys vs. 49ers Week 10 Gamecast — ESPN',
+          url: 'https://www.espn.com/nfl/game/_/gameId/401873063/49ers-cowboys'
+        }
+      ]
+    }
+  ];
+
+  assert.equal(isActiveInGameAvailabilityCluster(sampleClusters[0], inGameData, duringGameNow), true);
+  const inGameClusters = filterAndCleanSynthesisClusters([sampleClusters[0], sampleClusters[1]], inGameData, duringGameNow);
+  assert.equal(inGameClusters[inGameClusters.length - 1].id, 'cluster_bosa_buckner_week9', 'Pre-game availability AI cluster must sink to bottom during live game');
+
+  assert.equal(isCompletedGameAvailabilityCluster(sampleClusters[0], postGameData, postGameNow), true);
+  assert.equal(isCompletedGameAvailabilityCluster(sampleClusters[1], postGameData, postGameNow), false);
+  const postGameClusters = filterAndCleanSynthesisClusters(sampleClusters, postGameData, postGameNow);
+  assert.equal(postGameClusters.length, 1, 'Completed-game availability AI cluster must be hidden after game completes');
+  assert.equal(postGameClusters[0].id, 'cluster_matchup_wk10');
+  assert.equal(postGameClusters[0].sourceLinks.length, 1, 'Stale Week 9 Mike Evans sourceLink must be scrubbed from Week 10 cluster');
+  assert.equal(postGameClusters[0].heroImageUrl, '', 'Stale Week 9 Inactives hero graphic must be scrubbed from Week 10 cluster');
+
+  // C. Schedule View: Previous Games box starts collapsed; default list only contains current & future games
+  const schedCollapsedHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: postGameData,
+    activeVideosSet: new Set(),
+    schedulePrevExpanded: false
+  });
+  assert.ok(
+    schedCollapsedHtml.includes('data-schedule-previous-games') &&
+      !schedCollapsedHtml.includes('data-schedule-previous-games open'),
+    'Previous Games box must render and start collapsed (without open attribute)'
+  );
+  const prevBoxIdx = schedCollapsedHtml.indexOf('data-schedule-previous-list');
+  const upcomingBoxIdx = schedCollapsedHtml.indexOf('data-schedule-upcoming-list');
+  assert.ok(prevBoxIdx > -1 && upcomingBoxIdx > prevBoxIdx, 'Schedule must separate Previous Games box from Upcoming list');
+  const upcomingSlice = schedCollapsedHtml.slice(upcomingBoxIdx);
+  assert.ok(upcomingSlice.includes('Dallas Cowboys') && upcomingSlice.includes('WK 10'), 'Upcoming list must render Week 10 Cowboys');
+  assert.ok(!upcomingSlice.includes('Las Vegas Raiders') && !upcomingSlice.includes('Los Angeles Rams'), 'Upcoming list must NOT include completed games');
+
+  const schedExpandedHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: postGameData,
+    activeVideosSet: new Set(),
+    schedulePrevExpanded: true
+  });
+  assert.ok(schedExpandedHtml.includes('data-schedule-previous-games open'), 'schedulePrevExpanded=true must render open attribute');
 });
 
 console.log(`\n======================================================`);

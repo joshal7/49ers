@@ -18,7 +18,10 @@ import {
   balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
-  formatTweetBodyForDisplay
+  formatTweetBodyForDisplay,
+  isStaleCompletedGameAvailabilityItem,
+  filterOutCompletedGameAvailabilityItems,
+  filterAndCleanSynthesisClusters
 } from '../engine/breakingClassifier.js';
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
@@ -42,7 +45,7 @@ function decodeInlineEntities(str = '') {
     .replace(/&apos;/gi, "'");
 }
 
-export function resolveClusterSafeReports(cluster, rawStream = []) {
+export function resolveClusterSafeReports(cluster, rawStream = [], appData = null) {
   if (!cluster || !Array.isArray(cluster.sourceLinks)) return [];
   const seen = new Set();
   const reports = [];
@@ -53,6 +56,22 @@ export function resolveClusterSafeReports(cluster, rawStream = []) {
     const handleMatch = rawSlTitle.match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
     const effectiveHandle = sl.authorHandle || (handleMatch ? handleMatch[1] : '');
     const cleanTitle = handleMatch ? handleMatch[2].trim() : rawSlTitle.trim();
+
+    if (
+      appData &&
+      isStaleCompletedGameAvailabilityItem(
+        {
+          type: isTw ? 'tweet' : sl.type || 'article',
+          title: cleanTitle,
+          fullText: cleanTitle,
+          url: sl.url || '',
+          publishedAt: sl.publishedAt || null
+        },
+        appData
+      )
+    ) {
+      continue;
+    }
 
     const resolvedUrl = isTw
       ? resolveOriginalTweetUrl(
@@ -85,11 +104,11 @@ export function resolveClusterSafeReports(cluster, rawStream = []) {
   return reports;
 }
 
-export function renderSynthesisSourcesSheetHtml(cluster, rawStream = []) {
+export function renderSynthesisSourcesSheetHtml(cluster, rawStream = [], appData = null) {
   if (!cluster) {
     return `<div class="subcard-panel">Synthesis story not found.</div>`;
   }
-  const reports = resolveClusterSafeReports(cluster, rawStream);
+  const reports = resolveClusterSafeReports(cluster, rawStream, appData);
   return `
     <div style="display:flex;flex-direction:column;gap:10px" data-synthesis-sources-sheet="${esc(cluster.id)}">
       <div class="subcard-panel" style="border-color:var(--gold-border)">
@@ -165,8 +184,10 @@ export function renderNewsViewHtml({
   const mutedCount =
     (userPrefs?.disabledReporterIds?.length || 0) + (userPrefs?.disabledOutlets?.length || 0);
 
+  const activeClusters = filterAndCleanSynthesisClusters(filteredClusters || [], appData);
+  const rawAfterAvailabilityHide = filterOutCompletedGameAvailabilityItems(filteredRawItems || [], appData);
   const prioritizedRaw = sortNewsWithBreakingPriority(
-    (filteredRawItems || []).filter(i => {
+    rawAfterAvailabilityHide.filter(i => {
       if (i.type === 'video' && i.videoId) return true;
       return Boolean(sanitizeExternalUrl(i.url, null)) && !isPaywalledPublisher(i.outletName, i.url);
     }),
@@ -206,7 +227,7 @@ export function renderNewsViewHtml({
         </button>
         <button type="button" role="tab" aria-selected="${newsMode === 'clustered' ? 'true' : 'false'}" class="pill-btn seg-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
           ${iconSvg('sparkles', 13)}
-          <span>Synthesis Briefs (${filteredClusters.length})</span>
+          <span>Synthesis Briefs (${activeClusters.length})</span>
         </button>
       </div>
 
@@ -308,8 +329,8 @@ export function renderNewsViewHtml({
   if (newsMode === 'clustered') {
     const visibleClusters =
       newsCategoryFilter === 'all' || ['tweets', 'articles', 'videos'].includes(newsCategoryFilter)
-        ? filteredClusters
-        : filteredClusters.filter(c => c.category === newsCategoryFilter);
+        ? activeClusters
+        : activeClusters.filter(c => c.category === newsCategoryFilter);
 
     if (visibleClusters.length === 0) {
       return `${topToolbar}${xBeatSearchStrip}${breakingAlertStrip}<div class="card">No synthesis briefs match your active category or source filters.</div>`;
@@ -337,7 +358,7 @@ export function renderNewsViewHtml({
           );
         }
 
-        const safeSourceLinks = resolveClusterSafeReports(c, prioritizedRaw);
+        const safeSourceLinks = resolveClusterSafeReports(c, prioritizedRaw, appData);
         const reportCount = safeSourceLinks.length || Number(c.synthesizedFromCount) || 0;
         const sourceLinksHtml =
           safeSourceLinks.length > 0

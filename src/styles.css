@@ -4201,3 +4201,75 @@ button.gameday-active-pill:hover {
   border-color: var(--gold-border);
   background: var(--bg-elevated);
 }
+
+/* Collapsible Previous Games Box in Schedule View */
+.schedule-prev-collapsible {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-strong);
+  padding: 8px 11px;
+  transition: border-color 0.15s ease;
+}
+
+.schedule-prev-collapsible:hover,
+.schedule-prev-collapsible[open] {
+  border-color: var(--gold-border);
+}
+
+.schedule-prev-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.schedule-prev-summary::-webkit-details-marker {
+  display: none;
+}
+
+.schedule-prev-summary::before {
+  content: '▸';
+  color: var(--gold-bright);
+  font-size: 12px;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.schedule-prev-collapsible[open] > .schedule-prev-summary::before {
+  transform: rotate(90deg);
+}
+
+.schedule-prev-summary-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.schedule-prev-summary-sub {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+
+.schedule-prev-list {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.schedule-prev-collapsible:not([open]) > .schedule-prev-list {
+  display: none;
+}

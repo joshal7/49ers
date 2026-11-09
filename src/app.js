@@ -6,7 +6,11 @@ import { evaluateSeasonState, resolveOrderedDashboardBlocks } from './engine/sea
 import { simulateCapScenario } from './engine/capSimulator.js';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
-import { is49ersGameLiveWindow } from './engine/breakingClassifier.js';
+import {
+  is49ersGameLiveWindow,
+  isCompletedGameAvailabilityCluster,
+  isActiveInGameAvailabilityCluster
+} from './engine/breakingClassifier.js';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
 import {
   loadAll49ersData,
@@ -81,6 +85,7 @@ const state = {
 
   // Season & Temporal state
   seasonSubTab: 'matchup',
+  schedulePrevExpanded: false,
   combineSearch: '',
   expandedDraftSpiderIdx: -1,
 
@@ -280,7 +285,22 @@ function getAllAnalyses() {
 
 function getActiveAnalyses() {
   const archivedSet = new Set(state.prefs.archivedAnalysisIds || []);
-  return getAllAnalyses().filter(item => !archivedSet.has(item.id));
+  const activeList = getAllAnalyses().filter(
+    item => !archivedSet.has(item.id) && !isCompletedGameAvailabilityCluster(item, state.appData)
+  );
+  if (activeList.length > 1) {
+    const normal = [];
+    const demoted = [];
+    for (const item of activeList) {
+      if (isActiveInGameAvailabilityCluster(item, state.appData)) {
+        demoted.push(item);
+      } else {
+        normal.push(item);
+      }
+    }
+    return [...normal, ...demoted];
+  }
+  return activeList;
 }
 
 function getArchivedAnalyses() {
@@ -464,7 +484,8 @@ function renderMain() {
         forcedWinners: state.prefs.playoffForcedWinners,
         combineSearch: state.combineSearch,
         expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
-        activeVideosSet: state.activeVideosSet
+        activeVideosSet: state.activeVideosSet,
+        schedulePrevExpanded: state.schedulePrevExpanded
       });
     } else if (tab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
@@ -529,7 +550,8 @@ function renderSheet() {
         activeTab: state.sheetPlayerTab,
         statsMode: state.sheetPlayerStatsMode,
         txScenario: state.sheetPlayerTxScenario,
-        rawStream: state.appData?.news?.rawStream || []
+        rawStream: state.appData?.news?.rawStream || [],
+        appData: state.appData
       });
     } else if (state.sheetMode === 'settings') {
       if (eyebrow) eyebrow.textContent = 'Customization & Source Control';
@@ -553,10 +575,10 @@ function renderSheet() {
         c => String(c.id) === String(state.sheetSynthesisClusterId)
       );
       const rawStream = state.appData?.news?.rawStream || [];
-      const reports = resolveClusterSafeReports(cluster, rawStream);
+      const reports = resolveClusterSafeReports(cluster, rawStream, state.appData);
       if (eyebrow) eyebrow.textContent = `${cluster?.categoryLabel || 'AI Synthesis'} • ${reports.length} Reports`;
       if (title) title.textContent = `Reports Used (${reports.length})`;
-      body.innerHTML = renderSynthesisSourcesSheetHtml(cluster, rawStream);
+      body.innerHTML = renderSynthesisSourcesSheetHtml(cluster, rawStream, state.appData);
     }
   });
 }
@@ -747,6 +769,16 @@ function bindEvents() {
     { passive: true, capture: true }
   );
 
+  document.addEventListener(
+    'toggle',
+    e => {
+      if (e.target?.matches?.('[data-schedule-previous-games]')) {
+        state.schedulePrevExpanded = Boolean(e.target.open);
+      }
+    },
+    true
+  );
+
   // Sticky Mini-Player Controls
   document.getElementById('miniPlayerExpandTrigger')?.addEventListener('click', () => {
     state.activeNavTab = 'audio';
@@ -852,12 +884,15 @@ function bindEvents() {
         renderMain();
         break;
 
-      case 'jump-season-sub':
+      case 'jump-season-sub': {
+        const nextSeasonSub = btn.getAttribute('data-season-sub') || 'matchup';
+        if (nextSeasonSub === 'schedule') state.schedulePrevExpanded = false;
         state.activeNavTab = 'season';
-        state.seasonSubTab = btn.getAttribute('data-season-sub') || 'matchup';
+        state.seasonSubTab = nextSeasonSub;
         window.scrollTo({ top: 0, behavior: 'instant' });
         renderMain();
         break;
+      }
 
       case 'open-vault-module':
         state.sheetMode = null;
@@ -893,6 +928,7 @@ function bindEvents() {
         } else if (bid === 'autopodcast_ai') {
           state.activeNavTab = 'audio';
         } else if (seasonMap[bid]) {
+          if (seasonMap[bid] === 'schedule') state.schedulePrevExpanded = false;
           state.activeNavTab = 'season';
           state.seasonSubTab = seasonMap[bid];
         } else {
@@ -1066,10 +1102,13 @@ function bindEvents() {
         break;
       }
 
-      case 'set-season-sub':
-        state.seasonSubTab = btn.getAttribute('data-season-sub') || 'matchup';
+      case 'set-season-sub': {
+        const nextSeasonSub = btn.getAttribute('data-season-sub') || 'matchup';
+        if (nextSeasonSub === 'schedule') state.schedulePrevExpanded = false;
+        state.seasonSubTab = nextSeasonSub;
         renderMain();
         break;
+      }
 
       case 'toggle-playoff-winner': {
         const gid = btn.getAttribute('data-game-id');

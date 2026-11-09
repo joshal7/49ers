@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T09:06:25.130Z",
+  "updatedAt": "2026-11-09T14:35:16.920Z",
   "windowDays": 7,
   "shows": [
     {
@@ -12,7 +12,7 @@
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/5b/63/ed/5b63ed60-2449-1c6b-4f1d-5e3f2a4f410c/mza_13504327500715854238.png/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "49ers_talk",
@@ -515,26 +515,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/49ers-talk-a-san-francisco-49ers-podcast/id1153457233",
       "feedUrl": "https://feeds.simplecast.com/SCmnvidR",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/tracking.swap.fm/track/WyZndMW35x3t79tHlknd/nbcnews.simplecastaudio.com/a549b089-e84f-4296-b350-a3c5c5c5fd6a/episodes/6c17a8fd-cb9a-40d4-9c6e-995786cc7ae9/audio/128/default.mp3?aid=rss_feed&awCollectionId=a549b089-e84f-4296-b350-a3c5c5c5fd6a&awEpisodeId=6c17a8fd-cb9a-40d4-9c6e-995786cc7ae9&feed=SCmnvidR"
-    },
-    {
-      "id": "pod_the_gold_standard_1000799418358",
-      "trackId": 1000799418358,
-      "collectionId": 1524313515,
-      "showId": "the_gold_standard",
-      "showName": "The Gold Standard",
-      "showFullTitle": "The Gold Standard: San Francisco 49ers Podcast Network",
-      "hosts": "Rob \"Stats\" Guerrera & Levin Black",
-      "network": "Audacy / Bleav",
-      "title": "49ers in Five: Jauan Jennings did NOT want to return to the 49ers",
-      "summary": "Jauan Jennings did NOT want to return to the 49ers The San Francisco 49ers had a deal in place to reunite with Jauan Jennings, but Jennings refused to even talk about it with the Niners, so the deal died on the vine. One Thing to Read: 49ers' Top 5 in-season trades SIGN UP FOR OUR NEWSLETTER: SUBSCRIBE TO OUR…",
-      "publishedAt": "2026-11-02T14:33:05.000Z",
-      "durationMinutes": 5,
-      "durationDisplay": "5 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/f5/21/e9/f521e9fd-bfdd-1ca5-ea5e-607499ca7ae6/mza_9207101476847201369.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/49ers-in-five-jauan-jennings-did-not-want-to-return/id1524313515?i=1000799418358",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
-      "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
-      "audioStreamUrl": "https://serve.castfire.com/audio/8531292/8531292_2026-07-21-220832.192.mp3?rssID=6590"
     }
   ]
 }

@@ -20,7 +20,63 @@ const PRACTICE_WARMUP_INJURY_SCOOP_REGEX =
   /\b(not practicing|not seen at practice|working on a side field|rehab field|blue non-contact|non-contact jersey|walking boot|suffered a setback|aggravated his|underwent an mri|scheduled for an mri|high-ankle sprain|torn acl|torn achilles|torn pectoral|meniscus|21-day practice window|designated to return from|didn't activate|did not activate|game-time decision|full workload)\b/i;
 
 const PRE_GAME_AVAILABILITY_NOISE_REGEX =
-  /\b(is inactive|are inactive|officially inactive|inactives:|among .*inactives|won't play|will not play|not playing today|ruled out for (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|unlikely to play|expected to play|good to go|expected to take on a full workload|full workload|game-time decision|remains on injured reserve|not activated from)\b/i;
+  /\b(inactives?\b|is inactive|are inactive|as inactive|officially inactive|declared inactive|officially active|active vs\.?|active against|expected to be active|will be active|won['’]?t play|will not play|not playing today|not playing tonight|ruled out|rule[sd]? out (?:one|two|three|four|five|\d+)|unlikely to play|likely to play|expected to play|could play|hopes to play|plans to play|set to play|good to go|cleared to play|cleared for week \d+|expected to take on a full workload|full workload|game-time decision|remains on injured reserve|didn['’]?t activate|did not activate|not activated from|doesn['’]?t have a (?:game |injury )?designation|does not carry an? (?:official )?(?:injury |game )?designation|no (?:injury |game )?designation|listed as (?:questionable|doubtful|out)|deemed (?:questionable|doubtful|out))\b/i;
+
+const LEAD_PERMANENT_OR_POSTGAME_EXCLUSION_REGEX =
+  /\b(arrested|taken into custody|charged with|indicted|suspended|commissioner['’]?s exempt|under (?:nfl |league |police |federal )?investigation|lawsuit|\btrade:|traded (?:to|for)|acquiring|re-acquiring|has been traded|agreed to terms|contract extension|signed a \d+-year|signs a \d+-year|restructured his contract|reinstat(?:e|ed|ement)|left squad|hires? [a-z .'-]+ as agent|eyes return to (?:the )?nfl|bonus (?:repayment|forfeiture)|placed on injured reserve|placed [a-z .'()-]+ on (?:injured reserve|ir)\b|put [a-z .'()-]+ on ir\b|lose [a-z .'()-]+ to (?:ir|season-ending)|49ers roster move:|signed [a-z .'()-]+ to (?:the )?(?:active roster|practice squad)|out for (?:the )?(?:rest of (?:the )?)?(?:\d{4} )?season|miss the (?:remainder|rest) of the (?:\d{4} )?season|season-ending|done for the season|season likely over|fractured|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand)|torn (?:acl|achilles|pectoral|meniscus|patellar)|carted off|questionable to return|doubtful to return|ruled out for the rest|will not return|did not return|left (?:sunday|monday|thursday|saturday|the )['’]?s? game|exited (?:sunday|monday|thursday|saturday|the )['’]?s? game|suffered (?:a|an|injuries)\b|sustained (?:a|an)\b|\d+-\d+ (?:win|loss|victory)|beat(?:s)? (?:the )?[a-z]+|reaches career milestone|amid [a-z]+ game|notebook:|reacts? to (?:bounce-back )?win|react following)\b/i;
+
+const PRE_GAME_PLAY_AVAILABILITY_REGEX =
+  /\b(inactives?\b|officially inactive|declared inactive|is inactive|are inactive|as inactive|officially active|active vs\.?|active against|expected to be active|will be active|won['’]?t play|will not play|not playing today|not playing tonight|unlikely to play|likely to play|expected to play|could play|hopes to play|planning to play|plans to play|set to play|good to go|cleared to play|cleared for week \d+|prepared to return (?:sunday|monday|thursday|saturday|today|tonight)|to return in week \d+|welcoming back [a-z0-9 -]+ for [a-z0-9 .'-]+ game|ruled out|rule[sd]? out (?:one|two|three|four|five|\d+)|will miss (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|won['’]?t be available (?:sunday|monday|thursday|saturday|today|tonight|in week \d+)|expect [a-z .'-]+ to be available (?:sunday|monday|thursday|saturday|today|tonight)|listed as (?:questionable|doubtful|out)|deemed (?:questionable|doubtful|out)|questionable (?:designation|game status|for (?:sunday|monday|thursday|saturday|today|tonight|week \d+))|doubtful for (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|game-time decision|expected to take on a full workload|full workload (?:sunday|monday|thursday|saturday|today|tonight|against|vs)|doesn['’]?t have a (?:game |injury )?designation|does not carry an? (?:official )?(?:injury |game )?designation|carries no (?:game |injury )?designation|no (?:injury |game )?designation for|questionable (?:designation|game status)[\s\S]{0,25}removed|off the injury report|didn['’]?t activate|did not activate|not activated from|remains on injured reserve|(?:final )?(?:injury|availability|status) updates?\b[\s\S]{0,45}\b(?:before|ahead of|on\b)|final updates? ahead of (?:week \d+|sunday|monday|thursday|saturday)|makes?\s+(?:an?\s+)?(?:[a-z0-9 .'-]{0,40}\s+)?announcement\s+(?:on\s+[a-z0-9 .'-]{2,45}\s+)?(?:before|ahead of)\s+[a-z0-9 .'-]{2,25}\s+game|suffers? [a-z ]*injury ahead of [a-z0-9 .'-]+ game|limited (?:at|in) (?:wednesday|thursday|friday|today)['’]?s? practice|limited at practice today|practiced on a limited basis|didn['’]?t (?:participate in(?: [a-z]+['’]?s?)? practice|practice (?:wednesday|thursday|friday|today))|will not practice today|not going today but hopefully a chance tomorrow|returns? to full practice ahead of|eyes return[\s\S]{0,60}\b(?:could play|questionable|hamstring|ankle|knee|injury|sunday|week \d+))\b/i;
+
+const CLUSTER_PLAY_AVAILABILITY_HEADLINE_REGEX =
+  /\b(cleared for week \d+|cleared to play|inactives?\b|who plays|likely to play|unlikely to play|won['’]?t play|will not play|ruled out|expected to play|game-time decision|play likelihood|play probability|practice & availability|availability report|injury designations|availability outlook|active vs\.?|inactive vs\.?)\b/i;
+
+const CLUSTER_NON_AVAILABILITY_EXCLUSION_REGEX =
+  /\b(salary cap|cba rollover|front office ledger|trade window|pass-rush geometry|cpoe|out for (?:the )?season|season-ending)\b/i;
+
+function extractFirstLeadSentence(text = '') {
+  const s = String(text || '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!s) return '';
+  const m = s.match(/^[\s\S]{10,230}?[.!?](?=\s+[A-Z"“]|$)/);
+  return m ? m[0] : s.slice(0, 230);
+}
+
+function extractTeamNickname(teamName = '') {
+  const clean = String(teamName || '').trim();
+  if (!clean) return '';
+  const parts = clean.split(/\s+/);
+  return parts[parts.length - 1] || '';
+}
+
+function escapeRegexToken(s = '') {
+  return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Returns true if `item` (article, tweet, video, or sourceLink) is primarily about
+ * single-game pre-kickoff player availability / who is likely to play / won't play /
+ * game-day active or inactive status / weekly practice participation, rather than a
+ * permanent roster move, post-game injury diagnosis, trade, or game recap.
+ */
+export function isPreGamePlayAvailabilityItem(item = {}) {
+  if (!item || typeof item !== 'object') return false;
+  const isTw = item.type === 'tweet' || item.type === 'social';
+  const rawLead = isTw
+    ? extractFirstLeadSentence(item.fullText || item.title || item.headline || '')
+    : String(item.title || item.headline || '').trim();
+  if (!rawLead) return false;
+
+  if (LEAD_PERMANENT_OR_POSTGAME_EXCLUSION_REGEX.test(rawLead)) {
+    return false;
+  }
+
+  const summaryLead =
+    item.type === 'video' ? '' : extractFirstLeadSentence(item.summary || item.externalTitle || '');
+  const combinedCheck = `${rawLead} ${item.title || item.headline || ''} ${summaryLead}`.trim();
+  return PRE_GAME_PLAY_AVAILABILITY_REGEX.test(combinedCheck);
+}
 
 const SPECULATIVE_OR_RETROSPECTIVE_EXCLUSION_REGEX =
   /\b(mock trade|trade proposal|trade idea|trade pitch|hypothetical|what if|flashback|on this day|\d+\s+years ago|way-too-early|mailbag|merch|promo code)\b/i;
@@ -46,7 +102,7 @@ function decayPriority(base, ageHours, halfLifeHours = 10) {
 }
 
 /**
- * Resolves live in-game vs. 48-hour post-game context from schedule & matchup telemetry.
+ * Resolves live in-game vs. 48-hour post-game & completed-games context from schedule & matchup telemetry.
  */
 export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
   if (!appData || typeof appData !== 'object') {
@@ -54,14 +110,73 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
       inGame: false,
       postGame48h: false,
       activeKickoffMs: null,
+      activeWeek: null,
+      activeOppAbbr: '',
+      activeOppNickname: '',
       completedKickoffMs: null,
-      completedEndMs: null
+      completedEndMs: null,
+      latestCompletedWeek: null,
+      latestCompletedKickoffMs: null,
+      latestCompletedEndMs: null,
+      latestCompletedOppAbbr: '',
+      latestCompletedOppNickname: '',
+      completedWeeks: [],
+      upcomingWeek: null,
+      upcomingOppAbbr: '',
+      upcomingOppNickname: ''
     };
   }
 
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
   const schedule = appData?.scheduleMatchup?.schedule || [];
   const upcoming = appData?.scheduleMatchup?.upcomingMatchup || {};
+
+  const completedWeeks = [];
+  let latestCompleted = null;
+  let latestKoMs = -Infinity;
+  for (const g of schedule) {
+    if (!g || !g.completed) continue;
+    const wkNum = Number(g.week);
+    if (Number.isFinite(wkNum) && wkNum > 0 && !completedWeeks.includes(wkNum)) {
+      completedWeeks.push(wkNum);
+    }
+    const koMs = Date.parse(g.dateIso || '');
+    if (Number.isFinite(koMs) && koMs > latestKoMs && koMs <= ts + 6 * 3600_000) {
+      latestKoMs = koMs;
+      latestCompleted = g;
+    } else if (!latestCompleted && !Number.isFinite(koMs)) {
+      latestCompleted = g;
+    }
+  }
+  completedWeeks.sort((a, b) => a - b);
+
+  const nextSchedGame = schedule.find(g => g && !g.completed) || null;
+  const upcomingWeek =
+    Number(upcoming.week) ||
+    Number(nextSchedGame?.week) ||
+    Number(appData?.meta?.currentWeek) ||
+    null;
+  const upcomingOppAbbr = String(upcoming.oppAbbr || nextSchedGame?.opponent?.abbr || '').toUpperCase();
+  const upcomingOppNickname = extractTeamNickname(upcoming.oppName || nextSchedGame?.opponent?.name || '');
+
+  const latestCompletedWeek = latestCompleted ? Number(latestCompleted.week) || null : null;
+  const latestCompletedKickoffMs = Number.isFinite(latestKoMs) ? latestKoMs : null;
+  const latestCompletedEndMs =
+    latestCompletedKickoffMs !== null ? Math.min(ts, latestCompletedKickoffMs + 3.25 * 3600_000) : null;
+  const latestCompletedOppAbbr = String(latestCompleted?.opponent?.abbr || '').toUpperCase();
+  const latestCompletedOppNickname = extractTeamNickname(latestCompleted?.opponent?.name || '');
+
+  const sharedCompletedMeta = {
+    latestCompletedWeek,
+    latestCompletedKickoffMs,
+    latestCompletedEndMs,
+    latestCompletedOppAbbr,
+    latestCompletedOppNickname,
+    completedWeeks,
+    upcomingWeek,
+    upcomingOppAbbr,
+    upcomingOppNickname
+  };
 
   // 1. Check if a 49ers game is currently in progress (from kickoff until completion)
   for (const g of schedule) {
@@ -77,8 +192,12 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
         inGame: true,
         postGame48h: false,
         activeKickoffMs: Number.isFinite(koMs) ? koMs : ts - 30 * 60_000,
+        activeWeek: Number(g.week) || upcomingWeek,
+        activeOppAbbr: String(g.opponent?.abbr || upcomingOppAbbr).toUpperCase(),
+        activeOppNickname: extractTeamNickname(g.opponent?.name || '') || upcomingOppNickname,
         completedKickoffMs: null,
-        completedEndMs: null
+        completedEndMs: null,
+        ...sharedCompletedMeta
       };
     }
   }
@@ -89,23 +208,16 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
       inGame: true,
       postGame48h: false,
       activeKickoffMs: Number.isFinite(upKoMs) ? upKoMs : ts - 30 * 60_000,
+      activeWeek: upcomingWeek,
+      activeOppAbbr: upcomingOppAbbr,
+      activeOppNickname: upcomingOppNickname,
       completedKickoffMs: null,
-      completedEndMs: null
+      completedEndMs: null,
+      ...sharedCompletedMeta
     };
   }
 
   // 2. Check if a 49ers game completed within the last 48 hours
-  let latestCompleted = null;
-  let latestKoMs = -Infinity;
-  for (const g of schedule) {
-    if (!g || !g.completed) continue;
-    const koMs = Date.parse(g.dateIso || '');
-    if (Number.isFinite(koMs) && koMs > latestKoMs && koMs <= ts) {
-      latestKoMs = koMs;
-      latestCompleted = g;
-    }
-  }
-
   if (latestCompleted && Number.isFinite(latestKoMs)) {
     const estEndMs = latestKoMs + 3.25 * 3600_000;
     const sinceEndMs = ts - estEndMs;
@@ -114,8 +226,12 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
         inGame: false,
         postGame48h: true,
         activeKickoffMs: null,
+        activeWeek: null,
+        activeOppAbbr: '',
+        activeOppNickname: '',
         completedKickoffMs: latestKoMs,
-        completedEndMs: Math.min(ts, estEndMs)
+        completedEndMs: Math.min(ts, estEndMs),
+        ...sharedCompletedMeta
       };
     }
   }
@@ -124,8 +240,12 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     inGame: false,
     postGame48h: false,
     activeKickoffMs: null,
+    activeWeek: null,
+    activeOppAbbr: '',
+    activeOppNickname: '',
     completedKickoffMs: null,
-    completedEndMs: null
+    completedEndMs: null,
+    ...sharedCompletedMeta
   };
 }
 
@@ -133,6 +253,10 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
  * Classifies a tweet or news item for breaking / live in-game / 48h post-game injury priority.
  */
 export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext = null) {
+  const ctx =
+    gameContext && typeof gameContext === 'object' && gameContext.appData
+      ? resolveGameNewsContext(gameContext.appData, nowMs)
+      : gameContext;
   const combined = `${item.title || item.headline || ''} ${item.fullText || ''} ${item.summary || ''}`.trim();
   const pubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;
   const ageHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 999;
@@ -141,7 +265,8 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const matchesInGame = !isSpeculative && IN_GAME_INJURY_RETURN_REGEX.test(combined);
   const matchesPostGameInjury = !isSpeculative && POST_GAME_INJURY_FOLLOWUP_REGEX.test(combined);
   const matchesPracticeInjuryScoop = !isSpeculative && PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(combined);
-  const matchesPreGameAvailabilityNoise = PRE_GAME_AVAILABILITY_NOISE_REGEX.test(combined);
+  const matchesPreGameAvailabilityNoise =
+    PRE_GAME_AVAILABILITY_NOISE_REGEX.test(combined) || isPreGamePlayAvailabilityItem(item);
   const matchesMajorNonInjury =
     !isSpeculative && !NON_TRANSACTION_RELEASE_REGEX.test(combined) && MAJOR_NON_INJURY_BREAKING_REGEX.test(combined);
   const matchesCredibleTradeRumor = !isSpeculative && CREDIBLE_TRADE_RUMOR_REGEX.test(combined);
@@ -156,9 +281,9 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   );
   const effectiveTrustTier = Number(item.trustTier) || repEntry?.trustTier || 2;
 
-  // 1. LIVE IN-GAME MODE: Prioritize in-game tweets & especially in-game injuries; demote pre-game inactives/availability
-  if (gameContext?.inGame && Number.isFinite(gameContext.activeKickoffMs)) {
-    const koMs = gameContext.activeKickoffMs;
+  // 1. LIVE IN-GAME MODE: Prioritize in-game tweets & especially in-game injuries; sink pre-game inactives/availability to bottom
+  if (ctx?.inGame && Number.isFinite(ctx.activeKickoffMs)) {
+    const koMs = ctx.activeKickoffMs;
     const isDuringGame = Number.isFinite(pubMs) && pubMs >= koMs - 5 * 60_000;
 
     if (matchesMajorNonInjury && ageHours <= 6) {
@@ -171,11 +296,22 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       };
     }
 
-    if (!isDuringGame || (matchesPreGameAvailabilityNoise && !matchesInGame)) {
+    if (matchesPreGameAvailabilityNoise && !matchesInGame) {
       return {
         isBreaking: false,
         isInGameInjury: false,
-        breakingPriority: matchesPreGameAvailabilityNoise ? -0.5 : 0,
+        isStalePreGameAvailability: true,
+        breakingPriority: -5.0,
+        breakingBadge: null,
+        ageHours
+      };
+    }
+
+    if (!isDuringGame) {
+      return {
+        isBreaking: false,
+        isInGameInjury: false,
+        breakingPriority: 0,
         breakingBadge: null,
         ageHours
       };
@@ -212,21 +348,26 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     }
   }
 
-  // 2. 48-HOUR POST-GAME MODE: Prioritize meaningful updates on in-game injuries with smooth recency decay
-  //    so major breaking news (arrests, trades, extensions), credible trade rumors, and salient interviews are NEVER crowded out
-  if (gameContext?.postGame48h && Number.isFinite(gameContext.completedKickoffMs)) {
-    const koMs = gameContext.completedKickoffMs;
-    const isPreFinishedGame = Number.isFinite(pubMs) && pubMs < koMs;
-
-    if (isPreFinishedGame && matchesPreGameAvailabilityNoise) {
+  // Demote any pre-game availability item from a completed game regardless of post-game hour window
+  const completedKoRef = ctx?.completedKickoffMs ?? ctx?.latestCompletedKickoffMs ?? null;
+  if (!ctx?.inGame && Number.isFinite(completedKoRef) && Number.isFinite(pubMs) && pubMs < completedKoRef + 20 * 60_000) {
+    if (matchesPreGameAvailabilityNoise && !LEAD_PERMANENT_OR_POSTGAME_EXCLUSION_REGEX.test(extractFirstLeadSentence(item.fullText || item.title || item.headline || ''))) {
       return {
         isBreaking: false,
         isInGameInjury: false,
-        breakingPriority: -0.25,
+        isStalePreGameAvailability: true,
+        breakingPriority: -10.0,
         breakingBadge: null,
         ageHours
       };
     }
+  }
+
+  // 2. 48-HOUR POST-GAME MODE: Prioritize meaningful updates on in-game injuries with smooth recency decay
+  //    so major breaking news (arrests, trades, extensions), credible trade rumors, and salient interviews are NEVER crowded out
+  if (ctx?.postGame48h && Number.isFinite(ctx.completedKickoffMs)) {
+    const koMs = ctx.completedKickoffMs;
+    const isPreFinishedGame = Number.isFinite(pubMs) && pubMs < koMs;
 
     if (matchesMajorNonInjury && ageHours <= 36) {
       return {
@@ -345,7 +486,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     };
   }
 
-  if (item.isBreaking && !isSpeculative && ageHours <= 24 && !gameContext?.inGame) {
+  if (item.isBreaking && !isSpeculative && ageHours <= 24 && !ctx?.inGame) {
     return {
       isBreaking: true,
       isInGameInjury: Boolean(item.isInGameInjury),
@@ -362,6 +503,312 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     breakingBadge: null,
     ageHours
   };
+}
+
+function resolveEffectivePublishTimestampMs(item = {}, nowMs = Date.now()) {
+  let effMs = item?.publishedAt ? Date.parse(item.publishedAt) : NaN;
+  if (item?.type === 'video' && item?.summary) {
+    const dayMatch = String(item.summary).match(/\b(\d+)\s*d(?:ays?)?\s+ago\b/i);
+    const hrMatch = String(item.summary).match(/\b(\d+)\s*h(?:ours?|rs?)?\s+ago\b/i);
+    if (dayMatch) {
+      const est = nowMs - Number(dayMatch[1]) * 86_400_000;
+      effMs = Number.isFinite(effMs) ? Math.min(effMs, est) : est;
+    } else if (hrMatch) {
+      const est = nowMs - Number(hrMatch[1]) * 3_600_000;
+      effMs = Number.isFinite(effMs) ? Math.min(effMs, est) : est;
+    }
+  }
+  return effMs;
+}
+
+function extractReferencedWeekNumbers(text = '') {
+  const weeks = [];
+  for (const m of String(text || '').matchAll(/\b(?:week|wk)\s*(\d{1,2})\b/gi)) {
+    const n = Number(m[1]);
+    if (Number.isFinite(n) && n >= 1 && n <= 22 && !weeks.includes(n)) {
+      weeks.push(n);
+    }
+  }
+  return weeks;
+}
+
+/**
+ * Returns true when `item` is a pre-game player availability / likely-to-play / active-inactive /
+ * practice-status item for a game that has ALREADY completed (and should therefore be hidden).
+ */
+export function isStaleCompletedGameAvailabilityItem(item = {}, appData = null, nowMs = Date.now()) {
+  if (!item || !appData || typeof appData !== 'object') return false;
+  const ctx = resolveGameNewsContext(appData, nowMs);
+  if (!ctx.completedWeeks || ctx.completedWeeks.length === 0) return false;
+  if (!isPreGamePlayAvailabilityItem(item)) return false;
+
+  const completedSet = new Set(ctx.completedWeeks);
+  const upcomingWk = ctx.upcomingWeek && !completedSet.has(ctx.upcomingWeek) ? ctx.upcomingWeek : null;
+  const upcomingNick = ctx.upcomingOppNickname || '';
+  const latestCompKoMs = ctx.latestCompletedKickoffMs;
+  const latestCompEndMs = ctx.latestCompletedEndMs;
+  const latestCompNick = ctx.latestCompletedOppNickname || '';
+
+  const leadText =
+    item.type === 'tweet' || item.type === 'social'
+      ? extractFirstLeadSentence(item.fullText || item.title || item.headline || '')
+      : String(item.title || item.headline || '');
+  const checkText = `${leadText} ${item.title || item.headline || ''}`.trim();
+  const refWeeks = extractReferencedWeekNumbers(checkText);
+  const mentionsCompletedWeek = refWeeks.some(w => completedSet.has(w));
+  const mentionsUpcomingWeek = upcomingWk !== null && refWeeks.includes(upcomingWk);
+  const mentionsUpcomingOpp =
+    Boolean(upcomingNick) &&
+    new RegExp(`\\b${escapeRegexToken(upcomingNick)}\\b`, 'i').test(checkText);
+  const mentionsCompletedOppPreGame =
+    Boolean(latestCompNick) &&
+    ctx.latestCompletedOppAbbr !== ctx.upcomingOppAbbr &&
+    new RegExp(
+      `\\b(?:before|ahead of|vs\\.?|versus|against)\\s+(?:the\\s+)?(?:[a-z]+\\s+)?${escapeRegexToken(latestCompNick)}\\b`,
+      'i'
+    ).test(checkText);
+
+  const effPubMs = resolveEffectivePublishTimestampMs(item, nowMs);
+
+  // 1. Explicit completed week reference (e.g. "Mike Evans won't play Week 9", "Inactives Week 9") without targeting the upcoming week
+  if (mentionsCompletedWeek && !mentionsUpcomingWeek) {
+    return true;
+  }
+
+  // 2. Explicit pre-game framing for the just-completed opponent (e.g. "Before Raiders Game", "Active vs. Raiders")
+  if (mentionsCompletedOppPreGame && !mentionsUpcomingWeek && !mentionsUpcomingOpp) {
+    return true;
+  }
+
+  // 3. Published prior to kickoff of a completed game
+  if (Number.isFinite(latestCompKoMs) && Number.isFinite(effPubMs) && effPubMs < latestCompKoMs + 20 * 60_000) {
+    // Allow rare future-only lookahead items that never mention Sunday/today/practice or the completed game
+    const exclusivelyFutureWeek =
+      mentionsUpcomingWeek &&
+      !mentionsCompletedWeek &&
+      !mentionsCompletedOppPreGame &&
+      !/\b(sunday|monday|thursday|saturday|today|tonight|this week|inactives?|practice)\b/i.test(leadText);
+    if (!exclusivelyFutureWeek) {
+      return true;
+    }
+  }
+
+  // 4. Post-game guard: items published AFTER the completed game ended about the upcoming week/opponent stay visible
+  if (Number.isFinite(latestCompEndMs) && Number.isFinite(effPubMs) && effPubMs >= latestCompEndMs) {
+    return false;
+  }
+
+  return false;
+}
+
+/**
+ * Filters out pre-game player availability / likely-to-play / inactive news items
+ * pertaining to any game that has already completed.
+ */
+export function filterOutCompletedGameAvailabilityItems(items = [], appData = null, nowMs = Date.now()) {
+  if (!Array.isArray(items) || items.length === 0 || !appData) return items;
+  const ctx = resolveGameNewsContext(appData, nowMs);
+  if (!ctx.completedWeeks || ctx.completedWeeks.length === 0) return items;
+
+  return items
+    .filter(it => !isStaleCompletedGameAvailabilityItem(it, appData, nowMs))
+    .map(it => {
+      if (Array.isArray(it?.confirmingReports) && it.confirmingReports.length > 0) {
+        return {
+          ...it,
+          confirmingReports: it.confirmingReports.filter(
+            cr => !isStaleCompletedGameAvailabilityItem(cr, appData, nowMs)
+          )
+        };
+      }
+      return it;
+    });
+}
+
+/**
+ * Returns true if an AI-synthesized brief (`clusteredBriefs`) or AI analysis (`allAnalyses`)
+ * is about pre-game player availability / who is likely to play for a game that has completed.
+ */
+export function isCompletedGameAvailabilityCluster(cluster = {}, appData = null, nowMs = Date.now()) {
+  if (!cluster || typeof cluster !== 'object' || !appData) return false;
+  const ctx = resolveGameNewsContext(appData, nowMs);
+  if (!ctx.completedWeeks || ctx.completedWeeks.length === 0) return false;
+
+  const headline = String(cluster.headline || cluster.title || '').trim();
+  const catLabel = String(cluster.categoryLabel || cluster.category || '').trim();
+  const headerCombined = `${headline} ${catLabel}`.trim();
+
+  if (!headerCombined || CLUSTER_NON_AVAILABILITY_EXCLUSION_REGEX.test(headerCombined)) {
+    return false;
+  }
+  if (!CLUSTER_PLAY_AVAILABILITY_HEADLINE_REGEX.test(headerCombined)) {
+    return false;
+  }
+
+  const completedSet = new Set(ctx.completedWeeks);
+  const upcomingWk = ctx.upcomingWeek && !completedSet.has(ctx.upcomingWeek) ? ctx.upcomingWeek : null;
+  const idAndHeader = `${cluster.id || ''} ${headerCombined}`;
+  const refWeeks = extractReferencedWeekNumbers(idAndHeader);
+  for (const idMatch of String(cluster.id || '').matchAll(/(?:_|^)(?:wk|week)(\d{1,2})\b/gi)) {
+    const wn = Number(idMatch[1]);
+    if (Number.isFinite(wn) && !refWeeks.includes(wn)) refWeeks.push(wn);
+  }
+
+  const mentionsCompletedWeek = refWeeks.some(w => completedSet.has(w));
+  const mentionsUpcomingWeek = upcomingWk !== null && refWeeks.includes(upcomingWk);
+
+  if (mentionsCompletedWeek && !mentionsUpcomingWeek) {
+    return true;
+  }
+
+  const upcomingNick = ctx.upcomingOppNickname || '';
+  const latestCompNick = ctx.latestCompletedOppNickname || '';
+  const mentionsUpcomingOpp =
+    Boolean(upcomingNick) &&
+    new RegExp(`\\b${escapeRegexToken(upcomingNick)}\\b`, 'i').test(headline);
+  const mentionsCompletedOpp =
+    Boolean(latestCompNick) &&
+    ctx.latestCompletedOppAbbr !== ctx.upcomingOppAbbr &&
+    new RegExp(`\\b${escapeRegexToken(latestCompNick)}\\b`, 'i').test(headline);
+
+  if (mentionsCompletedOpp && !mentionsUpcomingWeek && !mentionsUpcomingOpp) {
+    return true;
+  }
+
+  const pubIso = cluster.publishedAt || cluster.createdAt || '';
+  const pubMs = pubIso ? Date.parse(pubIso) : NaN;
+  if (
+    !mentionsUpcomingWeek &&
+    !mentionsUpcomingOpp &&
+    Number.isFinite(ctx.latestCompletedKickoffMs) &&
+    Number.isFinite(pubMs) &&
+    pubMs < ctx.latestCompletedKickoffMs + 20 * 60_000
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Returns true during an active in-progress game (`inGame`) if an AI-synthesized brief or
+ * analysis is focused on pre-game availability / play likelihood for the game already underway,
+ * allowing views to sink it to the bottom of the list once kickoff starts.
+ */
+export function isActiveInGameAvailabilityCluster(cluster = {}, appData = null, nowMs = Date.now()) {
+  if (!cluster || typeof cluster !== 'object' || !appData) return false;
+  const ctx = resolveGameNewsContext(appData, nowMs);
+  if (!ctx.inGame) return false;
+
+  const headline = String(cluster.headline || cluster.title || '').trim();
+  const catLabel = String(cluster.categoryLabel || cluster.category || '').trim();
+  const headerCombined = `${headline} ${catLabel}`.trim();
+  if (!headerCombined || CLUSTER_NON_AVAILABILITY_EXCLUSION_REGEX.test(headerCombined)) {
+    return false;
+  }
+  if (!CLUSTER_PLAY_AVAILABILITY_HEADLINE_REGEX.test(headerCombined)) {
+    return false;
+  }
+
+  const idAndHeader = `${cluster.id || ''} ${headerCombined}`;
+  const refWeeks = extractReferencedWeekNumbers(idAndHeader);
+  for (const idMatch of String(cluster.id || '').matchAll(/(?:_|^)(?:wk|week)(\d{1,2})\b/gi)) {
+    const wn = Number(idMatch[1]);
+    if (Number.isFinite(wn) && !refWeeks.includes(wn)) refWeeks.push(wn);
+  }
+  if (ctx.activeWeek && refWeeks.length > 0) {
+    return refWeeks.includes(ctx.activeWeek);
+  }
+  return true;
+}
+
+/**
+ * Hides AI synthesis briefs about pre-game player availability for completed games,
+ * scrubs completed-game pre-game availability sourceLinks & inactives hero images from
+ * remaining briefs, and demotes pre-game availability briefs to the bottom during live games.
+ */
+export function filterAndCleanSynthesisClusters(clusters = [], appData = null, nowMs = Date.now()) {
+  if (!Array.isArray(clusters) || clusters.length === 0 || !appData) return clusters;
+  const ctx = resolveGameNewsContext(appData, nowMs);
+
+  let cleaned = clusters
+    .filter(c => !isCompletedGameAvailabilityCluster(c, appData, nowMs))
+    .map(c => {
+      let nextLinks = Array.isArray(c.sourceLinks) ? c.sourceLinks : null;
+      if (nextLinks && ctx.completedWeeks?.length > 0) {
+        const filteredLinks = nextLinks.filter(
+          sl =>
+            !isStaleCompletedGameAvailabilityItem(
+              {
+                type: sl?.type || 'article',
+                title: sl?.title || '',
+                fullText: sl?.title || '',
+                url: sl?.url || '',
+                publishedAt: sl?.publishedAt || null
+              },
+              appData,
+              nowMs
+            )
+        );
+        if (filteredLinks.length > 0) {
+          nextLinks = filteredLinks;
+        }
+      }
+
+      let heroPatch = null;
+      if (
+        ctx.completedWeeks?.length > 0 &&
+        (c.heroImageAlt || c.heroImageLink) &&
+        isStaleCompletedGameAvailabilityItem(
+          {
+            type: 'article',
+            title: c.heroImageAlt || '',
+            url: c.heroImageLink || '',
+            publishedAt: c.publishedAt || null
+          },
+          appData,
+          nowMs
+        )
+      ) {
+        heroPatch = c.videoClip?.videoId
+          ? {
+              heroImageUrl: `https://i.ytimg.com/vi/${c.videoClip.videoId}/hqdefault.jpg`,
+              heroImageAlt: c.videoClip.title || c.headline,
+              heroImageSource: c.videoClip.channel || 'YouTube HD Frame',
+              heroImageLink: `https://www.youtube.com/watch?v=${c.videoClip.videoId}`,
+              heroImageIsEditorial: false
+            }
+          : {
+              heroImageUrl: '',
+              heroImageAlt: '',
+              heroImageSource: '',
+              heroImageLink: '',
+              heroImageIsEditorial: false
+            };
+      }
+
+      if (nextLinks === c.sourceLinks && !heroPatch) return c;
+      return {
+        ...c,
+        ...(nextLinks ? { sourceLinks: nextLinks, synthesizedFromCount: nextLinks.length } : {}),
+        ...(heroPatch || {})
+      };
+    });
+
+  if (ctx.inGame && cleaned.length > 1) {
+    const normal = [];
+    const demoted = [];
+    for (const c of cleaned) {
+      if (isActiveInGameAvailabilityCluster(c, appData, nowMs)) {
+        demoted.push(c);
+      } else {
+        normal.push(c);
+      }
+    }
+    cleaned = [...normal, ...demoted];
+  }
+
+  return cleaned;
 }
 
 /**
@@ -388,6 +835,7 @@ export function sortNewsWithBreakingPriority(
         isBreaking: withinWindow ? cls.isBreaking : false,
         isInGameInjury: withinWindow ? cls.isInGameInjury : false,
         isPostGameInjuryUpdate: Boolean(cls.isPostGameInjuryUpdate),
+        isStalePreGameAvailability: Boolean(cls.isStalePreGameAvailability),
         breakingPriority: withinWindow ? cls.breakingPriority : 0,
         breakingBadge: withinWindow ? cls.breakingBadge : null
       };

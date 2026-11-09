@@ -225,7 +225,8 @@ export function renderSeasonMatchupViewHtml({
   forcedWinners = {},
   combineSearch = '',
   expandedDraftSpiderIdx = -1,
-  activeVideosSet
+  activeVideosSet,
+  schedulePrevExpanded = false
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const phaseSet = new Set(activePhases || []);
@@ -262,7 +263,7 @@ export function renderSeasonMatchupViewHtml({
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (seasonSub === 'playoffs') return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners);
-  if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData);
+  if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded);
   if (seasonSub === 'draft_prep') return switcherCard + renderDraftPrepAndCombine(appData, combineSearch);
   return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
 }
@@ -1324,16 +1325,124 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
   `;
 }
 
-function renderFullSchedule(appData) {
+function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
+  const restBadge =
+    g.restAdvantageDays > 0
+      ? `<span class="badge badge-positive mono">+${g.restAdvantageDays}d Rest</span>`
+      : g.restAdvantageDays < 0
+        ? `<span class="badge badge-danger mono">${g.restAdvantageDays}d Rest</span>`
+        : '';
+  const isLiveInGame =
+    !g.completed &&
+    (g.statusState === 'in' ||
+      /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/i.test(String(g.statusDetail || '')));
+  const currentBadge =
+    !g.completed && isCurrentGame
+      ? `<span class="badge ${isLiveInGame ? 'badge-danger' : 'badge-gold'} mono">${isLiveInGame ? 'LIVE' : 'Next Up'}</span>`
+      : '';
+  const borderColor = g.venue?.isInternational
+    ? 'var(--gold-border)'
+    : isCurrentGame && !g.completed
+      ? 'var(--gold-border)'
+      : 'var(--border-subtle)';
+
+  return `
+    <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}" data-schedule-week="${g.week}" style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${borderColor}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:8px;min-width:0">
+          ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 28)}
+          <div style="min-width:0">
+            <span class="mono" style="color:var(--gold-bright);font-weight:800">WK ${g.week}</span> •
+            ${
+              g.gameUrl
+                ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-primary)"><strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong></a>`
+                : `<strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>`
+            }
+            <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent?.record)})</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+          ${currentBadge}
+          ${restBadge}
+          ${
+            g.completed
+              ? `<span class="badge ${g.result === 'W' ? 'badge-positive' : g.result === 'T' ? 'badge-warning' : 'badge-danger'} mono">${g.result} ${g.sfScore}-${g.oppScore}</span>`
+              : `<span class="badge badge-neutral mono">${esc(g.statusDetail)}</span>`
+          }
+          ${
+            g.gameUrl
+              ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${g.completed ? 'Box Score' : 'Gamecast'}</span>${iconSvg('externalLink', 10)}</a>`
+              : ''
+          }
+        </div>
+      </div>
+      <div class="inline-icon-meta" style="margin-top:4px">
+        ${iconSvg('stadium', 13)}
+        <span>${esc(g.venue?.name)} (${esc(g.venue?.city)}) • ${esc(g.venue?.surface)}
+        ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">SF ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}</span>
+      </div>
+      ${
+        g.venue?.internationalNote
+          ? `<div style="margin-top:4px;font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(g.venue.internationalNote)}</div>`
+          : ''
+      }
+    </div>
+  `;
+}
+
+function renderFullSchedule(appData, schedulePrevExpanded = false) {
   const sched = appData?.scheduleMatchup?.schedule || [];
   const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const previousGames = sched.filter(g => Boolean(g?.completed));
+  const currentAndFutureGames = sched.filter(g => g && !g.completed);
+
+  const prevWins = previousGames.filter(g => g.result === 'W').length;
+  const prevLosses = previousGames.filter(g => g.result === 'L').length;
+  const prevTies = previousGames.filter(g => g.result === 'T').length;
+  const prevRecordStr = prevTies > 0 ? `${prevWins}-${prevLosses}-${prevTies}` : `${prevWins}-${prevLosses}`;
+  const prevRangeLabel =
+    previousGames.length === 1
+      ? `Wk ${previousGames[0].week}`
+      : previousGames.length > 1
+        ? `Wk ${previousGames[0].week}–${previousGames[previousGames.length - 1].week}`
+        : '';
+
+  const previousGamesBoxHtml =
+    previousGames.length > 0
+      ? `
+        <details class="schedule-prev-collapsible" data-schedule-previous-games${schedulePrevExpanded ? ' open' : ''}>
+          <summary class="schedule-prev-summary" data-schedule-previous-summary>
+            <span class="schedule-prev-summary-main">
+              <span>Previous Games (${previousGames.length})</span>
+              <span class="badge ${prevWins >= prevLosses ? 'badge-positive' : 'badge-neutral'} mono">${esc(prevRecordStr)}</span>
+            </span>
+            <span class="schedule-prev-summary-sub mono">${esc(prevRangeLabel)}</span>
+          </summary>
+          <div class="schedule-prev-list" data-schedule-previous-list>
+            ${previousGames.map(g => renderScheduleGameRowHtml(g, { isCurrentGame: false })).join('')}
+          </div>
+        </details>
+      `
+      : '';
+
+  const upcomingListHtml =
+    currentAndFutureGames.length > 0
+      ? `
+        <div class="schedule-upcoming-list" data-schedule-upcoming-list style="display:flex;flex-direction:column;gap:8px">
+          ${currentAndFutureGames
+            .map((g, idx) => renderScheduleGameRowHtml(g, { isCurrentGame: idx === 0 }))
+            .join('')}
+        </div>
+      `
+      : `<div class="subcard-panel" data-schedule-upcoming-list style="font-size:12.5px;color:var(--text-secondary)">All ${seasonYr} regular-season games are complete. Expand <strong>Previous Games</strong> above to review results and box scores.</div>`;
+
   return `
     <section class="card">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('calendar', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${seasonYr} Regular Season • International, Surface &amp; Rest Differential</div>
+            <div class="card-eyebrow">${seasonYr} Regular Season • Current &amp; Upcoming Slate</div>
             <h2 class="card-title">49ers Schedule &amp; Venue Tracker</h2>
           </div>
         </div>
@@ -1342,61 +1451,8 @@ function renderFullSchedule(appData) {
         </a>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${sched
-          .map(g => {
-            const restBadge =
-              g.restAdvantageDays > 0
-                ? `<span class="badge badge-positive mono">+${g.restAdvantageDays}d Rest</span>`
-                : g.restAdvantageDays < 0
-                  ? `<span class="badge badge-danger mono">${g.restAdvantageDays}d Rest</span>`
-                  : '';
-            return `
-              <div style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${
-                g.venue?.isInternational ? 'var(--gold-border)' : 'var(--border-subtle)'
-              }">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-                  <div style="display:flex;align-items:center;gap:8px;min-width:0">
-                    ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 28)}
-                    <div style="min-width:0">
-                      <span class="mono" style="color:var(--gold-bright);font-weight:800">WK ${g.week}</span> •
-                      ${
-                        g.gameUrl
-                          ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-primary)"><strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong></a>`
-                          : `<strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>`
-                      }
-                      <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent?.record)})</span>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
-                    ${restBadge}
-                    ${
-                      g.completed
-                        ? `<span class="badge ${g.result === 'W' ? 'badge-positive' : g.result === 'T' ? 'badge-warning' : 'badge-danger'} mono">${g.result} ${g.sfScore}-${g.oppScore}</span>`
-                        : `<span class="badge badge-neutral mono">${esc(g.statusDetail)}</span>`
-                    }
-                    ${
-                      g.gameUrl
-                        ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${g.completed ? 'Box Score' : 'Gamecast'}</span>${iconSvg('externalLink', 10)}</a>`
-                        : ''
-                    }
-                  </div>
-                </div>
-                <div class="inline-icon-meta" style="margin-top:4px">
-                  ${iconSvg('stadium', 13)}
-                  <span>${esc(g.venue?.name)} (${esc(g.venue?.city)}) • ${esc(g.venue?.surface)}
-                  ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">SF ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}</span>
-                </div>
-                ${
-                  g.venue?.internationalNote
-                    ? `<div style="margin-top:4px;font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(g.venue.internationalNote)}</div>`
-                    : ''
-                }
-              </div>
-            `;
-          })
-          .join('')}
-      </div>
+      ${previousGamesBoxHtml}
+      ${upcomingListHtml}
     </section>
   `;
 }

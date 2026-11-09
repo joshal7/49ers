@@ -16,7 +16,10 @@ import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   classifyBreakingItem,
   sortNewsWithBreakingPriority,
-  formatTweetBodyForDisplay
+  formatTweetBodyForDisplay,
+  isStaleCompletedGameAvailabilityItem,
+  filterOutCompletedGameAvailabilityItems,
+  filterAndCleanSynthesisClusters
 } from '../engine/breakingClassifier.js';
 import {
   evaluateGameDayWindow,
@@ -373,17 +376,26 @@ export async function loadAll49ersData(basePrefix = './data') {
     }))
   ]);
 
+  const bootCtxStub = { meta, scheduleMatchup };
   if (news && Array.isArray(news.rawStream)) {
     const directPosts = news.rawStream.filter(
       it => (it?.type === 'tweet' || it?.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(String(it?.url || ''))
     );
     news.rawStream = sortNewsWithBreakingPriority(
-      news.rawStream.map(it =>
-        it?.type === 'tweet' || it?.type === 'social'
-          ? { ...it, url: resolveOriginalTweetUrl(it, directPosts) }
-          : it
-      )
+      filterOutCompletedGameAvailabilityItems(
+        news.rawStream.map(it =>
+          it?.type === 'tweet' || it?.type === 'social'
+            ? { ...it, url: resolveOriginalTweetUrl(it, directPosts) }
+            : it
+        ),
+        bootCtxStub
+      ),
+      Date.now(),
+      { appData: bootCtxStub }
     );
+  }
+  if (news && Array.isArray(news.clusteredBriefs)) {
+    news.clusteredBriefs = filterAndCleanSynthesisClusters(news.clusteredBriefs, bootCtxStub);
   }
 
   return {
@@ -679,12 +691,15 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
 
           const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
           const pubIso = rec?.createdAt || post?.indexedAt || new Date().toISOString();
-          const brk = classifyBreakingItem({
+          const bskyCand = {
+            type: 'tweet',
             title: tweetDisplay.text,
             fullText: cleanFull,
             summary: extEmbed?.title || '',
             publishedAt: pubIso
-          });
+          };
+          if (isStaleCompletedGameAvailabilityItem(bskyCand, appData)) continue;
+          const brk = classifyBreakingItem(bskyCand, Date.now(), { appData });
 
           const imgThumb = post?.embed?.images?.[0]?.thumb || extEmbed?.thumb || '';
           const safeExtUrl = sanitizeExternalUrl(extEmbed?.uri, null);
@@ -734,10 +749,18 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
   );
 
   if (discovered.length > 0) {
-    appData.news.rawStream = sortNewsWithBreakingPriority([...discovered, ...appData.news.rawStream]);
+    appData.news.rawStream = sortNewsWithBreakingPriority(
+      filterOutCompletedGameAvailabilityItems([...discovered, ...appData.news.rawStream], appData),
+      Date.now(),
+      { appData }
+    );
     propagateLiveItemsToPlayerMentions(discovered, rosterPlayers);
   } else {
-    appData.news.rawStream = sortNewsWithBreakingPriority(appData.news.rawStream);
+    appData.news.rawStream = sortNewsWithBreakingPriority(
+      filterOutCompletedGameAvailabilityItems(appData.news.rawStream, appData),
+      Date.now(),
+      { appData }
+    );
   }
   return discovered.length;
 }
@@ -907,12 +930,15 @@ export async function hydrateLiveEspnPlayerBeatWire(
           ];
 
           const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
-          const brk = classifyBreakingItem({
+          const pwireCand = {
+            type: isPlayerBlurb ? 'tweet' : 'article',
             title: isPlayerBlurb ? tweetDisplay.text : rawHeadline || tweetDisplay.text,
-            fullText: cleanFull,
+            fullText: isPlayerBlurb ? cleanFull : undefined,
             summary: rawStory || rawDesc,
             publishedAt: pubIso
-          });
+          };
+          if (isStaleCompletedGameAvailabilityItem(pwireCand, appData)) continue;
+          const brk = classifyBreakingItem(pwireCand, Date.now(), { appData });
 
           existingUrls.add(itemUrl);
           existingTextKeys.add(textKey);
@@ -1028,12 +1054,15 @@ export async function hydrateLiveRotoWireBeatRss(appData) {
       const pubMs = rawPub ? new Date(rawPub).getTime() : Date.now();
       const pubIso = Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString();
       const tweetDisplay = formatTweetBodyForDisplay(bodyText, SHORT_TWEET_FULL_TEXT_LIMIT);
-      const brk = classifyBreakingItem({
+      const rwCand = {
+        type: 'tweet',
         title: tweetDisplay.text,
         fullText: bodyText,
         summary: rawTitle,
         publishedAt: pubIso
-      });
+      };
+      if (isStaleCompletedGameAvailabilityItem(rwCand, appData)) continue;
+      const brk = classifyBreakingItem(rwCand, Date.now(), { appData });
 
       existingUrls.add(safeUrl);
       existingTextKeys.add(textKey);
@@ -1211,8 +1240,15 @@ export async function hydrateLiveMultiSourceBeatWire(appData, { isGameLive = fal
   };
   const totalAdded = bySource.espnPlayerWire + bySource.rotowireRss + bySource.transactions + bySource.bluesky;
 
-  // Run cross-source corroboration & breaking/first-mover re-ranking across the combined stream
-  appData.news.rawStream = sortNewsWithBreakingPriority(appData.news.rawStream, Date.now(), { appData });
+  // Run cross-source corroboration, completed-game availability pruning & breaking/first-mover re-ranking across the combined stream
+  appData.news.rawStream = sortNewsWithBreakingPriority(
+    filterOutCompletedGameAvailabilityItems(appData.news.rawStream, appData),
+    Date.now(),
+    { appData }
+  );
+  if (Array.isArray(appData.news.clusteredBriefs)) {
+    appData.news.clusteredBriefs = filterAndCleanSynthesisClusters(appData.news.clusteredBriefs, appData);
+  }
 
   // Also refresh Game-Day Inactives & Active Roster if inside [T-90m, Final) window
   await hydrateLiveGameDayRosters(appData).catch(() => false);
@@ -2231,6 +2267,9 @@ export async function hydrateLiveEspnOverlay(appData) {
       const resolvedReporterId =
         matchedRep?.id || dirEntry?.id || (/schefter/i.test(bylineClean) ? 'adam_schefter' : null);
       const pubIso = art.published || new Date().toISOString();
+      if (isStaleCompletedGameAvailabilityItem({ type: 'article', title, summary, publishedAt: pubIso }, appData)) {
+        continue;
+      }
       const brk = classifyBreakingItem({ title, summary, publishedAt: pubIso }, Date.now(), { appData });
 
       existingUrls.add(url);
@@ -2265,12 +2304,23 @@ export async function hydrateLiveEspnOverlay(appData) {
       newArts.push(itemDraft);
     }
     if (newArts.length > 0) {
-      appData.news.rawStream = sortNewsWithBreakingPriority([...newArts, ...appData.news.rawStream], Date.now(), {
-        appData
-      });
+      appData.news.rawStream = sortNewsWithBreakingPriority(
+        filterOutCompletedGameAvailabilityItems([...newArts, ...appData.news.rawStream], appData),
+        Date.now(),
+        { appData }
+      );
       propagateLiveItemsToPlayerMentions(newArts, rosterPlayers);
       mutated = true;
     }
+  }
+
+  if (Array.isArray(appData.news?.rawStream)) {
+    const beforeLen = appData.news.rawStream.length;
+    appData.news.rawStream = filterOutCompletedGameAvailabilityItems(appData.news.rawStream, appData);
+    if (appData.news.rawStream.length !== beforeLen) mutated = true;
+  }
+  if (Array.isArray(appData.news?.clusteredBriefs)) {
+    appData.news.clusteredBriefs = filterAndCleanSynthesisClusters(appData.news.clusteredBriefs, appData);
   }
 
   // 6. Game-Day Inactives & Active Roster Window ([T-90m, Final))

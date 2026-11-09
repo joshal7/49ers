@@ -18,7 +18,8 @@ import {
   deduplicateAndGroupWireItems,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
-  formatTweetBodyForDisplay
+  formatTweetBodyForDisplay,
+  filterOutCompletedGameAvailabilityItems
 } from '../engine/breakingClassifier.js';
 import {
   isIndividualOtcPlayerUrl,
@@ -36,7 +37,8 @@ export function renderPlayerDossierSheetHtml({
   activeTab = 'overview',
   statsMode = '2026', // '2026' | 'career'
   txScenario = 'cut',
-  rawStream = []
+  rawStream = [],
+  appData = null
 }) {
   if (!player) return `<div class="empty-state">Player not found.</div>`;
 
@@ -68,7 +70,7 @@ export function renderPlayerDossierSheetHtml({
   let contentHtml = '';
 
   if (activeTab === 'overview') {
-    contentHtml = renderOverviewTab(player, rawStream);
+    contentHtml = renderOverviewTab(player, rawStream, appData);
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(player, statsMode);
   } else if (activeTab === 'spider') {
@@ -82,13 +84,18 @@ export function renderPlayerDossierSheetHtml({
   return `${tabsBar}${contentHtml}`;
 }
 
-function renderOverviewTab(p, rawStream = []) {
+function renderOverviewTab(p, rawStream = [], appData = null) {
   const sortedMentions = Array.isArray(p.recentNews)
     ? deduplicateAndGroupWireItems(
         sortNewsWithBreakingPriority(
-          p.recentNews.filter(
-            n => sanitizeExternalUrl(n?.url, null) && !isPaywalledPublisher(n?.outletName, n?.url)
-          )
+          filterOutCompletedGameAvailabilityItems(
+            p.recentNews.filter(
+              n => sanitizeExternalUrl(n?.url, null) && !isPaywalledPublisher(n?.outletName, n?.url)
+            ),
+            appData
+          ),
+          Date.now(),
+          { appData }
         )
       )
     : [];
