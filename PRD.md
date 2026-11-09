@@ -136,8 +136,8 @@ The app dynamically computes active modules based on the current date, the NFL s
 
 ### Section 1: Roster Explorer, 5-Tab Player Dossiers & Dual Depth Chart
 * **Roster Explorer (`src/views/rosterCapView.js`)**:
-  * Full 88-player roster (53 Active, IR/Reserve, Practice Squad), sorted alphabetically (`Name` ascending) by default.
-  * **Streamlined Sort Control**: Single Dropdown (`#rosterSortSelect`: `Name`, `Jersey Number`, `2026 Cap Hit`, `Off/Def Snap %`, `Play Likelihood %`, `Athletic RAS`, `Age`) paired with an adjacent Up/Down Arrow direction toggle button (`#rosterSortDirBtn`, `data-sort-dir="asc|desc"`). Zero cluttered sort pills.
+  * Full 88-player roster (53 Active, IR/Reserve, Practice Squad), sorted by `Roster Number` (`jersey` ascending) by default.
+  * **Streamlined Sort Control**: Single Dropdown (`#rosterSortSelect`: `Roster Number`, `First Name`, `Last Name`, `2026 Cap Hit`, `Snap Share %`, `Play Likelihood`, `Athletic RAS`, `Age`) paired with an adjacent Up/Down Arrow direction toggle button (`#rosterSortDirBtn`, `data-sort-dir="asc|desc"`). Zero cluttered sort pills.
   * **Two Filter Rows**: `Unit Filter` (`All`, `Active 53`, `Offense`, `Defense`, `Special Teams`, `IR / Reserve`, `Practice Squad`) and `Position Group Filter` (`ALL`, `QB`, `RB`, `WR`, `TE`, `OL`, `DL`, `LB`, `DB`).
   * **Resilient Search**: Preserves input focus and cursor position across keystrokes, supports `#0` jersey lookup (`Renardo Green`), and normalizes straight, iOS curly (`’`), and omitted apostrophes (`De'Zhaun Stribling`).
 * **5-Tab Player Dossier Bottom Sheet (`src/views/playerSheetView.js`)**:

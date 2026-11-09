@@ -7,8 +7,9 @@ import { iconSvg } from './icons.js';
 import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.js';
 
 export const ROSTER_SORT_FIELDS = [
-  { key: 'name', label: 'Name', shortLabel: 'Name', defaultDir: 'asc' },
-  { key: 'jersey', label: 'Jersey Number', shortLabel: 'Jersey #', defaultDir: 'asc' },
+  { key: 'jersey', label: 'Roster Number', shortLabel: 'Roster #', defaultDir: 'asc' },
+  { key: 'firstName', label: 'First Name', shortLabel: 'First Name', defaultDir: 'asc' },
+  { key: 'lastName', label: 'Last Name', shortLabel: 'Last Name', defaultDir: 'asc' },
   { key: 'cap', label: '2026 Cap Hit', shortLabel: 'Cap Hit', defaultDir: 'desc' },
   { key: 'snaps', label: 'Snap Share %', shortLabel: 'Snap %', defaultDir: 'desc' },
   { key: 'health', label: 'Play Likelihood', shortLabel: 'Health', defaultDir: 'asc' },
@@ -16,16 +17,60 @@ export const ROSTER_SORT_FIELDS = [
   { key: 'age', label: 'Age', shortLabel: 'Age', defaultDir: 'asc' }
 ];
 
-export function normalizeRosterSort(rawField = 'name', rawDir = 'asc') {
-  let field = String(rawField || 'name');
+export function extractPlayerSortNameParts(fullName = '') {
+  const raw = String(fullName || '').trim();
+  if (!raw) return { firstName: '', lastName: '', fullName: '' };
+  const withoutSuffix = raw
+    .replace(/,?\s+\b(?:jr\.?|sr\.?|ii|iii|iv|v)\b\.?$/i, '')
+    .trim();
+  const tokens = (withoutSuffix || raw).split(/\s+/).filter(Boolean);
+  if (tokens.length === 1) {
+    return { firstName: tokens[0], lastName: tokens[0], fullName: raw };
+  }
+  const lastName = tokens[tokens.length - 1];
+  const firstName = tokens.slice(0, -1).join(' ');
+  return { firstName, lastName, fullName: raw };
+}
+
+export function comparePlayersByFirstName(a, b) {
+  const pa = extractPlayerSortNameParts(a?.name);
+  const pb = extractPlayerSortNameParts(b?.name);
+  return (
+    pa.firstName.localeCompare(pb.firstName, undefined, { sensitivity: 'base' }) ||
+    pa.lastName.localeCompare(pb.lastName, undefined, { sensitivity: 'base' }) ||
+    pa.fullName.localeCompare(pb.fullName, undefined, { sensitivity: 'base' })
+  );
+}
+
+export function comparePlayersByLastName(a, b) {
+  const pa = extractPlayerSortNameParts(a?.name);
+  const pb = extractPlayerSortNameParts(b?.name);
+  return (
+    pa.lastName.localeCompare(pb.lastName, undefined, { sensitivity: 'base' }) ||
+    pa.firstName.localeCompare(pb.firstName, undefined, { sensitivity: 'base' }) ||
+    pa.fullName.localeCompare(pb.fullName, undefined, { sensitivity: 'base' })
+  );
+}
+
+export function normalizeRosterSort(rawField = 'jersey', rawDir = 'asc') {
+  let field = String(rawField || 'jersey').trim();
   let dir = rawDir === 'desc' ? 'desc' : 'asc';
-  if (field.includes('_')) {
-    const [f, d] = field.split('_');
-    field = f;
-    dir = d === 'desc' ? 'desc' : 'asc';
+  if (/_(asc|desc)$/i.test(field)) {
+    const match = field.match(/^(.*)_(asc|desc)$/i);
+    if (match) {
+      field = match[1];
+      dir = match[2].toLowerCase() === 'desc' ? 'desc' : 'asc';
+    }
+  }
+  if (field === 'name' || field === 'first_name' || field === 'firstname') {
+    field = 'firstName';
+  } else if (field === 'last_name' || field === 'lastname' || field === 'surname') {
+    field = 'lastName';
+  } else if (field === 'number' || field === 'roster_number' || field === 'jersey_number') {
+    field = 'jersey';
   }
   if (!ROSTER_SORT_FIELDS.some(x => x.key === field)) {
-    field = 'name';
+    field = 'jersey';
     dir = 'asc';
   }
   return { field, dir };
@@ -36,7 +81,7 @@ export function renderRosterCapViewHtml({
   rosterSearch = '',
   rosterUnitFilter = 'All',
   rosterPosFilter = 'ALL',
-  rosterSort = 'name',
+  rosterSort = 'jersey',
   rosterSortDir = 'asc',
   depthMode = 'projected', // 'baseline' | 'projected'
   capSelectedYear = '2026',
@@ -134,42 +179,45 @@ function renderRosterExplorer({
   });
 
   filtered.sort((a, b) => {
-    if (sortField === 'name') {
-      return mult * a.name.localeCompare(b.name);
+    if (sortField === 'firstName') {
+      return mult * comparePlayersByFirstName(a, b);
+    }
+    if (sortField === 'lastName') {
+      return mult * comparePlayersByLastName(a, b);
     }
     if (sortField === 'jersey') {
-      const aHas = a.jersey !== null && a.jersey !== undefined;
-      const bHas = b.jersey !== null && b.jersey !== undefined;
+      const aHas = a.jersey !== null && a.jersey !== undefined && a.jersey !== '';
+      const bHas = b.jersey !== null && b.jersey !== undefined && b.jersey !== '';
       if (aHas !== bHas) return aHas ? -1 : 1; // unassigned jerseys always sort last
-      if (!aHas && !bHas) return a.name.localeCompare(b.name);
-      return mult * (Number(a.jersey) - Number(b.jersey)) || a.name.localeCompare(b.name);
+      if (!aHas && !bHas) return comparePlayersByFirstName(a, b);
+      return mult * (Number(a.jersey) - Number(b.jersey)) || comparePlayersByFirstName(a, b);
     }
     if (sortField === 'cap') {
-      return mult * ((a.capHit2026 || 0) - (b.capHit2026 || 0)) || a.name.localeCompare(b.name);
+      return mult * ((a.capHit2026 || 0) - (b.capHit2026 || 0)) || comparePlayersByFirstName(a, b);
     }
     if (sortField === 'snaps') {
-      return mult * ((a.primarySnapPct || 0) - (b.primarySnapPct || 0)) || a.name.localeCompare(b.name);
+      return mult * ((a.primarySnapPct || 0) - (b.primarySnapPct || 0)) || comparePlayersByFirstName(a, b);
     }
     if (sortField === 'health') {
       return (
         mult * ((a.health?.playProbabilityPct ?? 99) - (b.health?.playProbabilityPct ?? 99)) ||
-        a.name.localeCompare(b.name)
+        comparePlayersByFirstName(a, b)
       );
     }
     if (sortField === 'ras') {
       return (
         mult * ((a.spiderProfile?.compositeRas || 0) - (b.spiderProfile?.compositeRas || 0)) ||
-        a.name.localeCompare(b.name)
+        comparePlayersByFirstName(a, b)
       );
     }
     if (sortField === 'age') {
       const aHas = a.age !== null && a.age !== undefined;
       const bHas = b.age !== null && b.age !== undefined;
       if (aHas !== bHas) return aHas ? -1 : 1;
-      if (!aHas && !bHas) return a.name.localeCompare(b.name);
-      return mult * (Number(a.age) - Number(b.age)) || a.name.localeCompare(b.name);
+      if (!aHas && !bHas) return comparePlayersByFirstName(a, b);
+      return mult * (Number(a.age) - Number(b.age)) || comparePlayersByFirstName(a, b);
     }
-    return mult * a.name.localeCompare(b.name);
+    return mult * comparePlayersByFirstName(a, b);
   });
 
   const dirArrowSymbol = sortDir === 'asc' ? '↑' : '↓';

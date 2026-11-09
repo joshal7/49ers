@@ -802,7 +802,7 @@ async function main() {
 
     console.log('\n=== [4/9] Roster Explorer (Simplified Dropdown + Up/Down Arrow Toggle), Dual Depth Chart & GM Cap Sim ===');
 
-    await runStep('Roster Explorer removes sort bubbles, uses Dropdown + Up/Down Arrow button for all 7 sort fields, keeps 2 filter rows, and preserves search focus', async () => {
+    await runStep('Roster Explorer defaults to Roster Number sort, supports First Name & Last Name sort with Up/Down Arrow toggle across all 8 fields, keeps 2 filter rows, and preserves search focus', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="roster"]').click());
       await cdp.assertNoOverflow('Roster Explorer Default');
 
@@ -815,6 +815,9 @@ async function main() {
         const sortBubblesCount = document.querySelectorAll('[data-action="set-roster-sort"]').length;
         const unitFilterRowExists = Boolean(document.querySelector('[aria-label="Unit Filter"]'));
         const posFilterRowExists = Boolean(document.querySelector('[aria-label="Position Group Filter"]'));
+        const jerseys = Array.from(document.querySelectorAll('.player-row .jersey-chip')).map(el =>
+          el.textContent.trim()
+        );
         const names = Array.from(document.querySelectorAll('.player-name-line')).map(el =>
           el.childNodes[0]?.textContent?.trim() || el.textContent.trim()
         );
@@ -827,34 +830,82 @@ async function main() {
           sortBubblesCount,
           unitFilterRowExists,
           posFilterRowExists,
+          firstThreeJerseys: jerseys.slice(0, 3),
           firstTwoNames: names.slice(0, 2),
-          lastTwoNames: names.slice(-2)
+          lastJersey: jerseys[jerseys.length - 1]
         };
       });
       assert(defaultSortAudit.sortBubblesCount === 0, `Expected 0 sort bubbles (dropdown-only sort UX), got ${defaultSortAudit.sortBubblesCount}`);
       assert(defaultSortAudit.unitFilterRowExists && defaultSortAudit.posFilterRowExists, 'Expected both Unit and Position filter rows kept intact');
       assert(defaultSortAudit.totalCount >= 80, `Expected >=80 players on full roster, got ${defaultSortAudit.totalCount}`);
-      assert(defaultSortAudit.selectedValue === 'name', `Expected default roster sort 'name', got '${defaultSortAudit.selectedValue}'`);
-      assert(defaultSortAudit.optionKeys[0] === 'name' && defaultSortAudit.optionKeys[1] === 'jersey', `Expected Name then Jersey Number at top of sort options, got ${JSON.stringify(defaultSortAudit.optionKeys.slice(0, 2))}`);
+      assert(defaultSortAudit.selectedValue === 'jersey', `Expected default roster sort 'jersey', got '${defaultSortAudit.selectedValue}'`);
+      assert(
+        defaultSortAudit.optionKeys[0] === 'jersey' &&
+          defaultSortAudit.optionKeys[1] === 'firstName' &&
+          defaultSortAudit.optionKeys[2] === 'lastName',
+        `Expected Roster Number, First Name, Last Name at top of sort options, got ${JSON.stringify(defaultSortAudit.optionKeys.slice(0, 3))}`
+      );
       assert(defaultSortAudit.sortDirAttr === 'asc' && defaultSortAudit.dirAria.includes('Ascending'), `Expected default ascending arrow button, got ${defaultSortAudit.sortDirAttr} / ${defaultSortAudit.dirAria}`);
       assert(
-        defaultSortAudit.firstTwoNames[0].localeCompare(defaultSortAudit.firstTwoNames[1]) <= 0,
-        `Players not sorted alphabetically by default: ${JSON.stringify(defaultSortAudit.firstTwoNames)}`
+        defaultSortAudit.firstThreeJerseys[0] === '#0' && defaultSortAudit.firstThreeJerseys[1] === '#1',
+        `Players not sorted by Roster Number ascending by default: ${JSON.stringify(defaultSortAudit.firstThreeJerseys)}`
       );
 
-      // Flip Name sort to Z-A via #rosterSortDirBtn arrow button and verify order reverses
-      const reversedNameAudit = await cdp.eval(() => {
+      // Flip Roster Number sort to descending via #rosterSortDirBtn arrow button (#99 at top)
+      const reversedJerseyAudit = await cdp.eval(() => {
         document.getElementById('rosterSortDirBtn').click();
         const dirBtn = document.getElementById('rosterSortDirBtn');
         const sortDirAttr = dirBtn?.getAttribute('data-sort-dir') || '';
-        const firstPlayer = document.querySelector('.player-name-line')?.childNodes[0]?.textContent?.trim() || '';
-        return { sortDirAttr, firstPlayer };
+        const firstJersey = document.querySelector('.player-row .jersey-chip')?.textContent?.trim() || '';
+        return { sortDirAttr, firstJersey };
       });
-      assert(reversedNameAudit.sortDirAttr === 'desc', `Expected desc arrow state after clicking arrow button, got ${reversedNameAudit.sortDirAttr}`);
-      assert(reversedNameAudit.firstPlayer === defaultSortAudit.lastTwoNames[1], 'Z–A sort did not place last alphabetical player at top');
+      assert(reversedJerseyAudit.sortDirAttr === 'desc', `Expected desc arrow state after clicking arrow button, got ${reversedJerseyAudit.sortDirAttr}`);
+      assert(reversedJerseyAudit.firstJersey === '#99', `Expected #99 at top on descending Roster Number sort, got ${reversedJerseyAudit.firstJersey}`);
 
-      // Exercise Dropdown selection + Up/Down Arrow toggle for EVERY sort field (jersey, cap, snaps, health, ras, age, name)
-      for (const fieldKey of ['jersey', 'cap', 'snaps', 'health', 'ras', 'age', 'name']) {
+      // Verify First Name sort (asc & desc) and Last Name sort (asc & desc) explicitly
+      const nameSortAudit = await cdp.eval(() => {
+        let sel = document.getElementById('rosterSortSelect');
+
+        sel.value = 'firstName';
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        const firstAscNames = Array.from(document.querySelectorAll('.player-name-line')).map(
+          el => el.childNodes[0]?.textContent?.trim() || el.textContent.trim()
+        );
+        document.getElementById('rosterSortDirBtn').click();
+        const firstDescTop = document.querySelector('.player-name-line')?.childNodes[0]?.textContent?.trim() || '';
+
+        sel = document.getElementById('rosterSortSelect');
+        sel.value = 'lastName';
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        const lastAscNames = Array.from(document.querySelectorAll('.player-name-line')).map(
+          el => el.childNodes[0]?.textContent?.trim() || el.textContent.trim()
+        );
+        document.getElementById('rosterSortDirBtn').click();
+        const lastDescTop = document.querySelector('.player-name-line')?.childNodes[0]?.textContent?.trim() || '';
+
+        return {
+          firstAscTop2: firstAscNames.slice(0, 2),
+          firstAscLast: firstAscNames[firstAscNames.length - 1],
+          firstDescTop,
+          lastAscTop3: lastAscNames.slice(0, 3),
+          lastAscLast: lastAscNames[lastAscNames.length - 1],
+          lastDescTop
+        };
+      });
+      assert(
+        nameSortAudit.firstAscTop2[0] === 'Alfred Collins' && nameSortAudit.firstDescTop === nameSortAudit.firstAscLast,
+        `First Name sort mismatch: ${JSON.stringify(nameSortAudit)}`
+      );
+      assert(
+        nameSortAudit.lastAscTop3[0] === 'Brandon Aiyuk' &&
+          nameSortAudit.lastAscTop3[1] === 'Isaac Alarcon' &&
+          nameSortAudit.lastAscTop3[2] === 'Robert Beal Jr.' &&
+          nameSortAudit.lastDescTop === nameSortAudit.lastAscLast,
+        `Last Name sort (with Jr. suffix handling) mismatch: ${JSON.stringify(nameSortAudit)}`
+      );
+
+      // Exercise Dropdown selection + Up/Down Arrow toggle for EVERY sort field (jersey, firstName, lastName, cap, snaps, health, ras, age)
+      for (const fieldKey of ['jersey', 'firstName', 'lastName', 'cap', 'snaps', 'health', 'ras', 'age']) {
         const pairCheck = await cdp.eval(fk => {
           const sel = document.getElementById('rosterSortSelect');
           sel.value = fk;
@@ -873,10 +924,10 @@ async function main() {
         );
       }
 
-      // Reset back to default Name A-Z
+      // Reset back to default Roster Number (#0 .. #99)
       await cdp.eval(() => {
         const sel = document.getElementById('rosterSortSelect');
-        sel.value = 'name';
+        sel.value = 'jersey';
         sel.dispatchEvent(new Event('change', { bubbles: true }));
       });
 

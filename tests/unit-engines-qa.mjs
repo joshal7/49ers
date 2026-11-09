@@ -23,7 +23,11 @@ import {
 } from '../src/engine/jargonGlossary.js';
 import {
   ROSTER_SORT_FIELDS,
-  normalizeRosterSort
+  extractPlayerSortNameParts,
+  comparePlayersByFirstName,
+  comparePlayersByLastName,
+  normalizeRosterSort,
+  renderRosterCapViewHtml
 } from '../src/views/rosterCapView.js';
 import { simulateCapScenario } from '../src/engine/capSimulator.js';
 import {
@@ -246,12 +250,48 @@ test('resolveOrderedDashboardBlocks preserves user order, drops retired blocks, 
   ]);
 });
 
-test('Roster sort fields place Name first, Jersey Number second, and support asc/desc normalization', () => {
-  assert.equal(ROSTER_SORT_FIELDS[0].key, 'name');
-  assert.equal(ROSTER_SORT_FIELDS[1].key, 'jersey');
-  assert.deepEqual(normalizeRosterSort(), { field: 'name', dir: 'asc' });
+test('Roster sort fields default to Roster Number (jersey asc) and support First Name & Last Name sorting with suffix handling', () => {
+  assert.equal(ROSTER_SORT_FIELDS[0].key, 'jersey');
+  assert.equal(ROSTER_SORT_FIELDS[1].key, 'firstName');
+  assert.equal(ROSTER_SORT_FIELDS[2].key, 'lastName');
+  assert.deepEqual(normalizeRosterSort(), { field: 'jersey', dir: 'asc' });
   assert.deepEqual(normalizeRosterSort('jersey', 'desc'), { field: 'jersey', dir: 'desc' });
+  assert.deepEqual(normalizeRosterSort('firstName', 'asc'), { field: 'firstName', dir: 'asc' });
+  assert.deepEqual(normalizeRosterSort('lastName', 'desc'), { field: 'lastName', dir: 'desc' });
+  assert.deepEqual(normalizeRosterSort('name'), { field: 'firstName', dir: 'asc' });
+  assert.deepEqual(normalizeRosterSort('first_name_desc'), { field: 'firstName', dir: 'desc' });
+  assert.deepEqual(normalizeRosterSort('last_name_desc'), { field: 'lastName', dir: 'desc' });
   assert.deepEqual(normalizeRosterSort('cap_desc'), { field: 'cap', dir: 'desc' });
+
+  // Verify generational suffixes (Jr., Sr., II, III) are stripped when extracting lastName
+  assert.deepEqual(extractPlayerSortNameParts('Deebo Samuel Sr.'), {
+    firstName: 'Deebo',
+    lastName: 'Samuel',
+    fullName: 'Deebo Samuel Sr.'
+  });
+  assert.deepEqual(extractPlayerSortNameParts('Andrew Farmer II'), {
+    firstName: 'Andrew',
+    lastName: 'Farmer',
+    fullName: 'Andrew Farmer II'
+  });
+  assert.deepEqual(extractPlayerSortNameParts('Robert Beal Jr.'), {
+    firstName: 'Robert',
+    lastName: 'Beal',
+    fullName: 'Robert Beal Jr.'
+  });
+
+  // Verify First Name vs Last Name comparators
+  const sample = [
+    { name: 'Trent Williams', jersey: 71 },
+    { name: 'Brock Purdy', jersey: 13 },
+    { name: 'Brandon Aiyuk', jersey: 11 },
+    { name: 'Robert Beal Jr.', jersey: 51 }
+  ];
+  const byFirst = [...sample].sort(comparePlayersByFirstName).map(p => p.name);
+  assert.deepEqual(byFirst, ['Brandon Aiyuk', 'Brock Purdy', 'Robert Beal Jr.', 'Trent Williams']);
+
+  const byLast = [...sample].sort(comparePlayersByLastName).map(p => p.name);
+  assert.deepEqual(byLast, ['Brandon Aiyuk', 'Robert Beal Jr.', 'Brock Purdy', 'Trent Williams']);
 });
 
 test('Invalid date throws descriptive error', () => {

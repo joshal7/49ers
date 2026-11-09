@@ -70,7 +70,7 @@ const state = {
   rosterSearch: '',
   rosterUnitFilter: 'All',
   rosterPosFilter: 'ALL',
-  rosterSort: 'name',
+  rosterSort: 'jersey',
   rosterSortDir: 'asc',
   depthMode: 'projected',
   capSelectedYear: '2026',
