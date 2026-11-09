@@ -3103,6 +3103,28 @@ button.featured-player-chip:active {
   outline: none;
 }
 
+.inline-player-link {
+  display: inline;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px dashed rgba(212, 188, 126, 0.58);
+  cursor: pointer;
+  padding-bottom: 0.5px;
+  transition: color 0.14s ease, border-bottom-color 0.14s ease;
+}
+
+[data-theme="light"] .inline-player-link {
+  border-bottom-color: rgba(140, 112, 52, 0.65);
+}
+
+.inline-player-link:hover,
+.inline-player-link:focus-visible {
+  color: var(--gold-bright);
+  border-bottom-color: var(--gold-bright);
+  border-bottom-style: solid;
+  outline: none;
+}
+
 .jargon-popover {
   position: fixed;
   z-index: 150;

@@ -3,6 +3,9 @@
  * Renders a crisp 10-axis radar chart (0–100th positional percentile) + drill table + historical NFL comps.
  */
 
+import { lookupRosterPlayerByName } from '../views/uiHelpers.js';
+import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+
 function escapeHtml(str = '') {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -119,14 +122,26 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
           </div>
           <div class="spider-comps-grid">
             ${spiderProfile.historicalComps
-              .map(
-                c => `
-              <div class="spider-comp-chip">
-                <span class="comp-name">${escapeHtml(c.name)}</span>
-                <span class="comp-meta mono">${c.draftYear ? `'${String(c.draftYear).slice(-2)} • ` : ''}${c.similarityPct}% match</span>
-              </div>
-            `
-              )
+              .map(c => {
+                const sfMatch = lookupRosterPlayerByName(c.name);
+                const compMetaHtml = `<span class="comp-meta mono">${c.draftYear ? `'${String(c.draftYear).slice(-2)} • ` : ''}${c.similarityPct}% match</span>`;
+                if (sfMatch && sfMatch.name.toLowerCase() !== String(playerName || '').toLowerCase()) {
+                  return `
+              <button type="button" class="spider-comp-chip" style="cursor:pointer;text-align:left" data-action="open-player-sheet" data-player-id="${escapeHtml(sfMatch.id)}" aria-label="Open ${escapeHtml(c.name)} 49ers dossier">
+                <span class="comp-name" style="color:var(--gold-bright)">${escapeHtml(c.name)}</span>
+                ${compMetaHtml}
+              </button>
+            `;
+                }
+                const fallbackSearch = `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(c.name || '')}`;
+                const safeCompUrl = sanitizeExternalUrl(c.pfrUrl, fallbackSearch);
+                return `
+              <a href="${escapeHtml(safeCompUrl)}" target="_blank" rel="noopener noreferrer" class="spider-comp-chip" style="text-decoration:none;color:inherit">
+                <span class="comp-name" style="color:var(--gold-bright)">${escapeHtml(c.name)} ↗</span>
+                ${compMetaHtml}
+              </a>
+            `;
+              })
               .join('')}
           </div>
         </div>

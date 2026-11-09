@@ -26,7 +26,11 @@ import {
   resolvePlacedBeforeWeekFromDate
 } from '../src/engine/injuryProbabilityModel.js';
 import { runPlayoffMonteCarlo } from '../src/engine/playoffMonteCarlo.js';
-import { sortNewsWithBreakingPriority } from '../src/engine/breakingClassifier.js';
+import {
+   sortNewsWithBreakingPriority,
+  isRedundantProfileSelfLink
+} from '../src/engine/breakingClassifier.js';
+import { getJargonEntry } from '../src/engine/jargonGlossary.js';
 import { hydrateLiveEspnOverlay } from '../src/services/dataService.js';
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
 import {
@@ -39,8 +43,16 @@ import {
 import {
   extractBeatAttributionFromText,
   resolveItemAuthorProfileUrl,
+  resolveOriginalTweetUrl,
+  resolveReporterFromNameOrHandle,
   corroborateAndAnnotateWireStream
 } from '../src/engine/beatAttributionEngine.js';
+import {
+  registerRosterPlayersForInlineLinks,
+  escJargon,
+  renderReporterSourceLinksHtml,
+  buildEspnNflTeamUrl
+} from '../src/views/uiHelpers.js';
 import {
   extractWireGameDaySignals,
   isBeforeWeeklyPracticeWindow,
@@ -623,6 +635,140 @@ test('Game-day clause isolation, DST practice-window accuracy, early-week rollov
   ]);
   assert.equal(corroborated[0].author, 'Dan Graziano');
   assert.equal(corroborated[0].authorProfileUrl, 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers');
+});
+
+test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & entity-URI regressions', () => {
+  // 1. Every jargonTerm(label, key) call in src/views and src/components must resolve to a real glossary entry
+  for (const dirRel of ['src/views', 'src/components']) {
+    const dirAbs = path.join(rootDir, dirRel);
+    for (const file of fs.readdirSync(dirAbs).filter(f => f.endsWith('.js'))) {
+      const src = fs.readFileSync(path.join(dirAbs, file), 'utf8');
+      const re = /jargonTerm\(\s*(['"`])([^'"`]+)\1(?:\s*,\s*(['"`])([^'"`]+)\3)?\s*\)/g;
+      let m;
+      while ((m = re.exec(src)) !== null) {
+        const label = m[2];
+        const key = m[4] || label;
+        const entry = getJargonEntry(key) || getJargonEntry(label);
+        assert.ok(entry, `Dead jargonTerm("${label}", "${key}") in ${dirRel}/${file}`);
+      }
+    }
+  }
+  assert.ok(getJargonEntry('dead_cap'), 'dead_cap synonym must resolve');
+  assert.ok(getJargonEntry('11_personnel'), '11_personnel synonym must resolve');
+  assert.ok(getJargonEntry('21_personnel'), '21_personnel synonym must resolve');
+
+  // 2. Cross-mentioned tweet subject extraction resolves lead injured player ("Evans") instead of secondary dossier player ("Cooks")
+  const crossMentionTweetUrl = resolveOriginalTweetUrl({
+    type: 'tweet',
+    author: 'Mike Garafolo',
+    authorHandle: '@MikeGarafolo',
+    title: `Evans (Achilles), who won't play in Sunday's game against the Raiders, appears to be "questionable at best" for Week 10, Mike Garafolo of NFL Network reports.`,
+    fullText: `Evans (Achilles), who won't play in Sunday's game against the Raiders, appears to be "questionable at best" for Week 10. Brandin Cooks and Jordan Watkins will lead the receiver rotation.`,
+    primaryPlayer: { name: 'Brandin Cooks' },
+    url: 'https://www.espn.com/nfl/player/_/id/16731/brandin-cooks'
+  });
+  assert.ok(
+    crossMentionTweetUrl.includes('from%3AMikeGarafolo') && crossMentionTweetUrl.includes('%22Evans%22'),
+    `Expected Mike Garafolo tweet URL to target "Evans", got: ${crossMentionTweetUrl}`
+  );
+  assert.ok(!crossMentionTweetUrl.includes('Cooks'), `Cross-mentioned secondary player leaked into tweet search: ${crossMentionTweetUrl}`);
+
+  // 3. Newly mapped beat & draft voices resolve to verified X handles and 0 tweets in news.json lack handle/direct post
+  for (const voice of ['Harrison Rich', 'Dane Brugler', 'Mel Kiper Jr.', 'Daniel Jeremiah', 'Lance Zierlein']) {
+    const rep = resolveReporterFromNameOrHandle(voice);
+    assert.ok(rep?.xUrl?.startsWith('https://x.com/'), `Missing verified X handle for ${voice}`);
+  }
+  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const directPosts = (newsJson.rawStream || []).filter(
+    it => (it.type === 'tweet' || it.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(it.url || '')
+  );
+  for (const tw of (newsJson.rawStream || []).filter(it => it.type === 'tweet' || it.type === 'social')) {
+    const resolved = resolveOriginalTweetUrl(tw, directPosts);
+    assert.ok(
+      /\/status\/|\/post\/|from%3A|49ers\.com\/team\/transactions/i.test(resolved),
+      `Tweet ${tw.id} (${tw.author}) lacked direct status or from:<handle> query: ${resolved}`
+    );
+  }
+
+  // 4. Redundant self-link suppressor catches utm_*, www., and trailing-slash variants
+  assert.equal(
+    isRedundantProfileSelfLink(
+      'https://www.49erswebzone.com/articles/195000-test/?utm_source=rss',
+      'https://49erswebzone.com/articles/195000-test'
+    ),
+    true
+  );
+
+  // 5. Inline roster player linker & multi-delimiter reporter link helper
+  const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  registerRosterPlayersForInlineLinks(rosterJson.players);
+  const annotatedHtml = escJargon('Brock Purdy hit George Kittle on a Wide-9 hot read.', {
+    excludePlayerId: '4361741'
+  });
+  assert.ok(!annotatedHtml.includes('data-player-id="4361741"'), 'Excluded self dossier player should not self-link');
+  assert.ok(annotatedHtml.includes('class="inline-player-link"') && annotatedHtml.includes('George Kittle'), 'Expected inline player link for George Kittle');
+  assert.ok(annotatedHtml.includes('data-jargon="wide_9"'), 'Expected inline jargon link for Wide-9');
+  const hostLinksHtml = renderReporterSourceLinksHtml('Matt Maiocco & Laura Britt');
+  assert.ok(hostLinksHtml.includes('https://x.com/MaioccoNBCS') && hostLinksHtml.includes(' &amp; Laura Britt'));
+  assert.equal(buildEspnNflTeamUrl('WAS'), 'https://www.espn.com/nfl/team/_/name/wsh/washington-commanders');
+
+  // 6. Compiled JSON entity-link & playerId integrity across roster, cap, health, depth, matchup & seasonal
+  const capJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+  const healthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const depthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8'));
+  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+
+  const validPlayerIds = new Set();
+  for (const p of rosterJson.players || []) {
+    if (p.id) validPlayerIds.add(String(p.id));
+    if (p.otcId) validPlayerIds.add(String(p.otcId));
+    if (p.pfrId) validPlayerIds.add(String(p.pfrId));
+    for (const comp of p.spiderProfile?.historicalComps || []) {
+      assert.ok(
+        /^https:\/\/www\.pro-football-reference\.com\/(?:players\/|search\/search\.fcgi\?search=)/.test(String(comp.pfrUrl || '')),
+        `Missing historicalComp pfrUrl on ${p.name} -> ${comp.name}: ${comp.pfrUrl}`
+      );
+    }
+  }
+
+  for (const r of [...(healthJson.practiceReport || []), ...(healthJson.injuredReserve || [])]) {
+    assert.ok(r.playerId && validPlayerIds.has(String(r.playerId)), `Unresolved health playerId for ${r.name}: ${r.playerId}`);
+  }
+  for (const u of depthJson.units || []) {
+    for (const row of u.rows || []) {
+      for (const c of [...(row.projectedActiveChain || []), ...(row.baselineChain || [])]) {
+        assert.ok(c.playerId && validPlayerIds.has(String(c.playerId)), `Unresolved depth playerId for ${c.name}: ${c.playerId}`);
+      }
+    }
+  }
+  for (const m of seasonalJson.tradeWarRoom?.completed2026Moves || []) {
+    assert.ok(m.playerId && validPlayerIds.has(String(m.playerId)), `Unresolved completed trade playerId for ${m.player}`);
+  }
+  for (const pk of seasonalJson.draftClass2026?.picks || []) {
+    assert.ok(pk.playerId && validPlayerIds.has(String(pk.playerId)), `Unresolved 2026 draft pick playerId for ${pk.name}`);
+  }
+  for (const ud of seasonalJson.draftClass2026?.priorityUdfas || []) {
+    assert.ok(ud.playerId && validPlayerIds.has(String(ud.playerId)), `Unresolved priority UDFA playerId for ${ud.name}`);
+  }
+  for (const dm of capJson.years?.['2026']?.topDeadMoneyEntries || []) {
+    assert.ok(String(dm.otcUrl || '').startsWith('https://overthecap.com/player/'), `Missing dead money otcUrl for ${dm.name}`);
+  }
+  for (const hg of smJson.franchiseHistory?.recentGames || []) {
+    assert.ok(String(hg.boxscoreUrl || '').startsWith('https://'), `Missing H2H boxscoreUrl on ${hg.season} Wk ${hg.week}`);
+  }
+  for (const pf of seasonalJson.tradeWarRoom?.pitfallsToAvoid || []) {
+    assert.ok(Array.isArray(pf.exampleLinks) && pf.exampleLinks.length > 0, `Missing exampleLinks on pitfall: ${pf.trap}`);
+    for (const el of pf.exampleLinks) {
+      assert.ok(String(el.url || '').startsWith('https://overthecap.com/player/'), `Invalid pitfall example URL: ${el.url}`);
+    }
+  }
+  for (const mt of seasonalJson.draftPrep2027?.consensusMockTargets || []) {
+    assert.ok(Array.isArray(mt.prospectLinks) && mt.prospectLinks.length > 0, `Missing prospectLinks on mock target: ${mt.name}`);
+    for (const pl of mt.prospectLinks) {
+      assert.ok(String(pl.url || '').startsWith('https://'), `Invalid mock prospect URL: ${pl.url}`);
+    }
+  }
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

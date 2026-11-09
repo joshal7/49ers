@@ -10,10 +10,13 @@ import {
   jargonTerm,
   relTime,
   playProbBadgeClass,
+  buildEspnNflTeamUrl,
   renderPlayerAvatarHtml,
   renderTeamLogoHtml,
   renderAvatarStackHtml,
-  renderMiniMeterHtml
+  renderPlayerChipsStripHtml,
+  renderMiniMeterHtml,
+  registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
@@ -56,6 +59,7 @@ export function renderHomeDashboardHtml({
   filteredRawItems,
   isCustomizingLayout
 }) {
+  registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const customizeBar = `
     <div class="reorder-bar">
       <div class="reorder-bar-status">
@@ -187,7 +191,9 @@ function renderSingleDashboardCard({
                   </div>
                   <div class="${hasHeroImg ? 'media-split-row' : ''}">
                     <div style="min-width:0">
-                      <div style="font-weight:700;font-size:13.5px;line-height:1.35">${esc(c.headline)}</div>
+                      <div style="font-weight:700;font-size:13.5px;line-height:1.35">
+                        <span class="inline-player-link" role="button" tabindex="0" style="border-bottom-style:none" data-action="open-news-cluster" data-cluster-id="${esc(c.id)}">${esc(c.headline)}</span>
+                      </div>
                       <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(c.hardFacts?.[0] || '')}</div>
                     </div>
                     ${
@@ -257,6 +263,7 @@ function renderSingleDashboardCard({
                     const showExtChip =
                       Boolean(safeTwExt) &&
                       !isRedundantProfileSelfLink(safeTwExt, resolvedTwUrl) &&
+                      !isRedundantProfileSelfLink(safeTwExt, tw.url) &&
                       !/\bon X$/i.test(String(tw.externalTitle || ''));
                     return `
                   <div class="home-wire-item ${tw.breakingPriority > 0 ? 'breaking-elevated' : ''}">
@@ -287,6 +294,7 @@ function renderSingleDashboardCard({
                           </div>`
                         : ''
                     }
+                    ${tw.mentionedPlayers?.length ? `<div style="margin-top:4px">${renderPlayerChipsStripHtml(tw.mentionedPlayers, 3)}</div>` : ''}
                   </div>
                 `;
                   })
@@ -357,35 +365,35 @@ function renderSingleDashboardCard({
         ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
         : '';
       const awayTeamCol = sfIsAway
-        ? `<div class="sb-team-col">
+        ? `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
             ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
             <div class="sb-team-meta">
               <div class="sb-team-abbr">49ers</div>
               <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
             </div>
-          </div>`
-        : `<div class="sb-team-col">
+          </a>`
+        : `<a href="${esc(buildEspnNflTeamUrl(um.oppAbbr || 'NFL'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
             ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 36)}
             <div class="sb-team-meta">
               <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
               <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
             </div>
-          </div>`;
+          </a>`;
       const homeTeamCol = sfIsAway
-        ? `<div class="sb-team-col home">
+        ? `<a href="${esc(buildEspnNflTeamUrl(um.oppAbbr || 'NFL'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
             <div class="sb-team-meta">
               <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
               <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
             </div>
             ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 36)}
-          </div>`
-        : `<div class="sb-team-col home">
+          </a>`
+        : `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
             <div class="sb-team-meta">
               <div class="sb-team-abbr">49ers</div>
               <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
             </div>
             ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
-          </div>`;
+          </a>`;
       bodyHtml = `
         <div class="matchup-scoreboard">
           ${awayTeamCol}
@@ -417,7 +425,11 @@ function renderSingleDashboardCard({
                       op => `
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
                       <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
-                        <strong>${esc(op.name)}</strong> <span style="color:var(--text-muted)">(${esc(op.position)} • ${esc(op.injuryType)})</span>
+                        ${
+                          op.espnUrl
+                            ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
+                            : `<strong>${esc(op.name)}</strong>`
+                        } <span style="color:var(--text-muted)">(${esc(op.position)} • ${esc(op.injuryType)})</span>
                       </span>
                       <span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span>
                     </div>
@@ -472,33 +484,39 @@ function renderSingleDashboardCard({
       const upcoming4 = sched.filter(g => !g.completed).slice(0, 4);
       const overallRec = appData?.meta?.teamRecord || '—';
       const divRec = appData?.meta?.divisionRecord ? ` (${appData.meta.divisionRecord} NFC West)` : '';
-      const intlNotes = intl
+      const intlNotesHtml = intl
         .map(g => {
           const scoreTxt = g.completed ? `${g.result} ${g.sfScore}-${g.oppScore}` : `${g.homeAway === 'home' ? 'vs' : '@'} ${g.opponent?.abbr || ''}`;
-          return `${g.venue?.city || g.venue?.country || 'Intl'} Wk ${g.week} (${scoreTxt})`;
+          const label = `${g.venue?.city || g.venue?.country || 'Intl'} Wk ${g.week} (${scoreTxt})`;
+          const safeGameUrl = sanitizeExternalUrl(g.gameUrl, null);
+          return safeGameUrl
+            ? `<a href="${esc(safeGameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link">${esc(label)}</a>`
+            : esc(label);
         })
-        .join(' & ');
+        .join(' &amp; ');
       externalHeaderLink = `<a href="https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Schedule</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         ${
           upcoming4.length
             ? `<div style="display:grid;grid-template-columns:repeat(${upcoming4.length},minmax(0,1fr));gap:6px;margin-bottom:7px">
                 ${upcoming4
-                  .map(
-                    g => `
-                  <div class="kpi-box" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;text-align:center">
-                    <span class="mono" style="font-size:10px;color:var(--text-muted)">WK ${g.week}</span>
-                    ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 24)}
-                    <span class="mono" style="font-size:11px;font-weight:700">${g.homeAway === 'home' ? 'vs' : '@'} ${esc(g.opponent?.abbr || '')}</span>
-                  </div>
-                `
-                  )
+                  .map(g => {
+                    const safeGameUrl = sanitizeExternalUrl(g.gameUrl, null);
+                    const inner = `
+                      <span class="mono" style="font-size:10px;color:var(--text-muted)">WK ${g.week}</span>
+                      ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 24)}
+                      <span class="mono" style="font-size:11px;font-weight:700">${g.homeAway === 'home' ? 'vs' : '@'} ${esc(g.opponent?.abbr || '')}</span>
+                    `;
+                    return safeGameUrl
+                      ? `<a href="${esc(safeGameUrl)}" target="_blank" rel="noopener noreferrer" class="kpi-box" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;text-align:center;text-decoration:none;color:inherit">${inner}</a>`
+                      : `<div class="kpi-box" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;text-align:center">${inner}</div>`;
+                  })
                   .join('')}
               </div>`
             : ''
         }
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          <strong>${esc(overallRec)} Overall${esc(divRec)}</strong>${intlNotes ? ` • International Series: ${esc(intlNotes)}.` : ''} ${intl.length} international venues tracked.
+          <strong>${esc(overallRec)} Overall${esc(divRec)}</strong>${intlNotesHtml ? ` • International Series: ${intlNotesHtml}.` : ''} ${intl.length} international venues tracked.
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="schedule"`;
@@ -617,7 +635,14 @@ function renderSingleDashboardCard({
       bodyHtml = `
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
           <div style="font-size:12.5px;color:var(--text-secondary);min-width:0;flex:1">
-            <strong>${(dc.picks || []).length} Draft Picks + Priority UDFAs:</strong> ${(dc.picks || []).slice(0, 4).map(p => esc(p.name)).join(', ')}…
+            <strong>${(dc.picks || []).length} Draft Picks + Priority ${jargonTerm('UDFAs', 'udfa')}:</strong> ${(dc.picks || [])
+        .slice(0, 4)
+        .map(p =>
+          p.playerId
+            ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}">${esc(p.name)}</span>`
+            : esc(p.name)
+        )
+        .join(', ')}…
           </div>
           ${pickAvatars.length ? renderAvatarStackHtml(pickAvatars, 28, 6) : ''}
         </div>
@@ -755,9 +780,13 @@ function renderSingleDashboardCard({
           </div>
           <div style="min-width:0;font-size:12.5px;color:var(--text-secondary)">
             <div style="color:var(--text-primary);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-              ${esc(latestEp?.title || `${epCount} Two-Host Audio Briefings Ready`)}
+              <span class="inline-player-link" role="button" tabindex="0" style="border-bottom-style:none" data-action="jump-studio-sub" data-studio-sub="podcast">${esc(latestEp?.title || `${epCount} Two-Host Audio Briefings Ready`)}</span>
             </div>
-            <div><strong>${beatEpsCount} 49ers Beat Podcasts (7d)</strong> + <strong>${epCount} AI Briefings</strong> &amp; Deep Scouting Generator.</div>
+            <div>
+              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="beat_podcasts">${beatEpsCount} 49ers Beat Podcasts (7d)</span> +
+              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="podcast">${epCount} AI Briefings</span> &amp;
+              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="analysis">Deep Scouting Generator</span>.
+            </div>
           </div>
         </div>
       `;

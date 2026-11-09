@@ -2814,13 +2814,25 @@ async function main() {
       const sfPts = Number(sfHome ? g.home_score : g.away_score);
       const oppPts = Number(sfHome ? g.away_score : g.home_score);
       const oppCodeInGame = sfHome ? g.away_team : g.home_team;
+      const espnGameId = g.espn && /^\d{6,}$/.test(String(g.espn).trim()) ? String(g.espn).trim() : '';
+      const pfrBoxId = g.pfr && /^[0-9a-z]+$/i.test(String(g.pfr).trim()) ? String(g.pfr).trim() : '';
+      const homePfrCode = PFR_FRANCHISE_CODES[g.home_team] || g.home_team?.toLowerCase() || 'sfo';
+      const dateDigits = String(g.gameday || '').replace(/-/g, '');
+      const boxscoreUrl = espnGameId
+        ? `https://www.espn.com/nfl/game/_/gameId/${espnGameId}`
+        : pfrBoxId
+          ? `https://www.pro-football-reference.com/boxscores/${pfrBoxId}.htm`
+          : dateDigits.length === 8
+            ? `https://www.pro-football-reference.com/boxscores/${dateDigits}0${homePfrCode}.htm`
+            : buildPfrHeadToHeadUrl('SF', oppAbbrTarget);
       return {
         season: Number(g.season),
         date: g.gameday,
         venue: g.location === 'Neutral' ? 'Neutral' : sfHome ? 'Home' : 'Away',
         scoreDisplay: `SF ${sfPts}, ${oppCodeInGame} ${oppPts}`,
         sfWon: sfPts > oppPts,
-        overtime: g.overtime === '1'
+        overtime: g.overtime === '1',
+        boxscoreUrl
       };
     });
 
@@ -3919,9 +3931,18 @@ async function main() {
         weightLb: r.wt ? Number(r.wt) : null
       });
       const athleteMeta = lookupAnyPlayerMeta(r.player_name);
+      const sfRosterMatch = rosterPlayers.find(rp => normName(rp.name) === normName(r.player_name));
+      const profileUrl =
+        sfRosterMatch?.pfrUrl ||
+        buildPfrPlayerUrl(r.pfr_id) ||
+        athleteMeta?.espnUrl ||
+        athleteMeta?.pfrUrl ||
+        `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(r.player_name)}`;
       return {
         name: r.player_name,
-        headshotUrl: athleteMeta?.headshotUrl || '',
+        playerId: sfRosterMatch?.id || null,
+        profileUrl,
+        headshotUrl: sfRosterMatch?.headshotUrl || athleteMeta?.headshotUrl || '',
         pos: r.pos,
         school: r.school,
         season: Number(r.season),

@@ -2,9 +2,18 @@
  * Roster Explorer, Dual-Mode Depth Chart & Interactive GM Salary Cap View
  */
 
-import { esc, escJargon, jargonTerm, playProbBadgeClass, renderPlayerAvatarHtml } from './uiHelpers.js';
+import {
+  esc,
+  escJargon,
+  jargonTerm,
+  playProbBadgeClass,
+  renderPlayerAvatarHtml,
+  lookupRosterPlayerByName,
+  registerRosterPlayersForInlineLinks
+} from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.js';
+import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 
 export const ROSTER_SORT_FIELDS = [
   { key: 'jersey', label: 'Roster Number', shortLabel: 'Roster #', defaultDir: 'asc' },
@@ -89,6 +98,7 @@ export function renderRosterCapViewHtml({
   simCapResult,
   userCapMoves = {}
 }) {
+  registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const topSwitcher = `
     <div class="card subnav-card">
       <div class="pill-bar" role="tablist" aria-label="Roster and Salary Cap Modes">
@@ -613,7 +623,16 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
                 <strong>Largest ${esc(selectedYrKey)} Dead Charges:</strong>
                 ${topDeadItems
                   .slice(0, 6)
-                  .map(d => `${esc(d.name)} (<span class="mono">${formatCompactDollars(d.capCharge)}</span>)`)
+                  .map(d => {
+                    const sfMatch = lookupRosterPlayerByName(d.name);
+                    const safeOtc = sanitizeExternalUrl(d.otcUrl, null);
+                    const nameHtml = sfMatch
+                      ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(sfMatch.id)}" data-initial-tab="contract">${esc(d.name)}</span>`
+                      : safeOtc
+                        ? `<a href="${esc(safeOtc)}" target="_blank" rel="noopener noreferrer" class="ext-link">${esc(d.name)}</a>`
+                        : esc(d.name);
+                    return `${nameHtml} (<span class="mono">${formatCompactDollars(d.capCharge)}</span>)`;
+                  })
                   .join(' • ')}
               </div>`
             : ''
@@ -867,7 +886,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
                           <span class="cap-player-name" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">${esc(p.name)}</span>
                           <span class="cap-player-pos">${esc(p.position)}${
                             p.otcUrl
-                              ? ` <a href="${esc(p.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" title="OverTheCap Contract">${iconSvg('externalLink', 9)}</a>`
+                              ? ` <a href="${esc(p.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" title="OverTheCap Contract" aria-label="Open ${esc(p.name)} OverTheCap Contract">${iconSvg('externalLink', 9)}</a>`
                               : ''
                           }</span>
                         </div>
@@ -876,7 +895,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
                     <td>
                       ${
                         p.isVoidYear
-                          ? `<span class="badge badge-neutral" title="Void Year">${jargonTerm('Void', 'void_years')}</span>`
+                          ? `<span class="badge badge-neutral">${jargonTerm('Void', 'void_years')}</span>`
                           : formatOtcDollars(p.baseSalary)
                       }
                     </td>

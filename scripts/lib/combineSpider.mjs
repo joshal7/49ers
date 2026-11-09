@@ -337,11 +337,19 @@ export function buildCombineIndexer(combineRows = []) {
       if (shared >= 4 && sharedWeight > 0) {
         const rmsd = Math.sqrt(weightedSq / sharedWeight);
         const similarityPct = Math.max(60, Math.min(99, Math.round(100 - rmsd * 0.85)));
+        const cleanPfrId =
+          cand.pfrId && /^[A-Za-z][A-Za-z0-9'-]{3,12}$/.test(String(cand.pfrId).trim())
+            ? String(cand.pfrId).trim()
+            : '';
+        const pfrUrl = cleanPfrId
+          ? `https://www.pro-football-reference.com/players/${cleanPfrId[0].toUpperCase()}/${cleanPfrId}.htm`
+          : `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(cand.name)}`;
         scoredComps.push({
           name: cand.name,
           draftYear: Number(cand.draftYear) || null,
           school: cand.school || '',
-          similarityPct
+          similarityPct,
+          pfrUrl
         });
       }
     }

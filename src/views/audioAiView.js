@@ -2,7 +2,14 @@
  * Auto Podcast, 49ers Beat Podcasts (7-Day Native App Directory) & Deep Scouting/Cap Analysis View
  */
 
-import { esc, renderMarkdownSafe, formatRelativeAge } from './uiHelpers.js';
+import {
+  esc,
+  escJargon,
+  renderMarkdownSafe,
+  formatRelativeAge,
+  registerRosterPlayersForInlineLinks,
+  renderReporterSourceLinksHtml
+} from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
@@ -227,7 +234,7 @@ function renderTranscriptTurnsList(episode, activeTurnIdx = -1) {
               <span class="inline-icon-meta">${iconSvg('mic', 12)}<span>${esc(seg.speaker)} <span style="font-weight:500;color:var(--text-muted)">(${esc(seg.speakerRole || '')})</span></span></span>
               <span class="mono">${formatTimeMmSs(seg.startSec)}</span>
             </div>
-            <div>${esc(seg.text)}</div>
+            <div>${escJargon(seg.text)}</div>
           </div>
         `
           )
@@ -375,6 +382,7 @@ export function renderAudioAiViewHtml({
   geminiKeyNotice = '',
   showGeminiKeyGuide = false
 }) {
+  registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const beatPodBundle = appData?.beatPodcasts || { shows: [], episodes: [] };
   const recentBeatEpisodes = filterEpisodesLast7Days(beatPodBundle.episodes || [], beatPodBundle.updatedAt);
 
@@ -597,16 +605,18 @@ function renderBeatPodcastsDirectory({
         <section class="card beat-podcast-show-group" data-podcast-group="${esc(show.id)}">
           <div class="card-header" style="margin-bottom:10px">
             <div class="card-header-left">
-              ${
-                hasShowArt
-                  ? `<div class="beat-podcast-art-wrap" style="width:44px;height:44px">
-                       <img src="${esc(show.artworkUrl)}" alt="${esc(show.name)}" width="44" height="44" loading="lazy" decoding="async" />
-                     </div>`
-                  : `<div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 17)}</div>`
-              }
+              <a href="${esc(showLaunch.href)}" ${showTargetAttrs} style="display:inline-flex;text-decoration:none;color:inherit">
+                ${
+                  hasShowArt
+                    ? `<div class="beat-podcast-art-wrap" style="width:44px;height:44px">
+                         <img src="${esc(show.artworkUrl)}" alt="${esc(show.name)}" width="44" height="44" loading="lazy" decoding="async" />
+                       </div>`
+                    : `<div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 17)}</div>`
+                }
+              </a>
               <div class="card-title-group">
-                <div class="card-eyebrow">${esc(show.hosts || show.network || '49ers Podcast')}</div>
-                <h3 class="card-title">${esc(show.name)}</h3>
+                <div class="card-eyebrow">${renderReporterSourceLinksHtml(show.hosts || show.network || '49ers Podcast')}</div>
+                <h3 class="card-title"><a href="${esc(showLaunch.href)}" ${showTargetAttrs} style="color:inherit;text-decoration:none">${esc(show.name)}</a></h3>
               </div>
             </div>
             <a href="${esc(showLaunch.href)}" ${showTargetAttrs} class="source-chip-link">

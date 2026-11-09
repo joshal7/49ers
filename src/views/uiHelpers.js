@@ -3,9 +3,231 @@
  */
 
 import { annotateJargonPlainText, jargonTerm } from '../engine/jargonGlossary.js';
+import { resolveReporterFromNameOrHandle } from '../engine/beatAttributionEngine.js';
+import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
+import { iconSvg } from './icons.js';
 
 export { jargonTerm };
-export const escJargon = annotateJargonPlainText;
+
+let cachedRosterArrayRef = null;
+let inlinePlayerRegex = null;
+let inlinePlayerByLowerPhrase = new Map();
+let rosterByCanonKey = new Map();
+
+function normalizePlayerCanon(name = '') {
+  return String(name || '')
+    .toLowerCase()
+    .replace(/\b(?:jr\.?|sr\.?|ii|iii|iv|v)\b\.?/gi, '')
+    .replace(/[^a-z0-9]/g, '')
+    .trim();
+}
+
+function escapeRegexChars(str = '') {
+  return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+export function registerRosterPlayersForInlineLinks(players = null) {
+  if (!Array.isArray(players) || players.length === 0) return;
+  if (players === cachedRosterArrayRef && inlinePlayerRegex) return;
+  cachedRosterArrayRef = players;
+
+  const phraseMap = new Map();
+  const canonMap = new Map();
+
+  for (const p of players) {
+    if (!p?.id || !p?.name) continue;
+    const full = String(p.name).trim();
+    if (!full.includes(' ') || full.length < 6) continue;
+    const entry = { id: String(p.id), name: full };
+
+    const ck = normalizePlayerCanon(full);
+    if (ck && !canonMap.has(ck)) canonMap.set(ck, entry);
+
+    const variants = new Set([
+      full,
+      full.replace(/'/g, '’'),
+      full.replace(/’/g, "'")
+    ]);
+    const withoutSuffix = full.replace(/,?\s+\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?$/i, '').trim();
+    if (withoutSuffix.includes(' ') && withoutSuffix.length >= 6) {
+      variants.add(withoutSuffix);
+      variants.add(withoutSuffix.replace(/'/g, '’'));
+    }
+
+    for (const v of variants) {
+      const lower = v.toLowerCase();
+      if (!phraseMap.has(lower)) {
+        phraseMap.set(lower, { phrase: v, ...entry });
+      }
+    }
+  }
+
+  const sortedPhrases = [...phraseMap.values()]
+    .map(x => x.phrase)
+    .sort((a, b) => b.length - a.length);
+
+  inlinePlayerByLowerPhrase = phraseMap;
+  rosterByCanonKey = canonMap;
+  inlinePlayerRegex =
+    sortedPhrases.length > 0
+      ? new RegExp(
+          `(?<![A-Za-z0-9_/'’-])(${sortedPhrases.map(escapeRegexChars).join('|')})(?![A-Za-z0-9_-])`,
+          'gi'
+        )
+      : null;
+}
+
+export function lookupRosterPlayerByName(name = '') {
+  const ck = normalizePlayerCanon(name);
+  return ck ? rosterByCanonKey.get(ck) || null : null;
+}
+
+export function annotateRosterAndJargonPlainText(
+  rawText,
+  { maxTerms = 8, maxPlayers = 6, seenKeys = null, seenPlayerIds = null, excludePlayerId = null } = {}
+) {
+  if (rawText === null || rawText === undefined) return '';
+  const text = String(rawText);
+  if (!text) return '';
+
+  if (!inlinePlayerRegex) {
+    return annotateJargonPlainText(text, { maxTerms, seenKeys });
+  }
+
+  const usedJargon = seenKeys instanceof Set ? seenKeys : new Set();
+  const usedPlayers = seenPlayerIds instanceof Set ? seenPlayerIds : new Set();
+  const excl = excludePlayerId != null ? String(excludePlayerId) : null;
+  let playerCount = 0;
+  let lastIdx = 0;
+  let out = '';
+
+  inlinePlayerRegex.lastIndex = 0;
+  let match;
+  while ((match = inlinePlayerRegex.exec(text)) !== null) {
+    const matchedText = match[1];
+    const mStart = match.index;
+    const mEnd = mStart + matchedText.length;
+
+    if (mStart > lastIdx) {
+      out += annotateJargonPlainText(text.slice(lastIdx, mStart), {
+        maxTerms,
+        seenKeys: usedJargon
+      });
+    }
+
+    const pEntry = inlinePlayerByLowerPhrase.get(matchedText.toLowerCase());
+    if (
+      pEntry &&
+      pEntry.id !== excl &&
+      !usedPlayers.has(pEntry.id) &&
+      playerCount < maxPlayers
+    ) {
+      usedPlayers.add(pEntry.id);
+      playerCount += 1;
+      out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+    } else {
+      out += annotateJargonPlainText(matchedText, { maxTerms, seenKeys: usedJargon });
+    }
+
+    lastIdx = mEnd;
+  }
+
+  if (lastIdx < text.length) {
+    out += annotateJargonPlainText(text.slice(lastIdx), {
+      maxTerms,
+      seenKeys: usedJargon
+    });
+  }
+
+  return out;
+}
+
+export const escJargon = annotateRosterAndJargonPlainText;
+
+const KNOWN_SOURCE_OUTLET_URLS = {
+  'nfl mock draft db': 'https://www.nflmockdraftdatabase.com/nfl-teams/2027/san-francisco-49ers',
+  'nfl mock draft database': 'https://www.nflmockdraftdatabase.com/nfl-teams/2027/san-francisco-49ers',
+  'cbs sports': 'https://www.cbssports.com/nfl/draft/',
+  'espn': 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
+  'overthecap': 'https://overthecap.com/salary-cap/san-francisco-49ers',
+  'tankathon': 'https://www.tankathon.com/nfl/49ers'
+};
+
+export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) {
+  const safeFallback = sanitizeExternalUrl(fallbackUrl, null);
+  if (Array.isArray(sourcesInput)) {
+    const names = sourcesInput.map(s => String(s || '').trim()).filter(Boolean);
+    if (names.length === 0) return '';
+    return names
+      .map(label => {
+        const rep = resolveReporterFromNameOrHandle(label);
+        const outletUrl = KNOWN_SOURCE_OUTLET_URLS[label.toLowerCase()] || null;
+        const href = sanitizeExternalUrl(rep?.xUrl || outletUrl || safeFallback, null);
+        return href
+          ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:inherit">${esc(label)} ${iconSvg('externalLink', 9)}</a>`
+          : esc(label);
+      })
+      .join(', ');
+  }
+
+  const raw = String(sourcesInput || '').trim();
+  if (!raw) return '';
+  const tokens = raw.split(/(\s*(?:,|&)\s*)/);
+  return tokens
+    .map((tok, idx) => {
+      if (idx % 2 === 1) return esc(tok);
+      const label = tok.trim();
+      if (!label) return '';
+      const rep = resolveReporterFromNameOrHandle(label);
+      const outletUrl = KNOWN_SOURCE_OUTLET_URLS[label.toLowerCase()] || null;
+      const href = sanitizeExternalUrl(rep?.xUrl || outletUrl || safeFallback, null);
+      return href
+        ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:inherit">${esc(label)} ${iconSvg('externalLink', 9)}</a>`
+        : esc(label);
+    })
+    .join('');
+}
+
+export function buildEspnNflTeamUrl(abbr = 'SF') {
+  const clean = String(abbr || 'SF').toUpperCase().trim();
+  const slugMap = {
+    ARI: 'ari/arizona-cardinals',
+    ATL: 'atl/atlanta-falcons',
+    BAL: 'bal/baltimore-ravens',
+    BUF: 'buf/buffalo-bills',
+    CAR: 'car/carolina-panthers',
+    CHI: 'chi/chicago-bears',
+    CIN: 'cin/cincinnati-bengals',
+    CLE: 'cle/cleveland-browns',
+    DAL: 'dal/dallas-cowboys',
+    DEN: 'den/denver-broncos',
+    DET: 'det/detroit-lions',
+    GB: 'gb/green-bay-packers',
+    HOU: 'hou/houston-texans',
+    IND: 'ind/indianapolis-colts',
+    JAX: 'jax/jacksonville-jaguars',
+    KC: 'kc/kansas-city-chiefs',
+    LAC: 'lac/los-angeles-chargers',
+    LAR: 'lar/los-angeles-rams',
+    LV: 'lv/las-vegas-raiders',
+    MIA: 'mia/miami-dolphins',
+    MIN: 'min/minnesota-vikings',
+    NE: 'ne/new-england-patriots',
+    NO: 'no/new-orleans-saints',
+    NYG: 'nyg/new-york-giants',
+    NYJ: 'nyj/new-york-jets',
+    PHI: 'phi/philadelphia-eagles',
+    PIT: 'pit/pittsburgh-steelers',
+    SEA: 'sea/seattle-seahawks',
+    SF: 'sf/san-francisco-49ers',
+    TB: 'tb/tampa-bay-buccaneers',
+    TEN: 'ten/tennessee-titans',
+    WAS: 'wsh/washington-commanders',
+    WSH: 'wsh/washington-commanders'
+  };
+  const path = slugMap[clean] || `${toEspnTeamSlug(clean)}/${toEspnTeamSlug(clean)}`;
+  return `https://www.espn.com/nfl/team/_/name/${path}`;
+}
 
 export function esc(str = '') {
   return String(str ?? '')
@@ -47,16 +269,27 @@ export function renderMarkdownSafe(md = '') {
   const html = [];
   let inList = false;
   const seenJargon = new Set();
+  const seenPlayers = new Set();
 
   const formatSegmentWithBoldAndJargon = seg => {
-    // Split on **bold** markers, preserving jargon links inside or outside bold safely
+    // Split on **bold** markers, preserving roster & jargon links inside or outside bold safely
     const parts = String(seg || '').split(/(\*\*[^*]+\*\*)/g);
     return parts
       .map(part => {
         if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
-          return `<strong>${annotateJargonPlainText(part.slice(2, -2), { maxTerms: 4, seenKeys: seenJargon })}</strong>`;
+          return `<strong>${annotateRosterAndJargonPlainText(part.slice(2, -2), {
+            maxTerms: 4,
+            maxPlayers: 4,
+            seenKeys: seenJargon,
+            seenPlayerIds: seenPlayers
+          })}</strong>`;
         }
-        return annotateJargonPlainText(part, { maxTerms: 6, seenKeys: seenJargon });
+        return annotateRosterAndJargonPlainText(part, {
+          maxTerms: 6,
+          maxPlayers: 6,
+          seenKeys: seenJargon,
+          seenPlayerIds: seenPlayers
+        });
       })
       .join('');
   };

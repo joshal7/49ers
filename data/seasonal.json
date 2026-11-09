@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T08:26:08.035Z",
+  "updatedAt": "2026-11-09T09:06:25.130Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -248,16 +248,42 @@
       {
         "trap": "Sacrificing 2027 Day-2 Picks (#63, #95) for Contender Pipe Dreams",
         "examples": "Brian Thomas Jr. (JAX 6-2), Garrett Wilson (NYJ), Landon Dickerson (PHI 6-2)",
+        "exampleLinks": [
+          {
+            "label": "Brian Thomas Jr. (JAX)",
+            "url": "https://overthecap.com/player/brian-thomas-jr/11631/"
+          },
+          {
+            "label": "Garrett Wilson (NYJ)",
+            "url": "https://overthecap.com/player/garrett-wilson/10055/"
+          },
+          {
+            "label": "Landon Dickerson (PHI)",
+            "url": "https://overthecap.com/player/landon-dickerson/9501/"
+          }
+        ],
         "whyAvoid": "Jacksonville and Philadelphia are playoff buyers, and burning Round 2 or 3 picks after trading SF's 2027 4th for DeForest Buckner would leave zero picks between #63 and #170 entering a -$31.54M 2027 cap squeeze."
       },
       {
         "trap": "Unproductive Aging Pass-Rushers on Past Name Value",
         "examples": "Cameron Jordan (NO DE, Age 37 — 0.0 Sacks, 1 QB Hit in 7 Games)",
+        "exampleLinks": [
+          {
+            "label": "Cameron Jordan (NO DE, Age 37)",
+            "url": "https://overthecap.com/player/cameron-jordan/1481/"
+          }
+        ],
         "whyAvoid": "Paying draft capital for a 37-year-old edge defender with zero sacks in 2026 provides no third-down burst upgrade over Mykel Williams, Keion White, or rookie Romello Height."
       },
       {
         "trap": "Stale Pre-Extension Trade Rumors",
         "examples": "Michael Mayer (LV TE — Extended 3 Yrs, $45M w/ $30M Guaranteed)",
+        "exampleLinks": [
+          {
+            "label": "Michael Mayer (LV TE — $45M Extension)",
+            "url": "https://overthecap.com/player/michael-mayer/10859/"
+          }
+        ],
         "whyAvoid": "Las Vegas locked Mayer into a $15M/yr extension before Week 1 to co-anchor Klint Kubiak's 12-personnel offense (36 rec, 351 yds in 2026); he is no longer an expendable rookie-deal backup."
       }
     ],
@@ -3546,6 +3572,14 @@
         "mockFrequencyToSfPct": 27,
         "shanahanLynchFitScore": 95,
         "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/jordan-seaton",
+        "prospectLinks": [
+          {
+            "name": "Jordan Seaton",
+            "pos": "OT",
+            "school": "LSU",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/jordan-seaton"
+          }
+        ],
         "archetypeTraits": "Explosive 10-yard split & lateral mirror in outside zone; SEC blindside anchor built for LT succession.",
         "sourcesMocking": [
           "Dane Brugler",
@@ -3561,7 +3595,21 @@
         "heightWeight": "6'7\" • 315 lbs / 6'5\" • 320 lbs",
         "mockFrequencyToSfPct": 22,
         "shanahanLynchFitScore": 94,
-        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/cayden-green",
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/trevor-goosby",
+        "prospectLinks": [
+          {
+            "name": "Trevor Goosby",
+            "pos": "OT",
+            "school": "Texas",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/trevor-goosby"
+          },
+          {
+            "name": "Cayden Green",
+            "pos": "IOL",
+            "school": "Missouri",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/cayden-green"
+          }
+        ],
         "archetypeTraits": "Dense displacement torque on duo/wide-zone combo blocks with immediate Left Guard floor and tackle versatility.",
         "sourcesMocking": [
           "Field Yates",
@@ -3578,6 +3626,20 @@
         "mockFrequencyToSfPct": 19,
         "shanahanLynchFitScore": 92,
         "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/leonard-moore",
+        "prospectLinks": [
+          {
+            "name": "Leonard Moore",
+            "pos": "CB",
+            "school": "Notre Dame",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/leonard-moore"
+          },
+          {
+            "name": "Ashton Hampton",
+            "pos": "CB",
+            "school": "Clemson",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/ashton-hampton"
+          }
+        ],
         "archetypeTraits": "Long-levered press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical run support.",
         "sourcesMocking": [
           "Lance Zierlein",
@@ -3592,7 +3654,21 @@
         "heightWeight": "6'7\" • 245 lbs / 6'5\" • 252 lbs",
         "mockFrequencyToSfPct": 15,
         "shanahanLynchFitScore": 90,
-        "sourceUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
+        "sourceUrl": "https://www.nflmockdraftdatabase.com/players/2027/treydez-green",
+        "prospectLinks": [
+          {
+            "name": "Trey'Dez Green",
+            "pos": "TE",
+            "school": "LSU",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/treydez-green"
+          },
+          {
+            "name": "Jamari Johnson",
+            "pos": "TE",
+            "school": "Oregon",
+            "url": "https://www.nflmockdraftdatabase.com/players/2027/jamari-johnson"
+          }
+        ],
         "archetypeTraits": "Dynamic 12-personnel move-TE seam separator and red-zone mismatch pairing behind George Kittle.",
         "sourcesMocking": [
           "NFL Mock Draft DB",
@@ -3603,6 +3679,8 @@
     "combineLeaderboard": [
       {
         "name": "Nick Emmanwori",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/E/EmmaNi00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pmy1sehsvo596a7si0i0",
         "pos": "SAF",
         "school": "South Carolina",
@@ -3718,25 +3796,30 @@
               "name": "Obi Melifonwu",
               "draftYear": 2017,
               "school": "Connecticut",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MeliOb00.htm"
             },
             {
               "name": "Jeremy Chinn",
               "draftYear": 2020,
               "school": "Southern Illinois",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/ChinJe00.htm"
             },
             {
               "name": "Tyler Owens",
               "draftYear": 2024,
               "school": "Texas Tech",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/O/OwenTy00.htm"
             }
           ]
         }
       },
       {
         "name": "Jihaad Campbell",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CampJi00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/njvl2eabvfekcqqa4jmq",
         "pos": "LB",
         "school": "Alabama",
@@ -3852,25 +3935,30 @@
               "name": "Carter Coughlin",
               "draftYear": 2020,
               "school": "Minnesota",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CougCa00.htm"
             },
             {
               "name": "Darrian Beavers",
               "draftYear": 2022,
               "school": "Cincinnati",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BeavDa00.htm"
             },
             {
               "name": "Jamin Davis",
               "draftYear": 2021,
               "school": "Kentucky",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviJa11.htm"
             }
           ]
         }
       },
       {
         "name": "Teddye Buchanan",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BuchTe00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ktowwliocunqxlxfznev",
         "pos": "LB",
         "school": "California",
@@ -3986,25 +4074,30 @@
               "name": "Isaiah Moore",
               "draftYear": 2023,
               "school": "North Carolina St.",
-              "similarityPct": 99
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MoorIs00.htm"
             },
             {
               "name": "Chance Campbell",
               "draftYear": 2022,
               "school": "Mississippi",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CampCh02.htm"
             },
             {
               "name": "Karson Sharar",
               "draftYear": 2026,
               "school": "Iowa",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Karson%20Sharar"
             }
           ]
         }
       },
       {
         "name": "DJ Giddens",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/G/GiddDJ00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/rfn0ulc1rs7ejcuc1f6j",
         "pos": "RB",
         "school": "Kansas St.",
@@ -4120,25 +4213,30 @@
               "name": "Jeremiyah Love",
               "draftYear": 2026,
               "school": "Notre Dame",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/L/LoveJe00.htm"
             },
             {
               "name": "Rachaad White",
               "draftYear": 2022,
               "school": "Arizona St.",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WhitRa01.htm"
             },
             {
               "name": "Chauncey Washington",
               "draftYear": 2008,
               "school": "USC",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WashCh00.htm"
             }
           ]
         }
       },
       {
         "name": "Will Campbell",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CampWi01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/iwhxbgyjofmceiu0sess",
         "pos": "OT",
         "school": "LSU",
@@ -4254,25 +4352,30 @@
               "name": "Maxwell Iheanachor",
               "draftYear": 2026,
               "school": "Arizona St.",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/I/IheaMa00.htm"
             },
             {
               "name": "Caleb Lomu",
               "draftYear": 2026,
               "school": "Utah",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/L/LomuCa00.htm"
             },
             {
               "name": "Jammal Brown",
               "draftYear": 2005,
               "school": "Oklahoma",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowJa55.htm"
             }
           ]
         }
       },
       {
         "name": "Miles Frazier",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/F/FrazMi00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/picu4brr7vqypp3fdxtf",
         "pos": "G",
         "school": "LSU",
@@ -4388,25 +4491,30 @@
               "name": "Nick Saldiveri",
               "draftYear": 2023,
               "school": "Old Dominion",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Nick%20Saldiveri"
             },
             {
               "name": "Gennings Dunker",
               "draftYear": 2026,
               "school": "Iowa",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DunkGe00.htm"
             },
             {
               "name": "Trevor Keegan",
               "draftYear": 2024,
               "school": "Michigan",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KeegTr00.htm"
             }
           ]
         }
       },
       {
         "name": "Terrance Ferguson",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/F/FergTe00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/w5o0s5yf6j5dsmiwdtfg",
         "pos": "TE",
         "school": "Oregon",
@@ -4522,25 +4630,30 @@
               "name": "Elijah Arroyo",
               "draftYear": 2025,
               "school": "Miami",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/ArroEl00.htm"
             },
             {
               "name": "Jack Endries",
               "draftYear": 2026,
               "school": "Texas",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EndrJa00.htm"
             },
             {
               "name": "Jared Cook",
               "draftYear": 2009,
               "school": "South Carolina",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CookJa02.htm"
             }
           ]
         }
       },
       {
         "name": "Elic Ayomanor",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AyomEl00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/xozpynzjbuorn6ixdjh3",
         "pos": "WR",
         "school": "Stanford",
@@ -4656,25 +4769,30 @@
               "name": "Tyrie Cleveland",
               "draftYear": 2020,
               "school": "Florida",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/ClevTy00.htm"
             },
             {
               "name": "Cornelius Johnson",
               "draftYear": 2024,
               "school": "Michigan",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnCo02.htm"
             },
             {
               "name": "Sam Brown Jr.",
               "draftYear": 2025,
               "school": "Miami",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowSa01.htm"
             }
           ]
         }
       },
       {
         "name": "Kitan Crawford",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CrawKi00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/puy0uqictbwcojpkmmrr",
         "pos": "SAF",
         "school": "Nevada",
@@ -4790,25 +4908,30 @@
               "name": "Marques Sigle",
               "draftYear": 2025,
               "school": "Kansas St.",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Marques%20Sigle"
             },
             {
               "name": "Donte Whitner",
               "draftYear": 2006,
               "school": "Ohio State",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WhitDo20.htm"
             },
             {
               "name": "Terrence Kiel",
               "draftYear": 2003,
               "school": "Texas A&M",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KielTe20.htm"
             }
           ]
         }
       },
       {
         "name": "Chimere Dike",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/D/DikeCh00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/jcxkarajirurpxlxl1rj",
         "pos": "WR",
         "school": "Florida",
@@ -4924,25 +5047,30 @@
               "name": "Ken-Yon Rambo",
               "draftYear": 2001,
               "school": "Ohio State",
-              "similarityPct": 99
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RambKe00.htm"
             },
             {
               "name": "Terrence Murphy",
               "draftYear": 2005,
               "school": "Texas A&M",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MurpTe00.htm"
             },
             {
               "name": "Craphonso Thorpe",
               "draftYear": 2005,
               "school": "Florida State",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/ThorCr00.htm"
             }
           ]
         }
       },
       {
         "name": "Connor Colby",
+        "playerId": "4431523",
+        "profileUrl": "https://www.pro-football-reference.com/players/C/ColbCo00.htm",
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431523.png",
         "pos": "G",
         "school": "Iowa",
@@ -5058,25 +5186,30 @@
               "name": "Blaise Andries",
               "draftYear": 2022,
               "school": "Minnesota",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Blaise%20Andries"
             },
             {
               "name": "Connor McGovern",
               "draftYear": 2019,
               "school": "Penn State",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/McGoCo01.htm"
             },
             {
               "name": "Kyle Long",
               "draftYear": 2013,
               "school": "Oregon",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/L/LongKy00.htm"
             }
           ]
         }
       },
       {
         "name": "Tai Felton",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/F/FeltTa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gylfmv9ivsu0rsc1g5uo",
         "pos": "WR",
         "school": "Maryland",
@@ -5192,25 +5325,30 @@
               "name": "Reggie Germany",
               "draftYear": 2001,
               "school": "Ohio State",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GermRe00.htm"
             },
             {
               "name": "Craphonso Thorpe",
               "draftYear": 2005,
               "school": "Florida State",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/ThorCr00.htm"
             },
             {
               "name": "Jalin Hyatt",
               "draftYear": 2023,
               "school": "Tennessee",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HyatJa00.htm"
             }
           ]
         }
       },
       {
         "name": "Zeek Biggers",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BiggZe01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/suxeeie7m0bmqjrgwsmv",
         "pos": "DT",
         "school": "Georgia Tech",
@@ -5326,25 +5464,30 @@
               "name": "Albert Haynesworth",
               "draftYear": 2002,
               "school": "Tennessee",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HaynAl20.htm"
             },
             {
               "name": "Eyioma Uwazurike",
               "draftYear": 2022,
               "school": "Iowa St.",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/U/UwazEy00.htm"
             },
             {
               "name": "William Joseph",
               "draftYear": 2003,
               "school": "Miami (FL)",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JoseWi20.htm"
             }
           ]
         }
       },
       {
         "name": "Warren Brinson",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BrinWa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lv56fxgmoabt9ecuu8eb",
         "pos": "DT",
         "school": "Georgia",
@@ -5460,25 +5603,30 @@
               "name": "Nathan Shepherd",
               "draftYear": 2018,
               "school": "Fort Hays State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/ShepNa00.htm"
             },
             {
               "name": "Albert Haynesworth",
               "draftYear": 2002,
               "school": "Tennessee",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HaynAl20.htm"
             },
             {
               "name": "Ty Warren",
               "draftYear": 2003,
               "school": "Texas A&M",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WarrTy20.htm"
             }
           ]
         }
       },
       {
         "name": "Eli Cox",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CoxxEl00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/uhtlmj9acfquzglsfld8",
         "pos": "C",
         "school": "Kentucky",
@@ -5594,25 +5742,30 @@
               "name": "Jon Asamoah",
               "draftYear": 2010,
               "school": "Illinois",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AsamJo20.htm"
             },
             {
               "name": "Jarrett Kingston",
               "draftYear": 2024,
               "school": "USC",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KingJa02.htm"
             },
             {
               "name": "Drew Kendall",
               "draftYear": 2025,
               "school": "Boston Col.",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KendDr00.htm"
             }
           ]
         }
       },
       {
         "name": "CJ Dippre",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/D/DippCJ00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hotvqpccxfpqqxujoo9g",
         "pos": "TE",
         "school": "Alabama",
@@ -5728,25 +5881,30 @@
               "name": "Mike Pinkard",
               "draftYear": 2003,
               "school": "Arizona State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Mike%20Pinkard"
             },
             {
               "name": "Todd Heap",
               "draftYear": 2001,
               "school": "Arizona State",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HeapTo00.htm"
             },
             {
               "name": "Jeremy Shockey",
               "draftYear": 2002,
               "school": "Miami (FL)",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/ShocJe00.htm"
             }
           ]
         }
       },
       {
         "name": "Donovan Edwards",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/E/EdwaDo01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/f92eymxwjffhifro5ckw",
         "pos": "RB",
         "school": "Michigan",
@@ -5862,25 +6020,30 @@
               "name": "Clinton Portis",
               "draftYear": 2002,
               "school": "Miami (FL)",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/PortCl00.htm"
             },
             {
               "name": "Kenny Irons",
               "draftYear": 2007,
               "school": "Auburn",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Kenny%20Irons"
             },
             {
               "name": "Rahsul Faison",
               "draftYear": 2026,
               "school": "South Carolina",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FaisRa00.htm"
             }
           ]
         }
       },
       {
         "name": "Jaydon Blue",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BlueJa01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/unb7f3lnt0ggohvovjpw",
         "pos": "RB",
         "school": "Texas",
@@ -5996,25 +6159,30 @@
               "name": "Bryce Love",
               "draftYear": 2019,
               "school": "Stanford",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/L/LoveBr00.htm"
             },
             {
               "name": "Tyler Goodson",
               "draftYear": 2022,
               "school": "Iowa",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GoodTy00.htm"
             },
             {
               "name": "Ronnie Hillman",
               "draftYear": 2012,
               "school": "San Diego State",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HillRo00.htm"
             }
           ]
         }
       },
       {
         "name": "Brady Cook",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CookBr03.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/cnek1ugisgarhb16fusi",
         "pos": "QB",
         "school": "Missouri",
@@ -6130,25 +6298,30 @@
               "name": "Mike McMahon",
               "draftYear": 2001,
               "school": "Rutgers",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/McMaMi00.htm"
             },
             {
               "name": "D.J. Shockley",
               "draftYear": 2006,
               "school": "Georgia",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=D.J.%20Shockley"
             },
             {
               "name": "Geno Smith",
               "draftYear": 2013,
               "school": "West Virginia",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SmitGe00.htm"
             }
           ]
         }
       },
       {
         "name": "Aireontae Ersery",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/E/ErseAi00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ww6vasew8bjgvcnxe2zp",
         "pos": "OT",
         "school": "Minnesota",
@@ -6264,25 +6437,30 @@
               "name": "Maxwell Iheanachor",
               "draftYear": 2026,
               "school": "Arizona St.",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/I/IheaMa00.htm"
             },
             {
               "name": "Will Campbell",
               "draftYear": 2025,
               "school": "LSU",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CampWi01.htm"
             },
             {
               "name": "Diego Pounds",
               "draftYear": 2026,
               "school": "Mississippi",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/PounDi00.htm"
             }
           ]
         }
       },
       {
         "name": "Tyler Baron",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BaroTy00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/v9mbzoaeie7jm6jt4gdx",
         "pos": "EDGE",
         "school": "Miami",
@@ -6398,25 +6576,30 @@
               "name": "Gaines Adams",
               "draftYear": 2007,
               "school": "Clemson",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AdamGa99.htm"
             },
             {
               "name": "Kemoko Turay",
               "draftYear": 2018,
               "school": "Rutgers",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/TuraKe00.htm"
             },
             {
               "name": "Davin Bellamy",
               "draftYear": 2018,
               "school": "Georgia",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BellDa01.htm"
             }
           ]
         }
       },
       {
         "name": "Zah Frazier",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/F/FrazZa01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/fu824naxjrnfhc9jgsab",
         "pos": "CB",
         "school": "Texas-San Antonio",
@@ -6532,25 +6715,30 @@
               "name": "Greedy Williams",
               "draftYear": 2019,
               "school": "LSU",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WillGr00.htm"
             },
             {
               "name": "Kaiir Elam",
               "draftYear": 2022,
               "school": "Florida",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/ElamKa00.htm"
             },
             {
               "name": "Ahmad Gardner",
               "draftYear": 2022,
               "school": "Cincinnati",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GardSa00.htm"
             }
           ]
         }
       },
       {
         "name": "Jordan Burch",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BurcJo00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/e1l9bvbtlmy2ea7izknj",
         "pos": "EDGE",
         "school": "Oregon",
@@ -6666,25 +6854,30 @@
               "name": "Shawne Merriman",
               "draftYear": 2005,
               "school": "Maryland",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MerrSh99.htm"
             },
             {
               "name": "Viliami Fehoko Jr.",
               "draftYear": 2023,
               "school": "San Jose St.",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Viliami%20Fehoko%20Jr."
             },
             {
               "name": "George Gause",
               "draftYear": 2005,
               "school": "South Carolina",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=George%20Gause"
             }
           ]
         }
       },
       {
         "name": "Logan Brown",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BrowLo01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lebjztgitjbfjryhkcu1",
         "pos": "OT",
         "school": "Kansas",
@@ -6800,25 +6993,30 @@
               "name": "Ryan Ramczyk",
               "draftYear": 2017,
               "school": "Wisconsin",
-              "similarityPct": 98
+              "similarityPct": 98,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RamcRy00.htm"
             },
             {
               "name": "Ryan Clady",
               "draftYear": 2008,
               "school": "Boise State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CladRy20.htm"
             },
             {
               "name": "Paris Johnson Jr.",
               "draftYear": 2023,
               "school": "Ohio St.",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnPa03.htm"
             }
           ]
         }
       },
       {
         "name": "Fadil Diggs",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/D/DiggFa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vdvzbolu1azzbtexeyfl",
         "pos": "EDGE",
         "school": "Syracuse",
@@ -6934,25 +7132,30 @@
               "name": "John Abraham",
               "draftYear": 2000,
               "school": "South Carolina",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AbraJo00.htm"
             },
             {
               "name": "Will Anderson Jr.",
               "draftYear": 2023,
               "school": "Alabama",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AndeWi01.htm"
             },
             {
               "name": "Kayvon Thibodeaux",
               "draftYear": 2022,
               "school": "Oregon",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/ThibKa00.htm"
             }
           ]
         }
       },
       {
         "name": "Trey Amos",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AmosTr00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/cxabcu8nz9p6k6sqsw4t",
         "pos": "CB",
         "school": "Mississippi",
@@ -7068,25 +7271,30 @@
               "name": "Chris Campbell",
               "draftYear": 2018,
               "school": "Penn State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Chris%20Campbell"
             },
             {
               "name": "Domani Jackson",
               "draftYear": 2026,
               "school": "Alabama",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JackDo04.htm"
             },
             {
               "name": "Eli Apple",
               "draftYear": 2016,
               "school": "Ohio State",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/ApplEl00.htm"
             }
           ]
         }
       },
       {
         "name": "Eugene Asante",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AsanEu01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vnznj77vaii7meied6pi",
         "pos": "LB",
         "school": "Auburn",
@@ -7202,25 +7410,30 @@
               "name": "Akeem Davis-Gaither",
               "draftYear": 2020,
               "school": "Appalachian State",
-              "similarityPct": 99
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviAk01.htm"
             },
             {
               "name": "Terez Hall",
               "draftYear": 2019,
               "school": "Missouri",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HallTe01.htm"
             },
             {
               "name": "Jeremiah Owusu-Koramoah",
               "draftYear": 2021,
               "school": "Notre Dame",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/O/OwusJe00.htm"
             }
           ]
         }
       },
       {
         "name": "Jalin Conyers",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/ConyJa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/zm7n2t2kghsjgkfvguq8",
         "pos": "TE",
         "school": "Texas Tech",
@@ -7336,25 +7549,30 @@
               "name": "Doug Zeigler",
               "draftYear": 2003,
               "school": "Mississippi",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Doug%20Zeigler"
             },
             {
               "name": "Jerome Collins",
               "draftYear": 2005,
               "school": "Notre Dame",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CollJe00.htm"
             },
             {
               "name": "Michael Hoomanawanui",
               "draftYear": 2010,
               "school": "Illinois",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HoomMi00.htm"
             }
           ]
         }
       },
       {
         "name": "Darius Alexander",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AlexDa01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/upwtqewimo1hydyqwznv",
         "pos": "DT",
         "school": "Toledo",
@@ -7470,25 +7688,30 @@
               "name": "Travis Johnson",
               "draftYear": 2005,
               "school": "Florida State",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnTr20.htm"
             },
             {
               "name": "Bilal Nichols",
               "draftYear": 2018,
               "school": "Delaware",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/N/NichBi00.htm"
             },
             {
               "name": "Wendell Bryant",
               "draftYear": 2002,
               "school": "Wisconsin",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BryaWe20.htm"
             }
           ]
         }
       },
       {
         "name": "Isaiah Bond",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BondIs00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pmbagsijcdb8hxdnwovq",
         "pos": "WR",
         "school": "Texas",
@@ -7604,25 +7827,30 @@
               "name": "Barion Brown",
               "draftYear": 2026,
               "school": "LSU",
-              "similarityPct": 99
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowBa02.htm"
             },
             {
               "name": "Ted Ginn",
               "draftYear": 2007,
               "school": "Ohio State",
-              "similarityPct": 98
+              "similarityPct": 98,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GinnTe00.htm"
             },
             {
               "name": "Josh Johnson",
               "draftYear": 2022,
               "school": "Tulsa",
-              "similarityPct": 98
+              "similarityPct": 98,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnJo13.htm"
             }
           ]
         }
       },
       {
         "name": "Andrew Armstrong",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/ArmsAn01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hkw32xqnimm6dvx2qfvl",
         "pos": "WR",
         "school": "Arkansas",
@@ -7738,25 +7966,30 @@
               "name": "Chris Henry",
               "draftYear": 2005,
               "school": "West Virginia",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HenrCh00.htm"
             },
             {
               "name": "Justyn Ross",
               "draftYear": 2022,
               "school": "Clemson",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RossJu00.htm"
             },
             {
               "name": "Ashley Lelie",
               "draftYear": 2002,
               "school": "Hawaii",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/L/LeliAs00.htm"
             }
           ]
         }
       },
       {
         "name": "Anthony Belton",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BeltAn00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pk9a1riaxi1hhtjq3ma3",
         "pos": "OT",
         "school": "North Carolina St.",
@@ -7872,25 +8105,30 @@
               "name": "Max Scharping",
               "draftYear": 2019,
               "school": "Northern Illinois",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SchaMa01.htm"
             },
             {
               "name": "Xavier Nixon",
               "draftYear": 2013,
               "school": "Florida",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/N/NixoXa00.htm"
             },
             {
               "name": "Carlos Joseph",
               "draftYear": 2004,
               "school": "Miami (FL)",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Carlos%20Joseph"
             }
           ]
         }
       },
       {
         "name": "Carson Bruener",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BrueCa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/xtklcumklpj2uytkbd6r",
         "pos": "LB",
         "school": "Washington",
@@ -8006,25 +8244,30 @@
               "name": "Akeem Davis-Gaither",
               "draftYear": 2020,
               "school": "Appalachian State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviAk01.htm"
             },
             {
               "name": "JoJo Domann",
               "draftYear": 2022,
               "school": "Nebraska",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DomaJo00.htm"
             },
             {
               "name": "Dorian Williams",
               "draftYear": 2023,
               "school": "Tulane",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WillDo04.htm"
             }
           ]
         }
       },
       {
         "name": "Trevor Etienne",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/E/EtieTr01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pcuzq84x7ia5yvmikltb",
         "pos": "RB",
         "school": "Georgia",
@@ -8140,25 +8383,30 @@
               "name": "Jaydon Blue",
               "draftYear": 2025,
               "school": "Texas",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Jaydon%20Blue"
             },
             {
               "name": "Tyler Goodson",
               "draftYear": 2022,
               "school": "Iowa",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GoodTy00.htm"
             },
             {
               "name": "Dylan Sampson",
               "draftYear": 2025,
               "school": "Tennessee",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SampDy00.htm"
             }
           ]
         }
       },
       {
         "name": "Jahdae Barron",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BarrJa01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ashvve6dr35gtgdyjo10",
         "pos": "CB",
         "school": "Texas",
@@ -8274,25 +8522,30 @@
               "name": "Damarri Mathis",
               "draftYear": 2022,
               "school": "Pittsburgh",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MathDa00.htm"
             },
             {
               "name": "Cam Taylor-Britt",
               "draftYear": 2022,
               "school": "Nebraska",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/TaylCa01.htm"
             },
             {
               "name": "D.J. Hayden",
               "draftYear": 2013,
               "school": "Houston",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HaydDJ00.htm"
             }
           ]
         }
       },
       {
         "name": "Tyler Batty",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BattTy00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/v1yovhiv6fae0af83hou",
         "pos": "EDGE",
         "school": "BYU",
@@ -8408,25 +8661,30 @@
               "name": "Courtney Brown",
               "draftYear": 2000,
               "school": "Penn State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowCo22.htm"
             },
             {
               "name": "Zach Harrison",
               "draftYear": 2023,
               "school": "Ohio St.",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HarrZa00.htm"
             },
             {
               "name": "Kalimba Edwards",
               "draftYear": 2002,
               "school": "South Carolina",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EdwaKa20.htm"
             }
           ]
         }
       },
       {
         "name": "Gavin Bartholomew",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BartGa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/amlveslginvwifpkih1q",
         "pos": "TE",
         "school": "Pittsburgh",
@@ -8542,25 +8800,30 @@
               "name": "Rory Anderson",
               "draftYear": 2015,
               "school": "South Carolina",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AndeRo01.htm"
             },
             {
               "name": "Kevin Everett",
               "draftYear": 2005,
               "school": "Miami (FL)",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EverKe00.htm"
             },
             {
               "name": "Ryan Otten",
               "draftYear": 2013,
               "school": "San Jose State",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/O/OtteRy01.htm"
             }
           ]
         }
       },
       {
         "name": "Elijhah Badger",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BadgEl00.htm",
         "headshotUrl": "",
         "pos": "WR",
         "school": "Florida",
@@ -8676,25 +8939,30 @@
               "name": "Chafie Fields",
               "draftYear": 2000,
               "school": "Penn State",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Chafie%20Fields"
             },
             {
               "name": "Jamaar Taylor",
               "draftYear": 2004,
               "school": "Texas A&M",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/TaylJa00.htm"
             },
             {
               "name": "Craig Bragg",
               "draftYear": 2005,
               "school": "UCLA",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Craig%20Bragg"
             }
           ]
         }
       },
       {
         "name": "Denzel Burke",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BurkDe01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ertjghbr5dldlhzml7jh",
         "pos": "CB",
         "school": "Ohio St.",
@@ -8810,25 +9078,30 @@
               "name": "Kendall Fuller",
               "draftYear": 2016,
               "school": "Virginia Tech",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FullKe00.htm"
             },
             {
               "name": "Ahmari Harvey",
               "draftYear": 2026,
               "school": "Georgia Tech",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Ahmari%20Harvey"
             },
             {
               "name": "Xavier Crawford",
               "draftYear": 2019,
               "school": "Central Michigan",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CrawXa00.htm"
             }
           ]
         }
       },
       {
         "name": "Joshua Conerly",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/ConeJo00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q9vrq43u3qh6nw3rcajo",
         "pos": "OT",
         "school": "Oregon",
@@ -8944,25 +9217,30 @@
               "name": "Jawaan Taylor",
               "draftYear": 2019,
               "school": "Florida",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/TaylJa02.htm"
             },
             {
               "name": "J.J. Dielman",
               "draftYear": 2017,
               "school": "Utah",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DielJJ00.htm"
             },
             {
               "name": "Keagen Trost",
               "draftYear": 2026,
               "school": "Missouri",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Keagen%20Trost"
             }
           ]
         }
       },
       {
         "name": "Tahj Brooks",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BrooTa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/s89clgkij0ytcmrkdydt",
         "pos": "RB",
         "school": "Texas Tech",
@@ -9078,25 +9356,30 @@
               "name": "D'Andre Swift",
               "draftYear": 2020,
               "school": "Georgia",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SwifDA00.htm"
             },
             {
               "name": "James Jackson",
               "draftYear": 2001,
               "school": "Miami (FL)",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JackJa00.htm"
             },
             {
               "name": "Duke Johnson",
               "draftYear": 2015,
               "school": "Miami (FL)",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnDu00.htm"
             }
           ]
         }
       },
       {
         "name": "Alijah Clark",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/ClarAl01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/sr5sjigohu5fufu4yxm7",
         "pos": "SAF",
         "school": "Syracuse",
@@ -9212,25 +9495,30 @@
               "name": "Trevon Moehrig",
               "draftYear": 2021,
               "school": "TCU",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MoehTr00.htm"
             },
             {
               "name": "Todd Franz",
               "draftYear": 2000,
               "school": "Tulsa",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FranTo21.htm"
             },
             {
               "name": "Vincent Fuller",
               "draftYear": 2005,
               "school": "Virginia Tech",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FullVi20.htm"
             }
           ]
         }
       },
       {
         "name": "Jake Briningstool",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BrinJa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q7n84oth87v1glz5a5sz",
         "pos": "TE",
         "school": "Clemson",
@@ -9346,25 +9634,30 @@
               "name": "Kevin Everett",
               "draftYear": 2005,
               "school": "Miami (FL)",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EverKe00.htm"
             },
             {
               "name": "Rory Anderson",
               "draftYear": 2015,
               "school": "South Carolina",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AndeRo01.htm"
             },
             {
               "name": "Tyler Higbee",
               "draftYear": 2016,
               "school": "Western Kentucky",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HigbTy00.htm"
             }
           ]
         }
       },
       {
         "name": "Ethan Downs",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/D/DownEt00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/h5fu33cdzislp78bpqwl",
         "pos": "EDGE",
         "school": "Oklahoma",
@@ -9480,25 +9773,30 @@
               "name": "Tomarrion Parker",
               "draftYear": 2026,
               "school": "Clemson",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/ParkTJ00.htm"
             },
             {
               "name": "Jordan Burch",
               "draftYear": 2025,
               "school": "Oregon",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BurcJo00.htm"
             },
             {
               "name": "Gabe Jacas",
               "draftYear": 2026,
               "school": "Illinois",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JacaGa00.htm"
             }
           ]
         }
       },
       {
         "name": "Tommy Akingbesote",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AkinTo00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/bgyqqzyyprqdpjhhufqf",
         "pos": "DT",
         "school": "Maryland",
@@ -9614,25 +9912,30 @@
               "name": "Ryan Sims",
               "draftYear": 2002,
               "school": "North Carolina",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SimsRy20.htm"
             },
             {
               "name": "Ty Warren",
               "draftYear": 2003,
               "school": "Texas A&M",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WarrTy20.htm"
             },
             {
               "name": "Brandon Deaderick",
               "draftYear": 2010,
               "school": "Alabama",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DeadBr99.htm"
             }
           ]
         }
       },
       {
         "name": "Jeffrey Bassa",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BassJe00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/tckcuuegqdkzkglz6ywg",
         "pos": "LB",
         "school": "Oregon",
@@ -9748,25 +10051,30 @@
               "name": "Terez Hall",
               "draftYear": 2019,
               "school": "Missouri",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/H/HallTe01.htm"
             },
             {
               "name": "Ernest Jones",
               "draftYear": 2021,
               "school": "South Carolina",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JoneEr01.htm"
             },
             {
               "name": "JD Bertrand",
               "draftYear": 2024,
               "school": "Notre Dame",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BertJD00.htm"
             }
           ]
         }
       },
       {
         "name": "Da'Quan Felton",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/F/FeltDa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/sg0t3s0irndtl7zeodfk",
         "pos": "WR",
         "school": "Virginia Tech",
@@ -9882,25 +10190,30 @@
               "name": "Mike Williams",
               "draftYear": 2017,
               "school": "Clemson",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WillMi07.htm"
             },
             {
               "name": "Brian Poli-Dixon",
               "draftYear": 2002,
               "school": "UCLA",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Brian%20Poli-Dixon"
             },
             {
               "name": "Jordan Kent",
               "draftYear": 2007,
               "school": "Oregon",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KentJo20.htm"
             }
           ]
         }
       },
       {
         "name": "Mitchell Evans",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/E/EvanMi01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/yruhsxdnyfaa7iswn1dp",
         "pos": "TE",
         "school": "Notre Dame",
@@ -10016,25 +10329,30 @@
               "name": "Brody Eldridge",
               "draftYear": 2010,
               "school": "Oklahoma",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EldrBr00.htm"
             },
             {
               "name": "Austin Seferian-Jenkins",
               "draftYear": 2014,
               "school": "Washington",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SefeAu00.htm"
             },
             {
               "name": "Dallas Goedert",
               "draftYear": 2018,
               "school": "South Dakota State",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GoedDa00.htm"
             }
           ]
         }
       },
       {
         "name": "Jacobee Bryant",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BryaCo02.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/krehmn2g4cxokjpcr6iw",
         "pos": "CB",
         "school": "Kansas",
@@ -10150,25 +10468,30 @@
               "name": "Glenn Sharpe",
               "draftYear": 2008,
               "school": "Miami (FL)",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Glenn%20Sharpe"
             },
             {
               "name": "Mario Goodrich",
               "draftYear": 2022,
               "school": "Clemson",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GoodMa02.htm"
             },
             {
               "name": "Mike Mickens",
               "draftYear": 2009,
               "school": "Cincinnati",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MickMi99.htm"
             }
           ]
         }
       },
       {
         "name": "Pat Bryant",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BryaPa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/n91hznzkfpftxhqt1qd9",
         "pos": "WR",
         "school": "Illinois",
@@ -10284,25 +10607,30 @@
               "name": "Keenan Allen",
               "draftYear": 2013,
               "school": "California",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AlleKe00.htm"
             },
             {
               "name": "Tandon Doss",
               "draftYear": 2011,
               "school": "Indiana",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DossTa00.htm"
             },
             {
               "name": "Jerard Rabb",
               "draftYear": 2007,
               "school": "Boise State",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Jerard%20Rabb"
             }
           ]
         }
       },
       {
         "name": "Joshua Farmer",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/F/FarmJo00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/qjxdixlsyuy3ph9m43to",
         "pos": "DT",
         "school": "Florida St.",
@@ -10418,25 +10746,30 @@
               "name": "Brandon Cleveland",
               "draftYear": 2026,
               "school": "North Carolina St.",
-              "similarityPct": 98
+              "similarityPct": 98,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/ClevBr00.htm"
             },
             {
               "name": "Cameron Young",
               "draftYear": 2023,
               "school": "Mississippi St.",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/Y/YounCa00.htm"
             },
             {
               "name": "Carlos Watkins",
               "draftYear": 2017,
               "school": "Clemson",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WatkCa00.htm"
             }
           ]
         }
       },
       {
         "name": "Ra'Mello Dotson",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/D/DotsMe00.htm",
         "headshotUrl": "",
         "pos": "CB",
         "school": "Kansas",
@@ -10552,25 +10885,30 @@
               "name": "Alan Zemaitis",
               "draftYear": 2006,
               "school": "Penn State",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Alan%20Zemaitis"
             },
             {
               "name": "Chris Campbell",
               "draftYear": 2018,
               "school": "Penn State",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Chris%20Campbell"
             },
             {
               "name": "Cameron Dantzler",
               "draftYear": 2020,
               "school": "Mississippi State",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DantCa00.htm"
             }
           ]
         }
       },
       {
         "name": "Yahya Black",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BlacYa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ndy8wevnmpdrin3espb5",
         "pos": "DT",
         "school": "Iowa",
@@ -10686,25 +11024,30 @@
               "name": "John Ridgeway",
               "draftYear": 2022,
               "school": "Arkansas",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RidgJo00.htm"
             },
             {
               "name": "Deone Walker",
               "draftYear": 2025,
               "school": "Kentucky",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WalkDe04.htm"
             },
             {
               "name": "Alfred Collins",
               "draftYear": 2025,
               "school": "Texas",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CollAl01.htm"
             }
           ]
         }
       },
       {
         "name": "BJ Adams",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AdamBr00.htm",
         "headshotUrl": "",
         "pos": "CB",
         "school": "Central Florida",
@@ -10820,25 +11163,30 @@
               "name": "O'Donnell Fortune",
               "draftYear": 2025,
               "school": "South Carolina",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FortOD00.htm"
             },
             {
               "name": "Zy Alexander",
               "draftYear": 2025,
               "school": "LSU",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AlexZy00.htm"
             },
             {
               "name": "Howard Wilson",
               "draftYear": 2017,
               "school": "Houston",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WilsHo00.htm"
             }
           ]
         }
       },
       {
         "name": "Jamaree Caldwell",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CaldJa00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/o6zilnte5jibvs84wshv",
         "pos": "DT",
         "school": "Oregon",
@@ -10954,25 +11302,30 @@
               "name": "Dewayne Robertson",
               "draftYear": 2003,
               "school": "Kentucky",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RobeDe20.htm"
             },
             {
               "name": "Robert Thomas",
               "draftYear": 2014,
               "school": "Arkansas",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomRo04.htm"
             },
             {
               "name": "McKinnley Jackson",
               "draftYear": 2024,
               "school": "Texas A&M",
-              "similarityPct": 90
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/J/JackMc00.htm"
             }
           ]
         }
       },
       {
         "name": "Tyler Booker",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/B/BookTy00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/rcqpeq8ahdoqt1xejjjp",
         "pos": "G",
         "school": "Alabama",
@@ -11088,25 +11441,30 @@
               "name": "Robert Myers",
               "draftYear": 2015,
               "school": "Tennessee State",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MyerRo01.htm"
             },
             {
               "name": "Duke Robinson",
               "draftYear": 2009,
               "school": "Oklahoma",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RobiDu21.htm"
             },
             {
               "name": "Jeremiah Poutasi",
               "draftYear": 2015,
               "school": "Utah",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/PoutJe00.htm"
             }
           ]
         }
       },
       {
         "name": "Zy Alexander",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/A/AlexZy00.htm",
         "headshotUrl": "",
         "pos": "CB",
         "school": "LSU",
@@ -11222,25 +11580,30 @@
               "name": "Jermod McCoy",
               "draftYear": 2026,
               "school": "Tennessee",
-              "similarityPct": 99
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/McCoJe00.htm"
             },
             {
               "name": "O'Donnell Fortune",
               "draftYear": 2025,
               "school": "South Carolina",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FortOD00.htm"
             },
             {
               "name": "Howard Wilson",
               "draftYear": 2017,
               "school": "Houston",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WilsHo00.htm"
             }
           ]
         }
       },
       {
         "name": "Brandon Crenshaw-Dickson",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CrenBr00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/chy7qc0smbahskwuk774",
         "pos": "OT",
         "school": "Florida",
@@ -11356,25 +11719,30 @@
               "name": "Ryan Pope",
               "draftYear": 2019,
               "school": "San Diego State",
-              "similarityPct": 96
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/PopeRy01.htm"
             },
             {
               "name": "Andrew Coker",
               "draftYear": 2024,
               "school": "TCU",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CokeAn00.htm"
             },
             {
               "name": "Rich Lapham",
               "draftYear": 2011,
               "school": "Boston Col.",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Rich%20Lapham"
             }
           ]
         }
       },
       {
         "name": "Power Echols",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/E/EchoPo00.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ptq9m3ohqianoex14gzx",
         "pos": "LB",
         "school": "North Carolina",
@@ -11490,25 +11858,30 @@
               "name": "H.B. Blades",
               "draftYear": 2007,
               "school": "Pittsburgh",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=H.B.%20Blades"
             },
             {
               "name": "Worrell Williams",
               "draftYear": 2009,
               "school": "California",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Worrell%20Williams"
             },
             {
               "name": "Raphael Kirby",
               "draftYear": 2016,
               "school": "Miami (FL)",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Raphael%20Kirby"
             }
           ]
         }
       },
       {
         "name": "Sebastian Castro",
+        "playerId": null,
+        "profileUrl": "https://www.pro-football-reference.com/players/C/CastSe01.htm",
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/df4sh5ddoseg7d5bbl6q",
         "pos": "SAF",
         "school": "Iowa",
@@ -11624,19 +11997,22 @@
               "name": "Pedro Cirino",
               "draftYear": 2000,
               "school": "Boston Col.",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Pedro%20Cirino"
             },
             {
               "name": "Ed Reed",
               "draftYear": 2002,
               "school": "Miami (FL)",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/ReedEd00.htm"
             },
             {
               "name": "Dexter Reid",
               "draftYear": 2004,
               "school": "North Carolina",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/ReidDe20.htm"
             }
           ]
         }
@@ -11772,19 +12148,22 @@
               "name": "De'Zhaun-Ryan Stribling",
               "draftYear": 2026,
               "school": "Mississippi",
-              "similarityPct": 99
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/StriDe01.htm"
             },
             {
               "name": "Charles Rogers",
               "draftYear": 2003,
               "school": "Michigan State",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RogeCh01.htm"
             },
             {
               "name": "DeMarco Sampson",
               "draftYear": 2011,
               "school": "San Diego State",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SampDe00.htm"
             }
           ]
         },
@@ -11924,19 +12303,22 @@
               "name": "DeAngelo Malone",
               "draftYear": 2022,
               "school": "Western Kentucky",
-              "similarityPct": 95
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MaloDe00.htm"
             },
             {
               "name": "Raynoch Thompson",
               "draftYear": 2000,
               "school": "Tennessee",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomRa23.htm"
             },
             {
               "name": "Boss Bailey",
               "draftYear": 2003,
               "school": "Georgia",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BailBo20.htm"
             }
           ]
         },
@@ -12075,19 +12457,22 @@
               "name": "Pierre Strong",
               "draftYear": 2022,
               "school": "South Dakota St.",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/StroPi00.htm"
             },
             {
               "name": "Antonio Pittman",
               "draftYear": 2007,
               "school": "Ohio State",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/PittAn00.htm"
             },
             {
               "name": "Darrynton Evans",
               "draftYear": 2020,
               "school": "Appalachian State",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EvanDa02.htm"
             }
           ]
         },
@@ -12226,19 +12611,22 @@
               "name": "Ron Edwards",
               "draftYear": 2001,
               "school": "Texas A&M",
-              "similarityPct": 98
+              "similarityPct": 98,
+              "pfrUrl": "https://www.pro-football-reference.com/players/E/EdwaRo20.htm"
             },
             {
               "name": "Robert Nkemdiche",
               "draftYear": 2016,
               "school": "Mississippi",
-              "similarityPct": 97
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/players/N/NkemRo00.htm"
             },
             {
               "name": "Payton Page",
               "draftYear": 2025,
               "school": "Clemson",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Payton%20Page"
             }
           ]
         },
@@ -12377,19 +12765,22 @@
               "name": "Chris Myers",
               "draftYear": 2005,
               "school": "Miami (FL)",
-              "similarityPct": 91
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MyerCh20.htm"
             },
             {
               "name": "John Saint Clair",
               "draftYear": 2000,
               "school": "Virginia",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=John%20Saint%20Clair"
             },
             {
               "name": "Graham Glasgow",
               "draftYear": 2016,
               "school": "Michigan",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GlasGr00.htm"
             }
           ]
         },
@@ -12528,19 +12919,22 @@
               "name": "Lance Boykin",
               "draftYear": 2023,
               "school": "Coastal Carolina",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BoykLa00.htm"
             },
             {
               "name": "Ahkello Witherspoon",
               "draftYear": 2017,
               "school": "Colorado",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WithAh00.htm"
             },
             {
               "name": "Azareye'h Thomas",
               "draftYear": 2025,
               "school": "Florida St.",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/ThomAz00.htm"
             }
           ]
         },
@@ -12679,19 +13073,22 @@
               "name": "William Bradley-King",
               "draftYear": 2021,
               "school": "Baylor",
-              "similarityPct": 94
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BradWi00.htm"
             },
             {
               "name": "Kyle Kennard",
               "draftYear": 2025,
               "school": "South Carolina",
-              "similarityPct": 93
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KennKy00.htm"
             },
             {
               "name": "Alex Brown",
               "draftYear": 2002,
               "school": "Florida",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowAl20.htm"
             }
           ]
         },
@@ -12830,19 +13227,22 @@
               "name": "Alex Leatherwood",
               "draftYear": 2021,
               "school": "Alabama",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/L/LeatAl00.htm"
             },
             {
               "name": "Brandon Coleman",
               "draftYear": 2024,
               "school": "TCU",
-              "similarityPct": 92
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/ColeBr02.htm"
             },
             {
               "name": "Frank Ragnow",
               "draftYear": 2018,
               "school": "Arkansas",
-              "similarityPct": 89
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RagnFr00.htm"
             }
           ]
         },
@@ -12889,19 +13289,19 @@
       {
         "season": 2026,
         "type": "PRIORITY_UDFA",
-        "name": "Priority UDFA Zone Center / Guard",
-        "displayName": "Priority UDFA IOL — Zone Center/Guard",
-        "playerId": "",
-        "otcUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-        "jersey": null,
-        "headshotUrl": "",
-        "position": "IOL",
-        "college": "Big Ten / Big 12",
+        "name": "Drake Nugent",
+        "displayName": "Drake Nugent — Priority UDFA Zone Center / Guard",
+        "playerId": "4428144",
+        "otcUrl": "https://overthecap.com/player/drake-nugent/11976/",
+        "jersey": 66,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428144.png",
+        "position": "C",
+        "college": "Michigan",
         "guaranteedTotal": 225000,
         "signingBonus": 25000,
         "baseGuarantee": 200000,
-        "rosterOddsNote": "$225K total guaranteed — Chris Foerster's annual UDFA interior offensive line pipeline investment.",
-        "roleSummary": "38-start collegiate center/guard cross-training at both pivot and right guard with sub-4.55s short shuttle.",
+        "rosterOddsNote": "$225K total guaranteed — Chris Foerster's priority UDFA interior offensive line pipeline anchor.",
+        "roleSummary": "National-champion Michigan pivot cross-training at both center and guard with high-leverage outside-zone reach footwork.",
         "highlightVideo": {
           "videoId": "-y7iLph6cnM",
           "url": "https://www.youtube.com/watch?v=-y7iLph6cnM",
@@ -12911,6 +13311,24 @@
           "duration": "2:18",
           "thumbnailUrl": "https://i.ytimg.com/vi/-y7iLph6cnM/hqdefault.jpg"
         }
+      },
+      {
+        "season": 2026,
+        "type": "PRIORITY_UDFA",
+        "name": "Mikail Kamara",
+        "displayName": "Mikail Kamara — Priority UDFA Wide-9 Edge",
+        "playerId": "4696051",
+        "otcUrl": "https://overthecap.com/player/mikail-kamara/13807/",
+        "jersey": 59,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696051.png",
+        "position": "DE",
+        "college": "Indiana",
+        "guaranteedTotal": 215000,
+        "signingBonus": 25000,
+        "baseGuarantee": 190000,
+        "rosterOddsNote": "$215K total guaranteed — high-motor Big Ten pass-rush producer stashed in the 49ers edge pipeline.",
+        "roleSummary": "Compact leverage rusher out of Indiana with explosive hand violence and special teams coverage upside.",
+        "highlightVideo": null
       }
     ]
   }

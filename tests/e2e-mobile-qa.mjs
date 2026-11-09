@@ -1318,7 +1318,9 @@ async function main() {
         const hobbsBadge = hobbsCard?.querySelector('.badge');
 
         // Also open Alfred Collins Player Dossier -> Health tab to verify Reserve List / Ineligible / Out for Season boxes
-        const collinsTrigger = collinsCard?.querySelector('[data-action="open-player-sheet"]') || collinsCard;
+        const collinsTrigger = collinsCard?.hasAttribute?.('data-player-id')
+          ? collinsCard
+          : collinsCard?.querySelector('[data-action="open-player-sheet"]');
         if (collinsTrigger?.getAttribute?.('data-player-id')) {
           collinsTrigger.click();
         } else {
@@ -3416,8 +3418,8 @@ async function main() {
         // 3. Game & Season (all 8 sub-views)
         document.querySelector('[data-nav-tab="season"]')?.click();
         await sleep(60);
-        for (const sub of ['matchup', 'health', 'schedule', 'stats', 'trade', 'playoffs', 'draft', 'recap']) {
-          document.querySelector('[data-action="set-season-subview"][data-subview="' + sub + '"]')?.click();
+        for (const sub of ['matchup', 'health', 'schedule', 'stats', 'trade', 'playoffs', 'draft_prep', 'draft_class']) {
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="' + sub + '"]')?.click();
           await sleep(45);
           auditVisibleAnchors('season:' + sub);
         }
@@ -3426,16 +3428,16 @@ async function main() {
         document.querySelector('[data-nav-tab="roster"]')?.click();
         await sleep(60);
         for (const rmode of ['roster', 'depth', 'cap']) {
-          document.querySelector('[data-action="set-roster-mode"][data-mode="' + rmode + '"]')?.click();
+          document.querySelector('[data-action="set-roster-sub"][data-roster-sub="' + rmode + '"]')?.click();
           await sleep(45);
           auditVisibleAnchors('roster:' + rmode);
         }
-        document.querySelector('[data-action="set-roster-mode"][data-mode="roster"]')?.click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]')?.click();
         await sleep(45);
-        document.querySelector('[data-action="open-player"]')?.click();
+        document.querySelector('[data-action="open-player-sheet"]')?.click();
         await sleep(60);
         for (const ptab of ['overview', 'stats', 'spider', 'contract', 'health']) {
-          document.querySelector('[data-action="set-player-tab"][data-tab="' + ptab + '"]')?.click();
+          document.querySelector('#sheetBody [data-action="set-player-tab"][data-player-tab="' + ptab + '"]')?.click();
           await sleep(35);
           auditVisibleAnchors('player:' + ptab);
         }
@@ -3459,6 +3461,183 @@ async function main() {
       assert(
         linkScrubResult.totalChecked >= 120 && linkScrubResult.badLinks.length === 0,
         `Site-wide DOM link scrub failed (checked=${linkScrubResult.totalChecked}): ${JSON.stringify(linkScrubResult.badLinks.slice(0, 10))}`
+      );
+    });
+
+    await runStep('Exhaustive interactive click & link verification (jargon popovers, inline player links, Spider Comps, Combine, Dead Cap, H2H Box Scores & transcripts)', async () => {
+      const clickAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const nestedAnchors = [];
+        const duplicateArticleChips = [];
+
+        const scanCurrentDom = view => {
+          for (const a of document.querySelectorAll('a[href]')) {
+            if (a.parentElement?.closest('a')) {
+              nestedAnchors.push({ view, href: a.getAttribute('href') });
+            }
+            const txt = (a.textContent || '').trim();
+            if (a.classList.contains('source-chip-link') && txt.startsWith('Article:')) {
+              const card = a.closest('.brief-card, .home-wire-item, .player-mention-card');
+              if (card) {
+                const others = [...card.querySelectorAll('a')].filter(
+                  x => x !== a && !x.classList.contains('raw-item-thumb') && !x.hasAttribute('data-wire-author-link')
+                );
+                if (others.some(o => o.getAttribute('href') === a.getAttribute('href'))) {
+                  duplicateArticleChips.push({ view, href: a.getAttribute('href') });
+                }
+              }
+            }
+          }
+        };
+
+        // 1. Home: Dead Cap tooltip + Scoreboard team links + Upcoming 4 Schedule KPI game links
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(45);
+        scanCurrentDom('home');
+        const homeDeadCapTrigger = document.querySelector('[data-dashboard-block="salary_cap"] [data-jargon="dead_money"]');
+        homeDeadCapTrigger?.click();
+        const pop = document.getElementById('jargonPopover');
+        const homeDeadCapOpened = Boolean(pop && !pop.hidden && pop.textContent.includes('Dead Money'));
+        document.querySelector('[data-action="close-jargon-popover"]')?.click();
+        const homeScoreboardLinks = document.querySelectorAll('[data-dashboard-block="upcoming_matchup"] a.sb-team-col').length;
+        const homeSchedGameLinks = document.querySelectorAll('[data-dashboard-block="schedule_overview"] a.kpi-box').length;
+
+        // 2. News: Inline prose player link opens Player Dossier
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        await sleep(45);
+        scanCurrentDom('news:raw');
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        await sleep(45);
+        scanCurrentDom('news:clustered');
+        const inlinePlayerEl = document.querySelector('#mainView .inline-player-link[data-action="open-player-sheet"]');
+        let inlinePlayerOpened = false;
+        if (inlinePlayerEl) {
+          inlinePlayerEl.click();
+          await sleep(30);
+          const backdrop = document.getElementById('bottomSheetBackdrop');
+          const title = document.getElementById('sheetTitle')?.textContent?.trim() || '';
+          inlinePlayerOpened = Boolean(backdrop && !backdrop.hidden && title && title !== 'Player Dossier');
+          document.getElementById('closeSheetBtn')?.click();
+          await sleep(25);
+        }
+
+        // 3. Season: H2H boxscores, Trade targets & pitfalls, NFC standings, Combine & UDFA triggers
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(45);
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]')?.click();
+        await sleep(40);
+        scanCurrentDom('season:matchup');
+        const h2hBoxscoreLinks = [...document.querySelectorAll('#mainView a.ext-link')].filter(a =>
+          /espn\.com\/nfl\/game|pro-football-reference\.com\/boxscores/i.test(a.getAttribute('href') || '')
+        ).length;
+
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"]')?.click();
+        await sleep(40);
+        scanCurrentDom('season:trade');
+        const tradePitfallLinks = [...document.querySelectorAll('#mainView a.ext-link')].filter(a =>
+          /overthecap\.com\/player\//i.test(a.getAttribute('href') || '')
+        ).length;
+
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="playoffs"]')?.click();
+        await sleep(40);
+        scanCurrentDom('season:playoffs');
+        const nfcStandingsTeamLinks = document.querySelectorAll('#mainView table.data-table tbody td a.ext-link').length;
+
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_prep"]')?.click();
+        await sleep(40);
+        scanCurrentDom('season:draft_prep');
+        const combineLinks = document.querySelectorAll('#mainView table.data-table tbody td a.ext-link, #mainView table.data-table tbody td .inline-player-link').length;
+
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_class"]')?.click();
+        await sleep(40);
+        scanCurrentDom('season:draft_class');
+        const udfaTriggers = document.querySelectorAll('#mainView .inline-player-link[data-action="open-player-sheet"]').length;
+
+        // 4. Roster & Cap: 11/21 personnel tooltips, Dead Cap player links & Spider Chart NFL Comp links
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        await sleep(45);
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="depth"]')?.click();
+        await sleep(40);
+        const p11Trigger = document.querySelector('#mainView [data-jargon="personnel_11"]');
+        p11Trigger?.click();
+        const p11Opened = Boolean(pop && !pop.hidden && pop.textContent.includes('11 Personnel'));
+        document.querySelector('[data-action="close-jargon-popover"]')?.click();
+
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]')?.click();
+        await sleep(40);
+        scanCurrentDom('roster:cap');
+        const deadCapPlayerLinks = document.querySelectorAll('#capHorizonSummaryCard .subcard-panel a.ext-link, #capHorizonSummaryCard .subcard-panel .inline-player-link').length;
+
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]')?.click();
+        await sleep(40);
+        document.querySelector('#mainView [data-action="open-player-sheet"]')?.click();
+        await sleep(30);
+        document.querySelector('#sheetBody [data-action="set-player-tab"][data-player-tab="spider"]')?.click();
+        await sleep(30);
+        scanCurrentDom('player:spider');
+        const spiderCompInteractive = document.querySelectorAll('#sheetBody .spider-comps-grid a.spider-comp-chip, #sheetBody .spider-comps-grid button.spider-comp-chip').length;
+        document.getElementById('closeSheetBtn')?.click();
+        await sleep(25);
+
+        // 5. Audio & AI: By-Podcast host links & Autopodcast transcript inline player + jargon links
+        document.querySelector('[data-nav-tab="audio"]')?.click();
+        await sleep(45);
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="beat_podcasts"]')?.click();
+        await sleep(35);
+        document.querySelector('[data-action="set-beat-pod-view"][data-pod-view="show"]')?.click();
+        await sleep(35);
+        scanCurrentDom('audio:beat_podcasts:show');
+        const beatPodHostLinks = document.querySelectorAll('.beat-podcast-show-group .card-eyebrow a.ext-link').length;
+        document.querySelector('[data-action="set-beat-pod-view"][data-pod-view="date"]')?.click();
+
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="podcast"]')?.click();
+        await sleep(40);
+        document.querySelector('#mainView [data-action="toggle-podcast-transcript"]')?.click();
+        await sleep(35);
+        scanCurrentDom('audio:podcast:transcript');
+        const transcriptPlayerLinks = document.querySelectorAll('.podcast-transcript-drawer .inline-player-link').length;
+
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(35);
+
+        return {
+          nestedAnchors,
+          duplicateArticleChips,
+          homeDeadCapOpened,
+          homeScoreboardLinks,
+          homeSchedGameLinks,
+          inlinePlayerOpened,
+          h2hBoxscoreLinks,
+          tradePitfallLinks,
+          nfcStandingsTeamLinks,
+          combineLinks,
+          udfaTriggers,
+          p11Opened,
+          deadCapPlayerLinks,
+          spiderCompInteractive,
+          beatPodHostLinks,
+          transcriptPlayerLinks
+        };
+      });
+
+      assert(
+        clickAudit.nestedAnchors.length === 0 &&
+          clickAudit.duplicateArticleChips.length === 0 &&
+          clickAudit.homeDeadCapOpened &&
+          clickAudit.homeScoreboardLinks === 2 &&
+          clickAudit.homeSchedGameLinks >= 1 &&
+          clickAudit.inlinePlayerOpened &&
+          clickAudit.h2hBoxscoreLinks >= 5 &&
+          clickAudit.tradePitfallLinks >= 10 &&
+          clickAudit.nfcStandingsTeamLinks === 16 &&
+          clickAudit.combineLinks >= 20 &&
+          clickAudit.udfaTriggers >= 5 &&
+          clickAudit.p11Opened &&
+          clickAudit.deadCapPlayerLinks >= 5 &&
+          clickAudit.spiderCompInteractive >= 1 &&
+          clickAudit.beatPodHostLinks >= 4 &&
+          clickAudit.transcriptPlayerLinks >= 3,
+        `Interactive click & link audit failed: ${JSON.stringify(clickAudit)}`
       );
     });
 
@@ -3517,10 +3696,10 @@ async function main() {
 
         document.querySelector('[data-nav-tab="season"]')?.click();
         await sleep(50);
-        document.querySelector('[data-action="set-season-subview"][data-subview="health"]')?.click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]')?.click();
         await sleep(50);
         const darkHealthSticky = inspectStickyCol();
-        document.querySelector('[data-action="set-season-subview"][data-subview="matchup"]')?.click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]')?.click();
         await sleep(50);
         const darkMatchupSticky = inspectStickyCol();
 

@@ -3,7 +3,13 @@
  * Modes: "Beat Synthesis Briefs" (Default) vs. "Live Tweets, Articles & Video"
  */
 
-import { esc, escJargon, formatRelativeAge, renderPlayerChipsStripHtml } from './uiHelpers.js';
+import {
+  esc,
+  escJargon,
+  formatRelativeAge,
+  renderPlayerChipsStripHtml,
+  registerRosterPlayersForInlineLinks
+} from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -155,6 +161,7 @@ export function renderNewsViewHtml({
   lastWireSyncAt = null,
   isSyncingWire = false
 }) {
+  registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const mutedCount =
     (userPrefs?.disabledReporterIds?.length || 0) + (userPrefs?.disabledOutlets?.length || 0);
 
@@ -373,7 +380,7 @@ export function renderNewsViewHtml({
           : '';
 
         return `
-          <article class="card" style="display:flex;flex-direction:column;gap:10px">
+          <article class="card" data-cluster-card="${esc(c.id)}" style="display:flex;flex-direction:column;gap:10px">
             ${heroBannerHtml}
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               ${hasHeroPhoto ? `<span class="card-eyebrow" style="margin:0">${esc(c.categoryLabel)} Synthesis</span>` : `<span class="badge badge-gold">${esc(c.categoryLabel)}</span>`}
@@ -487,6 +494,7 @@ export function renderNewsViewHtml({
               const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
               const showLinkedStory =
                 Boolean(safeExtUrl) &&
+                !isRedundantProfileSelfLink(safeExtUrl, resolvedItemUrl) &&
                 !isRedundantProfileSelfLink(safeExtUrl, item.url) &&
                 !/\bon X$/i.test(String(item.externalTitle || ''));
               const confirmingList = Array.isArray(item.confirmingReports) ? item.confirmingReports : [];
@@ -536,8 +544,16 @@ export function renderNewsViewHtml({
                                      const crHref = crIsTw
                                        ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
                                        : sanitizeExternalUrl(cr.url, '#');
+                                     const crAuthorHref = sanitizeExternalUrl(
+                                       resolveItemAuthorProfileUrl(cr, crHref),
+                                       crHref
+                                     );
                                      return `<div style="font-size:11.5px;color:var(--text-secondary)">
-                                       <strong>${esc(crAuthor)}</strong> <span class="mono" style="color:var(--text-muted)">• ${esc(formatRelativeAge(cr.publishedAt))}</span>:
+                                       ${
+                                         crAuthorHref
+                                           ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(crAuthor)}</strong></a>`
+                                           : `<strong>${esc(crAuthor)}</strong>`
+                                       } <span class="mono" style="color:var(--text-muted)">• ${esc(formatRelativeAge(cr.publishedAt))}</span>:
                                        <a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-secondary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''}</a>
                                      </div>`;
                                    })

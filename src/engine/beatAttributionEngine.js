@@ -74,7 +74,16 @@ export const BEAT_REPORTER_DIRECTORY = [
   // Tier 3: Viable Columnists, Camp & Sideline Observers (lower weight on opinion, full First-Mover elevation on acute injury observations)
   { id: 'dieter_kurtenbach', name: 'Dieter Kurtenbach', handle: '@dkurtenbach', outletId: 'bay_area_news', outletName: 'Bay Area News Group', trustTier: 3, credibilityScore: 80 },
   { id: 'larry_krueger', name: 'Larry Krueger', handle: '@sportslarryknbr', outletId: 'youtube_film', outletName: 'The Krueg Show', trustTier: 3, credibilityScore: 78 },
-  { id: 'grant_cohn', name: 'Grant Cohn', handle: '@grantcohn', outletId: 'youtube_film', outletName: '49ers On SI', trustTier: 3, credibilityScore: 76 }
+  { id: 'grant_cohn', name: 'Grant Cohn', handle: '@grantcohn', outletId: 'youtube_film', outletName: '49ers On SI', trustTier: 3, credibilityScore: 76 },
+  { id: 'harrison_rich', name: 'Harrison Rich', handle: '@harrisonrich_', outletId: 'sf_chronicle', outletName: 'San Francisco Chronicle', trustTier: 2, credibilityScore: 88 },
+  { id: 'dane_brugler', name: 'Dane Brugler', handle: '@dpbrugler', outletId: 'athletic', outletName: 'The Athletic Draft', trustTier: 1, credibilityScore: 95 },
+  { id: 'mel_kiper', name: 'Mel Kiper Jr.', aliases: ['Mel Kiper'], handle: '@MelKiperESPN', outletId: 'espn', outletName: 'ESPN NFL Draft', trustTier: 2, credibilityScore: 88 },
+  { id: 'daniel_jeremiah', name: 'Daniel Jeremiah', handle: '@MoveTheSticks', outletId: 'nfl_network', outletName: 'NFL Network', trustTier: 1, credibilityScore: 95 },
+  { id: 'lance_zierlein', name: 'Lance Zierlein', handle: '@LanceZierlein', outletId: 'nfl_network', outletName: 'NFL.com Draft', trustTier: 1, credibilityScore: 93 },
+  { id: 'todd_archer', name: 'Todd Archer', handle: '@toddarcher', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 93 },
+  { id: 'calvin_watkins', name: 'Calvin Watkins', handle: '@calvinwatkins', outletId: 'national_nfl', outletName: 'Dallas Morning News', trustTier: 2, credibilityScore: 89 },
+  { id: 'tommy_yarrish', name: 'Tommy Yarrish', handle: '@tommy_yarrish', outletId: 'national_nfl', outletName: 'DallasCowboys.com', trustTier: 2, credibilityScore: 89 },
+  { id: 'patrik_walker', name: 'Patrik Walker', handle: '@VoiceOfTheStar', outletId: 'national_nfl', outletName: 'DallasCowboys.com', trustTier: 2, credibilityScore: 89 }
 ];
 
 const BY_ID = new Map();
@@ -653,14 +662,28 @@ export function buildTargetedOriginalTweetUrl({
     .replace(/^@/, '')
     .trim();
 
+  const cleanText = String(text || '').trim();
+  const leadBodySubjectMatch = cleanText.match(
+    /\b([A-Z][A-Za-z'.-]{2,18})\s+\((?:ankle|knee|hamstring|achilles|groin|shoulder|back|foot|calf|quad|hip|wrist|hand|thumb|rib|ribs|neck|illness|concussion|pectoral|biceps|triceps|oblique|toe|elbow|lower leg|leg|head|shin|nir|rest|personal)[^)]*\)/i
+  );
+  const textSubjectSurname =
+    leadBodySubjectMatch && !/^(The|San|Las|Los|New|Week|Sunday|Monday|Friday|Coach)$/i.test(leadBodySubjectMatch[1])
+      ? leadBodySubjectMatch[1].replace(/\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?$/i, '').trim()
+      : '';
+
   const cleanPlayer = String(playerName || '')
     .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
     .trim();
   const surname = cleanPlayer ? cleanPlayer.split(/\s+/).slice(-1)[0] : '';
 
-  let focusTerm = surname && surname.length >= 3 ? surname : '';
-  if (!focusTerm && text) {
-    const leadProper = String(text).match(/^([A-Z][a-z'.-]{2,18})\b/);
+  let focusTerm =
+    textSubjectSurname && textSubjectSurname.length >= 3
+      ? textSubjectSurname
+      : surname && surname.length >= 3
+        ? surname
+        : '';
+  if (!focusTerm && cleanText) {
+    const leadProper = cleanText.match(/^([A-Z][a-z'.-]{2,18})\b/);
     if (leadProper && !/^(The|San|Head|Coach|Week|Sunday|Monday|Friday)$/i.test(leadProper[1])) {
       focusTerm = leadProper[1];
     }

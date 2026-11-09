@@ -1773,16 +1773,27 @@ export function buildTradeDeadlineWarRoom(
       {
         trap: `Sacrificing ${yr + 1} Day-2 Picks (#63, #95) for Contender Pipe Dreams`,
         examples: 'Brian Thomas Jr. (JAX 6-2), Garrett Wilson (NYJ), Landon Dickerson (PHI 6-2)',
+        exampleLinks: [
+          { label: 'Brian Thomas Jr. (JAX)', url: 'https://overthecap.com/player/brian-thomas-jr/11631/' },
+          { label: 'Garrett Wilson (NYJ)', url: 'https://overthecap.com/player/garrett-wilson/10055/' },
+          { label: 'Landon Dickerson (PHI)', url: 'https://overthecap.com/player/landon-dickerson/9501/' }
+        ],
         whyAvoid: `Jacksonville and Philadelphia are playoff buyers, and burning Round 2 or 3 picks after trading SF's ${yr + 1} 4th for DeForest Buckner would leave zero picks between #63 and #170 entering a -$31.54M ${yr + 1} cap squeeze.`
       },
       {
         trap: 'Unproductive Aging Pass-Rushers on Past Name Value',
         examples: 'Cameron Jordan (NO DE, Age 37 — 0.0 Sacks, 1 QB Hit in 7 Games)',
+        exampleLinks: [
+          { label: 'Cameron Jordan (NO DE, Age 37)', url: 'https://overthecap.com/player/cameron-jordan/1481/' }
+        ],
         whyAvoid: 'Paying draft capital for a 37-year-old edge defender with zero sacks in 2026 provides no third-down burst upgrade over Mykel Williams, Keion White, or rookie Romello Height.'
       },
       {
         trap: 'Stale Pre-Extension Trade Rumors',
         examples: 'Michael Mayer (LV TE — Extended 3 Yrs, $45M w/ $30M Guaranteed)',
+        exampleLinks: [
+          { label: 'Michael Mayer (LV TE — $45M Extension)', url: 'https://overthecap.com/player/michael-mayer/10859/' }
+        ],
         whyAvoid: 'Las Vegas locked Mayer into a $15M/yr extension before Week 1 to co-anchor Klint Kubiak\'s 12-personnel offense (36 rec, 351 yds in 2026); he is no longer an expendable rookie-deal backup.'
       }
     ],
@@ -1853,6 +1864,9 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
         mockFrequencyToSfPct: 27,
         shanahanLynchFitScore: 95,
         sourceUrl: buildMockDraftProspectUrl(dy, 'jordan-seaton', 2027),
+        prospectLinks: [
+          { name: 'Jordan Seaton', pos: 'OT', school: 'LSU', url: buildMockDraftProspectUrl(dy, 'jordan-seaton', 2027) }
+        ],
         archetypeTraits: 'Explosive 10-yard split & lateral mirror in outside zone; SEC blindside anchor built for LT succession.',
         sourcesMocking: ['Dane Brugler', 'Mel Kiper Jr.', 'NFL Mock Draft DB']
       },
@@ -1864,7 +1878,11 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
         heightWeight: '6\'7" • 315 lbs / 6\'5" • 320 lbs',
         mockFrequencyToSfPct: 22,
         shanahanLynchFitScore: 94,
-        sourceUrl: buildMockDraftProspectUrl(dy, 'cayden-green', 2027),
+        sourceUrl: buildMockDraftProspectUrl(dy, 'trevor-goosby', 2027),
+        prospectLinks: [
+          { name: 'Trevor Goosby', pos: 'OT', school: 'Texas', url: buildMockDraftProspectUrl(dy, 'trevor-goosby', 2027) },
+          { name: 'Cayden Green', pos: 'IOL', school: 'Missouri', url: buildMockDraftProspectUrl(dy, 'cayden-green', 2027) }
+        ],
         archetypeTraits: 'Dense displacement torque on duo/wide-zone combo blocks with immediate Left Guard floor and tackle versatility.',
         sourcesMocking: ['Field Yates', 'Daniel Jeremiah', 'NFL Mock Draft DB']
       },
@@ -1877,6 +1895,10 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
         mockFrequencyToSfPct: 19,
         shanahanLynchFitScore: 92,
         sourceUrl: buildMockDraftProspectUrl(dy, 'leonard-moore', 2027),
+        prospectLinks: [
+          { name: 'Leonard Moore', pos: 'CB', school: 'Notre Dame', url: buildMockDraftProspectUrl(dy, 'leonard-moore', 2027) },
+          { name: 'Ashton Hampton', pos: 'CB', school: 'Clemson', url: buildMockDraftProspectUrl(dy, 'ashton-hampton', 2027) }
+        ],
         archetypeTraits: 'Long-levered press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical run support.',
         sourcesMocking: ['Lance Zierlein', 'CBS Sports']
       },
@@ -1888,7 +1910,11 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
         heightWeight: '6\'7" • 245 lbs / 6\'5" • 252 lbs',
         mockFrequencyToSfPct: 15,
         shanahanLynchFitScore: 90,
-        sourceUrl: bigBoardUrl,
+        sourceUrl: buildMockDraftProspectUrl(dy, 'treydez-green', 2027),
+        prospectLinks: [
+          { name: "Trey'Dez Green", pos: 'TE', school: 'LSU', url: buildMockDraftProspectUrl(dy, 'treydez-green', 2027) },
+          { name: 'Jamari Johnson', pos: 'TE', school: 'Oregon', url: buildMockDraftProspectUrl(dy, 'jamari-johnson', 2027) }
+        ],
         archetypeTraits: 'Dynamic 12-personnel move-TE seam separator and red-zone mismatch pairing behind George Kittle.',
         sourcesMocking: ['NFL Mock Draft DB', 'CBS Sports']
       }
@@ -2020,6 +2046,8 @@ export async function build2026DraftAndUdfaClass(
   }
 
   const valdezMeta = lookupPlayerMeta('Sebastian Valdez');
+  const nugentMeta = lookupPlayerMeta('Drake Nugent');
+  const kamaraMeta = lookupPlayerMeta('Mikail Kamara');
 
   const priorityUdfas = [
     {
@@ -2027,9 +2055,9 @@ export async function build2026DraftAndUdfaClass(
       type: 'PRIORITY_UDFA',
       name: 'Sebastian Valdez',
       displayName: 'Sebastian Valdez — Priority UDFA Interior DL',
-      playerId: valdezMeta?.playerId || '',
-      otcUrl: valdezMeta?.otcUrl || OTC_TEAM_CAP_URL,
-      jersey: valdezMeta?.jersey ?? null,
+      playerId: valdezMeta?.playerId || '4775220',
+      otcUrl: valdezMeta?.otcUrl || 'https://overthecap.com/player/sebastian-valdez/12877/',
+      jersey: valdezMeta?.jersey ?? 55,
       headshotUrl: valdezMeta?.headshotUrl || '',
       position: 'DT',
       college: 'Washington',
@@ -2051,19 +2079,19 @@ export async function build2026DraftAndUdfaClass(
     {
       season: dy,
       type: 'PRIORITY_UDFA',
-      name: 'Priority UDFA Zone Center / Guard',
-      displayName: 'Priority UDFA IOL — Zone Center/Guard',
-      playerId: '',
-      otcUrl: OTC_TEAM_CAP_URL,
-      jersey: null,
-      headshotUrl: '',
-      position: 'IOL',
-      college: 'Big Ten / Big 12',
+      name: 'Drake Nugent',
+      displayName: 'Drake Nugent — Priority UDFA Zone Center / Guard',
+      playerId: nugentMeta?.playerId || '4428144',
+      otcUrl: nugentMeta?.otcUrl || 'https://overthecap.com/player/drake-nugent/11976/',
+      jersey: nugentMeta?.jersey ?? 60,
+      headshotUrl: nugentMeta?.headshotUrl || '',
+      position: 'C',
+      college: 'Michigan',
       guaranteedTotal: 225_000,
       signingBonus: 25_000,
       baseGuarantee: 200_000,
-      rosterOddsNote: "$225K total guaranteed — Chris Foerster's annual UDFA interior offensive line pipeline investment.",
-      roleSummary: '38-start collegiate center/guard cross-training at both pivot and right guard with sub-4.55s short shuttle.',
+      rosterOddsNote: "$225K total guaranteed — Chris Foerster's priority UDFA interior offensive line pipeline anchor.",
+      roleSummary: 'National-champion Michigan pivot cross-training at both center and guard with high-leverage outside-zone reach footwork.',
       highlightVideo: {
         videoId: '-y7iLph6cnM',
         url: 'https://www.youtube.com/watch?v=-y7iLph6cnM',
@@ -2073,6 +2101,24 @@ export async function build2026DraftAndUdfaClass(
         duration: '2:18',
         thumbnailUrl: 'https://i.ytimg.com/vi/-y7iLph6cnM/hqdefault.jpg'
       }
+    },
+    {
+      season: dy,
+      type: 'PRIORITY_UDFA',
+      name: 'Mikail Kamara',
+      displayName: 'Mikail Kamara — Priority UDFA Wide-9 Edge',
+      playerId: kamaraMeta?.playerId || '4696051',
+      otcUrl: kamaraMeta?.otcUrl || 'https://overthecap.com/player/mikail-kamara/13807/',
+      jersey: kamaraMeta?.jersey ?? null,
+      headshotUrl: kamaraMeta?.headshotUrl || '',
+      position: 'DE',
+      college: 'Indiana',
+      guaranteedTotal: 215_000,
+      signingBonus: 25_000,
+      baseGuarantee: 190_000,
+      rosterOddsNote: '$215K total guaranteed — high-motor Big Ten pass-rush producer stashed in the 49ers edge pipeline.',
+      roleSummary: 'Compact leverage rusher out of Indiana with explosive hand violence and special teams coverage upside.',
+      highlightVideo: null
     }
   ];
 

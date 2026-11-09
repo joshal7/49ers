@@ -387,7 +387,39 @@ export const JARGON_GLOSSARY = {
     category: 'Health & Roster',
     definition:
       'Questionable player whose active/inactive status will be finalized after pre-game warmups 90 minutes prior to kickoff.'
+  },
+  explosive_plays: {
+    term: 'Explosive Plays (20+ Pass / 10+ Rush)',
+    category: 'Analytics',
+    definition:
+      'Completions gaining 20+ yards or rushing attempts gaining 10+ yards. Drives drive-scoring probability in Kyle Shanahan’s play-action and wide-zone offense.'
+  },
+  sack_rate: {
+    term: 'Sacks Allowed Rate',
+    category: 'Analytics',
+    definition:
+      'Percentage of quarterback dropbacks resulting in a sack (Sacks / [Pass Attempts + Sacks]). Reflects combined offensive line pass protection and quarterback pocket movement.'
+  },
+  ny_pa: {
+    term: 'Net Yards Per Pass Attempt (NY/A)',
+    category: 'Analytics',
+    definition:
+      'Passing yards minus sack yardage lost, divided by (pass attempts + sacks taken) — capturing true per-dropback passing yardage efficiency.'
+  },
+  takeaways: {
+    term: 'Defensive Takeaways (INT + FR)',
+    category: 'Film & Box',
+    definition:
+      'Combined defensive interceptions and opponent fumble recoveries per game, one of the strongest single-game win-probability swings in football.'
   }
+};
+
+const KEY_SYNONYMS = {
+  dead_cap: 'dead_money',
+  '11_personnel': 'personnel_11',
+  '12_personnel': 'personnel_12',
+  '21_personnel': 'personnel_21',
+  '22_personnel': 'personnel_22'
 };
 
 /**
@@ -514,9 +546,16 @@ const PHRASE_ALIASES = [
   ['Game-Time Decision', 'gtd'],
   ['GTD', 'gtd'],
   ['DNP', 'dnp'],
+  ['LP', 'lp'],
+  ['FP', 'fp'],
   ['NIR', 'nir'],
   ['PUP', 'pup'],
-  ['Duo', 'duo']
+  ['Duo', 'duo'],
+  ['Explosive Plays', 'explosive_plays'],
+  ['explosive plays', 'explosive_plays'],
+  ['Sacks Allowed Rate', 'sack_rate'],
+  ['Net Yards / Pass Att', 'ny_pa'],
+  ['Def. Takeaways', 'takeaways']
 ];
 
 const SORTED_ALIASES = [...PHRASE_ALIASES].sort((a, b) => b[0].length - a[0].length);
@@ -545,7 +584,9 @@ export function getJargonEntry(key) {
   if (!key) return null;
   const norm = String(key).trim().toLowerCase();
   if (JARGON_GLOSSARY[norm]) return { key: norm, ...JARGON_GLOSSARY[norm] };
-  const mapped = ALIAS_TO_KEY.get(norm);
+  const syn = KEY_SYNONYMS[norm];
+  if (syn && JARGON_GLOSSARY[syn]) return { key: syn, ...JARGON_GLOSSARY[syn] };
+  const mapped = ALIAS_TO_KEY.get(norm) || ALIAS_TO_KEY.get(norm.replace(/[_-]+/g, ' '));
   if (mapped && JARGON_GLOSSARY[mapped]) return { key: mapped, ...JARGON_GLOSSARY[mapped] };
   return null;
 }
@@ -555,7 +596,7 @@ export function getJargonEntry(key) {
  * Uses <span role="button"> so it is valid HTML everywhere without nested-<button> conflicts.
  */
 export function jargonTerm(label, key) {
-  const entry = getJargonEntry(key || label);
+  const entry = getJargonEntry(key) || getJargonEntry(label);
   const safeLabel = escapeHtmlPlain(label);
   if (!entry) return safeLabel;
   return `<span class="jargon-term" role="button" tabindex="0" data-jargon="${escapeHtmlPlain(entry.key)}" aria-label="${escapeHtmlPlain(entry.term)}: tap for definition">${safeLabel}</span>`;

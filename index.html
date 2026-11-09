@@ -19,13 +19,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon" sizes="512x512" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png?v=6" />
-  <link rel="stylesheet" href="./src/styles.css?v=21" />
+  <link rel="stylesheet" href="./src/styles.css?v=22" />
 </head>
 <body>
   <!-- Full-Bleed Sticky Glass Header -->
   <header class="top-header" role="banner">
     <div class="header-row">
-      <div class="brand-lockup" id="brandHomeTrigger" style="cursor:pointer" title="Return to Dashboard">
+      <div class="brand-lockup" id="brandHomeTrigger" role="button" tabindex="0" data-action="go-home" style="cursor:pointer" aria-label="Return to Home Dashboard">
         <div class="brand-medallion-wrap">
           <img src="./assets/app-icon.svg?v=6" alt="49ers Faithful" class="brand-medallion" width="36" height="36" />
         </div>
@@ -214,6 +214,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=25"></script>
+  <script type="module" src="./src/app.js?v=26"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@ import {
   shareItemNatively
 } from './services/shareService.js';
 
-import { esc, formatRelativeAge } from './views/uiHelpers.js';
+import { esc, formatRelativeAge, registerRosterPlayersForInlineLinks } from './views/uiHelpers.js';
 import { getJargonEntry } from './engine/jargonGlossary.js';
 import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
@@ -370,6 +370,7 @@ function renderMain() {
   }
 
   closeJargonPopover();
+  registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
 
   const sortedCapYears = Object.keys(state.appData.cap?.years || {}).sort();
   const primaryCapYear = sortedCapYears[0] || '2026';
@@ -518,6 +519,7 @@ function renderSheet() {
   backdrop.hidden = false;
 
   preserveFocusAroundRender(() => {
+    registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
     if (state.sheetMode === 'player') {
       const player = getPlayerById(state.sheetPlayerId);
       if (eyebrow) eyebrow.textContent = player ? `${player.position} • #${player.jersey ?? '—'}` : 'Player Dossier';
@@ -526,7 +528,8 @@ function renderSheet() {
         player,
         activeTab: state.sheetPlayerTab,
         statsMode: state.sheetPlayerStatsMode,
-        txScenario: state.sheetPlayerTxScenario
+        txScenario: state.sheetPlayerTxScenario,
+        rawStream: state.appData?.news?.rawStream || []
       });
     } else if (state.sheetMode === 'settings') {
       if (eyebrow) eyebrow.textContent = 'Customization & Source Control';
@@ -714,6 +717,15 @@ function bindEvents() {
       openJargonPopover(jt, jt.getAttribute('data-jargon'));
       return;
     }
+    if (
+      (e.key === 'Enter' || e.key === ' ') &&
+      e.target?.getAttribute?.('role') === 'button' &&
+      e.target?.hasAttribute?.('data-action')
+    ) {
+      e.preventDefault();
+      e.target.click();
+      return;
+    }
     if (e.key === 'Enter' && e.target?.id === 'inlineGeminiApiKeyInput') {
       e.preventDefault();
       document.querySelector('[data-action="save-inline-gemini-key"]')?.click();
@@ -773,8 +785,11 @@ function bindEvents() {
       closeJargonPopover();
     }
 
+    const anchorHit = e.target.closest('a[href]');
     const btn = e.target.closest('[data-action]');
+    if (anchorHit && (!btn || btn.contains(anchorHit))) return;
     if (!btn) return;
+    if (anchorHit) e.preventDefault();
     const action = btn.getAttribute('data-action');
 
     switch (action) {
@@ -797,8 +812,35 @@ function bindEvents() {
         moveDashboardBlock(btn.getAttribute('data-block-id'), 1);
         break;
 
+      case 'go-home':
+        state.activeNavTab = 'home';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
       case 'jump-view':
         state.activeNavTab = btn.getAttribute('data-target-tab') || 'home';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+
+      case 'open-news-cluster': {
+        state.activeNavTab = 'news';
+        state.newsMode = 'clustered';
+        state.newsCategoryFilter = 'all';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        const cid = btn.getAttribute('data-cluster-id');
+        if (cid) {
+          const targetEl = document.querySelector(`[data-cluster-card="${CSS.escape(cid)}"]`);
+          targetEl?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+        }
+        break;
+      }
+
+      case 'jump-studio-sub':
+        state.activeNavTab = 'audio';
+        state.studioSubTab = btn.getAttribute('data-studio-sub') || 'beat_podcasts';
         window.scrollTo({ top: 0, behavior: 'instant' });
         renderMain();
         break;
@@ -825,6 +867,41 @@ function bindEvents() {
         window.scrollTo({ top: 0, behavior: 'instant' });
         renderMain();
         break;
+
+      case 'open-dashboard-block': {
+        const bid = btn.getAttribute('data-block-id') || '';
+        state.sheetMode = null;
+        renderSheet();
+        const seasonMap = {
+          upcoming_matchup: 'matchup',
+          team_health: 'health',
+          schedule_overview: 'schedule',
+          team_stats: 'stats',
+          trade_deadline: 'trade',
+          playoff_picture: 'playoffs',
+          draft_prep: 'draft_prep',
+          draft_live_udfa: 'draft_class'
+        };
+        if (bid === 'news_briefs') {
+          state.activeNavTab = 'news';
+        } else if (bid === 'roster_depth') {
+          state.activeNavTab = 'roster';
+          state.rosterSubTab = 'roster';
+        } else if (bid === 'salary_cap') {
+          state.activeNavTab = 'roster';
+          state.rosterSubTab = 'cap';
+        } else if (bid === 'autopodcast_ai') {
+          state.activeNavTab = 'audio';
+        } else if (seasonMap[bid]) {
+          state.activeNavTab = 'season';
+          state.seasonSubTab = seasonMap[bid];
+        } else {
+          state.activeNavTab = 'home';
+        }
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+      }
 
       case 'open-settings':
         state.sheetMode = 'settings';

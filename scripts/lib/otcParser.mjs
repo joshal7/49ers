@@ -98,7 +98,11 @@ function parseNonActiveSubtable(tableHtml) {
       continue;
     }
     if (capCharge !== 0) {
-      entries.push({ name, capCharge });
+      const hrefMatch = tds[0][1].match(/href="\/player\/([a-z0-9-]+)\/(\d+)\/?"/i);
+      const otcUrl = hrefMatch
+        ? `https://overthecap.com/player/${hrefMatch[1].toLowerCase()}/${hrefMatch[2]}/`
+        : null;
+      entries.push({ name, capCharge, ...(otcUrl ? { otcUrl } : {}) });
     }
   }
   const summed = entries.reduce((acc, x) => acc + x.capCharge, 0);

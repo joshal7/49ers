@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T08:26:08.035Z",
+  "updatedAt": "2026-11-09T09:06:25.130Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -28,63 +28,78 @@
       "topDeadMoneyEntries": [
         {
           "name": "Javon Hargrave",
-          "capCharge": 16156528
+          "capCharge": 16156528,
+          "otcUrl": "https://overthecap.com/player/javon-hargrave/4802/"
         },
         {
           "name": "Jauan Jennings",
-          "capCharge": 8030000
+          "capCharge": 8030000,
+          "otcUrl": "https://overthecap.com/player/jauan-jennings/8957/"
         },
         {
           "name": "Yetur Gross-Matos",
-          "capCharge": 4959000
+          "capCharge": 4959000,
+          "otcUrl": "https://overthecap.com/player/yetur-gross-matos/8778/"
         },
         {
           "name": "Maliek Collins",
-          "capCharge": 4074000
+          "capCharge": 4074000,
+          "otcUrl": "https://overthecap.com/player/maliek-collins/4780/"
         },
         {
           "name": "Brett Toth",
-          "capCharge": 2240000
+          "capCharge": 2240000,
+          "otcUrl": "https://overthecap.com/player/brett-toth/8620/"
         },
         {
           "name": "Robert Jones",
-          "capCharge": 1665000
+          "capCharge": 1665000,
+          "otcUrl": "https://overthecap.com/player/robert-jones/9738/"
         },
         {
           "name": "Jordan Elliott",
-          "capCharge": 1395000
+          "capCharge": 1395000,
+          "otcUrl": "https://overthecap.com/player/jordan-elliott/8828/"
         },
         {
           "name": "Jon Weeks",
-          "capCharge": 1262500
+          "capCharge": 1262500,
+          "otcUrl": "https://overthecap.com/player/jon-weeks/1671/"
         },
         {
           "name": "George Odum",
-          "capCharge": 1216668
+          "capCharge": 1216668,
+          "otcUrl": "https://overthecap.com/player/george-odum/7157/"
         },
         {
           "name": "Jack Jones",
-          "capCharge": 597222
+          "capCharge": 597222,
+          "otcUrl": "https://overthecap.com/player/jack-jones/10166/"
         },
         {
           "name": "Jack Jones",
-          "capCharge": 477778
+          "capCharge": 477778,
+          "otcUrl": "https://overthecap.com/player/jack-jones/10166/"
         },
         {
           "name": "Corliss Waitman",
-          "capCharge": 475000
+          "capCharge": 475000,
+          "otcUrl": "https://overthecap.com/player/corliss-waitman/9101/"
         },
         {
           "name": "Ashtyn Davis",
-          "capCharge": 285000
+          "capCharge": 285000,
+          "otcUrl": "https://overthecap.com/player/ashtyn-davis/8808/"
         },
         {
           "name": "Naquan Jones",
-          "capCharge": 270000
+          "capCharge": 270000,
+          "otcUrl": "https://overthecap.com/player/naquan-jones/9800/"
         },
         {
           "name": "Will Pauling",
-          "capCharge": 257500
+          "capCharge": 257500,
+          "otcUrl": "https://overthecap.com/player/will-pauling/13811/"
         }
       ],
       "contractedCount": 53,

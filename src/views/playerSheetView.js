@@ -35,7 +35,8 @@ export function renderPlayerDossierSheetHtml({
   player,
   activeTab = 'overview',
   statsMode = '2026', // '2026' | 'career'
-  txScenario = 'cut'
+  txScenario = 'cut',
+  rawStream = []
 }) {
   if (!player) return `<div class="empty-state">Player not found.</div>`;
 
@@ -67,7 +68,7 @@ export function renderPlayerDossierSheetHtml({
   let contentHtml = '';
 
   if (activeTab === 'overview') {
-    contentHtml = renderOverviewTab(player);
+    contentHtml = renderOverviewTab(player, rawStream);
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(player, statsMode);
   } else if (activeTab === 'spider') {
@@ -81,7 +82,7 @@ export function renderPlayerDossierSheetHtml({
   return `${tabsBar}${contentHtml}`;
 }
 
-function renderOverviewTab(p) {
+function renderOverviewTab(p, rawStream = []) {
   const sortedMentions = Array.isArray(p.recentNews)
     ? deduplicateAndGroupWireItems(
         sortNewsWithBreakingPriority(
@@ -91,6 +92,9 @@ function renderOverviewTab(p) {
         )
       )
     : [];
+  const combinedDirectPosts = Array.isArray(rawStream) && rawStream.length > 0
+    ? [...rawStream, ...sortedMentions]
+    : sortedMentions;
 
   const newsHtml =
     sortedMentions.length > 0
@@ -110,7 +114,7 @@ function renderOverviewTab(p) {
                   ? sanitizeExternalUrl(
                       resolveOriginalTweetUrl(
                         { ...n, primaryPlayer: { name: p.name } },
-                        sortedMentions
+                        combinedDirectPosts
                       ),
                       '#'
                     )
@@ -143,6 +147,7 @@ function renderOverviewTab(p) {
                 const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
                 const showMentionExt =
                   Boolean(safeMentionExt) &&
+                  !isRedundantProfileSelfLink(safeMentionExt, resolvedMentionUrl) &&
                   !isRedundantProfileSelfLink(safeMentionExt, n.url) &&
                   !/\bon X$/i.test(String(n.externalTitle || ''));
 
@@ -172,14 +177,14 @@ function renderOverviewTab(p) {
                              showMentionExt
                                ? `<div style="margin-top:5px">
                                     <a href="${esc(safeMentionExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                                      <span>Article: ${esc((n.summary || n.outletName || 'Read Story').slice(0, 56))}</span>
+                                      <span>Article: ${esc((n.externalTitle || n.headline || n.outletName || 'Read Story').slice(0, 56))}</span>
                                       ${iconSvg('externalLink', 10)}
                                     </a>
                                   </div>`
                                : ''
                            }`
                         : `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
-                           ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${esc(cleanSummary)}</div>` : ''}`
+                           ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(cleanSummary, { excludePlayerId: p.id })}</div>` : ''}`
                     }
                   </div>
                   ${
@@ -258,7 +263,7 @@ function renderOverviewTab(p) {
     ${
       p.publicEfficiencyNote
         ? `<div style="padding:9px 11px;border-radius:9px;background:var(--gold-soft);border:1px solid var(--gold-border);font-size:12.5px">
-            <strong style="color:var(--gold-bright)">Beat &amp; Film Efficiency Callout:</strong> ${escJargon(p.publicEfficiencyNote)}
+            <strong style="color:var(--gold-bright)">Beat &amp; Film Efficiency Callout:</strong> ${escJargon(p.publicEfficiencyNote, { excludePlayerId: p.id })}
            </div>`
         : ''
     }
@@ -575,20 +580,20 @@ function renderHealthTab(p) {
     ${irDetailHtml}
 
     <div class="subcard-panel" style="border-color:var(--gold-border);font-size:12.5px">
-      <strong style="color:var(--gold-bright)">Player Availability Prior:</strong> ${escJargon(h.archetypeNote || 'Standard positional prior.')}
+      <strong style="color:var(--gold-bright)">Player Availability Prior:</strong> ${escJargon(h.archetypeNote || 'Standard positional prior.', { excludePlayerId: p.id })}
     </div>
 
     <div>
       <div class="sub-label" style="margin-bottom:4px">Model Factors</div>
       <ul class="brief-bullets">
-        ${(h.factors || []).map(f => `<li>${escJargon(f)}</li>`).join('')}
+        ${(h.factors || []).map(f => `<li>${escJargon(f, { excludePlayerId: p.id })}</li>`).join('')}
       </ul>
     </div>
 
     ${
       noteBody
         ? `<div class="subcard-panel" style="font-size:12.5px">
-            <strong>Beat &amp; Medical Note:</strong> ${escJargon(noteBody)}
+            <strong>Beat &amp; Medical Note:</strong> ${escJargon(noteBody, { excludePlayerId: p.id })}
            </div>`
         : ''
     }

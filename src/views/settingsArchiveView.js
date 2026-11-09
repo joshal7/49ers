@@ -3,7 +3,13 @@
  * & Seasonal Off-Cycle Archive Sheet Renderers
  */
 
-import { esc, escJargon, renderPlayerAvatarHtml, renderTeamLogoHtml } from './uiHelpers.js';
+import {
+  esc,
+  escJargon,
+  buildEspnNflTeamUrl,
+  renderPlayerAvatarHtml,
+  renderTeamLogoHtml
+} from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { getReporterTrustTier } from '../engine/beatAttributionEngine.js';
@@ -312,13 +318,22 @@ export function renderArchiveVaultSheetHtml({
               <div class="subcard-panel" style="border-color:var(--border-strong)">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                   <div style="display:flex;align-items:center;gap:9px;min-width:0">
-                    ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 34, { showJerseyBadge: m.jersey != null })}
+                    <span style="cursor:${m.playerId ? 'pointer' : 'default'};display:inline-flex" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>
+                      ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 34, { showJerseyBadge: m.jersey != null })}
+                    </span>
                     <div style="min-width:0">
                       <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-                        <strong style="cursor:${m.playerId ? 'pointer' : 'default'}" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>${esc(m.player)} (${esc(m.position)})</strong>
+                        ${
+                          m.playerId
+                            ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(m.playerId)}">${esc(m.player)} (${esc(m.position)})</span>`
+                            : `<strong>${esc(m.player)} (${esc(m.position)})</strong>`
+                        }
                         <span style="color:var(--text-muted)">←</span>
-                        ${m.acquiredFrom ? renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 17) : ''}
-                        <strong>${esc(m.acquiredFrom)}</strong>
+                        ${
+                          m.acquiredFrom
+                            ? `<a href="${esc(buildEspnNflTeamUrl(m.acquiredFrom))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:4px;color:inherit">${renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 17)}<strong>${esc(m.acquiredFrom)}</strong></a>`
+                            : ''
+                        }
                         ${
                           m.sourceUrl
                             ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">Source ${iconSvg('externalLink', 10)}</a>`
@@ -330,7 +345,7 @@ export function renderArchiveVaultSheetHtml({
                   </div>
                   <span class="badge badge-neutral mono">Grade ${esc(m.schemeGrade)}</span>
                 </div>
-                <div style="font-size:12px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis)}</div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis, { excludePlayerId: m.playerId })}</div>
               </div>
             `
                 )
@@ -371,7 +386,12 @@ export function renderArchiveVaultSheetHtml({
     <div>
       <div class="sub-label" style="margin-bottom:6px">Currently Active On Dashboard (${active.length})</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
-        ${active.map(b => `<span class="badge badge-positive">${iconSvg('check', 11)}<span>${esc(b.shortTitle)}</span></span>`).join('')}
+        ${active
+          .map(
+            b =>
+              `<button type="button" class="badge badge-positive" style="cursor:pointer;border:1px solid rgba(16,185,129,0.35)" data-action="open-dashboard-block" data-block-id="${esc(b.id)}">${iconSvg('check', 11)}<span>${esc(b.shortTitle)}</span></button>`
+          )
+          .join('')}
       </div>
     </div>
   `;

@@ -19,7 +19,11 @@ import {
   rankBadgeClass,
   renderPlayerAvatarHtml,
   renderTeamLogoHtml,
-  renderMiniMeterHtml
+  renderMiniMeterHtml,
+  renderReporterSourceLinksHtml,
+  buildEspnNflTeamUrl,
+  lookupRosterPlayerByName,
+  registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
@@ -162,16 +166,19 @@ function renderGameDayRosterCard(
                       ? `<div class="gameday-active-chips">
                           ${list
                             .map(ap => {
-                              const clickAttrs =
-                                is49ers && ap.playerId
-                                  ? `data-action="open-player-sheet" data-player-id="${esc(ap.playerId)}"`
-                                  : '';
-                              const tag = is49ers && ap.playerId ? 'button type="button"' : 'span';
-                              return `<${tag} class="gameday-active-pill gameday-active-chip" ${clickAttrs}>${
+                              const inner = `${
                                 ap.jersey != null ? `<span class="mono gameday-pill-num">#${ap.jersey}</span>` : ''
                               }<span>${esc(ap.name)}</span><span class="gameday-pos">${esc(ap.position)}</span>${
                                 ap.isExplicitActiveGtd ? `<span class="badge badge-warning mono" style="font-size:9px;padding:1px 4px">GTD</span>` : ''
-                              }</${is49ers && ap.playerId ? 'button' : 'span'}>`;
+                              }`;
+                              if (is49ers && ap.playerId) {
+                                return `<button type="button" class="gameday-active-pill gameday-active-chip" data-action="open-player-sheet" data-player-id="${esc(ap.playerId)}">${inner}</button>`;
+                              }
+                              const safeOppUrl = !is49ers ? sanitizeExternalUrl(ap.espnUrl, null) : null;
+                              if (safeOppUrl) {
+                                return `<a href="${esc(safeOppUrl)}" target="_blank" rel="noopener noreferrer" class="gameday-active-pill gameday-active-chip" style="text-decoration:none;color:inherit">${inner}</a>`;
+                              }
+                              return `<span class="gameday-active-pill gameday-active-chip">${inner}</span>`;
                             })
                             .join('')}
                         </div>`
@@ -220,6 +227,7 @@ export function renderSeasonMatchupViewHtml({
   expandedDraftSpiderIdx = -1,
   activeVideosSet
 }) {
+  registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const phaseSet = new Set(activePhases || []);
 
   const switcherCard = `
@@ -297,35 +305,35 @@ function renderUpcomingMatchup(appData) {
     ? `49ers (${sfRecShort}) @ ${um.oppName} (${um.oppRecord})`
     : `${um.oppName} (${um.oppRecord}) @ 49ers (${sfRecShort})`;
   const awayColHtml = sfIsAway
-    ? `<div class="sb-team-col">
+    ? `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
         ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
         <div class="sb-team-meta">
           <div class="sb-team-abbr">49ers</div>
           <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
         </div>
-      </div>`
-    : `<div class="sb-team-col">
+      </a>`
+    : `<a href="${esc(buildEspnNflTeamUrl(um.oppAbbr || 'NFL'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
         ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 40)}
         <div class="sb-team-meta">
           <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
           <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
         </div>
-      </div>`;
+      </a>`;
   const homeColHtml = sfIsAway
-    ? `<div class="sb-team-col home">
+    ? `<a href="${esc(buildEspnNflTeamUrl(um.oppAbbr || 'NFL'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
         <div class="sb-team-meta">
           <div class="sb-team-abbr">${esc(um.oppName || 'Opponent')}</div>
           <div class="sb-team-rec mono">${esc(um.oppRecord || '—')}</div>
         </div>
         ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 40)}
-      </div>`
-    : `<div class="sb-team-col home">
+      </a>`
+    : `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
         <div class="sb-team-meta">
           <div class="sb-team-abbr">49ers</div>
           <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
         </div>
         ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
-      </div>`;
+      </a>`;
 
   return `
     <section class="card temporal-highlight">
@@ -482,7 +490,13 @@ function renderUpcomingMatchup(appData) {
                     op => `
                   <div class="subcard-panel" style="font-size:12px">
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
-                      <strong>${esc(op.name)} <span style="color:var(--gold-bright)">(${esc(op.position)} • ${esc(op.injuryType)})</span></strong>
+                      <span>
+                        ${
+                          op.espnUrl
+                            ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
+                            : `<strong>${esc(op.name)}</strong>`
+                        } <strong style="color:var(--gold-bright)">(${esc(op.position)} • ${esc(op.injuryType)})</strong>
+                      </span>
                       <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc((op.factors || [])[0] || `${formatPracCell(op.wed)}/${formatPracCell(op.thu)}/${formatPracCell(op.fri)}`)}</span>
                     </div>
                     <div style="color:var(--text-secondary)">${escJargon(op.longComment || op.shortComment || op.archetypeNote || '')}</div>
@@ -566,7 +580,11 @@ function renderUpcomingMatchup(appData) {
         <div style="font-size:12px;color:var(--text-secondary)">
           <strong>49ers Side:</strong> ${sfPr
             .slice(0, 3)
-            .map(p => `${esc(p.name)} (${esc(p.playBadgeLabel)})`)
+            .map(p =>
+              p.playerId
+                ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health">${esc(p.name)}</span> (${esc(p.playBadgeLabel)})`
+                : `${esc(p.name)} (${esc(p.playBadgeLabel)})`
+            )
             .join(' • ')}
         </div>
         <button type="button" class="btn-ghost" data-action="set-season-sub" data-season-sub="health">
@@ -621,16 +639,24 @@ function renderUpcomingMatchup(appData) {
           <thead><tr><th>Season</th><th>Date</th><th>Site</th><th>Result</th></tr></thead>
           <tbody>
             ${(um.franchiseHistory?.recentGames || [])
-              .map(
-                g => `
+              .map(g => {
+                const safeBoxUrl = sanitizeExternalUrl(g.boxscoreUrl, null);
+                const resInner = `<strong>${g.sfWon ? 'W' : 'L'}</strong> ${esc(g.scoreDisplay)}${g.overtime ? ' (OT)' : ''}`;
+                return `
               <tr>
                 <td>${g.season}</td>
                 <td>${esc(g.date)}</td>
                 <td>${esc(g.venue)}</td>
-                <td style="color:${g.sfWon ? 'var(--emerald)' : 'var(--crimson)'}"><strong>${g.sfWon ? 'W' : 'L'}</strong> ${esc(g.scoreDisplay)}${g.overtime ? ' (OT)' : ''}</td>
+                <td style="color:${g.sfWon ? 'var(--emerald)' : 'var(--crimson)'}">
+                  ${
+                    safeBoxUrl
+                      ? `<a href="${esc(safeBoxUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:inherit">${resInner} ${iconSvg('externalLink', 10)}</a>`
+                      : resInner
+                  }
+                </td>
               </tr>
-            `
-              )
+            `;
+              })
               .join('')}
           </tbody>
         </table>
@@ -790,7 +816,7 @@ function renderTeamHealthAndIr(appData) {
             <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">
               ${meta.subtitleHtml}
             </div>
-            ${ir.beatNote ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(ir.beatNote)}</div>` : ''}
+            ${ir.beatNote ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(ir.beatNote, { excludePlayerId: ir.playerId })}</div>` : ''}
           </div>
         `;
           })
@@ -847,7 +873,7 @@ function renderTeamStatsAndPower(appData) {
               .map(r => {
                 const metricLabel = COMPACT_STAT_LABELS[r.key] || r.label;
                 return `
-              <tr title="${esc(r.label)}">
+              <tr>
                 <td><strong>${escJargon(metricLabel)}</strong></td>
                 <td class="mono num-col"><strong>${esc(r.displayValue)}</strong></td>
                 <td class="rank-col">
@@ -975,13 +1001,22 @@ function renderTradeWindow(appData) {
           <div class="subcard-panel" style="border-color:var(--gold-border)">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:9px;min-width:0">
-                ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 36, { showJerseyBadge: m.jersey != null })}
+                <span style="cursor:${m.playerId ? 'pointer' : 'default'};display:inline-flex" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>
+                  ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 36, { showJerseyBadge: m.jersey != null })}
+                </span>
                 <div style="min-width:0">
                   <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-                    <strong style="cursor:${m.playerId ? 'pointer' : 'default'}" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>${esc(m.player)} (${esc(m.position)})</strong>
+                    ${
+                      m.playerId
+                        ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(m.playerId)}">${esc(m.player)} (${esc(m.position)})</span>`
+                        : `<strong>${esc(m.player)} (${esc(m.position)})</strong>`
+                    }
                     <span style="color:var(--text-muted)">←</span>
-                    ${m.acquiredFrom ? renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 18) : ''}
-                    <strong>${esc(m.acquiredFrom)}</strong>
+                    ${
+                      m.acquiredFrom
+                        ? `<a href="${esc(buildEspnNflTeamUrl(m.acquiredFrom))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:4px;color:inherit">${renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 18)}<strong>${esc(m.acquiredFrom)}</strong></a>`
+                        : ''
+                    }
                     ${
                       m.sourceUrl
                         ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px;margin-left:4px">Source ${iconSvg('externalLink', 10)}</a>`
@@ -993,7 +1028,7 @@ function renderTradeWindow(appData) {
               </div>
               <span class="badge badge-positive mono">Grade ${esc(m.schemeGrade)}</span>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis, { excludePlayerId: m.playerId })}</div>
           </div>
         `
                 )
@@ -1029,9 +1064,19 @@ function renderTradeWindow(appData) {
                 ${renderPlayerAvatarHtml({ name: t.name, jersey: t.jersey, headshotUrl: t.headshotUrl }, 36)}
                 <div style="min-width:0">
                   <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-                    <strong>${esc(t.name)} (${esc(t.position)})</strong>
+                    ${
+                      t.sourceUrl
+                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(t.name)} (${esc(t.position)})</strong></a>`
+                        : `<strong>${esc(t.name)} (${esc(t.position)})</strong>`
+                    }
                     ${t.teamAbbr ? renderTeamLogoHtml(t.teamAbbr, t.teamLogoUrl, 17) : ''}
-                    ${t.currentTeam ? `<span style="font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(t.currentTeam)}</span>` : ''}
+                    ${
+                      t.currentTeam
+                        ? t.teamAbbr
+                          ? `<a href="${esc(buildEspnNflTeamUrl(t.teamAbbr))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(t.currentTeam)}</a>`
+                          : `<span style="font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(t.currentTeam)}</span>`
+                        : ''
+                    }
                     ${
                       t.sourceUrl
                         ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">OTC Contract ${iconSvg('externalLink', 10)}</a>`
@@ -1070,7 +1115,20 @@ function renderTradeWindow(appData) {
                 <strong>${esc(p.trap)}</strong>
                 <span class="badge badge-danger">Avoid</span>
               </div>
-              ${p.examples ? `<div style="font-size:11.5px;color:var(--gold-bright);margin-bottom:3px"><strong>Examples:</strong> ${esc(p.examples)}</div>` : ''}
+              ${
+                Array.isArray(p.exampleLinks) && p.exampleLinks.length > 0
+                  ? `<div style="font-size:11.5px;color:var(--gold-bright);margin-bottom:3px"><strong>Examples:</strong> ${p.exampleLinks
+                      .map(el => {
+                        const safeEx = sanitizeExternalUrl(el.url, null);
+                        return safeEx
+                          ? `<a href="${esc(safeEx)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--gold-bright)">${esc(el.label)} ${iconSvg('externalLink', 9)}</a>`
+                          : esc(el.label);
+                      })
+                      .join(', ')}</div>`
+                  : p.examples
+                    ? `<div style="font-size:11.5px;color:var(--gold-bright);margin-bottom:3px"><strong>Examples:</strong> ${esc(p.examples)}</div>`
+                    : ''
+              }
               <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(p.whyAvoid)}</div>
             </div>
           `
@@ -1092,11 +1150,7 @@ function renderTradeWindow(appData) {
           <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
               <span class="badge ${r.tier.includes('Tier 1') ? 'badge-positive' : 'badge-gold'}">${esc(r.tier)}</span>
-              ${
-                r.sourceUrl
-                  ? `<a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">${esc(r.sources)} ${iconSvg('externalLink', 10)}</a>`
-                  : `<span style="font-size:11px;color:var(--text-muted)">${esc(r.sources)}</span>`
-              }
+              <span style="font-size:11px;color:var(--text-muted)">${renderReporterSourceLinksHtml(r.sources, r.sourceUrl)}</span>
             </div>
             <div style="font-size:12.5px">${escJargon(r.summary)}</div>
           </div>
@@ -1231,7 +1285,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
             c => `
           <div class="subcard-panel">
             <strong>${esc(c.target)}</strong>
-            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:3px">${esc(c.pathSummary)}</div>
+            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:3px">${escJargon(c.pathSummary)}</div>
           </div>
         `
           )
@@ -1248,10 +1302,10 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
                 t => `
               <tr style="${t.abbr === 'SF' ? 'background:var(--gold-soft)' : ''}">
                 <td>
-                  <div style="display:flex;align-items:center;gap:6px">
+                  <a href="${esc(buildEspnNflTeamUrl(t.abbr))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:6px;color:inherit">
                     ${renderTeamLogoHtml(t.abbr, t.logoUrl, 20)}
                     <strong>${esc(t.abbr)}</strong>
-                  </div>
+                  </a>
                 </td>
                 <td style="font-family:var(--font-sans);font-size:11px">${esc(t.division.replace('NFC ', ''))}</td>
                 <td>${esc(t.currentRecord)}</td>
@@ -1306,7 +1360,11 @@ function renderFullSchedule(appData) {
                     ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 28)}
                     <div style="min-width:0">
                       <span class="mono" style="color:var(--gold-bright);font-weight:800">WK ${g.week}</span> •
-                      <strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>
+                      ${
+                        g.gameUrl
+                          ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-primary)"><strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong></a>`
+                          : `<strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>`
+                      }
                       <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent?.record)})</span>
                     </div>
                   </div>
@@ -1411,22 +1469,32 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
       <h3 class="card-title" style="margin-bottom:8px">Top Projected 49ers Prospect Fits</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(dp.consensusMockTargets || [])
-          .map(
-            m => `
+          .map(m => {
+            const pLinks = Array.isArray(m.prospectLinks) && m.prospectLinks.length > 0 ? m.prospectLinks : null;
+            const headerLinksHtml = pLinks
+              ? `<span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">${pLinks
+                  .map(pl => {
+                    const safePl = sanitizeExternalUrl(pl.url, null);
+                    const lbl = `${pl.name} (${pl.pos} • ${pl.school})`;
+                    return safePl
+                      ? `<a href="${esc(safePl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(lbl)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                      : `<strong>${esc(lbl)}</strong>`;
+                  })
+                  .join('<span style="color:var(--text-muted)">/</span>')}</span>`
+              : m.sourceUrl
+                ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong> ${iconSvg('externalLink', 11)}</a>`
+                : `<strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>`;
+            return `
           <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-              ${
-                m.sourceUrl
-                  ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong> ${iconSvg('externalLink', 11)}</a>`
-                  : `<strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>`
-              }
+              ${headerLinksHtml}
               <span class="badge badge-positive mono">SF Fit ${m.shanahanLynchFitScore}/100 • ${m.mockFrequencyToSfPct}% Mocks</span>
             </div>
-            <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.heightWeight)} • Mocked by: ${esc((m.sourcesMocking || []).join(', '))}</div>
+            <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.heightWeight)} • Mocked by: ${renderReporterSourceLinksHtml(m.sourcesMocking || [], m.sourceUrl)}</div>
             <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(m.archetypeTraits)}</div>
           </div>
-        `
-          )
+        `;
+          })
           .join('')}
       </div>
     </section>
@@ -1454,10 +1522,16 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
           <tbody>
             ${filteredCombine
               .slice(0, 35)
-              .map(
-                c => `
+              .map(c => {
+                const sfMatch = c.playerId ? { id: c.playerId } : lookupRosterPlayerByName(c.name);
+                const fallbackPfr = `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(c.name || '')}`;
+                const safeProfUrl = sanitizeExternalUrl(c.profileUrl, fallbackPfr);
+                const athleteCellHtml = sfMatch?.id
+                  ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(sfMatch.id)}" data-initial-tab="spider">${esc(c.name)}</span>`
+                  : `<a href="${esc(safeProfUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(c.name)}</strong> ${iconSvg('externalLink', 9)}</a>`;
+                return `
               <tr>
-                <td style="font-family:var(--font-sans)"><strong>${esc(c.name)}</strong></td>
+                <td style="font-family:var(--font-sans)">${athleteCellHtml}</td>
                 <td>${esc(c.pos)}</td>
                 <td style="font-family:var(--font-sans)">${esc(c.school)}</td>
                 <td>${esc(c.ht)} / ${c.wt ?? '—'}</td>
@@ -1466,8 +1540,8 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
                 <td>${c.threeCone ?? '—'}</td>
                 <td><span class="badge badge-positive">${Number(c.ras).toFixed(2)}</span></td>
               </tr>
-            `
-              )
+            `;
+              })
               .join('')}
           </tbody>
         </table>
@@ -1520,20 +1594,25 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                     <div style="min-width:0">
                       <span class="badge badge-scarlet mono">Rd ${pk.round} • Pick #${pk.pick}</span>
                       ${
-                        pk.pfrUrl
-                          ? `<a href="${esc(pk.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:14.5px;margin-left:5px"><strong>${esc(pk.name)}</strong> ${iconSvg('externalLink', 11)}</a>`
+                        pk.playerId
+                          ? `<span class="inline-player-link" role="button" tabindex="0" style="font-size:14.5px;margin-left:5px" data-action="open-player-sheet" data-player-id="${esc(pk.playerId)}">${esc(pk.name)}</span>`
                           : `<strong style="font-size:14.5px;margin-left:5px">${esc(pk.name)}</strong>`
                       }
                       <span style="color:var(--gold-bright);font-weight:700"> ${esc(pk.position)} • ${esc(pk.college)}</span>
+                      ${
+                        pk.pfrUrl
+                          ? `<a href="${esc(pk.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:6px">PFR ${iconSvg('externalLink', 10)}</a>`
+                          : ''
+                      }
                     </div>
                   </div>
                   ${stealBadge}
                 </div>
 
-                <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(pk.roleSummary)}</div>
+                <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(pk.roleSummary, { excludePlayerId: pk.playerId })}</div>
 
                 <ul class="brief-bullets">
-                  ${(pk.strengths || []).map(s => `<li>${escJargon(s)}</li>`).join('')}
+                  ${(pk.strengths || []).map(s => `<li>${escJargon(s, { excludePlayerId: pk.playerId })}</li>`).join('')}
                 </ul>
 
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -1581,7 +1660,11 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                       ${renderPlayerAvatarHtml({ name: u.displayName || u.name, jersey: u.jersey, headshotUrl: u.headshotUrl }, 38, { showJerseyBadge: u.jersey != null })}
                     </span>
                     <div>
-                      <strong>${esc(u.displayName || u.name)} (${esc(u.position)})</strong>
+                      ${
+                        u.playerId
+                          ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(u.playerId)}">${esc(u.displayName || u.name)} (${esc(u.position)})</span>`
+                          : `<strong>${esc(u.displayName || u.name)} (${esc(u.position)})</strong>`
+                      }
                       ${
                         u.otcUrl
                           ? `<a href="${esc(u.otcUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:6px">OTC ${iconSvg('externalLink', 10)}</a>`
@@ -1592,7 +1675,7 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                   <span class="badge badge-gold mono">${formatCompactDollars(u.guaranteedTotal)} Guaranteed</span>
                 </div>
                 <div style="font-size:12px;color:var(--emerald)">${esc(u.rosterOddsNote)}</div>
-                <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(u.roleSummary)}</div>
+                <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(u.roleSummary, { excludePlayerId: u.playerId })}</div>
                 ${
                   u.highlightVideo?.videoId
                     ? renderVideoEmbedOrFacade(

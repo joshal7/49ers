@@ -634,10 +634,27 @@ export function stripRedundantAuthorBoilerplate(rawText = '', authorName = '') {
  * Returns true if `externalUrl` is just a bare social profile URL (e.g. https://x.com/MikeGarafolo)
  * or identical to `itemUrl`, preventing redundant "Linked Story: ... on X" self-link pills.
  */
+function canonicalComparableUrl(raw = '') {
+  const s = String(raw || '').trim();
+  if (!s) return '';
+  try {
+    const u = new URL(s);
+    for (const k of [...u.searchParams.keys()]) {
+      if (/^(utm_|fbclid$|gclid$|ref$|s$)/i.test(k)) u.searchParams.delete(k);
+    }
+    const host = u.hostname.toLowerCase().replace(/^www\./, '');
+    const path = u.pathname.replace(/\/+$/, '');
+    const qs = u.searchParams.toString();
+    return `${host}${path}${qs ? `?${qs}` : ''}`;
+  } catch {
+    return s.toLowerCase().replace(/^https?:\/\/(?:www\.)?/, '').replace(/\/+$/, '');
+  }
+}
+
 export function isRedundantProfileSelfLink(externalUrl = '', itemUrl = '') {
   const ext = String(externalUrl || '').trim();
   if (!ext) return true;
-  if (itemUrl && ext.toLowerCase() === String(itemUrl).trim().toLowerCase()) return true;
+  if (itemUrl && canonicalComparableUrl(ext) === canonicalComparableUrl(itemUrl)) return true;
   if (/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/[A-Za-z0-9_]+\/?(?:\?.*)?$/i.test(ext)) {
     return true;
   }
