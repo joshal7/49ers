@@ -17,6 +17,112 @@ import {
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { buildXBeatListSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
 
+export function resolveClusterSafeReports(cluster, rawStream = []) {
+  if (!cluster || !Array.isArray(cluster.sourceLinks)) return [];
+  const seen = new Set();
+  const reports = [];
+  for (const sl of cluster.sourceLinks) {
+    if (!sl) continue;
+    const isTw = sl.type === 'tweet' || sl.type === 'social' || /^@[A-Za-z0-9_]+:/.test(String(sl.title || ''));
+    const handleMatch = String(sl.title || '').match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
+    const effectiveHandle = sl.authorHandle || (handleMatch ? handleMatch[1] : '');
+    const cleanTitle = handleMatch ? handleMatch[2].trim() : String(sl.title || '').trim();
+
+    const resolvedUrl = isTw
+      ? resolveOriginalTweetUrl(
+          {
+            type: 'tweet',
+            url: sl.url || '',
+            author: sl.author || sl.outlet || '',
+            authorHandle: effectiveHandle,
+            title: cleanTitle,
+            fullText: cleanTitle,
+            publishedAt: sl.publishedAt || cluster.publishedAt || ''
+          },
+          rawStream
+        )
+      : sl.url;
+
+    const safeUrl = sanitizeExternalUrl(resolvedUrl, null);
+    if (!safeUrl || seen.has(safeUrl) || isPaywalledPublisher(sl.outlet, safeUrl)) continue;
+    seen.add(safeUrl);
+
+    reports.push({
+      title: cleanTitle || sl.outlet || 'Open Report',
+      url: safeUrl,
+      outlet: sl.outlet || '49ers Beat',
+      author: sl.author || (effectiveHandle ? effectiveHandle : sl.outlet || '49ers Beat'),
+      type: isTw ? 'tweet' : sl.type || 'article',
+      publishedAt: sl.publishedAt || null
+    });
+  }
+  return reports;
+}
+
+export function renderSynthesisSourcesSheetHtml(cluster, rawStream = []) {
+  if (!cluster) {
+    return `<div class="subcard-panel">Synthesis story not found.</div>`;
+  }
+  const reports = resolveClusterSafeReports(cluster, rawStream);
+  return `
+    <div style="display:flex;flex-direction:column;gap:10px" data-synthesis-sources-sheet="${esc(cluster.id)}">
+      <div class="subcard-panel" style="border-color:var(--gold-border)">
+        <div class="card-eyebrow" style="margin-bottom:3px">${esc(cluster.categoryLabel || 'AI Synthesis Story')}</div>
+        <div style="font-weight:700;font-size:13.5px;line-height:1.38;color:var(--text-primary)">${esc(cluster.headline)}</div>
+      </div>
+
+      <div class="sub-label" style="margin-bottom:0">
+        Clickable Reports &amp; Sources Used (${reports.length})
+      </div>
+
+      ${
+        reports.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No external report links attached to this brief.</div>`
+          : `<div style="display:flex;flex-direction:column;gap:7px">
+              ${reports
+                .map(rep => {
+                  const typeLabel =
+                    rep.type === 'tweet'
+                      ? 'Tweet'
+                      : rep.type === 'video'
+                        ? 'Video'
+                        : rep.type === 'cap'
+                          ? 'Cap Ledger'
+                          : rep.type === 'stats'
+                            ? 'Dataset'
+                            : 'Article';
+                  const badgeCls =
+                    rep.type === 'tweet'
+                      ? 'badge-gold'
+                      : rep.type === 'video'
+                        ? 'badge-scarlet'
+                        : 'badge-neutral';
+                  const attribution =
+                    rep.author && rep.outlet && rep.author.toLowerCase() !== rep.outlet.toLowerCase()
+                      ? `${rep.author} • ${rep.outlet}`
+                      : rep.outlet || rep.author || 'Source';
+                  return `
+                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row" data-synthesis-report-link>
+                      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
+                        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+                          <span class="badge ${badgeCls}" style="font-size:10px;padding:1.5px 6px">${esc(typeLabel)}</span>
+                          <strong style="font-size:11.8px;color:var(--gold-bright)">${esc(attribution)}</strong>
+                        </div>
+                        ${rep.publishedAt ? `<span class="mono" style="font-size:10.8px;color:var(--text-muted)">${esc(formatRelativeAge(rep.publishedAt))}</span>` : ''}
+                      </div>
+                      <div style="font-size:12.8px;font-weight:600;line-height:1.38;color:var(--text-primary)">
+                        ${esc(rep.title)} ${iconSvg('externalLink', 11)}
+                      </div>
+                    </a>
+                  `;
+                })
+                .join('')}
+            </div>`
+      }
+    </div>
+  `;
+}
+
 export function renderNewsViewHtml({
   appData = null,
   newsMode = 'raw', // 'raw' | 'clustered'
@@ -204,19 +310,20 @@ export function renderNewsViewHtml({
           );
         }
 
-        const safeSourceLinks = (c.sourceLinks || []).filter(
-          sl => sanitizeExternalUrl(sl?.url, null) && !isPaywalledPublisher(sl?.outlet, sl?.url)
-        );
+        const safeSourceLinks = resolveClusterSafeReports(c, prioritizedRaw);
+        const reportCount = safeSourceLinks.length || Number(c.synthesizedFromCount) || 0;
         const sourceLinksHtml =
           safeSourceLinks.length > 0
             ? `
-              <div>
-                <div class="brief-section-label">Original Sources &amp; Reports Used</div>
-                <div class="source-links-grid">
+              <details class="compact-details">
+                <summary class="compact-details-summary">
+                  <span>Original Sources &amp; Reports Used (${safeSourceLinks.length})</span>
+                </summary>
+                <div class="source-links-grid" style="margin-top:7px">
                   ${safeSourceLinks
                     .map(
                       sl => `
-                    <a href="${esc(sanitizeExternalUrl(sl.url))}" target="_blank" rel="noopener noreferrer" class="source-card-link">
+                    <a href="${esc(sl.url)}" target="_blank" rel="noopener noreferrer" class="source-card-link">
                       <span class="source-card-outlet">${esc(sl.outlet || 'Source')}${sl.publishedAt ? ` • ${esc(formatRelativeAge(sl.publishedAt))}` : ''}</span>
                       <span class="source-card-title">${esc(sl.title)} ${iconSvg('externalLink', 11)}</span>
                     </a>
@@ -224,7 +331,7 @@ export function renderNewsViewHtml({
                     )
                     .join('')}
                 </div>
-              </div>
+              </details>
             `
             : '';
 
@@ -251,7 +358,7 @@ export function renderNewsViewHtml({
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               ${hasHeroPhoto ? `<span class="card-eyebrow" style="margin:0">${esc(c.categoryLabel)} Synthesis</span>` : `<span class="badge badge-gold">${esc(c.categoryLabel)}</span>`}
               <span class="mono" style="font-size:11.5px;color:var(--text-muted)">
-                Synthesized from ${c.synthesizedFromCount} reports • ${esc(formatRelativeAge(c.publishedAt))}
+                Synthesized from <button type="button" class="synthesis-reports-link mono" data-action="open-synthesis-sources" data-cluster-id="${esc(c.id)}">${reportCount} report${reportCount === 1 ? '' : 's'}</button> • ${esc(formatRelativeAge(c.publishedAt))}
               </span>
             </div>
 

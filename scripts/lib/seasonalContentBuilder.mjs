@@ -5,7 +5,11 @@
  * 2026 Draft Class + Priority UDFAs, and 2027 Draft Prep + Combine boards.
  */
 
-import { classifyBreakingItem, formatTweetBodyForDisplay } from '../../src/engine/breakingClassifier.js';
+import {
+  classifyBreakingItem,
+  formatTweetBodyForDisplay,
+  stripRedundantAuthorBoilerplate
+} from '../../src/engine/breakingClassifier.js';
 import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
 import {
   OTC_TEAM_CAP_URL,
@@ -21,7 +25,8 @@ import {
 import {
   extractBeatAttributionFromText,
   extractXSnowflakeTimestampMs,
-  resolveReporterFromNameOrHandle
+  resolveReporterFromNameOrHandle,
+  resolveOriginalTweetUrl
 } from '../../src/engine/beatAttributionEngine.js';
 
 const embedCheckCache = new Map();
@@ -857,41 +862,53 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  function matchSourceLinks(keywords = [], extraLinks = []) {
+  function matchSourceLinks(keywords = [], extraLinks = [], maxTotal = 14) {
     const compiledKws = keywords
       .map(k => String(k || '').toLowerCase().trim())
       .filter(Boolean)
       .map(k => ({ raw: k, rx: new RegExp(`\\b${escapeKwRegex(k)}\\b`, 'i') }));
 
     const seenUrls = new Set();
+    const seenTitleKeys = new Set();
     const scoredCandidates = [];
 
     for (const it of rawItems) {
-      const safeItemUrl = sanitizeExternalUrl(it.url, null);
+      if (it?.type === 'video' || it?.isClickbait) continue;
+      const isTw = it?.type === 'tweet' || it?.type === 'social';
+      const resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
+      const safeItemUrl = sanitizeExternalUrl(resolvedUrl, null);
       if (!safeItemUrl || seenUrls.has(safeItemUrl) || isPaywalledPublisher(it.outletName, safeItemUrl)) continue;
+
       const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''}`.toLowerCase();
       let kwHitCount = 0;
       for (const kw of compiledKws) {
         if (kw.rx.test(hay)) kwHitCount += 1;
       }
       if (kwHitCount > 0) {
+        const authorName = it.author || it.reporterName || it.outletName || '49ers Beat';
+        const cleanBody = isTw
+          ? stripRedundantAuthorBoilerplate(it.fullText || it.title || '', authorName)
+          : String(it.title || '').trim();
+        const titleKey = cleanBody.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 52);
+        if (!cleanBody || seenTitleKeys.has(titleKey)) continue;
+
         seenUrls.add(safeItemUrl);
+        seenTitleKeys.add(titleKey);
         const salience =
           kwHitCount * 22 +
           Number(it.signalScore || 68) +
-          (it.type === 'article' ? 8 : 0) +
+          (it.type === 'article' ? 10 : 0) +
           (it.isBreaking ? 10 : 0);
-        const shortLabel =
-          it.type === 'tweet'
-            ? `${it.authorHandle || it.reporterName || 'Beat Post'}: ${(it.title || '').slice(0, 62)}${(it.title || '').length > 62 ? '…' : ''}`
-            : (it.title || '').slice(0, 72) + ((it.title || '').length > 72 ? '…' : '');
+        const displayLabel = cleanBody.length > 110 ? `${cleanBody.slice(0, 108).trim()}…` : cleanBody;
         scoredCandidates.push({
           salience,
           link: {
-            title: shortLabel,
+            title: displayLabel,
             url: safeItemUrl,
-            outlet: it.outletName || 'Source',
-            type: it.type || 'article',
+            author: authorName,
+            authorHandle: it.authorHandle || null,
+            outlet: it.outletName || authorName || '49ers Beat',
+            type: isTw ? 'tweet' : it.type || 'article',
             publishedAt: it.publishedAt || null
           }
         });
@@ -899,12 +916,13 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     }
 
     scoredCandidates.sort((a, b) => b.salience - a.salience);
-    const matched = scoredCandidates.slice(0, 4).map(c => c.link);
+    const reserveForExtra = Math.min(2, extraLinks.length);
+    const matched = scoredCandidates.slice(0, Math.max(4, maxTotal - reserveForExtra)).map(c => c.link);
     const finalSeen = new Set(matched.map(m => m.url));
 
     for (const ex of extraLinks) {
       const safeExUrl = sanitizeExternalUrl(ex?.url, null);
-      if (safeExUrl && !finalSeen.has(safeExUrl) && matched.length < 5) {
+      if (safeExUrl && !finalSeen.has(safeExUrl) && matched.length < maxTotal) {
         finalSeen.add(safeExUrl);
         matched.push({ ...ex, url: safeExUrl });
       }
@@ -1002,9 +1020,18 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         category: 'scheme',
         categoryLabel: `Week ${currentWeek} Matchup Briefing`,
         headline:
-          leadArticles[0]?.title ||
-          `Week ${currentWeek} Preparation: 49ers (${teamRecord}) Ready for ${oppName} (${um.oppRecord || 'NFL'})`,
-        synthesizedFromCount: Math.max(8, Math.min(22, leadArticles.length)),
+          leadArticles.find(
+            a =>
+              a.type === 'article' &&
+              a.title &&
+              a.title.length >= 24 &&
+              a.title.length <= 135 &&
+              /\b(49ers|niners|san francisco|shanahan|purdy)\b/i.test(a.title) &&
+              new RegExp(`\\b(${escapeKwRegex(oppShort)}|week\\s*${currentWeek})\\b`, 'i').test(a.title) &&
+              !/\b(inactives|fantasy|waiver|d\/st)\b/i.test(a.title)
+          )?.title ||
+          `Week ${currentWeek} Preparation: 49ers (${teamRecord}) Shift Focus to ${oppName} (${um.oppRecord || 'NFL'})`,
+        synthesizedFromCount: matchupLinks.length,
         signalScore: 95,
         citedReporterIds: ['matt_maiocco', 'matt_barrows', 'nick_wagoner', 'david_lombardi', 'kyle_shanahan'],
         ...selectClusterPhoto([oppShort.toLowerCase(), 'shanahan', 'purdy', '49ers'], topVid?.videoId || ''),
@@ -1046,7 +1073,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         category: 'film',
         categoryLabel: 'Practice & Roster Wire',
         headline: `Week ${currentWeek} Practice & Availability Report: Key 49ers Injury Designations & Rotation Notes`,
-        synthesizedFromCount: 11,
+        synthesizedFromCount: healthLinks.length,
         signalScore: 93,
         citedReporterIds: ['nick_wagoner', 'matt_maiocco', 'matt_barrows', 'david_lombardi'],
         ...selectClusterPhoto(['practice', 'injury', 'bosa', 'williams', 'mccaffrey'], secondVid?.videoId || ''),
@@ -1084,7 +1111,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         category: 'cap',
         categoryLabel: 'Cap & Roster Mechanics',
         headline: `49ers Front Office Ledger ($${capGrossM}M Space vs. ${cap2027Label} 2027 Horizon): CBA Rollover Mechanics`,
-        synthesizedFromCount: 9,
+        synthesizedFromCount: capLinks.length,
         signalScore: 91,
         citedReporterIds: ['matt_barrows', 'david_lombardi', 'field_yates', 'adam_schefter'],
         ...selectClusterPhoto(['lynch', 'purdy', 'cap', 'contract'], ''),
@@ -1183,7 +1210,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       category: 'film',
       categoryLabel: 'Trench & Health Briefing',
       headline: 'Nick Bosa & Christian McCaffrey Cleared for Week 9; Full Wide-9 Front Debuts Under DC Raheem Morris With DeForest Buckner & Osa Odighizuwa',
-      synthesizedFromCount: 16,
+      synthesizedFromCount: bosaLinks.length,
       signalScore: 96,
       citedReporterIds: ['nick_wagoner', 'matt_maiocco', 'matt_barrows', 'kyle_shanahan', 'tim_ryan', 'david_lombardi'],
       ...selectClusterPhoto(['bosa', 'buckner', 'mccaffrey', 'odighizuwa', 'defensive line'], shanahanBucknerVid.videoId),
@@ -1217,7 +1244,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       category: 'cap',
       categoryLabel: 'Cap & Roster Mechanics',
       headline: 'Brandon Aiyuk Meets With 49ers Brass Seeking Reinstatement: Contract, Cap & WR Depth Implications',
-      synthesizedFromCount: 19,
+      synthesizedFromCount: aiyukLinks.length,
       signalScore: 94,
       citedReporterIds: ['adam_schefter', 'nick_wagoner', 'matt_barrows', 'matt_maiocco', 'david_lombardi', 'field_yates'],
       ...selectClusterPhoto(['aiyuk', 'receiver', 'reinstatement', 'contract'], aiyukVid.videoId),
@@ -1251,7 +1278,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       category: 'scheme',
       categoryLabel: 'All-22 Matchup Preview',
       headline: "Shanahan & Raheem Morris vs. Klint Kubiak Chess Match: Decoding the 4-4 Raiders' Visit & Maxx Crosby Protection Plan",
-      synthesizedFromCount: 12,
+      synthesizedFromCount: matchupLinks.length,
       signalScore: 95,
       citedReporterIds: ['jonnydel', 'eric_crocker', 'matt_maiocco', 'kyle_posey', 'ben_solak', 'greg_papa'],
       ...selectClusterPhoto(['raiders', 'purdy', 'shanahan', 'kubiak', 'kittle', 'crosby'], offenseFilmVid.videoId),
@@ -1288,7 +1315,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       category: 'roster',
       categoryLabel: 'Trade Window Intel',
       headline: 'Countdown to the Nov 10 Trade Deadline: Evaluating 49ers WR/12-Personnel TE, Left Guard & Expiring Edge Rentals',
-      synthesizedFromCount: 14,
+      synthesizedFromCount: tradeLinks.length,
       signalScore: 93,
       citedReporterIds: ['adam_schefter', 'ian_rapoport', 'matt_barrows', 'matt_maiocco', 'albert_breer'],
       ...selectClusterPhoto(['trade', 'deadline', 'lynch', 'cap', '49ers'], '1r03PLzYU54'),

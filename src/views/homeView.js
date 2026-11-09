@@ -36,6 +36,7 @@ import {
 } from '../engine/linkIntegrity.js';
 import { resolveGameDayInjuryRows } from '../engine/gameDayRosterEngine.js';
 import { buildXBeatListSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
+import { resolveClusterSafeReports } from './newsView.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -166,11 +167,15 @@ function renderSingleDashboardCard({
               ${top2
                 .map(c => {
                   const hasHeroImg = c.heroImageUrl && /^https:\/\//i.test(c.heroImageUrl);
+                  const safeReports = resolveClusterSafeReports(c, rawList);
+                  const reportCount = safeReports.length || Number(c.synthesizedFromCount) || 0;
                   return `
                 <div class="subcard-panel">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:5px">
                     <span class="badge badge-gold">${esc(c.categoryLabel)}</span>
-                    <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(c.synthesizedFromCount)} reports • ${esc(relTime(c.publishedAt))}</span>
+                    <span class="mono" style="font-size:11px;color:var(--text-muted)">
+                      <button type="button" class="synthesis-reports-link mono" data-action="open-synthesis-sources" data-cluster-id="${esc(c.id)}">${reportCount} report${reportCount === 1 ? '' : 's'}</button> • ${esc(relTime(c.publishedAt))}
+                    </span>
                   </div>
                   <div class="${hasHeroImg ? 'media-split-row' : ''}">
                     <div style="min-width:0">
@@ -186,18 +191,17 @@ function renderSingleDashboardCard({
                     }
                   </div>
                   ${
-                    c.featuredPlayers?.length || (c.sourceLinks || []).filter(sl => sanitizeExternalUrl(sl?.url, null)).length
+                    c.featuredPlayers?.length || safeReports.length
                       ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px">
                           ${c.featuredPlayers?.length ? renderAvatarStackHtml(c.featuredPlayers, 25, 5) : '<span></span>'}
                           ${
-                            (c.sourceLinks || []).filter(sl => sanitizeExternalUrl(sl?.url, null)).length
+                            safeReports.length
                               ? `<div class="source-link-strip">
-                                  ${c.sourceLinks
-                                    .filter(sl => sanitizeExternalUrl(sl?.url, null))
+                                  ${safeReports
                                     .slice(0, 2)
                                     .map(
                                       sl => `
-                                    <a href="${esc(sanitizeExternalUrl(sl.url))}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                                    <a href="${esc(sl.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
                                       <span>${esc(sl.outlet || 'Source')}</span>
                                       ${iconSvg('external', 11)}
                                     </a>

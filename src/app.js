@@ -42,7 +42,11 @@ import { esc, formatRelativeAge } from './views/uiHelpers.js';
 import { getJargonEntry } from './engine/jargonGlossary.js';
 import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
-import { renderNewsViewHtml } from './views/newsView.js';
+import {
+  renderNewsViewHtml,
+  resolveClusterSafeReports,
+  renderSynthesisSourcesSheetHtml
+} from './views/newsView.js';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js';
@@ -532,6 +536,15 @@ function renderSheet() {
         archivedEpisodes: getArchivedEpisodes(),
         archivedAnalyses: getArchivedAnalyses()
       });
+    } else if (state.sheetMode === 'synthesis_sources') {
+      const cluster = (state.appData?.news?.clusteredBriefs || []).find(
+        c => String(c.id) === String(state.sheetSynthesisClusterId)
+      );
+      const rawStream = state.appData?.news?.rawStream || [];
+      const reports = resolveClusterSafeReports(cluster, rawStream);
+      if (eyebrow) eyebrow.textContent = `${cluster?.categoryLabel || 'AI Synthesis'} • ${reports.length} Reports`;
+      if (title) title.textContent = `Reports Used (${reports.length})`;
+      body.innerHTML = renderSynthesisSourcesSheetHtml(cluster, rawStream);
     }
   });
 }
@@ -811,6 +824,12 @@ function bindEvents() {
 
       case 'open-archive':
         state.sheetMode = 'vault';
+        renderSheet();
+        break;
+
+      case 'open-synthesis-sources':
+        state.sheetSynthesisClusterId = btn.getAttribute('data-cluster-id') || null;
+        state.sheetMode = 'synthesis_sources';
         renderSheet();
         break;
 

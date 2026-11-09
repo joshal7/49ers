@@ -3287,6 +3287,30 @@ async function main() {
         const hasSettingsDurationSlider = Boolean(document.getElementById('prefPodDurationSlider'));
         document.getElementById('closeSheetBtn').click();
 
+        // Verify "XX reports" clickable link on Home AND News -> Synthesis Briefs opens full clickable report sheet!
+        document.querySelector('[data-nav-tab="home"]').click();
+        const homeReportsBtn = document.querySelector('#mainView [data-action="open-synthesis-sources"]');
+        const homeBtnMatch = (homeReportsBtn?.textContent || '').match(/(\d+)\s+report/i);
+        const homeExpectedCount = homeBtnMatch ? Number(homeBtnMatch[1]) : -1;
+        homeReportsBtn?.click();
+        const homeSheetOpen = !document.getElementById('bottomSheetBackdrop').hidden;
+        const homeSheetLinks = Array.from(document.querySelectorAll('#sheetBody a[data-synthesis-report-link]'));
+        const homeAllHttpsNewTab = homeSheetLinks.every(
+          a => (a.getAttribute('href') || '').startsWith('https://') && a.getAttribute('target') === '_blank'
+        );
+        document.getElementById('closeSheetBtn').click();
+
+        document.querySelector('[data-nav-tab="news"]').click();
+        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        const newsReportsBtn = document.querySelector('#mainView [data-action="open-synthesis-sources"]');
+        const newsBtnMatch = (newsReportsBtn?.textContent || '').match(/(\d+)\s+report/i);
+        const newsExpectedCount = newsBtnMatch ? Number(newsBtnMatch[1]) : -1;
+        newsReportsBtn?.click();
+        const newsSheetOpen = !document.getElementById('bottomSheetBackdrop').hidden;
+        const newsSheetLinksCount = document.querySelectorAll('#sheetBody a[data-synthesis-report-link]').length;
+        document.getElementById('closeSheetBtn').click();
+        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+
         return {
           tweetCount: tweetCards.length,
           hasAuthorLinks,
@@ -3297,7 +3321,14 @@ async function main() {
           excessPhrases,
           hasSettingsHostFormat,
           hasSettingsDurationSlider,
-          sheetHasPodcastSection: sheetTxt.includes('Custom Podcast Preferences')
+          sheetHasPodcastSection: sheetTxt.includes('Custom Podcast Preferences'),
+          homeSheetOpen,
+          homeExpectedCount,
+          homeActualCount: homeSheetLinks.length,
+          homeAllHttpsNewTab,
+          newsSheetOpen,
+          newsExpectedCount,
+          newsSheetLinksCount
         };
       });
 
@@ -3319,6 +3350,16 @@ async function main() {
           wireAndClutterAudit.hasSettingsDurationSlider &&
           wireAndClutterAudit.sheetHasPodcastSection,
         `Podcast Host Format / Default Duration missing in Settings: ${JSON.stringify(wireAndClutterAudit)}`
+      );
+      assert(
+        wireAndClutterAudit.homeSheetOpen &&
+          wireAndClutterAudit.homeExpectedCount >= 3 &&
+          wireAndClutterAudit.homeActualCount === wireAndClutterAudit.homeExpectedCount &&
+          wireAndClutterAudit.homeAllHttpsNewTab &&
+          wireAndClutterAudit.newsSheetOpen &&
+          wireAndClutterAudit.newsExpectedCount >= 3 &&
+          wireAndClutterAudit.newsSheetLinksCount === wireAndClutterAudit.newsExpectedCount,
+        `Clickable "XX reports" synthesis sources sheet audit failed: ${JSON.stringify(wireAndClutterAudit)}`
       );
 
       await cdp.setViewport(393, 852, true, 3);
