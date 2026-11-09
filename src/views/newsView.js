@@ -15,7 +15,7 @@ import {
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
-import { buildXBeatListSearchUrl } from '../engine/beatAttributionEngine.js';
+import { buildXBeatListSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderNewsViewHtml({
   appData = null,
@@ -140,8 +140,11 @@ export function renderNewsViewHtml({
             ${activeBreakingItems
               .map(item => {
                 const isTw = item.type === 'tweet' || item.type === 'social';
+                const itemHref = isTw
+                  ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), '#')
+                  : sanitizeExternalUrl(item.url, '#');
                 const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
-                const authorHref = sanitizeExternalUrl(item.authorProfileUrl, sanitizeExternalUrl(item.url, '#'));
+                const authorHref = sanitizeExternalUrl(item.authorProfileUrl, itemHref);
                 const strippedBody = isTw
                   ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
                   : item.title;
@@ -157,7 +160,7 @@ export function renderNewsViewHtml({
                       </div>
                       <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(formatRelativeAge(item.publishedAt))}</span>
                     </div>
-                    <a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:600;line-height:1.42;color:var(--text-primary)">
+                    <a href="${esc(itemHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:600;line-height:1.42;color:var(--text-primary)">
                       ${esc(bodyText)} ${iconSvg('externalLink', 11)}
                     </a>
                   </div>
@@ -330,9 +333,12 @@ export function renderNewsViewHtml({
               const isVideo = item.type === 'video';
 
               const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+              const resolvedItemUrl = isTweet
+                ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
+                : sanitizeExternalUrl(item.url, null);
               const authorHref = sanitizeExternalUrl(
                 item.authorProfileUrl,
-                sanitizeExternalUrl(item.url, null)
+                resolvedItemUrl
               );
               const rawBody = isTweet
                 ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
@@ -383,8 +389,8 @@ export function renderNewsViewHtml({
                     <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
                       <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.42">
                         ${
-                          sanitizeExternalUrl(item.url, null)
-                            ? `<a href="${esc(sanitizeExternalUrl(item.url))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
+                          resolvedItemUrl
+                            ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
                             : esc(displayTitle)
                         }
                       </div>
@@ -399,9 +405,13 @@ export function renderNewsViewHtml({
                                    .map(cr => {
                                      const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
                                      const crBody = stripRedundantAuthorBoilerplate(cr.fullText || cr.title || '', crAuthor);
+                                     const crIsTw = cr.type === 'tweet' || cr.type === 'social';
+                                     const crHref = crIsTw
+                                       ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
+                                       : sanitizeExternalUrl(cr.url, '#');
                                      return `<div style="font-size:11.5px;color:var(--text-secondary)">
                                        <strong>${esc(crAuthor)}</strong> <span class="mono" style="color:var(--text-muted)">• ${esc(formatRelativeAge(cr.publishedAt))}</span>:
-                                       <a href="${esc(sanitizeExternalUrl(cr.url, '#'))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-secondary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''}</a>
+                                       <a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-secondary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''}</a>
                                      </div>`;
                                    })
                                    .join('')}
@@ -411,8 +421,8 @@ export function renderNewsViewHtml({
                       }
                     </div>
                     ${
-                      hasThumb && sanitizeExternalUrl(item.url || item.externalUrl, null)
-                        ? `<a href="${esc(sanitizeExternalUrl(item.url || item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
+                      hasThumb && (resolvedItemUrl || sanitizeExternalUrl(item.externalUrl, null))
+                        ? `<a href="${esc(resolvedItemUrl || sanitizeExternalUrl(item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
                             <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
                           </a>`
                         : hasThumb

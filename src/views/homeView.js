@@ -35,7 +35,7 @@ import {
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 import { resolveGameDayInjuryRows } from '../engine/gameDayRosterEngine.js';
-import { buildXBeatListSearchUrl } from '../engine/beatAttributionEngine.js';
+import { buildXBeatListSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -232,6 +232,7 @@ function renderSingleDashboardCard({
                 ${topTweets
                   .map(tw => {
                     const authorName = tw.author || tw.reporterName || tw.outletName || '49ers Beat';
+                    const resolvedTwUrl = sanitizeExternalUrl(resolveOriginalTweetUrl(tw, rawList), '#');
                     const cleanedTweetBody = stripRedundantAuthorBoilerplate(
                       tw.fullText || tw.title || '',
                       authorName
@@ -243,7 +244,7 @@ function renderSingleDashboardCard({
                     const safeTwExt = sanitizeExternalUrl(tw.externalUrl, null);
                     const showExtChip =
                       Boolean(safeTwExt) &&
-                      !isRedundantProfileSelfLink(safeTwExt, tw.url) &&
+                      !isRedundantProfileSelfLink(safeTwExt, resolvedTwUrl) &&
                       !/\bon X$/i.test(String(tw.externalTitle || ''));
                     return `
                   <div class="home-wire-item ${tw.breakingPriority > 0 ? 'breaking-elevated' : ''}">
@@ -254,13 +255,13 @@ function renderSingleDashboardCard({
                             ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
-                        <a href="${esc(sanitizeExternalUrl(tw.authorProfileUrl, sanitizeExternalUrl(tw.url, '#')))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
+                        <a href="${esc(sanitizeExternalUrl(tw.authorProfileUrl, resolvedTwUrl))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
                           <strong>${esc(authorName)}</strong>
                         </a>
                       </div>
                       <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
                     </div>
-                    <a href="${esc(sanitizeExternalUrl(tw.url, '#'))}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
+                    <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
                       ${esc(fullShortTweet)}
                       <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                     </a>

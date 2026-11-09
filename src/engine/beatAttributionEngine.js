@@ -230,16 +230,24 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
       };
     }
     const finalName = customName || fallback.reporterName || fallback.author || '49ers Beat Wire';
-    const cleanFallbackHandle = String(fallback.authorHandle || '').replace(/^@/, '');
-    const fallbackXUrl = cleanFallbackHandle ? `https://x.com/${cleanFallbackHandle}` : null;
+    const isCustomExternalWriter = Boolean(customName);
+    const cleanFallbackHandle = isCustomExternalWriter ? '' : String(fallback.authorHandle || '').replace(/^@/, '');
+    const fallbackXUrl = cleanFallbackHandle
+      ? `https://x.com/${cleanFallbackHandle}`
+      : isCustomExternalWriter
+        ? `https://x.com/search?q=${encodeURIComponent(`"${customName}" 49ers`)}&src=typed_query&f=live`
+        : null;
+    const customSlug = isCustomExternalWriter
+      ? `ext_${String(customName).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}`
+      : null;
     return {
       cleanedText: cleanedBody || original,
-      reporterId: fallback.reporterId || 'nick_wagoner',
+      reporterId: customSlug || fallback.reporterId || null,
       reporterName: finalName,
       author: finalName,
-      authorHandle: fallback.authorHandle || '',
+      authorHandle: isCustomExternalWriter ? '' : fallback.authorHandle || '',
       xUrl: fallbackXUrl,
-      authorProfileUrl: fallbackXUrl || fallback.authorProfileUrl || null,
+      authorProfileUrl: fallbackXUrl || (isCustomExternalWriter ? null : fallback.authorProfileUrl || null),
       outletId: fallback.outletId || 'espn',
       outletName: customOutlet || fallback.outletName || '49ers Beat Wire',
       trustTier: fallbackEntry?.trustTier || 2,
@@ -530,4 +538,207 @@ export function buildXPlayerScoopSearchUrl(playerName = '') {
   if (!cleanName) return buildXBeatListSearchUrl('trusted');
   const q = `"${cleanName}" (49ers OR from:MaioccoNBCS OR from:nwagoner OR from:mattbarrows OR from:LombardiHimself OR from:Eric_Branch OR from:CamInman)`;
   return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+}
+
+/**
+ * Decodes a 64-bit X/Twitter Snowflake status ID into its exact UTC creation timestamp (ms).
+ */
+export function extractXSnowflakeTimestampMs(tweetId = '') {
+  const clean = String(tweetId || '').trim();
+  if (!/^\d{15,22}$/.test(clean)) return null;
+  try {
+    const ms = Number((BigInt(clean) >> 22n) + 1288834974657n);
+    return Number.isFinite(ms) && ms > 1_288_834_974_657 ? ms : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Returns true if `url` points to a generic ESPN player bio/profile page (`/nfl/player/_/id/...`),
+ * which should NEVER be used as the destination link for a tweet.
+ */
+export function isEspnPlayerProfileUrl(url = '') {
+  return /^https?:\/\/(?:www\.|m\.)?espn\.com\/nfl\/player\/_\/id\/\d+/i.test(String(url || '').trim());
+}
+
+/**
+ * Returns true if `url` is a genuine direct social status URL (`x.com/<handle>/status/<id>` or `bsky.app/profile/.../post/...`)
+ * or an official 49ers.com transaction log entry.
+ */
+export function isDirectSocialPostUrl(url = '') {
+  const clean = String(url || '').trim();
+  if (/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/i.test(clean)) return true;
+  if (/^https?:\/\/bsky\.app\/profile\/[^/]+\/post\/[A-Za-z0-9]+/i.test(clean)) return true;
+  if (/^https?:\/\/(?:www\.)?49ers\.com\/team\/transactions\//i.test(clean)) return true;
+  return false;
+}
+
+/**
+ * Builds a precision X (`x.com`) tweet lookup URL (`from:<handle> "<PlayerSurname>" since:YYYY-MM-DD`)
+ * so wire-cited tweets open directly on the reporter's original post on X rather than an ESPN player profile.
+ */
+export function buildTargetedOriginalTweetUrl({
+  authorHandle = '',
+  authorName = '',
+  playerName = '',
+  text = '',
+  publishedAt = ''
+} = {}) {
+  const resolvedEntry = resolveReporterFromNameOrHandle(authorHandle || authorName);
+  const cleanHandle = String(authorHandle || resolvedEntry?.handle || '')
+    .replace(/^@/, '')
+    .trim();
+
+  const cleanPlayer = String(playerName || '')
+    .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+    .trim();
+  const surname = cleanPlayer ? cleanPlayer.split(/\s+/).slice(-1)[0] : '';
+
+  let focusTerm = surname && surname.length >= 3 ? surname : '';
+  if (!focusTerm && text) {
+    const leadProper = String(text).match(/^([A-Z][a-z'.-]{2,18})\b/);
+    if (leadProper && !/^(The|San|Head|Coach|Week|Sunday|Monday|Friday)$/i.test(leadProper[1])) {
+      focusTerm = leadProper[1];
+    }
+  }
+
+  let sinceClause = '';
+  const pubMs = publishedAt ? Date.parse(publishedAt) : NaN;
+  if (Number.isFinite(pubMs)) {
+    const sinceIso = new Date(pubMs - 36 * 3_600_000).toISOString().slice(0, 10);
+    sinceClause = ` since:${sinceIso}`;
+  }
+
+  if (cleanHandle) {
+    const q = focusTerm ? `from:${cleanHandle} "${focusTerm}"${sinceClause}` : `from:${cleanHandle} 49ers${sinceClause}`;
+    return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+  }
+
+  const cleanAuthor = String(authorName || '').trim();
+  if (cleanAuthor && cleanAuthor.length >= 4 && !/beat wire|espn|rotowire/i.test(cleanAuthor)) {
+    const q = focusTerm ? `"${cleanAuthor}" "${focusTerm}"${sinceClause}` : `"${cleanAuthor}" 49ers${sinceClause}`;
+    return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+  }
+
+  if (cleanPlayer) {
+    return buildXPlayerScoopSearchUrl(cleanPlayer);
+  }
+  return buildXBeatListSearchUrl('trusted');
+}
+
+/**
+ * Resolves the best authentic destination URL for a tweet item:
+ * 1. Preserves real direct `x.com/<handle>/status/<id>` (upgrading `twitter.com` -> `x.com`) & `bsky.app/profile/.../post/<rkey>` URLs.
+ * 2. If `item.url` is an ESPN player bio page (`/nfl/player/_/id/...`) or missing, first checks `directSocialPosts`
+ *    for a matching direct post by the same reporter on the same player within 8 hours.
+ * 3. Otherwise builds a precision `x.com/search?q=from:<handle>+"<Player>"` lookup URL directly to the reporter's tweet on X.
+ */
+export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
+  const rawUrl = String(item?.url || '').trim();
+  if (/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]+)\/status\/(\d+)/i.test(rawUrl)) {
+    const m = rawUrl.match(/\/([A-Za-z0-9_]+)\/status\/(\d+)/i);
+    return `https://x.com/${m[1]}/status/${m[2]}`;
+  }
+  if (isDirectSocialPostUrl(rawUrl)) {
+    return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
+  }
+
+  // If it's a real article/headline URL that is NOT an ESPN player bio page or generic RotoWire index, keep it only for non-tweet types
+  if (rawUrl && !isEspnPlayerProfileUrl(rawUrl) && item?.type !== 'tweet' && item?.type !== 'social') {
+    return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
+  }
+
+  const primaryPlayerName =
+    item?.mentionedPlayers?.[0]?.name ||
+    item?.primaryPlayer?.name ||
+    '';
+  const normPlayer = primaryPlayerName
+    .toLowerCase()
+    .replace(/\b(jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+    .replace(/[^a-z0-9]/g, '');
+  const surname = primaryPlayerName
+    .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+    .trim()
+    .split(/\s+/)
+    .slice(-1)[0]
+    ?.toLowerCase();
+
+  const itemAuthorEntry = resolveReporterFromNameOrHandle(
+    item?.reporterId || item?.authorHandle || item?.author || item?.reporterName
+  );
+  const itemHandleLower = String(item?.authorHandle || itemAuthorEntry?.handle || '')
+    .replace(/^@/, '')
+    .toLowerCase();
+  const itemAuthorLower = String(item?.author || item?.reporterName || itemAuthorEntry?.name || '')
+    .trim()
+    .toLowerCase();
+  const itemPubMs = item?.publishedAt ? Date.parse(item.publishedAt) : NaN;
+
+  // Cross-match against direct `x.com/.../status/...` and `bsky.app/.../post/...` posts in the feed
+  if (Array.isArray(directSocialPosts) && directSocialPosts.length > 0 && (itemHandleLower || itemAuthorLower)) {
+    let bestDirectUrl = null;
+    let bestRank = -1;
+
+    for (const dp of directSocialPosts) {
+      const dpUrl = String(dp?.url || '').trim();
+      if (!dpUrl || !isDirectSocialPostUrl(dpUrl) || dpUrl.includes('49ers.com/team/transactions')) continue;
+
+      const dpEntry = resolveReporterFromNameOrHandle(
+        dp?.reporterId || dp?.authorHandle || dp?.author || dp?.reporterName
+      );
+      const dpHandleLower = String(dp?.authorHandle || dpEntry?.handle || '')
+        .replace(/^@/, '')
+        .toLowerCase();
+      const dpAuthorLower = String(dp?.author || dp?.reporterName || dpEntry?.name || '')
+        .trim()
+        .toLowerCase();
+      if (itemHandleLower) {
+        if (dpHandleLower !== itemHandleLower) continue;
+      } else if (!itemAuthorLower || dpAuthorLower !== itemAuthorLower) {
+        continue;
+      }
+
+      const dpPubMs = dp?.publishedAt ? Date.parse(dp.publishedAt) : NaN;
+      if (Number.isFinite(itemPubMs) && Number.isFinite(dpPubMs)) {
+        if (Math.abs(itemPubMs - dpPubMs) > 8 * 3_600_000) continue;
+      }
+
+      const dpTextLower = `${dp?.fullText || ''} ${dp?.title || ''}`.toLowerCase();
+      const mentionsSamePlayer =
+        (normPlayer &&
+          Array.isArray(dp?.mentionedPlayers) &&
+          dp.mentionedPlayers.some(
+            mp =>
+              String(mp?.name || '')
+                .toLowerCase()
+                .replace(/\b(jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+                .replace(/[^a-z0-9]/g, '') === normPlayer
+          )) ||
+        (surname && surname.length >= 4 && dpTextLower.includes(surname));
+
+      if (!mentionsSamePlayer) continue;
+
+      // Prefer exact x.com/status/<id> over bsky mirror when both exist
+      const rank = /x\.com\/[^/]+\/status\/\d+/i.test(dpUrl) ? 2 : 1;
+      if (rank > bestRank) {
+        bestRank = rank;
+        bestDirectUrl = /^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(dpUrl)
+          ? dpUrl.replace(/^https?:\/\/(?:www\.)?twitter\.com\//i, 'https://x.com/')
+          : dpUrl;
+      }
+    }
+
+    if (bestDirectUrl) {
+      return bestDirectUrl;
+    }
+  }
+
+  return buildTargetedOriginalTweetUrl({
+    authorHandle: item?.authorHandle || itemAuthorEntry?.handle || '',
+    authorName: item?.author || item?.reporterName || '',
+    playerName: primaryPlayerName,
+    text: item?.fullText || item?.title || item?.headline || '',
+    publishedAt: item?.publishedAt || ''
+  });
 }

@@ -4136,6 +4136,19 @@ test('News Classifier prioritizes live in-game injuries, demotes stale pre-game 
   assert.equal(garafoloCount, 1, `Tweeter name must appear ONLY ONCE on tweet card, got ${garafoloCount}`);
   assert.ok(!newsHtml.includes('Tweet • @'), 'Redundant Tweet • @handle pill must be removed');
   assert.ok(!newsHtml.includes('Linked Story:'), 'Redundant X profile Linked Story pill must be removed');
+  assert.ok(!newsHtml.includes('espn.com/nfl/player/'), 'Tweet link must NEVER point to an ESPN player profile page');
+  assert.ok(newsHtml.includes('https://x.com/search?q=from%3AMikeGarafolo'), 'Legacy ESPN-bio tweet URL must upgrade to targeted X original-tweet lookup');
+
+  // Verify live data/news.json and data/roster.json have 0 tweets pointing to espn.com/nfl/player/
+  const liveNewsFeed = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const espnBioTweets = (liveNewsFeed.rawStream || []).filter(
+    it => (it.type === 'tweet' || it.type === 'social') && /espn\.com\/nfl\/player\//i.test(String(it.url || ''))
+  );
+  assert.equal(espnBioTweets.length, 0, `Expected 0 tweets in news.json pointing to ESPN player profiles, found ${espnBioTweets.length}`);
+  const directXStatusCount = (liveNewsFeed.rawStream || []).filter(
+    it => it.type === 'tweet' && /^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+/i.test(String(it.url || ''))
+  ).length;
+  assert.ok(directXStatusCount >= 5, `Expected >=5 direct x.com/<handle>/status/<id> tweets in news.json, got ${directXStatusCount}`);
 
   const settingsHtml = renderSettingsSheetHtml({
     userPrefs: { podFormat: 'two_host', defaultPodDurationMin: 5, disabledReporterIds: [], disabledOutlets: [] },

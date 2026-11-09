@@ -3264,6 +3264,10 @@ async function main() {
         const hasRelativeAges = tweetCards.every(c => Boolean(c.querySelector('[data-wire-age]')));
         const leakedTweetHandlePills = tweetCards.filter(c => /Tweet\s*•\s*@/i.test(c.textContent || '')).length;
         const leakedSelfProfileLinks = tweetCards.filter(c => /Linked Story:.*\bon X/i.test(c.textContent || '')).length;
+        const leakedEspnPlayerBioTweetLinks = tweetCards.filter(c => {
+          const bodyAnchor = c.querySelectorAll('a[href]')[1];
+          return /espn\.com\/nfl\/player\//i.test(bodyAnchor?.getAttribute('href') || '');
+        }).length;
         document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
 
         // Scrub check across all 5 main tabs
@@ -3289,6 +3293,7 @@ async function main() {
           hasRelativeAges,
           leakedTweetHandlePills,
           leakedSelfProfileLinks,
+          leakedEspnPlayerBioTweetLinks,
           excessPhrases,
           hasSettingsHostFormat,
           hasSettingsDurationSlider,
@@ -3301,8 +3306,9 @@ async function main() {
           wireAndClutterAudit.hasAuthorLinks &&
           wireAndClutterAudit.hasRelativeAges &&
           wireAndClutterAudit.leakedTweetHandlePills === 0 &&
-          wireAndClutterAudit.leakedSelfProfileLinks === 0,
-        `Tweet single-attribution audit failed: ${JSON.stringify(wireAndClutterAudit)}`
+          wireAndClutterAudit.leakedSelfProfileLinks === 0 &&
+          wireAndClutterAudit.leakedEspnPlayerBioTweetLinks === 0,
+        `Tweet single-attribution & non-ESPN-bio link audit failed: ${JSON.stringify(wireAndClutterAudit)}`
       );
       assert(
         wireAndClutterAudit.excessPhrases.length === 0,

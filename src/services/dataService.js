@@ -35,7 +35,8 @@ import {
 } from '../engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
-  resolveReporterFromNameOrHandle
+  resolveReporterFromNameOrHandle,
+  resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
 
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
@@ -366,7 +367,16 @@ export async function loadAll49ersData(basePrefix = './data') {
   ]);
 
   if (news && Array.isArray(news.rawStream)) {
-    news.rawStream = sortNewsWithBreakingPriority(news.rawStream);
+    const directPosts = news.rawStream.filter(
+      it => (it?.type === 'tweet' || it?.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(String(it?.url || ''))
+    );
+    news.rawStream = sortNewsWithBreakingPriority(
+      news.rawStream.map(it =>
+        it?.type === 'tweet' || it?.type === 'social'
+          ? { ...it, url: resolveOriginalTweetUrl(it, directPosts) }
+          : it
+      )
+    );
   }
 
   return {
@@ -832,18 +842,36 @@ export async function hydrateLiveEspnPlayerBeatWire(
             ? String(entry.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim()
             : '';
           const parsedAttr = extractBeatAttributionFromText(`${rawDesc} ${rawStory}`.trim(), {
-            reporterId: 'nick_wagoner',
-            reporterName: bylineHint || '49ers X Beat Wire',
+            reporterId: null,
+            reporterName: bylineHint || '49ers Beat Wire',
             outletId: 'espn',
             outletName: 'ESPN / X Beat Wire'
           });
 
           const cleanFull = cleanSensationalistText(parsedAttr.cleanedText || leadText);
           const directWebUrl = sanitizeExternalUrl(entry.links?.web?.href, null);
+          if (!directWebUrl && !parsedAttr.viaWire && !bylineHint) continue;
           const wireIdToken = entry.id || hashWireKey(`${player.id}_${pubIso}_${cleanFull.slice(0, 40)}`);
-          const itemUrl = directWebUrl || `${buildEspnPlayerUrl(player.id, player.name)}#wire-${wireIdToken}`;
+          const isPlayerBlurb = Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWebUrl;
+          const itemUrl = isPlayerBlurb
+            ? resolveOriginalTweetUrl(
+                {
+                  type: 'tweet',
+                  url: directWebUrl || '',
+                  author: parsedAttr.author,
+                  reporterId: parsedAttr.reporterId,
+                  reporterName: parsedAttr.reporterName,
+                  authorHandle: parsedAttr.authorHandle,
+                  primaryPlayer: player,
+                  fullText: cleanFull,
+                  title: cleanFull,
+                  publishedAt: new Date(pubMs).toISOString()
+                },
+                appData.news.rawStream
+              )
+            : directWebUrl;
           const textKey = cleanFull.toLowerCase().slice(0, 90);
-          if (existingUrls.has(itemUrl) || existingTextKeys.has(textKey)) continue;
+          if (!itemUrl || existingTextKeys.has(textKey)) continue;
 
           const sig = scoreContentSignal(cleanFull, rawStory);
           if (sig.isClickbait) continue;
@@ -862,7 +890,6 @@ export async function hydrateLiveEspnPlayerBeatWire(
             ...matchedOthers.filter(m => String(m.id) !== String(player.id))
           ];
 
-          const isPlayerBlurb = Boolean(entry.story) || entry.type === 'PlayerNews' || !directWebUrl;
           const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
           const brk = classifyBreakingItem({
             title: isPlayerBlurb ? tweetDisplay.text : rawHeadline || tweetDisplay.text,

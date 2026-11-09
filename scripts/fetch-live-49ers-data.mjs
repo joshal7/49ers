@@ -19,6 +19,7 @@ import { buildCombineIndexer } from './lib/combineSpider.mjs';
 import {
   searchYouTubeVideos,
   fetchLiveBeatSocialPosts,
+  harvestEmbeddedXStatusTweetsFromRss,
   fetchLatest49ersPodcasts7d,
   buildClusteredNewsBriefs,
   buildFrontOfficeCapBlueprint,
@@ -90,7 +91,8 @@ import {
 } from '../src/engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
-  resolveReporterFromNameOrHandle
+  resolveReporterFromNameOrHandle,
+  resolveOriginalTweetUrl
 } from '../src/engine/beatAttributionEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -1450,13 +1452,14 @@ async function main() {
   // 8. Fetch Live Beat Social Posts, X-Beat Player Wire, News RSS, Official 49ers RSS, Podcasts & YouTube Clips (`data/news.json` + `data/beat-podcasts.json`)
   console.log('[5/6] Fetching live X-Beat Player Wire, Beat Social Wire, Official/Beat RSS, Deep 7-Day Player Mentions, 6 Podcasts & YouTube Clips...');
   const [
-    liveBeatTweets,
+    rawBeatTweets,
     ninersNationXml,
     official49ersXml,
     nbcsbaXml,
     pfrRumorsXml,
     rotowireXml,
     sfStandardXml,
+    heavy49ersXml,
     gnewsBeatXml,
     liveYtClips,
     beatPodcasts7d
@@ -1468,12 +1471,24 @@ async function main() {
     fetchText('https://www.profootballrumors.com/san-francisco-49ers/feed').catch(() => ''),
     fetchText('https://www.rotowire.com/rss/news.php?sport=NFL').catch(() => ''),
     fetchText('https://www.sfstandard.com/sports/feed/').catch(() => ''),
+    fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
     fetchText(
       'https://news.google.com/rss/search?q=%2249ers%22+(Maiocco+OR+Barrows+OR+Lombardi+OR+Wagoner+OR+Shanahan+OR+Buckner+OR+Bosa+OR+Aiyuk+OR+%22Mike+Evans%22)+when:7d&hl=en-US&gl=US&ceid=US:en'
     ).catch(() => ''),
     searchYouTubeVideos('San Francisco 49ers Kyle Shanahan 2026', 8),
     fetchLatest49ersPodcasts7d().catch(() => ({ updatedAt: new Date().toISOString(), windowDays: 7, shows: [], episodes: [] }))
   ]);
+
+  // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded in beat RSS feeds via oEmbed
+  const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss([
+    pfrRumorsXml,
+    heavy49ersXml,
+    ninersNationXml,
+    nbcsbaXml,
+    official49ersXml,
+    sfStandardXml
+  ]).catch(() => []);
+  const liveBeatTweets = [...harvestedXTweets, ...rawBeatTweets];
 
   // Batch-fetch ESPN 24/7 X-Beat Player Wire across all numeric-ESPN-ID 49ers players (7-day window)
   const sevenDayWireCutoffMs = Date.now() - 7 * 86_400_000;
@@ -1511,22 +1526,42 @@ async function main() {
               ? String(entry.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim()
               : '';
             const attr = extractBeatAttributionFromText(`${rawDesc} ${rawStory}`.trim(), {
-              reporterId: 'nick_wagoner',
-              reporterName: bylineHint || '49ers X Beat Wire',
+              reporterId: null,
+              reporterName: bylineHint || '49ers Beat Wire',
               outletId: 'espn',
               outletName: 'ESPN / X Beat Wire'
             });
             const cleanFull = cleanSensationalistText(attr.cleanedText || lead);
             const directWeb = sanitizeExternalUrl(entry.links?.web?.href, null);
+            if (!directWeb && !attr.viaWire && !bylineHint) {
+              continue;
+            }
             const wireToken = entry.id || `${p.id}_${Math.floor(pubMs / 1000)}`;
-            const itemUrl = directWeb || `${buildEspnPlayerUrl(p.id, p.name)}#wire-${wireToken}`;
-            const isPlayerBlurb = Boolean(entry.story) || entry.type === 'PlayerNews' || !directWeb;
+            const isPlayerBlurb = Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWeb;
+            const pubIsoStr = new Date(pubMs).toISOString();
+            const itemUrl = isPlayerBlurb
+              ? resolveOriginalTweetUrl(
+                  {
+                    type: 'tweet',
+                    url: directWeb || '',
+                    author: attr.author,
+                    reporterId: attr.reporterId,
+                    reporterName: attr.reporterName,
+                    authorHandle: attr.authorHandle,
+                    primaryPlayer: p,
+                    fullText: cleanFull,
+                    title: cleanFull,
+                    publishedAt: pubIsoStr
+                  },
+                  liveBeatTweets
+                )
+              : directWeb;
             const fmtTw = formatTweetBodyForDisplay(cleanFull);
             const brk = classifyBreakingItem({
               title: isPlayerBlurb ? fmtTw.text : rawHeadline || fmtTw.text,
               fullText: cleanFull,
               summary: rawStory || rawDesc,
-              publishedAt: new Date(pubMs).toISOString()
+              publishedAt: pubIsoStr
             });
 
             espnPlayerWireItems.push({
@@ -1539,7 +1574,7 @@ async function main() {
               imageUrl: p.headshotUrl || '',
               imageAlt: `${p.name} beat update`,
               primaryPlayer: p,
-              publishedAt: new Date(pubMs).toISOString(),
+              publishedAt: pubIsoStr,
               url: itemUrl,
               externalUrl: null,
               externalTitle: null,

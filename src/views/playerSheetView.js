@@ -25,7 +25,7 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
-import { buildXPlayerScoopSearchUrl } from '../engine/beatAttributionEngine.js';
+import { buildXPlayerScoopSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
 
 export function renderPlayerDossierSheetHtml({
   player,
@@ -102,9 +102,18 @@ function renderOverviewTab(p) {
                 const isTweet = n.type === 'tweet' || n.type === 'social';
                 const hasImg = n.imageUrl && /^https:\/\//i.test(n.imageUrl);
                 const authorName = n.author || n.reporterName || n.outletName || '49ers Beat';
+                const resolvedMentionUrl = isTweet
+                  ? sanitizeExternalUrl(
+                      resolveOriginalTweetUrl(
+                        { ...n, primaryPlayer: { name: p.name } },
+                        sortedMentions
+                      ),
+                      '#'
+                    )
+                  : sanitizeExternalUrl(n.url, '#');
                 const authorHref = sanitizeExternalUrl(
                   n.authorProfileUrl,
-                  sanitizeExternalUrl(n.url, null)
+                  resolvedMentionUrl
                 );
                 const ageStr = n.publishedAt ? formatRelativeAge(n.publishedAt) : '';
 
@@ -154,7 +163,7 @@ function renderOverviewTab(p) {
                   <div style="min-width:0">
                     ${
                       isTweet
-                        ? `<a href="${esc(sanitizeExternalUrl(n.url, '#'))}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
+                        ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
                            ${
                              showMentionExt
                                ? `<div style="margin-top:5px">
@@ -165,7 +174,7 @@ function renderOverviewTab(p) {
                                   </div>`
                                : ''
                            }`
-                        : `<a href="${esc(sanitizeExternalUrl(n.url, '#'))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
+                        : `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
                            ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${esc(cleanSummary)}</div>` : ''}`
                     }
                   </div>
