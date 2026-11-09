@@ -19,6 +19,8 @@ import {
   buildOtcPositionUrl,
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
+  isOffTopicLeagueFiller,
+  isOpaqueShortenerUrl,
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../../src/engine/linkIntegrity.js';
@@ -166,6 +168,31 @@ function resolveMirroredInsiderAttribution(rawText = '', defaultAcc = {}) {
   };
 }
 
+const shortenerExpandCache = new Map();
+
+export async function expandShortenerUrl(rawUrl = '') {
+  const clean = String(rawUrl || '').trim();
+  if (!clean || !isOpaqueShortenerUrl(clean)) return clean;
+  if (shortenerExpandCache.has(clean)) return shortenerExpandCache.get(clean);
+  let resolved = '';
+  try {
+    const res = await fetch(clean, {
+      redirect: 'follow',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+      },
+      signal: AbortSignal.timeout(4500)
+    });
+    if (res?.url && !isOpaqueShortenerUrl(res.url)) {
+      resolved = res.url;
+    }
+  } catch {
+    resolved = '';
+  }
+  shortenerExpandCache.set(clean, resolved);
+  return resolved;
+}
+
 /**
  * Pulls live, real-time 49ers beat reporter & insider social posts via public Bluesky XRPC feeds,
  * complete with author attribution, full text for short tweets, breaking classification, and links.
@@ -214,7 +241,7 @@ export async function fetchLiveBeatSocialPosts() {
     },
     {
       actor: 'nbcs49ers.bsky.social',
-      reporterId: 'matt_maiocco',
+      reporterId: null,
       reporterName: '49ers on NBCSBA',
       authorHandle: '@NBCS49ers',
       outletId: 'nbcsba',
@@ -224,7 +251,7 @@ export async function fetchLiveBeatSocialPosts() {
     },
     {
       actor: 'nbcsportsbayarea.com',
-      reporterId: 'matt_maiocco',
+      reporterId: null,
       reporterName: 'NBC Sports Bay Area',
       authorHandle: '@NBCSAuthentic',
       outletId: 'nbcsba',
@@ -234,7 +261,7 @@ export async function fetchLiveBeatSocialPosts() {
     },
     {
       actor: '49erswebzone.bsky.social',
-      reporterId: 'al_sacco',
+      reporterId: null,
       reporterName: '49ers Webzone',
       authorHandle: '@49erswebzone',
       outletId: '49ers_webzone',
@@ -284,20 +311,22 @@ export async function fetchLiveBeatSocialPosts() {
     },
     {
       actor: 'nfltraderumors.bsky.social',
-      reporterId: 'adam_schefter',
-      reporterName: 'NFL Trade Rumors Wire',
-      authorHandle: '@nflrums',
-      outletId: 'nfl_network',
-      outletName: 'NFL Beat & Transaction Wire',
-      tier: 1,
+      reporterId: null,
+      reporterName: 'NFL Trade Rumors',
+      authorHandle: '',
+      authorProfileUrl: 'https://bsky.app/profile/nfltraderumors.bsky.social',
+      outletId: 'nfl_trade_rumors',
+      outletName: 'NFL Trade Rumors',
+      tier: 2,
       requireKeyword: true,
       parseInsiderPrefix: true
     },
     {
       actor: 'insidenflnews.bsky.social',
-      reporterId: 'tom_pelissero',
+      reporterId: null,
       reporterName: 'NFL Insider Wire',
-      authorHandle: '@InsideNFLNews',
+      authorHandle: '',
+      authorProfileUrl: 'https://bsky.app/profile/insidenflnews.bsky.social',
       outletId: 'nfl_network',
       outletName: 'NFL Insider Wire',
       tier: 1,
@@ -306,9 +335,10 @@ export async function fetchLiveBeatSocialPosts() {
     },
     {
       actor: 'nflnewsreposterbot.bsky.social',
-      reporterId: 'ian_rapoport',
+      reporterId: null,
       reporterName: 'NFL Beat Wire',
-      authorHandle: '@NFLBeatWire',
+      authorHandle: '',
+      authorProfileUrl: 'https://bsky.app/profile/nflnewsreposterbot.bsky.social',
       outletId: 'nfl_network',
       outletName: 'NFL Beat Wire',
       tier: 1,
@@ -364,7 +394,8 @@ export async function fetchLiveBeatSocialPosts() {
             publishedAt: pubIso
           });
 
-          const safeExternalUrl = sanitizeExternalUrl(extUri, null);
+          const expandedExtUri = extUri ? await expandShortenerUrl(extUri) : '';
+          const safeExternalUrl = sanitizeExternalUrl(expandedExtUri, null);
 
           posts.push({
             id: `tweet_${acc.actor.split('.')[0]}_${rkey || posts.length}`,
@@ -376,7 +407,7 @@ export async function fetchLiveBeatSocialPosts() {
             reporterId: attr.reporterId,
             reporterName: attr.reporterName,
             authorHandle: attr.authorHandle,
-            authorProfileUrl: attr.xUrl || `https://bsky.app/profile/${post.author?.handle || acc.actor}`,
+            authorProfileUrl: attr.xUrl || acc.authorProfileUrl || `https://bsky.app/profile/${post.author?.handle || acc.actor}`,
             title: formatted.text,
             fullText: formatted.text,
             isFullTweet: formatted.isFullTweet,
@@ -422,6 +453,14 @@ function decodeBasicEntitiesForOembed(html = '') {
   return String(html || '')
     .replace(/<br\s*\/?>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
+    .replace(/&#(\d+);/g, (_, dec) => {
+      const code = Number(dec);
+      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
+    })
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
+      const code = parseInt(hex, 16);
+      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
+    })
     .replace(/&mdash;/gi, '—')
     .replace(/&ndash;/gi, '–')
     .replace(/&amp;/gi, '&')
@@ -486,9 +525,9 @@ export async function harvestEmbeddedXStatusTweetsFromRss(rssXmlList = [], nowMs
         const bodyText = decodeBasicEntitiesForOembed(pMatch ? pMatch[1] : '');
         if (!bodyText || bodyText.length < 16) return;
 
-        if (!cand.dirEntry && !sfRelevantRegex.test(bodyText)) return;
-        if (cand.dirEntry && cand.dirEntry.outletId !== '49ers_official' && cand.dirEntry.trustTier === 1 && /schefter|rapoport|pelissero|garafolo/i.test(cand.dirEntry.id)) {
-          if (!sfRelevantRegex.test(bodyText)) return;
+        // Require 49ers relevance on all harvested tweets except official @49ers posts
+        if (cand.handle.toLowerCase() !== '49ers' && !sfRelevantRegex.test(bodyText)) {
+          return;
         }
 
         const pubIso = new Date(cand.snowMs).toISOString();
@@ -878,6 +917,16 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       const resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
       const safeItemUrl = sanitizeExternalUrl(resolvedUrl, null);
       if (!safeItemUrl || seenUrls.has(safeItemUrl) || isPaywalledPublisher(it.outletName, safeItemUrl)) continue;
+      if (
+        isOffTopicLeagueFiller({
+          url: safeItemUrl,
+          title: it.title || '',
+          summary: it.summary || it.fullText || '',
+          hasRosterMatch: Array.isArray(it.mentionedPlayers) && it.mentionedPlayers.length > 0
+        })
+      ) {
+        continue;
+      }
 
       const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''}`.toLowerCase();
       let kwHitCount = 0;
@@ -886,9 +935,10 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       }
       if (kwHitCount > 0) {
         const authorName = it.author || it.reporterName || it.outletName || '49ers Beat';
-        const cleanBody = isTw
+        const rawCleanBody = isTw
           ? stripRedundantAuthorBoilerplate(it.fullText || it.title || '', authorName)
           : String(it.title || '').trim();
+        const cleanBody = decodeBasicEntitiesForOembed(rawCleanBody);
         const titleKey = cleanBody.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 52);
         if (!cleanBody || seenTitleKeys.has(titleKey)) continue;
 
@@ -900,14 +950,16 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
           (it.type === 'article' ? 10 : 0) +
           (it.isBreaking ? 10 : 0);
         const displayLabel = cleanBody.length > 110 ? `${cleanBody.slice(0, 108).trim()}…` : cleanBody;
+        const resolvedOutletLabel = it.outletName || authorName || '49ers Beat';
         scoredCandidates.push({
           salience,
           link: {
             title: displayLabel,
+            label: resolvedOutletLabel,
             url: safeItemUrl,
             author: authorName,
             authorHandle: it.authorHandle || null,
-            outlet: it.outletName || authorName || '49ers Beat',
+            outlet: resolvedOutletLabel,
             type: isTw ? 'tweet' : it.type || 'article',
             publishedAt: it.publishedAt || null
           }
@@ -924,7 +976,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       const safeExUrl = sanitizeExternalUrl(ex?.url, null);
       if (safeExUrl && !finalSeen.has(safeExUrl) && matched.length < maxTotal) {
         finalSeen.add(safeExUrl);
-        matched.push({ ...ex, url: safeExUrl });
+        matched.push({ ...ex, label: ex.label || ex.outlet || 'Source', url: safeExUrl });
       }
     }
     return matched;
@@ -972,14 +1024,18 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         type: 'article'
       }
     ]);
-    const capLinks = matchSourceLinks(['cap', 'contract', 'trade', 'roster', 'lynch'], [
-      {
-        title: 'San Francisco 49ers Salary Cap Table — OverTheCap',
-        url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
-        outlet: 'OverTheCap',
-        type: 'cap'
-      }
-    ]);
+    const capLinks = matchSourceLinks(
+      ['cap', 'contract', 'restructure', 'bonus', 'trade', 'reinstatement', 'aiyuk', 'buckner', 'roster move'],
+      [
+        {
+          title: 'San Francisco 49ers Salary Cap Table — OverTheCap',
+          url: 'https://overthecap.com/salary-cap/san-francisco-49ers',
+          outlet: 'OverTheCap',
+          label: 'OverTheCap',
+          type: 'cap'
+        }
+      ]
+    );
 
     // Extract live quantitative leaders & CBA Article 13 post-rollover net balance
     const passLeader = rosterPlayers

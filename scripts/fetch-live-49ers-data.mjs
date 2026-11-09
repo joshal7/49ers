@@ -85,12 +85,17 @@ import {
   buildPfrTeamSeasonUrl,
   createPlayerIdentityResolver,
   getPlayerLookupKeys,
+  isOffTopicLeagueFiller,
   isPaywalledPublisher,
+  isStaleSeasonHeadline,
   sanitizeExternalUrl,
   toEspnTeamSlug
 } from '../src/engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
+  isEspnPlayerProfileUrl,
+  isPodiumSubjectId,
+  resolveItemAuthorProfileUrl,
   resolveReporterFromNameOrHandle,
   resolveOriginalTweetUrl
 } from '../src/engine/beatAttributionEngine.js';
@@ -160,7 +165,7 @@ function releaseCsvSlot() {
   if (next) next();
 }
 
-async function fetchCsv(url, retries = 6) {
+async function fetchCsv(url, retries = 2) {
   await acquireCsvSlot();
   try {
     let lastErr = null;
@@ -169,7 +174,7 @@ async function fetchCsv(url, retries = 6) {
         const res = await fetch(url, {
           redirect: 'follow',
           headers: { 'User-Agent': 'Mozilla/5.0 (49ers Data Pipeline)' },
-          signal: AbortSignal.timeout(35000)
+          signal: AbortSignal.timeout(14000)
         });
         if (!res.ok) {
           if ((res.status >= 500 || res.status === 429) && attempt < retries) {
@@ -285,11 +290,23 @@ function resolveTeamLogoUrl(abbr = 'SF', espnTeamObj = null) {
 
 function decodeHtmlEntitiesBasic(str = '') {
   return String(str || '')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
+    .replace(/&#(\d+);/g, (_, dec) => {
+      const code = Number(dec);
+      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
+    })
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
+      const code = parseInt(hex, 16);
+      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
+    })
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&mdash;/gi, '—')
+    .replace(/&ndash;/gi, '–')
+    .replace(/&lsquo;|&rsquo;|&apos;|&#39;/gi, "'")
+    .replace(/&ldquo;|&rdquo;|&quot;/gi, '"')
+    .replace(/&hellip;/gi, '…')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>');
 }
 
 async function main() {
@@ -1460,7 +1477,7 @@ async function main() {
     rotowireXml,
     sfStandardXml,
     heavy49ersXml,
-    gnewsBeatXml,
+    webzoneXml,
     liveYtClips,
     beatPodcasts7d
   ] = await Promise.all([
@@ -1472,9 +1489,7 @@ async function main() {
     fetchText('https://www.rotowire.com/rss/news.php?sport=NFL').catch(() => ''),
     fetchText('https://www.sfstandard.com/sports/feed/').catch(() => ''),
     fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
-    fetchText(
-      'https://news.google.com/rss/search?q=%2249ers%22+(Maiocco+OR+Barrows+OR+Lombardi+OR+Wagoner+OR+Shanahan+OR+Buckner+OR+Bosa+OR+Aiyuk+OR+%22Mike+Evans%22)+when:7d&hl=en-US&gl=US&ceid=US:en'
-    ).catch(() => ''),
+    fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
     searchYouTubeVideos('San Francisco 49ers Kyle Shanahan 2026', 8),
     fetchLatest49ersPodcasts7d().catch(() => ({ updatedAt: new Date().toISOString(), windowDays: 7, shows: [], episodes: [] }))
   ]);
@@ -1483,6 +1498,7 @@ async function main() {
   const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss([
     pfrRumorsXml,
     heavy49ersXml,
+    webzoneXml,
     ninersNationXml,
     nbcsbaXml,
     official49ersXml,
@@ -1532,12 +1548,21 @@ async function main() {
               outletName: 'ESPN / X Beat Wire'
             });
             const cleanFull = cleanSensationalistText(attr.cleanedText || lead);
+            if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${cleanFull}`)) {
+              continue;
+            }
             const directWeb = sanitizeExternalUrl(entry.links?.web?.href, null);
             if (!directWeb && !attr.viaWire && !bylineHint) {
               continue;
             }
             const wireToken = entry.id || `${p.id}_${Math.floor(pubMs / 1000)}`;
-            const isPlayerBlurb = Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWeb;
+            const isDirectArticleOrClip =
+              Boolean(directWeb) &&
+              !isEspnPlayerProfileUrl(directWeb) &&
+              /\/(nfl\/story|video\/clip)\/_\/id\/\d+/i.test(directWeb);
+            const isPlayerBlurb =
+              !isDirectArticleOrClip &&
+              (Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWeb || isEspnPlayerProfileUrl(directWeb));
             const pubIsoStr = new Date(pubMs).toISOString();
             const itemUrl = isPlayerBlurb
               ? resolveOriginalTweetUrl(
@@ -1564,7 +1589,10 @@ async function main() {
               publishedAt: pubIsoStr
             });
 
-            espnPlayerWireItems.push({
+            const resolvedAuthorName = isPlayerBlurb ? attr.author : (bylineHint || 'ESPN');
+            const resolvedRepEntry = resolveReporterFromNameOrHandle(resolvedAuthorName);
+            const validRepEntry = resolvedRepEntry && !isPodiumSubjectId(resolvedRepEntry.id) ? resolvedRepEntry : null;
+            const pwItemDraft = {
               id: `espn_pwire_${p.id}_${wireToken}`,
               type: isPlayerBlurb ? 'tweet' : 'article',
               title: isPlayerBlurb ? fmtTw.text : rawHeadline || fmtTw.text,
@@ -1579,18 +1607,20 @@ async function main() {
               externalUrl: null,
               externalTitle: null,
               outletId: attr.outletId || 'espn',
-              outletName: attr.outletName || 'ESPN / X Beat Wire',
-              reporterId: attr.reporterId,
-              reporterName: attr.reporterName,
-              author: attr.author,
-              authorHandle: attr.authorHandle,
-              authorProfileUrl: attr.xUrl || null,
+              outletName: isPlayerBlurb ? (attr.outletName || 'ESPN / X Beat Wire') : 'ESPN',
+              reporterId: isPlayerBlurb ? attr.reporterId : (validRepEntry?.id || null),
+              reporterName: resolvedAuthorName,
+              author: resolvedAuthorName,
+              authorHandle: isPlayerBlurb ? attr.authorHandle : (validRepEntry?.handle || ''),
+              authorProfileUrl: isPlayerBlurb ? (attr.xUrl || null) : (validRepEntry?.xUrl || null),
               trustTier: attr.trustTier,
               isBreaking: brk.isBreaking,
               isInGameInjury: brk.isInGameInjury,
               breakingBadge: brk.breakingBadge,
               breakingPriority: brk.breakingPriority
-            });
+            };
+            pwItemDraft.authorProfileUrl = resolveItemAuthorProfileUrl(pwItemDraft, itemUrl);
+            espnPlayerWireItems.push(pwItemDraft);
           }
         } catch {
           // Ignore single-player wire timeout
@@ -1605,21 +1635,30 @@ async function main() {
       .replace(/\s*,.*$/, '')
       .trim();
     if (cleanByline && cleanByline.length >= 4 && !/^(staff|news|rss|espn|admin)$/i.test(cleanByline)) {
-      const repMatch = reportersList.find(r => cleanByline.toLowerCase().includes(r.name.toLowerCase()));
-      return { authorName: repMatch?.name || cleanByline, reporterId: repMatch?.id || null };
+      const repMatch = reportersList.find(
+        r => !isPodiumSubjectId(r.id) && cleanByline.toLowerCase().includes(r.name.toLowerCase())
+      );
+      if (repMatch) {
+        return { authorName: repMatch.name, reporterId: repMatch.id };
+      }
+      if (!/\b(kyle shanahan|john lynch)\b/i.test(cleanByline)) {
+        return { authorName: cleanByline, reporterId: null };
+      }
     }
     const leadVerbMatch = String(textSample || '').match(
       /^([A-Z][a-z]+(?:\s+[A-Z][a-z'.-]+){1,2})\s+(?:reports|reported|breaks down|details|explains|writes|notes)\b/
     );
     if (leadVerbMatch?.[1]) {
       const cand = leadVerbMatch[1].trim();
-      const repMatch = reportersList.find(r => r.name.toLowerCase() === cand.toLowerCase());
-      return { authorName: repMatch?.name || cand, reporterId: repMatch?.id || null };
-    }
-    const lowerSample = String(textSample || '').toLowerCase();
-    const anyRep = reportersList.find(r => lowerSample.includes(r.name.toLowerCase()));
-    if (anyRep) {
-      return { authorName: anyRep.name, reporterId: anyRep.id };
+      const repMatch = reportersList.find(
+        r => !isPodiumSubjectId(r.id) && r.name.toLowerCase() === cand.toLowerCase()
+      );
+      if (repMatch) {
+        return { authorName: repMatch.name, reporterId: repMatch.id };
+      }
+      if (!/\b(kyle shanahan|john lynch)\b/i.test(cand)) {
+        return { authorName: cand, reporterId: null };
+      }
     }
     return { authorName: defaultAuthor, reporterId: null };
   }
@@ -1818,14 +1857,15 @@ async function main() {
     );
     const mediaImg = sanitizeExternalUrl(xml.match(/<media:content[^>]*url="([^"]+)"/i)?.[1] || '', null) || '';
     const pubIso = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
-    const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, 'Matt Maiocco');
-    const dirRep = resolveReporterFromNameOrHandle(authInfo.reporterId || authInfo.authorName);
+    const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, 'NBC Sports Bay Area');
+    const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : null;
+    const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
     const sig = scoreContentSignal(title, desc);
     if (sig.isClickbait) continue;
     const brk = classifyBreakingItem({ title, summary: desc, publishedAt: pubIso });
 
     seenStreamUrls.add(link);
-    rawNewsStream.push({
+    const nbcsItem = {
       id: `nbcsba_${rawNewsStream.length}`,
       type: 'article',
       title: sanitizeHallucinatedRosterText(title, rosterPlayers),
@@ -1837,11 +1877,11 @@ async function main() {
       url: link,
       outletId: 'nbcsba',
       outletName: 'NBC Sports Bay Area',
-      reporterId: authInfo.reporterId || dirRep?.id || 'matt_maiocco',
+      reporterId: dirRep?.id || null,
       reporterName: authInfo.authorName,
       author: authInfo.authorName,
-      authorHandle: dirRep?.handle || '@MaioccoNBCS',
-      authorProfileUrl: dirRep?.xUrl || 'https://x.com/MaioccoNBCS',
+      authorHandle: dirRep?.handle || '',
+      authorProfileUrl: dirRep?.xUrl || 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/',
       trustTier: dirRep?.trustTier || 1,
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
@@ -1851,13 +1891,15 @@ async function main() {
       signalScore: Math.max(80, sig.signalScore),
       fluffScore: sig.fluffScore,
       isClickbait: false
-    });
+    };
+    nbcsItem.authorProfileUrl = resolveItemAuthorProfileUrl(nbcsItem, link);
+    rawNewsStream.push(nbcsItem);
   }
 
   // Parse Pro Football Rumors 49ers RSS & RotoWire Live NFL RSS (filtered strictly to 49ers)
-  for (const [feedKey, rawFeedXml, fallbackOutlet] of [
-    ['pfrumors', pfrRumorsXml, 'Pro Football Rumors'],
-    ['rotowire', rotowireXml, 'RotoWire / X Beat']
+  for (const [feedKey, rawFeedXml, fallbackOutlet, fallbackOutletId] of [
+    ['pfrumors', pfrRumorsXml, 'Pro Football Rumors', 'pfrumors'],
+    ['rotowire', rotowireXml, 'RotoWire / X Beat', 'espn']
   ]) {
     for (const itemMatch of rawFeedXml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
       const xml = itemMatch[1];
@@ -1870,7 +1912,19 @@ async function main() {
         )
       );
       if (!title) continue;
+      const mentioned = matchMentionedPlayers(`${title} ${desc}`, 20);
       if (feedKey === 'rotowire' && !/\b(49ers|niners|san francisco)\b/i.test(`${title} ${desc}`)) {
+        continue;
+      }
+      if (
+        feedKey === 'pfrumors' &&
+        isOffTopicLeagueFiller({
+          url: '',
+          title,
+          summary: desc,
+          hasRosterMatch: mentioned.length > 0 && /\b(49ers|niners|san francisco)\b/i.test(`${title} ${desc}`)
+        })
+      ) {
         continue;
       }
       const rawLink = xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '';
@@ -1882,17 +1936,37 @@ async function main() {
       const pubIso = Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString();
 
       const attr = extractBeatAttributionFromText(`${desc} ${title}`, {
-        reporterId: 'nick_wagoner',
+        reporterId: null,
         reporterName: fallbackOutlet,
-        outletId: 'espn',
+        outletId: fallbackOutletId,
         outletName: fallbackOutlet
       });
       const sig = scoreContentSignal(title, desc);
       if (sig.isClickbait) continue;
       const brk = classifyBreakingItem({ title, fullText: desc, summary: desc, publishedAt: pubIso });
 
-      seenStreamUrls.add(link);
-      rawNewsStream.push({
+      const finalUrl =
+        feedKey === 'rotowire' && attr.viaWire
+          ? resolveOriginalTweetUrl(
+              {
+                type: 'tweet',
+                url: link,
+                author: attr.author,
+                reporterId: attr.reporterId,
+                reporterName: attr.reporterName,
+                authorHandle: attr.authorHandle,
+                mentionedPlayers: mentioned,
+                fullText: desc || title,
+                title: desc || title,
+                publishedAt: pubIso
+              },
+              liveBeatTweets
+            )
+          : link;
+      if (seenStreamUrls.has(finalUrl)) continue;
+      seenStreamUrls.add(finalUrl);
+
+      const pfItem = {
         id: `${feedKey}_${rawNewsStream.length}`,
         type: feedKey === 'rotowire' ? 'tweet' : 'article',
         title: sanitizeHallucinatedRosterText(feedKey === 'rotowire' ? formatTweetBodyForDisplay(desc || title).text : title, rosterPlayers),
@@ -1901,18 +1975,18 @@ async function main() {
         summary: sanitizeHallucinatedRosterText(feedKey === 'rotowire' ? title : desc.slice(0, 240), rosterPlayers),
         imageUrl: '',
         imageAlt: title,
-        mentionedPlayers: matchMentionedPlayers(`${title} ${desc}`, 20),
+        mentionedPlayers: mentioned,
         publishedAt: pubIso,
-        url: link,
+        url: finalUrl,
         externalUrl: null,
         externalTitle: null,
-        outletId: attr.outletId,
-        outletName: attr.outletName || fallbackOutlet,
-        reporterId: attr.reporterId,
-        reporterName: attr.reporterName,
-        author: attr.author,
-        authorHandle: attr.authorHandle,
-        authorProfileUrl: attr.xUrl || null,
+        outletId: feedKey === 'pfrumors' ? 'pfrumors' : attr.outletId,
+        outletName: feedKey === 'pfrumors' ? 'Pro Football Rumors' : (attr.outletName || fallbackOutlet),
+        reporterId: feedKey === 'pfrumors' ? (attr.viaWire ? attr.reporterId : null) : attr.reporterId,
+        reporterName: feedKey === 'pfrumors' ? 'Pro Football Rumors' : attr.reporterName,
+        author: feedKey === 'pfrumors' ? 'Pro Football Rumors' : attr.author,
+        authorHandle: feedKey === 'pfrumors' ? '' : attr.authorHandle,
+        authorProfileUrl: feedKey === 'pfrumors' ? 'https://www.profootballrumors.com/san-francisco-49ers' : (attr.xUrl || null),
         trustTier: attr.trustTier,
         isBreaking: brk.isBreaking,
         isInGameInjury: brk.isInGameInjury,
@@ -1922,23 +1996,40 @@ async function main() {
         signalScore: Math.max(78, sig.signalScore),
         fluffScore: sig.fluffScore,
         isClickbait: false
-      });
+      };
+      pfItem.authorProfileUrl = resolveItemAuthorProfileUrl(pfItem, finalUrl);
+      rawNewsStream.push(pfItem);
     }
   }
 
-  // Parse ESPN 49ers articles (with author attribution, paywall filter & breaking detection)
+  // Parse ESPN 49ers articles (with strict 49ers relevance filter, accurate author attribution & paywall guard)
   for (const art of espnNews.articles || []) {
     if (art.premium) continue;
     const safeEspnArtUrl = sanitizeExternalUrl(
-      art.links?.web?.href || 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
+      art.links?.web?.href || '',
       null
     );
-    if (!safeEspnArtUrl) continue;
-    const title = cleanSensationalistText(art.headline || '');
-    const summary = cleanSensationalistText(art.description || '');
+    if (!safeEspnArtUrl || seenStreamUrls.has(safeEspnArtUrl)) continue;
+    const title = cleanSensationalistText(decodeHtmlEntitiesBasic(art.headline || ''));
+    const summary = cleanSensationalistText(decodeHtmlEntitiesBasic(art.description || ''));
     if (!title) continue;
+    const mentionedPlayers = matchMentionedPlayers(`${title} ${summary}`, 20);
+    if (
+      isOffTopicLeagueFiller({
+        url: safeEspnArtUrl,
+        title,
+        summary,
+        hasRosterMatch: mentionedPlayers.length > 0
+      }) ||
+      isStaleSeasonHeadline(title, detectedCurrentWeek)
+    ) {
+      continue;
+    }
     const sig = scoreContentSignal(title, summary);
-    const authInfo = resolveArticleAuthor(art.byline || '', `${summary} ${title}`, 'Nick Wagoner');
+    if (sig.isClickbait) continue;
+    const authInfo = resolveArticleAuthor(art.byline || '', `${summary} ${title}`, 'ESPN');
+    const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : resolveReporterFromNameOrHandle(authInfo.authorName);
+    const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
     const pubIso = art.published || new Date().toISOString();
     const brk = classifyBreakingItem({ title, summary, publishedAt: pubIso });
 
@@ -1947,9 +2038,9 @@ async function main() {
       (art.images || []).find(im => im.url);
     const imageUrl = bestImg?.url || '';
     const imageAlt = cleanSensationalistText(bestImg?.caption || title);
-    const mentionedPlayers = matchMentionedPlayers(`${title} ${summary}`, 20);
 
-    rawNewsStream.push({
+    seenStreamUrls.add(safeEspnArtUrl);
+    const espnItem = {
       id: `espn_${art.id || rawNewsStream.length}`,
       type: 'article',
       title,
@@ -1961,9 +2052,11 @@ async function main() {
       url: safeEspnArtUrl,
       outletId: 'espn',
       outletName: 'ESPN',
-      reporterId: authInfo.reporterId || 'nick_wagoner',
+      reporterId: dirRep?.id || authInfo.reporterId || null,
       reporterName: authInfo.authorName,
       author: authInfo.authorName,
+      authorHandle: dirRep?.handle || '',
+      authorProfileUrl: dirRep?.xUrl || 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
       breakingBadge: brk.breakingBadge,
@@ -1972,7 +2065,9 @@ async function main() {
       signalScore: sig.signalScore,
       fluffScore: sig.fluffScore,
       isClickbait: sig.isClickbait
-    });
+    };
+    espnItem.authorProfileUrl = resolveItemAuthorProfileUrl(espnItem, safeEspnArtUrl);
+    rawNewsStream.push(espnItem);
   }
 
   // Parse Official 49ers.com RSS entries
@@ -1984,19 +2079,22 @@ async function main() {
     const desc = cleanSensationalistText(
       decodeHtmlEntitiesBasic(xml.match(/<description>([\s\S]*?)<\/description>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || '')
     );
-    const link = xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || 'https://www.49ers.com/news/';
+    const link = sanitizeExternalUrl(xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '', null);
     const pubDate = xml.match(/<pubDate>([^<]+)<\/pubDate>/i)?.[1];
     const dcCreator = cleanSensationalistText(
-      xml.match(/<dc:creator>([\s\S]*?)<\/dc:creator>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || ''
+      decodeHtmlEntitiesBasic(xml.match(/<dc:creator>([\s\S]*?)<\/dc:creator>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || '')
     );
-    const mediaImg = xml.match(/<media:content[^>]*url="([^"]+)"/i)?.[1] || '';
-    if (!title) continue;
+    const mediaImg = sanitizeExternalUrl(xml.match(/<media:content[^>]*url="([^"]+)"/i)?.[1] || '', null) || '';
+    if (!title || !link || seenStreamUrls.has(link)) continue;
     const pubIso = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
-    const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, 'Briana Jeannel • 49ers.com');
+    const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, '49ers.com Staff');
+    const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : null;
+    const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
     const sig = scoreContentSignal(title, desc);
     const brk = classifyBreakingItem({ title, summary: desc, publishedAt: pubIso });
 
-    rawNewsStream.push({
+    seenStreamUrls.add(link);
+    const sfItem = {
       id: `sf49_${rawNewsStream.length}`,
       type: 'article',
       title,
@@ -2008,9 +2106,11 @@ async function main() {
       url: link,
       outletId: '49ers_official',
       outletName: '49ers.com Official',
-      reporterId: authInfo.reporterId || 'brianna_jeannel',
+      reporterId: dirRep?.id || '49ers_news',
       reporterName: authInfo.authorName,
       author: authInfo.authorName,
+      authorHandle: dirRep?.handle || '@49ers',
+      authorProfileUrl: dirRep?.xUrl || 'https://www.49ers.com/news/',
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
       breakingBadge: brk.breakingBadge,
@@ -2019,7 +2119,9 @@ async function main() {
       signalScore: Math.max(72, sig.signalScore),
       fluffScore: sig.fluffScore,
       isClickbait: false
-    });
+    };
+    sfItem.authorProfileUrl = resolveItemAuthorProfileUrl(sfItem, link);
+    rawNewsStream.push(sfItem);
   }
 
   // Parse SF Standard Sports RSS (filtered strictly to 49ers items)
@@ -2034,17 +2136,21 @@ async function main() {
     if (!title || !/\b(49ers|niners|shanahan|purdy|bosa|aiyuk|mccaffrey|kittle|buckner|mike evans)\b/i.test(`${title} ${desc}`)) {
       continue;
     }
-    const link = xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || 'https://sfstandard.com/sports/';
+    const link = sanitizeExternalUrl(xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '', null);
+    if (!link || seenStreamUrls.has(link)) continue;
     const pubDate = xml.match(/<pubDate>([^<]+)<\/pubDate>/i)?.[1];
     const dcCreator = cleanSensationalistText(
-      xml.match(/<dc:creator>([\s\S]*?)<\/dc:creator>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || ''
+      decodeHtmlEntitiesBasic(xml.match(/<dc:creator>([\s\S]*?)<\/dc:creator>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || '')
     );
     const pubIso = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
-    const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, 'Tim Kawakami');
+    const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, 'The SF Standard');
+    const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : resolveReporterFromNameOrHandle(authInfo.authorName);
+    const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
     const sig = scoreContentSignal(title, desc);
     const brk = classifyBreakingItem({ title, summary: desc, publishedAt: pubIso });
 
-    rawNewsStream.push({
+    seenStreamUrls.add(link);
+    const sfStdItem = {
       id: `sfstd_${rawNewsStream.length}`,
       type: 'article',
       title,
@@ -2056,9 +2162,11 @@ async function main() {
       url: link,
       outletId: 'sf_standard',
       outletName: 'The SF Standard',
-      reporterId: authInfo.reporterId || 'tim_kawakami',
+      reporterId: dirRep?.id || null,
       reporterName: authInfo.authorName,
       author: authInfo.authorName,
+      authorHandle: dirRep?.handle || '',
+      authorProfileUrl: dirRep?.xUrl || 'https://sfstandard.com/sports/',
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
       breakingBadge: brk.breakingBadge,
@@ -2067,16 +2175,18 @@ async function main() {
       signalScore: Math.max(75, sig.signalScore),
       fluffScore: sig.fluffScore,
       isClickbait: sig.isClickbait
-    });
+    };
+    sfStdItem.authorProfileUrl = resolveItemAuthorProfileUrl(sfStdItem, link);
+    rawNewsStream.push(sfStdItem);
   }
 
   // Parse Niners Nation Atom entries
   for (const entryMatch of ninersNationXml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)) {
     const xml = entryMatch[1];
-    const title = cleanSensationalistText(xml.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '');
-    const link = xml.match(/<link[^>]*href="([^"]+)"/i)?.[1] || 'https://www.ninersnation.com';
+    const title = cleanSensationalistText(decodeHtmlEntitiesBasic(xml.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || ''));
+    const link = sanitizeExternalUrl(xml.match(/<link[^>]*href="([^"]+)"/i)?.[1] || '', null);
     const published = xml.match(/<published>([^<]+)<\/published>/i)?.[1] || new Date().toISOString();
-    const author = cleanSensationalistText(xml.match(/<author>[\s\S]*?<name>([^<]+)<\/name>/i)?.[1] || 'Kyle Posey');
+    const author = cleanSensationalistText(decodeHtmlEntitiesBasic(xml.match(/<author>[\s\S]*?<name>([^<]+)<\/name>/i)?.[1] || 'Niners Nation'));
     const rawContentBlock =
       xml.match(/<content[^>]*>([\s\S]*?)<\/content>/i)?.[1] ||
       xml.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i)?.[1] ||
@@ -2095,15 +2205,19 @@ async function main() {
         }
       }
     }
-    const contentSnippet = cleanSensationalistText(rawContentBlock.slice(0, 600)).slice(0, 240);
+    const contentSnippet = cleanSensationalistText(decodedContent.replace(/<[^>]+>/g, ' ').slice(0, 600)).slice(0, 240);
 
-    if (!title) continue;
+    if (!title || !link || seenStreamUrls.has(link)) continue;
     const sig = scoreContentSignal(title, contentSnippet);
-    const matchedRep = reportersList.find(r => author.toLowerCase().includes(r.name.toLowerCase()));
+    const matchedRep = reportersList.find(
+      r => !isPodiumSubjectId(r.id) && author.toLowerCase().includes(r.name.toLowerCase())
+    );
+    const dirRep = matchedRep ? resolveReporterFromNameOrHandle(matchedRep.id) : null;
     const mentionedPlayers = matchMentionedPlayers(`${title} ${contentSnippet}`, 20);
     const brk = classifyBreakingItem({ title, summary: contentSnippet, publishedAt: published });
 
-    rawNewsStream.push({
+    seenStreamUrls.add(link);
+    const nnItem = {
       id: `nn_${rawNewsStream.length}`,
       type: 'article',
       title,
@@ -2115,9 +2229,11 @@ async function main() {
       url: link,
       outletId: 'niners_nation',
       outletName: 'Niners Nation',
-      reporterId: matchedRep?.id || 'kyle_posey',
+      reporterId: matchedRep?.id || null,
       reporterName: matchedRep?.name || author,
       author: matchedRep?.name || author,
+      authorHandle: dirRep?.handle || '',
+      authorProfileUrl: dirRep?.xUrl || 'https://www.ninersnation.com/',
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
       breakingBadge: brk.breakingBadge,
@@ -2126,69 +2242,79 @@ async function main() {
       signalScore: sig.signalScore,
       fluffScore: sig.fluffScore,
       isClickbait: sig.isClickbait
-    });
+    };
+    nnItem.authorProfileUrl = resolveItemAuthorProfileUrl(nnItem, link);
+    rawNewsStream.push(nnItem);
   }
 
-  // Parse Google News Beat RSS items (strictly excluding paywalled publishers & broken URLs)
-  for (const itemMatch of gnewsBeatXml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
-    const xml = itemMatch[1];
-    const rawTitle = cleanSensationalistText(
-      decodeHtmlEntitiesBasic(xml.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || '')
-    );
-    const sourceElemMatch = xml.match(/<source([^>]*)>([\s\S]*?)<\/source>/i);
-    const sourceDomainUrl = sourceElemMatch?.[1]?.match(/url="([^"]+)"/i)?.[1] || '';
-    const sourceTag = cleanSensationalistText(
-      decodeHtmlEntitiesBasic(sourceElemMatch?.[2] || '')
-    );
-    const [headlinePart, sourcePart] = rawTitle.split(/\s+-\s+(?=[^-]+$)/);
-    const title = headlinePart || rawTitle;
-    const resolvedOutlet = sourceTag || sourcePart || '49ers Beat Wire';
-    const rawLink = xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '';
-    const link = sanitizeExternalUrl(rawLink, null);
-    const pubDate = xml.match(/<pubDate>([^<]+)<\/pubDate>/i)?.[1];
-    if (!title || !link || isPaywalledPublisher(resolvedOutlet, sourceDomainUrl)) continue;
+  // Parse Direct 49ers Webzone Original Articles RSS (`49erswebzone.com/articles/...`) & Heavy 49ers Beat RSS
+  for (const [feedKey, rawFeedXml, outletId, outletName, defaultUrl] of [
+    ['wz', webzoneXml, '49ers_webzone', '49ers Webzone', 'https://www.49erswebzone.com/'],
+    ['hvy', heavy49ersXml, '49ers_webzone', 'Heavy on 49ers', 'https://heavy.com/sports/nfl/san-francisco-49ers/']
+  ]) {
+    for (const itemMatch of rawFeedXml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
+      const xml = itemMatch[1];
+      const title = cleanSensationalistText(
+        decodeHtmlEntitiesBasic(xml.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || '')
+      );
+      const rawLink = xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '';
+      if (feedKey === 'wz' && !/49erswebzone\.com\/articles\//i.test(rawLink)) continue;
+      const link = sanitizeExternalUrl(rawLink, null);
+      if (!title || !link || seenStreamUrls.has(link) || isStaleSeasonHeadline(title, detectedCurrentWeek)) continue;
 
-    const lowerCombined = `${title} ${resolvedOutlet}`.toLowerCase();
-    const AMBIGUOUS_REPORTER_SURNAMES = new Set(['branch', 'chan', 'lee', 'grant', 'young', 'posey', 'cohn', 'king']);
-    const matchedRep = reportersList.find(r => {
-      const fullLower = r.name.toLowerCase();
-      if (new RegExp(`\\b${escapeMatchRegex(fullLower)}\\b`, 'i').test(lowerCombined)) return true;
-      const surname = fullLower.split(/\s+/).slice(-1)[0] || '';
-      if (surname.length >= 6 && !AMBIGUOUS_REPORTER_SURNAMES.has(surname)) {
-        return new RegExp(`\\b${escapeMatchRegex(surname)}\\b`, 'i').test(lowerCombined);
-      }
-      return false;
-    });
-    const resolvedAuthor = matchedRep?.name || resolvedOutlet;
-    const pubIso = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
-    const sig = scoreContentSignal(title, resolvedOutlet);
-    const mentionedPlayers = matchMentionedPlayers(title, 20);
-    const brk = classifyBreakingItem({ title, summary: resolvedOutlet, publishedAt: pubIso });
+      const pubDate = xml.match(/<pubDate>([^<]+)<\/pubDate>/i)?.[1];
+      const pubMs = pubDate ? new Date(pubDate).getTime() : NaN;
+      if (Number.isFinite(pubMs) && pubMs < sevenDayWireCutoffMs) continue;
+      const pubIso = Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString();
 
-    rawNewsStream.push({
-      id: `beat_${rawNewsStream.length}`,
-      type: 'article',
-      title,
-      summary: matchedRep ? `${matchedRep.name} • ${resolvedOutlet}` : `Published via ${resolvedOutlet}`,
-      imageUrl: '',
-      mentionedPlayers,
-      publishedAt: pubIso,
-      url: link,
-      outletId: matchedRep?.outletId || 'nbcsba',
-      outletName: resolvedOutlet,
-      reporterId: matchedRep?.id || 'matt_maiocco',
-      reporterName: resolvedAuthor,
-      author: resolvedAuthor,
-      isBreaking: brk.isBreaking,
-      isInGameInjury: brk.isInGameInjury,
-      breakingBadge: brk.breakingBadge,
-      breakingPriority: brk.breakingPriority,
-      category: 'beat',
-      signalScore: sig.signalScore,
-      fluffScore: sig.fluffScore,
-      isClickbait: sig.isClickbait
-    });
-    if (rawNewsStream.length >= 145) break;
+      const rawDesc = decodeHtmlEntitiesBasic(
+        xml.match(/<description>([\s\S]*?)<\/description>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').replace(/<[^>]+>/g, ' ') || ''
+      ).replace(/^49ers Webzone\s*-\s*/i, '');
+      const desc = cleanSensationalistText(rawDesc);
+      const dcCreator = cleanSensationalistText(
+        decodeHtmlEntitiesBasic(xml.match(/<dc:creator>([\s\S]*?)<\/dc:creator>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1') || '')
+      );
+      const mediaImgRaw = xml.match(/<media:content[^>]*url="([^"]+)"/i)?.[1] || '';
+      const mediaImg =
+        mediaImgRaw && !/fb-og-image/i.test(mediaImgRaw) ? sanitizeExternalUrl(mediaImgRaw, null) || '' : '';
+
+      const sig = scoreContentSignal(title, desc);
+      if (sig.isClickbait) continue;
+      const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, outletName);
+      const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : null;
+      const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
+      const brk = classifyBreakingItem({ title, summary: desc, publishedAt: pubIso });
+
+      seenStreamUrls.add(link);
+      const directArt = {
+        id: `${feedKey}_${rawNewsStream.length}`,
+        type: 'article',
+        title: sanitizeHallucinatedRosterText(title, rosterPlayers),
+        summary: sanitizeHallucinatedRosterText(desc.slice(0, 240), rosterPlayers),
+        imageUrl: mediaImg,
+        imageAlt: title,
+        mentionedPlayers: matchMentionedPlayers(`${title} ${desc}`, 20),
+        publishedAt: pubIso,
+        url: link,
+        outletId,
+        outletName,
+        reporterId: dirRep?.id || null,
+        reporterName: authInfo.authorName,
+        author: authInfo.authorName,
+        authorHandle: dirRep?.handle || '',
+        authorProfileUrl: dirRep?.xUrl || defaultUrl,
+        isBreaking: brk.isBreaking,
+        isInGameInjury: brk.isInGameInjury,
+        breakingBadge: brk.breakingBadge,
+        breakingPriority: brk.breakingPriority,
+        category: /injury|practice|questionable|ir\b/i.test(title) ? 'injury' : 'beat',
+        signalScore: Math.max(72, sig.signalScore),
+        fluffScore: sig.fluffScore,
+        isClickbait: false
+      };
+      directArt.authorProfileUrl = resolveItemAuthorProfileUrl(directArt, link);
+      rawNewsStream.push(directArt);
+    }
   }
 
   // Add live YouTube clips to raw stream with verified domain embeddability flag
@@ -2282,12 +2408,15 @@ async function main() {
     }
   }
 
-  // Second pass: deep 7-day Google News RSS search for all active contributors, starters, cap regulars & injured players
+  // Second pass: direct canonical per-player ESPN News & Webzone/NinersNation fallback for starters/IR with <3 Pass-1 mentions
+  // (Zero opaque news.google.com/rss/articles/... redirect wrappers!)
   const deepTargetPlayers = rosterPlayers.filter(
     p =>
+      (mentionsByPlayerId.get(p.id) || []).length < 5 &&
+      /^\d{4,10}$/.test(String(p.id || '')) &&
       (p.rosterBucket === 'active' || p.rosterBucket === 'ir') &&
-      (p.primarySnapPct >= 12 ||
-        p.capHit2026 >= 1_250_000 ||
+      (p.primarySnapPct >= 15 ||
+        p.capHit2026 >= 2_000_000 ||
         p.health?.isOnPracticeReport ||
         p.rosterBucket === 'ir')
   );
@@ -2298,71 +2427,62 @@ async function main() {
     await Promise.all(
       slice.map(async p => {
         try {
-          const queryName = stripSuffixName(p.name);
-          const qUrl = `https://news.google.com/rss/search?q=%22${encodeURIComponent(queryName)}%22+%2249ers%22+when:7d&hl=en-US&gl=US&ceid=US:en`;
-          const xml = await fetchText(qUrl);
+          const athNews = await fetchJson(
+            `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?athlete=${encodeURIComponent(p.id)}&limit=8`
+          );
           let addedForPlayer = 0;
-          for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
-            if (addedForPlayer >= 7) break;
-            const block = m[1];
-            const rawTitle = cleanSensationalistText(
-              decodeHtmlEntitiesBasic(block.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || '')
-            );
-            const srcElemMatch = block.match(/<source([^>]*)>([\s\S]*?)<\/source>/i);
-            const srcDomainUrl = srcElemMatch?.[1]?.match(/url="([^"]+)"/i)?.[1] || '';
-            const srcTag = cleanSensationalistText(
-              decodeHtmlEntitiesBasic(srcElemMatch?.[2] || '')
-            );
-            const [headlineOnly, fallbackSrc] = rawTitle.split(/\s+-\s+(?=[^-]+$)/);
-            const headline = (headlineOnly || rawTitle).trim();
-            const outletName = (srcTag || fallbackSrc || '49ers Beat').trim();
-            const rawLink = block.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '';
-            const link = sanitizeExternalUrl(rawLink, null);
-            const pubStr = block.match(/<pubDate>([^<]+)<\/pubDate>/i)?.[1] || '';
-            const pubMs = pubStr ? new Date(pubStr).getTime() : NaN;
+          for (const art of athNews?.articles || []) {
+            if (addedForPlayer >= 6 || art.premium) break;
+            const headline = cleanSensationalistText(decodeHtmlEntitiesBasic(art.headline || ''));
+            const desc = cleanSensationalistText(decodeHtmlEntitiesBasic(art.description || ''));
+            const link = sanitizeExternalUrl(art.links?.web?.href || '', null);
+            const pubMs = art.published ? new Date(art.published).getTime() : NaN;
             if (
               !headline ||
               !link ||
-              isPaywalledPublisher(outletName, srcDomainUrl) ||
+              isEspnPlayerProfileUrl(link) ||
               !Number.isFinite(pubMs) ||
-              pubMs < sevenDayCutoffMs
+              pubMs < sevenDayCutoffMs ||
+              isOffTopicLeagueFiller({ url: link, title: headline, summary: desc, hasRosterMatch: true }) ||
+              isStaleSeasonHeadline(headline, detectedCurrentWeek)
             ) {
               continue;
             }
-
-            // Ensure headline or query context isn't pure clickbait
-            const sig = scoreContentSignal(headline, outletName);
+            const sig = scoreContentSignal(headline, desc);
             if (sig.isClickbait) continue;
-
-            const authInfo = resolveArticleAuthor('', `${headline} ${outletName}`, outletName);
+            const authInfo = resolveArticleAuthor(art.byline || '', `${desc} ${headline}`, 'ESPN');
+            const rawDirRep = authInfo.reporterId
+              ? resolveReporterFromNameOrHandle(authInfo.reporterId)
+              : resolveReporterFromNameOrHandle(authInfo.authorName);
+            const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
             const pubIso = new Date(pubMs).toISOString();
-            const brk = classifyBreakingItem({ title: headline, summary: outletName, publishedAt: pubIso });
-
-            addMentionToPlayer(p.id, {
+            const brk = classifyBreakingItem({ title: headline, summary: desc, publishedAt: pubIso });
+            const mentionDraft = {
               id: `p7d_${p.id}_${addedForPlayer}`,
               type: 'article',
               headline,
               fullText: null,
               isFullTweet: false,
-              summary:
-                authInfo.authorName !== outletName
-                  ? `By ${authInfo.authorName} • ${outletName}`
-                  : `${outletName} 49ers Coverage`,
+              summary: desc.slice(0, 220),
               author: authInfo.authorName,
-              authorHandle: null,
-              outletName,
+              authorHandle: dirRep?.handle || null,
+              authorProfileUrl: dirRep?.xUrl || 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
+              outletId: 'espn',
+              outletName: 'ESPN',
               publishedAt: pubIso,
-              imageUrl: '',
+              imageUrl: art.images?.[0]?.url || '',
               url: link,
               isBreaking: brk.isBreaking,
               isInGameInjury: brk.isInGameInjury,
               breakingBadge: brk.breakingBadge,
               breakingPriority: brk.breakingPriority
-            });
+            };
+            mentionDraft.authorProfileUrl = resolveItemAuthorProfileUrl(mentionDraft, link);
+            addMentionToPlayer(p.id, mentionDraft);
             addedForPlayer++;
           }
         } catch {
-          // Ignore single-player Google News timeout
+          // Ignore single-player ESPN athlete news timeout
         }
       })
     );
@@ -3505,6 +3625,12 @@ async function main() {
     practiceSummaryBullets
   });
 
+  const liveEspnPrStoryUrl = sanitizeExternalUrl(
+    (espnNews.articles || []).find(
+      a => !a.premium && /nfl power rankings/i.test(a.headline || '') && a.links?.web?.href
+    )?.links?.web?.href || '',
+    'https://www.espn.com/nfl/fpi'
+  );
   const consensusPowerRank = Math.max(1, Math.min(32, sfStandingsDetail.playoffSeed <= 2 ? 2 : sfStandingsDetail.playoffSeed + 1));
   const powerRankings = {
     weekLabel: `Entering Week ${currentWeek} Consensus`,
@@ -3516,7 +3642,7 @@ async function main() {
     sources: [
       { outlet: 'Inpredictable / Betting Market Power Rating', url: 'https://stats.inpredictable.com/rankings/nfl.php', rank: Math.max(1, consensusPowerRank - 1), delta: '+1', blurb: `Market spreads price the ${sfStandingsDetail.record} 49ers in the NFL's elite tier entering Week ${currentWeek} vs. ${oppNameTarget}.` },
       { outlet: 'CBS Sports NFL Power Rankings', url: 'https://www.cbssports.com/nfl/powerrankings/', rank: consensusPowerRank, delta: '+1', blurb: `Sitting at ${sfStandingsDetail.record} (${sfStandingsDetail.divRecord} NFC West) with DeForest Buckner added to the interior keeps San Francisco atop NFC contenders.` },
-      { outlet: 'ESPN NFL Nation Power Panel', url: 'https://www.espn.com/nfl/story/_/page/nflpowerrankings', rank: consensusPowerRank, delta: '0', blurb: `Brock Purdy's efficiency (#${sfPassEpaRank.rank} Passing EPA/gm) anchors the offense while the defensive front reloads.` },
+      { outlet: 'ESPN NFL Power Index & Panel', url: liveEspnPrStoryUrl, rank: consensusPowerRank, delta: '0', blurb: `Brock Purdy's efficiency (#${sfPassEpaRank.rank} Passing EPA/gm) anchors the offense while the defensive front reloads.` },
       { outlet: 'nfelo Quantitative Elo & EPA Power Ratings', url: 'https://nfeloapp.com/nfl-power-ratings/', rank: Math.min(32, consensusPowerRank + 1), delta: '+1', blurb: `San Francisco's trench profile and +${sfStandingsDetail.pointDiff} point differential travel into Week ${currentWeek} against ${oppShortName}.` },
       { outlet: 'RBSDM / nflverse EPA Composite', url: 'https://rbsdm.com/stats/stats/', rank: consensusPowerRank, delta: '0', blurb: `#${sfPassEpaRank.rank} dropback EPA combined with the league's #${sfSackAllowRank.rank} pass-block sack avoidance (${sfSackAllowRank.value.toFixed(1)}%).` }
     ]
@@ -3812,6 +3938,16 @@ async function main() {
     })
     .sort((a, b) => b.ras - a.ras);
 
+  if (recentCombineLeaderboard.length === 0) {
+    try {
+      const prevSeasonal = JSON.parse(fs.readFileSync(path.join(dataDir, 'seasonal.json'), 'utf8'));
+      if (Array.isArray(prevSeasonal?.draftPrep2027?.combineLeaderboard)) {
+        recentCombineLeaderboard.push(...prevSeasonal.draftPrep2027.combineLeaderboard);
+      }
+    } catch {
+      // ignore
+    }
+  }
   const liveTankathonPicks = parseTankathonTeamPicksHtml(tankathonHtml);
   const draftPrep2027 = buildDraftPrep2027AndCombine(
     recentCombineLeaderboard,
@@ -3948,6 +4084,9 @@ async function main() {
         if (!p.pfrId && prev.pfrId) {
           p.pfrId = prev.pfrId;
           p.pfrUrl = prev.pfrUrl || buildPfrPlayerUrl(prev.pfrId);
+        }
+        if (combineRows.length === 0 && prev.spiderProfile) {
+          p.spiderProfile = prev.spiderProfile;
         }
       }
     }

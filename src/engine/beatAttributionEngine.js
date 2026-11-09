@@ -197,11 +197,76 @@ const NON_REPORTER_PREFIX_WORDS = new Set([
   '49ers',
   'san francisco',
   'kyle shanahan',
+  'shanahan',
   'john lynch',
+  'lynch',
   'note',
   'watch',
   'video'
 ]);
+
+export const PODIUM_SUBJECT_IDS = new Set(['kyle_shanahan', 'john_lynch']);
+
+export function isPodiumSubjectId(reporterId = '') {
+  return PODIUM_SUBJECT_IDS.has(String(reporterId || '').trim());
+}
+
+const OUTLET_DEFAULT_HUB_URLS = {
+  espn: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
+  '49ers_official': 'https://www.49ers.com/news/',
+  nbcsba: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/',
+  sf_standard: 'https://sfstandard.com/sports/',
+  niners_nation: 'https://www.ninersnation.com/',
+  '49ers_webzone': 'https://www.49erswebzone.com/',
+  pfrumors: 'https://www.profootballrumors.com/san-francisco-49ers',
+  nfl_trade_rumors: 'https://nfltraderumors.co/',
+  nfl_network: 'https://www.nfl.com/teams/san-francisco-49ers/',
+  knbr_radio: 'https://www.knbr.com/49ers/'
+};
+
+/**
+ * Resolves the authentic profile or outlet link for an item's author, strictly preventing
+ * cross-reporter X profile mismatches (e.g., never linking "Dan Graziano" to "@nwagoner"
+ * or "Kerry Crowley" to "@timkawakami", and never treating podium coaches as article authors).
+ */
+export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
+  const authorStr = String(item?.author || item?.reporterName || '').trim();
+  const matchedAuthor = authorStr ? resolveReporterFromNameOrHandle(authorStr) : null;
+  if (matchedAuthor && !PODIUM_SUBJECT_IDS.has(matchedAuthor.id) && matchedAuthor.xUrl) {
+    return matchedAuthor.xUrl;
+  }
+
+  const rawProfileUrl = String(item?.authorProfileUrl || '').trim();
+  if (rawProfileUrl) {
+    const xHandleMatch = rawProfileUrl.match(/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/?$/i);
+    if (xHandleMatch) {
+      const handleOwner = resolveReporterFromNameOrHandle(xHandleMatch[1]);
+      if (handleOwner && authorStr) {
+        const lowerAuth = authorStr.toLowerCase();
+        const ownerLower = handleOwner.name.toLowerCase();
+        const handleLower = handleOwner.handle.replace(/^@/, '').toLowerCase();
+        const outletLower = String(handleOwner.outletName || '').toLowerCase();
+        const isSameAuthorOrOrg =
+          lowerAuth === ownerLower ||
+          lowerAuth.includes(ownerLower) ||
+          lowerAuth.replace(/^@/, '') === handleLower ||
+          (PODIUM_SUBJECT_IDS.has(handleOwner.id) && /49ers|official/i.test(lowerAuth)) ||
+          lowerAuth === outletLower;
+        if (!isSameAuthorOrOrg) {
+          return OUTLET_DEFAULT_HUB_URLS[item?.outletId] || fallbackUrl;
+        }
+      }
+    }
+    return rawProfileUrl;
+  }
+
+  const cleanHandle = String(item?.authorHandle || '').replace(/^@/, '').trim();
+  if (cleanHandle) {
+    return `https://x.com/${cleanHandle}`;
+  }
+
+  return OUTLET_DEFAULT_HUB_URLS[item?.outletId] || fallbackUrl;
+}
 
 /**
  * Extracts canonical beat reporter / insider attribution from social mirror posts,
@@ -267,7 +332,7 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
       const candidateLabel = m[1].trim();
       if (!NON_REPORTER_PREFIX_WORDS.has(candidateLabel.toLowerCase())) {
         const matched = resolveReporterFromNameOrHandle(candidateLabel);
-        if (matched) {
+        if (matched && !PODIUM_SUBJECT_IDS.has(matched.id)) {
           return buildResult(matched, m[2].trim(), null, null, true);
         }
       }
@@ -283,23 +348,20 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
       if (!candidatePerson || NON_REPORTER_PREFIX_WORDS.has(candidatePerson.toLowerCase())) continue;
       const matched = resolveReporterFromNameOrHandle(candidatePerson);
       if (matched) {
+        if (PODIUM_SUBJECT_IDS.has(matched.id)) continue;
         return buildResult(matched, original, null, null, true);
       }
       // Valid 2-word capitalized reporter name from wire (e.g. "Brooke Evans", "Paul Gutierrez")
-      if (/^[A-Z][a-z'.-]+\s+[A-Z][a-z'.-]+$/.test(candidatePerson) && !/\b(Head Coach|General Manager|San Francisco|Las Vegas)\b/i.test(candidatePerson)) {
+      if (
+        /^[A-Z][a-z'.-]+\s+[A-Z][a-z'.-]+$/.test(candidatePerson) &&
+        !/\b(Head Coach|General Manager|San Francisco|Las Vegas|Kyle Shanahan|John Lynch|Robert Saleh|Raheem Morris|Brock Purdy)\b/i.test(candidatePerson)
+      ) {
         return buildResult(null, original, candidatePerson, candidateOutlet, true);
       }
     }
   }
 
-  // 3. Check podium attribution ("coach Kyle Shanahan said ...") if fallback has no specific human author
-  if (/\b(?:head\s+)?coach\s+Kyle\s+Shanahan\s+(?:said|noted|announced|confirmed|told\s+reporters)\b/i.test(original)) {
-    if (!fallbackEntry) {
-      return buildResult(BY_ID.get('kyle_shanahan'), original, null, null, true);
-    }
-  }
-
-  return buildResult(fallbackEntry, original);
+  return buildResult(fallbackEntry && !PODIUM_SUBJECT_IDS.has(fallbackEntry.id) ? fallbackEntry : null, original);
 }
 
 const ACUTE_INJURY_OBSERVATION_REGEX =
@@ -641,6 +703,11 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
     return `https://x.com/${m[1]}/status/${m[2]}`;
   }
   if (isDirectSocialPostUrl(rawUrl)) {
+    return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
+  }
+
+  // Preserve direct ESPN video highlight clips & full story URLs even if misclassified
+  if (/^https?:\/\/(?:www\.|m\.)?espn\.com\/(?:video\/clip|nfl\/story)\/_\/id\/\d+/i.test(rawUrl)) {
     return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
   }
 

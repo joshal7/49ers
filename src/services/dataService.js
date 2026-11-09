@@ -31,10 +31,14 @@ import {
   buildEspnTeamInjuriesUrl,
   buildEspnTeamLogoUrl,
   buildPfrHeadToHeadUrl,
+  isOffTopicLeagueFiller,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
+  isEspnPlayerProfileUrl,
+  isPodiumSubjectId,
+  resolveItemAuthorProfileUrl,
   resolveReporterFromNameOrHandle,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
@@ -89,7 +93,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
   },
   {
     actor: 'nbcs49ers.bsky.social',
-    reporterId: 'matt_maiocco',
+    reporterId: null,
     reporterName: '49ers on NBCSBA',
     authorHandle: '@NBCS49ers',
     outletId: 'nbcsba',
@@ -98,7 +102,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
   },
   {
     actor: 'nbcsportsbayarea.com',
-    reporterId: 'matt_maiocco',
+    reporterId: null,
     reporterName: 'NBC Sports Bay Area',
     authorHandle: '@NBCSAuthentic',
     outletId: 'nbcsba',
@@ -107,7 +111,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
   },
   {
     actor: '49erswebzone.bsky.social',
-    reporterId: 'al_sacco',
+    reporterId: null,
     reporterName: '49ers Webzone',
     authorHandle: '@49erswebzone',
     outletId: '49ers_webzone',
@@ -152,27 +156,30 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
   },
   {
     actor: 'nfltraderumors.bsky.social',
-    reporterId: 'adam_schefter',
-    reporterName: 'NFL Trade Rumors Wire',
-    authorHandle: '@nflrums',
-    outletId: 'nfl_network',
-    outletName: 'NFL Beat & Transaction Wire',
+    reporterId: null,
+    reporterName: 'NFL Trade Rumors',
+    authorHandle: '',
+    authorProfileUrl: 'https://bsky.app/profile/nfltraderumors.bsky.social',
+    outletId: 'nfl_trade_rumors',
+    outletName: 'NFL Trade Rumors',
     isNationalInsider: true
   },
   {
     actor: 'insidenflnews.bsky.social',
-    reporterId: 'adam_schefter',
+    reporterId: null,
     reporterName: 'NFL Insider Wire',
-    authorHandle: '@NFLInsiderWire',
+    authorHandle: '',
+    authorProfileUrl: 'https://bsky.app/profile/insidenflnews.bsky.social',
     outletId: 'nfl_network',
     outletName: 'NFL Insider Wire',
     isNationalInsider: true
   },
   {
     actor: 'nflnewsreposterbot.bsky.social',
-    reporterId: 'tom_pelissero',
+    reporterId: null,
     reporterName: 'NFL Beat & Insider Wire',
-    authorHandle: '@NFLBeatWire',
+    authorHandle: '',
+    authorProfileUrl: 'https://bsky.app/profile/nflnewsreposterbot.bsky.social',
     outletId: 'nfl_network',
     outletName: 'NFL Insider Wire',
     isNationalInsider: true
@@ -849,10 +856,19 @@ export async function hydrateLiveEspnPlayerBeatWire(
           });
 
           const cleanFull = cleanSensationalistText(parsedAttr.cleanedText || leadText);
+          if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${cleanFull}`)) {
+            continue;
+          }
           const directWebUrl = sanitizeExternalUrl(entry.links?.web?.href, null);
           if (!directWebUrl && !parsedAttr.viaWire && !bylineHint) continue;
           const wireIdToken = entry.id || hashWireKey(`${player.id}_${pubIso}_${cleanFull.slice(0, 40)}`);
-          const isPlayerBlurb = Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWebUrl;
+          const isDirectArticleOrClip =
+            Boolean(directWebUrl) &&
+            !isEspnPlayerProfileUrl(directWebUrl) &&
+            /\/(nfl\/story|video\/clip)\/_\/id\/\d+/i.test(directWebUrl);
+          const isPlayerBlurb =
+            !isDirectArticleOrClip &&
+            (Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWebUrl || isEspnPlayerProfileUrl(directWebUrl));
           const itemUrl = isPlayerBlurb
             ? resolveOriginalTweetUrl(
                 {
@@ -995,8 +1011,8 @@ export async function hydrateLiveRotoWireBeatRss(appData) {
       if (!hasExplicitSf && exactRosterMatches.length === 0) continue;
 
       const parsedAttr = extractBeatAttributionFromText(rawDesc || rawTitle, {
-        reporterId: 'nick_wagoner',
-        reporterName: '49ers Beat Wire',
+        reporterId: null,
+        reporterName: 'RotoWire NFL Beat',
         outletId: 'espn',
         outletName: 'RotoWire / X Beat'
       });
@@ -2177,26 +2193,28 @@ export async function hydrateLiveEspnOverlay(appData) {
       if (!url || existingUrls.has(url)) continue;
 
       const summary = cleanSensationalistText(art.description || '');
+      const mentioned = matchPlayersClient(`${title} ${summary}`, rosterPlayers, 12);
+      if (isOffTopicLeagueFiller({ url, title, summary, hasRosterMatch: mentioned.length > 0 })) continue;
       const sig = scoreContentSignal(title, summary);
       if (sig.isClickbait) continue;
       let imgUrl = art.images?.[0]?.url || '';
       if (imgUrl.startsWith('http://')) imgUrl = `https://${imgUrl.slice(7)}`;
       const bylineClean = art.byline
         ? cleanSensationalistText(String(art.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim())
-        : 'Nick Wagoner';
+        : 'ESPN';
       const bylineLower = bylineClean.toLowerCase();
       const matchedRep = (appData.reporters?.reporters || []).find(
-        r => r.name && r.name.toLowerCase() === bylineLower
+        r => r.name && !isPodiumSubjectId(r.id) && r.name.toLowerCase() === bylineLower
       );
-      const dirEntry = resolveReporterFromNameOrHandle(matchedRep?.id || bylineClean);
+      const rawDirEntry = resolveReporterFromNameOrHandle(matchedRep?.id || bylineClean);
+      const dirEntry = rawDirEntry && !isPodiumSubjectId(rawDirEntry.id) ? rawDirEntry : null;
       const resolvedReporterId =
-        matchedRep?.id || dirEntry?.id || (/schefter/i.test(bylineClean) ? 'adam_schefter' : 'nick_wagoner');
+        matchedRep?.id || dirEntry?.id || (/schefter/i.test(bylineClean) ? 'adam_schefter' : null);
       const pubIso = art.published || new Date().toISOString();
       const brk = classifyBreakingItem({ title, summary, publishedAt: pubIso }, Date.now(), { appData });
-      const mentioned = matchPlayersClient(`${title} ${summary}`, rosterPlayers, 12);
 
       existingUrls.add(url);
-      newArts.push({
+      const itemDraft = {
         id: `espn_live_${art.id || Date.now()}`,
         type: 'article',
         title,
@@ -2212,7 +2230,7 @@ export async function hydrateLiveEspnOverlay(appData) {
         reporterName: bylineClean,
         author: bylineClean,
         authorHandle: matchedRep?.handle || dirEntry?.handle || '',
-        authorProfileUrl: matchedRep?.xUrl || dirEntry?.xUrl || matchedRep?.profileUrl || null,
+        authorProfileUrl: matchedRep?.xUrl || dirEntry?.xUrl || null,
         trustTier: dirEntry?.trustTier || 1,
         isBreaking: brk.isBreaking,
         isInGameInjury: brk.isInGameInjury,
@@ -2222,7 +2240,9 @@ export async function hydrateLiveEspnOverlay(appData) {
         signalScore: Math.max(70, sig.signalScore),
         fluffScore: sig.fluffScore,
         isClickbait: false
-      });
+      };
+      itemDraft.authorProfileUrl = resolveItemAuthorProfileUrl(itemDraft, url);
+      newArts.push(itemDraft);
     }
     if (newArts.length > 0) {
       appData.news.rawStream = sortNewsWithBreakingPriority([...newArts, ...appData.news.rawStream], Date.now(), {

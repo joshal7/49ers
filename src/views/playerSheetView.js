@@ -25,7 +25,11 @@ import {
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
-import { buildXPlayerScoopSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
+import {
+  buildXPlayerScoopSearchUrl,
+  resolveItemAuthorProfileUrl,
+  resolveOriginalTweetUrl
+} from '../engine/beatAttributionEngine.js';
 
 export function renderPlayerDossierSheetHtml({
   player,
@@ -112,7 +116,7 @@ function renderOverviewTab(p) {
                     )
                   : sanitizeExternalUrl(n.url, '#');
                 const authorHref = sanitizeExternalUrl(
-                  n.authorProfileUrl,
+                  resolveItemAuthorProfileUrl(n, resolvedMentionUrl),
                   resolvedMentionUrl
                 );
                 const ageStr = n.publishedAt ? formatRelativeAge(n.publishedAt) : '';

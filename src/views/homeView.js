@@ -35,7 +35,11 @@ import {
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 import { resolveGameDayInjuryRows } from '../engine/gameDayRosterEngine.js';
-import { buildXBeatListSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
+import {
+  buildXBeatListSearchUrl,
+  resolveItemAuthorProfileUrl,
+  resolveOriginalTweetUrl
+} from '../engine/beatAttributionEngine.js';
 import { resolveClusterSafeReports } from './newsView.js';
 
 export function renderHomeDashboardHtml({
@@ -259,7 +263,7 @@ function renderSingleDashboardCard({
                             ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
-                        <a href="${esc(sanitizeExternalUrl(tw.authorProfileUrl, resolvedTwUrl))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
+                        <a href="${esc(sanitizeExternalUrl(resolveItemAuthorProfileUrl(tw, resolvedTwUrl), resolvedTwUrl))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
                           <strong>${esc(authorName)}</strong>
                         </a>
                       </div>
@@ -300,9 +304,10 @@ function renderSingleDashboardCard({
               <div class="home-wire-list">
                 ${topArticles
                   .map(art => {
+                    const safeArtUrl = sanitizeExternalUrl(art.url, '#');
                     const hasArtImg = art.imageUrl && /^https:\/\//i.test(art.imageUrl);
                     return `
-                  <a href="${esc(art.url)}" target="_blank" rel="noopener noreferrer" class="home-article-row">
+                  <a href="${esc(safeArtUrl)}" target="_blank" rel="noopener noreferrer" class="home-article-row">
                     ${
                       hasArtImg
                         ? `<span class="raw-item-thumb" style="width:44px;height:44px;border-radius:8px">

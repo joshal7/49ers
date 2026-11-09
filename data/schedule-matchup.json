@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T05:47:21.133Z",
+  "updatedAt": "2026-11-09T07:52:30.264Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -321,7 +321,7 @@
         "surface": "Synthetic Turf"
       },
       "restAdvantageDays": 0,
-      "spreadLineSf": -4.5,
+      "spreadLineSf": -3.5,
       "totalLine": 55.5,
       "broadcast": "FOX"
     },
@@ -710,8 +710,8 @@
         "blurb": "Sitting at 7-1 (3-0 NFC West) with DeForest Buckner added to the interior keeps San Francisco atop NFC contenders."
       },
       {
-        "outlet": "ESPN NFL Nation Power Panel",
-        "url": "https://www.espn.com/nfl/story/_/page/nflpowerrankings",
+        "outlet": "ESPN NFL Power Index & Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50359434/nfl-power-rankings-week-9-teams-best-season-trades-deadline",
         "rank": 2,
         "delta": "0",
         "blurb": "Brock Purdy's efficiency (#2 Passing EPA/gm) anchors the offense while the defensive front reloads."
@@ -825,7 +825,7 @@
           "jersey": 66,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685120.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4685120/tj-bass",
-          "snapPct": 44,
+          "snapPct": 57,
           "isStarter": false
         },
         {
@@ -837,7 +837,7 @@
           "jersey": 56,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426663.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426663/cooper-beebe",
-          "snapPct": 98,
+          "snapPct": 100,
           "isStarter": true
         },
         {
@@ -861,7 +861,7 @@
           "jersey": 80,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4808759.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4808759/camden-brown",
-          "snapPct": null,
+          "snapPct": 22,
           "isStarter": false
         },
         {
@@ -873,7 +873,7 @@
           "jersey": 65,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696203.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4696203/ajani-cornelius",
-          "snapPct": 23,
+          "snapPct": 16,
           "isStarter": false
         },
         {
@@ -885,7 +885,7 @@
           "jersey": 87,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242355.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4242355/jake-ferguson",
-          "snapPct": 67,
+          "snapPct": 59,
           "isStarter": true
         },
         {
@@ -897,7 +897,7 @@
           "jersey": 19,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5083754.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/5083754/ryan-flournoy",
-          "snapPct": 57,
+          "snapPct": 74,
           "isStarter": true
         },
         {
@@ -909,7 +909,7 @@
           "jersey": 32,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429676.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4429676/tyler-goodson",
-          "snapPct": null,
+          "snapPct": 19,
           "isStarter": false
         },
         {
@@ -921,7 +921,7 @@
           "jersey": 60,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4609048.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4609048/tyler-guyton",
-          "snapPct": 94,
+          "snapPct": 98,
           "isStarter": true
         },
         {
@@ -957,7 +957,7 @@
           "jersey": 77,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428990.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4428990/broderick-jones",
-          "snapPct": null,
+          "snapPct": 17,
           "isStarter": false
         },
         {
@@ -969,7 +969,7 @@
           "jersey": 88,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241389.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4241389/ceedee-lamb",
-          "snapPct": 73,
+          "snapPct": 78,
           "isStarter": true
         },
         {
@@ -981,7 +981,7 @@
           "jersey": 30,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4383396.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4383396/hunter-luepke",
-          "snapPct": 50,
+          "snapPct": 62,
           "isStarter": true
         },
         {
@@ -993,7 +993,7 @@
           "jersey": 18,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426485.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426485/jonathan-mingo",
-          "snapPct": 32,
+          "snapPct": 37,
           "isStarter": false
         },
         {
@@ -1005,7 +1005,7 @@
           "jersey": 84,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361988.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4361988/james-mitchell",
-          "snapPct": null,
+          "snapPct": 42,
           "isStarter": false
         },
         {
@@ -1017,7 +1017,7 @@
           "jersey": 3,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426354.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426354/george-pickens",
-          "snapPct": 81,
+          "snapPct": 78,
           "isStarter": true
         },
         {
@@ -1029,7 +1029,7 @@
           "jersey": 4,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2577417.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/2577417/dak-prescott",
-          "snapPct": 95,
+          "snapPct": 100,
           "isStarter": true
         },
         {
@@ -1041,7 +1041,7 @@
           "jersey": 86,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
-          "snapPct": 50,
+          "snapPct": 51,
           "isStarter": false
         },
         {
@@ -1053,7 +1053,7 @@
           "jersey": 67,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685554.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4685554/drew-shelton",
-          "snapPct": null,
+          "snapPct": 16,
           "isStarter": false
         },
         {
@@ -1065,7 +1065,7 @@
           "jersey": 73,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568652.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4568652/tyler-smith",
-          "snapPct": 98,
+          "snapPct": 100,
           "isStarter": true
         },
         {
@@ -1077,7 +1077,7 @@
           "jersey": 89,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360967.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4360967/brevyn-spann-ford",
-          "snapPct": 51,
+          "snapPct": 58,
           "isStarter": false
         },
         {
@@ -1089,7 +1089,7 @@
           "jersey": 78,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915834.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3915834/terence-steele",
-          "snapPct": 98,
+          "snapPct": 100,
           "isStarter": true
         },
         {
@@ -1101,7 +1101,7 @@
           "jersey": 9,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3676833.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
-          "snapPct": 40,
+          "snapPct": 27,
           "isStarter": true
         },
         {
@@ -1113,7 +1113,7 @@
           "jersey": 33,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361579.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4361579/javonte-williams",
-          "snapPct": 69,
+          "snapPct": 75,
           "isStarter": true
         },
         {
@@ -1125,7 +1125,7 @@
           "jersey": 55,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685266.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4685266/jaishawn-barham",
-          "snapPct": null,
+          "snapPct": 59,
           "isStarter": false
         },
         {
@@ -1137,7 +1137,7 @@
           "jersey": 45,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429249.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4429249/justin-barron",
-          "snapPct": 55,
+          "snapPct": 75,
           "isStarter": false
         },
         {
@@ -1149,7 +1149,7 @@
           "jersey": 14,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241921.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4241921/markquese-bell",
-          "snapPct": 76,
+          "snapPct": 77,
           "isStarter": false
         },
         {
@@ -1161,7 +1161,7 @@
           "jersey": 26,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4248911.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4248911/daron-bland",
-          "snapPct": 94,
+          "snapPct": 97,
           "isStarter": true
         },
         {
@@ -1173,7 +1173,7 @@
           "jersey": 11,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595352.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4595352/alijah-clark",
-          "snapPct": 60,
+          "snapPct": 65,
           "isStarter": false
         },
         {
@@ -1185,7 +1185,7 @@
           "jersey": 97,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122752.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3122752/kenny-clark",
-          "snapPct": 68,
+          "snapPct": 66,
           "isStarter": true
         },
         {
@@ -1197,7 +1197,7 @@
           "jersey": 13,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870706.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4870706/caleb-downs",
-          "snapPct": null,
+          "snapPct": 93,
           "isStarter": true
         },
         {
@@ -1209,7 +1209,7 @@
           "jersey": 2,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4384549.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4384549/cobie-durant",
-          "snapPct": null,
+          "snapPct": 56,
           "isStarter": false
         },
         {
@@ -1221,7 +1221,7 @@
           "jersey": 6,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683848.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4683848/donovan-ezeiruaku",
-          "snapPct": 56,
+          "snapPct": 67,
           "isStarter": true
         },
         {
@@ -1233,7 +1233,7 @@
           "jersey": 93,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039170.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4039170/elijah-garcia",
-          "snapPct": null,
+          "snapPct": 23,
           "isStarter": false
         },
         {
@@ -1245,7 +1245,7 @@
           "jersey": 7,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046523.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4046523/rashan-gary",
-          "snapPct": null,
+          "snapPct": 66,
           "isStarter": true
         },
         {
@@ -1257,7 +1257,7 @@
           "jersey": 24,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121415.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3121415/malik-hooker",
-          "snapPct": 79,
+          "snapPct": 61,
           "isStarter": true
         },
         {
@@ -1269,7 +1269,7 @@
           "jersey": 41,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240608.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4240608/james-houston",
-          "snapPct": 39,
+          "snapPct": 53,
           "isStarter": false
         },
         {
@@ -1281,7 +1281,7 @@
           "jersey": 50,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685400.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4685400/shemar-james",
-          "snapPct": 77,
+          "snapPct": 80,
           "isStarter": false
         },
         {
@@ -1293,7 +1293,7 @@
           "jersey": 15,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360307.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4360307/derion-kendrick",
-          "snapPct": null,
+          "snapPct": 81,
           "isStarter": false
         },
         {
@@ -1305,7 +1305,7 @@
           "jersey": 35,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427816.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4427816/marist-liufau",
-          "snapPct": 75,
+          "snapPct": null,
           "isStarter": false
         },
         {
@@ -1317,7 +1317,7 @@
           "jersey": 1,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929850.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3929850/pj-locke",
-          "snapPct": null,
+          "snapPct": 49,
           "isStarter": true
         },
         {
@@ -1329,7 +1329,7 @@
           "jersey": 40,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13976.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/13976/von-miller",
-          "snapPct": null,
+          "snapPct": 22,
           "isStarter": false
         },
         {
@@ -1341,7 +1341,7 @@
           "jersey": 91,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367210.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4367210/otito-ogbonnia",
-          "snapPct": null,
+          "snapPct": 44,
           "isStarter": true
         },
         {
@@ -1353,7 +1353,7 @@
           "jersey": 0,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
-          "snapPct": 60,
+          "snapPct": 71,
           "isStarter": true
         },
         {
@@ -1365,7 +1365,7 @@
           "jersey": 99,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870960.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4870960/lt-overton",
-          "snapPct": null,
+          "snapPct": 30,
           "isStarter": false
         },
         {
@@ -1377,7 +1377,7 @@
           "jersey": 25,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
-          "snapPct": null,
+          "snapPct": 54,
           "isStarter": true
         },
         {
@@ -1389,7 +1389,7 @@
           "jersey": 28,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5095865.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/5095865/shavon-revel-jr",
-          "snapPct": 81,
+          "snapPct": 43,
           "isStarter": false
         },
         {
@@ -1401,7 +1401,7 @@
           "jersey": 42,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4044448.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4044448/curtis-robinson",
-          "snapPct": null,
+          "snapPct": 70,
           "isStarter": false
         },
         {
@@ -1413,7 +1413,7 @@
           "jersey": 23,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259546.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4259546/ameer-speed",
-          "snapPct": null,
+          "snapPct": 69,
           "isStarter": false
         },
         {
@@ -1425,7 +1425,7 @@
           "jersey": 27,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428584.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4428584/reddy-steward",
-          "snapPct": 53,
+          "snapPct": 59,
           "isStarter": false
         },
         {
@@ -1437,7 +1437,7 @@
           "jersey": 43,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360590.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4360590/juanyeh-thomas",
-          "snapPct": 85,
+          "snapPct": 84,
           "isStarter": false
         },
         {
@@ -1449,7 +1449,7 @@
           "jersey": 59,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4689333.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4689333/tyrus-wheat",
-          "snapPct": null,
+          "snapPct": 64,
           "isStarter": false
         },
         {
@@ -1461,7 +1461,7 @@
           "jersey": 92,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040982.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4040982/quinnen-williams",
-          "snapPct": 65,
+          "snapPct": 66,
           "isStarter": true
         },
         {
@@ -1473,7 +1473,7 @@
           "jersey": 53,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4428914/dee-winters",
-          "snapPct": null,
+          "snapPct": 61,
           "isStarter": true
         },
         {
@@ -1497,7 +1497,7 @@
           "jersey": 17,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3953687.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3953687/brandon-aubrey",
-          "snapPct": 39,
+          "snapPct": 40,
           "isStarter": true
         },
         {
@@ -1521,7 +1521,7 @@
           "jersey": 86,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
-          "snapPct": 50,
+          "snapPct": 51,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1546,7 +1546,7 @@
           "jersey": 1,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929850.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3929850/pj-locke",
-          "snapPct": null,
+          "snapPct": 49,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1571,7 +1571,7 @@
           "jersey": 18,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426485.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426485/jonathan-mingo",
-          "snapPct": 32,
+          "snapPct": 37,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1590,39 +1590,13 @@
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
         },
         {
-          "name": "DeMarvion Overshown",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
-          "snapPct": 60,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Hamstring",
-          "gameStatus": "Questionable",
-          "shortComment": "Overshown (hamstring/back) is inactive for Sunday's tilt against Indianapolis.",
-          "longComment": "Overshown wasn't able to overcome injuries to his hamstring and back in time to be ready to suit up Sunday. He was limited in practice both Thursday and Friday, so the issues may not cause a long-term absence. Shemar James is likely to start alongside Dee Winters at inside linebacker for the Cowboys on Sunday.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 76,
-          "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "76% • True GTD",
-          "factors": [
-            "Questionable tag adjusted by player career prior (81%)",
-            "Soft-tissue re-aggravation caution (Hamstring)"
-          ],
-          "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
-        },
-        {
           "name": "Joey Porter Jr.",
           "position": "CB",
           "unit": "Defense",
           "jersey": 25,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
-          "snapPct": null,
+          "snapPct": 54,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1647,7 +1621,7 @@
           "jersey": 3,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426354.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426354/george-pickens",
-          "snapPct": 81,
+          "snapPct": 78,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1664,7 +1638,33 @@
             "Questionable tag adjusted by player career prior (82%)",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
-          "archetypeNote": "Every-down starter workload (81% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+          "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
+          "name": "DeMarvion Overshown",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
+          "snapPct": 71,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Hamstring",
+          "gameStatus": "Questionable",
+          "shortComment": "Overshown (hamstring/back) is inactive for Sunday's tilt against Indianapolis.",
+          "longComment": "Overshown wasn't able to overcome injuries to his hamstring and back in time to be ready to suit up Sunday. He was limited in practice both Thursday and Friday, so the issues may not cause a long-term absence. Shemar James is likely to start alongside Dee Winters at inside linebacker for the Cowboys on Sunday.",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 77,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "77% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (82%)",
+            "Soft-tissue re-aggravation caution (Hamstring)"
+          ],
+          "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         },
         {
           "name": "Jake Ferguson",
@@ -1673,7 +1673,7 @@
           "jersey": 87,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242355.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4242355/jake-ferguson",
-          "snapPct": 67,
+          "snapPct": 59,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1698,7 +1698,7 @@
           "jersey": 9,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3676833.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
-          "snapPct": 40,
+          "snapPct": 27,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1724,7 +1724,7 @@
           "jersey": 6,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683848.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4683848/donovan-ezeiruaku",
-          "snapPct": 56,
+          "snapPct": 67,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1749,7 +1749,7 @@
           "jersey": 73,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568652.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4568652/tyler-smith",
-          "snapPct": 98,
+          "snapPct": 100,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1765,7 +1765,7 @@
           "factors": [
             "Questionable tag adjusted by player career prior (82%)"
           ],
-          "archetypeNote": "Every-down starter workload (98% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         },
         {
           "name": "Caleb Downs",
@@ -1774,7 +1774,7 @@
           "jersey": 13,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870706.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4870706/caleb-downs",
-          "snapPct": null,
+          "snapPct": 93,
           "wed": "-",
           "thu": "-",
           "fri": "-",
@@ -1790,10 +1790,24 @@
           "factors": [
             "Cleared without restrictive game-day designation"
           ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+          "archetypeNote": "Every-down starter workload (93% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         }
       ],
       "keyStartersHealthy": [
+        {
+          "name": "Cooper Beebe",
+          "position": "C",
+          "unit": "Offense",
+          "jersey": 56,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426663.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426663/cooper-beebe",
+          "snapPct": 100,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
+        },
         {
           "name": "Tyler Booker",
           "position": "G",
@@ -1809,18 +1823,18 @@
           "shortComment": "1st-string Offense (100% snaps) • Off injury report."
         },
         {
-          "name": "Cooper Beebe",
-          "position": "C",
+          "name": "Dak Prescott",
+          "position": "QB",
           "unit": "Offense",
-          "jersey": 56,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426663.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426663/cooper-beebe",
-          "snapPct": 98,
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2577417.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/2577417/dak-prescott",
+          "snapPct": 100,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (98% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Offense (98% snaps) • Off injury report."
+          "archetypeNote": "Veteran franchise QB; plays through upper-extremity soreness while lower-body soft-tissue tags carry elevated caution.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
         },
         {
           "name": "Terence Steele",
@@ -1829,26 +1843,12 @@
           "jersey": 78,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915834.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3915834/terence-steele",
-          "snapPct": 98,
+          "snapPct": 100,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Veteran starter profile (7th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-          "shortComment": "1st-string Offense (98% snaps) • Off injury report."
-        },
-        {
-          "name": "Dak Prescott",
-          "position": "QB",
-          "unit": "Offense",
-          "jersey": 4,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2577417.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/2577417/dak-prescott",
-          "snapPct": 95,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Veteran franchise QB; plays through upper-extremity soreness while lower-body soft-tissue tags carry elevated caution.",
-          "shortComment": "1st-string Offense (95% snaps) • Off injury report."
+          "archetypeNote": "Veteran starter profile (7th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
         },
         {
           "name": "Tyler Guyton",
@@ -1857,12 +1857,12 @@
           "jersey": 60,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4609048.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4609048/tyler-guyton",
-          "snapPct": 94,
+          "snapPct": 98,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Offense (94% snaps) • Off injury report."
+          "archetypeNote": "Every-down starter workload (98% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (98% snaps) • Off injury report."
         },
         {
           "name": "CeeDee Lamb",
@@ -1871,12 +1871,12 @@
           "jersey": 88,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241389.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4241389/ceedee-lamb",
-          "snapPct": 73,
+          "snapPct": 78,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "High-volume alpha WR with strong track record of suiting up through Questionable/LP tags.",
-          "shortComment": "1st-string Offense (73% snaps) • Off injury report."
+          "shortComment": "1st-string Offense (78% snaps) • Off injury report."
         },
         {
           "name": "DaRon Bland",
@@ -1885,26 +1885,12 @@
           "jersey": 26,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4248911.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4248911/daron-bland",
-          "snapPct": 94,
+          "snapPct": 97,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Defense (94% snaps) • Off injury report."
-        },
-        {
-          "name": "Malik Hooker",
-          "position": "S",
-          "unit": "Defense",
-          "jersey": 24,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121415.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3121415/malik-hooker",
-          "snapPct": 79,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Veteran starter profile (10th NFL season, 79% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-          "shortComment": "1st-string Defense (79% snaps) • Off injury report."
+          "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Defense (97% snaps) • Off injury report."
         },
         {
           "name": "Kenny Clark",
@@ -1913,26 +1899,12 @@
           "jersey": 97,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122752.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3122752/kenny-clark",
-          "snapPct": 68,
+          "snapPct": 66,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-          "shortComment": "1st-string Defense (68% snaps) • Off injury report."
-        },
-        {
-          "name": "Quinnen Williams",
-          "position": "DT",
-          "unit": "Defense",
-          "jersey": 92,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040982.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4040982/quinnen-williams",
-          "snapPct": 65,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-          "shortComment": "1st-string Defense (65% snaps) • Off injury report."
+          "shortComment": "1st-string Defense (66% snaps) • Off injury report."
         },
         {
           "name": "Rashan Gary",
@@ -1941,26 +1913,54 @@
           "jersey": 7,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046523.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4046523/rashan-gary",
-          "snapPct": null,
+          "snapPct": 66,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-          "shortComment": "Listed 1st-string on depth chart; active without game designation."
+          "shortComment": "1st-string Defense (66% snaps) • Off injury report."
         },
         {
-          "name": "Otito Ogbonnia",
+          "name": "Quinnen Williams",
           "position": "DT",
           "unit": "Defense",
-          "jersey": 91,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367210.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4367210/otito-ogbonnia",
-          "snapPct": null,
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040982.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4040982/quinnen-williams",
+          "snapPct": 66,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-          "shortComment": "Listed 1st-string on depth chart; active without game designation."
+          "shortComment": "1st-string Defense (66% snaps) • Off injury report."
+        },
+        {
+          "name": "Malik Hooker",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 24,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121415.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3121415/malik-hooker",
+          "snapPct": 61,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+          "shortComment": "1st-string Defense (61% snaps) • Off injury report."
+        },
+        {
+          "name": "Dee Winters",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4428914/dee-winters",
+          "snapPct": 61,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+          "shortComment": "1st-string Defense (61% snaps) • Off injury report."
         }
       ],
       "irReserve": [
@@ -1970,7 +1970,7 @@
           "jersey": 34,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043089.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4043089/jalen-thompson",
-          "snapPct": null,
+          "snapPct": 81,
           "status": "IR — 21-Day Window Open",
           "injuryType": "Hamstring",
           "isSeasonEnding": false,
@@ -1989,7 +1989,7 @@
           "jersey": 90,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2980097.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/2980097/jonathan-bullard",
-          "snapPct": null,
+          "snapPct": 32,
           "status": "IR — 21-Day Window Open",
           "injuryType": "Calf",
           "isSeasonEnding": false,
@@ -2008,7 +2008,7 @@
           "jersey": 57,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710067.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4710067/malachi-lawrence",
-          "snapPct": null,
+          "snapPct": 42,
           "status": "Injured Reserve",
           "injuryType": "Ankle",
           "isSeasonEnding": false,
@@ -2046,7 +2046,7 @@
           "jersey": 20,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240603.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4240603/malik-davis",
-          "snapPct": 60,
+          "snapPct": null,
           "status": "Season-Ending IR",
           "injuryType": "Hip (Surgery)",
           "isSeasonEnding": true,
@@ -2056,25 +2056,6 @@
           "projectedReturnWeek": "Out for Season",
           "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
           "beatNote": "Davis underwent surgery Saturday for a hip injury, and Calvin Watkins of The Dallas Morning News reports that the procedure will sideline the 27-year-old running back for the entire 2026 season. With Davis on the shelf, the Cowboys bolstered their backfield depth by signing Israel Abanikanda from the practice squad to the active roster, with the latter serving as the RB3 behind Javonte Williams and Emari Demercado.",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out for Season"
-        },
-        {
-          "name": "Princeton Fant",
-          "position": "TE",
-          "jersey": 85,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242442.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4242442/princeton-fant",
-          "snapPct": 48,
-          "status": "Season-Ending IR",
-          "injuryType": "Knee - ACL + MCL (Surgery)",
-          "isSeasonEnding": true,
-          "isPracticeWindowOpen": false,
-          "placedWeek": 1,
-          "earliestEligibleWeek": null,
-          "projectedReturnWeek": "Out for Season",
-          "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-          "beatNote": "ir",
           "playProbabilityPct": 0,
           "playBadgeLabel": "0% • Out for Season"
         },
@@ -2096,16 +2077,35 @@
           "beatNote": "ir",
           "playProbabilityPct": 0,
           "playBadgeLabel": "0% • Out for Season"
+        },
+        {
+          "name": "Princeton Fant",
+          "position": "TE",
+          "jersey": 85,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242442.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4242442/princeton-fant",
+          "snapPct": null,
+          "status": "Season-Ending IR",
+          "injuryType": "Knee - ACL + MCL (Surgery)",
+          "isSeasonEnding": true,
+          "isPracticeWindowOpen": false,
+          "placedWeek": 1,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": "Out for Season",
+          "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+          "beatNote": "ir",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out for Season"
         }
       ]
     },
     "betting": {
       "favorite": "San Francisco 49ers",
-      "spread": "SF -4.5",
+      "spread": "SF -3.5",
       "openingSpread": "Opened SF +1.5 (Draft Kings)",
       "overUnder": 55.5,
-      "moneyline": "SF -225 | DAL +185",
-      "impliedScore": "SF 30.0 – DAL 25.5",
+      "moneyline": "SF -218 | DAL +180",
+      "impliedScore": "SF 29.5 – DAL 26.0",
       "restAdvantage": "Even Rest (Standard Prep Week)"
     },
     "franchiseHistory": {

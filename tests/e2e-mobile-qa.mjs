@@ -3365,6 +3365,103 @@ async function main() {
       await cdp.setViewport(393, 852, true, 3);
     });
 
+    await runStep('Site-wide rendered DOM link scrub across all 5 primary tabs, sub-views, and Player Dossier', async () => {
+      const linkScrubResult = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const badLinks = [];
+        let totalChecked = 0;
+
+        function auditVisibleAnchors(viewLabel) {
+          const anchors = [...document.querySelectorAll('#mainView a[href], #bottomSheetBackdrop:not([hidden]) a[href]')];
+          for (const a of anchors) {
+            const rawHref = (a.getAttribute('href') || '').trim();
+            totalChecked++;
+            if (!rawHref || rawHref === '#' || /(^|\/)(undefined|null|NaN)(\/|$|\?)/i.test(rawHref)) {
+              badLinks.push(viewLabel + ': invalid href="' + rawHref + '" text="' + (a.textContent || '').trim().slice(0, 40) + '"');
+              continue;
+            }
+            if (/^(podcasts|intent):\/\//i.test(rawHref)) continue;
+            if (!/^https:\/\//i.test(rawHref)) {
+              badLinks.push(viewLabel + ': non-HTTPS href="' + rawHref + '"');
+              continue;
+            }
+            if (a.getAttribute('target') !== '_blank' || !(a.getAttribute('rel') || '').includes('noopener')) {
+              badLinks.push(viewLabel + ': missing target=_blank/noopener on "' + rawHref + '"');
+            }
+            if (/news\.google\.com\/rss\/articles|dlvr\.it\/|bit\.ly\/|\/nfl\/draft2027\/?$|\/nfl\/story\/_\/page\/nflpowerrankings|utm_source=/i.test(rawHref)) {
+              badLinks.push(viewLabel + ': uncleaned/dead/opaque URL "' + rawHref + '"');
+            }
+          }
+        }
+
+        // 1. Home
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(60);
+        auditVisibleAnchors('home');
+
+        // 2. News & Film (Wire & Video + Synthesis Briefs + Synthesis Sources Sheet)
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        await sleep(60);
+        auditVisibleAnchors('news:raw');
+        const synthReportTriggers = [...document.querySelectorAll('[data-action="set-news-mode"][data-mode="clustered"]')];
+        synthReportTriggers[0]?.click();
+        await sleep(60);
+        auditVisibleAnchors('news:clustered');
+        document.querySelector('[data-action="open-synthesis-sources"]')?.click();
+        await sleep(60);
+        auditVisibleAnchors('news:sources-sheet');
+        document.getElementById('closeSheetBtn')?.click();
+        await sleep(40);
+
+        // 3. Game & Season (all 8 sub-views)
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(60);
+        for (const sub of ['matchup', 'health', 'schedule', 'stats', 'trade', 'playoffs', 'draft', 'recap']) {
+          document.querySelector('[data-action="set-season-subview"][data-subview="' + sub + '"]')?.click();
+          await sleep(45);
+          auditVisibleAnchors('season:' + sub);
+        }
+
+        // 4. Roster & Cap + Player Dossier 5 tabs
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        await sleep(60);
+        for (const rmode of ['roster', 'depth', 'cap']) {
+          document.querySelector('[data-action="set-roster-mode"][data-mode="' + rmode + '"]')?.click();
+          await sleep(45);
+          auditVisibleAnchors('roster:' + rmode);
+        }
+        document.querySelector('[data-action="set-roster-mode"][data-mode="roster"]')?.click();
+        await sleep(45);
+        document.querySelector('[data-action="open-player"]')?.click();
+        await sleep(60);
+        for (const ptab of ['overview', 'stats', 'spider', 'contract', 'health']) {
+          document.querySelector('[data-action="set-player-tab"][data-tab="' + ptab + '"]')?.click();
+          await sleep(35);
+          auditVisibleAnchors('player:' + ptab);
+        }
+        document.getElementById('closeSheetBtn')?.click();
+        await sleep(40);
+
+        // 5. Audio & AI (Podcasts + Auto Pod + AI Analysis)
+        document.querySelector('[data-nav-tab="audio"]')?.click();
+        await sleep(60);
+        for (const amode of ['podcasts', 'autopod', 'analysis']) {
+          document.querySelector('[data-action="set-audio-mode"][data-mode="' + amode + '"]')?.click();
+          await sleep(45);
+          auditVisibleAnchors('audio:' + amode);
+        }
+
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(40);
+        return { totalChecked, badLinks };
+      });
+
+      assert(
+        linkScrubResult.totalChecked >= 120 && linkScrubResult.badLinks.length === 0,
+        `Site-wide DOM link scrub failed (checked=${linkScrubResult.totalChecked}): ${JSON.stringify(linkScrubResult.badLinks.slice(0, 10))}`
+      );
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,

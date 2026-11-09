@@ -47,8 +47,28 @@ const PAYWALLED_OUTLET_NAME_REGEX =
 
 const KNOWN_BROKEN_PATH_RULES = [
   { host: /(^|\.)nfl\.com$/i, path: /^\/news\/series\/power-rankings\/?$/i },
-  { host: /(^|\.)nflmockdraftdatabase\.com$/i, path: /^\/team-needs-\d{4}\//i }
+  { host: /(^|\.)nflmockdraftdatabase\.com$/i, path: /^\/team-needs-\d{4}\//i },
+  { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/draft\d{4}\/?$/i },
+  { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/story\/_\/page\/nflpowerrankings\/?$/i }
 ];
+
+const OPAQUE_URL_SHORTENER_HOST_REGEX =
+  /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl)$/i;
+
+const TRACKING_QUERY_PARAMS = new Set([
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_term',
+  'utm_content',
+  'utm_id',
+  'fbclid',
+  'gclid',
+  'mc_cid',
+  'mc_eid',
+  'ref_src',
+  'ref_url'
+]);
 
 export const ESPN_TEAM_SLUG_MAP = {
   WAS: 'wsh',
@@ -213,6 +233,103 @@ export function isPaywalledOrBlockedUrl(rawUrl) {
     }
   }
 
+  if (OPAQUE_URL_SHORTENER_HOST_REGEX.test(host)) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isOpaqueShortenerUrl(rawUrl) {
+  if (typeof rawUrl !== 'string' || !rawUrl.trim()) return false;
+  try {
+    const clean = rawUrl.trim();
+    const parsed = new URL(clean.startsWith('http://') ? `https://${clean.slice(7)}` : clean);
+    return OPAQUE_URL_SHORTENER_HOST_REGEX.test(parsed.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
+export function stripTrackingParams(rawUrl = '') {
+  if (typeof rawUrl !== 'string') return '';
+  const trimmed = rawUrl.trim();
+  if (!trimmed || !trimmed.includes('?')) return trimmed;
+  try {
+    const parsed = new URL(trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed);
+    let mutated = false;
+    for (const key of [...parsed.searchParams.keys()]) {
+      if (TRACKING_QUERY_PARAMS.has(key.toLowerCase())) {
+        parsed.searchParams.delete(key);
+        mutated = true;
+      }
+    }
+    return mutated ? parsed.toString() : trimmed;
+  } catch {
+    return trimmed;
+  }
+}
+
+const OFF_TOPIC_LEAGUE_FILLER_URL_REGEX =
+  /^https?:\/\/(?:www\.|m\.)?espn\.com\/(?:fantasy\/|espn\/betting\/)/i;
+
+const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
+  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|week \d+\s+uniforms|best arrivals|nfl week \d+\s+trolls|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates)\b/i;
+
+const SF_RELEVANCE_TERM_REGEX =
+  /\b(49er|49ers|niners|san francisco|santa clara|levi['’]?s|shanahan|lynch|morris|saleh|foerster|kocurek|purdy|bosa|mccaffrey|kittle|warner|trent williams|mykel williams|aiyuk|buckner|odighizuwa|lenoir|pearsall|jennings|deebo|mike evans|greenlaw|mustapha|ji['’]?ayir|renardo green|upton stout|gracen halton|jordan watkins|mckivitz|brendel|puni|juszczyk|pineiro|demarcus robinson|christian kirk|brandin cooks|nate hobbs|stribling|dugger|mac jones|keion white|romello height)\b/i;
+
+/**
+ * Identifies generic league-wide filler (fantasy D/ST, survivor pools, betting lines roundups,
+ * uniform/arrival slideshows, non-49ers transactions) that should not pollute the 49ers news stream.
+ */
+export function isOffTopicLeagueFiller({
+  url = '',
+  title = '',
+  summary = '',
+  hasRosterMatch = false
+} = {}) {
+  const u = String(url || '').trim();
+  const t = String(title || '').trim();
+  const s = String(summary || '').trim();
+  if (u && OFF_TOPIC_LEAGUE_FILLER_URL_REGEX.test(u)) return true;
+  if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(t)) return true;
+  if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !/\b(49ers|niners|san francisco)\b/i.test(t)) {
+    return true;
+  }
+  const combined = `${t} ${s}`;
+  if (!hasRosterMatch && !SF_RELEVANCE_TERM_REGEX.test(combined)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Detects stale preseason, training-camp, 53-man cutdown, or far-past week headlines
+ * that RSS search aggregators occasionally resurface with fresh timestamps.
+ */
+export function isStaleSeasonHeadline(headline = '', currentWeek = null) {
+  const h = String(headline || '').trim();
+  if (!h) return false;
+  if (
+    /\b(training camp|cut-down to 53|53-man roster tracker|53-man roster projection|preseason finale|preseason week|ahead of the 202\d season|heading into the 202\d season|placed? .* on pup list)\b/i.test(
+      h
+    )
+  ) {
+    return true;
+  }
+  const wkNum = Number(currentWeek);
+  if (Number.isFinite(wkNum) && wkNum >= 4) {
+    const m = h.match(/\bweek\s*(\d{1,2})\b/i);
+    if (m) {
+      const mentionedWk = Number(m[1]);
+      if (Number.isFinite(mentionedWk) && mentionedWk <= wkNum - 3) {
+        if (/\b(ahead of week|clash vs|preview|inactives|highlights, replay|betting odds|picks, predictions|power rankings)\b/i.test(h)) {
+          return true;
+        }
+      }
+    }
+  }
   return false;
 }
 
@@ -244,13 +361,14 @@ export function isPaywalledPublisher(outletName = '', sourceDomainUrl = '') {
 }
 
 /**
- * Normalizes an external URL (`http://` -> `https://`) and returns `fallbackUrl` if empty, malformed, or paywalled.
+ * Normalizes an external URL (`http://` -> `https://`), strips marketing tracking params,
+ * and returns `fallbackUrl` if empty, malformed, shortener-opaque, or paywalled.
  */
 export function sanitizeExternalUrl(rawUrl, fallbackUrl = null) {
   if (typeof rawUrl !== 'string') return fallbackUrl;
   const trimmed = rawUrl.trim();
   if (!trimmed) return fallbackUrl;
-  const upgraded = trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed;
+  const upgraded = stripTrackingParams(trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed);
   if (isPaywalledOrBlockedUrl(upgraded)) return fallbackUrl;
   return upgraded;
 }

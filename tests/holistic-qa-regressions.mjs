@@ -29,6 +29,17 @@ import { runPlayoffMonteCarlo } from '../src/engine/playoffMonteCarlo.js';
 import { sortNewsWithBreakingPriority } from '../src/engine/breakingClassifier.js';
 import { hydrateLiveEspnOverlay } from '../src/services/dataService.js';
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
+import {
+  isOffTopicLeagueFiller,
+  isOpaqueShortenerUrl,
+  isPaywalledOrBlockedUrl,
+  isStaleSeasonHeadline,
+  sanitizeExternalUrl
+} from '../src/engine/linkIntegrity.js';
+import {
+  extractBeatAttributionFromText,
+  resolveItemAuthorProfileUrl
+} from '../src/engine/beatAttributionEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -409,6 +420,102 @@ await testAsync('buildClusteredNewsBriefs generates dynamic clusters in 2027 Wee
     !JSON.stringify(clusters2027Wk9).includes('Raiders'),
     '2027 Week 9 vs Dallas must not replay 2026 Week 9 Raiders cluster'
   );
+});
+
+await testAsync('Link scrub & attribution integrity: zero dead 404s, zero opaque shorteners/wrappers, zero coach-as-journalist or cross-reporter X profile bugs', async () => {
+  // 1. Dead ESPN paths & opaque shorteners blocked; tracking params stripped cleanly
+  assert.equal(isPaywalledOrBlockedUrl('https://www.espn.com/nfl/draft2027'), true);
+  assert.equal(isPaywalledOrBlockedUrl('https://www.espn.com/nfl/story/_/page/nflpowerrankings'), true);
+  assert.equal(isOpaqueShortenerUrl('https://dlvr.it/TWFclL'), true);
+  assert.equal(sanitizeExternalUrl('https://dlvr.it/TWFclL', null), null);
+  assert.equal(
+    sanitizeExternalUrl('https://nfltraderumors.co/trade-deadline-buzz-49ers/?utm_source=dlvr.it&utm_medium=bluesky', null),
+    'https://nfltraderumors.co/trade-deadline-buzz-49ers/'
+  );
+
+  // 2. Podium subjects (Kyle Shanahan / John Lynch) never hijack journalist tweet attribution
+  const schefterQuotingShanahan = extractBeatAttributionFromText(
+    '49ers DT Gracen Halton broke his ankle and is out for the season, per Kyle Shanahan.',
+    {
+      reporterId: 'adam_schefter',
+      reporterName: 'Adam Schefter',
+      authorHandle: '@AdamSchefter',
+      outletId: 'espn',
+      outletName: 'ESPN NFL Insider'
+    }
+  );
+  assert.equal(schefterQuotingShanahan.author, 'Adam Schefter');
+  assert.equal(schefterQuotingShanahan.authorHandle, '@AdamSchefter');
+  assert.equal(schefterQuotingShanahan.xUrl, 'https://x.com/AdamSchefter');
+
+  // 3. Cross-reporter X profile guard prevents linking Dan Graziano / Kerry Crowley to @nwagoner / @timkawakami
+  assert.equal(
+    resolveItemAuthorProfileUrl(
+      { author: 'Dan Graziano', outletId: 'espn', authorProfileUrl: 'https://x.com/nwagoner' },
+      'https://www.espn.com/nfl/story/_/id/123/test'
+    ),
+    'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers'
+  );
+  assert.equal(
+    resolveItemAuthorProfileUrl(
+      { author: 'Kerry Crowley', outletId: 'sf_standard', authorProfileUrl: 'https://x.com/timkawakami' },
+      'https://sfstandard.com/2026/11/06/test/'
+    ),
+    'https://sfstandard.com/sports/'
+  );
+  assert.equal(
+    resolveItemAuthorProfileUrl(
+      { author: 'Nick Wagoner', outletId: 'espn', authorProfileUrl: 'https://x.com/nwagoner' },
+      'https://www.espn.com/nfl/story/_/id/123/test'
+    ),
+    'https://x.com/nwagoner'
+  );
+
+  // 4. Off-topic league filler & stale preseason/early-week guards
+  assert.equal(
+    isOffTopicLeagueFiller({
+      url: 'https://www.espn.com/fantasy/football/story/_/id/50380217/nfl-survivor-week-9',
+      title: 'NFL survivor power rankings: Why this is the week to use Seahawks, Chiefs',
+      summary: ''
+    }),
+    true
+  );
+  assert.equal(
+    isStaleSeasonHeadline('49ers announce roster moves ahead of Week 1 clash vs. Rams', 10),
+    true
+  );
+  assert.equal(
+    isStaleSeasonHeadline('49ers 2026 Roster Tracker: Cut-down to 53 players', 10),
+    true
+  );
+
+  // 5. Compiled data/news.json, data/roster.json & data/schedule-matchup.json scrub assertions
+  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+
+  for (const src of smJson.powerRankings?.sources || []) {
+    assert.ok(!src.url.includes('nflpowerrankings'), `Dead ESPN power rankings URL remained: ${src.url}`);
+    assert.equal(isPaywalledOrBlockedUrl(src.url), false, `Blocked power rankings URL: ${src.url}`);
+  }
+
+  for (const item of newsJson.rawStream || []) {
+    assert.ok(!/news\.google\.com\/rss\/articles/i.test(item.url || ''), `Opaque Google News wrapper in news.json: ${item.url}`);
+    assert.ok(!isOpaqueShortenerUrl(item.url || ''), `Shortener URL in news.json: ${item.url}`);
+    if (item.externalUrl) {
+      assert.ok(!isOpaqueShortenerUrl(item.externalUrl), `Shortener externalUrl in news.json: ${item.externalUrl}`);
+      assert.ok(!/utm_source=/i.test(item.externalUrl), `Unstripped utm_source in externalUrl: ${item.externalUrl}`);
+    }
+    assert.ok(!/^(Kyle Shanahan|John Lynch)$/i.test(item.author || ''), `Coach/GM misattributed as author on ${item.id}: ${item.author}`);
+    assert.ok(!/&#\d+;/.test(item.title || ''), `Unescaped numeric HTML entity in title: ${item.title}`);
+  }
+
+  for (const p of rosterJson.players || []) {
+    for (const rn of p.recentNews || []) {
+      assert.ok(!/news\.google\.com\/rss\/articles/i.test(rn.url || ''), `Opaque Google News wrapper in ${p.name} recentNews: ${rn.url}`);
+      assert.ok(!/^(Kyle Shanahan|John Lynch)$/i.test(rn.author || ''), `Coach/GM misattributed as author in ${p.name} recentNews: ${rn.author}`);
+    }
+  }
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

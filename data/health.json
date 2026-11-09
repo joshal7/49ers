@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T05:47:21.133Z",
+  "updatedAt": "2026-11-09T07:52:30.264Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -100,7 +100,7 @@
       "gameStatus": "Questionable",
       "playProbabilityPct": 82,
       "playBadgeLabel": "82% • True GTD",
-      "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (98% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Questionable tag adjusted by player career prior (82%)"
       ],
@@ -157,7 +157,7 @@
       "gameStatus": "Questionable",
       "playProbabilityPct": 95,
       "playBadgeLabel": "95% • Probable",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "archetypeNote": "Every-down starter workload (88% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],

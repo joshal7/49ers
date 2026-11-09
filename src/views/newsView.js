@@ -15,7 +15,26 @@ import {
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
-import { buildXBeatListSearchUrl, resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
+import {
+  buildXBeatListSearchUrl,
+  resolveItemAuthorProfileUrl,
+  resolveOriginalTweetUrl
+} from '../engine/beatAttributionEngine.js';
+
+function decodeInlineEntities(str = '') {
+  return String(str || '')
+    .replace(/&#(\d+);/g, (_, dec) => {
+      const code = Number(dec);
+      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
+    })
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
+      const code = parseInt(hex, 16);
+      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
+    })
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;/gi, "'");
+}
 
 export function resolveClusterSafeReports(cluster, rawStream = []) {
   if (!cluster || !Array.isArray(cluster.sourceLinks)) return [];
@@ -23,10 +42,11 @@ export function resolveClusterSafeReports(cluster, rawStream = []) {
   const reports = [];
   for (const sl of cluster.sourceLinks) {
     if (!sl) continue;
-    const isTw = sl.type === 'tweet' || sl.type === 'social' || /^@[A-Za-z0-9_]+:/.test(String(sl.title || ''));
-    const handleMatch = String(sl.title || '').match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
+    const rawSlTitle = decodeInlineEntities(String(sl.title || ''));
+    const isTw = sl.type === 'tweet' || sl.type === 'social' || /^@[A-Za-z0-9_]+:/.test(rawSlTitle);
+    const handleMatch = rawSlTitle.match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
     const effectiveHandle = sl.authorHandle || (handleMatch ? handleMatch[1] : '');
-    const cleanTitle = handleMatch ? handleMatch[2].trim() : String(sl.title || '').trim();
+    const cleanTitle = handleMatch ? handleMatch[2].trim() : rawSlTitle.trim();
 
     const resolvedUrl = isTw
       ? resolveOriginalTweetUrl(
@@ -250,7 +270,7 @@ export function renderNewsViewHtml({
                   ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), '#')
                   : sanitizeExternalUrl(item.url, '#');
                 const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
-                const authorHref = sanitizeExternalUrl(item.authorProfileUrl, itemHref);
+                const authorHref = sanitizeExternalUrl(resolveItemAuthorProfileUrl(item, itemHref), itemHref);
                 const strippedBody = isTw
                   ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
                   : item.title;
@@ -444,7 +464,7 @@ export function renderNewsViewHtml({
                 ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
                 : sanitizeExternalUrl(item.url, null);
               const authorHref = sanitizeExternalUrl(
-                item.authorProfileUrl,
+                resolveItemAuthorProfileUrl(item, resolvedItemUrl),
                 resolvedItemUrl
               );
               const rawBody = isTweet

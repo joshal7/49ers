@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T05:47:21.133Z",
+  "updatedAt": "2026-11-09T07:52:30.264Z",
   "seasonYear": 2026,
   "currentWeek": 10,
   "teamRecord": "7-1",
@@ -41,6 +41,6 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-3.8-flash HIGH)",
-    "lastCheckedAt": "2026-11-09T05:47:21.133Z"
+    "lastCheckedAt": "2026-11-09T07:52:30.264Z"
   }
 }
