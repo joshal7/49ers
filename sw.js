@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v35';
+const CACHE_NAME = '49ers-faithful-v36';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -111,8 +111,9 @@ self.addEventListener('fetch', event => {
   }
 
   // Network-first with instant offline cache fallback for HTML, JS, CSS & live JSON feeds
+  // Pass event.request.url string so { cache: 'no-cache' } never throws TypeError on mode === 'navigate'
   event.respondWith(
-    fetch(event.request, { cache: 'no-cache' })
+    fetch(event.request.url, { cache: 'no-cache' })
       .then(res => {
         if (res && res.status === 200) {
           const clone = res.clone();

@@ -50,21 +50,21 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js';
-import { getJargonEntry } from './engine/jargonGlossary.js';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js';
-import { iconSvg } from './views/icons.js';
-import { renderHomeDashboardHtml } from './views/homeView.js';
+} from './views/uiHelpers.js?v=31';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=31';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=31';
+import { iconSvg } from './views/icons.js?v=31';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=31';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js';
-import { renderAudioAiViewHtml } from './views/audioAiView.js';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js';
+} from './views/newsView.js?v=31';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=31';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=31';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=31';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=31';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=31';
 
 const state = {
   appData: null,
@@ -2359,9 +2359,16 @@ async function init() {
 
   // Register Offline-Ready Service Worker (handle both pre-load and post-async-init readyState)
   if ('serviceWorker' in navigator) {
+    let refreshingSw = false;
+    const hadController = Boolean(navigator.serviceWorker.controller);
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController || refreshingSw) return;
+      refreshingSw = true;
+      window.location.reload();
+    });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js')
+        .register('./sw.js?v=36', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };
