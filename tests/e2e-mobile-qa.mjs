@@ -602,6 +602,7 @@ async function main() {
           articleLinks,
           externalLinksCount,
           matchupPlayerAvatars,
+          isTradeWindowActive: Boolean(window.__49ersDiagnostics.getState().seasonState?.activePhases?.includes('TRADE_WINDOW')),
           expectedRecord: window.__49ersDiagnostics.getState().appData.meta.teamRecord,
           hasOpponentHealthPreview:
             matchupText.includes(window.__49ersDiagnostics.getState().appData.scheduleMatchup.upcomingMatchup.oppName) &&
@@ -619,9 +620,8 @@ async function main() {
       assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
       assert(homeInfo.navSvgCount === 5, `Expected 5 SVG icons in bottom nav, got ${homeInfo.navSvgCount}`);
       assert(homeInfo.cardBadgeSvgCount >= 6, `Expected >=6 SVG card icon badges on Home Dashboard, got ${homeInfo.cardBadgeSvgCount}`);
-      assert(
-        JSON.stringify(homeInfo.blockOrder) ===
-          JSON.stringify([
+      const expectedDefaultHomeBlocks = homeInfo.isTradeWindowActive
+        ? [
             'news_briefs',
             'upcoming_matchup',
             'team_health',
@@ -631,7 +631,19 @@ async function main() {
             'roster_depth',
             'salary_cap',
             'autopodcast_ai'
-          ]),
+          ]
+        : [
+            'news_briefs',
+            'upcoming_matchup',
+            'team_health',
+            'schedule_overview',
+            'team_stats',
+            'roster_depth',
+            'salary_cap',
+            'autopodcast_ai'
+          ];
+      assert(
+        JSON.stringify(homeInfo.blockOrder) === JSON.stringify(expectedDefaultHomeBlocks),
         `Unexpected default Home block order: ${JSON.stringify(homeInfo.blockOrder)}`
       );
       assert(!homeInfo.hasWarRoom, 'Found "War Room" text on Home Dashboard');
@@ -2663,6 +2675,7 @@ async function main() {
         document.querySelector('#capSimulatorCard [data-action="set-cap-year"][data-cap-year="2026"]')?.click();
 
         return {
+          isTradeWindowActive: Boolean(window.__49ersDiagnostics.getState().seasonState?.activePhases?.includes('TRADE_WINDOW')),
           bannerStates,
           heroPlayerAvatars,
           oppHasParity,
@@ -2681,9 +2694,9 @@ async function main() {
         };
       });
 
-      // Assert #1: Trade banner exclusivity
+      // Assert #1: Trade banner exclusivity (visible in season:trade when TRADE_WINDOW active; hidden everywhere once deadline passes)
       for (const [k, v] of Object.entries(upgradesAudit.bannerStates)) {
-        if (k === 'season:trade') {
+        if (k === 'season:trade' && upgradesAudit.isTradeWindowActive) {
           assert(
             v.hidden === false && v.display !== 'none' && v.text.includes('Active NFL Trade Window'),
             `Expected Active NFL Trade Window banner visible in season:trade, got ${JSON.stringify(v)}`
@@ -2911,6 +2924,7 @@ async function main() {
             navStrictlyLeftToRight: navX.every((x, idx) => idx === 0 || x > navX[idx - 1]),
             barDetails,
             tradeBannerGeo: {
+              isTradeWindowActive: Boolean(window.__49ersDiagnostics.getState().seasonState?.activePhases?.includes('TRADE_WINDOW')),
               hidden: tradeBannerHidden,
               subnavBottom: Math.round(subnavRect?.bottom || 0),
               bannerTop: Math.round(bannerRect?.top || 0),
@@ -2960,14 +2974,21 @@ async function main() {
           );
         }
 
-        // Assert #4: Active NFL Trade Window block positioned BELOW the Game & Season navigation bars and ABOVE Trade Window card
-        assert(
-          audit.tradeBannerGeo.hidden === false &&
-            audit.tradeBannerGeo.bannerTop >= audit.tradeBannerGeo.subnavBottom &&
-            audit.tradeBannerGeo.bannerBottom <= audit.tradeBannerGeo.tradeCardTop &&
-            audit.tradeBannerGeo.tradeLiveDot,
-          `[${vp.name}] Active NFL Trade Window banner placement wrong: ${JSON.stringify(audit.tradeBannerGeo)}`
-        );
+        // Assert #4: Active NFL Trade Window block positioned BELOW the Game & Season navigation bars and ABOVE Trade Window card when active, or cleanly hidden post-deadline
+        if (audit.tradeBannerGeo.isTradeWindowActive) {
+          assert(
+            audit.tradeBannerGeo.hidden === false &&
+              audit.tradeBannerGeo.bannerTop >= audit.tradeBannerGeo.subnavBottom &&
+              audit.tradeBannerGeo.bannerBottom <= audit.tradeBannerGeo.tradeCardTop &&
+              audit.tradeBannerGeo.tradeLiveDot,
+            `[${vp.name}] Active NFL Trade Window banner placement wrong: ${JSON.stringify(audit.tradeBannerGeo)}`
+          );
+        } else {
+          assert(
+            audit.tradeBannerGeo.hidden === true && !audit.tradeBannerGeo.tradeLiveDot,
+            `[${vp.name}] Post-deadline Trade Window banner should be hidden: ${JSON.stringify(audit.tradeBannerGeo)}`
+          );
+        }
 
         // Assert #3: 4 stacked unit cards (Offense -> Defense -> Special Teams -> Margin), Category column hidden, and zero horizontal overflow!
         assert(
@@ -3992,6 +4013,8 @@ async function main() {
         await sleep(30);
 
         const purdySections = document.querySelectorAll('#sheetBody .player-stat-section').length;
+        const purdyStatsText = document.getElementById('sheetBody')?.textContent || '';
+        const purdyHasTotalQbr = purdyStatsText.includes('Total QBR') && purdyStatsText.includes('81.4');
         const purdyFirstRankBtn = document.querySelector('#sheetBody [data-action="open-stat-rank-modal"]');
         purdyFirstRankBtn?.click();
         await sleep(40);
@@ -4005,6 +4028,10 @@ async function main() {
         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
         const modalClosedAfterFirstEsc = document.getElementById('statRankModalBackdrop').hidden;
         const sheetStillOpenAfterFirstEsc = !document.getElementById('bottomSheetBackdrop').hidden;
+        document.querySelector('[data-action="set-player-stats-mode"][data-stats-mode="career"]')?.click();
+        const purdyCareerHeaders = Array.from(document.querySelectorAll('#sheetBody table[data-career-pos-table] thead th')).map(th =>
+          th.textContent.trim()
+        );
         document.getElementById('closeSheetBtn')?.click();
 
         // 4. Open Nick Bosa -> Stats & EPA -> Career Year-by-Year -> verify defensive columns & zero blank Passing/Receiving columns
@@ -4044,6 +4071,8 @@ async function main() {
           h2hHeaders,
           h2hModalRows,
           purdySections,
+          purdyHasTotalQbr,
+          purdyCareerHeaders,
           playerModalOpen,
           sheetStillOpenBehind,
           purdyHighlightedInModal,
@@ -4090,12 +4119,14 @@ async function main() {
       );
       assert(
         deepStatsAudit.purdySections >= 2 &&
+          deepStatsAudit.purdyHasTotalQbr &&
+          deepStatsAudit.purdyCareerHeaders.includes('QBR') &&
           deepStatsAudit.playerModalOpen &&
           deepStatsAudit.sheetStillOpenBehind &&
           deepStatsAudit.purdyHighlightedInModal &&
           deepStatsAudit.modalClosedAfterFirstEsc &&
           deepStatsAudit.sheetStillOpenAfterFirstEsc,
-        `Player Positional Leaderboard Modal / Escape stack failed: ${JSON.stringify(deepStatsAudit)}`
+        `Player Positional Leaderboard Modal / Total QBR / Escape stack failed: ${JSON.stringify(deepStatsAudit)}`
       );
       assert(
         deepStatsAudit.bosaCareerHeaders.includes('Sacks') &&

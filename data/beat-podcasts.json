@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T20:22:52.832Z",
+  "updatedAt": "2026-11-10T22:35:11.144Z",
   "windowDays": 7,
   "shows": [
     {
@@ -48,7 +48,7 @@
       "feedUrl": "https://feeds.castos.com/85z8",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/dieter-and-hutch/id1530087532",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/90/e3/30/90e33016-6a82-d838-802c-d13be8a44c9a/mza_17215823137049991204.png/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "locked_on_49ers",
@@ -615,26 +615,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-49ers-daily-podcast-on-the-san-francisco-49ers/id1143358718",
       "feedUrl": "https://rss.pdrl.fm/f9f75c/feeds.simplecast.com/P83yLSb_",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/f9f75c/lockedon.simplecastaudio.com/0a6076b9-74e2-4b01-846e-5cc0d0b8031c/episodes/9323d8ea-5628-4be0-bbad-ab48fff7640f/audio/128/default.mp3?aid=rss_feed&awCollectionId=0a6076b9-74e2-4b01-846e-5cc0d0b8031c&awEpisodeId=9323d8ea-5628-4be0-bbad-ab48fff7640f&feed=P83yLSb_"
-    },
-    {
-      "id": "pod_dieter_and_hutch_1000799678357",
-      "trackId": 1000799678357,
-      "collectionId": 1530087532,
-      "showId": "dieter_and_hutch",
-      "showName": "Dieter and Hutch",
-      "showFullTitle": "Dieter and Hutch",
-      "hosts": "Dieter Kurtenbach & Jake Hutchinson",
-      "network": "Bay Area News Group / KNBR",
-      "title": "The Sickies!",
-      "summary": "Dieter and Jake hand out mid-season awards. They were wearing tuxedos. Chapters (00:00:15) - Opening: Welcome to the Sickies Awards(00:01:08) - Jordan Jefferson Memorial & Curse Number Award(00:02:37) - Brock Purdy Memorial Day Three Gem Award(00:03:22) - Jonathan Award for Excellence (Jaden Duggar)(00:04:47) -…",
-      "publishedAt": "2026-11-03T22:23:16.000Z",
-      "durationMinutes": 34,
-      "durationDisplay": "34 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/90/e3/30/90e33016-6a82-d838-802c-d13be8a44c9a/mza_17215823137049991204.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-sickies/id1530087532?i=1000799678357",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/dieter-and-hutch/id1530087532",
-      "feedUrl": "https://feeds.castos.com/85z8",
-      "audioStreamUrl": "https://episodes.castos.com/5f47ece756f771-48882425/2690467/c1e-q3pxbrz91qh0v2vq-7zzrv6qwtmd2-z1smqy.mp3?awCollectionId=11935&awEpisodeId=https%3A%2F%2Fpermalink.castos.com%2Fpodcast%2F11935%2Fepisode%2F2690467&aw_0_1st.ri=castos&aw_0_cnt.rss=https%3A%2F%2Ffeeds.castos.com%2F85z8&aw_0_azn.pgenre=%5BSports%3A+Football%2CSports%2CSports%3A+Fantasy+Sports%5D&aw_0_cnt.url=https%3A%2F%2F49ers-gameday.castos.com%2Fepisodes%2Fthe-sickies&aw_0_azn.planguage=en&aw_0_azn.pcountry=US&q_co=bfb58507fc29387a342f7d0c2cbf0353224109e523a37db75d560f37dfd583e5"
     }
   ]
 }

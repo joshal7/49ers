@@ -16,6 +16,12 @@ export const JARGON_GLOSSARY = {
     definition:
       'Compares a quarterback’s actual completion rate to expected completion probability given target depth, receiver separation, pass rush proximity, and sideline tightness.'
   },
+  qbr: {
+    term: 'Total QBR (Quarterback Rating)',
+    category: 'Analytics',
+    definition:
+      'ESPN’s 0–100 efficiency metric (50.0 is NFL average) measuring a quarterback’s total contribution to winning across passes, scrambles/designed runs, sacks, and penalties—weighted by game leverage (EPA per QB play) and opponent defensive strength.'
+  },
   yac: {
     term: 'YAC (Yards After Catch)',
     category: 'Analytics',
@@ -570,6 +576,8 @@ const PHRASE_ALIASES = [
   ['EPA/db', 'epa'],
   ['EPA', 'epa'],
   ['CPOE', 'cpoe'],
+  ['Total QBR', 'qbr'],
+  ['QBR', 'qbr'],
   ['WOPR', 'wopr'],
   ['RACR', 'racr'],
   ['RYOE', 'ryoe'],

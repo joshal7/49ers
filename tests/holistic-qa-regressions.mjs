@@ -1264,6 +1264,10 @@ test('4-Unit Team Stats, Overall Composite Rank Jargon Tooltips, Positional Lead
   assert.ok(purdy?.statProfile2026?.sections?.length >= 2, 'Purdy must have Passing + Rushing sections');
   assert.ok(cmc?.statProfile2026?.sections?.length >= 2, 'CMC must have Rushing + RB Receiving sections');
 
+  const purdyQbrRow = purdy.statProfile2026.sections[0].coreRows.find(r => r.key === 'qbr_total');
+  assert.ok(purdyQbrRow && purdyQbrRow.value > 50, `Purdy must have Total QBR core metric populated, got ${JSON.stringify(purdyQbrRow)}`);
+  assert.ok(getJargonEntry('qbr')?.definition.includes('0–100'), 'QBR jargon definition must be registered');
+
   const purdyFirstRow = purdy.statProfile2026.sections[0].coreRows[0];
   const playerModal = resolveLeaderboardModalModel({
     appData: appDataMock,

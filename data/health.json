@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T20:22:52.832Z",
+  "updatedAt": "2026-11-10T22:35:11.144Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -8,25 +8,6 @@
   "remainingIrDesignations": 4,
   "maxRegularSeasonIrDesignations": 8,
   "practiceReport": [
-    {
-      "playerId": "4685369",
-      "name": "Gracen Halton",
-      "position": "DT",
-      "jersey": 93,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Halton sustained a broken left ankle in the fourth quarter, and he is now set to miss the rest of the 2026 campaign. With Halton unavailable, Osa Odighizuwa and DeForest Buckner will operate as San Francisco's primary options at defensive tackle moving forward."
-    },
     {
       "playerId": "16737",
       "name": "Mike Evans",
@@ -316,6 +297,23 @@
       "projectedReturnWeek": "Out for Season",
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "beatNote": "It's not clear what kind of injury Forrest is dealing with, but he's now on track to spend the entire 2026 season on IR unless he negotiates an injury settlement with the 49ers. His absence could open up more opportunities for rookie undrafted free agents Jalen Stroman and Larry Worth."
+    },
+    {
+      "playerId": "4685369",
+      "name": "Gracen Halton",
+      "position": "DT",
+      "jersey": 93,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
+      "injuryType": "Ankle (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "placedBeforeWeek": 9,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "beatNote": "Halton sustained a broken left ankle in the fourth quarter, and he is now set to miss the rest of the 2026 campaign. With Halton unavailable, Osa Odighizuwa and DeForest Buckner will operate as San Francisco's primary options at defensive tackle moving forward."
     },
     {
       "playerId": "4259147",

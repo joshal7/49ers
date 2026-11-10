@@ -1454,6 +1454,102 @@ export function aggregateWeeklyPfrAdvStats2026({
 }
 
 /**
+ * Reconciles ESPN Total QBR (`0–100`) across `qbr_season_level.csv.gz` and `qbr_week_level.csv.gz`.
+ * Indexes 2026 season QBR by both ESPN athlete ID (`player_id`) and `${team}:${normName}`,
+ * plus multi-year career QBR by `${espnId}:${season}` and `${normName}:${season}`.
+ */
+export function aggregateEspnQbr2026({
+  qbrSeason = [],
+  qbrWeek = [],
+  seasonYear = 2026
+} = {}) {
+  const seasonYearStr = String(seasonYear);
+  const qbr2026ByEspnId = new Map();
+  const qbr2026ByTeamName = new Map();
+  const qbrCareerByEspnSeason = new Map();
+  const qbrCareerByNameSeason = new Map();
+
+  for (const r of qbrSeason || []) {
+    const sType = String(r.season_type || '').toLowerCase();
+    if (sType && !sType.startsWith('reg')) continue;
+    const yr = String(r.season || '').trim();
+    const espnId = String(r.player_id || '').trim();
+    const tm = normalizeTeamAbbr(r.team_abb || '');
+    const nk = String(r.name_display || `${r.name_first || ''} ${r.name_last || ''}`)
+      .toLowerCase()
+      .replace(/\b(jr\.?|sr\.?|ii|iii|iv)\b/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .trim();
+    const qbrVal = r.qbr_total !== '' && r.qbr_total != null ? safeNum(r.qbr_total, null) : null;
+    if (qbrVal === null || !Number.isFinite(qbrVal)) continue;
+
+    const entry = {
+      season: Number(yr),
+      qbrTotal: Number(qbrVal.toFixed(1)),
+      ptsAdded: Number(safeNum(r.pts_added).toFixed(1)),
+      qbPlays: safeNum(r.qb_plays),
+      qualified: String(r.qualified || '').toUpperCase() === 'TRUE'
+    };
+
+    if (espnId && yr) qbrCareerByEspnSeason.set(`${espnId}:${yr}`, entry);
+    if (nk && yr) qbrCareerByNameSeason.set(`${nk}:${yr}`, entry);
+
+    if (yr === seasonYearStr) {
+      if (espnId) qbr2026ByEspnId.set(espnId, entry);
+      if (tm && nk) qbr2026ByTeamName.set(`${tm}:${nk}`, entry);
+    }
+  }
+
+  // Fallback to play-weighted weekly QBR (`qbr_week_level`) for any 2026 QB missing from `qbr_season_level`
+  const wkAgg = new Map();
+  for (const r of qbrWeek || []) {
+    const sType = String(r.season_type || '').toLowerCase();
+    if (String(r.season) !== seasonYearStr || (sType && !sType.startsWith('reg'))) continue;
+    const espnId = String(r.player_id || '').trim();
+    const tm = normalizeTeamAbbr(r.team_abb || '');
+    const nk = String(r.name_display || `${r.name_first || ''} ${r.name_last || ''}`)
+      .toLowerCase()
+      .replace(/\b(jr\.?|sr\.?|ii|iii|iv)\b/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .trim();
+    if ((espnId && qbr2026ByEspnId.has(espnId)) || (tm && nk && qbr2026ByTeamName.has(`${tm}:${nk}`))) continue;
+    const qbrVal = r.qbr_total !== '' && r.qbr_total != null ? safeNum(r.qbr_total, null) : null;
+    if (qbrVal === null || !Number.isFinite(qbrVal)) continue;
+    const plays = Math.max(1, safeNum(r.qb_plays, 1));
+    const key = espnId || `${tm}:${nk}`;
+    const cur = wkAgg.get(key) || { espnId, tm, nk, playsSum: 0, qbrWeightedSum: 0, ptsAddedSum: 0 };
+    cur.playsSum += plays;
+    cur.qbrWeightedSum += qbrVal * plays;
+    cur.ptsAddedSum += safeNum(r.pts_added);
+    wkAgg.set(key, cur);
+  }
+
+  for (const w of wkAgg.values()) {
+    if (w.playsSum <= 0) continue;
+    const entry = {
+      season: seasonYear,
+      qbrTotal: Number((w.qbrWeightedSum / w.playsSum).toFixed(1)),
+      ptsAdded: Number(w.ptsAddedSum.toFixed(1)),
+      qbPlays: w.playsSum,
+      qualified: false
+    };
+    if (w.espnId) {
+      qbr2026ByEspnId.set(w.espnId, entry);
+      qbrCareerByEspnSeason.set(`${w.espnId}:${seasonYearStr}`, entry);
+    }
+    if (w.tm && w.nk) qbr2026ByTeamName.set(`${w.tm}:${w.nk}`, entry);
+    if (w.nk) qbrCareerByNameSeason.set(`${w.nk}:${seasonYearStr}`, entry);
+  }
+
+  return {
+    qbr2026ByEspnId,
+    qbr2026ByTeamName,
+    qbrCareerByEspnSeason,
+    qbrCareerByNameSeason
+  };
+}
+
+/**
  * Classify any NFL player into a true NFL position peer group:
  * QB, RB, WR, TE, EDGE, IDL, LB, CB, S, OL, K, P, LS
  */
@@ -1519,6 +1615,7 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'pass_tds', label: 'Passing Touchdowns', higherIsBetter: true, qual: 'any_pass', format: v => String(Math.round(v)), extract: u => u.passTds },
       { key: 'pass_ints', label: 'Interceptions Thrown', higherIsBetter: false, qual: 'qb_att', format: v => String(Math.round(v)), extract: u => u.passInts },
       { key: 'pass_epa_total', label: 'Passing EPA', higherIsBetter: true, qual: 'any_pass', format: v => fmtSigned(v, 1), extract: u => u.passEpa },
+      { key: 'qbr_total', label: 'Total QBR', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1), extract: u => u.qbrTotal },
       { key: 'pass_cpoe', label: 'CPOE (Comp % Over Expected)', higherIsBetter: true, qual: 'qb_att', format: v => fmtSigned(v, 2, '%'), extract: u => u.passCpoe },
       { key: 'pass_ny_att', label: 'Net Yards / Dropback', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.passAtt + u.sacksTaken > 0 ? Math.max(0, u.passYds - u.sackYdsLostAbs) / (u.passAtt + u.sacksTaken) : null) },
       { key: 'passer_rating', label: 'Passer Rating', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1), extract: u => u.passerRating }
@@ -1860,6 +1957,8 @@ export function computeLeaguePositionalLeaderboards({
   pfrRush2026 = new Map(),
   pfrRec2026 = new Map(),
   pfrDef2026 = new Map(),
+  qbr2026ByEspnId = new Map(),
+  qbr2026ByTeamName = new Map(),
   maxPfrChartedWeek = 0,
   snaps2026 = [],
   nflPlayers = [],
@@ -1991,6 +2090,11 @@ export function computeLeaguePositionalLeaderboards({
 
     const uid = sfMatch ? `sf_${sfMatch.id}` : gsisId || pfrId || `${team}_${nk}`;
     const espnId = sfMatch?.id || (nflMeta?.espn_id ? String(nflMeta.espn_id).trim() : '');
+    const qbrEntry =
+      (espnId && qbr2026ByEspnId.get(String(espnId))) ||
+      qbr2026ByTeamName.get(`${sfMatch ? 'SF' : team}:${nk}`) ||
+      qbr2026ByTeamName.get(`${team}:${nk}`) ||
+      null;
 
     unifiedPlayers.set(uid, {
       uid,
@@ -2048,6 +2152,7 @@ export function computeLeaguePositionalLeaderboards({
       ngsTimeToThrow: ngsP?.avgTimeToThrow ?? null,
       ngsIay: ngsP?.avgIntendedAirYards ?? null,
       ngsAggr: ngsP?.aggressivenessPct ?? null,
+      qbrTotal: qbrEntry?.qbrTotal ?? null,
       pfrBadThrowPct: pfrP?.badThrowPct ?? null,
       pfrPressurePct: pfrP?.pressurePct ?? null,
 
@@ -2165,7 +2270,7 @@ export function computeLeaguePositionalLeaderboards({
       stSnaps: snapRec.stSnaps,
       stSnapPct: snapRec.games > 0 ? Number(((snapRec.stPctSum / snapRec.games) * 100).toFixed(1)) : 0,
       passComp: 0, passAtt: 0, passYds: 0, passTds: 0, passInts: 0, sacksTaken: 0, sackYdsLostAbs: 0,
-      passEpa: null, passCpoe: null, passerRating: null, ngsTimeToThrow: null, ngsIay: null, ngsAggr: null,
+      passEpa: null, passCpoe: null, passerRating: null, qbrTotal: null, ngsTimeToThrow: null, ngsIay: null, ngsAggr: null,
       pfrBadThrowPct: null, pfrPressurePct: null,
       carries: 0, rushYds: 0, rushTds: 0, rushEpa: null, rush10Plus: 0, rushFirstDowns: 0, fumblesLost: 0,
       ngsRyoePerAtt: null, ngsRyoeTotal: null, ngsStackedBoxPct: null, pfrRushYacPerAtt: null, pfrRushBrkTkl: null,
@@ -2471,7 +2576,7 @@ export function resolveCareerTableSchema(position = '') {
 
   if (grp === 'QB') {
     return {
-      headers: ['Year', 'Tm', 'GP', 'Cmp/Att', 'Pass Yds', 'TD / INT', 'Pass EPA', 'Rush Yds/TD'],
+      headers: ['Year', 'Tm', 'GP', 'Cmp/Att', 'Pass Yds', 'TD / INT', 'QBR', 'Pass EPA', 'Rush Yds/TD'],
       cells: s => [
         `<strong>${s.season}</strong>`,
         s.team || '—',
@@ -2479,6 +2584,7 @@ export function resolveCareerTableSchema(position = '') {
         s.passing?.attempts ? `${s.passing.completions}/${s.passing.attempts}` : '—',
         s.passing?.attempts ? s.passing.yards : '—',
         s.passing?.attempts ? `${s.passing.tds} / ${s.passing.ints}` : '—',
+        s.passing?.qbr != null ? fmtPlain(s.passing.qbr, 1) : '—',
         s.passing?.attempts ? fmtSigned(s.passing.epa, 1) : '—',
         s.rushing?.carries ? `${s.rushing.yards} / ${s.rushing.tds}` : '—'
       ]

@@ -109,7 +109,8 @@ import {
   computeLeagueTeamStatsPayload,
   computeLeaguePositionalLeaderboards,
   aggregateWeeklyNgsStats2026,
-  aggregateWeeklyPfrAdvStats2026
+  aggregateWeeklyPfrAdvStats2026,
+  aggregateEspnQbr2026
 } from '../src/engine/statsLeaderboardEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -392,6 +393,8 @@ async function main() {
     pfrRecWeekCurrent,
     pfrDef,
     pfrDefWeekCurrent,
+    qbrSeasonRows,
+    qbrWeekRows,
     snaps2026,
     injuries2026,
     combineRows,
@@ -423,6 +426,8 @@ async function main() {
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_rec_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_rec_${prevSeasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_def_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_def_${prevSeasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/espn_data/qbr_season_level.csv.gz`, `${NFLVERSE_BASE}/espn_data/qbr_season_level.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/espn_data/qbr_week_level.csv.gz`, `${NFLVERSE_BASE}/espn_data/qbr_week_level.csv`),
     fetchCsvWithFallback(
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${seasonYear}.csv.gz`,
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${prevSeasonYear}.csv.gz`
@@ -541,6 +546,18 @@ async function main() {
       }
     }
   }
+
+  // Index ESPN Total QBR (0–100) across season and weekly nflverse ESPN QBR datasets
+  const {
+    qbr2026ByEspnId,
+    qbr2026ByTeamName,
+    qbrCareerByEspnSeason,
+    qbrCareerByNameSeason
+  } = aggregateEspnQbr2026({
+    qbrSeason: qbrSeasonRows,
+    qbrWeek: qbrWeekRows,
+    seasonYear
+  });
 
   // Index NextGen Stats (`week === '0'` full-season rollups + volume-weighted `week > 0` weekly fallback)
   const { ngsByGsis, ngsPass2026, ngsRec2026, ngsRush2026 } = aggregateWeeklyNgsStats2026({
@@ -797,6 +814,15 @@ async function main() {
       for (const s of seasonsRaw.sort((a, b) => b.season - a.season)) {
         if (!seenYrs.has(s.season)) {
           seenYrs.add(s.season);
+          if (s.passing) {
+            const qbrHit =
+              qbrCareerByEspnSeason.get(`${espnId}:${s.season}`) ||
+              qbrCareerByNameSeason.get(`${nk}:${s.season}`) ||
+              null;
+            if (qbrHit?.qbrTotal != null) {
+              s.passing.qbr = qbrHit.qbrTotal;
+            }
+          }
           dedupSeasons.push(s);
         }
       }
@@ -4196,6 +4222,8 @@ async function main() {
     pfrRush2026,
     pfrRec2026,
     pfrDef2026,
+    qbr2026ByEspnId,
+    qbr2026ByTeamName,
     maxPfrChartedWeek,
     snaps2026,
     nflPlayers,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T20:22:52.832Z",
+  "updatedAt": "2026-11-10T22:35:11.144Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -6317,7 +6317,7 @@
       "jersey": 93,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
       "unit": "Defense",
-      "rosterBucket": "active",
+      "rosterBucket": "ir",
       "contractsByYear": {
         "2026": {
           "year": 2026,
