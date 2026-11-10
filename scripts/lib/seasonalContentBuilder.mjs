@@ -25,6 +25,7 @@ import {
   sanitizeExternalUrl
 } from '../../src/engine/linkIntegrity.js';
 import {
+  buildTargetedOriginalTweetUrl,
   extractBeatAttributionFromText,
   extractXSnowflakeTimestampMs,
   resolveReporterFromNameOrHandle,
@@ -313,8 +314,8 @@ export async function fetchLiveBeatSocialPosts() {
       actor: 'nfltraderumors.bsky.social',
       reporterId: null,
       reporterName: 'NFL Trade Rumors',
-      authorHandle: '',
-      authorProfileUrl: 'https://bsky.app/profile/nfltraderumors.bsky.social',
+      authorHandle: '@nflrums',
+      authorProfileUrl: 'https://x.com/nflrums',
       outletId: 'nfl_trade_rumors',
       outletName: 'NFL Trade Rumors',
       tier: 2,
@@ -325,8 +326,8 @@ export async function fetchLiveBeatSocialPosts() {
       actor: 'insidenflnews.bsky.social',
       reporterId: null,
       reporterName: 'NFL Insider Wire',
-      authorHandle: '',
-      authorProfileUrl: 'https://bsky.app/profile/insidenflnews.bsky.social',
+      authorHandle: '@NFL',
+      authorProfileUrl: 'https://x.com/NFL',
       outletId: 'nfl_network',
       outletName: 'NFL Insider Wire',
       tier: 1,
@@ -337,8 +338,8 @@ export async function fetchLiveBeatSocialPosts() {
       actor: 'nflnewsreposterbot.bsky.social',
       reporterId: null,
       reporterName: 'NFL Beat Wire',
-      authorHandle: '',
-      authorProfileUrl: 'https://bsky.app/profile/nflnewsreposterbot.bsky.social',
+      authorHandle: '@NFL',
+      authorProfileUrl: 'https://x.com/NFL',
       outletId: 'nfl_network',
       outletName: 'NFL Beat Wire',
       tier: 1,
@@ -379,12 +380,14 @@ export async function fetchLiveBeatSocialPosts() {
           if (acc.requireKeyword && !sfKeywords.test(`${rawText} ${extTitle}`)) continue;
 
           const rkey = (post.uri || '').split('/').pop();
-          const postUrl = rkey
-            ? `https://bsky.app/profile/${post.author?.handle || acc.actor}/post/${rkey}`
-            : `https://bsky.app/profile/${acc.actor}`;
-
           const attr = extractBeatAttributionFromText(rawText, acc);
           const cleanedBody = attr.cleanedText || rawText;
+          const postUrl = buildTargetedOriginalTweetUrl({
+            authorHandle: attr.authorHandle || acc.authorHandle || '',
+            authorName: attr.reporterName || acc.reporterName || '',
+            text: cleanedBody,
+            publishedAt: pubIso
+          });
 
           const formatted = formatTweetBodyForDisplay(cleanedBody);
           const brk = classifyBreakingItem({
@@ -407,7 +410,10 @@ export async function fetchLiveBeatSocialPosts() {
             reporterId: attr.reporterId,
             reporterName: attr.reporterName,
             authorHandle: attr.authorHandle,
-            authorProfileUrl: attr.xUrl || acc.authorProfileUrl || `https://bsky.app/profile/${post.author?.handle || acc.actor}`,
+            authorProfileUrl:
+              attr.xUrl ||
+              acc.authorProfileUrl ||
+              (attr.authorHandle ? `https://x.com/${attr.authorHandle.replace(/^@/, '')}` : 'https://x.com/49ers'),
             title: formatted.text,
             fullText: formatted.text,
             isFullTweet: formatted.isFullTweet,
@@ -921,7 +927,12 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       const isTw = it?.type === 'tweet' || it?.type === 'social';
       const resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
       const safeItemUrl = sanitizeExternalUrl(resolvedUrl, null);
-      if (!safeItemUrl || seenUrls.has(safeItemUrl) || isPaywalledPublisher(it.outletName, safeItemUrl)) continue;
+      const dedupUrlKey =
+        safeItemUrl && safeItemUrl.includes('x.com/search?')
+          ? `${safeItemUrl}::${String(it.title || it.fullText || '').toLowerCase().slice(0, 50)}`
+          : safeItemUrl;
+      if (!safeItemUrl || seenUrls.has(dedupUrlKey) || isPaywalledPublisher(it.outletName, safeItemUrl)) continue;
+      seenUrls.add(dedupUrlKey);
       if (
         isOffTopicLeagueFiller({
           url: safeItemUrl,
@@ -1817,7 +1828,7 @@ export function buildTradeDeadlineWarRoom(
       {
         tier: 'Tier 1 • Verified Beat & National',
         sources: 'Adam Schefter, Matt Maiocco',
-        sourceUrl: 'https://bsky.app/profile/mattmaiocco.bsky.social',
+        sourceUrl: 'https://x.com/MaioccoNBCS',
         summary: 'Brandon Aiyuk met with 49ers brass Friday seeking reinstatement; both sides working toward a structured resolution rather than contentious grievances.',
         credibilityPct: 97
       },

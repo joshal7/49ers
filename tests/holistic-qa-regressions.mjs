@@ -680,15 +680,34 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
   }
   const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
   const directPosts = (newsJson.rawStream || []).filter(
-    it => (it.type === 'tweet' || it.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(it.url || '')
+    it => (it.type === 'tweet' || it.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com)\//i.test(it.url || '')
   );
   for (const tw of (newsJson.rawStream || []).filter(it => it.type === 'tweet' || it.type === 'social')) {
     const resolved = resolveOriginalTweetUrl(tw, directPosts);
     assert.ok(
-      /\/status\/|\/post\/|from%3A|49ers\.com\/team\/transactions/i.test(resolved),
-      `Tweet ${tw.id} (${tw.author}) lacked direct status or from:<handle> query: ${resolved}`
+      /\/status\/|from%3A|49ers\.com\/team\/transactions/i.test(resolved),
+      `Tweet ${tw.id} (${tw.author}) lacked direct X status or from:<handle> query: ${resolved}`
+    );
+    assert.ok(
+      !resolved.includes('bsky.app'),
+      `Tweet ${tw.id} (${tw.author}) must not link to bsky.app: ${resolved}`
+    );
+    assert.ok(
+      !String(tw.url || '').includes('bsky.app') && !String(tw.authorProfileUrl || '').includes('bsky.app'),
+      `Tweet ${tw.id} in news.json still contains bsky.app URL: ${tw.url}`
     );
   }
+  const legacyBskyResolved = resolveOriginalTweetUrl({
+    type: 'tweet',
+    url: 'https://bsky.app/profile/mattmaiocco.bsky.social/post/3mztosm6ikc2f',
+    title: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
+    fullText: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
+    publishedAt: '2026-11-09T00:39:17.526Z'
+  });
+  assert.ok(
+    legacyBskyResolved.startsWith('https://x.com/search?q=from%3AMaioccoNBCS') && legacyBskyResolved.includes('%22Halton%22'),
+    `Legacy bsky.app tweet URL must resolve to X original tweet search: ${legacyBskyResolved}`
+  );
 
   // 4. Redundant self-link suppressor catches utm_*, www., and trailing-slash variants
   assert.equal(

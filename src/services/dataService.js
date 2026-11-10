@@ -38,6 +38,7 @@ import {
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 import {
+  buildTargetedOriginalTweetUrl,
   extractBeatAttributionFromText,
   isEspnPlayerProfileUrl,
   isPodiumSubjectId,
@@ -161,8 +162,8 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     actor: 'nfltraderumors.bsky.social',
     reporterId: null,
     reporterName: 'NFL Trade Rumors',
-    authorHandle: '',
-    authorProfileUrl: 'https://bsky.app/profile/nfltraderumors.bsky.social',
+    authorHandle: '@nflrums',
+    authorProfileUrl: 'https://x.com/nflrums',
     outletId: 'nfl_trade_rumors',
     outletName: 'NFL Trade Rumors',
     isNationalInsider: true
@@ -171,8 +172,8 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     actor: 'insidenflnews.bsky.social',
     reporterId: null,
     reporterName: 'NFL Insider Wire',
-    authorHandle: '',
-    authorProfileUrl: 'https://bsky.app/profile/insidenflnews.bsky.social',
+    authorHandle: '@NFL',
+    authorProfileUrl: 'https://x.com/NFL',
     outletId: 'nfl_network',
     outletName: 'NFL Insider Wire',
     isNationalInsider: true
@@ -181,8 +182,8 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     actor: 'nflnewsreposterbot.bsky.social',
     reporterId: null,
     reporterName: 'NFL Beat & Insider Wire',
-    authorHandle: '',
-    authorProfileUrl: 'https://bsky.app/profile/nflnewsreposterbot.bsky.social',
+    authorHandle: '@NFL',
+    authorProfileUrl: 'https://x.com/NFL',
     outletId: 'nfl_network',
     outletName: 'NFL Insider Wire',
     isNationalInsider: true
@@ -377,15 +378,21 @@ export async function loadAll49ersData(basePrefix = './data') {
   ]);
 
   const bootCtxStub = { meta, scheduleMatchup };
+  const directPosts = Array.isArray(news?.rawStream)
+    ? news.rawStream.filter(
+        it => (it?.type === 'tweet' || it?.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com)\//i.test(String(it?.url || ''))
+      )
+    : [];
   if (news && Array.isArray(news.rawStream)) {
-    const directPosts = news.rawStream.filter(
-      it => (it?.type === 'tweet' || it?.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(String(it?.url || ''))
-    );
     news.rawStream = sortNewsWithBreakingPriority(
       filterOutCompletedGameAvailabilityItems(
         news.rawStream.map(it =>
-          it?.type === 'tweet' || it?.type === 'social'
-            ? { ...it, url: resolveOriginalTweetUrl(it, directPosts) }
+          it?.type === 'tweet' || it?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(it?.url || ''))
+            ? {
+                ...it,
+                url: resolveOriginalTweetUrl(it, directPosts),
+                authorProfileUrl: resolveItemAuthorProfileUrl(it, null)
+              }
             : it
         ),
         bootCtxStub
@@ -393,6 +400,23 @@ export async function loadAll49ersData(basePrefix = './data') {
       Date.now(),
       { appData: bootCtxStub }
     );
+  }
+  if (roster && Array.isArray(roster.players)) {
+    for (const p of roster.players) {
+      if (Array.isArray(p.recentNews)) {
+        p.recentNews = p.recentNews.map(rn =>
+          rn?.type === 'tweet' || rn?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(rn?.url || ''))
+            ? {
+                ...rn,
+                url: resolveOriginalTweetUrl(
+                  { ...rn, type: rn.type || 'tweet', primaryPlayer: p, title: rn.title || rn.headline || '' },
+                  directPosts
+                )
+              }
+            : rn
+        );
+      }
+    }
   }
   if (news && Array.isArray(news.clusteredBriefs)) {
     news.clusteredBriefs = filterAndCleanSynthesisClusters(news.clusteredBriefs, bootCtxStub);
@@ -644,7 +668,7 @@ function propagateLiveItemsToPlayerMentions(newItems = [], rosterPlayers = []) {
  */
 export async function hydrateLiveBlueskyBeatWire(appData) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
-  const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
+  const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
   const existingTextKeys = new Set(
     appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
   );
@@ -682,9 +706,9 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
 
           const rkey = String(post?.uri || '').split('/').pop();
           if (!rkey) continue;
-          const postUrl = `https://bsky.app/profile/${acct.actor}/post/${rkey}`;
+          const postId = `bsky_live_${parsedAttr.reporterId}_${rkey}`;
           const textKey = cleanFull.toLowerCase().slice(0, 90);
-          if (existingUrls.has(postUrl) || existingTextKeys.has(textKey)) continue;
+          if (existingIds.has(postId) || existingTextKeys.has(textKey)) continue;
 
           const sig = scoreContentSignal(cleanFull, '');
           if (sig.isClickbait) continue;
@@ -703,11 +727,18 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
 
           const imgThumb = post?.embed?.images?.[0]?.thumb || extEmbed?.thumb || '';
           const safeExtUrl = sanitizeExternalUrl(extEmbed?.uri, null);
+          const postUrl = buildTargetedOriginalTweetUrl({
+            authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
+            authorName: parsedAttr.reporterName || acct.reporterName || '',
+            playerName: mentioned[0]?.name || '',
+            text: cleanFull,
+            publishedAt: pubIso
+          });
 
-          existingUrls.add(postUrl);
+          existingIds.add(postId);
           existingTextKeys.add(textKey);
           discovered.push({
-            id: `bsky_live_${parsedAttr.reporterId}_${rkey}`,
+            id: postId,
             type: 'tweet',
             title: tweetDisplay.text,
             fullText: cleanFull,
@@ -726,7 +757,10 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
             reporterName: parsedAttr.reporterName,
             author: parsedAttr.reporterName,
             authorHandle: parsedAttr.authorHandle,
-            authorProfileUrl: parsedAttr.xUrl || `https://bsky.app/profile/${acct.actor}`,
+            authorProfileUrl:
+              parsedAttr.xUrl ||
+              acct.authorProfileUrl ||
+              (parsedAttr.authorHandle ? `https://x.com/${parsedAttr.authorHandle.replace(/^@/, '')}` : 'https://x.com/49ers'),
             trustTier: parsedAttr.trustTier,
             wireSource: 'bsky_mirror',
             isBreaking: brk.isBreaking,

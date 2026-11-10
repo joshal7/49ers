@@ -184,7 +184,7 @@ export function renderSettingsSheetHtml({
         ${visibleReporters
           .map(r => {
             const enabled = !disabledReps.has(r.id);
-            const repLink = sanitizeExternalUrl(r.xUrl || r.profileUrl || r.bskyUrl, null);
+            const repLink = sanitizeExternalUrl(r.xUrl || r.profileUrl, null);
             const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
             const tierCls = tier === 1 ? 'badge-gold' : 'badge-neutral';
             const tierShort = tier === 1 ? 'Tier 1 Trusted' : tier === 2 ? 'Tier 2 Beat/Film' : 'Tier 3 Viable';

@@ -148,11 +148,10 @@ export async function buildReporterRegistry() {
     const cleanHandle = (rep.handle || '').replace(/^@/, '');
     const bskyHandle = BSKY_HANDLES[rep.id] || null;
     const xUrl = cleanHandle ? `https://x.com/${cleanHandle}` : null;
-    const bskyUrl = bskyHandle ? `https://bsky.app/profile/${bskyHandle}` : null;
     const outlet = outletMap.get(rep.outletId);
-    const safeOutletUrl = sanitizeExternalUrl(outlet?.url, xUrl || bskyUrl || 'https://www.49ers.com/news/');
+    const safeOutletUrl = sanitizeExternalUrl(outlet?.url, xUrl || 'https://www.49ers.com/news/');
     const safeProfileUrl = sanitizeExternalUrl(
-      xUrl || bskyUrl || safeOutletUrl,
+      xUrl || safeOutletUrl,
       'https://www.49ers.com/news/'
     );
     const trustTier = getReporterTrustTier(rep.id);
@@ -162,7 +161,7 @@ export async function buildReporterRegistry() {
       trustTierLabel: TRUST_TIER_LABELS[trustTier] || TRUST_TIER_LABELS[2],
       xUrl,
       bskyHandle,
-      bskyUrl,
+      bskyUrl: null,
       profileUrl: safeProfileUrl,
       outletUrl: safeOutletUrl,
       liveWeeklyMentions: liveMentions,

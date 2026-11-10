@@ -52,7 +52,11 @@ export function resolveClusterSafeReports(cluster, rawStream = [], appData = nul
   for (const sl of cluster.sourceLinks) {
     if (!sl) continue;
     const rawSlTitle = decodeInlineEntities(String(sl.title || ''));
-    const isTw = sl.type === 'tweet' || sl.type === 'social' || /^@[A-Za-z0-9_]+:/.test(rawSlTitle);
+    const isTw =
+      sl.type === 'tweet' ||
+      sl.type === 'social' ||
+      /^@[A-Za-z0-9_]+:/.test(rawSlTitle) ||
+      /^https?:\/\/bsky\.app\//i.test(String(sl.url || ''));
     const handleMatch = rawSlTitle.match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
     const effectiveHandle = sl.authorHandle || (handleMatch ? handleMatch[1] : '');
     const cleanTitle = handleMatch ? handleMatch[2].trim() : rawSlTitle.trim();
@@ -89,8 +93,11 @@ export function resolveClusterSafeReports(cluster, rawStream = [], appData = nul
       : sl.url;
 
     const safeUrl = sanitizeExternalUrl(resolvedUrl, null);
-    if (!safeUrl || seen.has(safeUrl) || isPaywalledPublisher(sl.outlet, safeUrl)) continue;
-    seen.add(safeUrl);
+    const dedupKey = safeUrl && safeUrl.includes('x.com/search?')
+      ? `${safeUrl}::${cleanTitle.toLowerCase().slice(0, 50)}`
+      : safeUrl;
+    if (!safeUrl || seen.has(dedupKey) || isPaywalledPublisher(sl.outlet, safeUrl)) continue;
+    seen.add(dedupKey);
 
     reports.push({
       title: cleanTitle || sl.outlet || 'Open Report',
@@ -445,7 +452,7 @@ export function renderNewsViewHtml({
                 <span>Voices:</span>
                 ${citedReporters
                   .map(rep => {
-                    const href = sanitizeExternalUrl(rep.xUrl || rep.profileUrl || rep.bskyUrl, null);
+                    const href = sanitizeExternalUrl(rep.xUrl || rep.profileUrl, null);
                     return href
                       ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px">${esc(rep.name)}</a>`
                       : `<strong>${esc(rep.name)}</strong>`;

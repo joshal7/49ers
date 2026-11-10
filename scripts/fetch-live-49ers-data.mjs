@@ -1694,7 +1694,19 @@ async function main() {
     const pubIso = tw.publishedAt || new Date().toISOString();
     const brk = classifyBreakingItem({ title: fmtTw.text, summary: tw.summary, publishedAt: pubIso });
 
-    const safeTwUrl = sanitizeExternalUrl(tw.url, null);
+    const mentioned = matchMentionedPlayers(`${fmtTw.text} ${tw.summary || ''}`, 20);
+    const resolvedTwUrl = resolveOriginalTweetUrl(
+      {
+        ...tw,
+        type: 'tweet',
+        mentionedPlayers: mentioned,
+        fullText: fmtTw.text,
+        title: fmtTw.text,
+        publishedAt: pubIso
+      },
+      rawNewsStream
+    );
+    const safeTwUrl = sanitizeExternalUrl(resolvedTwUrl, null);
     if (!safeTwUrl) continue;
     const safeTwExtUrl = sanitizeExternalUrl(tw.externalUrl, null);
 
@@ -1707,7 +1719,7 @@ async function main() {
       summary: tw.summary ? cleanSensationalistText(tw.summary) : '',
       imageUrl: tw.imageUrl || '',
       imageAlt: `${tw.reporterName} social post`,
-      mentionedPlayers: matchMentionedPlayers(`${fmtTw.text} ${tw.summary || ''}`, 20),
+      mentionedPlayers: mentioned,
       publishedAt: pubIso,
       url: safeTwUrl,
       externalUrl: safeTwExtUrl,
@@ -1718,7 +1730,7 @@ async function main() {
       reporterName: tw.reporterName,
       author: tw.reporterName,
       authorHandle: tw.authorHandle,
-      authorProfileUrl: tw.authorProfileUrl,
+      authorProfileUrl: resolveItemAuthorProfileUrl(tw, safeTwUrl),
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
       breakingBadge: brk.breakingBadge,
@@ -1733,7 +1745,11 @@ async function main() {
     });
   }
 
-  const seenStreamUrls = new Set(rawNewsStream.map(it => it.url).filter(Boolean));
+  const seenStreamUrls = new Set(
+    rawNewsStream
+      .map(it => it.url)
+      .filter(u => u && !String(u).includes('x.com/search?'))
+  );
   const seenStreamTextKeys = new Set(
     rawNewsStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
   );
@@ -1741,7 +1757,7 @@ async function main() {
   // Add X-Beat attributed ESPN Player Wire items (7-day window across all 88 49ers players)
   for (const pw of espnPlayerWireItems) {
     const safePwUrl = sanitizeExternalUrl(pw.url, null);
-    if (!safePwUrl || seenStreamUrls.has(safePwUrl)) continue;
+    if (!safePwUrl || (!safePwUrl.includes('x.com/search?') && seenStreamUrls.has(safePwUrl))) continue;
     const textKey = String(pw.fullText || pw.title || '').toLowerCase().slice(0, 90);
     if (textKey && seenStreamTextKeys.has(textKey)) continue;
     const sig = scoreContentSignal(pw.fullText || pw.title, pw.summary || '');
@@ -1983,8 +1999,8 @@ async function main() {
               liveBeatTweets
             )
           : link;
-      if (seenStreamUrls.has(finalUrl)) continue;
-      seenStreamUrls.add(finalUrl);
+      if (!finalUrl.includes('x.com/search?') && seenStreamUrls.has(finalUrl)) continue;
+      if (!finalUrl.includes('x.com/search?')) seenStreamUrls.add(finalUrl);
 
       const pfItem = {
         id: `${feedKey}_${rawNewsStream.length}`,
