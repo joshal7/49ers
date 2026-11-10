@@ -661,7 +661,19 @@ function renderSingleDashboardCard({
     }
 
     case 'team_stats': {
-      const topRanks = (appData?.scheduleMatchup?.teamStatRankings || []).slice(0, 3);
+      const tsUnits = appData?.scheduleMatchup?.teamStats?.units || [];
+      const flatByKey = appData?.scheduleMatchup?.teamStats?.flatByKey || {};
+      const offU = tsUnits.find(u => u.id === 'offense');
+      const defU = tsUnits.find(u => u.id === 'defense');
+      const toDiff = flatByKey.margin_turnover_diff;
+      const topRanks =
+        offU && defU && toDiff
+          ? [
+              { key: offU.overall.key, label: 'Offense Overall', rank: offU.overall.rank, displayValue: flatByKey.off_pts_game?.displayValue ? `${flatByKey.off_pts_game.displayValue} PPG` : offU.overall.displayValue },
+              { key: defU.overall.key, label: 'Defense Overall', rank: defU.overall.rank, displayValue: flatByKey.def_pts_allowed_game?.displayValue ? `${flatByKey.def_pts_allowed_game.displayValue} PA/G` : defU.overall.displayValue },
+              { key: toDiff.key, label: 'Turnover Diff', rank: toDiff.rank, displayValue: toDiff.displayValue }
+            ]
+          : (appData?.scheduleMatchup?.teamStatRankings || []).slice(0, 3);
       const pwr = appData?.scheduleMatchup?.powerRankings || {};
       externalHeaderLink = `<a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
@@ -673,7 +685,7 @@ function renderSingleDashboardCard({
           ${topRanks
             .map(
               r => `
-            <div class="kpi-box">
+            <div class="kpi-box" ${r.key ? `style="cursor:pointer" role="button" tabindex="0" data-action="open-stat-rank-modal" data-rank-scope="team" data-rank-key="${esc(r.key)}"` : ''}>
               <div class="kpi-label">${escJargon(r.label.replace('Offensive ', ''))}</div>
               <div class="kpi-val mono" style="font-size:13px">#${r.rank} (${esc(r.displayValue)})</div>
               ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : 'gold')}

@@ -2886,20 +2886,18 @@ async function main() {
             document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"] .season-live-dot')
           );
 
-          // 4. Switch to Stats sub-tab & verify Category column is hidden, zero horizontal scroll, and rankings fit in one portrait screen
+          // 4. Switch to Stats sub-tab & verify 4 stacked unit cards (Offense, Defense, Special Teams, Margin), Category column hidden, and zero horizontal scroll
           document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]').click();
           window.scrollTo({ top: 0, behavior: 'instant' });
+          const unitCards = Array.from(document.querySelectorAll('#mainView section[data-team-stats-unit]'));
+          const unitIds = unitCards.map(c => c.getAttribute('data-team-stats-unit'));
           const statsCard = document.getElementById('teamStatsRankingsCard');
-          const statsScroll = statsCard?.querySelector('.table-scroll');
+          const statsScrolls = Array.from(document.querySelectorAll('#mainView section[data-team-stats-unit] .table-scroll'));
           const statsTable = statsCard?.querySelector('table.team-stats-table');
           const statsHeaders = Array.from(statsTable?.querySelectorAll('thead th') || []).map(th =>
             th.textContent.trim()
           );
-          const statsRows = Array.from(statsTable?.querySelectorAll('tbody tr') || []);
-          const statsCardText = statsCard?.textContent || '';
-          const lastRowRect = statsRows[statsRows.length - 1]?.getBoundingClientRect();
-          const statsCardRect = statsCard?.getBoundingClientRect();
-          const bottomNavRect = document.querySelector('.bottom-nav')?.getBoundingClientRect();
+          const statsCardText = unitCards.map(c => c.textContent || '').join(' ');
 
           return {
             navTabs,
@@ -2914,17 +2912,13 @@ async function main() {
               tradeLiveDot
             },
             statsGeo: {
+              unitIds,
               headers: statsHeaders,
-              rowCount: statsRows.length,
               hasCategoryText:
                 statsCardText.includes('Advanced Offense') ||
                 statsCardText.includes('Standard Offense') ||
                 statsCardText.includes('Standard Defense'),
-              scrollW: statsScroll?.scrollWidth || 999,
-              clientW: statsScroll?.clientWidth || 0,
-              lastRowBottom: Math.round(lastRowRect?.bottom || 9999),
-              cardBottom: Math.round(statsCardRect?.bottom || 9999),
-              bottomNavTop: Math.round(bottomNavRect?.top || 0)
+              anyTableOverflow: statsScrolls.some(sc => sc.scrollWidth > sc.clientWidth + 1)
             }
           };
         });
@@ -2968,20 +2962,16 @@ async function main() {
           `[${vp.name}] Active NFL Trade Window banner placement wrong: ${JSON.stringify(audit.tradeBannerGeo)}`
         );
 
-        // Assert #3: Category column hidden, zero horizontal scroll, and all 11 rankings fit in one portrait screen above bottom nav!
+        // Assert #3: 4 stacked unit cards (Offense -> Defense -> Special Teams -> Margin), Category column hidden, and zero horizontal overflow!
         assert(
-          JSON.stringify(audit.statsGeo.headers) === JSON.stringify(['Metric', '49ers', 'Rank', 'NFL Avg']) &&
-            !audit.statsGeo.hasCategoryText &&
-            audit.statsGeo.rowCount === 11,
-          `[${vp.name}] Team Stats columns/category mismatch: ${JSON.stringify(audit.statsGeo)}`
+          JSON.stringify(audit.statsGeo.unitIds) === JSON.stringify(['offense', 'defense', 'special_teams', 'margin']) &&
+            JSON.stringify(audit.statsGeo.headers) === JSON.stringify(['Metric', '49ers', 'Rank', 'NFL Avg']) &&
+            !audit.statsGeo.hasCategoryText,
+          `[${vp.name}] Team Stats 4-unit order/columns mismatch: ${JSON.stringify(audit.statsGeo)}`
         );
         assert(
-          audit.statsGeo.scrollW <= audit.statsGeo.clientW + 1,
+          !audit.statsGeo.anyTableOverflow,
           `[${vp.name}] Team Stats table overflowed horizontally in portrait: ${JSON.stringify(audit.statsGeo)}`
-        );
-        assert(
-          audit.statsGeo.cardBottom <= audit.statsGeo.bottomNavTop,
-          `[${vp.name}] Entire Team Stats & NFL Rankings card did not fit in one portrait screen above bottom nav: ${JSON.stringify(audit.statsGeo)}`
         );
       }
     });
@@ -3856,6 +3846,159 @@ async function main() {
           schedAndNewsAudit.prevVisibleWhenExpanded &&
           schedAndNewsAudit.collapsesAgain,
         `Schedule Previous Games collapsible box audit failed: ${JSON.stringify(schedAndNewsAudit)}`
+      );
+    });
+
+    await runStep('4-Unit Team Stats, Overall Rank Tooltips, Matchup H2H Stats, Clickable #X Leaderboard Modals & Position-Specific Player Stats', async () => {
+      await cdp.setViewport(393, 852, true, 3);
+      const deepStatsAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        // 1. Navigate to Game & Season -> Stats
+        document.querySelector('[data-nav-tab="season"]').click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]').click();
+        await sleep(30);
+
+        // Click "How calculated ⓘ" tooltip link on Offense Overall Rank
+        const howLink = document.querySelector('[data-team-stats-unit="offense"] .overall-how-wrap [data-jargon]');
+        howLink?.click();
+        const pop = document.getElementById('jargonPopover');
+        const tooltipOpened = Boolean(pop && !pop.hidden && pop.textContent.includes('40%') && pop.textContent.includes('30%'));
+        document.querySelector('[data-action="close-jargon-popover"]')?.click();
+
+        // Expand Offense & Defense detailed metrics drawers
+        const offExp = document.querySelector('details[data-stats-expander="offense"]');
+        const defExp = document.querySelector('details[data-stats-expander="defense"]');
+        offExp?.querySelector('summary')?.click();
+        defExp?.querySelector('summary')?.click();
+        await sleep(30);
+        const expandersOpened = Boolean(offExp?.open && defExp?.open);
+
+        // Click #X Rank badge on Points / Game -> verify 32-team modal opens, highlights 49ers, renders NFL Avg divider, and closes
+        const ptsRankBtn = document.querySelector('[data-action="open-stat-rank-modal"][data-rank-key="off_pts_game"]');
+        ptsRankBtn?.click();
+        await sleep(40);
+        const modalBackdrop = document.getElementById('statRankModalBackdrop');
+        const teamModalOpen = Boolean(modalBackdrop && !modalBackdrop.hidden);
+        const teamModalRows = document.querySelectorAll('#rankModalBody .rank-modal-row').length;
+        const sfHighlighted = document.querySelector('#rankModalBody [data-rank-highlight="true"]')?.textContent?.includes('49ers');
+        const hasAvgDivider = Boolean(document.querySelector('#rankModalBody [data-rank-avg-divider="true"]'));
+        document.getElementById('closeRankModalBtn')?.click();
+        const teamModalClosed = Boolean(modalBackdrop?.hidden);
+
+        // 2. Navigate to Game & Season -> Matchup & test Head-to-Head 5-column Team Stats Comparison card
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+        await sleep(30);
+        const h2hCard = document.getElementById('matchupTeamStatsCard');
+        const h2hHeaders = Array.from(h2hCard?.querySelectorAll('table.matchup-stats-table thead th') || [])
+          .slice(0, 5)
+          .map(th => th.textContent.trim());
+        // Switch H2H unit pill to Defense, then click Opponent's #X rank badge
+        h2hCard?.querySelector('[data-action="set-matchup-stats-unit"][data-unit-id="defense"]')?.click();
+        await sleep(30);
+        const defH2hCard = document.getElementById('matchupTeamStatsCard');
+        const oppRankBtn = defH2hCard?.querySelectorAll('tbody tr:first-child [data-action="open-stat-rank-modal"]')?.[1];
+        oppRankBtn?.click();
+        await sleep(40);
+        const h2hModalRows = document.querySelectorAll('#rankModalBody .rank-modal-row').length;
+        document.getElementById('closeRankModalBtn')?.click();
+
+        // 3. Open Brock Purdy Dossier -> Stats & EPA -> click #X Rank inside Sheet -> verify Modal stacks WITHOUT closing Dossier!
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
+        const inp = document.getElementById('rosterSearchInput');
+        inp.value = 'Brock Purdy';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        document.querySelector('.player-row')?.click();
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]')?.click();
+        await sleep(30);
+
+        const purdySections = document.querySelectorAll('#sheetBody .player-stat-section').length;
+        const purdyFirstRankBtn = document.querySelector('#sheetBody [data-action="open-stat-rank-modal"]');
+        purdyFirstRankBtn?.click();
+        await sleep(40);
+        const playerModalOpen = !document.getElementById('statRankModalBackdrop').hidden;
+        const sheetStillOpenBehind = !document.getElementById('bottomSheetBackdrop').hidden;
+        const purdyHighlightedInModal = document
+          .querySelector('#rankModalBody [data-rank-highlight="true"]')
+          ?.textContent?.includes('Brock Purdy');
+
+        // Press Escape -> must close Rank Modal ONLY while keeping Brock Purdy's Dossier open!
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        const modalClosedAfterFirstEsc = document.getElementById('statRankModalBackdrop').hidden;
+        const sheetStillOpenAfterFirstEsc = !document.getElementById('bottomSheetBackdrop').hidden;
+        document.getElementById('closeSheetBtn')?.click();
+
+        // 4. Open Nick Bosa -> Stats & EPA -> Career Year-by-Year -> verify defensive columns & zero blank Passing/Receiving columns
+        const setLiveRosterSearch = q => {
+          const liveInp = document.getElementById('rosterSearchInput');
+          liveInp.value = q;
+          liveInp.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        setLiveRosterSearch('Nick Bosa');
+        document.querySelector('.player-row')?.click();
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]')?.click();
+        document.querySelector('[data-action="set-player-stats-mode"][data-stats-mode="career"]')?.click();
+        const bosaCareerHeaders = Array.from(document.querySelectorAll('#sheetBody table[data-career-pos-table] thead th')).map(th =>
+          th.textContent.trim()
+        );
+        document.getElementById('closeSheetBtn')?.click();
+        setLiveRosterSearch('');
+
+        return {
+          tooltipOpened,
+          expandersOpened,
+          teamModalOpen,
+          teamModalRows,
+          sfHighlighted,
+          hasAvgDivider,
+          teamModalClosed,
+          h2hHeaders,
+          h2hModalRows,
+          purdySections,
+          playerModalOpen,
+          sheetStillOpenBehind,
+          purdyHighlightedInModal,
+          modalClosedAfterFirstEsc,
+          sheetStillOpenAfterFirstEsc,
+          bosaCareerHeaders
+        };
+      });
+
+      await cdp.assertNoOverflow('Deep Team & Player Stats Leaderboard Modal Audit');
+      assert(deepStatsAudit.tooltipOpened, `Overall Rank "How calculated" tooltip failed: ${JSON.stringify(deepStatsAudit)}`);
+      assert(deepStatsAudit.expandersOpened, 'Team Stats Offense & Defense detailed expanders failed to open');
+      assert(
+        deepStatsAudit.teamModalOpen &&
+          deepStatsAudit.teamModalRows === 32 &&
+          deepStatsAudit.sfHighlighted &&
+          deepStatsAudit.hasAvgDivider &&
+          deepStatsAudit.teamModalClosed,
+        `32-Team Leaderboard Modal failed: ${JSON.stringify(deepStatsAudit)}`
+      );
+      assert(
+        deepStatsAudit.h2hHeaders.length === 5 &&
+          deepStatsAudit.h2hHeaders[0] === 'Metric' &&
+          deepStatsAudit.h2hHeaders[1] === '49ers' &&
+          deepStatsAudit.h2hHeaders[2] === 'Rank' &&
+          deepStatsAudit.h2hHeaders[4] === 'Rank' &&
+          deepStatsAudit.h2hModalRows === 32,
+        `Matchup H2H 5-column Team Stats card failed: ${JSON.stringify(deepStatsAudit)}`
+      );
+      assert(
+        deepStatsAudit.purdySections >= 2 &&
+          deepStatsAudit.playerModalOpen &&
+          deepStatsAudit.sheetStillOpenBehind &&
+          deepStatsAudit.purdyHighlightedInModal &&
+          deepStatsAudit.modalClosedAfterFirstEsc &&
+          deepStatsAudit.sheetStillOpenAfterFirstEsc,
+        `Player Positional Leaderboard Modal / Escape stack failed: ${JSON.stringify(deepStatsAudit)}`
+      );
+      assert(
+        deepStatsAudit.bosaCareerHeaders.includes('Sacks') &&
+          deepStatsAudit.bosaCareerHeaders.includes('TFL') &&
+          !deepStatsAudit.bosaCareerHeaders.some(h => /Pass|Rec|Rush/i.test(h)),
+        `Nick Bosa Career Year-by-Year table should be defensive-only: ${JSON.stringify(deepStatsAudit.bosaCareerHeaders)}`
       );
     });
 

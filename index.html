@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon" sizes="512x512" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png?v=6" />
-  <link rel="stylesheet" href="./src/styles.css?v=22" />
+  <link rel="stylesheet" href="./src/styles.css?v=23" />
 </head>
 <body>
   <!-- Full-Bleed Sticky Glass Header -->
@@ -211,9 +211,29 @@
     </div>
   </div>
 
+  <!-- Clickable #X Rank Leaderboard Overlay Modal (Layers cleanly above Main View & Player Dossier) -->
+  <div id="statRankModalBackdrop" class="rank-modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="rankModalTitle">
+    <div class="rank-modal-card" id="statRankModalCard">
+      <div class="rank-modal-header">
+        <div style="min-width:0">
+          <div class="card-eyebrow" id="rankModalEyebrow">2026 NFL Leaderboard</div>
+          <h2 class="card-title" id="rankModalTitle" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Leaderboard</h2>
+        </div>
+        <button type="button" id="closeRankModalBtn" data-action="close-stat-rank-modal" class="icon-btn" aria-label="Close Leaderboard">
+          <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+          <span>Close</span>
+        </button>
+      </div>
+      <div class="rank-modal-body" id="rankModalBody"></div>
+    </div>
+  </div>
+
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=26"></script>
+  <script type="module" src="./src/app.js?v=27"></script>
 </body>
 </html>

@@ -42,8 +42,17 @@ import {
   shareItemNatively
 } from './services/shareService.js';
 
-import { esc, formatRelativeAge, registerRosterPlayersForInlineLinks } from './views/uiHelpers.js';
+import {
+  esc,
+  formatRelativeAge,
+  rankBadgeClass,
+  renderTeamLogoHtml,
+  renderPlayerAvatarHtml,
+  renderMiniMeterHtml,
+  registerRosterPlayersForInlineLinks
+} from './views/uiHelpers.js';
 import { getJargonEntry } from './engine/jargonGlossary.js';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js';
 import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
 import {
@@ -85,6 +94,7 @@ const state = {
 
   // Season & Temporal state
   seasonSubTab: 'matchup',
+  matchupStatsUnit: 'offense',
   schedulePrevExpanded: false,
   combineSearch: '',
   expandedDraftSpiderIdx: -1,
@@ -107,13 +117,14 @@ const state = {
   expandedTranscriptIds: new Set(),
   shareToastTargetId: null,
 
-  // Bottom Sheet state
+  // Bottom Sheet & Rank Modal state
   sheetMode: null, // 'player' | 'settings' | 'vault' | null
   sheetPlayerId: null,
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
   sheetPlayerTxScenario: 'cut',
-  reporterSearch: ''
+  reporterSearch: '',
+  rankModal: null // { scope: 'team' | 'player', key: string, playerId: string | null }
 };
 
 let audioController = null;
@@ -485,7 +496,8 @@ function renderMain() {
         combineSearch: state.combineSearch,
         expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
         activeVideosSet: state.activeVideosSet,
-        schedulePrevExpanded: state.schedulePrevExpanded
+        schedulePrevExpanded: state.schedulePrevExpanded,
+        matchupStatsUnit: state.matchupStatsUnit
       });
     } else if (tab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
@@ -523,6 +535,99 @@ function renderMain() {
 
   renderHeaderAndPhaseBanner();
   renderNavTabs();
+}
+
+function closeStatRankModal() {
+  state.rankModal = null;
+  const backdrop = document.getElementById('statRankModalBackdrop');
+  const body = document.getElementById('rankModalBody');
+  if (backdrop) backdrop.hidden = true;
+  if (body) body.innerHTML = '';
+}
+
+function renderStatRankModal() {
+  const backdrop = document.getElementById('statRankModalBackdrop');
+  const eyebrow = document.getElementById('rankModalEyebrow');
+  const title = document.getElementById('rankModalTitle');
+  const body = document.getElementById('rankModalBody');
+  if (!backdrop || !body) return;
+
+  if (!state.rankModal) {
+    backdrop.hidden = true;
+    body.innerHTML = '';
+    return;
+  }
+
+  const model = resolveLeaderboardModalModel({
+    appData: state.appData,
+    scope: state.rankModal.scope,
+    key: state.rankModal.key,
+    playerId: state.rankModal.playerId
+  });
+
+  if (!model || !model.rows?.length) {
+    closeStatRankModal();
+    return;
+  }
+
+  if (eyebrow) eyebrow.textContent = model.eyebrow;
+  if (title) title.textContent = model.title;
+
+  const totalRows = model.rows.length;
+  const rowsHtml = [];
+
+  model.rows.forEach((r, idx) => {
+    const scaled32 = Math.max(1, Math.min(32, Math.round((r.rank / Math.max(1, totalRows)) * 32)));
+    const meterColor = scaled32 <= 8 ? 'emerald' : scaled32 <= 18 ? 'gold' : 'scarlet';
+    const visualThumb =
+      model.scope === 'team'
+        ? renderTeamLogoHtml(r.id, r.logoUrl, 26)
+        : renderPlayerAvatarHtml({ name: r.title, headshotUrl: r.headshotUrl }, 28);
+
+    const nameHtml =
+      r.is49erTeammate && r.sfPlayerId
+        ? `<button type="button" class="inline-player-link" style="background:none;border:0;padding:0;font:inherit;text-align:left" data-action="open-player-from-rank-modal" data-player-id="${esc(r.sfPlayerId)}"><strong>${esc(r.title)}</strong></button>`
+        : r.extUrl
+          ? `<a href="${esc(r.extUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(r.title)}</strong></a>`
+          : `<strong>${esc(r.title)}</strong>`;
+
+    rowsHtml.push(`
+      <div class="rank-modal-row ${r.isHighlighted ? 'highlighted' : ''}" ${r.isHighlighted ? 'data-rank-highlight="true"' : ''} data-rank-num="${r.rank}">
+        <div class="rank-modal-left">
+          <span class="badge ${rankBadgeClass(scaled32)} mono rank-modal-num">#${r.rank}</span>
+          ${visualThumb}
+          <div class="rank-modal-meta">
+            <div class="rank-modal-name">${nameHtml}</div>
+            <div class="rank-modal-sub mono">${esc(r.subtitle)}</div>
+          </div>
+        </div>
+        <div class="rank-modal-right">
+          <div class="rank-modal-val mono"><strong>${esc(r.displayValue)}</strong></div>
+          ${renderMiniMeterHtml(r.barPct, meterColor)}
+        </div>
+      </div>
+    `);
+
+    if (idx === model.avgInsertAfterIdx && idx < model.rows.length - 1) {
+      rowsHtml.push(`
+        <div class="rank-modal-avg-divider" data-rank-avg-divider="true">
+          <span class="mono">${esc(model.avgLabel)}</span>
+        </div>
+      `);
+    }
+  });
+
+  body.innerHTML = `<div class="rank-modal-list">${rowsHtml.join('')}</div>`;
+  backdrop.hidden = false;
+
+  requestAnimationFrame(() => {
+    const hl = body.querySelector('[data-rank-highlight="true"]');
+    if (hl && typeof hl.scrollIntoView === 'function') {
+      hl.scrollIntoView({ block: 'center', behavior: 'instant' });
+    } else {
+      body.scrollTop = 0;
+    }
+  });
 }
 
 function renderSheet() {
@@ -726,10 +831,20 @@ function bindEvents() {
     }
   });
 
+  document.getElementById('statRankModalBackdrop')?.addEventListener('click', e => {
+    if (e.target.id === 'statRankModalBackdrop') {
+      closeStatRankModal();
+    }
+  });
+
   document.addEventListener('keydown', e => {
     const pop = document.getElementById('jargonPopover');
     if (e.key === 'Escape' && pop && !pop.hidden) {
       closeJargonPopover();
+      return;
+    }
+    if (e.key === 'Escape' && state.rankModal) {
+      closeStatRankModal();
       return;
     }
     if ((e.key === 'Enter' || e.key === ' ') && e.target?.closest?.('[data-jargon]')) {
@@ -1107,6 +1222,41 @@ function bindEvents() {
         if (nextSeasonSub === 'schedule') state.schedulePrevExpanded = false;
         state.seasonSubTab = nextSeasonSub;
         renderMain();
+        break;
+      }
+
+      case 'set-matchup-stats-unit': {
+        state.matchupStatsUnit = btn.getAttribute('data-unit-id') || 'offense';
+        renderMain();
+        break;
+      }
+
+      case 'open-stat-rank-modal': {
+        const scope = btn.getAttribute('data-rank-scope') || 'team';
+        const key = btn.getAttribute('data-rank-key') || '';
+        const playerId = btn.getAttribute('data-player-id') || state.sheetPlayerId || null;
+        if (key) {
+          closeJargonPopover();
+          state.rankModal = { scope, key, playerId };
+          renderStatRankModal();
+        }
+        break;
+      }
+
+      case 'close-stat-rank-modal':
+        closeStatRankModal();
+        break;
+
+      case 'open-player-from-rank-modal': {
+        const pid = btn.getAttribute('data-player-id');
+        const targetPlayer = getPlayerById(pid);
+        closeStatRankModal();
+        if (targetPlayer) {
+          state.sheetMode = 'player';
+          state.sheetPlayerId = targetPlayer.id;
+          state.sheetPlayerTab = 'stats';
+          renderSheet();
+        }
         break;
       }
 

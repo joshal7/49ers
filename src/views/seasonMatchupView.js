@@ -226,7 +226,8 @@ export function renderSeasonMatchupViewHtml({
   combineSearch = '',
   expandedDraftSpiderIdx = -1,
   activeVideosSet,
-  schedulePrevExpanded = false
+  schedulePrevExpanded = false,
+  matchupStatsUnit = 'offense'
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const phaseSet = new Set(activePhases || []);
@@ -258,7 +259,7 @@ export function renderSeasonMatchupViewHtml({
     </div>
   `;
 
-  if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData);
+  if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit);
   if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData);
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
@@ -268,7 +269,164 @@ export function renderSeasonMatchupViewHtml({
   return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
 }
 
-function renderUpcomingMatchup(appData) {
+function renderTeamRankTriggerHtml(rank, metricKey, { showMeter = true, large = false } = {}) {
+  const rNum = Number(rank || 16);
+  const pct = ((33 - rNum) / 32) * 100;
+  const meterColor = rNum <= 8 ? 'emerald' : rNum <= 18 ? 'gold' : 'scarlet';
+  if (!metricKey) {
+    return `<div class="team-rank-cell"><span class="badge ${rankBadgeClass(rNum)} mono">#${rNum}</span>${
+      showMeter ? renderMiniMeterHtml(pct, meterColor) : ''
+    }</div>`;
+  }
+  return `
+    <button type="button" class="rank-badge-trigger ${large ? 'large' : ''}"
+            data-action="open-stat-rank-modal"
+            data-rank-scope="team"
+            data-rank-key="${esc(metricKey)}"
+            aria-label="Rank #${rNum} — tap to view all 32 NFL teams">
+      <span class="badge ${rankBadgeClass(rNum)} mono ${large ? 'overall-rank-pill' : ''}">#${rNum}</span>
+      ${showMeter ? renderMiniMeterHtml(pct, meterColor) : ''}
+    </button>
+  `;
+}
+
+function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense') {
+  const ts = appData?.scheduleMatchup?.teamStats;
+  const units = ts?.units || [];
+  if (units.length === 0) return '';
+
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const oppAbbr = String(um.oppAbbr || 'OPP').toUpperCase();
+  const oppShortName = (um.oppName || oppAbbr).split(' ').slice(-1)[0] || oppAbbr;
+  const activeUnit = units.find(u => u.id === matchupStatsUnit) || units[0];
+
+  const getTeamRowEntry = (metricObj, abbr) => {
+    const lb = metricObj?.leaderboard || [];
+    return lb.find(x => x.team === abbr) || { rank: 16, disp: '—' };
+  };
+
+  const renderH2hRows = rows =>
+    (rows || [])
+      .map(r => {
+        const sfEntry = getTeamRowEntry(r, 'SF');
+        const oppEntry = getTeamRowEntry(r, oppAbbr);
+        return `
+          <tr>
+            <td><strong>${escJargon(r.label)}</strong></td>
+            <td class="mono num-col"><strong>${esc(sfEntry.disp ?? r.displayValue)}</strong></td>
+            <td class="rank-col">${renderTeamRankTriggerHtml(sfEntry.rank ?? r.rank, r.key, { showMeter: false })}</td>
+            <td class="mono num-col">${esc(oppEntry.disp)}</td>
+            <td class="rank-col">${renderTeamRankTriggerHtml(oppEntry.rank, r.key, { showMeter: false })}</td>
+          </tr>
+        `;
+      })
+      .join('');
+
+  const sfOverall = getTeamRowEntry(activeUnit.overall, 'SF');
+  const oppOverall = getTeamRowEntry(activeUnit.overall, oppAbbr);
+  const expandedCount = (activeUnit.expandedGroups || []).reduce((s, g) => s + (g.rows?.length || 0), 0);
+
+  return `
+    <section class="card team-stats-card matchup-stats-card" id="matchupTeamStatsCard">
+      <div class="card-header team-stats-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('season', 16)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">32-Team Statistical Matchup • Tap #Rank for League List</div>
+            <h3 class="card-title">49ers vs. ${esc(oppShortName)} Unit Rankings</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Matchup Stat Units">
+        ${units
+          .map(
+            u => `
+          <button type="button" role="tab" aria-selected="${u.id === activeUnit.id ? 'true' : 'false'}"
+                  class="pill-btn seg-btn ${u.id === activeUnit.id ? 'active' : ''}"
+                  data-action="set-matchup-stats-unit" data-unit-id="${esc(u.id)}">
+            <span>${esc(u.shortLabel)}</span>
+          </button>
+        `
+          )
+          .join('')}
+      </div>
+
+      <div class="unit-overall-banner matchup-h2h-banner">
+        <div class="h2h-overall-side">
+          <span class="sub-label">49ers ${esc(activeUnit.shortLabel)}</span>
+          ${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
+        </div>
+        <div class="h2h-overall-center">
+          <span class="overall-how-wrap">${jargonTerm('How calculated ⓘ', activeUnit.jargonKey)}</span>
+        </div>
+        <div class="h2h-overall-side right">
+          <span class="sub-label">${esc(oppShortName)} ${esc(activeUnit.shortLabel)}</span>
+          ${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="data-table team-stats-table matchup-stats-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th class="mono num-col">49ers</th>
+              <th class="mono rank-col">Rank</th>
+              <th class="mono num-col">${esc(oppShortName)}</th>
+              <th class="mono rank-col">Rank</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${renderH2hRows(activeUnit.coreRows)}
+          </tbody>
+        </table>
+      </div>
+
+      ${
+        expandedCount > 0
+          ? `
+        <details class="stats-expand-details" data-matchup-stats-expander="${esc(activeUnit.id)}">
+          <summary class="stats-expand-summary">
+            <span>Detailed ${esc(activeUnit.shortLabel)} Breakdown (${expandedCount} Metrics)</span>
+            <span class="mono stats-expand-hint">Expand</span>
+          </summary>
+          <div class="stats-expand-body">
+            ${(activeUnit.expandedGroups || [])
+              .map(
+                grp => `
+              <div class="stats-subgroup-block">
+                <div class="sub-label stats-subgroup-title">${esc(grp.groupTitle)}</div>
+                <div class="table-scroll">
+                  <table class="data-table team-stats-table matchup-stats-table">
+                    <thead>
+                      <tr>
+                        <th>Metric</th>
+                        <th class="mono num-col">49ers</th>
+                        <th class="mono rank-col">Rank</th>
+                        <th class="mono num-col">${esc(oppShortName)}</th>
+                        <th class="mono rank-col">Rank</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${renderH2hRows(grp.rows)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `
+              )
+              .join('')}
+          </div>
+        </details>
+      `
+          : ''
+      }
+    </section>
+  `;
+}
+
+function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const bet = um.betting || {};
   const oppHealth = um.opponentHealth || {};
@@ -595,6 +753,8 @@ function renderUpcomingMatchup(appData) {
       </div>
     </section>
 
+    ${renderMatchupTeamStatsComparison(appData, matchupStatsUnit)}
+
     <section class="card">
       <div class="card-eyebrow">Opposing Coaching Staff Tendencies</div>
       <h3 class="card-title" style="margin-bottom:8px">${escJargon(um.coachingMatchup?.headline)}</h3>
@@ -841,13 +1001,131 @@ const COMPACT_STAT_LABELS = {
   def_takeaways_game: 'Def. Takeaways / Game'
 };
 
+function renderTeamStatsRowsHtml(rows = []) {
+  return rows
+    .map(r => {
+      const metricLabel = COMPACT_STAT_LABELS[r.key] || r.label;
+      return `
+        <tr>
+          <td><strong>${escJargon(metricLabel)}</strong></td>
+          <td class="mono num-col"><strong>${esc(r.displayValue)}</strong></td>
+          <td class="rank-col">${renderTeamRankTriggerHtml(r.rank, r.key, { showMeter: true })}</td>
+          <td class="mono num-col" style="color:var(--text-muted)">${esc(r.leagueAvgDisplay)}</td>
+        </tr>
+      `;
+    })
+    .join('');
+}
+
 function renderTeamStatsAndPower(appData) {
+  const ts = appData?.scheduleMatchup?.teamStats;
+  const units = ts?.units || [];
   const ranks = appData?.scheduleMatchup?.teamStatRankings || [];
   const pwr = appData?.scheduleMatchup?.powerRankings || {};
   const seasonYear = Number(appData?.meta?.seasonYear) || 2026;
   const pfrSeasonUrl = buildPfrTeamSeasonUrl('SF', seasonYear);
 
-  return `
+  const unitCardsHtml =
+    units.length > 0
+      ? units
+          .map((u, idx) => {
+            const expandedCount = (u.expandedGroups || []).reduce((acc, g) => acc + (g.rows?.length || 0), 0);
+            return `
+        <section class="card team-stats-card" ${idx === 0 ? 'id="teamStatsRankingsCard"' : ''} data-team-stats-unit="${esc(u.id)}">
+          <div class="card-header team-stats-header">
+            <div class="card-header-left">
+              <div class="card-icon-badge compact" aria-hidden="true">${iconSvg(u.icon || 'season', 16)}</div>
+              <div class="card-title-group">
+                <div class="card-eyebrow">nflverse &amp; ESPN ${seasonYear} • Tap #Rank for 32-Team List</div>
+                <h2 class="card-title">${esc(u.title)}</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="unit-overall-banner" data-overall-unit="${esc(u.id)}">
+            <div class="unit-overall-left">
+              <div class="unit-overall-title-row">
+                <span class="unit-overall-heading">${esc(u.overall?.label || 'Overall Unit Rank')}</span>
+                <span class="overall-how-wrap">${jargonTerm('How calculated ⓘ', u.jargonKey)}</span>
+              </div>
+              <div class="unit-overall-sub mono">Composite Score: ${esc(u.overall?.displayValue || '—')} (NFL Avg ${esc(u.overall?.leagueAvgDisplay || '50.0 idx')})</div>
+            </div>
+            <div class="unit-overall-right">
+              ${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: false, large: true })}
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="data-table team-stats-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th class="mono num-col">49ers</th>
+                  <th class="mono rank-col">Rank</th>
+                  <th class="mono num-col">NFL Avg</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderTeamStatsRowsHtml(u.coreRows || [])}
+              </tbody>
+            </table>
+          </div>
+
+          ${
+            expandedCount > 0
+              ? `
+            <details class="stats-expand-details" data-stats-expander="${esc(u.id)}">
+              <summary class="stats-expand-summary">
+                <span>Detailed ${esc(u.shortLabel)} Metrics (${expandedCount})</span>
+                <span class="mono stats-expand-hint">Expand</span>
+              </summary>
+              <div class="stats-expand-body">
+                ${(u.expandedGroups || [])
+                  .map(
+                    grp => `
+                  <div class="stats-subgroup-block">
+                    <div class="sub-label stats-subgroup-title">${esc(grp.groupTitle)}</div>
+                    <div class="table-scroll">
+                      <table class="data-table team-stats-table">
+                        <thead>
+                          <tr>
+                            <th>Metric</th>
+                            <th class="mono num-col">49ers</th>
+                            <th class="mono rank-col">Rank</th>
+                            <th class="mono num-col">NFL Avg</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${renderTeamStatsRowsHtml(grp.rows || [])}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                `
+                  )
+                  .join('')}
+              </div>
+            </details>
+          `
+              : ''
+          }
+
+          ${
+            idx === units.length - 1
+              ? `
+            <div class="source-link-strip team-stats-sources">
+              <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 11)}</a>
+              <a href="${esc(pfrSeasonUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
+              <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
+            </div>
+          `
+              : ''
+          }
+        </section>
+      `;
+          })
+          .join('')
+      : `
     <section class="card team-stats-card" id="teamStatsRankingsCard">
       <div class="card-header team-stats-header">
         <div class="card-header-left">
@@ -870,24 +1148,7 @@ function renderTeamStatsAndPower(appData) {
             </tr>
           </thead>
           <tbody>
-            ${ranks
-              .map(r => {
-                const metricLabel = COMPACT_STAT_LABELS[r.key] || r.label;
-                return `
-              <tr>
-                <td><strong>${escJargon(metricLabel)}</strong></td>
-                <td class="mono num-col"><strong>${esc(r.displayValue)}</strong></td>
-                <td class="rank-col">
-                  <div class="team-rank-cell">
-                    <span class="badge ${rankBadgeClass(r.rank)} mono">#${r.rank}</span>
-                    ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : r.rank <= 18 ? 'gold' : 'scarlet')}
-                  </div>
-                </td>
-                <td class="mono num-col" style="color:var(--text-muted)">${esc(r.leagueAvgDisplay)}</td>
-              </tr>
-            `;
-              })
-              .join('')}
+            ${renderTeamStatsRowsHtml(ranks)}
           </tbody>
         </table>
       </div>
@@ -898,6 +1159,10 @@ function renderTeamStatsAndPower(appData) {
         <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
       </div>
     </section>
+  `;
+
+  return `
+    ${unitCardsHtml}
 
     <section class="card">
       <div class="card-header">

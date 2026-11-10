@@ -411,6 +411,54 @@ export const JARGON_GLOSSARY = {
     category: 'Film & Box',
     definition:
       'Combined defensive interceptions and opponent fumble recoveries per game, one of the strongest single-game win-probability swings in football.'
+  },
+  overall_offense_rank: {
+    term: 'Overall Offense Composite Rank',
+    category: 'Composite Methodology',
+    definition:
+      'Weighted 32-team composite combining Offensive EPA / Play (40%), Points / Game (30%), Total Yards / Game (15%), and 3rd Down Conversion % (15%). Each metric is min-max normalized (0–100) across all 32 NFL clubs so both scoring output and down-to-down efficiency are captured.'
+  },
+  overall_defense_rank: {
+    term: 'Overall Defense Composite Rank',
+    category: 'Composite Methodology',
+    definition:
+      'Weighted 32-team composite combining Defensive EPA / Play Allowed (40%), Points Allowed / Game (30%), Total Yards Allowed / Game (15%), and 3rd Down Conversion % Allowed (15%). Each metric is normalized (0–100, lower allowed = higher score) across all 32 NFL clubs.'
+  },
+  overall_st_rank: {
+    term: 'Overall Special Teams Composite Rank',
+    category: 'Composite Methodology',
+    definition:
+      'Weighted 32-team composite combining Field Goal % (35%), Net Punt Average (30%), Kickoff Return Average (20%), and Punt Return Average (15%), normalized across all 32 NFL clubs to measure kicking accuracy and hidden-yardage field position.'
+  },
+  overall_margin_rank: {
+    term: 'Overall Overview & Margin Rank',
+    category: 'Composite Methodology',
+    definition:
+      'Weighted 32-team composite combining Point Differential / Game (40%), Net EPA / Play [Offense minus Defense] (35%), and Turnover Differential / Game (25%) — the three strongest team-level indicators of championship contention.'
+  },
+  turnover_diff: {
+    term: 'Turnover Differential (+/-)',
+    category: 'Film & Box',
+    definition:
+      'Defensive and special-teams takeaways (interceptions + opponent fumble recoveries) minus offensive giveaways (interceptions thrown + fumbles lost).'
+  },
+  net_epa: {
+    term: 'Net EPA / Play (Offense − Defense)',
+    category: 'Analytics',
+    definition:
+      'Offensive EPA per play minus Defensive EPA per play allowed. Positive values indicate a team out-executes opponents on a play-by-play expected-points basis.'
+  },
+  adot: {
+    term: 'aDOT (Average Depth of Target)',
+    category: 'Analytics',
+    definition:
+      'Average air-yard distance downfield from the line of scrimmage on all targeted passes (completions and incompletions).'
+  },
+  passer_rating: {
+    term: 'NFL Passer Rating',
+    category: 'Film & Box',
+    definition:
+      'Traditional 0.0-to-158.3 NFL passing efficiency formula weighting completion percentage, yards per attempt, touchdowns per attempt, and interceptions per attempt.'
   }
 };
 

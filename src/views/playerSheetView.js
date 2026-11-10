@@ -8,10 +8,11 @@
  * 5. health    — Week 9 Practice Progression, Player Toughness/Vet-Rest Priors & 2026 Injury Log
  */
 
-import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
+import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
@@ -279,9 +280,49 @@ function renderOverviewTab(p, rawStream = [], appData = null) {
   `;
 }
 
+function renderPlayerStatRankCellHtml(row, playerId) {
+  const rank = Number(row.rank || 1);
+  const total = Math.max(1, Number(row.totalPeers || 32));
+  const scaledRank32 = Math.max(1, Math.min(32, Math.round((rank / total) * 32)));
+  const pct = Math.max(6, Math.min(100, Math.round(((total - rank + 1) / total) * 100)));
+  const meterColor = scaledRank32 <= 8 ? 'emerald' : scaledRank32 <= 18 ? 'gold' : 'scarlet';
+  const scope = row.scope || 'player';
+
+  if (!row.leaderboardKey) {
+    return `<span class="badge ${rankBadgeClass(scaledRank32)} mono">#${rank}</span>`;
+  }
+
+  return `
+    <button type="button" class="rank-badge-trigger"
+            data-action="open-stat-rank-modal"
+            data-rank-scope="${esc(scope)}"
+            data-rank-key="${esc(row.leaderboardKey)}"
+            data-player-id="${esc(playerId || '')}"
+            aria-label="Rank #${rank} of ${total} — tap to view leaderboard">
+      <span class="badge ${rankBadgeClass(scaledRank32)} mono">#${rank}${!row.qualified ? '*' : ''}</span>
+      ${renderMiniMeterHtml(pct, meterColor)}
+    </button>
+  `;
+}
+
+function renderPlayerStatTableRowsHtml(rows = [], playerId = '') {
+  return rows
+    .map(
+      r => `
+      <tr>
+        <td><strong>${escJargon(r.label)}</strong></td>
+        <td class="mono num-col"><strong>${esc(r.displayValue)}</strong></td>
+        <td class="rank-col">${renderPlayerStatRankCellHtml(r, playerId)}</td>
+        <td class="mono num-col" style="color:var(--text-muted)">${esc(r.posAvgDisplay)}</td>
+      </tr>
+    `
+    )
+    .join('');
+}
+
 function renderStatsTab(p, statsMode) {
   const seasons = p.careerSeasons || [];
-  const s26 = p.stats2026;
+  const profile = p.statProfile2026 || null;
 
   const modeToggle = `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -297,165 +338,137 @@ function renderStatsTab(p, statsMode) {
     </div>
   `;
 
-  let primaryStatsHtml = '';
-  if (statsMode === '2026') {
-    const snapBannerHtml = `
-      <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
-        <strong style="color:var(--text-primary)">2026 Snaps Logged:</strong>
-        Offense <span class="mono">${p.snapSummary?.offenseSnaps || 0} (${p.snapSummary?.offenseSnapPct || 0}%)</span> •
-        Defense <span class="mono">${p.snapSummary?.defenseSnaps || 0} (${p.snapSummary?.defenseSnapPct || 0}%)</span> •
-        Special Teams <span class="mono">${p.snapSummary?.stSnaps || 0} (${p.snapSummary?.stSnapPct || 0}%)</span>
+  if (statsMode === 'career') {
+    if (seasons.length === 0) {
+      return `${modeToggle}<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
+        No multi-year NFL box-score seasons recorded yet (${esc(p.position)} • ${esc(p.draftInfo || 'Roster')}).
+      </div>`;
+    }
+    const schema = resolveCareerTableSchema(p.position);
+    return `
+      ${modeToggle}
+      <div class="sub-label" style="margin-top:4px">${esc(p.position)} Career Year-by-Year Ledger (${seasons[seasons.length - 1].season}–${seasons[0].season})</div>
+      <div class="table-scroll">
+        <table class="data-table mono" data-career-pos-table="${esc(p.position)}">
+          <thead>
+            <tr>
+              ${schema.headers.map(h => `<th>${esc(h)}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${seasons
+              .map(s => {
+                const cells = schema.cells(s);
+                return `
+                  <tr>
+                    ${cells
+                      .map((cell, idx) =>
+                        idx === 0
+                          ? `<td>${cell}</td>`
+                          : `<td>${esc(String(cell))}</td>`
+                      )
+                      .join('')}
+                  </tr>
+                `;
+              })
+              .join('')}
+          </tbody>
+        </table>
       </div>
     `;
+  }
 
-    if (!s26) {
-      primaryStatsHtml = `${snapBannerHtml}<div style="font-size:12px;color:var(--text-muted)">
-        (Offensive linemen &amp; reserve players do not accrue box-score ball-handling stats unless recording a tackle or fumble recovery.)
-      </div>`;
-    } else {
-      const blocks = [snapBannerHtml];
-      if (s26.passing.attempts > 0) {
-        blocks.push(`
-          <div class="sub-label">2026 Passing &amp; ${jargonTerm('EPA', 'epa')} (${s26.games} GP)</div>
-          <div class="kpi-grid">
-            <div class="kpi-box"><div class="kpi-label">Comp / Att</div><div class="kpi-val mono">${s26.passing.completions}/${s26.passing.attempts}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Pass Yds / TD / INT</div><div class="kpi-val mono">${s26.passing.yards} / ${s26.passing.tds} / ${s26.passing.ints}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Passing ${jargonTerm('EPA', 'epa')}</div><div class="kpi-val mono" style="color:var(--emerald)">${s26.passing.epa >= 0 ? '+' : ''}${s26.passing.epa}</div></div>
-            <div class="kpi-box"><div class="kpi-label">${jargonTerm('CPOE', 'cpoe')}</div><div class="kpi-val mono">${s26.passing.cpoe >= 0 ? '+' : ''}${s26.passing.cpoe}%</div></div>
-            <div class="kpi-box"><div class="kpi-label">Air Yards</div><div class="kpi-val mono">${s26.passing.airYards}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Sacks Taken</div><div class="kpi-val mono">${s26.passing.sacks}</div></div>
+  // 2026 Season Mode — Position-Tailored Single-Stat Rows + Clickable #X Positional Leaderboards
+  const snapBannerHtml = `
+    <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
+      <strong style="color:var(--text-primary)">2026 Snaps Logged:</strong>
+      Offense <span class="mono">${p.snapSummary?.offenseSnaps || 0} (${p.snapSummary?.offenseSnapPct || 0}%)</span> •
+      Defense <span class="mono">${p.snapSummary?.defenseSnaps || 0} (${p.snapSummary?.defenseSnapPct || 0}%)</span> •
+      Special Teams <span class="mono">${p.snapSummary?.stSnaps || 0} (${p.snapSummary?.stSnapPct || 0}%)</span>
+    </div>
+  `;
+
+  if (!profile?.hasActiveStats || !(profile.sections || []).length) {
+    return `
+      ${modeToggle}
+      ${snapBannerHtml}
+      <div class="subcard-panel" style="font-size:12.5px;color:var(--text-secondary)">
+        No 2026 regular-season game snaps logged yet (${esc(p.health?.status || p.rosterBucket)}).${
+          seasons.length > 0
+            ? ` Switch to <strong>Career Year-by-Year (${seasons.length})</strong> above to inspect prior NFL seasons.`
+            : ''
+        }
+      </div>
+    `;
+  }
+
+  const hasAnyUnqualified = (profile.sections || []).some(sec =>
+    [...(sec.coreRows || []), ...(sec.expandedRows || [])].some(r => !r.qualified)
+  );
+
+  const sectionsHtml = (profile.sections || [])
+    .map(sec => {
+      const expRows = sec.expandedRows || [];
+      return `
+        <div class="player-stat-section" data-player-stat-section="${esc(sec.id)}">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+            <div class="sub-label">${esc(sec.title)}</div>
+            <span class="mono" style="font-size:10.5px;color:var(--text-muted)">Tap #Rank vs. NFL ${esc(sec.peerGroupLabel || p.position)}</span>
           </div>
-        `);
-      }
-      if (s26.rushing.carries > 0) {
-        blocks.push(`
-          <div class="sub-label">2026 Rushing &amp; ${jargonTerm('EPA', 'epa')}</div>
-          <div class="kpi-grid">
-            <div class="kpi-box"><div class="kpi-label">Carries / Yds</div><div class="kpi-val mono">${s26.rushing.carries} / ${s26.rushing.yards}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Rush TD / 10+ Yd</div><div class="kpi-val mono">${s26.rushing.tds} / ${s26.rushing.explosive10Plus}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Rushing ${jargonTerm('EPA', 'epa')}</div><div class="kpi-val mono">${s26.rushing.epa >= 0 ? '+' : ''}${s26.rushing.epa}</div></div>
+          <div class="table-scroll">
+            <table class="data-table team-stats-table player-stats-table">
+              <thead>
+                <tr>
+                  <th>Stat</th>
+                  <th class="mono num-col">${esc(p.shortName || 'Player')}</th>
+                  <th class="mono rank-col">Rank</th>
+                  <th class="mono num-col">Pos Avg</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderPlayerStatTableRowsHtml(sec.coreRows || [], p.id)}
+              </tbody>
+            </table>
           </div>
-        `);
-      }
-      if (s26.receiving.targets > 0) {
-        blocks.push(`
-          <div class="sub-label">2026 Receiving &amp; Opportunity Share</div>
-          <div class="kpi-grid">
-            <div class="kpi-box"><div class="kpi-label">Rec / Tgt / Yds</div><div class="kpi-val mono">${s26.receiving.receptions}/${s26.receiving.targets} • ${s26.receiving.yards}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Rec TD / ${jargonTerm('EPA', 'epa')}</div><div class="kpi-val mono">${s26.receiving.tds} TD (${s26.receiving.epa >= 0 ? '+' : ''}${s26.receiving.epa})</div></div>
-            <div class="kpi-box"><div class="kpi-label">Target Share / ${jargonTerm('WOPR', 'wopr')}</div><div class="kpi-val mono">${s26.receiving.targetSharePct}% / ${s26.receiving.wopr}</div></div>
-          </div>
-        `);
-      }
-      if (s26.defense.totalTackles > 0 || s26.defense.sacks > 0 || s26.defense.ints > 0) {
-        blocks.push(`
-          <div class="sub-label">2026 Defensive Production (${s26.games} GP)</div>
-          <div class="kpi-grid">
-            <div class="kpi-box"><div class="kpi-label">Tackles (Solo)</div><div class="kpi-val mono">${s26.defense.totalTackles} (${s26.defense.soloTackles})</div></div>
-            <div class="kpi-box"><div class="kpi-label">Sacks / QB Hits</div><div class="kpi-val mono">${s26.defense.sacks} / ${s26.defense.qbHits}</div></div>
-            <div class="kpi-box"><div class="kpi-label">${jargonTerm('TFL', 'tfl')} / INT / PD</div><div class="kpi-val mono">${s26.defense.tfl} / ${s26.defense.ints} / ${s26.defense.passDefended}</div></div>
-          </div>
-        `);
-      }
-      if (s26.kicking.fgAtt > 0 || s26.kicking.punts > 0) {
-        blocks.push(`
-          <div class="sub-label">2026 Special Teams</div>
-          <div class="kpi-grid">
-            <div class="kpi-box"><div class="kpi-label">FG Made/Att</div><div class="kpi-val mono">${s26.kicking.fgMade}/${s26.kicking.fgAtt} (${s26.kicking.fgPct}%)</div></div>
-            <div class="kpi-box"><div class="kpi-label">FG Long / PAT</div><div class="kpi-val mono">${s26.kicking.fgLong} yd • ${s26.kicking.patMade}/${s26.kicking.patAtt}</div></div>
-            <div class="kpi-box"><div class="kpi-label">Punts (In 20)</div><div class="kpi-val mono">${s26.kicking.punts} (${s26.kicking.puntInside20})</div></div>
-          </div>
-        `);
-      }
-      primaryStatsHtml = blocks.join('') || `<div style="font-size:12.5px">Active in ${s26.games} games (${p.primarySnapPct}% snaps).</div>`;
-    }
-  } else {
-    // Year-by-year table (2023-2026)
-    if (seasons.length === 0) {
-      primaryStatsHtml = `<div style="font-size:12.5px;color:var(--text-muted)">No multi-year box-score rows in nflverse (OL / Rookie / PS).</div>`;
-    } else {
-      primaryStatsHtml = `
-        <div class="table-scroll">
-          <table class="data-table mono">
-            <thead>
-              <tr>
-                <th>Year</th><th>Tm</th><th>GP</th><th>Pass Yds/TD</th><th>Rush Yds/TD</th><th>Rec/Yds/TD</th><th>Tkl / Sk / INT</th><th>Tot EPA</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${seasons
-                .map(s => {
-                  const totEpa = (s.passing.epa + s.rushing.epa + s.receiving.epa).toFixed(1);
-                  return `
-                    <tr>
-                      <td><strong>${s.season}</strong></td>
-                      <td>${esc(s.team)}</td>
-                      <td>${s.games}</td>
-                      <td>${s.passing.attempts ? `${s.passing.yards}/${s.passing.tds}` : '—'}</td>
-                      <td>${s.rushing.carries ? `${s.rushing.yards}/${s.rushing.tds}` : '—'}</td>
-                      <td>${s.receiving.targets ? `${s.receiving.receptions}/${s.receiving.yards}/${s.receiving.tds}` : '—'}</td>
-                      <td>${s.defense.totalTackles || s.defense.sacks ? `${s.defense.totalTackles} / ${s.defense.sacks} / ${s.defense.ints}` : '—'}</td>
-                      <td>${Number(totEpa) !== 0 ? (Number(totEpa) > 0 ? `+${totEpa}` : totEpa) : '—'}</td>
-                    </tr>
-                  `;
-                })
-                .join('')}
-            </tbody>
-          </table>
+          ${
+            expRows.length > 0
+              ? `
+            <details class="stats-expand-details" data-player-stats-expander="${esc(sec.id)}">
+              <summary class="stats-expand-summary">
+                <span>Advanced Film, NextGen &amp; PFR Metrics (${expRows.length})</span>
+                <span class="mono stats-expand-hint">Expand</span>
+              </summary>
+              <div class="stats-expand-body">
+                <div class="table-scroll">
+                  <table class="data-table team-stats-table player-stats-table">
+                    <thead>
+                      <tr>
+                        <th>Stat</th>
+                        <th class="mono num-col">${esc(p.shortName || 'Player')}</th>
+                        <th class="mono rank-col">Rank</th>
+                        <th class="mono num-col">Pos Avg</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${renderPlayerStatTableRowsHtml(expRows, p.id)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          `
+              : ''
+          }
         </div>
       `;
-    }
-  }
+    })
+    .join('');
 
-  // NextGen Stats & PFR Advanced Stats cards
-  let ngsHtml = '';
-  if (p.nextGenStats) {
-    const ngs = p.nextGenStats;
-    const entries = Object.entries(ngs).filter(([k]) => k !== 'type' && k !== 'season');
-    ngsHtml = `
-      <div>
-        <div class="sub-label">${esc(ngs.type)} (${ngs.season} NFL NextGen Stats)</div>
-        <div class="kpi-grid">
-          ${entries
-            .map(
-              ([k, v]) => `
-            <div class="kpi-box">
-              <div class="kpi-label">${esc(k.replace(/([A-Z])/g, ' $1'))}</div>
-              <div class="kpi-val mono" style="font-size:13px">${esc(v)}</div>
-            </div>
-          `
-            )
-            .join('')}
-        </div>
-      </div>
-    `;
-  }
+  const footnoteHtml = hasAnyUnqualified
+    ? `<div style="font-size:11px;color:var(--text-muted)">* Below full-starter per-game volume threshold; effective placement shown against qualified NFL ${esc(profile.peerGroupLabel || p.position)}.</div>`
+    : '';
 
-  let pfrHtml = '';
-  if (p.pfrAdvStats) {
-    const adv = p.pfrAdvStats;
-    const entries = Object.entries(adv).filter(([k]) => k !== 'type' && k !== 'season');
-    pfrHtml = `
-      <div>
-        <div class="sub-label">Pro-Football-Reference Advanced (${adv.season} ${esc(adv.type)})</div>
-        <div class="kpi-grid">
-          ${entries
-            .slice(0, 6)
-            .map(
-              ([k, v]) => `
-            <div class="kpi-box">
-              <div class="kpi-label">${esc(k.replace(/([A-Z])/g, ' $1'))}</div>
-              <div class="kpi-val mono" style="font-size:13px">${esc(v)}</div>
-            </div>
-          `
-            )
-            .join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  return `${modeToggle}${primaryStatsHtml}${ngsHtml}${pfrHtml}`;
+  return `${modeToggle}${snapBannerHtml}${sectionsHtml}${footnoteHtml}`;
 }
 
 function renderContractTab(p, txScenario) {

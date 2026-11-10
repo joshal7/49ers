@@ -104,6 +104,11 @@ import {
   resolveReporterFromNameOrHandle,
   resolveOriginalTweetUrl
 } from '../src/engine/beatAttributionEngine.js';
+import {
+  NFL_TEAM_NAMES,
+  computeLeagueTeamStatsPayload,
+  computeLeaguePositionalLeaderboards
+} from '../src/engine/statsLeaderboardEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -375,6 +380,9 @@ async function main() {
     ngsReceiving,
     ngsRushing,
     pfrPass,
+    pfrPassWeekCurrent,
+    pfrRush,
+    pfrRec,
     pfrDef,
     snaps2026,
     injuries2026,
@@ -399,6 +407,9 @@ async function main() {
     fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_pass_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_pass_${prevSeasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_rush.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_rush.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_rec.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_rec.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv`),
     fetchCsvWithFallback(
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${seasonYear}.csv.gz`,
@@ -519,94 +530,172 @@ async function main() {
     }
   }
 
-  // Index NextGen Stats (week === '0' is full season summary; take latest seasonYear or prevSeasonYear)
+  // Index NextGen Stats (week === '0' is full season summary)
   const ngsByGsis = new Map();
+  const ngsPass2026 = new Map();
+  const ngsRec2026 = new Map();
+  const ngsRush2026 = new Map();
   for (const row of ngsPassing) {
     if (row.week !== '0' || (row.season !== seasonYearStr && row.season !== prevSeasonYearStr)) continue;
+    const obj = {
+      type: 'Passing NGS',
+      season: Number(row.season),
+      avgTimeToThrow: num(row.avg_time_to_throw, 2),
+      aggressivenessPct: num(row.aggressiveness, 1),
+      cpoe: num(row.completion_percentage_above_expectation, 2),
+      avgIntendedAirYards: num(row.avg_intended_air_yards, 2),
+      maxCompletedAirDistance: num(row.max_completed_air_distance, 1),
+      passerRating: num(row.passer_rating, 1)
+    };
+    if (row.season === seasonYearStr) ngsPass2026.set(row.player_gsis_id, obj);
     const prev = ngsByGsis.get(row.player_gsis_id);
     if (!prev || Number(row.season) >= prev.season) {
-      ngsByGsis.set(row.player_gsis_id, {
-        type: 'Passing NGS',
-        season: Number(row.season),
-        avgTimeToThrow: num(row.avg_time_to_throw, 2),
-        aggressivenessPct: num(row.aggressiveness, 1),
-        cpoe: num(row.completion_percentage_above_expectation, 2),
-        avgIntendedAirYards: num(row.avg_intended_air_yards, 2),
-        maxCompletedAirDistance: num(row.max_completed_air_distance, 1),
-        passerRating: num(row.passer_rating, 1)
-      });
+      ngsByGsis.set(row.player_gsis_id, obj);
     }
   }
   for (const row of ngsReceiving) {
     if (row.week !== '0' || (row.season !== seasonYearStr && row.season !== prevSeasonYearStr)) continue;
+    const obj = {
+      type: 'Receiving NGS',
+      season: Number(row.season),
+      avgCushion: num(row.avg_cushion, 2),
+      avgSeparation: num(row.avg_separation, 2),
+      avgIntendedAirYards: num(row.avg_intended_air_yards, 2),
+      airYardsSharePct: num(row.percent_share_of_intended_air_yards, 1),
+      avgYac: num(row.avg_yac, 2),
+      avgYacAboveExpectation: num(row.avg_yac_above_expectation, 2),
+      catchPct: num(row.catch_percentage, 1)
+    };
+    if (row.season === seasonYearStr) ngsRec2026.set(row.player_gsis_id, obj);
     const prev = ngsByGsis.get(row.player_gsis_id);
     if (!prev || Number(row.season) >= prev.season) {
-      ngsByGsis.set(row.player_gsis_id, {
-        type: 'Receiving NGS',
-        season: Number(row.season),
-        avgCushion: num(row.avg_cushion, 2),
-        avgSeparation: num(row.avg_separation, 2),
-        avgIntendedAirYards: num(row.avg_intended_air_yards, 2),
-        airYardsSharePct: num(row.percent_share_of_intended_air_yards, 1),
-        avgYac: num(row.avg_yac, 2),
-        avgYacAboveExpectation: num(row.avg_yac_above_expectation, 2),
-        catchPct: num(row.catch_percentage, 1)
-      });
+      ngsByGsis.set(row.player_gsis_id, obj);
     }
   }
   for (const row of ngsRushing) {
     if (row.week !== '0' || (row.season !== seasonYearStr && row.season !== prevSeasonYearStr)) continue;
+    const obj = {
+      type: 'Rushing NGS',
+      season: Number(row.season),
+      efficiency: num(row.efficiency, 2),
+      stackedBox8PlusPct: num(row.percent_attempts_gte_eight_defenders, 1),
+      avgTimeToLos: num(row.avg_time_to_los, 2),
+      ryoeTotal: num(row.rush_yards_over_expected, 1),
+      ryoePerAtt: num(row.rush_yards_over_expected_per_att, 2),
+      rushPctOverExpected: num(Number(row.rush_pct_over_expected || 0) * 100, 1)
+    };
+    if (row.season === seasonYearStr) ngsRush2026.set(row.player_gsis_id, obj);
     const prev = ngsByGsis.get(row.player_gsis_id);
     if (!prev || Number(row.season) >= prev.season) {
-      ngsByGsis.set(row.player_gsis_id, {
-        type: 'Rushing NGS',
-        season: Number(row.season),
-        efficiency: num(row.efficiency, 2),
-        stackedBox8PlusPct: num(row.percent_attempts_gte_eight_defenders, 1),
-        avgTimeToLos: num(row.avg_time_to_los, 2),
-        ryoeTotal: num(row.rush_yards_over_expected, 1),
-        ryoePerAtt: num(row.rush_yards_over_expected_per_att, 2),
-        rushPctOverExpected: num(Number(row.rush_pct_over_expected || 0) * 100, 1)
-      });
+      ngsByGsis.set(row.player_gsis_id, obj);
     }
   }
 
-  // Index PFR Advanced Stats (latest seasonYear or prevSeasonYear)
+  // Index PFR Advanced Stats (2026 strictly separated for Positional Leaderboards)
   const pfrAdvById = new Map();
+  const pfrDef2026 = new Map();
+  const pfrPass2026 = new Map();
+  const pfrRush2026 = new Map();
+  const pfrRec2026 = new Map();
+
   for (const row of pfrDef) {
     if (row.season !== seasonYearStr && row.season !== prevSeasonYearStr) continue;
+    const obj = {
+      type: 'Defense Coverage & Pressure',
+      season: Number(row.season),
+      targetsAllowed: num(row.tgt),
+      completionsAllowed: num(row.cmp),
+      completionPctAllowed: num(Number(row.cmp_percent || 0) * (Number(row.cmp_percent) <= 1 ? 100 : 1), 1),
+      yardsPerTargetAllowed: num(row.yds_tgt, 2),
+      passerRatingAllowed: num(row.rat, 1),
+      dadot: num(row.dadot, 1),
+      pressures: num(row.prss),
+      hurries: num(row.hrry),
+      qbKnockdowns: num(row.qbkd),
+      missedTacklePct: num(Number(row.m_tkl_percent || 0) * (Number(row.m_tkl_percent) <= 1 ? 100 : 1), 1)
+    };
+    if (row.season === seasonYearStr) pfrDef2026.set(row.pfr_id, obj);
     const prev = pfrAdvById.get(row.pfr_id);
     if (!prev || Number(row.season) >= prev.season) {
-      pfrAdvById.set(row.pfr_id, {
-        type: 'Defense Coverage & Pressure',
-        season: Number(row.season),
-        targetsAllowed: num(row.tgt),
-        completionsAllowed: num(row.cmp),
-        completionPctAllowed: num(Number(row.cmp_percent || 0) * (Number(row.cmp_percent) <= 1 ? 100 : 1), 1),
-        yardsPerTargetAllowed: num(row.yds_tgt, 2),
-        passerRatingAllowed: num(row.rat, 1),
-        dadot: num(row.dadot, 1),
-        pressures: num(row.prss),
-        hurries: num(row.hrry),
-        qbKnockdowns: num(row.qbkd),
-        missedTacklePct: num(Number(row.m_tkl_percent || 0) * (Number(row.m_tkl_percent) <= 1 ? 100 : 1), 1)
-      });
+      pfrAdvById.set(row.pfr_id, obj);
     }
+  }
+  for (const row of pfrRush) {
+    if (row.season !== seasonYearStr) continue;
+    pfrRush2026.set(row.pfr_id, {
+      season: Number(row.season),
+      ybcPerAtt: num(row.ybc_att, 2),
+      yacPerAtt: num(row.yac_att, 2),
+      brokenTackles: num(row.brk_tkl)
+    });
+  }
+  for (const row of pfrRec) {
+    if (row.season !== seasonYearStr) continue;
+    pfrRec2026.set(row.pfr_id, {
+      season: Number(row.season),
+      adot: row.adot !== '' ? num(row.adot, 1) : null,
+      yacPerRec: num(row.yac_r, 2),
+      brokenTackles: num(row.brk_tkl),
+      drops: num(row.drop),
+      dropPct: num(Number(row.drop_percent || 0) * (Number(row.drop_percent) <= 1 ? 100 : 1), 1)
+    });
   }
   for (const row of pfrPass) {
     if (row.season !== seasonYearStr && row.season !== prevSeasonYearStr) continue;
+    const obj = {
+      type: 'Passing Pocket & Accuracy',
+      season: Number(row.season),
+      pocketTimeSec: num(row.pocket_time, 2),
+      pressurePct: num(row.pressure_pct, 1),
+      onTargetPct: num(row.on_tgt_pct, 1),
+      badThrowPct: num(row.bad_throw_pct, 1),
+      dropPct: num(row.drop_pct, 1),
+      playActionPassYards: num(row.pa_pass_yards)
+    };
+    if (row.season === seasonYearStr) pfrPass2026.set(row.pfr_id, obj);
     const prev = pfrAdvById.get(row.pfr_id);
     if (!prev || Number(row.season) >= prev.season) {
-      pfrAdvById.set(row.pfr_id, {
+      pfrAdvById.set(row.pfr_id, obj);
+    }
+  }
+  // Aggregate 2026 weekly PFR pass rows (bad throws, drops, pressures) when season-summary CSV lags
+  if (pfrPass2026.size === 0 && pfrPassWeekCurrent.length > 0) {
+    const wkAgg = new Map();
+    for (const row of pfrPassWeekCurrent) {
+      if (row.season !== seasonYearStr || (row.game_type && row.game_type !== 'REG') || !row.pfr_player_id) continue;
+      const cur = wkAgg.get(row.pfr_player_id) || { badThrows: 0, drops: 0, pressured: 0, hurried: 0, hit: 0, sacked: 0, blitzed: 0 };
+      cur.badThrows += num(row.passing_bad_throws);
+      cur.drops += num(row.passing_drops);
+      cur.pressured += num(row.times_pressured);
+      cur.hurried += num(row.times_hurried);
+      cur.hit += num(row.times_hit);
+      cur.sacked += num(row.times_sacked);
+      cur.blitzed += num(row.times_blitzed);
+      wkAgg.set(row.pfr_player_id, cur);
+    }
+    const pfrAttMap = new Map();
+    for (const np of nflPlayers) {
+      if (np.pfr_id && np.gsis_id) {
+        const sList = seasonStatsByGsis.get(np.gsis_id) || [];
+        const sCur = sList.find(x => x.season === seasonYear);
+        if (sCur?.passing?.attempts) {
+          pfrAttMap.set(np.pfr_id, { att: sCur.passing.attempts, sk: sCur.passing.sacks });
+        }
+      }
+    }
+    for (const [pid, w] of wkAgg.entries()) {
+      const vol = pfrAttMap.get(pid);
+      if (!vol || vol.att <= 0) continue;
+      const db = Math.max(1, vol.att + vol.sk);
+      const built = {
         type: 'Passing Pocket & Accuracy',
-        season: Number(row.season),
-        pocketTimeSec: num(row.pocket_time, 2),
-        pressurePct: num(row.pressure_pct, 1),
-        onTargetPct: num(row.on_tgt_pct, 1),
-        badThrowPct: num(row.bad_throw_pct, 1),
-        dropPct: num(row.drop_pct, 1),
-        playActionPassYards: num(row.pa_pass_yards)
-      });
+        season: seasonYear,
+        pressurePct: num((w.pressured / db) * 100, 1),
+        badThrowPct: num((w.badThrows / vol.att) * 100, 1),
+        dropPct: num((w.drops / vol.att) * 100, 1)
+      };
+      pfrPass2026.set(pid, built);
+      pfrAdvById.set(pid, built);
     }
   }
 
@@ -2616,6 +2705,8 @@ async function main() {
         losses: Number(getStat('losses')?.value || 0),
         ties: Number(getStat('ties')?.value || 0),
         winPct: Number(getStat('winPercent')?.value || 0),
+        pointsFor: Number(getStat('pointsFor')?.value || 0),
+        pointsAgainst: Number(getStat('pointsAgainst')?.value || 0),
         pointDiff: pd,
         logoUrl: resolveTeamLogoUrl(abbr, entry.team)
       });
@@ -2745,7 +2836,7 @@ async function main() {
     };
   });
 
-  // Compute 1st–32nd NFL Team Stat Rankings from stats_team_reg_2026
+  // Compute 1st–32nd NFL Team Stat Rankings (Offense, Defense, Special Teams & Margin) + 32-Team Leaderboards
   const regTeams = statsTeam2026.filter(r => r.season_type === 'REG' && r.team);
   function computeTeamRankFor(teamAbbr, metricFn, higherIsBetter = true) {
     const vals = regTeams.map(t => ({ team: normalizeTeamAbbr(t.team), val: metricFn(t) }));
@@ -2755,109 +2846,60 @@ async function main() {
     const avgVal = vals.reduce((s, x) => s + x.val, 0) / Math.max(1, vals.length);
     return { rank: idx >= 0 ? idx + 1 : 16, value: teamVal, leagueAvg: avgVal };
   }
-  const computeLeagueRank = (metricFn, higherIsBetter = true) => computeTeamRankFor('SF', metricFn, higherIsBetter);
 
-  const teamStatRankings = [
-    {
-      key: 'total_off_epa_game',
-      label: 'Offensive Total EPA / Game',
-      category: 'Advanced Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => (num(t.passing_epa) + num(t.rushing_epa)) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value >= 0 ? '+' : ''}${r.value.toFixed(2)}`, leagueAvgDisplay: `${r.leagueAvg >= 0 ? '+' : ''}${r.leagueAvg.toFixed(2)}` };
-      })()
-    },
-    {
-      key: 'passing_epa_game',
-      label: 'Passing EPA / Game',
-      category: 'Advanced Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.passing_epa) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value >= 0 ? '+' : ''}${r.value.toFixed(2)}`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)}` };
-      })()
-    },
-    {
-      key: 'passing_cpoe',
-      label: 'Completion % Over Expected (CPOE)',
-      category: 'Advanced Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.passing_cpoe), true);
-        return { rank: r.rank, displayValue: `${r.value >= 0 ? '+' : ''}${r.value.toFixed(2)}%`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)}%` };
-      })()
-    },
-    {
-      key: 'rushing_epa_game',
-      label: 'Rushing EPA / Game',
-      category: 'Advanced Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.rushing_epa) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value >= 0 ? '+' : ''}${r.value.toFixed(2)}`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)}` };
-      })()
-    },
-    {
-      key: 'yards_per_pass_att',
-      label: 'Net Yards / Pass Attempt',
-      category: 'Standard Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.passing_yards) / Math.max(1, num(t.attempts)), true);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(2)} yds`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)} yds` };
-      })()
-    },
-    {
-      key: 'sack_rate_allowed',
-      label: 'Sacks Allowed Rate (Pass Protection)',
-      category: 'Advanced Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => (num(t.sacks_suffered) / Math.max(1, num(t.attempts) + num(t.sacks_suffered))) * 100, false);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(1)}%`, leagueAvgDisplay: `${r.leagueAvg.toFixed(1)}%` };
-      })()
-    },
-    {
-      key: 'explosive_plays_game',
-      label: 'Explosive Plays / Game (20+ Pass, 10+ Rush)',
-      category: 'Advanced Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => (num(t.passing_20) + num(t.rushing_10)) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(1)}`, leagueAvgDisplay: `${r.leagueAvg.toFixed(1)}` };
-      })()
-    },
-    {
-      key: 'rush_yds_game',
-      label: 'Rushing Yards / Game',
-      category: 'Standard Offense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.rushing_yards) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(1)} yds`, leagueAvgDisplay: `${r.leagueAvg.toFixed(1)} yds` };
-      })()
-    },
-    {
-      key: 'def_sacks_game',
-      label: 'Defensive Sacks / Game',
-      category: 'Standard Defense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.def_sacks) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(2)}`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)}` };
-      })()
-    },
-    {
-      key: 'def_tfl_game',
-      label: 'Tackles For Loss (TFL) / Game',
-      category: 'Advanced Defense',
-      ...(() => {
-        const r = computeLeagueRank(t => num(t.def_tackles_for_loss) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(2)}`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)}` };
-      })()
-    },
-    {
-      key: 'def_takeaways_game',
-      label: 'Defensive Takeaways (INT + FR) / Game',
-      category: 'Standard Defense',
-      ...(() => {
-        const r = computeLeagueRank(t => (num(t.def_interceptions) + num(t.fumble_recovery_opp)) / Math.max(1, num(t.games)), true);
-        return { rank: r.rank, displayValue: `${r.value.toFixed(2)}`, leagueAvgDisplay: `${r.leagueAvg.toFixed(2)}` };
-      })()
-    }
-  ];
+  // Batch-fetch ESPN 32-team situational statistics (3rd Down %, Red Zone TD %, Official Turnovers & Net Punting)
+  const espnTeamStatsByAbbr = new Map();
+  const allLeagueAbbrs = Object.keys(NFL_TEAM_NAMES);
+  const TEAM_STAT_BATCH = 8;
+  for (let i = 0; i < allLeagueAbbrs.length; i += TEAM_STAT_BATCH) {
+    const slice = allLeagueAbbrs.slice(i, i + TEAM_STAT_BATCH);
+    await Promise.all(
+      slice.map(async abbr => {
+        try {
+          const slug = toEspnTeamSlug(abbr);
+          const stJson = await fetchJson(
+            `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${slug}/statistics`
+          );
+          const ownCats = stJson?.results?.stats?.categories || [];
+          const oppRaw = stJson?.results?.opponent;
+          const oppCats = Array.isArray(oppRaw) ? oppRaw : oppRaw?.categories || [];
+          const findVal = (cats, catName, statName) => {
+            const c = cats.find(x => x.name === catName);
+            const s = c?.stats?.find(x => x.name === statName);
+            return s?.value != null && Number.isFinite(Number(s.value)) ? Number(s.value) : null;
+          };
+          espnTeamStatsByAbbr.set(abbr, {
+            offThirdDownPct: findVal(ownCats, 'miscellaneous', 'thirdDownConvPct'),
+            defThirdDownPctAllowed: findVal(oppCats, 'miscellaneous', 'thirdDownConvPct'),
+            offRedZoneTdPct: findVal(ownCats, 'miscellaneous', 'redzoneTouchdownPct'),
+            defRedZoneTdPctAllowed: findVal(oppCats, 'miscellaneous', 'redzoneTouchdownPct'),
+            takeaways: findVal(ownCats, 'miscellaneous', 'totalTakeaways'),
+            giveaways: findVal(ownCats, 'miscellaneous', 'totalGiveaways'),
+            turnoverDiff: findVal(ownCats, 'miscellaneous', 'turnOverDifferential'),
+            netPassingYards: findVal(ownCats, 'passing', 'netPassingYards'),
+            oppNetPassingYards: findVal(oppCats, 'passing', 'netPassingYards'),
+            oppRushingYards: findVal(oppCats, 'rushing', 'rushingYards'),
+            puntNetAvg: findVal(ownCats, 'punting', 'netAvgPuntYards'),
+            krAvg: findVal(ownCats, 'returning', 'yardsPerKickReturn'),
+            prAvg: findVal(ownCats, 'returning', 'yardsPerPuntReturn'),
+            oppKrAvg: findVal(oppCats, 'returning', 'yardsPerKickReturn'),
+            oppPrAvg: findVal(oppCats, 'returning', 'yardsPerPuntReturn')
+          });
+        } catch {
+          // Graceful fallback to nflverse weekly + seasonal aggregates
+        }
+      })
+    );
+  }
+
+  const teamStatsPayload = computeLeagueTeamStatsPayload({
+    regTeams,
+    statsTeamWeek: statsTeamWeekCurrent,
+    espnTeamStatsByAbbr,
+    teamRecordsMap,
+    seasonYear
+  });
+  const { teamStats, teamStatRankings } = teamStatsPayload;
 
   // Build Live Upcoming Matchup (auto-advances every week as games complete!)
   const nextScheduledGame = scheduleItems.find(g => !g.completed) || scheduleItems[scheduleItems.length - 1];
@@ -4234,10 +4276,48 @@ async function main() {
     // ignore
   }
 
+  const posLeaderboardsResult = computeLeaguePositionalLeaderboards({
+    statsPlayerCurrent,
+    ngsPass2026,
+    ngsRec2026,
+    ngsRush2026,
+    pfrPass2026,
+    pfrRush2026,
+    pfrRec2026,
+    pfrDef2026,
+    snaps2026,
+    nflPlayers,
+    rosterPlayers,
+    teamStatsPayload,
+    seasonYear
+  });
+  let finalPositionalLeaderboards = posLeaderboardsResult.positionalLeaderboards;
+  let finalPeerDirectory = posLeaderboardsResult.peerDirectory;
+  for (const p of rosterPlayers) {
+    p.statProfile2026 = posLeaderboardsResult.profilesBySfPlayerId.get(p.id) || null;
+  }
+  if (statsPlayerCurrent.length === 0) {
+    try {
+      const prevR = JSON.parse(fs.readFileSync(path.join(dataDir, 'roster.json'), 'utf8'));
+      if (prevR?.positionalLeaderboards) finalPositionalLeaderboards = prevR.positionalLeaderboards;
+      if (prevR?.peerDirectory) finalPeerDirectory = prevR.peerDirectory;
+      const prevMap = new Map((prevR?.players || []).map(x => [String(x.id), x]));
+      for (const p of rosterPlayers) {
+        if (!p.statProfile2026 && prevMap.get(String(p.id))?.statProfile2026) {
+          p.statProfile2026 = prevMap.get(String(p.id)).statProfile2026;
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
+
   writeCleanJson(path.join(dataDir, 'meta.json'), metaJson);
   writeCleanJson(path.join(dataDir, 'roster.json'), {
     updatedAt: nowIso,
     count: rosterPlayers.length,
+    positionalLeaderboards: finalPositionalLeaderboards,
+    peerDirectory: finalPeerDirectory,
     players: rosterPlayers
   });
   writeCleanJson(path.join(dataDir, 'depth-chart.json'), {
@@ -4287,6 +4367,7 @@ async function main() {
       { label: 'NFL NextGen Stats', url: 'https://nextgenstats.nfl.com/' }
     ],
     schedule: scheduleItems,
+    teamStats,
     teamStatRankings,
     powerRankings,
     upcomingMatchup

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T02:36:51.319Z",
+  "updatedAt": "2026-11-10T15:40:57.275Z",
   "week": 10,
   "units": [
     {
@@ -31,23 +31,23 @@
               "isAvailable": true
             },
             {
-              "playerId": "3047876",
-              "name": "KhaDarel Hodge",
-              "jersey": 86,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3047876.png",
+              "playerId": "4360438",
+              "name": "Brandon Aiyuk",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
               "baselineRank": 3,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Probable",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Roster Exemption",
               "isAvailable": false
             },
             {
-              "playerId": "3895856",
-              "name": "Christian Kirk",
-              "jersey": 3,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -74,24 +74,24 @@
               "demotedDueToInjury": true
             },
             {
-              "playerId": "3047876",
-              "name": "KhaDarel Hodge",
-              "jersey": 86,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3047876.png",
+              "playerId": "4360438",
+              "name": "Brandon Aiyuk",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
               "baselineRank": 3,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Probable",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Roster Exemption",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
             {
-              "playerId": "3895856",
-              "name": "Christian Kirk",
-              "jersey": 3,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
+              "playerId": "4428209",
+              "name": "Ricky Pearsall",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -123,23 +123,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "4360438",
-              "name": "Brandon Aiyuk",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+              "playerId": "4710714",
+              "name": "De'Zhaun Stribling",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • Roster Exemption",
-              "isAvailable": false
-            },
-            {
-              "playerId": "4428209",
-              "name": "Ricky Pearsall",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
-              "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
+              "statusBadge": "0% • IR",
               "isAvailable": false
             }
           ],
@@ -165,24 +155,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "4360438",
-              "name": "Brandon Aiyuk",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
+              "playerId": "4710714",
+              "name": "De'Zhaun Stribling",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • Roster Exemption",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
-              "playerId": "4428209",
-              "name": "Ricky Pearsall",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
-              "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
+              "statusBadge": "0% • IR",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -214,10 +193,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4710714",
-              "name": "De'Zhaun Stribling",
-              "jersey": 7,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
@@ -246,10 +225,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4710714",
-              "name": "De'Zhaun Stribling",
-              "jersey": 7,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
+              "playerId": "3895856",
+              "name": "Christian Kirk",
+              "jersey": 3,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",

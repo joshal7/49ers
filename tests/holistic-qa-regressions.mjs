@@ -37,6 +37,12 @@ import {
   isRedundantProfileSelfLink
 } from '../src/engine/breakingClassifier.js';
 import { getJargonEntry } from '../src/engine/jargonGlossary.js';
+import {
+  TEAM_STAT_UNITS_SCHEMA,
+  normalizePositionalPeerGroup,
+  resolveCareerTableSchema,
+  resolveLeaderboardModalModel
+} from '../src/engine/statsLeaderboardEngine.js';
 import { hydrateLiveEspnOverlay, matchPlayersClient } from '../src/services/dataService.js';
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
 import {
@@ -1205,6 +1211,77 @@ await testAsync('Trust-weighted corroborated news & prior-week absence calibrati
   } finally {
     globalThis.fetch = origFetch;
   }
+});
+
+test('4-Unit Team Stats, Overall Composite Rank Jargon Tooltips, Positional Leaderboards & Position-Specific Career Tables validate cleanly', () => {
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+
+  // 1. Exact 4-unit card order & Offense <-> Defense symmetry
+  assert.deepEqual(
+    TEAM_STAT_UNITS_SCHEMA.map(u => u.id),
+    ['offense', 'defense', 'special_teams', 'margin']
+  );
+  const tsUnits = scheduleMatchup.teamStats?.units || [];
+  assert.deepEqual(tsUnits.map(u => u.id), ['offense', 'defense', 'special_teams', 'margin']);
+  assert.equal(tsUnits[0].coreRows.length, 7, 'Offense must expose 7 paired core rows');
+  assert.equal(tsUnits[1].coreRows.length, 7, 'Defense must expose 7 symmetrical core rows');
+  assert.equal(tsUnits[0].expandedGroups.length, 3);
+  assert.equal(tsUnits[1].expandedGroups.length, 3);
+
+  // 2. Overall Rank "How calculated" tooltips exist with weighted methodology
+  for (const key of ['overall_offense_rank', 'overall_defense_rank', 'overall_st_rank', 'overall_margin_rank']) {
+    const entry = getJargonEntry(key);
+    assert.ok(entry && entry.definition.includes('%'), `Missing weighted formula explanation for ${key}`);
+  }
+
+  // 3. Every Team Stat & Overall Rank carries a full 32-team leaderboard sorted #1..#32
+  for (const [mKey, mObj] of Object.entries(scheduleMatchup.teamStats.flatByKey)) {
+    assert.equal(mObj.leaderboard.length, 32, `Metric ${mKey} must have 32 teams`);
+    assert.equal(mObj.leaderboard[0].rank, 1);
+    assert.equal(mObj.leaderboard[31].rank, 32);
+    if (mObj.higherIsBetter) {
+      assert.ok(mObj.leaderboard[0].val >= mObj.leaderboard[31].val, `${mKey} higherIsBetter sort wrong`);
+    } else {
+      assert.ok(mObj.leaderboard[0].val <= mObj.leaderboard[31].val, `${mKey} lowerIsBetter sort wrong`);
+    }
+  }
+
+  // 4. Leaderboard modal resolver highlights SF on Team Stats & highlights viewed 49ers player on Player Stats
+  const appDataMock = { scheduleMatchup, roster };
+  const teamModal = resolveLeaderboardModalModel({ appData: appDataMock, scope: 'team', key: 'off_pts_game' });
+  assert.ok(teamModal && teamModal.rows.length === 32);
+  assert.equal(teamModal.rows.filter(r => r.isHighlighted).length, 1);
+  assert.equal(teamModal.rows.find(r => r.isHighlighted).id, 'SF');
+  assert.ok(teamModal.avgInsertAfterIdx >= 0 && teamModal.avgInsertAfterIdx < 31);
+
+  const purdy = roster.players.find(p => p.name === 'Brock Purdy');
+  const cmc = roster.players.find(p => p.name === 'Christian McCaffrey');
+  assert.ok(purdy?.statProfile2026?.sections?.length >= 2, 'Purdy must have Passing + Rushing sections');
+  assert.ok(cmc?.statProfile2026?.sections?.length >= 2, 'CMC must have Rushing + RB Receiving sections');
+
+  const purdyFirstRow = purdy.statProfile2026.sections[0].coreRows[0];
+  const playerModal = resolveLeaderboardModalModel({
+    appData: appDataMock,
+    scope: 'player',
+    key: purdyFirstRow.leaderboardKey,
+    playerId: purdy.id
+  });
+  assert.ok(playerModal && playerModal.rows.length >= 20);
+  assert.equal(playerModal.rows.find(r => r.isHighlighted)?.title, 'Brock Purdy');
+
+  // 5. Position classification & Position-Specific Career Table Columns (zero blank offensive columns on defenders!)
+  assert.equal(normalizePositionalPeerGroup('OLB', { pff_position: 'ED' }), 'EDGE');
+  assert.equal(normalizePositionalPeerGroup('OLB', { pff_position: 'LB' }), 'LB');
+  assert.equal(normalizePositionalPeerGroup('OT', null), 'OT');
+  assert.equal(normalizePositionalPeerGroup('C', null), 'IOL');
+
+  const defCareer = resolveCareerTableSchema('DE');
+  assert.ok(defCareer.headers.includes('Sacks') && defCareer.headers.includes('TFL'));
+  assert.ok(
+    !defCareer.headers.some(h => /Pass|Rush|Rec/i.test(h)),
+    `Defensive career schema must not contain offensive columns: ${JSON.stringify(defCareer.headers)}`
+  );
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
