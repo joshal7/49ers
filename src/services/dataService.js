@@ -252,7 +252,8 @@ export const FLAGSHIP_PODCAST_SHOWS_CLIENT = [
 ];
 
 export const DEFAULT_USER_PREFS = {
-  theme: 'dark', // 'dark' = Levi's Night Game | 'light' = '94 Throwback White & Gold
+  theme: 'light', // 'light' = '94 Throwback White & Gold (Default) | 'dark' = Levi's Night Game
+  themeDefaultVersion: 2,
   dashboardOrder: [],
   dashboardOrderVersion: 2,
   disabledReporterIds: [],
@@ -288,9 +289,12 @@ export function loadUserPrefs() {
       return structuredCloneFallback(DEFAULT_USER_PREFS);
     }
     const orderIsV2 = parsed.dashboardOrderVersion === 2;
+    const themeIsV2 = parsed.themeDefaultVersion === 2;
     return {
       ...structuredCloneFallback(DEFAULT_USER_PREFS),
       ...parsed,
+      theme: themeIsV2 && (parsed.theme === 'dark' || parsed.theme === 'light') ? parsed.theme : 'light',
+      themeDefaultVersion: 2,
       dashboardOrderVersion: 2,
       dashboardOrder: orderIsV2 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
       disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],

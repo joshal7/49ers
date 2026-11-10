@@ -2228,16 +2228,23 @@ async function main() {
       await cdp.eval(() => document.getElementById('openSettingsBtn').click());
       await cdp.assertNoOverflow('Settings Bottom Sheet');
 
-      // Switch to Light Theme ('94 Throwback White & Gold)
-      const lightAttr = await cdp.eval(() => {
+      // Switch from default Light Theme ('94 Throwback) to Dark Theme (Levi's Night Game)
+      const toggledThemeAttr = await cdp.eval(() => {
+        const initialTheme = document.documentElement.getAttribute('data-theme');
         document.querySelector('[data-action="toggle-theme"]').click();
         return {
+          initialTheme,
           theme: document.documentElement.getAttribute('data-theme'),
           metaColor: document.getElementById('metaThemeColor')?.getAttribute('content')
         };
       });
-      assert(lightAttr.theme === 'light' && lightAttr.metaColor === '#F7F5F0', 'Light theme toggle failed');
-      await cdp.assertNoOverflow('Settings Sheet in Light Theme');
+      assert(
+        toggledThemeAttr.initialTheme === 'light' &&
+          toggledThemeAttr.theme === 'dark' &&
+          toggledThemeAttr.metaColor === '#0B0D10',
+        `Theme toggle failed: ${JSON.stringify(toggledThemeAttr)}`
+      );
+      await cdp.assertNoOverflow('Settings Sheet in Toggled Theme');
 
       // Mute an outlet & search/mute a reporter while verifying input focus stays in search box
       const filterState = await cdp.eval(() => {
