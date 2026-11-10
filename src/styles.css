@@ -4511,8 +4511,23 @@ tr.unit-overall-banner.overall-stat-row td {
   margin-bottom: 4px;
 }
 
+.player-snaps-banner {
+  background: rgba(179, 153, 93, 0.085) !important;
+  border-color: rgba(179, 153, 93, 0.28) !important;
+}
+
+[data-theme="light"] .player-snaps-banner {
+  background: rgba(179, 153, 93, 0.115) !important;
+  border-color: rgba(140, 112, 52, 0.25) !important;
+}
+
 .player-stat-section {
-  margin-top: 10px;
+  margin-top: 8px;
+  padding: 11px 12px;
+}
+
+.player-stat-section .card-title {
+  font-size: 14px;
 }
 
 /* Clickable #X Rank Leaderboard Modal Overlay (z-index: 125 — above Bottom Sheet, below Jargon Popover) */

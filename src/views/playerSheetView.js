@@ -326,9 +326,9 @@ function renderStatsTab(p, statsMode) {
 
   const modeToggle = `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-      <div style="display:flex;gap:6px">
-        <button type="button" class="pill-btn ${statsMode === '2026' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="2026">2026 Season</button>
-        <button type="button" class="pill-btn ${statsMode === 'career' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="career">Career Year-by-Year (${seasons.length})</button>
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Player Stat View Mode" style="flex:1 1 240px;margin:0">
+        <button type="button" role="tab" aria-selected="${statsMode === '2026' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === '2026' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="2026"><span>2026 Season</span></button>
+        <button type="button" role="tab" aria-selected="${statsMode === 'career' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === 'career' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="career"><span>Career Year-by-Year (${seasons.length})</span></button>
       </div>
       <div class="source-link-strip">
         ${p.pfrUrl ? `<a href="${esc(p.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Stats</span>${iconSvg('externalLink', 10)}</a>` : ''}
@@ -347,40 +347,49 @@ function renderStatsTab(p, statsMode) {
     const schema = resolveCareerTableSchema(p.position);
     return `
       ${modeToggle}
-      <div class="sub-label" style="margin-top:4px">${esc(p.position)} Career Year-by-Year Ledger (${seasons[seasons.length - 1].season}–${seasons[0].season})</div>
-      <div class="table-scroll">
-        <table class="data-table mono" data-career-pos-table="${esc(p.position)}">
-          <thead>
-            <tr>
-              ${schema.headers.map(h => `<th>${esc(h)}</th>`).join('')}
-            </tr>
-          </thead>
-          <tbody>
-            ${seasons
-              .map(s => {
-                const cells = schema.cells(s);
-                return `
-                  <tr>
-                    ${cells
-                      .map((cell, idx) =>
-                        idx === 0
-                          ? `<td>${cell}</td>`
-                          : `<td>${esc(String(cell))}</td>`
-                      )
-                      .join('')}
-                  </tr>
-                `;
-              })
-              .join('')}
-          </tbody>
-        </table>
-      </div>
+      <section class="card team-stats-card player-stat-section">
+        <div class="card-header team-stats-header">
+          <div class="card-header-left">
+            <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('calendar', 15)}</div>
+            <div class="card-title-group">
+              <h3 class="card-title">${esc(p.position)} Career Year-by-Year Ledger (${seasons[seasons.length - 1].season}–${seasons[0].season})</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table team-stats-table mono" data-career-pos-table="${esc(p.position)}">
+            <thead>
+              <tr>
+                ${schema.headers.map((h, idx) => `<th class="${idx >= 2 ? 'num-col' : ''}">${esc(h)}</th>`).join('')}
+              </tr>
+            </thead>
+            <tbody>
+              ${seasons
+                .map(s => {
+                  const cells = schema.cells(s);
+                  return `
+                    <tr>
+                      ${cells
+                        .map((cell, idx) =>
+                          idx === 0
+                            ? `<td>${cell}</td>`
+                            : `<td class="${idx >= 2 ? 'num-col' : ''}">${esc(String(cell))}</td>`
+                        )
+                        .join('')}
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      </section>
     `;
   }
 
   // 2026 Season Mode — Position-Tailored Single-Stat Rows + Clickable #X Positional Leaderboards
   const snapBannerHtml = `
-    <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
+    <div class="subcard-panel player-snaps-banner" style="font-size:12px;color:var(--text-secondary)">
       <strong style="color:var(--text-primary)">2026 Snaps Logged:</strong>
       Offense <span class="mono">${p.snapSummary?.offenseSnaps || 0} (${p.snapSummary?.offenseSnapPct || 0}%)</span> •
       Defense <span class="mono">${p.snapSummary?.defenseSnaps || 0} (${p.snapSummary?.defenseSnapPct || 0}%)</span> •
@@ -410,19 +419,23 @@ function renderStatsTab(p, statsMode) {
     .map(sec => {
       const expRows = sec.expandedRows || [];
       return `
-        <div class="player-stat-section" data-player-stat-section="${esc(sec.id)}">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px">
-            <div class="sub-label">${esc(sec.title)}</div>
-            <span class="mono" style="font-size:10.5px;color:var(--text-muted)">Tap #Rank vs. NFL ${esc(sec.peerGroupLabel || p.position)}</span>
+        <section class="card team-stats-card player-stat-section" data-player-stat-section="${esc(sec.id)}">
+          <div class="card-header team-stats-header">
+            <div class="card-header-left">
+              <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('season', 15)}</div>
+              <div class="card-title-group">
+                <h3 class="card-title">${esc(sec.title)}</h3>
+              </div>
+            </div>
           </div>
           <div class="table-scroll">
             <table class="data-table team-stats-table player-stats-table">
               <thead>
                 <tr>
-                  <th>Stat</th>
+                  <th>Metric</th>
                   <th class="mono num-col">${esc(p.shortName || 'Player')}</th>
                   <th class="mono rank-col">Rank</th>
-                  <th class="mono num-col">Pos Avg</th>
+                  <th class="mono num-col">NFL Avg</th>
                 </tr>
               </thead>
               <tbody>
@@ -435,7 +448,7 @@ function renderStatsTab(p, statsMode) {
               ? `
             <details class="stats-expand-details" data-player-stats-expander="${esc(sec.id)}">
               <summary class="stats-expand-summary">
-                <span>Advanced Film, NextGen &amp; PFR Metrics (${expRows.length})</span>
+                <span>Detailed ${esc(p.position)} Metrics (${expRows.length})</span>
                 <span class="mono stats-expand-hint">Expand</span>
               </summary>
               <div class="stats-expand-body">
@@ -443,10 +456,10 @@ function renderStatsTab(p, statsMode) {
                   <table class="data-table team-stats-table player-stats-table">
                     <thead>
                       <tr>
-                        <th>Stat</th>
+                        <th>Metric</th>
                         <th class="mono num-col">${esc(p.shortName || 'Player')}</th>
                         <th class="mono rank-col">Rank</th>
-                        <th class="mono num-col">Pos Avg</th>
+                        <th class="mono num-col">NFL Avg</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -459,7 +472,7 @@ function renderStatsTab(p, statsMode) {
           `
               : ''
           }
-        </div>
+        </section>
       `;
     })
     .join('');
