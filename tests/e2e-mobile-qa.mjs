@@ -3878,15 +3878,33 @@ async function main() {
         const noIdxText = !/\bidx\b/i.test(offCardText) && /\d+\.\d+%/.test(offCardText);
         const noTopEyebrow = !offCard?.querySelector('.team-stats-header .card-eyebrow');
 
-        // Verify single-line geometry & matching background on .unit-overall-banner and .stats-expand-details
+        // Verify single-line geometry, larger font than normal metrics, column alignment & matching background
         const bannerEl = offCard?.querySelector('.unit-overall-banner');
-        const headingRect = bannerEl?.querySelector('.unit-overall-heading')?.getBoundingClientRect();
-        const subRect = bannerEl?.querySelector('.unit-overall-sub')?.getBoundingClientRect();
+        const headingEl = bannerEl?.querySelector('.unit-overall-heading');
+        const valCellEl = bannerEl?.querySelector('[data-overall-col="sf-val"]');
+        const rankCellEl = bannerEl?.querySelector('[data-overall-col="sf-rank"]');
+        const avgCellEl = bannerEl?.querySelector('[data-overall-col="nfl-avg"]');
+        const overallPillEl = bannerEl?.querySelector('.overall-rank-pill');
+        const normalTdEl = offCard?.querySelector('tbody tr td:first-child');
+        const normalBadgeEl = offCard?.querySelector('tbody tr .badge');
+        const ths = Array.from(offCard?.querySelectorAll('table.team-stats-table thead th') || []);
+
+        const headingRect = headingEl?.getBoundingClientRect();
         const pillRect = bannerEl?.querySelector('.unit-overall-right')?.getBoundingClientRect();
         const singleLineBanner =
-          Boolean(headingRect && subRect && pillRect) &&
-          Math.abs(headingRect.top + headingRect.height / 2 - (pillRect.top + pillRect.height / 2)) <= 10 &&
-          Math.abs(subRect.top + subRect.height / 2 - (pillRect.top + pillRect.height / 2)) <= 10;
+          Boolean(headingRect && pillRect) &&
+          Math.abs(headingRect.top + headingRect.height / 2 - (pillRect.top + pillRect.height / 2)) <= 14;
+
+        const overallFontLargerTeam =
+          parseFloat(window.getComputedStyle(headingEl).fontSize) > parseFloat(window.getComputedStyle(normalTdEl).fontSize) &&
+          parseFloat(window.getComputedStyle(valCellEl).fontSize) > parseFloat(window.getComputedStyle(normalTdEl).fontSize) &&
+          parseFloat(window.getComputedStyle(overallPillEl).fontSize) > parseFloat(window.getComputedStyle(normalBadgeEl).fontSize);
+
+        const colsAlignedTeam =
+          ths.length >= 4 &&
+          Math.abs(valCellEl.getBoundingClientRect().right - ths[1].getBoundingClientRect().right) <= 2 &&
+          Math.abs(rankCellEl.getBoundingClientRect().left - ths[2].getBoundingClientRect().left) <= 2 &&
+          Math.abs(avgCellEl.getBoundingClientRect().right - ths[3].getBoundingClientRect().right) <= 2;
 
         // Expand Offense & Defense detailed metrics drawers
         const offExp = document.querySelector('details[data-stats-expander="offense"]');
@@ -3917,9 +3935,26 @@ async function main() {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
         await sleep(30);
         const h2hCard = document.getElementById('matchupTeamStatsCard');
-        const h2hHeaders = Array.from(h2hCard?.querySelectorAll('table.matchup-stats-table thead th') || [])
-          .slice(0, 5)
-          .map(th => th.textContent.trim());
+        const h2hThs = Array.from(h2hCard?.querySelectorAll('table.matchup-stats-table thead th') || []).slice(0, 5);
+        const h2hHeaders = h2hThs.map(th => th.textContent.trim());
+        const h2hSfVal = h2hCard?.querySelector('[data-overall-col="sf-val"]');
+        const h2hSfRank = h2hCard?.querySelector('[data-overall-col="sf-rank"]');
+        const h2hOppVal = h2hCard?.querySelector('[data-overall-col="opp-val"]');
+        const h2hOppRank = h2hCard?.querySelector('[data-overall-col="opp-rank"]');
+        const h2hNormalTd = h2hCard?.querySelector('tbody tr td:first-child');
+        const h2hHeading = h2hCard?.querySelector('.unit-overall-heading');
+
+        const overallFontLargerH2h =
+          Boolean(h2hHeading && h2hSfVal && h2hNormalTd) &&
+          parseFloat(window.getComputedStyle(h2hHeading).fontSize) > parseFloat(window.getComputedStyle(h2hNormalTd).fontSize) &&
+          parseFloat(window.getComputedStyle(h2hSfVal).fontSize) > parseFloat(window.getComputedStyle(h2hNormalTd).fontSize);
+
+        const colsAlignedH2h =
+          h2hThs.length === 5 &&
+          Math.abs(h2hSfVal.getBoundingClientRect().right - h2hThs[1].getBoundingClientRect().right) <= 2 &&
+          Math.abs(h2hSfRank.getBoundingClientRect().left - h2hThs[2].getBoundingClientRect().left) <= 2 &&
+          Math.abs(h2hOppVal.getBoundingClientRect().right - h2hThs[3].getBoundingClientRect().right) <= 2 &&
+          Math.abs(h2hOppRank.getBoundingClientRect().left - h2hThs[4].getBoundingClientRect().left) <= 2;
         // Switch H2H unit pill to Defense, then click Opponent's #X rank badge
         h2hCard?.querySelector('[data-action="set-matchup-stats-unit"][data-unit-id="defense"]')?.click();
         await sleep(30);
@@ -3978,6 +4013,10 @@ async function main() {
           noIdxText,
           noTopEyebrow,
           singleLineBanner,
+          overallFontLargerTeam,
+          colsAlignedTeam,
+          overallFontLargerH2h,
+          colsAlignedH2h,
           matchingTransparentBg,
           expandersOpened,
           teamModalOpen,
@@ -4004,8 +4043,12 @@ async function main() {
           deepStatsAudit.noIdxText &&
           deepStatsAudit.noTopEyebrow &&
           deepStatsAudit.singleLineBanner &&
+          deepStatsAudit.overallFontLargerTeam &&
+          deepStatsAudit.colsAlignedTeam &&
+          deepStatsAudit.overallFontLargerH2h &&
+          deepStatsAudit.colsAlignedH2h &&
           deepStatsAudit.matchingTransparentBg,
-        `Overall Rank single-line / % / Composite Score link / background check failed: ${JSON.stringify(deepStatsAudit)}`
+        `Overall Rank single-line / larger font / column alignment / % / Composite Score link check failed: ${JSON.stringify(deepStatsAudit)}`
       );
       assert(deepStatsAudit.expandersOpened, 'Team Stats Offense & Defense detailed expanders failed to open');
       assert(

@@ -353,26 +353,25 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
           .join('')}
       </div>
 
-      <div class="unit-overall-banner matchup-h2h-banner" data-overall-unit="${esc(activeUnit.id)}">
-        <div class="unit-overall-inline">
-          <span class="unit-overall-heading">${esc(activeUnit.overall?.label || `Overall ${activeUnit.shortLabel} Rank`)}</span>
-          <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', activeUnit.jargonKey)}</span>
-        </div>
-        <div class="matchup-overall-scores">
-          <span class="matchup-overall-team">
-            <span class="mono unit-overall-sub">49ers ${esc(sfOverallDisp)}</span>
-            ${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
-          </span>
-          <span class="matchup-overall-team">
-            <span class="mono unit-overall-sub">${esc(oppShortName)} ${esc(oppOverallDisp)}</span>
-            ${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
-          </span>
-        </div>
-      </div>
-
       <div class="table-scroll">
         <table class="data-table team-stats-table matchup-stats-table">
           <thead>
+            <tr class="unit-overall-banner overall-stat-row matchup-h2h-banner" data-overall-unit="${esc(activeUnit.id)}">
+              <td>
+                <div class="unit-overall-inline">
+                  <span class="unit-overall-heading">${esc(activeUnit.overall?.label || `Overall ${activeUnit.shortLabel} Rank`)}</span>
+                  <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', activeUnit.jargonKey)}</span>
+                </div>
+              </td>
+              <td class="mono num-col overall-val-cell" data-overall-col="sf-val"><strong>${esc(sfOverallDisp)}</strong></td>
+              <td class="rank-col overall-rank-cell" data-overall-col="sf-rank">
+                <div class="unit-overall-right">${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}</div>
+              </td>
+              <td class="mono num-col overall-val-cell" data-overall-col="opp-val"><strong>${esc(oppOverallDisp)}</strong></td>
+              <td class="rank-col overall-rank-cell" data-overall-col="opp-rank">
+                <div class="unit-overall-right">${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}</div>
+              </td>
+            </tr>
             <tr>
               <th>Metric</th>
               <th class="mono num-col">49ers</th>
@@ -1047,19 +1046,22 @@ function renderTeamStatsAndPower(appData) {
             </div>
           </div>
 
-          <div class="unit-overall-banner" data-overall-unit="${esc(u.id)}">
-            <div class="unit-overall-inline">
-              <span class="unit-overall-heading">${esc(u.overall?.label || 'Overall Unit Rank')}</span>
-              <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', u.jargonKey)} ${esc(overallDisp)} (NFL Avg ${esc(overallAvgDisp)})</span>
-            </div>
-            <div class="unit-overall-right">
-              ${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: false, large: true })}
-            </div>
-          </div>
-
           <div class="table-scroll">
             <table class="data-table team-stats-table">
               <thead>
+                <tr class="unit-overall-banner overall-stat-row" data-overall-unit="${esc(u.id)}">
+                  <td>
+                    <div class="unit-overall-inline">
+                      <span class="unit-overall-heading">${esc(u.overall?.label || 'Overall Unit Rank')}</span>
+                      <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', u.jargonKey)}</span>
+                    </div>
+                  </td>
+                  <td class="mono num-col overall-val-cell" data-overall-col="sf-val"><strong>${esc(overallDisp)}</strong></td>
+                  <td class="rank-col overall-rank-cell" data-overall-col="sf-rank">
+                    <div class="unit-overall-right">${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: true, large: true })}</div>
+                  </td>
+                  <td class="mono num-col overall-val-cell overall-avg-cell" data-overall-col="nfl-avg">${esc(overallAvgDisp)}</td>
+                </tr>
                 <tr>
                   <th>Metric</th>
                   <th class="mono num-col">49ers</th>

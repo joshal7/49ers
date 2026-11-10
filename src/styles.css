@@ -4287,74 +4287,58 @@ button.gameday-active-pill:hover {
    4-Unit Team Stats, Matchup H2H Stats, Player Stat Rows & #X Rank Modal
    ========================================================================== */
 
-.unit-overall-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  padding: 6px 8px;
-  margin-bottom: 7px;
-  border-radius: var(--radius-sm);
+tr.unit-overall-banner.overall-stat-row {
   background: transparent;
-  border: 1px solid var(--border-subtle);
-  flex-wrap: nowrap;
+}
+
+tr.unit-overall-banner.overall-stat-row td {
+  background: transparent !important;
+  padding: 10px 8px !important;
+  border-bottom: 1px solid var(--border-strong);
+  vertical-align: middle;
 }
 
 .unit-overall-inline {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  flex-wrap: wrap;
 }
 
 .unit-overall-heading {
-  font-size: 12.2px;
+  font-size: 14.8px;
   font-weight: 800;
   color: var(--text-primary);
-  flex-shrink: 0;
+  letter-spacing: -0.01em;
 }
 
 .unit-overall-sub {
-  font-size: 10.4px;
+  font-size: 12px;
   color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .overall-how-wrap .jargon-term {
-  font-size: inherit;
+  font-size: 12px;
   font-weight: 700;
   color: var(--gold-bright);
 }
 
+.overall-val-cell {
+  font-size: 14.8px !important;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.overall-avg-cell {
+  color: var(--text-muted) !important;
+  font-weight: 700;
+}
+
 .unit-overall-right {
-  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-}
-
-.matchup-h2h-banner {
-  justify-content: space-between;
-  gap: 6px;
-}
-
-.matchup-overall-scores {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.matchup-overall-team {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
+  justify-content: center;
 }
 
 .rank-badge-trigger {
@@ -4390,9 +4374,9 @@ button.gameday-active-pill:hover {
 }
 
 .rank-badge-trigger .overall-rank-pill {
-  font-size: 13px;
+  font-size: 13.8px !important;
   font-weight: 800;
-  padding: 2.5px 8px;
+  padding: 3.5px 9.5px !important;
   letter-spacing: -0.02em;
 }
 
@@ -4406,21 +4390,38 @@ button.gameday-active-pill:hover {
   .rank-badge-trigger .mini-meter-track {
     display: none;
   }
-  .unit-overall-banner {
-    padding: 5px 6.5px;
-    gap: 4px;
+  tr.unit-overall-banner.overall-stat-row td {
+    padding: 7.5px 5.5px !important;
   }
   .unit-overall-inline {
     gap: 5px;
   }
   .unit-overall-heading {
-    font-size: 11.2px;
+    font-size: 13px;
   }
-  .unit-overall-sub {
-    font-size: 9.6px;
+  .unit-overall-sub,
+  .overall-how-wrap .jargon-term {
+    font-size: 11px;
   }
-  .matchup-overall-scores {
-    gap: 5px;
+  .overall-val-cell {
+    font-size: 13px !important;
+  }
+  .rank-badge-trigger .overall-rank-pill {
+    font-size: 12.4px !important;
+    padding: 2.5px 7.5px !important;
+  }
+  .matchup-stats-table tr.unit-overall-banner.overall-stat-row td {
+    padding: 7px 4px !important;
+  }
+  .matchup-stats-table .unit-overall-heading {
+    font-size: 12.2px;
+  }
+  .matchup-stats-table .unit-overall-sub,
+  .matchup-stats-table .overall-how-wrap .jargon-term {
+    font-size: 10.5px;
+  }
+  .matchup-stats-table .overall-val-cell {
+    font-size: 12.2px !important;
   }
   .team-stats-table td:first-child {
     min-width: 0;
@@ -4435,10 +4436,6 @@ button.gameday-active-pill:hover {
   }
   .matchup-stats-table td:first-child {
     min-width: 84px;
-  }
-  .rank-badge-trigger .overall-rank-pill {
-    font-size: 11.5px;
-    padding: 2px 6.5px;
   }
 }
 
