@@ -4288,14 +4288,19 @@ button.gameday-active-pill:hover {
    ========================================================================== */
 
 tr.unit-overall-banner.overall-stat-row {
-  background: transparent;
+  background: rgba(179, 153, 93, 0.065);
 }
 
 tr.unit-overall-banner.overall-stat-row td {
-  background: transparent !important;
+  background: rgba(179, 153, 93, 0.065) !important;
   padding: 10px 8px !important;
   border-bottom: 1px solid var(--border-strong);
   vertical-align: middle;
+}
+
+[data-theme="light"] tr.unit-overall-banner.overall-stat-row,
+[data-theme="light"] tr.unit-overall-banner.overall-stat-row td {
+  background: rgba(179, 153, 93, 0.09) !important;
 }
 
 .unit-overall-inline {

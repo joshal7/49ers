@@ -356,6 +356,13 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
       <div class="table-scroll">
         <table class="data-table team-stats-table matchup-stats-table">
           <thead>
+            <tr>
+              <th>Metric</th>
+              <th class="mono num-col">49ers</th>
+              <th class="mono rank-col">Rank</th>
+              <th class="mono num-col">${esc(oppShortName)}</th>
+              <th class="mono rank-col">Rank</th>
+            </tr>
             <tr class="unit-overall-banner overall-stat-row matchup-h2h-banner" data-overall-unit="${esc(activeUnit.id)}">
               <td>
                 <div class="unit-overall-inline">
@@ -371,13 +378,6 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
               <td class="rank-col overall-rank-cell" data-overall-col="opp-rank">
                 <div class="unit-overall-right">${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}</div>
               </td>
-            </tr>
-            <tr>
-              <th>Metric</th>
-              <th class="mono num-col">49ers</th>
-              <th class="mono rank-col">Rank</th>
-              <th class="mono num-col">${esc(oppShortName)}</th>
-              <th class="mono rank-col">Rank</th>
             </tr>
           </thead>
           <tbody>
@@ -1049,6 +1049,12 @@ function renderTeamStatsAndPower(appData) {
           <div class="table-scroll">
             <table class="data-table team-stats-table">
               <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th class="mono num-col">49ers</th>
+                  <th class="mono rank-col">Rank</th>
+                  <th class="mono num-col">NFL Avg</th>
+                </tr>
                 <tr class="unit-overall-banner overall-stat-row" data-overall-unit="${esc(u.id)}">
                   <td>
                     <div class="unit-overall-inline">
@@ -1061,12 +1067,6 @@ function renderTeamStatsAndPower(appData) {
                     <div class="unit-overall-right">${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: true, large: true })}</div>
                   </td>
                   <td class="mono num-col overall-val-cell overall-avg-cell" data-overall-col="nfl-avg">${esc(overallAvgDisp)}</td>
-                </tr>
-                <tr>
-                  <th>Metric</th>
-                  <th class="mono num-col">49ers</th>
-                  <th class="mono rank-col">Rank</th>
-                  <th class="mono num-col">NFL Avg</th>
                 </tr>
               </thead>
               <tbody>

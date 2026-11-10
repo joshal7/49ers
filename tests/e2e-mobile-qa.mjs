@@ -3906,13 +3906,19 @@ async function main() {
           Math.abs(rankCellEl.getBoundingClientRect().left - ths[2].getBoundingClientRect().left) <= 2 &&
           Math.abs(avgCellEl.getBoundingClientRect().right - ths[3].getBoundingClientRect().right) <= 2;
 
-        // Expand Offense & Defense detailed metrics drawers
+        // Expand Offense & Defense detailed metrics drawers & verify Metric header sits ABOVE Overall Rank row + subtle tint on Overall Rank row
         const offExp = document.querySelector('details[data-stats-expander="offense"]');
         const defExp = document.querySelector('details[data-stats-expander="defense"]');
-        const bannerBg = bannerEl ? window.getComputedStyle(bannerEl).backgroundColor : '';
+        const bannerTdBg = valCellEl ? window.getComputedStyle(valCellEl).backgroundColor : '';
+        const normalTdBg = normalTdEl ? window.getComputedStyle(normalTdEl).backgroundColor : '';
         const expBg = offExp ? window.getComputedStyle(offExp).backgroundColor : '';
+        const headerAboveOverall =
+          Boolean(ths[0] && bannerEl) &&
+          ths[0].getBoundingClientRect().bottom <= bannerEl.getBoundingClientRect().top + 2;
         const matchingTransparentBg =
-          (bannerBg === 'rgba(0, 0, 0, 0)' || bannerBg === 'transparent') &&
+          headerAboveOverall &&
+          bannerTdBg !== normalTdBg &&
+          bannerTdBg !== 'rgba(0, 0, 0, 0)' &&
           (expBg === 'rgba(0, 0, 0, 0)' || expBg === 'transparent');
         offExp?.querySelector('summary')?.click();
         defExp?.querySelector('summary')?.click();
