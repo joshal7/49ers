@@ -1264,6 +1264,26 @@ test('4-Unit Team Stats, Overall Composite Rank Jargon Tooltips, Positional Lead
   assert.ok(purdy?.statProfile2026?.sections?.length >= 2, 'Purdy must have Passing + Rushing sections');
   assert.ok(cmc?.statProfile2026?.sections?.length >= 2, 'CMC must have Rushing + RB Receiving sections');
 
+  const purdyCoreKeys = purdy.statProfile2026.sections[0].coreRows.map(r => r.key);
+  const purdyExpKeys = purdy.statProfile2026.sections[0].expandedRows.map(r => r.key);
+  assert.deepEqual(
+    purdyCoreKeys,
+    [
+      'pass_yds_game',
+      'pass_tds',
+      'pass_ints',
+      'comp_pct',
+      'pass_cpoe',
+      'passer_rating',
+      'qbr_total',
+      'pass_epa_total'
+    ],
+    `QB core metric order must place Completion % in standard metrics and Total QBR directly next to Passer Rating: ${JSON.stringify(purdyCoreKeys)}`
+  );
+  assert.ok(
+    purdyExpKeys.includes('pass_ny_att'),
+    `Net Yards / Dropback must be in Detailed (expanded) QB metrics: ${JSON.stringify(purdyExpKeys)}`
+  );
   const purdyQbrRow = purdy.statProfile2026.sections[0].coreRows.find(r => r.key === 'qbr_total');
   assert.ok(purdyQbrRow && purdyQbrRow.value > 50, `Purdy must have Total QBR core metric populated, got ${JSON.stringify(purdyQbrRow)}`);
   assert.ok(getJargonEntry('qbr')?.definition.includes('0–100'), 'QBR jargon definition must be registered');

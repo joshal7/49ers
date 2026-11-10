@@ -21,7 +21,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=36';
+} from './services/dataService.js?v=37';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -50,21 +50,21 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=36';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=36';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=36';
-import { iconSvg } from './views/icons.js?v=36';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=36';
+} from './views/uiHelpers.js?v=37';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=37';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=37';
+import { iconSvg } from './views/icons.js?v=37';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=37';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=36';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=36';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=36';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=36';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=36';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=36';
+} from './views/newsView.js?v=37';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=37';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=37';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=37';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=37';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=37';
 
 const state = {
   appData: null,
@@ -2368,7 +2368,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=41', { updateViaCache: 'none' })
+        .register('./sw.js?v=42', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

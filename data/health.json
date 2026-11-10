@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T22:35:11.144Z",
+  "updatedAt": "2026-11-10T22:53:36.482Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -309,11 +309,11 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
-      "placedBeforeWeek": 9,
+      "placedBeforeWeek": 10,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-      "beatNote": "Halton sustained a broken left ankle in the fourth quarter, and he is now set to miss the rest of the 2026 campaign. With Halton unavailable, Osa Odighizuwa and DeForest Buckner will operate as San Francisco's primary options at defensive tackle moving forward."
+      "beatNote": "ir"
     },
     {
       "playerId": "4259147",

@@ -1614,21 +1614,21 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'pass_yds_game', label: 'Passing Yards / Game', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1, ' yds'), extract: u => (u.games > 0 ? u.passYds / u.games : null) },
       { key: 'pass_tds', label: 'Passing Touchdowns', higherIsBetter: true, qual: 'any_pass', format: v => String(Math.round(v)), extract: u => u.passTds },
       { key: 'pass_ints', label: 'Interceptions Thrown', higherIsBetter: false, qual: 'qb_att', format: v => String(Math.round(v)), extract: u => u.passInts },
-      { key: 'pass_epa_total', label: 'Passing EPA', higherIsBetter: true, qual: 'any_pass', format: v => fmtSigned(v, 1), extract: u => u.passEpa },
-      { key: 'qbr_total', label: 'Total QBR', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1), extract: u => u.qbrTotal },
+      { key: 'comp_pct', label: 'Completion %', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => (u.passAtt > 0 ? (u.passComp / u.passAtt) * 100 : null) },
       { key: 'pass_cpoe', label: 'CPOE (Comp % Over Expected)', higherIsBetter: true, qual: 'qb_att', format: v => fmtSigned(v, 2, '%'), extract: u => u.passCpoe },
-      { key: 'pass_ny_att', label: 'Net Yards / Dropback', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.passAtt + u.sacksTaken > 0 ? Math.max(0, u.passYds - u.sackYdsLostAbs) / (u.passAtt + u.sacksTaken) : null) },
-      { key: 'passer_rating', label: 'Passer Rating', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1), extract: u => u.passerRating }
+      { key: 'passer_rating', label: 'Passer Rating', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1), extract: u => u.passerRating },
+      { key: 'qbr_total', label: 'Total QBR', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1), extract: u => u.qbrTotal },
+      { key: 'pass_epa_total', label: 'Passing EPA', higherIsBetter: true, qual: 'any_pass', format: v => fmtSigned(v, 1), extract: u => u.passEpa }
     ],
     expanded: [
-      { key: 'comp_pct', label: 'Completion %', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => (u.passAtt > 0 ? (u.passComp / u.passAtt) * 100 : null) },
-      { key: 'pass_yds_total', label: 'Total Passing Yards', higherIsBetter: true, qual: 'any_pass', format: v => String(Math.round(v)), extract: u => u.passYds },
-      { key: 'sack_rate', label: 'Sack Rate Taken', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => (u.passAtt + u.sacksTaken > 0 ? (u.sacksTaken / (u.passAtt + u.sacksTaken)) * 100 : null) },
-      { key: 'ngs_time_to_throw', label: 'Avg Time to Throw (NGS)', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 2, 's'), extract: u => u.ngsTimeToThrow },
-      { key: 'ngs_iay', label: 'Avg Intended Air Yards (aDOT)', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.ngsIay },
-      { key: 'ngs_aggr', label: 'Tight-Window Aggressiveness %', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => u.ngsAggr },
-      { key: 'pfr_bad_throw_pct', label: 'Bad Throw % (PFR)', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrBadThrowPct },
-      { key: 'pfr_pressure_pct', label: 'Pressure % Faced (PFR)', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrPressurePct }
+      { key: 'pass_yds_total', label: 'Total Passing Yards', group: 'Volume & Dropback Efficiency', higherIsBetter: true, qual: 'any_pass', format: v => String(Math.round(v)), extract: u => u.passYds },
+      { key: 'pass_ny_att', label: 'Net Yards / Dropback', group: 'Volume & Dropback Efficiency', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.passAtt + u.sacksTaken > 0 ? Math.max(0, u.passYds - u.sackYdsLostAbs) / (u.passAtt + u.sacksTaken) : null) },
+      { key: 'sack_rate', label: 'Sack Rate Taken', group: 'Volume & Dropback Efficiency', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => (u.passAtt + u.sacksTaken > 0 ? (u.sacksTaken / (u.passAtt + u.sacksTaken)) * 100 : null) },
+      { key: 'pfr_pressure_pct', label: 'Pressure % Faced (PFR)', group: 'Pocket & Pressure', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrPressurePct },
+      { key: 'ngs_time_to_throw', label: 'Avg Time to Throw (NGS)', group: 'Pocket & Pressure', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 2, 's'), extract: u => u.ngsTimeToThrow },
+      { key: 'ngs_iay', label: 'Avg Intended Air Yards (aDOT)', group: 'Downfield Throw Profile & Accuracy', higherIsBetter: true, qual: 'qb_att', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.ngsIay },
+      { key: 'ngs_aggr', label: 'Tight-Window Aggressiveness %', group: 'Downfield Throw Profile & Accuracy', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => u.ngsAggr },
+      { key: 'pfr_bad_throw_pct', label: 'Bad Throw % (PFR)', group: 'Downfield Throw Profile & Accuracy', higherIsBetter: false, qual: 'qb_att', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrBadThrowPct }
     ]
   },
 
@@ -1637,20 +1637,20 @@ export const POSITIONAL_METRIC_TEMPLATES = {
     core: [
       { key: 'rush_yds_game', label: 'Rushing Yards / Game', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 1, ' yds'), extract: u => (u.games > 0 ? u.rushYds / u.games : null) },
       { key: 'rush_yds_total', label: 'Total Rushing Yards', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.rushYds },
-      { key: 'rush_ypc', label: 'Yards / Carry', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.carries > 0 ? u.rushYds / u.carries : null) },
       { key: 'rush_tds', label: 'Rushing Touchdowns', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.rushTds },
-      { key: 'rush_epa', label: 'Rushing EPA', higherIsBetter: true, qual: 'any_rush', format: v => fmtSigned(v, 1), extract: u => u.rushEpa },
+      { key: 'rush_ypc', label: 'Yards / Carry', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.carries > 0 ? u.rushYds / u.carries : null) },
       { key: 'ngs_ryoe_att', label: 'Rush Yds Over Expected / Att (RYOE)', higherIsBetter: true, qual: 'rb_car', format: v => fmtSigned(v, 2, ' yds'), extract: u => u.ngsRyoePerAtt },
-      { key: 'rush_explosive_10', label: 'Explosive Runs (10+ Yds)', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.rush10Plus }
+      { key: 'rush_explosive_10', label: 'Explosive Runs (10+ Yds)', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.rush10Plus },
+      { key: 'rush_epa', label: 'Rushing EPA', higherIsBetter: true, qual: 'any_rush', format: v => fmtSigned(v, 1), extract: u => u.rushEpa }
     ],
     expanded: [
-      { key: 'carries', label: 'Rushing Carries', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.carries },
-      { key: 'pfr_yac_att', label: 'Yards After Contact / Carry', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.pfrRushYacPerAtt },
-      { key: 'pfr_brk_tkl', label: 'Broken Tackles Forced (Rush)', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.pfrRushBrkTkl },
-      { key: 'ngs_ryoe_total', label: 'Total RYOE (NGS)', higherIsBetter: true, qual: 'rb_car', format: v => fmtSigned(v, 1, ' yds'), extract: u => u.ngsRyoeTotal },
-      { key: 'ngs_8box_pct', label: '8+ Defenders in Box %', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 1, '%'), extract: u => u.ngsStackedBoxPct },
-      { key: 'rush_1d', label: 'Rushing 1st Downs', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.rushFirstDowns },
-      { key: 'fumbles_lost', label: 'Fumbles Lost', higherIsBetter: false, qual: 'rb_car', format: v => String(Math.round(v)), extract: u => u.fumblesLost }
+      { key: 'carries', label: 'Rushing Carries', group: 'Workload, Chains & Ball Security', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.carries },
+      { key: 'rush_1d', label: 'Rushing 1st Downs', group: 'Workload, Chains & Ball Security', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.rushFirstDowns },
+      { key: 'fumbles_lost', label: 'Fumbles Lost', group: 'Workload, Chains & Ball Security', higherIsBetter: false, qual: 'rb_car', format: v => String(Math.round(v)), extract: u => u.fumblesLost },
+      { key: 'pfr_yac_att', label: 'Yards After Contact / Carry', group: 'Contact Balance & Box Fronts', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.pfrRushYacPerAtt },
+      { key: 'pfr_brk_tkl', label: 'Broken Tackles Forced (Rush)', group: 'Contact Balance & Box Fronts', higherIsBetter: true, qual: 'any_rush', format: v => String(Math.round(v)), extract: u => u.pfrRushBrkTkl },
+      { key: 'ngs_ryoe_total', label: 'Total RYOE (NGS)', group: 'Contact Balance & Box Fronts', higherIsBetter: true, qual: 'rb_car', format: v => fmtSigned(v, 1, ' yds'), extract: u => u.ngsRyoeTotal },
+      { key: 'ngs_8box_pct', label: '8+ Defenders in Box %', group: 'Contact Balance & Box Fronts', higherIsBetter: true, qual: 'rb_car', format: v => fmtPlain(v, 1, '%'), extract: u => u.ngsStackedBoxPct }
     ]
   },
 
@@ -1658,22 +1658,22 @@ export const POSITIONAL_METRIC_TEMPLATES = {
     primaryTitle: 'Receiving & Route Efficiency',
     core: [
       { key: 'rec_yds_game', label: 'Receiving Yards / Game', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => (u.games > 0 ? u.recYds / u.games : null) },
-      { key: 'rec_total', label: 'Receptions', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.receptions },
       { key: 'rec_yds_total', label: 'Total Receiving Yards', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recYds },
+      { key: 'rec_total', label: 'Receptions', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.receptions },
       { key: 'rec_tds', label: 'Receiving Touchdowns', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recTds },
-      { key: 'rec_epa', label: 'Receiving EPA', higherIsBetter: true, qual: 'any_rec', format: v => fmtSigned(v, 1), extract: u => u.recEpa },
       { key: 'tgt_share', label: 'Target Share %', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.targetSharePct },
-      { key: 'yds_per_tgt', label: 'Yards / Target', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.targets > 0 ? u.recYds / u.targets : null) }
+      { key: 'yds_per_tgt', label: 'Yards / Target', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.targets > 0 ? u.recYds / u.targets : null) },
+      { key: 'rec_epa', label: 'Receiving EPA', higherIsBetter: true, qual: 'any_rec', format: v => fmtSigned(v, 1), extract: u => u.recEpa }
     ],
     expanded: [
-      { key: 'catch_pct', label: 'Catch %', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => (u.targets > 0 ? (u.receptions / u.targets) * 100 : null) },
-      { key: 'ngs_sep', label: 'Avg Route Separation (NGS)', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.ngsSeparation },
-      { key: 'ngs_yac_oe', label: 'YAC Above Expectation (NGS)', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtSigned(v, 2, ' yds'), extract: u => u.ngsYacAboveExp },
-      { key: 'yac_per_rec', label: 'Yards After Catch / Rec', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.receptions > 0 ? u.recYac / u.receptions : null) },
-      { key: 'wopr', label: 'WOPR (Weighted Opportunity)', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2), extract: u => u.wopr },
-      { key: 'adot', label: 'Avg Depth of Target (aDOT)', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.adot },
-      { key: 'rec_1d', label: 'Receiving 1st Downs', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recFirstDowns },
-      { key: 'pfr_drop_pct', label: 'Drop % (PFR)', higherIsBetter: false, qual: 'wr_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrDropPct }
+      { key: 'catch_pct', label: 'Catch %', group: 'Hands, Chains & Catch Reliability', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => (u.targets > 0 ? (u.receptions / u.targets) * 100 : null) },
+      { key: 'pfr_drop_pct', label: 'Drop % (PFR)', group: 'Hands, Chains & Catch Reliability', higherIsBetter: false, qual: 'wr_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrDropPct },
+      { key: 'rec_1d', label: 'Receiving 1st Downs', group: 'Hands, Chains & Catch Reliability', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recFirstDowns },
+      { key: 'adot', label: 'Avg Depth of Target (aDOT)', group: 'Route Depth, Opportunity & Separation', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.adot },
+      { key: 'wopr', label: 'WOPR (Weighted Opportunity)', group: 'Route Depth, Opportunity & Separation', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2), extract: u => u.wopr },
+      { key: 'ngs_sep', label: 'Avg Route Separation (NGS)', group: 'Route Depth, Opportunity & Separation', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.ngsSeparation },
+      { key: 'yac_per_rec', label: 'Yards After Catch / Rec', group: 'After-the-Catch Creation', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.receptions > 0 ? u.recYac / u.receptions : null) },
+      { key: 'ngs_yac_oe', label: 'YAC Above Expectation (NGS)', group: 'After-the-Catch Creation', higherIsBetter: true, qual: 'wr_tgt', format: v => fmtSigned(v, 2, ' yds'), extract: u => u.ngsYacAboveExp }
     ]
   },
 
@@ -1681,21 +1681,21 @@ export const POSITIONAL_METRIC_TEMPLATES = {
     primaryTitle: 'Tight End Receiving & Efficiency',
     core: [
       { key: 'rec_yds_game', label: 'Receiving Yards / Game', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => (u.games > 0 ? u.recYds / u.games : null) },
-      { key: 'rec_total', label: 'Receptions', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.receptions },
       { key: 'rec_yds_total', label: 'Total Receiving Yards', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recYds },
+      { key: 'rec_total', label: 'Receptions', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.receptions },
       { key: 'rec_tds', label: 'Receiving Touchdowns', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recTds },
-      { key: 'rec_epa', label: 'Receiving EPA', higherIsBetter: true, qual: 'any_rec', format: v => fmtSigned(v, 1), extract: u => u.recEpa },
       { key: 'yds_per_tgt', label: 'Yards / Target', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.targets > 0 ? u.recYds / u.targets : null) },
-      { key: 'yac_per_rec', label: 'Yards After Catch / Rec', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.receptions > 0 ? u.recYac / u.receptions : null) }
+      { key: 'yac_per_rec', label: 'Yards After Catch / Rec', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.receptions > 0 ? u.recYac / u.receptions : null) },
+      { key: 'rec_epa', label: 'Receiving EPA', higherIsBetter: true, qual: 'any_rec', format: v => fmtSigned(v, 1), extract: u => u.recEpa }
     ],
     expanded: [
-      { key: 'catch_pct', label: 'Catch %', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => (u.targets > 0 ? (u.receptions / u.targets) * 100 : null) },
-      { key: 'tgt_share', label: 'Target Share %', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.targetSharePct },
-      { key: 'ngs_sep', label: 'Avg Route Separation (NGS)', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.ngsSeparation },
-      { key: 'ngs_yac_oe', label: 'YAC Above Expectation (NGS)', higherIsBetter: true, qual: 'te_tgt', format: v => fmtSigned(v, 2, ' yds'), extract: u => u.ngsYacAboveExp },
-      { key: 'adot', label: 'Avg Depth of Target (aDOT)', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.adot },
-      { key: 'rec_1d', label: 'Receiving 1st Downs', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recFirstDowns },
-      { key: 'off_snap_pct', label: 'Offensive Snap Share %', higherIsBetter: true, qual: 'any_snap', format: v => fmtPlain(v, 1, '%'), extract: u => u.offSnapPct }
+      { key: 'catch_pct', label: 'Catch %', group: 'Hands, Chains & Snap Share', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => (u.targets > 0 ? (u.receptions / u.targets) * 100 : null) },
+      { key: 'tgt_share', label: 'Target Share %', group: 'Hands, Chains & Snap Share', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.targetSharePct },
+      { key: 'rec_1d', label: 'Receiving 1st Downs', group: 'Hands, Chains & Snap Share', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recFirstDowns },
+      { key: 'off_snap_pct', label: 'Offensive Snap Share %', group: 'Hands, Chains & Snap Share', higherIsBetter: true, qual: 'any_snap', format: v => fmtPlain(v, 1, '%'), extract: u => u.offSnapPct },
+      { key: 'adot', label: 'Avg Depth of Target (aDOT)', group: 'Route Profile & After-the-Catch', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.adot },
+      { key: 'ngs_sep', label: 'Avg Route Separation (NGS)', group: 'Route Profile & After-the-Catch', higherIsBetter: true, qual: 'te_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.ngsSeparation },
+      { key: 'ngs_yac_oe', label: 'YAC Above Expectation (NGS)', group: 'Route Profile & After-the-Catch', higherIsBetter: true, qual: 'te_tgt', format: v => fmtSigned(v, 2, ' yds'), extract: u => u.ngsYacAboveExp }
     ]
   },
 
@@ -1710,12 +1710,12 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'def_ff', label: 'Forced Fumbles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.forcedFumbles }
     ],
     expanded: [
-      { key: 'pfr_hurries', label: 'QB Hurries (PFR)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrHurries },
-      { key: 'pressure_per_game', label: 'Pressures / Game', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => ((u.pfrDefGames || u.games) > 0 && u.pfrPressures != null ? u.pfrPressures / (u.pfrDefGames || u.games) : null) },
-      { key: 'def_solo', label: 'Solo Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles },
-      { key: 'def_pd', label: 'Passes Defended / Bats', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
-      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
-      { key: 'def_snap_pct', label: 'Defensive Snap Share %', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
+      { key: 'pressure_per_game', label: 'Pressures / Game', group: 'Pass Rush Rate & Hurries', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => ((u.pfrDefGames || u.games) > 0 && u.pfrPressures != null ? u.pfrPressures / (u.pfrDefGames || u.games) : null) },
+      { key: 'pfr_hurries', label: 'QB Hurries (PFR)', group: 'Pass Rush Rate & Hurries', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrHurries },
+      { key: 'def_solo', label: 'Solo Tackles', group: 'Tackling Precision, Disruption & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles },
+      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', group: 'Tackling Precision, Disruption & Snaps', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
+      { key: 'def_pd', label: 'Passes Defended / Bats', group: 'Tackling Precision, Disruption & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
+      { key: 'def_snap_pct', label: 'Defensive Snap Share %', group: 'Tackling Precision, Disruption & Snaps', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
     ]
   },
 
@@ -1730,12 +1730,12 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'def_solo', label: 'Solo Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles }
     ],
     expanded: [
-      { key: 'pfr_hurries', label: 'QB Hurries (PFR)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrHurries },
-      { key: 'pressure_per_game', label: 'Pressures / Game', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => ((u.pfrDefGames || u.games) > 0 && u.pfrPressures != null ? u.pfrPressures / (u.pfrDefGames || u.games) : null) },
-      { key: 'def_ff', label: 'Forced Fumbles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.forcedFumbles },
-      { key: 'def_pd', label: 'Batted Passes / PD', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
-      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
-      { key: 'def_snap_pct', label: 'Defensive Snap Share %', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
+      { key: 'pressure_per_game', label: 'Pressures / Game', group: 'Pass Rush Rate & Hurries', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => ((u.pfrDefGames || u.games) > 0 && u.pfrPressures != null ? u.pfrPressures / (u.pfrDefGames || u.games) : null) },
+      { key: 'pfr_hurries', label: 'QB Hurries (PFR)', group: 'Pass Rush Rate & Hurries', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrHurries },
+      { key: 'def_ff', label: 'Forced Fumbles', group: 'Havoc, Tackling Precision & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.forcedFumbles },
+      { key: 'def_pd', label: 'Batted Passes / PD', group: 'Havoc, Tackling Precision & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
+      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', group: 'Havoc, Tackling Precision & Snaps', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
+      { key: 'def_snap_pct', label: 'Defensive Snap Share %', group: 'Havoc, Tackling Precision & Snaps', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
     ]
   },
 
@@ -1745,18 +1745,18 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'def_tackles_total', label: 'Total Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.totalTackles },
       { key: 'def_solo', label: 'Solo Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles },
       { key: 'def_tfl', label: 'Tackles For Loss (TFL)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.tfl },
+      { key: 'def_sacks', label: 'Sacks', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1), extract: u => u.sacks },
       { key: 'pfr_rat_allowed', label: 'Passer Rating Allowed', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 1), extract: u => u.pfrRatingAllowed },
       { key: 'def_pd', label: 'Passes Defended', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
-      { key: 'def_ints', label: 'Interceptions', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.ints },
-      { key: 'def_sacks', label: 'Sacks', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1), extract: u => u.sacks }
+      { key: 'def_ints', label: 'Interceptions', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.ints }
     ],
     expanded: [
-      { key: 'pfr_cmp_pct_allowed', label: 'Completion % Allowed', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrCmpPctAllowed },
-      { key: 'pfr_yds_tgt_allowed', label: 'Yards / Target Allowed', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.pfrYdsPerTgtAllowed },
-      { key: 'pfr_pressures', label: 'Blitz Pressures (PFR)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrPressures },
-      { key: 'def_ff', label: 'Forced Fumbles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.forcedFumbles },
-      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
-      { key: 'def_snap_pct', label: 'Defensive Snap Share %', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
+      { key: 'pfr_cmp_pct_allowed', label: 'Completion % Allowed', group: 'Zone & Man Coverage Efficiency', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrCmpPctAllowed },
+      { key: 'pfr_yds_tgt_allowed', label: 'Yards / Target Allowed', group: 'Zone & Man Coverage Efficiency', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.pfrYdsPerTgtAllowed },
+      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', group: 'Tackling Reliability, Blitz & Snaps', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
+      { key: 'def_ff', label: 'Forced Fumbles', group: 'Tackling Reliability, Blitz & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.forcedFumbles },
+      { key: 'pfr_pressures', label: 'Blitz Pressures (PFR)', group: 'Tackling Reliability, Blitz & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrPressures },
+      { key: 'def_snap_pct', label: 'Defensive Snap Share %', group: 'Tackling Reliability, Blitz & Snaps', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
     ]
   },
 
@@ -1771,12 +1771,12 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'def_tackles_total', label: 'Total Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.totalTackles }
     ],
     expanded: [
-      { key: 'pfr_tgts_allowed', label: 'Targets Faced in Coverage', higherIsBetter: false, qual: 'cov_tgt', format: v => String(Math.round(v)), extract: u => u.pfrTargetsAllowed },
-      { key: 'pfr_dadot', label: 'Avg Depth of Target (dADOT)', higherIsBetter: true, qual: 'cov_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.pfrDadot },
-      { key: 'def_solo', label: 'Solo Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles },
-      { key: 'def_tfl', label: 'Tackles For Loss (TFL)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.tfl },
-      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
-      { key: 'def_snap_pct', label: 'Defensive Snap Share %', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
+      { key: 'pfr_tgts_allowed', label: 'Targets Faced in Coverage', group: 'Coverage Target Profile', higherIsBetter: false, qual: 'cov_tgt', format: v => String(Math.round(v)), extract: u => u.pfrTargetsAllowed },
+      { key: 'pfr_dadot', label: 'Avg Depth of Target (dADOT)', group: 'Coverage Target Profile', higherIsBetter: true, qual: 'cov_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.pfrDadot },
+      { key: 'def_solo', label: 'Solo Tackles', group: 'Run Support, Tackling & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles },
+      { key: 'def_tfl', label: 'Tackles For Loss (TFL)', group: 'Run Support, Tackling & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.tfl },
+      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', group: 'Run Support, Tackling & Snaps', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
+      { key: 'def_snap_pct', label: 'Defensive Snap Share %', group: 'Run Support, Tackling & Snaps', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
     ]
   },
 
@@ -1791,12 +1791,12 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'def_solo', label: 'Solo Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles }
     ],
     expanded: [
-      { key: 'pfr_yds_tgt_allowed', label: 'Yards / Target Allowed', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.pfrYdsPerTgtAllowed },
-      { key: 'pfr_dadot', label: 'Avg Depth of Target (dADOT)', higherIsBetter: true, qual: 'cov_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.pfrDadot },
-      { key: 'def_tfl', label: 'Tackles For Loss (TFL)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.tfl },
-      { key: 'pfr_pressures', label: 'Box / Blitz Pressures', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrPressures },
-      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
-      { key: 'def_snap_pct', label: 'Defensive Snap Share %', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
+      { key: 'pfr_yds_tgt_allowed', label: 'Yards / Target Allowed', group: 'Coverage Target Profile', higherIsBetter: false, qual: 'cov_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => u.pfrYdsPerTgtAllowed },
+      { key: 'pfr_dadot', label: 'Avg Depth of Target (dADOT)', group: 'Coverage Target Profile', higherIsBetter: true, qual: 'cov_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => u.pfrDadot },
+      { key: 'def_tfl', label: 'Tackles For Loss (TFL)', group: 'Box Disruption, Tackling & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.tfl },
+      { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', group: 'Box Disruption, Tackling & Snaps', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
+      { key: 'pfr_pressures', label: 'Box / Blitz Pressures', group: 'Box Disruption, Tackling & Snaps', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrPressures },
+      { key: 'def_snap_pct', label: 'Defensive Snap Share %', group: 'Box Disruption, Tackling & Snaps', higherIsBetter: true, qual: 'any_def', format: v => fmtPlain(v, 1, '%'), extract: u => u.defSnapPct }
     ]
   },
 
@@ -1809,7 +1809,7 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'snap_games', label: 'Active Games Logged', higherIsBetter: true, qual: 'any_snap', format: v => String(Math.round(v)), extract: u => u.snapGames || u.games }
     ],
     expanded: [
-      { key: 'st_snaps', label: 'Special Teams Snaps', higherIsBetter: true, qual: 'any_snap', format: v => String(Math.round(v)), extract: u => u.stSnaps }
+      { key: 'st_snaps', label: 'Special Teams Snaps', group: 'Special Teams Participation', higherIsBetter: true, qual: 'any_snap', format: v => String(Math.round(v)), extract: u => u.stSnaps }
     ]
   },
 
@@ -1822,7 +1822,7 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'snap_games', label: 'Active Games Logged', higherIsBetter: true, qual: 'any_snap', format: v => String(Math.round(v)), extract: u => u.snapGames || u.games }
     ],
     expanded: [
-      { key: 'st_snaps', label: 'Special Teams Snaps', higherIsBetter: true, qual: 'any_snap', format: v => String(Math.round(v)), extract: u => u.stSnaps }
+      { key: 'st_snaps', label: 'Special Teams Snaps', group: 'Special Teams Participation', higherIsBetter: true, qual: 'any_snap', format: v => String(Math.round(v)), extract: u => u.stSnaps }
     ]
   },
 
@@ -1831,13 +1831,13 @@ export const POSITIONAL_METRIC_TEMPLATES = {
     core: [
       { key: 'fg_pct', label: 'Field Goal %', higherIsBetter: true, qual: 'k_att', format: v => fmtPlain(v, 1, '%'), extract: u => (u.fgAtt > 0 ? (u.fgMade / u.fgAtt) * 100 : null) },
       { key: 'fg_made', label: 'Field Goals Made', higherIsBetter: true, qual: 'any_kick', format: v => String(Math.round(v)), extract: u => u.fgMade },
-      { key: 'fg_long', label: 'Longest Field Goal', higherIsBetter: true, qual: 'any_kick', format: v => fmtPlain(v, 0, ' yds'), extract: u => u.fgLong },
       { key: 'fg_50_plus', label: '50+ Yard Field Goals Made', higherIsBetter: true, qual: 'any_kick', format: v => String(Math.round(v)), extract: u => u.fg50PlusMade },
+      { key: 'fg_long', label: 'Longest Field Goal', higherIsBetter: true, qual: 'any_kick', format: v => fmtPlain(v, 0, ' yds'), extract: u => u.fgLong },
       { key: 'pat_pct', label: 'Extra Point (PAT) %', higherIsBetter: true, qual: 'any_kick', format: v => fmtPlain(v, 1, '%'), extract: u => (u.patAtt > 0 ? (u.patMade / u.patAtt) * 100 : null) }
     ],
     expanded: [
-      { key: 'fg_att', label: 'Field Goal Attempts', higherIsBetter: true, qual: 'any_kick', format: v => String(Math.round(v)), extract: u => u.fgAtt },
-      { key: 'pat_made', label: 'Extra Points Made', higherIsBetter: true, qual: 'any_kick', format: v => String(Math.round(v)), extract: u => u.patMade }
+      { key: 'fg_att', label: 'Field Goal Attempts', group: 'Kicking Volume', higherIsBetter: true, qual: 'any_kick', format: v => String(Math.round(v)), extract: u => u.fgAtt },
+      { key: 'pat_made', label: 'Extra Points Made', group: 'Kicking Volume', higherIsBetter: true, qual: 'any_kick', format: v => String(Math.round(v)), extract: u => u.patMade }
     ]
   },
 
@@ -1850,8 +1850,8 @@ export const POSITIONAL_METRIC_TEMPLATES = {
       { key: 'punt_in20_pct', label: 'Inside-20 %', higherIsBetter: true, qual: 'p_att', format: v => fmtPlain(v, 1, '%'), extract: u => (u.punts > 0 ? (u.puntIn20 / u.punts) * 100 : null) }
     ],
     expanded: [
-      { key: 'punts', label: 'Total Punts', higherIsBetter: true, qual: 'any_punt', format: v => String(Math.round(v)), extract: u => u.punts },
-      { key: 'punt_long', label: 'Longest Punt', higherIsBetter: true, qual: 'any_punt', format: v => fmtPlain(v, 0, ' yds'), extract: u => u.puntLong }
+      { key: 'punts', label: 'Total Punts', group: 'Punting Volume & Distance', higherIsBetter: true, qual: 'any_punt', format: v => String(Math.round(v)), extract: u => u.punts },
+      { key: 'punt_long', label: 'Longest Punt', group: 'Punting Volume & Distance', higherIsBetter: true, qual: 'any_punt', format: v => fmtPlain(v, 0, ' yds'), extract: u => u.puntLong }
     ]
   },
 
@@ -1872,12 +1872,12 @@ export const SECONDARY_ROLE_TEMPLATES = {
     title: 'Receiving & Mismatch Role (vs. NFL RBs)',
     peerGroup: 'RB',
     metrics: [
-      { key: 'rb_rec_total', label: 'Receptions', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.receptions },
       { key: 'rb_rec_yds_game', label: 'Receiving Yards / Game', higherIsBetter: true, qual: 'rb_tgt', format: v => fmtPlain(v, 1, ' yds'), extract: u => (u.games > 0 ? u.recYds / u.games : null) },
+      { key: 'rb_rec_total', label: 'Receptions', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.receptions },
       { key: 'rb_rec_tds', label: 'Receiving Touchdowns', higherIsBetter: true, qual: 'any_rec', format: v => String(Math.round(v)), extract: u => u.recTds },
-      { key: 'rb_rec_epa', label: 'Receiving EPA', higherIsBetter: true, qual: 'any_rec', format: v => fmtSigned(v, 1), extract: u => u.recEpa },
       { key: 'rb_tgt_share', label: 'Target Share %', higherIsBetter: true, qual: 'rb_tgt', format: v => fmtPlain(v, 1, '%'), extract: u => u.targetSharePct },
-      { key: 'rb_yac_rec', label: 'Yards After Catch / Rec', higherIsBetter: true, qual: 'rb_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.receptions > 0 ? u.recYac / u.receptions : null) }
+      { key: 'rb_yac_rec', label: 'Yards After Catch / Rec', higherIsBetter: true, qual: 'rb_tgt', format: v => fmtPlain(v, 2, ' yds'), extract: u => (u.receptions > 0 ? u.recYac / u.receptions : null) },
+      { key: 'rb_rec_epa', label: 'Receiving EPA', higherIsBetter: true, qual: 'any_rec', format: v => fmtSigned(v, 1), extract: u => u.recEpa }
     ]
   },
   SKILL_RUSHING: {
@@ -2423,6 +2423,7 @@ export function computeLeaguePositionalLeaderboards({
     return {
       key: metricDef.key,
       label: metricDef.label,
+      group: metricDef.group || null,
       value: numVal,
       displayValue: dispVal,
       rank,

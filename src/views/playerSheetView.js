@@ -418,6 +418,16 @@ function renderStatsTab(p, statsMode) {
   const sectionsHtml = (profile.sections || [])
     .map(sec => {
       const expRows = sec.expandedRows || [];
+      const expSubgroups = [];
+      for (const r of expRows) {
+        const gTitle = r.group || 'Advanced Efficiency, NextGen & Film Metrics';
+        const lastGrp = expSubgroups[expSubgroups.length - 1];
+        if (!lastGrp || lastGrp.groupTitle !== gTitle) {
+          expSubgroups.push({ groupTitle: gTitle, rows: [r] });
+        } else {
+          lastGrp.rows.push(r);
+        }
+      }
       return `
         <section class="card team-stats-card player-stat-section" data-player-stat-section="${esc(sec.id)}">
           <div class="card-header team-stats-header">
@@ -452,16 +462,22 @@ function renderStatsTab(p, statsMode) {
                 <span class="mono stats-expand-hint">Expand</span>
               </summary>
               <div class="stats-expand-body">
-                <div class="stats-subgroup-block">
-                  <div class="sub-label stats-subgroup-title">Advanced Efficiency, NextGen &amp; Film Metrics</div>
-                  <div class="table-scroll">
-                    <table class="data-table team-stats-table player-stats-table">
-                      <tbody>
-                        ${renderPlayerStatTableRowsHtml(expRows, p.id)}
-                      </tbody>
-                    </table>
+                ${expSubgroups
+                  .map(
+                    grp => `
+                  <div class="stats-subgroup-block">
+                    <div class="sub-label stats-subgroup-title">${esc(grp.groupTitle)}</div>
+                    <div class="table-scroll">
+                      <table class="data-table team-stats-table player-stats-table">
+                        <tbody>
+                          ${renderPlayerStatTableRowsHtml(grp.rows, p.id)}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
+                `
+                  )
+                  .join('')}
               </div>
             </details>
           `
