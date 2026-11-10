@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T15:40:57.275Z",
+  "updatedAt": "2026-11-10T20:22:52.832Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -321,7 +321,7 @@
         "surface": "Synthetic Turf"
       },
       "restAdvantageDays": 0,
-      "spreadLineSf": -4.5,
+      "spreadLineSf": -3.5,
       "totalLine": 55.5,
       "broadcast": "FOX"
     },
@@ -355,8 +355,8 @@
         "surface": "Natural Grass"
       },
       "restAdvantageDays": 0,
-      "spreadLineSf": null,
-      "totalLine": null,
+      "spreadLineSf": -3.5,
+      "totalLine": 45.5,
       "broadcast": "NBC"
     },
     {
@@ -824,6 +824,168 @@
         "shortName": "Commanders",
         "record": "2-5-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
+      }
+    },
+    "compositeInputs": {
+      "ARI": {
+        "off_epa_play": -0.03734,
+        "def_epa_play_allowed": 0.07768,
+        "margin_turnover_diff_game": 0
+      },
+      "ATL": {
+        "off_epa_play": -0.07243,
+        "def_epa_play_allowed": 0.00137,
+        "margin_turnover_diff_game": -0.88889
+      },
+      "BAL": {
+        "off_epa_play": -0.00837,
+        "def_epa_play_allowed": 0.05399,
+        "margin_turnover_diff_game": -0.22222
+      },
+      "BUF": {
+        "off_epa_play": 0.14392,
+        "def_epa_play_allowed": -0.00997,
+        "margin_turnover_diff_game": 0
+      },
+      "CAR": {
+        "off_epa_play": 0.03067,
+        "def_epa_play_allowed": 0.0459,
+        "margin_turnover_diff_game": -0.125
+      },
+      "CHI": {
+        "off_epa_play": 0.03549,
+        "def_epa_play_allowed": -0.03985,
+        "margin_turnover_diff_game": -0.44444
+      },
+      "CIN": {
+        "off_epa_play": 0.13286,
+        "def_epa_play_allowed": 0.01252,
+        "margin_turnover_diff_game": 0.25
+      },
+      "CLE": {
+        "off_epa_play": -0.06541,
+        "def_epa_play_allowed": -0.00408,
+        "margin_turnover_diff_game": 0.11111
+      },
+      "DAL": {
+        "off_epa_play": 0.11044,
+        "def_epa_play_allowed": 0.09562,
+        "margin_turnover_diff_game": -0.11111
+      },
+      "DEN": {
+        "off_epa_play": -0.0224,
+        "def_epa_play_allowed": -0.00464,
+        "margin_turnover_diff_game": 0.55556
+      },
+      "DET": {
+        "off_epa_play": 0.09376,
+        "def_epa_play_allowed": 0.06543,
+        "margin_turnover_diff_game": 0.375
+      },
+      "GB": {
+        "off_epa_play": 0.04117,
+        "def_epa_play_allowed": -0.06254,
+        "margin_turnover_diff_game": 0.88889
+      },
+      "HOU": {
+        "off_epa_play": 0.04993,
+        "def_epa_play_allowed": 0.00318,
+        "margin_turnover_diff_game": 0.5
+      },
+      "IND": {
+        "off_epa_play": -0.11426,
+        "def_epa_play_allowed": 0.06744,
+        "margin_turnover_diff_game": -1.22222
+      },
+      "JAX": {
+        "off_epa_play": 0.15533,
+        "def_epa_play_allowed": -0.12431,
+        "margin_turnover_diff_game": 1.125
+      },
+      "KC": {
+        "off_epa_play": 0.11796,
+        "def_epa_play_allowed": -0.06156,
+        "margin_turnover_diff_game": 0.5
+      },
+      "LAC": {
+        "off_epa_play": -0.2278,
+        "def_epa_play_allowed": -0.01012,
+        "margin_turnover_diff_game": -0.875
+      },
+      "LAR": {
+        "off_epa_play": 0.04526,
+        "def_epa_play_allowed": -0.10823,
+        "margin_turnover_diff_game": -0.44444
+      },
+      "LV": {
+        "off_epa_play": 0.00609,
+        "def_epa_play_allowed": 0.09668,
+        "margin_turnover_diff_game": 0.11111
+      },
+      "MIA": {
+        "off_epa_play": -0.05865,
+        "def_epa_play_allowed": 0.10122,
+        "margin_turnover_diff_game": -0.375
+      },
+      "MIN": {
+        "off_epa_play": -0.15775,
+        "def_epa_play_allowed": -0.15058,
+        "margin_turnover_diff_game": 0.625
+      },
+      "NE": {
+        "off_epa_play": 0.06552,
+        "def_epa_play_allowed": 0.05385,
+        "margin_turnover_diff_game": -1.22222
+      },
+      "NO": {
+        "off_epa_play": -0.02129,
+        "def_epa_play_allowed": 0.05852,
+        "margin_turnover_diff_game": -0.75
+      },
+      "NYG": {
+        "off_epa_play": -0.00567,
+        "def_epa_play_allowed": -0.03936,
+        "margin_turnover_diff_game": -0.25
+      },
+      "NYJ": {
+        "off_epa_play": -0.00311,
+        "def_epa_play_allowed": 0.03285,
+        "margin_turnover_diff_game": 0.33333
+      },
+      "PHI": {
+        "off_epa_play": -0.1396,
+        "def_epa_play_allowed": 0.07046,
+        "margin_turnover_diff_game": -0.44444
+      },
+      "PIT": {
+        "off_epa_play": -0.03542,
+        "def_epa_play_allowed": -0.06015,
+        "margin_turnover_diff_game": 0.625
+      },
+      "SEA": {
+        "off_epa_play": -0.04684,
+        "def_epa_play_allowed": -0.0943,
+        "margin_turnover_diff_game": -0.11111
+      },
+      "SF": {
+        "off_epa_play": 0.19271,
+        "def_epa_play_allowed": -0.03779,
+        "margin_turnover_diff_game": 0.125
+      },
+      "TB": {
+        "off_epa_play": -0.10495,
+        "def_epa_play_allowed": -0.163,
+        "margin_turnover_diff_game": 0.77778
+      },
+      "TEN": {
+        "off_epa_play": -0.06085,
+        "def_epa_play_allowed": 0.0607,
+        "margin_turnover_diff_game": -0.125
+      },
+      "WAS": {
+        "off_epa_play": -0.00957,
+        "def_epa_play_allowed": 0.04,
+        "margin_turnover_diff_game": 0.875
       }
     },
     "units": [
@@ -24096,7 +24258,7 @@
       "byeWeek": 14,
       "summary": {
         "overallAvailabilityScore": 72,
-        "activeStartersHealthy": 21,
+        "activeStartersHealthy": 22,
         "totalStarters": 22,
         "ruledOutCount": 0,
         "questionableOrDoubtfulCount": 10,
@@ -24854,134 +25016,6 @@
           "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
         },
         {
-          "name": "Luke Schoonmaker",
-          "position": "TE",
-          "unit": "Offense",
-          "jersey": 86,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
-          "snapPct": 51,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Groin",
-          "gameStatus": "Questionable",
-          "shortComment": "out",
-          "longComment": "out",
-          "isStarter": false,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 39,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "39% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report",
-            "Soft-tissue re-aggravation caution (Groin)"
-          ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
-        },
-        {
-          "name": "George Pickens",
-          "position": "WR",
-          "unit": "Offense",
-          "jersey": 3,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426354.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426354/george-pickens",
-          "snapPct": 78,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Hamstring",
-          "gameStatus": "Questionable",
-          "shortComment": "Pickens (hamstring) has a chance to play Sunday against San Francisco, but his practice reps will likely again be capped this week, Jon Machota of The Athletic reports.",
-          "longComment": "Pickens was limited in practice all of last week and ultimately didn't suit up Sunday against Indianapolis. There had been some optimism that he'd be able to participate in that contest, so there's a decent chance that he'll be able to return to action versus the 49ers. Nonetheless, Pickens could again be given a designation heading into this weekend if he doesn't manage at least one full practice before the Cowboys' final injury report is released Friday.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 40,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "40% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report",
-            "Soft-tissue re-aggravation caution (Hamstring)"
-          ],
-          "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps."
-        },
-        {
-          "name": "DeMarvion Overshown",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
-          "snapPct": 71,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Hamstring",
-          "gameStatus": "Questionable",
-          "shortComment": "out",
-          "longComment": "out",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 40,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "40% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report",
-            "Soft-tissue re-aggravation caution (Hamstring)"
-          ],
-          "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps."
-        },
-        {
-          "name": "KaVontae Turpin",
-          "position": "WR",
-          "unit": "Offense",
-          "jersey": 9,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3676833.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
-          "snapPct": 27,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Ribs",
-          "gameStatus": "Questionable",
-          "shortComment": "out",
-          "longComment": "out",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 43,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "43% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report"
-          ],
-          "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
-        },
-        {
-          "name": "Joey Porter Jr.",
-          "position": "CB",
-          "unit": "Defense",
-          "jersey": 25,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
-          "snapPct": 54,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Ankle",
-          "gameStatus": "Questionable",
-          "shortComment": "Porter \"will go through the same process as last week\" before a decision is made regarding his availability for Week 10 against San Francisco, Jon Machota of The Athletic reports.",
-          "longComment": "Porter didn't play in Week 9 versus the Colts, marking his fifth absence of the 2026 campaign. If he misses a sixth game Sunday, Cobie Durant may be in line for another start. For now, Porter should be considered questionable for Week 10.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 43,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "43% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report"
-          ],
-          "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
-        },
-        {
           "name": "Jake Ferguson",
           "position": "TE",
           "unit": "Offense",
@@ -25032,6 +25066,32 @@
           "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
         },
         {
+          "name": "Luke Schoonmaker",
+          "position": "TE",
+          "unit": "Offense",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
+          "snapPct": 51,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Groin",
+          "gameStatus": "Questionable",
+          "shortComment": "questionable",
+          "longComment": "questionable",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 73,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "73% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (78%)",
+            "Soft-tissue re-aggravation caution (Groin)"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+        },
+        {
           "name": "Jonathan Mingo",
           "position": "WR",
           "unit": "Offense",
@@ -25053,6 +25113,109 @@
           "playBadgeLabel": "76% • True GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (76%)"
+          ],
+          "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
+        },
+        {
+          "name": "Joey Porter Jr.",
+          "position": "CB",
+          "unit": "Defense",
+          "jersey": 25,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
+          "snapPct": 54,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Ankle",
+          "gameStatus": "Questionable",
+          "shortComment": "questionable",
+          "longComment": "questionable",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 76,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "76% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (76%)"
+          ],
+          "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
+        },
+        {
+          "name": "George Pickens",
+          "position": "WR",
+          "unit": "Offense",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426354.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426354/george-pickens",
+          "snapPct": 78,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Hamstring",
+          "gameStatus": "Questionable",
+          "shortComment": "questionable",
+          "longComment": "questionable",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 77,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "77% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (82%)",
+            "Soft-tissue re-aggravation caution (Hamstring)"
+          ],
+          "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
+          "name": "DeMarvion Overshown",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
+          "snapPct": 71,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Hamstring",
+          "gameStatus": "Questionable",
+          "shortComment": "questionable",
+          "longComment": "questionable",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 77,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "77% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (82%)",
+            "Soft-tissue re-aggravation caution (Hamstring)"
+          ],
+          "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
+          "name": "KaVontae Turpin",
+          "position": "WR",
+          "unit": "Offense",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3676833.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
+          "snapPct": 27,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Ribs",
+          "gameStatus": "Questionable",
+          "shortComment": "questionable",
+          "longComment": "questionable",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 80,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "80% • True GTD",
+          "factors": [
+            "Questionable tag adjusted by player career prior (76%)",
+            "Manageable pain-tolerance injury profile (Ribs)"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
         }
@@ -25365,11 +25528,11 @@
     },
     "betting": {
       "favorite": "San Francisco 49ers",
-      "spread": "SF -4.5",
+      "spread": "SF -3.5",
       "openingSpread": "Opened SF +1.5 (Draft Kings)",
       "overUnder": 55.5,
-      "moneyline": "SF -218 | DAL +180",
-      "impliedScore": "SF 30.0 – DAL 25.5",
+      "moneyline": "SF -205 | DAL +170",
+      "impliedScore": "SF 29.5 – DAL 26.0",
       "restAdvantage": "Even Rest (Standard Prep Week)"
     },
     "franchiseHistory": {

@@ -1866,7 +1866,11 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
       { label: 'NFL Combine Tracker', url: 'https://www.nfl.com/combine/' },
       { label: 'RAS Athletic Database', url: 'https://ras.football/' }
     ],
-    tradedPicksNote: `6 Total Picks: San Francisco traded its own ${dy} 4th-round pick to Indianapolis on Nov 3, ${dy - 1} for DT DeForest Buckner (and previously dealt its own ${dy} 6th & 7th picks while acquiring Rd 6 via BAL and Rd 7 via KC).`,
+    tradedPicksNote: `${verifiedSixPicks.length} Total Picks: San Francisco traded its own ${dy} 4th-round pick to Indianapolis on Nov 3, ${dy - 1} for DT DeForest Buckner${
+      verifiedSixPicks.some(p => p.round === 6)
+        ? ` (and previously dealt its own ${dy} 6th & 7th picks while acquiring Rd 6 via BAL and Rd 7 via KC).`
+        : ` and dealt its ${dy} 6th-round pick (via BAL) at the Nov 10 trade deadline while holding Rd 7 via KC.`
+    }`,
     pickInventory: verifiedSixPicks,
     topNeeds2027: [
       { rank: 1, pos: 'OT (Future Left Tackle Succession)', horizon: `Critical — Trent Williams turns 39 prior to ${dy} kickoff; outside-zone athletic thresholds required.` },

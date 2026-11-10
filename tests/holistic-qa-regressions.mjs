@@ -39,6 +39,10 @@ import {
 import { getJargonEntry } from '../src/engine/jargonGlossary.js';
 import {
   TEAM_STAT_UNITS_SCHEMA,
+  computeLeagueTeamStatsPayload,
+  refreshLiveStandingsMetricsInTeamStats,
+  aggregateWeeklyNgsStats2026,
+  aggregateWeeklyPfrAdvStats2026,
   normalizePositionalPeerGroup,
   resolveCareerTableSchema,
   resolveLeaderboardModalModel
@@ -1282,6 +1286,100 @@ test('4-Unit Team Stats, Overall Composite Rank Jargon Tooltips, Positional Lead
     !defCareer.headers.some(h => /Pass|Rush|Rec/i.test(h)),
     `Defensive career schema must not contain offensive columns: ${JSON.stringify(defCareer.headers)}`
   );
+});
+
+test('Statistical datasource refresh cadences (Thursday PFR charting, Tuesday nflverse/NGS, real-time ESPN) isolate denominators & sync live', () => {
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+
+  // 1. Live dataset check: Fred Warner PFR coverage metrics must aggregate weekly PFR charting (qualified across >40 NFL LBs, never frozen at Week 3 g=3)
+  const warner = roster.players.find(p => p.name === 'Fred Warner');
+  const warnerRows = [
+    ...(warner?.statProfile2026?.sections?.[0]?.coreRows || []),
+    ...(warner?.statProfile2026?.sections?.[0]?.expandedRows || [])
+  ];
+  const warnerRatRow = warnerRows.find(r => r.key === 'pfr_rat_allowed');
+  assert.ok(warnerRatRow && warnerRatRow.qualified, 'Fred Warner must be qualified on PFR Passer Rating Allowed');
+  assert.ok(warnerRatRow.totalPeers >= 40, `Expected >=40 qualified NFL LBs on PFR coverage, got ${warnerRatRow.totalPeers}`);
+
+  // 2. Live dataset check: Deebo Samuel Sr. must receive 2026 NextGen Stats via weekly NGS rollup even below full-season week=0 threshold
+  const deebo = roster.players.find(p => p.name === 'Deebo Samuel Sr.');
+  const deeboRows = [
+    ...(deebo?.statProfile2026?.sections?.[0]?.coreRows || []),
+    ...(deebo?.statProfile2026?.sections?.[0]?.expandedRows || [])
+  ];
+  assert.ok(deeboRows.some(r => r.key === 'ngs_sep'), 'Deebo Samuel Sr. must have 2026 NGS Route Separation populated');
+
+  // 3. Cross-source Sunday/Monday latency test: ESPN Standings at 8 GP (`pf=235`) while nflverse `reg` lags at 7 GP (`passing_yards=1750`)
+  const recMap = new Map([
+    ['SF', { record: '7-1', wins: 7, losses: 1, ties: 0, pointsFor: 235, pointsAgainst: 156, pointDiff: 79 }]
+  ]);
+  const espnStMap = new Map([
+    ['SF', { gamesPlayed: 8, takeaways: 12, giveaways: 11, turnoverDiff: 1 }]
+  ]);
+  const regTeamsLagging = [
+    { team: 'SF', season_type: 'REG', games: '7', attempts: '210', sacks_suffered: '7', sack_yards_lost: '-40', passing_yards: '1790', carries: '190', rushing_yards: '945', passing_epa: '60', rushing_epa: '21' }
+  ];
+  const simOut = computeLeagueTeamStatsPayload({
+    regTeams: regTeamsLagging,
+    statsTeamWeek: [],
+    espnTeamStatsByAbbr: espnStMap,
+    teamRecordsMap: recMap,
+    seasonYear: 2026
+  });
+  // PPG must use 8-game `standingsGp` (`235 / 8 = 29.375 -> 29.4`), NOT 7-game `regGp` (`33.6`)!
+  assert.equal(simOut.teamStats.flatByKey.off_pts_game.displayValue, '29.4');
+  // Passing Yards/Gm must use 7-game `regGp` (`(1790 - 40) / 7 = 250.0 yds`), NOT 8-game `standingsGp`!
+  assert.equal(simOut.teamStats.flatByKey.off_pass_yds_game.displayValue, '250.0 yds');
+  // Takeaways/Gm must use 8-game `espnGp` (`12 / 8 = 1.50`), NOT 7-game `regGp` (`1.71`)!
+  assert.equal(simOut.teamStats.flatByKey.def_takeaways_game.displayValue, '1.50');
+
+  // 4. Live in-browser post-game sync (`refreshLiveStandingsMetricsInTeamStats`) updates PPG, records & composites immediately
+  const clonedTs = JSON.parse(JSON.stringify(scheduleMatchup.teamStats));
+  const clonedRanks = JSON.parse(JSON.stringify(scheduleMatchup.teamStatRankings));
+  const postGameMap = new Map([
+    ['SF', { record: '8-1', wins: 8, losses: 1, ties: 0, pf: 270, pa: 171, pd: 99 }]
+  ]);
+  const didUpdate = refreshLiveStandingsMetricsInTeamStats(clonedTs, clonedRanks, postGameMap);
+  assert.equal(didUpdate, true);
+  assert.equal(clonedTs.teams.SF.record, '8-1');
+  assert.equal(clonedTs.flatByKey.off_pts_game.displayValue, '30.0'); // 270 / 9 = 30.0 PPG
+  assert.equal(clonedTs.flatByKey.def_pts_allowed_game.displayValue, '19.0'); // 171 / 9 = 19.0 PAPG
+
+  // 5. PFR Thursday latency denominator isolation: 7 charted PFR weeks must divide by 7-week attempts (`200`), NEVER 8-week attempts (`240`)
+  const pfrAgg = aggregateWeeklyPfrAdvStats2026({
+    pfrPassSeason: [],
+    pfrDefSeason: [{ season: '2026', pfr_id: 'WarnFr00', g: '3', tgt: '11', cmp: '9', rat: '98.9', prss: '2' }],
+    pfrPassWeek: [
+      { season: '2026', game_type: 'REG', week: '1', team: 'SF', pfr_player_id: 'PurdBr00', pfr_player_name: 'Brock Purdy', passing_bad_throws: '15', passing_drops: '2', times_pressured: '20', times_sacked: '0' },
+      { season: '2026', game_type: 'REG', week: '2', team: 'SF', pfr_player_id: 'PurdBr00', pfr_player_name: 'Brock Purdy', passing_bad_throws: '15', passing_drops: '2', times_pressured: '20', times_sacked: '0' }
+    ],
+    pfrDefWeek: [
+      { season: '2026', game_type: 'REG', week: '1', pfr_player_id: 'WarnFr00', def_targets: '5', def_completions_allowed: '3', def_yards_allowed: '25', def_receiving_td_allowed: '0', def_ints: '0', def_pressures: '2', def_tackles_combined: '10', def_missed_tackles: '1' },
+      { season: '2026', game_type: 'REG', week: '2', pfr_player_id: 'WarnFr00', def_targets: '5', def_completions_allowed: '3', def_yards_allowed: '25', def_receiving_td_allowed: '0', def_ints: '0', def_pressures: '2', def_tackles_combined: '10', def_missed_tackles: '1' },
+      { season: '2026', game_type: 'REG', week: '3', pfr_player_id: 'WarnFr00', def_targets: '5', def_completions_allowed: '3', def_yards_allowed: '25', def_receiving_td_allowed: '0', def_ints: '0', def_pressures: '2', def_tackles_combined: '10', def_missed_tackles: '1' },
+      { season: '2026', game_type: 'REG', week: '4', pfr_player_id: 'WarnFr00', def_targets: '5', def_completions_allowed: '3', def_yards_allowed: '25', def_receiving_td_allowed: '0', def_ints: '0', def_pressures: '2', def_tackles_combined: '10', def_missed_tackles: '1' }
+    ],
+    statsPlayerWeek: [
+      { season_type: 'REG', week: '1', player_id: 'G1', recent_team: 'SF', attempts: '100', sacks_suffered: '0' },
+      { season_type: 'REG', week: '2', player_id: 'G1', recent_team: 'SF', attempts: '100', sacks_suffered: '0' },
+      { season_type: 'REG', week: '3', player_id: 'G1', recent_team: 'SF', attempts: '40', sacks_suffered: '5' } // Uncharted in PFR!
+    ],
+    nflPlayers: [{ gsis_id: 'G1', pfr_id: 'PurdBr00' }],
+    seasonYear: 2026
+  });
+  assert.equal(pfrAgg.pfrPass2026.get('PurdBr00').badThrowPct, 15.0); // 30 / 200 = 15.0% (ignores uncharted Week 3's 40 att!)
+  assert.equal(pfrAgg.pfrDef2026.get('WarnFr00').games, 4); // Upgrades frozen g=3 season row to 4 weekly charted games!
+
+  // 6. Weekly NGS rollup test when `week === '0'` is absent
+  const ngsAgg = aggregateWeeklyNgsStats2026({
+    ngsReceiving: [
+      { season: '2026', season_type: 'REG', week: '1', player_gsis_id: 'DEEBO', targets: '4', receptions: '3', avg_separation: '4.0', avg_yac_above_expectation: '1.0', avg_cushion: '6.0', avg_intended_air_yards: '5.0', percent_share_of_intended_air_yards: '12.0', avg_yac: '8.0' },
+      { season: '2026', season_type: 'REG', week: '2', player_gsis_id: 'DEEBO', targets: '6', receptions: '5', avg_separation: '5.0', avg_yac_above_expectation: '2.0', avg_cushion: '7.0', avg_intended_air_yards: '5.0', percent_share_of_intended_air_yards: '14.0', avg_yac: '9.0' }
+    ],
+    seasonYear: 2026
+  });
+  assert.equal(ngsAgg.ngsRec2026.get('DEEBO').avgSeparation, 4.6); // (4*4.0 + 6*5.0)/10 = 4.60
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

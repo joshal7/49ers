@@ -440,7 +440,12 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     return {
       isBreaking: true,
       isInGameInjury: ageHours <= 8,
-      breakingPriority: ageHours <= 8 ? decayPriority(2.7, ageHours, 8) : decayPriority(1.6, ageHours, 10),
+      breakingPriority:
+        ageHours <= 4
+          ? 3.0
+          : ageHours <= 8
+            ? decayPriority(2.7, ageHours, 8)
+            : decayPriority(1.6, ageHours, 10),
       breakingBadge: ageHours <= 8 ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
       ageHours
     };

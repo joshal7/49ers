@@ -10,7 +10,7 @@ import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
-} from './engine/breakingClassifier.js';
+} from './engine/breakingClassifier.js?v=35';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
 import {
   loadAll49ersData,
@@ -21,7 +21,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=34';
+} from './services/dataService.js?v=35';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -50,21 +50,21 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=33';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=33';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=33';
-import { iconSvg } from './views/icons.js?v=33';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=33';
+} from './views/uiHelpers.js?v=35';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=35';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=35';
+import { iconSvg } from './views/icons.js?v=35';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=35';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=33';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=33';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=33';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=33';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=33';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=33';
+} from './views/newsView.js?v=35';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=35';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=35';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=35';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=35';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=35';
 
 const state = {
   appData: null,
@@ -2368,7 +2368,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=39', { updateViaCache: 'none' })
+        .register('./sw.js?v=40', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

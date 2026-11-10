@@ -342,15 +342,19 @@ export function computeLeagueTeamStatsPayload({
     const wins = safeNum(recInfo.wins);
     const losses = safeNum(recInfo.losses);
     const ties = safeNum(recInfo.ties);
-    const standingsGp = wins + losses + ties;
-    const gp = Math.max(1, safeNum(reg.games) || standingsGp || 1);
-    const oppGp = Math.max(1, opp?.games || gp);
+    const rawStandingsGp = wins + losses + ties;
+    // Strict per-datasource game denominators prevent cross-source inflation when ESPN updates
+    // minutes after game Final while nflverse play-by-play CSVs refresh overnight/Tuesday AM:
+    const standingsGp = Math.max(1, rawStandingsGp || safeNum(reg.games) || 1);
+    const regGp = Math.max(1, safeNum(reg.games) || rawStandingsGp || 1);
+    const oppGp = Math.max(1, opp?.games || regGp);
+    const espnGp = Math.max(1, safeNum(espnSt?.gamesPlayed) || rawStandingsGp || regGp);
 
     teamsMeta[abbr] = {
       abbr,
       name: NFL_TEAM_NAMES[abbr]?.name || abbr,
       shortName: NFL_TEAM_NAMES[abbr]?.shortName || abbr,
-      record: recInfo.record || (standingsGp > 0 ? `${wins}-${losses}${ties ? `-${ties}` : ''}` : '0-0'),
+      record: recInfo.record || (rawStandingsGp > 0 ? `${wins}-${losses}${ties ? `-${ties}` : ''}` : '0-0'),
       logoUrl: recInfo.logoUrl || `https://a.espncdn.com/i/teamlogos/nfl/500/${abbr === 'WAS' ? 'wsh' : abbr.toLowerCase()}.png`
     };
 
@@ -362,10 +366,11 @@ export function computeLeagueTeamStatsPayload({
     const sacksTaken = safeNum(reg.sacks_suffered);
     const passGrossYds = safeNum(reg.passing_yards);
     const sackYdsLostAbs = Math.abs(safeNum(reg.sack_yards_lost));
-    const netPassYds =
-      espnSt?.netPassingYards != null && passGrossYds === 0
-        ? safeNum(espnSt.netPassingYards)
-        : Math.max(0, passGrossYds - sackYdsLostAbs);
+    const usingEspnNetPassFallback = espnSt?.netPassingYards != null && passGrossYds === 0;
+    const netPassYds = usingEspnNetPassFallback
+      ? safeNum(espnSt.netPassingYards)
+      : Math.max(0, passGrossYds - sackYdsLostAbs);
+    const passYdsGp = usingEspnNetPassFallback ? espnGp : regGp;
     const carries = safeNum(reg.carries);
     const rushYds = safeNum(reg.rushing_yards);
     const dropbacks = Math.max(1, passAtt + sacksTaken);
@@ -378,10 +383,12 @@ export function computeLeagueTeamStatsPayload({
     const oppDropbacks = Math.max(1, (opp?.attempts || 0) + (opp?.sacksTaken || 0));
     const oppCarries = Math.max(1, opp?.carries || 1);
     const oppPlays = Math.max(1, oppDropbacks + (opp?.carries || 0));
+    const oppUsingEspnFallback = !opp;
+    const oppYdsGp = oppUsingEspnFallback ? espnGp : oppGp;
     const oppNetPassYds = opp
       ? Math.max(0, opp.passingYards - opp.sackYardsLostAbs)
-      : safeNum(espnSt?.oppNetPassingYards, 215 * oppGp);
-    const oppRushYds = opp ? opp.rushingYards : safeNum(espnSt?.oppRushingYards, 115 * oppGp);
+      : safeNum(espnSt?.oppNetPassingYards, 215 * oppYdsGp);
+    const oppRushYds = opp ? opp.rushingYards : safeNum(espnSt?.oppRushingYards, 115 * oppYdsGp);
     const oppTotalEpa = opp ? opp.passingEpa + opp.rushingEpa : 0;
 
     const defSacks = safeNum(reg.def_sacks);
@@ -389,6 +396,9 @@ export function computeLeagueTeamStatsPayload({
     const takeawaysNflverse = safeNum(reg.def_interceptions) + safeNum(reg.fumble_recovery_opp);
     const giveawaysNflverse = safeNum(reg.passing_interceptions) + safeNum(reg.fumbles_lost_total);
 
+    const usingEspnTurnovers =
+      espnSt?.takeaways != null || espnSt?.giveaways != null || espnSt?.turnoverDiff != null;
+    const turnGp = usingEspnTurnovers ? espnGp : regGp;
     const takeaways = espnSt?.takeaways != null ? safeNum(espnSt.takeaways) : takeawaysNflverse;
     const giveaways = espnSt?.giveaways != null ? safeNum(espnSt.giveaways) : giveawaysNflverse;
     const turnoverDiff =
@@ -410,11 +420,11 @@ export function computeLeagueTeamStatsPayload({
     const offRedZoneTdPct =
       espnSt?.offRedZoneTdPct != null
         ? safeNum(espnSt.offRedZoneTdPct)
-        : Math.min(78, Math.max(35, 42 + ((safeNum(reg.passing_tds) + safeNum(reg.rushing_tds)) / gp) * 6.5));
+        : Math.min(78, Math.max(35, 42 + ((safeNum(reg.passing_tds) + safeNum(reg.rushing_tds)) / regGp) * 6.5));
     const defRedZoneTdPctAllowed =
       espnSt?.defRedZoneTdPctAllowed != null
         ? safeNum(espnSt.defRedZoneTdPctAllowed)
-        : Math.min(78, Math.max(35, 38 + (pa / gp) * 0.85));
+        : Math.min(78, Math.max(35, 38 + (pa / standingsGp) * 0.85));
 
     // Special Teams
     const fgMade = safeNum(reg.fg_made);
@@ -449,44 +459,45 @@ export function computeLeagueTeamStatsPayload({
         ? opp.puntReturnYards / opp.puntReturns
         : safeNum(espnSt?.oppPrAvg, 8.8);
 
-    const offPassYdsGm = netPassYds / gp;
-    const offRushYdsGm = rushYds / gp;
+    const offPassYdsGm = netPassYds / passYdsGp;
+    const offRushYdsGm = rushYds / regGp;
     const offTotalYdsGm = offPassYdsGm + offRushYdsGm;
 
-    const defPassYdsGm = oppNetPassYds / oppGp;
-    const defRushYdsGm = oppRushYds / oppGp;
+    const defPassYdsGm = oppNetPassYds / oppYdsGp;
+    const defRushYdsGm = oppRushYds / oppYdsGp;
     const defTotalYdsGm = defPassYdsGm + defRushYdsGm;
 
-    const offExplosivePlaysGm = (safeNum(reg.passing_20) + safeNum(reg.rushing_10)) / gp;
+    const offExplosivePlaysGm = (safeNum(reg.passing_20) + safeNum(reg.rushing_10)) / regGp;
     const defExplosivePlaysGm = opp ? (opp.passing20 + opp.rushing10) / oppGp : 4.5;
 
     const offEpaPlay = offEpaTotal / offPlays;
     const defEpaPlayAllowed = oppTotalEpa / oppPlays;
 
     rawMetricsByTeam.set(abbr, {
-      games: gp,
+      games: regGp,
+      standingsGp,
       // Offense
-      off_pts_game: pf / gp,
+      off_pts_game: pf / standingsGp,
       off_total_yds_game: offTotalYdsGm,
-      total_off_epa_game: offEpaTotal / gp,
+      total_off_epa_game: offEpaTotal / regGp,
       off_epa_play: offEpaPlay,
       off_pass_yds_game: offPassYdsGm,
-      passing_epa_game: passEpa / gp,
+      passing_epa_game: passEpa / regGp,
       rush_yds_game: offRushYdsGm,
-      rushing_epa_game: rushEpa / gp,
+      rushing_epa_game: rushEpa / regGp,
       yards_per_pass_att: netPassYds / dropbacks,
       passing_cpoe: safeNum(reg.passing_cpoe),
-      off_explosive_pass_game: safeNum(reg.passing_20) / gp,
+      off_explosive_pass_game: safeNum(reg.passing_20) / regGp,
       off_yds_per_carry: carries > 0 ? rushYds / carries : 0,
       off_rush_1d_rate: carries > 0 ? (safeNum(reg.rushing_first_downs) / carries) * 100 : 0,
-      off_explosive_rush_game: safeNum(reg.rushing_10) / gp,
+      off_explosive_rush_game: safeNum(reg.rushing_10) / regGp,
       explosive_plays_game: offExplosivePlaysGm,
       sack_rate_allowed: (sacksTaken / dropbacks) * 100,
       off_third_down_pct: offThirdDownPct,
       off_red_zone_td_pct: offRedZoneTdPct,
 
       // Defense
-      def_pts_allowed_game: pa / gp,
+      def_pts_allowed_game: pa / standingsGp,
       def_total_yds_allowed_game: defTotalYdsGm,
       def_epa_allowed_game: oppTotalEpa / oppGp,
       def_epa_play_allowed: defEpaPlayAllowed,
@@ -502,8 +513,8 @@ export function computeLeagueTeamStatsPayload({
       def_explosive_rush_allowed_game: (opp?.rushing10 || 0) / oppGp,
       def_explosive_plays_allowed_game: defExplosivePlaysGm,
       def_sack_rate: (defSacks / Math.max(1, (opp?.attempts || 0) + defSacks)) * 100,
-      def_sacks_game: defSacks / gp,
-      def_tfl_game: defTfl / gp,
+      def_sacks_game: defSacks / regGp,
+      def_tfl_game: defTfl / regGp,
       def_third_down_pct_allowed: defThirdDownPctAllowed,
       def_red_zone_td_pct_allowed: defRedZoneTdPctAllowed,
 
@@ -519,14 +530,14 @@ export function computeLeagueTeamStatsPayload({
 
       // Margin & Overview
       margin_turnover_diff: turnoverDiff,
-      margin_turnover_diff_game: turnoverDiff / gp,
-      margin_pt_diff_game: ptDiff / gp,
+      margin_turnover_diff_game: turnoverDiff / turnGp,
+      margin_pt_diff_game: ptDiff / standingsGp,
       margin_net_epa_play: offEpaPlay - defEpaPlayAllowed,
-      def_takeaways_game: takeaways / gp,
-      margin_giveaways_game: giveaways / gp,
+      def_takeaways_game: takeaways / turnGp,
+      margin_giveaways_game: giveaways / turnGp,
       margin_yds_diff_game: offTotalYdsGm - defTotalYdsGm,
       margin_explosive_diff_game: offExplosivePlaysGm - defExplosivePlaysGm,
-      margin_pen_yds_game: safeNum(reg.penalty_yards) / gp
+      margin_pen_yds_game: safeNum(reg.penalty_yards) / regGp
     });
   }
 
@@ -680,14 +691,765 @@ export function computeLeagueTeamStatsPayload({
       leagueAvgDisplay: m.leagueAvgDisplay
     }));
 
+  const compositeInputs = {};
+  for (const tm of allTeamAbbrs) {
+    const rm = rawMetricsByTeam.get(tm) || {};
+    compositeInputs[tm] = {
+      off_epa_play: Number(safeNum(rm.off_epa_play).toFixed(5)),
+      def_epa_play_allowed: Number(safeNum(rm.def_epa_play_allowed).toFixed(5)),
+      margin_turnover_diff_game: Number(safeNum(rm.margin_turnover_diff_game).toFixed(5))
+    };
+  }
+
   return {
     teamStats: {
       seasonYear,
       teams: teamsMeta,
+      compositeInputs,
       units: unitsOutput,
       flatByKey
     },
     teamStatRankings
+  };
+}
+
+/**
+ * Deterministically refreshes live ESPN Standings-driven metrics (`Points / Game`,
+ * `Points Allowed / Game`, `Point Differential / Gm`, 32-team W-L-T records, and the
+ * 4 normalized unit composite scores) in-browser within milliseconds after games go Final,
+ * bridging the Sunday/Monday window before `nflverse` play-by-play CSVs rebuild on Tuesday.
+ */
+export function refreshLiveStandingsMetricsInTeamStats(
+  teamStats,
+  teamStatRankings = null,
+  liveStandingsByAbbr = new Map()
+) {
+  if (!teamStats?.flatByKey || !Array.isArray(teamStats.units) || !liveStandingsByAbbr || liveStandingsByAbbr.size === 0) {
+    return false;
+  }
+
+  const allTeamAbbrs = Object.keys(NFL_TEAM_NAMES);
+  const teamsMeta = teamStats.teams || (teamStats.teams = {});
+  let anyChanged = false;
+
+  const updatedRawScoring = new Map();
+  for (const abbr of allTeamAbbrs) {
+    const live = liveStandingsByAbbr.get(abbr);
+    if (!live) continue;
+    const wins = safeNum(live.wins);
+    const losses = safeNum(live.losses);
+    const ties = safeNum(live.ties);
+    const gp = Math.max(1, wins + losses + ties);
+    const recStr = live.record || `${wins}-${losses}${ties ? `-${ties}` : ''}`;
+
+    if (teamsMeta[abbr] && teamsMeta[abbr].record !== recStr) {
+      teamsMeta[abbr].record = recStr;
+      anyChanged = true;
+    }
+
+    if (live.pf != null && live.pa != null && wins + losses + ties > 0) {
+      const pf = safeNum(live.pf);
+      const pa = safeNum(live.pa);
+      const pd = live.pd != null ? safeNum(live.pd) : pf - pa;
+      updatedRawScoring.set(abbr, {
+        off_pts_game: pf / gp,
+        def_pts_allowed_game: pa / gp,
+        margin_pt_diff_game: pd / gp
+      });
+    }
+  }
+
+  if (updatedRawScoring.size === 0) return anyChanged;
+
+  const rebuildSingleMetricInPlace = (metricKey, higherIsBetter, formatFn, getValForTeam) => {
+    const targetObj = teamStats.flatByKey[metricKey];
+    if (!targetObj) return;
+    const entries = allTeamAbbrs.map(tm => {
+      const v = getValForTeam(tm);
+      return {
+        team: tm,
+        val: Number(safeNum(v).toFixed(4)),
+        disp: formatFn(v)
+      };
+    });
+    entries.sort((a, b) => {
+      const d = higherIsBetter ? b.val - a.val : a.val - b.val;
+      return Math.abs(d) > 1e-9 ? d : a.team.localeCompare(b.team);
+    });
+    const leaderboard = entries.map((e, idx) => ({
+      team: e.team,
+      rank: idx + 1,
+      val: e.val,
+      disp: e.disp
+    }));
+    const sfEntry = leaderboard.find(x => x.team === 'SF') || leaderboard[15];
+    const avgRaw = entries.reduce((acc, x) => acc + x.val, 0) / Math.max(1, entries.length);
+
+    if (Math.abs(safeNum(targetObj.value) - sfEntry.val) > 1e-4 || targetObj.rank !== sfEntry.rank) {
+      anyChanged = true;
+    }
+    targetObj.rank = sfEntry.rank;
+    targetObj.value = sfEntry.val;
+    targetObj.displayValue = sfEntry.disp;
+    targetObj.leagueAvg = Number(avgRaw.toFixed(4));
+    targetObj.leagueAvgDisplay = formatFn(avgRaw);
+    targetObj.leaderboard = leaderboard;
+  };
+
+  const getPrevLeaderboardVal = (metricKey, tm) => {
+    const lb = teamStats.flatByKey?.[metricKey]?.leaderboard || [];
+    return lb.find(x => x.team === tm)?.val ?? 0;
+  };
+
+  rebuildSingleMetricInPlace(
+    'off_pts_game',
+    true,
+    v => fmtPlain(v, 1),
+    tm => updatedRawScoring.get(tm)?.off_pts_game ?? getPrevLeaderboardVal('off_pts_game', tm)
+  );
+  rebuildSingleMetricInPlace(
+    'def_pts_allowed_game',
+    false,
+    v => fmtPlain(v, 1),
+    tm => updatedRawScoring.get(tm)?.def_pts_allowed_game ?? getPrevLeaderboardVal('def_pts_allowed_game', tm)
+  );
+  rebuildSingleMetricInPlace(
+    'margin_pt_diff_game',
+    true,
+    v => fmtSigned(v, 1),
+    tm => updatedRawScoring.get(tm)?.margin_pt_diff_game ?? getPrevLeaderboardVal('margin_pt_diff_game', tm)
+  );
+
+  // Recompute the 4 unit composite scores using updated scoring + stored EPA/situational inputs
+  const getCompositeInputVal = (key, tm) => {
+    if (teamStats.compositeInputs?.[tm]?.[key] != null) {
+      return safeNum(teamStats.compositeInputs[tm][key]);
+    }
+    return getPrevLeaderboardVal(key, tm);
+  };
+
+  for (const unit of TEAM_STAT_UNITS_SCHEMA) {
+    const compNormMaps = unit.compositeWeights.map(w => {
+      const vals = allTeamAbbrs.map(tm => getCompositeInputVal(w.key, tm));
+      const minV = Math.min(...vals);
+      const maxV = Math.max(...vals);
+      const span = maxV - minV;
+      const normMap = new Map();
+      for (const tm of allTeamAbbrs) {
+        const v = getCompositeInputVal(w.key, tm);
+        normMap.set(
+          tm,
+          span <= 1e-9 ? 50 : w.higherIsBetter ? ((v - minV) / span) * 100 : ((maxV - v) / span) * 100
+        );
+      }
+      return { weight: w.weight, normMap };
+    });
+
+    const scoreByTeam = new Map();
+    for (const tm of allTeamAbbrs) {
+      let score = 0;
+      for (const { weight, normMap } of compNormMaps) {
+        score += (normMap.get(tm) ?? 50) * weight;
+      }
+      scoreByTeam.set(tm, Number(score.toFixed(1)));
+    }
+
+    rebuildSingleMetricInPlace(
+      unit.overallKey,
+      true,
+      v => `${safeNum(v).toFixed(1)}%`,
+      tm => scoreByTeam.get(tm) ?? 50
+    );
+  }
+
+  // Sync unit card row references & legacy `teamStatRankings` array
+  for (const uOut of teamStats.units) {
+    if (uOut.overall?.key && teamStats.flatByKey[uOut.overall.key]) {
+      Object.assign(uOut.overall, teamStats.flatByKey[uOut.overall.key]);
+    }
+    for (const r of uOut.coreRows || []) {
+      if (r.key && teamStats.flatByKey[r.key]) Object.assign(r, teamStats.flatByKey[r.key]);
+    }
+    for (const grp of uOut.expandedGroups || []) {
+      for (const r of grp.rows || []) {
+        if (r.key && teamStats.flatByKey[r.key]) Object.assign(r, teamStats.flatByKey[r.key]);
+      }
+    }
+  }
+
+  if (Array.isArray(teamStatRankings)) {
+    for (const item of teamStatRankings) {
+      const fresh = teamStats.flatByKey[item.key];
+      if (fresh) {
+        item.rank = fresh.rank;
+        item.displayValue = fresh.displayValue;
+        item.leagueAvgDisplay = fresh.leagueAvgDisplay;
+      }
+    }
+  }
+
+  return anyChanged;
+}
+
+/**
+ * Reconciles NextGen Stats (`ngs_passing`, `ngs_receiving`, `ngs_rushing`) across both
+ * `week === '0'` full-season summaries AND volume-weighted `week > 0` regular-season rows
+ * for players who missed time or fall below NGS's full-season `week === '0'` threshold
+ * (e.g., Deebo Samuel Sr., Jacob Cowing, Jordan Watkins).
+ */
+export function aggregateWeeklyNgsStats2026({
+  ngsPassing = [],
+  ngsReceiving = [],
+  ngsRushing = [],
+  seasonYear = 2026
+} = {}) {
+  const seasonYearStr = String(seasonYear);
+  const prevSeasonYearStr = String(seasonYear - 1);
+
+  const ngsByGsis = new Map();
+  const ngsPass2026 = new Map();
+  const ngsRec2026 = new Map();
+  const ngsRush2026 = new Map();
+
+  // Pass 1: Authoritative `week === '0'` season rollups
+  for (const row of ngsPassing || []) {
+    if (String(row.week) !== '0' || (String(row.season) !== seasonYearStr && String(row.season) !== prevSeasonYearStr)) continue;
+    const gsis = String(row.player_gsis_id || '').trim();
+    if (!gsis) continue;
+    const obj = {
+      type: 'Passing NGS',
+      season: Number(row.season),
+      avgTimeToThrow: safeNum(row.avg_time_to_throw),
+      aggressivenessPct: safeNum(row.aggressiveness),
+      cpoe: safeNum(row.completion_percentage_above_expectation),
+      avgIntendedAirYards: safeNum(row.avg_intended_air_yards),
+      maxCompletedAirDistance: safeNum(row.max_completed_air_distance),
+      passerRating: safeNum(row.passer_rating)
+    };
+    if (String(row.season) === seasonYearStr) ngsPass2026.set(gsis, obj);
+    const prev = ngsByGsis.get(gsis);
+    if (!prev || Number(row.season) >= prev.season) ngsByGsis.set(gsis, obj);
+  }
+
+  for (const row of ngsReceiving || []) {
+    if (String(row.week) !== '0' || (String(row.season) !== seasonYearStr && String(row.season) !== prevSeasonYearStr)) continue;
+    const gsis = String(row.player_gsis_id || '').trim();
+    if (!gsis) continue;
+    const obj = {
+      type: 'Receiving NGS',
+      season: Number(row.season),
+      avgCushion: safeNum(row.avg_cushion),
+      avgSeparation: safeNum(row.avg_separation),
+      avgIntendedAirYards: safeNum(row.avg_intended_air_yards),
+      airYardsSharePct: safeNum(row.percent_share_of_intended_air_yards),
+      avgYac: safeNum(row.avg_yac),
+      avgYacAboveExpectation: safeNum(row.avg_yac_above_expectation),
+      catchPct: safeNum(row.catch_percentage)
+    };
+    if (String(row.season) === seasonYearStr) ngsRec2026.set(gsis, obj);
+    const prev = ngsByGsis.get(gsis);
+    if (!prev || Number(row.season) >= prev.season) ngsByGsis.set(gsis, obj);
+  }
+
+  for (const row of ngsRushing || []) {
+    if (String(row.week) !== '0' || (String(row.season) !== seasonYearStr && String(row.season) !== prevSeasonYearStr)) continue;
+    const gsis = String(row.player_gsis_id || '').trim();
+    if (!gsis) continue;
+    const obj = {
+      type: 'Rushing NGS',
+      season: Number(row.season),
+      efficiency: safeNum(row.efficiency),
+      stackedBox8PlusPct: safeNum(row.percent_attempts_gte_eight_defenders),
+      avgTimeToLos: safeNum(row.avg_time_to_los),
+      ryoeTotal: safeNum(row.rush_yards_over_expected),
+      ryoePerAtt: safeNum(row.rush_yards_over_expected_per_att),
+      rushPctOverExpected: Number((safeNum(row.rush_pct_over_expected) * 100).toFixed(1))
+    };
+    if (String(row.season) === seasonYearStr) ngsRush2026.set(gsis, obj);
+    const prev = ngsByGsis.get(gsis);
+    if (!prev || Number(row.season) >= prev.season) ngsByGsis.set(gsis, obj);
+  }
+
+  // Pass 2: Volume-weighted 2026 weekly rollups (`week > 0`, `REG`) for players missing `week === '0'`
+  const passWeekly = new Map();
+  for (const row of ngsPassing || []) {
+    if (String(row.season) !== seasonYearStr || String(row.week) === '0' || (row.season_type && row.season_type !== 'REG')) continue;
+    const gsis = String(row.player_gsis_id || '').trim();
+    if (!gsis || ngsPass2026.has(gsis)) continue;
+    const w = Math.max(1, safeNum(row.attempts, 1));
+    const cur = passWeekly.get(gsis) || { wSum: 0, ttt: 0, aggr: 0, cpoe: 0, iay: 0, maxAir: 0, rat: 0 };
+    cur.wSum += w;
+    cur.ttt += safeNum(row.avg_time_to_throw) * w;
+    cur.aggr += safeNum(row.aggressiveness) * w;
+    cur.cpoe += safeNum(row.completion_percentage_above_expectation) * w;
+    cur.iay += safeNum(row.avg_intended_air_yards) * w;
+    cur.maxAir = Math.max(cur.maxAir, safeNum(row.max_completed_air_distance));
+    cur.rat += safeNum(row.passer_rating) * w;
+    passWeekly.set(gsis, cur);
+  }
+  for (const [gsis, a] of passWeekly.entries()) {
+    if (a.wSum <= 0) continue;
+    const obj = {
+      type: 'Passing NGS',
+      season: seasonYear,
+      avgTimeToThrow: Number((a.ttt / a.wSum).toFixed(2)),
+      aggressivenessPct: Number((a.aggr / a.wSum).toFixed(1)),
+      cpoe: Number((a.cpoe / a.wSum).toFixed(2)),
+      avgIntendedAirYards: Number((a.iay / a.wSum).toFixed(2)),
+      maxCompletedAirDistance: Number(a.maxAir.toFixed(1)),
+      passerRating: Number((a.rat / a.wSum).toFixed(1))
+    };
+    ngsPass2026.set(gsis, obj);
+    ngsByGsis.set(gsis, obj);
+  }
+
+  const recWeekly = new Map();
+  for (const row of ngsReceiving || []) {
+    if (String(row.season) !== seasonYearStr || String(row.week) === '0' || (row.season_type && row.season_type !== 'REG')) continue;
+    const gsis = String(row.player_gsis_id || '').trim();
+    if (!gsis || ngsRec2026.has(gsis)) continue;
+    const w = Math.max(1, safeNum(row.targets, 1));
+    const rw = Math.max(1, safeNum(row.receptions, w));
+    const cur = recWeekly.get(gsis) || { tSum: 0, rSum: 0, cush: 0, sep: 0, iay: 0, airShare: 0, yac: 0, yacOe: 0, rec: 0, tgt: 0 };
+    cur.tSum += w;
+    cur.rSum += rw;
+    cur.rec += safeNum(row.receptions);
+    cur.tgt += safeNum(row.targets);
+    cur.cush += safeNum(row.avg_cushion) * w;
+    cur.sep += safeNum(row.avg_separation) * w;
+    cur.iay += safeNum(row.avg_intended_air_yards) * w;
+    cur.airShare += safeNum(row.percent_share_of_intended_air_yards) * w;
+    cur.yac += safeNum(row.avg_yac) * rw;
+    cur.yacOe += safeNum(row.avg_yac_above_expectation) * rw;
+    recWeekly.set(gsis, cur);
+  }
+  for (const [gsis, a] of recWeekly.entries()) {
+    if (a.tSum <= 0) continue;
+    const obj = {
+      type: 'Receiving NGS',
+      season: seasonYear,
+      avgCushion: Number((a.cush / a.tSum).toFixed(2)),
+      avgSeparation: Number((a.sep / a.tSum).toFixed(2)),
+      avgIntendedAirYards: Number((a.iay / a.tSum).toFixed(2)),
+      airYardsSharePct: Number((a.airShare / a.tSum).toFixed(1)),
+      avgYac: Number((a.yac / a.rSum).toFixed(2)),
+      avgYacAboveExpectation: Number((a.yacOe / a.rSum).toFixed(2)),
+      catchPct: a.tgt > 0 ? Number(((a.rec / a.tgt) * 100).toFixed(1)) : 0
+    };
+    ngsRec2026.set(gsis, obj);
+    ngsByGsis.set(gsis, obj);
+  }
+
+  const rushWeekly = new Map();
+  for (const row of ngsRushing || []) {
+    if (String(row.season) !== seasonYearStr || String(row.week) === '0' || (row.season_type && row.season_type !== 'REG')) continue;
+    const gsis = String(row.player_gsis_id || '').trim();
+    if (!gsis || ngsRush2026.has(gsis)) continue;
+    const w = Math.max(1, safeNum(row.rush_attempts, 1));
+    const cur = rushWeekly.get(gsis) || { wSum: 0, eff: 0, box8: 0, tlos: 0, ryoeTot: 0, pctOe: 0 };
+    cur.wSum += w;
+    cur.eff += safeNum(row.efficiency) * w;
+    cur.box8 += safeNum(row.percent_attempts_gte_eight_defenders) * w;
+    cur.tlos += safeNum(row.avg_time_to_los) * w;
+    cur.ryoeTot += safeNum(row.rush_yards_over_expected);
+    cur.pctOe += safeNum(row.rush_pct_over_expected) * w;
+    rushWeekly.set(gsis, cur);
+  }
+  for (const [gsis, a] of rushWeekly.entries()) {
+    if (a.wSum <= 0) continue;
+    const obj = {
+      type: 'Rushing NGS',
+      season: seasonYear,
+      efficiency: Number((a.eff / a.wSum).toFixed(2)),
+      stackedBox8PlusPct: Number((a.box8 / a.wSum).toFixed(1)),
+      avgTimeToLos: Number((a.tlos / a.wSum).toFixed(2)),
+      ryoeTotal: Number(a.ryoeTot.toFixed(1)),
+      ryoePerAtt: Number((a.ryoeTot / a.wSum).toFixed(2)),
+      rushPctOverExpected: Number(((a.pctOe / a.wSum) * 100).toFixed(1))
+    };
+    ngsRush2026.set(gsis, obj);
+    ngsByGsis.set(gsis, obj);
+  }
+
+  return { ngsByGsis, ngsPass2026, ngsRec2026, ngsRush2026 };
+}
+
+/**
+ * Reconciles Pro-Football-Reference Advanced Stats (`pass`, `rush`, `rec`, `def`) across
+ * season-summary CSVs AND weekly `advstats_week_*` CSVs with strict week-matched denominators!
+ *
+ * Why this is essential:
+ * 1) `nflverse` `advstats_season_{pass,rush,rec,def}.csv.gz` can lag or freeze mid-season
+ *    (e.g., `advstats_season_pass` has 0 current-year rows and `def/rush/rec` froze at Week 3 `g=3`),
+ *    whereas `advstats_week_*_{year}.csv.gz` updates every week.
+ * 2) PFR film charting refreshes on Wednesdays/Thursdays (with a Sunday AM pass for TNF),
+ *    lagging `nflverse` box-score `stats_player_reg` by 1 game on Tuesdays/Wednesdays.
+ *    Matching weekly PFR numerators strictly against `stats_player_week` denominators across
+ *    ONLY the charted weeks eliminates cross-week rate distortion!
+ */
+export function aggregateWeeklyPfrAdvStats2026({
+  pfrPassSeason = [],
+  pfrRushSeason = [],
+  pfrRecSeason = [],
+  pfrDefSeason = [],
+  pfrPassWeek = [],
+  pfrRushWeek = [],
+  pfrRecWeek = [],
+  pfrDefWeek = [],
+  statsPlayerWeek = [],
+  nflPlayers = [],
+  seasonYear = 2026
+} = {}) {
+  const seasonYearStr = String(seasonYear);
+  const prevSeasonYearStr = String(seasonYear - 1);
+
+  const gsisToPfr = new Map();
+  for (const np of nflPlayers || []) {
+    if (np.gsis_id && np.pfr_id) gsisToPfr.set(String(np.gsis_id).trim(), String(np.pfr_id).trim());
+  }
+
+  // Index weekly player box-score volumes by `(pfrId, week)` and `(team:normName, week)` for exact week-matched PFR rate denominators
+  const weeklyVolByPfrWeek = new Map();
+  const weeklyVolByTeamNameWeek = new Map();
+  for (const r of statsPlayerWeek || []) {
+    if (r.season_type && r.season_type !== 'REG') continue;
+    const wk = safeNum(r.week);
+    if (wk <= 0) continue;
+    const gsis = String(r.player_id || '').trim();
+    const pfrId = gsisToPfr.get(gsis) || '';
+    const tm = normalizeTeamAbbr(r.recent_team || r.team || '');
+    const nk = String(r.player_display_name || r.player_name || '')
+      .toLowerCase()
+      .replace(/\b(jr\.?|sr\.?|ii|iii|iv)\b/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .trim();
+    const vol = {
+      att: safeNum(r.attempts),
+      sacks: safeNum(r.sacks_suffered),
+      targets: safeNum(r.targets),
+      receptions: safeNum(r.receptions)
+    };
+    if (pfrId) weeklyVolByPfrWeek.set(`${pfrId}:${wk}`, vol);
+    if (tm && nk) weeklyVolByTeamNameWeek.set(`${tm}:${nk}:${wk}`, vol);
+  }
+
+  const resolveWeekVol = (pfrId, teamRaw, nameRaw, wk) => {
+    if (pfrId && weeklyVolByPfrWeek.has(`${pfrId}:${wk}`)) {
+      return weeklyVolByPfrWeek.get(`${pfrId}:${wk}`);
+    }
+    const tm = normalizeTeamAbbr(teamRaw || '');
+    const nk = String(nameRaw || '')
+      .toLowerCase()
+      .replace(/\b(jr\.?|sr\.?|ii|iii|iv)\b/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .trim();
+    return weeklyVolByTeamNameWeek.get(`${tm}:${nk}:${wk}`) || null;
+  };
+
+  const pfrAdvById = new Map();
+  const pfrPass2026 = new Map();
+  const pfrRush2026 = new Map();
+  const pfrRec2026 = new Map();
+  const pfrDef2026 = new Map();
+  let maxChartedWeek = 0;
+
+  // 1. Seed from season-level PFR CSVs (including prior-season fallback for `pfrAdvById`)
+  for (const row of pfrDefSeason || []) {
+    if (String(row.season) !== seasonYearStr && String(row.season) !== prevSeasonYearStr) continue;
+    const pid = String(row.pfr_id || '').trim();
+    if (!pid) continue;
+    const cmpPctRaw = safeNum(row.cmp_percent);
+    const mtklPctRaw = safeNum(row.m_tkl_percent);
+    const obj = {
+      type: 'Defense Coverage & Pressure',
+      season: Number(row.season),
+      games: safeNum(row.g),
+      targetsAllowed: safeNum(row.tgt),
+      completionsAllowed: safeNum(row.cmp),
+      completionPctAllowed: Number((cmpPctRaw * (cmpPctRaw <= 1 && cmpPctRaw > 0 ? 100 : 1)).toFixed(1)),
+      yardsPerTargetAllowed: Number(safeNum(row.yds_tgt).toFixed(2)),
+      passerRatingAllowed: Number(safeNum(row.rat).toFixed(1)),
+      dadot: row.dadot !== '' && row.dadot != null ? Number(safeNum(row.dadot).toFixed(1)) : null,
+      pressures: safeNum(row.prss),
+      hurries: safeNum(row.hrry),
+      qbKnockdowns: safeNum(row.qbkd),
+      missedTacklePct: Number((mtklPctRaw * (mtklPctRaw <= 1 && mtklPctRaw > 0 ? 100 : 1)).toFixed(1))
+    };
+    if (String(row.season) === seasonYearStr) pfrDef2026.set(pid, obj);
+    const prev = pfrAdvById.get(pid);
+    if (!prev || Number(row.season) >= prev.season) pfrAdvById.set(pid, obj);
+  }
+
+  for (const row of pfrRushSeason || []) {
+    if (String(row.season) !== seasonYearStr) continue;
+    const pid = String(row.pfr_id || '').trim();
+    if (!pid) continue;
+    pfrRush2026.set(pid, {
+      season: Number(row.season),
+      games: safeNum(row.g),
+      ybcPerAtt: Number(safeNum(row.ybc_att).toFixed(2)),
+      yacPerAtt: Number(safeNum(row.yac_att).toFixed(2)),
+      brokenTackles: safeNum(row.brk_tkl)
+    });
+  }
+
+  for (const row of pfrRecSeason || []) {
+    if (String(row.season) !== seasonYearStr) continue;
+    const pid = String(row.pfr_id || '').trim();
+    if (!pid) continue;
+    const dpRaw = safeNum(row.drop_percent);
+    pfrRec2026.set(pid, {
+      season: Number(row.season),
+      games: safeNum(row.g),
+      adot: row.adot !== '' && row.adot != null ? Number(safeNum(row.adot).toFixed(1)) : null,
+      yacPerRec: Number(safeNum(row.yac_r).toFixed(2)),
+      brokenTackles: safeNum(row.brk_tkl),
+      drops: safeNum(row.drop),
+      dropPct: Number((dpRaw * (dpRaw <= 1 && dpRaw > 0 ? 100 : 1)).toFixed(1))
+    });
+  }
+
+  for (const row of pfrPassSeason || []) {
+    if (String(row.season) !== seasonYearStr && String(row.season) !== prevSeasonYearStr) continue;
+    const pid = String(row.pfr_id || '').trim();
+    if (!pid) continue;
+    const obj = {
+      type: 'Passing Pocket & Accuracy',
+      season: Number(row.season),
+      games: safeNum(row.g),
+      pocketTimeSec: Number(safeNum(row.pocket_time).toFixed(2)),
+      pressurePct: Number(safeNum(row.pressure_pct).toFixed(1)),
+      onTargetPct: Number(safeNum(row.on_tgt_pct).toFixed(1)),
+      badThrowPct: Number(safeNum(row.bad_throw_pct).toFixed(1)),
+      dropPct: Number(safeNum(row.drop_pct).toFixed(1)),
+      playActionPassYards: safeNum(row.pa_pass_yards)
+    };
+    if (String(row.season) === seasonYearStr) pfrPass2026.set(pid, obj);
+    const prev = pfrAdvById.get(pid);
+    if (!prev || Number(row.season) >= prev.season) pfrAdvById.set(pid, obj);
+  }
+
+  // 2. Aggregate weekly PFR Defense (`advstats_week_def_{year}`) & upgrade whenever `chartedGames > seasonGames`
+  const defWkMap = new Map();
+  for (const r of pfrDefWeek || []) {
+    if (String(r.season) !== seasonYearStr || (r.game_type && r.game_type !== 'REG')) continue;
+    const pid = String(r.pfr_player_id || '').trim();
+    const wk = safeNum(r.week);
+    if (!pid || wk <= 0) continue;
+    if (wk > maxChartedWeek) maxChartedWeek = wk;
+    const cur = defWkMap.get(pid) || {
+      weeks: new Set(),
+      tgt: 0,
+      cmp: 0,
+      yds: 0,
+      td: 0,
+      ints: 0,
+      dadotWeighted: 0,
+      dadotTgt: 0,
+      prss: 0,
+      hrry: 0,
+      qbkd: 0,
+      combTkl: 0,
+      mTkl: 0
+    };
+    if (cur.weeks.has(wk)) continue;
+    cur.weeks.add(wk);
+    const tgt = safeNum(r.def_targets);
+    cur.tgt += tgt;
+    cur.cmp += safeNum(r.def_completions_allowed);
+    cur.yds += safeNum(r.def_yards_allowed);
+    cur.td += safeNum(r.def_receiving_td_allowed);
+    cur.ints += safeNum(r.def_ints);
+    if (r.def_adot !== '' && r.def_adot != null && tgt > 0) {
+      cur.dadotWeighted += safeNum(r.def_adot) * tgt;
+      cur.dadotTgt += tgt;
+    }
+    cur.prss += safeNum(r.def_pressures);
+    cur.hrry += safeNum(r.def_times_hurried);
+    cur.qbkd += safeNum(r.def_times_hitqb);
+    cur.combTkl += safeNum(r.def_tackles_combined);
+    cur.mTkl += safeNum(r.def_missed_tackles);
+    defWkMap.set(pid, cur);
+  }
+  for (const [pid, w] of defWkMap.entries()) {
+    const chartedGames = w.weeks.size;
+    const existing = pfrDef2026.get(pid);
+    if (existing && safeNum(existing.games) >= chartedGames) continue;
+    const tklAttempts = w.combTkl + w.mTkl;
+    const built = {
+      type: 'Defense Coverage & Pressure',
+      season: seasonYear,
+      games: chartedGames,
+      targetsAllowed: w.tgt,
+      completionsAllowed: w.cmp,
+      completionPctAllowed: w.tgt > 0 ? Number(((w.cmp / w.tgt) * 100).toFixed(1)) : null,
+      yardsPerTargetAllowed: w.tgt > 0 ? Number((w.yds / w.tgt).toFixed(2)) : null,
+      passerRatingAllowed:
+        w.tgt > 0 ? computeNflPasserRating(w.cmp, w.tgt, w.yds, w.td, w.ints) : null,
+      dadot: w.dadotTgt > 0 ? Number((w.dadotWeighted / w.dadotTgt).toFixed(1)) : existing?.dadot ?? null,
+      pressures: w.prss,
+      hurries: w.hrry,
+      qbKnockdowns: w.qbkd,
+      missedTacklePct: tklAttempts > 0 ? Number(((w.mTkl / tklAttempts) * 100).toFixed(1)) : null
+    };
+    pfrDef2026.set(pid, built);
+    pfrAdvById.set(pid, built);
+  }
+
+  // 3. Aggregate weekly PFR Rushing (`advstats_week_rush_{year}`) & upgrade whenever `chartedGames > seasonGames`
+  const rushWkMap = new Map();
+  for (const r of pfrRushWeek || []) {
+    if (String(r.season) !== seasonYearStr || (r.game_type && r.game_type !== 'REG')) continue;
+    const pid = String(r.pfr_player_id || '').trim();
+    const wk = safeNum(r.week);
+    if (!pid || wk <= 0) continue;
+    if (wk > maxChartedWeek) maxChartedWeek = wk;
+    const cur = rushWkMap.get(pid) || { weeks: new Set(), car: 0, ybc: 0, yac: 0, brk: 0 };
+    if (cur.weeks.has(wk)) continue;
+    cur.weeks.add(wk);
+    cur.car += safeNum(r.carries);
+    cur.ybc += safeNum(r.rushing_yards_before_contact);
+    cur.yac += safeNum(r.rushing_yards_after_contact);
+    cur.brk += safeNum(r.rushing_broken_tackles);
+    rushWkMap.set(pid, cur);
+  }
+  for (const [pid, w] of rushWkMap.entries()) {
+    const chartedGames = w.weeks.size;
+    const existing = pfrRush2026.get(pid);
+    if (existing && safeNum(existing.games) >= chartedGames) continue;
+    pfrRush2026.set(pid, {
+      season: seasonYear,
+      games: chartedGames,
+      ybcPerAtt: w.car > 0 ? Number((w.ybc / w.car).toFixed(2)) : existing?.ybcPerAtt ?? null,
+      yacPerAtt: w.car > 0 ? Number((w.yac / w.car).toFixed(2)) : existing?.yacPerAtt ?? null,
+      brokenTackles: w.brk
+    });
+  }
+
+  // 4. Aggregate weekly PFR Receiving (`advstats_week_rec_{year}`) with exact charted-week target denominators
+  const recWkMap = new Map();
+  for (const r of pfrRecWeek || []) {
+    if (String(r.season) !== seasonYearStr || (r.game_type && r.game_type !== 'REG')) continue;
+    const pid = String(r.pfr_player_id || '').trim();
+    const wk = safeNum(r.week);
+    if (!pid || wk <= 0) continue;
+    if (wk > maxChartedWeek) maxChartedWeek = wk;
+    const cur = recWkMap.get(pid) || {
+      weeks: new Set(),
+      drops: 0,
+      brk: 0,
+      matchedTargets: 0,
+      fallbackPctSum: 0,
+      fallbackCount: 0
+    };
+    if (cur.weeks.has(wk)) continue;
+    cur.weeks.add(wk);
+    const drops = safeNum(r.receiving_drop);
+    cur.drops += drops;
+    cur.brk += safeNum(r.receiving_broken_tackles);
+    const vol = resolveWeekVol(pid, r.team, r.pfr_player_name, wk);
+    if (vol && vol.targets > 0) {
+      cur.matchedTargets += vol.targets;
+    } else if (r.receiving_drop_pct !== '' && r.receiving_drop_pct != null) {
+      const pct = safeNum(r.receiving_drop_pct);
+      cur.fallbackPctSum += pct <= 1 ? pct * 100 : pct;
+      cur.fallbackCount += 1;
+    }
+    recWkMap.set(pid, cur);
+  }
+  for (const [pid, w] of recWkMap.entries()) {
+    const chartedGames = w.weeks.size;
+    const existing = pfrRec2026.get(pid);
+    if (existing && safeNum(existing.games) >= chartedGames) continue;
+    const dropPct =
+      w.matchedTargets > 0
+        ? Number(((w.drops / w.matchedTargets) * 100).toFixed(1))
+        : w.fallbackCount > 0
+          ? Number((w.fallbackPctSum / w.fallbackCount).toFixed(1))
+          : existing?.dropPct ?? 0;
+    pfrRec2026.set(pid, {
+      season: seasonYear,
+      games: chartedGames,
+      adot: existing?.adot ?? null,
+      yacPerRec: existing?.yacPerRec ?? null,
+      brokenTackles: w.brk,
+      drops: w.drops,
+      dropPct
+    });
+  }
+
+  // 5. Aggregate weekly PFR Passing (`advstats_week_pass_{year}`) with exact charted-week attempt & dropback denominators
+  const passWkMap = new Map();
+  for (const r of pfrPassWeek || []) {
+    if (String(r.season) !== seasonYearStr || (r.game_type && r.game_type !== 'REG')) continue;
+    const pid = String(r.pfr_player_id || '').trim();
+    const wk = safeNum(r.week);
+    if (!pid || wk <= 0) continue;
+    if (wk > maxChartedWeek) maxChartedWeek = wk;
+    const cur = passWkMap.get(pid) || {
+      weeks: new Set(),
+      badThrows: 0,
+      drops: 0,
+      pressured: 0,
+      matchedAtt: 0,
+      matchedDb: 0,
+      badPctFallbackSum: 0,
+      prssPctFallbackSum: 0,
+      fallbackCount: 0
+    };
+    if (cur.weeks.has(wk)) continue;
+    cur.weeks.add(wk);
+    const bad = safeNum(r.passing_bad_throws);
+    const drops = safeNum(r.passing_drops);
+    const prss = safeNum(r.times_pressured);
+    const sk = safeNum(r.times_sacked);
+    cur.badThrows += bad;
+    cur.drops += drops;
+    cur.pressured += prss;
+
+    const vol = resolveWeekVol(pid, r.team, r.pfr_player_name, wk);
+    if (vol && vol.att > 0) {
+      cur.matchedAtt += vol.att;
+      cur.matchedDb += vol.att + Math.max(vol.sacks, sk);
+    } else {
+      const bp = safeNum(r.passing_bad_throw_pct);
+      const pp = safeNum(r.times_pressured_pct);
+      cur.badPctFallbackSum += bp <= 1 ? bp * 100 : bp;
+      cur.prssPctFallbackSum += pp <= 1 ? pp * 100 : pp;
+      cur.fallbackCount += 1;
+    }
+    passWkMap.set(pid, cur);
+  }
+  for (const [pid, w] of passWkMap.entries()) {
+    const chartedGames = w.weeks.size;
+    const existing = pfrPass2026.get(pid);
+    if (existing && safeNum(existing.games) >= chartedGames) continue;
+    if (w.matchedAtt <= 0 && w.fallbackCount <= 0) continue;
+    const built = {
+      type: 'Passing Pocket & Accuracy',
+      season: seasonYear,
+      games: chartedGames,
+      pressurePct:
+        w.matchedDb > 0
+          ? Number(((w.pressured / w.matchedDb) * 100).toFixed(1))
+          : Number((w.prssPctFallbackSum / Math.max(1, w.fallbackCount)).toFixed(1)),
+      badThrowPct:
+        w.matchedAtt > 0
+          ? Number(((w.badThrows / w.matchedAtt) * 100).toFixed(1))
+          : Number((w.badPctFallbackSum / Math.max(1, w.fallbackCount)).toFixed(1)),
+      dropPct: w.matchedAtt > 0 ? Number(((w.drops / w.matchedAtt) * 100).toFixed(1)) : 0
+    };
+    pfrPass2026.set(pid, built);
+    pfrAdvById.set(pid, built);
+  }
+
+  return {
+    pfrAdvById,
+    pfrPass2026,
+    pfrRush2026,
+    pfrRec2026,
+    pfrDef2026,
+    maxChartedWeek
   };
 }
 
@@ -852,7 +1614,7 @@ export const POSITIONAL_METRIC_TEMPLATES = {
     ],
     expanded: [
       { key: 'pfr_hurries', label: 'QB Hurries (PFR)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrHurries },
-      { key: 'pressure_per_game', label: 'Pressures / Game', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => (u.games > 0 && u.pfrPressures != null ? u.pfrPressures / u.games : null) },
+      { key: 'pressure_per_game', label: 'Pressures / Game', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => ((u.pfrDefGames || u.games) > 0 && u.pfrPressures != null ? u.pfrPressures / (u.pfrDefGames || u.games) : null) },
       { key: 'def_solo', label: 'Solo Tackles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.soloTackles },
       { key: 'def_pd', label: 'Passes Defended / Bats', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
       { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
@@ -872,7 +1634,7 @@ export const POSITIONAL_METRIC_TEMPLATES = {
     ],
     expanded: [
       { key: 'pfr_hurries', label: 'QB Hurries (PFR)', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.pfrHurries },
-      { key: 'pressure_per_game', label: 'Pressures / Game', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => (u.games > 0 && u.pfrPressures != null ? u.pfrPressures / u.games : null) },
+      { key: 'pressure_per_game', label: 'Pressures / Game', higherIsBetter: true, qual: 'front_snaps', format: v => fmtPlain(v, 2), extract: u => ((u.pfrDefGames || u.games) > 0 && u.pfrPressures != null ? u.pfrPressures / (u.pfrDefGames || u.games) : null) },
       { key: 'def_ff', label: 'Forced Fumbles', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.forcedFumbles },
       { key: 'def_pd', label: 'Batted Passes / PD', higherIsBetter: true, qual: 'any_def', format: v => String(Math.round(v)), extract: u => u.passDefended },
       { key: 'pfr_mtkl_pct', label: 'Missed Tackle % (PFR)', higherIsBetter: false, qual: 'front_snaps', format: v => fmtPlain(v, 1, '%'), extract: u => u.pfrMissedTacklePct },
@@ -1090,6 +1852,7 @@ function normKeySimple(name = '') {
  */
 export function computeLeaguePositionalLeaderboards({
   statsPlayerCurrent = [],
+  statsPlayerWeek = [],
   ngsPass2026 = new Map(),
   ngsRec2026 = new Map(),
   ngsRush2026 = new Map(),
@@ -1097,6 +1860,7 @@ export function computeLeaguePositionalLeaderboards({
   pfrRush2026 = new Map(),
   pfrRec2026 = new Map(),
   pfrDef2026 = new Map(),
+  maxPfrChartedWeek = 0,
   snaps2026 = [],
   nflPlayers = [],
   rosterPlayers = [],
@@ -1108,6 +1872,18 @@ export function computeLeaguePositionalLeaderboards({
   for (const np of nflPlayers || []) {
     if (np.gsis_id) nflByGsis.set(np.gsis_id, np);
     if (np.pfr_id) nflByPfr.set(np.pfr_id, np);
+  }
+
+  // Track max week present in `stats_player_week` per team so if `snap_counts` refreshes a few hours
+  // ahead of `stats_player_reg` on Tuesday morning, box-score per-game denominators never jump ahead!
+  const maxStatWeekByTeam = new Map();
+  for (const rw of statsPlayerWeek || []) {
+    if (rw.season_type && rw.season_type !== 'REG') continue;
+    const tm = normalizeTeamAbbr(rw.recent_team || rw.team || '');
+    const wk = safeNum(rw.week);
+    if (tm && wk > (maxStatWeekByTeam.get(tm) || 0)) {
+      maxStatWeekByTeam.set(tm, wk);
+    }
   }
 
   // Aggregate 2026 snap counts across ALL 32 NFL teams (deduplicated per game_id + player)
@@ -1125,12 +1901,17 @@ export function computeLeaguePositionalLeaderboards({
     if (seenSnapPlayerGames.has(gameDedupKey)) continue;
     seenSnapPlayerGames.add(gameDedupKey);
 
+    const wkNum = safeNum(s.week);
+    const teamStatMaxWk = maxStatWeekByTeam.get(tm) || 0;
+    const withinStatWindow = teamStatMaxWk === 0 || wkNum <= 0 || wkNum <= teamStatMaxWk;
+
     const cur = leagueSnapsByPfr.get(key) || {
       pfrId,
       name: s.player || '',
       pos: s.position || '',
       team: tm,
       games: 0,
+      gamesThroughStatWeek: 0,
       offSnaps: 0,
       offPctSum: 0,
       defSnaps: 0,
@@ -1139,6 +1920,7 @@ export function computeLeaguePositionalLeaderboards({
       stPctSum: 0
     };
     cur.games += 1;
+    if (withinStatWindow) cur.gamesThroughStatWeek += 1;
     cur.offSnaps += safeNum(s.offense_snaps);
     cur.offPctSum += safeNum(s.offense_pct);
     cur.defSnaps += safeNum(s.defense_snaps);
@@ -1186,7 +1968,8 @@ export function computeLeaguePositionalLeaderboards({
       null;
 
     const rowGp = safeNum(row.games);
-    const games = Math.min(18, Math.max(rowGp <= 18 ? rowGp : 0, snapRec?.games || 0));
+    const snapGpForBoxStats = snapRec?.gamesThroughStatWeek ?? snapRec?.games ?? 0;
+    const games = Math.min(18, Math.max(rowGp <= 18 ? rowGp : 0, snapGpForBoxStats));
     if (games > maxLeagueGames && games <= 18) maxLeagueGames = games;
 
     const ngsP = gsisId ? ngsPass2026.get(gsisId) : null;
@@ -1313,6 +2096,10 @@ export function computeLeaguePositionalLeaderboards({
       ints: safeNum(row.def_interceptions),
       passDefended: safeNum(row.def_pass_defended),
       forcedFumbles: safeNum(row.def_fumbles_forced),
+      pfrDefGames: pfrD?.games ?? null,
+      pfrRushGames: pfrRu?.games ?? null,
+      pfrRecGames: pfrRc?.games ?? null,
+      pfrPassGames: pfrP?.games ?? null,
       pfrPressures: pfrD?.pressures ?? null,
       pfrHurries: pfrD?.hurries ?? null,
       pfrTargetsAllowed: pfrD?.targetsAllowed ?? null,
@@ -1385,6 +2172,7 @@ export function computeLeaguePositionalLeaderboards({
       receptions: 0, targets: 0, recYds: 0, recTds: 0, recEpa: null, recYac: 0, recFirstDowns: 0,
       targetSharePct: null, wopr: null, adot: null, ngsSeparation: null, ngsYacAboveExp: null, pfrDropPct: null,
       soloTackles: 0, totalTackles: 0, tfl: 0, sacks: 0, qbHits: 0, ints: 0, passDefended: 0, forcedFumbles: 0,
+      pfrDefGames: pfrD?.games ?? null, pfrRushGames: null, pfrRecGames: null, pfrPassGames: null,
       pfrPressures: pfrD?.pressures ?? null, pfrHurries: pfrD?.hurries ?? null,
       pfrTargetsAllowed: pfrD?.targetsAllowed ?? null, pfrCmpPctAllowed: pfrD?.completionPctAllowed ?? null,
       pfrYdsPerTgtAllowed: pfrD?.yardsPerTargetAllowed ?? null, pfrRatingAllowed: pfrD?.passerRatingAllowed ?? null,
@@ -1393,6 +2181,19 @@ export function computeLeaguePositionalLeaderboards({
       punts: 0, puntYds: 0, puntNetYds: 0, puntIn20: 0, puntLong: 0
     });
   }
+
+  // Compute PFR reference charted-game baseline (`refPfrGames`) so Thursday-refreshed PFR qualifiers
+  // (`cov_tgt`) never penalize Sunday/MNF starters on Tuesday/Wednesday when `maxLeagueGames` is +1 ahead!
+  const pfrGameSamples = [];
+  for (const u of unifiedPlayers.values()) {
+    const pg = u.pfrDefGames || u.pfrRushGames || u.pfrRecGames || u.pfrPassGames || 0;
+    if (pg > 0) pfrGameSamples.push(pg);
+  }
+  pfrGameSamples.sort((a, b) => a - b);
+  const refPfrGames =
+    pfrGameSamples.length > 0
+      ? Math.max(1, pfrGameSamples[Math.floor(pfrGameSamples.length * 0.75)] || maxLeagueGames)
+      : maxLeagueGames;
 
   const playersByPeerGroup = new Map();
   for (const u of unifiedPlayers.values()) {
@@ -1406,6 +2207,7 @@ export function computeLeaguePositionalLeaderboards({
 
   function registerPeerDirectoryEntry(u) {
     if (!peerDirectory[u.uid]) {
+      const pfrG = u.pfrDefGames || u.pfrRushGames || u.pfrRecGames || u.pfrPassGames || null;
       peerDirectory[u.uid] = {
         name: u.name,
         team: u.team,
@@ -1413,7 +2215,8 @@ export function computeLeaguePositionalLeaderboards({
         headshotUrl: u.headshotUrl || '',
         pfrUrl: u.pfrUrl || null,
         espnUrl: u.espnUrl || null,
-        sfPlayerId: u.sfPlayerId || null
+        sfPlayerId: u.sfPlayerId || null,
+        pfrGames: pfrG
       };
     }
   }
@@ -1422,6 +2225,9 @@ export function computeLeaguePositionalLeaderboards({
     const lbKey = `${peerGroup}:${metricDef.key}`;
     if (fullPoolCache.has(lbKey)) return fullPoolCache.get(lbKey);
 
+    const isPfrMetric = metricDef.key.startsWith('pfr_') || metricDef.key === 'pressure_per_game';
+    const effectiveRefGames = isPfrMetric ? Math.min(maxLeagueGames, refPfrGames) : maxLeagueGames;
+
     const groupPool = playersByPeerGroup.get(peerGroup) || [];
     const qualifiedList = [];
     let qualifierNote = 'Active Players';
@@ -1429,7 +2235,7 @@ export function computeLeaguePositionalLeaderboards({
     for (const u of groupPool) {
       const val = metricDef.extract(u);
       if (val === null || val === undefined || !Number.isFinite(Number(val))) continue;
-      const q = evaluateQualifier(metricDef.qual, u, maxLeagueGames);
+      const q = evaluateQualifier(metricDef.qual, u, effectiveRefGames);
       qualifierNote = q.label;
       if (q.ok) {
         qualifiedList.push({
@@ -1474,6 +2280,8 @@ export function computeLeaguePositionalLeaderboards({
       higherIsBetter: metricDef.higherIsBetter,
       qualifierLabel: qualifierNote,
       totalQualified: ranked.length,
+      isPfrCharted: isPfrMetric,
+      maxChartedWeek: isPfrMetric && maxPfrChartedWeek > 0 ? maxPfrChartedWeek : null,
       posAvg: Number(avgRaw.toFixed(4)),
       posAvgDisplay: avgDisp,
       rows: storedRows.map(r => [r.uid, r.rank, r.disp, r.val])
@@ -1889,11 +2697,13 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
     const barPct = lb.higherIsBetter
       ? ((r.val - minV) / span) * 100
       : ((maxV - r.val) / span) * 100;
+    const pfrGamesTag =
+      lb.isPfrCharted && r.meta.pfrGames ? ` • ${r.meta.pfrGames}G charted` : '';
     return {
       rank: r.rank,
       id: r.uid,
       title: r.meta.name || 'Player',
-      subtitle: `${r.meta.team || 'NFL'} • ${r.meta.pos || lb.peerGroup}${r.unqualifiedNote ? ' • Below Min. Vol' : ''}`,
+      subtitle: `${r.meta.team || 'NFL'} • ${r.meta.pos || lb.peerGroup}${pfrGamesTag}${r.unqualifiedNote ? ' • Below Min. Vol' : ''}`,
       logoUrl: '',
       headshotUrl: r.meta.headshotUrl || '',
       displayValue: r.disp,
@@ -1914,10 +2724,12 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
     if (aboveAvg) avgInsertAfterIdx = i;
   }
 
+  const pfrEyebrowNote = lb.isPfrCharted ? ' • PFR Film Charting (Thu Refresh)' : '';
+
   return {
     scope: 'player',
     title: lb.label,
-    eyebrow: `${lb.peerGroupLabel} • ${lb.qualifierLabel} (${lb.totalQualified} NFL Qualified)`,
+    eyebrow: `${lb.peerGroupLabel} • ${lb.qualifierLabel} (${lb.totalQualified} NFL Qualified)${pfrEyebrowNote}`,
     avgLabel: `${lb.peerGroup} Positional Avg: ${lb.posAvgDisplay}`,
     avgInsertAfterIdx,
     rows

@@ -107,7 +107,9 @@ import {
 import {
   NFL_TEAM_NAMES,
   computeLeagueTeamStatsPayload,
-  computeLeaguePositionalLeaderboards
+  computeLeaguePositionalLeaderboards,
+  aggregateWeeklyNgsStats2026,
+  aggregateWeeklyPfrAdvStats2026
 } from '../src/engine/statsLeaderboardEngine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -335,6 +337,7 @@ async function main() {
     espnDepth,
     espnInjuries,
     espnStandings,
+    espnScoreboard,
     espnNews,
     espnSfTxJson,
     official49ersRosterHtml,
@@ -349,6 +352,7 @@ async function main() {
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts'),
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries'),
     fetchJson('https://site.api.espn.com/apis/v2/sports/football/nfl/standings'),
+    fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard').catch(() => ({ events: [] })),
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=50'),
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=25&limit=250').catch(() => ({
       transactions: []
@@ -371,6 +375,7 @@ async function main() {
   const [
     nflPlayers,
     statsPlayerCurrent,
+    statsPlayerWeekCurrent,
     statsPlayerPrev1,
     statsPlayerPrev2,
     statsPlayerPrev3,
@@ -382,8 +387,11 @@ async function main() {
     pfrPass,
     pfrPassWeekCurrent,
     pfrRush,
+    pfrRushWeekCurrent,
     pfrRec,
+    pfrRecWeekCurrent,
     pfrDef,
+    pfrDefWeekCurrent,
     snaps2026,
     injuries2026,
     combineRows,
@@ -392,6 +400,7 @@ async function main() {
   ] = await Promise.all([
     fetchCsvWithFallback(`${NFLVERSE_BASE}/players/players.csv.gz`, `${NFLVERSE_BASE}/players/players.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_week_${seasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 1}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 2}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 3}.csv.gz`),
@@ -409,8 +418,11 @@ async function main() {
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_pass_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_pass_${prevSeasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_rush.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_rush.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_rush_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_rush_${prevSeasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_rec.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_rec.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_rec_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_rec_${prevSeasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_def_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_def_${prevSeasonYear}.csv.gz`),
     fetchCsvWithFallback(
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${seasonYear}.csv.gz`,
       `${NFLVERSE_BASE}/snap_counts/snap_counts_${prevSeasonYear}.csv.gz`
@@ -530,181 +542,48 @@ async function main() {
     }
   }
 
-  // Index NextGen Stats (week === '0' is full season summary)
-  const ngsByGsis = new Map();
-  const ngsPass2026 = new Map();
-  const ngsRec2026 = new Map();
-  const ngsRush2026 = new Map();
-  for (const row of ngsPassing) {
-    if (row.week !== '0' || (row.season !== seasonYearStr && row.season !== prevSeasonYearStr)) continue;
-    const obj = {
-      type: 'Passing NGS',
-      season: Number(row.season),
-      avgTimeToThrow: num(row.avg_time_to_throw, 2),
-      aggressivenessPct: num(row.aggressiveness, 1),
-      cpoe: num(row.completion_percentage_above_expectation, 2),
-      avgIntendedAirYards: num(row.avg_intended_air_yards, 2),
-      maxCompletedAirDistance: num(row.max_completed_air_distance, 1),
-      passerRating: num(row.passer_rating, 1)
-    };
-    if (row.season === seasonYearStr) ngsPass2026.set(row.player_gsis_id, obj);
-    const prev = ngsByGsis.get(row.player_gsis_id);
-    if (!prev || Number(row.season) >= prev.season) {
-      ngsByGsis.set(row.player_gsis_id, obj);
-    }
-  }
-  for (const row of ngsReceiving) {
-    if (row.week !== '0' || (row.season !== seasonYearStr && row.season !== prevSeasonYearStr)) continue;
-    const obj = {
-      type: 'Receiving NGS',
-      season: Number(row.season),
-      avgCushion: num(row.avg_cushion, 2),
-      avgSeparation: num(row.avg_separation, 2),
-      avgIntendedAirYards: num(row.avg_intended_air_yards, 2),
-      airYardsSharePct: num(row.percent_share_of_intended_air_yards, 1),
-      avgYac: num(row.avg_yac, 2),
-      avgYacAboveExpectation: num(row.avg_yac_above_expectation, 2),
-      catchPct: num(row.catch_percentage, 1)
-    };
-    if (row.season === seasonYearStr) ngsRec2026.set(row.player_gsis_id, obj);
-    const prev = ngsByGsis.get(row.player_gsis_id);
-    if (!prev || Number(row.season) >= prev.season) {
-      ngsByGsis.set(row.player_gsis_id, obj);
-    }
-  }
-  for (const row of ngsRushing) {
-    if (row.week !== '0' || (row.season !== seasonYearStr && row.season !== prevSeasonYearStr)) continue;
-    const obj = {
-      type: 'Rushing NGS',
-      season: Number(row.season),
-      efficiency: num(row.efficiency, 2),
-      stackedBox8PlusPct: num(row.percent_attempts_gte_eight_defenders, 1),
-      avgTimeToLos: num(row.avg_time_to_los, 2),
-      ryoeTotal: num(row.rush_yards_over_expected, 1),
-      ryoePerAtt: num(row.rush_yards_over_expected_per_att, 2),
-      rushPctOverExpected: num(Number(row.rush_pct_over_expected || 0) * 100, 1)
-    };
-    if (row.season === seasonYearStr) ngsRush2026.set(row.player_gsis_id, obj);
-    const prev = ngsByGsis.get(row.player_gsis_id);
-    if (!prev || Number(row.season) >= prev.season) {
-      ngsByGsis.set(row.player_gsis_id, obj);
-    }
-  }
+  // Index NextGen Stats (`week === '0'` full-season rollups + volume-weighted `week > 0` weekly fallback)
+  const { ngsByGsis, ngsPass2026, ngsRec2026, ngsRush2026 } = aggregateWeeklyNgsStats2026({
+    ngsPassing,
+    ngsReceiving,
+    ngsRushing,
+    seasonYear
+  });
 
-  // Index PFR Advanced Stats (2026 strictly separated for Positional Leaderboards)
-  const pfrAdvById = new Map();
-  const pfrDef2026 = new Map();
-  const pfrPass2026 = new Map();
-  const pfrRush2026 = new Map();
-  const pfrRec2026 = new Map();
+  // Index PFR Advanced Stats across season-summary CSVs AND weekly PFR charting CSVs (`advstats_week_*`)
+  // with strict week-matched box-score denominators to account for PFR's Wednesday/Thursday charting cadence!
+  const {
+    pfrAdvById,
+    pfrPass2026,
+    pfrRush2026,
+    pfrRec2026,
+    pfrDef2026,
+    maxChartedWeek: maxPfrChartedWeek
+  } = aggregateWeeklyPfrAdvStats2026({
+    pfrPassSeason: pfrPass,
+    pfrRushSeason: pfrRush,
+    pfrRecSeason: pfrRec,
+    pfrDefSeason: pfrDef,
+    pfrPassWeek: pfrPassWeekCurrent,
+    pfrRushWeek: pfrRushWeekCurrent,
+    pfrRecWeek: pfrRecWeekCurrent,
+    pfrDefWeek: pfrDefWeekCurrent,
+    statsPlayerWeek: statsPlayerWeekCurrent,
+    nflPlayers,
+    seasonYear
+  });
 
-  for (const row of pfrDef) {
-    if (row.season !== seasonYearStr && row.season !== prevSeasonYearStr) continue;
-    const obj = {
-      type: 'Defense Coverage & Pressure',
-      season: Number(row.season),
-      targetsAllowed: num(row.tgt),
-      completionsAllowed: num(row.cmp),
-      completionPctAllowed: num(Number(row.cmp_percent || 0) * (Number(row.cmp_percent) <= 1 ? 100 : 1), 1),
-      yardsPerTargetAllowed: num(row.yds_tgt, 2),
-      passerRatingAllowed: num(row.rat, 1),
-      dadot: num(row.dadot, 1),
-      pressures: num(row.prss),
-      hurries: num(row.hrry),
-      qbKnockdowns: num(row.qbkd),
-      missedTacklePct: num(Number(row.m_tkl_percent || 0) * (Number(row.m_tkl_percent) <= 1 ? 100 : 1), 1)
-    };
-    if (row.season === seasonYearStr) pfrDef2026.set(row.pfr_id, obj);
-    const prev = pfrAdvById.get(row.pfr_id);
-    if (!prev || Number(row.season) >= prev.season) {
-      pfrAdvById.set(row.pfr_id, obj);
-    }
-  }
-  for (const row of pfrRush) {
-    if (row.season !== seasonYearStr) continue;
-    pfrRush2026.set(row.pfr_id, {
-      season: Number(row.season),
-      ybcPerAtt: num(row.ybc_att, 2),
-      yacPerAtt: num(row.yac_att, 2),
-      brokenTackles: num(row.brk_tkl)
-    });
-  }
-  for (const row of pfrRec) {
-    if (row.season !== seasonYearStr) continue;
-    pfrRec2026.set(row.pfr_id, {
-      season: Number(row.season),
-      adot: row.adot !== '' ? num(row.adot, 1) : null,
-      yacPerRec: num(row.yac_r, 2),
-      brokenTackles: num(row.brk_tkl),
-      drops: num(row.drop),
-      dropPct: num(Number(row.drop_percent || 0) * (Number(row.drop_percent) <= 1 ? 100 : 1), 1)
-    });
-  }
-  for (const row of pfrPass) {
-    if (row.season !== seasonYearStr && row.season !== prevSeasonYearStr) continue;
-    const obj = {
-      type: 'Passing Pocket & Accuracy',
-      season: Number(row.season),
-      pocketTimeSec: num(row.pocket_time, 2),
-      pressurePct: num(row.pressure_pct, 1),
-      onTargetPct: num(row.on_tgt_pct, 1),
-      badThrowPct: num(row.bad_throw_pct, 1),
-      dropPct: num(row.drop_pct, 1),
-      playActionPassYards: num(row.pa_pass_yards)
-    };
-    if (row.season === seasonYearStr) pfrPass2026.set(row.pfr_id, obj);
-    const prev = pfrAdvById.get(row.pfr_id);
-    if (!prev || Number(row.season) >= prev.season) {
-      pfrAdvById.set(row.pfr_id, obj);
-    }
-  }
-  // Aggregate 2026 weekly PFR pass rows (bad throws, drops, pressures) when season-summary CSV lags
-  if (pfrPass2026.size === 0 && pfrPassWeekCurrent.length > 0) {
-    const wkAgg = new Map();
-    for (const row of pfrPassWeekCurrent) {
-      if (row.season !== seasonYearStr || (row.game_type && row.game_type !== 'REG') || !row.pfr_player_id) continue;
-      const cur = wkAgg.get(row.pfr_player_id) || { badThrows: 0, drops: 0, pressured: 0, hurried: 0, hit: 0, sacked: 0, blitzed: 0 };
-      cur.badThrows += num(row.passing_bad_throws);
-      cur.drops += num(row.passing_drops);
-      cur.pressured += num(row.times_pressured);
-      cur.hurried += num(row.times_hurried);
-      cur.hit += num(row.times_hit);
-      cur.sacked += num(row.times_sacked);
-      cur.blitzed += num(row.times_blitzed);
-      wkAgg.set(row.pfr_player_id, cur);
-    }
-    const pfrAttMap = new Map();
-    for (const np of nflPlayers) {
-      if (np.pfr_id && np.gsis_id) {
-        const sList = seasonStatsByGsis.get(np.gsis_id) || [];
-        const sCur = sList.find(x => x.season === seasonYear);
-        if (sCur?.passing?.attempts) {
-          pfrAttMap.set(np.pfr_id, { att: sCur.passing.attempts, sk: sCur.passing.sacks });
-        }
-      }
-    }
-    for (const [pid, w] of wkAgg.entries()) {
-      const vol = pfrAttMap.get(pid);
-      if (!vol || vol.att <= 0) continue;
-      const db = Math.max(1, vol.att + vol.sk);
-      const built = {
-        type: 'Passing Pocket & Accuracy',
-        season: seasonYear,
-        pressurePct: num((w.pressured / db) * 100, 1),
-        badThrowPct: num((w.badThrows / vol.att) * 100, 1),
-        dropPct: num((w.drops / vol.att) * 100, 1)
-      };
-      pfrPass2026.set(pid, built);
-      pfrAdvById.set(pid, built);
-    }
-  }
-
-  // Aggregate 2026 Snap Counts for SF players
+  // Aggregate 2026 Snap Counts for SF players (REG only, deduplicated per game_id + player)
   const snapsAggByPfr = new Map();
   const snapsAggByName = new Map();
+  const seenSfSnapGames = new Set();
   for (const s of snaps2026) {
     if (s.team !== 'SF') continue;
+    if (s.game_type && s.game_type !== 'REG') continue;
     const key = s.pfr_player_id || normName(s.player);
+    const dedupKey = `${key}::${s.game_id || s.week || ''}`;
+    if (seenSfSnapGames.has(dedupKey)) continue;
+    seenSfSnapGames.add(dedupKey);
     const cur = snapsAggByPfr.get(key) || { games: 0, offSnaps: 0, offPctSum: 0, defSnaps: 0, defPctSum: 0, stSnaps: 0, stPctSum: 0 };
     cur.games += 1;
     cur.offSnaps += num(s.offense_snaps);
@@ -2869,6 +2748,9 @@ async function main() {
             return s?.value != null && Number.isFinite(Number(s.value)) ? Number(s.value) : null;
           };
           espnTeamStatsByAbbr.set(abbr, {
+            gamesPlayed:
+              findVal(ownCats, 'general', 'gamesPlayed') ??
+              findVal(ownCats, 'passing', 'teamGamesPlayed'),
             offThirdDownPct: findVal(ownCats, 'miscellaneous', 'thirdDownConvPct'),
             defThirdDownPctAllowed: findVal(oppCats, 'miscellaneous', 'thirdDownConvPct'),
             offRedZoneTdPct: findVal(ownCats, 'miscellaneous', 'redzoneTouchdownPct'),
@@ -3852,15 +3734,32 @@ async function main() {
     }
   }
 
-  // Reconcile newly completed SF games from live ESPN schedule so SF never simulates 18 games right after Final
+  // Reconcile newly completed SF & league-wide games from live ESPN schedule + scoreboard so no team simulates 18 games right after Final
   const completedSfByWeek = new Map(
     scheduleItems.filter(s => s.completed).map(s => [Number(s.week), s])
   );
-  if (completedSfByWeek.size > 0 && remaining2026Games.length > 0) {
+  const completedScoreboardByKey = new Map();
+  for (const ev of espnScoreboard?.events || []) {
+    const comp = ev.competitions?.[0];
+    if (!comp?.status?.type?.completed) continue;
+    const wk = Number(ev.week?.number || espnScoreboard?.week?.number || 0);
+    const homeC = (comp.competitors || []).find(c => c.homeAway === 'home');
+    const awayC = (comp.competitors || []).find(c => c.homeAway === 'away');
+    if (!homeC || !awayC || !wk) continue;
+    const hAbbr = normalizeTeamAbbr(homeC.team?.abbreviation || '');
+    const aAbbr = normalizeTeamAbbr(awayC.team?.abbreviation || '');
+    completedScoreboardByKey.set(`${wk}:${aAbbr}@${hAbbr}`, {
+      homeScore: Number(homeC.score || 0),
+      awayScore: Number(awayC.score || 0)
+    });
+  }
+
+  if ((completedSfByWeek.size > 0 || completedScoreboardByKey.size > 0) && remaining2026Games.length > 0) {
     const stillRemaining = [];
     for (const rg of remaining2026Games) {
       const isSf = rg.home === 'SF' || rg.away === 'SF';
       const doneSf = isSf ? completedSfByWeek.get(Number(rg.week)) : null;
+      const doneSb = completedScoreboardByKey.get(`${Number(rg.week)}:${rg.away}@${rg.home}`) || null;
       if (doneSf && doneSf.sfScore != null && doneSf.oppScore != null) {
         const homeScore = rg.home === 'SF' ? Number(doneSf.sfScore) : Number(doneSf.oppScore);
         const awayScore = rg.home === 'SF' ? Number(doneSf.oppScore) : Number(doneSf.sfScore);
@@ -3872,6 +3771,17 @@ async function main() {
             away: rg.away,
             homeScore,
             awayScore
+          });
+        }
+      } else if (doneSb) {
+        if (!completed2026Games.some(cg => cg.id === rg.id)) {
+          completed2026Games.push({
+            id: rg.id,
+            week: rg.week,
+            home: rg.home,
+            away: rg.away,
+            homeScore: doneSb.homeScore,
+            awayScore: doneSb.awayScore
           });
         }
       } else {
@@ -4278,6 +4188,7 @@ async function main() {
 
   const posLeaderboardsResult = computeLeaguePositionalLeaderboards({
     statsPlayerCurrent,
+    statsPlayerWeek: statsPlayerWeekCurrent,
     ngsPass2026,
     ngsRec2026,
     ngsRush2026,
@@ -4285,6 +4196,7 @@ async function main() {
     pfrRush2026,
     pfrRec2026,
     pfrDef2026,
+    maxPfrChartedWeek,
     snaps2026,
     nflPlayers,
     rosterPlayers,

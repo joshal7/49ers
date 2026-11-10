@@ -50,6 +50,7 @@ import {
   resolveReporterFromNameOrHandle,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
+import { refreshLiveStandingsMetricsInTeamStats } from '../engine/statsLeaderboardEngine.js';
 
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
 const GITHUB_RAW_DATA_BASE = 'https://raw.githubusercontent.com/joshal7/49ers/main/data';
@@ -1655,6 +1656,16 @@ export async function hydrateLiveEspnOverlay(appData) {
             pointDiff: liveT.pd
           });
         }
+      }
+
+      // Immediately refresh live Standings-driven Team Stats (PPG, PAPG, PtDiff/Gm, 32-team modal records & unit composites)
+      if (appData.scheduleMatchup?.teamStats) {
+        const teamStatsUpdated = refreshLiveStandingsMetricsInTeamStats(
+          appData.scheduleMatchup.teamStats,
+          appData.scheduleMatchup.teamStatRankings,
+          teamRecords
+        );
+        if (teamStatsUpdated) mutated = true;
       }
     }
   }

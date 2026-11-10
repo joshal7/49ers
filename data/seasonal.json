@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T15:40:57.275Z",
+  "updatedAt": "2026-11-10T20:22:52.832Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -3580,7 +3580,7 @@
         "url": "https://ras.football/"
       }
     ],
-    "tradedPicksNote": "6 Total Picks: San Francisco traded its own 2027 4th-round pick to Indianapolis on Nov 3, 2026 for DT DeForest Buckner (and previously dealt its own 2027 6th & 7th picks while acquiring Rd 6 via BAL and Rd 7 via KC).",
+    "tradedPicksNote": "5 Total Picks: San Francisco traded its own 2027 4th-round pick to Indianapolis on Nov 3, 2026 for DT DeForest Buckner and dealt its 2027 6th-round pick (via BAL) at the Nov 10 trade deadline while holding Rd 7 via KC.",
     "pickInventory": [
       {
         "round": 1,
@@ -3605,21 +3605,14 @@
       },
       {
         "round": 5,
-        "projectedOverall": 170,
+        "projectedOverall": 168,
         "origin": "Own Pick",
         "fromTeam": "SF",
         "valueRichHill": 9
       },
       {
-        "round": 6,
-        "projectedOverall": 194,
-        "origin": "From BAL (Acquired via Trade)",
-        "fromTeam": "BAL",
-        "valueRichHill": 6
-      },
-      {
         "round": 7,
-        "projectedOverall": 245,
+        "projectedOverall": 244,
         "origin": "From KC (Acquired via Trade)",
         "fromTeam": "KC",
         "valueRichHill": 2
@@ -12562,13 +12555,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "BNMI2jqhOas",
-          "url": "https://www.youtube.com/watch?v=BNMI2jqhOas",
-          "title": "Kaelon Black NFL Debut Highlights | Every Play",
-          "channel": "Curtain Call Replays",
-          "publishedAgo": "1mo ago",
-          "duration": "1:53",
-          "thumbnailUrl": "https://i.ytimg.com/vi/BNMI2jqhOas/hqdefault.jpg",
+          "videoId": "BqPoRb11ni0",
+          "url": "https://www.youtube.com/watch?v=BqPoRb11ni0",
+          "title": "Kaelon Black 🔥 Physical Indiana RB Prospect 2025 Highlights ",
+          "channel": "Ball Game Productions ",
+          "publishedAgo": "8mo ago",
+          "duration": "3:07",
+          "thumbnailUrl": "https://i.ytimg.com/vi/BqPoRb11ni0/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }
@@ -12716,13 +12709,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "1Zfw4pl5YHo",
-          "url": "https://www.youtube.com/watch?v=1Zfw4pl5YHo",
-          "title": "Gracen Halton Highlights | San Francisco 49ers Defensive Lineman | Oklahoma | 2026 NFL Draft",
-          "channel": "Under The Radar Prospects",
-          "publishedAgo": "10mo ago",
-          "duration": "4:23",
-          "thumbnailUrl": "https://i.ytimg.com/vi/1Zfw4pl5YHo/hqdefault.jpg",
+          "videoId": "vwyKFf_WQX8",
+          "url": "https://www.youtube.com/watch?v=vwyKFf_WQX8",
+          "title": "Gracen Halton Full College Football Highlights💥| Oklahoma Defensive Tackle | NFL Draft Film",
+          "channel": "The NFL Film Room",
+          "publishedAgo": "7mo ago",
+          "duration": "8:14",
+          "thumbnailUrl": "https://i.ytimg.com/vi/vwyKFf_WQX8/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }
