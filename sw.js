@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v32';
+const CACHE_NAME = '49ers-faithful-v33';
 const CORE_ASSETS = [
   './',
   './index.html',

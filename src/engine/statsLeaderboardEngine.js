@@ -618,7 +618,7 @@ export function computeLeagueTeamStatsPayload({
         key: unit.overallKey,
         label: unit.overallLabel,
         higherIsBetter: true,
-        format: v => `${safeNum(v).toFixed(1)} idx`
+        format: v => `${safeNum(v).toFixed(1)}%`
       },
       unit.title
     );

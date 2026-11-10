@@ -413,28 +413,28 @@ export const JARGON_GLOSSARY = {
       'Combined defensive interceptions and opponent fumble recoveries per game, one of the strongest single-game win-probability swings in football.'
   },
   overall_offense_rank: {
-    term: 'Overall Offense Composite Rank',
+    term: 'Overall Offense Composite Score (0–100%)',
     category: 'Composite Methodology',
     definition:
-      'Weighted 32-team composite combining Offensive EPA / Play (40%), Points / Game (30%), Total Yards / Game (15%), and 3rd Down Conversion % (15%). Each metric is min-max normalized (0–100) across all 32 NFL clubs so both scoring output and down-to-down efficiency are captured.'
+      'Weighted 32-team composite normalized to a 0%–100% scale: Offensive EPA / Play (40%), Points / Game (30%), Total Yards / Game (15%), and 3rd Down Conversion % (15%). Each component is min-max normalized (0% to 100%) across all 32 NFL clubs so both scoring output and down-to-down efficiency are captured.'
   },
   overall_defense_rank: {
-    term: 'Overall Defense Composite Rank',
+    term: 'Overall Defense Composite Score (0–100%)',
     category: 'Composite Methodology',
     definition:
-      'Weighted 32-team composite combining Defensive EPA / Play Allowed (40%), Points Allowed / Game (30%), Total Yards Allowed / Game (15%), and 3rd Down Conversion % Allowed (15%). Each metric is normalized (0–100, lower allowed = higher score) across all 32 NFL clubs.'
+      'Weighted 32-team composite normalized to a 0%–100% scale: Defensive EPA / Play Allowed (40%), Points Allowed / Game (30%), Total Yards Allowed / Game (15%), and 3rd Down Conversion % Allowed (15%). Each component is min-max normalized (0% to 100%, lower allowed = higher %) across all 32 NFL clubs.'
   },
   overall_st_rank: {
-    term: 'Overall Special Teams Composite Rank',
+    term: 'Overall Special Teams Composite Score (0–100%)',
     category: 'Composite Methodology',
     definition:
-      'Weighted 32-team composite combining Field Goal % (35%), Net Punt Average (30%), Kickoff Return Average (20%), and Punt Return Average (15%), normalized across all 32 NFL clubs to measure kicking accuracy and hidden-yardage field position.'
+      'Weighted 32-team composite normalized to a 0%–100% scale: Field Goal % (35%), Net Punt Average (30%), Kickoff Return Average (20%), and Punt Return Average (15%), min-max normalized across all 32 NFL clubs to measure kicking accuracy and hidden-yardage field position.'
   },
   overall_margin_rank: {
-    term: 'Overall Overview & Margin Rank',
+    term: 'Overall Team Margin Composite Score (0–100%)',
     category: 'Composite Methodology',
     definition:
-      'Weighted 32-team composite combining Point Differential / Game (40%), Net EPA / Play [Offense minus Defense] (35%), and Turnover Differential / Game (25%) — the three strongest team-level indicators of championship contention.'
+      'Weighted 32-team composite normalized to a 0%–100% scale: Point Differential / Game (40%), Net EPA / Play [Offense minus Defense] (35%), and Turnover Differential / Game (25%) — the three strongest team-level indicators of championship contention.'
   },
   turnover_diff: {
     term: 'Turnover Differential (+/-)',

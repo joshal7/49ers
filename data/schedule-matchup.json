@@ -840,201 +840,201 @@
           "higherIsBetter": true,
           "rank": 1,
           "value": 92.9,
-          "displayValue": "92.9 idx",
+          "displayValue": "92.9%",
           "leagueAvg": 49.7594,
-          "leagueAvgDisplay": "49.8 idx",
+          "leagueAvgDisplay": "49.8%",
           "leaderboard": [
             {
               "team": "SF",
               "rank": 1,
               "val": 92.9,
-              "disp": "92.9 idx"
+              "disp": "92.9%"
             },
             {
               "team": "CIN",
               "rank": 2,
               "val": 88.9,
-              "disp": "88.9 idx"
+              "disp": "88.9%"
             },
             {
               "team": "BUF",
               "rank": 3,
               "val": 88.4,
-              "disp": "88.4 idx"
+              "disp": "88.4%"
             },
             {
               "team": "JAX",
               "rank": 4,
               "val": 80.9,
-              "disp": "80.9 idx"
+              "disp": "80.9%"
             },
             {
               "team": "DAL",
               "rank": 5,
               "val": 75.2,
-              "disp": "75.2 idx"
+              "disp": "75.2%"
             },
             {
               "team": "KC",
               "rank": 6,
               "val": 72.7,
-              "disp": "72.7 idx"
+              "disp": "72.7%"
             },
             {
               "team": "DET",
               "rank": 7,
               "val": 71.3,
-              "disp": "71.3 idx"
+              "disp": "71.3%"
             },
             {
               "team": "CHI",
               "rank": 8,
               "val": 69.8,
-              "disp": "69.8 idx"
+              "disp": "69.8%"
             },
             {
               "team": "HOU",
               "rank": 9,
               "val": 63.2,
-              "disp": "63.2 idx"
+              "disp": "63.2%"
             },
             {
               "team": "NE",
               "rank": 10,
               "val": 61.8,
-              "disp": "61.8 idx"
+              "disp": "61.8%"
             },
             {
               "team": "LAR",
               "rank": 11,
               "val": 61.5,
-              "disp": "61.5 idx"
+              "disp": "61.5%"
             },
             {
               "team": "LV",
               "rank": 12,
               "val": 59.2,
-              "disp": "59.2 idx"
+              "disp": "59.2%"
             },
             {
               "team": "CAR",
               "rank": 13,
               "val": 58.5,
-              "disp": "58.5 idx"
+              "disp": "58.5%"
             },
             {
               "team": "GB",
               "rank": 14,
               "val": 56.2,
-              "disp": "56.2 idx"
+              "disp": "56.2%"
             },
             {
               "team": "NO",
               "rank": 15,
               "val": 49.9,
-              "disp": "49.9 idx"
+              "disp": "49.9%"
             },
             {
               "team": "NYG",
               "rank": 16,
               "val": 49.5,
-              "disp": "49.5 idx"
+              "disp": "49.5%"
             },
             {
               "team": "PIT",
               "rank": 17,
               "val": 44,
-              "disp": "44.0 idx"
+              "disp": "44.0%"
             },
             {
               "team": "BAL",
               "rank": 18,
               "val": 43.6,
-              "disp": "43.6 idx"
+              "disp": "43.6%"
             },
             {
               "team": "SEA",
               "rank": 19,
               "val": 42.4,
-              "disp": "42.4 idx"
+              "disp": "42.4%"
             },
             {
               "team": "WAS",
               "rank": 20,
               "val": 39.8,
-              "disp": "39.8 idx"
+              "disp": "39.8%"
             },
             {
               "team": "NYJ",
               "rank": 21,
               "val": 39.2,
-              "disp": "39.2 idx"
+              "disp": "39.2%"
             },
             {
               "team": "ARI",
               "rank": 22,
               "val": 37.8,
-              "disp": "37.8 idx"
+              "disp": "37.8%"
             },
             {
               "team": "ATL",
               "rank": 23,
               "val": 35,
-              "disp": "35.0 idx"
+              "disp": "35.0%"
             },
             {
               "team": "DEN",
               "rank": 24,
               "val": 34.7,
-              "disp": "34.7 idx"
+              "disp": "34.7%"
             },
             {
               "team": "TB",
               "rank": 25,
               "val": 33.6,
-              "disp": "33.6 idx"
+              "disp": "33.6%"
             },
             {
               "team": "CLE",
               "rank": 26,
               "val": 28,
-              "disp": "28.0 idx"
+              "disp": "28.0%"
             },
             {
               "team": "IND",
               "rank": 27,
               "val": 27.5,
-              "disp": "27.5 idx"
+              "disp": "27.5%"
             },
             {
               "team": "MIA",
               "rank": 28,
               "val": 26.8,
-              "disp": "26.8 idx"
+              "disp": "26.8%"
             },
             {
               "team": "TEN",
               "rank": 29,
               "val": 25.8,
-              "disp": "25.8 idx"
+              "disp": "25.8%"
             },
             {
               "team": "MIN",
               "rank": 30,
               "val": 14.5,
-              "disp": "14.5 idx"
+              "disp": "14.5%"
             },
             {
               "team": "PHI",
               "rank": 31,
               "val": 13.9,
-              "disp": "13.9 idx"
+              "disp": "13.9%"
             },
             {
               "team": "LAC",
               "rank": 32,
               "val": 5.8,
-              "disp": "5.8 idx"
+              "disp": "5.8%"
             }
           ]
         },
@@ -4556,201 +4556,201 @@
           "higherIsBetter": true,
           "rank": 9,
           "value": 55.8,
-          "displayValue": "55.8 idx",
+          "displayValue": "55.8%",
           "leagueAvg": 40.0937,
-          "leagueAvgDisplay": "40.1 idx",
+          "leagueAvgDisplay": "40.1%",
           "leaderboard": [
             {
               "team": "MIN",
               "rank": 1,
               "val": 89.4,
-              "disp": "89.4 idx"
+              "disp": "89.4%"
             },
             {
               "team": "JAX",
               "rank": 2,
               "val": 78.4,
-              "disp": "78.4 idx"
+              "disp": "78.4%"
             },
             {
               "team": "SEA",
               "rank": 3,
               "val": 78.2,
-              "disp": "78.2 idx"
+              "disp": "78.2%"
             },
             {
               "team": "TB",
               "rank": 4,
               "val": 77.6,
-              "disp": "77.6 idx"
+              "disp": "77.6%"
             },
             {
               "team": "LAR",
               "rank": 5,
               "val": 69.4,
-              "disp": "69.4 idx"
+              "disp": "69.4%"
             },
             {
               "team": "PIT",
               "rank": 6,
               "val": 64.3,
-              "disp": "64.3 idx"
+              "disp": "64.3%"
             },
             {
               "team": "KC",
               "rank": 7,
               "val": 63.1,
-              "disp": "63.1 idx"
+              "disp": "63.1%"
             },
             {
               "team": "CHI",
               "rank": 8,
               "val": 62.6,
-              "disp": "62.6 idx"
+              "disp": "62.6%"
             },
             {
               "team": "SF",
               "rank": 9,
               "val": 55.8,
-              "disp": "55.8 idx"
+              "disp": "55.8%"
             },
             {
               "team": "NYG",
               "rank": 10,
               "val": 53,
-              "disp": "53.0 idx"
+              "disp": "53.0%"
             },
             {
               "team": "GB",
               "rank": 11,
               "val": 52.1,
-              "disp": "52.1 idx"
+              "disp": "52.1%"
             },
             {
               "team": "CLE",
               "rank": 12,
               "val": 42.6,
-              "disp": "42.6 idx"
+              "disp": "42.6%"
             },
             {
               "team": "DEN",
               "rank": 13,
               "val": 41.3,
-              "disp": "41.3 idx"
+              "disp": "41.3%"
             },
             {
               "team": "BUF",
               "rank": 14,
               "val": 41,
-              "disp": "41.0 idx"
+              "disp": "41.0%"
             },
             {
               "team": "HOU",
               "rank": 15,
               "val": 36.8,
-              "disp": "36.8 idx"
+              "disp": "36.8%"
             },
             {
               "team": "LAC",
               "rank": 16,
               "val": 34.3,
-              "disp": "34.3 idx"
+              "disp": "34.3%"
             },
             {
               "team": "CIN",
               "rank": 17,
               "val": 32.7,
-              "disp": "32.7 idx"
+              "disp": "32.7%"
             },
             {
               "team": "NE",
               "rank": 18,
               "val": 32.6,
-              "disp": "32.6 idx"
+              "disp": "32.6%"
             },
             {
               "team": "ATL",
               "rank": 19,
               "val": 32.4,
-              "disp": "32.4 idx"
+              "disp": "32.4%"
             },
             {
               "team": "NYJ",
               "rank": 20,
               "val": 30,
-              "disp": "30.0 idx"
+              "disp": "30.0%"
             },
             {
               "team": "WAS",
               "rank": 21,
               "val": 27.6,
-              "disp": "27.6 idx"
+              "disp": "27.6%"
             },
             {
               "team": "BAL",
               "rank": 22,
               "val": 25.5,
-              "disp": "25.5 idx"
+              "disp": "25.5%"
             },
             {
               "team": "DET",
               "rank": 23,
               "val": 23,
-              "disp": "23.0 idx"
+              "disp": "23.0%"
             },
             {
               "team": "PHI",
               "rank": 24,
               "val": 22.8,
-              "disp": "22.8 idx"
+              "disp": "22.8%"
             },
             {
               "team": "IND",
               "rank": 25,
               "val": 21.1,
-              "disp": "21.1 idx"
+              "disp": "21.1%"
             },
             {
               "team": "TEN",
               "rank": 26,
               "val": 18.9,
-              "disp": "18.9 idx"
+              "disp": "18.9%"
             },
             {
               "team": "CAR",
               "rank": 27,
               "val": 17.8,
-              "disp": "17.8 idx"
+              "disp": "17.8%"
             },
             {
               "team": "MIA",
               "rank": 28,
               "val": 16.2,
-              "disp": "16.2 idx"
+              "disp": "16.2%"
             },
             {
               "team": "ARI",
               "rank": 29,
               "val": 16,
-              "disp": "16.0 idx"
+              "disp": "16.0%"
             },
             {
               "team": "NO",
               "rank": 30,
               "val": 14.1,
-              "disp": "14.1 idx"
+              "disp": "14.1%"
             },
             {
               "team": "DAL",
               "rank": 31,
               "val": 9.2,
-              "disp": "9.2 idx"
+              "disp": "9.2%"
             },
             {
               "team": "LV",
               "rank": 32,
               "val": 3.2,
-              "disp": "3.2 idx"
+              "disp": "3.2%"
             }
           ]
         },
@@ -8682,201 +8682,201 @@
           "higherIsBetter": true,
           "rank": 28,
           "value": 41.3,
-          "displayValue": "41.3 idx",
+          "displayValue": "41.3%",
           "leagueAvg": 55.4375,
-          "leagueAvgDisplay": "55.4 idx",
+          "leagueAvgDisplay": "55.4%",
           "leaderboard": [
             {
               "team": "BUF",
               "rank": 1,
               "val": 83.2,
-              "disp": "83.2 idx"
+              "disp": "83.2%"
             },
             {
               "team": "LV",
               "rank": 2,
               "val": 81.8,
-              "disp": "81.8 idx"
+              "disp": "81.8%"
             },
             {
               "team": "CLE",
               "rank": 3,
               "val": 74.8,
-              "disp": "74.8 idx"
+              "disp": "74.8%"
             },
             {
               "team": "DET",
               "rank": 4,
               "val": 74.7,
-              "disp": "74.7 idx"
+              "disp": "74.7%"
             },
             {
               "team": "MIN",
               "rank": 5,
               "val": 71,
-              "disp": "71.0 idx"
+              "disp": "71.0%"
             },
             {
               "team": "TEN",
               "rank": 6,
               "val": 67.5,
-              "disp": "67.5 idx"
+              "disp": "67.5%"
             },
             {
               "team": "CAR",
               "rank": 7,
               "val": 65.7,
-              "disp": "65.7 idx"
+              "disp": "65.7%"
             },
             {
               "team": "DEN",
               "rank": 8,
               "val": 63.5,
-              "disp": "63.5 idx"
+              "disp": "63.5%"
             },
             {
               "team": "SEA",
               "rank": 9,
               "val": 63.2,
-              "disp": "63.2 idx"
+              "disp": "63.2%"
             },
             {
               "team": "IND",
               "rank": 10,
               "val": 62.2,
-              "disp": "62.2 idx"
+              "disp": "62.2%"
             },
             {
               "team": "TB",
               "rank": 11,
               "val": 62.1,
-              "disp": "62.1 idx"
+              "disp": "62.1%"
             },
             {
               "team": "GB",
               "rank": 12,
               "val": 61.6,
-              "disp": "61.6 idx"
+              "disp": "61.6%"
             },
             {
               "team": "WAS",
               "rank": 13,
               "val": 61.3,
-              "disp": "61.3 idx"
+              "disp": "61.3%"
             },
             {
               "team": "JAX",
               "rank": 14,
               "val": 59.9,
-              "disp": "59.9 idx"
+              "disp": "59.9%"
             },
             {
               "team": "CIN",
               "rank": 15,
               "val": 59.7,
-              "disp": "59.7 idx"
+              "disp": "59.7%"
             },
             {
               "team": "NYG",
               "rank": 16,
               "val": 56.9,
-              "disp": "56.9 idx"
+              "disp": "56.9%"
             },
             {
               "team": "NYJ",
               "rank": 17,
               "val": 56.4,
-              "disp": "56.4 idx"
+              "disp": "56.4%"
             },
             {
               "team": "HOU",
               "rank": 18,
               "val": 56.1,
-              "disp": "56.1 idx"
+              "disp": "56.1%"
             },
             {
               "team": "CHI",
               "rank": 19,
               "val": 51.2,
-              "disp": "51.2 idx"
+              "disp": "51.2%"
             },
             {
               "team": "LAC",
               "rank": 20,
               "val": 51.2,
-              "disp": "51.2 idx"
+              "disp": "51.2%"
             },
             {
               "team": "PHI",
               "rank": 21,
               "val": 48,
-              "disp": "48.0 idx"
+              "disp": "48.0%"
             },
             {
               "team": "BAL",
               "rank": 22,
               "val": 47.8,
-              "disp": "47.8 idx"
+              "disp": "47.8%"
             },
             {
               "team": "NE",
               "rank": 23,
               "val": 46.6,
-              "disp": "46.6 idx"
+              "disp": "46.6%"
             },
             {
               "team": "DAL",
               "rank": 24,
               "val": 45.9,
-              "disp": "45.9 idx"
+              "disp": "45.9%"
             },
             {
               "team": "ARI",
               "rank": 25,
               "val": 44.1,
-              "disp": "44.1 idx"
+              "disp": "44.1%"
             },
             {
               "team": "KC",
               "rank": 26,
               "val": 43.3,
-              "disp": "43.3 idx"
+              "disp": "43.3%"
             },
             {
               "team": "PIT",
               "rank": 27,
               "val": 42.5,
-              "disp": "42.5 idx"
+              "disp": "42.5%"
             },
             {
               "team": "SF",
               "rank": 28,
               "val": 41.3,
-              "disp": "41.3 idx"
+              "disp": "41.3%"
             },
             {
               "team": "ATL",
               "rank": 29,
               "val": 38.3,
-              "disp": "38.3 idx"
+              "disp": "38.3%"
             },
             {
               "team": "LAR",
               "rank": 30,
               "val": 36.2,
-              "disp": "36.2 idx"
+              "disp": "36.2%"
             },
             {
               "team": "MIA",
               "rank": 31,
               "val": 32.2,
-              "disp": "32.2 idx"
+              "disp": "32.2%"
             },
             {
               "team": "NO",
               "rank": 32,
               "val": 23.8,
-              "disp": "23.8 idx"
+              "disp": "23.8%"
             }
           ]
         },
@@ -10543,201 +10543,201 @@
           "higherIsBetter": true,
           "rank": 2,
           "value": 80.3,
-          "displayValue": "80.3 idx",
+          "displayValue": "80.3%",
           "leagueAvg": 47.6969,
-          "leagueAvgDisplay": "47.7 idx",
+          "leagueAvgDisplay": "47.7%",
           "leaderboard": [
             {
               "team": "JAX",
               "rank": 1,
               "val": 100,
-              "disp": "100.0 idx"
+              "disp": "100.0%"
             },
             {
               "team": "SF",
               "rank": 2,
               "val": 80.3,
-              "disp": "80.3 idx"
+              "disp": "80.3%"
             },
             {
               "team": "KC",
               "rank": 3,
               "val": 76.8,
-              "disp": "76.8 idx"
+              "disp": "76.8%"
             },
             {
               "team": "BUF",
               "rank": 4,
               "val": 71.6,
-              "disp": "71.6 idx"
+              "disp": "71.6%"
             },
             {
               "team": "CIN",
               "rank": 5,
               "val": 71.1,
-              "disp": "71.1 idx"
+              "disp": "71.1%"
             },
             {
               "team": "GB",
               "rank": 6,
               "val": 68.4,
-              "disp": "68.4 idx"
+              "disp": "68.4%"
             },
             {
               "team": "TB",
               "rank": 7,
               "val": 63.9,
-              "disp": "63.9 idx"
+              "disp": "63.9%"
             },
             {
               "team": "PIT",
               "rank": 8,
               "val": 62.8,
-              "disp": "62.8 idx"
+              "disp": "62.8%"
             },
             {
               "team": "DET",
               "rank": 9,
               "val": 59.8,
-              "disp": "59.8 idx"
+              "disp": "59.8%"
             },
             {
               "team": "HOU",
               "rank": 10,
               "val": 59.3,
-              "disp": "59.3 idx"
+              "disp": "59.3%"
             },
             {
               "team": "MIN",
               "rank": 11,
               "val": 59.3,
-              "disp": "59.3 idx"
+              "disp": "59.3%"
             },
             {
               "team": "LAR",
               "rank": 12,
               "val": 59.1,
-              "disp": "59.1 idx"
+              "disp": "59.1%"
             },
             {
               "team": "CHI",
               "rank": 13,
               "val": 57.8,
-              "disp": "57.8 idx"
+              "disp": "57.8%"
             },
             {
               "team": "SEA",
               "rank": 14,
               "val": 56.4,
-              "disp": "56.4 idx"
+              "disp": "56.4%"
             },
             {
               "team": "DEN",
               "rank": 15,
               "val": 54.1,
-              "disp": "54.1 idx"
+              "disp": "54.1%"
             },
             {
               "team": "DAL",
               "rank": 16,
               "val": 49,
-              "disp": "49.0 idx"
+              "disp": "49.0%"
             },
             {
               "team": "NYG",
               "rank": 17,
               "val": 49,
-              "disp": "49.0 idx"
+              "disp": "49.0%"
             },
             {
               "team": "WAS",
               "rank": 18,
               "val": 47.4,
-              "disp": "47.4 idx"
+              "disp": "47.4%"
             },
             {
               "team": "NYJ",
               "rank": 19,
               "val": 41.3,
-              "disp": "41.3 idx"
+              "disp": "41.3%"
             },
             {
               "team": "CAR",
               "rank": 20,
               "val": 41.1,
-              "disp": "41.1 idx"
+              "disp": "41.1%"
             },
             {
               "team": "CLE",
               "rank": 21,
               "val": 38.2,
-              "disp": "38.2 idx"
+              "disp": "38.2%"
             },
             {
               "team": "LV",
               "rank": 22,
               "val": 37,
-              "disp": "37.0 idx"
+              "disp": "37.0%"
             },
             {
               "team": "NE",
               "rank": 23,
               "val": 35.9,
-              "disp": "35.9 idx"
+              "disp": "35.9%"
             },
             {
               "team": "BAL",
               "rank": 24,
               "val": 32.5,
-              "disp": "32.5 idx"
+              "disp": "32.5%"
             },
             {
               "team": "NO",
               "rank": 25,
               "val": 27.7,
-              "disp": "27.7 idx"
+              "disp": "27.7%"
             },
             {
               "team": "TEN",
               "rank": 26,
               "val": 26.8,
-              "disp": "26.8 idx"
+              "disp": "26.8%"
             },
             {
               "team": "ATL",
               "rank": 27,
               "val": 26.7,
-              "disp": "26.7 idx"
+              "disp": "26.7%"
             },
             {
               "team": "ARI",
               "rank": 28,
               "val": 26,
-              "disp": "26.0 idx"
+              "disp": "26.0%"
             },
             {
               "team": "MIA",
               "rank": 29,
               "val": 17.8,
-              "disp": "17.8 idx"
+              "disp": "17.8%"
             },
             {
               "team": "PHI",
               "rank": 30,
               "val": 15.2,
-              "disp": "15.2 idx"
+              "disp": "15.2%"
             },
             {
               "team": "IND",
               "rank": 31,
               "val": 10.3,
-              "disp": "10.3 idx"
+              "disp": "10.3%"
             },
             {
               "team": "LAC",
               "rank": 32,
               "val": 3.7,
-              "disp": "3.7 idx"
+              "disp": "3.7%"
             }
           ]
         },
@@ -12400,201 +12400,201 @@
         "higherIsBetter": true,
         "rank": 1,
         "value": 92.9,
-        "displayValue": "92.9 idx",
+        "displayValue": "92.9%",
         "leagueAvg": 49.7594,
-        "leagueAvgDisplay": "49.8 idx",
+        "leagueAvgDisplay": "49.8%",
         "leaderboard": [
           {
             "team": "SF",
             "rank": 1,
             "val": 92.9,
-            "disp": "92.9 idx"
+            "disp": "92.9%"
           },
           {
             "team": "CIN",
             "rank": 2,
             "val": 88.9,
-            "disp": "88.9 idx"
+            "disp": "88.9%"
           },
           {
             "team": "BUF",
             "rank": 3,
             "val": 88.4,
-            "disp": "88.4 idx"
+            "disp": "88.4%"
           },
           {
             "team": "JAX",
             "rank": 4,
             "val": 80.9,
-            "disp": "80.9 idx"
+            "disp": "80.9%"
           },
           {
             "team": "DAL",
             "rank": 5,
             "val": 75.2,
-            "disp": "75.2 idx"
+            "disp": "75.2%"
           },
           {
             "team": "KC",
             "rank": 6,
             "val": 72.7,
-            "disp": "72.7 idx"
+            "disp": "72.7%"
           },
           {
             "team": "DET",
             "rank": 7,
             "val": 71.3,
-            "disp": "71.3 idx"
+            "disp": "71.3%"
           },
           {
             "team": "CHI",
             "rank": 8,
             "val": 69.8,
-            "disp": "69.8 idx"
+            "disp": "69.8%"
           },
           {
             "team": "HOU",
             "rank": 9,
             "val": 63.2,
-            "disp": "63.2 idx"
+            "disp": "63.2%"
           },
           {
             "team": "NE",
             "rank": 10,
             "val": 61.8,
-            "disp": "61.8 idx"
+            "disp": "61.8%"
           },
           {
             "team": "LAR",
             "rank": 11,
             "val": 61.5,
-            "disp": "61.5 idx"
+            "disp": "61.5%"
           },
           {
             "team": "LV",
             "rank": 12,
             "val": 59.2,
-            "disp": "59.2 idx"
+            "disp": "59.2%"
           },
           {
             "team": "CAR",
             "rank": 13,
             "val": 58.5,
-            "disp": "58.5 idx"
+            "disp": "58.5%"
           },
           {
             "team": "GB",
             "rank": 14,
             "val": 56.2,
-            "disp": "56.2 idx"
+            "disp": "56.2%"
           },
           {
             "team": "NO",
             "rank": 15,
             "val": 49.9,
-            "disp": "49.9 idx"
+            "disp": "49.9%"
           },
           {
             "team": "NYG",
             "rank": 16,
             "val": 49.5,
-            "disp": "49.5 idx"
+            "disp": "49.5%"
           },
           {
             "team": "PIT",
             "rank": 17,
             "val": 44,
-            "disp": "44.0 idx"
+            "disp": "44.0%"
           },
           {
             "team": "BAL",
             "rank": 18,
             "val": 43.6,
-            "disp": "43.6 idx"
+            "disp": "43.6%"
           },
           {
             "team": "SEA",
             "rank": 19,
             "val": 42.4,
-            "disp": "42.4 idx"
+            "disp": "42.4%"
           },
           {
             "team": "WAS",
             "rank": 20,
             "val": 39.8,
-            "disp": "39.8 idx"
+            "disp": "39.8%"
           },
           {
             "team": "NYJ",
             "rank": 21,
             "val": 39.2,
-            "disp": "39.2 idx"
+            "disp": "39.2%"
           },
           {
             "team": "ARI",
             "rank": 22,
             "val": 37.8,
-            "disp": "37.8 idx"
+            "disp": "37.8%"
           },
           {
             "team": "ATL",
             "rank": 23,
             "val": 35,
-            "disp": "35.0 idx"
+            "disp": "35.0%"
           },
           {
             "team": "DEN",
             "rank": 24,
             "val": 34.7,
-            "disp": "34.7 idx"
+            "disp": "34.7%"
           },
           {
             "team": "TB",
             "rank": 25,
             "val": 33.6,
-            "disp": "33.6 idx"
+            "disp": "33.6%"
           },
           {
             "team": "CLE",
             "rank": 26,
             "val": 28,
-            "disp": "28.0 idx"
+            "disp": "28.0%"
           },
           {
             "team": "IND",
             "rank": 27,
             "val": 27.5,
-            "disp": "27.5 idx"
+            "disp": "27.5%"
           },
           {
             "team": "MIA",
             "rank": 28,
             "val": 26.8,
-            "disp": "26.8 idx"
+            "disp": "26.8%"
           },
           {
             "team": "TEN",
             "rank": 29,
             "val": 25.8,
-            "disp": "25.8 idx"
+            "disp": "25.8%"
           },
           {
             "team": "MIN",
             "rank": 30,
             "val": 14.5,
-            "disp": "14.5 idx"
+            "disp": "14.5%"
           },
           {
             "team": "PHI",
             "rank": 31,
             "val": 13.9,
-            "disp": "13.9 idx"
+            "disp": "13.9%"
           },
           {
             "team": "LAC",
             "rank": 32,
             "val": 5.8,
-            "disp": "5.8 idx"
+            "disp": "5.8%"
           }
         ]
       },
@@ -16090,201 +16090,201 @@
         "higherIsBetter": true,
         "rank": 9,
         "value": 55.8,
-        "displayValue": "55.8 idx",
+        "displayValue": "55.8%",
         "leagueAvg": 40.0937,
-        "leagueAvgDisplay": "40.1 idx",
+        "leagueAvgDisplay": "40.1%",
         "leaderboard": [
           {
             "team": "MIN",
             "rank": 1,
             "val": 89.4,
-            "disp": "89.4 idx"
+            "disp": "89.4%"
           },
           {
             "team": "JAX",
             "rank": 2,
             "val": 78.4,
-            "disp": "78.4 idx"
+            "disp": "78.4%"
           },
           {
             "team": "SEA",
             "rank": 3,
             "val": 78.2,
-            "disp": "78.2 idx"
+            "disp": "78.2%"
           },
           {
             "team": "TB",
             "rank": 4,
             "val": 77.6,
-            "disp": "77.6 idx"
+            "disp": "77.6%"
           },
           {
             "team": "LAR",
             "rank": 5,
             "val": 69.4,
-            "disp": "69.4 idx"
+            "disp": "69.4%"
           },
           {
             "team": "PIT",
             "rank": 6,
             "val": 64.3,
-            "disp": "64.3 idx"
+            "disp": "64.3%"
           },
           {
             "team": "KC",
             "rank": 7,
             "val": 63.1,
-            "disp": "63.1 idx"
+            "disp": "63.1%"
           },
           {
             "team": "CHI",
             "rank": 8,
             "val": 62.6,
-            "disp": "62.6 idx"
+            "disp": "62.6%"
           },
           {
             "team": "SF",
             "rank": 9,
             "val": 55.8,
-            "disp": "55.8 idx"
+            "disp": "55.8%"
           },
           {
             "team": "NYG",
             "rank": 10,
             "val": 53,
-            "disp": "53.0 idx"
+            "disp": "53.0%"
           },
           {
             "team": "GB",
             "rank": 11,
             "val": 52.1,
-            "disp": "52.1 idx"
+            "disp": "52.1%"
           },
           {
             "team": "CLE",
             "rank": 12,
             "val": 42.6,
-            "disp": "42.6 idx"
+            "disp": "42.6%"
           },
           {
             "team": "DEN",
             "rank": 13,
             "val": 41.3,
-            "disp": "41.3 idx"
+            "disp": "41.3%"
           },
           {
             "team": "BUF",
             "rank": 14,
             "val": 41,
-            "disp": "41.0 idx"
+            "disp": "41.0%"
           },
           {
             "team": "HOU",
             "rank": 15,
             "val": 36.8,
-            "disp": "36.8 idx"
+            "disp": "36.8%"
           },
           {
             "team": "LAC",
             "rank": 16,
             "val": 34.3,
-            "disp": "34.3 idx"
+            "disp": "34.3%"
           },
           {
             "team": "CIN",
             "rank": 17,
             "val": 32.7,
-            "disp": "32.7 idx"
+            "disp": "32.7%"
           },
           {
             "team": "NE",
             "rank": 18,
             "val": 32.6,
-            "disp": "32.6 idx"
+            "disp": "32.6%"
           },
           {
             "team": "ATL",
             "rank": 19,
             "val": 32.4,
-            "disp": "32.4 idx"
+            "disp": "32.4%"
           },
           {
             "team": "NYJ",
             "rank": 20,
             "val": 30,
-            "disp": "30.0 idx"
+            "disp": "30.0%"
           },
           {
             "team": "WAS",
             "rank": 21,
             "val": 27.6,
-            "disp": "27.6 idx"
+            "disp": "27.6%"
           },
           {
             "team": "BAL",
             "rank": 22,
             "val": 25.5,
-            "disp": "25.5 idx"
+            "disp": "25.5%"
           },
           {
             "team": "DET",
             "rank": 23,
             "val": 23,
-            "disp": "23.0 idx"
+            "disp": "23.0%"
           },
           {
             "team": "PHI",
             "rank": 24,
             "val": 22.8,
-            "disp": "22.8 idx"
+            "disp": "22.8%"
           },
           {
             "team": "IND",
             "rank": 25,
             "val": 21.1,
-            "disp": "21.1 idx"
+            "disp": "21.1%"
           },
           {
             "team": "TEN",
             "rank": 26,
             "val": 18.9,
-            "disp": "18.9 idx"
+            "disp": "18.9%"
           },
           {
             "team": "CAR",
             "rank": 27,
             "val": 17.8,
-            "disp": "17.8 idx"
+            "disp": "17.8%"
           },
           {
             "team": "MIA",
             "rank": 28,
             "val": 16.2,
-            "disp": "16.2 idx"
+            "disp": "16.2%"
           },
           {
             "team": "ARI",
             "rank": 29,
             "val": 16,
-            "disp": "16.0 idx"
+            "disp": "16.0%"
           },
           {
             "team": "NO",
             "rank": 30,
             "val": 14.1,
-            "disp": "14.1 idx"
+            "disp": "14.1%"
           },
           {
             "team": "DAL",
             "rank": 31,
             "val": 9.2,
-            "disp": "9.2 idx"
+            "disp": "9.2%"
           },
           {
             "team": "LV",
             "rank": 32,
             "val": 3.2,
-            "disp": "3.2 idx"
+            "disp": "3.2%"
           }
         ]
       },
@@ -20190,201 +20190,201 @@
         "higherIsBetter": true,
         "rank": 28,
         "value": 41.3,
-        "displayValue": "41.3 idx",
+        "displayValue": "41.3%",
         "leagueAvg": 55.4375,
-        "leagueAvgDisplay": "55.4 idx",
+        "leagueAvgDisplay": "55.4%",
         "leaderboard": [
           {
             "team": "BUF",
             "rank": 1,
             "val": 83.2,
-            "disp": "83.2 idx"
+            "disp": "83.2%"
           },
           {
             "team": "LV",
             "rank": 2,
             "val": 81.8,
-            "disp": "81.8 idx"
+            "disp": "81.8%"
           },
           {
             "team": "CLE",
             "rank": 3,
             "val": 74.8,
-            "disp": "74.8 idx"
+            "disp": "74.8%"
           },
           {
             "team": "DET",
             "rank": 4,
             "val": 74.7,
-            "disp": "74.7 idx"
+            "disp": "74.7%"
           },
           {
             "team": "MIN",
             "rank": 5,
             "val": 71,
-            "disp": "71.0 idx"
+            "disp": "71.0%"
           },
           {
             "team": "TEN",
             "rank": 6,
             "val": 67.5,
-            "disp": "67.5 idx"
+            "disp": "67.5%"
           },
           {
             "team": "CAR",
             "rank": 7,
             "val": 65.7,
-            "disp": "65.7 idx"
+            "disp": "65.7%"
           },
           {
             "team": "DEN",
             "rank": 8,
             "val": 63.5,
-            "disp": "63.5 idx"
+            "disp": "63.5%"
           },
           {
             "team": "SEA",
             "rank": 9,
             "val": 63.2,
-            "disp": "63.2 idx"
+            "disp": "63.2%"
           },
           {
             "team": "IND",
             "rank": 10,
             "val": 62.2,
-            "disp": "62.2 idx"
+            "disp": "62.2%"
           },
           {
             "team": "TB",
             "rank": 11,
             "val": 62.1,
-            "disp": "62.1 idx"
+            "disp": "62.1%"
           },
           {
             "team": "GB",
             "rank": 12,
             "val": 61.6,
-            "disp": "61.6 idx"
+            "disp": "61.6%"
           },
           {
             "team": "WAS",
             "rank": 13,
             "val": 61.3,
-            "disp": "61.3 idx"
+            "disp": "61.3%"
           },
           {
             "team": "JAX",
             "rank": 14,
             "val": 59.9,
-            "disp": "59.9 idx"
+            "disp": "59.9%"
           },
           {
             "team": "CIN",
             "rank": 15,
             "val": 59.7,
-            "disp": "59.7 idx"
+            "disp": "59.7%"
           },
           {
             "team": "NYG",
             "rank": 16,
             "val": 56.9,
-            "disp": "56.9 idx"
+            "disp": "56.9%"
           },
           {
             "team": "NYJ",
             "rank": 17,
             "val": 56.4,
-            "disp": "56.4 idx"
+            "disp": "56.4%"
           },
           {
             "team": "HOU",
             "rank": 18,
             "val": 56.1,
-            "disp": "56.1 idx"
+            "disp": "56.1%"
           },
           {
             "team": "CHI",
             "rank": 19,
             "val": 51.2,
-            "disp": "51.2 idx"
+            "disp": "51.2%"
           },
           {
             "team": "LAC",
             "rank": 20,
             "val": 51.2,
-            "disp": "51.2 idx"
+            "disp": "51.2%"
           },
           {
             "team": "PHI",
             "rank": 21,
             "val": 48,
-            "disp": "48.0 idx"
+            "disp": "48.0%"
           },
           {
             "team": "BAL",
             "rank": 22,
             "val": 47.8,
-            "disp": "47.8 idx"
+            "disp": "47.8%"
           },
           {
             "team": "NE",
             "rank": 23,
             "val": 46.6,
-            "disp": "46.6 idx"
+            "disp": "46.6%"
           },
           {
             "team": "DAL",
             "rank": 24,
             "val": 45.9,
-            "disp": "45.9 idx"
+            "disp": "45.9%"
           },
           {
             "team": "ARI",
             "rank": 25,
             "val": 44.1,
-            "disp": "44.1 idx"
+            "disp": "44.1%"
           },
           {
             "team": "KC",
             "rank": 26,
             "val": 43.3,
-            "disp": "43.3 idx"
+            "disp": "43.3%"
           },
           {
             "team": "PIT",
             "rank": 27,
             "val": 42.5,
-            "disp": "42.5 idx"
+            "disp": "42.5%"
           },
           {
             "team": "SF",
             "rank": 28,
             "val": 41.3,
-            "disp": "41.3 idx"
+            "disp": "41.3%"
           },
           {
             "team": "ATL",
             "rank": 29,
             "val": 38.3,
-            "disp": "38.3 idx"
+            "disp": "38.3%"
           },
           {
             "team": "LAR",
             "rank": 30,
             "val": 36.2,
-            "disp": "36.2 idx"
+            "disp": "36.2%"
           },
           {
             "team": "MIA",
             "rank": 31,
             "val": 32.2,
-            "disp": "32.2 idx"
+            "disp": "32.2%"
           },
           {
             "team": "NO",
             "rank": 32,
             "val": 23.8,
-            "disp": "23.8 idx"
+            "disp": "23.8%"
           }
         ]
       },
@@ -22035,201 +22035,201 @@
         "higherIsBetter": true,
         "rank": 2,
         "value": 80.3,
-        "displayValue": "80.3 idx",
+        "displayValue": "80.3%",
         "leagueAvg": 47.6969,
-        "leagueAvgDisplay": "47.7 idx",
+        "leagueAvgDisplay": "47.7%",
         "leaderboard": [
           {
             "team": "JAX",
             "rank": 1,
             "val": 100,
-            "disp": "100.0 idx"
+            "disp": "100.0%"
           },
           {
             "team": "SF",
             "rank": 2,
             "val": 80.3,
-            "disp": "80.3 idx"
+            "disp": "80.3%"
           },
           {
             "team": "KC",
             "rank": 3,
             "val": 76.8,
-            "disp": "76.8 idx"
+            "disp": "76.8%"
           },
           {
             "team": "BUF",
             "rank": 4,
             "val": 71.6,
-            "disp": "71.6 idx"
+            "disp": "71.6%"
           },
           {
             "team": "CIN",
             "rank": 5,
             "val": 71.1,
-            "disp": "71.1 idx"
+            "disp": "71.1%"
           },
           {
             "team": "GB",
             "rank": 6,
             "val": 68.4,
-            "disp": "68.4 idx"
+            "disp": "68.4%"
           },
           {
             "team": "TB",
             "rank": 7,
             "val": 63.9,
-            "disp": "63.9 idx"
+            "disp": "63.9%"
           },
           {
             "team": "PIT",
             "rank": 8,
             "val": 62.8,
-            "disp": "62.8 idx"
+            "disp": "62.8%"
           },
           {
             "team": "DET",
             "rank": 9,
             "val": 59.8,
-            "disp": "59.8 idx"
+            "disp": "59.8%"
           },
           {
             "team": "HOU",
             "rank": 10,
             "val": 59.3,
-            "disp": "59.3 idx"
+            "disp": "59.3%"
           },
           {
             "team": "MIN",
             "rank": 11,
             "val": 59.3,
-            "disp": "59.3 idx"
+            "disp": "59.3%"
           },
           {
             "team": "LAR",
             "rank": 12,
             "val": 59.1,
-            "disp": "59.1 idx"
+            "disp": "59.1%"
           },
           {
             "team": "CHI",
             "rank": 13,
             "val": 57.8,
-            "disp": "57.8 idx"
+            "disp": "57.8%"
           },
           {
             "team": "SEA",
             "rank": 14,
             "val": 56.4,
-            "disp": "56.4 idx"
+            "disp": "56.4%"
           },
           {
             "team": "DEN",
             "rank": 15,
             "val": 54.1,
-            "disp": "54.1 idx"
+            "disp": "54.1%"
           },
           {
             "team": "DAL",
             "rank": 16,
             "val": 49,
-            "disp": "49.0 idx"
+            "disp": "49.0%"
           },
           {
             "team": "NYG",
             "rank": 17,
             "val": 49,
-            "disp": "49.0 idx"
+            "disp": "49.0%"
           },
           {
             "team": "WAS",
             "rank": 18,
             "val": 47.4,
-            "disp": "47.4 idx"
+            "disp": "47.4%"
           },
           {
             "team": "NYJ",
             "rank": 19,
             "val": 41.3,
-            "disp": "41.3 idx"
+            "disp": "41.3%"
           },
           {
             "team": "CAR",
             "rank": 20,
             "val": 41.1,
-            "disp": "41.1 idx"
+            "disp": "41.1%"
           },
           {
             "team": "CLE",
             "rank": 21,
             "val": 38.2,
-            "disp": "38.2 idx"
+            "disp": "38.2%"
           },
           {
             "team": "LV",
             "rank": 22,
             "val": 37,
-            "disp": "37.0 idx"
+            "disp": "37.0%"
           },
           {
             "team": "NE",
             "rank": 23,
             "val": 35.9,
-            "disp": "35.9 idx"
+            "disp": "35.9%"
           },
           {
             "team": "BAL",
             "rank": 24,
             "val": 32.5,
-            "disp": "32.5 idx"
+            "disp": "32.5%"
           },
           {
             "team": "NO",
             "rank": 25,
             "val": 27.7,
-            "disp": "27.7 idx"
+            "disp": "27.7%"
           },
           {
             "team": "TEN",
             "rank": 26,
             "val": 26.8,
-            "disp": "26.8 idx"
+            "disp": "26.8%"
           },
           {
             "team": "ATL",
             "rank": 27,
             "val": 26.7,
-            "disp": "26.7 idx"
+            "disp": "26.7%"
           },
           {
             "team": "ARI",
             "rank": 28,
             "val": 26,
-            "disp": "26.0 idx"
+            "disp": "26.0%"
           },
           {
             "team": "MIA",
             "rank": 29,
             "val": 17.8,
-            "disp": "17.8 idx"
+            "disp": "17.8%"
           },
           {
             "team": "PHI",
             "rank": 30,
             "val": 15.2,
-            "disp": "15.2 idx"
+            "disp": "15.2%"
           },
           {
             "team": "IND",
             "rank": 31,
             "val": 10.3,
-            "disp": "10.3 idx"
+            "disp": "10.3%"
           },
           {
             "team": "LAC",
             "rank": 32,
             "val": 3.7,
-            "disp": "3.7 idx"
+            "disp": "3.7%"
           }
         ]
       },

@@ -3859,16 +3859,43 @@ async function main() {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]').click();
         await sleep(30);
 
-        // Click "How calculated ⓘ" tooltip link on Offense Overall Rank
-        const howLink = document.querySelector('[data-team-stats-unit="offense"] .overall-how-wrap [data-jargon]');
-        howLink?.click();
+        // Click "Composite Score" tooltip link on Offense Overall Rank & verify single-line layout + % formatting + zero "How calculated" / "idx" / top eyebrow
+        const compLink = document.querySelector('[data-team-stats-unit="offense"] .overall-how-wrap [data-jargon]');
+        compLink?.click();
         const pop = document.getElementById('jargonPopover');
-        const tooltipOpened = Boolean(pop && !pop.hidden && pop.textContent.includes('40%') && pop.textContent.includes('30%'));
+        const tooltipOpened = Boolean(
+          pop &&
+            !pop.hidden &&
+            pop.textContent.includes('0%–100%') &&
+            pop.textContent.includes('40%') &&
+            pop.textContent.includes('30%')
+        );
         document.querySelector('[data-action="close-jargon-popover"]')?.click();
+
+        const offCard = document.querySelector('[data-team-stats-unit="offense"]');
+        const offCardText = offCard?.textContent || '';
+        const noHowCalculatedText = !/how\s+calculated/i.test(offCardText);
+        const noIdxText = !/\bidx\b/i.test(offCardText) && /\d+\.\d+%/.test(offCardText);
+        const noTopEyebrow = !offCard?.querySelector('.team-stats-header .card-eyebrow');
+
+        // Verify single-line geometry & matching background on .unit-overall-banner and .stats-expand-details
+        const bannerEl = offCard?.querySelector('.unit-overall-banner');
+        const headingRect = bannerEl?.querySelector('.unit-overall-heading')?.getBoundingClientRect();
+        const subRect = bannerEl?.querySelector('.unit-overall-sub')?.getBoundingClientRect();
+        const pillRect = bannerEl?.querySelector('.unit-overall-right')?.getBoundingClientRect();
+        const singleLineBanner =
+          Boolean(headingRect && subRect && pillRect) &&
+          Math.abs(headingRect.top + headingRect.height / 2 - (pillRect.top + pillRect.height / 2)) <= 10 &&
+          Math.abs(subRect.top + subRect.height / 2 - (pillRect.top + pillRect.height / 2)) <= 10;
 
         // Expand Offense & Defense detailed metrics drawers
         const offExp = document.querySelector('details[data-stats-expander="offense"]');
         const defExp = document.querySelector('details[data-stats-expander="defense"]');
+        const bannerBg = bannerEl ? window.getComputedStyle(bannerEl).backgroundColor : '';
+        const expBg = offExp ? window.getComputedStyle(offExp).backgroundColor : '';
+        const matchingTransparentBg =
+          (bannerBg === 'rgba(0, 0, 0, 0)' || bannerBg === 'transparent') &&
+          (expBg === 'rgba(0, 0, 0, 0)' || expBg === 'transparent');
         offExp?.querySelector('summary')?.click();
         defExp?.querySelector('summary')?.click();
         await sleep(30);
@@ -3947,6 +3974,11 @@ async function main() {
 
         return {
           tooltipOpened,
+          noHowCalculatedText,
+          noIdxText,
+          noTopEyebrow,
+          singleLineBanner,
+          matchingTransparentBg,
           expandersOpened,
           teamModalOpen,
           teamModalRows,
@@ -3966,7 +3998,15 @@ async function main() {
       });
 
       await cdp.assertNoOverflow('Deep Team & Player Stats Leaderboard Modal Audit');
-      assert(deepStatsAudit.tooltipOpened, `Overall Rank "How calculated" tooltip failed: ${JSON.stringify(deepStatsAudit)}`);
+      assert(
+        deepStatsAudit.tooltipOpened &&
+          deepStatsAudit.noHowCalculatedText &&
+          deepStatsAudit.noIdxText &&
+          deepStatsAudit.noTopEyebrow &&
+          deepStatsAudit.singleLineBanner &&
+          deepStatsAudit.matchingTransparentBg,
+        `Overall Rank single-line / % / Composite Score link / background check failed: ${JSON.stringify(deepStatsAudit)}`
+      );
       assert(deepStatsAudit.expandersOpened, 'Team Stats Offense & Defense detailed expanders failed to open');
       assert(
         deepStatsAudit.teamModalOpen &&

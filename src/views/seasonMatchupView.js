@@ -324,6 +324,8 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
 
   const sfOverall = getTeamRowEntry(activeUnit.overall, 'SF');
   const oppOverall = getTeamRowEntry(activeUnit.overall, oppAbbr);
+  const sfOverallDisp = String(sfOverall.disp || activeUnit.overall?.displayValue || '—').replace(/\s*idx\b/gi, '%');
+  const oppOverallDisp = String(oppOverall.disp || '—').replace(/\s*idx\b/gi, '%');
   const expandedCount = (activeUnit.expandedGroups || []).reduce((s, g) => s + (g.rows?.length || 0), 0);
 
   return `
@@ -332,7 +334,6 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
         <div class="card-header-left">
           <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('season', 16)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">32-Team Statistical Matchup • Tap #Rank for League List</div>
             <h3 class="card-title">49ers vs. ${esc(oppShortName)} Unit Rankings</h3>
           </div>
         </div>
@@ -352,17 +353,20 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
           .join('')}
       </div>
 
-      <div class="unit-overall-banner matchup-h2h-banner">
-        <div class="h2h-overall-side">
-          <span class="sub-label">49ers ${esc(activeUnit.shortLabel)}</span>
-          ${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
+      <div class="unit-overall-banner matchup-h2h-banner" data-overall-unit="${esc(activeUnit.id)}">
+        <div class="unit-overall-inline">
+          <span class="unit-overall-heading">${esc(activeUnit.overall?.label || `Overall ${activeUnit.shortLabel} Rank`)}</span>
+          <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', activeUnit.jargonKey)}</span>
         </div>
-        <div class="h2h-overall-center">
-          <span class="overall-how-wrap">${jargonTerm('How calculated ⓘ', activeUnit.jargonKey)}</span>
-        </div>
-        <div class="h2h-overall-side right">
-          <span class="sub-label">${esc(oppShortName)} ${esc(activeUnit.shortLabel)}</span>
-          ${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
+        <div class="matchup-overall-scores">
+          <span class="matchup-overall-team">
+            <span class="mono unit-overall-sub">49ers ${esc(sfOverallDisp)}</span>
+            ${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
+          </span>
+          <span class="matchup-overall-team">
+            <span class="mono unit-overall-sub">${esc(oppShortName)} ${esc(oppOverallDisp)}</span>
+            ${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}
+          </span>
         </div>
       </div>
 
@@ -1030,25 +1034,23 @@ function renderTeamStatsAndPower(appData) {
       ? units
           .map((u, idx) => {
             const expandedCount = (u.expandedGroups || []).reduce((acc, g) => acc + (g.rows?.length || 0), 0);
+            const overallDisp = String(u.overall?.displayValue || '—').replace(/\s*idx\b/gi, '%');
+            const overallAvgDisp = String(u.overall?.leagueAvgDisplay || '50.0%').replace(/\s*idx\b/gi, '%');
             return `
         <section class="card team-stats-card" ${idx === 0 ? 'id="teamStatsRankingsCard"' : ''} data-team-stats-unit="${esc(u.id)}">
           <div class="card-header team-stats-header">
             <div class="card-header-left">
               <div class="card-icon-badge compact" aria-hidden="true">${iconSvg(u.icon || 'season', 16)}</div>
               <div class="card-title-group">
-                <div class="card-eyebrow">nflverse &amp; ESPN ${seasonYear} • Tap #Rank for 32-Team List</div>
                 <h2 class="card-title">${esc(u.title)}</h2>
               </div>
             </div>
           </div>
 
           <div class="unit-overall-banner" data-overall-unit="${esc(u.id)}">
-            <div class="unit-overall-left">
-              <div class="unit-overall-title-row">
-                <span class="unit-overall-heading">${esc(u.overall?.label || 'Overall Unit Rank')}</span>
-                <span class="overall-how-wrap">${jargonTerm('How calculated ⓘ', u.jargonKey)}</span>
-              </div>
-              <div class="unit-overall-sub mono">Composite Score: ${esc(u.overall?.displayValue || '—')} (NFL Avg ${esc(u.overall?.leagueAvgDisplay || '50.0 idx')})</div>
+            <div class="unit-overall-inline">
+              <span class="unit-overall-heading">${esc(u.overall?.label || 'Overall Unit Rank')}</span>
+              <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', u.jargonKey)} ${esc(overallDisp)} (NFL Avg ${esc(overallAvgDisp)})</span>
             </div>
             <div class="unit-overall-right">
               ${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: false, large: true })}
