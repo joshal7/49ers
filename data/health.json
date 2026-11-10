@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T14:35:16.920Z",
+  "updatedAt": "2026-11-10T02:36:51.319Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -38,15 +38,16 @@
       "fri": "-",
       "injuryType": "Achilles",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 48,
-      "playBadgeLabel": "48% • Long Shot",
-      "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue sprint clearance.",
+      "playProbabilityPct": 21,
+      "playBadgeLabel": "21% • Long Shot",
+      "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue/Achilles sprint clearance.",
       "factors": [
-        "Questionable tag adjusted by player career prior (84%)",
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Matches player's documented chronic history (Achilles)",
         "Soft-tissue re-aggravation caution (Achilles)",
-        "Has not yet returned to practice following multi-week injury absence"
+        "Coaching/beat consensus (3 corroborated reports): not expected to play this week"
       ],
-      "beatComment": "Evans is missing a second straight contest Sunday after aggravating a right Achilles injury during a Week 6 win against the Commanders. He hasn't been able to practice in the meantime, and while he's the type of player that doesn't require practice reps during the week to be available on game days, even work on the side Wednesday through Friday would be a welcome sign. In any case, with fellow WR Deebo Samuel (hamstring) also sidelined this weekend and Christian Kirk (knee) being placed on IR on Saturday, Demarcus Robinson, Jordan Watkins, Brandin Cooks, Jacob Cowing and KhaDarel Hodge are the options at the position to be active in Week 9."
+      "beatComment": "They are not expecting WR Mike Evans to be ready this week."
     },
     {
       "playerId": "3126486",
@@ -59,15 +60,36 @@
       "fri": "-",
       "injuryType": "Hamstring",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 67,
-      "playBadgeLabel": "67% • True GTD",
+      "playProbabilityPct": 59,
+      "playBadgeLabel": "59% • True GTD",
       "archetypeNote": "High-contact YAC style; plays through upper-body pain tags (~86%) with extra caution on lower-body soft tissue.",
       "factors": [
-        "Questionable tag adjusted by player career prior (79%)",
+        "Missed 3 consecutive games without practice participation — awaiting Wednesday report",
         "Matches player's documented chronic history (Hamstring)",
-        "Soft-tissue re-aggravation caution (Hamstring)"
+        "Soft-tissue re-aggravation caution (Hamstring)",
+        "Coaching/beat update (3 corroborated reports): expected back at practice Wednesday (pending Wed–Fri workload)"
       ],
-      "beatComment": "inactive"
+      "beatComment": "The 49ers expect WR Deebo Samuel and DT CJ West to be back at practice on Wednesday, coach Kyle Shanahan said."
+    },
+    {
+      "playerId": "4242488",
+      "name": "Deommodore Lenoir",
+      "position": "CB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Foot",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 82,
+      "playBadgeLabel": "82% • True GTD",
+      "archetypeNote": "High snap durability across boundary and slot corner alignments.",
+      "factors": [
+        "Questionable tag adjusted by player career prior (92%)",
+        "Coaching update (coaching staff report): considered day-to-day ahead of Wednesday practice"
+      ],
+      "beatComment": "Lenoir came away from San Francisco's victory over the Raiders in Week 9 with a foot injury, and now his status for Week 10 is uncertain. It will be worth keeping an eye on whether he's able to practice in full during the week, and the 49ers' first official injury report of the week Wednesday should give more context on his condition."
     },
     {
       "playerId": "4427325",
@@ -84,28 +106,10 @@
       "playBadgeLabel": "82% • True GTD",
       "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Questionable tag adjusted by player career prior (82%)"
+        "Questionable tag adjusted by player career prior (82%)",
+        "Coaching update (coaching staff report): considered day-to-day ahead of Wednesday practice"
       ],
-      "beatComment": "Green sustained the injury in the second half of the victory, and head coach Kyle Shanahan said after the game that the cornerback has not been ruled out for Week 10, suggesting that the injury is relatively minor. Green's status at practice will be worth monitoring when San Francisco returns to the field Wednesday, and if he can't play against the Cowboys on Nov. 15, Ephesians Prysock would be a top candidate to draw a start at cornerback."
-    },
-    {
-      "playerId": "4242488",
-      "name": "Deommodore Lenoir",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Foot",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 84,
-      "playBadgeLabel": "84% • True GTD",
-      "archetypeNote": "High snap durability across boundary and slot corner alignments.",
-      "factors": [
-        "Questionable tag adjusted by player career prior (92%)"
-      ],
-      "beatComment": "Lenoir notched three solo tackles, one of which was for a loss, in the contest, but he didn't leave unscathed. Head coach Kyle Shanahan explained after the game that the cornerback hasn't been ruled out for Week 10, suggesting that Lenoir may have avoided a major injury. If he is forced to miss any action moving forward, Ashtyn Davis and Ephesians Prysock are both candidates to see increased workload in the secondary."
+      "beatComment": "Green sustained a back injury during San Francisco's win versus the Raiders in Week 9, and now his availability for Week 10 is in question. His activity at practice will be worth monitoring over the course of the week, and the 49ers' first official injury report of the week Wednesday should provide further insight into his status."
     }
   ],
   "irAndReserveTracker": [
@@ -119,11 +123,29 @@
       "status": "IR — 21-Day Window Open",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 4,
       "earliestEligibleWeek": 9,
       "projectedReturnWeek": "Week 10 Activation Window (Nov 15)",
       "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
       "beatNote": "Hobbs had his practice window opened Wednesday and logged three limited practices before initially being deemed questionable to face the Raiders on Sunday. Since he wasn't activated Saturday, the veteran cornerback will have to wait at least another week to return to action. Hobbs' next chance to do so is Sunday, Nov. 15, against Dallas."
+    },
+    {
+      "playerId": "4686308",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+      "injuryType": "Knee",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": true,
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Est. Week 10–11 (Window Expected)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "beatNote": "The 49ers expect WR Deebo Samuel and DT CJ West to be back at practice on Wednesday, coach Kyle Shanahan said. West was placed on injured reserve in late September due to an undisclosed injury but is now nearing his return. Once the practice window is officially opened, San Francisco will have 21 days to activate the 2025 fourth-round pick, or else he'll be forced to stay on injured reserve for the remainder of the campaign."
     },
     {
       "playerId": "3895856",
@@ -135,6 +157,7 @@
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 9,
       "earliestEligibleWeek": 13,
       "projectedReturnWeek": "Est. Week 13 (Dec 6)",
@@ -151,6 +174,7 @@
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 2,
       "earliestEligibleWeek": 6,
       "projectedReturnWeek": "Est. Week 13 (Dec 6)",
@@ -167,6 +191,7 @@
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "Est. Week 15 (Dec 17)",
@@ -183,27 +208,12 @@
       "status": "Injured Reserve (Designated)",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
       "byeWeekNote": "4-game NFL minimum requirement",
       "beatNote": "Pleasants sustained a knee injury during the 49ers' preseason game against the Chargers on Aug. 20. The injury is severe enough for 29-year-old offensive tackle to open the year on IR, meaning he'll be forced to miss at least the first four games of the regular season."
-    },
-    {
-      "playerId": "4686308",
-      "name": "C.J. West",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "placedBeforeWeek": 3,
-      "earliestEligibleWeek": 7,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "beatNote": "It remains unclear what issue is sidelining the second-year player. West will now need to miss at least four games on IR before becoming eligible to return to the active roster. The defensive tackle has logged five tackles (one solo) over 49 defensive snaps in the 49ers' first two regular-season games."
     },
     {
       "playerId": "4372561",
@@ -215,6 +225,7 @@
       "status": "Reserve / PUP",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
@@ -231,6 +242,7 @@
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
@@ -243,15 +255,16 @@
       "position": "WR",
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
-      "injuryType": "Reserve / Left Squad",
-      "status": "Reserve / Left Squad",
+      "injuryType": "Roster Exemption",
+      "status": "Reserve / Roster Exemption",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
-      "projectedReturnWeek": "Reinstatement Pending",
-      "byeWeekNote": "Reserve/Left Squad — requires formal NFL & club reinstatement",
-      "beatNote": "Per Wagoner, Aiyuk submitted paperwork to be reinstated to the NFL in late October, and since then both the NFL Management Council and the NFL Players Association have been involved in an attempt to reach a resolution that's agreeable to both the wide receiver and the 49ers. Tom Pelissero of Netflix reported Thursday that Aiyuk's efforts to secure his release may be hampered by the roughly $13 million in bonus forfeitures that he owes the team, which could mean arbitration comes into play and delays the process. Friday's meeting between Aiyuk, his agent Drew Rosenhaus and San Francisco brass was only the first step. If the sides reach an agreement, the 49ers will have three options: release Aiyuk, trade him before Tuesday's deadline or add him to their 53-man roster."
+      "projectedReturnWeek": "2-Wk Roster Exemption",
+      "byeWeekNote": "Two-week NFL roster exemption following reinstatement",
+      "beatNote": "In what amounted to a procedural transaction after Aiyuk met with team officials Friday upon filing his paperwork for reinstatement, the 49ers now have until Nov. 23 to either add him to the 53-man roster, release him or trade him. Given that Aiyuk owes the 49ers roughly $13 million in bonus forfeiture, securing a release from the team could prove difficult, though it's possible that the two sides work out a repayment plan that would allow him to become a free agent. In addition to the financial complications potentially delaying Aiyuk's return to the field, it's unclear if the 49ers or any other team have interest in rostering the 28-year-old wideout, who hasn't played an NFL snap since tearing the ACL and MCL in his right knee Oct. 20, 2024 and undergoing surgery."
     },
     {
       "playerId": "4430835",
@@ -263,6 +276,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -279,6 +293,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -295,6 +310,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -311,6 +327,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 2,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -327,6 +344,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -343,6 +361,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -359,6 +378,7 @@
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",

@@ -34,10 +34,14 @@ import {
 } from './lib/aiSynthesisEngine.mjs';
 import { buildReporterRegistry } from './update-reporter-registry.mjs';
 import {
+  collapseInitialDots,
   computePlayerPlayProbability,
   calculateIrReturnTimeline,
   extractPracticeDaysFromText,
-  classifyIrAndReserveTimeline
+  classifyIrAndReserveTimeline,
+  pickMeaningfulInjuryComment,
+  reconcileRosterAndHealthWithNews,
+  sortIrTrackerPriority
 } from '../src/engine/injuryProbabilityModel.js';
 import {
   canonicalPlayerKey,
@@ -866,9 +870,11 @@ async function main() {
         inlineInj?.status ||
         (bucket === 'ir' ? 'Injured Reserve' : '');
 
-      const rawShortComment = cleanSensationalistText(espnInj?.shortComment || webInj?.shortComment || '');
+      const rawShortComment = cleanSensationalistText(
+        pickMeaningfulInjuryComment(espnInj?.shortComment, webInj?.shortComment, inlineInj?.shortComment)
+      );
       const rawLongComment = cleanSensationalistText(
-        espnInj?.longComment || webInj?.longComment || rawShortComment
+        pickMeaningfulInjuryComment(espnInj?.longComment, webInj?.longComment, inlineInj?.longComment, rawShortComment)
       );
       const returnDateStr =
         espnInj?.details?.returnDate || webInj?.returnDate || inlineInj?.details?.returnDate || null;
@@ -1014,6 +1020,13 @@ async function main() {
         experienceYears: ath.experience?.years ?? null,
         snapPct: primarySnapPct,
         gameStatus: effectiveGameStatusForModel,
+        priorWeekStatus: rawStatus,
+        missedPriorGame: sfEarlyRoll ? sfEarlyRoll.missedPriorGame : undefined,
+        priorWeekPracticed: sfEarlyRoll ? sfEarlyRoll.priorWeekPracticed : undefined,
+        weeklyHistory: weeklyInjByName.get(nk) || [],
+        currentWeek: detectedCurrentWeek,
+        byeWeek: detectedByeWeek,
+        fantasyStatusAbbr: webInj?.fantasyStatusAbbr || espnInj?.details?.fantasyStatus?.abbreviation || '',
         rosterBucket: bucket,
         isIrReturnQuestionable,
         isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
@@ -1254,6 +1267,7 @@ async function main() {
       .toLowerCase();
     if (!hay) return [];
     const hayNoApos = hay.replace(/'/g, '');
+    const hayCollapsed = collapseInitialDots(hay);
     const found = [];
     const seen = new Set();
     const pushPlayer = p => {
@@ -1272,17 +1286,22 @@ async function main() {
     for (const p of rosterPlayers) {
       const fullLower = p.name.toLowerCase();
       const strippedLower = stripSuffixName(p.name).toLowerCase();
+      const collapsedLower = collapseInitialDots(strippedLower);
       const noAposLower = strippedLower.replace(/'/g, '');
-      const fullRe = new RegExp(`\\b${escapeMatchRegex(fullLower)}\\b`, 'i');
+      const fullRe = new RegExp(`(?<![a-z0-9])${escapeMatchRegex(fullLower)}(?![a-z0-9])`, 'i');
       const strippedRe = strippedLower.includes(' ')
-        ? new RegExp(`\\b${escapeMatchRegex(strippedLower)}\\b`, 'i')
+        ? new RegExp(`(?<![a-z0-9])${escapeMatchRegex(strippedLower)}(?![a-z0-9])`, 'i')
+        : null;
+      const collapsedRe = collapsedLower.includes(' ')
+        ? new RegExp(`(?<![a-z0-9])${escapeMatchRegex(collapsedLower)}(?![a-z0-9])`, 'i')
         : null;
       const noAposRe = noAposLower.includes(' ')
-        ? new RegExp(`\\b${escapeMatchRegex(noAposLower)}\\b`, 'i')
+        ? new RegExp(`(?<![a-z0-9])${escapeMatchRegex(noAposLower)}(?![a-z0-9])`, 'i')
         : null;
       if (
         fullRe.test(hay) ||
         (strippedRe && strippedRe.test(hay)) ||
+        (collapsedRe && collapsedRe.test(hayCollapsed)) ||
         (noAposRe && noAposRe.test(hayNoApos)) ||
         (p.name === 'Deebo Samuel Sr.' && /\bdeebo\b/i.test(hay)) ||
         (p.name === 'Christian McCaffrey' && /\bcmc\b/i.test(hay))
@@ -1419,7 +1438,7 @@ async function main() {
   depthUnits.sort((a, b) => depthPriority(a) - depthPriority(b));
 
   // 7. Build Team Health & IR Return Tracker (`data/health.json`)
-  const practiceReportPlayers = rosterPlayers
+  let practiceReportPlayers = rosterPlayers
     .filter(p => p.health.isOnPracticeReport)
     .sort((a, b) => a.health.playProbabilityPct - b.health.playProbabilityPct || b.capHit2026 - a.capHit2026)
     .map(p => ({
@@ -1439,19 +1458,10 @@ async function main() {
       playBadgeLabel: p.health.playBadgeLabel,
       archetypeNote: p.health.archetypeNote,
       factors: p.health.factors,
-      beatComment: p.health.longComment || p.health.shortComment
+      beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment)
     }));
 
-  const sortIrPriority = entry => {
-    if (entry.isPracticeWindowOpen) return 1;
-    const wkMatch = String(entry.projectedReturnWeek || '').match(/Week\s*(\d{1,2})/i);
-    if (!entry.isSeasonEnding && wkMatch) return 10 + Number(wkMatch[1]);
-    if (!entry.isSeasonEnding && /TBD/i.test(entry.projectedReturnWeek || '')) return 40;
-    if (!entry.isSeasonEnding) return 50;
-    return 100;
-  };
-
-  const irTrackerPlayers = rosterPlayers
+  let irTrackerPlayers = rosterPlayers
     .filter(p => p.rosterBucket === 'ir' || p.rosterBucket === 'suspended')
     .map(p => ({
       playerId: p.id,
@@ -1465,13 +1475,14 @@ async function main() {
         : p.health.status || 'Injured Reserve',
       isSeasonEnding: Boolean(p.health.isSeasonEnding),
       isPracticeWindowOpen: Boolean(p.health.isPracticeWindowOpen),
+      isPracticeWindowExpected: Boolean(p.health.isPracticeWindowExpected),
       placedBeforeWeek: p.health.placedBeforeWeek ?? 1,
       earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
       projectedReturnWeek: p.health.projectedReturnWeek || 'TBD',
       byeWeekNote: p.health.byeWeekNote || '4-game NFL minimum requirement',
-      beatNote: p.health.irBeatNote || p.health.longComment || p.health.shortComment || ''
+      beatNote: pickMeaningfulInjuryComment(p.health.irBeatNote, p.health.longComment, p.health.shortComment)
     }))
-    .sort((a, b) => sortIrPriority(a) - sortIrPriority(b) || a.name.localeCompare(b.name));
+    .sort((a, b) => sortIrTrackerPriority(a) - sortIrTrackerPriority(b) || a.name.localeCompare(b.name));
 
   // Count regular-season IR-return designations used under NFL CBA rules (max 8 in regular season):
   //  - Each transaction opening a 21-day return window from IR since Aug 20
@@ -2551,6 +2562,24 @@ async function main() {
     }).slice(0, 10);
   }
 
+  // Reconcile Roster Health, Play Likelihoods, IR Return Timelines & Projected Active Depth Chart with Corroborated Beat/Podium News
+  const healthReconcileContainer = {
+    week: detectedCurrentWeek,
+    byeWeek: detectedByeWeek,
+    practiceReport: practiceReportPlayers,
+    irAndReserveTracker: irTrackerPlayers
+  };
+  reconcileRosterAndHealthWithNews({
+    meta: { currentWeek: detectedCurrentWeek },
+    roster: { players: rosterPlayers },
+    depthChart: { units: depthUnits },
+    health: healthReconcileContainer,
+    news: { rawStream: rawNewsStream },
+    scheduleMatchup: pipelineAppDataStub.scheduleMatchup
+  });
+  practiceReportPlayers = healthReconcileContainer.practiceReport;
+  irTrackerPlayers = healthReconcileContainer.irAndReserveTracker;
+
   // 9. Build Schedule, 1st-32nd Team Stats, Power Rankings & Upcoming Matchup (`data/schedule-matchup.json`)
   console.log('[6/6] Computing 1st-32nd NFL Team Rankings, Upcoming Matchup, Opponent Health, Playoff Monte Carlo & Draft Classes...');
   const nflGames2026 = gamesRows.filter(g => g.season === seasonYearStr && g.game_type === 'REG');
@@ -3130,10 +3159,10 @@ async function main() {
         inlineInj?.status ||
         (isIrGroup ? 'Injured Reserve' : 'Active');
       const rawShort = cleanSensationalistText(
-        injFeedItem?.shortComment || oppWebInj?.shortComment || inlineInj?.shortComment || ''
+        pickMeaningfulInjuryComment(injFeedItem?.shortComment, oppWebInj?.shortComment, inlineInj?.shortComment)
       );
       const rawLong = cleanSensationalistText(
-        injFeedItem?.longComment || oppWebInj?.longComment || inlineInj?.longComment || rawShort
+        pickMeaningfulInjuryComment(injFeedItem?.longComment, oppWebInj?.longComment, inlineInj?.longComment, rawShort)
       );
       const combinedBeatLower = `${rawShort} ${rawLong}`.toLowerCase();
 
@@ -3305,6 +3334,9 @@ async function main() {
           experienceYears: expYears,
           snapPct,
           gameStatus: effectiveOppStatus,
+          priorWeekStatus: rawStatus,
+          missedPriorGame: oppEarlyRoll ? oppEarlyRoll.missedPriorGame : undefined,
+          priorWeekPracticed: oppEarlyRoll ? oppEarlyRoll.priorWeekPracticed : undefined,
           rosterBucket: isIrGroup ? 'ir' : 'active',
           isIrReturnQuestionable,
           injuryType: specificInjuryType,
@@ -3473,7 +3505,7 @@ async function main() {
   ];
 
   oppIrPlayers.sort(
-    (a, b) => sortIrPriority(a) - sortIrPriority(b) || (b.snapPct ?? 0) - (a.snapPct ?? 0) || a.name.localeCompare(b.name)
+    (a, b) => sortIrTrackerPriority(a) - sortIrTrackerPriority(b) || (b.snapPct ?? 0) - (a.snapPct ?? 0) || a.name.localeCompare(b.name)
   );
   oppInjuryReportPlayers.sort((a, b) => a.playProbabilityPct - b.playProbabilityPct);
 

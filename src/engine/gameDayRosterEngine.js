@@ -3,7 +3,10 @@
  * Game-Time Questionable -> In/Out Resolver & Post-Game Next-Week Rollover Engine
  */
 
-import { computePlayerPlayProbability } from './injuryProbabilityModel.js';
+import {
+  collapseInitialDots,
+  computePlayerPlayProbability
+} from './injuryProbabilityModel.js';
 
 export const GAME_DAY_INACTIVES_LEAD_MS = 90 * 60_000; // 90 minutes before kickoff
 const MAX_LIVE_GAME_DURATION_MS = 5.25 * 3600_000;
@@ -253,11 +256,12 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
       const name = p?.name || p?.fullName || '';
       const key = normalizeLookupName(name);
       if (!key || name.length < 4) return null;
-      const escaped = name
-        .replace(/\b(Jr\.?|Sr\.?|II|III|IV|V)\b\.?/gi, '')
-        .trim()
-        .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return escaped.length >= 4 ? { key, regex: getCachedPlayerRegex(escaped) } : null;
+      const stripped = name.replace(/\b(Jr\.?|Sr\.?|II|III|IV|V)\b\.?/gi, '').trim();
+      const collapsed = collapseInitialDots(stripped);
+      const variants = [...new Set([stripped, collapsed].filter(s => s.length >= 4))].map(s =>
+        s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      );
+      return variants.length > 0 ? { key, regex: getCachedPlayerRegex(`(?:${variants.join('|')})`) } : null;
     })
     .filter(Boolean);
 
@@ -827,6 +831,26 @@ export function resolveEarlyWeekRolloverInput({
     effectiveStatus = 'Questionable';
   }
 
+  const missedPriorGame =
+    statusLower === 'out' ||
+    statusLower === 'inactive' ||
+    /\b(is inactive|was inactive|officially inactive|ruled out|will not play|won't play|missing a (?:second|third|fourth) straight|will miss his (?:second|third|fourth) straight)\b/i.test(
+      combined
+    );
+
+  let priorWeekPracticed = null;
+  if (missedPriorGame) {
+    if (/\b(trio of limited practices|limited practices during the week|limited all week|practiced on a limited basis)\b/i.test(combined)) {
+      priorWeekPracticed = true;
+    } else if (
+      /\b(hasn't been able to practice|has not been able to practice|trio of '?dnps?'?|did not practice all week|not practicing in any capacity)\b/i.test(
+        combined
+      )
+    ) {
+      priorWeekPracticed = false;
+    }
+  }
+
   let beatNoteForModel = combined;
   if (effectiveStatus !== 'Out') {
     // Strip prior-game availability rulings so computePlayerPlayProbability models Week N+1 rather than clamping to 0%
@@ -841,7 +865,9 @@ export function resolveEarlyWeekRolloverInput({
   return {
     skip: false,
     effectiveStatus,
-    beatNoteForModel
+    beatNoteForModel,
+    missedPriorGame,
+    priorWeekPracticed
   };
 }
 
@@ -883,6 +909,15 @@ export function rolloverPracticeReportForUpcomingWeek(
 
     if (!hasOngoingDesignation) continue;
 
+    const priorCodes = [r?.wed, r?.thu, r?.fri].filter(Boolean);
+    const rowHadPriorPractice = priorCodes.some(c => c === 'LP' || c === 'FP');
+    const rowWasAllDnp = priorCodes.length === 3 && priorCodes.every(c => c === 'DNP');
+    const resolvedPriorPracticed = rowHadPriorPractice
+      ? true
+      : rowWasAllDnp && earlyRoll.priorWeekPracticed === null
+        ? false
+        : earlyRoll.priorWeekPracticed;
+
     const wed = clearPracticeDays ? '-' : r.wed || '-';
     const thu = clearPracticeDays ? '-' : r.thu || '-';
     const fri = clearPracticeDays ? '-' : r.fri || '-';
@@ -898,6 +933,10 @@ export function rolloverPracticeReportForUpcomingWeek(
       experienceYears: r.experienceYears ?? null,
       snapPct: r.snapPct ?? null,
       gameStatus: cleanStatus,
+      priorWeekStatus: r.gameStatus || '',
+      missedPriorGame: clearPracticeDays ? earlyRoll.missedPriorGame : false,
+      priorWeekPracticed: clearPracticeDays ? resolvedPriorPracticed : null,
+      sustainedInLastGame: Boolean(r?.sustainedInLastGame),
       rosterBucket: r.isIrReturnQuestionable ? 'ir' : 'active',
       isIrReturnQuestionable: Boolean(r.isIrReturnQuestionable),
       injuryType: r.injuryType || '',

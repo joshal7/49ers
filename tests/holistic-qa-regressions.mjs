@@ -22,16 +22,22 @@ import {
   buildAuthoritativeLiveContextSnapshot
 } from '../src/engine/groundingValidator.js';
 import {
+  classifyIrAndReserveTimeline,
+  collapseInitialDots,
   computePlayerPlayProbability,
-  resolvePlacedBeforeWeekFromDate
+  doesClauseMentionPlayer,
+  evaluateCorroboratedNewsInjurySignal,
+  reconcileRosterAndHealthWithNews,
+  resolvePlacedBeforeWeekFromDate,
+  scopeBeatTextToPlayer
 } from '../src/engine/injuryProbabilityModel.js';
 import { runPlayoffMonteCarlo } from '../src/engine/playoffMonteCarlo.js';
 import {
-   sortNewsWithBreakingPriority,
+  sortNewsWithBreakingPriority,
   isRedundantProfileSelfLink
 } from '../src/engine/breakingClassifier.js';
 import { getJargonEntry } from '../src/engine/jargonGlossary.js';
-import { hydrateLiveEspnOverlay } from '../src/services/dataService.js';
+import { hydrateLiveEspnOverlay, matchPlayersClient } from '../src/services/dataService.js';
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
 import {
   isOffTopicLeagueFiller,
@@ -787,6 +793,417 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
     for (const pl of mt.prospectLinks) {
       assert.ok(String(pl.url || '').startsWith('https://'), `Invalid mock prospect URL: ${pl.url}`);
     }
+  }
+});
+
+await testAsync('Trust-weighted corroborated news & prior-week absence calibration aligns Deebo, Mike Evans & C.J. West without overcorrecting on single/speculative tweets', async () => {
+  // 1. Initialism normalization ("CJ West" <-> "C.J. West") across matchPlayersClient, clause matcher & inline links
+  assert.equal(collapseInitialDots('C.J. West'), 'CJ West');
+  assert.equal(doesClauseMentionPlayer('Shanahan is hopeful to get Deebo Samuel and CJ West back to practice.', 'C.J. West'), true);
+  assert.equal(doesClauseMentionPlayer('NFC West standings heading into Week 10', 'C.J. West'), false, 'NFC West must never match C.J. West');
+
+  const sampleRoster = [
+    { id: '3126486', name: 'Deebo Samuel Sr.', shortName: 'D. Samuel Sr.', position: 'WR', jersey: 19 },
+    { id: '16737', name: 'Mike Evans', shortName: 'M. Evans', position: 'WR', jersey: 5 },
+    { id: '4686308', name: 'C.J. West', shortName: 'C. West', position: 'DT', jersey: 99 }
+  ];
+  const barrowsTweet =
+    "Shanahan said he's hopeful to get Deebo Samuel and CJ West back to practice on Wednesday. The team is not expecting Mike Evans this week.";
+  const matchedChips = matchPlayersClient(barrowsTweet, sampleRoster, 10);
+  assert.deepEqual(
+    matchedChips.map(m => m.name),
+    ['Deebo Samuel Sr.', 'Mike Evans', 'C.J. West'],
+    'Multi-player tweet with dotless "CJ West" must match all three players'
+  );
+
+  // 2. Clause-level per-player scoping prevents cross-player bleed between adjacent sentences
+  const deeboScoped = scopeBeatTextToPlayer(barrowsTweet, 'Deebo Samuel Sr.', sampleRoster.map(p => p.name));
+  const westScoped = scopeBeatTextToPlayer(barrowsTweet, 'C.J. West', sampleRoster.map(p => p.name));
+  const evansScoped = scopeBeatTextToPlayer(barrowsTweet, 'Mike Evans', sampleRoster.map(p => p.name));
+  assert.ok(/hopeful to get Deebo Samuel/i.test(deeboScoped) && !/not expecting Mike Evans/i.test(deeboScoped));
+  assert.ok(/CJ West back to practice/i.test(westScoped) && !/not expecting Mike Evans/i.test(westScoped));
+  assert.ok(/not expecting Mike Evans/i.test(evansScoped) && !/hopeful to get/i.test(evansScoped));
+
+  // 3. Anti-overreaction guards: speculative/unreliable sources = 0 confidence; aggregator echoes deduplicate; single unquoted tweet stays conservative
+  const nowMs = Date.parse('2026-11-10T01:30:00Z');
+  const winStartMs = Date.parse('2026-11-09T01:00:00Z');
+
+  const speculativeSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'C.J. West',
+    rosterBucket: 'ir',
+    nowMs,
+    windowStartMs: winStartMs,
+    newsItems: [
+      {
+        id: 'spec1',
+        trustTier: 3,
+        author: 'Random Fan Blog',
+        fullText: '49ers expect CJ West back to practice Wednesday and should activate him.',
+        publishedAt: '2026-11-09T23:00:00Z'
+      },
+      {
+        id: 'spec2',
+        trustTier: 1,
+        reporterId: 'matt_barrows',
+        author: 'Matt Barrows',
+        fullText: 'Team could activate CJ West this week if thin at DT.',
+        publishedAt: '2026-11-09T23:05:00Z'
+      }
+    ]
+  });
+  assert.equal(speculativeSig.hasSignal, false, 'Speculative modals and Tier-3 blogs must have zero impact');
+  assert.equal(speculativeSig.confidence, 0);
+
+  // Three mirrors quoting the SAME reporter (Matt Barrows) without coach quote must deduplicate to 1 reporter (<0.55 IR threshold!)
+  const echoedSingleReporter = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'C.J. West',
+    rosterBucket: 'ir',
+    nowMs,
+    windowStartMs: winStartMs,
+    newsItems: [
+      {
+        id: 'ec1',
+        trustTier: 1,
+        reporterId: 'matt_barrows',
+        author: 'Matt Barrows',
+        fullText: 'CJ West is on track to return to practice Wednesday.',
+        publishedAt: '2026-11-09T22:30:00Z'
+      },
+      {
+        id: 'ec2',
+        trustTier: 2,
+        outletId: 'rotowire',
+        author: 'RotoWire',
+        fullText: 'CJ West is on track to return to practice Wednesday, Matt Barrows of The Athletic reports.',
+        publishedAt: '2026-11-09T22:40:00Z'
+      }
+    ]
+  });
+  assert.equal(echoedSingleReporter.corroboratingCount, 1, 'Aggregator echo of same beat writer must count as 1 source');
+  assert.ok(echoedSingleReporter.confidence < 0.55, 'Single unquoted beat tweet must remain below 0.55 IR override threshold');
+
+  const unquotedIrTimeline = classifyIrAndReserveTimeline({
+    statusRaw: 'Injured Reserve',
+    injuryType: 'Knee',
+    placedDateIso: '2026-09-23T18:00:00Z',
+    txPlacedDateIso: '2026-09-23T18:00:00Z',
+    currentWeek: 10,
+    byeWeek: 8,
+    seasonYear: 2026,
+    scheduleEvents: [
+      { week: { number: 1 }, date: '2026-09-13T20:25Z' },
+      { week: { number: 3 }, date: '2026-09-27T20:05Z' },
+      { week: { number: 10 }, date: '2026-11-15T21:25Z' }
+    ],
+    corroboratedNewsSignal: echoedSingleReporter
+  });
+  assert.equal(unquotedIrTimeline.projectedReturnWeek, 'TBD (21d Window Not Open)', 'Single unquoted tweet must NOT flip IR badge');
+
+  // 4. Corroborated coaching podium reports (Barrows + Maiocco + Wagoner/Lombardi) properly calibrate Deebo > Mike Evans & C.J. West Window Expected
+  const podiumNews = [
+    {
+      id: 'p1',
+      trustTier: 1,
+      reporterId: 'matt_barrows',
+      author: 'Matt Barrows',
+      fullText: barrowsTweet,
+      publishedAt: '2026-11-09T22:37:52Z'
+    },
+    {
+      id: 'p2',
+      trustTier: 1,
+      reporterId: 'matt_maiocco',
+      author: 'Matt Maiocco',
+      fullText:
+        'The 49ers expect WR Deebo Samuel and DT CJ West to be back at practice on Wednesday, coach Kyle Shanahan said. They are not expecting WR Mike Evans to be ready this week.',
+      publishedAt: '2026-11-09T22:37:58Z'
+    },
+    {
+      id: 'p3',
+      trustTier: 1,
+      reporterId: 'nick_wagoner',
+      author: 'Nick Wagoner',
+      fullText: 'Evans (Achilles) is unlikely to participate in practice Wednesday, Nick Wagoner of ESPN reports.',
+      publishedAt: '2026-11-09T22:58:35Z'
+    },
+    {
+      id: 'p4',
+      trustTier: 1,
+      reporterId: 'david_lombardi',
+      author: 'David Lombardi',
+      fullText: 'Samuel (hamstring) is on track to return to practice Wednesday, David Lombardi of SFStandard.com reports.',
+      publishedAt: '2026-11-09T23:07:08Z'
+    }
+  ];
+
+  const deeboSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Deebo Samuel Sr.',
+    rosterBucket: 'active',
+    newsItems: podiumNews,
+    rosterPlayerNames: sampleRoster.map(p => p.name),
+    nowMs,
+    windowStartMs: winStartMs
+  });
+  const evansSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Mike Evans',
+    rosterBucket: 'active',
+    newsItems: podiumNews,
+    rosterPlayerNames: sampleRoster.map(p => p.name),
+    nowMs,
+    windowStartMs: winStartMs
+  });
+  const westSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'C.J. West',
+    rosterBucket: 'ir',
+    newsItems: podiumNews,
+    rosterPlayerNames: sampleRoster.map(p => p.name),
+    nowMs,
+    windowStartMs: winStartMs
+  });
+
+  const deeboProb = computePlayerPlayProbability({
+    name: 'Deebo Samuel Sr.',
+    position: 'WR',
+    experienceYears: 8,
+    snapPct: 58,
+    gameStatus: 'Questionable',
+    priorWeekStatus: 'Out',
+    missedPriorGame: true,
+    priorWeekPracticed: false,
+    consecutiveMissedGames: 3,
+    injuryType: 'Hamstring',
+    wed: '-',
+    thu: '-',
+    fri: '-',
+    corroboratedNewsSignal: deeboSig
+  });
+  const evansProb = computePlayerPlayProbability({
+    name: 'Mike Evans',
+    position: 'WR',
+    experienceYears: 13,
+    snapPct: 54,
+    gameStatus: 'Questionable',
+    priorWeekStatus: 'Out',
+    missedPriorGame: true,
+    priorWeekPracticed: false,
+    consecutiveMissedGames: 2,
+    injuryType: 'Achilles',
+    wed: '-',
+    thu: '-',
+    fri: '-',
+    corroboratedNewsSignal: evansSig
+  });
+
+  assert.ok(
+    deeboProb.probabilityPct >= 55 && deeboProb.probabilityPct <= 68,
+    `Expected Deebo cautious True GTD (55–68%, not overcorrected to Probable), got ${deeboProb.probabilityPct}%`
+  );
+  assert.ok(
+    evansProb.probabilityPct >= 15 && evansProb.probabilityPct <= 28,
+    `Expected Mike Evans Long Shot/Doubtful (15–28%, not 0% Out or 79% GTD), got ${evansProb.probabilityPct}%`
+  );
+  assert.ok(
+    deeboProb.probabilityPct >= evansProb.probabilityPct + 25,
+    `Deebo (${deeboProb.probabilityPct}%) must substantially exceed Mike Evans (${evansProb.probabilityPct}%)`
+  );
+
+  // Once actual Wed/Thu/Fri practice codes are logged (e.g., Deebo logs DNP/DNP/DNP setback), observed practice overrides Monday hope!
+  const deeboIfSetbackDnp = computePlayerPlayProbability({
+    name: 'Deebo Samuel Sr.',
+    position: 'WR',
+    gameStatus: 'Questionable',
+    injuryType: 'Hamstring',
+    wed: 'DNP',
+    thu: 'DNP',
+    fri: 'DNP',
+    corroboratedNewsSignal: deeboSig
+  });
+  assert.ok(deeboIfSetbackDnp.probabilityPct <= 15, `Observed DNP/DNP/DNP must override Monday optimism, got ${deeboIfSetbackDnp.probabilityPct}%`);
+
+  const westIrTimeline = classifyIrAndReserveTimeline({
+    statusRaw: 'Injured Reserve',
+    injuryType: 'Knee',
+    placedDateIso: '2026-09-23T18:00:00Z',
+    txPlacedDateIso: '2026-09-23T18:00:00Z',
+    currentWeek: 10,
+    byeWeek: 8,
+    seasonYear: 2026,
+    scheduleEvents: [
+      { week: { number: 1 }, date: '2026-09-13T20:25Z' },
+      { week: { number: 3 }, date: '2026-09-27T20:05Z' },
+      { week: { number: 10 }, date: '2026-11-15T21:25Z' }
+    ],
+    corroboratedNewsSignal: westSig
+  });
+  assert.equal(westIrTimeline.isPracticeWindowOpen, false, 'Formal NFL transaction count must remain unchanged before official wire');
+  assert.equal(westIrTimeline.isPracticeWindowExpected, true);
+  assert.equal(westIrTimeline.projectedReturnWeek, 'Est. Week 10–11 (Window Expected)');
+
+  // 5. hydrateLiveEspnOverlay resilience when ESPN /injuries emits bare "out" / "inactive" strings
+  const origFetch = globalThis.fetch;
+  try {
+    const mockAppData = {
+      meta: { updatedAt: '2026-11-09T14:00:00Z', currentWeek: 10 },
+      roster: {
+        players: [
+          {
+            id: '3126486',
+            name: 'Deebo Samuel Sr.',
+            position: 'WR',
+            jersey: 19,
+            rosterBucket: 'active',
+            experienceYears: 8,
+            primarySnapPct: 58,
+            capHit2026: 15_000_000,
+            health: {
+              status: 'Questionable',
+              injuryType: 'Hamstring',
+              isOnPracticeReport: true,
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              shortComment: 'Samuel (hamstring) is on track to return to practice Wednesday.',
+              longComment: 'Samuel (hamstring) is on track to return to practice Wednesday.',
+              weeklyHistory2026: [
+                { week: 6, gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+                { week: 7, gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+                { week: 9, gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' }
+              ]
+            },
+            recentNews: []
+          },
+          {
+            id: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            jersey: 5,
+            rosterBucket: 'active',
+            experienceYears: 13,
+            primarySnapPct: 54,
+            capHit2026: 12_000_000,
+            health: {
+              status: 'Questionable',
+              injuryType: 'Achilles',
+              isOnPracticeReport: true,
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              shortComment: 'Evans (Achilles) is unlikely to participate in practice Wednesday.',
+              longComment: 'Evans (Achilles) appears to be questionable at best for Dallas.',
+              weeklyHistory2026: [
+                { week: 7, gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+                { week: 9, gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' }
+              ]
+            },
+            recentNews: []
+          },
+          {
+            id: '4686308',
+            name: 'C.J. West',
+            position: 'DT',
+            jersey: 99,
+            rosterBucket: 'ir',
+            experienceYears: 2,
+            primarySnapPct: 41,
+            capHit2026: 1_200_000,
+            health: {
+              status: 'Injured Reserve',
+              injuryType: 'Knee',
+              isSeasonEnding: false,
+              isPracticeWindowOpen: false,
+              placedBeforeWeek: 3,
+              earliestEligibleWeek: 7,
+              projectedReturnWeek: 'TBD (21d Window Not Open)',
+              irBeatNote: 'West will need to miss at least four games on IR.'
+            },
+            recentNews: []
+          }
+        ]
+      },
+      health: {
+        week: 10,
+        byeWeek: 8,
+        practiceReport: [],
+        irAndReserveTracker: [
+          {
+            playerId: '4686308',
+            name: 'C.J. West',
+            position: 'DT',
+            jersey: 99,
+            injuryType: 'Knee',
+            status: 'Injured Reserve',
+            isSeasonEnding: false,
+            isPracticeWindowOpen: false,
+            placedBeforeWeek: 3,
+            earliestEligibleWeek: 7,
+            projectedReturnWeek: 'TBD (21d Window Not Open)'
+          }
+        ]
+      },
+      news: { rawStream: podiumNews },
+      scheduleMatchup: {
+        schedule: [
+          { week: 9, dateIso: '2026-11-08T21:25:00Z', completed: true },
+          { week: 10, dateIso: new Date(Date.now() + 5 * 86_400_000).toISOString(), completed: false }
+        ],
+        upcomingMatchup: {
+          week: 10,
+          oppAbbr: 'DAL',
+          oppName: 'Dallas Cowboys',
+          kickoffIso: new Date(Date.now() + 5 * 86_400_000).toISOString()
+        }
+      }
+    };
+
+    globalThis.fetch = async url => {
+      if (String(url).includes('/injuries')) {
+        return {
+          ok: true,
+          json: async () => ({
+            injuries: [
+              {
+                id: '25',
+                displayName: 'San Francisco 49ers',
+                injuries: [
+                  {
+                    athlete: { displayName: 'Deebo Samuel Sr.' },
+                    status: 'Out',
+                    details: { type: 'Hamstring' },
+                    shortComment: 'out',
+                    longComment: 'out'
+                  },
+                  {
+                    athlete: { displayName: 'Mike Evans' },
+                    status: 'Out',
+                    details: { type: 'Achilles' },
+                    shortComment: 'out',
+                    longComment: 'out'
+                  }
+                ]
+              }
+            ]
+          })
+        };
+      }
+      return { ok: false, json: async () => null };
+    };
+
+    await hydrateLiveEspnOverlay(mockAppData);
+    reconcileRosterAndHealthWithNews(mockAppData, { nowMs });
+
+    const prDeebo = mockAppData.health.practiceReport.find(p => p.name === 'Deebo Samuel Sr.');
+    const prEvans = mockAppData.health.practiceReport.find(p => p.name === 'Mike Evans');
+    const irWest = mockAppData.health.irAndReserveTracker.find(p => p.name === 'C.J. West');
+
+    assert.ok(prDeebo && prEvans && irWest, 'Expected Deebo, Evans & West present after live overlay hydration');
+    assert.notEqual(prEvans.beatComment, 'out', 'Bare "out" placeholder must never overwrite real medical comment');
+    assert.ok(
+      prDeebo.playProbabilityPct > prEvans.playProbabilityPct + 25,
+      `Live overlay must rank Deebo (${prDeebo.playProbabilityPct}%) well above Mike Evans (${prEvans.playProbabilityPct}%)`
+    );
+    assert.equal(irWest.projectedReturnWeek, 'Est. Week 10–11 (Window Expected)');
+  } finally {
+    globalThis.fetch = origFetch;
   }
 });
 

@@ -140,7 +140,7 @@ export function cleanSensationalistText(rawText = '') {
     .replace(/&#39;|&apos;/g, "'")
     .replace(/&nbsp;/g, ' ')
     .replace(/\b(SHOCKING|BREAKING|UNBELIEVABLE|BOMBSHELL):\s*/gi, '')
-    .replace(/\s*(Subscribe|Click here|Follow us on|Download the app).*$/i, '')
+    .replace(/\s*(Subscribe|Click here|Follow us on|Download the app|Visit RotoWire\.com).*$/i, '')
     .replace(/!{2,}/g, '.')
     .replace(/\s+/g, ' ')
     .trim();

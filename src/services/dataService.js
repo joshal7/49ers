@@ -4,8 +4,12 @@
 
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
 import {
+  collapseInitialDots,
   computePlayerPlayProbability,
-  extractPracticeDaysFromText
+  extractPracticeDaysFromText,
+  isBareStatusPlaceholderComment,
+  pickMeaningfulInjuryComment,
+  reconcileRosterAndHealthWithNews
 } from '../engine/injuryProbabilityModel.js';
 import {
   runPlayoffMonteCarlo,
@@ -422,7 +426,7 @@ export async function loadAll49ersData(basePrefix = './data') {
     news.clusteredBriefs = filterAndCleanSynthesisClusters(news.clusteredBriefs, bootCtxStub);
   }
 
-  return {
+  const loadedBundle = {
     meta,
     roster,
     depthChart,
@@ -435,6 +439,8 @@ export async function loadAll49ersData(basePrefix = './data') {
     podcastIndex,
     beatPodcasts
   };
+  reconcileRosterAndHealthWithNews(loadedBundle);
+  return loadedBundle;
 }
 
 function isProductionHostedOrigin() {
@@ -560,8 +566,11 @@ export function matchPlayersClient(
   max = 12,
   { allowUniqueSurnames = true } = {}
 ) {
-  const hay = String(text || '').toLowerCase();
+  const hay = String(text || '')
+    .replace(/[’‘]/g, "'")
+    .toLowerCase();
   if (!hay || !Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return [];
+  const hayCollapsed = collapseInitialDots(hay);
 
   const surnameCounts = new Map();
   if (allowUniqueSurnames) {
@@ -578,9 +587,10 @@ export function matchPlayersClient(
   const hits = [];
   for (const p of rosterPlayers) {
     if (hits.length >= max) break;
-    const fullLower = String(p.name || '').toLowerCase().trim();
+    const fullLower = String(p.name || '').replace(/[’‘]/g, "'").toLowerCase().trim();
     if (!fullLower) continue;
     const strippedLower = fullLower.replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '').trim();
+    const collapsedStripped = collapseInitialDots(strippedLower);
     const cleanParts = String(p.name || '')
       .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
       .trim()
@@ -589,9 +599,13 @@ export function matchPlayersClient(
     const surnameLower = surname.toLowerCase();
 
     const matchedFull =
-      new RegExp(`\\b${escapeClientRegex(fullLower)}\\b`, 'i').test(hay) ||
+      new RegExp(`(?<![a-z0-9])${escapeClientRegex(fullLower)}(?![a-z0-9])`, 'i').test(hay) ||
       (strippedLower.length >= 6 &&
-        new RegExp(`\\b${escapeClientRegex(strippedLower)}\\b`, 'i').test(hay));
+        new RegExp(`(?<![a-z0-9])${escapeClientRegex(strippedLower)}(?![a-z0-9])`, 'i').test(hay)) ||
+      (collapsedStripped.length >= 6 &&
+        new RegExp(`(?<![a-z0-9])${escapeClientRegex(collapsedStripped)}(?![a-z0-9])`, 'i').test(hayCollapsed)) ||
+      (p.name === 'Deebo Samuel Sr.' && /\bdeebo\b/i.test(hay)) ||
+      (p.name === 'Christian McCaffrey' && /\bcmc\b/i.test(hay));
 
     const matchedUniqueSurname =
       !matchedFull &&
@@ -1284,10 +1298,13 @@ export async function hydrateLiveMultiSourceBeatWire(appData, { isGameLive = fal
     appData.news.clusteredBriefs = filterAndCleanSynthesisClusters(appData.news.clusteredBriefs, appData);
   }
 
+  // Align player play probabilities & IR return windows with corroborated current-week coaching/beat reports
+  const healthAligned = reconcileRosterAndHealthWithNews(appData);
+
   // Also refresh Game-Day Inactives & Active Roster if inside [T-90m, Final) window
   await hydrateLiveGameDayRosters(appData).catch(() => false);
 
-  return { totalAdded, bySource };
+  return { totalAdded: totalAdded + (healthAligned && totalAdded === 0 ? 1 : 0), bySource, healthAligned };
 }
 
 function toEspnTeamSlugClient(abbr = '') {
@@ -1988,17 +2005,20 @@ export async function hydrateLiveEspnOverlay(appData) {
         if (!rp || !rp.health) continue;
         const rawStatus = item.status || rp.health.status || 'Active';
         const rawLower = rawStatus.toLowerCase();
-        const shortC = cleanSensationalistText(item.shortComment || '');
-        const longC = cleanSensationalistText(item.longComment || shortC);
+        const rawShortIn = cleanSensationalistText(item.shortComment || '');
+        const rawLongIn = cleanSensationalistText(item.longComment || rawShortIn);
+        const shortC = pickMeaningfulInjuryComment(rawShortIn, rp.health.shortComment);
+        const longC = pickMeaningfulInjuryComment(rawLongIn, rp.health.longComment, shortC);
         const combinedText = `${shortC} ${longC}`.trim();
         const bodyPart = item.details?.type || extractBodyPartSafe(shortC) || rp.health.injuryType || '';
+        const fantasyAbbr = item.details?.fantasyStatus?.abbreviation || rp.health.fantasyStatusAbbr || '';
         const sfEarlyRoll =
           earlyWeekBlankPractice && rp.rosterBucket === 'active'
             ? resolveEarlyWeekRolloverInput({
                 rawStatus,
                 injuryType: bodyPart,
-                shortComment: shortC,
-                longComment: longC,
+                shortComment: !isBareStatusPlaceholderComment(rawShortIn) ? rawShortIn : shortC,
+                longComment: !isBareStatusPlaceholderComment(rawLongIn) ? rawLongIn : longC,
                 upcomingWeek: appData.scheduleMatchup.upcomingMatchup?.week
               })
             : null;
@@ -2013,6 +2033,7 @@ export async function hydrateLiveEspnOverlay(appData) {
         const isIrReturnQ =
           rp.rosterBucket === 'ir' &&
           !rp.health.isSeasonEnding &&
+          String(fantasyAbbr).toUpperCase() !== 'RESERVE-EX' &&
           !notActivated &&
           /(listed as questionable|questionable for sunday|likely will be activated|expected to be activated)/i.test(
             combinedText
@@ -2052,9 +2073,18 @@ export async function hydrateLiveEspnOverlay(appData) {
         const playProb = computePlayerPlayProbability({
           name: rp.name,
           position: rp.position,
+          experienceYears: rp.experienceYears ?? null,
+          snapPct: rp.primarySnapPct ?? null,
           rosterBucket: rp.rosterBucket,
           isSeasonEnding: Boolean(rp.health.isSeasonEnding),
+          fantasyStatusAbbr: fantasyAbbr,
           gameStatus: effectiveStatusForModel,
+          priorWeekStatus: rawStatus,
+          missedPriorGame: sfEarlyRoll ? sfEarlyRoll.missedPriorGame : undefined,
+          priorWeekPracticed: sfEarlyRoll ? sfEarlyRoll.priorWeekPracticed : undefined,
+          weeklyHistory: rp.health.weeklyHistory2026 || [],
+          currentWeek: appData.scheduleMatchup.upcomingMatchup?.week,
+          byeWeek: appData.health?.byeWeek || 8,
           isIrReturnQuestionable: isIrReturnQ,
           injuryType: bodyPart,
           wed: rp.health.wed,
@@ -2063,7 +2093,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           beatNote: sfEarlyRoll ? sfEarlyRoll.beatNoteForModel : combinedText
         });
 
-        // Preserve authoritative IR sub-status ('Season-Ending IR', 'IR — 21-Day Window Open', 'Reserve / PUP', etc.)
+        // Preserve authoritative IR sub-status ('Season-Ending IR', 'IR — 21-Day Window Open', 'Reserve / PUP', 'Reserve / Roster Exemption', etc.)
         if (rp.rosterBucket === 'active') {
           rp.health.status = sfEarlyRoll
             ? sfEarlyRoll.effectiveStatus
@@ -2075,12 +2105,14 @@ export async function hydrateLiveEspnOverlay(appData) {
         } else if (isIrReturnQ) {
           rp.health.status = 'Questionable (IR Return Window)';
         }
-        if (bodyPart) rp.health.injuryType = bodyPart;
-        if (shortC) rp.health.shortComment = shortC;
-        if (longC) rp.health.longComment = longC;
+        if (fantasyAbbr) rp.health.fantasyStatusAbbr = fantasyAbbr;
+        if (bodyPart && rp.rosterBucket === 'active') rp.health.injuryType = bodyPart;
+        if (shortC && !isBareStatusPlaceholderComment(shortC)) rp.health.shortComment = shortC;
+        if (longC && !isBareStatusPlaceholderComment(longC)) rp.health.longComment = longC;
         rp.health.playProbabilityPct = playProb.probabilityPct;
         rp.health.playTier = playProb.tier;
         rp.health.playBadgeLabel = playProb.badgeLabel;
+        rp.health.factors = playProb.factors;
         rp.health.isOnPracticeReport =
           (rp.rosterBucket === 'active' &&
             (wasOnOfficialReport || hasExplicitGameDesignation || hasEarlyWeekSustainedInjury)) ||
@@ -2106,7 +2138,7 @@ export async function hydrateLiveEspnOverlay(appData) {
             playBadgeLabel: p.health.playBadgeLabel,
             archetypeNote: p.health.archetypeNote || '',
             factors: p.health.factors || [],
-            beatComment: p.health.longComment || p.health.shortComment || ''
+            beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment)
           }));
       }
       mutated = true;
@@ -2147,8 +2179,10 @@ export async function hydrateLiveEspnOverlay(appData) {
         const existingRep = existingReportByKey.get(nKey) || null;
         const rawSt = item.status || 'Active';
         const stLower = rawSt.toLowerCase();
-        const shortC = cleanSensationalistText(item.shortComment || '');
-        const longC = cleanSensationalistText(item.longComment || shortC);
+        const rawOppShort = cleanSensationalistText(item.shortComment || '');
+        const rawOppLong = cleanSensationalistText(item.longComment || rawOppShort);
+        const shortC = pickMeaningfulInjuryComment(rawOppShort, existingRep?.shortComment);
+        const longC = pickMeaningfulInjuryComment(rawOppLong, existingRep?.longComment, shortC);
         const combinedLower = `${shortC} ${longC}`.toLowerCase();
         const isIrRetQ =
           stLower.includes('injured reserve') &&
@@ -2166,8 +2200,8 @@ export async function hydrateLiveEspnOverlay(appData) {
             ? resolveEarlyWeekRolloverInput({
                 rawStatus: rawSt,
                 injuryType: bodyPart,
-                shortComment: shortC,
-                longComment: longC,
+                shortComment: !isBareStatusPlaceholderComment(rawOppShort) ? rawOppShort : shortC,
+                longComment: !isBareStatusPlaceholderComment(rawOppLong) ? rawOppLong : longC,
                 upcomingWeek: appData.scheduleMatchup.upcomingMatchup?.week
               })
             : null;
@@ -2220,6 +2254,9 @@ export async function hydrateLiveEspnOverlay(appData) {
           position: ath.position?.abbreviation || prevEntry?.position || 'ATH',
           snapPct: prevEntry?.snapPct ?? null,
           gameStatus: effectiveOppGameSt,
+          priorWeekStatus: rawSt,
+          missedPriorGame: oppEarlyRoll ? oppEarlyRoll.missedPriorGame : undefined,
+          priorWeekPracticed: oppEarlyRoll ? oppEarlyRoll.priorWeekPracticed : undefined,
           rosterBucket: isIrRetQ ? 'ir' : 'active',
           injuryType: bodyPart,
           wed,
@@ -2357,7 +2394,12 @@ export async function hydrateLiveEspnOverlay(appData) {
     appData.news.clusteredBriefs = filterAndCleanSynthesisClusters(appData.news.clusteredBriefs, appData);
   }
 
-  // 6. Game-Day Inactives & Active Roster Window ([T-90m, Final))
+  // 6. Reconcile 49ers Play Likelihood & IR Return Windows with Corroborated Beat/Coaching News
+  if (reconcileRosterAndHealthWithNews(appData)) {
+    mutated = true;
+  }
+
+  // 7. Game-Day Inactives & Active Roster Window ([T-90m, Final))
   const gdMutated = await hydrateLiveGameDayRosters(appData).catch(() => false);
   if (gdMutated) mutated = true;
 

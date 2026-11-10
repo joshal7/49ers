@@ -96,8 +96,8 @@ export const CURATED_49ERS_PLAYER_PRIORS = {
     isVeteranRestHabitual: true,
     usualRestDays: ['Wed'],
     questionablePlayRate: 0.84,
-    chronicParts: ['hamstring', 'calf'],
-    archetypeNote: 'Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue sprint clearance.'
+    chronicParts: ['hamstring', 'calf', 'achilles'],
+    archetypeNote: 'Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue/Achilles sprint clearance.'
   },
   'Deebo Samuel Sr.': {
     isVeteranRestHabitual: true,
@@ -252,10 +252,249 @@ const HIGH_CAUTION_STRUCTURAL_KEYWORDS = [
 ];
 const MINOR_PAIN_TOLERANCE_KEYWORDS = ['finger', 'thumb', 'hand', 'wrist', 'rib', 'shoulder', 'nose', 'illness'];
 
+function escapeRegexLiteral(str = '') {
+  return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Collapses dotted two-letter initials (`C.J.` / `C. J.` / `T.J.` / `A.J.`) into dotless initials (`CJ` / `TJ` / `AJ`)
+ * while leaving all other words untouched so `"C.J. West"` and `"CJ West"` match identically.
+ */
+export function collapseInitialDots(raw = '') {
+  return String(raw || '')
+    .replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$|[^A-Za-z])/g, '$1$2')
+    .replace(/\b([A-Za-z])\.(?=\s+[A-Za-z]\b)/g, '$1');
+}
+
+/**
+ * Detects bare status tokens (`"out"`, `"inactive"`, `"questionable"`, `"n/a"`) that ESPN `/injuries`
+ * occasionally emits during early-week rollover in place of real medical/beat prose.
+ */
+export function isBareStatusPlaceholderComment(raw = '') {
+  const s = String(raw || '').trim();
+  if (!s) return true;
+  if (/^(?:out|inactive|questionable|doubtful|active|healthy|injured reserve|ir|pup|n\/a|-|none)\.?$/i.test(s)) {
+    return true;
+  }
+  return s.length < 10 && !s.includes(' ');
+}
+
+export function pickMeaningfulInjuryComment(...candidates) {
+  for (const c of candidates) {
+    const trimmed = String(c || '').trim();
+    if (trimmed && !isBareStatusPlaceholderComment(trimmed)) return trimmed;
+  }
+  for (const c of candidates) {
+    const trimmed = String(c || '').trim();
+    if (trimmed) return trimmed;
+  }
+  return '';
+}
+
+function stripGenerationalSuffix(name = '') {
+  return String(name || '')
+    .replace(/,?\s+\b(?:jr\.?|sr\.?|ii|iii|iv|v)\b\.?$/i, '')
+    .trim();
+}
+
+const AMBIGUOUS_CLAUSE_SURNAMES = new Set([
+  'west',
+  'green',
+  'white',
+  'brown',
+  'black',
+  'young',
+  'long',
+  'short',
+  'hill',
+  'hall',
+  'king',
+  'ward',
+  'cook',
+  'ford',
+  'bell',
+  'gray',
+  'wood',
+  'park',
+  'james'
+]);
+
+/**
+ * Checks whether a single clause/sentence mentions `playerName` (handling dotted/dotless initials like
+ * `C.J. West` <-> `CJ West`, suffixes like `Deebo Samuel Sr.` <-> `Deebo Samuel`, nicknames like `Deebo` / `CMC`,
+ * and unambiguous surnames when `allowSurname` is enabled).
+ */
+export function doesClauseMentionPlayer(clauseText = '', playerName = '', { allowSurname = true } = {}) {
+  const rawClause = String(clauseText || '').replace(/[’‘]/g, "'");
+  const rawPlayer = String(playerName || '').replace(/[’‘]/g, "'").trim();
+  if (!rawClause || !rawPlayer) return false;
+
+  const clauseNorm = collapseInitialDots(rawClause).toLowerCase();
+  const fullStripped = stripGenerationalSuffix(rawPlayer);
+  const fullCollapsed = collapseInitialDots(fullStripped).toLowerCase();
+  const fullRawLower = fullStripped.toLowerCase();
+
+  if (fullRawLower.length >= 4 && new RegExp(`(?<![a-z0-9])${escapeRegexLiteral(fullRawLower)}(?![a-z0-9])`, 'i').test(rawClause.toLowerCase())) {
+    return true;
+  }
+  if (fullCollapsed.length >= 4 && new RegExp(`(?<![a-z0-9])${escapeRegexLiteral(fullCollapsed)}(?![a-z0-9])`, 'i').test(clauseNorm)) {
+    return true;
+  }
+  if (/^deebo samuel\b/i.test(fullStripped) && /\bdeebo\b/i.test(clauseNorm)) {
+    return true;
+  }
+  if (/^christian mccaffrey$/i.test(fullStripped) && /\bcmc\b/i.test(clauseNorm)) {
+    return true;
+  }
+
+  if (allowSurname) {
+    const parts = fullCollapsed.split(/\s+/).filter(Boolean);
+    const surname = parts[parts.length - 1] || '';
+    if (surname.length >= 4) {
+      // Allow surname even for common words ONLY when followed by injury parenthetical like "West (knee)" or "Green (back)" or preceded by WR/CB/DT/LB/RB/DE/OT/QB/TE/S
+      const posOrInjContextRe = new RegExp(
+        `(?:\\b(?:qb|rb|fb|wr|te|ot|og|ol|dt|de|dl|nt|lb|cb|db|saf)s?\\s+${escapeRegexLiteral(surname)}\\b|\\b${escapeRegexLiteral(surname)}\\s*\\([a-z /,-]{3,28}\\))`,
+        'i'
+      );
+      if (posOrInjContextRe.test(clauseNorm)) return true;
+
+      if (!AMBIGUOUS_CLAUSE_SURNAMES.has(surname)) {
+        // Ensure surname isn't attached to a DIFFERENT first name (e.g., "Trent Williams" vs "Mykel Williams")
+        const targetFirst = parts[0] || '';
+        const surnameWithPrecedingWord = clauseNorm.match(
+          new RegExp(`(?:([a-z.'-]{2,})\\s+)?\\b${escapeRegexLiteral(surname)}\\b`, 'i')
+        );
+        if (surnameWithPrecedingWord) {
+          const prevWord = (surnameWithPrecedingWord[1] || '').toLowerCase().replace(/\./g, '');
+          const nonFirstNameStopwords = new Set([
+            'wr', 'rb', 'qb', 'te', 'dt', 'de', 'dl', 'lb', 'cb', 'db', 'ot', 'og', 'ol', 'fb',
+            'coach', 'per', 'for', 'with', 'that', 'while', 'and', 'or', 'neither', 'nor', 'get',
+            'have', 'expecting', 'expect', 'said', 'veteran', 'rookie', 'starter', 'fellow', 'wideout',
+            'receiver', 'cornerback', 'tackle', 'linebacker', 'safety', 'defender', 'lineman'
+          ]);
+          const looksLikeDifferentCapitalizedFirstName = (() => {
+            const capMatch = rawClause.match(
+              new RegExp(`\\b([A-Z][a-z.'-]{1,})\\s+${escapeRegexLiteral(parts[parts.length - 1])}\\b`)
+            );
+            if (!capMatch) return false;
+            const foundFirst = collapseInitialDots(capMatch[1]).toLowerCase().replace(/\./g, '');
+            if (nonFirstNameStopwords.has(foundFirst)) return false;
+            return foundFirst !== targetFirst.replace(/\./g, '');
+          })();
+          if (!looksLikeDifferentCapitalizedFirstName) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Scopes multi-sentence / multi-player beat notes or tweets to ONLY the clauses pertaining to `targetPlayerName`,
+ * preventing cross-player signal bleed (e.g., `"Shanahan said he's hopeful to get Deebo Samuel and CJ West back
+ * to practice on Wednesday. The team is not expecting Mike Evans this week."`).
+ */
+export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', rosterPlayerNames = []) {
+  const text = String(rawText || '').trim();
+  const target = String(targetPlayerName || '').trim();
+  if (!text || !target) return text;
+
+  const sentences = text
+    .split(/(?<=[.!?])\s+|\s*[;\n]+\s*|\b(?=while\s+[A-Z]|whereas\s+[A-Z]|meanwhile,?\s+|on the plus side\b|in any case,?\s+)/i)
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  if (sentences.length <= 1) {
+    // Check intra-sentence contrast ("Samuel is expected back, while Mike Evans is unlikely")
+    const subClauses = text
+      .split(/,\s*(?:while|whereas|but|though|although)\s+/i)
+      .map(s => s.trim())
+      .filter(Boolean);
+    if (subClauses.length <= 1) return text;
+    const matchedSub = subClauses.filter(c => doesClauseMentionPlayer(c, target));
+    return matchedSub.length > 0 ? matchedSub.join('. ') : text;
+  }
+
+  const candidateOthers = [
+    ...new Set([
+      ...Object.keys(CURATED_NFL_PLAYER_PRIORS),
+      ...(rosterPlayerNames || [])
+    ])
+  ].filter(n => n && stripGenerationalSuffix(n).toLowerCase() !== stripGenerationalSuffix(target).toLowerCase());
+
+  const mentionsOtherNamedPlayer = clause => {
+    // Fast check for explicit teammate transition phrases or other roster names
+    if (/\bfellow\s+(?:wr|rb|te|cb|dt|de|dl|lb|ol|ot|s|qb)s?\b/i.test(clause) && !doesClauseMentionPlayer(clause, target)) {
+      return true;
+    }
+    for (const other of candidateOthers) {
+      if (doesClauseMentionPlayer(clause, other, { allowSurname: false })) return true;
+    }
+    // Also detect capitalized "First Last (injury)" or "WR First Last" for non-target players
+    const explicitOtherMatches = [
+      ...clause.matchAll(/\b([A-Z][a-z'.-]+\s+[A-Z][a-z'.-]+)\s*(?:\([a-zA-Z /,-]{3,24}\))?/g)
+    ];
+    const targetCollapsed = collapseInitialDots(stripGenerationalSuffix(target)).toLowerCase();
+    const nonPlayerPairs = new Set([
+      'san francisco', 'las vegas', 'dallas cowboys', 'los angeles', 'green bay', 'tampa bay',
+      'new orleans', 'new england', 'new york', 'kansas city', 'kyle shanahan', 'john lynch',
+      'matt barrows', 'matt maiocco', 'nick wagoner', 'david lombardi', 'cam inman', 'eric branch',
+      'vic tafur', 'sam warren', 'adam schefter', 'ian rapoport', 'tom pelissero', 'mike garafolo',
+      'injured reserve', 'practice squad', 'head coach', 'bay area', 'nfl network', 'the athletic'
+    ]);
+    for (const m of explicitOtherMatches) {
+      const pair = collapseInitialDots(m[1]).toLowerCase();
+      if (nonPlayerPairs.has(pair)) continue;
+      if (pair !== targetCollapsed && !targetCollapsed.includes(pair) && !pair.includes(targetCollapsed)) {
+        if (/\([a-z /,-]{3,24}\)|\b(?:wr|rb|te|cb|dt|de|lb|qb|ot|saf)\b/i.test(m[0]) || /\b(?:expecting|ruled out|sidelined|placed on|need surgery|miss)\b/i.test(clause)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const kept = [];
+  let activeSubjectIsTarget = false;
+  let anyTargetMentioned = false;
+
+  for (const sent of sentences) {
+    // Also split compound contrast clauses inside a sentence when different players are on each side
+    const parts = sent
+      .split(/,\s*(?=(?:while|whereas|but|though)\s+(?:fellow\s+|wr\s+|rb\s+|cb\s+|dt\s+|de\s+|lb\s+|te\s+)?[A-Z])/i)
+      .map(p => p.trim())
+      .filter(Boolean);
+
+    for (const clause of parts) {
+      const hasTarget = doesClauseMentionPlayer(clause, target);
+      const hasOther = mentionsOtherNamedPlayer(clause);
+
+      if (hasTarget) {
+        kept.push(clause);
+        activeSubjectIsTarget = true;
+        anyTargetMentioned = true;
+      } else if (hasOther) {
+        activeSubjectIsTarget = false;
+      } else if (activeSubjectIsTarget) {
+        kept.push(clause);
+      }
+    }
+  }
+
+  if (anyTargetMentioned) {
+    return kept.join(' ');
+  }
+  // If no competing player was named anywhere in `text`, preserve `text` (standalone single-player note)
+  const anyOtherAnywhere = sentences.some(s => mentionsOtherNamedPlayer(s));
+  return anyOtherAnywhere ? '' : text;
+}
+
 function hasAffirmativeRuledOutSignal(beatNote = '') {
   if (!beatNote) return false;
   if (/\bplaced on injured reserve\b/i.test(beatNote)) return true;
-  if (/\bruled out\b/i.test(beatNote) && !/\b(?:not|n't|hasn't been|has not been|haven't|never)\s+ruled out\b/i.test(beatNote)) {
+  if (/\bruled out\b/i.test(beatNote) && !/\b(?:not|n't|hasn't been|has not been|haven't|never|neither\b[^.;]{0,45})\s*(?:been\s+)?ruled out\b/i.test(beatNote)) {
     return true;
   }
   if (
@@ -271,7 +510,27 @@ function hasAffirmativeRuledOutSignal(beatNote = '') {
 
 function hasNegativePlayConsensusSignal(beatNote = '') {
   if (!beatNote) return false;
-  return /\b(?:long shot|unlikely to (?:play|suit up|be activated)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be activated)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
+  return /\b(?:long shot|unlikely to (?:play|suit up|be activated)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be ready|be activated)|expecting\b[^.;]{0,42}\b(?:this week|to play|to be ready|to suit up)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
+    beatNote
+  );
+}
+
+function hasNegativePracticeExpectationSignal(beatNote = '') {
+  if (!beatNote) return false;
+  return /\b(?:unlikely to (?:participate in |take part in )?practice|(?:not|n't)\s+expected to (?:participate in |take part in )?practice|won't (?:take part in |participate in )?practice|will not (?:participate in |take part in )?practice|questionable at best|still on hold)\b/i.test(
+    beatNote
+  );
+}
+
+function hasExpectedPracticeReturnSignal(beatNote = '') {
+  if (!beatNote || hasNegativePlayConsensusSignal(beatNote) || hasNegativePracticeExpectationSignal(beatNote)) {
+    return false;
+  }
+  // Reject vague/speculative phrasing ("getting close", "could return", "might practice")
+  if (/\b(?:could|might|may|possibly|perhaps|wonder if|getting close)\b[^.;]{0,28}\b(?:return|back|practice|open)\b/i.test(beatNote)) {
+    return false;
+  }
+  return /\b(?:hopeful to (?:get|have)\b[^.;]{0,55}\bback (?:to|at) practice|expect(?:s|ed|ing)?\b[^.;]{0,55}\b(?:to be )?back (?:to|at) practice|on track to return to practice|hopes? to have\b[^.;]{0,45}\b(?:back )?at practice|expected back\b[^.;]{0,25}(?:at practice|wednesday|this week)|(?:plan|plans|planning|expect|expects|expecting|set|slated)\s+to\s+open\b[^.;]{0,55}\bpractice window)\b/i.test(
     beatNote
   );
 }
@@ -281,6 +540,324 @@ function hasAffirmativePlayOrActivationSignal(beatNote = '') {
   return /\b(?:expected to play|on track to play|expected to suit up|likely will be activated|expected to be activated)\b/i.test(
     beatNote
   );
+}
+
+const VERIFIED_TIER1_REPORTER_NAMES_RE =
+  /\b(matt barrows|matt maiocco|nick wagoner|david lombardi|cam inman|eric branch|vic tafur|jennifer lee chan|sam warren|noah furtado|harrison rich|adam schefter|ian rapoport|tom pelissero|mike garafolo|jeremy fowler|briana jeannel)\b/i;
+
+const SPECULATIVE_CLAUSE_GUARD_RE =
+  /\b(could activate|might activate|could return|might return|wonder if|speculat|rumor|my guess|would make sense|should consider|shouldn't rush|why the 49ers|if he (?:can't|cannot|is forced|misses)|candidates? to (?:see|draw|replace)|in line for more|fantasy|waiver wire|start\/sit|lineup)\b/i;
+
+function canonicalReporterDedupeKey(item = {}, clauseText = '') {
+  const inlineMatch = String(clauseText || item?.fullText || item?.title || '').match(VERIFIED_TIER1_REPORTER_NAMES_RE);
+  if (inlineMatch) {
+    return inlineMatch[1].toLowerCase().replace(/\s+/g, '_');
+  }
+  if (item?.reporterId && !/^(?:kyle_shanahan|john_lynch|49ers_beat)$/i.test(item.reporterId)) {
+    return String(item.reporterId).toLowerCase();
+  }
+  const authorClean = String(item?.author || item?.reporterName || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '');
+  if (authorClean && !/^(?:kyle_shanahan|john_lynch|espn|49ers_beat_wire|rotowire_nfl_beat)$/.test(authorClean)) {
+    return authorClean;
+  }
+  return String(item?.outletId || item?.wireSource || item?.id || 'wire').toLowerCase();
+}
+
+/**
+ * Evaluates recent news/beat items for a specific player using:
+ *  1. Strict post-prior-game recency window (`windowStartMs`, max 5 days)
+ *  2. Clause-level per-player scoping (`scopeBeatTextToPlayer`) so multi-player tweets never cross-contaminate
+ *  3. Source reliability weighting + speculation rejection (`trustTier >= 3` or speculative modals = 0 weight)
+ *  4. Reporter-level deduplication (so aggregator echoes of one beat writer count once, not 3x)
+ *  5. Diminishing-returns Bayesian confidence `1 - Π(1 - w_i)` so one tweet never overcorrects
+ */
+export function evaluateCorroboratedNewsInjurySignal({
+  playerName = '',
+  rosterBucket = 'active',
+  newsItems = [],
+  rosterPlayerNames = [],
+  nowMs = Date.now(),
+  windowStartMs = null
+} = {}) {
+  const empty = {
+    hasSignal: false,
+    signalType: null,
+    direction: 0,
+    confidence: 0,
+    corroboratingCount: 0,
+    hasCoachOrGmQuote: false,
+    hasOfficialTxDesignation: false,
+    leadClause: '',
+    reporters: []
+  };
+  if (!playerName || !Array.isArray(newsItems) || newsItems.length === 0) return empty;
+
+  const fiveDaysAgoMs = nowMs - 5 * 86_400_000;
+  const minMs = Number.isFinite(windowStartMs) && windowStartMs > 0 ? Math.max(fiveDaysAgoMs, windowStartMs) : fiveDaysAgoMs;
+
+  const observationsByReporter = new Map();
+  let hasOfficialTxDesignation = false;
+
+  for (const item of newsItems) {
+    if (!item || item.isClickbait || item.type === 'video') continue;
+    const pubMs = parseFlexibleIsoMs(item.publishedAt);
+    if (pubMs === null || pubMs < minMs || pubMs > nowMs + 3_600_000) continue;
+
+    const primaryLead = String(item.fullText || item.title || item.headline || '').trim();
+    const secondarySummary = String(item.summary || '').trim();
+    const fullBody =
+      secondarySummary &&
+      (!primaryLead || !primaryLead.toLowerCase().includes(secondarySummary.toLowerCase().slice(0, 32)))
+        ? [primaryLead, secondarySummary].filter(Boolean).join(' ').trim()
+        : primaryLead;
+    if (!fullBody) continue;
+
+    // Must actually mention this player (via structured mentionedPlayers or text match)
+    const inMentionedList =
+      Array.isArray(item.mentionedPlayers) &&
+      item.mentionedPlayers.some(
+        mp => stripGenerationalSuffix(mp?.name || '').toLowerCase() === stripGenerationalSuffix(playerName).toLowerCase()
+      );
+    if (!inMentionedList && !doesClauseMentionPlayer(fullBody, playerName)) {
+      continue;
+    }
+
+    // Check official @49ers transaction wire for immediate 21-day return designation
+    if (
+      (item.wireSource === 'official_transactions' || item.outletId === '49ers_official') &&
+      /\b(?:designated\b[^.]{0,80}\bto return from (?:injured reserve|the pup list)|opened the (?:injured reserve|pup) practice window)\b/i.test(
+        fullBody
+      ) &&
+      doesClauseMentionPlayer(fullBody, playerName)
+    ) {
+      hasOfficialTxDesignation = true;
+    }
+
+    const scoped = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
+    if (!scoped) continue;
+
+    // Speculation & low-credibility guard: reject blogs/opinion/rumors unless directly citing a verified Tier-1 beat reporter
+    const trustTier = Number(item.trustTier || 2);
+    const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
+    const isOfficialSource = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
+    if (trustTier >= 3 && !hasInlineTier1 && !isOfficialSource) {
+      continue;
+    }
+
+    const hasCoachQuote =
+      /\b(?:kyle shanahan|coach shanahan|shanahan|head coach|john lynch|gm john lynch)\b[^.]{0,75}\b(?:said|says|relayed|explained|announced|indicated|noted|told|expects?|hopeful)\b|\b(?:coach kyle shanahan|shanahan|john lynch)\s+said\b|\bper (?:coach )?(?:kyle )?shanahan\b/i.test(
+        scoped
+      ) ||
+      (/\b(?:shanahan|john lynch)\s+said\b/i.test(fullBody) && !SPECULATIVE_CLAUSE_GUARD_RE.test(scoped));
+
+    if (!hasCoachQuote && SPECULATIVE_CLAUSE_GUARD_RE.test(scoped)) {
+      continue;
+    }
+
+    let signalType = null;
+    let direction = 0;
+
+    if (hasAffirmativeRuledOutSignal(scoped)) {
+      signalType = 'RULED_OUT_WEEK';
+      direction = -1.0;
+    } else if (hasNegativePlayConsensusSignal(scoped)) {
+      signalType = 'UNLIKELY_THIS_WEEK';
+      direction = -0.82;
+    } else if (hasNegativePracticeExpectationSignal(scoped)) {
+      signalType = 'UNLIKELY_WEDNESDAY_PRACTICE';
+      direction = -0.58;
+    } else if (hasAffirmativePlayOrActivationSignal(scoped)) {
+      signalType = 'EXPECTED_TO_PLAY';
+      direction = 0.80;
+    } else if (hasExpectedPracticeReturnSignal(scoped)) {
+      signalType = 'EXPECTED_PRACTICE_RETURN';
+      direction = 0.58;
+    } else if (
+      rosterBucket === 'active' &&
+      /\b(?:considered day-to-day|is day-to-day|neither has been ruled out|hasn't been ruled out|has not been ruled out)\b/i.test(
+        scoped
+      )
+    ) {
+      signalType = 'DAY_TO_DAY';
+      direction = 0.25;
+    }
+
+    if (!signalType) continue;
+
+    let baseWeight = 0.18;
+    if (isOfficialSource) {
+      baseWeight = 0.90;
+    } else if (trustTier <= 1 || hasInlineTier1) {
+      baseWeight = hasCoachQuote ? 0.60 : 0.40;
+    } else if (trustTier === 2) {
+      baseWeight = hasCoachQuote ? 0.36 : 0.18;
+    }
+
+    const repKey = canonicalReporterDedupeKey(item, fullBody);
+    const prev = observationsByReporter.get(repKey);
+    if (!prev || pubMs > prev.pubMs || (pubMs === prev.pubMs && baseWeight > prev.weight)) {
+      const samePolarityAsPrev = prev && Math.sign(prev.direction) === Math.sign(direction);
+      observationsByReporter.set(repKey, {
+        repKey,
+        reporterLabel: item.author || item.reporterName || item.outletName || '49ers Beat',
+        signalType: samePolarityAsPrev && prev.weight > baseWeight ? prev.signalType : signalType,
+        direction: samePolarityAsPrev && Math.abs(prev.direction) > Math.abs(direction) ? prev.direction : direction,
+        weight: samePolarityAsPrev ? Math.max(baseWeight, prev.weight) : baseWeight,
+        hasCoachQuote: samePolarityAsPrev ? Boolean(hasCoachQuote || prev.hasCoachQuote) : hasCoachQuote,
+        pubMs,
+        scopedClause: samePolarityAsPrev && prev.hasCoachQuote && !hasCoachQuote ? prev.scopedClause : scoped
+      });
+    }
+  }
+
+  const obsList = [...observationsByReporter.values()].sort((a, b) => b.pubMs - a.pubMs);
+  if (obsList.length === 0) {
+    return hasOfficialTxDesignation
+      ? { ...empty, hasSignal: true, signalType: 'OFFICIAL_IR_WINDOW_OPEN', direction: 0.65, confidence: 0.95, hasOfficialTxDesignation: true }
+      : empty;
+  }
+
+  const newestPubMs = obsList[0].pubMs;
+  const newestSign = Math.sign(obsList[0].direction);
+
+  // Decay older reports (>6h older) if newer reporting has reversed polarity (e.g., Mon "hopeful" -> Thu "unlikely")
+  let posRemaining = 1.0;
+  let negRemaining = 1.0;
+  let weightedDirSum = 0;
+  let totalWeight = 0;
+
+  for (const obs of obsList) {
+    let effW = obs.weight;
+    if (newestPubMs - obs.pubMs > 6 * 3_600_000 && Math.sign(obs.direction) !== newestSign) {
+      effW *= 0.25;
+    }
+    weightedDirSum += obs.direction * effW;
+    totalWeight += effW;
+    if (obs.direction > 0) {
+      posRemaining *= 1 - Math.min(0.65, effW);
+    } else if (obs.direction < 0) {
+      negRemaining *= 1 - Math.min(0.65, effW);
+    }
+  }
+
+  const netDirection = totalWeight > 0 ? weightedDirSum / totalWeight : 0;
+  const dominantSign = Math.sign(netDirection);
+  const rawConf = dominantSign >= 0 ? 1 - posRemaining : 1 - negRemaining;
+  const opposingConf = dominantSign >= 0 ? 1 - negRemaining : 1 - posRemaining;
+  const confidence = Math.max(0, Math.min(0.92, rawConf - opposingConf * 0.65));
+
+  // Pick dominant signalType matching net polarity
+  const matchingObs = obsList.filter(o => Math.sign(o.direction) === dominantSign);
+  const primaryObs =
+    matchingObs.sort((a, b) => Math.abs(b.direction) * b.weight - Math.abs(a.direction) * a.weight || b.pubMs - a.pubMs)[0] ||
+    obsList[0];
+
+  return {
+    hasSignal: confidence >= 0.12 || hasOfficialTxDesignation,
+    signalType: primaryObs.signalType,
+    direction: Number(netDirection.toFixed(3)),
+    confidence: Number(confidence.toFixed(3)),
+    corroboratingCount: matchingObs.length,
+    hasCoachOrGmQuote: matchingObs.some(o => o.hasCoachQuote),
+    hasOfficialTxDesignation,
+    leadClause: primaryObs.scopedClause,
+    reporters: matchingObs.map(o => o.reporterLabel)
+  };
+}
+
+/**
+ * Computes prior-week missed-game streak and whether the player logged practice participation
+ * (`LP` or `FP`) vs `DNP` during the prior week, anchored to 2024–2026 NFL empirical rollover rates
+ * (Missed game + Prior LP/FP = 51.8%–67% vs Missed game + Prior DNP = 30.4%–38%).
+ */
+export function derivePriorWeekAbsenceProfile({
+  weeklyHistory = [],
+  currentWeek = null,
+  byeWeek = 8,
+  rawStatus = '',
+  beatNote = ''
+} = {}) {
+  const stLower = String(rawStatus || '').toLowerCase().trim();
+  const noteLower = String(beatNote || '').toLowerCase();
+  let missedPriorGame = false;
+  let consecutiveMissedGames = 0;
+  let priorWeekPracticed = null;
+
+  if (Array.isArray(weeklyHistory) && weeklyHistory.length > 0 && Number.isFinite(Number(currentWeek))) {
+    const curWk = Number(currentWeek);
+    const byWk = new Map();
+    for (const h of weeklyHistory) {
+      const w = Number(h?.week);
+      if (w >= 1 && w < curWk) byWk.set(w, h);
+    }
+    let probeWk = curWk - 1;
+    if (probeWk === Number(byeWeek)) probeWk -= 1;
+
+    while (probeWk >= 1) {
+      if (probeWk === Number(byeWeek)) {
+        probeWk -= 1;
+        continue;
+      }
+      const entry = byWk.get(probeWk);
+      const gs = String(entry?.gameStatus || '').toLowerCase();
+      if (entry && (gs === 'out' || gs === 'inactive' || gs === 'doubtful')) {
+        consecutiveMissedGames += 1;
+        if (missedPriorGame === false) {
+          missedPriorGame = true;
+          const ps = String(entry.practiceStatus || '').toLowerCase();
+          if (ps.includes('limited') || ps.includes('full') || ps === 'lp' || ps === 'fp') {
+            priorWeekPracticed = true;
+          } else if (ps.includes('did not') || ps === 'dnp') {
+            priorWeekPracticed = false;
+          }
+        }
+        probeWk -= 1;
+      } else {
+        break;
+      }
+    }
+  }
+
+  if (
+    !missedPriorGame &&
+    (stLower === 'out' ||
+      stLower === 'inactive' ||
+      /\b(?:sidelined previously|missed (?:sunday|monday|thursday|saturday|last week)|missing a (?:second|third|fourth) straight|miss his (?:second|third|fourth) straight)\b/i.test(
+        noteLower
+      ))
+  ) {
+    missedPriorGame = true;
+    consecutiveMissedGames = Math.max(1, consecutiveMissedGames);
+  }
+
+  if (
+    /\b(?:second straight|third straight|fourth straight|consecutive (?:games|contests)|last (?:two|three|four|five) (?:games|contests))\b/i.test(
+      noteLower
+    )
+  ) {
+    consecutiveMissedGames = Math.max(2, consecutiveMissedGames);
+  }
+
+  if (priorWeekPracticed === null && missedPriorGame) {
+    if (/\b(?:trio of limited practices|limited practices during the week|limited all week|practiced on a limited basis)\b/i.test(noteLower)) {
+      priorWeekPracticed = true;
+    } else if (
+      /\b(?:hasn't been able to practice|has not been able to practice|trio of '?dnps?'?|did not practice all week|not practicing in any capacity|hasn't practiced)\b/i.test(
+        noteLower
+      )
+    ) {
+      priorWeekPracticed = false;
+    }
+  }
+
+  return {
+    missedPriorGame,
+    consecutiveMissedGames,
+    priorWeekPracticed
+  };
 }
 
 function hasClearedConcussionProtocolSignal(beatNote = '') {
@@ -480,7 +1057,11 @@ export function computePlayerPlayProbability(input = {}) {
   const rosterBucket = String(input.rosterBucket || 'active').toLowerCase();
   const injuryType = String(input.injuryType || '').trim();
   const injuryLower = injuryType.toLowerCase();
-  const beatNote = String(input.beatNote || input.comment || '').toLowerCase();
+  const rawBeatInput = String(input.beatNote || input.comment || '');
+  const scopedBeat = name ? scopeBeatTextToPlayer(rawBeatInput, name, input.rosterPlayerNames || []) : rawBeatInput;
+  const beatNote = scopedBeat.toLowerCase();
+  const fullBeatLower = rawBeatInput.toLowerCase();
+  const newsSig = input.corroboratedNewsSignal?.hasSignal ? input.corroboratedNewsSignal : null;
 
   const roleDefaultPrior = buildRoleInformedDefaultPrior({
     position: input.position,
@@ -502,12 +1083,17 @@ export function computePlayerPlayProbability(input = {}) {
     statusRaw.includes('season-ending') ||
     statusRaw.includes('out for season') ||
     /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|spend the entire (?:\d{4} )?season|stay on (?:the (?:team's )?)?(?:ir|injured reserve) (?:list )?for the (?:year|season))\b/i.test(
-      beatNote
+      beatNote || fullBeatLower
     );
+  const isRosterExemptionFlag =
+    String(input.fantasyStatusAbbr || '').toUpperCase() === 'RESERVE-EX' ||
+    statusRaw.includes('roster exemption') ||
+    /\b(?:granted a [a-z0-9 -]*roster exemption|two-week (?:unpaid )?roster exemption)\b/i.test(beatNote || fullBeatLower);
   const isReinstatementFlag =
-    beatNote.includes('looking to get reinstated') ||
-    statusRaw.includes('left squad') ||
-    statusRaw.includes('reinstatement');
+    !isRosterExemptionFlag &&
+    (beatNote.includes('looking to get reinstated') ||
+      statusRaw.includes('left squad') ||
+      statusRaw.includes('reinstatement'));
 
   const isIrBucketOrStatus =
     rosterBucket === 'ir' ||
@@ -522,11 +1108,14 @@ export function computePlayerPlayProbability(input = {}) {
       beatNote.includes('questionable ahead of') ||
       hasAffirmativePlayOrActivationSignal(beatNote));
 
-  const affirmativeRuledOut = hasAffirmativeRuledOutSignal(beatNote);
+  const affirmativeRuledOut =
+    hasAffirmativeRuledOutSignal(beatNote) ||
+    Boolean(newsSig && newsSig.signalType === 'RULED_OUT_WEEK' && newsSig.confidence >= 0.6);
 
   // 21-day practice window opened + officially Questionable (via explicit caller flag, official Questionable tag, or beat note)
   const isIrReturnQuestionable =
     !isSeasonEndingFlag &&
+    !isRosterExemptionFlag &&
     !isReinstatementFlag &&
     !affirmativeRuledOut &&
     statusRaw !== 'out' &&
@@ -537,6 +1126,7 @@ export function computePlayerPlayProbability(input = {}) {
   if (
     !isIrReturnQuestionable &&
     (isSeasonEndingFlag ||
+      isRosterExemptionFlag ||
       isReinstatementFlag ||
       rosterBucket === 'ir' ||
       rosterBucket === 'injuredreserveorout' ||
@@ -554,6 +1144,9 @@ export function computePlayerPlayProbability(input = {}) {
     if (isSeasonEndingFlag) {
       badgeLabel = '0% • Out for Season';
       factors.push('Season-ending Injured Reserve — ineligible to return this season');
+    } else if (isRosterExemptionFlag) {
+      badgeLabel = '0% • Roster Exemption';
+      factors.push('Two-week NFL roster exemption — not on 53-man active game-day roster');
     } else if (isReinstatementFlag) {
       badgeLabel = '0% • Reinstatement';
       factors.push('Reserve / Left Squad — requires formal NFL & club reinstatement');
@@ -597,17 +1190,17 @@ export function computePlayerPlayProbability(input = {}) {
   const wed = normalizePracticeCode(input.wed, injuryType);
   const thu = normalizePracticeCode(input.thu, injuryType);
   const fri = normalizePracticeCode(input.fri, injuryType);
+  const hasObservedPracticeThisWeek = wed !== 'NONE' || thu !== 'NONE' || fri !== 'NONE';
 
   // Healthy / Unlisted Active Player
   if (
     !injuryType &&
     !statusRaw &&
-    wed === 'NONE' &&
-    thu === 'NONE' &&
-    fri === 'NONE' &&
+    !hasObservedPracticeThisWeek &&
     !beatNote.includes('questionable') &&
     !beatNote.includes('doubtful') &&
-    !hasNegativePlayConsensusSignal(beatNote)
+    !hasNegativePlayConsensusSignal(beatNote) &&
+    !(newsSig && newsSig.direction < 0)
   ) {
     return {
       probabilityPct: 99,
@@ -640,6 +1233,25 @@ export function computePlayerPlayProbability(input = {}) {
     injuryLower.includes('concussion') || /\bconcussion protocol\b/i.test(beatNote);
   const clearedConcussion = hasClearedConcussionProtocolSignal(beatNote);
 
+  const priorAbsence = derivePriorWeekAbsenceProfile({
+    weeklyHistory: input.weeklyHistory,
+    currentWeek: input.currentWeek,
+    byeWeek: input.byeWeek,
+    rawStatus: input.priorWeekStatus || '',
+    beatNote
+  });
+  const missedPriorGame =
+    input.missedPriorGame !== undefined ? Boolean(input.missedPriorGame) : priorAbsence.missedPriorGame;
+  const consecutiveMissedGames =
+    input.consecutiveMissedGames !== undefined
+      ? Number(input.consecutiveMissedGames) || 0
+      : priorAbsence.consecutiveMissedGames;
+  const priorWeekPracticed =
+    input.priorWeekPracticed !== undefined ? input.priorWeekPracticed : priorAbsence.priorWeekPracticed;
+  const sustainedInLastGame =
+    Boolean(input.sustainedInLastGame) ||
+    (!missedPriorGame && /\b(?:considered day-to-day|is day-to-day|has not been ruled out|hasn't been ruled out)\b/i.test(beatNote));
+
   // 4. Base Probability from Game Designation, NFL 5-Step Concussion Protocol, or Practice Progression
   let prob = 0.78;
 
@@ -648,6 +1260,7 @@ export function computePlayerPlayProbability(input = {}) {
     factors.push('Official Doubtful tag (NFL historical base ~10–14%)');
   } else if (
     !hasNegativePlayConsensusSignal(beatNote) &&
+    !(newsSig && newsSig.direction < 0) &&
     (statusRaw === 'active' ||
       statusRaw === 'healthy' ||
       beatNote.includes('does not have a designation') ||
@@ -719,7 +1332,7 @@ export function computePlayerPlayProbability(input = {}) {
         factors.push('DNP across entire practice week (rarely activated without Friday practice reps)');
       }
     } else {
-      // Mid-week (before Friday report is finalized)
+      // Mid-week or Early-week pre-practice (before Friday report is finalized)
       if (thu === 'FP' || wed === 'FP') {
         prob = 0.91;
         factors.push('Full Participation logged in mid-week session');
@@ -737,11 +1350,34 @@ export function computePlayerPlayProbability(input = {}) {
       } else if (wed === 'DNP' && thu === 'DNP') {
         prob = prior.isVeteranRestHabitual ? 0.62 : 0.30;
         factors.push('Consecutive Wed/Thu DNPs');
-      } else if (statusRaw === 'questionable' || isIrReturnQuestionable) {
-        prob = prior.questionablePlayRate;
-        factors.push(
-          `Questionable tag adjusted by player career prior (${Math.round(prior.questionablePlayRate * 100)}%)`
-        );
+      } else if (wed === 'DNP' && thu === 'NONE') {
+        prob = prior.isVeteranRestHabitual ? 0.68 : 0.36;
+        factors.push('Did Not Participate (DNP) on Wednesday');
+      } else if ((statusRaw === 'questionable' || isIrReturnQuestionable) && !hasObservedPracticeThisWeek) {
+        // Early-week pre-practice rollover (Mon/Tue/Wed AM before first practice report):
+        // Calibrated to 2024–2026 NFL empirical next-game rates (Missed + Prior DNP = 33.7%; Missed + Prior LP/FP = 51.8%–67%; Active Day-to-Day = 74%–82%)
+        if (!isIrReturnQuestionable && missedPriorGame) {
+          if (priorWeekPracticed === true) {
+            prob = 0.72 + (prior.questionablePlayRate - 0.78) * 0.45;
+            factors.push('Missed prior game after logging Limited/Full practices — positive recovery ramp');
+          } else {
+            const missedCnt = Math.max(1, consecutiveMissedGames || 1);
+            prob = (missedCnt >= 2 ? 0.48 : 0.44) + (prior.questionablePlayRate - 0.78) * 0.35;
+            factors.push(
+              `Missed ${missedCnt > 1 ? `${missedCnt} consecutive games` : 'prior game'} without practice participation — awaiting Wednesday report`
+            );
+          }
+        } else if (!isIrReturnQuestionable && sustainedInLastGame) {
+          prob = Math.min(0.82, prior.questionablePlayRate - 0.04);
+          factors.push(
+            `Active in prior game; day-to-day evaluation ahead of Wednesday practice (base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+          );
+        } else {
+          prob = prior.questionablePlayRate;
+          factors.push(
+            `Questionable tag adjusted by player career prior (${Math.round(prior.questionablePlayRate * 100)}%)`
+          );
+        }
       }
     }
   }
@@ -758,7 +1394,7 @@ export function computePlayerPlayProbability(input = {}) {
     }
   } else if (
     !isConcussion &&
-    (wed !== 'NONE' || thu !== 'NONE' || fri !== 'NONE') &&
+    hasObservedPracticeThisWeek &&
     prior.questionablePlayRate >= 0.88 &&
     prob >= 0.45 &&
     prob < 0.93
@@ -767,7 +1403,7 @@ export function computePlayerPlayProbability(input = {}) {
     factors.push('High pain-tolerance / toughness prior (+5% boost)');
   }
 
-  if (wed === 'NONE' && thu === 'NONE' && fri === 'NONE' && statusRaw === 'questionable' && !isIrReturnQuestionable) {
+  if (!hasObservedPracticeThisWeek && statusRaw === 'questionable' && !isIrReturnQuestionable) {
     prob = Math.min(prob, 0.84);
   }
 
@@ -783,19 +1419,55 @@ export function computePlayerPlayProbability(input = {}) {
     factors.push(`Manageable pain-tolerance injury profile (${injuryType})`);
   }
 
-  // 7. Beat Context Refinements (Negation-Aware)
-  if (hasNegativePlayConsensusSignal(beatNote)) {
+  // 7. Trust-Weighted Corroborated News & Beat Context Refinements (Negation-Aware, Bounded Against Overreaction)
+  if (newsSig) {
+    const conf = newsSig.confidence;
+    const srcLabel =
+      newsSig.corroboratingCount >= 2
+        ? `${newsSig.corroboratingCount} corroborated reports`
+        : newsSig.hasCoachOrGmQuote
+          ? 'coaching staff report'
+          : 'beat report';
+
+    if (newsSig.signalType === 'UNLIKELY_THIS_WEEK') {
+      const blend = Math.min(0.86, conf * 0.94);
+      prob = Math.min(prob, prob * (1 - blend) + 0.18 * blend);
+      factors.push(`Coaching/beat consensus (${srcLabel}): not expected to play this week`);
+    } else if (newsSig.signalType === 'UNLIKELY_WEDNESDAY_PRACTICE' && !hasObservedPracticeThisWeek) {
+      const blend = Math.min(0.78, conf * 0.85);
+      prob = Math.min(prob, prob * (1 - blend) + 0.24 * blend);
+      factors.push(`Early-week update (${srcLabel}): unlikely to practice Wednesday / questionable at best`);
+    } else if (newsSig.signalType === 'EXPECTED_PRACTICE_RETURN' && !hasObservedPracticeThisWeek) {
+      const returnTarget = Math.min(0.66, 0.64 + (prior.questionablePlayRate - 0.78) * 0.35);
+      const blend = Math.min(0.84, conf * 0.90);
+      if (returnTarget > prob) {
+        prob = prob * (1 - blend) + returnTarget * blend;
+      }
+      factors.push(`Coaching/beat update (${srcLabel}): expected back at practice Wednesday (pending Wed–Fri workload)`);
+    } else if (newsSig.signalType === 'EXPECTED_TO_PLAY') {
+      const blend = Math.min(0.88, conf * 0.92);
+      prob = Math.max(prob, prob * (1 - blend) + 0.86 * blend);
+      factors.push(`Beat/podium consensus (${srcLabel}): on track to suit up`);
+    } else if (newsSig.signalType === 'DAY_TO_DAY' && !hasObservedPracticeThisWeek) {
+      prob = Math.min(0.82, Math.max(prob, 0.70 + (prior.questionablePlayRate - 0.78) * 0.55));
+      factors.push(`Coaching update (${srcLabel}): considered day-to-day ahead of Wednesday practice`);
+    }
+  } else if (hasNegativePlayConsensusSignal(beatNote)) {
     prob = Math.min(prob, 0.20);
     factors.push('Beat consensus: unlikely / not expected to suit up');
+  } else if (!hasObservedPracticeThisWeek && hasNegativePracticeExpectationSignal(beatNote)) {
+    prob = Math.min(prob, 0.30);
+    factors.push('Early-week beat note: unlikely to practice Wednesday / questionable at best');
   } else if (
     beatNote.includes('questionable at best') ||
-    (wed === 'NONE' &&
-      thu === 'NONE' &&
-      fri === 'NONE' &&
+    (!hasObservedPracticeThisWeek &&
       /\b(hasn't been able to practice|has not been able to practice|yet to return to practice)\b/i.test(beatNote))
   ) {
     prob = Math.min(prob, 0.48);
     factors.push('Has not yet returned to practice following multi-week injury absence');
+  } else if (!hasObservedPracticeThisWeek && hasExpectedPracticeReturnSignal(beatNote)) {
+    prob = Math.max(prob, Math.min(0.62, prob + 0.16));
+    factors.push('Coaching/beat note: expected back at practice Wednesday (pending Wed–Fri workload)');
   } else if (beatNote.includes('game-time decision') || beatNote.includes('50-50')) {
     prob = Math.max(0.42, Math.min(0.64, prob));
     factors.push('Coaching/beat note: true pre-game warmup decision');
@@ -977,8 +1649,10 @@ export function isSeasonEndingIrRecord({
   const combinedProse = `${beatNote || ''} ${txNote || ''}`;
   if (
     stLower.includes('left squad') ||
+    stLower.includes('roster exemption') ||
     stLower.includes('suspended') ||
-    /looking to get reinstated/i.test(combinedProse)
+    String(fantasyStatusAbbr || '').toUpperCase() === 'RESERVE-EX' ||
+    /looking to get reinstated|two-week (?:unpaid )?roster exemption|granted a [a-z0-9 -]*roster exemption/i.test(combinedProse)
   ) {
     return false;
   }
@@ -1034,7 +1708,8 @@ export function classifyIrAndReserveTimeline({
   currentWeek = 1,
   byeWeek = 8,
   seasonYear = 2026,
-  scheduleEvents = []
+  scheduleEvents = [],
+  corroboratedNewsSignal = null
 } = {}) {
   const cleanInj = String(injuryType || 'Undisclosed').trim() || 'Undisclosed';
   const cleanDetail = String(injuryDetail || '').trim();
@@ -1049,29 +1724,60 @@ export function classifyIrAndReserveTimeline({
   const combinedNote = String(beatNote || '').trim();
   const abbrUpper = String(fantasyStatusAbbr || '').toUpperCase();
 
-  // 1. Reserve / Left Squad or Reserve / Suspended
+  // 1. Reserve / Roster Exemption, Reserve / Left Squad, or Reserve / Suspended
+  const isRosterExemption =
+    abbrUpper === 'RESERVE-EX' ||
+    stLower.includes('roster exemption') ||
+    /\b(?:granted a [a-z0-9 -]*roster exemption|two-week (?:unpaid )?roster exemption)\b/i.test(combinedNote);
   const isLeftSquad =
-    stLower.includes('left squad') || /looking to get reinstated/i.test(combinedNote);
+    !isRosterExemption &&
+    (stLower.includes('left squad') || /looking to get reinstated/i.test(combinedNote));
   const isSuspended = stLower.includes('suspended') || abbrUpper === 'SUSP';
 
-  if (isLeftSquad || isSuspended) {
+  if (isRosterExemption || isLeftSquad || isSuspended) {
+    const expMatch = isRosterExemption
+      ? combinedNote.match(
+          /\b(?:until|expires?\s+(?:monday,?\s*|tuesday,?\s*)?)((?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z.]*\s+\d{1,2})\b/i
+        )
+      : null;
+    const expShort = expMatch ? expMatch[1].replace(/\./g, '') : '';
+
     return {
-      status: isLeftSquad ? 'Reserve / Left Squad' : 'Reserve / Suspended',
-      injuryType: isLeftSquad ? 'Reserve / Left Squad' : 'Suspension',
+      status: isRosterExemption
+        ? 'Reserve / Roster Exemption'
+        : isLeftSquad
+          ? 'Reserve / Left Squad'
+          : 'Reserve / Suspended',
+      injuryType: isRosterExemption
+        ? 'Roster Exemption'
+        : isLeftSquad
+          ? 'Reserve / Left Squad'
+          : 'Suspension',
       isSeasonEnding: false,
       isPracticeWindowOpen: false,
+      isPracticeWindowExpected: false,
       placedBeforeWeek: 1,
       earliestEligibleWeek: null,
       missedGameWeeks: [],
-      projectedReturnWeek: isLeftSquad ? 'Reinstatement Pending' : 'Suspension Window',
-      byeWeekNote: isLeftSquad
-        ? 'Reserve/Left Squad — requires formal NFL & club reinstatement'
-        : 'Reserve/Suspended — ineligible until league reinstatement',
+      projectedReturnWeek: isRosterExemption
+        ? expShort
+          ? `Exemption Thru ${expShort}`
+          : '2-Wk Roster Exemption'
+        : isLeftSquad
+          ? 'Reinstatement Pending'
+          : 'Suspension Window',
+      byeWeekNote: isRosterExemption
+        ? 'Two-week NFL roster exemption following reinstatement'
+        : isLeftSquad
+          ? 'Reserve/Left Squad — requires formal NFL & club reinstatement'
+          : 'Reserve/Suspended — ineligible until league reinstatement',
       beatNote:
         combinedNote ||
-        (isLeftSquad
-          ? 'On Reserve/Left Squad list; requires formal club and league reinstatement before returning to active roster.'
-          : 'On Reserve/Suspended list.')
+        (isRosterExemption
+          ? 'Reinstated under a two-week NFL roster exemption; does not count against the 53-man active roster.'
+          : isLeftSquad
+            ? 'On Reserve/Left Squad list; requires formal club and league reinstatement before returning to active roster.'
+            : 'On Reserve/Suspended list.')
     };
   }
 
@@ -1113,13 +1819,20 @@ export function classifyIrAndReserveTimeline({
         placedBeforeWeek -= 1;
       }
     } else if (
-      cbsWeek !== null &&
-      !/placed .* on (?:injured reserve|ir\b)/i.test(combinedNote)
+      (cbsWeek !== null &&
+        (!/placed .* on (?:injured reserve|ir\b)/i.test(combinedNote) ||
+          /\b(?:placed on (?:injured reserve|ir\b) in (?:early |mid-|late )?(?:august|september|october)|nearing his return|practice window)\b/i.test(
+            combinedNote
+          ))) ||
+      /\b(?:placed on (?:injured reserve|ir\b) in (?:early |mid-|late )?(?:august|september|october)|nearing his return|plan(?:s|ning)? to open\b[^.]{0,45}\bpractice window)\b/i.test(
+        combinedNote
+      )
     ) {
+      const anchorWk = cbsWeek !== null ? cbsWeek : Number(currentWeek) || 1;
       // Blurb date is a mid-rehab status update rather than original IR placement date
       while (
         placedBeforeWeek > 1 &&
-        calculateIrReturnTimeline(placedBeforeWeek, byeWeek, 4).earliestEligibleWeek > cbsWeek
+        calculateIrReturnTimeline(placedBeforeWeek, byeWeek, 4).earliestEligibleWeek > anchorWk
       ) {
         placedBeforeWeek -= 1;
       }
@@ -1145,6 +1858,7 @@ export function classifyIrAndReserveTimeline({
       injuryType: fullInjuryType,
       isSeasonEnding: true,
       isPracticeWindowOpen: false,
+      isPracticeWindowExpected: false,
       placedBeforeWeek,
       earliestEligibleWeek: null,
       missedGameWeeks: [],
@@ -1201,8 +1915,15 @@ export function classifyIrAndReserveTimeline({
   };
 
   let projectedReturnWeek = '';
+  let isPracticeWindowExpected = false;
   const curWk = Number(currentWeek) || 1;
   const rawEstWeek = Math.max(cbsWeek || 0, espnWeek || 0);
+  const hasCrediblePracticeReturnNews =
+    Boolean(corroboratedNewsSignal?.hasSignal) &&
+    (corroboratedNewsSignal.signalType === 'EXPECTED_PRACTICE_RETURN' ||
+      corroboratedNewsSignal.signalType === 'EXPECTED_TO_PLAY') &&
+    corroboratedNewsSignal.confidence >= 0.55 &&
+    earliestWk <= curWk + 1;
 
   if (isDesignatedToReturnOpen) {
     // 21-day practice window IS open; ignore "wasn't activated Saturday" notes written before the completed prior week's game
@@ -1226,8 +1947,20 @@ export function classifyIrAndReserveTimeline({
     } else {
       projectedReturnWeek = formatTargetWeek(targetWk);
     }
+  } else if (hasCrediblePracticeReturnNews) {
+    // Corroborated coaching/Tier-1 beat report expects player's 21-day practice window to open this week:
+    // Empirical NFL/49ers IR ramp-up spans 1–2 weeks from window opening (Week N–N+1), never overpromising instant activation.
+    isPracticeWindowExpected = true;
+    let winWk1 = Math.max(curWk, earliestWk);
+    if (winWk1 === byeWeek) winWk1 += 1;
+    let winWk2 = winWk1 + 1;
+    if (winWk2 === byeWeek) winWk2 += 1;
+    projectedReturnWeek =
+      winWk1 < 18 && winWk2 <= 18
+        ? `Est. Week ${winWk1}–${winWk2} (Window Expected)`
+        : `Est. Week ${Math.min(18, winWk1)} (Window Expected)`;
   } else if (rawEstWeek > curWk) {
-    // Concrete future week beyond currentWeek (e.g., Stribling Wk 13, Kirk Wk 13, Okuayinonu Wk 15, Patrick Johnson Wk 13)
+    // Concrete future week beyond currentWeek (e.g., Stribling Wk 13, Kirk Wk 13, Okuayinonu Wk 15)
     let targetWk = Math.max(rawEstWeek, earliestWk);
     if (targetWk === byeWeek) targetWk += 1;
     projectedReturnWeek = formatTargetWeek(targetWk);
@@ -1245,20 +1978,305 @@ export function classifyIrAndReserveTimeline({
 
   const factualFallback = isDesignatedToReturnOpen
     ? `21-day practice window opened; eligible for 53-man roster activation (${fullInjuryType}).`
-    : earliestWk <= curWk
-      ? `4-game minimum satisfied on ${statusLabel} (${fullInjuryType}); awaiting 21-day practice window designation.`
-      : `Placed on ${statusLabel} (${fullInjuryType}) ahead of Week ${placedBeforeWeek}; must miss at least 4 games (earliest eligible Week ${earliestWk}).`;
+    : isPracticeWindowExpected
+      ? `4-game minimum satisfied on ${statusLabel} (${fullInjuryType}); coaching staff expects 21-day practice window to open in Week ${curWk}.`
+      : earliestWk <= curWk
+        ? `4-game minimum satisfied on ${statusLabel} (${fullInjuryType}); awaiting 21-day practice window designation.`
+        : `Placed on ${statusLabel} (${fullInjuryType}) ahead of Week ${placedBeforeWeek}; must miss at least 4 games (earliest eligible Week ${earliestWk}).`;
+
+  let resolvedBeatNote = combinedNote || factualFallback;
+  if (isPracticeWindowExpected && corroboratedNewsSignal?.leadClause) {
+    const lead = String(corroboratedNewsSignal.leadClause).trim();
+    if (lead && !resolvedBeatNote.toLowerCase().includes(lead.toLowerCase().slice(0, 28))) {
+      resolvedBeatNote = combinedNote ? `${lead} ${combinedNote}` : lead;
+    }
+  }
 
   return {
     status: statusLabel,
     injuryType: fullInjuryType,
     isSeasonEnding: false,
     isPracticeWindowOpen: Boolean(isDesignatedToReturnOpen),
+    isPracticeWindowExpected,
     placedBeforeWeek,
     earliestEligibleWeek: earliestWk,
     missedGameWeeks: irCalc.missedGameWeeks,
     projectedReturnWeek,
     byeWeekNote,
-    beatNote: combinedNote || factualFallback
+    beatNote: resolvedBeatNote
   };
+}
+
+export function sortIrTrackerPriority(entry = {}) {
+  if (entry.isPracticeWindowOpen) return 1;
+  const wkMatch = String(entry.projectedReturnWeek || '').match(/Week\s*(\d{1,2})/i);
+  if (!entry.isSeasonEnding && entry.isPracticeWindowExpected && wkMatch) {
+    return 5 + Number(wkMatch[1]);
+  }
+  if (!entry.isSeasonEnding && wkMatch) return 10 + Number(wkMatch[1]);
+  if (!entry.isSeasonEnding && /TBD/i.test(entry.projectedReturnWeek || '')) return 40;
+  if (!entry.isSeasonEnding) return 50;
+  return 100;
+}
+
+/**
+ * Shared deterministic reconciler aligning `roster.players[*].health`, `health.practiceReport`,
+ * `health.irAndReserveTracker`, and `depthChart.units` with corroborated, trust-weighted post-game
+ * coaching/beat news & live official transactions — without overreacting to single/speculative tweets.
+ */
+export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.now() } = {}) {
+  const rosterPlayers = appData?.roster?.players;
+  if (!Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return false;
+
+  const currentWeek = Number(
+    appData?.health?.week ||
+      appData?.scheduleMatchup?.upcomingMatchup?.week ||
+      appData?.meta?.currentWeek ||
+      1
+  );
+  const byeWeek = Number(appData?.health?.byeWeek || 8);
+  const schedule = appData?.scheduleMatchup?.schedule || [];
+
+  // Post-prior-game cutoff: only news published AFTER the most recently completed game can adjust upcoming-week health
+  const completedGames = schedule
+    .filter(g => g?.completed && (g.dateIso || g.kickoffIso))
+    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
+    .filter(ms => ms !== null)
+    .sort((a, b) => b - a);
+  const lastCompletedGameEndMs =
+    completedGames.length > 0 ? completedGames[0] + 3 * 3_600_000 : nowMs - 4.5 * 86_400_000;
+
+  const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
+  const rosterPlayerNames = rosterPlayers.map(p => p?.name).filter(Boolean);
+  let mutated = false;
+
+  for (const p of rosterPlayers) {
+    if (!p?.health || !p.name) continue;
+
+    // Combine rawStream + player's own recentNews, deduplicated by URL/headline prefix
+    const combinedNews = [];
+    const seenKeys = new Set();
+    for (const srcItem of [...rawStream, ...(Array.isArray(p.recentNews) ? p.recentNews : [])]) {
+      if (!srcItem) continue;
+      const k = String(srcItem.url || srcItem.id || srcItem.fullText || srcItem.title || srcItem.headline || '')
+        .toLowerCase()
+        .slice(0, 96);
+      if (!k || seenKeys.has(k)) continue;
+      seenKeys.add(k);
+      combinedNews.push(srcItem);
+    }
+
+    const newsSig = evaluateCorroboratedNewsInjurySignal({
+      playerName: p.name,
+      rosterBucket: p.rosterBucket,
+      newsItems: combinedNews,
+      rosterPlayerNames,
+      nowMs,
+      windowStartMs: lastCompletedGameEndMs
+    });
+
+    if (p.rosterBucket === 'ir' || p.rosterBucket === 'suspended') {
+      if (p.health.isSeasonEnding) continue;
+
+      if (newsSig.hasOfficialTxDesignation && !p.health.isPracticeWindowOpen) {
+        p.health.isPracticeWindowOpen = true;
+        p.health.isPracticeWindowExpected = false;
+        p.health.status = 'IR — 21-Day Window Open';
+        p.health.projectedReturnWeek = `Week ${currentWeek} Activation Window`;
+        mutated = true;
+      } else if (
+        !p.health.isPracticeWindowOpen &&
+        newsSig.hasSignal &&
+        (newsSig.signalType === 'EXPECTED_PRACTICE_RETURN' || newsSig.signalType === 'EXPECTED_TO_PLAY') &&
+        newsSig.confidence >= 0.55
+      ) {
+        const earliestWk = Number(p.health.earliestEligibleWeek || 1);
+        const curProj = String(p.health.projectedReturnWeek || '');
+        const hasLaterConcreteTarget =
+          /^Est\.\s+Week\s+(\d+)/i.test(curProj) &&
+          !/Window Expected/i.test(curProj) &&
+          Number(curProj.match(/Week\s+(\d+)/i)?.[1] || 0) > currentWeek + 1;
+
+        if (earliestWk <= currentWeek + 1 && !hasLaterConcreteTarget) {
+          let winWk1 = Math.max(currentWeek, earliestWk);
+          if (winWk1 === byeWeek) winWk1 += 1;
+          let winWk2 = winWk1 + 1;
+          if (winWk2 === byeWeek) winWk2 += 1;
+          const nextProj =
+            winWk1 < 18 && winWk2 <= 18
+              ? `Est. Week ${winWk1}–${winWk2} (Window Expected)`
+              : `Est. Week ${Math.min(18, winWk1)} (Window Expected)`;
+
+          if (p.health.projectedReturnWeek !== nextProj || !p.health.isPracticeWindowExpected) {
+            p.health.projectedReturnWeek = nextProj;
+            p.health.isPracticeWindowExpected = true;
+            mutated = true;
+          }
+          if (newsSig.leadClause) {
+            const lead = String(newsSig.leadClause).trim();
+            const existingIrNote = String(p.health.irBeatNote || p.health.longComment || p.health.shortComment || '').trim();
+            if (lead && !existingIrNote.toLowerCase().includes(lead.toLowerCase().slice(0, 28))) {
+              p.health.irBeatNote = existingIrNote ? `${lead} ${existingIrNote}` : lead;
+              mutated = true;
+            }
+          }
+        }
+      }
+      continue;
+    }
+
+    if (p.rosterBucket === 'active' && p.health.isOnPracticeReport) {
+      // Upgrade bare status placeholder comments ("inactive", "out") with verified injury/beat context
+      if (isBareStatusPlaceholderComment(p.health.longComment) && newsSig.leadClause) {
+        p.health.longComment = newsSig.leadClause;
+        if (isBareStatusPlaceholderComment(p.health.shortComment)) {
+          p.health.shortComment = newsSig.leadClause;
+        }
+        mutated = true;
+      }
+
+      const rawStatusLower = String(p.health.status || '').toLowerCase();
+      const isEarlyPrePractice =
+        (p.health.wed === '-' || !p.health.wed) &&
+        (p.health.thu === '-' || !p.health.thu) &&
+        (p.health.fri === '-' || !p.health.fri);
+
+      if (newsSig.hasSignal || (isEarlyPrePractice && rawStatusLower === 'questionable')) {
+        const combinedComment = pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment);
+        // Strip prior-game availability rulings if we are in early-week pre-practice rollover
+        const noteForModel =
+          isEarlyPrePractice && rawStatusLower !== 'out'
+            ? combinedComment.replace(
+                /\b(is inactive|was inactive|officially inactive|ruled out|will not play|won't play|is out for|will miss (?:his |a )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|missing (?:a |his )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|miss(?:ing)? (?:sunday|monday|thursday|saturday)'?s?|inactive (?:sunday|monday|thursday|saturday)|inactive for (?:sunday|monday|thursday|saturday))\b/gi,
+                'sidelined previously'
+              )
+            : combinedComment;
+
+        const playProb = computePlayerPlayProbability({
+          name: p.name,
+          position: p.position,
+          experienceYears: p.experienceYears ?? null,
+          snapPct: p.primarySnapPct ?? null,
+          gameStatus: p.health.status,
+          rosterBucket: p.rosterBucket,
+          isIrReturnQuestionable: Boolean(p.health.isIrReturnQuestionable),
+          isSeasonEnding: Boolean(p.health.isSeasonEnding),
+          fantasyStatusAbbr: p.health.fantasyStatusAbbr || '',
+          injuryType: p.health.injuryType || '',
+          wed: p.health.wed,
+          thu: p.health.thu,
+          fri: p.health.fri,
+          beatNote: noteForModel,
+          weeklyHistory: p.health.weeklyHistory2026 || [],
+          currentWeek,
+          byeWeek,
+          rosterPlayerNames,
+          corroboratedNewsSignal: newsSig
+        });
+
+        if (
+          p.health.playProbabilityPct !== playProb.probabilityPct ||
+          p.health.playBadgeLabel !== playProb.badgeLabel
+        ) {
+          mutated = true;
+        }
+        p.health.playProbabilityPct = playProb.probabilityPct;
+        p.health.playTier = playProb.tier;
+        p.health.playBadgeLabel = playProb.badgeLabel;
+        p.health.factors = playProb.factors;
+      }
+    }
+  }
+
+  // Synchronize `appData.health` tables unless inside an active [T-90m, Final) game-day roster lock
+  if (appData.health && !appData.health.gameDayRoster?.isActive) {
+    const isEarlyWk =
+      Array.isArray(appData.health.practiceReport) &&
+      appData.health.practiceReport.length > 0 &&
+      appData.health.practiceReport.every(r => r.wed === '-' && r.thu === '-' && r.fri === '-');
+
+    appData.health.practiceReport = rosterPlayers
+      .filter(p => p.health?.isOnPracticeReport)
+      .sort(
+        (a, b) =>
+          (a.health.playProbabilityPct ?? 99) - (b.health.playProbabilityPct ?? 99) ||
+          (b.capHit2026 || 0) - (a.capHit2026 || 0)
+      )
+      .map(p => ({
+        playerId: p.id,
+        name: p.name,
+        position: p.position,
+        jersey: p.jersey,
+        headshotUrl: p.headshotUrl || '',
+        wed: isEarlyWk ? '-' : p.health.wed || '-',
+        thu: isEarlyWk ? '-' : p.health.thu || '-',
+        fri: isEarlyWk ? '-' : p.health.fri || '-',
+        injuryType:
+          p.health.injuryType ||
+          (p.health.wed === 'Vet Rest' ? 'NIR - Veteran Rest' : 'Cleared — No Designation'),
+        gameStatus: p.health.status,
+        playProbabilityPct: p.health.playProbabilityPct,
+        playBadgeLabel: p.health.playBadgeLabel,
+        archetypeNote: p.health.archetypeNote || '',
+        factors: p.health.factors || [],
+        beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment)
+      }));
+
+    if (Array.isArray(appData.health.irAndReserveTracker)) {
+      appData.health.irAndReserveTracker = rosterPlayers
+        .filter(p => p.rosterBucket === 'ir' || p.rosterBucket === 'suspended')
+        .map(p => ({
+          playerId: p.id,
+          name: p.name,
+          position: p.position,
+          jersey: p.jersey,
+          headshotUrl: p.headshotUrl || '',
+          injuryType: p.health.injuryType || 'Undisclosed',
+          status: p.health.isIrReturnQuestionable
+            ? 'IR — Designated to Return (Questionable)'
+            : p.health.status || 'Injured Reserve',
+          isSeasonEnding: Boolean(p.health.isSeasonEnding),
+          isPracticeWindowOpen: Boolean(p.health.isPracticeWindowOpen),
+          isPracticeWindowExpected: Boolean(p.health.isPracticeWindowExpected),
+          placedBeforeWeek: p.health.placedBeforeWeek ?? 1,
+          earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
+          projectedReturnWeek: p.health.projectedReturnWeek || 'TBD',
+          byeWeekNote: p.health.byeWeekNote || '4-game NFL minimum requirement',
+          beatNote: pickMeaningfulInjuryComment(p.health.irBeatNote, p.health.longComment, p.health.shortComment)
+        }))
+        .sort((a, b) => sortIrTrackerPriority(a) - sortIrTrackerPriority(b) || a.name.localeCompare(b.name));
+    }
+  }
+
+  // Keep Projected Active Depth Chart synchronized with updated play probabilities
+  if (Array.isArray(appData?.depthChart?.units)) {
+    const byId = new Map(rosterPlayers.map(p => [String(p.id), p]));
+    for (const unit of appData.depthChart.units) {
+      for (const row of unit.rows || []) {
+        if (!Array.isArray(row.baselineChain)) continue;
+        row.baselineChain = row.baselineChain.map(entry => {
+          const rp = byId.get(String(entry.playerId));
+          if (!rp?.health) return entry;
+          const prob = rp.health.playProbabilityPct ?? entry.playProbabilityPct ?? 95;
+          const isAvailable =
+            prob >= 40 && (rp.rosterBucket === 'active' || Boolean(rp.health.isIrReturnQuestionable));
+          return {
+            ...entry,
+            playProbabilityPct: prob,
+            statusBadge: rp.health.playBadgeLabel || entry.statusBadge,
+            isAvailable
+          };
+        });
+        row.projectedActiveChain = [
+          ...row.baselineChain.filter(x => x.isAvailable).map(({ demotedDueToInjury: _d, ...rest }) => rest),
+          ...row.baselineChain.filter(x => !x.isAvailable).map(x => ({ ...x, demotedDueToInjury: true }))
+        ];
+        row.starterPromoted =
+          row.baselineChain.length > 1 &&
+          row.projectedActiveChain[0]?.playerId !== row.baselineChain[0]?.playerId;
+      }
+    }
+  }
+
+  return mutated;
 }

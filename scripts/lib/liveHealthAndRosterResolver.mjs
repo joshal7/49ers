@@ -353,7 +353,9 @@ export function analyzeTeamTransactions(transactions = [], seasonYear = 2026) {
     const dateIso = tx.date;
     const dateMs = Date.parse(dateIso);
     const sentences = String(tx.description || '')
-      .split(/\.\s+|\.$/)
+      .replace(/\b([A-Za-z])\.([A-Za-z])\./g, '$1$2')
+      .replace(/\b(Jr|Sr)\./gi, '$1')
+      .split(/(?<![\s.][A-Za-z])\.\s+|\.$/)
       .map(s => s.trim())
       .filter(Boolean);
 

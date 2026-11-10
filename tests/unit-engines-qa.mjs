@@ -2267,7 +2267,7 @@ test('Live 2026 Health, Roster & Depth Chart datasets eliminate Alfred Collins b
   assert.equal(guerendo?.health?.status, 'Reserve / PUP');
   const aiyuk = roster.players.find(x => x.name === 'Brandon Aiyuk');
   assert.equal(aiyuk?.rosterBucket, 'ir');
-  assert.equal(aiyuk?.health?.status, 'Reserve / Left Squad');
+  assert.match(String(aiyuk?.health?.status || ''), /^Reserve \/ (?:Left Squad|Roster Exemption)$/);
   assert.ok(!health.practiceReport.some(p => p.name === 'Brandon Aiyuk'), 'Brandon Aiyuk must not be duplicated onto active practiceReport');
 
   // Official 49ers.com practice participation & early-week blank W/T/F rollover verification

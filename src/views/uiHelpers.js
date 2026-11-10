@@ -48,10 +48,18 @@ export function registerRosterPlayersForInlineLinks(players = null) {
       full.replace(/'/g, '’'),
       full.replace(/’/g, "'")
     ]);
+    const collapsedFull = full.replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$)/g, '$1$2');
+    if (collapsedFull.includes(' ') && collapsedFull.length >= 6) {
+      variants.add(collapsedFull);
+    }
     const withoutSuffix = full.replace(/,?\s+\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?$/i, '').trim();
     if (withoutSuffix.includes(' ') && withoutSuffix.length >= 6) {
       variants.add(withoutSuffix);
       variants.add(withoutSuffix.replace(/'/g, '’'));
+      const collapsedNoSuffix = withoutSuffix.replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$)/g, '$1$2');
+      if (collapsedNoSuffix.includes(' ') && collapsedNoSuffix.length >= 6) {
+        variants.add(collapsedNoSuffix);
+      }
     }
 
     for (const v of variants) {
