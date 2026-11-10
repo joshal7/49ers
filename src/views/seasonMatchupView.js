@@ -402,15 +402,6 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
                 <div class="sub-label stats-subgroup-title">${esc(grp.groupTitle)}</div>
                 <div class="table-scroll">
                   <table class="data-table team-stats-table matchup-stats-table">
-                    <thead>
-                      <tr>
-                        <th>Metric</th>
-                        <th class="mono num-col">49ers</th>
-                        <th class="mono rank-col">Rank</th>
-                        <th class="mono num-col">${esc(oppShortName)}</th>
-                        <th class="mono rank-col">Rank</th>
-                      </tr>
-                    </thead>
                     <tbody>
                       ${renderH2hRows(grp.rows)}
                     </tbody>
@@ -1091,14 +1082,6 @@ function renderTeamStatsAndPower(appData) {
                     <div class="sub-label stats-subgroup-title">${esc(grp.groupTitle)}</div>
                     <div class="table-scroll">
                       <table class="data-table team-stats-table">
-                        <thead>
-                          <tr>
-                            <th>Metric</th>
-                            <th class="mono num-col">49ers</th>
-                            <th class="mono rank-col">Rank</th>
-                            <th class="mono num-col">NFL Avg</th>
-                          </tr>
-                        </thead>
                         <tbody>
                           ${renderTeamStatsRowsHtml(grp.rows || [])}
                         </tbody>

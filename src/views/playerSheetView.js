@@ -452,20 +452,15 @@ function renderStatsTab(p, statsMode) {
                 <span class="mono stats-expand-hint">Expand</span>
               </summary>
               <div class="stats-expand-body">
-                <div class="table-scroll">
-                  <table class="data-table team-stats-table player-stats-table">
-                    <thead>
-                      <tr>
-                        <th>Metric</th>
-                        <th class="mono num-col">${esc(p.shortName || 'Player')}</th>
-                        <th class="mono rank-col">Rank</th>
-                        <th class="mono num-col">NFL Avg</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      ${renderPlayerStatTableRowsHtml(expRows, p.id)}
-                    </tbody>
-                  </table>
+                <div class="stats-subgroup-block">
+                  <div class="sub-label stats-subgroup-title">Advanced Efficiency, NextGen &amp; Film Metrics</div>
+                  <div class="table-scroll">
+                    <table class="data-table team-stats-table player-stats-table">
+                      <tbody>
+                        ${renderPlayerStatTableRowsHtml(expRows, p.id)}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </details>

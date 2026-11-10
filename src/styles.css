@@ -3489,6 +3489,51 @@ button.featured-player-chip:active {
   vertical-align: middle;
 }
 
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) th:nth-child(1),
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) td:nth-child(1) {
+  width: 45%;
+}
+
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) th:nth-child(2),
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) td:nth-child(2) {
+  width: 17%;
+}
+
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) th:nth-child(3),
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) td:nth-child(3) {
+  width: 21%;
+}
+
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) th:nth-child(4),
+.team-stats-table:not(.matchup-stats-table):not([data-career-pos-table]) td:nth-child(4) {
+  width: 17%;
+}
+
+.matchup-stats-table th:nth-child(1),
+.matchup-stats-table td:nth-child(1) {
+  width: 38%;
+}
+
+.matchup-stats-table th:nth-child(2),
+.matchup-stats-table td:nth-child(2) {
+  width: 16%;
+}
+
+.matchup-stats-table th:nth-child(3),
+.matchup-stats-table td:nth-child(3) {
+  width: 15%;
+}
+
+.matchup-stats-table th:nth-child(4),
+.matchup-stats-table td:nth-child(4) {
+  width: 16%;
+}
+
+.matchup-stats-table th:nth-child(5),
+.matchup-stats-table td:nth-child(5) {
+  width: 15%;
+}
+
 .team-stats-table td:first-child {
   white-space: normal;
   min-width: 120px;

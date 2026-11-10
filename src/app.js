@@ -50,21 +50,21 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=32';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=32';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=32';
-import { iconSvg } from './views/icons.js?v=32';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=32';
+} from './views/uiHelpers.js?v=33';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=33';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=33';
+import { iconSvg } from './views/icons.js?v=33';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=33';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=32';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=32';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=32';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=32';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=32';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=32';
+} from './views/newsView.js?v=33';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=33';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=33';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=33';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=33';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=33';
 
 const state = {
   appData: null,
@@ -2368,7 +2368,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=37', { updateViaCache: 'none' })
+        .register('./sw.js?v=38', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

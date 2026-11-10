@@ -3924,6 +3924,9 @@ async function main() {
         defExp?.querySelector('summary')?.click();
         await sleep(30);
         const expandersOpened = Boolean(offExp?.open && defExp?.open);
+        const noExpandedTheadInTeamStats =
+          document.querySelectorAll('details[data-stats-expander] table thead').length === 0 &&
+          document.querySelectorAll('details[data-stats-expander] .stats-subgroup-title').length >= 6;
 
         // Click #X Rank badge on Points / Game -> verify 32-team modal opens, highlights 49ers, renders NFL Avg divider, and closes
         const ptsRankBtn = document.querySelector('[data-action="open-stat-rank-modal"][data-rank-key="off_pts_game"]');
@@ -4025,6 +4028,7 @@ async function main() {
           colsAlignedH2h,
           matchingTransparentBg,
           expandersOpened,
+          noExpandedTheadInTeamStats,
           teamModalOpen,
           teamModalRows,
           sfHighlighted,
@@ -4056,7 +4060,10 @@ async function main() {
           deepStatsAudit.matchingTransparentBg,
         `Overall Rank single-line / larger font / column alignment / % / Composite Score link check failed: ${JSON.stringify(deepStatsAudit)}`
       );
-      assert(deepStatsAudit.expandersOpened, 'Team Stats Offense & Defense detailed expanders failed to open');
+      assert(
+        deepStatsAudit.expandersOpened && deepStatsAudit.noExpandedTheadInTeamStats,
+        'Team Stats Offense & Defense detailed expanders failed to open or still had duplicate thead'
+      );
       assert(
         deepStatsAudit.teamModalOpen &&
           deepStatsAudit.teamModalRows === 32 &&
