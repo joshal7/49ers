@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T00:16:18.805Z",
+  "updatedAt": "2026-11-11T04:24:01.491Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -6364,148 +6364,6 @@
       }
     },
     {
-      "id": "4685369",
-      "otcId": "13251",
-      "otcSlug": "gracen-halton",
-      "otcUrl": "https://overthecap.com/player/gracen-halton/13251/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685369/gracen-halton",
-      "pfrUrl": "https://www.pro-football-reference.com/players/H/HaltGr00.htm",
-      "name": "Gracen Halton",
-      "position": "DT",
-      "jersey": 93,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
-      "unit": "Defense",
-      "rosterBucket": "ir",
-      "contractsByYear": {
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1050000,
-          "proratedSigning": 310206,
-          "proratedOption": 0,
-          "proratedBonus": 310206,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1360206,
-          "transactions": {
-            "cut": {
-              "deadMoney": 930618,
-              "capSavings": 429588
-            },
-            "june_1_cut": {
-              "deadMoney": 310206,
-              "capSavings": 1050000
-            },
-            "trade": {
-              "deadMoney": 930618,
-              "capSavings": 429588
-            },
-            "june_1_trade": {
-              "deadMoney": 310206,
-              "capSavings": 1050000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 80000
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 96000
-            }
-          }
-        },
-        "2028": {
-          "year": 2028,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1165000,
-          "proratedSigning": 310206,
-          "proratedOption": 0,
-          "proratedBonus": 310206,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1475206,
-          "transactions": {
-            "cut": {
-              "deadMoney": 620412,
-              "capSavings": 854794
-            },
-            "june_1_cut": {
-              "deadMoney": 310206,
-              "capSavings": 1165000
-            },
-            "trade": {
-              "deadMoney": 620412,
-              "capSavings": 854794
-            },
-            "june_1_trade": {
-              "deadMoney": 310206,
-              "capSavings": 1165000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 95000
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 152000
-            }
-          }
-        },
-        "2029": {
-          "year": 2029,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1280000,
-          "proratedSigning": 310206,
-          "proratedOption": 0,
-          "proratedBonus": 310206,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1590206,
-          "transactions": {
-            "cut": {
-              "deadMoney": 310206,
-              "capSavings": 1280000
-            },
-            "june_1_cut": {
-              "deadMoney": 310206,
-              "capSavings": 1280000
-            },
-            "trade": {
-              "deadMoney": 310206,
-              "capSavings": 1280000
-            },
-            "june_1_trade": {
-              "deadMoney": 310206,
-              "capSavings": 1280000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 208000
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "4431466",
       "otcId": "12498",
       "otcSlug": "jordan-watkins",
@@ -9304,6 +9162,148 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 511819
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4685369",
+      "otcId": "13251",
+      "otcSlug": "gracen-halton",
+      "otcUrl": "https://overthecap.com/player/gracen-halton/13251/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685369/gracen-halton",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HaltGr00.htm",
+      "name": "Gracen Halton",
+      "position": "DT",
+      "jersey": 93,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
+      "unit": "Defense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1050000,
+          "proratedSigning": 310206,
+          "proratedOption": 0,
+          "proratedBonus": 310206,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1360206,
+          "transactions": {
+            "cut": {
+              "deadMoney": 930618,
+              "capSavings": 429588
+            },
+            "june_1_cut": {
+              "deadMoney": 310206,
+              "capSavings": 1050000
+            },
+            "trade": {
+              "deadMoney": 930618,
+              "capSavings": 429588
+            },
+            "june_1_trade": {
+              "deadMoney": 310206,
+              "capSavings": 1050000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 80000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 96000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1165000,
+          "proratedSigning": 310206,
+          "proratedOption": 0,
+          "proratedBonus": 310206,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1475206,
+          "transactions": {
+            "cut": {
+              "deadMoney": 620412,
+              "capSavings": 854794
+            },
+            "june_1_cut": {
+              "deadMoney": 310206,
+              "capSavings": 1165000
+            },
+            "trade": {
+              "deadMoney": 620412,
+              "capSavings": 854794
+            },
+            "june_1_trade": {
+              "deadMoney": 310206,
+              "capSavings": 1165000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 95000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 152000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1280000,
+          "proratedSigning": 310206,
+          "proratedOption": 0,
+          "proratedBonus": 310206,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1590206,
+          "transactions": {
+            "cut": {
+              "deadMoney": 310206,
+              "capSavings": 1280000
+            },
+            "june_1_cut": {
+              "deadMoney": 310206,
+              "capSavings": 1280000
+            },
+            "trade": {
+              "deadMoney": 310206,
+              "capSavings": 1280000
+            },
+            "june_1_trade": {
+              "deadMoney": 310206,
+              "capSavings": 1280000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 208000
             }
           }
         }

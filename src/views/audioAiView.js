@@ -145,6 +145,16 @@ function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = 
     : isPodcast
       ? PODCAST_PIPELINE_STAGES
       : ANALYSIS_PIPELINE_STAGES;
+  const stagePercents = Array.isArray(jobStatus?.stagePercents) && jobStatus.stagePercents.length === 3
+    ? jobStatus.stagePercents
+    : [
+        activeStep > 1 ? 100 : Math.min(95, Math.max(15, pct * 2)),
+        activeStep > 2 ? 100 : activeStep === 2 ? Math.min(95, Math.max(12, (pct - 30) * 2)) : 0,
+        activeStep === 3 ? Math.min(98, Math.max(10, (pct - 60) * 2.4)) : 0
+      ];
+  const stageElapsed = Array.isArray(jobStatus?.stageElapsedSec) && jobStatus.stageElapsedSec.length === 3
+    ? jobStatus.stageElapsedSec
+    : [0, 0, 0];
   const estText = jobStatus?.estLabel || waitEst.estLabel;
   const modelBadge = jobStatus?.modelLabel || modelInfo.displayLabel;
   const elapsedSec = jobStatus?.startedAtMs
@@ -160,6 +170,22 @@ function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = 
       const stepNum = idx + 1;
       const stateClass =
         stepNum < activeStep ? 'done' : stepNum === activeStep ? 'current' : 'pending';
+      const rawStagePct = Number(stagePercents[idx] ?? 0);
+      const stageBarPct =
+        stateClass === 'done'
+          ? 100
+          : stateClass === 'current'
+            ? Math.max(8, Math.min(99, Math.round(rawStagePct || 12)))
+            : 0;
+      const stageSec = Math.max(0, Math.floor(Number(stageElapsed[idx] || 0)));
+      const statusText =
+        stateClass === 'done'
+          ? stageSec > 0
+            ? `Done · ${stageSec}s`
+            : 'Done'
+          : stateClass === 'current'
+            ? `In progress · ${stageSec}s`
+            : 'Queued';
       const indicator =
         stepNum < activeStep
           ? `<span class="stage-step-icon done" aria-hidden="true">${iconSvg('check', 11)}</span>`
@@ -168,11 +194,14 @@ function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = 
             : `<span class="stage-step-icon pending" aria-hidden="true">${stepNum}</span>`;
       return `
         <div class="job-stage-row ${stateClass}" data-pipeline-step="${stepNum}" data-step-state="${stateClass}">
-          ${indicator}
-          <span class="job-stage-label">${esc(label)}</span>
-          <span class="job-stage-status mono">${
-            stepNum < activeStep ? 'Done' : stepNum === activeStep ? 'In progress' : 'Queued'
-          }</span>
+          <div class="job-stage-top">
+            ${indicator}
+            <span class="job-stage-label">${esc(label)}</span>
+            <span class="job-stage-status mono" data-stage-status="${stepNum}">${esc(statusText)}</span>
+          </div>
+          <div class="job-stage-bar-track" aria-hidden="true">
+            <div class="job-stage-bar-fill" data-stage-bar="${stepNum}" style="width:${stageBarPct}%"></div>
+          </div>
         </div>
       `;
     })

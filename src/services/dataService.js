@@ -3,6 +3,7 @@
  */
 
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
+import { normalizeScheduleGameItem } from '../engine/seasonStateMachine.js';
 import {
   collapseInitialDots,
   computePlayerPlayProbability,
@@ -2164,18 +2165,98 @@ export async function hydrateLiveEspnOverlay(appData) {
     appData.scheduleMatchup?.upcomingMatchup?.dateIso ||
     '';
 
-  // 2. Live Schedule Scores, In-Game Live State & Automatic Week Rollover
+  // 2. Live Schedule Scores, In-Game Live State & Automatic Week Rollover (Preseason + Regular Season + Postseason)
   if (scheduleRaw?.events?.length && Array.isArray(appData.scheduleMatchup.schedule)) {
-    const byWeek = new Map(appData.scheduleMatchup.schedule.map(g => [Number(g.week), g]));
-    for (const ev of scheduleRaw.events) {
-      const wk = Number(ev.week?.number || 0);
-      const item = byWeek.get(wk);
-      if (!item) continue;
+    const byId = new Map(
+      appData.scheduleMatchup.schedule.filter(g => g?.id).map(g => [String(g.id), g])
+    );
+    const byTypeWeek = new Map(
+      appData.scheduleMatchup.schedule.map(g => [`${g.seasonType || 'REG'}:${Number(g.week)}`, g])
+    );
+
+    const allEvents = [...scheduleRaw.events];
+    const allRegDone = appData.scheduleMatchup.schedule
+      .filter(g => (g.seasonType || 'REG') === 'REG')
+      .every(g => Boolean(g.completed));
+    if (
+      allRegDone &&
+      !allEvents.some(e => Number(e.seasonType?.type ?? e.seasonType?.id ?? 0) === 3)
+    ) {
+      const postRaw = await fetchCorsJson(
+        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule?seasontype=3'
+      ).catch(() => null);
+      if (Array.isArray(postRaw?.events) && postRaw.events.length > 0) {
+        allEvents.push(...postRaw.events);
+      }
+    }
+
+    for (const ev of allEvents) {
+      const evStType = Number(ev.seasonType?.type ?? ev.seasonType?.id ?? 2);
+      const rawWkNum = Number(ev.week?.number || 0);
+      if (evStType === 3 && rawWkNum === 4) continue; // Skip Pro Bowl
+
+      let stCode = 'REG';
+      let wk = rawWkNum;
+      let postRound = null;
+      if (evStType === 1) {
+        stCode = 'PRE';
+        const preWk = Number(
+          String(ev.week?.text || '').match(/(\d+)/)?.[1] || Math.max(1, rawWkNum - 1)
+        );
+        wk = -(4 - Math.min(3, preWk));
+      } else if (evStType === 3) {
+        stCode = 'POST';
+        postRound = rawWkNum === 1 ? 'WC' : rawWkNum === 2 ? 'DIV' : rawWkNum === 3 ? 'CON' : 'SB';
+        wk = rawWkNum === 1 ? 19 : rawWkNum === 2 ? 20 : rawWkNum === 3 ? 21 : 22;
+      }
+
       const comp = ev.competitions?.[0] || {};
       const sfComp = (comp.competitors || []).find(c => c.team?.abbreviation === 'SF');
       const oppComp = (comp.competitors || []).find(c => c.team?.abbreviation !== 'SF');
       const completed = Boolean(comp.status?.type?.completed);
       const liveState = String(comp.status?.type?.state || '').toLowerCase();
+
+      let item = (ev.id && byId.get(String(ev.id))) || byTypeWeek.get(`${stCode}:${wk}`) || null;
+      if (!item && stCode === 'POST') {
+        const oppAbbrRaw = normalizeTeamAbbrClient(oppComp?.team?.abbreviation || 'TBD');
+        const isTbdOpp = !oppComp?.team?.abbreviation || oppAbbrRaw === 'TBD';
+        const venueObj = comp.venue || {};
+        item = normalizeScheduleGameItem(
+          {
+            id: ev.id || `post_${appData.meta.seasonYear || 2026}_${postRound.toLowerCase()}`,
+            seasonType: 'POST',
+            postseasonRound: postRound,
+            week: wk,
+            dateIso: ev.date,
+            statusDetail: comp.status?.type?.shortDetail || 'Playoffs',
+            statusState: liveState,
+            completed,
+            homeAway: sfComp?.homeAway || 'home',
+            sfLogoUrl: 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+            opponent: {
+              abbr: isTbdOpp ? 'TBD' : oppAbbrRaw,
+              name: oppComp?.team?.displayName || (isTbdOpp ? 'Opponent TBD' : oppAbbrRaw),
+              logoUrl: isTbdOpp ? '' : buildEspnTeamLogoUrl(oppAbbrRaw),
+              record: teamRecords.get(oppAbbrRaw)?.record || (isTbdOpp ? 'Matchup TBD' : '—'),
+              isTbd: isTbdOpp
+            },
+            venue: {
+              name: venueObj.fullName || (sfComp?.homeAway === 'home' ? "Levi's Stadium" : 'Venue TBD'),
+              city: venueObj.address?.city || (sfComp?.homeAway === 'home' ? 'Santa Clara' : ''),
+              state: venueObj.address?.state || '',
+              country: venueObj.address?.country || 'USA',
+              isInternational: false,
+              surface: 'Natural Grass'
+            }
+          },
+          Number(appData.meta.seasonYear) || 2026
+        );
+        appData.scheduleMatchup.schedule.push(item);
+        if (item.id) byId.set(String(item.id), item);
+        byTypeWeek.set(`${stCode}:${wk}`, item);
+      }
+
+      if (!item) continue;
       item.statusState = liveState;
 
       if (completed && !item.completed) standingsOrScoresChanged = true;
@@ -2192,8 +2273,18 @@ export async function hydrateLiveEspnOverlay(appData) {
       if (comp.status?.type?.shortDetail) {
         item.statusDetail = comp.status.type.shortDetail;
       }
+      if (stCode === 'POST' && oppComp?.team?.abbreviation && oppComp.team.abbreviation !== 'TBD') {
+        const newOppAbbr = normalizeTeamAbbrClient(oppComp.team.abbreviation);
+        item.opponent = {
+          ...(item.opponent || {}),
+          abbr: newOppAbbr,
+          name: oppComp.team.displayName || newOppAbbr,
+          logoUrl: buildEspnTeamLogoUrl(newOppAbbr),
+          isTbd: false
+        };
+      }
       const oppLive = teamRecords.get(normalizeTeamAbbrClient(item.opponent?.abbr));
-      if (oppLive && item.opponent) {
+      if (oppLive && item.opponent && !item.opponent.isTbd) {
         item.opponent.record = oppLive.record;
         item.opponent.pointDiff = oppLive.pd;
       }
@@ -2201,7 +2292,7 @@ export async function hydrateLiveEspnOverlay(appData) {
     }
 
     const nextGame =
-      appData.scheduleMatchup.schedule.find(g => !g.completed) ||
+      appData.scheduleMatchup.schedule.find(g => !g.completed && !g.isByeWeek) ||
       appData.scheduleMatchup.schedule[appData.scheduleMatchup.schedule.length - 1];
 
     if (nextGame) {
@@ -2341,9 +2432,11 @@ export async function hydrateLiveEspnOverlay(appData) {
     try {
       const simIn = appData.seasonal.playoffPicture.simulatorInputs;
       let prunedRemainingCount = 0;
-      // Ensure newly completed SF schedule games are moved out of remainingGames so SF never exceeds 17 games
+      // Ensure newly completed SF regular-season schedule games are moved out of remainingGames so SF never exceeds 17 games
       const completedSfWeeks = new Set(
-        (appData.scheduleMatchup?.schedule || []).filter(g => g.completed).map(g => Number(g.week))
+        (appData.scheduleMatchup?.schedule || [])
+          .filter(g => g.completed && (g.seasonType || 'REG') === 'REG' && Number(g.week) >= 1 && Number(g.week) <= 18)
+          .map(g => Number(g.week))
       );
       if (Array.isArray(simIn.remainingGames) && completedSfWeeks.size > 0) {
         const newlyDone = simIn.remainingGames.filter(
@@ -2355,7 +2448,9 @@ export async function hydrateLiveEspnOverlay(appData) {
             rg => !((rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week)))
           );
           for (const nd of newlyDone) {
-            const schedItem = (appData.scheduleMatchup?.schedule || []).find(s => Number(s.week) === Number(nd.week));
+            const schedItem = (appData.scheduleMatchup?.schedule || []).find(
+              s => (s.seasonType || 'REG') === 'REG' && Number(s.week) === Number(nd.week)
+            );
             if (schedItem && schedItem.sfScore != null && schedItem.oppScore != null) {
               const homeScore = nd.home === 'SF' ? Number(schedItem.sfScore) : Number(schedItem.oppScore);
               const awayScore = nd.home === 'SF' ? Number(schedItem.oppScore) : Number(schedItem.sfScore);

@@ -65,7 +65,8 @@ import {
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
   DEFAULT_NFL_CALENDAR_2026,
-  buildNflCalendarForSeasonYear
+  buildNflCalendarForSeasonYear,
+  normalizeScheduleGameItem
 } from '../src/engine/seasonStateMachine.js';
 import {
   classifyBreakingItem,
@@ -337,7 +338,9 @@ async function main() {
   console.log('[1/6] Fetching ESPN & 49ers.com Roster/Injury Report, Transactions, Schedule, Standings, OverTheCap & Tankathon...');
   const [
     espnRoster,
+    espnPreseasonSchedule,
     espnSchedule,
+    espnPostseasonSchedule,
     espnDepth,
     espnInjuries,
     espnStandings,
@@ -352,7 +355,11 @@ async function main() {
     tankathonHtml
   ] = await Promise.all([
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster'),
-    fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/schedule'),
+    fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/schedule?seasontype=1').catch(() => ({ events: [] })),
+    fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/schedule?seasontype=2').catch(() =>
+      fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/schedule')
+    ),
+    fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/schedule?seasontype=3').catch(() => ({ events: [] })),
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts'),
     fetchJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries'),
     fetchJson('https://site.api.espn.com/apis/v2/sports/football/nfl/standings'),
@@ -2804,22 +2811,42 @@ async function main() {
     return clean;
   }
 
-  const scheduleItems = (espnSchedule.events || []).map(ev => {
-    const wk = Number(ev.week?.number || 0);
+  const NATURAL_GRASS_STADIUMS_RE =
+    /\b(levi's|allegiant|lambeau|soldier|hard rock|raymond james|lincoln financial|acrisure|huntington bank|cleveland browns|arrow|geha|empower|state farm|m&t bank|everbank|nissan|northwest|fedex|melbourne|azteca)\b/i;
+
+  function buildNormalizedScheduleItemFromEspnEvent(ev, stCode = 'REG', fallbackIdx = 0) {
+    const rawWk = Number(ev.week?.number || 0);
     const comp = ev.competitions?.[0] || {};
     const sfComp = (comp.competitors || []).find(c => c.team?.abbreviation === 'SF');
     const oppComp = (comp.competitors || []).find(c => c.team?.abbreviation !== 'SF');
-    const oppAbbr = normalizeTeamAbbr(oppComp?.team?.abbreviation || 'OPP');
+    const oppAbbrRaw = normalizeTeamAbbr(oppComp?.team?.abbreviation || (stCode === 'POST' ? 'TBD' : 'OPP'));
+    const isTbdOpp = stCode === 'POST' && (!oppComp?.team?.abbreviation || oppAbbrRaw === 'TBD');
     const venue = comp.venue || {};
     const country = venue.address?.country || 'USA';
     const city = venue.address?.city || '';
     const stateRegion = venue.address?.state || '';
     const isInternational = country !== 'USA';
-    const nflRow = sfNflGamesByWeek.get(wk) || {};
+    const nflRow = stCode === 'REG' ? sfNflGamesByWeek.get(rawWk) || {} : {};
 
-    const sfRest = sfComp?.homeAway === 'home' ? num(nflRow.home_rest || 7) : num(nflRow.away_rest || 7);
-    const oppRest = sfComp?.homeAway === 'home' ? num(nflRow.away_rest || 7) : num(nflRow.home_rest || 7);
-    const netRest = sfRest - oppRest;
+    let wk = rawWk;
+    let preWk = null;
+    let postRound = null;
+    let weekLabel = `WK ${rawWk}`;
+
+    if (stCode === 'PRE') {
+      const m = String(ev.week?.text || '').match(/(\d+)/);
+      preWk = m ? Number(m[1]) : fallbackIdx + 1;
+      wk = -(4 - Math.min(3, preWk));
+      weekLabel = `PRE ${preWk}`;
+    } else if (stCode === 'POST') {
+      postRound = rawWk === 1 ? 'WC' : rawWk === 2 ? 'DIV' : rawWk === 3 ? 'CON' : 'SB';
+      wk = rawWk === 1 ? 19 : rawWk === 2 ? 20 : rawWk === 3 ? 21 : 22;
+      weekLabel = postRound === 'CON' ? 'NFC CHAMP' : postRound === 'SB' ? 'SUPER BOWL' : postRound;
+    }
+
+    const sfRest = stCode === 'REG' ? (sfComp?.homeAway === 'home' ? num(nflRow.home_rest || 7) : num(nflRow.away_rest || 7)) : 7;
+    const oppRest = stCode === 'REG' ? (sfComp?.homeAway === 'home' ? num(nflRow.away_rest || 7) : num(nflRow.home_rest || 7)) : 7;
+    const netRest = stCode === 'REG' ? sfRest - oppRest : 0;
 
     const completed = Boolean(comp.status?.type?.completed);
     const sfScore = completed ? Number(sfComp?.score?.value ?? sfComp?.score?.displayValue ?? 0) : null;
@@ -2830,51 +2857,83 @@ async function main() {
       ev.links?.[0]?.href ||
       (ev.id ? `https://www.espn.com/nfl/game/_/gameId/${ev.id}` : 'https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers');
 
-    return {
-      id: ev.id || `wk_${wk}`,
-      gameUrl,
-      week: wk,
-      dateIso: ev.date,
-      statusDetail: comp.status?.type?.shortDetail || '',
-      completed,
-      result: completed ? (sfScore > oppScore ? 'W' : sfScore < oppScore ? 'L' : 'T') : null,
-      sfScore,
-      oppScore,
-      homeAway: sfComp?.homeAway || 'home',
-      sfLogoUrl: resolveTeamLogoUrl('SF', sfComp?.team),
-      opponent: {
-        abbr: oppAbbr,
-        name: oppComp?.team?.displayName || oppAbbr,
-        logoUrl: resolveTeamLogoUrl(oppAbbr, oppComp?.team) || teamRecordsMap.get(oppAbbr)?.logoUrl || '',
-        record: teamRecordsMap.get(oppAbbr)?.record || '—',
-        pointDiff: teamRecordsMap.get(oppAbbr)?.pointDiff ?? 0,
-        coach: normalizeCoachName(sfComp?.homeAway === 'home' ? nflRow.away_coach : nflRow.home_coach)
+    const venueName = venue.fullName || nflRow.stadium || "Levi's Stadium";
+    const isGrass =
+      Boolean(venue.grass) ||
+      nflRow.surface === 'grass' ||
+      (venue.grass === undefined && NATURAL_GRASS_STADIUMS_RE.test(venueName));
+
+    return normalizeScheduleGameItem(
+      {
+        id: ev.id || `${stCode.toLowerCase()}_wk_${wk}`,
+        seasonType: stCode,
+        ...(preWk ? { preseasonWeek: preWk } : {}),
+        ...(postRound ? { postseasonRound: postRound } : {}),
+        weekLabel,
+        gameUrl,
+        week: wk,
+        dateIso: ev.date,
+        statusDetail: comp.status?.type?.shortDetail || '',
+        completed,
+        result: completed ? (sfScore > oppScore ? 'W' : sfScore < oppScore ? 'L' : 'T') : null,
+        sfScore,
+        oppScore,
+        homeAway: sfComp?.homeAway || 'home',
+        sfLogoUrl: resolveTeamLogoUrl('SF', sfComp?.team),
+        opponent: {
+          abbr: isTbdOpp ? 'TBD' : oppAbbrRaw,
+          name: oppComp?.team?.displayName || (isTbdOpp ? 'Opponent TBD' : oppAbbrRaw),
+          logoUrl: isTbdOpp
+            ? ''
+            : resolveTeamLogoUrl(oppAbbrRaw, oppComp?.team) || teamRecordsMap.get(oppAbbrRaw)?.logoUrl || '',
+          record: isTbdOpp ? 'Matchup TBD' : teamRecordsMap.get(oppAbbrRaw)?.record || '—',
+          pointDiff: teamRecordsMap.get(oppAbbrRaw)?.pointDiff ?? 0,
+          coach: normalizeCoachName(sfComp?.homeAway === 'home' ? nflRow.away_coach : nflRow.home_coach),
+          ...(isTbdOpp ? { isTbd: true } : {})
+        },
+        venue: {
+          name: venueName,
+          city,
+          state: stateRegion,
+          country,
+          isInternational,
+          internationalNote:
+            country === 'Australia'
+              ? '🌏 International Series — Melbourne, Australia (MCG • 100,000 cap)'
+              : country === 'Mexico'
+                ? '🇲🇽 International Series — Mexico City (7,200 ft High Altitude)'
+                : null,
+          surface: isGrass ? 'Natural Grass' : 'Synthetic Turf'
+        },
+        restAdvantageDays: netRest,
+        spreadLineSf:
+          nflRow.spread_line !== '' && nflRow.spread_line != null
+            ? sfComp?.homeAway === 'home'
+              ? -Number(nflRow.spread_line)
+              : Number(nflRow.spread_line)
+            : null,
+        totalLine: nflRow.total_line ? Number(nflRow.total_line) : null,
+        broadcast: normalizeBroadcastName(comp.broadcasts?.[0]?.media?.shortName || 'NFL')
       },
-      venue: {
-        name: venue.fullName || nflRow.stadium || "Levi's Stadium",
-        city,
-        state: stateRegion,
-        country,
-        isInternational,
-        internationalNote:
-          country === 'Australia'
-            ? '🌏 International Series — Melbourne, Australia (MCG • 100,000 cap)'
-            : country === 'Mexico'
-              ? '🇲🇽 International Series — Mexico City (7,200 ft High Altitude)'
-              : null,
-        surface: venue.grass ? 'Natural Grass' : nflRow.surface === 'grass' ? 'Natural Grass' : 'Synthetic Turf'
-      },
-      restAdvantageDays: netRest,
-      spreadLineSf:
-        nflRow.spread_line !== '' && nflRow.spread_line != null
-          ? sfComp?.homeAway === 'home'
-            ? -Number(nflRow.spread_line)
-            : Number(nflRow.spread_line)
-          : null,
-      totalLine: nflRow.total_line ? Number(nflRow.total_line) : null,
-      broadcast: normalizeBroadcastName(comp.broadcasts?.[0]?.media?.shortName || 'NFL')
-    };
-  });
+      seasonYear
+    );
+  }
+
+  const preseasonScheduleItems = (espnPreseasonSchedule?.events || []).map((ev, idx) =>
+    buildNormalizedScheduleItemFromEspnEvent(ev, 'PRE', idx)
+  );
+  const regSeasonScheduleItems = (espnSchedule.events || []).map((ev, idx) =>
+    buildNormalizedScheduleItemFromEspnEvent(ev, 'REG', idx)
+  );
+  const postseasonScheduleItems = (espnPostseasonSchedule?.events || [])
+    .filter(ev => Number(ev.week?.number || 0) !== 4)
+    .map((ev, idx) => buildNormalizedScheduleItemFromEspnEvent(ev, 'POST', idx));
+
+  const scheduleItems = [
+    ...preseasonScheduleItems,
+    ...regSeasonScheduleItems,
+    ...postseasonScheduleItems
+  ];
 
   // Compute 1st–32nd NFL Team Stat Rankings (Offense, Defense, Special Teams & Margin) + 32-Team Leaderboards
   const regTeams = statsTeam2026.filter(r => r.season_type === 'REG' && r.team);
@@ -3807,7 +3866,7 @@ async function main() {
 
   // 10. Build NFC Standings & Remaining Games for Calibrated 10,000-Run Monte Carlo (`data/seasonal.json`)
   const intlSfWeeks = new Set(
-    scheduleItems.filter(s => s.venue?.isInternational).map(s => Number(s.week))
+    scheduleItems.filter(s => (s.seasonType || 'REG') === 'REG' && s.venue?.isInternational).map(s => Number(s.week))
   );
   let completed2026Games = nflGames2026
     .filter(g => g.home_score !== '' && g.away_score !== '')
@@ -3851,7 +3910,7 @@ async function main() {
 
   // Reconcile newly completed SF & league-wide games from live ESPN schedule + scoreboard so no team simulates 18 games right after Final
   const completedSfByWeek = new Map(
-    scheduleItems.filter(s => s.completed).map(s => [Number(s.week), s])
+    scheduleItems.filter(s => (s.seasonType || 'REG') === 'REG' && s.completed).map(s => [Number(s.week), s])
   );
   const completedScoreboardByKey = new Map();
   for (const ev of espnScoreboard?.events || []) {

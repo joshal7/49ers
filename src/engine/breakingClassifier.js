@@ -135,9 +135,9 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
   let latestCompleted = null;
   let latestKoMs = -Infinity;
   for (const g of schedule) {
-    if (!g || !g.completed) continue;
+    if (!g || !g.completed || g.isByeWeek) continue;
     const wkNum = Number(g.week);
-    if (Number.isFinite(wkNum) && wkNum > 0 && !completedWeeks.includes(wkNum)) {
+    if (String(g.seasonType || 'REG').toUpperCase() !== 'PRE' && Number.isFinite(wkNum) && wkNum > 0 && !completedWeeks.includes(wkNum)) {
       completedWeeks.push(wkNum);
     }
     const koMs = Date.parse(g.dateIso || '');

@@ -15,9 +15,9 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 
-const PORT = 8094;
-const CDP_PORT = 9239;
-const BASE_URL = `http://127.0.0.1:${PORT}/index.html`;
+let PORT = 8094;
+const CDP_PORT = 9300 + (process.pid % 600);
+let BASE_URL = `http://127.0.0.1:${PORT}/index.html`;
 
 let passed = 0;
 let failed = 0;
@@ -174,7 +174,7 @@ function startStaticServer(port) {
               .trim()
               .split(/\s+/)
               .filter(Boolean).length;
-            const segSeconds = Math.max(25, Math.min(130, (spokenWords / 148) * 60));
+            const segSeconds = Math.max(25, Math.min(240, (spokenWords / 145) * 60));
             const b64Audio = buildMockHarmonicPcmBase64(segSeconds, 24000);
             res.writeHead(200, {
               'Content-Type': 'application/json; charset=utf-8',
@@ -318,8 +318,21 @@ With **Brandon Aiyuk** on season-ending IR and **Mike Evans** rehabbing on IR, K
       res.end(buf);
     });
 
-    server.on('error', reject);
-    server.listen(port, '127.0.0.1', () => resolve(server));
+    server.on('error', err => {
+      if (err && err.code === 'EADDRINUSE' && port !== 0) {
+        server.listen(0, '127.0.0.1');
+        return;
+      }
+      reject(err);
+    });
+    server.listen(port, '127.0.0.1', () => {
+      const addr = server.address();
+      if (addr && typeof addr === 'object' && addr.port) {
+        PORT = addr.port;
+        BASE_URL = `http://127.0.0.1:${PORT}/index.html`;
+      }
+      resolve(server);
+    });
   });
 }
 
@@ -1853,6 +1866,10 @@ async function main() {
         const stageLabels = Array.from(banner?.querySelectorAll('.job-stage-label') || []).map(el =>
           el.textContent.trim()
         );
+        const stageBarsCount = banner?.querySelectorAll('[data-stage-bar]')?.length || 0;
+        const stageStatuses = Array.from(banner?.querySelectorAll('[data-stage-status]') || []).map(el =>
+          el.textContent.trim()
+        );
         const spinner = banner?.querySelector('.job-spinner-ring');
         const spinnerRect = spinner?.getBoundingClientRect();
         const waveBars = banner?.querySelectorAll('.job-wave-bars span')?.length || 0;
@@ -1863,6 +1880,8 @@ async function main() {
         return {
           hasBanner: Boolean(banner),
           stageLabels,
+          stageBarsCount,
+          stageStatuses,
           bannerText: banner?.textContent || '',
           spinnerVisible: Boolean(spinnerRect && spinnerRect.width >= 18 && spinnerRect.height >= 18),
           waveBars,
@@ -1884,6 +1903,8 @@ async function main() {
       );
       assert(
         podSetupAndProgress.hasBanner &&
+          podSetupAndProgress.stageBarsCount === 3 &&
+          podSetupAndProgress.stageStatuses.length === 3 &&
           podSetupAndProgress.spinnerVisible &&
           podSetupAndProgress.waveBars === 4 &&
           podSetupAndProgress.hasProgressBar &&
@@ -2129,10 +2150,16 @@ async function main() {
         const stageLabels = Array.from(banner?.querySelectorAll('.job-stage-label') || []).map(el =>
           el.textContent.trim()
         );
+        const stageBarsCount = banner?.querySelectorAll('[data-stage-bar]')?.length || 0;
+        const stageStatuses = Array.from(banner?.querySelectorAll('[data-stage-status]') || []).map(el =>
+          el.textContent.trim()
+        );
         return {
           preHint,
           hasBanner: Boolean(banner),
           stageLabels,
+          stageBarsCount,
+          stageStatuses,
           bannerText: banner?.textContent || '',
           hasSpinner: Boolean(banner?.querySelector('.job-spinner-ring'))
         };
@@ -2142,6 +2169,8 @@ async function main() {
           analysisProgress.hasBanner &&
           analysisProgress.hasSpinner &&
           analysisProgress.stageLabels.length === 3 &&
+          analysisProgress.stageBarsCount === 3 &&
+          analysisProgress.stageStatuses.length === 3 &&
           analysisProgress.bannerText.includes('Est. wait:') &&
           !analysisProgress.bannerText.includes('Gemini 3.8'),
         `Analysis 3-stage wait bar / estimate check failed: ${JSON.stringify(analysisProgress)}`
@@ -2598,9 +2627,37 @@ async function main() {
         const heroPlayerAvatars = heroMatchupCard ? heroMatchupCard.querySelectorAll('.player-avatar').length : -1;
         const oppSec = document.getElementById('opponentHealthSection');
         const oppSecText = oppSec?.textContent || '';
+        const scorecardVals = Array.from(oppSec?.querySelectorAll('[data-opp-health-scorecard] .kpi-val') || []).map(el =>
+          el.textContent.trim()
+        );
+        const oppStarterRowsInTable = Array.from(
+          oppSec?.querySelectorAll('[data-health-table="opp"] tbody tr') || []
+        ).filter(tr => {
+          const subTxt = tr.querySelector('.sticky-player-sub')?.textContent || '';
+          const badgeTxt = tr.querySelector('.badge')?.textContent || '';
+          return /\bStarter\b/.test(subTxt) && !/Full Go|Cleared/i.test(badgeTxt);
+        }).length;
+        const startersClearedNum = parseInt(String(scorecardVals[1] || '0').split('/')[0], 10);
+        const availExplainTrigger = oppSec?.querySelector('[data-jargon="availability_index"]');
+        let availPopoverOpened = false;
+        if (availExplainTrigger) {
+          availExplainTrigger.click();
+          const pop = document.getElementById('jargonPopover');
+          availPopoverOpened = Boolean(pop && !pop.hidden && pop.textContent.includes('Availability Index'));
+          document.querySelector('[data-action="close-jargon-popover"]')?.click();
+        }
+        const clippedScorecardEls = Array.from(
+          oppSec?.querySelectorAll('[data-opp-health-scorecard] .kpi-label, [data-opp-health-scorecard] .kpi-val, [data-opp-health-scorecard] .kpi-sub-note') || []
+        )
+          .filter(el => el.scrollWidth > el.clientWidth + 1)
+          .map(el => `${el.className}: "${el.textContent.trim()}" (${el.scrollWidth}>${el.clientWidth})`);
         const oppHasParity =
           oppSecText.includes('Availability Index') &&
+          oppSecText.includes('What this means') &&
           oppSecText.includes('Starters Cleared') &&
+          availPopoverOpened &&
+          clippedScorecardEls.length === 0 &&
+          startersClearedNum === Math.max(0, 22 - oppStarterRowsInTable) &&
           oppSecText.includes('Practice Participation') &&
           oppSecText.includes('4-Game Return Window Tracker');
 
@@ -3842,12 +3899,93 @@ async function main() {
         prevSummary?.click();
         await sleep(40);
         const collapsesAgain = Boolean(prevDetails && prevDetails.open === false);
+        const preRowCountInPrev = document.querySelectorAll('[data-schedule-previous-list] [data-schedule-season-type="PRE"]').length;
+        const hasUnclinchedTracker = Boolean(document.querySelector('[data-schedule-postseason-tracker="unclinched"]'));
+
+        // Test live DOM transitions across Postseason qualification states (Clinched Unknown Opponent, 1st-Round Bye, and Round-by-Round Advancement)
+        const st = window.__49ersDiagnostics.getState();
+        const origSchedule = JSON.parse(JSON.stringify(st.appData.scheduleMatchup.schedule));
+        const origTeamStatus = JSON.parse(JSON.stringify(st.appData.meta.teamStatus || {}));
+        const origSfOdds = JSON.parse(JSON.stringify(st.appData.seasonal.playoffPicture.baselineSimulation.sfOdds));
+
+        // State A: Clinched NFC West (Seeds #2–#4), Opponent Unknown in Wild Card Round
+        st.appData.meta.teamStatus = { ...origTeamStatus, clinchedDivision: true };
+        st.appData.seasonal.playoffPicture.baselineSimulation.sfOdds = {
+          ...origSfOdds,
+          makePlayoffsPct: 100,
+          winDivisionPct: 100,
+          seed1ByePct: 0
+        };
+        window.__49ersDiagnostics.forceRender();
+        const wcTbdRow = document.querySelector('[data-schedule-upcoming-list] [data-postseason-round="WC"]');
+        const wcTbdStateOk = Boolean(
+          wcTbdRow &&
+            wcTbdRow.textContent.includes('NFC Wild Card Opponent (TBD)') &&
+            wcTbdRow.textContent.includes("Levi's Stadium") &&
+            document.documentElement.scrollWidth <= window.innerWidth + 1
+        );
+
+        // State B: Clinched #1 NFC Seed First-Round Bye -> WC BYE + automatic DIV at Levi's Stadium
+        st.appData.meta.teamStatus = { ...origTeamStatus, clinchedSeed1Bye: true, wildCardRoundCompleted: false };
+        st.appData.seasonal.playoffPicture.baselineSimulation.sfOdds = {
+          ...origSfOdds,
+          makePlayoffsPct: 100,
+          winDivisionPct: 100,
+          seed1ByePct: 100
+        };
+        window.__49ersDiagnostics.forceRender();
+        const byeRow = document.querySelector('[data-schedule-upcoming-list] [data-postseason-round="WC_BYE"]');
+        const divFromByeRow = document.querySelector('[data-schedule-upcoming-list] [data-postseason-round="DIV"]');
+        const byeStateOk = Boolean(
+          byeRow &&
+            byeRow.textContent.includes('First-Round Playoff Bye (#1 NFC Seed)') &&
+            divFromByeRow &&
+            divFromByeRow.textContent.includes('Lowest Remaining NFC Seed (TBD)') &&
+            document.documentElement.scrollWidth <= window.innerWidth + 1
+        );
+
+        // State C: Wild Card Round completes (or 49ers win Divisional) -> Past postseason items move into collapsed Previous Games bar while NFC CHAMP arises in Upcoming
+        st.appData.meta.teamStatus = { ...origTeamStatus, clinchedSeed1Bye: true, wildCardRoundCompleted: true };
+        st.appData.scheduleMatchup.schedule = [
+          ...origSchedule.map(g => ({ ...g, completed: true, result: g.result || 'W', sfScore: g.sfScore ?? 27, oppScore: g.oppScore ?? 17 })),
+          {
+            id: 'e2e_post_div_win',
+            seasonType: 'POST',
+            postseasonRound: 'DIV',
+            week: 20,
+            dateIso: '2027-01-24T21:30:00Z',
+            completed: true,
+            result: 'W',
+            sfScore: 34,
+            oppScore: 20,
+            homeAway: 'home',
+            opponent: { abbr: 'GB', name: 'Green Bay Packers', record: '11-6' },
+            venue: { name: "Levi's Stadium", city: 'Santa Clara', surface: 'Natural Grass' }
+          }
+        ];
+        window.__49ersDiagnostics.forceRender();
+        const divMovedToPrev = Boolean(
+          document.querySelector('[data-schedule-previous-list] [data-postseason-round="DIV"]') &&
+            document.querySelector('[data-schedule-previous-list] [data-postseason-round="WC_BYE"]')
+        );
+        const nfcChampInUpcoming = Boolean(
+          document.querySelector('[data-schedule-upcoming-list] [data-postseason-round="CON"]')
+        );
+        const postAdvanceNoOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1;
+
+        // Restore live state
+        st.appData.scheduleMatchup.schedule = origSchedule;
+        st.appData.meta.teamStatus = origTeamStatus;
+        st.appData.seasonal.playoffPicture.baselineSimulation.sfOdds = origSfOdds;
+        window.__49ersDiagnostics.forceRender();
 
         return {
           homeStaleHit,
           rawStaleHit,
           clusteredStaleHit,
           prevCount: prevRows.length,
+          preRowCountInPrev,
+          hasUnclinchedTracker,
           upcomingCount: upcomingRows.length,
           anyPrevInUpcoming,
           startsCollapsed,
@@ -3855,7 +3993,12 @@ async function main() {
           upcomingVisibleByDefault,
           expandsOnClick,
           prevVisibleWhenExpanded,
-          collapsesAgain
+          collapsesAgain,
+          wcTbdStateOk,
+          byeStateOk,
+          divMovedToPrev,
+          nfcChampInUpcoming,
+          postAdvanceNoOverflow
         };
       });
 
@@ -3869,12 +4012,19 @@ async function main() {
       assert(
         schedAndNewsAudit.startsCollapsed &&
           schedAndNewsAudit.prevHiddenByDefault &&
+          schedAndNewsAudit.preRowCountInPrev === 3 &&
+          schedAndNewsAudit.hasUnclinchedTracker &&
           schedAndNewsAudit.upcomingVisibleByDefault &&
           !schedAndNewsAudit.anyPrevInUpcoming &&
           schedAndNewsAudit.expandsOnClick &&
           schedAndNewsAudit.prevVisibleWhenExpanded &&
-          schedAndNewsAudit.collapsesAgain,
-        `Schedule Previous Games collapsible box audit failed: ${JSON.stringify(schedAndNewsAudit)}`
+          schedAndNewsAudit.collapsesAgain &&
+          schedAndNewsAudit.wcTbdStateOk &&
+          schedAndNewsAudit.byeStateOk &&
+          schedAndNewsAudit.divMovedToPrev &&
+          schedAndNewsAudit.nfcChampInUpcoming &&
+          schedAndNewsAudit.postAdvanceNoOverflow,
+        `Schedule Preseason + Postseason + Collapsible Previous Games audit failed: ${JSON.stringify(schedAndNewsAudit)}`
       );
     });
 
@@ -4134,6 +4284,58 @@ async function main() {
           deepStatsAudit.bosaCareerHeaders.includes('TFL') &&
           !deepStatsAudit.bosaCareerHeaders.some(h => /Pass|Rec|Rush/i.test(h)),
         `Nick Bosa Career Year-by-Year table should be defensive-only: ${JSON.stringify(deepStatsAudit.bosaCareerHeaders)}`
+      );
+    });
+
+    await runStep('360px Opponent 4-card Scorecard zero text clipping, multi-stage bar transitions & feed error self-recovery', async () => {
+      await cdp.setViewport(360, 780, true, 3);
+      const audit360 = await cdp.eval(async () => {
+        document.querySelector('[data-nav-tab="season"]').click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+        const oppSec = document.getElementById('opponentHealthSection');
+        const clippedAt360 = Array.from(
+          oppSec?.querySelectorAll(
+            '[data-opp-health-scorecard] .kpi-label, [data-opp-health-scorecard] .kpi-val, [data-opp-health-scorecard] .kpi-sub-note'
+          ) || []
+        )
+          .filter(el => el.scrollWidth > el.clientWidth + 1)
+          .map(el => `${el.className}: "${el.textContent.trim()}" (${el.scrollWidth}>${el.clientWidth})`);
+
+        // Observe all 3 pipeline steps actually transition 1 -> 2 -> 3 during Deep Analysis in browser
+        document.querySelector('[data-nav-tab="audio"]').click();
+        document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
+        const area = document.getElementById('analysisPromptInput');
+        area.value = 'Keenan Allen slot option routes and cap fit';
+        area.dispatchEvent(new Event('input', { bubbles: true }));
+
+        const seenSteps = new Set();
+        const obs = setInterval(() => {
+          const cur = document.querySelector('[data-job-progress="active"] .job-stage-row.current');
+          if (cur) seenSteps.add(Number(cur.getAttribute('data-pipeline-step')));
+        }, 80);
+        document.querySelector('[data-action="run-deep-analysis"]').click();
+        const t0 = Date.now();
+        while (Date.now() - t0 < 8000) {
+          await new Promise(r => setTimeout(r, 80));
+          if (!document.querySelector('[data-job-progress="active"]') && seenSteps.size > 0) break;
+        }
+        clearInterval(obs);
+
+        // Return to Home cleanly
+        document.querySelector('[data-nav-tab="home"]').click();
+        return {
+          clippedAt360,
+          seenSteps: [...seenSteps].sort((a, b) => a - b)
+        };
+      });
+
+      assert(
+        audit360.clippedAt360.length === 0,
+        `Opponent 4-card scorecard clipped text at 360px: ${JSON.stringify(audit360.clippedAt360)}`
+      );
+      assert(
+        JSON.stringify(audit360.seenSteps) === JSON.stringify([1, 2, 3]),
+        `Expected Deep Analysis progress banner to visibly visit all 3 steps [1,2,3], saw ${JSON.stringify(audit360.seenSteps)}`
       );
     });
 

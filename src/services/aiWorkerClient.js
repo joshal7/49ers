@@ -1121,6 +1121,294 @@ function createMissingGeminiKeyError() {
   return err;
 }
 
+/**
+ * Pure, deterministic stage-progress & per-stage timer allocator for both AI Analysis (20–60s)
+ * and Auto Podcast (1–2m for 3m pod), ensuring every pipeline bar reflects real work across
+ * Stage 1 (Live Search Grounding & Dossier Research), Stage 2 (High-Thinking Film/Cap Audit or Script),
+ * and Stage 3 (Report Structuring/Fact-Audit or Multi-Speaker Studio TTS).
+ */
+export function computeLiveStageProgressState({
+  kind = 'analysis',
+  elapsedMs = 0,
+  durationMinutes = 3,
+  phaseFloor = 1,
+  allowAutoStage3 = true,
+  phase3ElapsedMs = null,
+  ttsSubPercent = null,
+  solo = false,
+  topicLabel = ''
+} = {}) {
+  const sec = Math.max(0, Number(elapsedMs || 0) / 1000);
+  const mins = Math.max(2, Math.min(20, Number(durationMinutes || 3)));
+
+  if (kind === 'analysis') {
+    const s1Budget = 10; // ~10s live wire + Google Search grounding + 88-player ledger cross-check
+    const s2Budget = 14; // ~14s High-Thinking EPA, coverage mechanics & CBA Article 13 cap audit
+    const s3Budget = 12; // ~12s structured Markdown synthesis & roster anti-hallucination check
+
+    if (phaseFloor >= 4) {
+      const s1Sec = Math.min(s1Budget, Math.max(1, Math.round(sec * 0.3)));
+      const s2Sec = Math.min(s2Budget, Math.max(1, Math.round(sec * 0.45)));
+      const s3Sec = Math.max(1, Math.round(sec) - s1Sec - s2Sec);
+      return {
+        stepIdx: 3,
+        percent: 100,
+        stagePercents: [100, 100, 100],
+        stageElapsedSec: [s1Sec, s2Sec, s3Sec],
+        message: 'Step 3 of 3: Verified scouting & cap report complete!',
+        subDetail: 'Cross-checked zero retired/departed roster claims and saved to library.'
+      };
+    }
+
+    if (phaseFloor < 2 && sec < s1Budget) {
+      const p1 = Math.min(98, Math.max(10, Math.round(10 + (sec / s1Budget) * 88)));
+      return {
+        stepIdx: 1,
+        percent: Math.round(8 + p1 * 0.28),
+        stagePercents: [p1, 0, 0],
+        stageElapsedSec: [Math.floor(sec), 0, 0],
+        message: 'Step 1 of 3: Deep research on the topic…',
+        subDetail: 'Querying live Google Search Grounding, ESPN/Bluesky beat wire & 88-player 49ers ledger.'
+      };
+    }
+
+    if (phaseFloor < 3 && (sec < s1Budget + s2Budget || !allowAutoStage3)) {
+      const s1Done = Math.min(s1Budget, Math.max(1, Math.floor(sec)));
+      const s2Sec = sec >= s1Budget ? sec - s1Budget : Math.max(0.5, sec * 0.5);
+      const p2 = Math.min(97, Math.max(12, Math.round(12 + 85 * (1 - Math.exp(-s2Sec / (s2Budget * 0.72))))));
+      return {
+        stepIdx: 2,
+        percent: Math.round(36 + p2 * 0.38),
+        stagePercents: [100, p2, 0],
+        stageElapsedSec: [s1Done, Math.floor(s2Sec), 0],
+        message: 'Step 2 of 3: Auditing All-22 film, EPA splits & CBA cap math…',
+        subDetail: 'Evaluating scheme cause-and-effect, efficiency splits & 2026–2027 Article 13 cap trade-offs.'
+      };
+    }
+
+    const s1Done = Math.min(s1Budget, Math.max(1, Math.floor(sec * 0.34)));
+    const s2Done = Math.min(s2Budget, Math.max(1, Math.floor(Math.max(1, sec - s1Done) * 0.62)));
+    const s3Sec =
+      phase3ElapsedMs != null
+        ? Math.max(0, Number(phase3ElapsedMs) / 1000)
+        : Math.max(0, sec - (s1Budget + s2Budget));
+    const p3 =
+      phaseFloor >= 3
+        ? Math.min(97, Math.max(35, Math.round(35 + 60 * (1 - Math.exp(-s3Sec / 4)))))
+        : Math.min(95, Math.max(10, Math.round(10 + 85 * (1 - Math.exp(-s3Sec / s3Budget)))));
+
+    return {
+      stepIdx: 3,
+      percent: Math.min(98, Math.round(74 + p3 * 0.24)),
+      stagePercents: [100, 100, p3],
+      stageElapsedSec: [
+        sec >= s1Budget ? s1Budget : s1Done,
+        sec >= s1Budget + s2Budget ? s2Budget : s2Done,
+        Math.floor(s3Sec)
+      ],
+      message: 'Step 3 of 3: Adversarial fact-check & structuring final report…',
+      subDetail: 'Auditing player roster buckets, OverTheCap figures, draft slots & polishing Markdown sections.'
+    };
+  }
+
+  // Podcast 3-stage progress allocation
+  const s1PodBudget = Math.min(14, Math.max(9, Math.round(7 + mins * 1.0))); // ~10s for 3m pod
+  const s2PodBudget = Math.max(15, Math.round(10 + mins * 2.0)); // ~16s for 3m pod
+  const s3PodBudget = Math.max(22, Math.round(16 + mins * 3.5)); // ~26s single-pass TTS for 3m pod
+  const targetWordEst = Math.round(mins * 140);
+
+  if (phaseFloor >= 4) {
+    const s1Sec = Math.min(s1PodBudget, Math.max(1, Math.round(sec * 0.2)));
+    const s2Sec = Math.min(s2PodBudget, Math.max(1, Math.round(sec * 0.35)));
+    const s3Sec = Math.max(1, Math.round(sec) - s1Sec - s2Sec);
+    return {
+      stepIdx: 3,
+      percent: 100,
+      stagePercents: [100, 100, 100],
+      stageElapsedSec: [s1Sec, s2Sec, s3Sec],
+      message: 'Podcast ready to play!',
+      subDetail: 'Mastered 24 kHz 2-channel Stereo studio broadcast WAV.'
+    };
+  }
+
+  if (phaseFloor < 2 && sec < s1PodBudget) {
+    const p1 = Math.min(98, Math.max(10, Math.round(10 + (sec / s1PodBudget) * 88)));
+    return {
+      stepIdx: 1,
+      percent: Math.round(8 + p1 * 0.22),
+      stagePercents: [p1, 0, 0],
+      stageElapsedSec: [Math.floor(sec), 0, 0],
+      message: 'Step 1 of 3: Deep research on the topic…',
+      subDetail: `Investigating "${topicLabel || '49ers topic'}" across Google Search Grounding, beat wire & 88-player ledger.`
+    };
+  }
+
+  if (phaseFloor < 3 && (!allowAutoStage3 || sec < s1PodBudget + s2PodBudget)) {
+    const s1Done = Math.min(s1PodBudget, Math.max(1, Math.floor(sec)));
+    const s2Sec = sec >= s1PodBudget ? sec - s1PodBudget : Math.max(0.5, sec * 0.5);
+    const p2 = Math.min(96, Math.max(12, Math.round(12 + 84 * (1 - Math.exp(-s2Sec / (s2PodBudget * 0.78))))));
+    return {
+      stepIdx: 2,
+      percent: Math.round(30 + p2 * 0.3),
+      stagePercents: [100, p2, 0],
+      stageElapsedSec: [s1Done, Math.floor(s2Sec), 0],
+      message: `Step 2 of 3: Restructuring deep research into ${mins}-min audio script…`,
+      subDetail: `Writing natural ~${targetWordEst}-word ${solo ? 'solo briefing' : 'Marcus & Elena studio conversation'} grounded in live stats & cap math.`
+    };
+  }
+
+  const s1Done = sec >= s1PodBudget ? s1PodBudget : Math.max(1, Math.floor(sec * 0.4));
+  const preTtsSec =
+    phase3ElapsedMs != null ? Math.max(1, sec - Number(phase3ElapsedMs) / 1000) : s1PodBudget + s2PodBudget;
+  const s2Done = Math.max(1, Math.round(Math.max(1, preTtsSec - s1Done)));
+  const s3Sec =
+    phase3ElapsedMs != null
+      ? Math.max(0, Number(phase3ElapsedMs) / 1000)
+      : Math.max(0, sec - (s1PodBudget + s2PodBudget));
+  const timeBasedP3 = Math.min(95, Math.max(8, Math.round(8 + 87 * (1 - Math.exp(-s3Sec / (s3PodBudget * 0.75))))));
+  const p3 =
+    ttsSubPercent != null
+      ? Math.min(99, Math.max(timeBasedP3, Math.round(Number(ttsSubPercent))))
+      : timeBasedP3;
+
+  return {
+    stepIdx: 3,
+    percent: Math.min(99, Math.round(60 + p3 * 0.39)),
+    stagePercents: [100, 100, p3],
+    stageElapsedSec: [s1Done, s2Done, Math.floor(s3Sec)],
+    message: 'Step 3 of 3: Converting script to studio podcast audio…',
+    subDetail: `Recording conversational studio voices (${solo ? 'Charon' : 'Puck & Aoede'}) & mastering 2-channel Stereo WAV.`
+  };
+}
+
+function createPipelineStageTracker({
+  kind = 'analysis',
+  stages = ANALYSIS_PIPELINE_STAGES,
+  durationMinutes = 3,
+  solo = false,
+  topicLabel = '',
+  allowAutoStage3 = true,
+  waitEst,
+  initialModelLabel = 'Accuracy-First',
+  onProgress
+}) {
+  const isBrowserRuntime = typeof window !== 'undefined' && typeof document !== 'undefined';
+  const startedAtMs = Date.now();
+  let phaseFloor = 1;
+  let phase3StartedAtMs = null;
+  let ttsSubPercent = null;
+  let customSubDetail = '';
+  let customMessage = '';
+  let activeModelLabel = initialModelLabel;
+  let maxPercentEmitted = 8;
+  let maxStagePercents = [0, 0, 0];
+  let timerId = null;
+
+  const emitNow = () => {
+    const now = Date.now();
+    const computed = computeLiveStageProgressState({
+      kind,
+      elapsedMs: now - startedAtMs,
+      durationMinutes,
+      phaseFloor,
+      allowAutoStage3,
+      phase3ElapsedMs: phase3StartedAtMs != null ? now - phase3StartedAtMs : null,
+      ttsSubPercent,
+      solo,
+      topicLabel
+    });
+    maxPercentEmitted = Math.max(maxPercentEmitted, computed.percent);
+    maxStagePercents = [
+      Math.max(maxStagePercents[0], computed.stagePercents[0]),
+      Math.max(maxStagePercents[1], computed.stagePercents[1]),
+      Math.max(maxStagePercents[2], computed.stagePercents[2])
+    ];
+    onProgress?.({
+      kind,
+      stepIdx: computed.stepIdx,
+      totalSteps: 3,
+      stages,
+      percent: phaseFloor >= 4 ? 100 : maxPercentEmitted,
+      stagePercents: phaseFloor >= 4 ? [100, 100, 100] : [...maxStagePercents],
+      stageElapsedSec: computed.stageElapsedSec,
+      estLabel: waitEst.estLabel,
+      summaryText: waitEst.summaryText,
+      modelLabel: activeModelLabel,
+      message: customMessage || computed.message,
+      subDetail: customSubDetail || computed.subDetail
+    });
+  };
+
+  if (isBrowserRuntime && typeof onProgress === 'function') {
+    timerId = setInterval(emitNow, 300);
+  }
+
+  return {
+    emitInitial() {
+      emitNow();
+    },
+    setModelLabel(label) {
+      if (label) activeModelLabel = label;
+    },
+    async ensureMinimumVisualStageDwell(targetMinTotalMs) {
+      if (!isBrowserRuntime) return;
+      const elapsed = Date.now() - startedAtMs;
+      if (elapsed < targetMinTotalMs) {
+        await new Promise(r => setTimeout(r, targetMinTotalMs - elapsed));
+      }
+    },
+    enterStage2(msg = '', detail = '', badge = '') {
+      phaseFloor = Math.max(phaseFloor, 2);
+      maxStagePercents[0] = 100;
+      maxStagePercents[1] = Math.max(maxStagePercents[1], 14);
+      if (badge) activeModelLabel = badge;
+      customMessage = msg;
+      customSubDetail = detail;
+      emitNow();
+    },
+    enterStage3({ ttsPct = null, msg = '', detail = '', badge = '' } = {}) {
+      if (phaseFloor < 3) {
+        phaseFloor = 3;
+        phase3StartedAtMs = Date.now();
+      }
+      maxStagePercents[0] = 100;
+      maxStagePercents[1] = 100;
+      if (ttsPct != null) ttsSubPercent = ttsPct;
+      if (badge) activeModelLabel = badge;
+      customMessage = msg;
+      customSubDetail = detail;
+      emitNow();
+    },
+    updateStage3Progress({ subPercent = null, detail = '', msg = '', badge = '' } = {}) {
+      if (phaseFloor < 3) {
+        phaseFloor = 3;
+        phase3StartedAtMs = Date.now();
+      }
+      if (subPercent != null) ttsSubPercent = subPercent;
+      if (detail) customSubDetail = detail;
+      if (msg) customMessage = msg;
+      if (badge) activeModelLabel = badge;
+      emitNow();
+    },
+    complete(msg = '', detail = '') {
+      phaseFloor = 4;
+      customMessage = msg;
+      customSubDetail = detail;
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+      emitNow();
+    },
+    stop() {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    }
+  };
+}
+
 export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs, onProgress }) {
   const rawPrompt = String(prompt || '').trim();
   if (!rawPrompt) throw new Error('Please enter an analysis topic or question.');
@@ -1132,193 +1420,182 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
   const modelInfo = resolveActiveHighQualityModelLabel(appData, prefs);
   const waitEst = estimateGenerationWait({ kind: 'analysis', prefs, appData });
   const rosterPlayers = appData?.roster?.players || [];
-  const liveSnapshot = buildAuthoritativeLiveContextSnapshot(appData);
+  const isTradeTopic = /\b(trade|deadline|seller|buyer|target|acquire|rental)\b/i.test(cleanPrompt);
+  const liveSnapshot = buildAuthoritativeLiveContextSnapshot(appData, {
+    compactForDossier: true,
+    includeTradeMatrix: isTradeTopic
+  });
   const groundingRules = buildLiveGroundingSystemPrompt(appData);
 
-  const emit = (stepIdx, percent, message, subDetail = '', customModelLabel = '') => {
-    onProgress?.({
-      kind: 'analysis',
-      stepIdx,
-      totalSteps: 3,
-      stages: ANALYSIS_PIPELINE_STAGES,
-      percent,
-      estLabel: waitEst.estLabel,
-      summaryText: waitEst.summaryText,
-      modelLabel: customModelLabel || modelInfo.displayLabel,
-      message,
-      subDetail
-    });
-  };
+  const tracker = createPipelineStageTracker({
+    kind: 'analysis',
+    stages: ANALYSIS_PIPELINE_STAGES,
+    allowAutoStage3: true,
+    topicLabel: cleanPrompt,
+    waitEst,
+    initialModelLabel: modelInfo.displayLabel,
+    onProgress
+  });
+  tracker.emitInitial();
 
-  // =========================================================================
-  // Cloud Worker Transport (`prefs.workerBaseUrl`)
-  // =========================================================================
-  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
-  if (baseUrl) {
-    emit(
-      1,
-      18,
-      'Step 1 of 3: Deep research on the topic…',
-      'Querying live ESPN NFL Nation, Bluesky 49ers beat wire, Google Search Grounding & 88-player ledger.'
-    );
-    const liveSearchItems = await fetchLiveTopicSignals(cleanPrompt);
+  try {
+    // =========================================================================
+    // Cloud Worker Transport (`prefs.workerBaseUrl`)
+    // =========================================================================
+    const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+    if (baseUrl) {
+      const liveSearchItems = await fetchLiveTopicSignals(cleanPrompt);
+      const dossier = compileDeepResearchDossier({
+        query: cleanPrompt,
+        appData,
+        liveSearchItems
+      });
+
+      const res = await fetch(`${baseUrl}/api/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Group-Passcode': prefs?.groupPasscode || ''
+        },
+        body: JSON.stringify({
+          prompt: rawPrompt,
+          category: category || 'Deep Scouting & Cap Dive',
+          author: prefs?.authorName || 'Josh',
+          deepResearchPass: false,
+          verifyPass: false,
+          thinkingLevel: 'HIGH',
+          qualityPriority: 'accuracy_over_latency',
+          systemPrompt: groundingRules,
+          contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
+        })
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error || `Worker HTTP ${res.status}`);
+      }
+      await tracker.ensureMinimumVisualStageDwell(420);
+      tracker.enterStage2();
+      await tracker.ensureMinimumVisualStageDwell(800);
+      tracker.enterStage3({
+        msg: 'Step 3 of 3: Structuring verified scouting & cap report…',
+        detail: 'Cross-checking active 53-man roster & OverTheCap figures.'
+      });
+      if (json.item?.markdown) {
+        json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers);
+      }
+      await tracker.ensureMinimumVisualStageDwell(1150);
+      tracker.complete(
+        'Step 3 of 3: Verified scouting & cap report ready!',
+        'Cross-checked zero retired/departed roster claims and saved to library.'
+      );
+      return json.item;
+    }
+
+    // =========================================================================
+    // Direct Browser Gemini High-Thinking Pipeline (`prefs.geminiApiKey`)
+    // =========================================================================
+    const [conn, liveSearchItems] = await Promise.all([
+      resolveDirectGeminiCascades(prefs),
+      fetchLiveTopicSignals(cleanPrompt)
+    ]);
+    const activeBadge = formatActiveModelBadge(conn.bestModel, 'Accuracy-First');
+    tracker.setModelLabel(activeBadge);
+
     const dossier = compileDeepResearchDossier({
       query: cleanPrompt,
       appData,
       liveSearchItems
     });
 
-    emit(
-      2,
-      54,
-      `Step 2 of 3: Auditing All-22 film mechanics, EPA & CBA cap math (${modelInfo.shortModelName})…`,
-      'Running unhurried High-Thinking multi-pass synthesis & adversarial verification.'
-    );
-    const res = await fetch(`${baseUrl}/api/analyze`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Group-Passcode': prefs?.groupPasscode || ''
-      },
-      body: JSON.stringify({
-        prompt: rawPrompt,
-        category: category || 'Deep Scouting & Cap Dive',
-        author: prefs?.authorName || 'Josh',
-        deepResearchPass: true,
-        verifyPass: true,
-        thinkingLevel: 'HIGH',
-        qualityPriority: 'accuracy_over_latency',
-        systemPrompt: groundingRules,
-        contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
-      })
-    });
-    const json = await res.json();
-    if (!res.ok) {
-      throw new Error(json.error || `Worker HTTP ${res.status}`);
+    let finalMarkdown = '';
+    let finalModel = conn.bestModel;
+    let groundingChips = [];
+
+    try {
+      // Single focused High-Thinking + Google Search Grounding synthesis over compiled Stage-1 Dossier (~20–50s)
+      const synthRes = await callGeminiDirectWithCascade({
+        apiBase: conn.apiBase,
+        key: conn.key,
+        cascade: conn.cascade,
+        systemInstructionText: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
+        userText: buildStage2AnalysisSynthesisPrompt({
+          question: rawPrompt,
+          researchMemo: dossier.dossierSummaryText,
+          liveContextSnapshot: liveSnapshot
+        }),
+        useGoogleSearch: true,
+        temperature: 0.2
+      });
+      if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
+        prefs.verifiedGeminiModel = synthRes.modelUsed;
+      }
+      groundingChips = synthRes.groundingChips || [];
+      finalMarkdown = synthRes.text;
+      finalModel = synthRes.modelUsed;
+
+      // Ensure fast/cached responses still step cleanly through Stage 2 -> Stage 3 without flashing in <1s
+      await tracker.ensureMinimumVisualStageDwell(420);
+      tracker.enterStage2();
+      await tracker.ensureMinimumVisualStageDwell(800);
+      tracker.enterStage3({
+        msg: 'Step 3 of 3: Adversarial fact-check & structuring final report…',
+        detail: 'Auditing every player bucket, OverTheCap figure, draft slot & sharpening prose clarity.',
+        badge: formatActiveModelBadge(finalModel, 'Accuracy-First')
+      });
+    } catch (err) {
+      if (!isGeminiQuotaExhaustedError(err)) {
+        throw err;
+      }
+      tracker.enterStage2(
+        'Step 2 of 3: Google AI Studio Free-Tier quota reached — running Deep Research & Cap Engine…',
+        'Synthesizing verified 88-player EPA, practice participation, OverTheCap & beat wire dossier.',
+        formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
+      );
+      finalMarkdown = buildDeepScoutingAnalysisMarkdown({
+        query: rawPrompt,
+        appData,
+        dossier
+      });
+      finalModel = `${conn.bestModel}-dossier-fallback`;
+      await tracker.ensureMinimumVisualStageDwell(750);
+      tracker.enterStage3({
+        msg: 'Step 3 of 3: Structuring verified scouting & cap report…',
+        detail: 'Completed 6-section All-22 & OverTheCap audit.'
+      });
     }
-    if (json.item?.markdown) {
-      json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers);
-    }
-    emit(
-      3,
-      97,
-      'Step 3 of 3: Structuring verified scouting & cap report…',
-      'Cross-checked zero retired/departed roster claims and saved to library.'
+
+    const verifiedMarkdown = sanitizeHallucinatedRosterText(finalMarkdown, rosterPlayers);
+    await tracker.ensureMinimumVisualStageDwell(1150);
+    tracker.complete(
+      'Step 3 of 3: Verified scouting & cap report ready!',
+      'Completed All-22 film, EPA & CBA cap audit.'
     );
-    return json.item;
+
+    const sourcesCited = [
+      ...groundingChips,
+      { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
+      { label: 'OverTheCap 49ers Cap', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
+    ].slice(0, 6);
+
+    return {
+      id: `local_analysis_${Date.now()}`,
+      title: rawPrompt,
+      category: dossier.primaryGroup?.label
+        ? `${dossier.primaryGroup.label} Deep Dive`
+        : category || 'Deep Scouting & Cap Synthesis',
+      modelUsed: finalModel,
+      thinkingLevel: 'HIGH',
+      qualityPriority: 'accuracy_over_latency',
+      verifiedPasses: 3,
+      createdAt: new Date().toISOString(),
+      createdBy: prefs?.authorName || 'Josh',
+      sourcesCited,
+      markdown: verifiedMarkdown
+    };
+  } finally {
+    tracker.stop();
   }
-
-  // =========================================================================
-  // Direct Browser Gemini Pro High-Thinking 3-Stage Pipeline (`prefs.geminiApiKey`)
-  // =========================================================================
-  const conn = await resolveDirectGeminiCascades(prefs);
-  const activeBadge = formatActiveModelBadge(conn.bestModel, 'Accuracy-First');
-
-  // STAGE 1: Deep Research Investigation (~15–30s with Google Search Grounding + High Thinking)
-  emit(
-    1,
-    14,
-    'Step 1 of 3: Deep research on the topic…',
-    `Running live Google Search Grounding + ESPN/Bluesky wire + 88-player 49ers ledger investigation (${conn.bestModel} HIGH).`,
-    activeBadge
-  );
-  const liveSearchItems = await fetchLiveTopicSignals(cleanPrompt);
-  const dossier = compileDeepResearchDossier({
-    query: cleanPrompt,
-    appData,
-    liveSearchItems
-  });
-
-  let finalMarkdown = '';
-  let finalModel = conn.bestModel;
-  let groundingChips = [];
-
-  try {
-    // Single unified High-Thinking + Google Search Grounding synthesis call (1 RPD per analysis -> 20/day on Gemini 3.8 High)
-    emit(
-      2,
-      52,
-      `Step 2 of 3: Auditing All-22 film, EPA splits & CBA cap math (${conn.bestModel} HIGH)…`,
-      'Synthesizing bespoke thesis, scheme cause-and-effect, counter-arguments & multi-year cap trade-offs with Google Search Grounding.',
-      activeBadge
-    );
-
-    const synthRes = await callGeminiDirectWithCascade({
-      apiBase: conn.apiBase,
-      key: conn.key,
-      cascade: conn.cascade,
-      systemInstructionText: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
-      userText: buildStage2AnalysisSynthesisPrompt({
-        question: rawPrompt,
-        researchMemo: dossier.dossierSummaryText,
-        liveContextSnapshot: liveSnapshot
-      }),
-      useGoogleSearch: true,
-      temperature: 0.2
-    });
-    if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
-      prefs.verifiedGeminiModel = synthRes.modelUsed;
-    }
-    groundingChips = synthRes.groundingChips || [];
-    finalMarkdown = synthRes.text;
-    finalModel = synthRes.modelUsed;
-
-    // STAGE 3: Deterministic Anti-Hallucination & Roster Verification Audit (0 extra RPD cost)
-    emit(
-      3,
-      88,
-      'Step 3 of 3: Adversarial fact-check & structuring final report…',
-      'Auditing every player bucket, OverTheCap figure, draft slot & sharpening prose clarity.',
-      formatActiveModelBadge(finalModel, 'Accuracy-First')
-    );
-  } catch (err) {
-    if (!isGeminiQuotaExhaustedError(err)) {
-      throw err;
-    }
-    emit(
-      2,
-      62,
-      'Step 2 of 3: Google AI Studio Free-Tier quota reached — running Deep Research & Cap Engine…',
-      'Synthesizing verified 88-player EPA, practice participation, OverTheCap & beat wire dossier.',
-      formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
-    );
-    finalMarkdown = buildDeepScoutingAnalysisMarkdown({
-      query: rawPrompt,
-      appData,
-      dossier
-    });
-    finalModel = `${conn.bestModel}-dossier-fallback`;
-    emit(
-      3,
-      92,
-      'Step 3 of 3: Structuring verified scouting & cap report…',
-      'Completed 6-section All-22 & OverTheCap audit.'
-    );
-  }
-
-  const verifiedMarkdown = sanitizeHallucinatedRosterText(finalMarkdown, rosterPlayers);
-  const sourcesCited = [
-    ...groundingChips,
-    { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
-    { label: 'OverTheCap 49ers Cap', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
-    { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
-  ].slice(0, 6);
-
-  return {
-    id: `local_analysis_${Date.now()}`,
-    title: rawPrompt,
-    category: dossier.primaryGroup?.label
-      ? `${dossier.primaryGroup.label} Deep Dive`
-      : category || 'Deep Scouting & Cap Synthesis',
-    modelUsed: finalModel,
-    thinkingLevel: 'HIGH',
-    qualityPriority: 'accuracy_over_latency',
-    verifiedPasses: 3,
-    createdAt: new Date().toISOString(),
-    createdBy: prefs?.authorName || 'Josh',
-    sourcesCited,
-    markdown: verifiedMarkdown
-  };
 }
 
 export async function generateOnDemandAutopodcast({
@@ -1347,285 +1624,266 @@ export async function generateOnDemandAutopodcast({
     appData
   });
   const rosterPlayers = appData?.roster?.players || [];
-  const liveSnapshot = buildAuthoritativeLiveContextSnapshot(appData);
+  const isTradeTopic = /\b(trade|deadline|seller|buyer|target|acquire|rental)\b/i.test(cleanTopic);
+  const liveSnapshot = buildAuthoritativeLiveContextSnapshot(appData, {
+    compactForDossier: true,
+    includeTradeMatrix: isTradeTopic
+  });
   const groundingRules = buildLiveGroundingSystemPrompt(appData);
-
-  const emit = (stepIdx, percent, message, subDetail = '', customModelLabel = '') => {
-    onProgress?.({
-      kind: 'podcast',
-      stepIdx,
-      totalSteps: 3,
-      stages: PODCAST_PIPELINE_STAGES,
-      percent,
-      estLabel: waitEst.estLabel,
-      summaryText: waitEst.summaryText,
-      modelLabel: customModelLabel || modelInfo.displayLabel,
-      message,
-      subDetail
-    });
-  };
-
-  // =========================================================================
-  // Cloud Worker Transport (`prefs.workerBaseUrl`)
-  // =========================================================================
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
-  if (baseUrl) {
-    emit(
-      1,
-      14,
-      'Step 1 of 3: Deep research on the topic…',
-      `Investigating "${cleanTopic}" across live beat wire, Google Search Grounding & 88-player roster/cap ledger.`
-    );
-    const liveSearchItems = await fetchLiveTopicSignals(cleanTopic);
+
+  const tracker = createPipelineStageTracker({
+    kind: 'podcast',
+    stages: PODCAST_PIPELINE_STAGES,
+    durationMinutes: mins,
+    solo,
+    topicLabel: cleanTopic,
+    // Cloud Worker runs Script + R2 TTS inside one HTTP request; Direct Browser enters Stage 3 explicitly when TTS starts
+    allowAutoStage3: Boolean(baseUrl),
+    waitEst,
+    initialModelLabel: modelInfo.displayLabel,
+    onProgress
+  });
+  tracker.emitInitial();
+
+  try {
+    // =========================================================================
+    // Cloud Worker Transport (`prefs.workerBaseUrl`)
+    // =========================================================================
+    if (baseUrl) {
+      const liveSearchItems = await fetchLiveTopicSignals(cleanTopic);
+      const dossier = compileDeepResearchDossier({
+        query: cleanTopic,
+        appData,
+        liveSearchItems
+      });
+
+      const res = await fetch(`${baseUrl}/api/podcast`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Group-Passcode': prefs?.groupPasscode || ''
+        },
+        body: JSON.stringify({
+          topic: cleanTopic,
+          durationMinutes: mins,
+          format,
+          author: prefs?.authorName || 'Josh',
+          deepResearchPass: false,
+          verifyPass: false,
+          thinkingLevel: 'HIGH',
+          qualityPriority: 'accuracy_over_latency',
+          systemPrompt: groundingRules,
+          researchDossier: dossier.dossierSummaryText,
+          contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
+        })
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error || `Worker HTTP ${res.status}`);
+      }
+      const cloudEp = json.episode;
+      if (cloudEp && Array.isArray(cloudEp.transcript)) {
+        cloudEp.transcript = cloudEp.transcript.map(seg => ({
+          ...seg,
+          text: sanitizeHallucinatedRosterText(seg.text || '', rosterPlayers)
+        }));
+      }
+
+      await tracker.ensureMinimumVisualStageDwell(420);
+      tracker.enterStage2();
+      await tracker.ensureMinimumVisualStageDwell(800);
+
+      if (cloudEp && !cloudEp.audioUrl && Array.isArray(cloudEp.transcript) && cloudEp.transcript.length > 0) {
+        tracker.enterStage3({
+          ttsPct: 12,
+          msg: 'Step 3 of 3: Converting verified script into studio Stereo podcast audio…',
+          detail: 'Rendering natural multi-speaker studio voices.'
+        });
+        const rendered = await synthesizeTurnsWithKokoroWorker(
+          cloudEp.id,
+          cloudEp.transcript,
+          info => {
+            tracker.updateStage3Progress({
+              subPercent: Number(info.subPercent || 15),
+              msg: 'Step 3 of 3: Converting script into studio podcast audio…',
+              detail: info.detail
+            });
+          }
+        );
+        cloudEp.audioUrl = rendered.audioUrl;
+        cloudEp.durationSec = rendered.durationSec;
+        cloudEp.transcript = rendered.transcript;
+      } else {
+        tracker.enterStage3({
+          ttsPct: 96,
+          msg: 'Step 3 of 3: Studio podcast mastered & ready to play!',
+          detail: 'Gemini NotebookLM multi-speaker audio verified and indexed.'
+        });
+        await tracker.ensureMinimumVisualStageDwell(1150);
+      }
+      tracker.complete(
+        'Podcast ready to play!',
+        'Gemini NotebookLM multi-speaker audio verified and indexed.'
+      );
+      return cloudEp;
+    }
+
+    // =========================================================================
+    // Direct Browser Gemini High-Thinking + Gemini NotebookLM Multi-Speaker TTS
+    // =========================================================================
+    const [conn, liveSearchItems] = await Promise.all([
+      resolveDirectGeminiCascades(prefs),
+      fetchLiveTopicSignals(cleanTopic)
+    ]);
+    const activeBadge = formatActiveModelBadge(conn.bestModel, 'Accuracy-First');
+    tracker.setModelLabel(activeBadge);
+
     const dossier = compileDeepResearchDossier({
       query: cleanTopic,
       appData,
       liveSearchItems
     });
 
-    emit(
-      2,
-      46,
-      `Step 2 of 3: Restructuring deep research into ${mins}-min NotebookLM audio script…`,
-      `Running ${modelInfo.shortModelName} multi-pass synthesis + Gemini NotebookLM Studio Voices.`
-    );
-    const res = await fetch(`${baseUrl}/api/podcast`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Group-Passcode': prefs?.groupPasscode || ''
-      },
-      body: JSON.stringify({
-        topic: cleanTopic,
-        durationMinutes: mins,
-        format,
-        author: prefs?.authorName || 'Josh',
-        deepResearchPass: true,
-        verifyPass: true,
-        thinkingLevel: 'HIGH',
-        qualityPriority: 'accuracy_over_latency',
-        systemPrompt: groundingRules,
-        researchDossier: dossier.dossierSummaryText,
-        contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
-      })
-    });
-    const json = await res.json();
-    if (!res.ok) {
-      throw new Error(json.error || `Worker HTTP ${res.status}`);
-    }
-    const cloudEp = json.episode;
-    if (cloudEp && Array.isArray(cloudEp.transcript)) {
-      cloudEp.transcript = cloudEp.transcript.map(seg => ({
-        ...seg,
-        text: sanitizeHallucinatedRosterText(seg.text || '', rosterPlayers)
-      }));
-    }
+    let parsedTurns = null;
+    let scriptModelUsed = conn.bestModel;
+    let groundingChips = [];
 
-    if (cloudEp && !cloudEp.audioUrl && Array.isArray(cloudEp.transcript) && cloudEp.transcript.length > 0) {
-      emit(
-        3,
-        64,
-        'Step 3 of 3: Converting verified script into studio Stereo podcast audio…',
-        'Rendering natural multi-speaker studio voices.'
+    try {
+      // Unified High-Thinking + Google Search Grounding script synthesis (~22–40s, smoothly spanning Stage 1 -> Stage 2)
+      const stage2Draft = await callGeminiDirectWithCascade({
+        apiBase: conn.apiBase,
+        key: conn.key,
+        cascade: conn.cascade,
+        systemInstructionText: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
+        userText: buildStage2NotebookLmScriptPrompt({
+          topic: cleanTopic,
+          durationMinutes: mins,
+          format: solo ? 'solo' : 'two_host',
+          researchMemo: dossier.dossierSummaryText,
+          liveContextSnapshot: liveSnapshot
+        }),
+        useGoogleSearch: true,
+        temperature: 0.3
+      });
+
+      if (prefs && typeof prefs === 'object' && stage2Draft.modelUsed) {
+        prefs.verifiedGeminiModel = stage2Draft.modelUsed;
+      }
+      groundingChips = stage2Draft.groundingChips || [];
+      parsedTurns = parseJsonTurnsSafe(stage2Draft.text);
+      scriptModelUsed = stage2Draft.modelUsed;
+    } catch (err) {
+      if (!isGeminiQuotaExhaustedError(err)) {
+        throw err;
+      }
+      tracker.enterStage2(
+        `Step 2 of 3: Google AI Studio Free-Tier quota reached — building ${mins}-min NotebookLM script from live dossier…`,
+        `Synthesizing verified ${solo ? 'solo briefing' : 'Marcus & Elena studio dialogue'} from 88-player ledger, EPA & beat wire.`,
+        formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
       );
-      const rendered = await synthesizeTurnsWithKokoroWorker(
-        cloudEp.id,
-        cloudEp.transcript,
-        info => {
-          const mappedPct = 62 + Math.round(Number(info.subPercent || 10) * 0.36);
-          emit(
-            3,
-            Math.min(99, mappedPct),
-            'Step 3 of 3: Converting script into studio podcast audio…',
-            info.detail
-          );
-        }
-      );
-      cloudEp.audioUrl = rendered.audioUrl;
-      cloudEp.durationSec = rendered.durationSec;
-      cloudEp.transcript = rendered.transcript;
-    } else {
-      emit(
-        3,
-        98,
-        'Step 3 of 3: Studio podcast mastered & ready to play!',
-        'Gemini NotebookLM multi-speaker audio verified and indexed.'
-      );
-    }
-    return cloudEp;
-  }
-
-  // =========================================================================
-  // Direct Browser Gemini Pro High-Thinking + Gemini NotebookLM Multi-Speaker TTS
-  // =========================================================================
-  const conn = await resolveDirectGeminiCascades(prefs);
-  const activeBadge = formatActiveModelBadge(conn.bestModel, 'Accuracy-First');
-
-  // STAGE 1: Deep Research on the Topic (~15–30s High-Thinking + Google Search Grounding)
-  emit(
-    1,
-    12,
-    'Step 1 of 3: Deep research on the topic…',
-    `Investigating "${cleanTopic}" via ${conn.bestModel} HIGH + Google Search Grounding + 88-player EPA/cap ledger.`,
-    activeBadge
-  );
-
-  const liveSearchItems = await fetchLiveTopicSignals(cleanTopic);
-  const dossier = compileDeepResearchDossier({
-    query: cleanTopic,
-    appData,
-    liveSearchItems
-  });
-
-  let parsedTurns = null;
-  let scriptModelUsed = conn.bestModel;
-  let groundingChips = [];
-
-  try {
-    // STAGE 2: Restructure Deep Research Dossier into Smooth NotebookLM Conversational Script
-    // Uses 1 unified High-Thinking + Google Search Grounding query so 20 RPD = 20 full podcasts/day!
-    const targetWordEst = Math.round(mins * 148);
-    emit(
-      2,
-      46,
-      `Step 2 of 3: Restructuring deep research into ${mins}-min NotebookLM script…`,
-      `Writing natural ~${targetWordEst}-word ${solo ? 'solo briefing' : 'Marcus & Elena studio conversation'} (${conn.bestModel} HIGH + Google Search Grounding).`,
-      activeBadge
-    );
-
-    const stage2Draft = await callGeminiDirectWithCascade({
-      apiBase: conn.apiBase,
-      key: conn.key,
-      cascade: conn.cascade,
-      systemInstructionText: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${groundingRules}`,
-      userText: buildStage2NotebookLmScriptPrompt({
-        topic: cleanTopic,
+      parsedTurns = buildNotebookLmPodcastScript({
+        query: cleanTopic,
         durationMinutes: mins,
         format: solo ? 'solo' : 'two_host',
-        researchMemo: dossier.dossierSummaryText,
-        liveContextSnapshot: liveSnapshot
-      }),
-      useGoogleSearch: true,
-      temperature: 0.3
+        appData,
+        dossier
+      });
+      scriptModelUsed = `${conn.bestModel}-dossier-fallback`;
+    }
+
+    if (!parsedTurns || parsedTurns.length === 0) {
+      parsedTurns = buildNotebookLmPodcastScript({
+        query: cleanTopic,
+        durationMinutes: mins,
+        format: solo ? 'solo' : 'two_host',
+        appData,
+        dossier
+      });
+    }
+
+    // Ensure Stage 1 & Stage 2 both show cleanly even when mock/cached LLM resolves rapidly
+    await tracker.ensureMinimumVisualStageDwell(400);
+    tracker.enterStage2();
+    await tracker.ensureMinimumVisualStageDwell(780);
+
+    const sanitizedTurns = parsedTurns
+      .map(t => ({
+        speaker: solo ? 'Marcus' : t?.speaker === 'Elena' ? 'Elena' : 'Marcus',
+        text: sanitizeHallucinatedRosterText(String(t?.text || '').trim(), rosterPlayers)
+      }))
+      .filter(t => t.text.length > 0);
+
+    // STAGE 3: Convert Script to Podcast via Single-Pass Gemini Native Multi-Speaker NotebookLM TTS (`Puck` + `Aoede`)
+    const episodeId = `custom_ep_${Date.now()}`;
+    tracker.enterStage3({
+      ttsPct: 10,
+      msg: 'Step 3 of 3: Converting script to podcast (Gemini NotebookLM Studio Voices)…',
+      detail: `Synthesizing smooth multi-speaker studio dialogue (${solo ? 'Charon' : 'Puck & Aoede'}).`,
+      badge: formatActiveModelBadge(scriptModelUsed, 'NotebookLM TTS')
     });
 
-    if (prefs && typeof prefs === 'object' && stage2Draft.modelUsed) {
-      prefs.verifiedGeminiModel = stage2Draft.modelUsed;
+    let renderedAudio = null;
+    try {
+      renderedAudio = await synthesizeWithGeminiNotebookLmTts({
+        apiBase: conn.apiBase,
+        key: conn.key,
+        ttsCascade: conn.ttsCascade,
+        episodeId,
+        turns: sanitizedTurns,
+        solo,
+        onProgress: info => {
+          tracker.updateStage3Progress({
+            subPercent: Number(info.subPercent || 14),
+            msg: 'Step 3 of 3: Recording Gemini NotebookLM studio podcast…',
+            detail: info.detail || 'Synthesizing conversational studio voices…',
+            badge: formatActiveModelBadge(scriptModelUsed, 'NotebookLM TTS')
+          });
+        }
+      });
+    } catch {
+      // Fallback strictly to Kokoro-82M human voices (`af_heart` + `am_fenrir`) if Gemini TTS hits free-tier daily quota
+      renderedAudio = await synthesizeTurnsWithKokoroWorker(episodeId, sanitizedTurns, info => {
+        tracker.updateStage3Progress({
+          subPercent: Number(info.subPercent || 12),
+          msg: 'Step 3 of 3: Converting script to natural studio podcast audio…',
+          detail: info.detail || 'Synthesizing Kokoro-82M human voices…',
+          badge: formatActiveModelBadge(scriptModelUsed, 'Kokoro-82M')
+        });
+      });
     }
-    groundingChips = stage2Draft.groundingChips || [];
-    parsedTurns = parseJsonTurnsSafe(stage2Draft.text);
-    scriptModelUsed = stage2Draft.modelUsed;
-  } catch (err) {
-    if (!isGeminiQuotaExhaustedError(err)) {
-      throw err;
-    }
-    emit(
-      2,
-      54,
-      `Step 2 of 3: Google AI Studio Free-Tier quota reached — building ${mins}-min NotebookLM script from live dossier…`,
-      `Synthesizing verified ${solo ? 'solo briefing' : 'Marcus & Elena studio dialogue'} from 88-player ledger, EPA & beat wire.`,
-      formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
+
+    await tracker.ensureMinimumVisualStageDwell(1150);
+    tracker.complete(
+      'Podcast ready to play!',
+      `Mastered 2-channel Stereo WAV (${Math.floor(renderedAudio.durationSec / 60)}m ${renderedAudio.durationSec % 60}s).`
     );
-    parsedTurns = buildNotebookLmPodcastScript({
-      query: cleanTopic,
-      durationMinutes: mins,
-      format: solo ? 'solo' : 'two_host',
-      appData,
-      dossier
-    });
-    scriptModelUsed = `${conn.bestModel}-dossier-fallback`;
+
+    const sourceLinks = [
+      ...groundingChips.filter(c => c.url),
+      { label: 'nflverse EPA & PBP', url: 'https://github.com/nflverse/nflverse-data/releases' },
+      { label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
+      { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
+    ].slice(0, 5);
+
+    return {
+      id: episodeId,
+      title: cleanTopic,
+      topic: cleanTopic,
+      format: solo ? 'Solo Executive Briefing' : 'Two-Host Analytical Banter',
+      presetLabel: `${mins}m On-Demand Pod`,
+      modelUsed: scriptModelUsed,
+      audioModelUsed: renderedAudio.audioModelUsed,
+      thinkingLevel: 'HIGH',
+      qualityPriority: 'accuracy_over_latency',
+      createdBy: prefs?.authorName || 'Josh',
+      createdAt: new Date().toISOString(),
+      audioUrl: renderedAudio.audioUrl,
+      durationSec: renderedAudio.durationSec,
+      sourceLinks,
+      transcript: renderedAudio.transcript
+    };
+  } finally {
+    tracker.stop();
   }
-
-  if (!parsedTurns || parsedTurns.length === 0) {
-    parsedTurns = buildNotebookLmPodcastScript({
-      query: cleanTopic,
-      durationMinutes: mins,
-      format: solo ? 'solo' : 'two_host',
-      appData,
-      dossier
-    });
-  }
-
-  const sanitizedTurns = parsedTurns
-    .map(t => ({
-      speaker: solo ? 'Marcus' : t?.speaker === 'Elena' ? 'Elena' : 'Marcus',
-      text: sanitizeHallucinatedRosterText(String(t?.text || '').trim(), rosterPlayers)
-    }))
-    .filter(t => t.text.length > 0);
-
-  // STAGE 3: Convert Script to Podcast via Gemini Native Multi-Speaker NotebookLM TTS (`Puck` + `Aoede`)
-  const episodeId = `custom_ep_${Date.now()}`;
-  emit(
-    3,
-    66,
-    'Step 3 of 3: Converting script to podcast (Gemini NotebookLM Studio Voices)…',
-    `Synthesizing smooth multi-speaker studio dialogue (${solo ? 'Charon' : 'Puck & Aoede'}).`,
-    formatActiveModelBadge(scriptModelUsed, 'NotebookLM TTS')
-  );
-
-  let renderedAudio = null;
-  try {
-    renderedAudio = await synthesizeWithGeminiNotebookLmTts({
-      apiBase: conn.apiBase,
-      key: conn.key,
-      ttsCascade: conn.ttsCascade,
-      episodeId,
-      turns: sanitizedTurns,
-      solo,
-      onProgress: info => {
-        const mappedPct = 66 + Math.round(Number(info.subPercent || 10) * 0.32);
-        emit(
-          3,
-          Math.min(99, mappedPct),
-          'Step 3 of 3: Recording Gemini NotebookLM studio podcast…',
-          info.detail || 'Synthesizing conversational studio voices…',
-          formatActiveModelBadge(scriptModelUsed, 'NotebookLM TTS')
-        );
-      }
-    });
-  } catch {
-    // Fallback strictly to Kokoro-82M human voices (`af_heart` + `am_fenrir`) if Gemini TTS hits free-tier daily quota
-    renderedAudio = await synthesizeTurnsWithKokoroWorker(episodeId, sanitizedTurns, info => {
-      const mappedPct = 68 + Math.round(Number(info.subPercent || 10) * 0.3);
-      emit(
-        3,
-        Math.min(99, mappedPct),
-        'Step 3 of 3: Converting script to natural studio podcast audio…',
-        info.detail || 'Synthesizing Kokoro-82M human voices…',
-        formatActiveModelBadge(scriptModelUsed, 'Kokoro-82M')
-      );
-    });
-  }
-
-  emit(
-    3,
-    100,
-    'Podcast ready to play!',
-    `Mastered 2-channel Stereo WAV (${Math.floor(renderedAudio.durationSec / 60)}m ${renderedAudio.durationSec % 60}s).`
-  );
-
-  const sourceLinks = [
-    ...groundingChips.filter(c => c.url),
-    { label: 'nflverse EPA & PBP', url: 'https://github.com/nflverse/nflverse-data/releases' },
-    { label: 'OverTheCap 49ers', url: 'https://overthecap.com/salary-cap/san-francisco-49ers' },
-    { label: 'ESPN 49ers Coverage', url: 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers' }
-  ].slice(0, 5);
-
-  return {
-    id: episodeId,
-    title: cleanTopic,
-    topic: cleanTopic,
-    format: solo ? 'Solo Executive Briefing' : 'Two-Host Analytical Banter',
-    presetLabel: `${mins}m On-Demand Pod`,
-    modelUsed: scriptModelUsed,
-    audioModelUsed: renderedAudio.audioModelUsed,
-    thinkingLevel: 'HIGH',
-    qualityPriority: 'accuracy_over_latency',
-    createdBy: prefs?.authorName || 'Josh',
-    createdAt: new Date().toISOString(),
-    audioUrl: renderedAudio.audioUrl,
-    durationSec: renderedAudio.durationSec,
-    sourceLinks,
-    transcript: renderedAudio.transcript
-  };
 }

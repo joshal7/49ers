@@ -120,7 +120,7 @@ export function evaluateGameDayWindow(scheduleOrGame = [], upcomingMatchupOrNow 
   }
 
   for (const g of candidates) {
-    if (!g || g.completed) continue;
+    if (!g || g.completed || g.isByeWeek || g.opponent?.isTbd) continue;
     const kickoffMs = Date.parse(g.dateIso || g.kickoffIso || '');
     if (!Number.isFinite(kickoffMs)) continue;
 

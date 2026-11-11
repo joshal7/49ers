@@ -421,7 +421,16 @@ export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
 }
 
 export function renderTeamLogoHtml(abbr = 'SF', logoUrl = '', size = 24, extraClass = '') {
-  const cleanAbbr = String(abbr || 'NFL').toUpperCase();
+  const cleanAbbr = String(abbr || 'NFL').toUpperCase().trim();
+  const isPlaceholderAbbr = /^(?:TBD|NFL|OPP|BYE|NFC|AFC)$/.test(cleanAbbr);
+  const hasExplicitHttpLogo = Boolean(logoUrl && /^https:\/\//i.test(String(logoUrl).trim()));
+  if (isPlaceholderAbbr && !hasExplicitHttpLogo) {
+    return `
+      <span class="team-logo-wrap img-error no-logo-img ${extraClass}" style="--logo-size:${Number(size)}px">
+        <span class="team-logo-fallback mono" aria-hidden="true">${esc(cleanAbbr === 'BYE' ? 'SF' : cleanAbbr)}</span>
+      </span>
+    `;
+  }
   const resolved = espnTeamLogoUrl(cleanAbbr, logoUrl);
   return `
     <span class="team-logo-wrap ${extraClass}" style="--logo-size:${Number(size)}px">

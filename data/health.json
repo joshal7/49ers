@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T00:16:18.805Z",
+  "updatedAt": "2026-11-11T04:24:01.491Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -19,8 +19,8 @@
       "fri": "-",
       "injuryType": "Achilles",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 21,
-      "playBadgeLabel": "21% • Long Shot",
+      "playProbabilityPct": 22,
+      "playBadgeLabel": "22% • Long Shot",
       "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue/Achilles sprint clearance.",
       "factors": [
         "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
@@ -41,14 +41,14 @@
       "fri": "-",
       "injuryType": "Hamstring",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 59,
-      "playBadgeLabel": "59% • True GTD",
+      "playProbabilityPct": 56,
+      "playBadgeLabel": "56% • True GTD",
       "archetypeNote": "High-contact YAC style; plays through upper-body pain tags (~86%) with extra caution on lower-body soft tissue.",
       "factors": [
         "Missed 3 consecutive games without practice participation — awaiting Wednesday report",
         "Matches player's documented chronic history (Hamstring)",
         "Soft-tissue re-aggravation caution (Hamstring)",
-        "Coaching/beat update (3 corroborated reports): expected back at practice Wednesday (pending Wed–Fri workload)"
+        "Coaching/beat update (2 corroborated reports): expected back at practice Wednesday (pending Wed–Fri workload)"
       ],
       "beatComment": "The 49ers expect WR Deebo Samuel and DT CJ West to be back at practice on Wednesday, coach Kyle Shanahan said."
     },
@@ -110,23 +110,6 @@
       "projectedReturnWeek": "Week 10 Activation Window (Nov 15)",
       "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
       "beatNote": "Hobbs had his practice window opened Wednesday and logged three limited practices before initially being deemed questionable to face the Raiders on Sunday. Since he wasn't activated Saturday, the veteran cornerback will have to wait at least another week to return to action. Hobbs' next chance to do so is Sunday, Nov. 15, against Dallas."
-    },
-    {
-      "playerId": "4686308",
-      "name": "C.J. West",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": true,
-      "placedBeforeWeek": 3,
-      "earliestEligibleWeek": 7,
-      "projectedReturnWeek": "Est. Week 10–11 (Window Expected)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "beatNote": "The 49ers expect WR Deebo Samuel and DT CJ West to be back at practice on Wednesday, coach Kyle Shanahan said. West was placed on injured reserve in late September due to an undisclosed injury but is now nearing his return. Once the practice window is officially opened, San Francisco will have 21 days to activate the 2025 fourth-round pick, or else he'll be forced to stay on injured reserve for the remainder of the campaign."
     },
     {
       "playerId": "3895856",
@@ -195,6 +178,23 @@
       "projectedReturnWeek": "TBD (21d Window Not Open)",
       "byeWeekNote": "4-game NFL minimum requirement",
       "beatNote": "Pleasants sustained a knee injury during the 49ers' preseason game against the Chargers on Aug. 20. The injury is severe enough for 29-year-old offensive tackle to open the year on IR, meaning he'll be forced to miss at least the first four games of the regular season."
+    },
+    {
+      "playerId": "4686308",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+      "injuryType": "Knee",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "TBD (21d Window Not Open)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "beatNote": "West was placed on injured reserve in late September due to an undisclosed injury but is now nearing his return. Once the practice window is officially opened, San Francisco will have 21 days to activate the 2025 fourth-round pick, or else he'll be forced to stay on injured reserve for the remainder of the campaign."
     },
     {
       "playerId": "4372561",

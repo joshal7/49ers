@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T00:16:18.805Z",
+  "updatedAt": "2026-11-11T04:24:01.491Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -19,6 +19,120 @@
     }
   ],
   "schedule": [
+    {
+      "id": "401874392",
+      "seasonType": "PRE",
+      "preseasonWeek": 1,
+      "week": -3,
+      "weekLabel": "PRE 1",
+      "roundBadgeLabel": "Preseason",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401874392/titans-49ers",
+      "dateIso": "2026-08-14T01:00Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "L",
+      "sfScore": 13,
+      "oppScore": 19,
+      "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "opponent": {
+        "abbr": "TEN",
+        "name": "Tennessee Titans",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+        "record": "1-7",
+        "pointDiff": 0,
+        "coach": ""
+      },
+      "venue": {
+        "name": "Levi's Stadium",
+        "city": "Santa Clara",
+        "state": "CA",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "NFL Net"
+    },
+    {
+      "id": "401873285",
+      "seasonType": "PRE",
+      "preseasonWeek": 2,
+      "week": -2,
+      "weekLabel": "PRE 2",
+      "roundBadgeLabel": "Preseason",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873285/49ers-chargers",
+      "dateIso": "2026-08-21T02:00Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 41,
+      "oppScore": 17,
+      "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "opponent": {
+        "abbr": "LAC",
+        "name": "Los Angeles Chargers",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+        "record": "0-8",
+        "pointDiff": -98,
+        "coach": "Jim Harbaugh"
+      },
+      "venue": {
+        "name": "SoFi Stadium",
+        "city": "Inglewood",
+        "state": "CA",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Synthetic Turf"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "NFL Net"
+    },
+    {
+      "id": "401873641",
+      "seasonType": "PRE",
+      "preseasonWeek": 3,
+      "week": -1,
+      "weekLabel": "PRE 3",
+      "roundBadgeLabel": "Preseason",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873641/49ers-raiders",
+      "dateIso": "2026-08-28T00:00Z",
+      "statusDetail": "Final",
+      "completed": true,
+      "result": "W",
+      "sfScore": 18,
+      "oppScore": 12,
+      "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "opponent": {
+        "abbr": "LV",
+        "name": "Las Vegas Raiders",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
+        "record": "4-5",
+        "pointDiff": -30,
+        "coach": "Klint Kubiak"
+      },
+      "venue": {
+        "name": "Allegiant Stadium",
+        "city": "Las Vegas",
+        "state": "NV",
+        "country": "USA",
+        "isInternational": false,
+        "internationalNote": null,
+        "surface": "Natural Grass"
+      },
+      "restAdvantageDays": 0,
+      "spreadLineSf": null,
+      "totalLine": null,
+      "broadcast": "ESPN Unlmtd"
+    },
     {
       "id": "401872657",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872657/49ers-rams",
@@ -51,7 +165,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": 3.5,
       "totalLine": 47.5,
-      "broadcast": "Netflix"
+      "broadcast": "Netflix",
+      "seasonType": "REG",
+      "weekLabel": "WK 1"
     },
     {
       "id": "401872942",
@@ -85,7 +201,9 @@
       "restAdvantageDays": 3,
       "spreadLineSf": -12.5,
       "totalLine": 44.5,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 2"
     },
     {
       "id": "401872958",
@@ -119,7 +237,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -7.5,
       "totalLine": 48.5,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 3"
     },
     {
       "id": "401872975",
@@ -153,7 +273,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -3,
       "totalLine": 48.5,
-      "broadcast": "CBS"
+      "broadcast": "CBS",
+      "seasonType": "REG",
+      "weekLabel": "WK 4"
     },
     {
       "id": "401872992",
@@ -187,7 +309,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": 3,
       "totalLine": 46.5,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 5"
     },
     {
       "id": "401873008",
@@ -221,7 +345,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -7.5,
       "totalLine": 51.5,
-      "broadcast": "ESPN"
+      "broadcast": "ESPN",
+      "seasonType": "REG",
+      "weekLabel": "WK 6"
     },
     {
       "id": "401873017",
@@ -255,7 +381,9 @@
       "restAdvantageDays": -1,
       "spreadLineSf": -2.5,
       "totalLine": 49.5,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 7"
     },
     {
       "id": "401873047",
@@ -289,7 +417,9 @@
       "restAdvantageDays": 7,
       "spreadLineSf": -8.5,
       "totalLine": 51.5,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 9"
     },
     {
       "id": "401873063",
@@ -321,9 +451,11 @@
         "surface": "Synthetic Turf"
       },
       "restAdvantageDays": 0,
-      "spreadLineSf": -4.5,
+      "spreadLineSf": -3.5,
       "totalLine": 55.5,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 10"
     },
     {
       "id": "401873077",
@@ -357,7 +489,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -3.5,
       "totalLine": 45.5,
-      "broadcast": "NBC"
+      "broadcast": "NBC",
+      "seasonType": "REG",
+      "weekLabel": "WK 11"
     },
     {
       "id": "401873091",
@@ -391,7 +525,9 @@
       "restAdvantageDays": -7,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 12"
     },
     {
       "id": "401873095",
@@ -425,7 +561,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 13"
     },
     {
       "id": "401873120",
@@ -459,7 +597,9 @@
       "restAdvantageDays": -3,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "FOX"
+      "broadcast": "FOX",
+      "seasonType": "REG",
+      "weekLabel": "WK 14"
     },
     {
       "id": "401873124",
@@ -493,7 +633,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "Prime Video"
+      "broadcast": "Prime Video",
+      "seasonType": "REG",
+      "weekLabel": "WK 15"
     },
     {
       "id": "401873153",
@@ -527,7 +669,9 @@
       "restAdvantageDays": 4,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "CBS"
+      "broadcast": "CBS",
+      "seasonType": "REG",
+      "weekLabel": "WK 16"
     },
     {
       "id": "401873170",
@@ -561,7 +705,9 @@
       "restAdvantageDays": -3,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "NBC"
+      "broadcast": "NBC",
+      "seasonType": "REG",
+      "weekLabel": "WK 17"
     },
     {
       "id": "401873184",
@@ -595,7 +741,9 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "NFL"
+      "broadcast": "NFL",
+      "seasonType": "REG",
+      "weekLabel": "WK 18"
     }
   ],
   "teamStats": {
@@ -24257,13 +24405,21 @@
       "teamInjuriesUrl": "https://www.espn.com/nfl/team/injuries/_/name/dal",
       "byeWeek": 14,
       "summary": {
-        "overallAvailabilityScore": 72,
-        "activeStartersHealthy": 22,
+        "overallAvailabilityScore": 78,
+        "activeStartersHealthy": 16,
         "totalStarters": 22,
+        "startersOutCount": 0,
+        "startersDoubtfulCount": 3,
+        "startersQuestionableCount": 3,
+        "startersUnresolvedCount": 6,
         "ruledOutCount": 0,
+        "doubtfulOrLongShotCount": 4,
+        "gtdCount": 6,
         "questionableOrDoubtfulCount": 10,
         "clearedCount": 0,
-        "irCount": 7
+        "irCount": 7,
+        "irOpenWindowCount": 2,
+        "irSeasonEndingCount": 3
       },
       "activeRoster": [
         {
@@ -24432,7 +24588,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4383396.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4383396/hunter-luepke",
           "snapPct": 62,
-          "isStarter": true
+          "isStarter": false
         },
         {
           "id": "4426485",
@@ -24552,7 +24708,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3676833.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
           "snapPct": 27,
-          "isStarter": true
+          "isStarter": false
         },
         {
           "id": "4361579",
@@ -24792,7 +24948,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367210.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4367210/otito-ogbonnia",
           "snapPct": 44,
-          "isStarter": true
+          "isStarter": false
         },
         {
           "id": "4362088",
@@ -24867,18 +25023,6 @@
           "isStarter": false
         },
         {
-          "id": "4428584",
-          "name": "Reddy Steward",
-          "position": "CB",
-          "unit": "Defense",
-          "rosterBucket": "active",
-          "jersey": 27,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428584.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4428584/reddy-steward",
-          "snapPct": 59,
-          "isStarter": false
-        },
-        {
           "id": "4360590",
           "name": "Juanyeh Thomas",
           "position": "S",
@@ -24936,7 +25080,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14950.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/14950/bryan-anger",
           "snapPct": 28,
-          "isStarter": true
+          "isStarter": false
         },
         {
           "id": "3953687",
@@ -24948,7 +25092,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3953687.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3953687/brandon-aubrey",
           "snapPct": 40,
-          "isStarter": true
+          "isStarter": false
         },
         {
           "id": "3052357",
@@ -24960,7 +25104,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052357.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3052357/trent-sieg",
           "snapPct": 28,
-          "isStarter": true
+          "isStarter": false
         }
       ],
       "injuryReport": [
@@ -25208,7 +25352,7 @@
           "gameStatus": "Questionable",
           "shortComment": "questionable",
           "longComment": "questionable",
-          "isStarter": true,
+          "isStarter": false,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 80,
           "playTier": "FIFTY_FIFTY",
@@ -25528,11 +25672,11 @@
     },
     "betting": {
       "favorite": "San Francisco 49ers",
-      "spread": "SF -4.5",
+      "spread": "SF -3.5",
       "openingSpread": "Opened SF +1.5 (Draft Kings)",
       "overUnder": 55.5,
       "moneyline": "SF -205 | DAL +170",
-      "impliedScore": "SF 30.0 – DAL 25.5",
+      "impliedScore": "SF 29.5 – DAL 26.0",
       "restAdvantage": "Even Rest (Standard Prep Week)"
     },
     "franchiseHistory": {

@@ -29,7 +29,10 @@ import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
-import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
+import {
+  partitionCompletedTradesByWindow,
+  resolveCompleteScheduleModel
+} from '../engine/seasonStateMachine.js';
 import {
   buildPfrTeamDraftUrl,
   buildPfrTeamSeasonUrl,
@@ -268,7 +271,7 @@ export function renderSeasonMatchupViewHtml({
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (seasonSub === 'playoffs') return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners);
-  if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded);
+  if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
   if (seasonSub === 'draft_prep') return switcherCard + renderDraftPrepAndCombine(appData, combineSearch);
   return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
 }
@@ -464,40 +467,40 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
   const startersSubNote = (() => {
     const { startersUnresolvedCount, startersOutCount, startersDoubtfulCount, startersQuestionableCount } =
       resolvedOppSummary;
-    if (startersUnresolvedCount === 0) return 'All 22 off injury report';
+    if (startersUnresolvedCount === 0) return 'All 22 full go';
     if (startersOutCount > 0 && startersDoubtfulCount + startersQuestionableCount > 0) {
       return `${startersOutCount} Out · ${startersDoubtfulCount + startersQuestionableCount} Q/Dbt`;
     }
     if (startersOutCount > 0) {
-      return `${startersOutCount} starter${startersOutCount > 1 ? 's' : ''} ruled Out`;
+      return `${startersOutCount} starter${startersOutCount > 1 ? 's' : ''} Out`;
     }
     if (startersDoubtfulCount > 0 && startersQuestionableCount > 0) {
       return `${startersDoubtfulCount} Dbt/Long · ${startersQuestionableCount} GTD`;
     }
     if (startersDoubtfulCount > 0) {
-      return `${startersDoubtfulCount} Doubtful / Long Shot`;
+      return `${startersDoubtfulCount} Dbt / Long Shot`;
     }
     return `${startersQuestionableCount} starter${startersQuestionableCount > 1 ? 's' : ''} GTD`;
   })();
   const qDoubtfulSubNote = (() => {
     const { questionableOrDoubtfulCount, doubtfulOrLongShotCount, gtdCount } = resolvedOppSummary;
-    if (questionableOrDoubtfulCount === 0) return '0 active designations';
+    if (questionableOrDoubtfulCount === 0) return '0 designations';
     if (doubtfulOrLongShotCount > 0 && gtdCount > 0) {
       return `${doubtfulOrLongShotCount} Long Shot · ${gtdCount} GTD`;
     }
-    if (doubtfulOrLongShotCount > 0) return `${doubtfulOrLongShotCount} Doubtful / Long Shot`;
-    return `${gtdCount} Game-Time Decision${gtdCount > 1 ? 's' : ''}`;
+    if (doubtfulOrLongShotCount > 0) return `${doubtfulOrLongShotCount} Dbt / Long Shot`;
+    return `${gtdCount} GTD on report`;
   })();
   const outIrSubNote = (() => {
     const { irCount, irOpenWindowCount, irSeasonEndingCount } = resolvedOppSummary;
     if (irOpenWindowCount > 0) {
-      return `${irOpenWindowCount} in 21-day return window`;
+      return `${irOpenWindowCount} IR window${irOpenWindowCount > 1 ? 's' : ''} open`;
     }
     if (irSeasonEndingCount > 0) {
-      return `${irSeasonEndingCount} season-ending IR`;
+      return `${irSeasonEndingCount} season-ending`;
     }
-    if (irCount > 0) return '4-game minimum reserve';
-    return '0 players on reserve';
+    if (irCount > 0) return '4-gm min reserve';
+    return '0 on reserve';
   })();
 
   const sfIsAway = um.homeAway === 'away';
@@ -615,7 +618,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
           <div class="kpi-sub-note mono">${esc(startersSubNote)}</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Questionable / Doubtful</div>
+          <div class="kpi-label">Q / Doubtful / GTD</div>
           <div class="kpi-val mono" style="color:${resolvedOppSummary.questionableOrDoubtfulCount > 0 ? 'var(--gold-bright)' : 'var(--text-primary)'}">${resolvedOppSummary.questionableOrDoubtfulCount}</div>
           <div class="kpi-sub-note mono">${esc(qDoubtfulSubNote)}</div>
         </div>
@@ -1621,39 +1624,109 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
 }
 
 function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
+  const seasonType = g.seasonType || 'REG';
+  const isPre = seasonType === 'PRE';
+  const isPost = seasonType === 'POST';
+  const isBye = Boolean(g.isByeWeek);
+
   const restBadge =
-    g.restAdvantageDays > 0
+    !isBye && g.restAdvantageDays > 0
       ? `<span class="badge badge-positive mono">+${g.restAdvantageDays}d Rest</span>`
-      : g.restAdvantageDays < 0
+      : !isBye && g.restAdvantageDays < 0
         ? `<span class="badge badge-danger mono">${g.restAdvantageDays}d Rest</span>`
         : '';
   const isLiveInGame =
     !g.completed &&
+    !isBye &&
     (g.statusState === 'in' ||
       /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/i.test(String(g.statusDetail || '')));
   const currentBadge =
-    !g.completed && isCurrentGame
+    !g.completed && isCurrentGame && !isBye
       ? `<span class="badge ${isLiveInGame ? 'badge-danger' : 'badge-gold'} mono">${isLiveInGame ? 'LIVE' : 'Next Up'}</span>`
       : '';
-  const borderColor = g.venue?.isInternational
-    ? 'var(--gold-border)'
-    : isCurrentGame && !g.completed
+  const borderColor =
+    isPost || g.venue?.isInternational || (isCurrentGame && !g.completed)
       ? 'var(--gold-border)'
       : 'var(--border-subtle)';
 
+  const weekTagText =
+    seasonType === 'REG'
+      ? `WK ${g.week}`
+      : g.weekLabel || (isPre ? `PRE ${g.preseasonWeek || Math.abs(g.week)}` : 'POST');
+
+  const phasePillHtml = isPre
+    ? `<span class="badge badge-neutral mono" style="font-size:9.5px;padding:1px 5px">Preseason</span>`
+    : isPost
+      ? `<span class="badge ${isBye ? 'badge-positive' : 'badge-gold'} mono" style="font-size:9.5px;padding:1px 5px">${esc(g.roundBadgeLabel || 'Playoffs')}</span>`
+      : '';
+
+  if (isBye) {
+    return `
+      <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}"
+           data-schedule-season-type="POST"
+           data-schedule-week="${esc(g.week)}"
+           data-postseason-round="${esc(g.postseasonRound || 'WC_BYE')}"
+           data-postseason-state="${esc(g.postseasonState || 'first_round_bye')}"
+           style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${borderColor}">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;min-width:0">
+            ${renderTeamLogoHtml('SF', g.sfLogoUrl, 28)}
+            <div style="min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+              <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
+              ${phasePillHtml}
+              <span>•</span>
+              <strong>${esc(g.opponent?.name || 'First-Round Playoff Bye (#1 NFC Seed)')}</strong>
+            </div>
+          </div>
+          <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+            <span class="badge badge-positive mono">${esc(g.statusDetail || '1st-Round Bye (#1 Seed)')}</span>
+          </div>
+        </div>
+        <div class="inline-icon-meta" style="margin-top:4px">
+          ${iconSvg('stadium', 13)}
+          <span>${esc(g.venue?.name || "Levi's Stadium")} (${esc(g.venue?.city || 'Santa Clara')}) • Homefield Advantage Clinched</span>
+        </div>
+        ${
+          g.qualificationNote
+            ? `<div style="margin-top:4px;font-size:11.5px;color:var(--emerald);font-weight:600">${esc(g.qualificationNote)}</div>`
+            : ''
+        }
+      </div>
+    `;
+  }
+
+  const locPrefix =
+    g.homeAway === 'home'
+      ? 'vs.'
+      : g.homeAway === 'away'
+        ? '@'
+        : g.homeAway === 'neutral'
+          ? 'vs.'
+          : 'vs./@';
+  const oppRecordDisplay =
+    g.opponent?.record && g.opponent.record !== '—'
+      ? ` <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent.record)})</span>`
+      : '';
+  const venueCityPart = g.venue?.city ? ` (${esc(g.venue.city)})` : '';
+  const venueSurfacePart = g.venue?.surface ? ` • ${esc(g.venue.surface)}` : '';
+
   return `
-    <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}" data-schedule-week="${g.week}" style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${borderColor}">
+    <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}"
+         data-schedule-season-type="${esc(seasonType)}"
+         data-schedule-week="${esc(g.week)}"
+         ${isPost ? `data-postseason-round="${esc(g.postseasonRound || '')}" data-postseason-state="${esc(g.postseasonState || '')}"` : ''}
+         style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${borderColor}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;gap:8px;min-width:0">
           ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 28)}
           <div style="min-width:0">
-            <span class="mono" style="color:var(--gold-bright);font-weight:800">WK ${g.week}</span> •
+            <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
+            ${phasePillHtml ? ` ${phasePillHtml}` : ''} •
             ${
               g.gameUrl
-                ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-primary)"><strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong></a>`
-                : `<strong>${g.homeAway === 'home' ? 'vs.' : '@'} ${esc(g.opponent?.name)}</strong>`
-            }
-            <span class="mono" style="font-size:11.5px;color:var(--text-muted)">(${esc(g.opponent?.record)})</span>
+                ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-primary)"><strong>${locPrefix} ${esc(g.opponent?.name)}</strong></a>`
+                : `<strong>${locPrefix} ${esc(g.opponent?.name)}</strong>`
+            }${oppRecordDisplay}
           </div>
         </div>
         <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
@@ -1662,7 +1735,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
           ${
             g.completed
               ? `<span class="badge ${g.result === 'W' ? 'badge-positive' : g.result === 'T' ? 'badge-warning' : 'badge-danger'} mono">${g.result} ${g.sfScore}-${g.oppScore}</span>`
-              : `<span class="badge badge-neutral mono">${esc(g.statusDetail)}</span>`
+              : `<span class="badge ${isPost ? 'badge-gold' : 'badge-neutral'} mono">${esc(g.statusDetail || 'TBD')}</span>`
           }
           ${
             g.gameUrl
@@ -1673,7 +1746,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
       </div>
       <div class="inline-icon-meta" style="margin-top:4px">
         ${iconSvg('stadium', 13)}
-        <span>${esc(g.venue?.name)} (${esc(g.venue?.city)}) • ${esc(g.venue?.surface)}
+        <span>${esc(g.venue?.name || 'Venue TBD')}${venueCityPart}${venueSurfacePart}
         ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">SF ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}</span>
       </div>
       ${
@@ -1681,26 +1754,82 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
           ? `<div style="margin-top:4px;font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(g.venue.internationalNote)}</div>`
           : ''
       }
+      ${
+        g.qualificationNote
+          ? `<div style="margin-top:4px;font-size:11.5px;color:var(--gold-bright);font-weight:600">${esc(g.qualificationNote)}</div>`
+          : ''
+      }
     </div>
   `;
 }
 
-function renderFullSchedule(appData, schedulePrevExpanded = false) {
-  const sched = appData?.scheduleMatchup?.schedule || [];
-  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
-  const previousGames = sched.filter(g => Boolean(g?.completed));
-  const currentAndFutureGames = sched.filter(g => g && !g.completed);
+function formatWltString(games = []) {
+  const playable = games.filter(g => !g.isByeWeek && (g.result === 'W' || g.result === 'L' || g.result === 'T'));
+  const w = playable.filter(g => g.result === 'W').length;
+  const l = playable.filter(g => g.result === 'L').length;
+  const t = playable.filter(g => g.result === 'T').length;
+  return {
+    w,
+    l,
+    t,
+    str: t > 0 ? `${w}-${l}-${t}` : `${w}-${l}`
+  };
+}
 
-  const prevWins = previousGames.filter(g => g.result === 'W').length;
-  const prevLosses = previousGames.filter(g => g.result === 'L').length;
-  const prevTies = previousGames.filter(g => g.result === 'T').length;
-  const prevRecordStr = prevTies > 0 ? `${prevWins}-${prevLosses}-${prevTies}` : `${prevWins}-${prevLosses}`;
-  const prevRangeLabel =
-    previousGames.length === 1
-      ? `Wk ${previousGames[0].week}`
-      : previousGames.length > 1
-        ? `Wk ${previousGames[0].week}–${previousGames[previousGames.length - 1].week}`
-        : '';
+function renderFullSchedule(appData, schedulePrevExpanded = false, mcSimResult = null) {
+  const schedModel = resolveCompleteScheduleModel(appData, mcSimResult);
+  const seasonYr = schedModel.seasonYear;
+  const previousGames = schedModel.previousGames;
+  const currentAndFutureGames = schedModel.upcomingGames;
+  const postStatus = schedModel.postseasonStatus;
+
+  const prevPre = previousGames.filter(g => g.seasonType === 'PRE');
+  const prevReg = previousGames.filter(g => g.seasonType === 'REG');
+  const prevPost = previousGames.filter(g => g.seasonType === 'POST');
+  const prevPostPlayed = prevPost.filter(g => !g.isByeWeek);
+
+  const regRec = formatWltString(prevReg);
+  const preRec = formatWltString(prevPre);
+  const postRec = formatWltString(prevPostPlayed);
+
+  const primaryRecObj = prevReg.length > 0 ? regRec : prevPre.length > 0 ? preRec : postRec;
+  const primaryRecLabel =
+    prevReg.length > 0
+      ? regRec.str
+      : prevPre.length > 0
+        ? `${preRec.str} Pre`
+        : postRec.str;
+
+  const extraRecordBadgesHtml = [
+    prevReg.length > 0 && prevPre.length > 0
+      ? `<span class="badge badge-neutral mono">${esc(preRec.str)} Pre</span>`
+      : '',
+    prevPostPlayed.length > 0
+      ? `<span class="badge badge-gold mono">${esc(postRec.str)} Post</span>`
+      : ''
+  ]
+    .filter(Boolean)
+    .join('');
+
+  const rangeParts = [];
+  if (prevPre.length === 1) {
+    rangeParts.push(`PRE ${prevPre[0].preseasonWeek || 1}`);
+  } else if (prevPre.length > 1) {
+    rangeParts.push(
+      `PRE ${prevPre[0].preseasonWeek || 1}–${prevPre[prevPre.length - 1].preseasonWeek || prevPre.length}`
+    );
+  }
+  if (prevReg.length === 1) {
+    rangeParts.push(`Wk ${prevReg[0].week}`);
+  } else if (prevReg.length > 1) {
+    rangeParts.push(`Wk ${prevReg[0].week}–${prevReg[prevReg.length - 1].week}`);
+  }
+  if (prevPost.length > 0) {
+    rangeParts.push(
+      prevPost.length === 1 ? prevPost[0].weekLabel || 'Playoffs' : 'Playoffs'
+    );
+  }
+  const prevRangeLabel = rangeParts.join(' • ');
 
   const previousGamesBoxHtml =
     previousGames.length > 0
@@ -1709,7 +1838,8 @@ function renderFullSchedule(appData, schedulePrevExpanded = false) {
           <summary class="schedule-prev-summary" data-schedule-previous-summary>
             <span class="schedule-prev-summary-main">
               <span>Previous Games (${previousGames.length})</span>
-              <span class="badge ${prevWins >= prevLosses ? 'badge-positive' : 'badge-neutral'} mono">${esc(prevRecordStr)}</span>
+              <span class="badge ${primaryRecObj.w >= primaryRecObj.l ? 'badge-positive' : 'badge-neutral'} mono">${esc(primaryRecLabel)}</span>
+              ${extraRecordBadgesHtml}
             </span>
             <span class="schedule-prev-summary-sub mono">${esc(prevRangeLabel)}</span>
           </summary>
@@ -1720,16 +1850,40 @@ function renderFullSchedule(appData, schedulePrevExpanded = false) {
       `
       : '';
 
+  const firstPlayableUpcomingIdx = currentAndFutureGames.findIndex(g => !g.isByeWeek);
+  const activeCurrentIdx = firstPlayableUpcomingIdx >= 0 ? firstPlayableUpcomingIdx : 0;
+
   const upcomingListHtml =
     currentAndFutureGames.length > 0
       ? `
         <div class="schedule-upcoming-list" data-schedule-upcoming-list style="display:flex;flex-direction:column;gap:8px">
           ${currentAndFutureGames
-            .map((g, idx) => renderScheduleGameRowHtml(g, { isCurrentGame: idx === 0 }))
+            .map((g, idx) => renderScheduleGameRowHtml(g, { isCurrentGame: idx === activeCurrentIdx }))
             .join('')}
         </div>
       `
-      : `<div class="subcard-panel" data-schedule-upcoming-list style="font-size:12.5px;color:var(--text-secondary)">All ${seasonYr} regular-season games are complete. Expand <strong>Previous Games</strong> above to review results and box scores.</div>`;
+      : `<div class="subcard-panel" data-schedule-upcoming-list style="font-size:12.5px;color:var(--text-secondary)">All ${seasonYr} games are complete.${
+          postStatus.summary ? ` ${esc(postStatus.summary)}` : ''
+        } Expand <strong>Previous Games</strong> above to review results and box scores.</div>`;
+
+  const postseasonHorizonHtml =
+    postStatus.state === 'UNCLINCHED_IN_HUNT'
+      ? `
+        <div class="subcard-panel" data-schedule-postseason-tracker="unclinched" style="margin-top:10px;border-color:var(--gold-border)">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+            <div>
+              <div class="card-eyebrow">Postseason Qualification Tracker</div>
+              <strong style="font-size:13px">${esc(postStatus.headline)}</strong>
+            </div>
+            <button type="button" class="btn-ghost" data-action="set-season-sub" data-season-sub="playoffs" style="font-size:11.5px;padding:4px 9px">
+              ${iconSvg('trophy', 12)}
+              <span>Playoff Simulator</span>
+            </button>
+          </div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${esc(postStatus.summary)}</div>
+        </div>
+      `
+      : '';
 
   return `
     <section class="card">
@@ -1747,6 +1901,7 @@ function renderFullSchedule(appData, schedulePrevExpanded = false) {
 
       ${previousGamesBoxHtml}
       ${upcomingListHtml}
+      ${postseasonHorizonHtml}
     </section>
   `;
 }

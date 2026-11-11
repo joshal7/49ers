@@ -21,7 +21,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=37';
+} from './services/dataService.js?v=39';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -33,7 +33,7 @@ import {
   resolveActiveHighQualityModelLabel,
   verifyGeminiApiKey,
   checkAndAutoUpdateBestGeminiModel
-} from './services/aiWorkerClient.js';
+} from './services/aiWorkerClient.js?v=39';
 import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
 import {
   buildShareablePodcastUrl,
@@ -50,21 +50,21 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=37';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=37';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=37';
-import { iconSvg } from './views/icons.js?v=38';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=38';
+} from './views/uiHelpers.js?v=39';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=39';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=39';
+import { iconSvg } from './views/icons.js?v=39';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=39';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=38';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=38';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=38';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=38';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=38';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=38';
+} from './views/newsView.js?v=39';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=39';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=39';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=39';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=39';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=39';
 
 const state = {
   appData: null,
@@ -486,7 +486,10 @@ function renderMain() {
         userCapMoves: activeYearMoves
       });
     } else if (tab === 'season') {
-      const mcSimResult = state.seasonSubTab === 'playoffs' ? getMonteCarloResult() : null;
+      const mcSimResult =
+        state.seasonSubTab === 'playoffs' || state.seasonSubTab === 'schedule'
+          ? getMonteCarloResult()
+          : null;
       mainEl.innerHTML = renderSeasonMatchupViewHtml({
         seasonSub: state.seasonSubTab,
         activePhases: state.seasonState.activePhases,
@@ -792,6 +795,11 @@ function bindEvents() {
     btn.addEventListener('click', () => {
       state.activeNavTab = btn.getAttribute('data-nav-tab') || 'home';
       window.scrollTo({ top: 0, behavior: 'instant' });
+      if (!state.appData) {
+        renderNavTabs();
+        bootOrRecoverAppData({ manual: true });
+        return;
+      }
       if (state.activeNavTab === 'audio' && state.prefs.geminiApiKey) {
         checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
           saveUserPrefs(state.prefs);
@@ -1602,6 +1610,11 @@ function bindEvents() {
         break;
       }
 
+      case 'retry-load-feeds': {
+        bootOrRecoverAppData({ manual: true });
+        break;
+      }
+
       case 'generate-autopodcast': {
         const inputEl = document.getElementById('podTopicInput');
         if (inputEl) state.podTopicDraft = inputEl.value;
@@ -1639,6 +1652,8 @@ function bindEvents() {
             totalSteps: 3,
             stages: PODCAST_PIPELINE_STAGES,
             percent: 10,
+            stagePercents: [10, 0, 0],
+            stageElapsedSec: [0, 0, 0],
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
             message: 'Step 1 of 3: Deep research on the topic…',
@@ -1652,20 +1667,26 @@ function bindEvents() {
             appData: state.appData,
             prefs: state.prefs,
             onProgress: p => {
+              const prevStep = state.jobStatus?.stepIdx || 1;
+              const nextStep = p.stepIdx || 1;
               state.jobStatus = {
                 active: true,
                 kind: 'podcast',
                 startedAtMs,
-                stepIdx: p.stepIdx || 1,
+                stepIdx: nextStep,
                 totalSteps: p.totalSteps || 3,
                 stages: p.stages || PODCAST_PIPELINE_STAGES,
                 percent: p.percent || 30,
+                stagePercents: p.stagePercents || [100, 0, 0],
+                stageElapsedSec: p.stageElapsedSec || [0, 0, 0],
                 estLabel: p.estLabel || waitEst.estLabel,
                 modelLabel: p.modelLabel || modelInfo.displayLabel,
                 message: p.message,
                 subDetail: p.subDetail || ''
               };
-              renderMain();
+              if (prevStep !== nextStep || !syncActiveJobBannerDomInPlace(state.jobStatus)) {
+                renderMain();
+              }
             }
           });
           // Store clean metadata in localStorage (real WAV audio blob is persisted in IndexedDB)
@@ -1745,7 +1766,9 @@ function bindEvents() {
             stepIdx: 1,
             totalSteps: 3,
             stages: ANALYSIS_PIPELINE_STAGES,
-            percent: 14,
+            percent: 12,
+            stagePercents: [12, 0, 0],
+            stageElapsedSec: [0, 0, 0],
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
             message: 'Step 1 of 3: Deep research on the topic…',
@@ -1758,20 +1781,26 @@ function bindEvents() {
             appData: state.appData,
             prefs: state.prefs,
             onProgress: p => {
+              const prevStep = state.jobStatus?.stepIdx || 1;
+              const nextStep = p.stepIdx || 1;
               state.jobStatus = {
                 active: true,
                 kind: 'analysis',
                 startedAtMs,
-                stepIdx: p.stepIdx || 1,
+                stepIdx: nextStep,
                 totalSteps: p.totalSteps || 3,
                 stages: p.stages || ANALYSIS_PIPELINE_STAGES,
                 percent: p.percent || 35,
+                stagePercents: p.stagePercents || [100, 0, 0],
+                stageElapsedSec: p.stageElapsedSec || [0, 0, 0],
                 estLabel: p.estLabel || waitEst.estLabel,
                 modelLabel: p.modelLabel || modelInfo.displayLabel,
                 message: p.message,
                 subDetail: p.subDetail || ''
               };
-              renderMain();
+              if (prevStep !== nextStep || !syncActiveJobBannerDomInPlace(state.jobStatus)) {
+                renderMain();
+              }
             }
           });
           state.prefs.deletedAnalysisIds = (state.prefs.deletedAnalysisIds || []).filter(
@@ -2194,58 +2223,95 @@ async function handleIncomingSharedLink(locationLike = window.location) {
   return false;
 }
 
-async function init() {
-  state.prefs = loadUserPrefs();
-  applyTheme(state.prefs.theme);
-  if (state.prefs?.capSelectedYear) {
-    state.capSelectedYear = String(state.prefs.capSelectedYear);
+function syncActiveJobBannerDomInPlace(jobStatus) {
+  if (!jobStatus?.active) return false;
+  const banner = document.querySelector('[data-job-progress="active"]');
+  if (!banner) return false;
+
+  const overallFill = banner.querySelector('.job-progress-fill');
+  if (overallFill) {
+    const pct = Math.max(8, Math.min(99, Number(jobStatus.percent || 12)));
+    overallFill.style.width = `${pct}%`;
   }
-  state.podFormat = state.prefs?.podFormat === 'solo' ? 'solo' : 'two_host';
-  state.podDurationMin = Math.max(2, Math.min(20, Number(state.prefs?.defaultPodDurationMin || 3)));
-  audioController = new PodcastAudioController(renderMiniPlayer, {
-    onSynthesizeMissingAudio: async ep => {
-      const startedAtMs = Date.now();
-      const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
-      state.jobStatus = {
-        active: true,
-        kind: 'podcast',
-        startedAtMs,
-        stepIdx: 3,
-        totalSteps: 3,
-        stages: PODCAST_PIPELINE_STAGES,
-        percent: 52,
-        estLabel: '30–60 sec',
-        modelLabel: modelInfo.displayLabel,
-        message: 'Step 3 of 3: Preparing shared podcast studio audio…',
-        subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'
-      };
-      if (state.activeNavTab === 'audio') renderMain();
-      try {
-        return await synthesizeMissingEpisodeAudio(
-          ep,
-          p => {
-            state.jobStatus = {
-              ...state.jobStatus,
-              ...p,
-              active: true,
-              kind: 'podcast',
-              startedAtMs,
-              modelLabel: modelInfo.displayLabel
-            };
-            if (state.activeNavTab === 'audio') renderMain();
-          },
-          state.prefs
-        );
-      } finally {
-        state.jobStatus = null;
-        if (state.activeNavTab === 'audio') renderMain();
-      }
+  const stepEl = banner.querySelector('.job-progress-step');
+  if (stepEl && jobStatus.message) {
+    stepEl.textContent = jobStatus.message;
+  }
+  const subEl = banner.querySelector('.job-progress-subdetail');
+  if (subEl && jobStatus.subDetail) {
+    subEl.textContent = jobStatus.subDetail;
+  }
+
+  const activeStep = Math.max(1, Math.min(3, Number(jobStatus.stepIdx || 1)));
+  const stagePcts = Array.isArray(jobStatus.stagePercents) ? jobStatus.stagePercents : [];
+  const stageSecs = Array.isArray(jobStatus.stageElapsedSec) ? jobStatus.stageElapsedSec : [];
+
+  for (let s = 1; s <= 3; s++) {
+    const barEl = banner.querySelector(`[data-stage-bar="${s}"]`);
+    const statusEl = banner.querySelector(`[data-stage-status="${s}"]`);
+    const secVal = Math.max(0, Math.floor(Number(stageSecs[s - 1] || 0)));
+    if (s < activeStep) {
+      if (barEl) barEl.style.width = '100%';
+      if (statusEl) statusEl.textContent = secVal > 0 ? `Done · ${secVal}s` : 'Done';
+    } else if (s === activeStep) {
+      const curPct = Math.max(8, Math.min(99, Math.round(Number(stagePcts[s - 1] || 12))));
+      if (barEl) barEl.style.width = `${curPct}%`;
+      if (statusEl) statusEl.textContent = `In progress · ${secVal}s`;
+    } else {
+      if (barEl) barEl.style.width = '0%';
+      if (statusEl) statusEl.textContent = 'Queued';
     }
-  });
-  bindEvents();
+  }
+  return true;
+}
+
+let isBootingAppData = false;
+let hasCompletedBootLifecycle = false;
+let bootRetryTimerId = null;
+let bootFailureCount = 0;
+
+function renderFeedLoadErrorState(err, { isRetrying = false } = {}) {
+  const subStatus = document.getElementById('headerSubStatus');
+  if (subStatus) {
+    subStatus.textContent = isRetrying
+      ? 'Reconnecting to 49ers data feeds…'
+      : 'Connection interrupted • Tap Retry';
+  }
+  const mainEl = document.getElementById('mainView');
+  if (!mainEl) return;
+  const rawMsg = String(err?.message || 'Network connection interrupted');
+  const friendlyDetail = /load failed|failed to fetch|networkerror|abort/i.test(rawMsg)
+    ? 'Network connection dropped while loading feeds. The app will reconnect automatically as soon as signal returns, or tap Retry below.'
+    : rawMsg;
+  mainEl.innerHTML = `
+    <div class="card" data-feed-error-card="true">
+      <div class="card-eyebrow" style="color:var(--crimson)">Feed Connection Interrupted</div>
+      <h2 class="card-title">Reconnecting 49ers Data Feeds</h2>
+      <p style="font-size:13px;color:var(--text-secondary);margin:6px 0 12px">${esc(friendlyDetail)}</p>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <button type="button" class="btn-primary" data-action="retry-load-feeds" ${isRetrying ? 'disabled' : ''}>
+          ${iconSvg(isRetrying ? 'loader' : 'reset', 14, isRetrying ? 'btn-spin-icon' : '')}
+          <span>${isRetrying ? 'Reconnecting…' : 'Retry Loading Feeds'}</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function bootOrRecoverAppData({ manual = false } = {}) {
+  if (isBootingAppData || state.appData) return Boolean(state.appData);
+  isBootingAppData = true;
+  if (bootRetryTimerId) {
+    clearTimeout(bootRetryTimerId);
+    bootRetryTimerId = null;
+  }
+  if (manual && bootFailureCount > 0) {
+    renderFeedLoadErrorState(null, { isRetrying: true });
+  }
 
   try {
     state.appData = await loadAll49ersData();
+    bootFailureCount = 0;
     state.lastWireSyncAt = state.appData.meta?.updatedAt || new Date().toISOString();
     lastLiveCheckMs = Date.now();
     lastWirePollMs = Date.now();
@@ -2276,99 +2342,179 @@ async function init() {
     renderHeaderAndPhaseBanner();
     renderMain();
 
-    // Check if colleague arrived via a shared `?pod=...` / `#shared-pod=...` or `?analysis=...` deep link
-    handleIncomingSharedLink(window.location).catch(() => {});
-    window.addEventListener('hashchange', () => {
+    if (!hasCompletedBootLifecycle) {
+      hasCompletedBootLifecycle = true;
+
+      // Check if colleague arrived via a shared `?pod=...` / `#shared-pod=...` or `?analysis=...` deep link
       handleIncomingSharedLink(window.location).catch(() => {});
-    });
-
-    // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire + 6 podcasts)
-    refreshLiveFeedsInBackground(false);
-
-    // Start <1 min adaptive live tweet & in-game injury wire polling (20s in-game, 45s standard)
-    scheduleAdaptiveSubMinuteWireLoop();
-
-    // Non-blocking sync of shared Cloudflare Worker intelligence feed if configured
-    fetchSharedWorkerFeed(state.prefs).then(shared => {
-      if (shared) {
-        state.workerSharedFeed = shared;
-        if (state.activeNavTab === 'audio') renderMain();
-      }
-    });
-
-    // Auto-update to newer, more capable free Gemini models in the background as Google releases them
-    if (state.prefs.geminiApiKey) {
-      checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
-        saveUserPrefs(state.prefs);
-        if (state.activeNavTab === 'audio') renderMain();
+      window.addEventListener('hashchange', () => {
+        handleIncomingSharedLink(window.location).catch(() => {});
       });
-    }
 
-    // Live countdown & relative timestamp ticker (every 60s while tab is visible)
-    setInterval(() => {
-      if (document.visibilityState === 'hidden' || !state.appData) return;
-      const prevPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
-      state.seasonState = evaluateSeasonState({
-        now: new Date(),
-        calendar: state.appData.meta?.calendar,
-        teamStatus: state.appData.meta?.teamStatus
-      });
-      renderHeaderAndPhaseBanner();
-      if (JSON.stringify(state.seasonState?.activePhases || []) !== prevPhaseKey && state.activeVideosSet.size === 0) {
-        renderMain();
-      }
-    }, 60_000);
+      // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire + 6 podcasts)
+      refreshLiveFeedsInBackground(Boolean(state.appData._restoredFromOfflineSnapshot));
 
-    // Periodic background check for full upstream JSON bundles & podcasts every 5 minutes
-    setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        refreshLiveFeedsInBackground(false);
-      }
-    }, 5 * 60_000);
+      // Start <1 min adaptive live tweet & in-game injury wire polling (20s in-game, 45s standard)
+      scheduleAdaptiveSubMinuteWireLoop();
 
-    // Instant sub-minute sync when waking the PWA/tab after >= 15s or reconnecting online
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
-          refreshLiveFeedsInBackground(false);
-        } else if (Date.now() - lastWirePollMs >= 15_000) {
-          pollLowLatencyTweetAndInjuryWire(false);
+      // Non-blocking sync of shared Cloudflare Worker intelligence feed if configured
+      fetchSharedWorkerFeed(state.prefs).then(shared => {
+        if (shared) {
+          state.workerSharedFeed = shared;
+          if (state.activeNavTab === 'audio') renderMain();
         }
+      });
+
+      // Auto-update to newer, more capable free Gemini models in the background as Google releases them
+      if (state.prefs.geminiApiKey) {
+        checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
+          saveUserPrefs(state.prefs);
+          if (state.activeNavTab === 'audio') renderMain();
+        });
       }
-    });
-    window.addEventListener('focus', () => {
-      if (Date.now() - lastWirePollMs >= 15_000) {
+    }
+    return true;
+  } catch (err) {
+    bootFailureCount += 1;
+    renderFeedLoadErrorState(err, { isRetrying: false });
+    if (bootFailureCount <= 4) {
+      const retryDelayMs = Math.min(15_000, 2500 * bootFailureCount);
+      bootRetryTimerId = setTimeout(() => {
+        if (!state.appData && document.visibilityState !== 'hidden') {
+          bootOrRecoverAppData({ manual: false });
+        }
+      }, retryDelayMs);
+    }
+    return false;
+  } finally {
+    isBootingAppData = false;
+  }
+}
+
+async function init() {
+  state.prefs = loadUserPrefs();
+  applyTheme(state.prefs.theme);
+  if (state.prefs?.capSelectedYear) {
+    state.capSelectedYear = String(state.prefs.capSelectedYear);
+  }
+  state.podFormat = state.prefs?.podFormat === 'solo' ? 'solo' : 'two_host';
+  state.podDurationMin = Math.max(2, Math.min(20, Number(state.prefs?.defaultPodDurationMin || 3)));
+  audioController = new PodcastAudioController(renderMiniPlayer, {
+    onSynthesizeMissingAudio: async ep => {
+      const startedAtMs = Date.now();
+      const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
+      state.jobStatus = {
+        active: true,
+        kind: 'podcast',
+        startedAtMs,
+        stepIdx: 3,
+        totalSteps: 3,
+        stages: PODCAST_PIPELINE_STAGES,
+        percent: 52,
+        stagePercents: [100, 100, 20],
+        stageElapsedSec: [0, 0, 0],
+        estLabel: '30–60 sec',
+        modelLabel: modelInfo.displayLabel,
+        message: 'Step 3 of 3: Preparing shared podcast studio audio…',
+        subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'
+      };
+      if (state.activeNavTab === 'audio') renderMain();
+      try {
+        return await synthesizeMissingEpisodeAudio(
+          ep,
+          p => {
+            state.jobStatus = {
+              ...state.jobStatus,
+              ...p,
+              active: true,
+              kind: 'podcast',
+              startedAtMs,
+              modelLabel: modelInfo.displayLabel
+            };
+            if (state.activeNavTab === 'audio' && !syncActiveJobBannerDomInPlace(state.jobStatus)) {
+              renderMain();
+            }
+          },
+          state.prefs
+        );
+      } finally {
+        state.jobStatus = null;
+        if (state.activeNavTab === 'audio') renderMain();
+      }
+    }
+  });
+  bindEvents();
+
+  // Register recovery & live-sync listeners unconditionally so even an offline cold boot self-heals automatically
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      if (!state.appData) {
+        bootOrRecoverAppData({ manual: false });
+      } else if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
+        refreshLiveFeedsInBackground(false);
+      } else if (Date.now() - lastWirePollMs >= 15_000) {
         pollLowLatencyTweetAndInjuryWire(false);
       }
-    });
-    window.addEventListener('online', () => {
-      refreshLiveFeedsInBackground(false);
-    });
-  } catch (err) {
-    const mainEl = document.getElementById('mainView');
-    if (mainEl) {
-      mainEl.innerHTML = `
-        <div class="card">
-          <div class="card-eyebrow" style="color:var(--crimson)">Feed Load Error</div>
-          <h2 class="card-title">Unable to Load 49ers Data Feeds</h2>
-          <p style="font-size:13px;color:var(--text-secondary)">${esc(err.message)}</p>
-        </div>
-      `;
     }
-  }
+  });
+  window.addEventListener('focus', () => {
+    if (!state.appData) {
+      bootOrRecoverAppData({ manual: false });
+    } else if (Date.now() - lastWirePollMs >= 15_000) {
+      pollLowLatencyTweetAndInjuryWire(false);
+    }
+  });
+  window.addEventListener('online', () => {
+    if (!state.appData) {
+      bootOrRecoverAppData({ manual: true });
+    } else {
+      refreshLiveFeedsInBackground(false);
+    }
+  });
 
-  // Register Offline-Ready Service Worker (handle both pre-load and post-async-init readyState)
+  // Live countdown & relative timestamp ticker (every 60s while tab is visible)
+  setInterval(() => {
+    if (document.visibilityState === 'hidden' || !state.appData) return;
+    const prevPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
+    state.seasonState = evaluateSeasonState({
+      now: new Date(),
+      calendar: state.appData.meta?.calendar,
+      teamStatus: state.appData.meta?.teamStatus
+    });
+    renderHeaderAndPhaseBanner();
+    if (JSON.stringify(state.seasonState?.activePhases || []) !== prevPhaseKey && state.activeVideosSet.size === 0) {
+      renderMain();
+    }
+  }, 60_000);
+
+  // Periodic background check for full upstream JSON bundles & podcasts every 5 minutes
+  setInterval(() => {
+    if (document.visibilityState === 'visible') {
+      if (!state.appData) {
+        bootOrRecoverAppData({ manual: false });
+      } else {
+        refreshLiveFeedsInBackground(false);
+      }
+    }
+  }, 5 * 60_000);
+
+  await bootOrRecoverAppData({ manual: false });
+
+  // Register Offline-Ready Service Worker AFTER initial boot attempt and NEVER reload mid-boot or mid-job
   if ('serviceWorker' in navigator) {
     let refreshingSw = false;
     const hadController = Boolean(navigator.serviceWorker.controller);
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!hadController || refreshingSw) return;
+      if (isBootingAppData || !state.appData || state.jobStatus?.active || state.audioState?.isPlaying) {
+        return;
+      }
       refreshingSw = true;
       window.location.reload();
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=45', { updateViaCache: 'none' })
+        .register('./sw.js?v=46', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

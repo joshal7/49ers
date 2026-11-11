@@ -441,3 +441,762 @@ export function partitionCompletedTradesByWindow(moves = [], referenceTime = und
 
   return { recentTrades, archivedTrades, maxAgeDays };
 }
+
+const POSTSEASON_ROUND_META = {
+  WC_BYE: {
+    week: 19,
+    weekLabel: 'WC BYE',
+    roundBadgeLabel: 'First-Round Bye',
+    roundTitle: 'NFC Wild Card Weekend — First-Round Bye',
+    defaultOpponentName: 'First-Round Playoff Bye (#1 NFC Seed)'
+  },
+  QUALIFIED_TBD: {
+    week: 19,
+    weekLabel: 'POST',
+    roundBadgeLabel: 'Playoff Berth Clinched',
+    roundTitle: 'NFC Wild Card or Divisional Round',
+    defaultOpponentName: 'NFC Playoff Opponent (TBD)'
+  },
+  WC: {
+    week: 19,
+    weekLabel: 'WC',
+    roundBadgeLabel: 'Wild Card Round',
+    roundTitle: 'NFC Wild Card Round',
+    defaultOpponentName: 'NFC Wild Card Opponent (TBD)'
+  },
+  DIV: {
+    week: 20,
+    weekLabel: 'DIV',
+    roundBadgeLabel: 'Divisional Round',
+    roundTitle: 'NFC Divisional Round',
+    defaultOpponentName: 'NFC Divisional Opponent (TBD)'
+  },
+  CON: {
+    week: 21,
+    weekLabel: 'NFC CHAMP',
+    roundBadgeLabel: 'NFC Championship',
+    roundTitle: 'NFC Championship Game',
+    defaultOpponentName: 'NFC Championship Opponent (TBD)'
+  },
+  SB: {
+    week: 22,
+    weekLabel: 'SUPER BOWL',
+    roundBadgeLabel: 'Super Bowl',
+    roundTitle: 'Super Bowl',
+    defaultOpponentName: 'AFC Champion (TBD)'
+  }
+};
+
+function inferPostseasonRoundCode(rawGame = {}) {
+  const explicit = String(rawGame.postseasonRound || '').trim().toUpperCase();
+  if (explicit in POSTSEASON_ROUND_META) return explicit;
+  if (rawGame.isByeWeek) return 'WC_BYE';
+
+  const label = String(rawGame.weekLabel || rawGame.roundTitle || rawGame.statusDetail || '').toUpperCase();
+  if (label.includes('BYE')) return 'WC_BYE';
+  if (label.includes('SUPER BOWL') || label === 'SB') return 'SB';
+  if (label.includes('CHAMP') || label.includes('CONF') || label === 'CON') return 'CON';
+  if (label.includes('DIV')) return 'DIV';
+  if (label.includes('WILD') || label === 'WC') return 'WC';
+
+  const wk = Number(rawGame.week || 0);
+  if (wk === 22) return 'SB';
+  if (wk === 21) return 'CON';
+  if (wk === 20) return 'DIV';
+  return 'WC';
+}
+
+/**
+ * Normalizes a single schedule entry across Preseason ('PRE'), Regular Season ('REG'),
+ * and Postseason ('POST') so UI views and engines have consistent week labels, round metadata,
+ * and non-colliding numeric `week` values (`< 0` for Preseason, `1..18` for Regular Season, `19..22` for Postseason).
+ */
+export function normalizeScheduleGameItem(rawGame = {}, seasonYear = 2026) {
+  if (!rawGame || typeof rawGame !== 'object') return null;
+
+  const rawSt = String(rawGame.seasonType || '').trim().toUpperCase();
+  const rawWk = Number(rawGame.week ?? 0);
+  const rawLabel = String(rawGame.weekLabel || '').trim();
+
+  let seasonType = 'REG';
+  if (rawSt === 'PRE' || rawSt === 'PRESEASON' || rawSt === '1' || rawWk < 0 || Number(rawGame.preseasonWeek) > 0 || /^PRE\b/i.test(rawLabel)) {
+    seasonType = 'PRE';
+  } else if (
+    rawSt === 'POST' ||
+    rawSt === 'POSTSEASON' ||
+    rawSt === '3' ||
+    rawWk >= 19 ||
+    Boolean(rawGame.postseasonRound) ||
+    Boolean(rawGame.isByeWeek) ||
+    /^(?:WC|DIV|CON|NFC CHAMP|SUPER BOWL|POST)\b/i.test(rawLabel)
+  ) {
+    seasonType = 'POST';
+  }
+
+  if (seasonType === 'PRE') {
+    const labelMatch = rawLabel.match(/(\d+)/);
+    const preWk =
+      Number(rawGame.preseasonWeek) > 0
+        ? Number(rawGame.preseasonWeek)
+        : labelMatch
+          ? Number(labelMatch[1])
+          : rawWk < 0
+            ? Math.max(1, 4 + rawWk)
+            : Math.max(1, rawWk);
+    const normWeek = rawWk < 0 ? rawWk : -(4 - Math.min(3, preWk));
+    return {
+      ...rawGame,
+      seasonType: 'PRE',
+      preseasonWeek: preWk,
+      week: normWeek,
+      weekLabel: rawLabel || `PRE ${preWk}`,
+      roundBadgeLabel: rawGame.roundBadgeLabel || 'Preseason',
+      completed: Boolean(rawGame.completed)
+    };
+  }
+
+  if (seasonType === 'POST') {
+    const roundCode = inferPostseasonRoundCode(rawGame);
+    const meta = POSTSEASON_ROUND_META[roundCode] || POSTSEASON_ROUND_META.WC;
+    const isBye = roundCode === 'WC_BYE' || Boolean(rawGame.isByeWeek);
+    const oppRaw = rawGame.opponent || {};
+    const oppAbbrRaw = String(oppRaw.abbr || '').trim().toUpperCase();
+    const isTbdOpp =
+      !isBye &&
+      (Boolean(oppRaw.isTbd) ||
+        !oppAbbrRaw ||
+        oppAbbrRaw === 'TBD' ||
+        oppAbbrRaw === 'OPP' ||
+        oppAbbrRaw === 'NFL' ||
+        /^tbd\b/i.test(String(oppRaw.name || '').trim()));
+
+    const opponent = isBye
+      ? {
+          abbr: 'BYE',
+          name: oppRaw.name || meta.defaultOpponentName,
+          logoUrl: '',
+          record: oppRaw.record || '#1 NFC Seed',
+          isTbd: false
+        }
+      : {
+          ...oppRaw,
+          abbr: isTbdOpp ? 'TBD' : oppAbbrRaw,
+          name:
+            oppRaw.name && !/^tbd$/i.test(String(oppRaw.name).trim())
+              ? oppRaw.name
+              : meta.defaultOpponentName,
+          record: oppRaw.record && oppRaw.record !== '—' ? oppRaw.record : isTbdOpp ? 'Matchup TBD' : '—',
+          isTbd: isTbdOpp
+        };
+
+    return {
+      ...rawGame,
+      seasonType: 'POST',
+      postseasonRound: roundCode,
+      isByeWeek: isBye,
+      week: rawWk >= 19 ? rawWk : meta.week,
+      weekLabel: rawLabel || meta.weekLabel,
+      roundBadgeLabel: rawGame.roundBadgeLabel || meta.roundBadgeLabel,
+      roundTitle: rawGame.roundTitle || meta.roundTitle,
+      completed: Boolean(rawGame.completed),
+      opponent,
+      venue: rawGame.venue || {
+        name: "Levi's Stadium",
+        city: 'Santa Clara',
+        state: 'CA',
+        country: 'USA',
+        isInternational: false,
+        surface: 'Natural Grass'
+      },
+      seasonYear
+    };
+  }
+
+  return {
+    ...rawGame,
+    seasonType: 'REG',
+    week: rawWk,
+    weekLabel: rawLabel || `WK ${rawWk}`,
+    completed: Boolean(rawGame.completed)
+  };
+}
+
+/**
+ * Resolves the complete 49ers season schedule including:
+ *  1. Preseason games (`seasonType: 'PRE'`, `PRE 1..3`)
+ *  2. Regular Season games (`seasonType: 'REG'`, `WK 1..18`)
+ *  3. Postseason games (`seasonType: 'POST'`) that the 49ers qualify for as they arise:
+ *     - Handles uncertainty when playoff berth is unclinched (`0% < makePlayoffsPct < 100%`)
+ *       without injecting premature postseason rows, while exposing a `postseasonStatus` tracker.
+ *     - Handles clinched playoff berth when entry round (1st-Round Bye vs. Wild Card) & opponent are unknown.
+ *     - Handles clinched Wild Card Round berth when opponent (and/or home vs. away venue) is unknown (`TBD`).
+ *     - Handles clinched #1 NFC Seed First-Round Bye (`WC BYE` + automatic `DIV` qualification at Levi's Stadium).
+ *     - Handles round-by-round postseason advancement (`WC` win -> `DIV` -> `NFC CHAMP` -> `SUPER BOWL`).
+ *     - Places all completed games (Preseason, Regular Season, 1st-Round Bye once passed, and Postseason)
+ *       into `previousGames` so past games are hidden inside the collapsible Previous Games bar.
+ */
+export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
+  const seasonYear = Number(appData?.meta?.seasonYear) || 2026;
+  const rawSched = Array.isArray(appData?.scheduleMatchup?.schedule) ? appData.scheduleMatchup.schedule : [];
+  const rawPreExtra = Array.isArray(appData?.scheduleMatchup?.preseasonSchedule)
+    ? appData.scheduleMatchup.preseasonSchedule
+    : [];
+  const rawPostExtra = Array.isArray(appData?.scheduleMatchup?.postseasonSchedule)
+    ? appData.scheduleMatchup.postseasonSchedule
+    : [];
+
+  const combinedRaw = [
+    ...rawPreExtra.map(g => ({ ...g, seasonType: 'PRE' })),
+    ...rawSched,
+    ...rawPostExtra.map(g => ({ ...g, seasonType: 'POST' }))
+  ];
+
+  const seenIds = new Set();
+  const normalized = [];
+  for (const item of combinedRaw) {
+    const norm = normalizeScheduleGameItem(item, seasonYear);
+    if (!norm) continue;
+    const dedupKey = norm.id ? `id:${norm.id}` : `${norm.seasonType}:${norm.week}:${norm.postseasonRound || ''}`;
+    if (seenIds.has(dedupKey)) continue;
+    seenIds.add(dedupKey);
+    normalized.push(norm);
+  }
+
+  const preGames = normalized
+    .filter(g => g.seasonType === 'PRE')
+    .sort((a, b) => (a.preseasonWeek || 0) - (b.preseasonWeek || 0) || (Date.parse(a.dateIso || '') || 0) - (Date.parse(b.dateIso || '') || 0));
+
+  const regGames = normalized
+    .filter(g => g.seasonType === 'REG')
+    .sort((a, b) => (a.week || 0) - (b.week || 0));
+
+  let postGames = normalized
+    .filter(g => g.seasonType === 'POST')
+    .sort((a, b) => (a.week || 0) - (b.week || 0));
+
+  const allRegCompleted = regGames.length >= 15 && regGames.every(g => Boolean(g.completed));
+  const sfOdds = mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
+  const teamStatus = appData?.meta?.teamStatus || {};
+  const nowMs = appData?.meta?.nowMs ? new Date(appData.meta.nowMs).getTime() : Date.now();
+
+  const hasExplicitOdds = Boolean(
+    sfOdds &&
+      (sfOdds.makePlayoffsPct !== undefined ||
+        sfOdds.winDivisionPct !== undefined ||
+        sfOdds.seed1ByePct !== undefined)
+  );
+  const makePlayoffsPct = hasExplicitOdds ? Number(sfOdds.makePlayoffsPct ?? 0) : null;
+  const winDivisionPct = hasExplicitOdds ? Number(sfOdds.winDivisionPct ?? 0) : null;
+  const seed1ByePct = hasExplicitOdds ? Number(sfOdds.seed1ByePct ?? 0) : null;
+
+  const clinchCode = String(
+    teamStatus.clinchTag || teamStatus.playoffClinchCode || appData?.meta?.clinchTag || ''
+  )
+    .trim()
+    .toLowerCase();
+
+  const lostPostGame = postGames.find(g => g.completed && g.result === 'L' && !g.isByeWeek) || null;
+  const isEliminatedRegularSeason = Boolean(
+    !postGames.length &&
+      (teamStatus.mathematicallyEliminated ||
+        teamStatus.eliminatedAt ||
+        clinchCode === 'e' ||
+        (makePlayoffsPct !== null && makePlayoffsPct <= 0))
+  );
+
+  const hasClinchedSeed1Bye = Boolean(
+    !isEliminatedRegularSeason &&
+      (teamStatus.clinchedSeed1Bye ||
+        teamStatus.clinchedBye ||
+        clinchCode === 'z' ||
+        (seed1ByePct !== null && seed1ByePct >= 99.95) ||
+        postGames.some(g => g.postseasonRound === 'WC_BYE' || g.isByeWeek))
+  );
+
+  const hasClinchedDivision = Boolean(
+    !isEliminatedRegularSeason &&
+      (hasClinchedSeed1Bye ||
+        teamStatus.clinchedDivision ||
+        clinchCode === 'y' ||
+        (winDivisionPct !== null && winDivisionPct >= 99.95))
+  );
+
+  const hasClinchedPlayoffs = Boolean(
+    !isEliminatedRegularSeason &&
+      (hasClinchedDivision ||
+        teamStatus.clinchedPlayoffs ||
+        ['x', 'y', 'z', '*'].includes(clinchCode) ||
+        (makePlayoffsPct !== null && makePlayoffsPct >= 99.95) ||
+        postGames.length > 0)
+  );
+
+  if (isEliminatedRegularSeason) {
+    postGames = postGames.filter(g => g.completed);
+  } else if (hasClinchedPlayoffs) {
+    const sfLogoUrl =
+      appData?.scheduleMatchup?.upcomingMatchup?.sfLogoUrl ||
+      regGames[0]?.sfLogoUrl ||
+      'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png';
+
+    // 1. Handle #1 NFC Seed First-Round Bye + automatic Divisional Round qualification at Levi's Stadium
+    if (hasClinchedSeed1Bye) {
+      // Remove any unplayed WC / QUALIFIED_TBD game since #1 seed receives a Wild Card bye
+      postGames = postGames.filter(
+        g => (g.postseasonRound !== 'WC' && g.postseasonRound !== 'QUALIFIED_TBD') || g.completed
+      );
+
+      const wcRoundDone = Boolean(
+        teamStatus.wildCardRoundCompleted ||
+          postGames.some(
+            g =>
+              g.week >= 20 &&
+              (g.completed ||
+                g.statusState === 'in' ||
+                (g.opponent && !g.opponent.isTbd && g.opponent.abbr && g.opponent.abbr !== 'TBD'))
+          ) ||
+          (allRegCompleted && Number.isFinite(nowMs) && nowMs >= Date.parse(`${seasonYear + 1}-01-19T08:00:00Z`))
+      );
+
+      const existingBye = postGames.find(g => g.postseasonRound === 'WC_BYE' || g.isByeWeek);
+      if (existingBye) {
+        if (wcRoundDone) {
+          existingBye.completed = true;
+          existingBye.result = existingBye.result || 'BYE';
+        }
+      } else {
+        postGames.unshift(
+          normalizeScheduleGameItem(
+            {
+              id: `post_${seasonYear}_wc_bye`,
+              seasonType: 'POST',
+              postseasonRound: 'WC_BYE',
+              postseasonState: 'first_round_bye',
+              isByeWeek: true,
+              week: 19,
+              weekLabel: 'WC BYE',
+              roundBadgeLabel: 'First-Round Bye',
+              dateIso: `${seasonYear + 1}-01-17T21:00:00Z`,
+              statusDetail: '1st-Round Bye (#1 NFC Seed)',
+              completed: wcRoundDone,
+              result: wcRoundDone ? 'BYE' : null,
+              homeAway: 'home',
+              sfLogoUrl,
+              opponent: {
+                abbr: 'BYE',
+                name: 'First-Round Playoff Bye (#1 NFC Seed)',
+                record: 'Homefield Clinched',
+                isTbd: false
+              },
+              venue: {
+                name: "Levi's Stadium",
+                city: 'Santa Clara',
+                state: 'CA',
+                country: 'USA',
+                isInternational: false,
+                surface: 'Natural Grass'
+              },
+              qualificationNote:
+                'Clinched #1 NFC Seed — 49ers earn a Wild Card Weekend bye and homefield advantage through the NFC playoffs.'
+            },
+            seasonYear
+          )
+        );
+      }
+
+      const existingDiv = postGames.find(g => g.postseasonRound === 'DIV' || g.week === 20);
+      if (!existingDiv) {
+        postGames.push(
+          normalizeScheduleGameItem(
+            {
+              id: `post_${seasonYear}_div`,
+              seasonType: 'POST',
+              postseasonRound: 'DIV',
+              postseasonState: 'bye_awaiting_divisional_opponent',
+              week: 20,
+              weekLabel: 'DIV',
+              roundBadgeLabel: 'Divisional Round',
+              dateIso: `${seasonYear + 1}-01-24T21:30:00Z`,
+              statusDetail: 'NFC Divisional • Homefield Clinched',
+              completed: false,
+              result: null,
+              homeAway: 'home',
+              sfLogoUrl,
+              opponent: {
+                abbr: 'TBD',
+                name: 'Lowest Remaining NFC Seed (TBD)',
+                record: 'Awaiting Wild Card',
+                isTbd: true
+              },
+              venue: {
+                name: "Levi's Stadium",
+                city: 'Santa Clara',
+                state: 'CA',
+                country: 'USA',
+                isInternational: false,
+                surface: 'Natural Grass'
+              },
+              qualificationNote:
+                'Automatic Divisional Round berth via #1 NFC Seed Bye — 49ers host the lowest remaining seed from Wild Card Weekend.'
+            },
+            seasonYear
+          )
+        );
+      } else if (existingDiv.opponent?.isTbd) {
+        existingDiv.homeAway = 'home';
+        existingDiv.postseasonState = existingDiv.postseasonState || 'bye_awaiting_divisional_opponent';
+        if (/^(?:opponent tbd|nfc divisional opponent \(tbd\))$/i.test(existingDiv.opponent.name || '')) {
+          existingDiv.opponent.name = 'Lowest Remaining NFC Seed (TBD)';
+        }
+      }
+    } else if (postGames.length === 0) {
+      // 2. Clinched Playoff Berth, but #1 Seed Bye is not clinched
+      const byeStillPossible =
+        seed1ByePct !== null &&
+        seed1ByePct > 0.05 &&
+        !allRegCompleted &&
+        !teamStatus.wildCardRoundLocked;
+
+      if (byeStillPossible) {
+        postGames.push(
+          normalizeScheduleGameItem(
+            {
+              id: `post_${seasonYear}_clinched_tbd`,
+              seasonType: 'POST',
+              postseasonRound: 'QUALIFIED_TBD',
+              postseasonState: 'clinched_round_tbd',
+              week: 19,
+              weekLabel: 'POST',
+              roundBadgeLabel: 'Playoff Berth Clinched',
+              dateIso: `${seasonYear + 1}-01-17T21:30:00Z`,
+              statusDetail: `Clinched Berth • #1 Bye ${seed1ByePct.toFixed(1)}%`,
+              completed: false,
+              result: null,
+              homeAway: hasClinchedDivision ? 'home' : 'tbd',
+              sfLogoUrl,
+              opponent: {
+                abbr: 'TBD',
+                name: 'NFC Playoff Opponent (TBD)',
+                record: 'Seed & Round TBD',
+                isTbd: true
+              },
+              venue: hasClinchedDivision
+                ? {
+                    name: "Levi's Stadium",
+                    city: 'Santa Clara',
+                    state: 'CA',
+                    country: 'USA',
+                    isInternational: false,
+                    surface: 'Natural Grass'
+                  }
+                : {
+                    name: "Levi's Stadium or Road Host (TBD)",
+                    city: 'Seed Dependent',
+                    state: '',
+                    country: 'USA',
+                    isInternational: false,
+                    surface: 'TBD'
+                  },
+              qualificationNote: `Playoff berth clinched — ${seed1ByePct.toFixed(1)}% #1 Seed First-Round Bye (Divisional Round entry) vs. ${(100 - seed1ByePct).toFixed(1)}% Wild Card Weekend.`
+            },
+            seasonYear
+          )
+        );
+      } else {
+        const isRoadWildCard = Boolean(
+          !hasClinchedDivision &&
+            ((winDivisionPct !== null && winDivisionPct <= 0.05) ||
+              teamStatus.clinchedWildCardOnly ||
+              Number(teamStatus.playoffSeed || appData?.meta?.playoffSeed || 0) >= 5)
+        );
+        const homeAway = hasClinchedDivision ? 'home' : isRoadWildCard ? 'away' : 'tbd';
+        postGames.push(
+          normalizeScheduleGameItem(
+            {
+              id: `post_${seasonYear}_wc`,
+              seasonType: 'POST',
+              postseasonRound: 'WC',
+              postseasonState: 'clinched_opponent_tbd',
+              week: 19,
+              weekLabel: 'WC',
+              roundBadgeLabel: 'Wild Card Round',
+              dateIso: `${seasonYear + 1}-01-17T21:30:00Z`,
+              statusDetail: hasClinchedDivision
+                ? 'NFC Wild Card • Home Game Clinched'
+                : isRoadWildCard
+                  ? 'NFC Wild Card • Road Berth Clinched'
+                  : 'NFC Wild Card • Berth Clinched',
+              completed: false,
+              result: null,
+              homeAway,
+              sfLogoUrl,
+              opponent: {
+                abbr: 'TBD',
+                name: hasClinchedDivision
+                  ? 'NFC Wild Card Opponent (TBD)'
+                  : isRoadWildCard
+                    ? 'NFC Division Winner (TBD)'
+                    : 'NFC Wild Card Opponent (TBD)',
+                record: 'Matchup TBD',
+                isTbd: true
+              },
+              venue: hasClinchedDivision
+                ? {
+                    name: "Levi's Stadium",
+                    city: 'Santa Clara',
+                    state: 'CA',
+                    country: 'USA',
+                    isInternational: false,
+                    surface: 'Natural Grass'
+                  }
+                : isRoadWildCard
+                  ? {
+                      name: 'NFC Division Winner Stadium (TBD)',
+                      city: 'Road Playoff Venue',
+                      state: '',
+                      country: 'USA',
+                      isInternational: false,
+                      surface: 'TBD'
+                    }
+                  : {
+                      name: "Levi's Stadium or Road Host (TBD)",
+                      city: 'Seed Dependent',
+                      state: '',
+                      country: 'USA',
+                      isInternational: false,
+                      surface: 'TBD'
+                    },
+              qualificationNote: hasClinchedDivision
+                ? 'NFC West Champions — 49ers host an NFC Wild Card matchup at Levi’s Stadium (opponent TBD).'
+                : isRoadWildCard
+                  ? 'NFC Wild Card berth clinched — 49ers travel to face an NFC division champion on Wild Card Weekend.'
+                  : 'Playoff berth clinched — final seeding determines home vs. road Wild Card matchup.'
+            },
+            seasonYear
+          )
+        );
+      }
+    }
+
+    // 3. Round-by-round postseason progression as games complete (WC win -> DIV -> CON -> SB)
+    const wcGame = postGames.find(g => g.postseasonRound === 'WC' && !g.isByeWeek);
+    if (wcGame?.completed && wcGame.result === 'W' && !postGames.some(g => g.postseasonRound === 'DIV' || g.week === 20)) {
+      const seedNum = Number(teamStatus.playoffSeed || appData?.meta?.playoffSeed || 0);
+      const isSeed2Host = seedNum === 2;
+      postGames.push(
+        normalizeScheduleGameItem(
+          {
+            id: `post_${seasonYear}_div`,
+            seasonType: 'POST',
+            postseasonRound: 'DIV',
+            postseasonState: 'advanced_opponent_tbd',
+            week: 20,
+            weekLabel: 'DIV',
+            roundBadgeLabel: 'Divisional Round',
+            dateIso: `${seasonYear + 1}-01-24T21:30:00Z`,
+            statusDetail: 'NFC Divisional • Qualified',
+            completed: false,
+            result: null,
+            homeAway: isSeed2Host ? 'home' : 'tbd',
+            sfLogoUrl,
+            opponent: {
+              abbr: 'TBD',
+              name: 'NFC Divisional Opponent (TBD)',
+              record: 'Awaiting Wild Card Results',
+              isTbd: true
+            },
+            venue: isSeed2Host
+              ? {
+                  name: "Levi's Stadium",
+                  city: 'Santa Clara',
+                  state: 'CA',
+                  country: 'USA',
+                  isInternational: false,
+                  surface: 'Natural Grass'
+                }
+              : {
+                  name: "Levi's Stadium or Host Venue (TBD)",
+                  city: 'Seed Dependent',
+                  state: '',
+                  country: 'USA',
+                  isInternational: false,
+                  surface: 'TBD'
+                },
+            qualificationNote: 'Advanced from NFC Wild Card Round — Divisional Round matchup & kickoff finalized once Wild Card Weekend concludes.'
+          },
+          seasonYear
+        )
+      );
+    }
+
+    const divGame = postGames.find(g => g.postseasonRound === 'DIV' || g.week === 20);
+    if (divGame?.completed && divGame.result === 'W' && !postGames.some(g => g.postseasonRound === 'CON' || g.week === 21)) {
+      postGames.push(
+        normalizeScheduleGameItem(
+          {
+            id: `post_${seasonYear}_con`,
+            seasonType: 'POST',
+            postseasonRound: 'CON',
+            postseasonState: 'advanced_opponent_tbd',
+            week: 21,
+            weekLabel: 'NFC CHAMP',
+            roundBadgeLabel: 'NFC Championship',
+            dateIso: `${seasonYear + 1}-01-31T23:30:00Z`,
+            statusDetail: 'NFC Championship • Qualified',
+            completed: false,
+            result: null,
+            homeAway: hasClinchedSeed1Bye ? 'home' : 'tbd',
+            sfLogoUrl,
+            opponent: {
+              abbr: 'TBD',
+              name: 'NFC Championship Opponent (TBD)',
+              record: 'Awaiting Divisional Results',
+              isTbd: true
+            },
+            venue: hasClinchedSeed1Bye
+              ? {
+                  name: "Levi's Stadium",
+                  city: 'Santa Clara',
+                  state: 'CA',
+                  country: 'USA',
+                  isInternational: false,
+                  surface: 'Natural Grass'
+                }
+              : {
+                  name: "Levi's Stadium or Host Venue (TBD)",
+                  city: 'Seed Dependent',
+                  state: '',
+                  country: 'USA',
+                  isInternational: false,
+                  surface: 'TBD'
+                },
+            qualificationNote: 'Advanced to the NFC Championship Game — winner represents the NFC in the Super Bowl.'
+          },
+          seasonYear
+        )
+      );
+    }
+
+    const conGame = postGames.find(g => g.postseasonRound === 'CON' || g.week === 21);
+    if (conGame?.completed && conGame.result === 'W' && !postGames.some(g => g.postseasonRound === 'SB' || g.week === 22)) {
+      postGames.push(
+        normalizeScheduleGameItem(
+          {
+            id: `post_${seasonYear}_sb`,
+            seasonType: 'POST',
+            postseasonRound: 'SB',
+            postseasonState: 'advanced_opponent_tbd',
+            week: 22,
+            weekLabel: 'SUPER BOWL',
+            roundBadgeLabel: 'Super Bowl',
+            dateIso: `${seasonYear + 1}-02-14T23:30:00Z`,
+            statusDetail: 'Super Bowl • NFC Champions',
+            completed: false,
+            result: null,
+            homeAway: 'neutral',
+            sfLogoUrl,
+            opponent: {
+              abbr: 'TBD',
+              name: 'AFC Champion (TBD)',
+              record: 'Awaiting AFC Championship',
+              isTbd: true
+            },
+            venue: {
+              name: seasonYear === 2026 ? 'SoFi Stadium' : 'Super Bowl Host Stadium',
+              city: seasonYear === 2026 ? 'Inglewood' : 'Neutral Site',
+              state: seasonYear === 2026 ? 'CA' : '',
+              country: 'USA',
+              isInternational: false,
+              surface: 'Neutral Turf'
+            },
+            qualificationNote: 'NFC Champions — 49ers advance to the Super Bowl.'
+          },
+          seasonYear
+        )
+      );
+    }
+
+    // If the 49ers lost any completed postseason game, drop any unplayed subsequent rounds
+    const lossRound = postGames.find(g => g.completed && g.result === 'L' && !g.isByeWeek);
+    if (lossRound) {
+      postGames = postGames.filter(g => g.completed || g.week <= lossRound.week);
+    }
+  }
+
+  postGames.sort((a, b) => (a.week || 0) - (b.week || 0));
+
+  const allGames = [...preGames, ...regGames, ...postGames];
+  const previousGames = allGames.filter(g => Boolean(g.completed));
+  const upcomingGames = allGames.filter(g => !g.completed);
+
+  let postseasonStatus = {
+    state: 'NONE',
+    hasClinchedPlayoffs,
+    hasClinchedDivision,
+    hasClinchedSeed1Bye,
+    isEliminated: Boolean(isEliminatedRegularSeason || lostPostGame),
+    makePlayoffsPct,
+    winDivisionPct,
+    seed1ByePct,
+    headline: '',
+    summary: ''
+  };
+
+  if (isEliminatedRegularSeason) {
+    postseasonStatus = {
+      ...postseasonStatus,
+      state: 'ELIMINATED',
+      headline: 'Eliminated from Postseason Contention',
+      summary: `The 49ers did not qualify for the ${seasonYear} NFL Postseason.`
+    };
+  } else if (lostPostGame) {
+    postseasonStatus = {
+      ...postseasonStatus,
+      state: 'POSTSEASON_ELIMINATED',
+      headline: `Postseason Concluded (${lostPostGame.roundBadgeLabel || lostPostGame.weekLabel})`,
+      summary: `The 49ers' ${seasonYear} postseason run concluded in the ${lostPostGame.roundTitle || lostPostGame.roundBadgeLabel}.`
+    };
+  } else if (hasClinchedSeed1Bye) {
+    postseasonStatus = {
+      ...postseasonStatus,
+      state: 'CLINCHED_FIRST_ROUND_BYE',
+      headline: 'Clinched #1 NFC Seed & First-Round Playoff Bye',
+      summary: "49ers skip Wild Card Weekend and hold homefield advantage at Levi's Stadium through the NFC playoffs."
+    };
+  } else if (hasClinchedPlayoffs) {
+    const byePossible = seed1ByePct !== null && seed1ByePct > 0.05 && !allRegCompleted;
+    postseasonStatus = {
+      ...postseasonStatus,
+      state: byePossible
+        ? 'CLINCHED_ROUND_TBD'
+        : hasClinchedDivision
+          ? 'CLINCHED_DIVISION'
+          : 'CLINCHED_WILD_CARD_ROUND',
+      headline: hasClinchedDivision
+        ? 'NFC West Champions • Playoff Berth Clinched'
+        : 'NFL Playoff Berth Clinched',
+      summary: byePossible
+        ? `Clinched postseason berth — ${seed1ByePct.toFixed(1)}% #1 Seed First-Round Bye vs. ${(100 - seed1ByePct).toFixed(1)}% Wild Card Weekend.`
+        : hasClinchedDivision
+          ? "Clinched NFC West title — guaranteed a home playoff matchup at Levi's Stadium."
+          : 'Clinched NFC playoff berth — opponent and kickoff window finalize as regular-season standings lock.'
+    };
+  } else if (hasExplicitOdds && makePlayoffsPct > 0) {
+    postseasonStatus = {
+      ...postseasonStatus,
+      state: 'UNCLINCHED_IN_HUNT',
+      headline: `Postseason Qualification Horizon • ${makePlayoffsPct.toFixed(1)}% Playoff Odds`,
+      summary: `Playoff berth not yet clinched (${winDivisionPct !== null ? `${winDivisionPct.toFixed(1)}% NFC West • ` : ''}${seed1ByePct !== null ? `${seed1ByePct.toFixed(1)}% #1 Seed Bye` : ''}). Postseason games will appear here automatically once the 49ers qualify.`
+    };
+  }
+
+  return {
+    seasonYear,
+    allGames,
+    preseasonGames: preGames,
+    regularSeasonGames: regGames,
+    postseasonGames: postGames,
+    previousGames,
+    upcomingGames,
+    postseasonStatus
+  };
+}

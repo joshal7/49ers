@@ -14,7 +14,9 @@ import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveOrderedDashboardBlocks,
-  partitionCompletedTradesByWindow
+  partitionCompletedTradesByWindow,
+  normalizeScheduleGameItem,
+  resolveCompleteScheduleModel
 } from '../src/engine/seasonStateMachine.js';
 import {
   JARGON_GLOSSARY,
@@ -4672,6 +4674,495 @@ test('Keenan Allen trade deadline acquisition & multi-source roster reconciliati
   assert.ok(mockClientAppData.roster.players.some(p => p.name === 'Future Trade Target' && p.gsisId === '00-0099999'));
   assert.ok(!mockClientAppData.roster.players.some(p => p.name === 'Vincent Anthony Jr.'), 'Client roster sync must still block known PS ghost');
   assert.equal(mockClientAppData.depthChart.units[0].rows[0].baselineChain[0]?.name, 'Future Trade Target');
+});
+
+await testAsync('Resilient fetchJsonSafe retries transient iOS Load failed socket drops and falls back to CacheStorage', async () => {
+  const { fetchJsonSafe } = await import('../src/services/dataService.js');
+  const origFetch = globalThis.fetch;
+  const origCaches = globalThis.caches;
+
+  try {
+    // 1. Transient WebKit `TypeError: Load failed` on attempt 1 recovers automatically on attempt 2
+    let calls = 0;
+    globalThis.fetch = async (_url, init) => {
+      calls += 1;
+      if (calls === 1) {
+        assert.equal(init?.cache, 'no-cache');
+        throw new TypeError('Load failed');
+      }
+      assert.equal(init?.cache, 'default', 'Retry must allow HTTP/SW cache fallback');
+      return new Response(JSON.stringify({ ok: true, recoveredOnAttempt: calls }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    };
+
+    const recovered = await fetchJsonSafe('./data/meta.json', { maxAttempts: 3, timeoutMs: 2000, allowGithubRawFallback: false });
+    assert.equal(recovered.ok, true);
+    assert.equal(recovered.recoveredOnAttempt, 2);
+
+    // 2. Total network outage falls back cleanly to CacheStorage when cached copy exists
+    globalThis.fetch = async () => {
+      throw new TypeError('Load failed');
+    };
+    globalThis.caches = {
+      match: async url =>
+        String(url).includes('roster.json')
+          ? new Response(JSON.stringify({ players: [{ name: 'Brock Purdy' }] }), { status: 200 })
+          : null
+    };
+
+    const fromCache = await fetchJsonSafe('./data/roster.json', { maxAttempts: 2, timeoutMs: 1000, allowGithubRawFallback: false });
+    assert.equal(fromCache.players?.[0]?.name, 'Brock Purdy');
+  } finally {
+    globalThis.fetch = origFetch;
+    if (origCaches === undefined) delete globalThis.caches;
+    else globalThis.caches = origCaches;
+  }
+});
+
+await testAsync('Opponent 4-card Health Summary accurately subtracts Doubtful/GTD starters, excludes ST returners, and defines Availability Index glossary', async () => {
+  const {
+    computeTeamHealthSummary,
+    isEffectiveOffDefStarter,
+    select22OffDefStartersFromDepthChart
+  } = await import('../src/engine/injuryProbabilityModel.js');
+
+  // Verify glossary entries for Availability Index & Starters Cleared
+  const availGlossary = getJargonEntry('availability_index');
+  const clearedGlossary = getJargonEntry('starters_cleared');
+  assert.ok(availGlossary?.term.includes('Availability Index') && availGlossary.definition.includes('22'));
+  assert.ok(clearedGlossary?.term.includes('Starters Cleared'));
+
+  // Verify ST returners (KR/PR with <35% WR snaps like KaVontae Turpin 27%) are NOT miscounted as Off/Def starters
+  assert.equal(isEffectiveOffDefStarter({ name: 'KaVontae Turpin', position: 'WR', snapPct: 27, isStarter: true }), false);
+  assert.equal(isEffectiveOffDefStarter({ name: 'Brandon Aubrey', position: 'PK', snapPct: 40, isStarter: true }), false);
+  assert.equal(isEffectiveOffDefStarter({ name: 'P.J. Locke', position: 'S', snapPct: 53, isStarter: true }), true);
+  assert.equal(isEffectiveOffDefStarter({ name: 'Jake Ferguson', position: 'TE', snapPct: 56, isStarter: true }), true);
+
+  // Verify depth chart selector caps at <=22 Off+Def starters and ignores Special Teams
+  const mockDepth = [
+    {
+      name: '3WR 1TE',
+      positions: {
+        qb: { athletes: [{ displayName: 'Dak Prescott' }] },
+        rb: { athletes: [{ displayName: 'Javonte Williams' }] },
+        fb: { athletes: [{ displayName: 'Hunter Luepke' }] },
+        wr1: { athletes: [{ displayName: 'CeeDee Lamb' }] },
+        wr2: { athletes: [{ displayName: 'George Pickens' }] },
+        wr3: { athletes: [{ displayName: 'Ryan Flournoy' }] },
+        te: { athletes: [{ displayName: 'Jake Ferguson' }] },
+        lt: { athletes: [{ displayName: 'Tyler Guyton' }] },
+        lg: { athletes: [{ displayName: 'Tyler Smith' }] },
+        c: { athletes: [{ displayName: 'Cooper Beebe' }] },
+        rg: { athletes: [{ displayName: 'Tyler Booker' }] },
+        rt: { athletes: [{ displayName: 'Terence Steele' }] }
+      }
+    },
+    {
+      name: 'Special Teams',
+      positions: {
+        pk: { athletes: [{ displayName: 'Brandon Aubrey' }] },
+        kr: { athletes: [{ displayName: 'KaVontae Turpin' }] }
+      }
+    }
+  ];
+  const snapLookup = nk => (nk === 'ryanflournoy' ? 76 : nk === 'hunterluepke' ? 62 : 80);
+  const selected = select22OffDefStartersFromDepthChart(mockDepth, snapLookup);
+  assert.equal(selected.offStarterNames.size, 11, 'Must pick exact 11 offensive starters (resolving WR3 76% over FB 62%)');
+  assert.equal(selected.allStarterNames.has('kavontaeturpin'), false, 'KR must never be marked starter');
+  assert.equal(selected.allStarterNames.has('brandonaubrey'), false, 'PK must never be marked starter');
+
+  // Verify Dallas scenario: 6 starters on injury report (3 Doubtful/Long Shot + 3 GTD) => 16/22 Starters Cleared (NEVER 22/22!)
+  const dallasSummary = computeTeamHealthSummary({
+    injuryReport: [
+      { name: 'P.J. Locke', position: 'S', snapPct: 53, isStarter: true, gameStatus: 'Questionable', playProbabilityPct: 18 },
+      { name: 'Tyler Goodson', position: 'RB', snapPct: 20, isStarter: false, gameStatus: 'Questionable', playProbabilityPct: 35 },
+      { name: 'Jake Ferguson', position: 'TE', snapPct: 56, isStarter: true, gameStatus: 'Questionable', playProbabilityPct: 44 },
+      { name: 'Donovan Ezeiruaku', position: 'LB', snapPct: 65, isStarter: true, gameStatus: 'Questionable', playProbabilityPct: 45 },
+      { name: 'Luke Schoonmaker', position: 'TE', snapPct: 51, isStarter: false, gameStatus: 'Questionable', playProbabilityPct: 73 },
+      { name: 'Joey Porter Jr.', position: 'CB', snapPct: 54, isStarter: true, gameStatus: 'Questionable', playProbabilityPct: 76 },
+      { name: 'George Pickens', position: 'WR', snapPct: 78, isStarter: true, gameStatus: 'Questionable', playProbabilityPct: 77 },
+      { name: 'DeMarvion Overshown', position: 'LB', snapPct: 71, isStarter: true, gameStatus: 'Questionable', playProbabilityPct: 77 }
+    ],
+    irReserve: [
+      { name: 'Jalen Thompson', position: 'S', snapPct: 81, isPracticeWindowOpen: true },
+      { name: 'Malik Davis', position: 'RB', isSeasonEnding: true }
+    ],
+    totalStarters: 22
+  });
+  assert.equal(dallasSummary.activeStartersHealthy, 16, 'Expected 16/22 starters cleared when 6 starters carry Doubtful/GTD tags');
+  assert.equal(dallasSummary.startersDoubtfulCount, 3);
+  assert.equal(dallasSummary.startersQuestionableCount, 3);
+  assert.equal(dallasSummary.questionableOrDoubtfulCount, 8);
+  assert.equal(dallasSummary.doubtfulOrLongShotCount, 4);
+  assert.equal(dallasSummary.gtdCount, 4);
+  assert.equal(dallasSummary.irOpenWindowCount, 1);
+
+  // Also verify live schedule-matchup.json has 100% parity between injured starters and activeStartersHealthy
+  const liveSched = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const liveOh = liveSched.upcomingMatchup?.opponentHealth;
+  const expectedLiveSummary = computeTeamHealthSummary({
+    injuryReport: liveOh?.injuryReport || [],
+    irReserve: liveOh?.irReserve || [],
+    totalStarters: liveOh?.summary?.totalStarters || 22
+  });
+  assert.equal(liveOh.summary.activeStartersHealthy, expectedLiveSummary.activeStartersHealthy);
+});
+
+await testAsync('3-Stage AI Analysis & Auto Podcast timer allocator progresses across all 3 bars and fits 3m pod in 1 TTS pass', async () => {
+  const { computeLiveStageProgressState } = await import('../src/services/aiWorkerClient.js');
+  const { chunkTurnsForGeminiTts } = await import('../src/engine/geminiStudioPrompts.js');
+
+  // Analysis timer spends appreciable time across Step 1 (0-10s), Step 2 (10-24s), and Step 3 (24s+)
+  const aStep1 = computeLiveStageProgressState({ kind: 'analysis', elapsedMs: 5000 });
+  const aStep2 = computeLiveStageProgressState({ kind: 'analysis', elapsedMs: 16000 });
+  const aStep3 = computeLiveStageProgressState({ kind: 'analysis', elapsedMs: 28000 });
+  assert.equal(aStep1.stepIdx, 1);
+  assert.ok(aStep1.stagePercents[0] >= 40 && aStep1.stagePercents[1] === 0);
+  assert.equal(aStep2.stepIdx, 2);
+  assert.ok(aStep2.stagePercents[0] === 100 && aStep2.stagePercents[1] > 30 && aStep2.stagePercents[2] === 0);
+  assert.equal(aStep3.stepIdx, 3);
+  assert.ok(aStep3.stagePercents[0] === 100 && aStep3.stagePercents[1] === 100 && aStep3.stagePercents[2] > 15);
+  assert.ok(aStep3.percent > aStep2.percent && aStep2.percent > aStep1.percent);
+
+  // Podcast timer spans Step 1 -> Step 2 during Research+Script, holds Step 2 until TTS starts, then advances Step 3
+  const pStep1 = computeLiveStageProgressState({ kind: 'podcast', durationMinutes: 3, elapsedMs: 5000, allowAutoStage3: false });
+  const pStep2 = computeLiveStageProgressState({ kind: 'podcast', durationMinutes: 3, elapsedMs: 22000, allowAutoStage3: false });
+  const pStep3 = computeLiveStageProgressState({
+    kind: 'podcast',
+    durationMinutes: 3,
+    elapsedMs: 36000,
+    phaseFloor: 3,
+    phase3ElapsedMs: 10000,
+    ttsSubPercent: 48,
+    allowAutoStage3: false
+  });
+  assert.equal(pStep1.stepIdx, 1);
+  assert.equal(pStep2.stepIdx, 2);
+  assert.equal(pStep3.stepIdx, 3);
+  assert.ok(pStep3.stagePercents[2] >= 48 && pStep3.stageElapsedSec[2] === 10);
+
+  // Verify a 3-minute (~420 word) two-host podcast fits inside ONE single 3800-char Gemini Multi-Speaker TTS block
+  const threeMinTurns = Array.from({ length: 18 }, (_, i) => ({
+    speaker: i % 2 === 0 ? 'Marcus' : 'Elena',
+    text: "Let's look at how Keenan Allen gives Brock Purdy a veteran option route winner over the middle on third down."
+  }));
+  const blocks3m = chunkTurnsForGeminiTts(threeMinTurns, 3800);
+  assert.equal(blocks3m.length, 1, `Expected 3-minute podcast (~400 words) to synthesize in 1 single TTS pass, got ${blocks3m.length}`);
+});
+
+test('Schedule includes Preseason (PRE 1..3), hides all past games in Previous Games bar, and handles all Postseason qualification & round-by-round states', () => {
+  const liveSm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const liveMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+  const liveSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+
+  // 1. Live schedule-matchup.json contains all 3 2026 Preseason games (PRE 1..3) + 17 Regular Season games
+  const preGamesInFile = (liveSm.schedule || []).filter(g => g.seasonType === 'PRE');
+  const regGamesInFile = (liveSm.schedule || []).filter(g => (g.seasonType || 'REG') === 'REG');
+  assert.equal(preGamesInFile.length, 3, 'Expected 3 Preseason games in data/schedule-matchup.json');
+  assert.deepEqual(
+    preGamesInFile.map(g => g.weekLabel),
+    ['PRE 1', 'PRE 2', 'PRE 3'],
+    'Preseason games must carry PRE 1, PRE 2, PRE 3 labels'
+  );
+  assert.ok(preGamesInFile.every(g => g.completed && g.week < 0), '2026 Preseason games must be completed with negative week numbers');
+  assert.equal(regGamesInFile.length, 17, 'Expected 17 Regular Season games in data/schedule-matchup.json');
+
+  // 2. Scenario A: Uncertainty for making playoffs (0% < makePlayoffsPct < 99.95%, unclinched)
+  //    - Completed Preseason + Completed Regular Season games are hidden inside the collapsed Previous Games bar
+  //    - Zero premature Postseason game rows appear in Upcoming
+  //    - Postseason Qualification Tracker renders with live probabilities
+  const unclinchedAppData = {
+    meta: { ...liveMeta, seasonYear: 2026, currentWeek: 10 },
+    scheduleMatchup: liveSm,
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: {
+          sfOdds: { makePlayoffsPct: 68.4, winDivisionPct: 44.2, seed1ByePct: 14.5 }
+        }
+      }
+    }
+  };
+  const unclinchedModel = resolveCompleteScheduleModel(unclinchedAppData);
+  assert.equal(unclinchedModel.preseasonGames.length, 3);
+  assert.equal(unclinchedModel.postseasonGames.length, 0, 'Unclinched team must not have premature postseason game rows');
+  assert.equal(unclinchedModel.postseasonStatus.state, 'UNCLINCHED_IN_HUNT');
+  assert.ok(
+    unclinchedModel.previousGames.some(g => g.seasonType === 'PRE' && g.weekLabel === 'PRE 1') &&
+      unclinchedModel.previousGames.some(g => g.seasonType === 'REG' && g.week === 1),
+    'Both completed Preseason and completed Regular Season games must be in previousGames'
+  );
+  assert.ok(
+    unclinchedModel.upcomingGames.every(g => !g.completed && g.seasonType === 'REG'),
+    'Upcoming games while unclinched must only contain unplayed regular-season games'
+  );
+
+  const unclinchedHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: unclinchedAppData,
+    activeVideosSet: new Set(),
+    schedulePrevExpanded: false
+  });
+  assert.ok(
+    unclinchedHtml.includes('data-schedule-previous-games') &&
+      !unclinchedHtml.includes('data-schedule-previous-games open'),
+    'Previous Games bar must start collapsed'
+  );
+  assert.ok(unclinchedHtml.includes('2-1 Pre'), 'Previous Games summary must display 2-1 Pre badge alongside regular-season record');
+  assert.ok(unclinchedHtml.includes('PRE 1–3 • Wk 1–9'), 'Previous Games summary must show PRE 1–3 • Wk 1–9 range');
+  assert.ok(unclinchedHtml.includes('data-schedule-postseason-tracker="unclinched"'), 'Unclinched state must render Postseason Qualification Tracker');
+  assert.ok(unclinchedHtml.includes('68.4% Playoff Odds'));
+  const unclinchedUpcomingSlice = unclinchedHtml.slice(unclinchedHtml.indexOf('data-schedule-upcoming-list'));
+  assert.ok(!unclinchedUpcomingSlice.includes('Tennessee Titans') && !unclinchedUpcomingSlice.includes('PRE 1'), 'Completed Preseason games must be hidden inside Previous Games bar, never in Upcoming');
+
+  // 3. Scenario B: Mathematically Eliminated (makePlayoffsPct = 0%) -> Zero postseason games and no unclinched tracker
+  const eliminatedModel = resolveCompleteScheduleModel({
+    meta: { seasonYear: 2026, currentWeek: 18, teamStatus: { mathematicallyEliminated: true } },
+    scheduleMatchup: liveSm,
+    seasonal: { playoffPicture: { baselineSimulation: { sfOdds: { makePlayoffsPct: 0, winDivisionPct: 0, seed1ByePct: 0 } } } }
+  });
+  assert.equal(eliminatedModel.postseasonGames.length, 0);
+  assert.equal(eliminatedModel.postseasonStatus.state, 'ELIMINATED');
+
+  // 4. Scenario C: Clinched Playoff Spot, Entry Round (1st-Round Bye vs. Wild Card) & Opponent Still Unknown
+  const clinchedRoundTbdData = {
+    meta: { seasonYear: 2026, currentWeek: 16, teamStatus: { clinchedPlayoffs: true } },
+    scheduleMatchup: liveSm,
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: {
+          sfOdds: { makePlayoffsPct: 100, winDivisionPct: 88.5, seed1ByePct: 41.2 }
+        }
+      }
+    }
+  };
+  const roundTbdModel = resolveCompleteScheduleModel(clinchedRoundTbdData);
+  assert.equal(roundTbdModel.postseasonGames.length, 1);
+  assert.equal(roundTbdModel.postseasonGames[0].postseasonRound, 'QUALIFIED_TBD');
+  assert.equal(roundTbdModel.postseasonGames[0].opponent.name, 'NFC Playoff Opponent (TBD)');
+  assert.equal(roundTbdModel.postseasonStatus.state, 'CLINCHED_ROUND_TBD');
+  const roundTbdHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON', 'PLAYOFF_PUSH'],
+    appData: clinchedRoundTbdData,
+    activeVideosSet: new Set()
+  });
+  assert.ok(roundTbdHtml.includes('data-postseason-state="clinched_round_tbd"'));
+  assert.ok(roundTbdHtml.includes('NFC Playoff Opponent (TBD)'));
+
+  // 5. Scenario D: Clinched Playoff Spot in Wild Card Round, Opponent Unknown (Division Winner Home vs. Wild Card Road vs. Venue TBD)
+  const clinchedDivWcModel = resolveCompleteScheduleModel({
+    meta: { seasonYear: 2026, currentWeek: 17, teamStatus: { clinchedDivision: true } },
+    scheduleMatchup: liveSm,
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: { sfOdds: { makePlayoffsPct: 100, winDivisionPct: 100, seed1ByePct: 0 } }
+      }
+    }
+  });
+  assert.equal(clinchedDivWcModel.postseasonGames.length, 1);
+  assert.equal(clinchedDivWcModel.postseasonGames[0].postseasonRound, 'WC');
+  assert.equal(clinchedDivWcModel.postseasonGames[0].homeAway, 'home');
+  assert.equal(clinchedDivWcModel.postseasonGames[0].venue.name, "Levi's Stadium");
+  assert.equal(clinchedDivWcModel.postseasonGames[0].opponent.name, 'NFC Wild Card Opponent (TBD)');
+
+  const clinchedRoadWcModel = resolveCompleteScheduleModel({
+    meta: { seasonYear: 2026, currentWeek: 18, playoffSeed: 6, teamStatus: { clinchedPlayoffs: true, clinchedWildCardOnly: true } },
+    scheduleMatchup: liveSm,
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: { sfOdds: { makePlayoffsPct: 100, winDivisionPct: 0, seed1ByePct: 0 } }
+      }
+    }
+  });
+  assert.equal(clinchedRoadWcModel.postseasonGames.length, 1);
+  assert.equal(clinchedRoadWcModel.postseasonGames[0].postseasonRound, 'WC');
+  assert.equal(clinchedRoadWcModel.postseasonGames[0].homeAway, 'away');
+  assert.equal(clinchedRoadWcModel.postseasonGames[0].opponent.name, 'NFC Division Winner (TBD)');
+
+  // 6. Scenario E: Clinched #1 NFC Seed First-Round Bye (Before Wild Card Weekend vs. After Wild Card Weekend)
+  const allRegDoneSched = liveSm.schedule.map(g => ({
+    ...g,
+    completed: true,
+    result: g.result || 'W',
+    sfScore: g.sfScore ?? 28,
+    oppScore: g.oppScore ?? 17
+  }));
+  const seed1ByePreWcData = {
+    meta: {
+      seasonYear: 2026,
+      currentWeek: 19,
+      nowMs: '2027-01-12T18:00:00Z',
+      teamStatus: { clinchedSeed1Bye: true, wildCardRoundCompleted: false }
+    },
+    scheduleMatchup: { ...liveSm, schedule: allRegDoneSched },
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: { sfOdds: { makePlayoffsPct: 100, winDivisionPct: 100, seed1ByePct: 100 } }
+      }
+    }
+  };
+  const byePreWcModel = resolveCompleteScheduleModel(seed1ByePreWcData);
+  assert.equal(byePreWcModel.postseasonStatus.state, 'CLINCHED_FIRST_ROUND_BYE');
+  assert.equal(byePreWcModel.postseasonGames.length, 2, 'Must include both WC BYE and automatic DIV qualification');
+  assert.equal(byePreWcModel.postseasonGames[0].postseasonRound, 'WC_BYE');
+  assert.equal(byePreWcModel.postseasonGames[0].isByeWeek, true);
+  assert.equal(byePreWcModel.postseasonGames[0].completed, false);
+  assert.equal(byePreWcModel.postseasonGames[1].postseasonRound, 'DIV');
+  assert.equal(byePreWcModel.postseasonGames[1].homeAway, 'home');
+  assert.equal(byePreWcModel.postseasonGames[1].venue.name, "Levi's Stadium");
+  assert.equal(byePreWcModel.postseasonGames[1].opponent.name, 'Lowest Remaining NFC Seed (TBD)');
+
+  const byePreWcHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: seed1ByePreWcData,
+    activeVideosSet: new Set()
+  });
+  const byeUpcomingSlice = byePreWcHtml.slice(byePreWcHtml.indexOf('data-schedule-upcoming-list'));
+  assert.ok(byeUpcomingSlice.includes('WC BYE') && byeUpcomingSlice.includes('First-Round Playoff Bye (#1 NFC Seed)'));
+  assert.ok(byeUpcomingSlice.includes('Lowest Remaining NFC Seed (TBD)') && byeUpcomingSlice.includes('Next Up'));
+
+  // Once Wild Card Weekend completes, WC BYE moves into Previous Games bar and DIV is at the top of Upcoming!
+  const seed1ByePostWcData = {
+    ...seed1ByePreWcData,
+    meta: {
+      ...seed1ByePreWcData.meta,
+      nowMs: '2027-01-20T18:00:00Z',
+      teamStatus: { clinchedSeed1Bye: true, wildCardRoundCompleted: true }
+    }
+  };
+  const byePostWcModel = resolveCompleteScheduleModel(seed1ByePostWcData);
+  assert.ok(
+    byePostWcModel.previousGames.some(g => g.postseasonRound === 'WC_BYE' && g.completed),
+    'Completed Wild Card Bye must move into previousGames'
+  );
+  assert.equal(byePostWcModel.upcomingGames.length, 1);
+  assert.equal(byePostWcModel.upcomingGames[0].postseasonRound, 'DIV');
+
+  // 7. Scenario F: Round-by-Round Postseason Progression (WC Win -> DIV -> NFC CHAMP -> SUPER BOWL, then Loss)
+  // Step 1: 49ers win Wild Card vs. GB -> WC moves to previousGames, DIV arises in upcomingGames with Opponent TBD
+  const afterWcWinData = {
+    meta: { seasonYear: 2026, currentWeek: 20, playoffSeed: 2 },
+    scheduleMatchup: {
+      ...liveSm,
+      schedule: [
+        ...allRegDoneSched,
+        {
+          id: 'post_2026_wc_gb',
+          seasonType: 'POST',
+          postseasonRound: 'WC',
+          week: 19,
+          dateIso: '2027-01-17T21:30:00Z',
+          completed: true,
+          result: 'W',
+          sfScore: 31,
+          oppScore: 20,
+          homeAway: 'home',
+          opponent: { abbr: 'GB', name: 'Green Bay Packers', record: '10-7' },
+          venue: { name: "Levi's Stadium", city: 'Santa Clara', surface: 'Natural Grass' }
+        }
+      ]
+    }
+  };
+  const afterWcWinModel = resolveCompleteScheduleModel(afterWcWinData);
+  assert.ok(afterWcWinModel.previousGames.some(g => g.postseasonRound === 'WC' && g.result === 'W'));
+  assert.equal(afterWcWinModel.upcomingGames.length, 1);
+  assert.equal(afterWcWinModel.upcomingGames[0].postseasonRound, 'DIV');
+  assert.equal(afterWcWinModel.upcomingGames[0].opponent.name, 'NFC Divisional Opponent (TBD)');
+
+  // Step 2: 49ers win Divisional vs. DET -> DIV moves to previousGames, NFC CHAMP arises in upcomingGames
+  const afterDivWinData = {
+    meta: { seasonYear: 2026, currentWeek: 21, teamStatus: { clinchedSeed1Bye: true } },
+    scheduleMatchup: {
+      ...liveSm,
+      schedule: [
+        ...allRegDoneSched,
+        {
+          id: 'post_2026_div_det',
+          seasonType: 'POST',
+          postseasonRound: 'DIV',
+          week: 20,
+          dateIso: '2027-01-24T21:30:00Z',
+          completed: true,
+          result: 'W',
+          sfScore: 34,
+          oppScore: 24,
+          homeAway: 'home',
+          opponent: { abbr: 'DET', name: 'Detroit Lions', record: '12-5' },
+          venue: { name: "Levi's Stadium", city: 'Santa Clara', surface: 'Natural Grass' }
+        }
+      ]
+    }
+  };
+  const afterDivWinModel = resolveCompleteScheduleModel(afterDivWinData);
+  assert.ok(afterDivWinModel.previousGames.some(g => g.postseasonRound === 'DIV' && g.result === 'W'));
+  assert.equal(afterDivWinModel.upcomingGames.length, 1);
+  assert.equal(afterDivWinModel.upcomingGames[0].postseasonRound, 'CON');
+  assert.equal(afterDivWinModel.upcomingGames[0].weekLabel, 'NFC CHAMP');
+  assert.equal(afterDivWinModel.upcomingGames[0].homeAway, 'home');
+  assert.equal(afterDivWinModel.upcomingGames[0].opponent.name, 'NFC Championship Opponent (TBD)');
+
+  // Step 3: 49ers win NFC Championship vs. PHI -> CON moves to previousGames, SUPER BOWL arises in upcomingGames
+  const afterConWinData = {
+    meta: { seasonYear: 2026, currentWeek: 22, teamStatus: { clinchedSeed1Bye: true } },
+    scheduleMatchup: {
+      ...liveSm,
+      schedule: [
+        ...afterDivWinData.scheduleMatchup.schedule,
+        {
+          id: 'post_2026_con_phi',
+          seasonType: 'POST',
+          postseasonRound: 'CON',
+          week: 21,
+          dateIso: '2027-01-31T23:30:00Z',
+          completed: true,
+          result: 'W',
+          sfScore: 28,
+          oppScore: 21,
+          homeAway: 'home',
+          opponent: { abbr: 'PHI', name: 'Philadelphia Eagles', record: '13-4' },
+          venue: { name: "Levi's Stadium", city: 'Santa Clara', surface: 'Natural Grass' }
+        }
+      ]
+    }
+  };
+  const afterConWinModel = resolveCompleteScheduleModel(afterConWinData);
+  assert.ok(afterConWinModel.previousGames.some(g => g.postseasonRound === 'CON' && g.result === 'W'));
+  assert.equal(afterConWinModel.upcomingGames.length, 1);
+  assert.equal(afterConWinModel.upcomingGames[0].postseasonRound, 'SB');
+  assert.equal(afterConWinModel.upcomingGames[0].weekLabel, 'SUPER BOWL');
+  assert.equal(afterConWinModel.upcomingGames[0].opponent.name, 'AFC Champion (TBD)');
+
+  // Step 4: If 49ers lose a postseason round (e.g. Divisional loss), zero further rounds are synthesized
+  const afterDivLossData = {
+    meta: { seasonYear: 2026, currentWeek: 20, teamStatus: { clinchedSeed1Bye: true } },
+    scheduleMatchup: {
+      ...liveSm,
+      schedule: [
+        ...allRegDoneSched,
+        {
+          id: 'post_2026_div_loss',
+          seasonType: 'POST',
+          postseasonRound: 'DIV',
+          week: 20,
+          dateIso: '2027-01-24T21:30:00Z',
+          completed: true,
+          result: 'L',
+          sfScore: 20,
+          oppScore: 23,
+          homeAway: 'home',
+          opponent: { abbr: 'DET', name: 'Detroit Lions', record: '12-5' },
+          venue: { name: "Levi's Stadium", city: 'Santa Clara', surface: 'Natural Grass' }
+        }
+      ]
+    }
+  };
+  const afterDivLossModel = resolveCompleteScheduleModel(afterDivLossData);
+  assert.equal(afterDivLossModel.upcomingGames.length, 0, 'Postseason loss must stop any subsequent round synthesis');
+  assert.equal(afterDivLossModel.postseasonStatus.state, 'POSTSEASON_ELIMINATED');
 });
 
 console.log(`\n======================================================`);

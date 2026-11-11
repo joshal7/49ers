@@ -20,7 +20,10 @@ import {
 } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
-import { partitionCompletedTradesByWindow } from '../engine/seasonStateMachine.js';
+import {
+  partitionCompletedTradesByWindow,
+  resolveCompleteScheduleModel
+} from '../engine/seasonStateMachine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   sortNewsWithBreakingPriority,
@@ -489,9 +492,10 @@ function renderSingleDashboardCard({
     }
 
     case 'schedule_overview': {
-      const sched = appData?.scheduleMatchup?.schedule || [];
+      const schedModel = resolveCompleteScheduleModel(appData, mcSimResult);
+      const sched = schedModel.allGames;
       const intl = sched.filter(g => g.venue?.isInternational);
-      const upcoming4 = sched.filter(g => !g.completed).slice(0, 4);
+      const upcoming4 = schedModel.upcomingGames.filter(g => !g.isByeWeek).slice(0, 4);
       const overallRec = appData?.meta?.teamRecord || '—';
       const divRec = appData?.meta?.divisionRecord ? ` (${appData.meta.divisionRecord} NFC West)` : '';
       const intlNotesHtml = intl
@@ -512,10 +516,12 @@ function renderSingleDashboardCard({
                 ${upcoming4
                   .map(g => {
                     const safeGameUrl = sanitizeExternalUrl(g.gameUrl, null);
+                    const wkLbl = g.seasonType === 'REG' ? `WK ${g.week}` : g.weekLabel || `WK ${g.week}`;
+                    const locPref = g.homeAway === 'home' ? 'vs' : g.homeAway === 'away' ? '@' : 'vs/@';
                     const inner = `
-                      <span class="mono" style="font-size:10px;color:var(--text-muted)">WK ${g.week}</span>
+                      <span class="mono" style="font-size:10px;color:var(--text-muted)">${esc(wkLbl)}</span>
                       ${renderTeamLogoHtml(g.opponent?.abbr || 'NFL', g.oppLogoUrl || g.opponent?.logoUrl, 24)}
-                      <span class="mono" style="font-size:11px;font-weight:700">${g.homeAway === 'home' ? 'vs' : '@'} ${esc(g.opponent?.abbr || '')}</span>
+                      <span class="mono" style="font-size:11px;font-weight:700">${locPref} ${esc(g.opponent?.abbr || 'TBD')}</span>
                     `;
                     return safeGameUrl
                       ? `<a href="${esc(safeGameUrl)}" target="_blank" rel="noopener noreferrer" class="kpi-box" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;text-align:center;text-decoration:none;color:inherit">${inner}</a>`

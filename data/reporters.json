@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-11T00:15:58.521Z",
+  "updatedAt": "2026-11-11T04:23:35.409Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-25T00:15:58.521Z",
+  "nextAutoReviewAt": "2026-11-25T04:23:35.410Z",
   "totalTrackedReporters": 48,
   "outlets": [
     {
@@ -126,7 +126,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 38,
+      "liveWeeklyMentions": 34,
       "popularityScore": 99,
       "defaultEnabled": true
     },
@@ -166,7 +166,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/nwagoner",
       "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-      "liveWeeklyMentions": 74,
+      "liveWeeklyMentions": 78,
       "popularityScore": 96,
       "defaultEnabled": true
     },
