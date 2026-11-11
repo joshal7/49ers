@@ -223,25 +223,28 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
   const cacheKey = `${apiBase}:${key}`;
   const deadSet = unavailableModelsByKey.get(cacheKey) || new Set();
 
-  // Rank strictly among models actually present on this key first, then append verified active fallbacks
+  // Rank strictly among models actually present on this key first; only fall back to static list if catalog was empty
   const keyPresentRanked = rankBestGeminiReasoningModels(models).filter(
     id => (catalogIds.length === 0 || catalogIds.includes(id)) && !deadSet.has(id)
   );
-  const fallbackPool =
-    catalogIds.length > 0 ? LIVE_PRODUCTION_FALLBACK_CASCADE : DEFAULT_BEST_REASONING_CASCADE;
+  const matchingCatalogFallbacks = LIVE_PRODUCTION_FALLBACK_CASCADE.filter(
+    m => (catalogIds.length === 0 || catalogIds.includes(m)) && !keyPresentRanked.includes(m) && !deadSet.has(m)
+  );
   const fullCascade =
     keyPresentRanked.length > 0
-      ? [
-          ...keyPresentRanked,
-          ...fallbackPool.filter(m => !keyPresentRanked.includes(m) && !deadSet.has(m))
-        ]
+      ? [...keyPresentRanked, ...matchingCatalogFallbacks]
       : [...DEFAULT_BEST_REASONING_CASCADE.filter(m => !deadSet.has(m))];
 
-  const ttsCascade = DEFAULT_NOTEBOOKLM_TTS_CASCADE.filter(
+  // Prefer fast Gemini Flash Native Multi-Speaker TTS first when present on key so 3-min pods render in ~25-40s
+  const orderedTtsCandidates = [
+    'gemini-2.5-flash-preview-tts',
+    ...DEFAULT_NOTEBOOKLM_TTS_CASCADE.filter(id => id !== 'gemini-2.5-flash-preview-tts')
+  ];
+  const ttsCascade = orderedTtsCandidates.filter(
     id => catalogIds.length === 0 || catalogIds.includes(id)
   );
   const resolvedTtsCascade =
-    ttsCascade.length > 0 ? ttsCascade : [...DEFAULT_NOTEBOOKLM_TTS_CASCADE];
+    ttsCascade.length > 0 ? ttsCascade : [...orderedTtsCandidates];
 
   const state = {
     ok: true,
@@ -387,10 +390,25 @@ function parseJsonTurnsSafe(rawText = '') {
   return null;
 }
 
+async function fetchPostJsonWithTimeout(url, payloadObj, timeoutMs = 55000) {
+  const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
+  try {
+    return await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payloadObj),
+      ...(ctrl ? { signal: ctrl.signal } : {})
+    });
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 /**
  * Executes a High-Thinking Gemini text generation call directly from the browser,
  * automatically matching `thinkingLevel: "HIGH"` (Gemini 3+) vs `thinkingBudget: 32768` (Gemini 2.5 Pro)
- * and cascading cleanly across models if a preview model returns 400/403/404/429/503.
+ * and cascading cleanly across models if a preview model returns 400/403/404/429/503 or times out.
  */
 async function callGeminiDirectWithCascade({
   apiBase,
@@ -399,7 +417,8 @@ async function callGeminiDirectWithCascade({
   systemInstructionText,
   userText,
   useGoogleSearch = false,
-  temperature = 0.2
+  temperature = 0.2,
+  perAttemptTimeoutMs = 55000
 }) {
   let lastErrorText = '';
   let lastStatus = 500;
@@ -444,11 +463,14 @@ async function callGeminiDirectWithCascade({
     };
 
     const url = `${apiBase}/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
-    let res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    let res;
+    try {
+      res = await fetchPostJsonWithTimeout(url, payload, perAttemptTimeoutMs);
+    } catch (netErr) {
+      lastStatus = 504;
+      lastErrorText = netErr?.message || 'Request timed out';
+      continue;
+    }
 
     // Some preview models reject `google_search` tool binding with 400, or hit Free-Tier Google Search Grounding quota (429) while base model quota remains
     if ((res.status === 400 || res.status === 429) && useGoogleSearch) {
@@ -468,11 +490,13 @@ async function callGeminiDirectWithCascade({
           },
           contents: [{ role: 'user', parts: [{ text: userText }] }]
         };
-        res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(retryPayload)
-        });
+        try {
+          res = await fetchPostJsonWithTimeout(url, retryPayload, perAttemptTimeoutMs);
+        } catch (retryErr) {
+          lastStatus = 504;
+          lastErrorText = retryErr?.message || 'Retry timed out';
+          continue;
+        }
       }
     }
 
@@ -488,11 +512,11 @@ async function callGeminiDirectWithCascade({
           generationConfig: { temperature },
           contents: [{ role: 'user', parts: [{ text: userText }] }]
         };
-        res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dynamicPayload)
-        });
+        try {
+          res = await fetchPostJsonWithTimeout(url, dynamicPayload, perAttemptTimeoutMs);
+        } catch {
+          continue;
+        }
       }
     }
 
@@ -663,7 +687,9 @@ async function synthesizeWithGeminiNotebookLmTts({
   solo = false,
   onProgress
 }) {
-  const chunks = chunkTurnsForGeminiTts(turns, 2400);
+  // 3800-char studio blocks fit an entire 2-to-4-minute podcast (~420-560 words) into ONE continuous
+  // multi-speaker pass (~22-38s) with seamless vocal prosody instead of 2 sequential HTTP calls
+  const chunks = chunkTurnsForGeminiTts(turns, 3800);
   if (chunks.length === 0) {
     throw new Error('No spoken podcast dialogue generated.');
   }
@@ -699,64 +725,93 @@ async function synthesizeWithGeminiNotebookLmTts({
         }
       };
 
-  const pcmChunks = [];
-  const chunkDurationsSec = [];
+  const pcmChunks = new Array(chunks.length).fill(null);
+  const chunkDurationsSec = new Array(chunks.length).fill(0);
   let resolvedAudioModel = ttsCascade[0] || DEFAULT_NOTEBOOKLM_TTS_CASCADE[0];
   const sampleRate = 24000;
+  let completedBlocks = 0;
 
-  for (let cIdx = 0; cIdx < chunks.length; cIdx++) {
+  const synthesizeSingleBlock = async cIdx => {
     const block = chunks[cIdx];
     const blockDialogue = directorHeader + block.map(t => t.spokenLine).join('\n');
-
-    onProgress?.({
-      subPercent: Math.round(12 + (cIdx / chunks.length) * 78),
-      detail:
-        chunks.length === 1
-          ? `Recording studio conversation with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`
-          : `Recording Gemini NotebookLM studio segment ${cIdx + 1} of ${chunks.length} (${solo ? 'Charon' : 'Puck & Aoede'})…`
-    });
-
     let chunkSamples = null;
     let lastTtsErr = '';
 
     for (const ttsModel of ttsCascade) {
       const ttsUrl = `${apiBase}/models/${encodeURIComponent(ttsModel)}:generateContent?key=${encodeURIComponent(key)}`;
-      const res = await fetch(ttsUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: blockDialogue }] }],
-          generationConfig: {
-            responseModalities: ['AUDIO'],
-            speechConfig
-          }
-        })
-      });
-
-      if (res.ok) {
-        const json = await res.json();
-        const b64 = json?.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data)?.inlineData?.data;
-        if (b64) {
-          chunkSamples = decodeBase64ToInt16Mono(b64);
-          resolvedAudioModel = ttsModel;
+      for (let retry = 0; retry < 2; retry++) {
+        let res;
+        try {
+          res = await fetchPostJsonWithTimeout(
+            ttsUrl,
+            {
+              contents: [{ parts: [{ text: blockDialogue }] }],
+              generationConfig: {
+                responseModalities: ['AUDIO'],
+                speechConfig
+              }
+            },
+            65000
+          );
+        } catch (timeoutErr) {
+          lastTtsErr = timeoutErr?.message || 'TTS request timed out';
           break;
         }
-      } else {
-        try {
-          lastTtsErr = await res.text();
-        } catch {}
-        if (![400, 403, 404, 429, 503].includes(res.status)) {
+
+        if (res.ok) {
+          const json = await res.json();
+          const b64 = json?.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data)?.inlineData?.data;
+          if (b64) {
+            chunkSamples = decodeBase64ToInt16Mono(b64);
+            resolvedAudioModel = ttsModel;
+            break;
+          }
+        } else {
+          try {
+            lastTtsErr = await res.text();
+          } catch {}
+          if ((res.status === 429 || res.status === 503) && retry === 0 && !/limit:\s*0\b/i.test(lastTtsErr)) {
+            await new Promise(r => setTimeout(r, 1200));
+            continue;
+          }
           break;
         }
       }
+      if (chunkSamples && chunkSamples.length > 0) break;
     }
 
     if (!chunkSamples || chunkSamples.length === 0) {
       throw new Error(`Gemini NotebookLM TTS unavailable (${String(lastTtsErr).slice(0, 120)})`);
     }
 
-    pcmChunks.push(chunkSamples);
-    chunkDurationsSec.push(chunkSamples.length / sampleRate);
+    pcmChunks[cIdx] = chunkSamples;
+    chunkDurationsSec[cIdx] = chunkSamples.length / sampleRate;
+    completedBlocks += 1;
+    onProgress?.({
+      subPercent: Math.round(14 + (completedBlocks / chunks.length) * 78),
+      detail:
+        chunks.length === 1
+          ? `Recorded studio conversation with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`
+          : `Recorded studio segment ${completedBlocks} of ${chunks.length} (${solo ? 'Charon' : 'Puck & Aoede'})…`
+    });
+  };
+
+  onProgress?.({
+    subPercent: 12,
+    detail:
+      chunks.length === 1
+        ? `Recording studio conversation with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`
+        : `Recording ${chunks.length} studio segments with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`
+  });
+
+  // Synthesize up to 2 TTS blocks in parallel for multi-segment 6-20m podcasts (single-pass for 2-4m pods)
+  const maxConcurrency = 2;
+  for (let start = 0; start < chunks.length; start += maxConcurrency) {
+    const indices = [];
+    for (let j = start; j < Math.min(chunks.length, start + maxConcurrency); j++) {
+      indices.push(j);
+    }
+    await Promise.all(indices.map(idx => synthesizeSingleBlock(idx)));
   }
 
   onProgress?.({

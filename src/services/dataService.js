@@ -6,10 +6,12 @@ import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluff
 import {
   collapseInitialDots,
   computePlayerPlayProbability,
+  computeTeamHealthSummary,
   extractPracticeDaysFromText,
   isBareStatusPlaceholderComment,
   pickMeaningfulInjuryComment,
-  reconcileRosterAndHealthWithNews
+  reconcileRosterAndHealthWithNews,
+  select22OffDefStartersFromDepthChart
 } from '../engine/injuryProbabilityModel.js';
 import {
   runPlayoffMonteCarlo,
@@ -345,17 +347,157 @@ function structuredCloneFallback(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
-async function fetchJsonSafe(pathUrl) {
-  const res = await fetch(pathUrl, { cache: 'no-cache' });
-  if (!res.ok) {
-    throw new Error(`Failed to load ${pathUrl} (HTTP ${res.status})`);
-  }
-  return res.json();
+const OFFLINE_BUNDLE_IDB_NAME = '49ers_faithful_data_cache_v1';
+const OFFLINE_BUNDLE_STORE = 'bundles';
+const OFFLINE_BUNDLE_KEY = 'latest_v1';
+
+function openOfflineBundleDb() {
+  if (typeof indexedDB === 'undefined' || !indexedDB) return Promise.resolve(null);
+  return new Promise(resolve => {
+    try {
+      const req = indexedDB.open(OFFLINE_BUNDLE_IDB_NAME, 1);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains(OFFLINE_BUNDLE_STORE)) {
+          db.createObjectStore(OFFLINE_BUNDLE_STORE);
+        }
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => resolve(null);
+    } catch {
+      resolve(null);
+    }
+  });
 }
 
-export async function loadAll49ersData(basePrefix = './data') {
-  const cleanBase = String(basePrefix || './data').replace(/\/+$/, '');
-  const [
+async function saveLastKnownGoodRawBundle(rawFiles) {
+  const db = await openOfflineBundleDb();
+  if (!db) return false;
+  return new Promise(resolve => {
+    try {
+      const tx = db.transaction(OFFLINE_BUNDLE_STORE, 'readwrite');
+      tx.objectStore(OFFLINE_BUNDLE_STORE).put(
+        { savedAt: new Date().toISOString(), files: rawFiles },
+        OFFLINE_BUNDLE_KEY
+      );
+      tx.oncomplete = () => {
+        db.close();
+        resolve(true);
+      };
+      tx.onerror = () => {
+        db.close();
+        resolve(false);
+      };
+    } catch {
+      try {
+        db.close();
+      } catch {}
+      resolve(false);
+    }
+  });
+}
+
+async function loadLastKnownGoodRawBundle() {
+  const db = await openOfflineBundleDb();
+  if (!db) return null;
+  return new Promise(resolve => {
+    try {
+      const tx = db.transaction(OFFLINE_BUNDLE_STORE, 'readonly');
+      const req = tx.objectStore(OFFLINE_BUNDLE_STORE).get(OFFLINE_BUNDLE_KEY);
+      req.onsuccess = () => {
+        const val = req.result?.files || null;
+        db.close();
+        resolve(val);
+      };
+      req.onerror = () => {
+        db.close();
+        resolve(null);
+      };
+    } catch {
+      try {
+        db.close();
+      } catch {}
+      resolve(null);
+    }
+  });
+}
+
+function sleepMs(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function fetchSingleWithTimeout(url, fetchInit = {}, timeoutMs = 8000) {
+  const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
+  try {
+    return await fetch(url, {
+      ...fetchInit,
+      ...(ctrl ? { signal: ctrl.signal } : {})
+    });
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function matchJsonFromCacheStorage(pathUrl) {
+  if (typeof caches === 'undefined' || !caches?.match) return null;
+  try {
+    const cachedRes = await caches.match(pathUrl, { ignoreSearch: true });
+    if (cachedRes && cachedRes.ok) {
+      return await cachedRes.json();
+    }
+  } catch {}
+  return null;
+}
+
+export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000, allowGithubRawFallback = null } = {}) {
+  let lastErr = null;
+  const retryableStatuses = new Set([408, 425, 429, 500, 502, 503, 504]);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      // First attempt checks fresh network (`no-cache`); retries allow HTTP/SW cache (`default`) to survive iOS socket drops (`Load failed`)
+      const cacheMode = attempt === 1 ? 'no-cache' : 'default';
+      const attemptTimeout = attempt === 1 ? timeoutMs : Math.round(timeoutMs * 1.25);
+      const res = await fetchSingleWithTimeout(pathUrl, { cache: cacheMode }, attemptTimeout);
+      if (res.ok) {
+        return await res.json();
+      }
+      lastErr = new Error(`Failed to load ${pathUrl} (HTTP ${res.status})`);
+      if (!retryableStatuses.has(res.status)) {
+        break;
+      }
+    } catch (err) {
+      lastErr = err;
+    }
+    if (attempt < maxAttempts) {
+      await sleepMs(260 * attempt);
+    }
+  }
+
+  // Fallback 1: Direct CacheStorage read (handles iOS PWA wake before SW claims client or offline reloads)
+  const cachedJson = await matchJsonFromCacheStorage(pathUrl);
+  if (cachedJson) return cachedJson;
+
+  // Fallback 2: Cross-origin GitHub Raw mirror when hosted in production (`49ers.joshal.com` / `github.io`)
+  const useRawFallback =
+    allowGithubRawFallback !== null ? Boolean(allowGithubRawFallback) : isProductionHostedOrigin();
+  const relMatch = String(pathUrl || '').match(/(?:^|\/)data\/(.+)$/);
+  if (useRawFallback && relMatch && !String(pathUrl).startsWith(GITHUB_RAW_DATA_BASE)) {
+    try {
+      const rawUrl = `${GITHUB_RAW_DATA_BASE}/${relMatch[1].replace(/\?.*$/, '')}`;
+      const rawRes = await fetchSingleWithTimeout(rawUrl, { cache: 'no-store' }, timeoutMs);
+      if (rawRes.ok) {
+        return await rawRes.json();
+      }
+    } catch {}
+  }
+
+  throw lastErr || new Error(`Failed to load ${pathUrl}`);
+}
+
+function hydrateBundlePostLoad(rawFiles) {
+  const {
     meta,
     roster,
     depthChart,
@@ -367,24 +509,7 @@ export async function loadAll49ersData(basePrefix = './data') {
     seasonal,
     podcastIndex,
     beatPodcasts
-  ] = await Promise.all([
-    fetchJsonSafe(`${cleanBase}/meta.json`),
-    fetchJsonSafe(`${cleanBase}/roster.json`),
-    fetchJsonSafe(`${cleanBase}/depth-chart.json`),
-    fetchJsonSafe(`${cleanBase}/cap.json`),
-    fetchJsonSafe(`${cleanBase}/reporters.json`),
-    fetchJsonSafe(`${cleanBase}/news.json`),
-    fetchJsonSafe(`${cleanBase}/schedule-matchup.json`),
-    fetchJsonSafe(`${cleanBase}/health.json`),
-    fetchJsonSafe(`${cleanBase}/seasonal.json`),
-    fetchJsonSafe(`${cleanBase}/podcasts/index.json`),
-    fetchJsonSafe(`${cleanBase}/beat-podcasts.json`).catch(() => ({
-      updatedAt: '',
-      windowDays: 7,
-      shows: FLAGSHIP_PODCAST_SHOWS_CLIENT,
-      episodes: []
-    }))
-  ]);
+  } = rawFiles;
 
   const bootCtxStub = { meta, scheduleMatchup };
   const directPosts = Array.isArray(news?.rawStream)
@@ -446,6 +571,67 @@ export async function loadAll49ersData(basePrefix = './data') {
   };
   reconcileRosterAndHealthWithNews(loadedBundle);
   return loadedBundle;
+}
+
+export async function loadAll49ersData(basePrefix = './data') {
+  const cleanBase = String(basePrefix || './data').replace(/\/+$/, '');
+  try {
+    const [
+      meta,
+      roster,
+      depthChart,
+      cap,
+      reporters,
+      news,
+      scheduleMatchup,
+      health,
+      seasonal,
+      podcastIndex,
+      beatPodcasts
+    ] = await Promise.all([
+      fetchJsonSafe(`${cleanBase}/meta.json`),
+      fetchJsonSafe(`${cleanBase}/roster.json`),
+      fetchJsonSafe(`${cleanBase}/depth-chart.json`),
+      fetchJsonSafe(`${cleanBase}/cap.json`),
+      fetchJsonSafe(`${cleanBase}/reporters.json`).catch(() => ({ reporters: [], outlets: [] })),
+      fetchJsonSafe(`${cleanBase}/news.json`),
+      fetchJsonSafe(`${cleanBase}/schedule-matchup.json`),
+      fetchJsonSafe(`${cleanBase}/health.json`),
+      fetchJsonSafe(`${cleanBase}/seasonal.json`),
+      fetchJsonSafe(`${cleanBase}/podcasts/index.json`).catch(() => ({ episodes: [], sharedAnalyses: [] })),
+      fetchJsonSafe(`${cleanBase}/beat-podcasts.json`).catch(() => ({
+        updatedAt: '',
+        windowDays: 7,
+        shows: FLAGSHIP_PODCAST_SHOWS_CLIENT,
+        episodes: []
+      }))
+    ]);
+
+    const rawFiles = {
+      meta,
+      roster,
+      depthChart,
+      cap,
+      reporters,
+      news,
+      scheduleMatchup,
+      health,
+      seasonal,
+      podcastIndex,
+      beatPodcasts
+    };
+    // Persist last-known-good snapshot asynchronously in IndexedDB so future offline/flaky cold boots never brick
+    saveLastKnownGoodRawBundle(structuredCloneFallback(rawFiles)).catch(() => {});
+    return hydrateBundlePostLoad(rawFiles);
+  } catch (primaryErr) {
+    const fallbackRaw = await loadLastKnownGoodRawBundle();
+    if (fallbackRaw?.meta && fallbackRaw?.roster && fallbackRaw?.scheduleMatchup) {
+      const restored = hydrateBundlePostLoad(structuredCloneFallback(fallbackRaw));
+      restored._restoredFromOfflineSnapshot = true;
+      return restored;
+    }
+    throw primaryErr;
+  }
 }
 
 function isProductionHostedOrigin() {
@@ -2081,13 +2267,11 @@ export async function hydrateLiveEspnOverlay(appData) {
             fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/depthcharts`).catch(() => null)
           ]);
 
-          const oppStarterSet = new Set();
-          for (const dc of oppDepthRaw?.depthchart || []) {
-            for (const posObj of Object.values(dc.positions || {})) {
-              const starterName = posObj?.athletes?.[0]?.displayName;
-              if (starterName) oppStarterSet.add(normPlayerNameKey(starterName));
-            }
-          }
+          const { allStarterNames: oppStarterSet } = select22OffDefStartersFromDepthChart(
+            oppDepthRaw?.depthchart || [],
+            null,
+            normPlayerNameKey
+          );
 
           if (oppRosterRaw?.athletes?.length) {
             const activeOppList = extractActiveRosterFromEspnTeamRoster(oppRosterRaw, oppStarterSet);
@@ -2127,10 +2311,11 @@ export async function hydrateLiveEspnOverlay(appData) {
               }
             }
             um.opponentHealth.irReserve = irList;
-            um.opponentHealth.summary = {
-              ...(um.opponentHealth.summary || {}),
-              irCount: irList.length
-            };
+            um.opponentHealth.summary = computeTeamHealthSummary({
+              injuryReport: um.opponentHealth.injuryReport || [],
+              irReserve: irList,
+              totalStarters: 22
+            });
           }
         }
       }
@@ -2614,12 +2799,11 @@ export async function hydrateLiveEspnOverlay(appData) {
       if (liveOppReport.length > 0 || weekAdvancedFlag) {
         liveOppReport.sort((a, b) => a.playProbabilityPct - b.playProbabilityPct);
         oh.injuryReport = liveOppReport;
-        oh.summary = {
-          ...(oh.summary || {}),
-          ruledOutCount: liveOppReport.filter(p => p.playProbabilityPct === 0).length,
-          questionableOrDoubtfulCount: liveOppReport.filter(p => p.playProbabilityPct > 0 && p.playProbabilityPct < 85).length,
-          clearedCount: liveOppReport.filter(p => p.playProbabilityPct >= 85).length
-        };
+        oh.summary = computeTeamHealthSummary({
+          injuryReport: liveOppReport,
+          irReserve: oh.irReserve || [],
+          totalStarters: oh.summary?.totalStarters || 22
+        });
         mutated = true;
       }
     }

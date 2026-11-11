@@ -230,7 +230,7 @@ export const CORE_FACTUAL_GROUNDING_CHARTER = `NON-NEGOTIABLE FACTUAL GROUNDING 
 export const DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT = `You are the Principal Football Research Director for "49ers Faithful", preparing an exhaustive Stage-1 Deep Research Investigation for an elite coaching, scouting, and salary-cap room.
 
 THINK DEEPLY & INVESTIGATE THOROUGHLY (ACCURACY & DEPTH OVER SPEED):
-- Use your full High-Thinking reasoning capacity and live Google Search Grounding. Take all the reasoning steps needed to uncover second-order scheme interactions, film leverage mechanics, efficiency splits, injury return timelines, and multi-year CBA cap consequences.
+- Use focused High-Thinking reasoning and targeted Google Search Grounding (run at most 1–2 concise web searches ONLY if a recent fact is missing from the provided live snapshot; do not loop on redundant searches). Uncover second-order scheme interactions, film leverage mechanics, efficiency splits, injury return timelines, and multi-year CBA cap consequences without repetitive internal re-drafting.
 - Read the user's prompt carefully to understand their ACTUAL underlying question, hypothesis, or strategic dilemma—not just surface keywords.
 - Cross-examine:
   1. The user's exact question and the core football/front-office tension inside it.
@@ -285,7 +285,7 @@ export function buildStage2AnalysisSynthesisPrompt({
   researchMemo,
   liveContextSnapshot
 }) {
-  return `Using your full High-Thinking reasoning capacity, synthesize the Stage-1 Deep Research Investigation below into a definitive, deeply reasoned Markdown analysis that directly and thoroughly answers the user's question.
+  return `Synthesize the Stage-1 Deep Research Investigation below into a definitive, deeply reasoned Markdown analysis that directly and thoroughly answers the user's question. Keep internal reasoning focused and concise: rely primarily on the verified Stage-1 extract and live snapshot below (running at most 1 targeted Google Search query ONLY if an external fact is missing), verify every roster/cap figure once, and emit the polished report directly without repetitive internal drafts.
 
 USER'S EXACT QUESTION:
 "${question}"
@@ -345,18 +345,19 @@ export function buildStage2NotebookLmScriptPrompt({
   liveContextSnapshot
 }) {
   const solo = format === 'solo' || format === 'Solo Executive Briefing';
-  const targetWords = Math.round(durationMinutes * 148);
+  const targetWords = Math.round(durationMinutes * 140);
   const minWords = Math.round(targetWords * 0.88);
-  const maxWords = Math.round(targetWords * 1.12);
+  const maxWords = Math.round(targetWords * 1.1);
   const estTurns = solo
     ? Math.max(6, Math.round(durationMinutes * 3.5))
-    : Math.max(12, Math.round(durationMinutes * 6.5));
+    : Math.max(12, Math.round(durationMinutes * 6.0));
 
   if (solo) {
     return `Restructure the Stage-1 Deep Research Investigation below into a smooth, natural, conversational ${durationMinutes}-minute Solo Podcast Briefing hosted by "Marcus" on: "${topic}".
+Keep internal thinking focused: rely on the verified Stage-1 extract & live snapshot below (at most 1 targeted web search only if needed) and avoid rewriting the JSON multiple times internally.
 
 DURATION & FORMAT REQUIREMENTS:
-- Total spoken word count MUST land between ${minWords} and ${maxWords} words (target ~${targetWords} words at ~148 words/min so audio duration is ~${durationMinutes}:00).
+- Total spoken word count MUST land between ${minWords} and ${maxWords} words (target ~${targetWords} words at ~140 words/min so audio duration is ~${durationMinutes}:00).
 - Break the monologue into ~${estTurns} natural breath-sized segments so pacing feels intimate, unhurried, and human—like a smart insider talking directly to a close friend over coffee.
 - Directly address "${topic}" with deep X's & O's and cap insight, spoken contractions, rhetorical questions, and zero robotic bullet-reading.
 - Output ONLY a valid raw JSON array of objects: [{"speaker":"Marcus","text":"..."}]. No markdown fences or prose outside the JSON array.
@@ -369,9 +370,10 @@ ${liveContextSnapshot}`;
   }
 
   return `Restructure the Stage-1 Deep Research Investigation below into an authentic, smooth, natural ${durationMinutes}-minute **Gemini NotebookLM Audio Overview** style two-host podcast conversation between "Marcus" and "Elena" on: "${topic}".
+Keep internal thinking focused: rely on the verified Stage-1 extract & live snapshot below (at most 1 targeted web search only if needed) and avoid rewriting the JSON multiple times internally.
 
 DURATION, CADENCE & FORMAT REQUIREMENTS:
-- Total spoken word count across all turns MUST land between ${minWords} and ${maxWords} words (target ~${targetWords} words at ~148 words/min so real spoken audio runs ~${durationMinutes}:00).
+- Total spoken word count across all turns MUST land between ${minWords} and ${maxWords} words (target ~${targetWords} words at ~140 words/min so real spoken audio runs ~${durationMinutes}:00).
 - Aim for ~${estTurns} dynamic back-and-forth turns alternating naturally between "Marcus" and "Elena".
 - Include genuine NotebookLM conversational texture: quick reactions ("Right, and here's the wild part—", "Wait, hold on—explain why that matters for 2027.", "Mm-hmm, spot on."), natural contractions, warm camaraderie, and deep, specific football/cap insight directly answering "${topic}".
 - NEVER sound scripted, stiff, or robotic. Every line must pass the read-aloud human studio test.

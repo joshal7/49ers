@@ -109,7 +109,7 @@ function renderOverviewTab(p, rawStream = [], appData = null) {
       ? `
         <div class="player-mentions-section">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px">
-            <div class="sub-label" style="margin:0">Recent Beat &amp; Roster Mentions (7d)</div>
+            <div class="sub-label" style="margin:0">Recent Mentions (7d)</div>
             <span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} updates</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:7px">
@@ -271,7 +271,7 @@ function renderOverviewTab(p, rawStream = [], appData = null) {
     ${
       p.publicEfficiencyNote
         ? `<div style="padding:9px 11px;border-radius:9px;background:var(--gold-soft);border:1px solid var(--gold-border);font-size:12.5px">
-            <strong style="color:var(--gold-bright)">Beat &amp; Film Efficiency Callout:</strong> ${escJargon(p.publicEfficiencyNote, { excludePlayerId: p.id })}
+            <strong style="color:var(--gold-bright)">Scouting Note:</strong> ${escJargon(p.publicEfficiencyNote, { excludePlayerId: p.id })}
            </div>`
         : ''
     }
@@ -352,7 +352,7 @@ function renderStatsTab(p, statsMode) {
           <div class="card-header-left">
             <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('calendar', 15)}</div>
             <div class="card-title-group">
-              <h3 class="card-title">${esc(p.position)} Career Year-by-Year Ledger (${seasons[seasons.length - 1].season}–${seasons[0].season})</h3>
+              <h3 class="card-title">Career Stats (${seasons[seasons.length - 1].season}–${seasons[0].season})</h3>
             </div>
           </div>
         </div>
@@ -526,9 +526,9 @@ function renderContractTab(p, txScenario) {
   return `
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
-        <div class="sub-label">Multi-Year OverTheCap Ledger (${yrs[0].year}–${yrs[yrs.length - 1].year})</div>
+        <div class="sub-label">Contract Breakdown (${yrs[0].year}–${yrs[yrs.length - 1].year})</div>
         <a href="${esc(p.otcUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-          <span>View Contract on OverTheCap</span>${iconSvg('externalLink', 10)}
+          <span>OverTheCap</span>${iconSvg('externalLink', 10)}
         </a>
       </div>
       <div class="table-scroll">
@@ -559,7 +559,7 @@ function renderContractTab(p, txScenario) {
     </div>
 
     <div>
-      <div class="sub-label" style="margin-bottom:6px">${activeYrLabel} ${jargonTerm('Dead Cap', 'dead_cap')} &amp; Cap Savings Scenario Explorer</div>
+      <div class="sub-label" style="margin-bottom:6px">${activeYrLabel} ${jargonTerm('Dead Cap', 'dead_cap')} &amp; Cap Savings</div>
       <div class="pill-bar" style="margin-bottom:8px">${txButtons}</div>
       <div class="kpi-grid kpi-grid-2">
         <div class="kpi-box">
@@ -612,7 +612,7 @@ function renderHealthTab(p) {
   return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
       <div>
-        <div class="sub-label">Next-Game Play Likelihood</div>
+        <div class="sub-label">Availability</div>
         <div style="font-size:13px;color:var(--text-secondary)">Status: <strong>${esc(h.status || 'Active')}</strong> ${h.injuryType ? `(${esc(h.injuryType)})` : ''}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">

@@ -40,6 +40,10 @@ import {
   resolveGameDayInjuryRows,
   resolveTeamGameDayModel
 } from '../engine/gameDayRosterEngine.js';
+import {
+  computeTeamHealthSummary,
+  isEffectiveOffDefStarter
+} from '../engine/injuryProbabilityModel.js';
 
 function formatPracCell(val) {
   const s = String(val ?? '').trim();
@@ -48,7 +52,7 @@ function formatPracCell(val) {
 
 function formatOppImportanceTag(op) {
   const snap = Number(op?.snapPct || 0);
-  const isStarter = Boolean(op?.isStarter) || snap >= 58 || /starter|pro bowl|all-pro|wr1|wr2|qb1|rb1|te1|cb1|lt|rt/i.test(String(op?.archetypeNote || ''));
+  const isStarter = isEffectiveOffDefStarter(op);
   if (isStarter && snap > 0) return `Starter · ${snap}%`;
   if (isStarter) return 'Starter';
   if (snap >= 25) return `Rotation · ${snap}%`;
@@ -391,7 +395,7 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
           ? `
         <details class="stats-expand-details" data-matchup-stats-expander="${esc(activeUnit.id)}">
           <summary class="stats-expand-summary">
-            <span>Detailed ${esc(activeUnit.shortLabel)} Breakdown (${expandedCount} Metrics)</span>
+            <span>Detailed ${esc(activeUnit.shortLabel)} (${expandedCount})</span>
             <span class="mono stats-expand-hint">Expand</span>
           </summary>
           <div class="stats-expand-body">
@@ -430,26 +434,71 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
   const oppInjReport = oppGameDay?.isActive
     ? resolveGameDayInjuryRows(rawOppInjReport, oppGameDay)
     : rawOppInjReport;
-  const oppHealthyStarters = oppHealth.keyStartersHealthy || [];
   const oppIrList = oppHealth.irReserve || [];
+  const unresolvedOppNames = new Set(
+    oppInjReport
+      .filter(r => {
+        const st = String(r?.gameStatus || '').trim();
+        const pr = Number(r?.playProbabilityPct ?? 50);
+        return !(/^(?:active|in\b|no designation|cleared)/i.test(st) || pr >= 88);
+      })
+      .map(r => String(r?.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
+      .filter(Boolean)
+  );
+  const oppHealthyStarters = (oppHealth.keyStartersHealthy || []).filter(
+    st => !unresolvedOppNames.has(String(st?.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
+  );
   const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true, windowState: sharedWin });
   const rawSfPr = appData?.health?.practiceReport || [];
   const sfPr = (sfGameDay?.isActive ? resolveGameDayInjuryRows(rawSfPr, sfGameDay) : rawSfPr).slice(0, 5);
 
-  const resolvedOppSummary = oppGameDay?.isActive
-    ? {
-        ...oppHealth.summary,
-        questionableOrDoubtfulCount: oppInjReport.filter(r =>
-          /questionable|doubtful|gtd/i.test(String(r.gameStatus || ''))
-        ).length,
-        ruledOutCount: Math.max(
-          oppHealth.summary?.ruledOutCount ?? 0,
-          oppInjReport.filter(
-            r => /^(?:out|inactive)/i.test(String(r.gameStatus || '')) || r.playProbabilityPct === 0
-          ).length
-        )
-      }
-    : oppHealth.summary;
+  const resolvedOppSummary = computeTeamHealthSummary({
+    injuryReport: oppInjReport,
+    irReserve: oppIrList,
+    totalStarters: oppHealth.summary?.totalStarters || 22
+  });
+  const availScore = resolvedOppSummary.overallAvailabilityScore;
+  const availMeterTone = availScore >= 82 ? 'emerald' : availScore >= 68 ? 'gold' : 'scarlet';
+  const availValColor =
+    availScore >= 82 ? 'var(--emerald)' : availScore >= 68 ? 'var(--gold-bright)' : 'var(--crimson)';
+  const startersSubNote = (() => {
+    const { startersUnresolvedCount, startersOutCount, startersDoubtfulCount, startersQuestionableCount } =
+      resolvedOppSummary;
+    if (startersUnresolvedCount === 0) return 'All 22 off injury report';
+    if (startersOutCount > 0 && startersDoubtfulCount + startersQuestionableCount > 0) {
+      return `${startersOutCount} Out · ${startersDoubtfulCount + startersQuestionableCount} Q/Dbt`;
+    }
+    if (startersOutCount > 0) {
+      return `${startersOutCount} starter${startersOutCount > 1 ? 's' : ''} ruled Out`;
+    }
+    if (startersDoubtfulCount > 0 && startersQuestionableCount > 0) {
+      return `${startersDoubtfulCount} Dbt/Long · ${startersQuestionableCount} GTD`;
+    }
+    if (startersDoubtfulCount > 0) {
+      return `${startersDoubtfulCount} Doubtful / Long Shot`;
+    }
+    return `${startersQuestionableCount} starter${startersQuestionableCount > 1 ? 's' : ''} GTD`;
+  })();
+  const qDoubtfulSubNote = (() => {
+    const { questionableOrDoubtfulCount, doubtfulOrLongShotCount, gtdCount } = resolvedOppSummary;
+    if (questionableOrDoubtfulCount === 0) return '0 active designations';
+    if (doubtfulOrLongShotCount > 0 && gtdCount > 0) {
+      return `${doubtfulOrLongShotCount} Long Shot · ${gtdCount} GTD`;
+    }
+    if (doubtfulOrLongShotCount > 0) return `${doubtfulOrLongShotCount} Doubtful / Long Shot`;
+    return `${gtdCount} Game-Time Decision${gtdCount > 1 ? 's' : ''}`;
+  })();
+  const outIrSubNote = (() => {
+    const { irCount, irOpenWindowCount, irSeasonEndingCount } = resolvedOppSummary;
+    if (irOpenWindowCount > 0) {
+      return `${irOpenWindowCount} in 21-day return window`;
+    }
+    if (irSeasonEndingCount > 0) {
+      return `${irSeasonEndingCount} season-ending IR`;
+    }
+    if (irCount > 0) return '4-game minimum reserve';
+    return '0 players on reserve';
+  })();
 
   const sfIsAway = um.homeAway === 'away';
   const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
@@ -494,7 +543,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('swords', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Week ${um.week} Upcoming Matchup • ${esc(um.kickoffDisplay)}</div>
+            <div class="card-eyebrow">Week ${um.week} • ${esc(um.kickoffDisplay)}</div>
             <h2 class="card-title">${esc(matchupHeadline)}</h2>
           </div>
         </div>
@@ -507,7 +556,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
       <div class="matchup-scoreboard">
         ${awayColHtml}
-        <span class="sb-vs-pill mono">@ WK ${um.week || ''}</span>
+        <span class="sb-vs-pill mono">@</span>
         ${homeColHtml}
       </div>
 
@@ -542,8 +591,8 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         <div class="card-header-left">
           ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 28)}
           <div class="card-title-group">
-            <div class="card-eyebrow">Opponent Availability • Bye Wk ${oppHealth.byeWeek || 13}</div>
-            <h3 class="card-title">${esc(um.oppName)} Health &amp; Play Odds</h3>
+            <div class="card-eyebrow">Bye Wk ${oppHealth.byeWeek || 13}</div>
+            <h3 class="card-title">${esc(um.oppName)} Health</h3>
           </div>
         </div>
         <div class="source-link-strip">
@@ -553,23 +602,27 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         </div>
       </div>
 
-      <div class="kpi-grid kpi-grid-2" style="margin-bottom:10px">
+      <div class="kpi-grid kpi-grid-2 health-scorecard-grid" style="margin-bottom:10px" data-opp-health-scorecard>
         <div class="kpi-box">
           <div class="kpi-label">Availability Index</div>
-          <div class="kpi-val mono" style="color:var(--emerald)">${resolvedOppSummary?.overallAvailabilityScore ?? 85}/100</div>
-          ${renderMiniMeterHtml(resolvedOppSummary?.overallAvailabilityScore ?? 85, 'emerald')}
+          <div class="kpi-val mono" style="color:${availValColor}">${availScore}/100</div>
+          ${renderMiniMeterHtml(availScore, availMeterTone)}
+          <div class="kpi-sub-note">${jargonTerm('What this means', 'availability_index')}</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Starters Cleared</div>
-          <div class="kpi-val mono">${resolvedOppSummary?.activeStartersHealthy ?? 19}/${resolvedOppSummary?.totalStarters ?? 22}</div>
+          <div class="kpi-label">${jargonTerm('Starters Cleared', 'starters_cleared')}</div>
+          <div class="kpi-val mono">${resolvedOppSummary.activeStartersHealthy}/${resolvedOppSummary.totalStarters}</div>
+          <div class="kpi-sub-note mono">${esc(startersSubNote)}</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Questionable / GTD</div>
-          <div class="kpi-val mono" style="color:var(--gold-bright)">${resolvedOppSummary?.questionableOrDoubtfulCount ?? 0}</div>
+          <div class="kpi-label">Questionable / Doubtful</div>
+          <div class="kpi-val mono" style="color:${resolvedOppSummary.questionableOrDoubtfulCount > 0 ? 'var(--gold-bright)' : 'var(--text-primary)'}">${resolvedOppSummary.questionableOrDoubtfulCount}</div>
+          <div class="kpi-sub-note mono">${esc(qDoubtfulSubNote)}</div>
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Ruled Out / ${jargonTerm('IR', 'ir')}</div>
-          <div class="kpi-val mono" style="color:var(--crimson)">${resolvedOppSummary?.ruledOutCount ?? 0} Out • ${resolvedOppSummary?.irCount ?? oppIrList.length} IR</div>
+          <div class="kpi-val mono" style="color:${resolvedOppSummary.ruledOutCount > 0 || resolvedOppSummary.irCount > 0 ? 'var(--crimson)' : 'var(--text-primary)'}">${resolvedOppSummary.ruledOutCount} Out • ${resolvedOppSummary.irCount} IR</div>
+          <div class="kpi-sub-note mono">${esc(outIrSubNote)}</div>
         </div>
       </div>
 
@@ -584,7 +637,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
       ${
         oppInjReport.length > 0
           ? `
-            <div class="sub-label" style="margin-bottom:6px">Week ${um.week || 9} Practice Participation &amp; Modeled Play Likelihood</div>
+            <div class="sub-label" style="margin-bottom:6px">Practice Participation</div>
             <div class="table-scroll health-table-scroll" data-health-table="opp" style="margin-bottom:10px">
               <table class="data-table sticky-col-table narrow-health-table">
                 <thead>
@@ -635,7 +688,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
             <details class="compact-details" style="margin-bottom:10px">
               <summary class="compact-details-summary">
-                <span>${esc(um.oppAbbr || 'OPP')} Beat Notes &amp; Availability Context (${oppInjReport.length})</span>
+                <span>${esc(um.oppAbbr || 'OPP')} Beat Notes (${oppInjReport.length})</span>
               </summary>
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
                 ${oppInjReport
@@ -668,7 +721,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
           ? `
             <details class="compact-details" style="margin-bottom:10px">
               <summary class="compact-details-summary">
-                <span>Key ${esc(um.oppName)} Starters Cleared (${oppHealthyStarters.length})</span>
+                <span>Starters Cleared (${oppHealthyStarters.length})</span>
               </summary>
               <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
                 ${oppHealthyStarters
@@ -693,7 +746,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
           ? `
             <details class="compact-details" style="margin-bottom:10px">
               <summary class="compact-details-summary">
-                <span>${esc(um.oppAbbr || 'OPP')} IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</span>
+                <span>IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</span>
               </summary>
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
                 ${oppIrList
@@ -750,7 +803,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
     ${renderMatchupTeamStatsComparison(appData, matchupStatsUnit)}
 
     <section class="card">
-      <div class="card-eyebrow">Opposing Coaching Staff Tendencies</div>
+      <div class="card-eyebrow">Coaching Matchup</div>
       <h3 class="card-title" style="margin-bottom:8px">${escJargon(um.coachingMatchup?.headline)}</h3>
       <p style="margin:0 0 8px;font-size:13px;color:var(--text-secondary)">${escJargon(um.coachingMatchup?.summary)}</p>
       <ul class="brief-bullets">
@@ -759,8 +812,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Trench &amp; Coverage Mismatches</div>
-      <h3 class="card-title" style="margin-bottom:8px">Key Matchup Matrix</h3>
+      <h3 class="card-title" style="margin-bottom:8px">Key Matchups</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(um.keyMatchupsMatrix || [])
           .map(
@@ -780,10 +832,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <div>
-          <div class="card-eyebrow">Recent Franchise History (${esc(um.franchiseHistory?.recentRecord)})</div>
-          <h3 class="card-title">49ers vs. ${esc(oppShortName)} Recent Meetings</h3>
-        </div>
+        <h3 class="card-title">Recent Meetings (${esc(um.franchiseHistory?.recentRecord)})</h3>
         <a href="${esc(um.franchiseHistory?.pfrQueryUrl || 'https://www.pro-football-reference.com/teams/sfo/head-to-head.htm')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>PFR Box Scores</span>${iconSvg('externalLink', 11)}
         </a>
@@ -892,8 +941,7 @@ function renderTeamHealthAndIr(appData) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('heartPulse', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Practice Participation &amp; Player Availability</div>
-            <h2 class="card-title">Week ${h.week || 9} Practice &amp; Play Likelihood</h2>
+            <h2 class="card-title">Week ${h.week || 9} Injury Report</h2>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -908,7 +956,7 @@ function renderTeamHealthAndIr(appData) {
       </div>
 
       <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
-        Tap any player for full injury &amp; contract dossier • ${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}
+        ${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}
       </div>
 
       <div class="table-scroll health-table-scroll" data-health-table="sf">
@@ -948,8 +996,8 @@ function renderTeamHealthAndIr(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">NFL 4-Game Minimum Rule (Week ${h.byeWeek || 8} Bye Excluded)</div>
-      <h3 class="card-title" style="margin-bottom:8px">IR &amp; Reserve Return Window Tracker (${(h.irAndReserveTracker || []).length})</h3>
+      <div class="card-eyebrow">Week ${h.byeWeek || 8} Bye Excluded</div>
+      <h3 class="card-title" style="margin-bottom:8px">Injured Reserve (${(h.irAndReserveTracker || []).length})</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(h.irAndReserveTracker || [])
           .map(ir => {
@@ -1155,7 +1203,7 @@ function renderTeamStatsAndPower(appData) {
       <div class="card-header">
         <div class="card-title-group">
           <div class="card-eyebrow">${esc(pwr.weekLabel)}</div>
-          <h2 class="card-title">Aggregated NFL Power Rankings</h2>
+          <h2 class="card-title">Power Rankings</h2>
         </div>
         <span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus</span>
       </div>
@@ -1199,8 +1247,8 @@ function renderTradeWindow(appData) {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trade', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Oct 1 – Trade Deadline • ${esc(tw.deadlineDisplay)}</div>
-            <h2 class="card-title">NFL Trade Window</h2>
+            <div class="card-eyebrow">${esc(tw.deadlineDisplay)}</div>
+            <h2 class="card-title">Trade Window</h2>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -1213,7 +1261,7 @@ function renderTradeWindow(appData) {
       ${
         Array.isArray(tw.purchasingPower) && tw.purchasingPower.length > 0
           ? `
-        <div class="sub-label" style="margin-bottom:6px">Purchasing Power &amp; 2027 Cap / Draft Constraints</div>
+        <div class="sub-label" style="margin-bottom:6px">Cap &amp; Draft Constraints</div>
         <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
           ${tw.purchasingPower
             .map(
@@ -1234,7 +1282,7 @@ function renderTradeWindow(appData) {
       }
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
-        <div class="sub-label" style="margin:0">Completed Impact Acquisitions (Last 30 Days)</div>
+        <div class="sub-label" style="margin:0">Completed Trades (Last 30 Days)</div>
         ${
           archivedTrades.length > 0
             ? `<button type="button" class="btn-ghost" data-action="open-archive" style="font-size:11.5px;padding:4px 9px">
@@ -1289,7 +1337,7 @@ function renderTradeWindow(appData) {
         }
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">Remaining Pre-Deadline Needs</div>
+      <div class="sub-label" style="margin-bottom:6px">Team Needs</div>
       <div style="display:flex;flex-direction:column;gap:7px">
         ${(tw.topNeeds || [])
           .map(
@@ -1305,8 +1353,8 @@ function renderTradeWindow(appData) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">${Math.max(1, Math.min(18, 18 - (Number(appData?.meta?.currentWeek) || 9)))}/18ths Pro-Rated Base Salary &amp; ${jargonTerm('Rich Hill', 'rich_hill')} Pick Costs</div>
-      <h3 class="card-title" style="margin-bottom:8px">Seller-Team Target Fit Matrix</h3>
+      <div class="card-eyebrow">${Math.max(1, Math.min(18, 18 - (Number(appData?.meta?.currentWeek) || 9)))}/18ths Prorated Cap • ${jargonTerm('Rich Hill', 'rich_hill')} Pick Value</div>
+      <h3 class="card-title" style="margin-bottom:8px">Trade Targets</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(tw.realisticTargets || [])
           .map(
@@ -1357,8 +1405,7 @@ function renderTradeWindow(appData) {
       Array.isArray(tw.pitfallsToAvoid) && tw.pitfallsToAvoid.length > 0
         ? `
       <section class="card">
-        <div class="card-eyebrow">Front Office Discipline • Multi-Year Cap &amp; Pick Guardrails</div>
-        <h3 class="card-title" style="margin-bottom:8px">Pitfalls &amp; Trap Targets to Avoid</h3>
+        <h3 class="card-title" style="margin-bottom:8px">Targets to Avoid</h3>
         <div style="display:flex;flex-direction:column;gap:8px">
           ${tw.pitfallsToAvoid
             .map(
@@ -1394,8 +1441,7 @@ function renderTradeWindow(appData) {
     }
 
     <section class="card">
-      <div class="card-eyebrow">Beat &amp; National Insider Reports</div>
-      <h3 class="card-title" style="margin-bottom:8px">Trade Window Updates &amp; Front Office Notes</h3>
+      <h3 class="card-title" style="margin-bottom:8px">Trade Intel &amp; Rumors</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(tw.tieredRumors || [])
           .map(
@@ -1428,8 +1474,8 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trophy', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">10,000-Iteration ${jargonTerm('Monte Carlo', 'monte_carlo')} • Official NFL Tiebreakers</div>
-            <h2 class="card-title">49ers Playoff &amp; Seeding Probabilities</h2>
+            <div class="card-eyebrow">10,000-Run ${jargonTerm('Monte Carlo', 'monte_carlo')}</div>
+            <h2 class="card-title">Playoff Odds</h2>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -1460,7 +1506,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
         </div>
       </div>
 
-      <div class="sub-label" style="margin:10px 0 6px">Exact NFC Seed Distribution (Proj. ${sf.projectedWins ?? 12.0} Wins)</div>
+      <div class="sub-label" style="margin:10px 0 6px">NFC Seed Distribution (Proj. ${sf.projectedWins ?? 12.0} Wins)</div>
       <div style="display:flex;flex-direction:column;gap:5px">
         ${[1, 2, 3, 4, 5, 6, 7]
           .map(s => {
@@ -1480,8 +1526,8 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
     <section class="card">
       <div class="card-header">
         <div class="card-title-group">
-          <div class="card-eyebrow">Tap Any Team to Lock Winner &amp; Re-Run 10,000 Simulations</div>
-          <h3 class="card-title">Interactive Rooting Guide &amp; Scenario Toggler</h3>
+          <div class="card-eyebrow">Tap team to lock winner</div>
+          <h3 class="card-title">Rooting Guide</h3>
         </div>
       </div>
 
@@ -1526,10 +1572,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
 
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <div>
-          <div class="card-eyebrow">Explicit Seeding Scenarios</div>
-          <h3 class="card-title">Paths to #1 Seed &amp; Division Crown</h3>
-        </div>
+        <h3 class="card-title">Seeding Scenarios</h3>
         <a href="https://www.espn.com/nfl/standings" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Standings</span>${iconSvg('externalLink', 11)}</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
@@ -1545,7 +1588,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
           .join('')}
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">Full 16-Team NFC Simulated Standings</div>
+      <div class="sub-label" style="margin-bottom:6px">NFC Projected Standings</div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead><tr><th>Team</th><th>Div</th><th>Rec</th><th>Proj W</th><th>Playoffs</th><th>Div %</th><th>#1 Bye</th></tr></thead>
@@ -1694,8 +1737,7 @@ function renderFullSchedule(appData, schedulePrevExpanded = false) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('calendar', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${seasonYr} Regular Season • Current &amp; Upcoming Slate</div>
-            <h2 class="card-title">49ers Schedule &amp; Venue Tracker</h2>
+            <h2 class="card-title">${seasonYr} Season</h2>
           </div>
         </div>
         <a href="https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link">
@@ -1723,8 +1765,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('compass', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">2-Year Cap &amp; Roster Horizon</div>
-            <h2 class="card-title">${nextDraftYr} NFL Draft &amp; Pick Inventory</h2>
+            <h2 class="card-title">${nextDraftYr} Draft Needs &amp; Picks</h2>
           </div>
         </div>
         <div class="source-link-strip">
@@ -1750,7 +1791,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
           .join('')}
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">49ers ${Number(dp.draftYear) || 2027} Draft Pick Capital (${(dp.pickInventory || []).length} Picks)</div>
+      <div class="sub-label" style="margin-bottom:6px">${Number(dp.draftYear) || 2027} Draft Picks (${(dp.pickInventory || []).length})</div>
       ${dp.tradedPicksNote ? `<div class="subcard-panel" style="font-size:11.5px;color:var(--text-secondary);margin-bottom:8px">${escJargon(dp.tradedPicksNote)}</div>` : ''}
       <div class="table-scroll">
         <table class="data-table mono">
@@ -1773,8 +1814,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Aggregated Mock Consensus + Shanahan/Lynch Fit</div>
-      <h3 class="card-title" style="margin-bottom:8px">Top Projected 49ers Prospect Fits</h3>
+      <h3 class="card-title" style="margin-bottom:8px">Consensus Mock Targets</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(dp.consensusMockTargets || [])
           .map(m => {
@@ -1809,10 +1849,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
 
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <div>
-          <div class="card-eyebrow">NFL Scouting Combine Measurables &amp; ${jargonTerm('RAS', 'ras')} Leaderboard</div>
-          <h3 class="card-title">Searchable Combine Results (${filteredCombine.length})</h3>
-        </div>
+        <h3 class="card-title">Combine Leaderboard (${filteredCombine.length})</h3>
         <div class="source-link-strip">
           <a href="https://www.nfl.com/combine/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Combine</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://ras.football/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RAS.football</span>${iconSvg('externalLink', 10)}</a>
@@ -1871,8 +1908,7 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('radar', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Draft Recap • Value vs. Consensus &amp; Film</div>
-            <h2 class="card-title">${draftYear} 49ers Draft Class (${picks.length} Picks)</h2>
+            <h2 class="card-title">${draftYear} Draft Class (${picks.length} Picks)</h2>
           </div>
         </div>
         <div class="source-link-strip">
@@ -1954,8 +1990,7 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">Sorted by Guaranteed Contract Commitment</div>
-      <h3 class="card-title" style="margin-bottom:8px">Priority Undrafted Free Agents (${jargonTerm('UDFAs', 'udfa')})</h3>
+      <h3 class="card-title" style="margin-bottom:8px">Priority ${jargonTerm('UDFAs', 'udfa')} (${udfas.length})</h3>
       <div style="display:flex;flex-direction:column;gap:9px">
         ${udfas
           .map((u, idx) => {

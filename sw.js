@@ -1,4 +1,5 @@
-const CACHE_NAME = '49ers-faithful-v43';
+const CACHE_NAME = '49ers-faithful-v45';
+const NETWORK_TIMEOUT_MS = 7500;
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -52,28 +53,59 @@ const CORE_ASSETS = [
   './apple-touch-icon.png'
 ];
 
+function fetchWithTimeoutSw(url, init = {}, timeoutMs = NETWORK_TIMEOUT_MS) {
+  if (typeof AbortController !== 'function') {
+    return fetch(url, init);
+  }
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  return fetch(url, { ...init, signal: ctrl.signal }).finally(() => clearTimeout(timer));
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache =>
-      Promise.all(
-        CORE_ASSETS.map(url =>
-          fetch(url, { cache: 'no-cache' })
-            .then(res => (res.ok ? cache.put(url, res) : null))
-            .catch(() => null)
+    caches
+      .open(CACHE_NAME)
+      .then(cache =>
+        Promise.all(
+          CORE_ASSETS.map(url =>
+            fetchWithTimeoutSw(url, { cache: 'no-cache' }, 9000)
+              .then(res => (res && res.ok ? cache.put(url, res) : null))
+              .catch(() => null)
+          )
         )
       )
-    )
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    (async () => {
+      const keys = await caches.keys();
+      const oldKeys = keys.filter(k => k !== CACHE_NAME);
+      if (oldKeys.length > 0) {
+        try {
+          const nextCache = await caches.open(CACHE_NAME);
+          // Carry forward any core/data asset that failed to pre-fetch on a flaky cellular SW install
+          for (const assetUrl of CORE_ASSETS) {
+            const alreadyPresent = await nextCache.match(assetUrl, { ignoreSearch: true });
+            if (alreadyPresent) continue;
+            for (const oldKey of oldKeys) {
+              const prevCache = await caches.open(oldKey);
+              const prevMatch = await prevCache.match(assetUrl, { ignoreSearch: true });
+              if (prevMatch) {
+                await nextCache.put(assetUrl, prevMatch.clone());
+                break;
+              }
+            }
+          }
+        } catch {}
+        await Promise.all(oldKeys.map(k => caches.delete(k)));
+      }
+      await self.clients.claim();
+    })()
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
@@ -110,10 +142,10 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network-first with instant offline cache fallback for HTML, JS, CSS & live JSON feeds
+  // Network-first with fast timeout & instant offline cache fallback for HTML, JS, CSS & live JSON feeds
   // Pass event.request.url string so { cache: 'no-cache' } never throws TypeError on mode === 'navigate'
   event.respondWith(
-    fetch(event.request.url, { cache: 'no-cache' })
+    fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, NETWORK_TIMEOUT_MS)
       .then(res => {
         if (res && res.status === 200) {
           const clone = res.clone();

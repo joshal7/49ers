@@ -194,7 +194,7 @@ export function buildLiveGroundingSystemPrompt(appData = null) {
   return [
     'You are the Lead Football Intelligence Analyst for "49ers Faithful", a private, high-IQ San Francisco 49ers briefing platform.',
     'UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:',
-    '0. Take as much internal reasoning time and High-Thinking token budget as needed to achieve 100% factual accuracy, exact CBA cap arithmetic, and coaching-tape analytical depth. NEVER rush, truncate verification, approximate contract math, or sacrifice prose/dialogue quality to reduce latency—readers and listeners gladly wait longer for an authoritative, zero-error output.',
+    '0. Achieve 100% factual accuracy, exact CBA cap arithmetic, and coaching-tape analytical depth with focused, non-repetitive internal reasoning: consult the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT first, run at most 1–2 targeted Google Search queries ONLY if a post-snapshot external fact is genuinely needed, and avoid redundant internal re-drafting loops.',
     `1. NEVER rely on stale pre-trained model weights for roster membership, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations. Anchor strictly to the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT (synced ${syncStamp}) and live Google Search Grounding.`,
     '2. COACHING, CAP & DRAFT RULES OF TRUTH:',
     '   - Coaching Staff: Head Coach Kyle Shanahan; Defensive Coordinator Raheem Morris (Wide-9 4-man pass rush married to disguised two-high / Cover-3 Buzz / Quarters coverage rotations).',
@@ -205,7 +205,7 @@ export function buildLiveGroundingSystemPrompt(appData = null) {
     disallowedSample
       ? `3. NEVER attribute retired, cut, or departed former 49ers to the active 49ers rotation (non-rostered names include: ${disallowedSample}). You may reference them ONLY in verified historical, 2026 dead-cap, opponent, or external trade-target context.`
       : '3. Verify every 49ers player mentioned against the provided LIVE 49ERS ROSTER list before citing them in current-season rotations.',
-    '4. INTERNAL MULTI-PASS SELF-AUDIT BEFORE EMITTING A SINGLE WORD: Silently cross-check every player name, injury status, contract figure, pick slot, scheme concept, and playoff probability against the live snapshot and Google Search Grounding; rewrite any weak or generic phrasing before finalizing.',
+    '4. INTERNAL MULTI-PASS SELF-AUDIT BEFORE EMITTING A SINGLE WORD: Efficiently cross-check every player name, injury status, contract figure, pick slot, scheme concept, and playoff probability against the live snapshot in one crisp verification pass without repeating full drafts internally.',
     '5. EDITORIAL CHARTER: Zero clickbait, zero rage-bait, zero filler throat-clearing. Separate Verified Facts, All-22 Film Mechanics (11/21 personnel, Wide-9 stunt geometry, coverage shells, EPA/play, CPOE), and CBA Salary Cap Math.',
     '6. Cite originating beat reporters (Matt Maiocco, Matt Barrows, Nick Wagoner, Jennifer Lee Chan, David Lombardi, Dieter Kurtenbach, Eric Branch, Cam Inman, Tim Kawakami, Brian Peacock, Eric Crocker, Adam Schefter, Ian Rapoport, Tom Pelissero) or open datasets (nflverse, OverTheCap, Tankathon, NextGen Stats).'
   ].join('\n');
@@ -215,7 +215,7 @@ export function buildLiveGroundingSystemPrompt(appData = null) {
  * Builds a comprehensive, up-to-the-minute live data context block injected into
  * every LLM prompt so the model has exact current roster, trades, injuries, cap, picks, and calibrated playoff odds.
  */
-export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
+export function buildAuthoritativeLiveContextSnapshot(appData = {}, { compactForDossier = false, includeTradeMatrix = true } = {}) {
   const meta = appData?.meta || {};
   const seasonYr = String(meta.seasonYear || 2026);
   const nextYr = String(Number(seasonYr) + 1);
@@ -345,15 +345,28 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}) {
     pickLines
       ? `${nextYr} DRAFT PICK INVENTORY (${pickInventory.length} PICKS TOTAL): ${pickLines}${tradedPicksNote ? `\n  Traded Away Note: ${tradedPicksNote}` : ''}`
       : '',
-    tradeLines ? `VERIFIED ${seasonYr} TRADES & ACQUISITIONS:\n${tradeLines}` : '',
-    needLines ? `TRADE WINDOW RANKED POSITIONAL NEEDS:\n${needLines}` : '',
-    targetLines ? `TRADE WINDOW VERIFIED TARGET CANDIDATES:\n${targetLines}` : '',
-    pitfallLines ? `TRADE WINDOW PITFALLS & TRAPS TO AVOID:\n${pitfallLines}` : '',
+    tradeLines
+      ? `VERIFIED ${seasonYr} TRADES & ACQUISITIONS:\n${
+          compactForDossier
+            ? completedTrades
+                .map(
+                  m =>
+                    `  - ${m.player} (${m.position}, from ${m.acquiredFrom}, ${m.timing}${
+                      m.costSummary || m.compensation ? ` for ${m.costSummary || m.compensation}` : ''
+                    })`
+                )
+                .join('\n')
+            : tradeLines
+        }`
+      : '',
+    !compactForDossier || includeTradeMatrix ? (needLines ? `TRADE WINDOW RANKED POSITIONAL NEEDS:\n${needLines}` : '') : '',
+    !compactForDossier || includeTradeMatrix ? (targetLines ? `TRADE WINDOW VERIFIED TARGET CANDIDATES:\n${targetLines}` : '') : '',
+    !compactForDossier || includeTradeMatrix ? (pitfallLines ? `TRADE WINDOW PITFALLS & TRAPS TO AVOID:\n${pitfallLines}` : '') : '',
     depthStarterSummary ? `PROJECTED STARTING LINEUP SNAPSHOT:\n${depthStarterSummary}` : '',
     activeRosterLines ? `AUTHORITATIVE LIVE 49ERS ACTIVE 53-MAN ROSTER (USE ONLY THESE PLAYERS FOR ACTIVE ROTATIONS):\n${activeRosterLines}` : '',
     irNames ? `49ERS INJURED RESERVE / OUT LIST: ${irNames}` : '',
     injuryLines ? `UP-TO-THE-MINUTE WEEK ${meta.currentWeek || 9} INJURY & PRACTICE REPORT:\n${injuryLines}` : '',
-    latestWireLines ? `LATEST LIVE BEAT TWEETS & NEWS WIRE:\n${latestWireLines}` : '',
+    !compactForDossier && latestWireLines ? `LATEST LIVE BEAT TWEETS & NEWS WIRE:\n${latestWireLines}` : '',
     disallowed ? `DO NOT CITE AS ACTIVE 49ERS (RETIRED / DEPARTED): ${disallowed}` : ''
   ]
     .filter(Boolean)

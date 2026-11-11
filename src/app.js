@@ -53,18 +53,18 @@ import {
 } from './views/uiHelpers.js?v=37';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=37';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=37';
-import { iconSvg } from './views/icons.js?v=37';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=37';
+import { iconSvg } from './views/icons.js?v=38';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=38';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=37';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=37';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=37';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=37';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=37';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=37';
+} from './views/newsView.js?v=38';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=38';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=38';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=38';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=38';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=38';
 
 const state = {
   appData: null,
@@ -659,16 +659,16 @@ function renderSheet() {
         appData: state.appData
       });
     } else if (state.sheetMode === 'settings') {
-      if (eyebrow) eyebrow.textContent = 'Customization & Source Control';
-      if (title) title.textContent = 'Settings & Reporter Filters';
+      if (eyebrow) eyebrow.textContent = 'Preferences';
+      if (title) title.textContent = 'Settings';
       body.innerHTML = renderSettingsSheetHtml({
         userPrefs: state.prefs,
         reportersData: state.appData?.reporters,
         reporterSearch: state.reporterSearch
       });
     } else if (state.sheetMode === 'vault') {
-      if (eyebrow) eyebrow.textContent = 'Podcasts, Analyses, Trades & Seasonal Archive';
-      if (title) title.textContent = 'Archive Vault';
+      if (eyebrow) eyebrow.textContent = 'Off-Cycle & Saved Items';
+      if (title) title.textContent = 'Archive';
       body.innerHTML = renderArchiveVaultSheetHtml({
         seasonState: state.seasonState,
         appData: state.appData,
@@ -681,7 +681,7 @@ function renderSheet() {
       );
       const rawStream = state.appData?.news?.rawStream || [];
       const reports = resolveClusterSafeReports(cluster, rawStream, state.appData);
-      if (eyebrow) eyebrow.textContent = `${cluster?.categoryLabel || 'AI Synthesis'} • ${reports.length} Reports`;
+      if (eyebrow) eyebrow.textContent = cluster?.categoryLabel || 'Synthesis Brief';
       if (title) title.textContent = `Reports Used (${reports.length})`;
       body.innerHTML = renderSynthesisSourcesSheetHtml(cluster, rawStream, state.appData);
     }
@@ -2368,7 +2368,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=42', { updateViaCache: 'none' })
+        .register('./sw.js?v=45', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

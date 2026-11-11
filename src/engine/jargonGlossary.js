@@ -394,6 +394,18 @@ export const JARGON_GLOSSARY = {
     definition:
       'Questionable player whose active/inactive status will be finalized after pre-game warmups 90 minutes prior to kickoff.'
   },
+  availability_index: {
+    term: 'Team Availability Index (0–100)',
+    category: 'Health & Availability Model',
+    definition:
+      'Snap- and probability-weighted 0–100 lineup health score across the 22 offensive and defensive starters plus key rotational depth and Injured Reserve attrition. Starts at 100 and deducts expected snap-weighted value lost to Out, Doubtful, Questionable/GTD, and IR players (82–100 = Near Full Strength, 68–81 = Moderately Banged Up, <68 = Heavily Depleted).'
+  },
+  starters_cleared: {
+    term: 'Starters Cleared (X/22)',
+    category: 'Health & Availability Model',
+    definition:
+      'Counts how many of a team’s 22 primary offensive and defensive starters are currently off the injury report without an unresolved Out, Doubtful, or Questionable game designation.'
+  },
   explosive_plays: {
     term: 'Explosive Plays (20+ Pass / 10+ Rush)',
     category: 'Analytics',

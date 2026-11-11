@@ -532,7 +532,7 @@ function renderBeatPodcastsDirectory({
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Last 7 Days</div>
-            <h2 class="card-title">Latest 49ers Beat Podcasts (${episodes.length})</h2>
+            <h2 class="card-title">49ers Beat Podcasts (${episodes.length})</h2>
           </div>
         </div>
         <div class="podcast-view-toggle" role="group" aria-label="Organize Podcasts By">
@@ -761,8 +761,7 @@ function renderPodcastStudio({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Custom Audio Briefing</div>
-            <h2 class="card-title">Generate Autopodcast</h2>
+            <h2 class="card-title">Auto Podcast</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="open-settings" title="Change Host Format in Settings" style="font-size:11px;padding:4px 8px">
@@ -779,7 +778,7 @@ function renderPodcastStudio({
         <span class="badge badge-gold mono" id="podDurationBadge">${podDurationMin} min</span>
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">Topic or Football Question</div>
+      <div class="sub-label" style="margin-bottom:6px">Topic</div>
       <div class="pill-bar" style="margin-bottom:8px">
         ${topicChips
           .map(
@@ -821,10 +820,7 @@ function renderPodcastStudio({
     <!-- Audio Briefing Library -->
     <section class="card" data-podcast-library-section="${esc(podLibraryFilter)}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px">
-        <div style="min-width:0">
-          <div class="card-eyebrow">Instant Play • Share • Archive or Delete</div>
-          <h3 class="card-title">Audio Briefing Library (${visibleEpisodes.length})</h3>
-        </div>
+        <h3 class="card-title">Saved Episodes (${visibleEpisodes.length})</h3>
         <div class="library-filter-toggle" role="group" aria-label="Filter Audio Briefing Library">
           <button type="button" class="pill-btn ${!showingArchivedPods ? 'active' : ''}"
                   data-action="set-pod-library-filter" data-filter="active">
@@ -966,7 +962,6 @@ function renderDeepAnalysisRunner({
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Film, Analytics &amp; Salary Cap</div>
             <h2 class="card-title">Scouting &amp; Cap Analysis</h2>
           </div>
         </div>
@@ -1012,10 +1007,7 @@ function renderDeepAnalysisRunner({
 
     <section class="card" data-analysis-library-section="${esc(analysisLibraryFilter)}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-        <div style="min-width:0">
-          <div class="card-eyebrow">Film &amp; Salary Cap Breakdowns • Share, Archive or Delete</div>
-          <h3 class="card-title">Saved Scouting &amp; Cap Reports (${visibleAnalyses.length})</h3>
-        </div>
+        <h3 class="card-title">Saved Reports (${visibleAnalyses.length})</h3>
         <div class="library-filter-toggle" role="group" aria-label="Filter Saved Scouting Reports">
           <button type="button" class="pill-btn ${!showingArchivedAnalyses ? 'active' : ''}"
                   data-action="set-analysis-library-filter" data-filter="active">

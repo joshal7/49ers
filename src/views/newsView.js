@@ -123,10 +123,6 @@ export function renderSynthesisSourcesSheetHtml(cluster, rawStream = [], appData
         <div style="font-weight:700;font-size:13.5px;line-height:1.38;color:var(--text-primary)">${esc(cluster.headline)}</div>
       </div>
 
-      <div class="sub-label" style="margin-bottom:0">
-        Clickable Reports &amp; Sources Used (${reports.length})
-      </div>
-
       ${
         reports.length === 0
           ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No external report links attached to this brief.</div>`
@@ -372,7 +368,7 @@ export function renderNewsViewHtml({
             ? `
               <details class="compact-details">
                 <summary class="compact-details-summary">
-                  <span>Original Sources &amp; Reports Used (${safeSourceLinks.length})</span>
+                  <span>Sources (${safeSourceLinks.length})</span>
                 </summary>
                 <div class="source-links-grid" style="margin-top:7px">
                   ${safeSourceLinks
@@ -411,9 +407,9 @@ export function renderNewsViewHtml({
           <article class="card" data-cluster-card="${esc(c.id)}" style="display:flex;flex-direction:column;gap:10px">
             ${heroBannerHtml}
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-              ${hasHeroPhoto ? `<span class="card-eyebrow" style="margin:0">${esc(c.categoryLabel)} Synthesis</span>` : `<span class="badge badge-gold">${esc(c.categoryLabel)}</span>`}
+              ${hasHeroPhoto ? '<span></span>' : `<span class="badge badge-gold">${esc(c.categoryLabel)}</span>`}
               <span class="mono" style="font-size:11.5px;color:var(--text-muted)">
-                Synthesized from <button type="button" class="synthesis-reports-link mono" data-action="open-synthesis-sources" data-cluster-id="${esc(c.id)}">${reportCount} report${reportCount === 1 ? '' : 's'}</button> • ${esc(formatRelativeAge(c.publishedAt))}
+                <button type="button" class="synthesis-reports-link mono" data-action="open-synthesis-sources" data-cluster-id="${esc(c.id)}">${reportCount} report${reportCount === 1 ? '' : 's'}</button> • ${esc(formatRelativeAge(c.publishedAt))}
               </span>
             </div>
 
@@ -429,7 +425,7 @@ export function renderNewsViewHtml({
             </div>
 
             <div>
-              <div class="brief-section-label">Scheme &amp; Salary Cap Breakdown</div>
+              <div class="brief-section-label">Scheme &amp; Cap Impact</div>
               <ul class="brief-bullets">
                 ${(c.schemeAndCapTakeaways || []).map(t => `<li>${escJargon(t)}</li>`).join('')}
               </ul>

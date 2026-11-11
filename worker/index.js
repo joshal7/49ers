@@ -42,7 +42,7 @@ export const HIGH_THINKING_BUDGET = 24576;
 
 export const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
 UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:
-0. Take full advantage of your maximum High-Thinking token budget. NEVER rush, truncate verification, approximate CBA contract math, or sacrifice prose/dialogue quality to respond faster. Readers and listeners gladly wait longer for an exhaustive, zero-error, coaching-tape-grade output.
+0. Achieve exhaustive factual accuracy, exact CBA contract math, and coaching-tape analytical depth with focused, non-repetitive internal reasoning: consult the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT first, run at most 1–2 targeted Google Search queries ONLY if a brand-new external fact is missing, and avoid redundant internal re-drafting loops.
 1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations.
 2. Treat the provided AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
 3. MANDATORY COACHING, CAP & DRAFT GROUNDING:
@@ -1016,7 +1016,7 @@ export default {
       let audioModelUsed = null;
       let measuredAudioSec = 0;
       if (env.PODCAST_BUCKET) {
-        const ttsBlocks = chunkTurnsForGeminiTts(turns, 2400);
+        const ttsBlocks = chunkTurnsForGeminiTts(turns, 3800);
         const directorHeader = buildNotebookLmTtsDirectorHeader({
           format: solo ? 'solo' : 'two_host'
         });
@@ -1045,35 +1045,42 @@ export default {
               }
             };
 
-        const pcmBuffers = [];
-        for (const block of ttsBlocks) {
-          const ttsDialogue = directorHeader + block.map(t => t.spokenLine).join('\n');
-          const { res: ttsRes, audioModelUsed: resolvedAudioModel } = await callGeminiAudioTtsWithFallback(env, {
-            contents: [{ parts: [{ text: ttsDialogue }] }],
-            generationConfig: {
-              responseModalities: ['AUDIO'],
-              speechConfig
-            }
-          });
-
-          if (ttsRes && ttsRes.ok) {
-            audioModelUsed = resolvedAudioModel;
-            const ttsJson = await ttsRes.json();
-            const b64 = ttsJson.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data)?.inlineData?.data;
-            if (b64) {
+        const pcmBuffers = new Array(ttsBlocks.length).fill(null);
+        let ttsAllOk = ttsBlocks.length > 0;
+        const maxConcurrency = 2;
+        for (let bStart = 0; bStart < ttsBlocks.length && ttsAllOk; bStart += maxConcurrency) {
+          const batch = ttsBlocks.slice(bStart, bStart + maxConcurrency);
+          const batchResults = await Promise.all(
+            batch.map(async (block, relIdx) => {
+              const ttsDialogue = directorHeader + block.map(t => t.spokenLine).join('\n');
+              const { res: ttsRes, audioModelUsed: resolvedAudioModel } = await callGeminiAudioTtsWithFallback(env, {
+                contents: [{ parts: [{ text: ttsDialogue }] }],
+                generationConfig: {
+                  responseModalities: ['AUDIO'],
+                  speechConfig
+                }
+              });
+              if (!ttsRes || !ttsRes.ok) return null;
+              const ttsJson = await ttsRes.json();
+              const b64 = ttsJson.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data)?.inlineData?.data;
+              if (!b64) return null;
               const binaryStr = atob(b64);
               const pcm = new Uint8Array(binaryStr.length - (binaryStr.length % 2));
               for (let i = 0; i < pcm.length; i++) pcm[i] = binaryStr.charCodeAt(i);
-              pcmBuffers.push(pcm);
-            } else {
+              return { idx: bStart + relIdx, pcm, resolvedAudioModel };
+            })
+          );
+          for (const item of batchResults) {
+            if (!item) {
+              ttsAllOk = false;
               break;
             }
-          } else {
-            break;
+            pcmBuffers[item.idx] = item.pcm;
+            audioModelUsed = item.resolvedAudioModel;
           }
         }
 
-        if (pcmBuffers.length > 0 && pcmBuffers.length === ttsBlocks.length) {
+        if (ttsAllOk && pcmBuffers.every(Boolean)) {
           const pauseBytes = pcmBuffers.length > 1 ? Math.round(24000 * 0.14) * 2 : 0;
           const totalBytes =
             pcmBuffers.reduce((s, b) => s + b.byteLength, 0) +

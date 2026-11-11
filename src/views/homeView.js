@@ -44,6 +44,7 @@ import {
   resolveGameDayInjuryRows,
   resolveTeamGameDayModel
 } from '../engine/gameDayRosterEngine.js';
+import { computeTeamHealthSummary } from '../engine/injuryProbabilityModel.js';
 import {
   buildXBeatListSearchUrl,
   resolveItemAuthorProfileUrl,
@@ -181,8 +182,8 @@ function renderSingleDashboardCard({
         <div style="display:flex;flex-direction:column;gap:10px">
           <div>
             <div class="home-wire-heading">
-              <span>AI Beat Synthesis</span>
-              <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${top2[0]?.publishedAt ? `Synthesized ${esc(relTime(top2[0].publishedAt))}` : ''}</span>
+              <span>Synthesis Briefs</span>
+              <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${top2[0]?.publishedAt ? esc(relTime(top2[0].publishedAt)) : ''}</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
               ${top2
@@ -249,11 +250,8 @@ function renderSingleDashboardCard({
               ? `
             <div>
               <div class="home-wire-heading">
-                <span>Top Beat Tweets</span>
-                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                  <a href="${esc(buildXBeatListSearchUrl('injuries'))}" target="_blank" rel="noopener noreferrer" class="ext-link mono" style="font-size:10.5px">Live X Beat ${iconSvg('external', 10)}</a>
-                  <span class="mono" style="font-size:10.5px;color:var(--emerald)">Live Wire (&lt;1m)</span>
-                </div>
+                <span>Latest Tweets</span>
+                <a href="${esc(buildXBeatListSearchUrl('injuries'))}" target="_blank" rel="noopener noreferrer" class="ext-link mono" style="font-size:10.5px">Live X Beat ${iconSvg('external', 10)}</a>
               </div>
               <div class="home-wire-list">
                 ${topTweets
@@ -319,8 +317,7 @@ function renderSingleDashboardCard({
               ? `
             <div>
               <div class="home-wire-heading">
-                <span>Top Beat Articles</span>
-                <span class="mono" style="font-size:10.5px;color:var(--text-muted)">Direct Links</span>
+                <span>Latest Articles</span>
               </div>
               <div class="home-wire-list">
                 ${topArticles
@@ -365,11 +362,15 @@ function renderSingleDashboardCard({
       const oppHealth = um.opponentHealth || {};
       const rawOppInj = oppHealth.injuryReport || [];
       const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false });
-      const oppInj = (
-        oppGameDay?.isActive
-          ? resolveGameDayInjuryRows(rawOppInj, oppGameDay)
-          : rawOppInj
-      ).slice(0, 3);
+      const resolvedOppInjAll = oppGameDay?.isActive
+        ? resolveGameDayInjuryRows(rawOppInj, oppGameDay)
+        : rawOppInj;
+      const oppInj = resolvedOppInjAll.slice(0, 3);
+      const homeOppSummary = computeTeamHealthSummary({
+        injuryReport: resolvedOppInjAll,
+        irReserve: oppHealth.irReserve || [],
+        totalStarters: oppHealth.summary?.totalStarters || 22
+      });
       externalHeaderLink = um.gameUrl
         ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
         : '';
@@ -421,7 +422,7 @@ function renderSingleDashboardCard({
         </div>
         <div class="subcard-panel" style="font-size:12px">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:${oppInj.length ? '5px' : '0'}">
-            <strong style="color:var(--text-primary)">${esc(um.oppName)} Health &amp; Play Likelihood${oppHealth.summary?.overallAvailabilityScore != null ? ` <span class="mono" style="color:var(--gold-bright);font-size:11px">(${oppHealth.summary.overallAvailabilityScore}/100 Avail.)</span>` : ''}</strong>
+            <strong style="color:var(--text-primary)">${esc(um.oppName)} Health <span class="mono" style="color:var(--gold-bright);font-size:11px">(${homeOppSummary.overallAvailabilityScore}/100 Avail.)</span></strong>
             <a href="${esc(oppHealth.teamInjuriesUrl || um.injurySourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
               <span>Injury Wire</span>${iconSvg('external', 10)}
             </a>
@@ -446,7 +447,7 @@ function renderSingleDashboardCard({
                     )
                     .join('')}
                 </div>`
-              : `<div style="font-size:11.5px;color:var(--text-muted);margin-top:3px">Active starters cleared (${oppHealth.summary?.activeStartersHealthy ?? 20}/${oppHealth.summary?.totalStarters ?? 22}) • ${oppHealth.summary?.irCount ?? (oppHealth.irReserve || []).length} on IR</div>`
+              : `<div style="font-size:11.5px;color:var(--text-muted);margin-top:3px">Active starters cleared (${homeOppSummary.activeStartersHealthy}/${homeOppSummary.totalStarters}) • ${homeOppSummary.irCount} on IR</div>`
           }
         </div>
       `;
@@ -525,7 +526,7 @@ function renderSingleDashboardCard({
             : ''
         }
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          <strong>${esc(overallRec)} Overall${esc(divRec)}</strong>${intlNotesHtml ? ` • International Series: ${intlNotesHtml}.` : ''} ${intl.length} international venues tracked.
+          <strong>${esc(overallRec)} Overall${esc(divRec)}</strong>${intlNotesHtml ? ` • International Series: ${intlNotesHtml}` : ''}
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="schedule"`;
@@ -712,10 +713,9 @@ function renderSingleDashboardCard({
       bodyHtml = `
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
           ${starAvatars.length ? renderAvatarStackHtml(starAvatars, 30, 7) : ''}
-          <span class="mono" style="font-size:11px;color:var(--gold-bright)">Tap headshot for 5-tab Dossier</span>
         </div>
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          Explore all <strong>${count} players</strong> (${activeCnt} Active + IR + Practice Squad) sorted by Name or Jersey #, with ${jargonTerm('EPA', 'epa')}, NextGen Stats, NFL Combine percentiles, Contracts &amp; ${depthWk ? `Week ${depthWk} ` : ''}Active Depth Chart.
+          <strong>${count} Players</strong> (${activeCnt} Active · IR · Practice Squad) — ${jargonTerm('EPA', 'epa')}, NextGen, ${jargonTerm('RAS', 'ras')}, Contracts &amp; ${depthWk ? `Wk ${depthWk} ` : ''}Depth Chart.
         </div>
       `;
       deepDiveAttr = `data-action="jump-view" data-target-tab="roster"`;
@@ -804,9 +804,9 @@ function renderSingleDashboardCard({
               <span class="inline-player-link" role="button" tabindex="0" style="border-bottom-style:none" data-action="jump-studio-sub" data-studio-sub="podcast">${esc(latestEp?.title || `${epCount} Two-Host Audio Briefings Ready`)}</span>
             </div>
             <div>
-              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="beat_podcasts">${beatEpsCount} 49ers Beat Podcasts (7d)</span> +
-              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="podcast">${epCount} AI Briefings</span> &amp;
-              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="analysis">Deep Scouting Generator</span>.
+              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="beat_podcasts">${beatEpsCount} Beat Podcasts (7d)</span> ·
+              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="podcast">${epCount} Auto Pods</span> ·
+              <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="analysis">AI Analysis</span>
             </div>
           </div>
         </div>
@@ -828,7 +828,6 @@ function renderSingleDashboardCard({
             ${iconSvg(iconName, 18)}
           </div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(block.phase.replace('_', ' '))}</div>
             <h2 class="card-title">${esc(block.title)}</h2>
           </div>
         </div>

@@ -25,7 +25,7 @@ export const ALL_DASHBOARD_BLOCKS = [
   },
   {
     id: 'team_health',
-    title: 'Team Health & Play Probability',
+    title: 'Team Health',
     shortTitle: 'Team Health',
     phase: 'IN_SEASON',
     navTab: 'season',
@@ -52,7 +52,7 @@ export const ALL_DASHBOARD_BLOCKS = [
   },
   {
     id: 'playoff_picture',
-    title: 'Playoff Probabilities',
+    title: 'Playoff Odds',
     shortTitle: 'Playoff Odds',
     phase: 'PLAYOFF_PUSH',
     navTab: 'season',

@@ -238,10 +238,6 @@ export function renderArchiveVaultSheetHtml({
   };
 
   return `
-    <div style="font-size:12.5px;color:var(--text-secondary)">
-      Archived podcasts, AI analyses, completed trades older than 30 days, and off-cycle NFL seasonal modules are stored here:
-    </div>
-
     <div id="archivePodcastsSection">
       <div class="sub-label" style="margin-bottom:6px">Archived Podcasts (${archivedEpisodes.length})</div>
       <div style="display:flex;flex-direction:column;gap:8px">

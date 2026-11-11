@@ -4505,6 +4505,12 @@ test('Completed-game play-likelihood articles & AI synthesis briefs are demoted 
     schedulePrevExpanded: false
   });
   assert.ok(
+    schedCollapsedHtml.includes('<h2 class="card-title">2026 Season</h2>') &&
+      !schedCollapsedHtml.includes('Current &amp; Upcoming Slate') &&
+      !schedCollapsedHtml.includes('Venue Tracker'),
+    'Schedule header must be streamlined to "2026 Season" without redundant eyebrow or venue-tracker title'
+  );
+  assert.ok(
     schedCollapsedHtml.includes('data-schedule-previous-games') &&
       !schedCollapsedHtml.includes('data-schedule-previous-games open'),
     'Previous Games box must render and start collapsed (without open attribute)'

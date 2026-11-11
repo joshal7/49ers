@@ -36,11 +36,13 @@ import { buildReporterRegistry } from './update-reporter-registry.mjs';
 import {
   collapseInitialDots,
   computePlayerPlayProbability,
+  computeTeamHealthSummary,
   calculateIrReturnTimeline,
   extractPracticeDaysFromText,
   classifyIrAndReserveTimeline,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
+  select22OffDefStartersFromDepthChart,
   sortIrTrackerPriority
 } from '../src/engine/injuryProbabilityModel.js';
 import {
@@ -3064,43 +3066,6 @@ async function main() {
   }
   const oppWebAthleteDetails = await fetchEspnAthleteDetailsBatch(oppIdsForDeepHealth, fetchJson);
 
-  // Extract opponent's actual 1st-string starters dynamically from ESPN's live opponent depth chart across BOTH Offense & Defense!
-  const dynamicOppStarterNames = new Set();
-  const oppOffStarterNames = new Set();
-  const oppDefStarterNames = new Set();
-  const offStarterSlots = ['qb', 'rb', 'wr1', 'wr2', 'wr3', 'te', 'lt', 'lg', 'c', 'rg', 'rt'];
-  const defStarterSlots = ['lde', 'ldt', 'rdt', 'nt', 'rde', 'wlb', 'mlb', 'lilb', 'rilb', 'slb', 'lcb', 'rcb', 'nb', 'ss', 'fs'];
-  for (const dc of oppDepthRaw.depthchart || []) {
-    const dcNameLower = String(dc.name || '').toLowerCase();
-    for (const slot of offStarterSlots) {
-      const starter = dc.positions?.[slot]?.athletes?.[0]?.displayName;
-      if (starter) {
-        const nk = normName(starter);
-        dynamicOppStarterNames.add(nk);
-        oppOffStarterNames.add(nk);
-      }
-    }
-    for (const slot of defStarterSlots) {
-      const starter = dc.positions?.[slot]?.athletes?.[0]?.displayName;
-      if (starter) {
-        const nk = normName(starter);
-        dynamicOppStarterNames.add(nk);
-        oppDefStarterNames.add(nk);
-      }
-    }
-    for (const [slotKey, posObj] of Object.entries(dc.positions || {})) {
-      const starter = posObj?.athletes?.[0]?.displayName;
-      if (!starter) continue;
-      const nk = normName(starter);
-      dynamicOppStarterNames.add(nk);
-      if (dcNameLower.includes('def') || /^(l|r)?(de|dt|nt|lb|ilb|olb|cb|ss|fs|db)/i.test(slotKey)) {
-        oppDefStarterNames.add(nk);
-      } else if (!/^(pk|p|ls|h|pr|kr)/i.test(slotKey)) {
-        oppOffStarterNames.add(nk);
-      }
-    }
-  }
-
   // Index opponent snap shares & nflverse weekly injury reports + compute opponent's real Bye Week!
   const oppSnapAgg = new Map();
   for (const row of snaps2026) {
@@ -3120,6 +3085,12 @@ async function main() {
     if (!rec || rec.games === 0) return null;
     return Math.round((rec.maxPctSum / rec.games) * 100);
   };
+
+  // Extract opponent's 22 true Offense + Defense starters from ESPN's live depth chart (excluding ST specialists/returners)
+  const {
+    allStarterNames: dynamicOppStarterNames,
+    defStarterNames: oppDefStarterNames
+  } = select22OffDefStartersFromDepthChart(oppDepthRaw.depthchart || [], getOppSnapPct, normName);
 
   const oppNflInjByName = new Map();
   for (const row of injuries2026) {
@@ -3592,19 +3563,12 @@ async function main() {
   );
   oppInjuryReportPlayers.sort((a, b) => a.playProbabilityPct - b.playProbabilityPct);
 
-  // Compute Opponent Overall Availability Index (0-100, snap-weighted starter parity with 49ers Health!)
-  const totalOppStarters = Math.max(22, oppHealthyOffCandidates.length + oppHealthyDefCandidates.length + oppInjuryReportPlayers.filter(p => p.isStarter).length);
-  const healthyOrLikelyOppStarters =
-    oppHealthyOffCandidates.length +
-    oppHealthyDefCandidates.length +
-    oppInjuryReportPlayers.filter(p => p.isStarter && p.playProbabilityPct >= 75).length;
-  const oppOutStarterPenalty = oppInjuryReportPlayers.filter(p => p.isStarter && p.playProbabilityPct === 0).length * 4.5;
-  const oppQStarterPenalty = oppInjuryReportPlayers.filter(p => p.isStarter && p.playProbabilityPct > 0 && p.playProbabilityPct < 85).length * 2.0;
-  const oppIrImpactPenalty = Math.min(10, oppIrPlayers.filter(p => (p.snapPct ?? 0) >= 35).length * 3.5 + oppIrPlayers.length * 0.6);
-  const oppOverallAvailabilityScore = Math.max(
-    50,
-    Math.min(99, Math.round(96 - oppOutStarterPenalty - oppQStarterPenalty - oppIrImpactPenalty))
-  );
+  // Compute Opponent Overall Availability Index & 4-card Scorecard Summary (22 true Off/Def starters, 0-100 snap-weighted index)
+  const oppComputedSummary = computeTeamHealthSummary({
+    injuryReport: oppInjuryReportPlayers,
+    irReserve: oppIrPlayers,
+    totalStarters: 22
+  });
 
   // Format dynamic kickoff time in America/Los_Angeles PT + live broadcast TV network
   const kickoffDateObj = nextScheduledGame?.dateIso ? new Date(nextScheduledGame.dateIso) : new Date('2026-11-08T21:25:00Z');
@@ -3756,15 +3720,7 @@ async function main() {
       sourceUrl: 'https://www.espn.com/nfl/injuries',
       teamInjuriesUrl: buildEspnTeamInjuriesUrl(oppAbbrTarget),
       byeWeek: oppByeWeek,
-      summary: {
-        overallAvailabilityScore: oppOverallAvailabilityScore,
-        activeStartersHealthy: Math.min(22, healthyOrLikelyOppStarters),
-        totalStarters: Math.min(22, totalOppStarters),
-        ruledOutCount: oppInjuryReportPlayers.filter(p => p.playProbabilityPct === 0).length,
-        questionableOrDoubtfulCount: oppInjuryReportPlayers.filter(p => p.playProbabilityPct > 0 && p.playProbabilityPct < 85).length,
-        clearedCount: oppInjuryReportPlayers.filter(p => p.playProbabilityPct >= 85).length,
-        irCount: oppIrPlayers.length
-      },
+      summary: oppComputedSummary,
       activeRoster: oppActiveRosterPlayers,
       injuryReport: oppInjuryReportPlayers,
       keyStartersHealthy: oppKeyHealthyStarters,

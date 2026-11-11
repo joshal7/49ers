@@ -2280,3 +2280,224 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
 
   return mutated;
 }
+
+const SPECIAL_TEAMS_ONLY_POSITIONS = new Set(['PK', 'K', 'P', 'LS', 'H', 'KR', 'PR']);
+
+/**
+ * Canonical predicate determining whether an active/injured player counts among a club's
+ * 22 offensive & defensive starters (shared between scorecard summary math and table row tags).
+ */
+export function isEffectiveOffDefStarter(player = {}) {
+  if (!player || typeof player !== 'object') return false;
+  const pos = String(player.position || '').trim().toUpperCase();
+  const unit = String(player.unit || '').trim().toLowerCase();
+  if (SPECIAL_TEAMS_ONLY_POSITIONS.has(pos) || unit === 'special teams') {
+    return false;
+  }
+
+  const snap = Number.isFinite(Number(player.snapPct)) && player.snapPct !== null ? Number(player.snapPct) : null;
+  if (player.isStarter === true) {
+    // Guard against return specialists (e.g. KR1/PR1 WR4 with <35% offensive snaps) being tagged starter via ST depth chart
+    if (snap !== null && snap > 0 && snap < 35 && ['WR', 'RB', 'CB', 'DB', 'S'].includes(pos)) {
+      return false;
+    }
+    return true;
+  }
+
+  if (snap !== null && snap >= 58) return true;
+  if (/\b(?:starter|pro bowl|all-pro|wr1|wr2|qb1|rb1|te1|cb1|lt|rt)\b/i.test(String(player.archetypeNote || ''))) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Selects up to 11 Offensive + 11 Defensive = 22 true starters from an ESPN depth chart payload,
+ * excluding Special Teams returners/specialists and resolving 12th-personnel ties (e.g. FB vs WR3, NT vs NB) by snap share.
+ */
+export function select22OffDefStartersFromDepthChart(depthChartArr = [], getSnapPctByNormKey = null, normFn = null) {
+  const norm =
+    typeof normFn === 'function'
+      ? normFn
+      : s =>
+          String(s || '')
+            .toLowerCase()
+            .replace(/\b(?:jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+            .replace(/[^a-z0-9]/g, '')
+            .trim();
+
+  const offSlotPriority = ['qb', 'rb', 'wr1', 'wr2', 'te', 'lt', 'lg', 'c', 'rg', 'rt', 'wr3', 'fb', 'dh'];
+  const defSlotPriority = ['lde', 'rde', 'ldt', 'rdt', 'wlb', 'mlb', 'lilb', 'rilb', 'lcb', 'rcb', 'ss', 'fs', 'nb', 'slb', 'nt', 'db'];
+
+  const offCandidates = new Map();
+  const defCandidates = new Map();
+
+  for (const dc of depthChartArr || []) {
+    const dcNameLower = String(dc?.name || '').toLowerCase();
+    if (dcNameLower.includes('special')) continue;
+    const positions = dc?.positions || {};
+
+    for (const [slotKeyRaw, posObj] of Object.entries(positions)) {
+      const slotKey = String(slotKeyRaw || '').toLowerCase().trim();
+      if (/^(?:pk|k|p|ls|h|pr|kr)\b/.test(slotKey)) continue;
+      const starterName = posObj?.athletes?.[0]?.displayName || posObj?.athletes?.[0]?.fullName || '';
+      const nk = norm(starterName);
+      if (!nk) continue;
+
+      const snapPct = typeof getSnapPctByNormKey === 'function' ? getSnapPctByNormKey(nk) : null;
+      const isDef =
+        dcNameLower.includes('def') ||
+        /^(?:l|r)?(?:de|dt|nt|lb|ilb|olb|wlb|mlb|slb|cb|ss|fs|nb|db)$/i.test(slotKey);
+
+      if (isDef) {
+        const prio = defSlotPriority.indexOf(slotKey);
+        const prev = defCandidates.get(nk);
+        const rankOrder = prio === -1 ? 99 : prio;
+        if (!prev || rankOrder < prev.rankOrder) {
+          defCandidates.set(nk, { nk, slotKey, snapPct, rankOrder });
+        }
+      } else {
+        const prio = offSlotPriority.indexOf(slotKey);
+        const prev = offCandidates.get(nk);
+        const rankOrder = prio === -1 ? 99 : prio;
+        if (!prev || rankOrder < prev.rankOrder) {
+          offCandidates.set(nk, { nk, slotKey, snapPct, rankOrder });
+        }
+      }
+    }
+  }
+
+  const pickTop11 = (candMap, coreLimit = 10) => {
+    const all = [...candMap.values()].sort((a, b) => a.rankOrder - b.rankOrder);
+    if (all.length <= 11) return new Set(all.map(x => x.nk));
+    const locked = all.slice(0, coreLimit);
+    const flex = all
+      .slice(coreLimit)
+      .sort((a, b) => (b.snapPct ?? -1) - (a.snapPct ?? -1) || a.rankOrder - b.rankOrder)
+      .slice(0, 11 - locked.length);
+    return new Set([...locked, ...flex].map(x => x.nk));
+  };
+
+  const offStarterNames = pickTop11(offCandidates, 10);
+  const defStarterNames = pickTop11(defCandidates, 9);
+  const allStarterNames = new Set([...offStarterNames, ...defStarterNames]);
+  return {
+    allStarterNames,
+    offStarterNames,
+    defStarterNames
+  };
+}
+
+/**
+ * Deterministically computes the 4-card Team Health Scorecard summary from live injury & IR lists
+ * so Availability Index, Starters Cleared (X/22), Questionable/Doubtful, and Ruled Out/IR are 100% consistent
+ * across build-time data generation, live client ESPN overlays, and Game-Day [T-90m, Final) windows.
+ */
+export function computeTeamHealthSummary({
+  injuryReport = [],
+  irReserve = [],
+  totalStarters = 22
+} = {}) {
+  const safeTotalStarters = Math.max(22, Number(totalStarters) || 22);
+  const reportList = Array.isArray(injuryReport) ? injuryReport : [];
+  const irList = Array.isArray(irReserve) ? irReserve : [];
+
+  let ruledOutCount = 0;
+  let doubtfulOrLongShotCount = 0;
+  let gtdCount = 0;
+  let clearedCount = 0;
+
+  let startersOutCount = 0;
+  let startersDoubtfulCount = 0;
+  let startersQuestionableCount = 0;
+
+  let starterAbsencePenalty = 0;
+  let rotationAbsencePenalty = 0;
+
+  const seenNames = new Set();
+  for (const row of reportList) {
+    const key = String(row?.name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+    if (key && seenNames.has(key)) continue;
+    if (key) seenNames.add(key);
+
+    const prob = Number.isFinite(Number(row?.playProbabilityPct)) ? Number(row.playProbabilityPct) : 50;
+    const statusStr = String(row?.gameStatus || '').trim();
+    const isStarter = isEffectiveOffDefStarter(row);
+
+    const isCleared =
+      /^(?:active|in\b|no designation|cleared)/i.test(statusStr) ||
+      (prob >= 88 && !/^(?:out|inactive|doubtful|questionable|ir)/i.test(statusStr));
+    const isOut = !isCleared && (prob === 0 || /^(?:out|inactive)\b/i.test(statusStr));
+    const isDoubtful = !isCleared && !isOut && (prob < 50 || /\bdoubtful\b/i.test(statusStr));
+    const isGtd = !isCleared && !isOut && !isDoubtful;
+
+    if (isCleared) {
+      clearedCount += 1;
+    } else if (isOut) {
+      ruledOutCount += 1;
+      if (isStarter) startersOutCount += 1;
+    } else if (isDoubtful) {
+      doubtfulOrLongShotCount += 1;
+      if (isStarter) startersDoubtfulCount += 1;
+    } else if (isGtd) {
+      gtdCount += 1;
+      if (isStarter) startersQuestionableCount += 1;
+    }
+
+    if (!isCleared) {
+      const missProb = Math.max(0, Math.min(1, (100 - prob) / 100));
+      if (isStarter) {
+        starterAbsencePenalty += missProb * 4.4;
+      } else {
+        const snapWeight = Number(row?.snapPct || 0) >= 30 ? 1.35 : 0.85;
+        rotationAbsencePenalty += missProb * snapWeight;
+      }
+    }
+  }
+
+  const startersUnresolvedCount = startersOutCount + startersDoubtfulCount + startersQuestionableCount;
+  const activeStartersHealthy = Math.max(
+    0,
+    safeTotalStarters - Math.min(safeTotalStarters, startersUnresolvedCount)
+  );
+  const questionableOrDoubtfulCount = doubtfulOrLongShotCount + gtdCount;
+
+  const irCount = irList.length;
+  const irOpenWindowCount = irList.filter(ir => Boolean(ir?.isPracticeWindowOpen)).length;
+  const irSeasonEndingCount = irList.filter(ir => Boolean(ir?.isSeasonEnding)).length;
+
+  let rawIrPenalty = 0;
+  for (const ir of irList) {
+    const snap = Number(ir?.snapPct || 0);
+    if (snap >= 50) rawIrPenalty += 3.2;
+    else if (snap >= 25) rawIrPenalty += 1.7;
+    else rawIrPenalty += 0.65;
+  }
+  const irPenalty = Math.min(14, rawIrPenalty);
+
+  const totalAttrition = starterAbsencePenalty + rotationAbsencePenalty + irPenalty;
+  const overallAvailabilityScore =
+    totalAttrition <= 0.2
+      ? 100
+      : Math.max(50, Math.min(99, Math.round(100 - totalAttrition)));
+
+  return {
+    overallAvailabilityScore,
+    activeStartersHealthy,
+    totalStarters: safeTotalStarters,
+    startersOutCount,
+    startersDoubtfulCount,
+    startersQuestionableCount,
+    startersUnresolvedCount,
+    ruledOutCount,
+    doubtfulOrLongShotCount,
+    gtdCount,
+    questionableOrDoubtfulCount,
+    clearedCount,
+    irCount,
+    irOpenWindowCount,
+    irSeasonEndingCount
+  };
+}

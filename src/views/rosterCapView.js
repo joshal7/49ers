@@ -283,7 +283,7 @@ function renderRosterExplorer({
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
-        <span>Showing <strong>${filtered.length}</strong> players — tap any row for Stats, ${jargonTerm('EPA', 'epa')}, ${jargonTerm('RAS', 'ras')} &amp; Contract details.</span>
+        <span><strong>${filtered.length}</strong> players — ${jargonTerm('EPA', 'epa')}, ${jargonTerm('RAS', 'ras')} &amp; Contracts</span>
         <div class="source-link-strip">
           <a href="https://www.espn.com/nfl/team/roster/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://www.49ers.com/team/players-roster/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com</span>${iconSvg('externalLink', 10)}</a>
@@ -358,8 +358,8 @@ function renderDualDepthChart({ appData, depthMode }) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('layers', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${jargonTerm('11 personnel', '11_personnel')} / ${jargonTerm('21 personnel', '21_personnel')} Offense • ${jargonTerm('Wide-9', 'wide_9')} Base &amp; Nickel 4-2-5 Defense</div>
-            <h2 class="card-title">49ers Depth Chart</h2>
+            <div class="card-eyebrow">${jargonTerm('11 personnel', '11_personnel')} / ${jargonTerm('21 personnel', '21_personnel')} • ${jargonTerm('Wide-9', 'wide_9')} &amp; Nickel 4-2-5</div>
+            <h2 class="card-title">Depth Chart</h2>
           </div>
         </div>
         <div class="source-link-strip">
@@ -426,7 +426,6 @@ function renderDualDepthChart({ appData, depthMode }) {
 
       return `
         <section class="card">
-          <div class="card-eyebrow">Depth Alignment</div>
           <h3 class="card-title" style="margin-bottom:8px">${esc(u.unitName)}</h3>
           ${rowsHtml}
         </section>
@@ -615,7 +614,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
     ? `
       <div class="subcard-panel" style="margin-top:10px;font-size:12px">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
-          <strong style="color:var(--gold-bright)">${esc(selectedYrKey)} Non-Active &amp; Dead Cap Breakdown (OverTheCap)</strong>
+          <strong style="color:var(--gold-bright)">${esc(selectedYrKey)} Reserve &amp; Dead Cap</strong>
           <span class="mono" style="color:var(--amber)">Dead Money: ${formatOtcDollars(yrDeadMoney)}</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;color:var(--text-secondary);font-size:11.5px;margin-bottom:${topDeadItems.length ? '6px' : '0'}">
@@ -667,8 +666,8 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('cap', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">OverTheCap &amp; NFLPA Ledger • ${esc(firstYrKey)}–${esc(horizonEndKey)} (5-Year Horizon)</div>
-            <h2 class="card-title">49ers Salary Cap Summary (${esc(selectedYrKey)})</h2>
+            <div class="card-eyebrow">${esc(firstYrKey)}–${esc(horizonEndKey)} Cap Horizon</div>
+            <h2 class="card-title">${esc(selectedYrKey)} Salary Cap</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
@@ -679,9 +678,9 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
       </div>
 
       <div class="source-link-strip" style="margin-bottom:10px">
-        <a href="${esc(otcTeamUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>OverTheCap 49ers Table</span>${iconSvg('externalLink', 11)}</a>
-        <a href="${esc(spotracUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Spotrac 49ers Cap</span>${iconSvg('externalLink', 11)}</a>
-        <a href="${esc(nflpaUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFLPA Public Cap</span>${iconSvg('externalLink', 11)}</a>
+        <a href="${esc(otcTeamUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>OverTheCap</span>${iconSvg('externalLink', 11)}</a>
+        <a href="${esc(spotracUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Spotrac</span>${iconSvg('externalLink', 11)}</a>
+        <a href="${esc(nflpaUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFLPA</span>${iconSvg('externalLink', 11)}</a>
       </div>
 
       ${renderOtcYearTabs(sortedYrKeys, selectedYrKey, years, 'Select Salary Cap Summary Year')}
@@ -738,7 +737,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
 
       ${nonActiveLedgerHtml}
 
-      <div class="sub-label" style="margin:12px 0 6px">${esc(firstYrKey)}–${esc(horizonEndKey)} Multi-Year OverTheCap Comparison (Tap Any Year)</div>
+      <div class="sub-label" style="margin:12px 0 6px">5-Year Cap Outlook</div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead>
@@ -752,7 +751,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
 
       <details class="compact-details" style="margin-top:10px">
         <summary class="compact-details-summary">
-          <span>Front Office Cap Blueprint &amp; Multi-Year Strategy</span>
+          <span>Multi-Year Cap Strategy</span>
         </summary>
         <div style="margin-top:8px;font-size:12.5px;color:var(--text-secondary)">
           <strong style="color:var(--gold-bright)">Executive Summary:</strong> ${escJargon(blueprint.executiveSummary || '')}
@@ -777,8 +776,8 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('bolt', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">CBA Cap Calculator • ${jargonTerm('Post-June 1', 'post_june_1')} &amp; Replacement Rules Applied</div>
-            <h2 class="card-title">Salary Cap Simulator (${esc(selectedYrKey)})</h2>
+            <div class="card-eyebrow">${jargonTerm('Post-June 1', 'post_june_1')} &amp; Top-51 Rules</div>
+            <h2 class="card-title">${esc(selectedYrKey)} Cap Simulator</h2>
           </div>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -845,9 +844,9 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <div class="sub-label" style="margin:0">Active Roster (${simPlayers.length} total) — ${esc(selectedYrKey)} Ledger</div>
+        <div class="sub-label" style="margin:0">Active Contracts (${simPlayers.length})</div>
         <span style="font-size:11.5px;color:var(--text-muted)">
-          Dead Money &amp; Cap Savings are nominally <strong class="mono">$0</strong> when keeping a player; select any roster move to model CBA impact.
+          Select a move to model CBA cap impact.
         </span>
       </div>
 
