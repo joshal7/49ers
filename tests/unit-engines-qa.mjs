@@ -43,7 +43,8 @@ import {
   parseOfficial49ersRosterHtml,
   parseOfficial49ersInjuryReportHtml,
   parseCbsTeamInjuriesHtml,
-  analyzeTeamTransactions
+  analyzeTeamTransactions,
+  resolveAuthoritativeRosterPlayerStatus
 } from '../scripts/lib/liveHealthAndRosterResolver.mjs';
 import {
   runPlayoffMonteCarlo,
@@ -81,6 +82,7 @@ import {
 import { parseOverTheCapHtml } from '../scripts/lib/otcParser.mjs';
 import {
   hydrateLiveEspnOverlay,
+  reconcileLiveEspnSfRosterAndDepthChart,
   hydrateLiveBlueskyBeatWire,
   hydrateLiveMultiSourceBeatWire
 } from '../src/services/dataService.js';
@@ -4522,6 +4524,148 @@ test('Completed-game play-likelihood articles & AI synthesis briefs are demoted 
     schedulePrevExpanded: true
   });
   assert.ok(schedExpandedHtml.includes('data-schedule-previous-games open'), 'schedulePrevExpanded=true must render open attribute');
+});
+
+test('Keenan Allen trade deadline acquisition & multi-source roster reconciliation prevent 49ers.com HTML lag from dropping new acquisitions', () => {
+  // 1. Verify resolveAuthoritativeRosterPlayerStatus includes ESPN Active-53 / Depth Chart additions (Keenan Allen) when 49ers.com HTML lags
+  const depthIds = new Set(['15818', '4360438']);
+  const allenStatus = resolveAuthoritativeRosterPlayerStatus({
+    espnId: '15818',
+    fullName: 'Keenan Allen',
+    groupKey: 'offense',
+    espnDefaultBucket: 'active',
+    offRosRec: null,
+    officialRosterHasData: true,
+    txRec: null,
+    depthChartIds: depthIds,
+    recentNewsText: "49ers trade for Colts' Keenan Allen to bolster injury-plagued WR room"
+  });
+  assert.equal(allenStatus.include, true, 'Keenan Allen must be included when on ESPN Active 53 & Depth Chart despite 49ers.com HTML lag');
+  assert.equal(allenStatus.bucket, 'active');
+
+  // 2. Verify uncorroborated non-active practice squad ghost (Vincent Anthony Jr.) and injury-settlement release (Brett Toth) remain excluded
+  const ghostStatus = resolveAuthoritativeRosterPlayerStatus({
+    espnId: '4875123',
+    fullName: 'Vincent Anthony Jr.',
+    groupKey: 'practiceSquad',
+    espnDefaultBucket: 'practice_squad',
+    offRosRec: null,
+    officialRosterHasData: true,
+    txRec: null,
+    depthChartIds: depthIds
+  });
+  assert.equal(ghostStatus.include, false, 'Uncorroborated non-active PS ghost must remain excluded');
+
+  const tothStatus = resolveAuthoritativeRosterPlayerStatus({
+    espnId: '3129116',
+    fullName: 'Brett Toth',
+    groupKey: 'injuredReserveOrOut',
+    espnDefaultBucket: 'ir',
+    offRosRec: null,
+    officialRosterHasData: true,
+    txRec: { releasedInjurySettlement: true, latestRosterMoveBucket: 'released' },
+    depthChartIds: depthIds
+  });
+  assert.equal(tothStatus.include, false, 'Injury-settlement release must remain excluded');
+
+  // 3. Verify analyzeTeamTransactions parses trade acquisitions, waiver claims, left-squad reinstatements, and Ogbonnia/Ogbo Okoronkwo alias
+  assert.equal(canonicalPlayerKey('Ogbonnia Okoronkwo'), canonicalPlayerKey('Ogbo Okoronkwo'));
+  const txParsed = analyzeTeamTransactions(
+    [
+      { date: '2026-10-23T08:00Z', description: 'Released DL Ogbo Okoronkwo.' },
+      { date: '2026-10-24T08:00Z', description: 'Signed DE Ogbonnia Okoronkwo to the practice squad.' },
+      { date: '2026-11-09T08:00Z', description: 'Reinstated WR Brandon Aiyuk from the reserve/left squad list.' },
+      { date: '2026-11-10T18:00Z', description: 'Acquired WR Keenan Allen from Indianapolis for a 2027 sixth-round draft pick.' }
+    ],
+    2026
+  );
+  assert.equal(txParsed.byKey.get(canonicalPlayerKey('Ogbo Okoronkwo'))?.latestRosterMoveBucket, 'practice_squad');
+  assert.ok(txParsed.byKey.get(canonicalPlayerKey('Brandon Aiyuk'))?.reinstatedFromLeftSquadDate);
+  assert.equal(txParsed.byKey.get(canonicalPlayerKey('Keenan Allen'))?.acquiredViaTrade, true);
+  assert.equal(txParsed.byKey.get(canonicalPlayerKey('Keenan Allen'))?.latestRosterMoveBucket, 'active');
+
+  // 4. Verify live data files contain Keenan Allen across Roster, Cap, Depth Chart, and Completed Trades
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const cap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+  const depth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8'));
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+
+  const allenRos = roster.players.find(p => p.name === 'Keenan Allen');
+  assert.ok(allenRos, 'Keenan Allen must exist in data/roster.json');
+  assert.equal(allenRos.id, '15818');
+  assert.equal(allenRos.position, 'WR');
+  assert.equal(allenRos.rosterBucket, 'active');
+  assert.ok(allenRos.capHit2026 > 0, `Keenan Allen must have non-zero 2026 cap hit from OTC fallback, got ${allenRos.capHit2026}`);
+  assert.ok(allenRos.primarySnapPct > 0, `Keenan Allen must retain 2026 regular-season snap share, got ${allenRos.primarySnapPct}%`);
+  assert.ok((allenRos.stats2026?.receiving?.receptions || 0) >= 40, 'Keenan Allen 2026 receiving stats must be populated');
+  assert.equal(allenRos.statProfile2026?.hasActiveStats, true, 'Keenan Allen statProfile2026 must be active');
+
+  const allenCap = cap.players.find(p => p.name === 'Keenan Allen');
+  assert.ok(allenCap && allenCap.otcId === '2227', 'Keenan Allen must appear in data/cap.json with OTC ID 2227');
+
+  const wr3Row = depth.units[0]?.rows?.find(r => r.slotKey === 'wr3');
+  assert.ok(wr3Row?.baselineChain?.some(c => c.name === 'Keenan Allen'), 'Keenan Allen must appear on 49ers depth chart (wr3)');
+
+  const allenTrade = seasonal.tradeWarRoom?.completed2026Moves?.find(m => m.player === 'Keenan Allen');
+  assert.ok(allenTrade && allenTrade.acquiredFrom === 'IND', 'Keenan Allen trade from IND must appear in completed2026Moves');
+
+  // 5. Verify live browser client reconcileLiveEspnSfRosterAndDepthChart dynamically injects newly traded players between static builds
+  const mockClientAppData = {
+    roster: {
+      count: 1,
+      peerDirectory: {
+        '00-0099999': {
+          name: 'Future Trade Target',
+          team: 'NYJ',
+          pos: 'WR',
+          espnUrl: 'https://www.espn.com/nfl/player/_/id/9999999',
+          pfrUrl: 'https://www.pro-football-reference.com/players/T/TargFu00.htm',
+          pfrGames: 8
+        }
+      },
+      players: [
+        { id: '4361741', name: 'Brock Purdy', position: 'QB', unit: 'Offense', rosterBucket: 'active', jersey: 13, health: { playProbabilityPct: 99, playBadgeLabel: '99% • Full Go' } }
+      ]
+    },
+    depthChart: {
+      units: [
+        {
+          id: '1',
+          unitName: 'Offense (11 & 21 Personnel)',
+          rows: [{ slotKey: 'wr1', slotLabel: 'WR (X)', baselineChain: [], projectedActiveChain: [] }]
+        }
+      ]
+    }
+  };
+  const mutatedClient = reconcileLiveEspnSfRosterAndDepthChart(
+    mockClientAppData,
+    {
+      athletes: [
+        {
+          position: 'offense',
+          items: [{ id: '9999999', fullName: 'Future Trade Target', displayName: 'Future Trade Target', position: { abbreviation: 'WR' }, age: 26 }]
+        },
+        {
+          position: 'practiceSquad',
+          items: [{ id: '4875123', fullName: 'Vincent Anthony Jr.', displayName: 'Vincent Anthony Jr.', position: { abbreviation: 'DE' } }]
+        }
+      ]
+    },
+    {
+      depthchart: [
+        {
+          id: '1',
+          name: '3WR 1TE',
+          positions: { wr1: { athletes: [{ id: '9999999', displayName: 'Future Trade Target' }] } }
+        }
+      ]
+    },
+    []
+  );
+  assert.equal(mutatedClient, true);
+  assert.ok(mockClientAppData.roster.players.some(p => p.name === 'Future Trade Target' && p.gsisId === '00-0099999'));
+  assert.ok(!mockClientAppData.roster.players.some(p => p.name === 'Vincent Anthony Jr.'), 'Client roster sync must still block known PS ghost');
+  assert.equal(mockClientAppData.depthChart.units[0].rows[0].baselineChain[0]?.name, 'Future Trade Target');
 });
 
 console.log(`\n======================================================`);

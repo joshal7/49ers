@@ -1041,7 +1041,7 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
       }
     ]);
     const capLinks = matchSourceLinks(
-      ['cap', 'contract', 'restructure', 'bonus', 'trade', 'reinstatement', 'aiyuk', 'buckner', 'roster move'],
+      ['cap', 'contract', 'restructure', 'bonus', 'trade', 'deadline', 'allen', 'keenan', 'reinstatement', 'aiyuk', 'buckner', 'roster move'],
       [
         {
           title: 'San Francisco 49ers Salary Cap Table — OverTheCap',
@@ -1186,23 +1186,30 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         publishedAt: latestPublishedFromSources(capLinks, 120),
         category: 'cap',
         categoryLabel: 'Cap & Roster Mechanics',
-        headline: `49ers Front Office Ledger ($${capGrossM}M Space vs. ${cap2027Label} 2027 Horizon): CBA Rollover Mechanics`,
+        headline: byNorm.has('keenanallen')
+          ? `Keenan Allen Deadline Acquisition & 49ers Front Office Ledger ($${capGrossM}M Space vs. ${cap2027Label} 2027 Horizon)`
+          : `49ers Front Office Ledger ($${capGrossM}M Space vs. ${cap2027Label} 2027 Horizon): CBA Rollover Mechanics`,
         synthesizedFromCount: capLinks.length,
         signalScore: 91,
-        citedReporterIds: ['matt_barrows', 'david_lombardi', 'field_yates', 'adam_schefter'],
-        ...selectClusterPhoto(['lynch', 'purdy', 'cap', 'contract'], ''),
-        featuredPlayers: pickPlayers(['Brock Purdy', 'Nick Bosa', 'Fred Warner', 'Trent Williams']),
+        citedReporterIds: ['tom_pelissero', 'matt_barrows', 'david_lombardi', 'field_yates', 'adam_schefter'],
+        ...selectClusterPhoto(['allen', 'lynch', 'purdy', 'cap', 'contract'], ''),
+        featuredPlayers: pickPlayers(['Keenan Allen', 'DeForest Buckner', 'Brock Purdy', 'Nick Bosa', 'Fred Warner', 'Trent Williams']).slice(0, 5),
         sourceLinks: capLinks,
         hardFacts: [
+          ...(byNorm.has('keenanallen')
+            ? [
+                'At the Nov 10 NFL trade deadline, San Francisco acquired WR Keenan Allen (40 rec, 351 yds, 1 TD, 20 first downs, +6.98 EPA in 8g) from Indianapolis for a 2027 6th-round pick (via BAL) on an expiring 1-year rental ($0 2027 cap liability).'
+              ]
+            : []),
           `OverTheCap's live ledger lists San Francisco with $${capGrossM}M in gross 2026 cap space (#1 in NFC) against a ${cap2027Label} projected 2027 cap balance on a $327M estimated ceiling.`,
           'Unused 2026 cap dollars carry over 1-for-1 into 2027 under Article 13 of the NFL CBA, directly offsetting next season\'s projected deficit.',
           'Rookie-scale contributors from the 2025–2026 draft classes continue insulating rotational depth costs.'
-        ],
+        ].slice(0, 3),
         schemeAndCapTakeaways: [
           'Option-Bonus Structure: Purdy and Bosa option prorations keep immediate base salaries low while preserving pre-April flexibility.',
           'Post-June 1 Accounting: Any transaction executed after June 1 defers unamortized future-year bonus acceleration into 2027.'
         ],
-        consensusVsDissent: 'Front office discipline prioritizes 2027 rollover cushion over multi-year veteran guarantees.',
+        consensusVsDissent: 'Front office discipline prioritizes expiring rentals and 2027 rollover cushion over multi-year veteran guarantees.',
         videoClip: null
       }
     ];
@@ -1533,6 +1540,7 @@ export function buildTradeDeadlineWarRoom(
     yr === 2026 ? playerUrl2026 : buildOtcPositionUrl(posSlug, yr);
 
   const bucknerMeta = lookupPlayerMeta('DeForest Buckner');
+  const allenMeta = lookupPlayerMeta('Keenan Allen');
   const osaMeta = lookupPlayerMeta('Osa Odighizuwa');
   const mitchellMeta = lookupPlayerMeta('Adonai Mitchell');
   const downsMeta = lookupPlayerMeta('Josh Downs');
@@ -1544,6 +1552,114 @@ export function buildTradeDeadlineWarRoom(
   const qjMeta = lookupPlayerMeta('Quentin Johnston');
   const djacksonMeta = lookupPlayerMeta('Donte Jackson');
   const batesMeta = lookupPlayerMeta('Jessie Bates III') || lookupPlayerMeta('Jessie Bates');
+
+  const livePicks = Array.isArray(extraContext?.pickInventory) && extraContext.pickInventory.length >= 4
+    ? extraContext.pickInventory
+    : null;
+  const pickFigureDisplay = livePicks
+    ? `${livePicks.length} Picks (${livePicks.map(p => `Rd ${p.round}${p.fromTeam && p.fromTeam !== 'SF' ? `-${p.fromTeam}` : ''}`).join(', ')})`
+    : '5 Picks (Rd 1, 2, 3, 5, 7-KC)';
+
+  const baseCompletedMoves = [
+    {
+      player: 'Keenan Allen',
+      playerId: allenMeta?.playerId || '15818',
+      jersey: allenMeta?.jersey ?? null,
+      headshotUrl: allenMeta?.headshotUrl || 'https://a.espncdn.com/i/headshots/nfl/players/full/15818.png',
+      position: 'WR',
+      acquiredFrom: 'IND',
+      acquiredFromLogoUrl: lookupTeamLogo('IND'),
+      tradeDateIso: `${yr}-11-10T18:40:00Z`,
+      timing: `Trade Deadline Deal (Nov 10, ${yr})`,
+      costSummary: `${yr + 1} 6th-Round Pick (via BAL)`,
+      schemeGrade: 'A-',
+      sourceUrl: allenMeta?.otcUrl || 'https://overthecap.com/player/keenan-allen/2227/',
+      analysis: 'Veteran 6\'2" chain-moving route technician (40 rec, 351 yds, 1 TD, 20 first downs, +6.98 EPA in 8g) acquired on an expiring 1-year rental ($0 2027 cap) to stabilize Brock Purdy\'s intermediate third-down passing game while Mike Evans and Deebo Samuel Sr. recover.'
+    },
+    {
+      player: 'DeForest Buckner',
+      playerId: bucknerMeta?.playerId || '',
+      jersey: bucknerMeta?.jersey ?? null,
+      headshotUrl: bucknerMeta?.headshotUrl || '',
+      position: 'IDL (3-Tech)',
+      acquiredFrom: 'IND',
+      acquiredFromLogoUrl: lookupTeamLogo('IND'),
+      tradeDateIso: `${yr}-11-03T16:00:00Z`,
+      timing: `Pre-Deadline Reunion (Nov 3, ${yr})`,
+      costSummary: `${yr + 1} 4th-Round Pick`,
+      schemeGrade: 'A',
+      sourceUrl: bucknerMeta?.otcUrl || 'https://overthecap.com/player/deforest-buckner/4720/',
+      analysis: 'Reunites an elite 6\'7" All-Pro interior disruptor (4.0 sacks, 8 QB hits in 7g; $7.90M 2026 cap hit absorbed) with Nick Bosa under DC Raheem Morris, keeping Mykel Williams on the edge full-time.'
+    },
+    {
+      player: 'Osa Odighizuwa',
+      playerId: osaMeta?.playerId || '',
+      jersey: osaMeta?.jersey ?? 92,
+      headshotUrl: osaMeta?.headshotUrl || '',
+      position: 'IDL (DT)',
+      acquiredFrom: 'DAL',
+      acquiredFromLogoUrl: lookupTeamLogo('DAL'),
+      tradeDateIso: `${yr}-03-11T16:00:00Z`,
+      timing: `March 11, ${yr} Trade`,
+      costSummary: `${yr} 3rd-Round Pick`,
+      schemeGrade: 'A-',
+      sourceUrl: osaMeta?.otcUrl || 'https://overthecap.com/player/osa-odighizuwa/9539/',
+      analysis: "High-motor penetrating 3-technique (2.0 sacks, 7 QB hits) who carried interior pass-rush disruption during Bosa's Weeks 3–7 absence."
+    }
+  ];
+
+  // Dynamically discover any additional completed trade acquisitions from live ESPN team transactions for active/rostered 49ers
+  const knownTradeNames = new Set(baseCompletedMoves.map(m => normLookup(m.player)));
+  const activeRosterKeys = new Set(
+    (extraContext?.rosterPlayers || []).map(p => normLookup(p.name)).filter(Boolean)
+  );
+  const TEAM_NAME_TO_ABBR = {
+    arizona: 'ARI', cardinals: 'ARI', atlanta: 'ATL', falcons: 'ATL', baltimore: 'BAL', ravens: 'BAL',
+    buffalo: 'BUF', bills: 'BUF', carolina: 'CAR', panthers: 'CAR', chicago: 'CHI', bears: 'CHI',
+    cincinnati: 'CIN', bengals: 'CIN', cleveland: 'CLE', browns: 'CLE', dallas: 'DAL', cowboys: 'DAL',
+    denver: 'DEN', broncos: 'DEN', detroit: 'DET', lions: 'DET', 'green bay': 'GB', packers: 'GB',
+    houston: 'HOU', texans: 'HOU', indianapolis: 'IND', colts: 'IND', jacksonville: 'JAX', jaguars: 'JAX',
+    'kansas city': 'KC', chiefs: 'KC', 'las vegas': 'LV', raiders: 'LV', 'los angeles chargers': 'LAC', chargers: 'LAC',
+    'los angeles rams': 'LAR', rams: 'LAR', miami: 'MIA', dolphins: 'MIA', minnesota: 'MIN', vikings: 'MIN',
+    'new england': 'NE', patriots: 'NE', 'new orleans': 'NO', saints: 'NO', 'new york giants': 'NYG', giants: 'NYG',
+    'new york jets': 'NYJ', jets: 'NYJ', philadelphia: 'PHI', eagles: 'PHI', pittsburgh: 'PIT', steelers: 'PIT',
+    seattle: 'SEA', seahawks: 'SEA', 'tampa bay': 'TB', buccaneers: 'TB', tennessee: 'TEN', titans: 'TEN',
+    washington: 'WAS', commanders: 'WAS'
+  };
+  for (const tx of extraContext?.transactions || []) {
+    const desc = String(tx?.description || '');
+    const m = desc.match(/Acquired\s+(?:(QB|RB|FB|WR|TE|OL|OT|OG|G|C|T|DL|DE|DT|NT|LB|ILB|OLB|MLB|DB|CB|S|SAF|K|P|LS)\s+)?([A-Z][A-Za-z'. -]{2,28}?)\s+from\s+([A-Za-z .']+?)(?:\s+for\s+([^.]+))?(?:\.|$)/i);
+    if (!m) continue;
+    const pos = (m[1] || 'VET').toUpperCase();
+    const pName = String(m[2] || '').trim();
+    if (/draft\s+pick|conditional|selection/i.test(pName)) continue;
+    const pKey = normLookup(pName);
+    if (!pKey || knownTradeNames.has(pKey)) continue;
+    if (activeRosterKeys.size > 0 && !activeRosterKeys.has(pKey)) continue;
+    knownTradeNames.add(pKey);
+    const rawFrom = String(m[3] || '').trim().toLowerCase();
+    const fromAbbr =
+      TEAM_NAME_TO_ABBR[rawFrom] ||
+      Object.entries(TEAM_NAME_TO_ABBR).find(([k]) => rawFrom.includes(k))?.[1] ||
+      'NFL';
+    const meta = lookupPlayerMeta(pName);
+    const txDateIso = tx.date || new Date().toISOString();
+    baseCompletedMoves.unshift({
+      player: pName,
+      playerId: meta?.playerId || '',
+      jersey: meta?.jersey ?? null,
+      headshotUrl: meta?.headshotUrl || '',
+      position: pos,
+      acquiredFrom: fromAbbr,
+      acquiredFromLogoUrl: lookupTeamLogo(fromAbbr),
+      tradeDateIso: txDateIso,
+      timing: `In-Season Trade (${new Date(txDateIso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})`,
+      costSummary: String(m[4] || 'DraftPick Compensation').trim(),
+      schemeGrade: 'B+',
+      sourceUrl: meta?.otcUrl || OTC_TEAM_CAP_URL,
+      analysis: `Official transaction wire trade acquisition (${desc.trim()}).`
+    });
+  }
 
   return {
     deadlineIso: `${yr}-11-10T13:00:00-08:00`,
@@ -1565,42 +1681,11 @@ export function buildTradeDeadlineWarRoom(
       },
       {
         metric: `${yr + 1} Draft Pick Inventory`,
-        figure: '6 Picks (Rd 1, 2, 3, 5, 6-BAL, 7-KC)',
-        strategicImpact: `Own ${yr + 1} 4th-round pick went to Indianapolis for DT DeForest Buckner. Protecting Day 1–2 selections (#31, #63, #95) is vital to supply rookie-scale starters against ${yr + 1} cap tightness.`
+        figure: pickFigureDisplay,
+        strategicImpact: `Own ${yr + 1} 4th-round pick went to Indianapolis for DT DeForest Buckner and ${yr + 1} 6th-round pick (via BAL) went to Indianapolis for WR Keenan Allen. Protecting Day 1–2 selections (#31, #63, #95) is vital to supply rookie-scale starters against ${yr + 1} cap tightness.`
       }
     ],
-    completed2026Moves: [
-      {
-        player: 'DeForest Buckner',
-        playerId: bucknerMeta?.playerId || '',
-        jersey: bucknerMeta?.jersey ?? null,
-        headshotUrl: bucknerMeta?.headshotUrl || '',
-        position: 'IDL (3-Tech)',
-        acquiredFrom: 'IND',
-        acquiredFromLogoUrl: lookupTeamLogo('IND'),
-        tradeDateIso: `${yr}-11-03T16:00:00Z`,
-        timing: `Pre-Deadline Reunion (Nov 3, ${yr})`,
-        costSummary: `${yr + 1} 4th-Round Pick`,
-        schemeGrade: 'A',
-        sourceUrl: bucknerMeta?.otcUrl || 'https://overthecap.com/player/deforest-buckner/4720/',
-        analysis: 'Reunites an elite 6\'7" All-Pro interior disruptor (4.0 sacks, 8 QB hits in 7g; $7.90M 2026 cap hit absorbed) with Nick Bosa under DC Raheem Morris, keeping Mykel Williams on the edge full-time.'
-      },
-      {
-        player: 'Osa Odighizuwa',
-        playerId: osaMeta?.playerId || '',
-        jersey: osaMeta?.jersey ?? 92,
-        headshotUrl: osaMeta?.headshotUrl || '',
-        position: 'IDL (DT)',
-        acquiredFrom: 'DAL',
-        acquiredFromLogoUrl: lookupTeamLogo('DAL'),
-        tradeDateIso: `${yr}-03-11T16:00:00Z`,
-        timing: `March 11, ${yr} Trade`,
-        costSummary: `${yr} 3rd-Round Pick`,
-        schemeGrade: 'A-',
-        sourceUrl: osaMeta?.otcUrl || 'https://overthecap.com/player/osa-odighizuwa/9539/',
-        analysis: "High-motor penetrating 3-technique (2.0 sacks, 7 QB hits) who carried interior pass-rush disruption during Bosa's Weeks 3–7 absence."
-      }
-    ],
+    completed2026Moves: baseCompletedMoves,
     topNeeds: [
       {
         rank: 1,
@@ -1869,7 +1954,7 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
     tradedPicksNote: `${verifiedSixPicks.length} Total Picks: San Francisco traded its own ${dy} 4th-round pick to Indianapolis on Nov 3, ${dy - 1} for DT DeForest Buckner${
       verifiedSixPicks.some(p => p.round === 6)
         ? ` (and previously dealt its own ${dy} 6th & 7th picks while acquiring Rd 6 via BAL and Rd 7 via KC).`
-        : ` and dealt its ${dy} 6th-round pick (via BAL) at the Nov 10 trade deadline while holding Rd 7 via KC.`
+        : ` and dealt its ${dy} 6th-round pick (via BAL) to Indianapolis at the Nov 10 trade deadline for WR Keenan Allen while holding Rd 7 via KC.`
     }`,
     pickInventory: verifiedSixPicks,
     topNeeds2027: [

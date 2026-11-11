@@ -1513,11 +1513,306 @@ function extractBodyPartSafe(shortComment = '') {
   return cand.charAt(0).toUpperCase() + cand.slice(1);
 }
 
+const KNOWN_ESPN_STALE_GHOST_KEYS = new Set([
+  'bretttoth',
+  'vincentanthony',
+  'vincentanthonyjr'
+]);
+
+/**
+ * Reconciles ESPN's live 49ers Roster (`teams/25/roster`) and Depth Chart (`teams/25/depthcharts`)
+ * directly in the browser so newly traded, claimed, or signed 49ers players (and newly assigned jersey numbers)
+ * appear immediately in `appData.roster` and `appData.depthChart` even before the next static data build.
+ */
+export function reconcileLiveEspnSfRosterAndDepthChart(
+  appData,
+  sfRosterRaw = null,
+  sfDepthRaw = null,
+  combinedEspnArticles = []
+) {
+  if (!appData?.roster || !Array.isArray(appData.roster.players)) return false;
+  let changed = false;
+
+  const depthChartIds = new Set();
+  for (const dc of sfDepthRaw?.depthchart || []) {
+    for (const posObj of Object.values(dc.positions || {})) {
+      for (const ath of posObj?.athletes || []) {
+        if (ath?.id) depthChartIds.add(String(ath.id));
+      }
+    }
+  }
+
+  const players = appData.roster.players;
+  const byId = new Map(players.map(p => [String(p.id), p]));
+  const byNorm = new Map(players.map(p => [normPlayerNameKey(p.name), p]));
+
+  if (Array.isArray(sfRosterRaw?.athletes) && sfRosterRaw.athletes.length > 0) {
+    for (const grp of sfRosterRaw.athletes) {
+      const gKey = String(grp.position || '');
+      const espnDefaultBucket =
+        gKey === 'injuredReserveOrOut'
+          ? 'ir'
+          : gKey === 'practiceSquad'
+            ? 'practice_squad'
+            : gKey === 'suspended'
+              ? 'suspended'
+              : 'active';
+
+      for (const ath of grp.items || []) {
+        const espnId = String(ath.id || '').trim();
+        const fullName = String(ath.fullName || ath.displayName || '').trim();
+        const nk = normPlayerNameKey(fullName);
+        if (!espnId || !fullName || !nk) continue;
+        if (KNOWN_ESPN_STALE_GHOST_KEYS.has(nk)) continue;
+
+        const inlineInj = ath.injuries?.[0] || null;
+        const injProbe = `${inlineInj?.shortComment || ''} ${inlineInj?.longComment || ''}`;
+        if (/\breleased\b[\s\S]{0,45}\bfrom\s+(?:injured\s+reserve|the\s+practice\s+squad)\s+with\s+an\s+injury\s+settlement/i.test(injProbe)) {
+          continue;
+        }
+
+        const existing = byId.get(espnId) || byNorm.get(nk) || null;
+        if (existing) {
+          if (
+            (existing.jersey === null || existing.jersey === undefined || existing.jersey === '') &&
+            ath.jersey !== undefined &&
+            ath.jersey !== null &&
+            ath.jersey !== ''
+          ) {
+            existing.jersey = Number(ath.jersey);
+            changed = true;
+          }
+          if (!existing.headshotUrl && ath.headshot?.href) {
+            const hs = String(ath.headshot.href);
+            existing.headshotUrl = hs.startsWith('http://') ? `https://${hs.slice(7)}` : hs;
+            changed = true;
+          }
+          continue;
+        }
+
+        // Only auto-inject newly added players who are in ESPN's Active 53 groups or on the live Depth Chart
+        if (espnDefaultBucket !== 'active' && !depthChartIds.has(espnId)) {
+          continue;
+        }
+
+        const posAbbr = ath.position?.abbreviation || 'ATH';
+        const unit = classifyRosterUnit(
+          posAbbr,
+          gKey === 'defense' ? 'Defense' : gKey === 'specialTeam' ? 'Special Teams' : 'Offense'
+        );
+        const rawHs =
+          ath.headshot?.href ||
+          (/^\d+$/.test(espnId) ? `https://a.espncdn.com/i/headshots/nfl/players/full/${espnId}.png` : '');
+        const headshotUrl = rawHs.startsWith('http://') ? `https://${rawHs.slice(7)}` : rawHs;
+        const jersey =
+          ath.jersey !== undefined && ath.jersey !== null && ath.jersey !== '' ? Number(ath.jersey) : null;
+        const expYears = Number.isFinite(Number(ath.experience?.years)) ? Number(ath.experience.years) : null;
+
+        // Enrich from league-wide `peerDirectory` and `positionalLeaderboards` when present
+        let peerUid = null;
+        let peerEntry = null;
+        const peerDir = appData.roster.peerDirectory || {};
+        for (const [uidKey, pMeta] of Object.entries(peerDir)) {
+          if (
+            (pMeta?.espnUrl && String(pMeta.espnUrl).includes(`/id/${espnId}`)) ||
+            normPlayerNameKey(pMeta?.name || '') === nk
+          ) {
+            peerUid = uidKey;
+            peerEntry = pMeta;
+            break;
+          }
+        }
+        if (peerEntry) {
+          peerEntry.team = 'SF';
+          peerEntry.sfPlayerId = espnId;
+        }
+
+        const gsisId = peerUid && /^\d{2}-\d{7}$/.test(peerUid) ? peerUid : null;
+        const pfrUrl = peerEntry?.pfrUrl || null;
+        const pfrIdMatch = pfrUrl ? String(pfrUrl).match(/\/players\/[A-Z]\/([A-Za-z0-9]+)\.htm/) : null;
+        const pfrId = pfrIdMatch ? pfrIdMatch[1] : null;
+        const espnUrl = buildEspnPlayerUrl(espnId, fullName);
+        const slugName = fullName
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '');
+        const otcUrl = `https://overthecap.com/salary-cap/san-francisco-49ers`;
+
+        const playProb = computePlayerPlayProbability({
+          name: fullName,
+          position: posAbbr,
+          experienceYears: expYears,
+          snapPct: 65,
+          rosterBucket: 'active',
+          gameStatus: inlineInj?.status || 'Active'
+        });
+
+        const matchedNews = (combinedEspnArticles || [])
+          .filter(art => {
+            if (art?.premium) return false;
+            const hay = `${art?.headline || ''} ${art?.description || ''}`.toLowerCase();
+            return hay.includes(fullName.toLowerCase());
+          })
+          .slice(0, 3)
+          .map(art => ({
+            headline: cleanSensationalistText(art.headline || ''),
+            summary: cleanSensationalistText(art.description || ''),
+            publishedAt: art.published || new Date().toISOString(),
+            imageUrl: art.images?.[0]?.url
+              ? String(art.images[0].url).replace(/^http:\/\//i, 'https://')
+              : '',
+            url: sanitizeExternalUrl(art.links?.web?.href, 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers')
+          }));
+
+        const newPlayer = {
+          id: espnId,
+          gsisId,
+          pfrId,
+          otcId: null,
+          otcSlug: slugName,
+          otcUrl,
+          espnUrl,
+          pfrUrl,
+          name: fullName,
+          shortName: ath.shortName || fullName,
+          jersey,
+          position: posAbbr,
+          unit,
+          rosterBucket: 'active',
+          age: ath.age || null,
+          displayHeight: ath.displayHeight || '',
+          displayWeight: ath.displayWeight || (ath.weight ? `${ath.weight} lbs` : ''),
+          experienceYears: expYears ?? 0,
+          college: ath.college?.name || 'NFL',
+          draftInfo: ath.displayDraft || 'NFL Veteran',
+          headshotUrl,
+          capHit2026: 0,
+          contractsByYear: {},
+          snapSummary: {
+            gamesLogged: peerEntry?.pfrGames || 0,
+            offenseSnaps: 0,
+            offenseSnapPct: unit === 'Offense' ? 65 : 0,
+            defenseSnaps: 0,
+            defenseSnapPct: unit === 'Defense' ? 65 : 0,
+            stSnaps: 0,
+            stSnapPct: unit === 'Special Teams' ? 50 : 0
+          },
+          primarySnapPct: 65,
+          stats2026: null,
+          careerSeasons: [],
+          nextGenStats: null,
+          pfrAdvStats: null,
+          publicEfficiencyNote: null,
+          spiderProfile: {
+            positionGroup: posAbbr,
+            compositeRas: 7.5,
+            axes: [
+              { label: 'Speed', percentile: 75 },
+              { label: 'Explosion', percentile: 75 },
+              { label: 'Agility', percentile: 78 },
+              { label: 'Size', percentile: 74 },
+              { label: 'Strength', percentile: 72 }
+            ]
+          },
+          health: {
+            status: inlineInj?.status && inlineInj.status !== 'Active' ? inlineInj.status : 'Active',
+            injuryType: inlineInj?.details?.type || '',
+            returnDate: null,
+            isSeasonEnding: false,
+            isPracticeWindowOpen: false,
+            placedBeforeWeek: null,
+            earliestEligibleWeek: null,
+            projectedReturnWeek: null,
+            byeWeekNote: null,
+            irBeatNote: null,
+            fantasyStatusAbbr: '',
+            isIrReturnQuestionable: false,
+            isOnPracticeReport: false,
+            wed: '-',
+            thu: '-',
+            fri: '-',
+            shortComment: '',
+            longComment: '',
+            playProbabilityPct: playProb.probabilityPct,
+            playTier: playProb.tier,
+            playBadgeLabel: playProb.badgeLabel,
+            factors: playProb.factors,
+            archetypeNote: playProb.priorUsed?.archetypeNote || '',
+            weeklyHistory2026: []
+          },
+          recentNews: matchedNews
+        };
+
+        players.push(newPlayer);
+        byId.set(espnId, newPlayer);
+        byNorm.set(nk, newPlayer);
+        changed = true;
+      }
+    }
+  }
+
+  if (changed) {
+    players.sort((a, b) => a.name.localeCompare(b.name));
+    appData.roster.count = players.length;
+  }
+
+  // Sync any newly added active players into `appData.depthChart.units` if present on ESPN's live depth chart
+  if (Array.isArray(sfDepthRaw?.depthchart) && Array.isArray(appData.depthChart?.units)) {
+    for (const dc of sfDepthRaw.depthchart) {
+      const targetUnit = appData.depthChart.units.find(
+        u =>
+          String(u.id) === String(dc.id) ||
+          (dc.name === '3WR 1TE' && String(u.unitName || '').includes('Offense')) ||
+          (dc.name === 'Base 4-3 D' && String(u.unitName || '').includes('Defense'))
+      );
+      if (!targetUnit || !Array.isArray(targetUnit.rows)) continue;
+
+      for (const [slotKey, posObj] of Object.entries(dc.positions || {})) {
+        const row = targetUnit.rows.find(r => r.slotKey === slotKey);
+        if (!row || !Array.isArray(row.baselineChain)) continue;
+        const existingRowIds = new Set(row.baselineChain.map(c => String(c.playerId)));
+
+        for (const ath of posObj?.athletes || []) {
+          const matched =
+            byId.get(String(ath.id || '')) || byNorm.get(normPlayerNameKey(ath.displayName || ''));
+          if (!matched || existingRowIds.has(String(matched.id))) continue;
+          const prob = matched.health?.playProbabilityPct ?? 95;
+          const isAvailable =
+            prob >= 40 && (matched.rosterBucket === 'active' || Boolean(matched.health?.isIrReturnQuestionable));
+          const entry = {
+            playerId: matched.id,
+            name: matched.name,
+            jersey: matched.jersey ?? null,
+            headshotUrl: matched.headshotUrl || '',
+            baselineRank: row.baselineChain.length + 1,
+            playProbabilityPct: prob,
+            statusBadge: matched.health?.playBadgeLabel || '95% • Full Go',
+            isAvailable
+          };
+          row.baselineChain.push(entry);
+          row.projectedActiveChain = [
+            ...row.baselineChain.filter(x => x.isAvailable),
+            ...row.baselineChain.filter(x => !x.isAvailable).map(x => ({ ...x, demotedDueToInjury: true }))
+          ];
+          row.starterPromoted =
+            row.baselineChain.length > 1 &&
+            row.projectedActiveChain[0]?.playerId !== row.baselineChain[0]?.playerId;
+          existingRowIds.add(String(matched.id));
+          changed = true;
+        }
+      }
+    }
+  }
+
+  return changed;
+}
+
 /**
  * Zero-server real-time client hydration directly from CORS-enabled ESPN NFL APIs
  * (`site.api.espn.com` + `site.web.api.espn.com`). Automatically updates standings,
- * live game state & scores, week rollover (`upcomingMatchup` + Pickcenter odds), 49ers & opponent
- * injury play probabilities, 10,000-run Monte Carlo playoff odds, and ESPN beat articles.
+ * live game state & scores, week rollover (`upcomingMatchup` + Pickcenter odds), 49ers live
+ * roster & depth chart additions, 49ers & opponent injury play probabilities, 10,000-run
+ * Monte Carlo playoff odds, and ESPN beat articles.
  */
 export async function hydrateLiveEspnOverlay(appData) {
   if (!appData?.meta || !appData?.scheduleMatchup) return false;
@@ -1530,13 +1825,20 @@ export async function hydrateLiveEspnOverlay(appData) {
     return res.json();
   };
 
-  const [standingsRaw, scheduleRaw, injuriesRaw, espnNewsRaw] = await Promise.all([
+  const [standingsRaw, scheduleRaw, injuriesRaw, espnNewsRaw, sfRosterRaw, sfDepthRaw] = await Promise.all([
     fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
     fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule').catch(() => null),
     fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null)
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster').catch(() => null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts').catch(() => null)
   ]);
   let combinedEspnArticles = Array.isArray(espnNewsRaw?.articles) ? [...espnNewsRaw.articles] : [];
+
+  // Reconcile any newly traded/signed/claimed 49ers players on ESPN's live roster & depth chart immediately
+  if (reconcileLiveEspnSfRosterAndDepthChart(appData, sfRosterRaw, sfDepthRaw, combinedEspnArticles)) {
+    mutated = true;
+  }
 
   const teamRecords = new Map();
 

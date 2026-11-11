@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T22:53:36.482Z",
+  "updatedAt": "2026-11-11T00:16:18.805Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -356,7 +356,7 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -3.5,
-      "totalLine": 46.5,
+      "totalLine": 45.5,
       "broadcast": "NBC"
     },
     {
@@ -25528,11 +25528,11 @@
     },
     "betting": {
       "favorite": "San Francisco 49ers",
-      "spread": "SF -3.5",
+      "spread": "SF -4.5",
       "openingSpread": "Opened SF +1.5 (Draft Kings)",
       "overUnder": 55.5,
       "moneyline": "SF -205 | DAL +170",
-      "impliedScore": "SF 29.5 – DAL 26.0",
+      "impliedScore": "SF 30.0 – DAL 25.5",
       "restAdvantage": "Even Rest (Standard Prep Week)"
     },
     "franchiseHistory": {

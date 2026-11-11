@@ -32,12 +32,14 @@ function stripTags(html = '') {
  * Canonical player lookup key stripping punctuation, accents, and generational suffixes (`Jr.`, `Sr.`, `II`, `III`, `IV`).
  */
 export function canonicalPlayerKey(rawName = '') {
-  return String(rawName || '')
+  const k = String(rawName || '')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/\b(jr|sr|ii|iii|iv|v)\b\.?/g, '')
     .replace(/[^a-z0-9]/g, '');
+  if (k === 'ogbonniaokoronkwo') return 'ogbookoronkwo';
+  return k;
 }
 
 /**
@@ -459,7 +461,7 @@ export function analyzeTeamTransactions(transactions = [], seasonYear = 2026) {
         continue;
       }
 
-      // 7. Signed / Promoted to active roster
+      // 7. Signed / Promoted to active roster, Acquired via trade, or Claimed off waivers
       if (
         (m =
           sent.match(/^(?:Signed|Promoted)\s+(.+?)\s+(?:from\s+the\s+practice\s+squad\s+)?to\s+the\s+active\s+roster/i) ||
@@ -475,15 +477,73 @@ export function analyzeTeamTransactions(transactions = [], seasonYear = 2026) {
         continue;
       }
 
-      // 8. Released / Waived
-      if ((m = sent.match(/^(?:Released|Waived)\s+(.+?)(?:\s+from\s+the\s+practice\s+squad)?$/i))) {
+      // 7b. Acquired via trade ("Acquired DT DeForest Buckner from Indianapolis for ...", "Acquired WR Keenan Allen from Indianapolis ...")
+      if ((m = sent.match(/^Acquired\s+(.+?)\s+from\s+([A-Za-z .']+?)(?:\s+for\s+(.+?))?$/i))) {
+        const rawTarget = String(m[1] || '').trim();
+        if (!/\bdraft\s+picks?\b|\bconditional\b|\bselection\b/i.test(rawTarget)) {
+          for (const nm of extractNamesFromClause(rawTarget)) {
+            const st = ensurePlayer(nm, canonicalPlayerKey(nm));
+            st.releasedInjurySettlement = false;
+            st.acquiredViaTrade = true;
+            st.acquiredFromTeam = String(m[2] || '').trim();
+            st.tradeCompensation = String(m[3] || '').trim();
+            st.acquiredDate = dateIso;
+            st.latestRosterMoveBucket = 'active';
+            st.lastAction = sent;
+            st.lastActionDate = dateIso;
+          }
+          continue;
+        }
+      }
+
+      // 7c. Claimed off waivers ("Claimed CB ... off waivers from ...") or direct active signing ("Signed WR ...")
+      if (
+        (m =
+          sent.match(/^Claimed\s+(.+?)\s+off\s+waivers(?:\s+from\s+[A-Za-z .']+)?$/i) ||
+          sent.match(/^Signed\s+(.+?)$/i))
+      ) {
+        const clause = String(m[1] || '').trim();
+        if (!/\bpractice\s+squad\b|\breserve\/future\b|\bdraft\s+pick\b/i.test(clause)) {
+          for (const nm of extractNamesFromClause(clause)) {
+            const st = ensurePlayer(nm, canonicalPlayerKey(nm));
+            st.releasedInjurySettlement = false;
+            st.latestRosterMoveBucket = 'active';
+            st.lastAction = sent;
+            st.lastActionDate = dateIso;
+          }
+          continue;
+        }
+      }
+
+      // 7d. Reinstated from Reserve/Left Squad list (often paired with a two-week roster exemption before active-53 elevation)
+      if ((m = sent.match(/^Reinstated\s+(.+?)\s+from\s+the\s+reserve\/left\s+squad\s+list/i))) {
         for (const nm of extractNamesFromClause(m[1])) {
           const st = ensurePlayer(nm, canonicalPlayerKey(nm));
-          st.releasedDate = dateIso;
-          st.designatedToReturnOpen = false;
-          st.latestRosterMoveBucket = 'released';
+          st.reinstatedFromLeftSquadDate = dateIso;
+          st.releasedInjurySettlement = false;
           st.lastAction = sent;
           st.lastActionDate = dateIso;
+        }
+        continue;
+      }
+
+      // 8. Released / Waived / Terminated / Traded Away
+      if (
+        (m =
+          sent.match(/^(?:Released|Waived)\s+(.+?)(?:\s+from\s+the\s+practice\s+squad)?$/i) ||
+          sent.match(/^Terminated\s+the\s+contract\s+of\s+(.+?)$/i) ||
+          sent.match(/^Traded\s+(.+?)\s+to\s+[A-Za-z .']+$/i))
+      ) {
+        const targetClause = String(m[1] || '').trim();
+        if (!/\bdraft\s+picks?\b|\bselection\b/i.test(targetClause)) {
+          for (const nm of extractNamesFromClause(targetClause)) {
+            const st = ensurePlayer(nm, canonicalPlayerKey(nm));
+            st.releasedDate = dateIso;
+            st.designatedToReturnOpen = false;
+            st.latestRosterMoveBucket = 'released';
+            st.lastAction = sent;
+            st.lastActionDate = dateIso;
+          }
         }
       }
     }
@@ -493,6 +553,110 @@ export function analyzeTeamTransactions(transactions = [], seasonYear = 2026) {
     byKey: playerTxState,
     regularSeasonIrDesignationsCount,
     designatedIrKeysInTx
+  };
+}
+
+/**
+ * Reconciles ESPN's live team roster (`teams/25/roster`) with `49ers.com/team/players-roster/`,
+ * `teams/25/depthcharts`, `transactions?team=25`, and `news?team=25`.
+ *
+ * Why this is essential:
+ * - `49ers.com/team/players-roster/` is manually maintained by team PR staff and lags 6–48 hours behind
+ *   breaking trades, waiver claims, and signings (e.g., Keenan Allen traded to SF on Nov 10 is immediately
+ *   on ESPN's active 53 & depth chart while `49ers.com` still lists 52 active players).
+ * - Conversely, ESPN's `practiceSquad` and `injuredReserveOrOut` groups occasionally retain stale
+ *   preseason/camp ghosts (e.g., `Vincent Anthony Jr.`) or injury-settlement releases (`Brett Toth`).
+ * - By accepting players on ESPN's Active 53 (`espnDefaultBucket === 'active'`), Depth Chart, or active
+ *   Transaction/News ledger even before `49ers.com` updates, while rejecting uncorroborated non-active
+ *   PS/IR ghosts and confirmed releases, the roster is both sub-hour fresh and 100% ghost-free.
+ */
+export function resolveAuthoritativeRosterPlayerStatus({
+  espnId = '',
+  fullName = '',
+  groupKey = '',
+  espnDefaultBucket = 'active',
+  offRosRec = null,
+  officialRosterHasData = false,
+  txRec = null,
+  depthChartIds = new Set(),
+  espnInj = null,
+  webInj = null,
+  inlineInj = null,
+  recentNewsText = ''
+} = {}) {
+  const canonKey = canonicalPlayerKey(fullName);
+  const probeComment = `${espnInj?.shortComment || ''} ${espnInj?.longComment || ''} ${webInj?.shortComment || ''} ${webInj?.longComment || ''} ${inlineInj?.shortComment || ''}`;
+
+  // 1. Exclude free-agent ghosts released with an injury settlement (e.g., Brett Toth)
+  if (
+    txRec?.releasedInjurySettlement ||
+    /\breleased\b[\s\S]{0,45}\bfrom\s+(?:injured\s+reserve|the\s+practice\s+squad)\s+with\s+an\s+injury\s+settlement/i.test(
+      probeComment
+    )
+  ) {
+    return { include: false, bucket: 'released', isReserveLeftSquadOrSusp: false, statusOverride: null };
+  }
+
+  // 2. Detect Reserve / Left Squad, Commissioner's Roster Exemption, or League Suspension
+  const isRosterExemption = /roster exemption|two-week roster exemption/i.test(probeComment);
+  const isReserveLeftSquadOrSusp =
+    groupKey === 'suspended' ||
+    canonKey === 'brandonaiyuk' ||
+    isRosterExemption ||
+    /looking to get reinstated|left squad|reserve\/suspended/i.test(probeComment);
+
+  // 3. When 49ers.com has authoritative data but the player is not yet in 49ers.com's HTML table:
+  //    Keep the player if ESPN has them in the Active 53 (`espnDefaultBucket === 'active'`), on the live
+  //    Depth Chart, in an active Transaction (`txRec`), in Reserve/Exemption status, or in breaking acquisition news.
+  //    Filter out only uncorroborated non-active (`practiceSquad` / `injuredReserveOrOut`) ghosts (e.g., Vincent Anthony Jr.).
+  if (officialRosterHasData && !offRosRec && !isReserveLeftSquadOrSusp) {
+    if (txRec?.latestRosterMoveBucket === 'released') {
+      return { include: false, bucket: 'released', isReserveLeftSquadOrSusp: false, statusOverride: null };
+    }
+    const onDepthChart = Boolean(espnId && depthChartIds?.has?.(String(espnId)));
+    const hasActiveTxMove =
+      Boolean(txRec?.latestRosterMoveBucket) && txRec.latestRosterMoveBucket !== 'released';
+    const fullLower = String(fullName || '').toLowerCase().trim();
+    const mentionedInBreakingAcquisition =
+      fullLower.length >= 5 &&
+      String(recentNewsText || '').toLowerCase().includes(fullLower) &&
+      /\b(trade|traded|acquir|sign|signed|claim|claimed|waiver|roster|reinstate)\b/i.test(recentNewsText);
+
+    const isCorroboratedAddition =
+      espnDefaultBucket === 'active' ||
+      onDepthChart ||
+      hasActiveTxMove ||
+      mentionedInBreakingAcquisition;
+
+    if (!isCorroboratedAddition) {
+      return { include: false, bucket: 'released', isReserveLeftSquadOrSusp: false, statusOverride: null };
+    }
+  }
+
+  if (!officialRosterHasData && txRec?.latestRosterMoveBucket === 'released') {
+    return { include: false, bucket: 'released', isReserveLeftSquadOrSusp: false, statusOverride: null };
+  }
+
+  const bucket =
+    isReserveLeftSquadOrSusp && !offRosRec
+      ? 'ir'
+      : offRosRec?.bucket ||
+        (txRec?.latestRosterMoveBucket && txRec.latestRosterMoveBucket !== 'released'
+          ? txRec.latestRosterMoveBucket
+          : espnDefaultBucket);
+
+  const statusOverride =
+    isReserveLeftSquadOrSusp && !offRosRec
+      ? isRosterExemption
+        ? 'Reserve / Roster Exemption'
+        : 'Reserve / Left Squad'
+      : offRosRec?.statusOverride || null;
+
+  return {
+    include: true,
+    bucket,
+    isReserveLeftSquadOrSusp,
+    statusOverride
   };
 }
 

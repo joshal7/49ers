@@ -920,7 +920,7 @@ async function main() {
           firstAscTop2: firstAscNames.slice(0, 2),
           firstAscLast: firstAscNames[firstAscNames.length - 1],
           firstDescTop,
-          lastAscTop3: lastAscNames.slice(0, 3),
+          lastAscTop4: lastAscNames.slice(0, 4),
           lastAscLast: lastAscNames[lastAscNames.length - 1],
           lastDescTop
         };
@@ -930,11 +930,12 @@ async function main() {
         `First Name sort mismatch: ${JSON.stringify(nameSortAudit)}`
       );
       assert(
-        nameSortAudit.lastAscTop3[0] === 'Brandon Aiyuk' &&
-          nameSortAudit.lastAscTop3[1] === 'Isaac Alarcon' &&
-          nameSortAudit.lastAscTop3[2] === 'Robert Beal Jr.' &&
+        nameSortAudit.lastAscTop4[0] === 'Brandon Aiyuk' &&
+          nameSortAudit.lastAscTop4[1] === 'Isaac Alarcon' &&
+          nameSortAudit.lastAscTop4[2] === 'Keenan Allen' &&
+          nameSortAudit.lastAscTop4[3] === 'Robert Beal Jr.' &&
           nameSortAudit.lastDescTop === nameSortAudit.lastAscLast,
-        `Last Name sort (with Jr. suffix handling) mismatch: ${JSON.stringify(nameSortAudit)}`
+        `Last Name sort (with Keenan Allen & Jr. suffix handling) mismatch: ${JSON.stringify(nameSortAudit)}`
       );
 
       // Exercise Dropdown selection + Up/Down Arrow toggle for EVERY sort field (jersey, firstName, lastName, cap, snaps, health, ras, age)

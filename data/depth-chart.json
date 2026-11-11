@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T22:53:36.482Z",
+  "updatedAt": "2026-11-11T00:16:18.805Z",
   "week": 10,
   "units": [
     {
@@ -193,11 +193,21 @@
           "slotLabel": "SLWR (11 Pers)",
           "baselineChain": [
             {
+              "playerId": "15818",
+              "name": "Keenan Allen",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "16731",
               "name": "Brandin Cooks",
               "jersey": 84,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16731.png",
-              "baselineRank": 1,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -207,7 +217,7 @@
               "name": "De'Zhaun Stribling",
               "jersey": 7,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false
@@ -215,11 +225,21 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "15818",
+              "name": "Keenan Allen",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "16731",
               "name": "Brandin Cooks",
               "jersey": 84,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16731.png",
-              "baselineRank": 1,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -229,7 +249,7 @@
               "name": "De'Zhaun Stribling",
               "jersey": 7,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false,

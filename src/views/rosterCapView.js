@@ -324,7 +324,15 @@ function renderRosterExplorer({
                 </div>
                 <div class="player-row-right">
                   <span class="mono" style="font-weight:800;font-size:12.5px">
-                    ${p.capHit2026 ? formatCompactDollars(p.capHit2026) : 'PS'}
+                    ${
+                      p.capHit2026
+                        ? formatCompactDollars(p.capHit2026)
+                        : p.rosterBucket === 'practice_squad'
+                          ? 'PS'
+                          : p.rosterBucket === 'ir'
+                            ? 'IR'
+                            : '53-Man'
+                    }
                   </span>
                   <span class="badge ${playProbBadgeClass(p.health?.playProbabilityPct)} mono" style="font-size:10px">
                     ${esc(p.health?.playBadgeLabel)}

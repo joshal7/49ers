@@ -50,6 +50,7 @@ import {
   buildCbsTeamInjuriesUrl,
   parseCbsTeamInjuriesHtml,
   analyzeTeamTransactions,
+  resolveAuthoritativeRosterPlayerStatus,
   fetchEspnAthleteDetailsBatch
 } from './lib/liveHealthAndRosterResolver.mjs';
 import {
@@ -444,11 +445,88 @@ async function main() {
   const capPrimaryYrKey = otcParsed.years[seasonYearStr]
     ? seasonYearStr
     : otcParsed.yearKeys?.[0] || '2026';
+
+  // Cross-team OverTheCap contract fallback for newly traded/claimed active 53-man players
+  // when OverTheCap's `san-francisco-49ers` page has not yet migrated their contract from their prior club:
+  const OTC_TEAM_SLUGS_BY_ABBR = {
+    ARI: 'arizona-cardinals', ATL: 'atlanta-falcons', BAL: 'baltimore-ravens', BUF: 'buffalo-bills',
+    CAR: 'carolina-panthers', CHI: 'chicago-bears', CIN: 'cincinnati-bengals', CLE: 'cleveland-browns',
+    DAL: 'dallas-cowboys', DEN: 'denver-broncos', DET: 'detroit-lions', GB: 'green-bay-packers',
+    HOU: 'houston-texans', IND: 'indianapolis-colts', JAX: 'jacksonville-jaguars', KC: 'kansas-city-chiefs',
+    LAC: 'los-angeles-chargers', LAR: 'los-angeles-rams', LV: 'las-vegas-raiders', MIA: 'miami-dolphins',
+    MIN: 'minnesota-vikings', NE: 'new-england-patriots', NO: 'new-orleans-saints', NYG: 'new-york-giants',
+    NYJ: 'new-york-jets', PHI: 'philadelphia-eagles', PIT: 'pittsburgh-steelers', SEA: 'seattle-seahawks',
+    SF: 'san-francisco-49ers', TB: 'tampa-bay-buccaneers', TEN: 'tennessee-titans', WAS: 'washington-commanders',
+    WSH: 'washington-commanders'
+  };
+  const existingSfOtcKeys = new Set();
+  for (const op of otcParsed.otcPlayers) {
+    if (op.otcId) existingSfOtcKeys.add(`id:${op.otcId}`);
+    for (const k of getPlayerLookupKeys(op.name)) existingSfOtcKeys.add(`nm:${k}`);
+  }
+  const nflByEspnPre = new Map();
+  const nflByNamePre = new Map();
+  for (const row of nflPlayers) {
+    if (row.espn_id) nflByEspnPre.set(String(row.espn_id).trim(), row);
+    const nk = normName(row.display_name || row.full_name || '');
+    if (nk && !nflByNamePre.has(nk)) nflByNamePre.set(nk, row);
+  }
+  const recentStatTeamByName = new Map();
+  for (const row of statsPlayerCurrent) {
+    const nk = normName(row.player_display_name || row.player_name || '');
+    if (nk && row.recent_team) recentStatTeamByName.set(nk, normalizeTeamAbbr(row.recent_team));
+  }
+  const priorTeamsToFetchOtc = new Map(); // abbr -> Set of canonicalPlayerKey
+  for (const grp of espnRoster.athletes || []) {
+    const gKey = String(grp.position || '');
+    if (gKey === 'injuredReserveOrOut' || gKey === 'practiceSquad' || gKey === 'suspended') continue;
+    for (const ath of grp.items || []) {
+      const fullName = ath.fullName || ath.displayName || '';
+      const lookupKeys = getPlayerLookupKeys(fullName);
+      if (lookupKeys.some(k => existingSfOtcKeys.has(`nm:${k}`))) continue;
+      const nflP = nflByEspnPre.get(String(ath.id || '')) || nflByNamePre.get(normName(fullName)) || null;
+      if (nflP?.otc_id && existingSfOtcKeys.has(`id:${String(nflP.otc_id).trim()}`)) continue;
+      const priorTeam = normalizeTeamAbbr(
+        nflP?.latest_team || nflP?.team_abbr || recentStatTeamByName.get(normName(fullName)) || ''
+      );
+      if (priorTeam && priorTeam !== 'SF' && OTC_TEAM_SLUGS_BY_ABBR[priorTeam]) {
+        if (!priorTeamsToFetchOtc.has(priorTeam)) priorTeamsToFetchOtc.set(priorTeam, new Set());
+        for (const k of lookupKeys) priorTeamsToFetchOtc.get(priorTeam).add(k);
+      }
+    }
+  }
+  if (priorTeamsToFetchOtc.size > 0) {
+    await Promise.all(
+      [...priorTeamsToFetchOtc.entries()].map(async ([priorAbbr, wantedKeys]) => {
+        try {
+          const slug = OTC_TEAM_SLUGS_BY_ABBR[priorAbbr];
+          const priorHtml = await fetchText(`https://overthecap.com/salary-cap/${slug}`);
+          const priorParsed = parseOverTheCapHtml(priorHtml, seasonYear, '');
+          for (const op of priorParsed.otcPlayers || []) {
+            const opKeys = getPlayerLookupKeys(op.name);
+            if (!opKeys.some(k => wantedKeys.has(k))) continue;
+            if (op.otcId && existingSfOtcKeys.has(`id:${op.otcId}`)) continue;
+            existingSfOtcKeys.add(`id:${op.otcId}`);
+            for (const k of opKeys) existingSfOtcKeys.add(`nm:${k}`);
+            otcParsed.otcPlayers.push(op);
+            for (const [yrKey] of Object.entries(op.contractsByYear || {})) {
+              if (otcParsed.years[yrKey]) {
+                otcParsed.years[yrKey].contractedCount = (otcParsed.years[yrKey].contractedCount || 0) + 1;
+              }
+            }
+          }
+        } catch {
+          // Ignore transient prior-team OTC fetch errors
+        }
+      })
+    );
+  }
+
   const { buildPlayerSpiderProfile } = buildCombineIndexer(combineRows);
 
   const playerIdentityResolver = createPlayerIdentityResolver({
     nflPlayers,
-    otcPlayers: otcParsed.otcDirectory?.length ? otcParsed.otcDirectory : otcParsed.otcPlayers,
+    otcPlayers: otcParsed.otcDirectory?.length ? [...otcParsed.otcDirectory, ...otcParsed.otcPlayers] : otcParsed.otcPlayers,
     seasonYear
   });
 
@@ -590,14 +668,40 @@ async function main() {
     seasonYear
   });
 
-  // Aggregate 2026 Snap Counts for SF players (REG only, deduplicated per game_id + player)
+  // Aggregate 2026 Snap Counts for SF players + full-season all-team fallback for mid-season trade/waiver acquisitions
   const snapsAggByPfr = new Map();
   const snapsAggByName = new Map();
+  const snapsAllTeamsAggByPfr = new Map();
+  const snapsAllTeamsAggByName = new Map();
   const seenSfSnapGames = new Set();
+  const seenAllSnapGames = new Set();
   for (const s of snaps2026) {
-    if (s.team !== 'SF') continue;
     if (s.game_type && s.game_type !== 'REG') continue;
     const key = s.pfr_player_id || normName(s.player);
+    const allDedupKey = `${key}::${s.game_id || s.week || ''}`;
+    if (!seenAllSnapGames.has(allDedupKey)) {
+      seenAllSnapGames.add(allDedupKey);
+      const allCur = snapsAllTeamsAggByPfr.get(key) || {
+        games: 0,
+        offSnaps: 0,
+        offPctSum: 0,
+        defSnaps: 0,
+        defPctSum: 0,
+        stSnaps: 0,
+        stPctSum: 0
+      };
+      allCur.games += 1;
+      allCur.offSnaps += num(s.offense_snaps);
+      allCur.offPctSum += num(s.offense_pct);
+      allCur.defSnaps += num(s.defense_snaps);
+      allCur.defPctSum += num(s.defense_pct);
+      allCur.stSnaps += num(s.st_snaps);
+      allCur.stPctSum += num(s.st_pct);
+      snapsAllTeamsAggByPfr.set(key, allCur);
+      snapsAllTeamsAggByName.set(normName(s.player), allCur);
+    }
+
+    if (s.team !== 'SF') continue;
     const dedupKey = `${key}::${s.game_id || s.week || ''}`;
     if (seenSfSnapGames.has(dedupKey)) continue;
     seenSfSnapGames.add(dedupKey);
@@ -648,6 +752,7 @@ async function main() {
     'George Kittle': 'Top-2 NFL tight end in yards per route run (2.48 YPRR) and perimeter run-block grade.',
     'Christian McCaffrey': 'Dual-threat engine forcing 1.4 missed tackles per touch; primary slot/choice mismatch weapon.',
     'DeForest Buckner': 'Posted 81+ interior pass-rush efficiency mark prior to Bay Area trade reunion; elite A/B-gap length.',
+    'Keenan Allen': 'Acquired at Nov 10 trade deadline from Indianapolis; 40 receptions, 351 yards, 1 TD & 20 first downs (+6.98 EPA) across 8 games in 2026.',
     'Osa Odighizuwa': 'Leads SF interior linemen in 2026 QB hurries & TFL disruption after March trade from Dallas.',
     'Deommodore Lenoir': 'Versatile boundary-to-nickel lockdown cornerback allowing <62% completions when sliding inside on 3rd down.'
   };
@@ -732,6 +837,17 @@ async function main() {
   console.log('[4/6] Compiling full 49ers Roster, Player Dossiers, Dual Depth Chart & Health Engine...');
   const rosterPlayers = [];
   const seenEspnIds = new Set();
+  const sfDepthChartIds = new Set();
+  for (const dc of espnDepth.depthchart || []) {
+    for (const posObj of Object.values(dc.positions || {})) {
+      for (const ath of posObj.athletes || []) {
+        if (ath.id) sfDepthChartIds.add(String(ath.id));
+      }
+    }
+  }
+  const recentSfTeamNewsText = (espnNews.articles || [])
+    .map(a => `${a.headline || ''} ${a.description || ''}`)
+    .join(' ');
 
   for (const group of espnRoster.athletes || []) {
     const groupKey = String(group.position || '');
@@ -754,34 +870,30 @@ async function main() {
       const canonKey = canonicalPlayerKey(fullName);
       const txRec = sfTxAnalysis.byKey.get(canonKey) || null;
       const offRosRec = officialSfRoster.byKey.get(canonKey) || null;
-
-      // Exclude free-agent ghosts released with an injury settlement (e.g., Brett Toth) or waived from PS
-      if (txRec?.releasedInjurySettlement) {
-        continue;
-      }
       const espnInjProbe = espnInjByAthleteId.get(espnId) || espnInjByName.get(nk) || null;
       const webInjProbe = sfWebAthleteDetails.get(espnId)?.injury || null;
-      const probeComment = `${espnInjProbe?.shortComment || ''} ${webInjProbe?.shortComment || ''}`;
-      const isReserveLeftSquadOrSusp =
-        groupKey === 'suspended' ||
-        canonKey === 'brandonaiyuk' ||
-        /looking to get reinstated|left squad|reserve\/suspended/i.test(probeComment);
 
-      if (officialSfRoster.hasAuthoritativeData && !offRosRec && !isReserveLeftSquadOrSusp) {
+      const rosterDecision = resolveAuthoritativeRosterPlayerStatus({
+        espnId,
+        fullName,
+        groupKey,
+        espnDefaultBucket,
+        offRosRec,
+        officialRosterHasData: officialSfRoster.hasAuthoritativeData,
+        txRec,
+        depthChartIds: sfDepthChartIds,
+        espnInj: espnInjProbe,
+        webInj: webInjProbe,
+        inlineInj: ath.injuries?.[0] || null,
+        recentNewsText: recentSfTeamNewsText
+      });
+
+      if (!rosterDecision.include) {
         continue;
       }
-      if (!officialSfRoster.hasAuthoritativeData && txRec?.latestRosterMoveBucket === 'released') {
-        continue;
-      }
 
-      // Resolve authoritative roster bucket (49ers.com + NFL transaction ledger override stale ESPN game-day elevations)
-      const bucket =
-        isReserveLeftSquadOrSusp && !offRosRec
-          ? 'ir'
-          : offRosRec?.bucket ||
-            (txRec?.latestRosterMoveBucket && txRec.latestRosterMoveBucket !== 'released'
-              ? txRec.latestRosterMoveBucket
-              : espnDefaultBucket);
+      const isReserveLeftSquadOrSusp = rosterDecision.isReserveLeftSquadOrSusp;
+      const bucket = rosterDecision.bucket;
       const posAbbr = ath.position?.abbreviation || 'ATH';
       const unit = mapUnitFromGroup(groupKey, posAbbr);
 
@@ -828,8 +940,13 @@ async function main() {
       }
       const current2026Stats = dedupSeasons.find(s => s.season === seasonYear) || null;
 
-      // Snaps
-      const snapObj = (pfrId && snapsAggByPfr.get(pfrId)) || snapsAggByName.get(nk) || null;
+      // Snaps (prefer full 2026 regular-season snap share when a player was acquired mid-season via trade/waivers)
+      const sfSnapObj = (pfrId && snapsAggByPfr.get(pfrId)) || snapsAggByName.get(nk) || null;
+      const allSnapObj = (pfrId && snapsAllTeamsAggByPfr.get(pfrId)) || snapsAllTeamsAggByName.get(nk) || null;
+      const snapObj =
+        allSnapObj && (!sfSnapObj || allSnapObj.games > sfSnapObj.games)
+          ? allSnapObj
+          : sfSnapObj || allSnapObj || null;
       const snapSummary = snapObj
         ? {
             gamesLogged: snapObj.games,
@@ -1330,6 +1447,16 @@ async function main() {
         fallbackToTeam: true
       });
       const anyContractYear = Object.values(op.contractsByYear || {})[0] || null;
+      const effectiveBucket =
+        rp?.rosterBucket ||
+        op.contractsByYear?.[capPrimaryYrKey]?.rosterBucket ||
+        anyContractYear?.rosterBucket ||
+        'active';
+      const cleanedContractsByYear = { ...(op.contractsByYear || {}) };
+      if (effectiveBucket !== 'active' && cleanedContractsByYear[capPrimaryYrKey]) {
+        delete cleanedContractsByYear[capPrimaryYrKey];
+        if (rp) rp.capHit2026 = 0;
+      }
       return {
         id: rp?.id || op.otcId,
         otcId: op.otcId,
@@ -1342,8 +1469,8 @@ async function main() {
         jersey: rp?.jersey ?? null,
         headshotUrl: rp?.headshotUrl || '',
         unit: rp?.unit || 'Offense',
-        rosterBucket: rp?.rosterBucket || op.contractsByYear?.[capPrimaryYrKey]?.rosterBucket || anyContractYear?.rosterBucket || 'active',
-        contractsByYear: op.contractsByYear
+        rosterBucket: effectiveBucket,
+        contractsByYear: cleanedContractsByYear
       };
     })
     .filter(p => Object.keys(p.contractsByYear || {}).length > 0)
@@ -1355,6 +1482,12 @@ async function main() {
       const maxB = Math.max(0, ...Object.values(b.contractsByYear || {}).map(y => y?.capNumber || 0));
       return maxB - maxA;
     });
+
+  for (const [yrKey, yrSummary] of Object.entries(otcParsed.years || {})) {
+    if (yrSummary) {
+      yrSummary.contractedCount = enrichedCapPlayers.filter(p => Boolean(p.contractsByYear?.[yrKey])).length;
+    }
+  }
 
   const capBlueprint = buildFrontOfficeCapBlueprint(otcParsed.years, enrichedCapPlayers, seasonYear);
 
@@ -4069,7 +4202,8 @@ async function main() {
       capSummary2027: otcParsed.years[nextCapYrKey],
       teamRecordsMap,
       pickInventory: draftPrep2027.pickInventory,
-      rosterPlayers
+      rosterPlayers,
+      transactions: espnSfTxJson.transactions || []
     }
   );
 
