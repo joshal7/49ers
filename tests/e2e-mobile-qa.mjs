@@ -2653,7 +2653,7 @@ async function main() {
           .map(el => `${el.className}: "${el.textContent.trim()}" (${el.scrollWidth}>${el.clientWidth})`);
         const oppHasParity =
           oppSecText.includes('Availability Index') &&
-          oppSecText.includes('What this means') &&
+          !oppSecText.includes('What this means') &&
           oppSecText.includes('Starters Cleared') &&
           availPopoverOpened &&
           clippedScorecardEls.length === 0 &&
@@ -4337,6 +4337,86 @@ async function main() {
         JSON.stringify(audit360.seenSteps) === JSON.stringify([1, 2, 3]),
         `Expected Deep Analysis progress banner to visibly visit all 3 steps [1,2,3], saw ${JSON.stringify(audit360.seenSteps)}`
       );
+    });
+
+    await runStep('Matchup Health Scorecard parity, 4-color Play-Likelihood badges, Schedule single Gamecast link & Rooting Guide collapsible Week 11 card verify in headless Chrome', async () => {
+      const check = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="season"]').click();
+        await sleep(80);
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+        await sleep(100);
+
+        const scorecard = document.querySelector('[data-opp-health-scorecard]');
+        const scorecardText = scorecard ? scorecard.innerText : '';
+        const hasAvailJargonLink = Boolean(scorecard?.querySelector('[data-jargon="availability_index"]'));
+        const hasWhatThisMeans = scorecardText.includes('What this means');
+
+        const oppTable = document.querySelector('[data-health-table="opp"]');
+        const oppTableText = oppTable ? oppTable.innerText : '';
+        const hasRedundantQuestionable = /\bQuestionable\b/.test(oppTableText);
+        const hasTrueGtd = document.body.innerText.includes('True GTD');
+        const orangeBadges = oppTable ? oppTable.querySelectorAll('.badge-orange').length : 0;
+        const redBadges = oppTable ? oppTable.querySelectorAll('.badge-danger').length : 0;
+        const yellowBadges = oppTable ? oppTable.querySelectorAll('.badge-warning').length : 0;
+
+        const boldCoachingHeaders = document.querySelectorAll('.brief-bullets li > strong').length;
+
+        // Switch to Schedule -> check only 1 Gamecast link in upcoming list
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="schedule"]').click();
+        await sleep(100);
+        const upcomingWrap = document.querySelector('[data-schedule-upcoming-list]');
+        const upcomingGamecastCount = upcomingWrap
+          ? Array.from(upcomingWrap.querySelectorAll('a.source-chip-link')).filter(a =>
+              a.textContent.includes('Gamecast')
+            ).length
+          : -1;
+
+        // Switch to Playoffs -> check Rooting Guide week cards & collapsible next-week card
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="playoffs"]').click();
+        await sleep(100);
+        const weekCards = document.querySelectorAll('[data-rooting-week]').length;
+        const nextWeekDetails = document.querySelector('details[data-rooting-next-week]');
+        const nextWeekStartsCollapsed = Boolean(nextWeekDetails && !nextWeekDetails.open);
+        if (nextWeekDetails) {
+          nextWeekDetails.querySelector('summary')?.click();
+          await sleep(60);
+        }
+        const nextWeekOpensOnClick = Boolean(nextWeekDetails && nextWeekDetails.open);
+
+        document.querySelector('[data-nav-tab="home"]').click();
+        await sleep(60);
+
+        return {
+          scorecardText,
+          hasAvailJargonLink,
+          hasWhatThisMeans,
+          hasRedundantQuestionable,
+          hasTrueGtd,
+          orangeBadges,
+          redBadges,
+          yellowBadges,
+          boldCoachingHeaders,
+          upcomingGamecastCount,
+          weekCards,
+          nextWeekStartsCollapsed,
+          nextWeekOpensOnClick
+        };
+      });
+
+      assert(check.hasAvailJargonLink && !check.hasWhatThisMeans, 'Availability Index must be a dotted glossary link without "What this means"');
+      assert(
+        check.scorecardText.includes('1 Doubtful · 2 Long Shot · 3 GTD') &&
+          /INJURED/i.test(check.scorecardText) &&
+          check.scorecardText.includes('(1 Doubtful · 3 Long Shot · 6 GTD)'),
+        `Unexpected scorecard text: ${check.scorecardText}`
+      );
+      assert(!check.hasRedundantQuestionable, 'Opponent Practice Participation table must not show redundant Questionable sub-line');
+      assert(!check.hasTrueGtd, 'Zero "True GTD" strings may appear in DOM');
+      assert(check.redBadges === 1 && check.orangeBadges === 3 && check.yellowBadges === 6, `Expected 1 Red Doubtful, 3 Orange Long Shot, 6 Yellow GTD badges; got red=${check.redBadges}, orange=${check.orangeBadges}, yellow=${check.yellowBadges}`);
+      assert(check.boldCoachingHeaders >= 5, `Expected >=5 bold coaching bullet headers, got ${check.boldCoachingHeaders}`);
+      assert(check.upcomingGamecastCount === 1, `Expected 1 Gamecast link in Upcoming schedule, got ${check.upcomingGamecastCount}`);
+      assert(check.weekCards >= 2 && check.nextWeekStartsCollapsed && check.nextWeekOpensOnClick, 'Rooting Guide must group by week and collapse week-after-next by default');
     });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {

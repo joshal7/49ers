@@ -261,7 +261,8 @@ export const relTime = formatRelativeAge;
 export function playProbBadgeClass(pct) {
   const n = Number(pct ?? 0);
   if (n >= 85) return 'badge-positive';
-  if (n >= 45) return 'badge-warning';
+  if (n >= 50) return 'badge-warning';
+  if (n >= 20) return 'badge-orange';
   return 'badge-danger';
 }
 

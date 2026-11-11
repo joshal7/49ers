@@ -24409,10 +24409,15 @@
         "activeStartersHealthy": 16,
         "totalStarters": 22,
         "startersOutCount": 0,
+        "startersDoubtfulOnlyCount": 1,
+        "startersLongShotCount": 2,
         "startersDoubtfulCount": 3,
         "startersQuestionableCount": 3,
+        "startersGtdCount": 3,
         "startersUnresolvedCount": 6,
         "ruledOutCount": 0,
+        "doubtfulCount": 1,
+        "longShotCount": 3,
         "doubtfulOrLongShotCount": 4,
         "gtdCount": 6,
         "questionableOrDoubtfulCount": 10,
@@ -25228,7 +25233,7 @@
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 73,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "73% • True GTD",
+          "playBadgeLabel": "73% • GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (78%)",
             "Soft-tissue re-aggravation caution (Groin)"
@@ -25254,7 +25259,7 @@
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 76,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "76% • True GTD",
+          "playBadgeLabel": "76% • GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (76%)"
           ],
@@ -25279,7 +25284,7 @@
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 76,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "76% • True GTD",
+          "playBadgeLabel": "76% • GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (76%)"
           ],
@@ -25304,7 +25309,7 @@
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 77,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "77% • True GTD",
+          "playBadgeLabel": "77% • GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (82%)",
             "Soft-tissue re-aggravation caution (Hamstring)"
@@ -25330,7 +25335,7 @@
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 77,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "77% • True GTD",
+          "playBadgeLabel": "77% • GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (82%)",
             "Soft-tissue re-aggravation caution (Hamstring)"
@@ -25356,7 +25361,7 @@
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 80,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "80% • True GTD",
+          "playBadgeLabel": "80% • GTD",
           "factors": [
             "Questionable tag adjusted by player career prior (76%)",
             "Manageable pain-tolerance injury profile (Ribs)"
@@ -25759,29 +25764,41 @@
       ]
     },
     "coachingMatchup": {
-      "headline": "Kyle Shanahan & DC Raheem Morris vs. Dallas Cowboys HC Brian Schottenheimer",
-      "summary": "San Francisco (7-1) matches its #2 NFL passing EPA offense (+8.81/gm) and #1 pass protection (3.3% sack rate) against Dallas Cowboys (4-5), led on the field by Dak Prescott, Cowboys Skill Corps, and Kenny Clark.",
+      "headline": "Kyle Shanahan & DC Raheem Morris vs. Cowboys HC Brian Schottenheimer, OC Klayton Adams, DC Matt Eberflus",
+      "summary": "This Week 10 clash at AT&T Stadium is a high-leverage schematic chess match between two top-7 NFL passing attacks (#2 SF at +8.81 EPA/gm vs. #7 DAL at +7.09 EPA/gm) that win in completely different ways. Kyle Shanahan will use pre-snap shift/orbit motion, 21-personnel formations, and newly acquired slot technician Keenan Allen to stress DC Matt Eberflus's spot-drop Cover 3 and Tampa-2 zone spacing between the hashes. On the other side of the ball, Raheem Morris's disguised two-high shells and Wide-9 interior stunt packages (featuring DeForest Buckner and former Cowboy Osa Odighizuwa alongside Nick Bosa) are built to collapse Dak Prescott's internal pocket and force checkdowns in front of Fred Warner and Deommodore Lenoir.",
       "bullets": [
-        "Pass-Game Efficiency Delta: SF enters ranked #2 in Passing EPA/game vs. DAL's #7 offensive passing EPA mark (+7.09/gm).",
-        "Raheem Morris Trench Plan: DAL allows sacks on 4.0% of dropbacks (#5 NFL) entering its matchup with Nick Bosa, DeForest Buckner, and Osa Odighizuwa.",
-        "Rest & Venue Factor: AT&T Stadium • Arlington, TX (Synthetic Turf) • Even Rest (Standard Prep Week)."
+        "Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #2 in Passing EPA/game (+8.81) and #1 in Sack Rate Allowed (3.3%). Against Matt Eberflus's zone-heavy structure—which relies on four-man rush integrity (#23 in sacks/gm) and disciplined landmark drops rather than heavy blitzing—watch Brock Purdy attack the 12-to-22 yard intermediate honey-hole between the hook/curl linebackers and deep safeties off play-action.",
+        "Keenan Allen's Option-Route Integration & 21-Personnel Spacing: With Deebo Samuel Sr. (hamstring, GTD) managing his workload, Tuesday's trade for Keenan Allen gives Shanahan an elite zone-beating separator from the slot. When SF condenses splits or motions Christian McCaffrey out of the backfield, Eberflus must choose between widening his curl/flat defender (opening George Kittle and Allen on choice/dagger concepts over the middle) or staying tight inside (conceding perimeter leverage to McCaffrey and Brandin Cooks).",
+        "Klayton Adams's Gap-Scheme Run Game vs. SF's Rebuilt Interior Front: Cowboys OC Klayton Adams pairs Brian Schottenheimer's West Coast pass concepts with heavy pin-and-pull, counter, and duo run schemes behind interior maulers Tyler Smith, Cooper Beebe, and Tyler Booker. Watch how DeForest Buckner and Osa Odighizuwa (who practiced against this exact Dallas O-line daily before joining SF) anchor the A- and B-gaps on early downs so Fred Warner can stay clean to trigger downhill.",
+        "Raheem Morris's Disguised Split-Safety Rotations vs. Dak Prescott: Prescott ranks #7 in Passing EPA/game (+7.09) and feasts when he can diagnose single-high vs. two-high pre-snap to isolate CeeDee Lamb and George Pickens. Expect Morris to hold static two-high shells until the snap before rotating late into Cover 4 Quarters, Cover 6, or cloud-trap looks—forcing Prescott to hold the ball an extra hitch while Nick Bosa works 1-on-1 against LT Tyler Guyton or RT Terence Steele.",
+        "Red-Zone & Tight-End Attrition Leverage: With Dallas tight ends Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin) banged up and safety P.J. Locke (18% Doubtful, concussion) unlikely to clear protocol, watch Shanahan hunt safety Caleb Downs and linebacker Donovan Ezeiruaku (45% Long Shot, ankle) in heavy 12/21 red-zone personnel while Morris brackets CeeDee Lamb on 3rd-and-medium."
       ]
     },
     "keyMatchupsMatrix": [
       {
-        "unitMatchup": "49ers Pass Protection (3.3% Sack Rate, #1 NFL) vs. Kenny Clark & Cowboys Rush (#23 Sacks/Gm)",
-        "advantage": "SF Edge",
-        "tacticalDetail": "Trent Williams + 21-personnel Kittle/Juszczyk chip releases keep Brock Purdy clean on intermediate in-breakers against Dallas Cowboys's edge pressure."
+        "unitMatchup": "DeForest Buckner + Osa Odighizuwa & Nick Bosa vs. Dak Prescott & Cowboys Interior O-Line (#5 Sack Rate Allowed, 4.0%)",
+        "advantage": "SF Trench Edge",
+        "tacticalDetail": "Dallas protects Dak Prescott well overall (4.0% sack rate allowed, #5 NFL) behind young interior anchors Cooper Beebe (C #56), Tyler Smith (LG #73), and Tyler Booker (RG #52). The key to watch is Osa Odighizuwa (#92) facing his former teammates alongside DeForest Buckner: when Buckner and Odighizuwa win vertical A/B-gap penetration on T-E stunts, Cooper Beebe cannot slide protection help to LT Tyler Guyton or RT Terence Steele, leaving Nick Bosa isolated 1-on-1 on the Wide-9 rail."
       },
       {
-        "unitMatchup": "Purdy Play-Action & Middle-of-Field (#2 Pass EPA) vs. Cowboys Coverage",
-        "advantage": "SF Edge",
-        "tacticalDetail": "George Kittle, Christian McCaffrey, Brandin Cooks, and SF's motion spacing stress second-level zone leverage between the numbers."
+        "unitMatchup": "Brock Purdy, George Kittle & Keenan Allen vs. DC Matt Eberflus's Tampa-2 / Cover 3 Seam & Hook Zones",
+        "advantage": "SF Heavy Edge",
+        "tacticalDetail": "Purdy (#2 Passing EPA/gm at +8.81) thrives on anticipation throws between the numbers. With Dallas safety P.J. Locke (18% Doubtful, concussion) and LB Donovan Ezeiruaku (45% Long Shot, ankle) compromised—and LB DeMarvion Overshown (77% GTD) playing through a knee tag—watch Shanahan pair George Kittle's seam/over routes with Keenan Allen's underneath option routes to high-low Dallas's middle-hook linebacker and force CB DaRon Bland to tackle in space."
       },
       {
-        "unitMatchup": "Nick Bosa + DeForest Buckner + Osa Odighizuwa vs. Dak Prescott & Cowboys O-Line (#5 Sack Rate Allowed)",
-        "advantage": "SF Slight Edge",
-        "tacticalDetail": "Aligning Buckner and Odighizuwa inside forces interior protection slides, isolating Bosa 1-on-1 on the Wide-9 rail."
+        "unitMatchup": "49ers Pass Protection (#1 NFL, 3.3% Sack Rate) vs. Quinnen Williams, Kenny Clark & Rashan Gary (#23 Sacks/Gm)",
+        "advantage": "SF Edge",
+        "tacticalDetail": "Dallas generates sacks on just 2.00 plays per game (#23 NFL), relying on interior push from DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge power from Rashan Gary (#7). Watch LT Trent Williams erase Dallas's right-side rush solo while RG Dominick Puni and C Jake Brendel use combo-blocks and 21-personnel Kittle/Juszczyk play-action chips to keep Purdy's internal throwing lanes clean."
+      },
+      {
+        "unitMatchup": "Deommodore Lenoir, Renardo Green & Fred Warner vs. CeeDee Lamb & George Pickens (77% GTD)",
+        "advantage": "Even High-Stakes Battle",
+        "tacticalDetail": "Brian Schottenheimer moves CeeDee Lamb across the formation (Z, slot, and motion stacks) while using George Pickens on boundary verticals and back-shoulder fades. Watch Deommodore Lenoir travel into the slot in nickel packages to disrupt Lamb's release timing at the top of the stem, while Fred Warner carries deep middle crossers to prevent Prescott from hitting explosive chunk plays off play-action."
+      },
+      {
+        "unitMatchup": "Christian McCaffrey Outside Zone & Choice Routes vs. Cowboys Second-Level Run Fits",
+        "advantage": "SF Edge",
+        "tacticalDetail": "San Francisco ranks #3 in Rushing EPA/game and uses McCaffrey as both an outside-zone tempo setter and a 3rd-down mismatch weapon. Watch how jet/orbit motion forces Dallas's safeties (Caleb Downs) to widen pre-snap—creating cutback lanes behind Trent Williams and George Kittle on early downs and isolating McCaffrey on angle/Texas routes against linebackers in pass coverage."
       }
     ]
   }

@@ -3936,8 +3936,8 @@ test('Game-Day Roster Engine activates strictly from T-90m until Final, tolerate
   const sampleReport = [
     { playerId: '3', name: 'Deebo Samuel Sr.', position: 'WR', jersey: 19, gameStatus: 'Out', injuryType: 'Hamstring', playProbabilityPct: 0, playBadgeLabel: '0% • Out' },
     { playerId: '2', name: 'Christian McCaffrey', position: 'RB', jersey: 23, gameStatus: 'Questionable', injuryType: 'Achilles', playProbabilityPct: 82, playBadgeLabel: '82% • Likely' },
-    { playerId: '8', name: 'Siran Neal', position: 'S', jersey: 33, gameStatus: 'Questionable', injuryType: 'Knee', playProbabilityPct: 56, playBadgeLabel: '56% • True GTD' },
-    { playerId: '9', name: 'Upton Stout', position: 'CB', jersey: 20, gameStatus: 'Questionable', injuryType: 'Shoulder', playProbabilityPct: 78, playBadgeLabel: '78% • True GTD', beatComment: 'Stout is active as an emergency backup CB and remains a game-time decision on snaps.' }
+    { playerId: '8', name: 'Siran Neal', position: 'S', jersey: 33, gameStatus: 'Questionable', injuryType: 'Knee', playProbabilityPct: 56, playBadgeLabel: '56% • GTD' },
+    { playerId: '9', name: 'Upton Stout', position: 'CB', jersey: 20, gameStatus: 'Questionable', injuryType: 'Shoulder', playProbabilityPct: 78, playBadgeLabel: '78% • GTD', beatComment: 'Stout is active as an emergency backup CB and remains a game-time decision on snaps.' }
   ];
 
   // Delay-tolerant pending state (T-88m, before official 5-7 scratch list drops)
@@ -5163,6 +5163,133 @@ test('Schedule includes Preseason (PRE 1..3), hides all past games in Previous G
   const afterDivLossModel = resolveCompleteScheduleModel(afterDivLossData);
   assert.equal(afterDivLossModel.upcomingGames.length, 0, 'Postseason loss must stop any subsequent round synthesis');
   assert.equal(afterDivLossModel.postseasonStatus.state, 'POSTSEASON_ELIMINATED');
+});
+
+await testAsync('Schedule Gamecast scoping, Rooting Guide week grouping, 4-color Play-Likelihood nomenclature (GTD/Long Shot/Doubtful/Cleared), Scorecard parity & in-depth Coaching/Key Matchups', async () => {
+  const { playProbBadgeClass } = await import('../src/views/uiHelpers.js');
+  const { formatPlayTierLabel } = await import('../src/engine/injuryProbabilityModel.js');
+
+  // 1. Verify 4-color numerical range mapping & nomenclature (Red 0-19%, Orange 20-49%, Yellow 50-84%, Green 85-99%)
+  assert.equal(playProbBadgeClass(0), 'badge-danger');
+  assert.equal(playProbBadgeClass(18), 'badge-danger');
+  assert.equal(playProbBadgeClass(19), 'badge-danger');
+  assert.equal(playProbBadgeClass(20), 'badge-orange');
+  assert.equal(playProbBadgeClass(35), 'badge-orange');
+  assert.equal(playProbBadgeClass(44), 'badge-orange');
+  assert.equal(playProbBadgeClass(45), 'badge-orange');
+  assert.equal(playProbBadgeClass(49), 'badge-orange');
+  assert.equal(playProbBadgeClass(50), 'badge-warning');
+  assert.equal(playProbBadgeClass(73), 'badge-warning');
+  assert.equal(playProbBadgeClass(84), 'badge-warning');
+  assert.equal(playProbBadgeClass(85), 'badge-positive');
+  assert.equal(playProbBadgeClass(95), 'badge-positive');
+  assert.equal(playProbBadgeClass(99), 'badge-positive');
+
+  assert.equal(formatPlayTierLabel('OUT'), 'Out');
+  assert.equal(formatPlayTierLabel('DOUBTFUL'), 'Doubtful');
+  assert.equal(formatPlayTierLabel('UNLIKELY'), 'Long Shot');
+  assert.equal(formatPlayTierLabel('FIFTY_FIFTY'), 'GTD');
+  assert.equal(formatPlayTierLabel('LIKELY'), 'Cleared');
+  assert.equal(formatPlayTierLabel('ACTIVE'), 'Full Go');
+
+  // 2. Verify ZERO occurrences of "True GTD" across all data files and src/
+  for (const rel of ['data/health.json', 'data/roster.json', 'data/schedule-matchup.json', 'data/depth-chart.json']) {
+    const txt = fs.readFileSync(path.join(rootDir, rel), 'utf8');
+    assert.ok(!txt.includes('True GTD'), `Found leftover "True GTD" in ${rel}`);
+  }
+
+  // 3. Verify Schedule removes Gamecast links from all future games except the immediate upcoming game
+  const liveSm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const liveMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+  const liveSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const liveRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+
+  const fullAppData = {
+    meta: liveMeta,
+    scheduleMatchup: liveSm,
+    seasonal: liveSeasonal,
+    health: liveHealth,
+    roster: liveRoster
+  };
+
+  const schedHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: fullAppData,
+    activeVideosSet: new Set()
+  });
+  const upcomingSlice = schedHtml.slice(schedHtml.indexOf('data-schedule-upcoming-list'));
+  const gamecastMatches = upcomingSlice.match(/>Gamecast</g) || [];
+  assert.equal(gamecastMatches.length, 1, `Expected exactly 1 Gamecast link in Upcoming schedule (only the immediate upcoming game), got ${gamecastMatches.length}`);
+  const prevSlice = schedHtml.slice(0, schedHtml.indexOf('data-schedule-upcoming-list'));
+  assert.ok(prevSlice.includes('>Box Score<'), 'Completed games in Previous Games bar must retain Box Score links');
+
+  // 4. Verify Rooting Guide groups by week in cards and collapses the week after next
+  const playoffsHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'playoffs',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON', 'PLAYOFF_PUSH'],
+    appData: fullAppData,
+    activeVideosSet: new Set()
+  });
+  assert.ok(playoffsHtml.includes('data-rooting-guide-weeks'), 'Rooting Guide must group games into week cards');
+  assert.ok(playoffsHtml.includes('data-rooting-week="10"'), 'Rooting Guide must render Week 10 card');
+  assert.ok(
+    playoffsHtml.includes('details class="subcard-panel rooting-week-card rooting-week-collapsible" data-rooting-week="11" data-rooting-next-week>'),
+    'Week after next (Week 11) must be an expandable collapsed <details> card'
+  );
+
+  // 5. Verify Matchup View: Availability Index dotted link (no "What this means"), Injured 10 (1 Doubtful · 3 Long Shot · 6 GTD), no redundant Questionable under injuries, Coaching OC/DC & bold headers, and 5 detailed Key Matchups
+  const matchupHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'matchup',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: fullAppData,
+    activeVideosSet: new Set()
+  });
+  assert.ok(
+    matchupHtml.includes('data-jargon="availability_index"') &&
+      matchupHtml.includes('>Availability Index</span>') &&
+      !matchupHtml.includes('What this means'),
+    'Availability Index must be a dotted glossary link and "What this means" must be removed'
+  );
+  assert.ok(
+    matchupHtml.includes('1 Doubtful · 2 Long Shot · 3 GTD'),
+    'Starters Cleared sub-note must break out 1 Doubtful · 2 Long Shot · 3 GTD'
+  );
+  assert.ok(
+    matchupHtml.includes('<div class="kpi-label">Injured</div>') &&
+      matchupHtml.includes('(1 Doubtful · 3 Long Shot · 6 GTD)'),
+    'Lower-left card must show Injured 10 and (1 Doubtful · 3 Long Shot · 6 GTD)'
+  );
+  const oppTableSlice = matchupHtml.slice(
+    matchupHtml.indexOf('data-health-table="opp"'),
+    matchupHtml.indexOf('DAL Beat Notes')
+  );
+  assert.ok(
+    !oppTableSlice.includes('>Questionable<'),
+    'Opponent Practice Participation table must not show redundant "Questionable" sub-line under every injury'
+  );
+  assert.ok(
+    oppTableSlice.includes('badge-danger mono">18% • Doubtful') &&
+      oppTableSlice.includes('badge-orange mono">35% • Long Shot') &&
+      oppTableSlice.includes('badge-orange mono">44% • Long Shot') &&
+      oppTableSlice.includes('badge-orange mono">45% • Long Shot') &&
+      oppTableSlice.includes('badge-warning mono">73% • GTD'),
+    'Opponent Practice Participation badges must use Red for Doubtful, Orange for Long Shot, and Yellow for GTD'
+  );
+  assert.ok(
+    matchupHtml.includes('OC Klayton Adams') && matchupHtml.includes('DC Matt Eberflus'),
+    'Coaching Matchup headline must include salient opponent OC and DC'
+  );
+  assert.ok(
+    matchupHtml.includes('<li><strong>Pass-Game Efficiency &amp; Coverage Shell Delta:</strong>'),
+    'Coaching Matchup bullets must bold the header before the colon'
+  );
+  assert.equal(
+    (liveSm.upcomingMatchup?.keyMatchupsMatrix || []).length,
+    5,
+    'Key Matchups matrix must provide 5 detailed film/scheme cards'
+  );
 });
 
 console.log(`\n======================================================`);

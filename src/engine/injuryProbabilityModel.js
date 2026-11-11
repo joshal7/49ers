@@ -1263,6 +1263,8 @@ export function computePlayerPlayProbability(input = {}) {
     !(newsSig && newsSig.direction < 0) &&
     (statusRaw === 'active' ||
       statusRaw === 'healthy' ||
+      statusRaw.includes('no designation') ||
+      statusRaw.includes('cleared') ||
       beatNote.includes('does not have a designation') ||
       beatNote.includes("doesn't have a designation") ||
       beatNote.includes('does not carry an official injury designation') ||
@@ -1497,9 +1499,9 @@ export function formatPlayTierLabel(tier) {
     case 'ACTIVE':
       return 'Full Go';
     case 'LIKELY':
-      return 'Probable';
+      return 'Cleared';
     case 'FIFTY_FIFTY':
-      return 'True GTD';
+      return 'GTD';
     case 'UNLIKELY':
       return 'Long Shot';
     case 'DOUBTFUL':
@@ -1507,7 +1509,7 @@ export function formatPlayTierLabel(tier) {
     case 'OUT':
       return 'Out';
     default:
-      return 'Questionable';
+      return 'GTD';
   }
 }
 
@@ -2403,11 +2405,15 @@ export function computeTeamHealthSummary({
   const irList = Array.isArray(irReserve) ? irReserve : [];
 
   let ruledOutCount = 0;
+  let doubtfulCount = 0;
+  let longShotCount = 0;
   let doubtfulOrLongShotCount = 0;
   let gtdCount = 0;
   let clearedCount = 0;
 
   let startersOutCount = 0;
+  let startersDoubtfulOnlyCount = 0;
+  let startersLongShotCount = 0;
   let startersDoubtfulCount = 0;
   let startersQuestionableCount = 0;
 
@@ -2428,19 +2434,31 @@ export function computeTeamHealthSummary({
 
     const isCleared =
       /^(?:active|in\b|no designation|cleared)/i.test(statusStr) ||
-      (prob >= 88 && !/^(?:out|inactive|doubtful|questionable|ir)/i.test(statusStr));
+      (prob >= 85 && !/^(?:out|inactive|doubtful|ir)/i.test(statusStr));
     const isOut = !isCleared && (prob === 0 || /^(?:out|inactive)\b/i.test(statusStr));
-    const isDoubtful = !isCleared && !isOut && (prob < 50 || /\bdoubtful\b/i.test(statusStr));
-    const isGtd = !isCleared && !isOut && !isDoubtful;
+    const isDoubtfulOnly = !isCleared && !isOut && prob < 20;
+    const isLongShot = !isCleared && !isOut && !isDoubtfulOnly && prob < 50;
+    const isGtd = !isCleared && !isOut && !isDoubtfulOnly && !isLongShot;
 
     if (isCleared) {
       clearedCount += 1;
     } else if (isOut) {
       ruledOutCount += 1;
       if (isStarter) startersOutCount += 1;
-    } else if (isDoubtful) {
+    } else if (isDoubtfulOnly) {
+      doubtfulCount += 1;
       doubtfulOrLongShotCount += 1;
-      if (isStarter) startersDoubtfulCount += 1;
+      if (isStarter) {
+        startersDoubtfulOnlyCount += 1;
+        startersDoubtfulCount += 1;
+      }
+    } else if (isLongShot) {
+      longShotCount += 1;
+      doubtfulOrLongShotCount += 1;
+      if (isStarter) {
+        startersLongShotCount += 1;
+        startersDoubtfulCount += 1;
+      }
     } else if (isGtd) {
       gtdCount += 1;
       if (isStarter) startersQuestionableCount += 1;
@@ -2488,10 +2506,15 @@ export function computeTeamHealthSummary({
     activeStartersHealthy,
     totalStarters: safeTotalStarters,
     startersOutCount,
+    startersDoubtfulOnlyCount,
+    startersLongShotCount,
     startersDoubtfulCount,
     startersQuestionableCount,
+    startersGtdCount: startersQuestionableCount,
     startersUnresolvedCount,
     ruledOutCount,
+    doubtfulCount,
+    longShotCount,
     doubtfulOrLongShotCount,
     gtdCount,
     questionableOrDoubtfulCount,

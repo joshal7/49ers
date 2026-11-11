@@ -1644,6 +1644,17 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now()) {
     appData.health.gameDayRoster = sfModel;
     if (Array.isArray(appData.health.practiceReport)) {
       appData.health.practiceReport = resolveGameDayInjuryRows(baseSfReport, sfModel);
+      const byId = new Map(appData.health.practiceReport.map(r => [String(r.playerId || ''), r]));
+      const byName = new Map(appData.health.practiceReport.map(r => [normPlayerNameKey(r.name), r]));
+      for (const p of appData.roster?.players || []) {
+        const match = byId.get(String(p.id || '')) || byName.get(normPlayerNameKey(p.name));
+        if (match && p.health) {
+          p.health.status = match.gameStatus || p.health.status;
+          p.health.playProbabilityPct = match.playProbabilityPct;
+          p.health.playTier = match.playTier || match.tier || p.health.playTier;
+          p.health.playBadgeLabel = match.playBadgeLabel || match.badgeLabel || p.health.playBadgeLabel;
+        }
+      }
     }
   }
 

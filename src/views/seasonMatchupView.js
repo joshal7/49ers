@@ -53,6 +53,17 @@ function formatPracCell(val) {
   return !s || s === '-' ? '—' : s;
 }
 
+function formatCoachingBulletHtml(bullet = '') {
+  const raw = String(bullet || '').trim();
+  const colonIdx = raw.indexOf(':');
+  if (colonIdx > 0 && colonIdx <= 95) {
+    const headClean = raw.slice(0, colonIdx).replace(/\*\*/g, '').trim();
+    const bodyClean = raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim();
+    return `<li><strong>${escJargon(headClean)}:</strong> ${escJargon(bodyClean)}</li>`;
+  }
+  return `<li>${escJargon(raw)}</li>`;
+}
+
 function formatOppImportanceTag(op) {
   const snap = Number(op?.snapPct || 0);
   const isStarter = isEffectiveOffDefStarter(op);
@@ -234,6 +245,7 @@ export function renderSeasonMatchupViewHtml({
   expandedDraftSpiderIdx = -1,
   activeVideosSet,
   schedulePrevExpanded = false,
+  expandedRootingWeeks = null,
   matchupStatsUnit = 'offense'
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
@@ -270,7 +282,8 @@ export function renderSeasonMatchupViewHtml({
   if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData);
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
-  if (seasonSub === 'playoffs') return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners);
+  if (seasonSub === 'playoffs')
+    return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks);
   if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
   if (seasonSub === 'draft_prep') return switcherCard + renderDraftPrepAndCombine(appData, combineSearch);
   return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
@@ -465,31 +478,31 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
   const availValColor =
     availScore >= 82 ? 'var(--emerald)' : availScore >= 68 ? 'var(--gold-bright)' : 'var(--crimson)';
   const startersSubNote = (() => {
-    const { startersUnresolvedCount, startersOutCount, startersDoubtfulCount, startersQuestionableCount } =
-      resolvedOppSummary;
+    const {
+      startersUnresolvedCount,
+      startersOutCount,
+      startersDoubtfulOnlyCount,
+      startersLongShotCount,
+      startersQuestionableCount
+    } = resolvedOppSummary;
     if (startersUnresolvedCount === 0) return 'All 22 full go';
-    if (startersOutCount > 0 && startersDoubtfulCount + startersQuestionableCount > 0) {
-      return `${startersOutCount} Out · ${startersDoubtfulCount + startersQuestionableCount} Q/Dbt`;
-    }
-    if (startersOutCount > 0) {
-      return `${startersOutCount} starter${startersOutCount > 1 ? 's' : ''} Out`;
-    }
-    if (startersDoubtfulCount > 0 && startersQuestionableCount > 0) {
-      return `${startersDoubtfulCount} Dbt/Long · ${startersQuestionableCount} GTD`;
-    }
-    if (startersDoubtfulCount > 0) {
-      return `${startersDoubtfulCount} Dbt / Long Shot`;
-    }
-    return `${startersQuestionableCount} starter${startersQuestionableCount > 1 ? 's' : ''} GTD`;
+    const parts = [
+      startersOutCount > 0 ? `${startersOutCount} Out` : '',
+      startersDoubtfulOnlyCount > 0 ? `${startersDoubtfulOnlyCount} Doubtful` : '',
+      startersLongShotCount > 0 ? `${startersLongShotCount} Long Shot` : '',
+      startersQuestionableCount > 0 ? `${startersQuestionableCount} GTD` : ''
+    ].filter(Boolean);
+    return parts.join(' · ');
   })();
   const qDoubtfulSubNote = (() => {
-    const { questionableOrDoubtfulCount, doubtfulOrLongShotCount, gtdCount } = resolvedOppSummary;
+    const { questionableOrDoubtfulCount, doubtfulCount, longShotCount, gtdCount } = resolvedOppSummary;
     if (questionableOrDoubtfulCount === 0) return '0 designations';
-    if (doubtfulOrLongShotCount > 0 && gtdCount > 0) {
-      return `${doubtfulOrLongShotCount} Long Shot · ${gtdCount} GTD`;
-    }
-    if (doubtfulOrLongShotCount > 0) return `${doubtfulOrLongShotCount} Dbt / Long Shot`;
-    return `${gtdCount} GTD on report`;
+    const parts = [
+      doubtfulCount > 0 ? `${doubtfulCount} Doubtful` : '',
+      longShotCount > 0 ? `${longShotCount} Long Shot` : '',
+      gtdCount > 0 ? `${gtdCount} GTD` : ''
+    ].filter(Boolean);
+    return `(${parts.join(' · ')})`;
   })();
   const outIrSubNote = (() => {
     const { irCount, irOpenWindowCount, irSeasonEndingCount } = resolvedOppSummary;
@@ -607,10 +620,9 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
       <div class="kpi-grid kpi-grid-2 health-scorecard-grid" style="margin-bottom:10px" data-opp-health-scorecard>
         <div class="kpi-box">
-          <div class="kpi-label">Availability Index</div>
+          <div class="kpi-label">${jargonTerm('Availability Index', 'availability_index')}</div>
           <div class="kpi-val mono" style="color:${availValColor}">${availScore}/100</div>
           ${renderMiniMeterHtml(availScore, availMeterTone)}
-          <div class="kpi-sub-note">${jargonTerm('What this means', 'availability_index')}</div>
         </div>
         <div class="kpi-box">
           <div class="kpi-label">${jargonTerm('Starters Cleared', 'starters_cleared')}</div>
@@ -618,7 +630,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
           <div class="kpi-sub-note mono">${esc(startersSubNote)}</div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Q / Doubtful / GTD</div>
+          <div class="kpi-label">Injured</div>
           <div class="kpi-val mono" style="color:${resolvedOppSummary.questionableOrDoubtfulCount > 0 ? 'var(--gold-bright)' : 'var(--text-primary)'}">${resolvedOppSummary.questionableOrDoubtfulCount}</div>
           <div class="kpi-sub-note mono">${esc(qDoubtfulSubNote)}</div>
         </div>
@@ -671,14 +683,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <div>${esc(op.injuryType || op.gameStatus || 'Undisclosed')}</div>
-                        ${
-                          op.gameStatus && !/^(?:active|in\b)/i.test(String(op.gameStatus))
-                            ? `<div style="font-size:10.5px;color:var(--text-muted)">${esc(op.gameStatus)}</div>`
-                            : ''
-                        }
-                      </td>
+                      <td>${esc(op.injuryType || op.gameStatus || 'Undisclosed')}</td>
                       <td class="mono">${esc(formatPracCell(op.wed))} / ${esc(formatPracCell(op.thu))} / ${esc(formatPracCell(op.fri))}</td>
                       <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span></td>
                     </tr>
@@ -808,9 +813,9 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
     <section class="card">
       <div class="card-eyebrow">Coaching Matchup</div>
       <h3 class="card-title" style="margin-bottom:8px">${escJargon(um.coachingMatchup?.headline)}</h3>
-      <p style="margin:0 0 8px;font-size:13px;color:var(--text-secondary)">${escJargon(um.coachingMatchup?.summary)}</p>
+      <p style="margin:0 0 8px;font-size:13px;line-height:1.48;color:var(--text-secondary)">${escJargon(um.coachingMatchup?.summary)}</p>
       <ul class="brief-bullets">
-        ${(um.coachingMatchup?.bullets || []).map(b => `<li>${escJargon(b)}</li>`).join('')}
+        ${(um.coachingMatchup?.bullets || []).map(b => formatCoachingBulletHtml(b)).join('')}
       </ul>
     </section>
 
@@ -1464,12 +1469,91 @@ function renderTradeWindow(appData) {
   `;
 }
 
-function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
+function renderRootingGameRowHtml(g, forcedWinners) {
+  const picked = forcedWinners?.[g.gameId] || null;
+  return `
+    <div class="scenario-game-row">
+      <div style="min-width:0">
+        <div style="font-weight:700;font-size:13px">
+          Wk ${g.week}: ${esc(g.matchupLabel)}
+          ${g.is49ersGame ? `<span class="badge badge-scarlet">49ers</span>` : ''}
+        </div>
+        <div style="font-size:11.5px;color:var(--text-secondary)">
+          Root for <strong style="color:var(--emerald)">${esc(g.rootForTeam)}</strong> •
+          <span class="mono">+${g.primaryDeltaPct}% ${esc(g.primaryMetric)} swing</span>${g.leverageTag ? ` <span style="color:var(--text-muted)">(${esc(g.leverageTag)})</span>` : ''}
+        </div>
+      </div>
+      <div class="scenario-toggle-pair">
+        <button type="button"
+                class="team-pick-btn mono ${picked === 'AWAY' ? 'selected' : ''} ${g.recommendedWinner === 'AWAY' ? 'recommended' : ''}"
+                style="display:inline-flex;align-items:center;gap:5px"
+                data-action="toggle-playoff-winner" data-game-id="${esc(g.gameId)}" data-side="AWAY">
+          ${renderTeamLogoHtml(g.away, g.awayLogoUrl, 16)}
+          <span>${esc(g.away)}</span>
+        </button>
+        <button type="button"
+                class="team-pick-btn mono ${picked === 'HOME' ? 'selected' : ''} ${g.recommendedWinner === 'HOME' ? 'recommended' : ''}"
+                style="display:inline-flex;align-items:center;gap:5px"
+                data-action="toggle-playoff-winner" data-game-id="${esc(g.gameId)}" data-side="HOME">
+          ${renderTeamLogoHtml(g.home, g.homeLogoUrl, 16)}
+          <span>${esc(g.home)}</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks = null) {
   const pp = appData?.seasonal?.playoffPicture || {};
   const sim = mcSimResult || pp.baselineSimulation || {};
   const sf = sim.sfOdds || {};
   const seeds = sf.seedDistribution || {};
   const overrideCount = Object.keys(forcedWinners || {}).length;
+
+  const byWeek = new Map();
+  for (const g of pp.rootingLeverage || []) {
+    const wk = Number(g.week || 0);
+    if (!byWeek.has(wk)) byWeek.set(wk, []);
+    byWeek.get(wk).push(g);
+  }
+  const sortedRootingWeeks = [...byWeek.keys()].sort((a, b) => a - b);
+  const rootingWeekCardsHtml = sortedRootingWeeks
+    .map((wk, idx) => {
+      const games = byWeek.get(wk) || [];
+      const rowsHtml = games.map(g => renderRootingGameRowHtml(g, forcedWinners)).join('');
+      if (idx === 0) {
+        return `
+          <div class="subcard-panel rooting-week-card" data-rooting-week="${wk}">
+            <div class="rooting-week-header">
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="badge badge-gold mono">Week ${wk}</span>
+                <strong style="font-size:13px">Week ${wk} Rooting Slate</strong>
+              </div>
+              <span class="mono" style="font-size:11px;color:var(--text-muted)">${games.length} ${games.length === 1 ? 'game' : 'games'}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+              ${rowsHtml}
+            </div>
+          </div>
+        `;
+      }
+      const isOpen = expandedRootingWeeks instanceof Set && expandedRootingWeeks.has(wk);
+      return `
+        <details class="subcard-panel rooting-week-card rooting-week-collapsible" data-rooting-week="${wk}" data-rooting-next-week${isOpen ? ' open' : ''}>
+          <summary class="rooting-week-summary">
+            <div style="display:flex;align-items:center;gap:6px">
+              <span class="badge badge-neutral mono">Week ${wk}</span>
+              <strong style="font-size:13px">Week ${wk} Rooting Guide</strong>
+            </div>
+            <span class="mono" style="font-size:11px;color:var(--gold-bright)">${games.length} ${games.length === 1 ? 'game' : 'games'} • Tap to expand ▾</span>
+          </summary>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+            ${rowsHtml}
+          </div>
+        </details>
+      `;
+    })
+    .join('');
 
   return `
     <section class="card temporal-highlight">
@@ -1534,42 +1618,8 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners) {
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:7px">
-        ${(pp.rootingLeverage || [])
-          .map(g => {
-            const picked = forcedWinners?.[g.gameId] || null;
-            return `
-              <div class="scenario-game-row">
-                <div style="min-width:0">
-                  <div style="font-weight:700;font-size:13px">
-                    Wk ${g.week}: ${esc(g.matchupLabel)}
-                    ${g.is49ersGame ? `<span class="badge badge-scarlet">49ers</span>` : ''}
-                  </div>
-                  <div style="font-size:11.5px;color:var(--text-secondary)">
-                    Root for <strong style="color:var(--emerald)">${esc(g.rootForTeam)}</strong> •
-                    <span class="mono">+${g.primaryDeltaPct}% ${esc(g.primaryMetric)} swing</span>${g.leverageTag ? ` <span style="color:var(--text-muted)">(${esc(g.leverageTag)})</span>` : ''}
-                  </div>
-                </div>
-                <div class="scenario-toggle-pair">
-                  <button type="button"
-                          class="team-pick-btn mono ${picked === 'AWAY' ? 'selected' : ''} ${g.recommendedWinner === 'AWAY' ? 'recommended' : ''}"
-                          style="display:inline-flex;align-items:center;gap:5px"
-                          data-action="toggle-playoff-winner" data-game-id="${esc(g.gameId)}" data-side="AWAY">
-                    ${renderTeamLogoHtml(g.away, g.awayLogoUrl, 16)}
-                    <span>${esc(g.away)}</span>
-                  </button>
-                  <button type="button"
-                          class="team-pick-btn mono ${picked === 'HOME' ? 'selected' : ''} ${g.recommendedWinner === 'HOME' ? 'recommended' : ''}"
-                          style="display:inline-flex;align-items:center;gap:5px"
-                          data-action="toggle-playoff-winner" data-game-id="${esc(g.gameId)}" data-side="HOME">
-                    ${renderTeamLogoHtml(g.home, g.homeLogoUrl, 16)}
-                    <span>${esc(g.home)}</span>
-                  </button>
-                </div>
-              </div>
-            `;
-          })
-          .join('')}
+      <div style="display:flex;flex-direction:column;gap:8px" data-rooting-guide-weeks>
+        ${rootingWeekCardsHtml}
       </div>
     </section>
 
@@ -1723,7 +1773,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
             <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
             ${phasePillHtml ? ` ${phasePillHtml}` : ''} •
             ${
-              g.gameUrl
+              g.gameUrl && (g.completed || isCurrentGame)
                 ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-primary)"><strong>${locPrefix} ${esc(g.opponent?.name)}</strong></a>`
                 : `<strong>${locPrefix} ${esc(g.opponent?.name)}</strong>`
             }${oppRecordDisplay}
@@ -1738,7 +1788,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
               : `<span class="badge ${isPost ? 'badge-gold' : 'badge-neutral'} mono">${esc(g.statusDetail || 'TBD')}</span>`
           }
           ${
-            g.gameUrl
+            g.gameUrl && (g.completed || isCurrentGame)
               ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${g.completed ? 'Box Score' : 'Gamecast'}</span>${iconSvg('externalLink', 10)}</a>`
               : ''
           }

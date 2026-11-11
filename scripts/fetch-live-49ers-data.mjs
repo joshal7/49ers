@@ -3702,56 +3702,124 @@ async function main() {
 
   // Compute Opponent 2026 Team EPA & Trench Ranks for Dynamic Matchup Matrix
   const sfPassEpaRank = computeTeamRankFor('SF', t => num(t.passing_epa) / Math.max(1, num(t.games)), true);
+  const sfRushEpaRank = computeTeamRankFor('SF', t => num(t.rushing_epa) / Math.max(1, num(t.games)), true);
   const sfSackAllowRank = computeTeamRankFor('SF', t => (num(t.sacks_suffered) / Math.max(1, num(t.attempts) + num(t.sacks_suffered))) * 100, false);
+  const sfDefSacksRank = computeTeamRankFor('SF', t => num(t.def_sacks) / Math.max(1, num(t.games)), true);
   const oppPassEpaRank = computeTeamRankFor(oppAbbrTarget, t => num(t.passing_epa) / Math.max(1, num(t.games)), true);
+  const oppRushEpaRank = computeTeamRankFor(oppAbbrTarget, t => num(t.rushing_epa) / Math.max(1, num(t.games)), true);
   const oppSackAllowRank = computeTeamRankFor(oppAbbrTarget, t => (num(t.sacks_suffered) / Math.max(1, num(t.attempts) + num(t.sacks_suffered))) * 100, false);
   const oppDefSacksRank = computeTeamRankFor(oppAbbrTarget, t => num(t.def_sacks) / Math.max(1, num(t.games)), true);
 
-  const oppQbStarter = oppKeyHealthyStarters.find(p => p.position === 'QB')?.name || `${oppShortName} QB1`;
+  const oppAllCandidates = [...oppHealthyOffCandidates, ...oppHealthyDefCandidates, ...oppInjuryReportPlayers];
+  const oppQbStarter = oppAllCandidates.find(p => p.position === 'QB')?.name || `${oppShortName} QB1`;
   const oppEdgeOrStar =
-    oppKeyHealthyStarters.find(p => ['DE', 'OLB', 'LB', 'DT'].includes(p.position))?.name || `${oppShortName} Front`;
+    oppHealthyDefCandidates.find(p => ['DE', 'OLB', 'LB', 'DT'].includes(p.position))?.name || `${oppShortName} Front`;
   const oppSkillStar =
-    oppKeyHealthyStarters.find(p => ['WR', 'TE', 'RB'].includes(p.position))?.name || `${oppShortName} Skill Corps`;
+    oppAllCandidates.find(p => ['WR', 'TE', 'RB'].includes(p.position) && (p.isStarter || (p.snapPct ?? 0) >= 55))?.name ||
+    oppHealthyOffCandidates.find(p => ['WR', 'TE', 'RB'].includes(p.position))?.name ||
+    `${oppShortName} Playmakers`;
+
+  const OPPONENT_COORDINATOR_MAP = {
+    DAL: { hc: 'Brian Schottenheimer', oc: 'Klayton Adams', dc: 'Matt Eberflus' },
+    SEA: { hc: 'Mike Macdonald', oc: 'Ryan Grubb', dc: 'Aden Durde' },
+    GB: { hc: 'Matt LaFleur', oc: 'Adam Stenavich', dc: 'Jeff Hafley' },
+    BUF: { hc: 'Sean McDermott', oc: 'Joe Brady', dc: 'Bobby Babich' },
+    CHI: { hc: 'Ben Johnson', oc: 'Declan Doyle', dc: 'Dennis Allen' },
+    LAR: { hc: 'Sean McVay', oc: 'Mike LaFleur', dc: 'Chris Shula' },
+    MIA: { hc: 'Mike McDaniel', oc: 'Frank Smith', dc: 'Anthony Weaver' },
+    DET: { hc: 'Dan Campbell', oc: 'John Morton', dc: 'Kelvin Sheppard' },
+    ARI: { hc: 'Jonathan Gannon', oc: 'Drew Petzing', dc: 'Nick Rallis' },
+    LV: { hc: 'Klint Kubiak', oc: 'Klint Kubiak', dc: 'Patrick Graham' }
+  };
+  const oppStaff = OPPONENT_COORDINATOR_MAP[oppAbbrTarget] || {
+    hc: oppCoachName || `${oppShortName} HC`,
+    oc: null,
+    dc: null
+  };
+  const oppStaffTitle = [
+    oppStaff.hc ? `HC ${oppStaff.hc}` : '',
+    oppStaff.oc && oppStaff.oc !== oppStaff.hc ? `OC ${oppStaff.oc}` : '',
+    oppStaff.dc ? `DC ${oppStaff.dc}` : ''
+  ]
+    .filter(Boolean)
+    .join(', ');
 
   const coachingMatchupDynamic =
-    oppAbbrTarget === 'LV' && oppCoachName.includes('Kubiak')
+    oppAbbrTarget === 'DAL'
       ? {
-          headline: 'Kyle Shanahan & DC Raheem Morris vs. Raiders HC Klint Kubiak (Former 2023 49ers Passing Game Specialist)',
-          summary:
-            "Klint Kubiak spent the entire 2023 Super Bowl LVIII run inside Kyle Shanahan's offensive meeting room as San Francisco's Passing Game Specialist. Both offenses marry outside zone to deep boot/over play-action with Kirk Cousins and Brock Bowers—giving DC Raheem Morris, Fred Warner, and Deommodore Lenoir direct blueprint familiarity with Kubiak's route-spacing rules and disguised split-safety rotations.",
+          headline: `Kyle Shanahan & DC Raheem Morris vs. Cowboys ${oppStaffTitle}`,
+          summary: `This Week 10 clash at AT&T Stadium is a high-leverage schematic chess match between two top-7 NFL passing attacks (#${sfPassEpaRank.rank} SF at +${sfPassEpaRank.value.toFixed(2)} EPA/gm vs. #${oppPassEpaRank.rank} DAL at +${oppPassEpaRank.value.toFixed(2)} EPA/gm) that win in completely different ways. Kyle Shanahan will use pre-snap shift/orbit motion, 21-personnel formations, and newly acquired slot technician Keenan Allen to stress DC Matt Eberflus's spot-drop Cover 3 and Tampa-2 zone spacing between the hashes. On the other side of the ball, Raheem Morris's disguised two-high shells and Wide-9 interior stunt packages (featuring DeForest Buckner and former Cowboy Osa Odighizuwa alongside Nick Bosa) are built to collapse Dak Prescott's internal pocket and force checkdowns in front of Fred Warner and Deommodore Lenoir.`,
           bullets: [
-            `Shanahan Post-Bye Track Record: Coming off the Week ${detectedByeWeek} Bye with a +${Math.max(7, restDelta)}-day rest edge, SF historically averages +0.21 EPA/play on opening-15 scripted snaps when QB1 is healthy.`,
-            'Countering Maxx Crosby (DE #98): Crosby plays ~96% of Las Vegas defensive snaps. Expect 21-personnel Kittle/Juszczyk edge chips and quick rhythm throws whenever Crosby aligns over RT Colton McKivitz.',
-            'Raheem Morris Wide-9 & Interior Stunts vs. Raiders Pocket: Pairing DeForest Buckner + Osa Odighizuwa (#92) on interior T-E stunts alongside Nick Bosa prevents Las Vegas from sliding center Tyler Linderbaum toward Bosa.'
+            `Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%). Against Matt Eberflus's zone-heavy structure—which relies on four-man rush integrity (#${oppDefSacksRank.rank} in sacks/gm) and disciplined landmark drops rather than heavy blitzing—watch Brock Purdy attack the 12-to-22 yard intermediate honey-hole between the hook/curl linebackers and deep safeties off play-action.`,
+            `Keenan Allen's Option-Route Integration & 21-Personnel Spacing: With Deebo Samuel Sr. (hamstring, GTD) managing his workload, Tuesday's trade for Keenan Allen gives Shanahan an elite zone-beating separator from the slot. When SF condenses splits or motions Christian McCaffrey out of the backfield, Eberflus must choose between widening his curl/flat defender (opening George Kittle and Allen on choice/dagger concepts over the middle) or staying tight inside (conceding perimeter leverage to McCaffrey and Brandin Cooks).`,
+            `Klayton Adams's Gap-Scheme Run Game vs. SF's Rebuilt Interior Front: Cowboys OC Klayton Adams pairs Brian Schottenheimer's West Coast pass concepts with heavy pin-and-pull, counter, and duo run schemes behind interior maulers Tyler Smith, Cooper Beebe, and Tyler Booker. Watch how DeForest Buckner and Osa Odighizuwa (who practiced against this exact Dallas O-line daily before joining SF) anchor the A- and B-gaps on early downs so Fred Warner can stay clean to trigger downhill.`,
+            `Raheem Morris's Disguised Split-Safety Rotations vs. Dak Prescott: Prescott ranks #${oppPassEpaRank.rank} in Passing EPA/game (+${oppPassEpaRank.value.toFixed(2)}) and feasts when he can diagnose single-high vs. two-high pre-snap to isolate CeeDee Lamb and George Pickens. Expect Morris to hold static two-high shells until the snap before rotating late into Cover 4 Quarters, Cover 6, or cloud-trap looks—forcing Prescott to hold the ball an extra hitch while Nick Bosa works 1-on-1 against LT Tyler Guyton or RT Terence Steele.`,
+            `Red-Zone & Tight-End Attrition Leverage: With Dallas tight ends Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin) banged up and safety P.J. Locke (18% Doubtful, concussion) unlikely to clear protocol, watch Shanahan hunt safety Caleb Downs and linebacker Donovan Ezeiruaku (45% Long Shot, ankle) in heavy 12/21 red-zone personnel while Morris brackets CeeDee Lamb on 3rd-and-medium.`
           ]
         }
       : {
-          headline: `Kyle Shanahan & DC Raheem Morris vs. ${oppNameTarget}${oppCoachName ? ` HC ${oppCoachName}` : ''}`,
-          summary: `San Francisco (${sfStandingsDetail.record}) matches its #${sfPassEpaRank.rank} NFL passing EPA offense (+${sfPassEpaRank.value.toFixed(2)}/gm) and #${sfSackAllowRank.rank} pass protection (${sfSackAllowRank.value.toFixed(1)}% sack rate) against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}), led on the field by ${oppQbStarter}, ${oppSkillStar}, and ${oppEdgeOrStar}.`,
+          headline: `Kyle Shanahan & DC Raheem Morris vs. ${oppNameTarget} ${oppStaffTitle}`,
+          summary: `San Francisco (${sfStandingsDetail.record}) brings its #${sfPassEpaRank.rank} NFL passing EPA offense (+${sfPassEpaRank.value.toFixed(2)}/gm) and #${sfSackAllowRank.rank} pass protection (${sfSackAllowRank.value.toFixed(1)}% sack rate) into a critical tactical chess match against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}) and ${oppStaffTitle}. What to watch on Sunday is how Kyle Shanahan uses pre-snap motion and 21-personnel formation variety to dictate linebacker leverage on early downs, while DC Raheem Morris deploys disguised split-safety rotations and Wide-9 interior T-E stunts to disrupt ${oppQbStarter}'s rhythm and force ${oppNameTarget}'s offense off schedule.`,
           bullets: [
-            `Pass-Game Efficiency Delta: SF enters ranked #${sfPassEpaRank.rank} in Passing EPA/game vs. ${oppAbbrTarget}'s #${oppPassEpaRank.rank} offensive passing EPA mark (${oppPassEpaRank.value >= 0 ? '+' : ''}${oppPassEpaRank.value.toFixed(2)}/gm).`,
-            `Raheem Morris Trench Plan: ${oppAbbrTarget} allows sacks on ${oppSackAllowRank.value.toFixed(1)}% of dropbacks (#${oppSackAllowRank.rank} NFL) entering its matchup with Nick Bosa, DeForest Buckner, and Osa Odighizuwa.`,
-            `Rest & Venue Factor: ${venueDisplayDynamic} • ${restAdvDisplay}.`
+            `Pass-Game Efficiency & Coverage Shell Delta: SF enters ranked #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) vs. ${oppAbbrTarget}'s #${oppPassEpaRank.rank} offensive passing EPA mark (${oppPassEpaRank.value >= 0 ? '+' : ''}${oppPassEpaRank.value.toFixed(2)}/gm). Watch Brock Purdy use condensed splits and play-action boot/over concepts to attack intermediate windows between 10 and 20 air yards.`,
+            `Early-Down Motion & Personnel Dictation: By cycling between 21 personnel (Kyle Juszczyk + Christian McCaffrey) and 11 personnel (with George Kittle and Keenan Allen working the middle), Shanahan forces ${oppStaff.dc ? `DC ${oppStaff.dc}` : `${oppShortName}'s defense`} to declare base vs. nickel personnel and tip coverage rotations before the snap.`,
+            `Raheem Morris Trench & Stunt Blueprint: ${oppAbbrTarget} allows sacks on ${oppSackAllowRank.value.toFixed(1)}% of dropbacks (#${oppSackAllowRank.rank} NFL) entering its matchup with Nick Bosa, DeForest Buckner, and Osa Odighizuwa. Expect Morris to align Buckner and Odighizuwa over the guards on 3rd-and-long to prevent ${oppAbbrTarget} from sliding its center toward Bosa's Wide-9 edge rush.`,
+            `Situational 3rd-Down & Red-Zone Chess Match: Watch Fred Warner and Deommodore Lenoir disguise middle-of-field closure until the snap to take away ${oppQbStarter}'s primary hot read (${oppSkillStar}) on 3rd-and-4-to-7.`,
+            `Venue, Surface & Tempo Factor: ${venueDisplayDynamic} • ${restAdvDisplay}.`
           ]
         };
 
-  const keyMatchupsMatrixDynamic = [
-    {
-      unitMatchup: `49ers Pass Protection (${sfSackAllowRank.value.toFixed(1)}% Sack Rate, #${sfSackAllowRank.rank} NFL) vs. ${oppEdgeOrStar} & ${oppShortName} Rush (#${oppDefSacksRank.rank} Sacks/Gm)`,
-      advantage: sfSackAllowRank.rank <= oppDefSacksRank.rank ? 'SF Edge' : 'Even Trench Battle',
-      tacticalDetail: `Trent Williams + 21-personnel Kittle/Juszczyk chip releases keep Brock Purdy clean on intermediate in-breakers against ${oppNameTarget}'s edge pressure.`
-    },
-    {
-      unitMatchup: `Purdy Play-Action & Middle-of-Field (#${sfPassEpaRank.rank} Pass EPA) vs. ${oppShortName} Coverage`,
-      advantage: 'SF Edge',
-      tacticalDetail: `George Kittle, Christian McCaffrey, Brandin Cooks, and SF's motion spacing stress second-level zone leverage between the numbers.`
-    },
-    {
-      unitMatchup: `Nick Bosa + DeForest Buckner + Osa Odighizuwa vs. ${oppQbStarter} & ${oppShortName} O-Line (#${oppSackAllowRank.rank} Sack Rate Allowed)`,
-      advantage: oppSackAllowRank.rank >= 12 ? 'SF Heavy Edge' : 'SF Slight Edge',
-      tacticalDetail: `Aligning Buckner and Odighizuwa inside forces interior protection slides, isolating Bosa 1-on-1 on the Wide-9 rail.`
-    }
-  ];
+  const keyMatchupsMatrixDynamic =
+    oppAbbrTarget === 'DAL'
+      ? [
+          {
+            unitMatchup: `DeForest Buckner + Osa Odighizuwa & Nick Bosa vs. Dak Prescott & Cowboys Interior O-Line (#${oppSackAllowRank.rank} Sack Rate Allowed, ${oppSackAllowRank.value.toFixed(1)}%)`,
+            advantage: 'SF Trench Edge',
+            tacticalDetail: `Dallas protects Dak Prescott well overall (${oppSackAllowRank.value.toFixed(1)}% sack rate allowed, #${oppSackAllowRank.rank} NFL) behind young interior anchors Cooper Beebe (C #56), Tyler Smith (LG #73), and Tyler Booker (RG #52). The key to watch is Osa Odighizuwa (#92) facing his former teammates alongside DeForest Buckner: when Buckner and Odighizuwa win vertical A/B-gap penetration on T-E stunts, Cooper Beebe cannot slide protection help to LT Tyler Guyton or RT Terence Steele, leaving Nick Bosa isolated 1-on-1 on the Wide-9 rail.`
+          },
+          {
+            unitMatchup: `Brock Purdy, George Kittle & Keenan Allen vs. DC Matt Eberflus's Tampa-2 / Cover 3 Seam & Hook Zones`,
+            advantage: 'SF Heavy Edge',
+            tacticalDetail: `Purdy (#${sfPassEpaRank.rank} Passing EPA/gm at +${sfPassEpaRank.value.toFixed(2)}) thrives on anticipation throws between the numbers. With Dallas safety P.J. Locke (18% Doubtful, concussion) and LB Donovan Ezeiruaku (45% Long Shot, ankle) compromised—and LB DeMarvion Overshown (77% GTD) playing through a knee tag—watch Shanahan pair George Kittle's seam/over routes with Keenan Allen's underneath option routes to high-low Dallas's middle-hook linebacker and force CB DaRon Bland to tackle in space.`
+          },
+          {
+            unitMatchup: `49ers Pass Protection (#${sfSackAllowRank.rank} NFL, ${sfSackAllowRank.value.toFixed(1)}% Sack Rate) vs. Quinnen Williams, Kenny Clark & Rashan Gary (#${oppDefSacksRank.rank} Sacks/Gm)`,
+            advantage: 'SF Edge',
+            tacticalDetail: `Dallas generates sacks on just ${oppDefSacksRank.value.toFixed(2)} plays per game (#${oppDefSacksRank.rank} NFL), relying on interior push from DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge power from Rashan Gary (#7). Watch LT Trent Williams erase Dallas's right-side rush solo while RG Dominick Puni and C Jake Brendel use combo-blocks and 21-personnel Kittle/Juszczyk play-action chips to keep Purdy's internal throwing lanes clean.`
+          },
+          {
+            unitMatchup: `Deommodore Lenoir, Renardo Green & Fred Warner vs. CeeDee Lamb & George Pickens (77% GTD)`,
+            advantage: 'Even High-Stakes Battle',
+            tacticalDetail: `Brian Schottenheimer moves CeeDee Lamb across the formation (Z, slot, and motion stacks) while using George Pickens on boundary verticals and back-shoulder fades. Watch Deommodore Lenoir travel into the slot in nickel packages to disrupt Lamb's release timing at the top of the stem, while Fred Warner carries deep middle crossers to prevent Prescott from hitting explosive chunk plays off play-action.`
+          },
+          {
+            unitMatchup: `Christian McCaffrey Outside Zone & Choice Routes vs. Cowboys Second-Level Run Fits`,
+            advantage: 'SF Edge',
+            tacticalDetail: `San Francisco ranks #${sfRushEpaRank.rank} in Rushing EPA/game and uses McCaffrey as both an outside-zone tempo setter and a 3rd-down mismatch weapon. Watch how jet/orbit motion forces Dallas's safeties (Caleb Downs) to widen pre-snap—creating cutback lanes behind Trent Williams and George Kittle on early downs and isolating McCaffrey on angle/Texas routes against linebackers in pass coverage.`
+          }
+        ]
+      : [
+          {
+            unitMatchup: `49ers Pass Protection (${sfSackAllowRank.value.toFixed(1)}% Sack Rate, #${sfSackAllowRank.rank} NFL) vs. ${oppEdgeOrStar} & ${oppShortName} Rush (#${oppDefSacksRank.rank} Sacks/Gm)`,
+            advantage: sfSackAllowRank.rank <= oppDefSacksRank.rank ? 'SF Edge' : 'Even Trench Battle',
+            tacticalDetail: `Watch LT Trent Williams lock down the blindside solo while Kyle Shanahan uses 21-personnel Kittle/Juszczyk chip releases and moving play-action pockets to neutralize ${oppEdgeOrStar} and give Brock Purdy clean intermediate throwing windows.`
+          },
+          {
+            unitMatchup: `Purdy Play-Action, Kittle & Keenan Allen (#${sfPassEpaRank.rank} Pass EPA) vs. ${oppShortName} Middle-of-Field Coverage`,
+            advantage: 'SF Edge',
+            tacticalDetail: `George Kittle's intermediate over routes paired with Keenan Allen's slot option-route leverage and Christian McCaffrey's check-release spacing put constant horizontal and vertical conflict on ${oppNameTarget}'s linebackers and safeties.`
+          },
+          {
+            unitMatchup: `Nick Bosa + DeForest Buckner + Osa Odighizuwa vs. ${oppQbStarter} & ${oppShortName} O-Line (#${oppSackAllowRank.rank} Sack Rate Allowed)`,
+            advantage: oppSackAllowRank.rank >= 12 ? 'SF Heavy Edge' : 'SF Slight Edge',
+            tacticalDetail: `Aligning DeForest Buckner and Osa Odighizuwa over the interior guards forces ${oppNameTarget}'s center and guards to honor A/B-gap T-E stunts, isolating Nick Bosa 1-on-1 on the Wide-9 edge.`
+          },
+          {
+            unitMatchup: `Fred Warner & Deommodore Lenoir vs. ${oppQbStarter} & ${oppSkillStar} on Situational Downs`,
+            advantage: 'SF Edge',
+            tacticalDetail: `DC Raheem Morris disguises two-high shells until the snap before rotating into Cover 4/6 or Robber looks, allowing Fred Warner to wall off ${oppQbStarter}'s primary middle-of-field progression on 3rd-and-medium.`
+          }
+        ];
 
   const upcomingMatchup = {
     week: currentWeek,

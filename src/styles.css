@@ -29,6 +29,10 @@
 
   --emerald: #10B981;
   --emerald-soft: rgba(16, 185, 129, 0.15);
+  --yellow-gtd: #FACC15;
+  --yellow-gtd-soft: rgba(250, 204, 21, 0.16);
+  --orange: #F97316;
+  --orange-soft: rgba(249, 115, 22, 0.17);
   --amber: #F59E0B;
   --amber-soft: rgba(245, 158, 11, 0.16);
   --crimson: #EF4444;
@@ -648,19 +652,67 @@ a:hover {
 .badge-positive {
   background: var(--emerald-soft);
   color: var(--emerald);
-  border: 1px solid rgba(16, 185, 129, 0.32);
+  border: 1px solid rgba(16, 185, 129, 0.34);
+}
+[data-theme="light"] .badge-positive {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.14);
 }
 
 .badge-warning {
-  background: var(--amber-soft);
-  color: var(--amber);
-  border: 1px solid rgba(245, 158, 11, 0.32);
+  background: var(--yellow-gtd-soft);
+  color: var(--yellow-gtd);
+  border: 1px solid rgba(250, 204, 21, 0.38);
+}
+[data-theme="light"] .badge-warning {
+  color: #A16207;
+  background: rgba(234, 179, 8, 0.18);
+  border-color: rgba(202, 138, 4, 0.42);
+}
+
+.badge-orange {
+  background: var(--orange-soft);
+  color: var(--orange);
+  border: 1px solid rgba(249, 115, 22, 0.38);
+}
+[data-theme="light"] .badge-orange {
+  color: #C2410C;
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(234, 88, 12, 0.40);
 }
 
 .badge-danger {
   background: var(--crimson-soft);
   color: var(--crimson);
-  border: 1px solid rgba(239, 68, 68, 0.32);
+  border: 1px solid rgba(239, 68, 68, 0.34);
+}
+[data-theme="light"] .badge-danger {
+  color: #B91C1C;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+/* Rooting Guide Week Cards */
+.rooting-week-card {
+  padding: 10px 11px;
+}
+
+.rooting-week-header,
+.rooting-week-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rooting-week-summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.rooting-week-summary::-webkit-details-marker {
+  display: none;
 }
 
 .badge-neutral {
@@ -884,6 +936,14 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.health-scorecard-grid .kpi-sub-note {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  font-size: 10px;
+  line-height: 1.25;
 }
 
 /* Search & Sort Controls */

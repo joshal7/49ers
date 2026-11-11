@@ -635,7 +635,7 @@ test('Game-day clause isolation, DST practice-window accuracy, early-week rollov
   const lenoir = rolled.find(r => r.name === 'Deommodore Lenoir');
   assert.ok(schoonmaker && schoonmaker.playProbabilityPct >= 65, `Expected Schoonmaker >=65%, got ${schoonmaker?.playProbabilityPct}%`);
   assert.ok(evans && evans.playProbabilityPct <= 50, `Expected unpracticed multi-week Evans <=50%, got ${evans?.playProbabilityPct}%`);
-  assert.ok(lenoir && lenoir.playProbabilityPct <= 84, `Expected unpracticed injured Lenoir <=84% True GTD, got ${lenoir?.playProbabilityPct}%`);
+  assert.ok(lenoir && lenoir.playProbabilityPct <= 84, `Expected unpracticed injured Lenoir <=84% GTD, got ${lenoir?.playProbabilityPct}%`);
 
   // 5. Corroboration pass preserves safe author profile URLs and never assigns coach/cross-reporter X URLs
   const corroborated = corroborateAndAnnotateWireStream([
@@ -1006,7 +1006,7 @@ await testAsync('Trust-weighted corroborated news & prior-week absence calibrati
 
   assert.ok(
     deeboProb.probabilityPct >= 55 && deeboProb.probabilityPct <= 68,
-    `Expected Deebo cautious True GTD (55–68%, not overcorrected to Probable), got ${deeboProb.probabilityPct}%`
+    `Expected Deebo cautious GTD (55–68%, not overcorrected to Probable), got ${deeboProb.probabilityPct}%`
   );
   assert.ok(
     evansProb.probabilityPct >= 15 && evansProb.probabilityPct <= 28,

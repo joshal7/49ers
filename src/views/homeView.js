@@ -514,8 +514,8 @@ function renderSingleDashboardCard({
           upcoming4.length
             ? `<div style="display:grid;grid-template-columns:repeat(${upcoming4.length},minmax(0,1fr));gap:6px;margin-bottom:7px">
                 ${upcoming4
-                  .map(g => {
-                    const safeGameUrl = sanitizeExternalUrl(g.gameUrl, null);
+                  .map((g, idx) => {
+                    const safeGameUrl = idx === 0 ? sanitizeExternalUrl(g.gameUrl, null) : null;
                     const wkLbl = g.seasonType === 'REG' ? `WK ${g.week}` : g.weekLabel || `WK ${g.week}`;
                     const locPref = g.homeAway === 'home' ? 'vs' : g.homeAway === 'away' ? '@' : 'vs/@';
                     const inner = `

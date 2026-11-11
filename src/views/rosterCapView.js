@@ -412,7 +412,13 @@ function renderDualDepthChart({ appData, depthMode }) {
                     ${c.jersey !== null && c.jersey !== undefined ? `<span class="mono" style="color:var(--text-muted)">#${c.jersey}</span> ` : ''}
                     ${esc(c.name)}
                     <span class="mono" style="font-size:10.5px;color:${
-                      c.playProbabilityPct >= 80 ? 'var(--emerald)' : c.playProbabilityPct >= 40 ? 'var(--amber)' : 'var(--crimson)'
+                      c.playProbabilityPct >= 85
+                        ? 'var(--emerald)'
+                        : c.playProbabilityPct >= 50
+                          ? 'var(--yellow-gtd)'
+                          : c.playProbabilityPct >= 20
+                            ? 'var(--orange)'
+                            : 'var(--crimson)'
                     }">(${c.playProbabilityPct}%)</span>
                   </button>
                 `

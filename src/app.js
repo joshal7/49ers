@@ -96,6 +96,7 @@ const state = {
   seasonSubTab: 'matchup',
   matchupStatsUnit: 'offense',
   schedulePrevExpanded: false,
+  expandedRootingWeeks: new Set(),
   combineSearch: '',
   expandedDraftSpiderIdx: -1,
 
@@ -325,6 +326,17 @@ function preserveFocusAroundRender(renderFn) {
   const selStart = typeof active?.selectionStart === 'number' ? active.selectionStart : null;
   const selEnd = typeof active?.selectionEnd === 'number' ? active.selectionEnd : null;
 
+  const prevDetailsEl = document.querySelector('details[data-schedule-previous-games]');
+  if (prevDetailsEl) {
+    state.schedulePrevExpanded = Boolean(prevDetailsEl.open);
+  }
+  if (document.querySelector('[data-rooting-guide-weeks]')) {
+    const openRooting = Array.from(document.querySelectorAll('details[data-rooting-week][open]'))
+      .map(el => Number(el.getAttribute('data-rooting-week')))
+      .filter(Number.isFinite);
+    state.expandedRootingWeeks = new Set(openRooting);
+  }
+
   renderFn();
 
   if (activeId) {
@@ -500,6 +512,7 @@ function renderMain() {
         expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
         activeVideosSet: state.activeVideosSet,
         schedulePrevExpanded: state.schedulePrevExpanded,
+        expandedRootingWeeks: state.expandedRootingWeeks,
         matchupStatsUnit: state.matchupStatsUnit
       });
     } else if (tab === 'audio') {
