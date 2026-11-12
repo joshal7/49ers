@@ -3,8 +3,10 @@ name: Refresh Live 49ers Data Feeds
 on:
   schedule:
     # Runs every 30 minutes during NFL game, Friday injury-designation, and practice windows (UTC),
-    # plus every 2 hours around the clock for year-round roster, cap, and beat wire coverage.
+    # explicitly triggers right after the 5:00 PM PT daily NFL news peak (00:05 & 01:05 UTC for PDT/PST)
+    # for the 1/day Gemini 3.8 Flash High Top News Brief, plus every 2 hours around the clock.
     - cron: '*/30 16-23,0-4 * * 0,1,2,4,5'
+    - cron: '5 0,1 * * *'
     - cron: '23 */2 * * *'
   workflow_dispatch:
   push:
@@ -46,6 +48,7 @@ jobs:
       - name: Run Live 49ers Data Ingestion & Grounded AI Synthesis Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_NEWS_API_KEY: ${{ secrets.GEMINI_NEWS_API_KEY }}
           GEMINI_SYNTHESIS_MODEL: auto
         run: node scripts/fetch-live-49ers-data.mjs
 
@@ -66,7 +69,8 @@ jobs:
             if (!Array.isArray(roster.players) || roster.players.length < 50) throw new Error("Roster count too low");
             if (!Array.isArray(cap.players) || cap.players.length < 30) throw new Error("Cap players count too low");
             if (!Array.isArray(sched.schedule) || sched.schedule.length < 17) throw new Error("Schedule incomplete");
-            if (!Array.isArray(news.clusteredBriefs) || news.clusteredBriefs.length < 1) throw new Error("Missing clustered briefs");
+            if (!news.dailyTopNewsBrief || !Array.isArray(news.dailyTopNewsBrief.bullets) || news.dailyTopNewsBrief.bullets.length < 2) throw new Error("Missing dailyTopNewsBrief");
+            if (!Array.isArray(news.rawStream) || news.rawStream.length < 5) throw new Error("Missing rawStream");
             if (!Array.isArray(health.practiceReport)) throw new Error("Invalid health.json");
             if (!seasonal.playoffPicture || !Array.isArray(pod.episodes)) throw new Error("Invalid seasonal or podcast JSON");
             console.log("All 10 JSON feeds validated cleanly.");

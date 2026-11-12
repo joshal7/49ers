@@ -854,27 +854,90 @@ async function main() {
 
     console.log('\n=== [3/9] Team News, Source Links, Verified Video Embeds & Deep Dive AI Jump ===');
 
-    await runStep('News & Film view defaults to Wire & Video (left tab), swaps Synthesis Briefs to right, and supports verified YouTube embeds & filters', async () => {
+    await runStep('Unified 2-row 6-filter News & Film view removes Synthesis Briefs, renders 1/day Top News Brief with inline links & expandable sources, partitions Highlights & Videos vs Film & Trench, and folds Cap into Trades & Roster', async () => {
       await cdp.eval(() => document.querySelector('[data-nav-tab="news"]').click());
-      await cdp.assertNoOverflow('News & Film Default Wire & Video View');
+      await cdp.assertNoOverflow('News & Film Unified Default All View');
 
-      // 1. Verify News & Film defaults to Wire & Video ('raw') on the LEFT and Synthesis Briefs ('clustered') on the RIGHT
-      const defaultTabOrder = await cdp.eval(() => {
-        const rawBtn = document.querySelector('[data-action="set-news-mode"][data-mode="raw"]');
-        const clusBtn = document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]');
-        const rRect = rawBtn?.getBoundingClientRect();
-        const cRect = clusBtn?.getBoundingClientRect();
+      // 1. Verify Synthesis Briefs is completely removed and 2-row 6-filter bar has 0px horizontal scroll
+      const navStructure = await cdp.eval(() => {
+        const modeBtns = document.querySelectorAll('[data-action="set-news-mode"]').length;
+        const mainText = document.getElementById('mainView')?.textContent || '';
+        const bars = Array.from(document.querySelectorAll('.news-cluster-bar'));
+        const row1Tabs = Array.from(bars[0]?.querySelectorAll('[data-action="set-news-category"]') || []).map(b => ({
+          key: b.getAttribute('data-category'),
+          label: b.textContent.trim(),
+          active: b.classList.contains('active')
+        }));
+        const row2Tabs = Array.from(bars[1]?.querySelectorAll('[data-action="set-news-category"]') || []).map(b => ({
+          key: b.getAttribute('data-category'),
+          label: b.textContent.trim(),
+          active: b.classList.contains('active')
+        }));
+        const barsOverflow = bars.some(b => b.scrollWidth > b.clientWidth + 2);
         return {
-          rawActiveByDefault: Boolean(rawBtn?.classList.contains('active')),
-          rawLeftOfClustered: Boolean(rRect && cRect && rRect.left < cRect.left)
+          modeBtns,
+          hasSynthesisBriefsCopy: /Synthesis Briefs/i.test(mainText),
+          hasClickbaitCut: /clickbait\s*cut/i.test(mainText),
+          hasNoFluffEngine: /no-fluff\s*synthesis\s*engine/i.test(mainText),
+          barCount: bars.length,
+          row1Tabs,
+          row2Tabs,
+          barsOverflow
         };
       });
-      assert(defaultTabOrder.rawActiveByDefault, 'News & Film must default to Wire & Video (raw) mode');
-      assert(defaultTabOrder.rawLeftOfClustered, 'Wire & Video tab must sit to the LEFT of Synthesis Briefs');
+      assert(navStructure.modeBtns === 0 && !navStructure.hasSynthesisBriefsCopy, 'Synthesis Briefs tab and mode switcher must be completely removed');
+      assert(!navStructure.hasClickbaitCut && !navStructure.hasNoFluffEngine, 'Forbidden editorial internal labels leaked into News UI');
+      assert(navStructure.barCount === 2 && !navStructure.barsOverflow, `Expected 2 zero-overflow News filter rows, got: ${JSON.stringify(navStructure)}`);
+      assert(
+        JSON.stringify(navStructure.row1Tabs.map(t => t.key)) === JSON.stringify(['all', 'tweets', 'articles']) &&
+          navStructure.row1Tabs[0].active,
+        `Unexpected Row 1 News filters: ${JSON.stringify(navStructure.row1Tabs)}`
+      );
+      assert(
+        JSON.stringify(navStructure.row2Tabs.map(t => t.key)) === JSON.stringify(['videos', 'film', 'roster']) &&
+          navStructure.row2Tabs[0].label === 'Highlights & Videos',
+        `Unexpected Row 2 News filters: ${JSON.stringify(navStructure.row2Tabs)}`
+      );
 
-      // 2. Audit default Raw Beat Stream mode (including Tweets, Articles, Videos filters & non-embeddable fallback card)
-      const rawStreamAudit = await cdp.eval(() => {
-        const totalCards = document.querySelectorAll('.brief-card').length;
+      // 2. Verify Daily Top News Brief in All section (upper-right xxh ago, inline links, expandable sources, word count ~2/3 Coaching Matchup)
+      const briefAudit = await cdp.eval(() => {
+        const briefEl = document.querySelector('#mainView [data-daily-news-brief]');
+        const headEl = briefEl?.querySelector('.daily-brief-head');
+        const ageEl = briefEl?.querySelector('[data-daily-brief-age]');
+        const inlineLinks = Array.from(briefEl?.querySelectorAll('a[data-brief-inline-source]') || []);
+        const sourcesDetails = briefEl?.querySelector('details[data-daily-brief-sources]');
+        const startedCollapsed = Boolean(sourcesDetails && sourcesDetails.open === false);
+        sourcesDetails?.querySelector('summary')?.click();
+        const expandedOpen = Boolean(sourcesDetails && sourcesDetails.open === true);
+        const sourceRows = Array.from(sourcesDetails?.querySelectorAll('a[data-brief-source-row]') || []);
+        sourcesDetails?.querySelector('summary')?.click();
+
+        const hRect = headEl?.getBoundingClientRect();
+        const aRect = ageEl?.getBoundingClientRect();
+        return {
+          exists: Boolean(briefEl),
+          ageText: ageEl?.textContent?.trim() || '',
+          ageInUpperRight: Boolean(hRect && aRect && aRect.right >= hRect.right - 20 && aRect.top <= hRect.top + 26),
+          inlineLinkCount: inlineLinks.length,
+          allInlineHttps: inlineLinks.every(a => (a.getAttribute('href') || '').startsWith('https://')),
+          startedCollapsed,
+          expandedOpen,
+          sourceRowCount: sourceRows.length,
+          allSourcesHttps: sourceRows.every(a => (a.getAttribute('href') || '').startsWith('https://'))
+        };
+      });
+      assert(briefAudit.exists && briefAudit.ageText.length >= 2 && briefAudit.ageInUpperRight, `Daily Brief upper-right age timestamp failed: ${JSON.stringify(briefAudit)}`);
+      assert(briefAudit.inlineLinkCount >= 3 && briefAudit.allInlineHttps, `Expected >=3 HTTPS inline source links in Daily Brief, got: ${JSON.stringify(briefAudit)}`);
+      assert(
+        briefAudit.startedCollapsed && briefAudit.expandedOpen && briefAudit.sourceRowCount >= 5 && briefAudit.allSourcesHttps,
+        `Expandable Daily Brief Sources list failed: ${JSON.stringify(briefAudit)}`
+      );
+
+      // 3. Audit all 6 filters, 0% video duplication between Highlights & Videos and Film & Trench, inline video play, and Cap folded into Trades & Roster
+      const categoriesAudit = await cdp.eval(() => {
+        const totalAllCards = document.querySelectorAll('.brief-card').length;
+        const urgentBreakingCards = document.querySelectorAll('.brief-card.breaking-elevated').length;
+        const groupedClusters = document.querySelectorAll('.brief-card [data-confirming-reports]').length;
 
         document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
         const tweetCards = document.querySelectorAll('.brief-card').length;
@@ -884,91 +947,82 @@ async function main() {
 
         document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
         const videoCards = document.querySelectorAll('.brief-card').length;
-        const videoHeadlines = Array.from(document.querySelectorAll('.brief-card')).map(el => el.textContent.trim().slice(0, 60));
         const externalFallbackCards = document.querySelectorAll('a.video-external-card[href*="youtube.com/watch"]').length;
+        const hlVidIds = Array.from(document.querySelectorAll('#mainView a[href*="youtube.com/watch?v="]'))
+          .map(a => (a.getAttribute('href') || '').match(/v=([A-Za-z0-9_-]+)/)?.[1])
+          .filter(Boolean);
 
         document.querySelector('[data-action="set-news-category"][data-category="film"]')?.click();
         const filmCards = document.querySelectorAll('.brief-card').length;
-        const filmHeadlines = Array.from(document.querySelectorAll('.brief-card')).map(el => el.textContent.trim().slice(0, 60));
+        const filmVidIds = Array.from(document.querySelectorAll('#mainView a[href*="youtube.com/watch?v="]'))
+          .map(a => (a.getAttribute('href') || '').match(/v=([A-Za-z0-9_-]+)/)?.[1])
+          .filter(Boolean);
+        const playBtn = document.querySelector('[data-action="play-inline-video"]');
+        let iframeSrc = '';
+        let iframeRefPolicy = '';
+        if (playBtn) {
+          playBtn.click();
+          const iframe = document.querySelector('.video-iframe-wrap iframe');
+          iframeSrc = iframe?.getAttribute('src') || '';
+          iframeRefPolicy = iframe?.getAttribute('referrerpolicy') || '';
+        }
+
+        document.querySelector('[data-action="set-news-category"][data-category="roster"]')?.click();
+        const rosterCards = document.querySelectorAll('.brief-card').length;
+        const rosterText = document.getElementById('mainView')?.textContent || '';
+        const hasRosterBrief = Boolean(document.querySelector('#mainView [data-daily-news-brief]'));
 
         document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
-        const urgentBreakingCards = document.querySelectorAll('.brief-card.breaking-elevated').length;
-        const groupedClusters = document.querySelectorAll('.brief-card [data-confirming-reports]').length;
+
+        const overlapIds = hlVidIds.filter(id => filmVidIds.includes(id));
         return {
-          totalCards,
+          totalAllCards,
+          urgentBreakingCards,
+          groupedClusters,
           tweetCards,
           articleCards,
           videoCards,
+          externalFallbackCards,
           filmCards,
-          filmsDifferFromVideos: JSON.stringify(filmHeadlines) !== JSON.stringify(videoHeadlines),
-          urgentBreakingCards,
-          groupedClusters,
-          externalFallbackCards
+          overlapCount: overlapIds.length,
+          iframeSrc,
+          iframeRefPolicy,
+          rosterCards,
+          hasCapInRoster: /cap|restructure|contract/i.test(rosterText),
+          hasRosterBrief
         };
       });
-      assert(rawStreamAudit.totalCards >= 12, `Expected >=12 raw stream items, got ${rawStreamAudit.totalCards}`);
-      assert(rawStreamAudit.tweetCards >= 5, `Expected >=5 tweets in Raw Tweets filter, got ${rawStreamAudit.tweetCards}`);
-      assert(rawStreamAudit.articleCards >= 4, `Expected >=4 articles in Raw Articles filter, got ${rawStreamAudit.articleCards}`);
-      assert(rawStreamAudit.videoCards >= 3, `Expected >=3 videos in Raw Videos filter, got ${rawStreamAudit.videoCards}`);
-      assert(rawStreamAudit.filmCards >= 3, `Expected >=3 items in Film & Trench filter, got ${rawStreamAudit.filmCards}`);
-      assert(rawStreamAudit.filmsDifferFromVideos, 'Film & Trench filter must be differentiated from Videos filter');
-      assert(rawStreamAudit.urgentBreakingCards <= 3, `Urgent BREAKING scarcity cap violated: got ${rawStreamAudit.urgentBreakingCards} red breaking cards`);
-      assert(rawStreamAudit.groupedClusters >= 2, `Expected >=2 consolidated story clusters in Wire & Video, got ${rawStreamAudit.groupedClusters}`);
-      assert(rawStreamAudit.externalFallbackCards >= 1, 'Expected DRM-blocked channel videos to render external YouTube thumbnail card instead of broken iframe');
-      await cdp.assertNoOverflow('News Raw Beat Stream');
-
-      // 3. Switch to Synthesis Briefs ('clustered') and verify source links, inline YouTube embeds, category filters & Deep Dive AI jump
-      const newsSnapshot = await cdp.eval(() => {
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]').click();
-        const mainText = document.getElementById('mainView').textContent;
-        const headlines = Array.from(document.querySelectorAll('.brief-headline')).map(h => h.textContent.trim());
-        const hasClickbaitCut = /clickbait\s*cut/i.test(mainText);
-        const hasNoFluffEngine = /no-fluff\s*synthesis\s*engine/i.test(mainText);
-        const playClipBtns = document.querySelectorAll('[data-action="play-inline-video"]').length;
-        const sourceCardLinks = document.querySelectorAll('.source-card-link[href^="https://"]').length;
-        return { count: headlines.length, hasClickbaitCut, hasNoFluffEngine, playClipBtns, sourceCardLinks };
-      });
-      assert(newsSnapshot.count >= 3, `Expected >=3 clustered briefs, got ${newsSnapshot.count}`);
-      assert(!newsSnapshot.hasClickbaitCut, 'Found PRD "clickbait cut" text in News view');
-      assert(!newsSnapshot.hasNoFluffEngine, 'Found PRD "No-Fluff Synthesis Engine" text in News view');
-      assert(newsSnapshot.playClipBtns >= 1, 'Expected at least 1 verified inline video clip facade');
-      assert(newsSnapshot.sourceCardLinks >= 4, `Expected >=4 clickable source links on briefs, got ${newsSnapshot.sourceCardLinks}`);
-
-      const iframeCheck = await cdp.eval(() => {
-        const btn = document.querySelector('[data-action="play-inline-video"]');
-        btn.click();
-        const iframe = document.querySelector('.video-iframe-wrap iframe');
-        return {
-          src: iframe?.getAttribute('src') || '',
-          refPolicy: iframe?.getAttribute('referrerpolicy') || ''
-        };
-      });
-      assert(
-        iframeCheck.src.includes('https://www.youtube.com/embed/') && iframeCheck.src.includes('playsinline=1'),
-        `Invalid YouTube iframe src: ${iframeCheck.src}`
-      );
-      assert(iframeCheck.refPolicy === 'strict-origin-when-cross-origin', 'Missing strict-origin-when-cross-origin referrerpolicy on YouTube iframe');
-      await cdp.assertNoOverflow('News View with Expanded Video Embed');
-
-      for (const cat of ['film', 'cap', 'scheme', 'roster', 'all']) {
-        await cdp.eval(c => {
-          document.querySelector(`[data-action="set-news-category"][data-category="${c}"]`)?.click();
-        }, cat);
+      assert(categoriesAudit.totalAllCards >= 12, `Expected >=12 wire cards in All, got ${categoriesAudit.totalAllCards}`);
+      assert(categoriesAudit.tweetCards >= 5, `Expected >=5 tweets, got ${categoriesAudit.tweetCards}`);
+      assert(categoriesAudit.articleCards >= 4, `Expected >=4 articles, got ${categoriesAudit.articleCards}`);
+      assert(categoriesAudit.videoCards >= 3, `Expected >=3 videos in Highlights & Videos, got ${categoriesAudit.videoCards}`);
+      assert(categoriesAudit.filmCards >= 2, `Expected >=2 items in Film & Trench, got ${categoriesAudit.filmCards}`);
+      assert(categoriesAudit.overlapCount === 0, `Expected 0 duplicate videos between Highlights & Videos and Film & Trench, got ${categoriesAudit.overlapCount}`);
+      assert(categoriesAudit.urgentBreakingCards <= 3, `Urgent BREAKING scarcity cap violated: ${categoriesAudit.urgentBreakingCards}`);
+      assert(categoriesAudit.groupedClusters >= 2, `Expected >=2 grouped story clusters, got ${categoriesAudit.groupedClusters}`);
+      assert(categoriesAudit.externalFallbackCards >= 1, 'Expected official YouTube external card fallback');
+      if (categoriesAudit.iframeSrc) {
+        assert(
+          categoriesAudit.iframeSrc.includes('https://www.youtube.com/embed/') &&
+            categoriesAudit.iframeSrc.includes('playsinline=1') &&
+            categoriesAudit.iframeRefPolicy === 'strict-origin-when-cross-origin',
+          `Invalid YouTube inline iframe: ${JSON.stringify(categoriesAudit)}`
+        );
       }
+      assert(categoriesAudit.rosterCards >= 3 && categoriesAudit.hasCapInRoster && !categoriesAudit.hasRosterBrief, `Trades & Roster cap folding check failed: ${JSON.stringify(categoriesAudit)}`);
+      await cdp.assertNoOverflow('News View After Category & Video Checks');
 
-      // Test Deep Dive AI jump button and leave News default mode back on 'raw'
+      // 4. Test Ask AI jump button on Daily Top News Brief
       const jumpedPrompt = await cdp.eval(() => {
         const jumpBtn = document.querySelector('[data-action="analyze-topic-jump"]');
         jumpBtn.click();
-        const res = {
+        return {
           activeTab: document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab'),
           promptValue: document.getElementById('analysisPromptInput')?.value || ''
         };
-        window.__49ersDiagnostics.getState().newsMode = 'raw';
-        return res;
       });
-      assert(jumpedPrompt.activeTab === 'audio', 'Deep Dive AI jump should navigate to audio/AI tab');
-      assert(jumpedPrompt.promptValue.length > 10, 'Deep Dive AI jump should pre-fill analysis prompt');
+      assert(jumpedPrompt.activeTab === 'audio', 'Ask AI jump should navigate to audio/AI tab');
+      assert(jumpedPrompt.promptValue.length > 10, 'Ask AI jump should pre-fill analysis prompt');
     });
 
     console.log('\n=== [4/9] Roster Explorer (Simplified Dropdown + Up/Down Arrow Toggle), Dual Depth Chart & GM Cap Sim ===');
@@ -1858,15 +1912,15 @@ async function main() {
           }
         }
         document.querySelector('[data-nav-tab="news"]').click();
-        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]').click();
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
         if (/Bryce Huff/i.test(document.getElementById('mainView').textContent || '')) {
-          huffHits.push('news_raw');
+          huffHits.push('news_all');
         }
 
         // 2. Check <1m polling config
         const wireCfg = window.__49ersDiagnostics.getLiveWireConfig();
 
-        // 3. Simulate a late-breaking in-game injury return tweet arriving in real time
+        // 3. Simulate a late-breaking uncovered in-game injury return tweet arriving in real time
         const appState = window.__49ersDiagnostics.getState();
         const bosa = appState.appData.roster.players.find(p => p.name === 'Nick Bosa');
         const breakingTweet = {
@@ -1891,7 +1945,7 @@ async function main() {
           fluffScore: 0,
           isClickbait: false
         };
-        // Insert at the END of rawStream & bosa.recentNews to prove priority sorting elevates it to #1!
+        // Insert at the END of rawStream & bosa.recentNews to prove priority sorting elevates uncovered breaking news ABOVE the Daily Brief!
         appState.appData.news.rawStream.push(breakingTweet);
         bosa.recentNews.push({
           type: 'tweet',
@@ -1905,9 +1959,28 @@ async function main() {
         });
         window.__49ersDiagnostics.forceRender();
 
-        const rawTopCardText = document.querySelector('#mainView .brief-card')?.textContent || '';
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]').click();
-        const clusteredBannerText = document.querySelector('#mainView .breaking-wire-card')?.textContent || '';
+        const newsAboveBriefEl = document.querySelector('#mainView [data-breaking-above-brief]');
+        const newsBriefEl = document.querySelector('#mainView [data-daily-news-brief]');
+        const newsAboveBriefRect = newsAboveBriefEl?.getBoundingClientRect();
+        const newsBriefRect = newsBriefEl?.getBoundingClientRect();
+        const newsUncoveredAboveBrief = Boolean(
+          newsAboveBriefEl &&
+            newsBriefEl &&
+            newsAboveBriefRect.top < newsBriefRect.top &&
+            newsAboveBriefEl.textContent.includes('LIVE INJURY UPDATE') &&
+            newsAboveBriefEl.textContent.includes('questionable to return')
+        );
+
+        // Verify Home screen ALSO elevates uncovered breaking news ABOVE the Daily Brief!
+        document.querySelector('[data-nav-tab="home"]').click();
+        const homeAboveBriefEl = document.querySelector('[data-dashboard-block="news_briefs"] [data-breaking-above-brief]');
+        const homeBriefEl = document.querySelector('[data-dashboard-block="news_briefs"] [data-daily-news-brief]');
+        const homeUncoveredAboveBrief = Boolean(
+          homeAboveBriefEl &&
+            homeBriefEl &&
+            homeAboveBriefEl.getBoundingClientRect().top < homeBriefEl.getBoundingClientRect().top &&
+            homeAboveBriefEl.textContent.includes('questionable to return')
+        );
 
         // Check Bosa's Dossier #1 mention
         appState.sheetMode = 'player';
@@ -1920,13 +1993,14 @@ async function main() {
         // Clean up simulated item
         appState.appData.news.rawStream = appState.appData.news.rawStream.filter(x => x.id !== 'qa_live_in_game_inj_1');
         bosa.recentNews = bosa.recentNews.filter(x => x.url !== breakingTweet.url);
+        document.querySelector('[data-nav-tab="news"]').click();
         window.__49ersDiagnostics.forceRender();
 
         return {
           huffHits,
           wireCfg,
-          rawRisesToTop: rawTopCardText.includes('LIVE INJURY UPDATE') && rawTopCardText.includes('questionable to return'),
-          clusteredBannerShows: clusteredBannerText.includes('LIVE INJURY UPDATE') && clusteredBannerText.includes('questionable to return'),
+          rawRisesToTop: newsUncoveredAboveBrief,
+          homeUncoveredAboveBrief,
           bosaMentionRisesToTop: bosaTopMention.includes('LIVE INJURY UPDATE') && bosaTopMention.includes('Matt Maiocco')
         };
       });
@@ -1937,8 +2011,8 @@ async function main() {
           liveWireAndGroundingAudit.wireCfg.standardPollMs < 60_000,
         `Expected <1m tweet polling latency, got: ${JSON.stringify(liveWireAndGroundingAudit.wireCfg)}`
       );
-      assert(liveWireAndGroundingAudit.rawRisesToTop, 'Live in-game injury tweet did not rise to #1 in Raw Wire');
-      assert(liveWireAndGroundingAudit.clusteredBannerShows, 'Live in-game injury tweet did not surface in Breaking Wire banner on Synthesis Briefs');
+      assert(liveWireAndGroundingAudit.rawRisesToTop, 'Uncovered live breaking injury tweet did not rise ABOVE Daily Brief in News -> All');
+      assert(liveWireAndGroundingAudit.homeUncoveredAboveBrief, 'Uncovered live breaking injury tweet did not rise ABOVE Daily Brief on Home screen');
       assert(liveWireAndGroundingAudit.bosaMentionRisesToTop, 'Live in-game injury tweet did not rise to #1 in Nick Bosa Dossier mentions');
     });
 
@@ -2988,7 +3062,7 @@ async function main() {
 
         // 4. Verify Jargon Quick-Bubble Popover opens, stays inside viewport, and closes cleanly
         document.querySelector('[data-nav-tab="news"]').click();
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
         const jargonTermsFound = document.querySelectorAll('#mainView .jargon-term[data-jargon]').length;
         const firstJargon = document.querySelector('#mainView .jargon-term[data-jargon]');
         let jargonPopInfo = { opened: false };
@@ -3657,10 +3731,11 @@ async function main() {
       );
       await cdp.assertNoOverflow('Game-Day Roster Lifecycle & Narrow Health Tables (360px)');
 
-      // 3. Single-Attribution Wire Cards & Site-Wide Clutter Scrub Audit
+      // 3. Single-Attribution Wire Cards, 360px 2-Row Filter Bar Fit & Expandable Daily Brief Sources Audit
       const wireAndClutterAudit = await cdp.eval(() => {
         document.querySelector('[data-nav-tab="news"]').click();
-        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        const bars360 = Array.from(document.querySelectorAll('.news-cluster-bar'));
+        const zeroBarScroll360 = bars360.length === 2 && bars360.every(b => b.scrollWidth <= b.clientWidth + 2);
         document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
 
         const tweetCards = Array.from(document.querySelectorAll('#mainView .brief-card'));
@@ -3691,31 +3766,31 @@ async function main() {
         const hasSettingsDurationSlider = Boolean(document.getElementById('prefPodDurationSlider'));
         document.getElementById('closeSheetBtn').click();
 
-        // Verify "XX reports" clickable link on Home AND News -> Synthesis Briefs opens full clickable report sheet!
+        // Verify expandable "Sources (N)" drawer on BOTH Home AND News -> All opens full clickable report list!
         document.querySelector('[data-nav-tab="home"]').click();
-        const homeReportsBtn = document.querySelector('#mainView [data-action="open-synthesis-sources"]');
-        const homeBtnMatch = (homeReportsBtn?.textContent || '').match(/(\d+)\s+report/i);
+        const homeSourcesDetails = document.querySelector('#mainView details[data-daily-brief-sources]');
+        const homeBtnMatch = (homeSourcesDetails?.querySelector('summary')?.textContent || '').match(/Sources\s*\((\d+)\)/i);
         const homeExpectedCount = homeBtnMatch ? Number(homeBtnMatch[1]) : -1;
-        homeReportsBtn?.click();
-        const homeSheetOpen = !document.getElementById('bottomSheetBackdrop').hidden;
-        const homeSheetLinks = Array.from(document.querySelectorAll('#sheetBody a[data-synthesis-report-link]'));
+        homeSourcesDetails?.querySelector('summary')?.click();
+        const homeSheetOpen = Boolean(homeSourcesDetails?.open);
+        const homeSheetLinks = Array.from(homeSourcesDetails?.querySelectorAll('a[data-brief-source-row]') || []);
         const homeAllHttpsNewTab = homeSheetLinks.every(
           a => (a.getAttribute('href') || '').startsWith('https://') && a.getAttribute('target') === '_blank'
         );
-        document.getElementById('closeSheetBtn').click();
+        homeSourcesDetails?.querySelector('summary')?.click();
 
         document.querySelector('[data-nav-tab="news"]').click();
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
-        const newsReportsBtn = document.querySelector('#mainView [data-action="open-synthesis-sources"]');
-        const newsBtnMatch = (newsReportsBtn?.textContent || '').match(/(\d+)\s+report/i);
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        const newsSourcesDetails = document.querySelector('#mainView details[data-daily-brief-sources]');
+        const newsBtnMatch = (newsSourcesDetails?.querySelector('summary')?.textContent || '').match(/Sources\s*\((\d+)\)/i);
         const newsExpectedCount = newsBtnMatch ? Number(newsBtnMatch[1]) : -1;
-        newsReportsBtn?.click();
-        const newsSheetOpen = !document.getElementById('bottomSheetBackdrop').hidden;
-        const newsSheetLinksCount = document.querySelectorAll('#sheetBody a[data-synthesis-report-link]').length;
-        document.getElementById('closeSheetBtn').click();
-        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        newsSourcesDetails?.querySelector('summary')?.click();
+        const newsSheetOpen = Boolean(newsSourcesDetails?.open);
+        const newsSheetLinksCount = (newsSourcesDetails?.querySelectorAll('a[data-brief-source-row]') || []).length;
+        newsSourcesDetails?.querySelector('summary')?.click();
 
         return {
+          zeroBarScroll360,
           tweetCount: tweetCards.length,
           hasAuthorLinks,
           hasRelativeAges,
@@ -3735,6 +3810,8 @@ async function main() {
           newsSheetLinksCount
         };
       });
+
+      assert(wireAndClutterAudit.zeroBarScroll360, 'News 2-row filter bar overflowed horizontally at 360px mobile width');
 
       assert(
         wireAndClutterAudit.tweetCount >= 5 &&
@@ -3803,18 +3880,19 @@ async function main() {
         await sleep(60);
         auditVisibleAnchors('home');
 
-        // 2. News & Film (Wire & Video + Synthesis Briefs + Synthesis Sources Sheet)
+        // 2. News & Film (all 6 unified categories + expanded Daily Brief Sources)
         document.querySelector('[data-nav-tab="news"]')?.click();
         await sleep(60);
-        auditVisibleAnchors('news:raw');
-        const synthReportTriggers = [...document.querySelectorAll('[data-action="set-news-mode"][data-mode="clustered"]')];
-        synthReportTriggers[0]?.click();
-        await sleep(60);
-        auditVisibleAnchors('news:clustered');
-        document.querySelector('[data-action="open-synthesis-sources"]')?.click();
-        await sleep(60);
-        auditVisibleAnchors('news:sources-sheet');
-        document.getElementById('closeSheetBtn')?.click();
+        for (const ncat of ['all', 'tweets', 'articles', 'videos', 'film', 'roster']) {
+          document.querySelector(`[data-action="set-news-category"][data-category="${ncat}"]`)?.click();
+          await sleep(40);
+          if (ncat === 'all') {
+            document.querySelector('#mainView details[data-daily-brief-sources] summary')?.click();
+            await sleep(25);
+          }
+          auditVisibleAnchors(`news:${ncat}`);
+        }
+        document.querySelector(`[data-action="set-news-category"][data-category="all"]`)?.click();
         await sleep(40);
 
         // 3. Game & Season (all 8 sub-views)
@@ -3904,13 +3982,12 @@ async function main() {
         const homeScoreboardLinks = document.querySelectorAll('[data-dashboard-block="upcoming_matchup"] a.sb-team-col').length;
         const homeSchedGameLinks = document.querySelectorAll('[data-dashboard-block="schedule_overview"] a.kpi-box').length;
 
-        // 2. News: Inline prose player link opens Player Dossier
+        // 2. News: Inline prose player link opens Player Dossier & zero nested anchors across Daily Brief + Wire
         document.querySelector('[data-nav-tab="news"]')?.click();
         await sleep(45);
-        scanCurrentDom('news:raw');
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
         await sleep(45);
-        scanCurrentDom('news:clustered');
+        scanCurrentDom('news:all');
         const inlinePlayerEl = document.querySelector('#mainView .inline-player-link[data-action="open-player-sheet"]');
         let inlinePlayerOpened = false;
         if (inlinePlayerEl) {
@@ -4047,20 +4124,18 @@ async function main() {
       const qaSweepCheck = await cdp.eval(async () => {
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        // 1. News mode switch resets incompatible category filters so user never lands on an empty filter state
+        // 1. News category validation resets any legacy/unknown category to 'all' cleanly
         document.querySelector('[data-nav-tab="news"]')?.click();
         await sleep(50);
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
-        await sleep(50);
-        document.querySelector('[data-action="set-news-category"][data-category="cap"]')?.click();
-        await sleep(50);
-        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        document.querySelector('[data-action="set-news-category"][data-category="roster"]')?.click();
+        await sleep(40);
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
         await sleep(50);
         const rawActivePillCat = document
           .querySelector('[data-action="set-news-category"].active')
           ?.getAttribute('data-category');
         const rawModeTabAria = document
-          .querySelector('[data-action="set-news-mode"][data-mode="raw"]')
+          .querySelector('[data-action="set-news-category"][data-category="all"]')
           ?.getAttribute('aria-selected');
         const rawVisibleItems = document.querySelectorAll('[data-raw-type]').length;
 
@@ -4176,18 +4251,19 @@ async function main() {
         const homeText = document.getElementById('mainView')?.textContent || '';
         const homeStaleHit = staleRe.test(homeText);
 
-        // 2. News Wire & Video + Synthesis Briefs check
+        // 2. News All (Daily Brief + Wire) + Highlights & Videos check
         document.querySelector('[data-nav-tab="news"]')?.click();
         await sleep(50);
-        document.querySelector('[data-action="set-news-mode"][data-mode="raw"]')?.click();
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
         await sleep(50);
         const rawText = document.getElementById('mainView')?.textContent || '';
         const rawStaleHit = staleRe.test(rawText);
 
-        document.querySelector('[data-action="set-news-mode"][data-mode="clustered"]')?.click();
+        document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
         await sleep(50);
-        const clusteredText = document.getElementById('mainView')?.textContent || '';
-        const clusteredStaleHit = staleRe.test(clusteredText);
+        const videosText = document.getElementById('mainView')?.textContent || '';
+        const clusteredStaleHit = staleRe.test(videosText) || /SF Falls Flat in ATL/i.test(videosText);
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
 
         // 3. Schedule Previous Games collapsible box check
         document.querySelector('[data-nav-tab="season"]')?.click();

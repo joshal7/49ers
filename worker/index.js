@@ -667,6 +667,67 @@ export default {
       return jsonResponse({ cached: false, ...payloadOut }, 200, cors);
     }
 
+    if (request.method === 'POST' && url.pathname === '/api/daily-news-brief') {
+      const body = await parseJsonBodySafe(request);
+      if (!body || !body.prompt) {
+        return jsonResponse({ error: 'Invalid daily news brief request' }, 400, cors);
+      }
+      const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
+      const cacheKey = `daily_news_brief:${cycleKey}`;
+
+      const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
+      if (existing && !body.forceRefresh) {
+        return jsonResponse({ cached: true, ...existing }, 200, cors);
+      }
+
+      const newsKey = env.GEMINI_NEWS_API_KEY || env.GEMINI_API_KEY;
+      if (!newsKey) {
+        return jsonResponse({ error: 'GEMINI_API_KEY secret is not configured on this Worker.' }, 503, cors);
+      }
+
+      const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+      const clientSystem = String(body.systemPrompt || '').slice(0, 8000);
+      const effectiveSystem = clientSystem
+        ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystem}`
+        : EDITORIAL_SYSTEM_PROMPT;
+
+      const scopedEnv = {
+        ...env,
+        GEMINI_API_KEY: newsKey,
+        GEMINI_DEFAULT_FREE_MODEL: 'gemini-3.8-flash'
+      };
+      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(scopedEnv, {
+        systemInstruction: { parts: [{ text: effectiveSystem }] },
+        tools: [{ google_search: {} }],
+        generationConfig: {
+          temperature: 0.16,
+          thinkingConfig: { thinkingBudget }
+        },
+        contents: [{ role: 'user', parts: [{ text: String(body.prompt).slice(0, 24000) }] }]
+      });
+
+      if (!geminiRes || !geminiRes.ok) {
+        const errText = geminiRes ? await geminiRes.text() : 'No response';
+        return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 240)}` }, 502, cors);
+      }
+
+      const rawJson = await geminiRes.json();
+      const rawText = scrubStaleWeightHallucinations(extractNonThoughtText(rawJson), String(body.prompt));
+      const payloadOut = {
+        cycleKey,
+        modelUsed: modelUsed || 'gemini-3.8-flash',
+        generatedAt: new Date().toISOString(),
+        rawText
+      };
+
+      if (env.SHARED_CACHE && rawText) {
+        await env.SHARED_CACHE.put(cacheKey, JSON.stringify(payloadOut), {
+          expirationTtl: 60 * 60 * 26
+        });
+      }
+      return jsonResponse({ cached: false, ...payloadOut }, 200, cors);
+    }
+
     if (request.method === 'POST' && url.pathname === '/api/analyze') {
       const body = await parseJsonBodySafe(request);
       if (!body) {

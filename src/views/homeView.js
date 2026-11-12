@@ -34,7 +34,8 @@ import {
   isRedundantProfileSelfLink,
   formatTweetBodyForDisplay,
   filterOutCompletedGameAvailabilityItems,
-  filterAndCleanSynthesisClusters
+  filterFreshVideosForCurrentSlate,
+  partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
 import { computeNewsSalienceScore } from '../engine/antiFluffFilter.js';
 import {
@@ -54,7 +55,8 @@ import {
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
-import { resolveClusterSafeReports } from './newsView.js';
+import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js';
+import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -143,19 +145,36 @@ function renderSingleDashboardCard({
   let deepDiveAttr = '';
   let externalHeaderLink = '';
 
-  const prioritizedHomeStream = sortNewsWithBreakingPriority(
-    filterOutCompletedGameAvailabilityItems(
-      filteredRawItems || appData?.news?.rawStream || [],
-      appData
-    ),
-    Date.now(),
-    { appData }
-  );
-  const rawList = deduplicateAndGroupWireItems(prioritizedHomeStream);
-
   switch (block.id) {
     case 'news_briefs': {
-      const top2 = filterAndCleanSynthesisClusters(filteredClusters || [], appData).slice(0, 2);
+      const nowHomeMs = Date.now();
+      const prioritizedHomeStream = sortNewsWithBreakingPriority(
+        filterFreshVideosForCurrentSlate(
+          filterOutCompletedGameAvailabilityItems(
+            filteredRawItems || appData?.news?.rawStream || [],
+            appData,
+            nowHomeMs
+          ),
+          appData,
+          nowHomeMs
+        ),
+        nowHomeMs,
+        { appData }
+      );
+      const rawList = balanceFeedTopSalience(
+        deduplicateAndGroupWireItems(prioritizedHomeStream, { nowMs: nowHomeMs }),
+        { nowMs: nowHomeMs, appData }
+      );
+      const dailyBrief =
+        appData?.news?.dailyTopNewsBrief || buildDeterministicDailyTopNewsBrief(appData, nowHomeMs);
+      const { breakingAboveBrief } = partitionBreakingNewsAboveBrief(
+        rawList,
+        dailyBrief,
+        nowHomeMs
+      );
+      const promotedIds = new Set(breakingAboveBrief.map(it => it?.id).filter(Boolean));
+      const promotedUrls = new Set(breakingAboveBrief.map(it => it?.url).filter(Boolean));
+
       const rankHomeSalience = (a, b) => {
         const srDiff = Number(b.storyRank || 0) - Number(a.storyRank || 0);
         if (Math.abs(srDiff) >= 0.5) return srDiff;
@@ -166,11 +185,15 @@ function renderSingleDashboardCard({
       const topTweets = balanceFeedTopSalience(
         deduplicateAndGroupWireItems(
           prioritizedHomeStream.filter(
-            it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null)
+            it =>
+              (it.type === 'tweet' || it.type === 'social') &&
+              sanitizeExternalUrl(it.url, null) &&
+              !promotedIds.has(it.id) &&
+              !promotedUrls.has(it.url)
           ),
-          { preserveFormat: 'tweets' }
+          { nowMs: nowHomeMs, preserveFormat: 'tweets' }
         ).sort(rankHomeSalience),
-        { appData, maxConsecutiveInjuries: 2 }
+        { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
       const topArticles = balanceFeedTopSalience(
         deduplicateAndGroupWireItems(
@@ -178,79 +201,34 @@ function renderSingleDashboardCard({
             it =>
               (it.type === 'article' || it.type === 'post') &&
               sanitizeExternalUrl(it.url, null) &&
-              !isPaywalledPublisher(it.outletName, it.url)
+              !isPaywalledPublisher(it.outletName, it.url) &&
+              !promotedIds.has(it.id) &&
+              !promotedUrls.has(it.url)
           ),
-          { preserveFormat: 'articles' }
+          { nowMs: nowHomeMs, preserveFormat: 'articles' }
         ).sort(rankHomeSalience),
-        { appData, maxConsecutiveInjuries: 2 }
+        { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
+
+      const breakingTopHomeHtml =
+        breakingAboveBrief.length > 0
+          ? `<div style="display:flex;flex-direction:column;gap:8px" data-breaking-above-brief>
+              ${breakingAboveBrief
+                .map(item => renderWireItemCardHtml(item, { prioritizedRaw: prioritizedHomeStream }))
+                .join('')}
+            </div>`
+          : '';
+
+      const homeDailyBriefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
+        rawStream: prioritizedHomeStream,
+        appData,
+        asSubcard: true
+      });
 
       bodyHtml = `
         <div style="display:flex;flex-direction:column;gap:10px">
-          <div>
-            <div class="home-wire-heading">
-              <span>Synthesis Briefs</span>
-              <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${top2[0]?.publishedAt ? esc(relTime(top2[0].publishedAt)) : ''}</span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              ${top2
-                .map(c => {
-                  const hasHeroImg = c.heroImageUrl && /^https:\/\//i.test(c.heroImageUrl);
-                  const safeReports = resolveClusterSafeReports(c, rawList, appData);
-                  const reportCount = safeReports.length || Number(c.synthesizedFromCount) || 0;
-                  return `
-                <div class="subcard-panel">
-                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:5px">
-                    <span class="badge badge-gold">${esc(c.categoryLabel)}</span>
-                    <span class="mono" style="font-size:11px;color:var(--text-muted)">
-                      <button type="button" class="synthesis-reports-link mono" data-action="open-synthesis-sources" data-cluster-id="${esc(c.id)}">${reportCount} report${reportCount === 1 ? '' : 's'}</button> • ${esc(relTime(c.publishedAt))}
-                    </span>
-                  </div>
-                  <div class="${hasHeroImg ? 'media-split-row' : ''}">
-                    <div style="min-width:0">
-                      <div style="font-weight:700;font-size:13.5px;line-height:1.35">
-                        <span class="inline-player-link" role="button" tabindex="0" style="border-bottom-style:none" data-action="open-news-cluster" data-cluster-id="${esc(c.id)}">${esc(c.headline)}</span>
-                      </div>
-                      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(c.hardFacts?.[0] || '')}</div>
-                    </div>
-                    ${
-                      hasHeroImg
-                        ? `<div class="raw-item-thumb compact">
-                            <img src="${esc(c.heroImageUrl)}" alt="${esc(c.heroImageAlt || c.headline)}" width="64" height="64" loading="lazy" decoding="async" />
-                          </div>`
-                        : ''
-                    }
-                  </div>
-                  ${
-                    c.featuredPlayers?.length || safeReports.length
-                      ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px">
-                          ${c.featuredPlayers?.length ? renderAvatarStackHtml(c.featuredPlayers, 25, 5) : '<span></span>'}
-                          ${
-                            safeReports.length
-                              ? `<div class="source-link-strip">
-                                  ${safeReports
-                                    .slice(0, 2)
-                                    .map(
-                                      sl => `
-                                    <a href="${esc(sl.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                                      <span>${esc(sl.outlet || 'Source')}</span>
-                                      ${iconSvg('external', 11)}
-                                    </a>
-                                  `
-                                    )
-                                    .join('')}
-                                </div>`
-                              : ''
-                          }
-                        </div>`
-                      : ''
-                  }
-                </div>
-              `;
-                })
-                .join('')}
-            </div>
-          </div>
+          ${breakingTopHomeHtml}
+          ${homeDailyBriefHtml}
 
           ${
             topTweets.length

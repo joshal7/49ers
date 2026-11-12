@@ -135,6 +135,148 @@ export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbedd
   }
 }
 
+/**
+ * Polls official YouTube channel Atom feeds (`https://www.youtube.com/feeds/videos.xml?channel_id=...`)
+ * for exact ISO-8601 `<published>` timestamps across San Francisco 49ers (`@49ers`), NFL (`@NFL`),
+ * JT O'Sullivan's `The QB School` (`@TheQBSchool`), `Jonnydel's Football Academy`, and `Chase Daniel`.
+ */
+export async function fetchCuratedYouTubeChannelVideos({
+  qbNames = ['Brock Purdy'],
+  maxAgeDays = 11,
+  nowMs = Date.now()
+} = {}) {
+  const escapedQbTokens = (Array.isArray(qbNames) ? qbNames : ['Brock Purdy'])
+    .flatMap(nm => {
+      const clean = String(nm || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+      const parts = clean.split(/\s+/);
+      const last = parts[parts.length - 1] || '';
+      return [clean, last.length >= 5 && !/^(jones|smith|brown|allen|young|white)$/i.test(last) ? last : ''];
+    })
+    .filter(Boolean)
+    .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  const sfQbFilterRe = new RegExp(
+    `\\b(${['49ers', 'niners', 'san francisco', 'shanahan', ...escapedQbTokens].join('|')})\\b`,
+    'i'
+  );
+  const sfTeamFilterRe =
+    /\b(49ers|niners|san francisco|purdy|bosa|mccaffrey|kittle|warner|buckner|shanahan|allen|deebo|lenoir)\b/i;
+
+  const channels = [
+    {
+      channelId: 'UCeIOarQkwmGhimim9cDUTng',
+      channelName: 'San Francisco 49ers',
+      filterRe: null,
+      limit: 15
+    },
+    {
+      channelId: 'UCDVYQ4Zhbm3S2dlz7P1GBDg',
+      channelName: 'NFL',
+      filterRe: sfTeamFilterRe,
+      limit: 15
+    },
+    {
+      channelId: 'UCGfxHp2yuimtLsFaq1r7aIQ',
+      channelName: 'The QB School',
+      filterRe: sfQbFilterRe,
+      limit: 12
+    },
+    {
+      channelId: 'UCt1LfHRE5eGiacPVtiaC10w',
+      channelName: "Jonnydel's Football Academy",
+      filterRe: sfTeamFilterRe,
+      limit: 8
+    },
+    {
+      channelId: 'UCSnTko7TBHGlGlA7yvzQVpA',
+      channelName: 'Chase Daniel',
+      filterRe: sfTeamFilterRe,
+      limit: 8
+    }
+  ];
+
+  const cutoffMs = nowMs - maxAgeDays * 86_400_000;
+  const rawMatches = [];
+
+  await Promise.all(
+    channels.map(async ch => {
+      try {
+        const res = await fetch(
+          `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(ch.channelId)}`,
+          {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' },
+            signal: AbortSignal.timeout(6500)
+          }
+        );
+        if (!res.ok) return;
+        const xml = await res.text();
+        const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)].slice(0, ch.limit);
+        for (const m of entries) {
+          const block = m[1];
+          const videoId = block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i)?.[1]?.trim() || '';
+          const rawTitle = block
+            .match(/<title>([\s\S]*?)<\/title>/i)?.[1]
+            ?.replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;|&apos;/g, "'")
+            .trim();
+          const pubIso = block.match(/<published>([^<]+)<\/published>/i)?.[1]?.trim() || '';
+          const pubMs = pubIso ? Date.parse(pubIso) : NaN;
+          if (!videoId || !rawTitle || rawTitle.length < 16) continue;
+          if (/^49ers:\s*$/i.test(rawTitle) || /#shorts\b/i.test(rawTitle) || /youtube\.com\/shorts\//i.test(block)) {
+            continue;
+          }
+          if (!Number.isFinite(pubMs) || pubMs < cutoffMs) continue;
+          if (ch.filterRe && !ch.filterRe.test(rawTitle)) continue;
+
+          const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
+          const publishedAgo =
+            ageHours < 1
+              ? `${Math.max(1, Math.round(ageHours * 60))}m ago`
+              : ageHours < 24
+                ? `${Math.round(ageHours)}h ago`
+                : `${Math.round(ageHours / 24)}d ago`;
+
+          rawMatches.push({
+            videoId,
+            url: `https://www.youtube.com/watch?v=${videoId}`,
+            title: rawTitle,
+            channel: ch.channelName,
+            publishedAtIso: new Date(pubMs).toISOString(),
+            publishedAgo,
+            duration: '',
+            thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+          });
+        }
+      } catch {
+        // Ignore single channel RSS timeout
+      }
+    })
+  );
+
+  const seenIds = new Set();
+  const deduped = rawMatches.filter(v => {
+    if (seenIds.has(v.videoId)) return false;
+    seenIds.add(v.videoId);
+    return true;
+  });
+
+  const checked = await Promise.all(
+    deduped.map(async c => {
+      const check = await verifyYouTubeEmbeddable(c.videoId);
+      return {
+        ...c,
+        title: c.title || check.title,
+        channel: c.channel || check.authorName || 'YouTube',
+        exists: check.exists,
+        embeddable: check.embeddable
+      };
+    })
+  );
+
+  return checked.filter(c => c.exists);
+}
+
 const INSIDER_MIRROR_PREFIXES = [
   { re: /^(?:adam\s+)?schefter\s*:\s*/i, reporterId: 'adam_schefter', reporterName: 'Adam Schefter', authorHandle: '@AdamSchefter', outletId: 'espn', outletName: 'ESPN NFL Insider' },
   { re: /^(?:ian\s+)?rapoport\s*:\s*/i, reporterId: 'ian_rapoport', reporterName: 'Ian Rapoport', authorHandle: '@RapSheet', outletId: 'nfl_network', outletName: 'NFL Network' },
@@ -1471,7 +1613,7 @@ export function buildFrontOfficeCapBlueprint(capYears = {}, capPlayers = [], sea
     .sort((a, b) => (b.contractsByYear[yrKey].capNumber || 0) - (a.contractsByYear[yrKey].capNumber || 0));
 
   const restructureCandidates = topSeason
-    .filter(p => (p.contractsByYear[yrKey]?.transactions?.restructure?.capSavings || 0) >= 2_500_000)
+    .filter(p => (p.contractsByYear[yrKey]?.transactions?.restructure?.capSavings || 0) >= 1_000_000)
     .slice(0, 6)
     .map(p => ({
       id: p.id || p.otcId,

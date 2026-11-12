@@ -94,13 +94,23 @@ export function renderInjuryNewsItemCardHtml(
     : '';
 
   const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
+  const normCmpUrl = u => String(u || '').replace(/\/+$/, '').toLowerCase();
   const showMentionExt =
     Boolean(safeMentionExt) &&
+    normCmpUrl(safeMentionExt) !== normCmpUrl(resolvedMentionUrl) &&
     !isRedundantProfileSelfLink(safeMentionExt, resolvedMentionUrl) &&
     !isRedundantProfileSelfLink(safeMentionExt, n.url) &&
     !/\bon X$/i.test(String(n.externalTitle || ''));
 
-  const confirmingList = Array.isArray(n.confirmingReports) ? n.confirmingReports : [];
+  const confirmingList = (Array.isArray(n.confirmingReports) ? n.confirmingReports : []).filter(cr => {
+    const crIsTw = cr?.type === 'tweet' || cr?.type === 'social';
+    const crHref = crIsTw
+      ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '')
+      : sanitizeExternalUrl(cr?.url, '');
+    if (showMentionExt && crHref && normCmpUrl(crHref) === normCmpUrl(safeMentionExt)) return false;
+    if (resolvedMentionUrl && crHref && normCmpUrl(crHref) === normCmpUrl(resolvedMentionUrl)) return false;
+    return true;
+  });
   const headlineText = n.headline || n.title || '';
 
   const nonTweetBadgeLabel =

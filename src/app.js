@@ -10,7 +10,7 @@ import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
-} from './engine/breakingClassifier.js?v=43';
+} from './engine/breakingClassifier.js?v=47';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
 import {
   loadAll49ersData,
@@ -21,7 +21,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=44';
+} from './services/dataService.js?v=47';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -34,8 +34,10 @@ import {
   verifyGeminiApiKey,
   checkAndAutoUpdateBestGeminiModel,
   hydrateCachedDailyMatchupIntel,
-  refreshDailyMatchupIntelIfDue
-} from './services/aiWorkerClient.js?v=42';
+  refreshDailyMatchupIntelIfDue,
+  hydrateCachedDailyTopNewsBrief,
+  refreshDailyTopNewsBriefIfDue
+} from './services/aiWorkerClient.js?v=47';
 import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
 import {
   buildShareablePodcastUrl,
@@ -56,17 +58,16 @@ import {
 import { getJargonEntry } from './engine/jargonGlossary.js?v=42';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=42';
 import { iconSvg } from './views/icons.js?v=42';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=43';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=47';
 import {
   renderNewsViewHtml,
-  resolveClusterSafeReports,
-  renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=43';
+  VALID_NEWS_CATEGORIES
+} from './views/newsView.js?v=47';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=42';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=44';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=42';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=47';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=47';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=42';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=42';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=47';
 
 const state = {
   appData: null,
@@ -78,7 +79,6 @@ const state = {
   draggedBlockId: null,
 
   // News state
-  newsMode: 'raw',
   newsCategoryFilter: 'all',
   activeVideosSet: new Set(),
   lastWireSyncAt: null,
@@ -433,11 +433,6 @@ function renderMain() {
 
   preserveFocusAroundRender(() => {
     if (tab === 'home') {
-      const filteredClusters = filterNewsByUserPrefs(
-        state.appData.news?.clusteredBriefs || [],
-        reportersMap,
-        state.prefs
-      );
       const filteredRawItems = filterNewsByUserPrefs(
         state.appData.news?.rawStream || [],
         reportersMap,
@@ -459,16 +454,10 @@ function renderMain() {
         appData: state.appData,
         simCapResult: homeSimCapResult,
         mcSimResult,
-        filteredClusters,
         filteredRawItems,
         isCustomizingLayout: state.isCustomizingLayout
       });
     } else if (tab === 'news') {
-      const filteredClusters = filterNewsByUserPrefs(
-        state.appData.news?.clusteredBriefs || [],
-        reportersMap,
-        state.prefs
-      );
       const filteredRawItems = filterNewsByUserPrefs(
         state.appData.news?.rawStream || [],
         reportersMap,
@@ -476,9 +465,7 @@ function renderMain() {
       );
       mainEl.innerHTML = renderNewsViewHtml({
         appData: state.appData,
-        newsMode: state.newsMode,
         newsCategoryFilter: state.newsCategoryFilter,
-        filteredClusters,
         filteredRawItems,
         reportersById: reportersMap,
         activeVideosSet: state.activeVideosSet,
@@ -700,15 +687,6 @@ function renderSheet() {
         archivedEpisodes: getArchivedEpisodes(),
         archivedAnalyses: getArchivedAnalyses()
       });
-    } else if (state.sheetMode === 'synthesis_sources') {
-      const cluster = (state.appData?.news?.clusteredBriefs || []).find(
-        c => String(c.id) === String(state.sheetSynthesisClusterId)
-      );
-      const rawStream = state.appData?.news?.rawStream || [];
-      const reports = resolveClusterSafeReports(cluster, rawStream, state.appData);
-      if (eyebrow) eyebrow.textContent = cluster?.categoryLabel || 'Synthesis Brief';
-      if (title) title.textContent = `Reports Used (${reports.length})`;
-      body.innerHTML = renderSynthesisSourcesSheetHtml(cluster, rawStream, state.appData);
     }
   });
 }
@@ -812,8 +790,8 @@ function reorderBlockBeforeTarget(draggedId, targetId) {
 }
 
 function triggerDailyMatchupIntelSync() {
-  if (!state.appData) return;
-  refreshDailyMatchupIntelIfDue({
+  if (!state.appData) return Promise.resolve(null);
+  return refreshDailyMatchupIntelIfDue({
     appData: state.appData,
     prefs: state.prefs
   })
@@ -825,8 +803,24 @@ function triggerDailyMatchupIntelSync() {
       ) {
         renderMain();
       }
+      return res;
     })
-    .catch(() => {});
+    .catch(() => null);
+}
+
+function triggerDailyTopNewsBriefSync() {
+  if (!state.appData) return Promise.resolve(null);
+  return refreshDailyTopNewsBriefIfDue({
+    appData: state.appData,
+    prefs: state.prefs
+  })
+    .then(res => {
+      if (res?.updated && (state.activeNavTab === 'home' || state.activeNavTab === 'news')) {
+        renderMain();
+      }
+      return res;
+    })
+    .catch(() => null);
 }
 
 function bindEvents() {
@@ -848,6 +842,9 @@ function bindEvents() {
       }
       if (state.activeNavTab === 'season' && state.seasonSubTab === 'matchup') {
         triggerDailyMatchupIntelSync();
+      }
+      if (state.activeNavTab === 'news' || state.activeNavTab === 'home') {
+        triggerDailyTopNewsBriefSync();
       }
       renderMain();
     });
@@ -1019,22 +1016,11 @@ function bindEvents() {
       case 'jump-view':
         state.activeNavTab = btn.getAttribute('data-target-tab') || 'home';
         window.scrollTo({ top: 0, behavior: 'instant' });
-        renderMain();
-        break;
-
-      case 'open-news-cluster': {
-        state.activeNavTab = 'news';
-        state.newsMode = 'clustered';
-        state.newsCategoryFilter = 'all';
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        renderMain();
-        const cid = btn.getAttribute('data-cluster-id');
-        if (cid) {
-          const targetEl = document.querySelector(`[data-cluster-card="${CSS.escape(cid)}"]`);
-          targetEl?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+        if (state.activeNavTab === 'news' || state.activeNavTab === 'home') {
+          triggerDailyTopNewsBriefSync();
         }
+        renderMain();
         break;
-      }
 
       case 'jump-studio-sub':
         state.activeNavTab = 'audio';
@@ -1115,36 +1101,17 @@ function bindEvents() {
         renderSheet();
         break;
 
-      case 'open-synthesis-sources':
-        state.sheetSynthesisClusterId = btn.getAttribute('data-cluster-id') || null;
-        state.sheetMode = 'synthesis_sources';
-        renderSheet();
-        break;
-
       case 'close-sheet':
         state.sheetMode = null;
         renderSheet();
         break;
 
-      case 'set-news-mode': {
-        const nextMode = btn.getAttribute('data-mode') || 'raw';
-        state.newsMode = nextMode;
-        if (nextMode === 'raw' && (state.newsCategoryFilter === 'cap' || state.newsCategoryFilter === 'scheme')) {
-          state.newsCategoryFilter = 'all';
-        } else if (
-          nextMode === 'clustered' &&
-          (state.newsCategoryFilter === 'tweets' || state.newsCategoryFilter === 'articles' || state.newsCategoryFilter === 'videos')
-        ) {
-          state.newsCategoryFilter = 'all';
-        }
+      case 'set-news-category': {
+        const reqCat = btn.getAttribute('data-category') || 'all';
+        state.newsCategoryFilter = VALID_NEWS_CATEGORIES.has(reqCat) ? reqCat : 'all';
         renderMain();
         break;
       }
-
-      case 'set-news-category':
-        state.newsCategoryFilter = btn.getAttribute('data-category') || 'all';
-        renderMain();
-        break;
 
       case 'play-inline-video': {
         const key = btn.getAttribute('data-vid-key');
@@ -1529,6 +1496,7 @@ function bindEvents() {
           state.geminiKeyNotice = '';
           state.showGeminiKeyGuide = false;
           if (state.jobStatus?.error) state.jobStatus = null;
+          triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
           renderMain();
         } catch (err) {
           state.geminiKeyNotice = err.message || 'Unable to verify Gemini API Key.';
@@ -1936,9 +1904,7 @@ function bindEvents() {
         if (state.jobStatus?.error) state.jobStatus = null;
         const shared = await fetchSharedWorkerFeed(state.prefs);
         if (shared) state.workerSharedFeed = shared;
-        if (state.activeNavTab === 'home' || state.activeNavTab === 'season') {
-          triggerDailyMatchupIntelSync();
-        }
+        triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
         renderMain();
         btn.innerHTML = `${iconSvg('check', 14)}<span>Saved!</span>`;
         setTimeout(() => {
@@ -2162,6 +2128,8 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 
     if (fresherBundle) {
       state.appData = fresherBundle;
+      hydrateCachedDailyMatchupIntel(state.appData);
+      hydrateCachedDailyTopNewsBrief(state.appData);
       cachedMonteCarloKey = '';
       cachedMonteCarloResult = null;
       hasNewUpstreamData = true;
@@ -2368,6 +2336,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
   try {
     state.appData = await loadAll49ersData();
     hydrateCachedDailyMatchupIntel(state.appData);
+    hydrateCachedDailyTopNewsBrief(state.appData);
     bootFailureCount = 0;
     state.lastWireSyncAt = state.appData.meta?.updatedAt || new Date().toISOString();
     lastLiveCheckMs = Date.now();
@@ -2430,8 +2399,8 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
         });
       }
 
-      // 1/day live Gemini 3.8 High Matchup Intel refresh (<= 1 credit/day)
-      triggerDailyMatchupIntelSync();
+      // Sequenced 1/day Gemini 3.8 High Matchup Intel + 5:00 PM PT Top News Brief refreshes (no split budget)
+      triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
     }
     return true;
   } catch (err) {
@@ -2574,7 +2543,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=52', { updateViaCache: 'none' })
+        .register('./sw.js?v=55', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

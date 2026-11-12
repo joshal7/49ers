@@ -120,7 +120,7 @@ export function renderSettingsSheetHtml({
             : ''
         }
         <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Google Gemini API Key (Private on This Device • Unlocks Both Auto Pod &amp; AI Analysis)</label>
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Google Gemini API Key (Private on This Device • Unlocks Daily Briefs, Auto Pod &amp; AI Analysis)</label>
           <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free AI Studio Key ${iconSvg('externalLink', 10)}</a>
         </div>
         <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T08:56:35.985Z",
+  "updatedAt": "2026-11-12T15:53:15.713Z",
   "windowDays": 7,
   "shows": [
     {
@@ -12,7 +12,7 @@
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/5b/63/ed/5b63ed60-2449-1c6b-4f1d-5e3f2a4f410c/mza_13504327500715854238.png/600x600bb.jpg",
-      "episodeCount7d": 12
+      "episodeCount7d": 11
     },
     {
       "id": "49ers_talk",
@@ -36,7 +36,7 @@
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/49ers-plus-minus",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/49ers-plus-minus/id1827546443",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/18/54/f9/1854f918-9aba-2e17-42a3-d6be78c1b130/mza_724948237958582685.jpg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 2
     },
     {
       "id": "dieter_and_hutch",
@@ -615,46 +615,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
       "audioStreamUrl": "https://serve.castfire.com/audio/8531448/8531448_2026-07-21-221548.192.mp3?rssID=6590"
-    },
-    {
-      "id": "pod_the_gold_standard_1000800054969",
-      "trackId": 1000800054969,
-      "collectionId": 1524313515,
-      "showId": "the_gold_standard",
-      "showName": "The Gold Standard",
-      "showFullTitle": "The Gold Standard: San Francisco 49ers Podcast Network",
-      "hosts": "Rob \"Stats\" Guerrera & Levin Black",
-      "network": "Audacy / Bleav",
-      "title": "49ers in Five: Kyle Shanahan addresses Brandon Aiyuk's future",
-      "summary": "Kyle Shanahan addresses Brandon Aiyuk's future San Francisco 49ers head coach Kyle Shanahan addressed how the Aiyuk saga will end, and whether he expects the team to make another trade before the deadline. Plus, Nick Bosa says he's ready to get back on the field against the Raiders. One Thing to Read: 49ers players…",
-      "publishedAt": "2026-11-05T14:58:36.000Z",
-      "durationMinutes": 5,
-      "durationDisplay": "5 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/b9/61/0d/b9610d92-9669-3782-9e16-6d05aa63e470/mza_4643469667260273108.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/49ers-in-five-kyle-shanahan-addresses-brandon-aiyuks/id1524313515?i=1000800054969",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
-      "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
-      "audioStreamUrl": "https://serve.castfire.com/audio/8531295/8531295_2026-07-21-221235.192.mp3?rssID=6590"
-    },
-    {
-      "id": "pod_49ers_plus_minus_1000800041846",
-      "trackId": 1000800041846,
-      "collectionId": 1827546443,
-      "showId": "49ers_plus_minus",
-      "showName": "49ers +/-",
-      "showFullTitle": "49ers Plus Minus",
-      "hosts": "Tim Kawakami & SF Standard Beat",
-      "network": "The San Francisco Standard / Audacy",
-      "title": "Aiyuk Conclusion? More Trades Coming?",
-      "summary": "Tim and Matt Barrows discuss the potential end of the Brandon Aiyuk/49ers saga at last and Kyle Shanahan's thoughts about the trade deadline after already acquiring DeForest Buckner.",
-      "publishedAt": "2026-11-05T13:00:00.000Z",
-      "durationMinutes": 34,
-      "durationDisplay": "34 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/18/54/f9/1854f918-9aba-2e17-42a3-d6be78c1b130/mza_724948237958582685.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/aiyuk-conclusion-more-trades-coming/id1827546443?i=1000800041846",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/49ers-plus-minus/id1827546443",
-      "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/49ers-plus-minus",
-      "audioStreamUrl": "https://serve.castfire.com/audio/8945761/8945761_2026-11-05-011401.192.mp3?rssID=5944"
     }
   ]
 }

@@ -1,21 +1,21 @@
 {
-  "updatedAt": "2026-11-12T08:56:35.985Z",
+  "updatedAt": "2026-11-12T15:53:15.713Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
-    "availableGrossCap": 33980986,
-    "projected2027CapSpace": -31540066,
+    "availableGrossCap": 39180986,
+    "projected2027CapSpace": -36740066,
     "capSourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
     "transactionsUrl": "https://www.espn.com/nfl/transactions",
     "purchasingPower": [
       {
         "metric": "2026 Salary Cap Space",
-        "figure": "$33.98M Gross (~$41.26M Pre-Buckner)",
+        "figure": "$39.18M Gross (~$41.26M Pre-Buckner)",
         "strategicImpact": "#1 in NFC. Lets SF absorb 9/18ths prorated 2026 base salaries directly on 1-year rentals—keeping draft compensation down to Day 3 instead of paying sellers to eat cash."
       },
       {
         "metric": "2027 Projected Cap Horizon",
-        "figure": "-$31.54M on $327M Est. Cap",
+        "figure": "-$36.74M on $327M Est. Cap",
         "strategicImpact": "Unused 2026 cap rolls over 1-for-1 under CBA Article 13 to neutralize the 2027 deficit. Expiring 2026 rentals ($0 2027 cap) or cheap rookie deals are mandatory over multi-year veteran guarantees."
       },
       {
@@ -307,7 +307,7 @@
         "tier": "Tier 1 • Verified Beat & National",
         "sources": "Adam Schefter, Ian Rapoport, Matt Barrows",
         "sourceUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-        "summary": "With six WRs sidelined and $33.98M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.",
+        "summary": "With six WRs sidelined and $39.18M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.",
         "credibilityPct": 96
       },
       {
@@ -12878,13 +12878,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "5DtpgQ79xIA",
-          "url": "https://www.youtube.com/watch?v=5DtpgQ79xIA",
-          "title": "Film Breakdown: Carver Willis is a WEAPON in the Run Game | San Francisco 49ers",
-          "channel": "Ryder McConville",
-          "publishedAgo": "7mo ago",
-          "duration": "10:56",
-          "thumbnailUrl": "https://i.ytimg.com/vi/5DtpgQ79xIA/hqdefault.jpg",
+          "videoId": "epn6x5ZEOtc",
+          "url": "https://www.youtube.com/watch?v=epn6x5ZEOtc",
+          "title": "49ers Draft Carver Willis: New Left Guard Contender",
+          "channel": "DNN",
+          "publishedAgo": "6mo ago",
+          "duration": "0:57",
+          "thumbnailUrl": "https://i.ytimg.com/vi/epn6x5ZEOtc/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }

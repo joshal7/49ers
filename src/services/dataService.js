@@ -295,6 +295,7 @@ export const DEFAULT_USER_PREFS = {
   defaultPodDurationMin: 3, // 2..20
   workerBaseUrl: '',
   geminiApiKey: '',
+  geminiNewsApiKey: '',
   verifiedGeminiModel: '',
   geminiApiBaseUrl: '',
   capSelectedYear: null,
@@ -329,6 +330,7 @@ export function loadUserPrefs() {
       disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
       disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
       geminiApiKey: typeof parsed.geminiApiKey === 'string' ? parsed.geminiApiKey.trim() : '',
+      geminiNewsApiKey: typeof parsed.geminiNewsApiKey === 'string' ? parsed.geminiNewsApiKey.trim() : '',
       podFormat: parsed.podFormat === 'solo' ? 'solo' : 'two_host',
       defaultPodDurationMin:
         Number.isFinite(Number(parsed.defaultPodDurationMin)) && Number(parsed.defaultPodDurationMin) >= 2
@@ -1338,7 +1340,12 @@ export async function hydrateLiveEspnPlayerBeatWire(
                 `${cleanFull} ${rawStory}`
               )
                 ? 'injury'
-                : 'beat',
+                : classifyNewsItemCategory({
+                    type: effectiveType,
+                    title: pwireCand.title,
+                    fullText: pwireCand.fullText,
+                    summary: pwireCand.summary
+                  }),
             signalScore: Math.max(brk.isBreaking ? 93 : 80, sig.signalScore),
             fluffScore: sig.fluffScore,
             isClickbait: false
@@ -1472,7 +1479,12 @@ export async function hydrateLiveRotoWireBeatRss(appData) {
         category:
           brk.isInGameInjury || /injur|practice|questionable|ruled out|return|reserve|activated/i.test(combined)
             ? 'injury'
-            : 'beat',
+            : classifyNewsItemCategory({
+                type: rwType,
+                title: tweetDisplay.text,
+                fullText: bodyText,
+                summary: rawTitle
+              }),
         signalScore: brk.isBreaking ? 94 : 84,
         fluffScore: 0,
         isClickbait: false

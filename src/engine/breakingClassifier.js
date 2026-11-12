@@ -102,11 +102,20 @@ const CREDIBLE_FORWARD_TRADE_RUMOR_REGEX =
 const SALIENT_INTERVIEW_OR_FEATURE_REGEX =
   /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room interview|opened up about|spoke candidly|reflects on|mic['’]?d up|joined knbr|players['’]? tribune|candid interview)\b/i;
 
+const SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX =
+  /\b(salary cap|cap space|cap hit|cap charge|cap number|cap savings|cap relief|cap room|cap table|cap ledger|dead cap|dead money|void years?|option bonus|signing bonus|roster bonus|workout bonus|per-game roster bonus|base salary|prorat(?:ed|ion)|restructure[sd]?|pay cut|contract extension|contract details|contract breakdown|contract terms|multi-year deal|new deal|agreed to terms|franchise tag|transition tag|fifth-year option|5th-year option|bonus forfeiture|bonus repayment|cba (?:article|rollover)|cap rollover|overthecap|over the cap|spotrac)\b/i;
+
+const DEDICATED_PURE_FILM_CHANNEL_REGEX =
+  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|football academy|alex rollins|qb confidential|kurt warner|baldy|brett kollmann|film room)\b/i;
+
 const TRUE_FILM_VIDEO_CHANNEL_REGEX =
-  /\b(jonnydel|football academy|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|kurt warner|all[ _-]?22)\b/i;
+  /\b(jonnydel|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|kurt warner|qb confidential|all[ _-]?22)\b/i;
 
 const TRUE_FILM_VIDEO_TITLE_REGEX =
-  /\b(all-22|all 22|film breakdown|film study|film room|tape breakdown|tape study|49ers playbook|qb film|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush breakdown|coverage breakdown|coaching tape)\b/i;
+  /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|49ers playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush breakdown|coverage breakdown|coaching tape)\b/i;
+
+const HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX =
+  /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|top plays|condensed game|end of game|final drive|game-winning|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes)\b/i;
 
 const WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX =
   /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|snap count|snap share|pass[- ]block|run[- ]block|\bpbwr\b|\brswr\b|pressure rate|pass rush|pass-rush|qb sack|pff\s+grad|pff\s+gard|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards)\b/i;
@@ -158,6 +167,20 @@ function escapeRegexToken(s = '') {
  * - Written articles and beat threads with substantive All-22, snap-count, trench, coverage-shell,
  *   or EPA/CPOE tactical analysis ARE classified as `'film'`, making `Film & Trench` genuinely cross-media!
  */
+export function isSalientCapOrContractItem(item = {}) {
+  if (!item || typeof item !== 'object') return false;
+  if (item.category === 'cap') return true;
+  const lead = extractPrimaryClaimText(item);
+  const title = String(item.title || item.headline || '').trim();
+  const combined = `${title} ${item.fullText || ''} ${item.summary || ''}`.trim();
+  if (HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead)) return false;
+  if (SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX.test(lead) || SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX.test(title)) {
+    return true;
+  }
+  const capHits = combined.match(new RegExp(SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX.source, 'gi')) || [];
+  return capHits.length >= 2;
+}
+
 export function classifyNewsItemCategory(item = {}) {
   if (!item || typeof item !== 'object') return 'beat';
   const title = String(item.title || item.headline || '').trim();
@@ -167,26 +190,22 @@ export function classifyNewsItemCategory(item = {}) {
   const combined = `${title} ${body}`.trim();
 
   if (item.type === 'video' || Boolean(item.videoId)) {
+    const isDedicatedPureFilmChannel =
+      DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) &&
+      !/\b(mailbag|q\s*&\s*a|live\s*stream\s*q&a|podcast)\b/i.test(title);
     const isTapeChannel = TRUE_FILM_VIDEO_CHANNEL_REGEX.test(channelOrAuthor);
     const isTapeTitle = TRUE_FILM_VIDEO_TITLE_REGEX.test(title);
     const isPodiumOrVlog = NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX.test(title) && !isTapeTitle;
-    if ((isTapeChannel || isTapeTitle) && !isPodiumOrVlog) {
+    if (isDedicatedPureFilmChannel || ((isTapeChannel || isTapeTitle) && !isPodiumOrVlog)) {
       return 'film';
     }
-    if (
-      TIER1_MAJOR_BREAKING_EVENT_REGEX.test(title) ||
-      TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(title) ||
-      /\b(trade[sd]?|acquir|roster|cap|contract|extension|free agent|waive[sd]?)\b/i.test(title)
-    ) {
+    if (/\b(trade|traded|acquir|sign|waiv|roster|cap|contract|restructur)\b/i.test(title)) {
       return 'roster';
-    }
-    if (/\b(injur|practice report|mri|questionable|doubtful|ruled out|inactives?)\b/i.test(title)) {
-      return 'injury';
     }
     return 'beat';
   }
 
-  // Primary roster / trade / contract items -> 'roster'
+  // Primary roster / trade / salient salary-cap & contract items -> 'roster' (Trades & Roster)
   if (
     !SECONDARY_COMMENTARY_OR_REACTION_REGEX.test(lead) &&
     (TIER1_MAJOR_BREAKING_EVENT_REGEX.test(lead) ||
@@ -200,6 +219,10 @@ export function classifyNewsItemCategory(item = {}) {
     if (!/\b(mri|x-ray|sprain|strain|concussion|fracture)\b/i.test(lead)) {
       return 'roster';
     }
+  }
+
+  if (isSalientCapOrContractItem(item) && !TRUE_FILM_VIDEO_TITLE_REGEX.test(title)) {
+    return 'roster';
   }
 
   // Genuine X's & O's, All-22 tape, snap-count, EPA/CPOE, and trench breakdowns -> 'film'
@@ -1231,9 +1254,11 @@ export function sortNewsWithBreakingPriority(
       const trustTier = Number(it.trustTier) || repEntry?.trustTier || 2;
       const withinWindow = cls.breakingPriority < 0 || cls.ageHours <= effectiveWindowHours;
       const resolvedCat =
-        it.category === 'cap' || it.category === 'scheme'
-          ? it.category
-          : classifyNewsItemCategory(it);
+        it.category === 'cap'
+          ? 'roster'
+          : it.category === 'scheme'
+            ? 'scheme'
+            : classifyNewsItemCategory(it);
 
       const enriched = {
         ...it,
@@ -2073,3 +2098,237 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
 
   return false;
 }
+
+/**
+ * Returns true when a video (`item.type === 'video'` or `item.videoId`) is from a prior game slate
+ * (e.g. 2+ weeks ago or published before the most recently completed 49ers game) so `Highlights & Videos`
+ * and `Film & Trench` refresh cleanly after every completed game.
+ */
+export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.now()) {
+  if (!item || (item.type !== 'video' && !item.videoId)) return false;
+
+  const pubMs = resolveEffectivePublishTimestampMs(item, nowMs);
+  const ageDays = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 86_400_000) : 99;
+  const summaryAgeStr = String(item.summary || '');
+  if (/\b([2-9]\d*\s*w(?:eeks?|ks?)|\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?))\s+ago\b/i.test(summaryAgeStr)) {
+    return true;
+  }
+
+  if (!appData || typeof appData !== 'object') {
+    return ageDays > 12;
+  }
+
+  const ctx = resolveGameNewsContext(appData, nowMs);
+  const latestCompKoMs = ctx.latestCompletedKickoffMs;
+  const latestCompWk = ctx.latestCompletedWeek;
+  const upcomingWk = ctx.upcomingWeek;
+  const latestOppNick = String(ctx.latestCompletedOppNickname || '').trim();
+  const upcomingOppNick = String(ctx.upcomingOppNickname || '').trim();
+
+  if (Number.isFinite(latestCompKoMs)) {
+    const daysSinceCompletedGame = (nowMs - latestCompKoMs) / 86_400_000;
+    // If a game completed within the last 10 days, any video published before that game kicked off is from an older week/game
+    if (daysSinceCompletedGame >= 0 && daysSinceCompletedGame <= 10.5) {
+      if (Number.isFinite(pubMs) && pubMs < latestCompKoMs - 3 * 3_600_000) {
+        return true;
+      }
+    }
+    // Even across a Bye week (10.5..16 days since last game), reject anything >13 days old
+    if (daysSinceCompletedGame > 10.5 && daysSinceCompletedGame <= 17 && ageDays > 13) {
+      return true;
+    }
+  }
+
+  // Guard against re-uploaded or search-surfaced videos explicitly tied ONLY to an older completed week/opponent
+  const title = String(item.title || item.headline || '').trim();
+  const refWeeks = extractReferencedWeekNumbers(title);
+  if (refWeeks.length > 0 && latestCompWk) {
+    const mentionsLatestOrUpcomingWk = refWeeks.some(
+      w => w === latestCompWk || (upcomingWk && w === upcomingWk) || w > latestCompWk
+    );
+    const mentionsOlderCompletedWk = refWeeks.some(w => w < latestCompWk);
+    if (mentionsOlderCompletedWk && !mentionsLatestOrUpcomingWk) {
+      return true;
+    }
+  }
+
+  const schedule = appData?.scheduleMatchup?.schedule || [];
+  if (latestCompWk && schedule.length > 0) {
+    const mentionsCurrentOrNextOpp =
+      (latestOppNick && new RegExp(`\\b${escapeRegexToken(latestOppNick)}\\b`, 'i').test(title)) ||
+      (upcomingOppNick && new RegExp(`\\b${escapeRegexToken(upcomingOppNick)}\\b`, 'i').test(title));
+    if (!mentionsCurrentOrNextOpp && refWeeks.length === 0) {
+      for (const g of schedule) {
+        if (!g?.completed || g.isByeWeek || Number(g.week) >= latestCompWk) continue;
+        const oldNick = extractTeamNickname(g.opponent?.name || '');
+        const oldAbbr = String(g.opponent?.abbr || '').toUpperCase();
+        if (
+          oldAbbr &&
+          oldAbbr !== ctx.latestCompletedOppAbbr &&
+          oldAbbr !== ctx.upcomingOppAbbr &&
+          ((oldNick && new RegExp(`\\b${escapeRegexToken(oldNick)}\\b`, 'i').test(title)) ||
+            new RegExp(`\\b(?:in|vs\\.?|at)\\s+${escapeRegexToken(oldAbbr)}\\b`, 'i').test(title))
+        ) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return ageDays > 16;
+}
+
+/**
+ * Filters out stale prior-game videos across a list of news/video items while keeping all non-video items intact.
+ */
+export function filterFreshVideosForCurrentSlate(items = [], appData = null, nowMs = Date.now()) {
+  if (!Array.isArray(items) || items.length === 0) return items;
+  return items.filter(it => !isStalePriorGameVideo(it, appData, nowMs));
+}
+
+/**
+ * Ranks non-film videos for `Highlights & Videos` so Game Highlights, Condensed/End-of-Game Recaps,
+ * 49Hours / Forty Niner Way, Mic'd Up, Locker Room Victory Speeches, and Player Highlight Reels lead first.
+ */
+export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, nowMs = Date.now()) {
+  if (!item || typeof item !== 'object') return 0;
+  const title = String(item.title || item.headline || '').trim();
+  const channel = String(item.outletName || item.author || '').trim();
+  const pubMs = resolveEffectivePublishTimestampMs(item, nowMs);
+  const ageHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 96;
+  const ctx = appData ? resolveGameNewsContext(appData, nowMs) : null;
+
+  let score = 40;
+
+  if (/\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|top plays|condensed game|end of game|final drive)\b/i.test(title)) {
+    score += 48;
+  } else if (/\b(forty niner way|49hours|brick by brick|mic['’]?d up|locker room|victory speech|from the trenches|sights and sounds|wired|postgame recap|week \d+ recap|game recap)\b/i.test(title)) {
+    score += 42;
+  } else if (HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX.test(title) || SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(title)) {
+    score += 30;
+  } else if (/\b(preview|talk new additions|speak ahead)\b/i.test(title)) {
+    score += 16;
+  }
+
+  if (/^(?:nfl|san francisco 49ers)$/i.test(channel)) {
+    score += 16;
+  } else if (/nbc sports bay area|espn|fox sports|cbs sports|knbr/i.test(channel)) {
+    score += 10;
+  }
+
+  if (ctx?.latestCompletedOppNickname && new RegExp(`\\b${escapeRegexToken(ctx.latestCompletedOppNickname)}\\b`, 'i').test(title)) {
+    score += 10;
+  }
+  if (ctx?.upcomingOppNickname && new RegExp(`\\b${escapeRegexToken(ctx.upcomingOppNickname)}\\b`, 'i').test(title)) {
+    score += 8;
+  }
+
+  // Gentle age decay so newest post-game highlights & features stay near the top
+  score -= Math.min(34, ageHours * 0.28);
+  return Number(score.toFixed(2));
+}
+
+/**
+ * Determines whether an active breaking news item is ALREADY covered by `dailyBrief`.
+ * Used so brand-new breaking news that lands after/outside the daily AI brief surfaces at #1 ABOVE the brief
+ * until the next daily AI summary incorporates it.
+ */
+export function isBreakingItemCoveredInBrief(item = {}, dailyBrief = null, nowMs = Date.now()) {
+  if (!item || !dailyBrief || typeof dailyBrief !== 'object') return false;
+
+  const coveredUrls = new Set(
+    [
+      ...(Array.isArray(dailyBrief.coveredUrls) ? dailyBrief.coveredUrls : []),
+      ...(Array.isArray(dailyBrief.sources) ? dailyBrief.sources.map(s => s?.url) : [])
+    ]
+      .map(u => canonicalComparableUrl(u || ''))
+      .filter(Boolean)
+  );
+
+  const itemComparable = canonicalComparableUrl(item.url || '');
+  const extComparable = canonicalComparableUrl(item.externalUrl || '');
+  if ((itemComparable && coveredUrls.has(itemComparable)) || (extComparable && coveredUrls.has(extComparable))) {
+    return true;
+  }
+  for (const cr of item.confirmingReports || []) {
+    const crUrl = canonicalComparableUrl(cr?.url || '');
+    if (crUrl && coveredUrls.has(crUrl)) return true;
+  }
+
+  const coveredStoryKeys = new Set(Array.isArray(dailyBrief.coveredStoryKeys) ? dailyBrief.coveredStoryKeys : []);
+  const sigKey = buildStorySignatureKey(item);
+  if (sigKey && coveredStoryKeys.has(sigKey)) {
+    return true;
+  }
+
+  const briefGenMs = dailyBrief.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
+  const itemPubMs = resolveEffectivePublishTimestampMs(item, nowMs);
+  // If the breaking item was published AFTER the daily brief was generated (and matched neither URL nor story signature),
+  // it is brand-new breaking news not yet covered in the brief!
+  if (Number.isFinite(briefGenMs) && Number.isFinite(itemPubMs) && itemPubMs > briefGenMs + 90_000) {
+    return false;
+  }
+
+  // For items published BEFORE the daily brief was generated, check if the brief prose already discusses the primary player/topic
+  const briefProseLower = [
+    dailyBrief.headline || '',
+    dailyBrief.summary || '',
+    ...(Array.isArray(dailyBrief.bullets) ? dailyBrief.bullets : [])
+  ]
+    .join(' ')
+    .toLowerCase();
+
+  const primaryPlayerName = String(item.mentionedPlayers?.[0]?.name || '').trim();
+  if (primaryPlayerName && primaryPlayerName.length >= 5) {
+    const cleanFull = primaryPlayerName.replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').toLowerCase();
+    const surname = cleanFull.split(/\s+/).slice(-1)[0] || '';
+    if (briefProseLower.includes(cleanFull) || (surname.length >= 5 && briefProseLower.includes(surname))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Partitions a prioritized, deduplicated news stream relative to `dailyBrief`:
+ * - `breakingAboveBrief`: Active urgent breaking news (`BREAKING`, `LIVE INJURY UPDATE`, `LIVE IN-GAME`)
+ *   that is NOT already covered in `dailyBrief` (rises to #1 ABOVE the summary block!).
+ * - `remainingBelowBrief`: All other stories in StoryRank/salience order rendered below the summary block.
+ */
+export function partitionBreakingNewsAboveBrief(items = [], dailyBrief = null, nowMs = Date.now()) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return { breakingAboveBrief: [], remainingBelowBrief: [] };
+  }
+  if (!dailyBrief || typeof dailyBrief !== 'object') {
+    return { breakingAboveBrief: [], remainingBelowBrief: items };
+  }
+
+  const breakingAboveBrief = [];
+  const remainingBelowBrief = [];
+
+  for (const item of items) {
+    const isActiveUrgent =
+      isUrgentBreakingBadge(item?.breakingBadge) ||
+      Boolean(
+        item?.isUrgentBreaking &&
+          (item?.storyTier === 'tier1_major' ||
+            item?.storyTier === 'tier2_roster' ||
+            item?.storyTier === 'in_game_injury')
+      );
+
+    if (
+      isActiveUrgent &&
+      breakingAboveBrief.length < 3 &&
+      !isBreakingItemCoveredInBrief(item, dailyBrief, nowMs)
+    ) {
+      breakingAboveBrief.push(item);
+    } else {
+      remainingBelowBrief.push(item);
+    }
+  }
+
+  return { breakingAboveBrief, remainingBelowBrief };
+}
+
+export { buildStorySignatureKey };

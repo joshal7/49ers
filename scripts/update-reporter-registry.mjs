@@ -73,6 +73,7 @@ const SEEDED_REPORTERS = [
   { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', role: '49ers Rush • All-22 & Draft Prospect Tape', category: 'film', styleTag: 'film-breakdown', baseScore: 90 },
   { id: 'eric_crocker', name: 'Eric Crocker', handle: '@eric_crocker', outletId: 'youtube_film', role: 'Former DB • Coverage & CB Technique Film', category: 'film', styleTag: 'film-breakdown', baseScore: 91 },
   { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydelsfa', outletId: 'youtube_film', role: 'QB Progression & Shanahan Play-Design All-22', category: 'film', styleTag: 'film-breakdown', baseScore: 93 },
+  { id: 'jt_osullivan', name: "JT O'Sullivan (The QB School)", handle: '@theqbschool', outletId: 'youtube_film', role: 'Former NFL QB • The QB School 49ers QB All-22', category: 'film', styleTag: 'film-breakdown', baseScore: 93 },
   { id: 'jeff_deeney', name: 'Jeff Deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', role: '49ers Advanced Grading & Snap Share Analyst', category: 'analytics', styleTag: 'analytics-cap', baseScore: 89 },
   { id: 'brad_graham', name: 'Brad Graham', handle: '@TheSFNiners', outletId: 'youtube_film', role: 'TheSFNiners • Camp Clips & Film Cutups', category: 'video_pod', styleTag: 'factual-beat', baseScore: 88 },
   { id: 'al_sacco', name: 'Al Sacco', handle: '@AlSacco49', outletId: '49ers_webzone', role: 'Founder • 49ers Webzone News & Transcripts', category: 'beat', styleTag: 'factual-beat', baseScore: 85 },

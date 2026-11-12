@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T08:56:35.985Z",
+  "updatedAt": "2026-11-12T15:53:15.713Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -10,14 +10,14 @@
       "capCeiling": 340563099,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 306582113,
-      "top51": 239390880,
-      "teamCapSpace": 33980986,
-      "otcRawTeamCapSpace": 33980986,
-      "effectiveCapSpace": 33980986,
-      "activeCapSpending": 260561414,
+      "totalCapLiabilities": 301382113,
+      "top51": 234190880,
+      "teamCapSpace": 39180986,
+      "otcRawTeamCapSpace": 39180986,
+      "effectiveCapSpace": 39180986,
+      "activeCapSpending": 255361414,
       "offenseSpend": 145376783,
-      "defenseSpend": 111083631,
+      "defenseSpend": 105883631,
       "specialSpend": 4101000,
       "deadMoneyTotal": 46020699,
       "injuredReserveTotal": 25478109,
@@ -110,14 +110,14 @@
       "capCeiling": 327000000,
       "baseLeagueCap": 327000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 358540066,
-      "top51": 358455063,
-      "teamCapSpace": -31540066,
-      "otcRawTeamCapSpace": -31540066,
-      "effectiveCapSpace": -36296645,
-      "activeCapSpending": 358455063,
+      "totalCapLiabilities": 363740066,
+      "top51": 363655063,
+      "teamCapSpace": -36740066,
+      "otcRawTeamCapSpace": -36740066,
+      "effectiveCapSpace": -41496645,
+      "activeCapSpending": 363655063,
       "offenseSpend": 191170555,
-      "defenseSpend": 164559508,
+      "defenseSpend": 169759508,
       "specialSpend": 2725000,
       "deadMoneyTotal": 85003,
       "injuredReserveTotal": 0,
@@ -162,7 +162,7 @@
       "top51": 268006698,
       "teamCapSpace": 108993302,
       "otcRawTeamCapSpace": 0,
-      "effectiveCapSpace": 87573302,
+      "effectiveCapSpace": 88593302,
       "activeCapSpending": 268006698,
       "offenseSpend": 184234643,
       "defenseSpend": 77440055,
@@ -174,8 +174,8 @@
       "suspendedTotal": 0,
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
-      "contractedCount": 30,
-      "totalSignedCount": 30
+      "contractedCount": 31,
+      "totalSignedCount": 31
     },
     "2030": {
       "year": 2030,
@@ -186,7 +186,7 @@
       "top51": 91860000,
       "teamCapSpace": 310140000,
       "otcRawTeamCapSpace": 0,
-      "effectiveCapSpace": 277125000,
+      "effectiveCapSpace": 278190000,
       "activeCapSpending": 91860000,
       "offenseSpend": 82210000,
       "defenseSpend": 7100000,
@@ -198,21 +198,21 @@
       "suspendedTotal": 0,
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
-      "contractedCount": 20,
-      "totalSignedCount": 20
+      "contractedCount": 21,
+      "totalSignedCount": 21
     }
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-    "executiveSummary": "Paraag Marathe & John Lynch hold $33.98M in gross 2026 cap space ($33.98M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$31.54M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $26M–$30M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
+    "executiveSummary": "Paraag Marathe & John Lynch hold $39.18M in gross 2026 cap space ($39.18M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$36.74M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $31M–$36M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($26M–$30M Target vs. -$31.54M 2027 Projection)",
-        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027. Preserving $26M+ of 2026 room nearly erases San Francisco's projected -$31.54M 2027 deficit without forcing premature void-year restructures on aging veterans."
+        "title": "1. CBA Article 13 Rollover Bridge ($31M–$36M Target vs. -$36.74M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027. Preserving $31M+ of 2026 room nearly erases San Francisco's projected -$36.74M 2027 deficit without forcing premature void-year restructures on aging veterans."
       },
       {
         "title": "2. Expiring Rental Purchasing Power & Option-Bonus Architecture",
-        "detail": "Leading the NFC with $33.98M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
+        "detail": "Leading the NFC with $39.18M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
       },
       {
         "title": "3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks",
@@ -233,15 +233,15 @@
         "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
       },
       {
-        "id": "2971282",
-        "name": "DeForest Buckner",
-        "position": "DT",
-        "jersey": 99,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png",
-        "otcUrl": "https://overthecap.com/player/deforest-buckner/4720/",
-        "capHit2026": 7944444,
-        "baseSalary2026": 13000000,
-        "maxRestructureSavings": 7800000,
+        "id": "3916903",
+        "name": "Dre Greenlaw",
+        "position": "LB",
+        "jersey": 57,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916903.png",
+        "otcUrl": "https://overthecap.com/player/dre-greenlaw/7939/",
+        "capHit2026": 3405556,
+        "baseSalary2026": 2600000,
+        "maxRestructureSavings": 1080000,
         "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
       }
     ],
@@ -312,16 +312,16 @@
         "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
       },
       {
-        "id": "2971282",
-        "name": "DeForest Buckner",
+        "id": "4035840",
+        "name": "Osa Odighizuwa",
         "position": "DT",
-        "jersey": 99,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png",
-        "otcUrl": "https://overthecap.com/player/deforest-buckner/4720/",
-        "capHit2026": 7944444,
-        "postJune1CutSavings": 7944444,
-        "postJune1TradeSavings": 7944444,
-        "preJune1DeadMoney": 0,
+        "jersey": 92,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035840.png",
+        "otcUrl": "https://overthecap.com/player/osa-odighizuwa/9539/",
+        "capHit2026": 5122000,
+        "postJune1CutSavings": 0,
+        "postJune1TradeSavings": 2215000,
+        "preJune1DeadMoney": 16750000,
         "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
       }
     ]
@@ -1904,148 +1904,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": -1116000
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "2971282",
-      "otcId": "4720",
-      "otcSlug": "deforest-buckner",
-      "otcUrl": "https://overthecap.com/player/deforest-buckner/4720/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/2971282/deforest-buckner",
-      "pfrUrl": "https://www.pro-football-reference.com/players/B/BuckDe00.htm",
-      "name": "DeForest Buckner",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png",
-      "unit": "Defense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 13000000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 7944444,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 7944444
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 7944444
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 7944444
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 7944444
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 7800000
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 9360000
-            }
-          }
-        },
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": true,
-          "baseSalary": 0,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 0,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": -672500
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": -1076000
-            }
-          }
-        },
-        "2028": {
-          "year": 2028,
-          "rosterBucket": "active",
-          "isVoidYear": true,
-          "baseSalary": 0,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 0,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": -1112000
             }
           }
         }
@@ -4070,6 +3928,232 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "2971282",
+      "otcId": "4720",
+      "otcSlug": "deforest-buckner",
+      "otcUrl": "https://overthecap.com/player/deforest-buckner/4720/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2971282/deforest-buckner",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BuckDe00.htm",
+      "name": "DeForest Buckner",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1300000,
+          "proratedSigning": 1300000,
+          "proratedOption": 0,
+          "proratedBonus": 1300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2744444,
+          "transactions": {
+            "cut": {
+              "deadMoney": 6500000,
+              "capSavings": -3755556
+            },
+            "june_1_cut": {
+              "deadMoney": 1300000,
+              "capSavings": 1444444
+            },
+            "trade": {
+              "deadMoney": 6500000,
+              "capSavings": -3755556
+            },
+            "june_1_trade": {
+              "deadMoney": 1300000,
+              "capSavings": 1444444
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 1300000,
+          "proratedOption": 0,
+          "proratedBonus": 1300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 5200000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 5200000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1300000,
+              "capSavings": 3900000
+            },
+            "trade": {
+              "deadMoney": 5200000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1300000,
+              "capSavings": 3900000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -1008750
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1076000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 1300000,
+          "proratedOption": 0,
+          "proratedBonus": 1300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3900000,
+              "capSavings": -3900000
+            },
+            "june_1_cut": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "trade": {
+              "deadMoney": 3900000,
+              "capSavings": -3900000
+            },
+            "june_1_trade": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -926667
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1112000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 1300000,
+          "proratedOption": 0,
+          "proratedBonus": 1300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2600000,
+              "capSavings": -2600000
+            },
+            "june_1_cut": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "trade": {
+              "deadMoney": 2600000,
+              "capSavings": -2600000
+            },
+            "june_1_trade": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -717500
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1148000
+            }
+          }
+        },
+        "2030": {
+          "year": 2030,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 1300000,
+          "proratedOption": 0,
+          "proratedBonus": 1300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "june_1_cut": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "trade": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "june_1_trade": {
+              "deadMoney": 1300000,
+              "capSavings": -1300000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1184000
             }
           }
         }
@@ -7258,6 +7342,64 @@
       }
     },
     {
+      "id": "13729",
+      "otcId": "1671",
+      "otcSlug": "jon-weeks",
+      "otcUrl": "https://overthecap.com/player/jon-weeks/1671/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/13729/jon-weeks",
+      "pfrUrl": "https://www.pro-football-reference.com/players/W/WeekJo00.htm",
+      "name": "Jon Weeks",
+      "position": "LS",
+      "jersey": 46,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13729.png",
+      "unit": "Special Teams",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1300000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1075000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 1075000
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 1075000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 1075000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 1075000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4241807",
       "otcId": "9634",
       "otcSlug": "garret-wallow",
@@ -7426,64 +7568,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 56000
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "13729",
-      "otcId": "1671",
-      "otcSlug": "jon-weeks",
-      "otcUrl": "https://overthecap.com/player/jon-weeks/1671/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/13729/jon-weeks",
-      "pfrUrl": "https://www.pro-football-reference.com/players/W/WeekJo00.htm",
-      "name": "Jon Weeks",
-      "position": "LS",
-      "jersey": 46,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13729.png",
-      "unit": "Special Teams",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1300000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1075000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 1075000
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 1075000
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 1075000
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 1075000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 0
             }
           }
         }

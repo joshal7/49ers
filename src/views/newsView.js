@@ -1,6 +1,10 @@
 /**
- * Team News, Beat Reporter Synthesis, Live Tweets & Playable Video Clip View
- * Modes: "Beat Synthesis Briefs" (Default) vs. "Live Tweets, Articles & Video"
+ * Unified High-Signal Team News, Daily Gemini 3.8 Flash High Top-News Brief,
+ * Live Beat Wire, Game Highlights & All-22 Film View
+ *
+ * Single Two-Row Filter Bar (0px mobile overflow):
+ * - Row 1: All | Tweets | Articles
+ * - Row 2: Highlights & Videos | Film & Trench | Trades & Roster
  */
 
 import {
@@ -14,6 +18,7 @@ import { iconSvg } from './icons.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
+  isSalientCapOrContractItem,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
@@ -22,7 +27,9 @@ import {
   formatTweetBodyForDisplay,
   isStaleCompletedGameAvailabilityItem,
   filterOutCompletedGameAvailabilityItems,
-  filterAndCleanSynthesisClusters
+  filterFreshVideosForCurrentSlate,
+  scoreHighlightAndTeamVideoSalience,
+  partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
@@ -30,6 +37,30 @@ import {
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
+import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
+
+export const NEWS_NAV_CLUSTERS = [
+  {
+    id: 'core_wire',
+    ariaLabel: 'Primary News and Wire Formats',
+    tabs: [
+      { key: 'all', icon: 'layers', label: 'All', fullTitle: 'All News & Daily Brief' },
+      { key: 'tweets', icon: 'tweet', label: 'Tweets', fullTitle: 'Live Beat & Insider Tweets' },
+      { key: 'articles', icon: 'news', label: 'Articles', fullTitle: 'Beat Articles & Features' }
+    ]
+  },
+  {
+    id: 'media_topics',
+    ariaLabel: 'Highlights, All-22 Film and Roster Topics',
+    tabs: [
+      { key: 'videos', icon: 'video', label: 'Highlights & Videos', fullTitle: 'Game Highlights, Recaps & Team Videos' },
+      { key: 'film', icon: 'target', label: 'Film & Trench', fullTitle: "All-22 Tape, JT O'Sullivan QB School & Trench Study" },
+      { key: 'roster', icon: 'trade', label: 'Trades & Roster', fullTitle: 'Trades, Roster Moves & Salary Cap' }
+    ]
+  }
+];
+
+export const VALID_NEWS_CATEGORIES = new Set(['all', 'tweets', 'articles', 'videos', 'film', 'roster']);
 
 function decodeInlineEntities(str = '') {
   return String(str || '')
@@ -46,21 +77,26 @@ function decodeInlineEntities(str = '') {
     .replace(/&apos;/gi, "'");
 }
 
-export function resolveClusterSafeReports(cluster, rawStream = [], appData = null) {
-  if (!cluster || !Array.isArray(cluster.sourceLinks)) return [];
+/**
+ * Resolves and sanitizes the source list for the Daily Top News Brief, ensuring direct
+ * X/Bluesky permalinks for tweets, HTTPS-only URLs, zero paywalls, and zero stale pre-game noise.
+ */
+export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData = null) {
+  const rawSources = Array.isArray(dailyBrief?.sources) ? dailyBrief.sources : [];
   const seen = new Set();
-  const reports = [];
-  for (const sl of cluster.sourceLinks) {
+  const safeList = [];
+
+  for (const sl of rawSources) {
     if (!sl) continue;
-    const rawSlTitle = decodeInlineEntities(String(sl.title || ''));
+    const rawTitle = decodeInlineEntities(String(sl.title || ''));
     const isTw =
       sl.type === 'tweet' ||
       sl.type === 'social' ||
-      /^@[A-Za-z0-9_]+:/.test(rawSlTitle) ||
-      /^https?:\/\/bsky\.app\//i.test(String(sl.url || ''));
-    const handleMatch = rawSlTitle.match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
+      /^@[A-Za-z0-9_]+:/.test(rawTitle) ||
+      /^https?:\/\/(?:www\.)?(?:x|twitter|bsky)\./i.test(String(sl.url || ''));
+    const handleMatch = rawTitle.match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
     const effectiveHandle = sl.authorHandle || (handleMatch ? handleMatch[1] : '');
-    const cleanTitle = handleMatch ? handleMatch[2].trim() : rawSlTitle.trim();
+    const cleanTitle = handleMatch ? handleMatch[2].trim() : rawTitle.trim();
 
     if (
       appData &&
@@ -87,85 +123,367 @@ export function resolveClusterSafeReports(cluster, rawStream = [], appData = nul
             authorHandle: effectiveHandle,
             title: cleanTitle,
             fullText: cleanTitle,
-            publishedAt: sl.publishedAt || cluster.publishedAt || ''
+            publishedAt: sl.publishedAt || dailyBrief?.generatedAt || ''
           },
           rawStream
         )
       : sl.url;
 
     const safeUrl = sanitizeExternalUrl(resolvedUrl, null);
-    const dedupKey = safeUrl && safeUrl.includes('x.com/search?')
-      ? `${safeUrl}::${cleanTitle.toLowerCase().slice(0, 50)}`
-      : safeUrl;
+    const dedupKey =
+      safeUrl && safeUrl.includes('x.com/search?')
+        ? `${safeUrl}::${cleanTitle.toLowerCase().slice(0, 50)}`
+        : safeUrl;
     if (!safeUrl || seen.has(dedupKey) || isPaywalledPublisher(sl.outlet, safeUrl)) continue;
     seen.add(dedupKey);
 
-    reports.push({
-      title: cleanTitle || sl.outlet || 'Open Report',
+    safeList.push({
+      title: cleanTitle || sl.outlet || 'Open Source',
       url: safeUrl,
       outlet: sl.outlet || '49ers Beat',
       author: sl.author || (effectiveHandle ? effectiveHandle : sl.outlet || '49ers Beat'),
-      type: isTw ? 'tweet' : sl.type || 'article',
+      type: isTw ? 'tweet' : 'article',
       publishedAt: sl.publishedAt || null
     });
   }
-  return reports;
+  return safeList;
 }
 
-export function renderSynthesisSourcesSheetHtml(cluster, rawStream = [], appData = null) {
-  if (!cluster) {
-    return `<div class="subcard-panel">Synthesis story not found.</div>`;
-  }
-  const reports = resolveClusterSafeReports(cluster, rawStream, appData);
-  return `
-    <div style="display:flex;flex-direction:column;gap:10px" data-synthesis-sources-sheet="${esc(cluster.id)}">
-      <div class="subcard-panel" style="border-color:var(--gold-border)">
-        <div style="font-weight:700;font-size:13.5px;line-height:1.38;color:var(--text-primary)">${esc(cluster.headline)}</div>
-      </div>
+/**
+ * Safely renders prose containing markdown inline source citations `[Label](https://...)`
+ * into clickable `<a class="brief-inline-source-link">` anchors while annotating plain prose
+ * segments between links with football jargon popovers and clickable roster player links
+ * (guaranteeing zero nested `<a>` tags!).
+ */
+export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null) {
+  const raw = String(text || '').trim();
+  if (!raw) return '';
+  const opts = { maxTerms: 14, maxPlayers: 5, seenKeys: seenJargon };
+  const linkRe = /\[([^\]]{2,68})\]\((https:\/\/[^)\s]+)\)/g;
 
-      ${
-        reports.length === 0
-          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No external report links attached to this brief.</div>`
-          : `<div style="display:flex;flex-direction:column;gap:7px">
-              ${reports
+  let outHtml = '';
+  let lastIdx = 0;
+  let match;
+  while ((match = linkRe.exec(raw)) !== null) {
+    if (match.index > lastIdx) {
+      outHtml += escJargon(raw.slice(lastIdx, match.index), opts);
+    }
+    const label = decodeInlineEntities(match[1]).trim();
+    const safeUrl = sanitizeExternalUrl(match[2], null);
+    if (safeUrl && !isPaywalledPublisher('', safeUrl)) {
+      outHtml += `<a href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" class="brief-inline-source-link" data-brief-inline-source>${esc(label)}${iconSvg('externalLink', 9)}</a>`;
+    } else {
+      outHtml += escJargon(label, opts);
+    }
+    lastIdx = match.index + match[0].length;
+  }
+
+  if (lastIdx < raw.length) {
+    outHtml += escJargon(raw.slice(lastIdx), opts);
+  }
+  return outHtml;
+}
+
+function formatDailyBriefBulletHtml(bullet = '', seenJargon = null) {
+  const raw = String(bullet || '').trim();
+  if (!raw) return '';
+  const colonIdx = raw.indexOf(':');
+  // Avoid splitting inside a markdown URL `https://` by checking `[` before colon
+  const bracketBeforeColon = colonIdx > 0 ? raw.slice(0, colonIdx).includes('[') : false;
+  if (colonIdx > 0 && colonIdx <= 78 && !bracketBeforeColon) {
+    const headClean = raw.slice(0, colonIdx).replace(/\*\*/g, '').trim();
+    const bodyClean = raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim();
+    return `<li><strong>${escJargon(headClean, { maxTerms: 6, maxPlayers: 2, seenKeys: seenJargon })}:</strong> ${renderBriefProseWithInlineLinksHtml(bodyClean, seenJargon)}</li>`;
+  }
+  return `<li>${renderBriefProseWithInlineLinksHtml(raw, seenJargon)}</li>`;
+}
+
+/**
+ * Renders the 1/day Gemini 3.8 Flash High Top-News Brief card (shared identically between
+ * the top of `News & Film -> All` and the top of the `Home` screen).
+ */
+export function renderDailyTopNewsBriefHtml(
+  dailyBrief,
+  { rawStream = [], appData = null, asSubcard = false } = {}
+) {
+  const brief =
+    dailyBrief && typeof dailyBrief === 'object' && Array.isArray(dailyBrief.bullets) && dailyBrief.bullets.length > 0
+      ? dailyBrief
+      : buildDeterministicDailyTopNewsBrief(appData);
+  if (!brief) return '';
+
+  const seenJargon = new Set();
+  const safeSources = resolveDailyBriefSafeSources(brief, rawStream, appData);
+  const ageTiny = brief.generatedAt ? formatRelativeAge(brief.generatedAt) : 'now';
+  const tagName = asSubcard ? 'div' : 'section';
+  const outerCls = asSubcard
+    ? 'subcard-panel daily-news-brief-card daily-news-brief-subcard'
+    : 'card daily-news-brief-card';
+
+  const sourcesDrawerHtml =
+    safeSources.length > 0
+      ? `
+        <div class="daily-brief-footer">
+          <details class="compact-details daily-brief-sources" data-daily-brief-sources>
+            <summary class="compact-details-summary" style="justify-content:space-between">
+              <span>Sources (${safeSources.length})</span>
+              <span class="mono" style="font-size:10px;color:var(--text-muted)">All Sources ▾</span>
+            </summary>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:7px">
+              ${safeSources
                 .map(rep => {
-                  const typeLabel =
-                    rep.type === 'tweet'
-                      ? 'Tweet'
-                      : rep.type === 'video'
-                        ? 'Video'
-                        : rep.type === 'cap'
-                          ? 'Cap Ledger'
-                          : rep.type === 'stats'
-                            ? 'Dataset'
-                            : 'Article';
-                  const badgeCls =
-                    rep.type === 'tweet'
-                      ? 'badge-gold'
-                      : rep.type === 'video'
-                        ? 'badge-scarlet'
-                        : 'badge-neutral';
+                  const typeLabel = rep.type === 'tweet' ? 'Tweet' : 'Article';
+                  const badgeCls = rep.type === 'tweet' ? 'badge-gold' : 'badge-neutral';
                   const attribution =
                     rep.author && rep.outlet && rep.author.toLowerCase() !== rep.outlet.toLowerCase()
                       ? `${rep.author} • ${rep.outlet}`
                       : rep.outlet || rep.author || 'Source';
                   return `
-                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row" data-synthesis-report-link>
-                      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
+                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row" data-brief-source-row>
+                      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
                         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
-                          <span class="badge ${badgeCls}" style="font-size:10px;padding:1.5px 6px">${esc(typeLabel)}</span>
-                          <strong style="font-size:11.8px;color:var(--gold-bright)">${esc(attribution)}</strong>
+                          <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
+                          <strong style="font-size:11.6px;color:var(--gold-bright)">${esc(attribution)}</strong>
                         </div>
-                        ${rep.publishedAt ? `<span class="mono" style="font-size:10.8px;color:var(--text-muted)">${esc(formatRelativeAge(rep.publishedAt))}</span>` : ''}
+                        ${rep.publishedAt ? `<span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(formatRelativeAge(rep.publishedAt))}</span>` : ''}
                       </div>
-                      <div style="font-size:12.8px;font-weight:600;line-height:1.38;color:var(--text-primary)">
+                      <div style="font-size:12.4px;font-weight:600;line-height:1.36;color:var(--text-primary)">
                         ${esc(rep.title)} ${iconSvg('externalLink', 11)}
                       </div>
                     </a>
                   `;
                 })
                 .join('')}
+            </div>
+          </details>
+          ${
+            !asSubcard
+              ? `<button type="button" class="btn-ghost btn-compact daily-brief-ask-btn" data-action="analyze-topic-jump" data-prompt="${esc(brief.headline || '49ers Top News Deep Dive')}">
+                   ${iconSvg('sparkles', 12)}
+                   <span>Ask AI</span>
+                 </button>`
+              : ''
+          }
+        </div>
+      `
+      : '';
+
+  return `
+    <${tagName} class="${outerCls}" data-daily-news-brief="${esc(brief.id || 'daily')}">
+      <div class="daily-brief-head">
+        <div style="min-width:0;flex:1">
+          <div class="card-eyebrow">Top News Brief</div>
+          <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || '49ers Daily Briefing', { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
+        </div>
+        <span class="mono daily-brief-age" data-daily-brief-age title="Generated ${esc(brief.generatedAt || '')}">${esc(ageTiny)}</span>
+      </div>
+      <p class="coaching-thesis-copy daily-brief-summary">${renderBriefProseWithInlineLinksHtml(brief.summary || '', seenJargon)}</p>
+      <ul class="brief-bullets coaching-bullets daily-brief-bullets">
+        ${(brief.bullets || []).map(b => formatDailyBriefBulletHtml(b, seenJargon)).join('')}
+      </ul>
+      ${sourcesDrawerHtml}
+    </${tagName}>
+  `;
+}
+
+export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
+  const badge = item?.breakingBadge || '';
+  if (badge && isUrgentBreakingBadge(badge)) {
+    const urgentCls = item.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill';
+    return `<span class="badge ${urgentCls}">${iconSvg('bolt', 11)}<span>${esc(badge)}</span></span>`;
+  }
+  if (badge === 'FILM & TRENCH' || item?.category === 'film') {
+    return `<span class="badge badge-positive">${iconSvg(isVideo ? 'video' : 'target', 11)}<span>${isVideo ? 'All-22 Film' : 'Film & Trench'}</span></span>`;
+  }
+  if (badge === 'ROSTER MOVE' || badge === 'TRADE INTEL') {
+    return `<span class="badge badge-gold"><span>${esc(badge)}</span></span>`;
+  }
+  if (!isVideo && isSalientCapOrContractItem(item)) {
+    return `<span class="badge badge-gold"><span>CAP &amp; CONTRACT</span></span>`;
+  }
+  if (badge === 'INJURY SCOOP' || badge === 'INJURY UPDATE') {
+    return `<span class="badge badge-neutral"><span>${esc(badge)}</span></span>`;
+  }
+  if (isVideo) {
+    const title = String(item?.title || '');
+    if (/\b(highlights|best plays|top plays|every touchdown|condensed game)\b/i.test(title)) {
+      return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Highlights</span></span>`;
+    }
+    if (/\b(forty niner way|49hours|mic['’]?d up|locker room|from the trenches|recap)\b/i.test(title)) {
+      return `<span class="badge badge-gold">${iconSvg('video', 11)}<span>Team Video</span></span>`;
+    }
+    return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Video</span></span>`;
+  }
+  if (!isTweet) {
+    const artLabel =
+      item?.wireSource === 'espn_player_wire' || String(item?.id || '').startsWith('espn_pwire_')
+        ? 'Injury Wire'
+        : 'Article';
+    return `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${artLabel}</span></span>`;
+  }
+  return '';
+}
+
+export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideosSet = new Set() } = {}) {
+  const vidKey = item.videoId ? `raw_${item.id}` : null;
+  const isVidOpen = vidKey && activeVideosSet.has(vidKey);
+  const isTweet = item.type === 'tweet' || item.type === 'social';
+  const isVideo = item.type === 'video';
+  const isUrgent = isUrgentBreakingBadge(item.breakingBadge);
+
+  const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+  const resolvedItemUrl = isTweet
+    ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
+    : sanitizeExternalUrl(item.url, null);
+  const authorHref = sanitizeExternalUrl(
+    resolveItemAuthorProfileUrl(item, resolvedItemUrl),
+    resolvedItemUrl
+  );
+  const rawBody = isTweet
+    ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
+    : item.title || '';
+  const displayTitle = isTweet
+    ? formatTweetBodyForDisplay(rawBody, SHORT_TWEET_FULL_TEXT_LIMIT).text
+    : rawBody;
+
+  const cleanSummary =
+    !isVideo &&
+    !isTweet &&
+    item.summary &&
+    !item.summary.startsWith('Published via ') &&
+    item.summary.toLowerCase() !== `${authorName} • ${item.outletName || ''}`.toLowerCase()
+      ? stripRedundantAuthorBoilerplate(item.summary, authorName)
+      : '';
+
+  const hasThumb = !isVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl);
+  const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
+  const normCmpUrl = u => String(u || '').replace(/\/+$/, '').toLowerCase();
+  const showLinkedStory =
+    Boolean(safeExtUrl) &&
+    normCmpUrl(safeExtUrl) !== normCmpUrl(resolvedItemUrl) &&
+    !isRedundantProfileSelfLink(safeExtUrl, resolvedItemUrl) &&
+    !isRedundantProfileSelfLink(safeExtUrl, item.url) &&
+    !/\bon X$/i.test(String(item.externalTitle || ''));
+  const confirmingList = (Array.isArray(item.confirmingReports) ? item.confirmingReports : []).filter(cr => {
+    const crIsTw = cr?.type === 'tweet' || cr?.type === 'social';
+    const crHref = crIsTw
+      ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '')
+      : sanitizeExternalUrl(cr?.url, '');
+    if (showLinkedStory && crHref && normCmpUrl(crHref) === normCmpUrl(safeExtUrl)) return false;
+    if (resolvedItemUrl && crHref && normCmpUrl(crHref) === normCmpUrl(resolvedItemUrl)) return false;
+    return true;
+  });
+  const relatedSourcesPreview =
+    confirmingList.length > 0
+      ? Array.from(
+          new Set(
+            confirmingList
+              .map(cr => cr.outletName || cr.author || cr.reporterName || '')
+              .filter(s => s && s.toLowerCase() !== authorName.toLowerCase())
+          )
+        )
+          .slice(0, 2)
+          .join(', ')
+      : '';
+
+  return `
+    <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+          ${renderWireSignalBadgeHtml(item, isVideo, isTweet)}
+          ${
+            authorHref
+              ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="wire-author-single-link" data-wire-author-link><strong>${esc(authorName)}</strong></a>`
+              : `<strong style="font-size:12.5px;color:var(--gold-bright)">${esc(authorName)}</strong>`
+          }
+        </div>
+        <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(formatRelativeAge(item.publishedAt))}</span>
+      </div>
+      <div class="${hasThumb ? 'media-split-row' : ''}">
+        <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
+          <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.42">
+            ${
+              resolvedItemUrl
+                ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
+                : esc(displayTitle)
+            }
+          </div>
+          ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(cleanSummary)}</div>` : ''}
+          ${
+            confirmingList.length > 0
+              ? `<details class="compact-details confirming-reports-toggle" data-confirming-reports>
+                   <summary class="compact-details-summary" style="justify-content:space-between">
+                     <span>+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}${relatedSourcesPreview ? ` · ${esc(relatedSourcesPreview)}` : ''}</span>
+                     <span class="mono" style="font-size:10px;color:var(--text-muted)">Coverage ▾</span>
+                   </summary>
+                   <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
+                     ${confirmingList
+                       .slice(0, 6)
+                       .map(cr => {
+                         const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
+                         const crBody = stripRedundantAuthorBoilerplate(cr.fullText || cr.title || '', crAuthor);
+                         const crIsTw = cr.type === 'tweet' || cr.type === 'social';
+                         const crIsVid = cr.type === 'video' || Boolean(cr.videoId);
+                         const crTypeTag = crIsVid ? 'Video' : crIsTw ? 'Tweet' : 'Article';
+                         const crHref = crIsTw
+                           ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
+                           : sanitizeExternalUrl(cr.url, '#');
+                         const crAuthorHref = sanitizeExternalUrl(
+                           resolveItemAuthorProfileUrl(cr, crHref),
+                           crHref
+                         );
+                         return `<div class="related-coverage-row">
+                           <span class="badge badge-neutral" style="font-size:9.5px;padding:1px 5px">${esc(crTypeTag)}</span>
+                           ${
+                             crAuthorHref
+                               ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(crAuthor)}</strong></a>`
+                               : `<strong>${esc(crAuthor)}</strong>`
+                           } <span class="mono" style="color:var(--text-muted)">• ${esc(formatRelativeAge(cr.publishedAt))}</span>:
+                           <a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-secondary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''}</a>
+                         </div>`;
+                       })
+                       .join('')}
+                   </div>
+                 </details>`
+              : ''
+          }
+        </div>
+        ${
+          hasThumb && (resolvedItemUrl || sanitizeExternalUrl(item.externalUrl, null))
+            ? `<a href="${esc(resolvedItemUrl || sanitizeExternalUrl(item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
+                <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
+              </a>`
+            : hasThumb
+              ? `<div class="raw-item-thumb" aria-hidden="true">
+                  <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
+                </div>`
+              : ''
+        }
+      </div>
+      ${
+        showLinkedStory
+          ? `<div>
+              <a href="${esc(safeExtUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                <span>Article: ${esc((item.externalTitle || item.outletName || 'Open Story').slice(0, 56))}</span>
+                ${iconSvg('externalLink', 11)}
+              </a>
             </div>`
+          : ''
+      }
+      ${item.mentionedPlayers?.length ? renderPlayerChipsStripHtml(item.mentionedPlayers, 4) : ''}
+      ${
+        item.videoId
+          ? renderVideoEmbedOrFacade(
+              vidKey,
+              item.videoId,
+              0,
+              item.title || `Watch Clip (${item.duration || 'Video'})`,
+              item.outletName,
+              isVidOpen,
+              item.embeddable !== false,
+              { compactFooter: true }
+            )
+          : ''
       }
     </div>
   `;
@@ -173,54 +491,78 @@ export function renderSynthesisSourcesSheetHtml(cluster, rawStream = [], appData
 
 export function renderNewsViewHtml({
   appData = null,
-  newsMode = 'raw', // 'raw' | 'clustered'
-  newsCategoryFilter, // 'all' | 'tweets' | 'videos' | 'film' | 'cap' | 'scheme' | 'roster' | 'beat'
-  filteredClusters,
+  newsCategoryFilter = 'all', // 'all' | 'tweets' | 'articles' | 'videos' | 'film' | 'roster'
   filteredRawItems,
-  reportersById,
-  activeVideosSet,
+  activeVideosSet = new Set(),
   userPrefs,
   lastWireSyncAt = null,
   isSyncingWire = false
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
+  const activeFilter = ['all', 'tweets', 'articles', 'videos', 'film', 'roster'].includes(newsCategoryFilter)
+    ? newsCategoryFilter
+    : 'all';
   const mutedCount =
     (userPrefs?.disabledReporterIds?.length || 0) + (userPrefs?.disabledOutlets?.length || 0);
 
-  const activeClusters = filterAndCleanSynthesisClusters(filteredClusters || [], appData);
-  const rawAfterAvailabilityHide = filterOutCompletedGameAvailabilityItems(filteredRawItems || [], appData);
+  const nowMs = Date.now();
+  const rawAfterAvailabilityHide = filterFreshVideosForCurrentSlate(
+    filterOutCompletedGameAvailabilityItems(filteredRawItems || [], appData, nowMs),
+    appData,
+    nowMs
+  );
   const prioritizedRaw = sortNewsWithBreakingPriority(
     rawAfterAvailabilityHide.filter(i => {
       if (i.type === 'video' && i.videoId) return true;
       return Boolean(sanitizeExternalUrl(i.url, null)) && !isPaywalledPublisher(i.outletName, i.url);
     }),
-    Date.now(),
+    nowMs,
     { appData }
   );
-  const dedupedRaw = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritizedRaw), { appData });
+
+  const dedupedRaw = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritizedRaw, { nowMs }), {
+    nowMs,
+    appData
+  });
   const dedupedTweets = deduplicateAndGroupWireItems(
     prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social'),
-    { preserveFormat: 'tweets' }
+    { nowMs, preserveFormat: 'tweets' }
   );
   const dedupedArticles = deduplicateAndGroupWireItems(
     prioritizedRaw.filter(i => i.type === 'article' || i.type === 'post'),
-    { preserveFormat: 'articles' }
+    { nowMs, preserveFormat: 'articles' }
   );
-  const dedupedVideos = deduplicateAndGroupWireItems(
-    prioritizedRaw.filter(i => i.type === 'video'),
-    { preserveFormat: 'videos' }
+  // Highlights & Videos: strictly non-film videos (0% overlap with Film & Trench), ranked by Highlight & Team-Video salience!
+  const dedupedHighlightsAndVideos = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.type === 'video' && i.category !== 'film'),
+    { nowMs, preserveFormat: 'videos' }
+  ).sort(
+    (a, b) =>
+      scoreHighlightAndTeamVideoSalience(b, appData, nowMs) -
+      scoreHighlightAndTeamVideoSalience(a, appData, nowMs)
   );
-  const tweetCount = dedupedTweets.length;
-  const activeBreakingItems = dedupedRaw.filter(i => isUrgentBreakingBadge(i.breakingBadge)).slice(0, 3);
+  // Film & Trench: All-22 film videos (incl. JT O'Sullivan's The QB School & Jonnydel) + written film/trench breakdowns
+  const dedupedFilmAndTrench = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.category === 'film'),
+    { nowMs }
+  );
+  // Trades & Roster: Trades, official roster moves, AND salient salary cap / contract news (excluding videos to avoid redundancy)
+  const dedupedTradesAndRoster = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(
+      i => i.type !== 'video' && (i.category === 'roster' || i.category === 'cap' || isSalientCapOrContractItem(i))
+    ),
+    { nowMs }
+  );
+
   const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'now';
 
   const topToolbar = `
-    <div class="card news-toolbar-card">
+    <div class="card subnav-card news-toolbar-card" role="navigation" aria-label="News and Film Categories">
       <div class="news-toolbar-head">
         <div class="news-toolbar-title-row">
           <div class="news-toolbar-brand">
             <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('news', 15)}</div>
-            <h2 class="card-title">Wire &amp; Film</h2>
+            <h2 class="card-title">News &amp; Film</h2>
           </div>
           <div class="news-toolbar-actions">
             <button type="button" class="btn-ghost btn-compact" data-action="sync-live-wire-now" ${isSyncingWire ? 'disabled' : ''} title="Check live beat tweets and injury wire immediately">
@@ -235,42 +577,27 @@ export function renderNewsViewHtml({
         </div>
       </div>
 
-      <div class="segmented-control compact-seg" role="tablist" aria-label="News Feed Mode">
-        <button type="button" role="tab" aria-selected="${newsMode === 'raw' ? 'true' : 'false'}" class="pill-btn seg-btn ${newsMode === 'raw' ? 'active' : ''}" data-action="set-news-mode" data-mode="raw">
-          ${iconSvg('bolt', 13)}
-          <span>Wire &amp; Video (${dedupedRaw.length})</span>
-        </button>
-        <button type="button" role="tab" aria-selected="${newsMode === 'clustered' ? 'true' : 'false'}" class="pill-btn seg-btn ${newsMode === 'clustered' ? 'active' : ''}" data-action="set-news-mode" data-mode="clustered">
-          ${iconSvg('sparkles', 13)}
-          <span>Synthesis Briefs (${activeClusters.length})</span>
-        </button>
-      </div>
-
-      <div class="pill-bar" aria-label="News Category Filter">
-        ${(newsMode === 'raw'
-          ? [
-              ['all', 'All'],
-              ['tweets', `Tweets (${tweetCount})`],
-              ['articles', 'Articles'],
-              ['videos', 'Videos'],
-              ['film', 'Film & Trench'],
-              ['roster', 'Trades & Roster']
-            ]
-          : [
-              ['all', 'All Topics'],
-              ['film', 'Film & Trench'],
-              ['cap', 'Cap & Contracts'],
-              ['scheme', 'Scheme & Matchup'],
-              ['roster', 'Trades & Roster']
-            ]
-        )
-          .map(
-            ([val, label]) => `
-          <button type="button" class="pill-btn ${newsCategoryFilter === val ? 'active' : ''}"
-                  data-action="set-news-category" data-category="${val}">${esc(label)}</button>
+      <div class="news-subnav-bars">
+        ${NEWS_NAV_CLUSTERS.map(
+          cluster => `
+          <div class="segmented-control season-cluster-bar news-cluster-bar" data-news-cluster="${esc(cluster.id)}" role="tablist" aria-label="${esc(cluster.ariaLabel)}">
+            ${cluster.tabs
+              .map(t => {
+                const isSelected = activeFilter === t.key;
+                return `
+                  <button type="button" role="tab" aria-selected="${isSelected ? 'true' : 'false'}"
+                          title="${esc(t.fullTitle)}"
+                          class="pill-btn seg-btn season-tab-btn news-tab-btn ${isSelected ? 'active' : ''}"
+                          data-action="set-news-category" data-category="${esc(t.key)}">
+                    ${iconSvg(t.icon, 12)}
+                    <span>${esc(t.label)}</span>
+                  </button>
+                `;
+              })
+              .join('')}
+          </div>
         `
-          )
-          .join('')}
+        ).join('')}
       </div>
 
       <details class="compact-details">
@@ -292,401 +619,71 @@ export function renderNewsViewHtml({
     </div>
   `;
 
-  const xBeatSearchStrip = '';
+  if (activeFilter === 'all') {
+    const dailyBrief =
+      appData?.news?.dailyTopNewsBrief || buildDeterministicDailyTopNewsBrief(appData, nowMs);
+    const { breakingAboveBrief, remainingBelowBrief } = partitionBreakingNewsAboveBrief(
+      dedupedRaw,
+      dailyBrief,
+      nowMs
+    );
 
-  const breakingAlertStrip =
-    newsMode === 'clustered' && activeBreakingItems.length > 0
-      ? `
-        <section class="card breaking-wire-card" aria-label="Breaking and Live Injury Alerts">
-          <div class="breaking-wire-head">
-            <span class="badge badge-danger live-breaking-pill">${iconSvg('bolt', 11)}<span>Breaking &amp; Injury Wire</span></span>
-            <button type="button" class="btn-ghost btn-compact" data-action="set-news-mode" data-mode="raw">
-              <span>Wire &amp; Video</span>
-              ${iconSvg('arrowRight', 11)}
-            </button>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:7px">
-            ${activeBreakingItems
-              .map(item => {
-                const isTw = item.type === 'tweet' || item.type === 'social';
-                const itemHref = isTw
-                  ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), '#')
-                  : sanitizeExternalUrl(item.url, '#');
-                const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
-                const authorHref = sanitizeExternalUrl(resolveItemAuthorProfileUrl(item, itemHref), itemHref);
-                const strippedBody = isTw
-                  ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
-                  : item.title;
-                const bodyText = isTw
-                  ? formatTweetBodyForDisplay(strippedBody, SHORT_TWEET_FULL_TEXT_LIMIT).text
-                  : strippedBody;
-                return `
-                  <div class="subcard-panel breaking-elevated" style="font-size:12.5px">
-                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
-                      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-                        <span class="badge ${item.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}">${esc(item.breakingBadge || 'BREAKING')}</span>
-                        <a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:12px"><strong>${esc(authorName)}</strong></a>
-                      </div>
-                      <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(formatRelativeAge(item.publishedAt))}</span>
-                    </div>
-                    <a href="${esc(itemHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:600;line-height:1.42;color:var(--text-primary)">
-                      ${esc(bodyText)} ${iconSvg('externalLink', 11)}
-                    </a>
-                  </div>
-                `;
-              })
+    const breakingTopHtml =
+      breakingAboveBrief.length > 0
+        ? `
+          <div class="card breaking-above-brief-card" data-breaking-above-brief style="display:flex;flex-direction:column;gap:9px">
+            ${breakingAboveBrief
+              .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
               .join('')}
           </div>
-        </section>
-      `
-      : '';
+        `
+        : '';
 
-  if (newsMode === 'clustered') {
-    const visibleClusters =
-      newsCategoryFilter === 'all' || ['tweets', 'articles', 'videos'].includes(newsCategoryFilter)
-        ? activeClusters
-        : activeClusters.filter(c => c.category === newsCategoryFilter);
+    const briefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
+      rawStream: prioritizedRaw,
+      appData,
+      asSubcard: false
+    });
 
-    if (visibleClusters.length === 0) {
-      return `${topToolbar}${xBeatSearchStrip}${breakingAlertStrip}<div class="card">No synthesis briefs match your active category or source filters.</div>`;
-    }
-
-    const clustersHtml = visibleClusters
-      .map(c => {
-        const citedReporters = (c.citedReporterIds || [])
-          .map(id => reportersById.get(id))
-          .filter(Boolean)
-          .slice(0, 6);
-
-        let videoHtml = '';
-        if (c.videoClip?.videoId) {
-          const vidKey = `cluster_${c.id}_${c.videoClip.videoId}`;
-          const isPlaying = activeVideosSet.has(vidKey);
-          videoHtml = renderVideoEmbedOrFacade(
-            vidKey,
-            c.videoClip.videoId,
-            c.videoClip.startSeconds || 0,
-            c.videoClip.timestampLabel || c.videoClip.title,
-            c.videoClip.channel,
-            isPlaying,
-            c.videoClip.embeddable !== false
-          );
-        }
-
-        const safeSourceLinks = resolveClusterSafeReports(c, prioritizedRaw, appData);
-        const reportCount = safeSourceLinks.length || Number(c.synthesizedFromCount) || 0;
-        const sourceLinksHtml =
-          safeSourceLinks.length > 0
-            ? `
-              <details class="compact-details">
-                <summary class="compact-details-summary">
-                  <span>Sources (${safeSourceLinks.length})</span>
-                </summary>
-                <div class="source-links-grid" style="margin-top:7px">
-                  ${safeSourceLinks
-                    .map(
-                      sl => `
-                    <a href="${esc(sl.url)}" target="_blank" rel="noopener noreferrer" class="source-card-link">
-                      <span class="source-card-outlet">${esc(sl.outlet || 'Source')}${sl.publishedAt ? ` • ${esc(formatRelativeAge(sl.publishedAt))}` : ''}</span>
-                      <span class="source-card-title">${esc(sl.title)} ${iconSvg('externalLink', 11)}</span>
-                    </a>
-                  `
-                    )
-                    .join('')}
-                </div>
-              </details>
-            `
-            : '';
-
-        const hasHeroPhoto =
-          c.heroImageUrl &&
-          /^https:\/\//i.test(c.heroImageUrl) &&
-          (c.heroImageIsEditorial || !c.videoClip?.videoId);
-
-        const heroBannerHtml = hasHeroPhoto
-          ? `
-            <div class="brief-hero-media">
-              <img src="${esc(c.heroImageUrl)}" alt="${esc(c.heroImageAlt || c.headline)}" class="brief-hero-img" loading="lazy" decoding="async" />
-              <div class="brief-hero-scrim">
-                <span class="badge badge-gold">${esc(c.categoryLabel)}</span>
-                ${c.heroImageSource ? `<span class="brief-hero-credit">${esc(c.heroImageSource)}</span>` : ''}
-              </div>
-            </div>
-          `
-          : '';
-
-        return `
-          <article class="card" data-cluster-card="${esc(c.id)}" style="display:flex;flex-direction:column;gap:10px">
-            ${heroBannerHtml}
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-              ${hasHeroPhoto ? '<span></span>' : `<span class="badge badge-gold">${esc(c.categoryLabel)}</span>`}
-              <span class="mono" style="font-size:11.5px;color:var(--text-muted)">
-                <button type="button" class="synthesis-reports-link mono" data-action="open-synthesis-sources" data-cluster-id="${esc(c.id)}">${reportCount} report${reportCount === 1 ? '' : 's'}</button> • ${esc(formatRelativeAge(c.publishedAt))}
-              </span>
-            </div>
-
-            <h3 class="brief-headline">${esc(c.headline)}</h3>
-
-            ${c.featuredPlayers?.length ? renderPlayerChipsStripHtml(c.featuredPlayers, 5) : ''}
-
-            <div>
-              <div class="brief-section-label">Key Developments</div>
-              <ul class="brief-bullets">
-                ${(c.hardFacts || []).map(f => `<li>${escJargon(f)}</li>`).join('')}
-              </ul>
-            </div>
-
-            <div>
-              <div class="brief-section-label">Scheme &amp; Cap Impact</div>
-              <ul class="brief-bullets">
-                ${(c.schemeAndCapTakeaways || []).map(t => `<li>${escJargon(t)}</li>`).join('')}
-              </ul>
-            </div>
-
-            ${
-              c.consensusVsDissent
-                ? `<div class="subcard-panel" style="font-size:12.5px">
-                    <strong style="color:var(--gold-bright)">Beat Consensus:</strong> ${escJargon(c.consensusVsDissent)}
-                   </div>`
-                : ''
-            }
-
-            ${videoHtml}
-
-            ${sourceLinksHtml}
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--border-subtle);font-size:11.5px;color:var(--text-muted)">
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-                <span>Voices:</span>
-                ${citedReporters
-                  .map(rep => {
-                    const href = sanitizeExternalUrl(rep.xUrl || rep.profileUrl, null);
-                    return href
-                      ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px">${esc(rep.name)}</a>`
-                      : `<strong>${esc(rep.name)}</strong>`;
-                  })
-                  .join(' · ')}
-              </div>
-              <button type="button" class="btn-ghost" data-action="analyze-topic-jump" data-prompt="${esc(c.headline)}">
-                ${iconSvg('sparkles', 13)}
-                <span>Ask AI</span>
-              </button>
-            </div>
-          </article>
+    const belowListHtml =
+      remainingBelowBrief.length === 0
+        ? `<div class="card">No additional feed items match your active source filters.</div>`
+        : `
+          <div class="card" style="display:flex;flex-direction:column;gap:9px">
+            ${remainingBelowBrief
+              .slice(0, 65)
+              .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
+              .join('')}
+          </div>
         `;
-      })
-      .join('');
 
-    return `${topToolbar}${xBeatSearchStrip}${breakingAlertStrip}${clustersHtml}`;
+    return `${topToolbar}${breakingTopHtml}${briefHtml}${belowListHtml}`;
   }
 
-  // Raw Stream Mode (StoryRank-Prioritized & Consolidated Stories, Tweets, Articles, Videos & All-22 Film)
-  const visibleRaw =
-    newsCategoryFilter === 'tweets'
-      ? balanceFeedTopSalience(dedupedTweets, { appData })
-      : newsCategoryFilter === 'articles'
-        ? balanceFeedTopSalience(dedupedArticles, { appData })
-        : newsCategoryFilter === 'videos'
-          ? dedupedVideos
-          : dedupedRaw.filter(it => {
-              if (newsCategoryFilter === 'all') return true;
-              return it.category === newsCategoryFilter;
-            });
+  const visibleFiltered =
+    activeFilter === 'tweets'
+      ? balanceFeedTopSalience(dedupedTweets, { nowMs, appData })
+      : activeFilter === 'articles'
+        ? balanceFeedTopSalience(dedupedArticles, { nowMs, appData })
+        : activeFilter === 'videos'
+          ? dedupedHighlightsAndVideos
+          : activeFilter === 'film'
+            ? dedupedFilmAndTrench
+            : dedupedTradesAndRoster;
 
-  const renderWireSignalBadgeHtml = (item, isVideo, isTweet) => {
-    const badge = item.breakingBadge || '';
-    if (badge && isUrgentBreakingBadge(badge)) {
-      const urgentCls = item.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill';
-      return `<span class="badge ${urgentCls}">${iconSvg('bolt', 11)}<span>${esc(badge)}</span></span>`;
-    }
-    if (badge === 'FILM & TRENCH' || (isVideo && item.category === 'film')) {
-      return `<span class="badge badge-positive">${iconSvg(isVideo ? 'video' : 'sparkles', 11)}<span>${isVideo ? 'All-22 Film' : 'Film & Trench'}</span></span>`;
-    }
-    if (badge === 'ROSTER MOVE' || badge === 'TRADE INTEL') {
-      return `<span class="badge badge-gold"><span>${esc(badge)}</span></span>`;
-    }
-    if (badge === 'INJURY SCOOP' || badge === 'INJURY UPDATE') {
-      return `<span class="badge badge-neutral"><span>${esc(badge)}</span></span>`;
-    }
-    if (isVideo) {
-      return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Video</span></span>`;
-    }
-    if (!isTweet) {
-      const artLabel =
-        item.wireSource === 'espn_player_wire' || String(item.id || '').startsWith('espn_pwire_')
-          ? 'Injury Wire'
-          : 'Article';
-      return `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${artLabel}</span></span>`;
-    }
-    return '';
-  };
-
-  const rawListHtml =
-    visibleRaw.length === 0
+  const filteredListHtml =
+    visibleFiltered.length === 0
       ? `<div class="card">No feed items match your active filters.</div>`
       : `
         <div class="card" style="display:flex;flex-direction:column;gap:9px">
-          ${visibleRaw
+          ${visibleFiltered
             .slice(0, 65)
-            .map(item => {
-              const vidKey = item.videoId ? `raw_${item.id}` : null;
-              const isVidOpen = vidKey && activeVideosSet.has(vidKey);
-              const isTweet = item.type === 'tweet' || item.type === 'social';
-              const isVideo = item.type === 'video';
-              const isUrgent = isUrgentBreakingBadge(item.breakingBadge);
-
-              const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
-              const resolvedItemUrl = isTweet
-                ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
-                : sanitizeExternalUrl(item.url, null);
-              const authorHref = sanitizeExternalUrl(
-                resolveItemAuthorProfileUrl(item, resolvedItemUrl),
-                resolvedItemUrl
-              );
-              const rawBody = isTweet
-                ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
-                : item.title || '';
-              const displayTitle = isTweet
-                ? formatTweetBodyForDisplay(rawBody, SHORT_TWEET_FULL_TEXT_LIMIT).text
-                : rawBody;
-
-              const cleanSummary =
-                !isVideo &&
-                !isTweet &&
-                item.summary &&
-                !item.summary.startsWith('Published via ') &&
-                item.summary.toLowerCase() !== `${authorName} • ${item.outletName || ''}`.toLowerCase()
-                  ? stripRedundantAuthorBoilerplate(item.summary, authorName)
-                  : '';
-
-              const hasThumb = !isVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl);
-              const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
-              const showLinkedStory =
-                Boolean(safeExtUrl) &&
-                !isRedundantProfileSelfLink(safeExtUrl, resolvedItemUrl) &&
-                !isRedundantProfileSelfLink(safeExtUrl, item.url) &&
-                !/\bon X$/i.test(String(item.externalTitle || ''));
-              const confirmingList = Array.isArray(item.confirmingReports) ? item.confirmingReports : [];
-              const relatedSourcesPreview =
-                confirmingList.length > 0
-                  ? Array.from(
-                      new Set(
-                        confirmingList
-                          .map(cr => cr.outletName || cr.author || cr.reporterName || '')
-                          .filter(s => s && s.toLowerCase() !== authorName.toLowerCase())
-                      )
-                    )
-                      .slice(0, 2)
-                      .join(', ')
-                  : '';
-
-              return `
-                <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}">
-                  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-                    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
-                      ${renderWireSignalBadgeHtml(item, isVideo, isTweet)}
-                      ${
-                        authorHref
-                          ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="wire-author-single-link" data-wire-author-link><strong>${esc(authorName)}</strong></a>`
-                          : `<strong style="font-size:12.5px;color:var(--gold-bright)">${esc(authorName)}</strong>`
-                      }
-                    </div>
-                    <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(formatRelativeAge(item.publishedAt))}</span>
-                  </div>
-                  <div class="${hasThumb ? 'media-split-row' : ''}">
-                    <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
-                      <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.42">
-                        ${
-                          resolvedItemUrl
-                            ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
-                            : esc(displayTitle)
-                        }
-                      </div>
-                      ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(cleanSummary)}</div>` : ''}
-                      ${
-                        confirmingList.length > 0
-                          ? `<details class="compact-details confirming-reports-toggle" data-confirming-reports>
-                               <summary class="compact-details-summary" style="justify-content:space-between">
-                                 <span>+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}${relatedSourcesPreview ? ` · ${esc(relatedSourcesPreview)}` : ''}</span>
-                                 <span class="mono" style="font-size:10px;color:var(--text-muted)">Coverage ▾</span>
-                               </summary>
-                               <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
-                                 ${confirmingList
-                                   .slice(0, 6)
-                                   .map(cr => {
-                                     const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
-                                     const crBody = stripRedundantAuthorBoilerplate(cr.fullText || cr.title || '', crAuthor);
-                                     const crIsTw = cr.type === 'tweet' || cr.type === 'social';
-                                     const crIsVid = cr.type === 'video' || Boolean(cr.videoId);
-                                     const crTypeTag = crIsVid ? 'Video' : crIsTw ? 'Tweet' : 'Article';
-                                     const crHref = crIsTw
-                                       ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
-                                       : sanitizeExternalUrl(cr.url, '#');
-                                     const crAuthorHref = sanitizeExternalUrl(
-                                       resolveItemAuthorProfileUrl(cr, crHref),
-                                       crHref
-                                     );
-                                     return `<div class="related-coverage-row">
-                                       <span class="badge badge-neutral" style="font-size:9.5px;padding:1px 5px">${esc(crTypeTag)}</span>
-                                       ${
-                                         crAuthorHref
-                                           ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(crAuthor)}</strong></a>`
-                                           : `<strong>${esc(crAuthor)}</strong>`
-                                       } <span class="mono" style="color:var(--text-muted)">• ${esc(formatRelativeAge(cr.publishedAt))}</span>:
-                                       <a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-secondary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''}</a>
-                                     </div>`;
-                                   })
-                                   .join('')}
-                               </div>
-                             </details>`
-                          : ''
-                      }
-                    </div>
-                    ${
-                      hasThumb && (resolvedItemUrl || sanitizeExternalUrl(item.externalUrl, null))
-                        ? `<a href="${esc(resolvedItemUrl || sanitizeExternalUrl(item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
-                            <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
-                          </a>`
-                        : hasThumb
-                          ? `<div class="raw-item-thumb" aria-hidden="true">
-                              <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
-                            </div>`
-                          : ''
-                    }
-                  </div>
-                  ${
-                    showLinkedStory
-                      ? `<div>
-                          <a href="${esc(safeExtUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                            <span>Article: ${esc((item.externalTitle || item.outletName || 'Open Story').slice(0, 56))}</span>
-                            ${iconSvg('externalLink', 11)}
-                          </a>
-                        </div>`
-                      : ''
-                  }
-                  ${item.mentionedPlayers?.length ? renderPlayerChipsStripHtml(item.mentionedPlayers, 4) : ''}
-                  ${
-                    item.videoId
-                      ? renderVideoEmbedOrFacade(
-                          vidKey,
-                          item.videoId,
-                          0,
-                          item.title || `Watch Clip (${item.duration || 'Video'})`,
-                          item.outletName,
-                          isVidOpen,
-                          item.embeddable !== false,
-                          { compactFooter: true }
-                        )
-                      : ''
-                  }
-                </div>
-              `;
-            })
+            .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
             .join('')}
         </div>
       `;
 
-  return `${topToolbar}${xBeatSearchStrip}${rawListHtml}`;
+  return `${topToolbar}${filteredListHtml}`;
 }
 
 export function renderVideoEmbedOrFacade(

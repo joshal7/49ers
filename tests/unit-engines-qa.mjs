@@ -136,7 +136,12 @@ import {
   filterOutCompletedGameAvailabilityItems,
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster,
-  filterAndCleanSynthesisClusters
+  filterAndCleanSynthesisClusters,
+  isSalientCapOrContractItem,
+  isStalePriorGameVideo,
+  filterFreshVideosForCurrentSlate,
+  isBreakingItemCoveredInBrief,
+  partitionBreakingNewsAboveBrief
 } from '../src/engine/breakingClassifier.js';
 import {
   evaluateGameDayWindow,
@@ -148,7 +153,21 @@ import {
   resolveEarlyWeekRolloverInput,
   rolloverPracticeReportForUpcomingWeek
 } from '../src/engine/gameDayRosterEngine.js';
-import { renderNewsViewHtml } from '../src/views/newsView.js';
+import {
+  NEWS_NAV_CLUSTERS,
+  VALID_NEWS_CATEGORIES,
+  renderNewsViewHtml,
+  renderDailyTopNewsBriefHtml
+} from '../src/views/newsView.js';
+import { renderHomeDashboardHtml } from '../src/views/homeView.js';
+import {
+  DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
+  getDailyNewsBriefCycleKey,
+  selectTopNewsBriefSourceCandidates,
+  buildDailyTopNewsBriefPrompt,
+  parseAndSanitizeDailyTopNewsBrief,
+  buildDeterministicDailyTopNewsBrief
+} from '../src/services/aiWorkerClient.js';
 import { renderSettingsSheetHtml } from '../src/views/settingsArchiveView.js';
 import {
   buildNativePodcastAppHref,
@@ -1780,7 +1799,12 @@ test('5-Year OverTheCap summary (2026–2030) has exact gross space, effective s
     assert.ok(Number.isFinite(row.deadMoneyTotal) && row.deadMoneyTotal >= 0, `Invalid deadMoneyTotal for ${y}`);
   }
   assert.equal(capData.years['2026'].deadMoneyTotal, 46020699, '2026 OTC Dead Money must match exact $46,020,699 without footer double-counting');
-  assert.equal(capData.years['2027'].teamCapSpace, -31540066, '2027 OTC Team Cap Space must parse negative ($31,540,066)');
+  assert.ok(
+    capData.years['2027'].teamCapSpace < 0 &&
+      capData.years['2027'].teamCapSpace ===
+        capData.years['2027'].capCeiling - capData.years['2027'].totalCapLiabilities,
+    '2027 OTC Team Cap Space must parse negative and equal capCeiling - totalCapLiabilities penny-for-penny'
+  );
 });
 
 test('Multi-Year Salary Cap Simulator (2026–2030) combines Prorated & Current-Yr Bonuses, defaults Dead Money & Cap Savings to $0, and computes OTC moves per year', () => {
@@ -4141,11 +4165,9 @@ test('News Classifier prioritizes live in-game injuries, demotes stale pre-game 
   assert.equal(isRedundantProfileSelfLink('https://x.com/MikeGarafolo', 'https://www.espn.com/nfl/player/_/id/3117251#wire'), true);
   assert.equal(isRedundantProfileSelfLink('https://www.espn.com/nfl/story/_/id/999/real-story', 'https://x.com/MikeGarafolo/status/123'), false);
 
-  // 4. News View tab order (Wire & Video LEFT + active by default), Sticky first column, and Settings Host Format
+  // 4. Unified 2-row 6-filter News View (no Synthesis Briefs), Single-attribution tweet cards, and Settings Host Format
   const newsHtml = renderNewsViewHtml({
-    newsMode: 'raw',
     newsCategoryFilter: 'all',
-    filteredClusters: [],
     filteredRawItems: [
       {
         id: 'garafolo_card',
@@ -4165,11 +4187,16 @@ test('News Classifier prioritizes live in-game injuries, demotes stale pre-game 
     userPrefs: { disabledReporterIds: [], disabledOutlets: [] },
     activeVideosSet: new Set()
   });
-  const rawIdx = newsHtml.indexOf('data-mode="raw"');
-  const clusIdx = newsHtml.indexOf('data-mode="clustered"');
-  assert.ok(rawIdx > -1 && clusIdx > -1 && rawIdx < clusIdx, 'Wire & Video tab must sit to the LEFT of Synthesis Briefs');
+  assert.ok(!newsHtml.includes('data-action="set-news-mode"'), 'Synthesis Briefs / Wire mode toggle must be completely removed');
+  assert.ok(!/Synthesis Briefs/i.test(newsHtml), 'Synthesis Briefs label must not render anywhere in News & Film');
+  for (const expectedCat of ['all', 'tweets', 'articles', 'videos', 'film', 'roster']) {
+    assert.ok(newsHtml.includes(`data-category="${expectedCat}"`), `Missing unified news filter button: ${expectedCat}`);
+  }
+  assert.ok(newsHtml.includes('Highlights &amp; Videos'), 'Videos filter must be titled "Highlights & Videos"');
   const garafoloCount = (newsHtml.match(/Mike Garafolo/g) || []).length;
-  assert.equal(garafoloCount, 1, `Tweeter name must appear ONLY ONCE on tweet card, got ${garafoloCount}`);
+  // Note: 1 on the tweet card itself (+ optional 1 if cited in deterministic daily brief when it's the sole item)
+  const garafoloTweetCardHtml = newsHtml.split('class="brief-card')[1] || '';
+  assert.equal((garafoloTweetCardHtml.match(/Mike Garafolo/g) || []).length, 1, 'Tweeter name must appear ONLY ONCE on tweet card');
   assert.ok(!newsHtml.includes('Tweet • @'), 'Redundant Tweet • @handle pill must be removed');
   assert.ok(!newsHtml.includes('Linked Story:'), 'Redundant X profile Linked Story pill must be removed');
   assert.ok(!newsHtml.includes('espn.com/nfl/player/'), 'Tweet link must NEVER point to an ESPN player profile page');
@@ -5914,15 +5941,13 @@ await testAsync('Site-wide redundancy consolidation & Depth Chart scheme/alignme
   // 4. News & Audio rapid-succession count & video footer de-duplication
   const newsHtml = renderNewsViewHtml({
     appData: fullAppData,
-    newsMode: 'raw',
     newsCategoryFilter: 'all',
-    filteredClusters: fullAppData.news.clusteredBriefs,
     filteredRawItems: fullAppData.news.rawStream,
     reportersById: new Map(),
     activeVideosSet: new Set(),
     userPrefs: {}
   });
-  assert.ok(newsHtml.includes('data-category="all">All</button>'), 'Wire & Video All filter pill must not repeat total count directly under Wire & Video (N)');
+  assert.ok(newsHtml.includes('data-category="all">') && newsHtml.includes('<span>All</span>'), 'All filter tab must render cleanly without total count clutter');
 
   const podsHtml = renderAudioAiViewHtml({
     appData: fullAppData,
@@ -5932,6 +5957,248 @@ await testAsync('Site-wide redundancy consolidation & Depth Chart scheme/alignme
   });
   assert.ok(podsHtml.includes('<h2 class="card-title">49ers Beat Podcasts</h2>'), '49ers Beat Podcasts title must not repeat episode count under Podcasts (N) tab');
   assert.ok(podsHtml.includes('<span>All 6 Shows</span>'), 'All 6 Shows filter pill must not repeat episode count a third time');
+});
+
+test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-News Brief, Breaking-Above-Brief Ordering & Disjoint Video/Cap Partitioning', () => {
+  const fullAppData = {
+    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+    cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+    health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8')),
+    depthChart: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8')),
+    podcastIndex: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'podcasts', 'index.json'), 'utf8')),
+    beatPodcasts: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'beat-podcasts.json'), 'utf8'))
+  };
+
+  // 1. Two-Row 6-Filter Bar Structure: All, Tweets, Articles | Highlights & Videos, Film & Trench, Trades & Roster
+  assert.equal(NEWS_NAV_CLUSTERS.length, 2, 'Expected 2 segmented filter rows for zero-overflow mobile News navigation');
+  const flatKeys = NEWS_NAV_CLUSTERS.flatMap(c => c.tabs.map(t => t.key));
+  assert.deepEqual(flatKeys, ['all', 'tweets', 'articles', 'videos', 'film', 'roster']);
+  assert.equal(VALID_NEWS_CATEGORIES.size, 6);
+
+  // 2. 5:00 PM PT (17:00 America/Los_Angeles) Peak Daily News Brief Cycle Boundary
+  assert.equal(DAILY_NEWS_BRIEF_PEAK_HOUR_PT, 17);
+  // Nov 12, 2026 in PST (UTC-8): 16:59 PST = 2026-11-13T00:59:00Z -> still on Nov 11 @ 17PT cycle!
+  const before5pmPtMs = Date.parse('2026-11-13T00:59:00Z');
+  // 17:01 PST = 2026-11-13T01:01:00Z -> rolls to Nov 12 @ 17PT cycle!
+  const after5pmPtMs = Date.parse('2026-11-13T01:01:00Z');
+  assert.equal(getDailyNewsBriefCycleKey(before5pmPtMs), '2026-11-11@17PT');
+  assert.equal(getDailyNewsBriefCycleKey(after5pmPtMs), '2026-11-12@17PT');
+
+  // 3. Daily Top News Brief in data/news.json (~2/3 Coaching Matchup word count, inline links, upper-right age, expandable sources)
+  const dailyBrief = fullAppData.news.dailyTopNewsBrief;
+  assert.ok(dailyBrief && dailyBrief.headline && dailyBrief.summary, 'data/news.json must include dailyTopNewsBrief');
+  assert.equal(dailyBrief.bullets.length, 3, 'Daily Top News Brief must contain 3 high-signal bullets');
+  assert.ok(
+    dailyBrief.wordCount >= 165 && dailyBrief.wordCount <= 275,
+    `Daily Top News Brief wordCount (${dailyBrief.wordCount}) must be ~2/3 of the ~355-word Coaching Matchup`
+  );
+  assert.ok(dailyBrief.sources.length >= 5, `Expected >=5 sources in dailyTopNewsBrief, got ${dailyBrief.sources.length}`);
+
+  const briefCardHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
+    rawStream: fullAppData.news.rawStream,
+    appData: fullAppData
+  });
+  assert.ok(briefCardHtml.includes('data-daily-brief-age'), 'Missing tiny upper-right xxh ago age timestamp');
+  assert.ok(briefCardHtml.includes('data-brief-inline-source'), 'Missing inline clickable source citations inside brief prose');
+  assert.ok(briefCardHtml.includes('data-daily-brief-sources'), 'Missing expandable full source list at bottom of brief');
+  assert.ok(!/<a\b[^>]*>(?:(?!<\/a>)[\s\S])*<a\b/i.test(briefCardHtml), 'Found nested <a> tags inside Daily Top News Brief HTML');
+
+  // Verify LLM JSON parser resolves [Author](S#) references cleanly and strips departed-player hallucinations
+  const cands = selectTopNewsBriefSourceCandidates(fullAppData, 10);
+  const promptText = buildDailyTopNewsBriefPrompt(fullAppData, cands);
+  assert.ok(promptText.includes('~215–245 words'), 'Prompt must enforce ~2/3 Coaching Matchup word budget');
+  const parsedAiBrief = parseAndSanitizeDailyTopNewsBrief(
+    JSON.stringify({
+      headline: '49ers Finalize Keenan Allen Trade & DeForest Buckner Cap Restructure Before Cowboys Tilt',
+      summary: 'San Francisco cleared $5.2M in 2026 cap space while integrating WR Keenan Allen ([S1]) and opening DT C.J. West\'s 21-day practice window ([Matt Maiocco](S2)).',
+      bullets: [
+        'Trades & Cap Ledger: Paraag Marathe converted DeForest Buckner base salary into bonus proration ([NFL Trade Rumors](S1)) to preserve $39.18M in Article 13 rollover.',
+        'Practice Participation: Deebo Samuel returned on a limited basis while Kyle Shanahan monitored mid-week reps ([49ers Webzone](S3)).',
+        'Week 10 Matchup Prep: Brock Purdy and Fred Warner headline locker-room preparation ahead of Sunday vs. Dallas ([49ers.com](S4)).'
+      ],
+      citedSourceIds: ['S1', 'S2', 'S3', 'S4']
+    }),
+    cands,
+    fullAppData
+  );
+  assert.ok(parsedAiBrief && parsedAiBrief.sources.length >= 4, 'Failed to parse valid Gemini 3.8 Flash High brief JSON');
+  assert.ok(/\[[^\]]+\]\(https:\/\/[^)]+\)/.test(parsedAiBrief.summary), 'Expected S# citations converted to verified HTTPS links');
+
+  // 4. Breaking-Above-Brief Ordering Rule (Identical in News -> All AND Home)
+  const nowOrderMs = Date.now();
+  const coveredSrcUrl = dailyBrief.sources[0].url;
+  const coveredBreakingItem = {
+    id: 'covered_brk_1',
+    type: 'tweet',
+    title: dailyBrief.sources[0].title,
+    fullText: dailyBrief.sources[0].title,
+    url: coveredSrcUrl,
+    author: 'Adam Schefter',
+    trustTier: 1,
+    isBreaking: true,
+    breakingBadge: 'BREAKING',
+    publishedAt: new Date(nowOrderMs - 20 * 60_000).toISOString()
+  };
+  const uncoveredNewBreakingItem = {
+    id: 'uncovered_new_brk_1',
+    type: 'tweet',
+    title: 'BREAKING: 49ers sign veteran All-Pro guard Zack Martin to a 1-year deal off waivers ahead of Week 10.',
+    fullText: 'BREAKING: 49ers sign veteran All-Pro guard Zack Martin to a 1-year deal off waivers ahead of Week 10.',
+    url: 'https://x.com/AdamSchefter/status/9999999999999999991',
+    author: 'Adam Schefter',
+    trustTier: 1,
+    isBreaking: true,
+    breakingBadge: 'BREAKING',
+    publishedAt: new Date(nowOrderMs - 5 * 60_000).toISOString()
+  };
+  assert.equal(isBreakingItemCoveredInBrief(coveredBreakingItem, dailyBrief), true, 'Covered breaking story must be recognized as already in brief');
+  assert.equal(isBreakingItemCoveredInBrief(uncoveredNewBreakingItem, dailyBrief), false, 'Brand-new breaking story must be recognized as uncovered');
+
+  const partCoveredOnly = partitionBreakingNewsAboveBrief([coveredBreakingItem], dailyBrief, nowOrderMs);
+  assert.equal(partCoveredOnly.breakingAboveBrief.length, 0, 'Already-covered breaking news must NOT jump above Daily Brief');
+
+  const partWithUncovered = partitionBreakingNewsAboveBrief(
+    [uncoveredNewBreakingItem, coveredBreakingItem],
+    dailyBrief,
+    nowOrderMs
+  );
+  assert.equal(partWithUncovered.breakingAboveBrief.length, 1);
+  assert.equal(partWithUncovered.breakingAboveBrief[0].id, 'uncovered_new_brk_1');
+
+  // Verify BOTH News -> All AND Home render uncovered breaking news ABOVE `[data-daily-news-brief]`!
+  const mockDataWithUncovered = {
+    ...fullAppData,
+    news: {
+      ...fullAppData.news,
+      rawStream: [uncoveredNewBreakingItem, ...fullAppData.news.rawStream]
+    }
+  };
+  const newsAllWithBrkHtml = renderNewsViewHtml({
+    appData: mockDataWithUncovered,
+    newsCategoryFilter: 'all',
+    filteredRawItems: mockDataWithUncovered.news.rawStream,
+    reportersById: new Map(),
+    activeVideosSet: new Set(),
+    userPrefs: {}
+  });
+  const newsBrkPos = newsAllWithBrkHtml.indexOf('data-breaking-above-brief');
+  const newsBriefPos = newsAllWithBrkHtml.indexOf('data-daily-news-brief');
+  assert.ok(newsBrkPos > -1 && newsBriefPos > -1 && newsBrkPos < newsBriefPos, 'Uncovered breaking news must render ABOVE Daily Brief in News -> All');
+
+  const seasonStateNow = evaluateSeasonState({
+    now: new Date(),
+    calendar: fullAppData.meta.calendar,
+    teamStatus: fullAppData.meta.teamStatus
+  });
+  const homeWithBrkHtml = renderHomeDashboardHtml({
+    orderedBlocks: resolveOrderedDashboardBlocks(seasonStateNow.activeBlocks, []),
+    archivedBlocks: seasonStateNow.archivedBlocks,
+    appData: mockDataWithUncovered,
+    simCapResult: simulateCapScenario(fullAppData.cap, {}),
+    mcSimResult: fullAppData.seasonal.playoffPicture.baselineSimulation,
+    filteredRawItems: mockDataWithUncovered.news.rawStream,
+    isCustomizingLayout: false
+  });
+  const homeBrkPos = homeWithBrkHtml.indexOf('data-breaking-above-brief');
+  const homeBriefPos = homeWithBrkHtml.indexOf('data-daily-news-brief');
+  assert.ok(homeBrkPos > -1 && homeBriefPos > -1 && homeBrkPos < homeBriefPos, 'Uncovered breaking news must render ABOVE Daily Brief on Home screen');
+
+  // 5. Post-Game Stale Video Pruning, JT O'Sullivan QB School Film Classification & 0% Video Overlap
+  const staleAtlantaVideo = {
+    id: 'yt_stale_atl',
+    type: 'video',
+    videoId: 'staleAtl123',
+    title: '49ers Playbook: SF Falls Flat in ATL vs Falcons',
+    outletName: "Jonnydel's Football Academy",
+    publishedAt: new Date(Date.now() - 16 * 86_400_000).toISOString()
+  };
+  const recentPriorWeekOpponentVideo = {
+    id: 'yt_prior_opp',
+    type: 'video',
+    videoId: 'priorFalcons99',
+    title: 'San Francisco 49ers vs. Atlanta Falcons Full Game Highlights',
+    outletName: 'NFL',
+    publishedAt: new Date(Date.now() - 9 * 86_400_000).toISOString()
+  };
+  const freshRaidersHighlight = {
+    id: 'yt_fresh_lv',
+    type: 'video',
+    videoId: 'freshRaiders99',
+    title: 'Las Vegas Raiders vs. San Francisco 49ers Game Highlights | Week 9',
+    outletName: 'NFL',
+    publishedAt: new Date(Date.now() - 2 * 86_400_000).toISOString()
+  };
+  assert.equal(isStalePriorGameVideo(staleAtlantaVideo, fullAppData), true, '2-week-old video must be pruned');
+  assert.equal(isStalePriorGameVideo(recentPriorWeekOpponentVideo, fullAppData), true, 'Prior-opponent highlight video must be pruned after a newer game is played');
+  assert.equal(isStalePriorGameVideo(freshRaidersHighlight, fullAppData), false, 'Latest completed game highlights must be preserved');
+
+  const qbSchoolPurdyVideo = {
+    id: 'yt_qbschool_purdy',
+    type: 'video',
+    videoId: 'qbschoolPurdy1',
+    title: 'Brock Purdy Week 9 Analysis: Anticipation & Layered Throws',
+    outletName: 'The QB School',
+    author: "JT O'Sullivan • The QB School",
+    publishedAt: new Date(Date.now() - 24 * 3_600_000).toISOString()
+  };
+  assert.equal(classifyNewsItemCategory(qbSchoolPurdyVideo), 'film', "JT O'Sullivan's The QB School videos of 49ers QBs must classify into Film & Trench");
+  assert.equal(classifyNewsItemCategory(freshRaidersHighlight), 'beat', 'Game highlight reel must stay in Highlights & Videos (not Film & Trench)');
+
+  // Verify 0% video duplication between rendered Highlights & Videos (`videos`) and Film & Trench (`film`)
+  const videosTabHtml = renderNewsViewHtml({
+    appData: fullAppData,
+    newsCategoryFilter: 'videos',
+    filteredRawItems: [...fullAppData.news.rawStream, qbSchoolPurdyVideo],
+    reportersById: new Map(),
+    activeVideosSet: new Set(),
+    userPrefs: {}
+  });
+  const filmTabHtml = renderNewsViewHtml({
+    appData: fullAppData,
+    newsCategoryFilter: 'film',
+    filteredRawItems: [...fullAppData.news.rawStream, qbSchoolPurdyVideo],
+    reportersById: new Map(),
+    activeVideosSet: new Set(),
+    userPrefs: {}
+  });
+  const extractRenderedVidIds = html =>
+    new Set(
+      [...html.matchAll(/youtube\.com\/(?:watch\?v=|embed\/)([A-Za-z0-9_-]{6,15})/g)].map(m => m[1])
+    );
+  const hlVidIds = extractRenderedVidIds(videosTabHtml);
+  const filmVidIds = extractRenderedVidIds(filmTabHtml);
+  assert.ok(hlVidIds.size >= 3, `Expected >=3 videos in Highlights & Videos, got ${hlVidIds.size}`);
+  assert.ok(filmVidIds.has('qbschoolPurdy1'), "Expected JT O'Sullivan QB School video in Film & Trench");
+  for (const vidId of hlVidIds) {
+    assert.ok(!filmVidIds.has(vidId), `Duplicate video "${vidId}" appeared in both Highlights & Videos and Film & Trench`);
+  }
+
+  // 6. Salient Cap News Folded Into Trades & Roster (No Separate AI Cap Brief)
+  const capRestructureItem = {
+    id: 'cap_buckner_1',
+    type: 'tweet',
+    title: '49ers restructured DT DeForest Buckner’s contract, converting base salary into a signing bonus to create $5.2M in 2026 salary cap space.',
+    fullText: '49ers restructured DT DeForest Buckner’s contract, converting base salary into a signing bonus to create $5.2M in 2026 salary cap space.',
+    author: 'Matt Maiocco',
+    url: 'https://x.com/MaioccoNBCS/status/2120617948138409999',
+    publishedAt: new Date(Date.now() - 2 * 3_600_000).toISOString()
+  };
+  assert.equal(isSalientCapOrContractItem(capRestructureItem), true);
+  assert.equal(classifyNewsItemCategory(capRestructureItem), 'roster', 'Salient cap news must fold directly into Trades & Roster');
+  const rosterTabHtml = renderNewsViewHtml({
+    appData: fullAppData,
+    newsCategoryFilter: 'roster',
+    filteredRawItems: [capRestructureItem, ...fullAppData.news.rawStream],
+    reportersById: new Map(),
+    activeVideosSet: new Set(),
+    userPrefs: {}
+  });
+  assert.ok(rosterTabHtml.includes('DeForest Buckner') && rosterTabHtml.includes('CAP &amp; CONTRACT'), 'Trades & Roster must surface salient cap news with CAP & CONTRACT signal badge');
+  assert.ok(!rosterTabHtml.includes('data-daily-news-brief'), 'Trades & Roster must not render an AI brief');
 });
 
 console.log(`\n======================================================`);

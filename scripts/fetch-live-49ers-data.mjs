@@ -18,6 +18,7 @@ import { parseOverTheCapHtml } from './lib/otcParser.mjs';
 import { buildCombineIndexer } from './lib/combineSpider.mjs';
 import {
   searchYouTubeVideos,
+  fetchCuratedYouTubeChannelVideos,
   fetchLiveBeatSocialPosts,
   harvestEmbeddedXStatusTweetsFromRss,
   fetchLatest49ersPodcasts7d,
@@ -35,6 +36,11 @@ import {
 } from './lib/aiSynthesisEngine.mjs';
 import {
   getPacificDateKey,
+  getDailyNewsBriefCycleKey,
+  selectTopNewsBriefSourceCandidates,
+  buildDailyTopNewsBriefPrompt,
+  parseAndSanitizeDailyTopNewsBrief,
+  buildDeterministicDailyTopNewsBrief,
   buildDailyMatchupIntelPrompt,
   parseAndSanitizeDailyMatchupIntel
 } from '../src/services/aiWorkerClient.js';
@@ -82,6 +88,7 @@ import {
   formatTweetBodyForDisplay,
   resolveGameNewsContext,
   filterOutCompletedGameAvailabilityItems,
+  isStalePriorGameVideo,
   stripRedundantAuthorBoilerplate
 } from '../src/engine/breakingClassifier.js';
 import {
@@ -1706,6 +1713,15 @@ async function main() {
 
   // 8. Fetch Live Beat Social Posts, X-Beat Player Wire, News RSS, Official 49ers RSS, Podcasts & YouTube Clips (`data/news.json` + `data/beat-podcasts.json`)
   console.log('[5/6] Fetching live X-Beat Player Wire, Beat Social Wire, Official/Beat RSS, Deep 7-Day Player Mentions, 6 Podcasts & YouTube Clips...');
+  const active49ersQbNames = rosterPlayers
+    .filter(p => p.position === 'QB' && (p.rosterBucket === 'active' || (p.stats2026?.passing?.attempts || 0) > 0))
+    .sort((a, b) => (b.stats2026?.passing?.attempts || 0) - (a.stats2026?.passing?.attempts || 0))
+    .map(p => p.name);
+  const primary49ersQbName = active49ersQbNames[0] || 'Brock Purdy';
+  const latestCompWkForYt = pipelineGameContext?.latestCompletedWeek || null;
+  const latestCompOppForYt = pipelineGameContext?.latestCompletedOppNickname || '';
+  const upcomingOppForYt = pipelineGameContext?.upcomingOppNickname || '';
+
   const [
     rawBeatTweets,
     ninersNationXml,
@@ -1716,7 +1732,11 @@ async function main() {
     sfStandardXml,
     heavy49ersXml,
     webzoneXml,
+    curatedYtChannelClips,
+    liveYtHighlightClips,
+    liveYtTeamInterestClips,
     liveYtPodiumClips,
+    liveYtQbSchoolClips,
     liveYtFilmClips1,
     liveYtFilmClips2,
     beatPodcasts7d
@@ -1730,21 +1750,92 @@ async function main() {
     fetchText('https://www.sfstandard.com/sports/feed/').catch(() => ''),
     fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
-    searchYouTubeVideos('San Francisco 49ers Kyle Shanahan 2026', 6),
+    fetchCuratedYouTubeChannelVideos({ qbNames: active49ersQbNames, maxAgeDays: 11 }).catch(() => []),
+    searchYouTubeVideos(
+      latestCompWkForYt && latestCompOppForYt
+        ? `San Francisco 49ers vs ${latestCompOppForYt} Week ${latestCompWkForYt} ${seasonYear} highlights NFL`
+        : `San Francisco 49ers game highlights ${seasonYear} NFL`,
+      6
+    ),
+    searchYouTubeVideos(
+      latestCompWkForYt && latestCompOppForYt
+        ? `San Francisco 49ers ${latestCompOppForYt} Mic'd Up Forty Niner Way locker room recap ${seasonYear}`
+        : `San Francisco 49ers Mic'd Up Forty Niner Way locker room ${seasonYear}`,
+      6
+    ),
+    searchYouTubeVideos(
+      `San Francisco 49ers Kyle Shanahan Week ${detectedCurrentWeek} ${upcomingOppForYt} ${seasonYear}`.trim(),
+      5
+    ),
+    searchYouTubeVideos(`The QB School ${primary49ersQbName} ${seasonYear}`, 4),
     searchYouTubeVideos('49ers Playbook Jonnydel Football Academy', 4),
-    searchYouTubeVideos('San Francisco 49ers All 22 film breakdown 49ers Rush', 4),
+    searchYouTubeVideos(
+      `San Francisco 49ers All 22 film breakdown ${latestCompOppForYt} ${seasonYear}`.trim(),
+      5
+    ),
     fetchLatest49ersPodcasts7d().catch(() => ({ updatedAt: new Date().toISOString(), windowDays: 7, shows: [], episodes: [] }))
   ]);
 
+  const qbNameFilterTokens = active49ersQbNames
+    .flatMap(nm => {
+      const clean = String(nm || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+      const last = clean.split(/\s+/).pop() || '';
+      return [clean, last.length >= 5 && !/^(jones|smith|brown|allen|young|white)$/i.test(last) ? last : ''];
+    })
+    .filter(Boolean)
+    .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const sfQbVideoTitleRe = new RegExp(
+    `\\b(${['49ers', 'niners', 'san francisco', 'shanahan', ...qbNameFilterTokens].join('|')})\\b`,
+    'i'
+  );
+  const sfVideoRelevanceRe =
+    /\b(49ers|niners|san francisco|forty niner|purdy|bosa|mccaffrey|kittle|warner|buckner|shanahan|mckivitz|allen|lenoir|deebo|levi)\b/i;
+  const opposingOfficialChannelRe =
+    /^(?:las vegas )?raiders$|^(?:dallas )?cowboys$|^(?:seattle )?seahawks$|^(?:los angeles )?rams$|^(?:arizona )?cardinals$|^(?:kansas city )?chiefs$|^(?:atlanta )?falcons$|^(?:green bay )?packers$|^(?:detroit )?lions$|^(?:philadelphia )?eagles$|^(?:minnesota )?vikings$|^(?:chicago )?bears$/i;
+
   const seenYtIds = new Set();
-  const liveYtClips = [];
-  for (const clip of [...(liveYtFilmClips1 || []), ...(liveYtFilmClips2 || []), ...(liveYtPodiumClips || [])]) {
+  const seenYtTitleKeys = new Set();
+  const rawCandidateYtClips = [];
+  for (const clip of [
+    ...(curatedYtChannelClips || []),
+    ...(liveYtHighlightClips || []),
+    ...(liveYtTeamInterestClips || []),
+    ...(liveYtQbSchoolClips || []),
+    ...(liveYtFilmClips1 || []),
+    ...(liveYtFilmClips2 || []),
+    ...(liveYtPodiumClips || [])
+  ]) {
     if (!clip?.videoId || seenYtIds.has(clip.videoId)) continue;
+    const chClean = String(clip.channel || '').trim();
+    const titleClean = String(clip.title || '').trim();
+    const normTitleKey = titleClean.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 70);
+    if (!normTitleKey || seenYtTitleKeys.has(normTitleKey)) continue;
+    // Exclude non-Latin bootleg highlight re-uploaders, Madden sims, and opposing-team official channels
+    if (/[^\x00-\x7F‘’“”—–®™•&'’-]/.test(chClean)) continue;
+    if (/\b(madden|ea sports|simulation|retro bowl|cf25|ncaa)\b/i.test(`${chClean} ${titleClean}`)) continue;
+    if (opposingOfficialChannelRe.test(chClean)) continue;
+    if (!/^san francisco 49ers$/i.test(chClean) && !sfVideoRelevanceRe.test(titleClean)) continue;
+    if (/\bqb school\b/i.test(chClean) && !sfQbVideoTitleRe.test(titleClean)) continue;
+
     const agoStr = String(clip.publishedAgo || '');
-    if (/\b(\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?)?|[4-9]\s*w(?:eeks?|ks?)?)\s+ago\b/i.test(agoStr)) continue;
+    if (/\b(\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?)?|[2-9]\s*w(?:eeks?|ks?)?)\s+ago\b/i.test(agoStr)) continue;
     seenYtIds.add(clip.videoId);
-    liveYtClips.push(clip);
+    seenYtTitleKeys.add(normTitleKey);
+    rawCandidateYtClips.push(clip);
   }
+
+  const scoreYtIngestPriority = c => {
+    const t = `${c.channel || ''} ${c.title || ''}`;
+    let s = 0;
+    if (/\b(qb school|49ers playbook|all-?22|film breakdown)\b/i.test(t) && !/\bpodcast\b/i.test(c.title || '')) s += 45;
+    if (/\b(game highlights|highlights|best plays|every touchdown|condensed game)\b/i.test(c.title || '')) s += 42;
+    if (/\b(forty niner way|49hours|mic['’]?d up|from the trenches|locker room|sights and sounds)\b/i.test(c.title || '')) s += 38;
+    if (/^(?:nfl|san francisco 49ers)$/i.test(String(c.channel || '').trim())) s += 12;
+    return s;
+  };
+  const liveYtClips = rawCandidateYtClips
+    .sort((a, b) => scoreYtIngestPriority(b) - scoreYtIngestPriority(a))
+    .slice(0, 22);
 
   // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded in beat RSS feeds via oEmbed
   const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss([
@@ -2617,8 +2708,44 @@ async function main() {
     ) {
       continue;
     }
-    const sig = scoreContentSignal(cleanVidTitle.replace(/\bACTUALLY\b/g, 'Actually'), vid.channel);
-    if (sig.isClickbait) continue;
+    const chStr = String(vid.channel || 'YouTube').trim();
+    const isOfficialTeamChannel = /^san francisco 49ers$/i.test(chStr);
+    const isOfficialNflChannel = /^nfl$/i.test(chStr);
+    const isNbcsbaChannel = /nbc sports bay area/i.test(chStr);
+    const isQbSchoolChannel = /\bqb school\b/i.test(chStr);
+    const isJonnydelChannel = /\bjonnydel/i.test(chStr);
+    const sig = scoreContentSignal(cleanVidTitle.replace(/\bACTUALLY\b/g, 'Actually'), chStr);
+    if (
+      sig.isClickbait &&
+      !isOfficialTeamChannel &&
+      !isOfficialNflChannel &&
+      !isQbSchoolChannel &&
+      !isJonnydelChannel
+    ) {
+      continue;
+    }
+
+    const matchedChRep = !isOfficialTeamChannel && !isOfficialNflChannel ? resolveReporterFromNameOrHandle(chStr) : null;
+    const validChRep = matchedChRep && !isPodiumSubjectId(matchedChRep.id) ? matchedChRep : null;
+    const resolvedOutletId = isOfficialTeamChannel
+      ? '49ers_official'
+      : isOfficialNflChannel
+        ? 'nfl_network'
+        : isNbcsbaChannel
+          ? 'nbcsba'
+          : validChRep?.outletId || 'youtube_film';
+    const resolvedReporterId = isOfficialTeamChannel
+      ? '49ers_news'
+      : isQbSchoolChannel
+        ? 'jt_osullivan'
+        : validChRep?.id || null;
+    const resolvedAuthorDisplay = isQbSchoolChannel ? "JT O'Sullivan • The QB School" : chStr;
+    const resolvedTrustTier = isOfficialTeamChannel || isOfficialNflChannel || isNbcsbaChannel
+      ? 1
+      : isQbSchoolChannel || isJonnydelChannel
+        ? 2
+        : validChRep?.trustTier || 2;
+
     const agoRaw = String(vid.publishedAgo || '');
     const dM = agoRaw.match(/(\d+)\s*d(?:ays?)?\s+ago/i);
     const hM = agoRaw.match(/(\d+)\s*h(?:ours?|rs?)?\s+ago/i);
@@ -2634,31 +2761,19 @@ async function main() {
             ? Number(mM[1]) * 60_000
             : 12 * 3_600_000;
 
-    const chStr = String(vid.channel || 'YouTube').trim();
-    const isOfficialTeamChannel = /^san francisco 49ers$/i.test(chStr);
-    const isNbcsbaChannel = /nbc sports bay area/i.test(chStr);
-    const matchedChRep = !isOfficialTeamChannel ? resolveReporterFromNameOrHandle(chStr) : null;
-    const validChRep = matchedChRep && !isPodiumSubjectId(matchedChRep.id) ? matchedChRep : null;
-    const resolvedOutletId = isOfficialTeamChannel
-      ? '49ers_official'
-      : isNbcsbaChannel
-        ? 'nbcsba'
-        : validChRep?.outletId || 'youtube_film';
-    const resolvedReporterId = isOfficialTeamChannel
-      ? '49ers_news'
-      : validChRep?.id || null;
-    const resolvedTrustTier = isOfficialTeamChannel || isNbcsbaChannel
-      ? 1
-      : validChRep?.trustTier || 3;
+    const exactPubIso =
+      vid.publishedAtIso && Number.isFinite(Date.parse(vid.publishedAtIso))
+        ? vid.publishedAtIso
+        : new Date(Date.now() - offsetMs).toISOString();
 
     const vidDraft = {
       id: `yt_${vid.videoId}`,
       type: 'video',
       title: cleanVidTitle,
-      summary: `Video (${vid.duration || 'Clip'}) • ${chStr} • ${vid.publishedAgo || 'Recent'}`,
+      summary: `Video${vid.duration ? ` (${vid.duration})` : ''} • ${chStr} • ${vid.publishedAgo || 'Recent'}`,
       imageUrl: vid.thumbnailUrl || `https://i.ytimg.com/vi/${vid.videoId}/hqdefault.jpg`,
       mentionedPlayers: matchMentionedPlayers(cleanVidTitle, 10),
-      publishedAt: new Date(Date.now() - offsetMs).toISOString(),
+      publishedAt: exactPubIso,
       url: `https://www.youtube.com/watch?v=${vid.videoId}`,
       videoId: vid.videoId,
       embeddable: Boolean(vid.embeddable),
@@ -2666,13 +2781,16 @@ async function main() {
       outletId: resolvedOutletId,
       outletName: chStr,
       reporterId: resolvedReporterId,
-      reporterName: chStr,
-      author: chStr,
+      reporterName: resolvedAuthorDisplay,
+      author: resolvedAuthorDisplay,
       trustTier: resolvedTrustTier,
       isBreaking: false
     };
+    if (isStalePriorGameVideo(vidDraft, pipelineAppDataStub, Date.now())) {
+      continue;
+    }
     vidDraft.category = classifyNewsItemCategory(vidDraft);
-    vidDraft.signalScore = Math.max(vidDraft.category === 'film' ? 84 : 68, sig.signalScore);
+    vidDraft.signalScore = Math.max(vidDraft.category === 'film' ? 86 : 74, sig.signalScore);
     vidDraft.fluffScore = sig.fluffScore;
     vidDraft.isClickbait = false;
     rawNewsStream.push(vidDraft);
@@ -4635,6 +4753,87 @@ async function main() {
     }
   }
 
+  // 1/Day Gemini 3.8 Flash High Top-News Brief Synthesis (gated by 5:00 PM PT daily news-peak cycle)
+  const activeNewsBriefCycle = getDailyNewsBriefCycleKey(Date.now());
+  const newsBriefApiKey = process.env.GEMINI_NEWS_API_KEY || process.env.GEMINI_API_KEY || '';
+  let prevNewsBriefCached = null;
+  try {
+    const prevNewsPath = path.join(dataDir, 'news.json');
+    if (fs.existsSync(prevNewsPath)) {
+      const prevNews = JSON.parse(fs.readFileSync(prevNewsPath, 'utf8'));
+      const prevBrief = prevNews?.dailyTopNewsBrief;
+      if (
+        !process.env.FORCE_NEWS_BRIEF_AI &&
+        prevBrief &&
+        prevBrief.cycleKey === activeNewsBriefCycle &&
+        Array.isArray(prevBrief.bullets) &&
+        prevBrief.bullets.length >= 2 &&
+        (prevBrief.source === 'pipeline-gemini-daily' || prevBrief.source === 'live-gemini-daily')
+      ) {
+        prevNewsBriefCached = prevBrief;
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  const liveNewsBriefAppData = {
+    meta: { seasonYear, currentWeek, teamRecord: sfStandingsDetail.record },
+    roster: { players: rosterPlayers },
+    cap: { years: otcParsed.years },
+    health: { practiceReport: practiceReportPlayers, irAndReserveTracker: irTrackerPlayers },
+    news: { rawStream: rawNewsStream },
+    scheduleMatchup: { schedule: scheduleItems, upcomingMatchup, teamStats }
+  };
+
+  let dailyTopNewsBrief = null;
+  if (prevNewsBriefCached) {
+    dailyTopNewsBrief = prevNewsBriefCached;
+    console.log(
+      `[1/Day News Brief AI] Reusing cached ${activeNewsBriefCycle} Top News Brief (${dailyTopNewsBrief.source}, 0 credits spent).`
+    );
+  } else if (newsBriefApiKey) {
+    try {
+      const sourceCandidates = selectTopNewsBriefSourceCandidates(liveNewsBriefAppData, 14, Date.now());
+      if (sourceCandidates.length > 0) {
+        const aiNewsBriefRes = await runSinglePassDailyGeminiSynthesis({
+          apiKey: newsBriefApiKey,
+          preferredModel: 'gemini-3.8-flash',
+          promptText: buildDailyTopNewsBriefPrompt(liveNewsBriefAppData, sourceCandidates),
+          appData: liveNewsBriefAppData,
+          rosterPlayers
+        });
+        if (aiNewsBriefRes.ok && aiNewsBriefRes.rawText) {
+          dailyTopNewsBrief = parseAndSanitizeDailyTopNewsBrief(
+            aiNewsBriefRes.rawText,
+            sourceCandidates,
+            liveNewsBriefAppData,
+            {
+              cycleKey: activeNewsBriefCycle,
+              generatedAt: new Date().toISOString(),
+              modelUsed: aiNewsBriefRes.modelUsed || 'gemini-3.8-flash',
+              source: 'pipeline-gemini-daily'
+            }
+          );
+          if (dailyTopNewsBrief) {
+            console.log(
+              `[1/Day News Brief AI] Synthesized fresh ${activeNewsBriefCycle} Top News Brief via ${dailyTopNewsBrief.modelUsed} (${dailyTopNewsBrief.wordCount} words, 1 credit).`
+            );
+          }
+        }
+      }
+    } catch (newsBriefErr) {
+      console.warn('1/Day Gemini Top News Brief synthesis skipped:', newsBriefErr.message);
+    }
+  }
+
+  if (!dailyTopNewsBrief) {
+    dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(liveNewsBriefAppData, Date.now(), {
+      cycleKey: activeNewsBriefCycle,
+      source: 'pipeline-grounded'
+    });
+  }
+
   // Write all JSON files cleanly (normalizing any legacy http:// feed links to https://)
   function upgradeHttpUrlsDeep(val) {
     if (typeof val === 'string') {
@@ -4814,6 +5013,7 @@ async function main() {
   });
   writeCleanJson(path.join(dataDir, 'news.json'), {
     updatedAt: nowIso,
+    dailyTopNewsBrief,
     clusteredBriefs,
     rawStream: rawNewsStream
   });

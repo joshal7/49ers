@@ -479,7 +479,7 @@ a:hover {
   align-items: center;
   gap: 8px;
   min-width: 0;
-  flex: 1 1 175px;
+  flex: 1 1 120px;
 }
 
 .news-toolbar-brand .card-title {
@@ -5086,4 +5086,223 @@ tr.unit-overall-banner.overall-stat-row td {
   line-height: 1.32;
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+/* ==========================================================================
+   Two-Row Unified News Filter Bar & Daily Top-News Brief Card
+   ========================================================================== */
+.news-subnav-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pill-btn.seg-btn.news-tab-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 30px;
+  padding: 4px 6px;
+  gap: 4px;
+  border-radius: 7.5px;
+  font-size: 11.4px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+@media (max-width: 430px) {
+  .news-toolbar-card {
+    padding: 8px 8px;
+  }
+  .news-toolbar-head {
+    margin-bottom: 6px;
+  }
+  .pill-btn.seg-btn.news-tab-btn {
+    padding: 4px 4px;
+    font-size: 10.7px;
+    gap: 3px;
+    letter-spacing: -0.02em;
+  }
+}
+
+@media (max-width: 382px) {
+  .pill-btn.seg-btn.news-tab-btn {
+    padding: 4px 3px;
+    font-size: 10.4px;
+  }
+  .pill-btn.seg-btn.news-tab-btn .ui-icon {
+    display: none;
+  }
+}
+
+.daily-news-brief-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.subcard-panel.daily-news-brief-card {
+  padding: 11px 12px;
+  border-color: var(--gold-border);
+}
+
+.daily-brief-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.daily-brief-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  margin: 0;
+}
+
+.daily-brief-age {
+  font-size: 10.2px;
+  line-height: 1;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.daily-brief-headline {
+  margin: 0;
+  font-size: 15.2px;
+  font-weight: 800;
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+.daily-brief-lead,
+.daily-brief-summary {
+  margin: 1px 0 3px;
+}
+
+.subcard-panel.daily-news-brief-card .daily-brief-lead,
+.subcard-panel.daily-news-brief-card .daily-brief-summary {
+  background: var(--bg-card);
+}
+
+.daily-brief-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+}
+
+.daily-brief-sources {
+  flex: 1 1 220px;
+  min-width: 0;
+  padding: 5px 9px;
+}
+
+.daily-brief-ask-btn {
+  flex-shrink: 0;
+}
+
+.daily-brief-bullets {
+  margin: 0;
+}
+
+.brief-inline-source-link {
+  display: inline;
+  color: var(--gold-bright);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--gold-border);
+  text-underline-offset: 2px;
+  transition: color 0.14s ease, text-decoration-color 0.14s ease;
+}
+
+[data-theme="light"] .brief-inline-source-link {
+  color: var(--scarlet);
+  text-decoration-color: rgba(170, 0, 0, 0.36);
+}
+
+.brief-inline-source-link:hover,
+.brief-inline-source-link:focus-visible {
+  color: var(--text-primary);
+  text-decoration-color: var(--gold-bright);
+}
+
+.brief-inline-source-link .ui-icon {
+  display: inline-block;
+  vertical-align: -1px;
+  margin-left: 2px;
+  opacity: 0.82;
+}
+
+.daily-brief-sources-details {
+  margin-top: 3px;
+  padding: 5px 9px;
+}
+
+.daily-brief-sources-list {
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.daily-brief-source-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: var(--text-primary);
+  min-width: 0;
+  transition: border-color 0.14s ease;
+}
+
+.subcard-panel.daily-news-brief-card .daily-brief-source-row {
+  background: var(--bg-card);
+}
+
+.daily-brief-source-row:hover {
+  border-color: var(--gold-border);
+}
+
+.daily-brief-source-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.daily-brief-source-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  font-size: 10.5px;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.daily-brief-source-title {
+  font-size: 12px;
+  line-height: 1.32;
+  color: var(--text-primary);
+  margin-top: 1px;
+  overflow-wrap: anywhere;
+}
+
+.breaking-above-brief-card {
+  border-color: rgba(212, 25, 25, 0.45);
 }
