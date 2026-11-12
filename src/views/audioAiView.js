@@ -333,7 +333,8 @@ function renderGeminiConnectionStatusCard(
   userPrefs = {},
   _modelInfo = {},
   keyFeedback = '',
-  showGeminiKeyGuide = false
+  showGeminiKeyGuide = false,
+  { hasSharedItemAbove = false } = {}
 ) {
   const connected = hasLiveAiConnection(userPrefs);
   if (connected) {
@@ -371,7 +372,11 @@ function renderGeminiConnectionStatusCard(
         </a>
       </div>
       <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
-        Saved privately on this device. Unlocks custom Auto Pod episodes and on-demand scouting &amp; cap reports.
+        ${
+          hasSharedItemAbove
+            ? 'No API key is needed to listen to or read shared links above. Connect a key below only to generate new custom episodes (note: iOS keeps Home Screen app and Safari keys separate).'
+            : 'Saved privately on this device. Unlocks custom Auto Pod episodes and on-demand scouting &amp; cap reports.'
+        }
       </div>
       <div class="gemini-key-row">
         <input type="password" id="inlineGeminiApiKeyInput" class="text-input"
@@ -399,6 +404,8 @@ export function renderAudioAiViewHtml({
   podTopicDraft = '',
   analysisPromptDraft = '',
   jobStatus = null,
+  sharedAudioPrep = null,
+  sharedAnalysisHighlightId = null,
   allEpisodes = [],
   archivedEpisodes = [],
   podLibraryFilter = 'active',
@@ -457,6 +464,7 @@ export function renderAudioAiViewHtml({
         podFormat,
         podTopicDraft,
         jobStatus,
+        sharedAudioPrep,
         allEpisodes,
         archivedEpisodes,
         podLibraryFilter,
@@ -476,6 +484,7 @@ export function renderAudioAiViewHtml({
       userPrefs,
       analysisPromptDraft,
       jobStatus,
+      sharedAnalysisHighlightId,
       allAnalyses,
       archivedAnalyses,
       analysisLibraryFilter,
@@ -683,6 +692,7 @@ function renderPodcastStudio({
   podFormat,
   podTopicDraft,
   jobStatus,
+  sharedAudioPrep = null,
   allEpisodes = [],
   archivedEpisodes = [],
   podLibraryFilter = 'active',
@@ -716,20 +726,108 @@ function renderPodcastStudio({
   const activeTurnCount = activeEp?.transcript?.length || 0;
   const isActiveSharedToast = Boolean(activeEp && shareToastTargetId === activeEp.id);
   const isActiveEpArchived = Boolean(activeEp && archivedEpisodes.some(e => e.id === activeEp.id));
-  const activeEyebrow = audioState?.isBufferingAudio
-    ? 'Preparing Studio Audio…'
+
+  const isPreparingActiveAudio = Boolean(
+    activeEp &&
+      (audioState?.isBufferingAudio ||
+        (sharedAudioPrep?.active && sharedAudioPrep?.episodeId === activeEp.id))
+  );
+  const sharedAudioError =
+    activeEp &&
+    sharedAudioPrep &&
+    !sharedAudioPrep.active &&
+    sharedAudioPrep.episodeId === activeEp.id
+      ? String(sharedAudioPrep.error || '')
+      : '';
+  const prepPct = Math.max(8, Math.min(99, Math.round(Number(sharedAudioPrep?.percent || 14))));
+  const prepElapsedSec = sharedAudioPrep?.startedAtMs
+    ? Math.max(0, Math.floor((Date.now() - sharedAudioPrep.startedAtMs) / 1000))
+    : 0;
+
+  const activeEyebrow = isPreparingActiveAudio
+    ? activeEp?.isSharedImport
+      ? 'Preparing Shared Podcast Audio…'
+      : 'Preparing Studio Audio…'
     : audioState?.isPlaying
-      ? 'Now Playing • Studio Stereo Audio'
+      ? audioState?.usingDeviceSpeech
+        ? 'Now Playing • Device Voice'
+        : activeEp?.isSharedImport
+          ? 'Now Playing • Shared Studio Audio'
+          : 'Now Playing • Studio Stereo Audio'
       : activeEp?.isSharedImport && !audioState?.currentTimeSec
         ? 'Shared Podcast Ready to Play'
         : 'Podcast Ready to Play';
 
+  const playBtnLabel = audioState?.isPlaying
+    ? 'Pause Podcast'
+    : isPreparingActiveAudio
+      ? audioState?.isAutoPlayQueued
+        ? 'Auto-Play Queued…'
+        : 'Play When Ready'
+      : activeEp?.isSharedImport && !audioState?.currentTimeSec
+        ? 'Play Shared Podcast'
+        : 'Play Podcast';
+
+  const sharedAudioPrepHtml = isPreparingActiveAudio
+    ? `
+      <div class="job-progress-box" data-shared-audio-prep="active" role="status" aria-live="polite" style="margin-bottom:10px">
+        <div class="job-progress-head">
+          <div class="job-progress-lead">
+            <span class="job-spinner-ring" aria-hidden="true"></span>
+            <span class="job-wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span style="font-weight:800;color:var(--gold-bright);min-width:0">
+              ${activeEp?.isSharedImport ? 'Preparing Shared Podcast Audio…' : 'Preparing Podcast Audio…'}
+            </span>
+          </div>
+          <span class="badge badge-gold mono" data-shared-prep-pct>${prepPct}%</span>
+        </div>
+        <div class="job-progress-step" data-shared-prep-message>
+          ${esc(sharedAudioPrep?.message || 'Synthesizing 2-channel Stereo audio for instant playback on your device…')}
+        </div>
+        <div class="job-progress-subdetail" data-shared-prep-subdetail>
+          ${esc(
+            audioState?.isAutoPlayQueued
+              ? 'Speaker unlocked — playback will start automatically the moment audio reaches 100%.'
+              : sharedAudioPrep?.subDetail ||
+                  'Tap "Play When Ready" below to start automatically when ready, or tap "Show Transcript" to read now.'
+          )}
+        </div>
+        <div class="job-progress-track" aria-hidden="true">
+          <div class="job-progress-fill" data-shared-prep-bar style="width:${prepPct}%"></div>
+        </div>
+        <div class="job-eta-strip">
+          <span class="inline-icon-meta">${iconSvg('clock', 12)}<span>No API key required • Cached on this device once ready</span></span>
+          <span class="mono" id="sharedAudioElapsedClock" style="color:var(--gold-bright);font-weight:700">Elapsed ${formatTimeMmSs(prepElapsedSec)}</span>
+        </div>
+      </div>
+    `
+    : sharedAudioError
+      ? `
+        <div class="alert-banner-danger" data-shared-audio-error="true" style="margin-bottom:10px;flex-direction:column;align-items:flex-start;gap:8px">
+          <div style="display:flex;align-items:flex-start;gap:7px">
+            ${iconSvg('alert', 14)}
+            <span>${esc(sharedAudioError)}</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn-secondary" data-action="retry-shared-audio" data-episode-id="${esc(activeEp.id)}" style="font-size:11.5px;padding:5px 10px">
+              ${iconSvg('reset', 12)}
+              <span>Retry Studio Audio</span>
+            </button>
+            <button type="button" class="btn-ghost" data-action="play-device-voice" data-episode-id="${esc(activeEp.id)}" style="font-size:11.5px;padding:5px 10px">
+              ${iconSvg('play', 12)}
+              <span>Listen Now (Device Voice)</span>
+            </button>
+          </div>
+        </div>
+      `
+      : '';
+
   const readyOrPlayingCardHtml = activeEp
     ? `
-      <section class="card temporal-highlight" data-podcast-ready-card="${esc(activeEp.id)}">
+      <section class="card temporal-highlight" data-podcast-ready-card="${esc(activeEp.id)}" ${activeEp.isSharedImport ? 'data-shared-podcast-hero="true"' : ''}>
         <div class="card-header" style="margin-bottom:8px">
           <div class="card-header-left">
-            <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg(audioState?.isPlaying ? 'audio' : 'check', 18)}</div>
+            <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg(audioState?.isPlaying ? 'audio' : isPreparingActiveAudio ? 'mic' : 'check', 18)}</div>
             <div class="card-title-group">
               <div class="card-eyebrow">${esc(activeEyebrow)}</div>
               <h3 class="card-title">${esc(activeEp.title)}</h3>
@@ -739,13 +837,20 @@ function renderPodcastStudio({
         </div>
 
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
-          ${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || '49ers Faithful')}
+          ${
+            activeEp.isSharedImport
+              ? `Shared by <strong>${esc(activeEp.createdBy || '49ers Faithful')}</strong> • ${esc(activeEp.format || 'Two-Host Analytical Banter')} • No API key needed to listen`
+              : `${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || '49ers Faithful')}`
+          }
         </div>
 
-        <div class="podcast-action-row">
+        ${sharedAudioPrepHtml}
+        ${renderSourceChips(activeEp.sourceLinks || [])}
+
+        <div class="podcast-action-row" style="margin-top:${(activeEp.sourceLinks || []).length > 0 ? '8px' : '0'}">
           <button type="button" class="btn-primary" data-action="play-episode" data-episode-id="${esc(activeEp.id)}">
-            ${iconSvg(audioState?.isPlaying ? 'pause' : 'play', 14)}
-            <span>${audioState?.isPlaying ? 'Pause Podcast' : 'Play Podcast'}</span>
+            ${iconSvg(audioState?.isPlaying ? 'pause' : audioState?.isAutoPlayQueued ? 'audio' : 'play', 14)}
+            <span>${esc(playBtnLabel)}</span>
           </button>
 
           <div class="podcast-secondary-actions">
@@ -788,13 +893,16 @@ function renderPodcastStudio({
   const visibleEpisodes = showingArchivedPods ? archivedEpisodes : allEpisodes;
 
   return `
+    ${readyOrPlayingCardHtml}
+
     <!-- On-Demand Autopodcast Generator -->
-    <section class="card">
+    <section class="card" data-podcast-generator-card>
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 18)}</div>
           <div class="card-title-group">
-            <h2 class="card-title">Auto Podcast</h2>
+            ${activeEp?.isSharedImport ? `<div class="card-eyebrow">Create New Episode</div>` : ''}
+            <h2 class="card-title">${activeEp?.isSharedImport ? 'Create Your Own Auto Podcast' : 'Auto Podcast'}</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="open-settings" title="Change Host Format in Settings" style="font-size:11px;padding:4px 8px">
@@ -803,7 +911,9 @@ function renderPodcastStudio({
         </button>
       </div>
 
-      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide)}
+      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide, {
+        hasSharedItemAbove: Boolean(activeEp?.isSharedImport)
+      })}
 
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
         <label for="podDurationSlider" style="font-size:12px;color:var(--text-secondary);font-weight:700" class="mono">Length</label>
@@ -847,8 +957,6 @@ function renderPodcastStudio({
         <span>${isPodBusy ? `Creating ${podDurationMin}-Min Podcast…` : `Generate ${podDurationMin}-Min Audio Briefing`}</span>
       </button>
     </section>
-
-    ${readyOrPlayingCardHtml}
 
     <!-- Audio Briefing Library -->
     <section class="card" data-podcast-library-section="${esc(podLibraryFilter)}">
@@ -964,6 +1072,7 @@ function renderDeepAnalysisRunner({
   userPrefs = {},
   analysisPromptDraft,
   jobStatus,
+  sharedAnalysisHighlightId = null,
   allAnalyses = [],
   archivedAnalyses = [],
   analysisLibraryFilter = 'active',
@@ -988,19 +1097,53 @@ function renderDeepAnalysisRunner({
 
   const showingArchivedAnalyses = analysisLibraryFilter === 'archived';
   const visibleAnalyses = showingArchivedAnalyses ? archivedAnalyses : allAnalyses;
+  const sharedHeroReport = sharedAnalysisHighlightId
+    ? allAnalyses.find(r => r.id === sharedAnalysisHighlightId) || null
+    : null;
+  const isHeroCopied = Boolean(sharedHeroReport && shareToastTargetId === sharedHeroReport.id);
+
+  const sharedHeroReportHtml = sharedHeroReport
+    ? `
+      <section class="card temporal-highlight" data-shared-analysis-hero="${esc(sharedHeroReport.id)}">
+        <div class="card-header" style="margin-bottom:8px">
+          <div class="card-header-left">
+            <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
+            <div class="card-title-group">
+              <div class="card-eyebrow">Shared Scouting &amp; Cap Report • By ${esc(sharedHeroReport.createdBy || '49ers Faithful')}</div>
+              <h3 class="card-title">${esc(sharedHeroReport.title)}</h3>
+            </div>
+          </div>
+          <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(sharedHeroReport.id)}" aria-label="Share analysis link">
+            ${iconSvg(isHeroCopied ? 'check' : 'share', 13)}
+            <span>${isHeroCopied ? 'Link Copied' : 'Share'}</span>
+          </button>
+        </div>
+        ${renderMarkdownSafe(sharedHeroReport.markdown)}
+        <div style="border-top:1px solid var(--border-subtle);padding-top:6px;margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:11px;color:var(--text-muted)">Sources:</span>
+          ${renderSourceChips(sharedHeroReport.sourcesCited || [])}
+        </div>
+      </section>
+    `
+    : '';
 
   return `
+    ${sharedHeroReportHtml}
+
     <section class="card">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
           <div class="card-title-group">
-            <h2 class="card-title">Scouting &amp; Cap Analysis</h2>
+            ${sharedHeroReport ? `<div class="card-eyebrow">Run Custom Analysis</div>` : ''}
+            <h2 class="card-title">${sharedHeroReport ? 'Run Your Own Scouting &amp; Cap Analysis' : 'Scouting &amp; Cap Analysis'}</h2>
           </div>
         </div>
       </div>
 
-      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide)}
+      ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide, {
+        hasSharedItemAbove: Boolean(sharedHeroReport)
+      })}
 
       <div class="pill-bar" style="margin-bottom:8px">
         ${quickPrompts

@@ -1,13 +1,14 @@
 /**
  * Studio Multi-Speaker Kokoro-82M Neural TTS & Broadcast Mastering Web Worker
  *
- * Used whenever an episode's audio needs local on-device synthesis (such as a colleague opening
- * a shared podcast link without a cloud R2 URL or Gemini API key, or as an automatic fallback if
- * Gemini Native Multi-Speaker TTS hits a daily free-tier rate limit).
+ * Used whenever an episode's audio needs local on-device synthesis (such as a family member or
+ * colleague opening a shared podcast link in Mobile Safari without an API key or R2 stream, or
+ * as an automatic fallback if Gemini Native Multi-Speaker TTS hits a daily free-tier rate limit).
  *
- * Runs StyleTTS2-based Kokoro-82M (`onnx-community/Kokoro-82M-v1.0-ONNX`) with natural human
- * podcast voices (`am_fenrir` for Marcus, `af_heart` for Elena), accelerating on WebGPU (`fp32`)
- * when available and falling back seamlessly to quantized WASM (`q8`).
+ * Uses quantized INT8 (`q8`, ~88 MB cached in browser CacheStorage) WASM SIMD inference exclusively
+ * rather than `fp32` WebGPU (~310 MB), preventing iOS/iPadOS Safari WebKit Worker Jetsam OOM
+ * terminations and `onnxruntime-web` duplicate `initializeWebAssembly()` faults while splitting
+ * long turns into sentence-level passes for low peak RAM and per-second progress feedback.
  */
 
 import {
@@ -28,16 +29,54 @@ const KOKORO_VOICES = {
 
 let kokoroEnginePromise = null;
 
-async function hasUsableWebGpu() {
-  try {
-    if (!self.navigator?.gpu || typeof self.navigator.gpu.requestAdapter !== 'function') {
-      return false;
+/**
+ * Splits spoken dialogue into natural sentence-bounded segments (<= `maxChars`) so every
+ * ONNX forward pass stays well inside Kokoro's 510-phoneme context window with small
+ * mobile WASM attention buffers and frequent progress updates.
+ */
+export function splitTurnIntoSpokenSentences(spokenText = '', maxChars = 195) {
+  const clean = String(spokenText || '').replace(/\s+/g, ' ').trim();
+  if (!clean) return [];
+  if (clean.length <= maxChars) return [clean];
+
+  const rawSentences = clean.split(/(?<=[.!?])\s+/).filter(Boolean);
+  const expanded = [];
+
+  for (const sent of rawSentences) {
+    if (sent.length <= maxChars + 35) {
+      expanded.push(sent);
+      continue;
     }
-    const adapter = await self.navigator.gpu.requestAdapter();
-    return Boolean(adapter);
-  } catch {
-    return false;
+    // Split extra-long run-on clauses on natural pause punctuation (, ; —)
+    const parts = sent.split(/(?<=[,;—–])\s+/).filter(Boolean);
+    let acc = '';
+    for (const part of parts) {
+      if (!acc) {
+        acc = part;
+      } else if (acc.length + 1 + part.length <= maxChars) {
+        acc = `${acc} ${part}`;
+      } else {
+        expanded.push(acc);
+        acc = part;
+      }
+    }
+    if (acc) expanded.push(acc);
   }
+
+  // Merge very short interjections ("Right!", "Exactly.") into the following sentence for natural prosody
+  const merged = [];
+  for (const seg of expanded) {
+    if (
+      merged.length > 0 &&
+      (merged[merged.length - 1].length < 28 || merged[merged.length - 1].length + 1 + seg.length <= maxChars)
+    ) {
+      merged[merged.length - 1] = `${merged[merged.length - 1]} ${seg}`;
+    } else {
+      merged.push(seg);
+    }
+  }
+
+  return merged;
 }
 
 async function getKokoroEngine(reportStatus) {
@@ -46,35 +85,67 @@ async function getKokoroEngine(reportStatus) {
   kokoroEnginePromise = (async () => {
     reportStatus?.({
       subPercent: 8,
-      detail: 'Loading Kokoro-82M expressive studio voice engine…'
+      detail: 'Loading studio voice engine…'
     });
 
     const { KokoroTTS } = await import(KOKORO_WEB_ESM_URL);
-    const useWebGpu = await hasUsableWebGpu();
 
-    const loadWithBackend = async (device, dtype) =>
-      KokoroTTS.from_pretrained(KOKORO_MODEL_ID, {
-        device,
-        dtype,
-        progress_callback: prog => {
-          if (prog && typeof prog.progress === 'number') {
-            const dlPct = Math.min(100, Math.max(0, Math.round(prog.progress)));
-            reportStatus?.({
-              subPercent: Math.min(30, 8 + Math.round(dlPct * 0.22)),
-              detail: `Caching Kokoro-82M studio voice weights (${dlPct}%)…`
-            });
+    const fileProgressByKey = new Map();
+    let maxDlPct = 0;
+
+    // Quantized INT8 (`q8`, ~88 MB) on WASM SIMD avoids the 310 MB `fp32` WebGPU bundle that
+    // triggers silent iOS Safari WebKit Worker Jetsam memory kills on iPhone/iPad.
+    return await KokoroTTS.from_pretrained(KOKORO_MODEL_ID, {
+      device: 'wasm',
+      dtype: 'q8',
+      progress_callback: prog => {
+        if (!prog) return;
+        const fileKey = String(prog.file || prog.name || 'weights');
+        const loaded = Number(prog.loaded || 0);
+        const total = Number(prog.total || 0);
+        if (total > 0) {
+          fileProgressByKey.set(fileKey, { loaded: Math.min(loaded, total), total });
+        }
+
+        // Prioritize `.onnx` weight download bytes so small 2 KB JSON configs never jump progress to 100%
+        let onnxEntry = null;
+        let sumLoaded = 0;
+        let sumTotal = 0;
+        for (const [k, v] of fileProgressByKey.entries()) {
+          sumLoaded += v.loaded;
+          sumTotal += v.total;
+          if (/\.onnx$/i.test(k)) {
+            onnxEntry = v;
           }
         }
-      });
 
-    if (useWebGpu) {
-      try {
-        return await loadWithBackend('webgpu', 'fp32');
-      } catch {
-        // Fall through cleanly to quantized WASM if WebGPU shader compilation is unavailable
+        let dlPct = maxDlPct;
+        let mbSuffix = '';
+        if (onnxEntry && onnxEntry.total > 0) {
+          dlPct = Math.round((onnxEntry.loaded / onnxEntry.total) * 100);
+          const loadedMb = Math.round(onnxEntry.loaded / 1_048_576);
+          const totalMb = Math.max(1, Math.round(onnxEntry.total / 1_048_576));
+          mbSuffix = ` • ${loadedMb} / ${totalMb} MB`;
+        } else if (sumTotal > 5_000_000) {
+          dlPct = Math.round((sumLoaded / sumTotal) * 100);
+        } else if (/\.onnx$/i.test(fileKey) && typeof prog.progress === 'number') {
+          dlPct = Math.round(prog.progress);
+        } else {
+          return;
+        }
+
+        dlPct = Math.min(100, Math.max(maxDlPct, dlPct));
+        maxDlPct = dlPct;
+
+        reportStatus?.({
+          subPercent: Math.min(38, 8 + Math.round(dlPct * 0.3)),
+          detail:
+            dlPct >= 100
+              ? 'Initializing studio voice weights…'
+              : `Caching studio voice weights (${dlPct}%${mbSuffix} — 1-time download)…`
+        });
       }
-    }
-    return await loadWithBackend('wasm', 'q8');
+    });
   })().catch(err => {
     kokoroEnginePromise = null;
     throw err;
@@ -146,35 +217,97 @@ async function synthesizeFullPodcastMaster({ jobId, turns = [] }) {
   });
 
   let sampleRate = 24000;
-  const leadRoomSamples = Math.round(sampleRate * 0.16);
-  const trailRoomSamples = Math.round(sampleRate * 0.32);
-
-  const conditionedTurns = [];
-  const gapSamplesAfterTurn = [];
-
-  for (let idx = 0; idx < cleanTurns.length; idx++) {
-    const turn = cleanTurns[idx];
+  const preparedTurnPlans = cleanTurns.map((turn, idx) => {
     const speaker = turn.speaker === 'Elena' ? 'Elena' : 'Marcus';
     const voice = KOKORO_VOICES[speaker] || KOKORO_VOICES.Marcus;
     const dyn = computeConversationalTurnDynamics(cleanTurns, idx);
     const speed = dyn.rate === '+2%' ? 1.04 : dyn.rate === '-1%' ? 0.99 : 1.01;
-
     const spokenText = prepareConversationalTextForModernNeuralTts(turn.text, {
       engine: 'kokoro'
     });
-
-    const audioOut = await tts.generate(spokenText, {
+    const sentences = splitTurnIntoSpokenSentences(spokenText, 195);
+    return {
+      orig: turn,
+      speaker,
       voice,
-      speed
-    });
-    if (audioOut?.sampling_rate) {
-      sampleRate = Number(audioOut.sampling_rate) || 24000;
+      dyn,
+      speed,
+      sentences: sentences.length > 0 ? sentences : [spokenText]
+    };
+  });
+
+  const totalSentenceUnits = Math.max(
+    1,
+    preparedTurnPlans.reduce((sum, p) => sum + p.sentences.length, 0)
+  );
+  let completedSentenceUnits = 0;
+
+  self.postMessage({
+    type: 'progress',
+    jobId,
+    subPercent: 40,
+    turnIndex: 1,
+    totalTurns: preparedTurnPlans.length,
+    detail: `Synthesizing voice turn 1 of ${preparedTurnPlans.length} (${preparedTurnPlans[0].speaker})…`
+  });
+
+  const conditionedTurns = [];
+  const gapSamplesAfterTurn = [];
+
+  for (let idx = 0; idx < preparedTurnPlans.length; idx++) {
+    const plan = preparedTurnPlans[idx];
+    const sentenceChunksInt16 = [];
+
+    for (let sIdx = 0; sIdx < plan.sentences.length; sIdx++) {
+      const sentenceText = plan.sentences[sIdx];
+      const audioOut = await tts.generate(sentenceText, {
+        voice: plan.voice,
+        speed: plan.speed
+      });
+      if (audioOut?.sampling_rate) {
+        sampleRate = Number(audioOut.sampling_rate) || 24000;
+      }
+      if (audioOut?.audio && audioOut.audio.length > 0) {
+        sentenceChunksInt16.push(float32ToInt16(audioOut.audio));
+      }
+
+      completedSentenceUnits += 1;
+      const synthPct = Math.min(
+        95,
+        40 + Math.round((completedSentenceUnits / totalSentenceUnits) * 55)
+      );
+      self.postMessage({
+        type: 'progress',
+        jobId,
+        subPercent: synthPct,
+        turnIndex: idx + 1,
+        totalTurns: preparedTurnPlans.length,
+        detail: `Synthesizing studio voices — Turn ${idx + 1} of ${preparedTurnPlans.length} (${plan.speaker})…`
+      });
+
+      // Yield briefly to allow mobile WebKit Worker GC to reclaim temporary ONNX tensors
+      await new Promise(resolve => setTimeout(resolve, 0));
     }
 
-    const rawFloat = audioOut?.audio ? Float32Array.from(audioOut.audio) : new Float32Array(0);
+    const intraPauseSamples = Math.round(sampleRate * 0.065);
+    let turnTotalSamples = 0;
+    for (let c = 0; c < sentenceChunksInt16.length; c++) {
+      turnTotalSamples += sentenceChunksInt16[c].length;
+      if (c < sentenceChunksInt16.length - 1) turnTotalSamples += intraPauseSamples;
+    }
+
+    const mergedTurnInt16 = new Int16Array(Math.max(1, turnTotalSamples));
+    let writeOff = 0;
+    for (let c = 0; c < sentenceChunksInt16.length; c++) {
+      const seg = sentenceChunksInt16[c];
+      mergedTurnInt16.set(seg, writeOff);
+      writeOff += seg.length;
+      if (c < sentenceChunksInt16.length - 1) writeOff += intraPauseSamples;
+    }
+
     const trimmed =
-      rawFloat.length > 0
-        ? trimAndFadeTurnPcm(float32ToInt16(rawFloat), sampleRate, {
+      turnTotalSamples > 0
+        ? trimAndFadeTurnPcm(mergedTurnInt16, sampleRate, {
             threshold: 85,
             leadPadMs: 24,
             trailPadMs: 42,
@@ -184,26 +317,18 @@ async function synthesizeFullPodcastMaster({ jobId, turns = [] }) {
 
     const conditioned = conditionTurnVoicePcm(trimmed, sampleRate, 0.12);
     conditionedTurns.push(conditioned);
-    gapSamplesAfterTurn.push(Math.round((dyn.gapAfterMs / 1000) * sampleRate));
-
-    const synthPct = 32 + Math.round(((idx + 1) / cleanTurns.length) * 62);
-    self.postMessage({
-      type: 'progress',
-      jobId,
-      subPercent: synthPct,
-      turnIndex: idx + 1,
-      totalTurns: cleanTurns.length,
-      detail: `Synthesizing natural voice turn ${idx + 1} of ${cleanTurns.length} (${speaker})…`
-    });
+    gapSamplesAfterTurn.push(Math.round((plan.dyn.gapAfterMs / 1000) * sampleRate));
   }
 
   self.postMessage({
     type: 'progress',
     jobId,
-    subPercent: 96,
+    subPercent: 97,
     detail: 'Mastering 2-channel Stereo studio bus…'
   });
 
+  const leadRoomSamples = Math.round(sampleRate * 0.16);
+  const trailRoomSamples = Math.round(sampleRate * 0.32);
   let totalSamples = leadRoomSamples + trailRoomSamples;
   for (let i = 0; i < conditionedTurns.length; i++) {
     totalSamples += conditionedTurns[i].length + (gapSamplesAfterTurn[i] || 0);
@@ -220,7 +345,7 @@ async function synthesizeFullPodcastMaster({ jobId, turns = [] }) {
     cursorSamples += segAudio.length;
     const endSec = +(cursorSamples / sampleRate).toFixed(2);
 
-    const orig = cleanTurns[i];
+    const orig = preparedTurnPlans[i].orig;
     timedTranscript.push({
       idx: i,
       speaker: orig.speaker === 'Elena' ? 'Elena' : 'Marcus',
@@ -248,29 +373,31 @@ async function synthesizeFullPodcastMaster({ jobId, turns = [] }) {
   };
 }
 
-self.addEventListener('message', async event => {
-  const data = event?.data || {};
-  if (data.type !== 'synthesize_podcast') return;
+if (typeof self !== 'undefined' && typeof self.addEventListener === 'function') {
+  self.addEventListener('message', async event => {
+    const data = event?.data || {};
+    if (data.type !== 'synthesize_podcast') return;
 
-  const { jobId, turns } = data;
-  try {
-    const result = await synthesizeFullPodcastMaster({ jobId, turns });
-    self.postMessage(
-      {
-        type: 'complete',
+    const { jobId, turns } = data;
+    try {
+      const result = await synthesizeFullPodcastMaster({ jobId, turns });
+      self.postMessage(
+        {
+          type: 'complete',
+          jobId,
+          wavBuffer: result.wavBuffer,
+          durationSec: result.durationSec,
+          sampleRate: result.sampleRate,
+          transcript: result.transcript
+        },
+        [result.wavBuffer]
+      );
+    } catch (err) {
+      self.postMessage({
+        type: 'error',
         jobId,
-        wavBuffer: result.wavBuffer,
-        durationSec: result.durationSec,
-        sampleRate: result.sampleRate,
-        transcript: result.transcript
-      },
-      [result.wavBuffer]
-    );
-  } catch (err) {
-    self.postMessage({
-      type: 'error',
-      jobId,
-      error: err?.message || String(err)
-    });
-  }
-});
+        error: err?.message || String(err)
+      });
+    }
+  });
+}

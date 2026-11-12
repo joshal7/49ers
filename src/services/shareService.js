@@ -283,6 +283,7 @@ export async function extractIncomingSharedRoute(
           qualityPriority: 'accuracy_over_latency',
           createdBy: String(decoded.by || '49ers Faithful'),
           createdAt: String(decoded.at || new Date().toISOString()),
+          isSharedImport: true,
           sourcesCited: Array.isArray(decoded.src)
             ? decoded.src.map(s => ({
                 label: String(s?.l || 'Source'),

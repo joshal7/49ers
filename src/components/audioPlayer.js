@@ -11,6 +11,10 @@ import {
   peekCachedEpisodeAudioUrl,
   getEpisodeAudioUrl
 } from '../services/podcastAudioStore.js';
+import {
+  humanizeNflTextForTts,
+  selectBestBrowserVoices
+} from '../engine/podcastSpeechEngine.js';
 
 const SPEEDS = [1.0, 1.25, 1.5, 2.0];
 
@@ -105,10 +109,15 @@ export class PodcastAudioController {
     this.onSynthesizeMissingAudio = options.onSynthesizeMissingAudio || null;
     this.audio = configureInlineAudioElement(new Audio());
     this._audioCtx = null;
+    this._inflightAudioPromises = new Map();
 
     this.currentEpisode = null;
     this.isPlaying = false;
     this.isBufferingAudio = false;
+    this.autoPlayEpisodeId = null;
+    this._isCarrierLooping = false;
+    this._usingDeviceSpeech = false;
+    this._deviceSpeechSession = 0;
     this.currentTimeSec = 0;
     this.durationSec = 0;
     this.speedIdx = 0;
@@ -118,7 +127,7 @@ export class PodcastAudioController {
   }
 
   /**
-   * Forces iOS 16.4+ / 17 / 18 Safari & Home Screen PWA into `playback` audio session
+   * Forces iOS 16.4+ / 17 / 18 / 26 Safari & Home Screen PWA into `playback` audio session
    * (`AVAudioSessionCategoryPlayback`) so `<audio>` plays out loud through the iPhone's
    * built-in speakers even when the hardware Ring/Silent switch is on Silent Mode.
    */
@@ -151,8 +160,45 @@ export class PodcastAudioController {
     this._enforcePlaybackSession();
   }
 
+  _startSilentCarrierGestureLock() {
+    try {
+      const carrierUri = buildSilentPlaybackCarrierWavDataUri();
+      this._isCarrierLooping = true;
+      this._activeSrcUrl = '';
+      this.audio.src = carrierUri;
+      this.audio.loop = true;
+      this.audio.muted = false;
+      this.audio.volume = 0.01;
+      const p = this.audio.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    } catch {}
+  }
+
+  _stopSilentCarrierGestureLock() {
+    if (!this._isCarrierLooping) return;
+    this._isCarrierLooping = false;
+    try {
+      this.audio.loop = false;
+      this.audio.pause();
+      this.audio.volume = 1.0;
+    } catch {}
+  }
+
+  _cancelDeviceSpeech() {
+    this._deviceSpeechSession += 1;
+    if (this._usingDeviceSpeech) {
+      this._usingDeviceSpeech = false;
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        try {
+          window.speechSynthesis.cancel();
+        } catch {}
+      }
+    }
+  }
+
   _bindAudioEvents() {
     this.audio.addEventListener('timeupdate', () => {
+      if (this._isCarrierLooping) return;
       this.currentTimeSec = this.audio.currentTime || 0;
       if (this.audio.duration && Number.isFinite(this.audio.duration) && this.audio.duration > 1) {
         this.durationSec = this.audio.duration;
@@ -161,6 +207,7 @@ export class PodcastAudioController {
     });
 
     this.audio.addEventListener('loadedmetadata', () => {
+      if (this._isCarrierLooping) return;
       if (this.audio.duration && Number.isFinite(this.audio.duration) && this.audio.duration > 1) {
         this.durationSec = this.audio.duration;
       }
@@ -168,13 +215,16 @@ export class PodcastAudioController {
     });
 
     this.audio.addEventListener('play', () => {
+      if (this._isCarrierLooping) return;
       this.isPlaying = true;
       this.isBufferingAudio = false;
+      this.autoPlayEpisodeId = null;
       this._updateMediaSessionState('playing');
       this._emit();
     });
 
     this.audio.addEventListener('pause', () => {
+      if (this._isCarrierLooping) return;
       if (!this.audio.ended) {
         this.isPlaying = false;
         this._updateMediaSessionState('paused');
@@ -183,6 +233,7 @@ export class PodcastAudioController {
     });
 
     this.audio.addEventListener('ended', () => {
+      if (this._isCarrierLooping) return;
       this.isPlaying = false;
       this.currentTimeSec = 0;
       this._updateMediaSessionState('none');
@@ -227,36 +278,60 @@ export class PodcastAudioController {
   }
 
   async _resolveEpisodeAudioSrc(episode) {
+    if (!episode) return null;
     const syncUrl = getDirectNonStaleUrl(episode);
     if (syncUrl) return syncUrl;
 
-    const storedUrl = await getEpisodeAudioUrl(episode?.id);
-    if (storedUrl) {
-      episode.audioUrl = storedUrl;
-      return storedUrl;
+    const epId = String(episode.id || '');
+    if (epId && this._inflightAudioPromises.has(epId)) {
+      return this._inflightAudioPromises.get(epId);
     }
 
-    if (typeof this.onSynthesizeMissingAudio === 'function') {
-      this.isBufferingAudio = true;
-      this._emit();
-      try {
-        const renderedUrl = await this.onSynthesizeMissingAudio(episode);
-        if (renderedUrl) {
-          episode.audioUrl = renderedUrl;
-          return renderedUrl;
+    const promise = (async () => {
+      const storedUrl = await getEpisodeAudioUrl(epId);
+      if (storedUrl) {
+        episode.audioUrl = storedUrl;
+        return storedUrl;
+      }
+
+      if (typeof this.onSynthesizeMissingAudio === 'function') {
+        this.isBufferingAudio = true;
+        this._emit();
+        try {
+          const renderedUrl = await this.onSynthesizeMissingAudio(episode);
+          if (renderedUrl) {
+            episode.audioUrl = renderedUrl;
+            if (this.currentEpisode?.id === episode.id && episode.durationSec) {
+              this.durationSec = Number(episode.durationSec) || this.durationSec;
+            }
+            return renderedUrl;
+          }
+        } finally {
+          this.isBufferingAudio = false;
         }
-      } finally {
-        this.isBufferingAudio = false;
+      }
+
+      return getDirectNonStaleUrl(episode);
+    })();
+
+    if (epId) {
+      this._inflightAudioPromises.set(epId, promise);
+    }
+    try {
+      return await promise;
+    } finally {
+      if (epId) {
+        this._inflightAudioPromises.delete(epId);
       }
     }
-
-    return episode?.audioUrl || null;
   }
 
   _assignAudioSrcIfNeeded(srcUrl, startSec = 0) {
     if (!srcUrl) return;
+    this._stopSilentCarrierGestureLock();
     if (this._activeSrcUrl !== srcUrl) {
       this._activeSrcUrl = srcUrl;
+      this.audio.loop = false;
       this.audio.src = srcUrl;
       try {
         this.audio.load();
@@ -272,29 +347,52 @@ export class PodcastAudioController {
 
   /**
    * Preloads an episode into the Ready-to-Play state (0:00 / duration) without auto-starting
-   * audio, so clicking Play subsequently starts `<audio>` synchronously inside the user's tap!
+   * audio unless the user explicitly tapped Play while shared audio was preparing!
    */
   async loadEpisodeReady(episode) {
     if (!episode) return;
-    if (!this.audio.paused) {
+    this._cancelDeviceSpeech();
+    if (!this.audio.paused && !this._isCarrierLooping) {
       this.audio.pause();
+    }
+    if (this.autoPlayEpisodeId && this.autoPlayEpisodeId !== episode.id) {
+      this.autoPlayEpisodeId = null;
+      this._stopSilentCarrierGestureLock();
     }
     this.currentEpisode = episode;
     this.isPlaying = false;
     this.currentTimeSec = 0;
     this.durationSec = Number(episode.durationSec || 180);
+    this._activeSrcUrl = '';
     this._setupMediaSession(episode);
     this._updateMediaSessionState('paused');
+    this._emit();
 
     const srcUrl = await this._resolveEpisodeAudioSrc(episode);
+    if (this.currentEpisode?.id !== episode.id) return;
+
     if (srcUrl) {
-      this._assignAudioSrcIfNeeded(srcUrl, 0);
+      const shouldAutoStart = this.autoPlayEpisodeId === episode.id;
+      this.autoPlayEpisodeId = null;
+      this._assignAudioSrcIfNeeded(srcUrl, this.currentTimeSec || 0);
+      if (shouldAutoStart) {
+        try {
+          await this.audio.play();
+          this.isPlaying = true;
+        } catch {
+          this.isPlaying = false;
+        }
+      }
+    } else {
+      this.autoPlayEpisodeId = null;
+      this._stopSilentCarrierGestureLock();
     }
     this._emit();
   }
 
   async loadAndPlay(episode, startSec = 0) {
     if (!episode) return;
+    this._cancelDeviceSpeech();
     this._enforcePlaybackSession();
 
     this.currentEpisode = episode;
@@ -305,6 +403,7 @@ export class PodcastAudioController {
     // Fast synchronous path inside the user gesture whenever URL is already resolved!
     const syncUrl = getDirectNonStaleUrl(episode);
     if (syncUrl) {
+      this.autoPlayEpisodeId = null;
       this._assignAudioSrcIfNeeded(syncUrl, startSec);
       this._emit();
       try {
@@ -317,20 +416,24 @@ export class PodcastAudioController {
       return;
     }
 
-    // Unlock this exact HTMLAudioElement instance synchronously inside the tap before awaiting IDB/worker
-    try {
-      this.audio.load();
-    } catch {}
+    // Keep iOS HTMLAudioElement unlocked with near-silent Stereo WAV carrier while awaiting synthesis/IDB
+    this.autoPlayEpisodeId = episode.id;
+    this._startSilentCarrierGestureLock();
     this._emit();
 
     const asyncUrl = await this._resolveEpisodeAudioSrc(episode);
-    if (!asyncUrl) {
+    if (this.currentEpisode?.id !== episode.id) return;
+
+    const stillWantsAutoPlay = this.autoPlayEpisodeId === episode.id;
+    this.autoPlayEpisodeId = null;
+    if (!asyncUrl || !stillWantsAutoPlay) {
+      this._stopSilentCarrierGestureLock();
       this.isPlaying = false;
       this._emit();
       return;
     }
 
-    this._assignAudioSrcIfNeeded(asyncUrl, startSec);
+    this._assignAudioSrcIfNeeded(asyncUrl, this.currentTimeSec || startSec);
     try {
       await this.audio.play();
       this.isPlaying = true;
@@ -340,8 +443,89 @@ export class PodcastAudioController {
     this._emit();
   }
 
+  /**
+   * Instant zero-download Web Speech fallback so a shared podcast remains 100% listenable
+   * even completely offline or on memory-constrained browsers where WASM synthesis is unavailable.
+   */
+  playWithDeviceVoiceFallback(episode, startSec = 0) {
+    const ep = episode || this.currentEpisode;
+    if (!ep || !Array.isArray(ep.transcript) || ep.transcript.length === 0) return false;
+    if (typeof window === 'undefined' || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      return false;
+    }
+
+    this._stopSilentCarrierGestureLock();
+    try {
+      this.audio.pause();
+    } catch {}
+    this._cancelDeviceSpeech();
+
+    this.currentEpisode = ep;
+    this.durationSec = Number(ep.durationSec || 180);
+    this.autoPlayEpisodeId = null;
+    this.isBufferingAudio = false;
+    this._usingDeviceSpeech = true;
+    this.isPlaying = true;
+    const sessionToken = ++this._deviceSpeechSession;
+
+    const synth = window.speechSynthesis;
+    try {
+      synth.cancel();
+    } catch {}
+    const voices = typeof synth.getVoices === 'function' ? synth.getVoices() : [];
+    const { maleVoice, femaleVoice } = selectBestBrowserVoices(voices);
+
+    const startIdx = Math.max(
+      0,
+      ep.transcript.findIndex(seg => Number(seg.endSec || 0) > startSec)
+    );
+    const speakTurnAt = idx => {
+      if (this._deviceSpeechSession !== sessionToken || !this._usingDeviceSpeech) return;
+      if (idx >= ep.transcript.length) {
+        this._usingDeviceSpeech = false;
+        this.isPlaying = false;
+        this.currentTimeSec = 0;
+        this._updateMediaSessionState('none');
+        this._emit();
+        return;
+      }
+      const seg = ep.transcript[idx];
+      this.currentTimeSec = Number(seg.startSec || 0);
+      this._emit();
+
+      const spoken = humanizeNflTextForTts(seg.text || '');
+      const utt = new SpeechSynthesisUtterance(spoken || seg.text || '');
+      const chosenVoice = seg.speaker === 'Elena' ? femaleVoice : maleVoice;
+      if (chosenVoice) utt.voice = chosenVoice;
+      utt.rate = Math.min(2.0, Math.max(0.85, this.playbackRate));
+      utt.pitch = seg.speaker === 'Elena' ? 1.04 : 0.96;
+      utt.onend = () => speakTurnAt(idx + 1);
+      utt.onerror = () => speakTurnAt(idx + 1);
+      synth.speak(utt);
+    };
+
+    this._updateMediaSessionState('playing');
+    this._emit();
+    speakTurnAt(startIdx);
+    return true;
+  }
+
   async togglePlayPause() {
     if (!this.currentEpisode) return;
+    if (this.isBufferingAudio) {
+      // Allow toggling "Auto-Play When Ready" on/off while studio audio is preparing
+      if (this.autoPlayEpisodeId === this.currentEpisode.id) {
+        this.autoPlayEpisodeId = null;
+        this._stopSilentCarrierGestureLock();
+        this._emit();
+      } else {
+        this._enforcePlaybackSession();
+        this.autoPlayEpisodeId = this.currentEpisode.id;
+        this._startSilentCarrierGestureLock();
+        this._emit();
+      }
+      return;
+    }
     if (this.isPlaying) {
       this.pause();
     } else {
@@ -359,6 +543,7 @@ export class PodcastAudioController {
     }
 
     try {
+      this._stopSilentCarrierGestureLock();
       this.audio.muted = false;
       this.audio.volume = 1.0;
       this.audio.playbackRate = this.playbackRate;
@@ -371,6 +556,11 @@ export class PodcastAudioController {
   }
 
   pause() {
+    this.autoPlayEpisodeId = null;
+    this._stopSilentCarrierGestureLock();
+    if (this._usingDeviceSpeech) {
+      this._cancelDeviceSpeech();
+    }
     try {
       this.audio.pause();
     } catch {}
@@ -391,9 +581,15 @@ export class PodcastAudioController {
     if (!this.currentEpisode) return;
     const clamped = Math.max(0, Math.min(this.durationSec || 3600, Number(targetSec || 0)));
     this.currentTimeSec = clamped;
-    try {
-      this.audio.currentTime = clamped;
-    } catch {}
+    if (this._usingDeviceSpeech) {
+      this.playWithDeviceVoiceFallback(this.currentEpisode, clamped);
+      return;
+    }
+    if (!this._isCarrierLooping && this._activeSrcUrl) {
+      try {
+        this.audio.currentTime = clamped;
+      } catch {}
+    }
     this._emit();
   }
 
@@ -404,6 +600,10 @@ export class PodcastAudioController {
   cycleSpeed() {
     this.speedIdx = (this.speedIdx + 1) % SPEEDS.length;
     this.audio.playbackRate = this.playbackRate;
+    if (this._usingDeviceSpeech && this.currentEpisode) {
+      this.playWithDeviceVoiceFallback(this.currentEpisode, this.currentTimeSec);
+      return;
+    }
     this._emit();
   }
 
@@ -421,6 +621,10 @@ export class PodcastAudioController {
         episode: this.currentEpisode,
         isPlaying: this.isPlaying,
         isBufferingAudio: this.isBufferingAudio,
+        isAutoPlayQueued: Boolean(
+          this.currentEpisode && this.autoPlayEpisodeId === this.currentEpisode.id
+        ),
+        usingDeviceSpeech: this._usingDeviceSpeech,
         currentTimeSec: this.currentTimeSec,
         durationSec: this.durationSec,
         playbackRate: this.playbackRate,

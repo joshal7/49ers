@@ -63,28 +63,43 @@ export const BIG_BOARD_SORT_FIELDS = [
   { key: 'name', label: 'Player Name', shortLabel: 'Name', defaultDir: 'asc' }
 ];
 
+export const BIG_BOARD_OFFENSE_POSITIONS = ['QB', 'RB', 'WR', 'TE', 'OT', 'IOL'];
+export const BIG_BOARD_DEFENSE_POSITIONS = ['DL', 'EDGE', 'LB', 'CB', 'S'];
+
 export const BIG_BOARD_INDIVIDUAL_POSITIONS = [
-  'QB',
-  'RB',
-  'WR',
-  'TE',
-  'OT',
-  'IOL',
-  'EDGE',
-  'DL',
-  'LB',
-  'CB',
-  'S'
+  ...BIG_BOARD_OFFENSE_POSITIONS,
+  ...BIG_BOARD_DEFENSE_POSITIONS
+];
+
+// Consistent Offense -> Defense filter order (matching Roster Explorer: QB, RB, WR, TE, OL | DL/EDGE, LB, DB)
+export const BIG_BOARD_QUICK_POS_PILLS = [
+  { key: 'ALL', label: 'All', unit: 'ALL' },
+  { key: 'QB', label: 'QB', unit: 'OFF' },
+  { key: 'RB', label: 'RB', unit: 'OFF' },
+  { key: 'WR', label: 'WR', unit: 'OFF' },
+  { key: 'TE', label: 'TE', unit: 'OFF' },
+  { key: 'OL', label: 'OL', unit: 'OFF' },
+  { key: 'DL_EDGE', label: 'DL/EDGE', unit: 'DEF' },
+  { key: 'LB', label: 'LB', unit: 'DEF' },
+  { key: 'DB', label: 'DB', unit: 'DEF' }
 ];
 
 export const BIG_BOARD_POS_BUCKETS = {
+  QB: new Set(['QB']),
+  RB: new Set(['RB', 'FB', 'HB']),
+  WR: new Set(['WR']),
+  TE: new Set(['TE']),
   OL: new Set(['OT', 'IOL', 'OG', 'G', 'C', 'OL', 'T', 'LT', 'RT']),
+  DL_EDGE: new Set(['DL', 'DT', 'NT', 'IDL', 'EDGE', 'DE', 'OLB', 'ED']),
+  DL: new Set(['DL', 'DT', 'NT', 'IDL', 'EDGE', 'DE', 'OLB', 'ED']),
+  LB: new Set(['LB', 'ILB', 'MLB']),
+  DB: new Set(['CB', 'CBN', 'NB', 'S', 'SAF', 'FS', 'SS', 'DB']),
+  // Legacy composite aliases preserved for backward compatibility
   WR_TE: new Set(['WR', 'TE']),
-  DL_EDGE: new Set(['EDGE', 'DE', 'DT', 'DL', 'NT', 'IDL', 'OLB', 'ED']),
-  DB_LB: new Set(['CB', 'S', 'SAF', 'FS', 'SS', 'DB', 'LB', 'ILB', 'MLB']),
+  DB_LB: new Set(['CB', 'CBN', 'NB', 'S', 'SAF', 'FS', 'SS', 'DB', 'LB', 'ILB', 'MLB']),
   QB_RB: new Set(['QB', 'RB', 'FB', 'HB']),
   OFF: new Set(['QB', 'RB', 'FB', 'HB', 'WR', 'TE', 'OT', 'IOL', 'OG', 'G', 'C', 'OL', 'T', 'LT', 'RT']),
-  DEF: new Set(['EDGE', 'DE', 'DT', 'DL', 'NT', 'IDL', 'OLB', 'ED', 'LB', 'ILB', 'MLB', 'CB', 'S', 'SAF', 'FS', 'SS', 'DB'])
+  DEF: new Set(['DL', 'DT', 'NT', 'IDL', 'EDGE', 'DE', 'OLB', 'ED', 'LB', 'ILB', 'MLB', 'CB', 'CBN', 'NB', 'S', 'SAF', 'FS', 'SS', 'DB'])
 };
 
 export const BIG_BOARD_RANGE_OPTIONS = [

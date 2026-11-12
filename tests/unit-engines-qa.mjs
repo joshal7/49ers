@@ -25,6 +25,10 @@ import {
   annotateJargonPlainText
 } from '../src/engine/jargonGlossary.js';
 import {
+  BIG_BOARD_QUICK_POS_PILLS,
+  BIG_BOARD_OFFENSE_POSITIONS,
+  BIG_BOARD_DEFENSE_POSITIONS,
+  BIG_BOARD_INDIVIDUAL_POSITIONS,
   normalizeBigBoardProspect,
   queryBigBoardProspects,
   parseBigBoardUrlParams,
@@ -6494,13 +6498,37 @@ test('3-Lens NFL Draft Big Board Engine: 250+ Depth, NR-at-Bottom Sorting (Asc &
   }
   assert.ok(jargonInfoIcon('pff_big_board').includes('data-jargon="pff_big_board"'));
 
-  // 6. Live seasonal.json 250+ Prospect Dataset Audit
+  // 6. Live seasonal.json 250+ Prospect Dataset Audit & Split Offense->Defense Position Filters
+  assert.deepEqual(
+    BIG_BOARD_QUICK_POS_PILLS.map(p => p.key),
+    ['ALL', 'QB', 'RB', 'WR', 'TE', 'OL', 'DL_EDGE', 'LB', 'DB'],
+    'Quick Big Board position pills must split QB/RB, WR/TE, DB/LB in strict Offense -> Defense order'
+  );
+  assert.deepEqual(BIG_BOARD_OFFENSE_POSITIONS, ['QB', 'RB', 'WR', 'TE', 'OT', 'IOL']);
+  assert.deepEqual(BIG_BOARD_DEFENSE_POSITIONS, ['DL', 'EDGE', 'LB', 'CB', 'S']);
+  assert.deepEqual(BIG_BOARD_INDIVIDUAL_POSITIONS, ['QB', 'RB', 'WR', 'TE', 'OT', 'IOL', 'DL', 'EDGE', 'LB', 'CB', 'S']);
+
   const liveSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
   const liveBb = liveSeasonal.draftPrep2027?.consensusBigBoard || [];
   assert.ok(liveBb.length >= 250, `Expected >= 250 prospects in live Big Board, got ${liveBb.length}`);
   assert.ok(liveBb.some(p => p.boards?.buzz?.rank === null), 'Live Big Board must include NR (null) late-round Buzz rows');
   assert.ok(liveBb.some(p => p.boards?.pff?.rank === null), 'Live Big Board must include NR (null) late-round PFF rows');
   assert.ok(liveBb.some(p => p.spread !== null && p.spread >= 15), 'Live Big Board must surface Polarizing (spread >= 15) prospects');
+
+  for (const [grpKey, allowedSet] of [
+    ['QB', new Set(['QB'])],
+    ['RB', new Set(['RB'])],
+    ['WR', new Set(['WR'])],
+    ['TE', new Set(['TE'])],
+    ['OL', new Set(['OT', 'IOL'])],
+    ['DL_EDGE', new Set(['DL', 'EDGE'])],
+    ['LB', new Set(['LB'])],
+    ['DB', new Set(['CB', 'S'])]
+  ]) {
+    const grpRes = queryBigBoardProspects(liveBb, { posGroup: grpKey }).items;
+    assert.ok(grpRes.length >= 5, `Expected >=5 prospects for split filter ${grpKey}, got ${grpRes.length}`);
+    assert.ok(grpRes.every(p => allowedSet.has(p.canonicalPos)), `Split filter ${grpKey} leaked unexpected position`);
+  }
 });
 
 console.log(`\n======================================================`);

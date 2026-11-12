@@ -1897,6 +1897,14 @@ async function main() {
         freshInp.value = '';
         freshInp.dispatchEvent(new Event('input', { bubbles: true }));
 
+        const posPillOrder = Array.from(
+          document.querySelectorAll('#consensusBigBoardCard .big-board-pos-bar [data-action="set-big-board-pos"]')
+        ).map(el => (el.textContent || '').trim());
+
+        document.querySelector('[data-action="set-big-board-pos"][data-pos-group="QB"]')?.click();
+        const qbMatches = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
+        document.querySelector('[data-action="set-big-board-pos"][data-pos-group="DB"]')?.click();
+        const dbMatches = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
         document.querySelector('[data-action="set-big-board-pos"][data-pos-group="OL"]')?.click();
         const olMatches = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
         document.querySelector('[data-action="set-big-board-pos"][data-pos-group="ALL"]')?.click();
@@ -1922,6 +1930,9 @@ async function main() {
           resetCleanedUrl,
           focused,
           searchMatches,
+          posPillOrder,
+          qbMatches,
+          dbMatches,
           olMatches,
           expandedCount
         };
@@ -1941,6 +1952,10 @@ async function main() {
           draftAudit.resetCleanedUrl &&
           draftAudit.focused &&
           draftAudit.searchMatches >= 1 &&
+          JSON.stringify(draftAudit.posPillOrder) ===
+            JSON.stringify(['All', 'QB', 'RB', 'WR', 'TE', 'OL', 'DL/EDGE', 'LB', 'DB']) &&
+          draftAudit.qbMatches >= 5 &&
+          draftAudit.dbMatches >= 5 &&
           draftAudit.olMatches >= 3 &&
           draftAudit.expandedCount >= 30,
         `Draft section audit failed: ${JSON.stringify(draftAudit)}`

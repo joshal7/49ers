@@ -295,6 +295,14 @@ export async function checkAndAutoUpdateBestGeminiModel(prefs = {}, onModelUpdat
   }
 }
 
+const FAST_FALLBACK_TTS_CASCADE = [
+  'gemini-2.5-flash-preview-tts',
+  'gemini-2.5-pro-preview-tts',
+  ...DEFAULT_NOTEBOOKLM_TTS_CASCADE.filter(
+    id => id !== 'gemini-2.5-flash-preview-tts' && id !== 'gemini-2.5-pro-preview-tts'
+  )
+];
+
 async function resolveDirectGeminiCascades(prefs = {}) {
   const key = String(prefs?.geminiApiKey || '').trim();
   const apiBase = String(prefs?.geminiApiBaseUrl || DEFAULT_GEMINI_API_BASE)
@@ -321,7 +329,7 @@ async function resolveDirectGeminiCascades(prefs = {}) {
       key,
       bestModel: DEFAULT_BEST_REASONING_CASCADE[0],
       cascade: [...DEFAULT_BEST_REASONING_CASCADE],
-      ttsCascade: [...DEFAULT_NOTEBOOKLM_TTS_CASCADE]
+      ttsCascade: [...FAST_FALLBACK_TTS_CASCADE]
     };
   }
 }
@@ -545,7 +553,7 @@ async function callGeminiDirectWithCascade({
           ok: true,
           bestModel: model,
           cascade: [model, ...activeRemaining],
-          ttsCascade: existingState?.ttsCascade || [...DEFAULT_NOTEBOOKLM_TTS_CASCADE],
+          ttsCascade: existingState?.ttsCascade || [...FAST_FALLBACK_TTS_CASCADE],
           checkedAtMs: Date.now()
         });
         return {
@@ -947,12 +955,29 @@ export async function fetchLiveTopicSignals(rawTopic = '') {
 let sharedTtsWorker = null;
 let nextTtsJobSeq = 1;
 const pendingTtsJobs = new Map();
+const TTS_WORKER_INACTIVITY_TIMEOUT_MS = 45_000;
+
+function terminateAndResetTtsWorker(reasonError = null) {
+  if (sharedTtsWorker) {
+    try {
+      sharedTtsWorker.terminate();
+    } catch {}
+    sharedTtsWorker = null;
+  }
+  if (reasonError) {
+    for (const [, job] of pendingTtsJobs.entries()) {
+      job.clearWatchdog?.();
+      job.reject(reasonError);
+    }
+    pendingTtsJobs.clear();
+  }
+}
 
 function getOrCreateTtsWorker() {
   if (typeof Worker === 'undefined') return null;
   if (sharedTtsWorker) return sharedTtsWorker;
 
-  sharedTtsWorker = new Worker(new URL('../workers/neuralTtsWorker.js', import.meta.url), {
+  sharedTtsWorker = new Worker(new URL('../workers/neuralTtsWorker.js?v=51', import.meta.url), {
     type: 'module'
   });
 
@@ -962,23 +987,29 @@ function getOrCreateTtsWorker() {
     if (!job) return;
 
     if (msg.type === 'progress') {
+      job.touchWatchdog?.();
       job.onProgress?.(msg);
     } else if (msg.type === 'complete') {
+      job.clearWatchdog?.();
       pendingTtsJobs.delete(msg.jobId);
       job.resolve(msg);
     } else if (msg.type === 'error') {
+      job.clearWatchdog?.();
       pendingTtsJobs.delete(msg.jobId);
+      // Reset Worker so any corrupted ONNX/WASM initialization state starts fresh on retry
+      terminateAndResetTtsWorker();
       job.reject(new Error(msg.error || 'Studio neural audio synthesis failed.'));
     }
   });
 
   sharedTtsWorker.addEventListener('error', err => {
     const errObj = new Error(err?.message || 'Neural TTS Web Worker crashed.');
-    for (const [, job] of pendingTtsJobs.entries()) {
-      job.reject(errObj);
-    }
-    pendingTtsJobs.clear();
-    sharedTtsWorker = null;
+    terminateAndResetTtsWorker(errObj);
+  });
+
+  sharedTtsWorker.addEventListener('messageerror', () => {
+    const errObj = new Error('Neural TTS Web Worker message serialization failed.');
+    terminateAndResetTtsWorker(errObj);
   });
 
   return sharedTtsWorker;
@@ -1035,8 +1066,22 @@ function buildNodeFallbackWavAndTranscript(turns = []) {
 }
 
 async function synthesizeTurnsWithKokoroWorker(episodeId, turns, onWorkerProgress) {
-  const worker = getOrCreateTtsWorker();
+  const isFastTestStub =
+    typeof globalThis !== 'undefined' && Boolean(globalThis.__49ersFastTestTtsFallback);
+  const worker = isFastTestStub ? null : getOrCreateTtsWorker();
   if (!worker) {
+    if (isFastTestStub) {
+      onWorkerProgress?.({
+        subPercent: 28,
+        detail: 'Caching studio voice weights (42% • 37 / 88 MB — 1-time download)…'
+      });
+      await new Promise(r => setTimeout(r, 90));
+      onWorkerProgress?.({
+        subPercent: 74,
+        detail: `Synthesizing studio voices — Turn ${Math.max(1, Math.ceil((turns?.length || 2) / 2))} of ${turns?.length || 2} (Elena)…`
+      });
+      await new Promise(r => setTimeout(r, 90));
+    }
     const fallback = buildNodeFallbackWavAndTranscript(turns);
     const url = await saveEpisodeAudioBlob(episodeId, fallback.wavBuffer);
     return {
@@ -1049,10 +1094,32 @@ async function synthesizeTurnsWithKokoroWorker(episodeId, turns, onWorkerProgres
 
   const jobId = `tts_${Date.now()}_${nextTtsJobSeq++}`;
   const result = await new Promise((resolve, reject) => {
+    let watchdogTimer = null;
+    const clearWatchdog = () => {
+      if (watchdogTimer) {
+        clearTimeout(watchdogTimer);
+        watchdogTimer = null;
+      }
+    };
+    const touchWatchdog = () => {
+      clearWatchdog();
+      watchdogTimer = setTimeout(() => {
+        pendingTtsJobs.delete(jobId);
+        const stallErr = new Error(
+          'Studio audio synthesis timed out waiting for voice weights or browser memory. Tap Retry Studio Audio or Listen with Device Voice.'
+        );
+        terminateAndResetTtsWorker(stallErr);
+        reject(stallErr);
+      }, TTS_WORKER_INACTIVITY_TIMEOUT_MS);
+    };
+
+    touchWatchdog();
     pendingTtsJobs.set(jobId, {
       resolve,
       reject,
-      onProgress: onWorkerProgress
+      onProgress: onWorkerProgress,
+      touchWatchdog,
+      clearWatchdog
     });
     worker.postMessage({
       type: 'synthesize_podcast',
@@ -1073,7 +1140,7 @@ async function synthesizeTurnsWithKokoroWorker(episodeId, turns, onWorkerProgres
 /**
  * Synthesizes and caches studio `.wav` audio for a shared or reloaded custom podcast episode.
  * Uses Gemini Native Multi-Speaker NotebookLM TTS when a Gemini API key is configured,
- * and Kokoro-82M (`af_heart` + `am_fenrir`) when opened by a colleague with no API key.
+ * and quantized WASM Kokoro-82M (`af_heart` + `am_fenrir`) when opened without an API key.
  */
 export async function synthesizeMissingEpisodeAudio(episode, onProgress, prefs = {}) {
   if (!episode?.id || !Array.isArray(episode.transcript) || episode.transcript.length === 0) {
@@ -1094,12 +1161,17 @@ export async function synthesizeMissingEpisodeAudio(episode, onProgress, prefs =
         turns: episode.transcript,
         solo,
         onProgress: info => {
+          const subPct = Math.min(99, Math.max(10, Math.round(Number(info.subPercent || 24))));
           onProgress?.({
             stepIdx: 3,
             totalSteps: 3,
             stages: PODCAST_PIPELINE_STAGES,
-            percent: Math.min(99, Math.max(40, Number(info.subPercent || 55))),
-            message: info.detail || 'Recording shared podcast with Gemini NotebookLM voices…'
+            subPercent: subPct,
+            percent: subPct,
+            stagePercents: [100, 100, subPct],
+            engineLabel: 'NotebookLM Studio TTS',
+            message: info.detail || 'Recording shared podcast with Gemini NotebookLM voices…',
+            subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'
           });
         }
       });
@@ -1110,12 +1182,17 @@ export async function synthesizeMissingEpisodeAudio(episode, onProgress, prefs =
 
   if (!rendered) {
     rendered = await synthesizeTurnsWithKokoroWorker(episode.id, episode.transcript, info => {
+      const subPct = Math.min(99, Math.max(8, Math.round(Number(info.subPercent || 15))));
       onProgress?.({
         stepIdx: 3,
         totalSteps: 3,
         stages: PODCAST_PIPELINE_STAGES,
-        percent: Math.min(99, Math.max(35, Number(info.subPercent || 50))),
-        message: info.detail || 'Converting shared podcast script into natural studio audio…'
+        subPercent: subPct,
+        percent: subPct,
+        stagePercents: [100, 100, subPct],
+        engineLabel: 'On-Device Studio Audio',
+        message: info.detail || 'Preparing shared podcast studio audio…',
+        subDetail: 'No API key required — caching stereo audio directly on this device.'
       });
     });
   }

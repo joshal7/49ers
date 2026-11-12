@@ -41,7 +41,9 @@ import {
   BIG_BOARD_LENSES,
   BIG_BOARD_LENS_ORDER,
   BIG_BOARD_SORT_FIELDS,
-  BIG_BOARD_INDIVIDUAL_POSITIONS,
+  BIG_BOARD_QUICK_POS_PILLS,
+  BIG_BOARD_OFFENSE_POSITIONS,
+  BIG_BOARD_DEFENSE_POSITIONS,
   BIG_BOARD_RANGE_OPTIONS,
   BIG_BOARD_AGREEMENT_OPTIONS,
   formatShortBoardDate,
@@ -2162,16 +2164,6 @@ function renderFullSchedule(appData, schedulePrevExpanded = false, mcSimResult =
   `;
 }
 
-const BIG_BOARD_POS_PILLS = [
-  { key: 'ALL', label: 'All' },
-  { key: 'SF_RANGE', label: 'SF Window' },
-  { key: 'OL', label: 'OL' },
-  { key: 'WR_TE', label: 'WR/TE' },
-  { key: 'DL_EDGE', label: 'DL/EDGE' },
-  { key: 'DB_LB', label: 'DB/LB' },
-  { key: 'QB_RB', label: 'QB/RB' }
-];
-
 function formatBoardRankLabelForMock(p, activeLens = 'consensus') {
   if (activeLens === 'buzz' && p.buzzRank) {
     return p.bigBoardRank
@@ -2865,14 +2857,14 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
         </div>
       </div>
 
-      <!-- Quick Position Group Filter Pills -->
-      <div class="big-board-pos-bar" role="tablist" aria-label="Filter Big Board by Position Group">
-        ${BIG_BOARD_POS_PILLS.map(pill => {
+      <!-- Quick Position Filter Pills (Offense -> Defense: All | QB, RB, WR, TE, OL | DL/EDGE, LB, DB) -->
+      <div class="big-board-pos-bar" role="tablist" aria-label="Filter Big Board by Position">
+        ${BIG_BOARD_QUICK_POS_PILLS.map(pill => {
           const active = boardQuery.posGroup === pill.key && boardQuery.positions.length === 0;
           return `
             <button type="button" role="tab" aria-selected="${active ? 'true' : 'false'}"
                     class="pill-btn big-board-pos-pill ${active ? 'active' : ''}"
-                    data-action="set-big-board-pos" data-pos-group="${pill.key}">
+                    data-action="set-big-board-pos" data-pos-group="${pill.key}" data-unit="${pill.unit}">
               <span>${esc(pill.label)}</span>
             </button>
           `;
@@ -2885,7 +2877,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
           ? `
         <div class="big-board-filter-drawer" id="bigBoardFilterDrawer" data-big-board-drawer>
           <div class="bb-drawer-group">
-            <div class="bb-drawer-label">Positions (Multi-Select) &amp; Unit</div>
+            <div class="bb-drawer-label">Unit Scope</div>
             <div class="bb-drawer-chips">
               <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.posGroup === 'ALL' && boardQuery.positions.length === 0 ? 'active' : ''}"
                       data-action="set-big-board-pos" data-pos-group="ALL">All</button>
@@ -2893,7 +2885,28 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
                       data-action="set-big-board-pos" data-pos-group="OFF">Offense</button>
               <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.posGroup === 'DEF' ? 'active' : ''}"
                       data-action="set-big-board-pos" data-pos-group="DEF">Defense</button>
-              ${BIG_BOARD_INDIVIDUAL_POSITIONS.map(posKey => {
+            </div>
+          </div>
+
+          <div class="bb-drawer-group">
+            <div class="bb-drawer-label">Offense Positions (Multi-Select)</div>
+            <div class="bb-drawer-chips">
+              ${BIG_BOARD_OFFENSE_POSITIONS.map(posKey => {
+                const active = boardQuery.positions.includes(posKey);
+                return `
+                  <button type="button" class="pill-btn big-board-pos-pill ${active ? 'active' : ''}"
+                          data-action="toggle-big-board-pos-chip" data-pos="${posKey}">
+                    ${esc(posKey)}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="bb-drawer-group">
+            <div class="bb-drawer-label">Defense Positions (Multi-Select)</div>
+            <div class="bb-drawer-chips">
+              ${BIG_BOARD_DEFENSE_POSITIONS.map(posKey => {
                 const active = boardQuery.positions.includes(posKey);
                 return `
                   <button type="button" class="pill-btn big-board-pos-pill ${active ? 'active' : ''}"
