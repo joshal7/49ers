@@ -71,7 +71,8 @@ const TRACKING_QUERY_PARAMS = new Set([
   'mc_cid',
   'mc_eid',
   'ref_src',
-  'ref_url'
+  'ref_url',
+  '_osource'
 ]);
 
 export const ESPN_TEAM_SLUG_MAP = {
@@ -257,7 +258,7 @@ export function isOpaqueShortenerUrl(rawUrl) {
 
 export function stripTrackingParams(rawUrl = '') {
   if (typeof rawUrl !== 'string') return '';
-  const trimmed = rawUrl.trim();
+  const trimmed = rawUrl.trim().replace(/\/_osource=[^/?#]+/gi, '/');
   if (!trimmed || !trimmed.includes('?')) return trimmed;
   try {
     const parsed = new URL(trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed);

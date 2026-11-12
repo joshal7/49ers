@@ -546,19 +546,27 @@ function hydrateBundlePostLoad(rawFiles) {
       )
     : [];
   if (news && Array.isArray(news.rawStream)) {
+    const mappedStream = news.rawStream.map(it =>
+      it?.type === 'tweet' || it?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(it?.url || ''))
+        ? {
+            ...it,
+            url: resolveOriginalTweetUrl(it, directPosts),
+            authorProfileUrl: resolveItemAuthorProfileUrl(it, null)
+          }
+        : it
+    );
+    const seenResolvedUrls = new Set();
+    const dedupedByUrl = [];
+    for (const it of mappedStream) {
+      const u = String(it?.url || '').trim();
+      if (u && !u.includes('x.com/search?') && !u.includes('#:~:text=')) {
+        if (seenResolvedUrls.has(u)) continue;
+        seenResolvedUrls.add(u);
+      }
+      dedupedByUrl.push(it);
+    }
     news.rawStream = sortNewsWithBreakingPriority(
-      filterOutCompletedGameAvailabilityItems(
-        news.rawStream.map(it =>
-          it?.type === 'tweet' || it?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(it?.url || ''))
-            ? {
-                ...it,
-                url: resolveOriginalTweetUrl(it, directPosts),
-                authorProfileUrl: resolveItemAuthorProfileUrl(it, null)
-              }
-            : it
-        ),
-        bootCtxStub
-      ),
+      filterOutCompletedGameAvailabilityItems(dedupedByUrl, bootCtxStub),
       Date.now(),
       { appData: bootCtxStub }
     );
@@ -592,7 +600,34 @@ function hydrateBundlePostLoad(rawFiles) {
     }
   }
   if (news && Array.isArray(news.clusteredBriefs)) {
-    news.clusteredBriefs = filterAndCleanSynthesisClusters(news.clusteredBriefs, bootCtxStub);
+    news.clusteredBriefs = filterAndCleanSynthesisClusters(
+      news.clusteredBriefs.map(cl => {
+        if (!Array.isArray(cl?.sourceLinks)) return cl;
+        return {
+          ...cl,
+          sourceLinks: cl.sourceLinks.map(sl =>
+            sl && /^https?:\/\/bsky\.app\//i.test(String(sl.url || ''))
+              ? {
+                  ...sl,
+                  url: resolveOriginalTweetUrl(
+                    {
+                      type: 'tweet',
+                      url: sl.url,
+                      author: sl.author || sl.label || sl.outlet || '',
+                      authorHandle: sl.authorHandle || '',
+                      title: sl.title || '',
+                      fullText: sl.title || '',
+                      publishedAt: sl.publishedAt || cl.publishedAt || ''
+                    },
+                    directPosts
+                  )
+                }
+              : sl
+          )
+        };
+      }),
+      bootCtxStub
+    );
   }
 
   const loadedBundle = {
@@ -945,6 +980,7 @@ function propagateLiveItemsToPlayerMentions(newItems = [], rosterPlayers = []) {
 export async function hydrateLiveBlueskyBeatWire(appData) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
+  const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
   const existingTextKeys = new Set(
     appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
   );
@@ -1009,6 +1045,7 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
             {
               type: 'tweet',
               url: bskyPermalink,
+              externalUrl: safeExtUrl,
               author: parsedAttr.reporterName,
               reporterId: parsedAttr.reporterId,
               reporterName: parsedAttr.reporterName,
@@ -1020,8 +1057,12 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
             },
             appData.news.rawStream
           );
+          if (postUrl && !postUrl.includes('x.com/search?') && existingUrls.has(postUrl)) {
+            continue;
+          }
 
           existingIds.add(postId);
+          if (postUrl) existingUrls.add(postUrl);
           existingTextKeys.add(textKey);
           discovered.push({
             id: postId,

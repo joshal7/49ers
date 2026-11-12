@@ -1729,9 +1729,12 @@ async function main() {
     official49ersXml,
     nbcsbaXml,
     pfrRumorsXml,
+    nflTradeRumorsXml,
     rotowireXml,
     sfStandardXml,
     heavy49ersXml,
+    heavy49ersPage2Xml,
+    pftFeedXml,
     webzoneXml,
     curatedYtChannelClips,
     official49ersGameClips,
@@ -1751,9 +1754,12 @@ async function main() {
     fetchText('https://www.49ers.com/rss/news').catch(() => ''),
     fetchText('https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1').catch(() => ''),
     fetchText('https://www.profootballrumors.com/san-francisco-49ers/feed').catch(() => ''),
+    fetchText('https://nfltraderumors.co/feed/').catch(() => ''),
     fetchText('https://www.rotowire.com/rss/news.php?sport=NFL').catch(() => ''),
     fetchText('https://www.sfstandard.com/sports/feed/').catch(() => ''),
     fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
+    fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/?paged=2').catch(() => ''),
+    fetchText('https://profootballtalk.nbcsports.com/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
     fetchCuratedYouTubeChannelVideos({ qbNames: active49ersQbNames, maxAgeDays: 11 }).catch(() => []),
     searchYouTubeChannelVideos(
@@ -1958,16 +1964,28 @@ async function main() {
   const otherBucket = sortedYtCandidates.filter(c => !highlightBucket.includes(c) && !filmBucket.includes(c)).slice(0, 6);
   const liveYtClips = [...highlightBucket, ...filmBucket, ...otherBucket];
 
-  // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded in beat RSS feeds via oEmbed
-  const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss([
-    pfrRumorsXml,
-    heavy49ersXml,
-    webzoneXml,
-    ninersNationXml,
-    nbcsbaXml,
-    official49ersXml,
-    sfStandardXml
-  ]).catch(() => []);
+  // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded across beat RSS feeds AND recent beat article pages
+  const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss(
+    [
+      pfrRumorsXml,
+      nflTradeRumorsXml,
+      heavy49ersXml,
+      heavy49ersPage2Xml,
+      pftFeedXml,
+      webzoneXml,
+      ninersNationXml,
+      nbcsbaXml,
+      official49ersXml,
+      sfStandardXml,
+      JSON.stringify(espnNews || {})
+    ],
+    Date.now(),
+    {
+      crawlArticlePages: true,
+      seedArticleUrls: (rawBeatTweets || []).map(t => t?.externalUrl).filter(Boolean),
+      rosterPlayers
+    }
+  ).catch(() => []);
   const liveBeatTweets = [...harvestedXTweets, ...rawBeatTweets];
 
   // Batch-fetch ESPN 24/7 X-Beat Player Wire across all numeric-ESPN-ID 49ers players (7-day window)
@@ -2150,8 +2168,9 @@ async function main() {
   }
 
   const rawNewsStream = [];
+  const rawTweetItemByUrl = new Map();
 
-  // Add live beat social posts (tweets / Bluesky beat wire) with full short-tweet text, author & breaking flags
+  // Add live beat social posts (direct X status tweets first, then Bluesky beat wire fallback) with X-first deduplication
   for (const tw of liveBeatTweets) {
     const rawTweetBody = cleanSensationalistText(tw.fullText || tw.title || '');
     if (!rawTweetBody) continue;
@@ -2161,10 +2180,12 @@ async function main() {
     const brk = classifyBreakingItem({ title: fmtTw.text, summary: tw.summary, publishedAt: pubIso });
 
     const mentioned = matchMentionedPlayers(`${fmtTw.text} ${tw.summary || ''}`, 20);
+    const safeTwExtUrl = sanitizeExternalUrl(tw.externalUrl, null);
     const resolvedTwUrl = resolveOriginalTweetUrl(
       {
         ...tw,
         type: 'tweet',
+        externalUrl: safeTwExtUrl,
         mentionedPlayers: mentioned,
         fullText: fmtTw.text,
         title: fmtTw.text,
@@ -2174,9 +2195,24 @@ async function main() {
     );
     const safeTwUrl = sanitizeExternalUrl(resolvedTwUrl, null);
     if (!safeTwUrl) continue;
-    const safeTwExtUrl = sanitizeExternalUrl(tw.externalUrl, null);
 
-    rawNewsStream.push({
+    // If a Bluesky post upgraded to an already-harvested direct `x.com/<handle>/status/<id>` item,
+    // enrich the X item with any missing external article link or thumbnail and skip pushing a duplicate!
+    if (!safeTwUrl.includes('x.com/search?') && rawTweetItemByUrl.has(safeTwUrl)) {
+      const existingX = rawTweetItemByUrl.get(safeTwUrl);
+      if (existingX) {
+        if (!existingX.externalUrl && safeTwExtUrl) {
+          existingX.externalUrl = safeTwExtUrl;
+          existingX.externalTitle = tw.externalTitle ? cleanSensationalistText(tw.externalTitle) : null;
+        }
+        if (!existingX.imageUrl && tw.imageUrl && !String(tw.imageUrl).includes('cdn.bsky.app')) {
+          existingX.imageUrl = tw.imageUrl;
+        }
+      }
+      continue;
+    }
+
+    const builtTwItem = {
       id: tw.id,
       type: 'tweet',
       title: fmtTw.text,
@@ -2208,7 +2244,11 @@ async function main() {
       signalScore: Math.max(78, sig.signalScore),
       fluffScore: sig.fluffScore,
       isClickbait: false
-    });
+    };
+    rawNewsStream.push(builtTwItem);
+    if (!safeTwUrl.includes('x.com/search?')) {
+      rawTweetItemByUrl.set(safeTwUrl, builtTwItem);
+    }
   }
 
   const seenStreamUrls = new Set(
@@ -2398,9 +2438,10 @@ async function main() {
     rawNewsStream.push(nbcsItem);
   }
 
-  // Parse Pro Football Rumors 49ers RSS & RotoWire Live NFL RSS (filtered strictly to 49ers)
+  // Parse Pro Football Rumors 49ers RSS, NFL Trade Rumors 49ers RSS & RotoWire Live NFL RSS (filtered strictly to 49ers)
   for (const [feedKey, rawFeedXml, fallbackOutlet, fallbackOutletId] of [
     ['pfrumors', pfrRumorsXml, 'Pro Football Rumors', 'pfrumors'],
+    ['nflrums', nflTradeRumorsXml, 'NFL Trade Rumors', 'nfl_trade_rumors'],
     ['rotowire', rotowireXml, 'RotoWire / X Beat', 'espn']
   ]) {
     for (const itemMatch of rawFeedXml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
@@ -2419,7 +2460,7 @@ async function main() {
         continue;
       }
       if (
-        feedKey === 'pfrumors' &&
+        (feedKey === 'pfrumors' || feedKey === 'nflrums') &&
         isOffTopicLeagueFiller({
           url: '',
           title,
@@ -2468,6 +2509,7 @@ async function main() {
       if (!finalUrl.includes('x.com/search?') && seenStreamUrls.has(finalUrl)) continue;
       if (!finalUrl.includes('x.com/search?')) seenStreamUrls.add(finalUrl);
 
+      const isArticleRumorFeed = feedKey === 'pfrumors' || feedKey === 'nflrums';
       const pfItem = {
         id: `${feedKey}_${rawNewsStream.length}`,
         type: feedKey === 'rotowire' ? 'tweet' : 'article',
@@ -2482,13 +2524,18 @@ async function main() {
         url: finalUrl,
         externalUrl: null,
         externalTitle: null,
-        outletId: feedKey === 'pfrumors' ? 'pfrumors' : attr.outletId,
-        outletName: feedKey === 'pfrumors' ? 'Pro Football Rumors' : (attr.outletName || fallbackOutlet),
-        reporterId: feedKey === 'pfrumors' ? (attr.viaWire ? attr.reporterId : null) : attr.reporterId,
-        reporterName: feedKey === 'pfrumors' ? 'Pro Football Rumors' : attr.reporterName,
-        author: feedKey === 'pfrumors' ? 'Pro Football Rumors' : attr.author,
-        authorHandle: feedKey === 'pfrumors' ? '' : attr.authorHandle,
-        authorProfileUrl: feedKey === 'pfrumors' ? 'https://www.profootballrumors.com/san-francisco-49ers' : (attr.xUrl || null),
+        outletId: isArticleRumorFeed ? fallbackOutletId : attr.outletId,
+        outletName: isArticleRumorFeed ? fallbackOutlet : (attr.outletName || fallbackOutlet),
+        reporterId: isArticleRumorFeed ? (attr.viaWire ? attr.reporterId : null) : attr.reporterId,
+        reporterName: isArticleRumorFeed ? fallbackOutlet : attr.reporterName,
+        author: isArticleRumorFeed ? fallbackOutlet : attr.author,
+        authorHandle: isArticleRumorFeed ? '' : attr.authorHandle,
+        authorProfileUrl:
+          feedKey === 'pfrumors'
+            ? 'https://www.profootballrumors.com/san-francisco-49ers'
+            : feedKey === 'nflrums'
+              ? 'https://x.com/nflrums'
+              : (attr.xUrl || null),
         trustTier: attr.trustTier,
         isBreaking: brk.isBreaking,
         isInGameInjury: brk.isInGameInjury,
@@ -4889,6 +4936,7 @@ async function main() {
         prevBrief.cycleKey === activeNewsBriefCycle &&
         Array.isArray(prevBrief.bullets) &&
         prevBrief.bullets.length >= 2 &&
+        !JSON.stringify(prevBrief).includes('bsky.app') &&
         (prevBrief.source === 'pipeline-gemini-daily' || prevBrief.source === 'live-gemini-daily')
       ) {
         prevNewsBriefCached = prevBrief;

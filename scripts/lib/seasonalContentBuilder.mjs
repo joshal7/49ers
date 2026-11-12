@@ -8,6 +8,7 @@
 import {
   classifyBreakingItem,
   formatTweetBodyForDisplay,
+  isRedundantProfileSelfLink,
   stripRedundantAuthorBoilerplate
 } from '../../src/engine/breakingClassifier.js';
 import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
@@ -28,6 +29,8 @@ import {
   buildTargetedOriginalTweetUrl,
   extractBeatAttributionFromText,
   extractXSnowflakeTimestampMs,
+  isBlueskyPostUrl,
+  isDirectXStatusUrl,
   resolveReporterFromNameOrHandle,
   resolveOriginalTweetUrl
 } from '../../src/engine/beatAttributionEngine.js';
@@ -678,14 +681,46 @@ const TRUSTED_MEDIA_X_HANDLES = new Set([
   '957thegame',
   'knbr',
   'nbcs49ers',
+  'nbcsauthentic',
   'nfl',
   'nflnetwork',
   'espnnfl',
+  'espn',
+  'nflonfox',
+  'nfloncbs',
+  'foxsports',
   'profootballtalk',
+  'nflrums',
+  'spotrac',
+  'overthecap',
   '49ers',
   '49erswebzone',
-  'ninersnation'
+  'ninersnation',
+  'mattblively',
+  'rob_lowder',
+  'oursf49ers',
+  '49ershive',
+  'coach_yac'
 ]);
+
+const TRUSTED_MEDIA_DISPLAY_NAMES = {
+  '957thegame': { name: '95.7 The Game', outletId: 'knbr_radio', outletName: '95.7 The Game', tier: 2 },
+  knbr: { name: 'KNBR', outletId: 'knbr_radio', outletName: 'KNBR 680', tier: 2 },
+  nbcs49ers: { name: '49ers on NBCSBA', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', tier: 1 },
+  nbcsauthentic: { name: 'NBC Sports Bay Area', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', tier: 1 },
+  nfl: { name: 'NFL', outletId: 'nfl_network', outletName: 'NFL', tier: 1 },
+  nflnetwork: { name: 'NFL Network', outletId: 'nfl_network', outletName: 'NFL Network', tier: 1 },
+  espnnfl: { name: 'ESPN NFL', outletId: 'espn', outletName: 'ESPN NFL', tier: 1 },
+  espn: { name: 'ESPN', outletId: 'espn', outletName: 'ESPN', tier: 1 },
+  profootballtalk: { name: 'ProFootballTalk', outletId: 'nfl_network', outletName: 'NBC ProFootballTalk', tier: 2 },
+  nflrums: { name: 'NFL Trade Rumors', outletId: 'nfl_trade_rumors', outletName: 'NFL Trade Rumors', tier: 2 },
+  spotrac: { name: 'Spotrac', outletId: 'nfl_trade_rumors', outletName: 'Spotrac NFL Cap', tier: 1 },
+  overthecap: { name: 'OverTheCap', outletId: 'nfl_trade_rumors', outletName: 'OverTheCap', tier: 1 },
+  '49ers': { name: 'San Francisco 49ers', outletId: '49ers_official', outletName: '49ers.com Official', tier: 1 },
+  '49erswebzone': { name: '49ers Webzone', outletId: '49ers_webzone', outletName: '49ers Webzone', tier: 2 },
+  ninersnation: { name: 'Niners Nation', outletId: 'niners_nation', outletName: 'Niners Nation', tier: 2 },
+  rob_lowder: { name: 'Rob Lowder', outletId: 'youtube_film', outletName: 'Striking Gold', tier: 2 }
+};
 
 function decodeBasicEntitiesForOembed(html = '') {
   return String(html || '')
@@ -708,28 +743,49 @@ function decodeBasicEntitiesForOembed(html = '') {
     .replace(/&gt;/gi, '>')
     .replace(/&nbsp;/gi, ' ')
     .replace(/\bpic\.twitter\.com\/[A-Za-z0-9]+/gi, '')
+    .replace(/\bhttps?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
 /**
- * Extracts embedded `https://x.com/<handle>/status/<id>` URLs from beat RSS feeds,
- * decodes exact Snowflake timestamps, and hydrates verbatim tweet text + author via
- * X's public oEmbed endpoint (`publish.twitter.com/oembed`) so tweet cards link directly
- * to the original status on X.
+ * Extracts embedded `https://x.com/<handle>/status/<id>` URLs from beat RSS feeds AND recent
+ * HTTP-200 beat article pages, decodes exact 64-bit Snowflake timestamps, and hydrates verbatim
+ * tweet text, thumbnails, external links, and quoted beat tweets via X's public syndication
+ * (`cdn.syndication.twimg.com/tweet-result`) + oEmbed (`publish.twitter.com/oembed`) endpoints
+ * so tweet cards prioritize direct X status links over Bluesky mirrors whenever discoverable.
  */
-export async function harvestEmbeddedXStatusTweetsFromRss(rssXmlList = [], nowMs = Date.now()) {
+export async function harvestEmbeddedXStatusTweetsFromRss(
+  rssXmlList = [],
+  nowMs = Date.now(),
+  { crawlArticlePages = true, extraHubUrls = [], seedArticleUrls = [], rosterPlayers = [] } = {}
+) {
   const sevenDaysAgoMs = nowMs - 7 * 86_400_000;
   const candidates = new Map();
-  const statusRegex = /https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
+  const articleUrlsToCrawl = new Set(
+    (Array.isArray(seedArticleUrls) ? seedArticleUrls : [])
+      .map(u => sanitizeExternalUrl(u, null))
+      .filter(u => u && !isPaywalledPublisher('', u) && !u.includes('youtube.com') && !u.includes('youtu.be'))
+  );
+  const statusRegex = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
+  const articleUrlRegex =
+    /https?:\/\/(?:www\.)?(?:49erswebzone\.com\/(?:articles|news)\/\d+-[^"'\s<>]+|nbcsportsbayarea\.com\/nfl\/san-francisco-49ers\/[^"'\s<>]+|profootballrumors\.com\/\d{4}\/\d{2}\/[^"'\s<>]+|nfltraderumors\.co\/[a-z0-9][a-z0-9-]{8,}\/?|ninersnation\.com\/\d{4}\/\d+\/\d+\/[^"'\s<>]+|sfstandard\.com\/202\d\/[^"'\s<>]+|espn\.com\/nfl\/story\/_\/id\/\d+[^"'\s<>]*)/gi;
 
-  for (const xml of rssXmlList) {
-    if (!xml || typeof xml !== 'string') continue;
-    for (const m of xml.matchAll(statusRegex)) {
+  const scanPayloadForXStatuses = (raw, collectArticles = false) => {
+    if (!raw || typeof raw !== 'string') return;
+    const decoded = raw
+      .replace(/\\\//g, '/')
+      .replace(/&amp;/gi, '&')
+      .replace(/&quot;/gi, '"')
+      .replace(/%2F/gi, '/')
+      .replace(/%3A/gi, ':');
+
+    for (const m of decoded.matchAll(statusRegex)) {
       const handle = m[1];
       const statusId = m[2];
+      if (/^(i|intent|share|hashtag|search)$/i.test(handle)) continue;
       const snowMs = extractXSnowflakeTimestampMs(statusId);
-      if (!snowMs || snowMs < sevenDaysAgoMs || snowMs > nowMs + 6 * 3600_000) continue;
+      if (!snowMs || snowMs < sevenDaysAgoMs || snowMs > nowMs + 6 * 3_600_000) continue;
 
       const dirEntry = resolveReporterFromNameOrHandle(handle);
       if (!dirEntry && !TRUSTED_MEDIA_X_HANDLES.has(handle.toLowerCase())) continue;
@@ -739,83 +795,406 @@ export async function harvestEmbeddedXStatusTweetsFromRss(rssXmlList = [], nowMs
         candidates.set(statusId, { handle, statusId, snowMs, canonicalUrl, dirEntry });
       }
     }
+
+    if (collectArticles) {
+      for (const am of decoded.matchAll(articleUrlRegex)) {
+        const cleanArtUrl = am[0].replace(/["'<>\\].*$/, '').trim();
+        if (cleanArtUrl && !cleanArtUrl.includes('?rss=') && !cleanArtUrl.endsWith('/feed/')) {
+          articleUrlsToCrawl.add(cleanArtUrl);
+        }
+      }
+    }
+  };
+
+  for (const xml of rssXmlList) {
+    scanPayloadForXStatuses(xml, crawlArticlePages);
+  }
+
+  if (crawlArticlePages) {
+    const hubs = [
+      'https://www.49erswebzone.com/articles/',
+      'https://www.49erswebzone.com/news/',
+      'https://www.yardbarker.com/nfl/teams/san_francisco_49ers/50',
+      ...extraHubUrls
+    ];
+    await Promise.all(
+      hubs.map(async hubUrl => {
+        try {
+          const res = await fetch(hubUrl, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; 49ersFaithful/1.0)' },
+            signal: AbortSignal.timeout(6500)
+          });
+          if (res.ok) {
+            scanPayloadForXStatuses(await res.text(), true);
+          }
+        } catch {
+          // Ignore single hub timeout
+        }
+      })
+    );
+
+    const crawlBatch = [...articleUrlsToCrawl].slice(0, 72);
+    const CRAWL_CONCURRENCY = 18;
+    for (let i = 0; i < crawlBatch.length; i += CRAWL_CONCURRENCY) {
+      await Promise.all(
+        crawlBatch.slice(i, i + CRAWL_CONCURRENCY).map(async pageUrl => {
+          try {
+            const res = await fetch(pageUrl, {
+              headers: { 'User-Agent': 'Mozilla/5.0 (compatible; 49ersFaithful/1.0)' },
+              signal: AbortSignal.timeout(6000)
+            });
+            if (res.ok) {
+              scanPayloadForXStatuses(await res.text(), false);
+            }
+          } catch {
+            // Ignore single article timeout
+          }
+        })
+      );
+    }
   }
 
   const ordered = [...candidates.values()]
     .sort((a, b) => b.snowMs - a.snowMs)
-    .slice(0, 28);
+    .slice(0, 105);
   if (ordered.length === 0) return [];
 
-  const sfRelevantRegex =
-    /\b(49ers|niners|san francisco|shanahan|lynch|purdy|bosa|mccaffrey|aiyuk|kittle|warner|buckner|odighizuwa|lenoir|pearsall|evans|deebo|cooks|kirk|robinson|green|halton|williams|stout|sigle|hobbs|santa clara)\b/i;
+  const rosterTokens = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
+    .filter(p => p?.name)
+    .map(p =>
+      String(p.name)
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .trim()
+        .split(/\s+/)
+        .pop()
+    )
+    .filter(s => s && s.length >= 5 && !/^(jones|smith|brown|allen|young|white|green|davis|moore|scott|williams|thomas|wilson)$/i.test(s))
+    .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 
-  const hydrated = [];
-  await Promise.all(
-    ordered.map(async cand => {
-      try {
-        const oeRes = await fetch(
-          `https://publish.twitter.com/oembed?omit_script=true&url=${encodeURIComponent(cand.canonicalUrl)}`,
-          { signal: AbortSignal.timeout(5500) }
-        );
-        if (!oeRes.ok) return;
-        const oe = await oeRes.json();
-        const pMatch = String(oe?.html || '').match(/<p[^>]*>([\s\S]*?)<\/p>/i);
-        const bodyText = decodeBasicEntitiesForOembed(pMatch ? pMatch[1] : '');
-        if (!bodyText || bodyText.length < 16) return;
-
-        // Require 49ers relevance on all harvested tweets except official @49ers posts
-        if (cand.handle.toLowerCase() !== '49ers' && !sfRelevantRegex.test(bodyText)) {
-          return;
-        }
-
-        const pubIso = new Date(cand.snowMs).toISOString();
-        const authorName = cand.dirEntry?.name || String(oe?.author_name || cand.handle).trim();
-        const authorHandle = cand.dirEntry?.handle || `@${cand.handle}`;
-        const authorProfileUrl = cand.dirEntry?.xUrl || sanitizeExternalUrl(oe?.author_url, `https://x.com/${cand.handle}`);
-        const formatted = formatTweetBodyForDisplay(bodyText);
-        const brk = classifyBreakingItem({
-          type: 'tweet',
-          title: formatted.text,
-          fullText: bodyText,
-          publishedAt: pubIso,
-          reporterId: cand.dirEntry?.id || null,
-          author: authorName,
-          authorHandle
-        });
-
-        hydrated.push({
-          id: `x_status_${cand.statusId}`,
-          type: 'tweet',
-          outletId: cand.dirEntry?.outletId || 'x_beat',
-          outletName: cand.dirEntry?.outletName || 'X Beat',
-          tier: cand.dirEntry?.trustTier || 2,
-          trustTier: cand.dirEntry?.trustTier || 2,
-          reporterId: cand.dirEntry?.id || null,
-          reporterName: authorName,
-          author: authorName,
-          authorHandle,
-          authorProfileUrl,
-          title: formatted.text,
-          fullText: bodyText,
-          isFullTweet: formatted.isFullTweet,
-          summary: '',
-          url: cand.canonicalUrl,
-          externalUrl: null,
-          externalTitle: null,
-          imageUrl: '',
-          publishedAt: pubIso,
-          isBreaking: brk.isBreaking,
-          isInGameInjury: brk.isInGameInjury,
-          breakingBadge: brk.breakingBadge,
-          breakingPriority: brk.breakingPriority
-        });
-      } catch {
-        // Ignore single oEmbed timeout
-      }
-    })
+  const sfRelevantRegex = new RegExp(
+    `\\b(${[
+      '49ers',
+      'niners',
+      'san francisco',
+      'shanahan',
+      'lynch',
+      'marathe',
+      'purdy',
+      'bosa',
+      'mccaffrey',
+      'aiyuk',
+      'kittle',
+      'warner',
+      'buckner',
+      'odighizuwa',
+      'lenoir',
+      'pearsall',
+      'evans',
+      'deebo',
+      'keenan allen',
+      'mac jones',
+      'jack jones',
+      'renardo green',
+      'cooks',
+      'kirk',
+      'robinson',
+      'halton',
+      'stout',
+      'sigle',
+      'hobbs',
+      'santa clara',
+      ...rosterTokens
+    ].join('|')})\\b`,
+    'i'
   );
 
-  return hydrated;
+  const rosterFullNames = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
+    .filter(p => p?.name)
+    .map(p =>
+      String(p.name)
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .trim()
+    )
+    .filter(nm => nm && nm.includes(' ') && nm.length >= 7)
+    .map(nm => nm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  const sfExplicitOrFullNameRegex = new RegExp(
+    `\\b(${[
+      '49ers',
+      'niners',
+      'san francisco',
+      'kyle shanahan',
+      'john lynch',
+      'paraag marathe',
+      'santa clara',
+      'brock purdy',
+      'nick bosa',
+      'christian mccaffrey',
+      'brandon aiyuk',
+      'george kittle',
+      'fred warner',
+      'deforest buckner',
+      'trent williams',
+      'mike evans',
+      'deebo samuel',
+      'keenan allen',
+      'christian kirk',
+      'ricky pearsall',
+      'deommodore lenoir',
+      'renardo green',
+      'gracen halton',
+      'mac jones',
+      ...rosterFullNames
+    ].join('|')})\\b`,
+    'i'
+  );
+
+  const local49ersXHandles = new Set([
+    '49ers',
+    'johnlynch49ers',
+    'brianajeannel',
+    'maiocconbcs',
+    'nwagoner',
+    'mattbarrows',
+    'lombardihimself',
+    'jenniferleechan',
+    'eric_branch',
+    'caminman',
+    'samwarren_sf',
+    'noah_furtado',
+    'mattblively',
+    'chrisbiderman',
+    'victafur',
+    'timkawakami',
+    'timryan49ers',
+    'gregpapa',
+    'guyhaberman',
+    'jl_chapman',
+    'eric_crocker',
+    'jonnydelsfa',
+    'pff_jeff',
+    'thesfhiners',
+    'thesfNiners'.toLowerCase(),
+    'alsacco49',
+    'kp_show',
+    'rohanchakrav',
+    'akashanav',
+    'steph49k',
+    'jasonaponte2103',
+    'vishkumaran',
+    'dkurtenbach',
+    'sportslarryknbr',
+    'grantcohn',
+    'harrisonrich_',
+    '957thegame',
+    'knbr',
+    'nbcs49ers',
+    'nbcsauthentic',
+    '49erswebzone',
+    'ninersnation',
+    'rob_lowder',
+    'oursf49ers',
+    '49ershive',
+    'coach_yac'
+  ]);
+
+  const hydratedMap = new Map();
+
+  const buildHydratedTweetItem = ({
+    statusId,
+    handle,
+    snowMs,
+    dirEntry,
+    rawBodyText,
+    fallbackAuthorName,
+    fallbackAuthorUrl,
+    expandedExtUrl,
+    mediaImageUrl
+  }) => {
+    const bodyText = decodeBasicEntitiesForOembed(rawBodyText);
+    if (!bodyText || bodyText.length < 16) return null;
+    const handleLower = handle.toLowerCase();
+    if (handleLower !== '49ers') {
+      const isLocal49ersHandle = local49ersXHandles.has(handleLower);
+      if (isLocal49ersHandle) {
+        if (!sfRelevantRegex.test(bodyText)) return null;
+      } else if (!sfExplicitOrFullNameRegex.test(bodyText)) {
+        return null;
+      }
+    }
+
+    const mediaMeta = TRUSTED_MEDIA_DISPLAY_NAMES[handle.toLowerCase()] || null;
+    const pubIso = new Date(snowMs).toISOString();
+    const authorName = dirEntry?.name || mediaMeta?.name || String(fallbackAuthorName || handle).trim();
+    const authorHandle = dirEntry?.handle || `@${handle}`;
+    const canonicalUrl = `https://x.com/${handle}/status/${statusId}`;
+    const authorProfileUrl =
+      dirEntry?.xUrl || sanitizeExternalUrl(fallbackAuthorUrl, `https://x.com/${handle}`);
+
+    const attr =
+      !dirEntry && /^(oursf49ers|49ershive|coach_yac|nflrums)$/i.test(handle)
+        ? extractBeatAttributionFromText(bodyText, {
+            reporterId: null,
+            reporterName: authorName,
+            authorHandle,
+            outletId: mediaMeta?.outletId || 'x_beat',
+            outletName: mediaMeta?.outletName || 'X Beat'
+          })
+        : null;
+
+    const finalAuthor = attr?.viaWire ? attr.author : authorName;
+    const finalHandle = attr?.viaWire && attr.authorHandle ? attr.authorHandle : authorHandle;
+    const finalProfileUrl = attr?.viaWire && attr.xUrl ? attr.xUrl : authorProfileUrl;
+    const finalReporterId = dirEntry?.id || (attr?.viaWire ? attr.reporterId : null);
+    const finalTrustTier = dirEntry?.trustTier || mediaMeta?.tier || (attr?.viaWire ? attr.trustTier : 2);
+    const finalOutletId = dirEntry?.outletId || mediaMeta?.outletId || 'x_beat';
+    const finalOutletName = dirEntry?.outletName || mediaMeta?.outletName || 'X Beat';
+
+    const safeExt =
+      expandedExtUrl && !isDirectXStatusUrl(expandedExtUrl) && !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(expandedExtUrl)
+        ? sanitizeExternalUrl(expandedExtUrl, null)
+        : null;
+
+    const formatted = formatTweetBodyForDisplay(attr?.viaWire ? attr.cleanedText || bodyText : bodyText);
+    const brk = classifyBreakingItem({
+      type: 'tweet',
+      title: formatted.text,
+      fullText: bodyText,
+      publishedAt: pubIso,
+      reporterId: finalReporterId,
+      author: finalAuthor,
+      authorHandle: finalHandle
+    });
+
+    return {
+      id: `x_status_${statusId}`,
+      type: 'tweet',
+      outletId: finalOutletId,
+      outletName: finalOutletName,
+      tier: finalTrustTier,
+      trustTier: finalTrustTier,
+      reporterId: finalReporterId,
+      reporterName: finalAuthor,
+      author: finalAuthor,
+      authorHandle: finalHandle,
+      authorProfileUrl: finalProfileUrl,
+      title: formatted.text,
+      fullText: bodyText,
+      isFullTweet: formatted.isFullTweet,
+      summary: '',
+      url: canonicalUrl,
+      externalUrl: safeExt && !isPaywalledPublisher('', safeExt) ? safeExt : null,
+      externalTitle: null,
+      imageUrl: mediaImageUrl && mediaImageUrl.startsWith('https://') ? mediaImageUrl : '',
+      publishedAt: pubIso,
+      isBreaking: brk.isBreaking,
+      isInGameInjury: brk.isInGameInjury,
+      breakingBadge: brk.breakingBadge,
+      breakingPriority: brk.breakingPriority
+    };
+  };
+
+  const HYDRATE_CONCURRENCY = 18;
+  for (let i = 0; i < ordered.length; i += HYDRATE_CONCURRENCY) {
+    await Promise.all(
+      ordered.slice(i, i + HYDRATE_CONCURRENCY).map(async cand => {
+        try {
+          // 1. Primary: X public syndication `tweet-result` JSON (provides full text, expanded URLs, photos & quoted beat tweets)
+          let hydratedItem = null;
+          try {
+            const synRes = await fetch(
+              `https://cdn.syndication.twimg.com/tweet-result?id=${encodeURIComponent(cand.statusId)}&token=x`,
+              { signal: AbortSignal.timeout(5000) }
+            );
+            if (synRes.ok) {
+              const syn = await synRes.json();
+              if (syn && typeof syn.text === 'string' && syn.text.trim()) {
+                const rawExpUrl = syn.entities?.urls?.[0]?.expanded_url || '';
+                const mediaThumb =
+                  syn.photos?.[0]?.url ||
+                  syn.mediaDetails?.[0]?.media_url_https ||
+                  syn.video?.poster ||
+                  '';
+                const screenName = syn.user?.screen_name || cand.handle;
+                hydratedItem = buildHydratedTweetItem({
+                  statusId: cand.statusId,
+                  handle: screenName,
+                  snowMs: cand.snowMs,
+                  dirEntry: resolveReporterFromNameOrHandle(screenName) || cand.dirEntry,
+                  rawBodyText: syn.text,
+                  fallbackAuthorName: syn.user?.name || screenName,
+                  fallbackAuthorUrl: `https://x.com/${screenName}`,
+                  expandedExtUrl: rawExpUrl,
+                  mediaImageUrl: mediaThumb
+                });
+
+                // Also harvest quoted beat-reporter X status if present within 7-day window!
+                const qt = syn.quoted_tweet;
+                const qtId = qt?.id_str;
+                const qtHandle = qt?.user?.screen_name;
+                if (qtId && qtHandle && !hydratedMap.has(qtId)) {
+                  const qtSnow = extractXSnowflakeTimestampMs(qtId);
+                  const qtDir = resolveReporterFromNameOrHandle(qtHandle);
+                  if (
+                    qtSnow &&
+                    qtSnow >= sevenDaysAgoMs &&
+                    (qtDir || TRUSTED_MEDIA_X_HANDLES.has(qtHandle.toLowerCase()))
+                  ) {
+                    const qtBuilt = buildHydratedTweetItem({
+                      statusId: qtId,
+                      handle: qtHandle,
+                      snowMs: qtSnow,
+                      dirEntry: qtDir,
+                      rawBodyText: qt.text || '',
+                      fallbackAuthorName: qt.user?.name || qtHandle,
+                      fallbackAuthorUrl: `https://x.com/${qtHandle}`,
+                      expandedExtUrl: qt.entities?.urls?.[0]?.expanded_url || '',
+                      mediaImageUrl: qt.photos?.[0]?.url || qt.mediaDetails?.[0]?.media_url_https || ''
+                    });
+                    if (qtBuilt) hydratedMap.set(qtId, qtBuilt);
+                  }
+                }
+              }
+            }
+          } catch {
+            // Fall through to oEmbed
+          }
+
+          // 2. Fallback: X public oEmbed endpoint (`publish.twitter.com/oembed`)
+          if (!hydratedItem) {
+            const oeRes = await fetch(
+              `https://publish.twitter.com/oembed?omit_script=true&url=${encodeURIComponent(cand.canonicalUrl)}`,
+              { signal: AbortSignal.timeout(5500) }
+            );
+            if (!oeRes.ok) return;
+            const oe = await oeRes.json();
+            const pMatch = String(oe?.html || '').match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+            hydratedItem = buildHydratedTweetItem({
+              statusId: cand.statusId,
+              handle: cand.handle,
+              snowMs: cand.snowMs,
+              dirEntry: cand.dirEntry,
+              rawBodyText: pMatch ? pMatch[1] : '',
+              fallbackAuthorName: oe?.author_name || cand.handle,
+              fallbackAuthorUrl: oe?.author_url || `https://x.com/${cand.handle}`,
+              expandedExtUrl: '',
+              mediaImageUrl: ''
+            });
+          }
+
+          if (hydratedItem && !hydratedMap.has(cand.statusId)) {
+            hydratedMap.set(cand.statusId, hydratedItem);
+          }
+        } catch {
+          // Ignore single tweet timeout
+        }
+      })
+    );
+  }
+
+  return [...hydratedMap.values()].sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
 }
 
 export const FLAGSHIP_49ERS_PODCAST_SHOWS = [
@@ -1156,8 +1535,23 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
 
     for (const it of rawItems) {
       if (it?.type === 'video' || it?.isClickbait) continue;
-      const isTw = it?.type === 'tweet' || it?.type === 'social';
-      const resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
+      let isTw = it?.type === 'tweet' || it?.type === 'social';
+      let resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
+
+      // Prioritize direct X status links or canonical non-paywalled article URLs over Bluesky links
+      if (isBlueskyPostUrl(resolvedUrl)) {
+        const safeExt = sanitizeExternalUrl(it.externalUrl, null);
+        if (
+          safeExt &&
+          !isBlueskyPostUrl(safeExt) &&
+          !isPaywalledPublisher(it.outletName, safeExt) &&
+          !isRedundantProfileSelfLink(safeExt, resolvedUrl)
+        ) {
+          resolvedUrl = safeExt;
+          isTw = false;
+        }
+      }
+
       const safeItemUrl = sanitizeExternalUrl(resolvedUrl, null);
       const dedupUrlKey =
         safeItemUrl && safeItemUrl.includes('x.com/search?')
@@ -1185,18 +1579,24 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         const authorName = it.author || it.reporterName || it.outletName || '49ers Beat';
         const rawCleanBody = isTw
           ? stripRedundantAuthorBoilerplate(it.fullText || it.title || '', authorName)
-          : String(it.title || '').trim();
+          : String(it.externalTitle || it.title || '').trim();
         const cleanBody = decodeBasicEntitiesForOembed(rawCleanBody);
         const titleKey = cleanBody.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 52);
         if (!cleanBody || seenTitleKeys.has(titleKey)) continue;
 
         seenUrls.add(safeItemUrl);
         seenTitleKeys.add(titleKey);
+        const xSalienceBonus = isDirectXStatusUrl(safeItemUrl)
+          ? 14
+          : isBlueskyPostUrl(safeItemUrl)
+            ? -6
+            : 0;
         const salience =
           kwHitCount * 22 +
           Number(it.signalScore || 68) +
-          (it.type === 'article' ? 10 : 0) +
-          (it.isBreaking ? 10 : 0);
+          (!isTw ? 10 : 0) +
+          (it.isBreaking ? 10 : 0) +
+          xSalienceBonus;
         const displayLabel = cleanBody.length > 110 ? `${cleanBody.slice(0, 108).trim()}…` : cleanBody;
         const resolvedOutletLabel = it.outletName || authorName || '49ers Beat';
         scoredCandidates.push({

@@ -30,10 +30,15 @@ import {
   balanceFeedTopSalience,
   filterOutCompletedGameAvailabilityItems,
   stripRedundantAuthorBoilerplate,
+  isRedundantProfileSelfLink,
   buildStorySignatureKey
 } from '../engine/breakingClassifier.js';
 import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
-import { resolveOriginalTweetUrl } from '../engine/beatAttributionEngine.js';
+import {
+  isBlueskyPostUrl,
+  isDirectXStatusUrl,
+  resolveOriginalTweetUrl
+} from '../engine/beatAttributionEngine.js';
 import {
   normalizeDisplayTopic,
   compileDeepResearchDossier,
@@ -2292,8 +2297,8 @@ export async function refreshDailyMatchupIntelIfDue({
  */
 export const DAILY_NEWS_BRIEF_PEAK_HOUR_PT = 17;
 
-const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v2';
-const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v2';
+const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v3';
+const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v3';
 let inFlightDailyNewsBriefPromise = null;
 
 export function getPacificHour24(nowMs = Date.now()) {
@@ -2380,22 +2385,59 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
 
   const pushCandidate = (it, parentStoryKey = '') => {
     if (!it || candidates.length >= maxSources) return;
-    const isTw = it.type === 'tweet' || it.type === 'social';
-    const resolvedUrl = isTw ? resolveOriginalTweetUrl(it, prioritized) : it.url;
+    let isTw = it.type === 'tweet' || it.type === 'social';
+    let resolvedUrl = isTw ? resolveOriginalTweetUrl(it, prioritized) : it.url;
+    let effectiveAuthor = String(it.author || it.reporterName || it.outletName || '49ers Beat').trim();
+    let effectiveOutlet = String(it.outletName || effectiveAuthor || '49ers Beat').trim();
+
+    // Prioritize direct X status links (or canonical non-paywalled article URLs on link-share posts) over Bluesky links
+    if (isBlueskyPostUrl(resolvedUrl)) {
+      const confirmingX = Array.isArray(it.confirmingReports)
+        ? it.confirmingReports.find(cr => {
+            const crUrl =
+              cr?.type === 'tweet' || cr?.type === 'social'
+                ? resolveOriginalTweetUrl(cr, prioritized)
+                : cr?.url;
+            return isDirectXStatusUrl(crUrl);
+          })
+        : null;
+      if (confirmingX) {
+        resolvedUrl = resolveOriginalTweetUrl(confirmingX, prioritized);
+        effectiveAuthor = String(
+          confirmingX.author || confirmingX.reporterName || effectiveAuthor
+        ).trim();
+        effectiveOutlet = String(confirmingX.outletName || effectiveOutlet).trim();
+        isTw = true;
+      } else {
+        const safeExtArticleUrl = sanitizeExternalUrl(it.externalUrl, null);
+        if (
+          safeExtArticleUrl &&
+          !isBlueskyPostUrl(safeExtArticleUrl) &&
+          !isPaywalledPublisher(it.outletName, safeExtArticleUrl) &&
+          !isRedundantProfileSelfLink(safeExtArticleUrl, resolvedUrl)
+        ) {
+          resolvedUrl = safeExtArticleUrl;
+          isTw = false;
+        }
+      }
+    }
+
     const safeUrl = sanitizeExternalUrl(resolvedUrl, null);
-    if (!safeUrl || isPaywalledPublisher(it.outletName, safeUrl)) return;
+    if (!safeUrl || isPaywalledPublisher(effectiveOutlet, safeUrl)) return;
     const dedupKey = safeUrl.includes('x.com/search?')
       ? `${safeUrl}::${String(it.title || it.fullText || '').toLowerCase().slice(0, 48)}`
       : safeUrl;
     if (seenUrls.has(dedupKey)) return;
     seenUrls.add(dedupKey);
 
-    const author = String(it.author || it.reporterName || it.outletName || '49ers Beat').trim();
-    const outlet = String(it.outletName || author || '49ers Beat').trim();
+    const author = effectiveAuthor;
+    const outlet = effectiveOutlet;
     const fullTweetClean = isTw
       ? stripEmojisAndUrls(stripRedundantAuthorBoilerplate(it.fullText || it.title || '', author)).replace(/[…]+$/g, '').trim()
       : '';
-    const cleanHeadline = !isTw ? stripEmojisAndUrls(it.title || '').replace(/[…]+$/g, '').trim() : '';
+    const cleanHeadline = !isTw
+      ? stripEmojisAndUrls(it.externalTitle || it.title || '').replace(/[…]+$/g, '').trim()
+      : '';
     const rawBody = isTw ? fullTweetClean : cleanHeadline;
     if (!rawBody || rawBody.length < 14) return;
 
@@ -2443,11 +2485,16 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
     if (candidates.length >= maxSources) break;
     const leadKey = buildStorySignatureKey(lead) || '';
     pushCandidate(lead, leadKey);
-    // Also surface a distinct-format corroborating report on the top 3 lead stories so both tweets & articles can be cited
+    // Surface a distinct-format corroborating report on top stories ONLY when it is a direct X status tweet or canonical article (never a Bluesky promo echo)
     if (candidates.length < maxSources && candidates.length <= 8 && Array.isArray(lead.confirmingReports)) {
-      const altFmt = lead.confirmingReports.find(
-        cr => (cr?.type === 'tweet') !== (lead.type === 'tweet') && !cr?.videoId
-      );
+      const altFmt = lead.confirmingReports.find(cr => {
+        if (!cr || cr.videoId || (cr.type === 'tweet') === (lead.type === 'tweet')) return false;
+        if (cr.type === 'tweet' || cr.type === 'social') {
+          const crResolved = resolveOriginalTweetUrl(cr, prioritized);
+          return isDirectXStatusUrl(crResolved);
+        }
+        return !isBlueskyPostUrl(cr.url || '');
+      });
       if (altFmt) pushCandidate(altFmt, leadKey);
     }
   }
@@ -2809,7 +2856,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
   });
   const topTrade = completedMoves[0] || null;
 
-  // Detect any contract restructure reported in wire candidates (e.g. "Restructured DT DeForest Buckner For $5.2M")
+  // Detect any contract restructure reported in wire candidates (e.g. "Restructured DT DeForest Buckner For $5.2M" or Spotrac salary conversion)
   let restructureFact = null;
   for (const c of candidates) {
     const txt = `${c.title || ''} ${c.fullBody || ''}`;
@@ -2821,6 +2868,18 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         pos: rm[1] ? rm[1].toUpperCase() : '',
         player: rm[2].replace(/\s+(?:For|In|To)$/i, '').trim(),
         millions: rm[3],
+        cand: c
+      };
+      break;
+    }
+    const convM = txt.match(
+      /converted\s+\$[\d.]+\s*M\s+of\s+(?:([A-Z]{1,3})\s+)?([A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+)+)['’]s[\s\S]{0,80}?(?:creating|opening|clearing)\s+\$(\d+(?:\.\d+)?)\s*M/i
+    );
+    if (convM) {
+      restructureFact = {
+        pos: convM[1] ? convM[1].toUpperCase() : '',
+        player: convM[2].trim(),
+        millions: convM[3],
         cand: c
       };
       break;

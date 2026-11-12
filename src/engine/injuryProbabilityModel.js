@@ -17,7 +17,9 @@ import { isPaywalledPublisher, sanitizeExternalUrl, buildEspnPlayerNewsAnchorUrl
 import {
   buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
+  isBlueskyPostUrl,
   isDirectSocialPostUrl,
+  isDirectXStatusUrl,
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl,
   resolveReporterFromNameOrHandle
@@ -3408,8 +3410,10 @@ export function computeInjuryNewsRankScore(
     supersededPenalty = -18;
   }
 
+  const xBonus = isDirectXStatusUrl(item.url) ? 2.5 : isBlueskyPostUrl(item.url) ? -1.0 : 0;
+
   const totalScore = Number(
-    (recencyScore + colorScore + medicalScore + milestoneScore + authorityScore + focusScore + supersededPenalty).toFixed(2)
+    (recencyScore + colorScore + medicalScore + milestoneScore + authorityScore + focusScore + supersededPenalty + xBonus).toFixed(2)
   );
 
   return {
@@ -3471,7 +3475,11 @@ export function rankPlayerInjuryNews(
     ...(Array.isArray(rawStream) ? rawStream : []),
     ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
     ...(Array.isArray(player.recentNews) ? player.recentNews : [])
-  ];
+  ].sort((a, b) => {
+    const aRank = isDirectXStatusUrl(a?.url) ? 0 : isBlueskyPostUrl(a?.url) ? 2 : 1;
+    const bRank = isDirectXStatusUrl(b?.url) ? 0 : isBlueskyPostUrl(b?.url) ? 2 : 1;
+    return aRank - bRank;
+  });
 
   const directPosts = combinedCandidates.filter(
     it =>
@@ -3790,8 +3798,10 @@ export function computeOverviewMentionRankScore(
     authorityScore += 4;
   }
 
+  const xBonus = isDirectXStatusUrl(item.url) ? 2.5 : isBlueskyPostUrl(item.url) ? -1.0 : 0;
+
   const totalScore = Number(
-    (urgentBoost + recencyScore + focusScore + substanceScore + authorityScore).toFixed(2)
+    (urgentBoost + recencyScore + focusScore + substanceScore + authorityScore + xBonus).toFixed(2)
   );
 
   return {
@@ -3836,7 +3846,11 @@ export function rankPlayerOverviewMentions(
     ...(Array.isArray(rawStream) ? rawStream : []),
     ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
     ...(Array.isArray(player.recentNews) ? player.recentNews : [])
-  ];
+  ].sort((a, b) => {
+    const aRank = isDirectXStatusUrl(a?.url) ? 0 : isBlueskyPostUrl(a?.url) ? 2 : 1;
+    const bRank = isDirectXStatusUrl(b?.url) ? 0 : isBlueskyPostUrl(b?.url) ? 2 : 1;
+    return aRank - bRank;
+  });
 
   const directPosts = combinedCandidates.filter(
     it =>
@@ -3853,7 +3867,7 @@ export function rankPlayerOverviewMentions(
     const isTw =
       cand.type === 'tweet' ||
       cand.type === 'social' ||
-      /^https?:\/\/bsky\.app\/profile\/[^/?#]+\/post\//i.test(String(cand.url || ''));
+      isBlueskyPostUrl(String(cand.url || ''));
     const rawUrl = isTw
       ? resolveOriginalTweetUrl(
           {

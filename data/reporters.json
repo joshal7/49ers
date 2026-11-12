@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-12T18:10:31.518Z",
+  "updatedAt": "2026-11-12T19:10:39.920Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-26T18:10:31.518Z",
+  "nextAutoReviewAt": "2026-11-26T19:10:39.921Z",
   "totalTrackedReporters": 49,
   "outlets": [
     {
@@ -106,7 +106,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 152,
+      "liveWeeklyMentions": 154,
       "popularityScore": 99,
       "defaultEnabled": true
     },
@@ -171,26 +171,6 @@
       "defaultEnabled": true
     },
     {
-      "id": "49ers_news",
-      "name": "San Francisco 49ers Official",
-      "handle": "@49ers",
-      "outletId": "49ers_official",
-      "role": "Transactions, Injury Reports & Depth Releases",
-      "category": "official",
-      "styleTag": "factual-beat",
-      "baseScore": 97,
-      "trustTier": 1,
-      "trustTierLabel": "Tier 1 • Primary Trusted",
-      "xUrl": "https://x.com/49ers",
-      "bskyHandle": null,
-      "bskyUrl": null,
-      "profileUrl": "https://x.com/49ers",
-      "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 16,
-      "popularityScore": 97,
-      "defaultEnabled": true
-    },
-    {
       "id": "john_lynch",
       "name": "John Lynch",
       "handle": "@JohnLynch49ers",
@@ -206,7 +186,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/JohnLynch49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 32,
+      "liveWeeklyMentions": 34,
       "popularityScore": 96,
       "defaultEnabled": true
     },
@@ -226,7 +206,27 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/nwagoner",
       "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-      "liveWeeklyMentions": 70,
+      "liveWeeklyMentions": 72,
+      "popularityScore": 96,
+      "defaultEnabled": true
+    },
+    {
+      "id": "49ers_news",
+      "name": "San Francisco 49ers Official",
+      "handle": "@49ers",
+      "outletId": "49ers_official",
+      "role": "Transactions, Injury Reports & Depth Releases",
+      "category": "official",
+      "styleTag": "factual-beat",
+      "baseScore": 97,
+      "trustTier": 1,
+      "trustTierLabel": "Tier 1 • Primary Trusted",
+      "xUrl": "https://x.com/49ers",
+      "bskyHandle": null,
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/49ers",
+      "outletUrl": "https://www.49ers.com/news/",
+      "liveWeeklyMentions": 12,
       "popularityScore": 96,
       "defaultEnabled": true
     },

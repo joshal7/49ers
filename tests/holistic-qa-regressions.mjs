@@ -40,6 +40,7 @@ import {
 } from '../src/engine/injuryProbabilityModel.js';
 import { runPlayoffMonteCarlo } from '../src/engine/playoffMonteCarlo.js';
 import {
+  deduplicateAndGroupWireItems,
   sortNewsWithBreakingPriority,
   isRedundantProfileSelfLink
 } from '../src/engine/breakingClassifier.js';
@@ -65,13 +66,18 @@ import {
   sanitizeExternalUrl
 } from '../src/engine/linkIntegrity.js';
 import {
+  buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
+  isBlueskyPostUrl,
   isDirectSocialPostUrl,
+  isDirectXStatusUrl,
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl,
   resolveReporterFromNameOrHandle,
   corroborateAndAnnotateWireStream
 } from '../src/engine/beatAttributionEngine.js';
+import { selectTopNewsBriefSourceCandidates } from '../src/services/aiWorkerClient.js';
+import { renderDailyTopNewsBriefHtml } from '../src/views/newsView.js';
 import {
   registerRosterPlayersForInlineLinks,
   escJargon,
@@ -1902,6 +1908,164 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
     rawStream: rankedPurdyOverview
   });
   assert.equal(mutedPurdyOverview.some(x => x.id === 'purdy_primary_1'), false, 'Overview mentions must respect userPrefs muted reporters');
+});
+
+test('X-first social link priority: upgrades Bluesky mirrors to analogous X status links, promotes X leads in clusters & briefs, and preserves Bluesky fallback only when X is undiscoverable', () => {
+  // 1. Player scoop X search includes Matt Barrows (@mattbarrows)
+  const purdyXSearch = buildXPlayerScoopSearchUrl('Brock Purdy');
+  assert.ok(purdyXSearch.includes('from%3Amattbarrows'), `Expected from:mattbarrows in X player scoop search: ${purdyXSearch}`);
+
+  // 2. Bluesky post upgrades to direct X status URL when analogous X tweet exists, and keeps bsky.app when X tweet does not exist
+  const barrowsXPost = {
+    type: 'tweet',
+    url: 'https://x.com/mattbarrows/status/2120638097100886138',
+    author: 'Matt Barrows',
+    authorHandle: '@mattbarrows',
+    title: 'Keenan Allen sure seems happy to be back in the Northern California sun.',
+    fullText: 'Keenan Allen sure seems happy to be back in the Northern California sun.',
+    publishedAt: '2026-11-11T22:00:00.000Z'
+  };
+  const barrowsBskyMirror = {
+    type: 'tweet',
+    url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3n23allen123',
+    author: 'Matt Barrows',
+    authorHandle: '@mattbarrows',
+    title: 'Keenan Allen sure seems happy to be back in the Northern California sun.',
+    fullText: 'Keenan Allen sure seems happy to be back in the Northern California sun.',
+    publishedAt: '2026-11-11T22:04:00.000Z'
+  };
+  assert.equal(
+    resolveOriginalTweetUrl(barrowsBskyMirror, [barrowsXPost]),
+    'https://x.com/mattbarrows/status/2120638097100886138'
+  );
+
+  // Unrelated same-day Barrows post on a different topic MUST NOT collide with Keenan Allen X status; keeps verified bsky.app fallback
+  const barrowsUnrelatedBsky = {
+    type: 'tweet',
+    url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u',
+    author: 'Matt Barrows',
+    authorHandle: '@mattbarrows',
+    title: 'Brock Purdy for MVP? For real? He’s among the 49ers nominated for midseason honors',
+    fullText: 'Brock Purdy for MVP? For real? He’s among the 49ers nominated for midseason honors',
+    publishedAt: '2026-11-11T22:30:00.000Z'
+  };
+  assert.equal(
+    resolveOriginalTweetUrl(barrowsUnrelatedBsky, [barrowsXPost]),
+    'https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u'
+  );
+
+  // 3. Story clustering promotes direct `x.com/<handle>/status/<id>` lead over a Bluesky post even when Bluesky carries an image thumbnail
+  const clustered = deduplicateAndGroupWireItems(
+    [
+      {
+        id: 'bsky_first_with_thumb',
+        type: 'tweet',
+        trustTier: 1,
+        signalScore: 80,
+        author: '49ers on NBCSBA',
+        authorHandle: '@NBCS49ers',
+        outletId: 'nbcsba',
+        outletName: 'NBC Sports Bay Area',
+        imageUrl: 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:test/thumb1',
+        url: 'https://bsky.app/profile/nbcs49ers.bsky.social/post/3n23b2cukis2d',
+        title: 'Keenan Allen and Mike Evans squashed their beef and are all good now',
+        fullText: 'Keenan Allen and Mike Evans squashed their beef and are all good now',
+        publishedAt: '2026-11-12T00:54:00.000Z'
+      },
+      {
+        id: 'x_second_no_thumb',
+        type: 'tweet',
+        trustTier: 1,
+        signalScore: 80,
+        author: '49ers on NBCSBA',
+        authorHandle: '@NBCS49ers',
+        outletId: 'nbcsba',
+        outletName: 'NBC Sports Bay Area',
+        imageUrl: '',
+        url: 'https://x.com/NBCS49ers/status/2120640440341037224',
+        title: 'Keenan Allen and Mike Evans squashed their beef and are all good now',
+        fullText: 'Keenan Allen and Mike Evans squashed their beef and are all good now',
+        publishedAt: '2026-11-11T23:20:00.000Z'
+      }
+    ],
+    { nowMs: Date.parse('2026-11-12T02:00:00.000Z') }
+  );
+  assert.equal(clustered.length, 1);
+  assert.equal(clustered[0].url, 'https://x.com/NBCS49ers/status/2120640440341037224', 'Direct X status must always win cluster lead over Bluesky mirror');
+  assert.equal(isDirectXStatusUrl(clustered[0].url), true);
+  assert.equal(isBlueskyPostUrl(clustered[0].url), false);
+
+  // 4. Daily Top News Brief source selector & prose renderer upgrade Bluesky link-shares and mirrors to X status or canonical article URLs
+  const briefCands = selectTopNewsBriefSourceCandidates(
+    {
+      news: {
+        rawStream: [
+          {
+            id: 'bsky_rumors_share',
+            type: 'tweet',
+            author: 'NFL Trade Rumors',
+            outletName: 'NFL Trade Rumors',
+            title: '49ers Restructured DT DeForest Buckner For $5.2M In Cap Space',
+            fullText: '49ers Restructured DT DeForest Buckner For $5.2M In Cap Space',
+            url: 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n',
+            externalUrl: 'https://nfltraderumors.co/49ers-restructured-dt-deforest-buckner-for-5-2m-in-cap-space/',
+            publishedAt: '2026-11-12T14:32:15Z'
+          }
+        ]
+      }
+    },
+    6,
+    Date.parse('2026-11-12T18:00:00Z')
+  );
+  assert.equal(
+    briefCands[0]?.url,
+    'https://nfltraderumors.co/49ers-restructured-dt-deforest-buckner-for-5-2m-in-cap-space/',
+    'Bluesky link-share without X status must upgrade to its free canonical article URL in Daily Top News Brief'
+  );
+
+  const renderedBriefHtml = renderDailyTopNewsBriefHtml(
+    {
+      id: 'test_brief_x_upgrade',
+      headline: '49ers Week 10 Briefing',
+      generatedAt: '2026-11-12T18:00:00Z',
+      summary: 'Keenan Allen practiced in Northern California sunshine [Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n23allen123).',
+      bullets: [
+        'Roster Note: Keenan Allen joined practice Wednesday [Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n23allen123).',
+        'Award Watch: Brock Purdy drew midseason MVP recognition [Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u).'
+      ],
+      sources: [
+        {
+          type: 'tweet',
+          author: 'Matt Barrows',
+          outlet: 'The Athletic',
+          title: 'Keenan Allen sure seems happy to be back in the Northern California sun.',
+          url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3n23allen123',
+          publishedAt: '2026-11-11T22:04:00.000Z'
+        },
+        {
+          type: 'tweet',
+          author: 'Matt Barrows',
+          outlet: 'The Athletic',
+          title: 'Brock Purdy for MVP? For real? He’s among the 49ers nominated for midseason honors',
+          url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u',
+          publishedAt: '2026-11-11T22:30:00.000Z'
+        }
+      ]
+    },
+    { rawStream: [barrowsXPost] }
+  );
+  assert.ok(
+    renderedBriefHtml.includes('href="https://x.com/mattbarrows/status/2120638097100886138"'),
+    'Inline brief citation and source drawer must upgrade Bluesky URL to analogous X status URL'
+  );
+  assert.ok(
+    !renderedBriefHtml.includes('3n23allen123'),
+    'Upgraded Bluesky URL must not remain in rendered brief HTML'
+  );
+  assert.ok(
+    renderedBriefHtml.includes('https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u'),
+    'Undiscoverable X status fallback must cleanly keep verified Bluesky URL'
+  );
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

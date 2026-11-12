@@ -20,6 +20,8 @@
 
 import {
   corroborateAndAnnotateWireStream,
+  isBlueskyPostUrl,
+  isDirectXStatusUrl,
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
 
@@ -91,7 +93,7 @@ const TIER1_MAJOR_BREAKING_EVENT_REGEX =
  * then `ROSTER MOVE` / `INJURY UPDATE`).
  */
 const TIER2_ROSTER_OR_STATUS_MOVE_REGEX =
-  /(\bbreaking:|just in:|\bdesignate[sd]? (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{2,28} (?:for|to) return|open(?:ed|s|ing)? [a-z .'-]{2,28}(?:21-day )?practice window|reinstated|activated (?:[a-z .'-]{2,28} )?(?:from|off) (?:ir|injured reserve)|placed (?:[a-z .'-]{2,28} )?on (?:injured reserve|ir)\b|put [a-z .'-]{2,28} on ir\b|signed (?:[a-z .'-]{2,28} )?to (?:the )?(?:active roster|53-man roster)|claimed [a-z .'-]{2,28} off waivers|\bwaived\b|has been released|have released|officially released|released from (?:ir|injured reserve|the practice squad)|\breleased\s+(?:veteran\s+|rookie\s+)?(?:qb|rb|fb|wr|te|ol|ot|og|c|dl|de|dt|nt|edge|lb|ilb|olb|cb|db|s|k|p|ls)\b|49ers roster move:)/i;
+  /(\bbreaking:|just in:|\bdesignate[sd]? (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{2,28} (?:for|to) return|open(?:ed|s|ing)? [a-z .'-]{2,28}(?:21-day )?practice window|reinstated|activated (?:[a-z .'-]{2,28} )?(?:from|off) (?:ir|injured reserve)|placed (?:[a-z .'-]{2,28} )?on (?:injured reserve|ir)\b|put [a-z .'-]{2,28} on ir\b|signed (?:[a-z .'-]{2,28} )?to (?:the )?(?:active roster|53-man roster)|claimed [a-z .'-]{2,28} off waivers|restructured (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{3,28}|converted \$[\d.]+m of [a-z .'-]{3,28}['’]?s [\s\S]{0,35}into signing bonus|\bwaived\b|has been released|have released|officially released|released from (?:ir|injured reserve|the practice squad)|\breleased\s+(?:veteran\s+|rookie\s+)?(?:qb|rb|fb|wr|te|ol|ot|og|c|dl|de|dt|nt|edge|lb|ilb|olb|cb|db|s|k|p|ls)\b|49ers roster move:)/i;
 
 const MINOR_PRACTICE_SQUAD_MOVE_REGEX =
   /\b(signed [\s\S]{0,35}to (?:the )?practice squad|practice squad|elevated [\s\S]{0,30}from (?:the )?practice squad|standard elevation)\b/i;
@@ -907,13 +909,18 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
   const signal = Math.max(30, Math.min(100, Number(item.signalScore) || 65));
   const fluff = Math.max(0, Math.min(100, Number(item.fluffScore) || 0));
   const substanceBonus = (signal - 55) * 0.22 - fluff * 0.35;
+  const socialPlatformBonus = isDirectXStatusUrl(item.url)
+    ? 5
+    : isBlueskyPostUrl(item.url)
+      ? -2
+      : 0;
 
   // Active Urgent Breaking boost ensures genuine <4.5h/<8h breaking transactions & acute injuries
   // always hold Top Stories placement ahead of brand-new routine beat/aggregator posts
   const activeBreakingFloorBoost =
     item.isUrgentBreaking && isUrgentBreakingBadge(item.breakingBadge) ? 16 : 0;
 
-  const numerator = Math.max(8, eventMagnitude + authorityBonus + velocityBonus + substanceBonus);
+  const numerator = Math.max(8, eventMagnitude + authorityBonus + velocityBonus + substanceBonus + socialPlatformBonus);
   const denom = Math.pow(clusterAnchorAge + tau, gravity);
   return Number((numerator / denom + activeBreakingFloorBoost).toFixed(4));
 }
@@ -1288,16 +1295,21 @@ export function sortNewsWithBreakingPriority(
       const aMs = resolveEffectivePublishTimestampMs(a, nowMs) || 0;
       const bMs = resolveEffectivePublishTimestampMs(b, nowMs) || 0;
 
-      // Within a near-tied StoryRank band on items published within 15m, honor First-Mover & Trust-Tier
-      if (Math.abs(rankDiff) < 1.2 && Math.abs(bMs - aMs) <= 15 * 60_000) {
-        if (a.isFirstMoverInjuryScoop && !b.isFirstMoverInjuryScoop && (a.corroborationCount || 1) === 1) {
-          return -1;
+      // Within a near-tied StoryRank band on items published within 30m, honor First-Mover, Trust-Tier & X-over-Bluesky
+      if (Math.abs(rankDiff) < 1.2 && Math.abs(bMs - aMs) <= 30 * 60_000) {
+        if (Math.abs(bMs - aMs) <= 15 * 60_000) {
+          if (a.isFirstMoverInjuryScoop && !b.isFirstMoverInjuryScoop && (a.corroborationCount || 1) === 1) {
+            return -1;
+          }
+          if (b.isFirstMoverInjuryScoop && !a.isFirstMoverInjuryScoop && (b.corroborationCount || 1) === 1) {
+            return 1;
+          }
+          const tierDiff = (a.trustTier || 2) - (b.trustTier || 2);
+          if (tierDiff !== 0) return tierDiff;
         }
-        if (b.isFirstMoverInjuryScoop && !a.isFirstMoverInjuryScoop && (b.corroborationCount || 1) === 1) {
-          return 1;
-        }
-        const tierDiff = (a.trustTier || 2) - (b.trustTier || 2);
-        if (tierDiff !== 0) return tierDiff;
+        const aIsX = isDirectXStatusUrl(a.url);
+        const bIsX = isDirectXStatusUrl(b.url);
+        if (aIsX !== bIsX) return aIsX ? -1 : 1;
       }
 
       if (Math.abs(rankDiff) >= 0.35) return rankDiff;
@@ -1652,6 +1664,14 @@ function buildStorySignatureKey(item = {}) {
     }
   }
 
+  // 6b. Player-specific Contract Restructure / Bonus Conversion
+  if (
+    pKey &&
+    /\b(restructured|converted\s+\$[\d.]+m\s+of\s+[\s\S]{1,35}into\s+signing\s+bonus)\b/i.test(lead)
+  ) {
+    return `${pKey}::contract_restructure`;
+  }
+
   // 7. Player-specific Injury Milestone Bucket (IR/21d return, MRI/X-ray, recovery timeline, in-game status, pre-game availability)
   if (pKey && !SECONDARY_COMMENTARY_OR_REACTION_REGEX.test(lead) && !HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead)) {
     const milestoneProbe = `${lead} ${String(item?.fullText || item?.summary || '').slice(0, 140)}`;
@@ -1704,7 +1724,8 @@ function scoreClusterLeadQuality(item = {}) {
   const primaryMoveBonus =
     item.storyTier === 'tier1_major' || item.storyTier === 'tier2_roster' ? 16 : 0;
   const urgencyBonus = isUrgentBreakingBadge(item.breakingBadge) ? 20 : item.breakingBadge ? 6 : 0;
-  return tierScore + formatScore + conversationalPenalty + thumbBonus + sigBonus + primaryMoveBonus + urgencyBonus;
+  const xPlatformBonus = isDirectXStatusUrl(item.url) ? 12 : isBlueskyPostUrl(item.url) ? -4 : 0;
+  return tierScore + formatScore + conversationalPenalty + thumbBonus + sigBonus + primaryMoveBonus + urgencyBonus + xPlatformBonus;
 }
 
 /**
@@ -1923,9 +1944,15 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
     const existingQual = scoreClusterLeadQuality(matchedCluster.lead);
     const candQual = scoreClusterLeadQuality(item);
     const existingMs = resolveEffectivePublishTimestampMs(matchedCluster.lead, nowMs) || 0;
+    const xUpgradesBskyLead =
+      isDirectXStatusUrl(item.url) &&
+      isBlueskyPostUrl(matchedCluster.lead.url) &&
+      (Number(item.trustTier) || 2) <= (Number(matchedCluster.lead.trustTier) || 2);
     const candidateIsBetterLead =
+      xUpgradesBskyLead ||
       candQual > existingQual + 5 ||
       (Math.abs(candQual - existingQual) <= 5 &&
+        !isBlueskyPostUrl(item.url) &&
         itemMs > existingMs + 15 * 60_000 &&
         String(item.fullText || item.title || '').length >=
           String(matchedCluster.lead.fullText || matchedCluster.lead.title || '').length * 0.75);
@@ -1936,6 +1963,9 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
       delete demotedPrev.confirmingReports;
       matchedCluster.lead = {
         ...item,
+        imageUrl: item.imageUrl || demotedPrev.imageUrl || '',
+        externalUrl: item.externalUrl || demotedPrev.externalUrl || null,
+        externalTitle: item.externalTitle || demotedPrev.externalTitle || null,
         // Inherit urgent breaking badge if an earlier primary report in the same fresh cluster triggered it
         breakingBadge: item.breakingBadge || demotedPrev.breakingBadge || null,
         isBreaking: Boolean(item.isBreaking || demotedPrev.isBreaking),

@@ -85,11 +85,16 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
   const rawSources = Array.isArray(dailyBrief?.sources) ? dailyBrief.sources : [];
   const seen = new Set();
   const safeList = [];
+  const rawByUrl = new Map(
+    (Array.isArray(rawStream) ? rawStream : [])
+      .filter(it => it?.url)
+      .map(it => [String(it.url).trim(), it])
+  );
 
   for (const sl of rawSources) {
     if (!sl) continue;
     const rawTitle = decodeInlineEntities(String(sl.title || ''));
-    const isTw =
+    let isTw =
       sl.type === 'tweet' ||
       sl.type === 'social' ||
       /^@[A-Za-z0-9_]+:/.test(rawTitle) ||
@@ -114,7 +119,7 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
       continue;
     }
 
-    const resolvedUrl = isTw
+    let resolvedUrl = isTw
       ? resolveOriginalTweetUrl(
           {
             type: 'tweet',
@@ -129,6 +134,21 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
         )
       : sl.url;
 
+    // If still pointing to Bluesky and the underlying stream item carries a free canonical article URL, upgrade to it
+    if (/^https?:\/\/bsky\.app\//i.test(String(resolvedUrl || ''))) {
+      const streamMatch = rawByUrl.get(String(sl.url || '').trim());
+      const extSafe = sanitizeExternalUrl(streamMatch?.externalUrl, null);
+      if (
+        extSafe &&
+        !/^https?:\/\/bsky\.app\//i.test(extSafe) &&
+        !isPaywalledPublisher(sl.outlet, extSafe) &&
+        !isRedundantProfileSelfLink(extSafe, resolvedUrl)
+      ) {
+        resolvedUrl = extSafe;
+        isTw = false;
+      }
+    }
+
     const safeUrl = sanitizeExternalUrl(resolvedUrl, null);
     const dedupKey =
       safeUrl && safeUrl.includes('x.com/search?')
@@ -138,6 +158,7 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
     seen.add(dedupKey);
 
     safeList.push({
+      originalUrl: sl.url || safeUrl,
       title: cleanTitle || sl.outlet || 'Open Source',
       url: safeUrl,
       outlet: sl.outlet || '49ers Beat',
@@ -156,7 +177,7 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
  * segments between links with football jargon popovers and clickable roster player links
  * (guaranteeing zero nested `<a>` tags!).
  */
-export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null) {
+export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null, urlUpgradeMap = null) {
   const rawInput = String(text || '').trim();
   if (!rawInput) return '';
 
@@ -178,7 +199,8 @@ export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null
       outHtml += escJargon(raw.slice(lastIdx, match.index), opts);
     }
     const label = decodeInlineEntities(match[1]).trim();
-    const safeUrl = sanitizeExternalUrl(match[2], null);
+    const mappedTarget = urlUpgradeMap?.get(match[2]) || match[2];
+    const safeUrl = sanitizeExternalUrl(mappedTarget, null);
     if (safeUrl && !isPaywalledPublisher('', safeUrl)) {
       const cleanTip = label && !/^s\d+$/i.test(label) ? `Source: ${label}` : 'Open source';
       outHtml += `<a href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" class="brief-inline-source-link" data-brief-inline-source title="${esc(cleanTip)}" aria-label="${esc(cleanTip)}">${iconSvg('link', 10)}</a>`;
@@ -192,7 +214,7 @@ export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null
   return outHtml;
 }
 
-function formatDailyBriefBulletHtml(bullet = '', seenJargon = null) {
+function formatDailyBriefBulletHtml(bullet = '', seenJargon = null, urlUpgradeMap = null) {
   const raw = String(bullet || '').trim();
   if (!raw) return '';
   const colonIdx = raw.indexOf(':');
@@ -201,9 +223,9 @@ function formatDailyBriefBulletHtml(bullet = '', seenJargon = null) {
   if (colonIdx > 0 && colonIdx <= 78 && !bracketBeforeColon) {
     const headClean = raw.slice(0, colonIdx).replace(/\*\*/g, '').trim();
     const bodyClean = raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim();
-    return `<li><strong>${escJargon(headClean, { maxTerms: 6, maxPlayers: 2, seenKeys: seenJargon })}:</strong> ${renderBriefProseWithInlineLinksHtml(bodyClean, seenJargon)}</li>`;
+    return `<li><strong>${escJargon(headClean, { maxTerms: 6, maxPlayers: 2, seenKeys: seenJargon })}:</strong> ${renderBriefProseWithInlineLinksHtml(bodyClean, seenJargon, urlUpgradeMap)}</li>`;
   }
-  return `<li>${renderBriefProseWithInlineLinksHtml(raw, seenJargon)}</li>`;
+  return `<li>${renderBriefProseWithInlineLinksHtml(raw, seenJargon, urlUpgradeMap)}</li>`;
 }
 
 /**
@@ -222,6 +244,11 @@ export function renderDailyTopNewsBriefHtml(
 
   const seenJargon = new Set();
   const safeSources = resolveDailyBriefSafeSources(brief, rawStream, appData);
+  const urlUpgradeMap = new Map(
+    safeSources
+      .filter(s => s.originalUrl && s.url && s.originalUrl !== s.url)
+      .map(s => [s.originalUrl, s.url])
+  );
   const ageTiny = brief.generatedAt ? formatRelativeAge(brief.generatedAt) : 'now';
   const tagName = asSubcard ? 'div' : 'section';
   const outerCls = asSubcard
@@ -285,9 +312,9 @@ export function renderDailyTopNewsBriefHtml(
         </div>
         <span class="mono daily-brief-age" data-daily-brief-age title="Generated ${esc(brief.generatedAt || '')}">${esc(ageTiny)}</span>
       </div>
-      <p class="coaching-thesis-copy daily-brief-summary">${renderBriefProseWithInlineLinksHtml(brief.summary || '', seenJargon)}</p>
+      <p class="coaching-thesis-copy daily-brief-summary">${renderBriefProseWithInlineLinksHtml(brief.summary || '', seenJargon, urlUpgradeMap)}</p>
       <ul class="brief-bullets coaching-bullets daily-brief-bullets">
-        ${(brief.bullets || []).map(b => formatDailyBriefBulletHtml(b, seenJargon)).join('')}
+        ${(brief.bullets || []).map(b => formatDailyBriefBulletHtml(b, seenJargon, urlUpgradeMap)).join('')}
       </ul>
       ${sourcesDrawerHtml}
     </${tagName}>
