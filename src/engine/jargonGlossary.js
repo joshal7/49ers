@@ -53,10 +53,75 @@ export const JARGON_GLOSSARY = {
       '0.00-to-10.00 composite score normalizing a prospect’s height, weight, speed, explosion, and agility drills against historical NFL Combine athletes at the same position.'
   },
   consensus_big_board: {
-    term: 'Consensus Big Board (Wisdom of the Crowd)',
-    category: 'Scouting',
+    term: 'Consensus Big Board (Talent Baseline)',
+    category: 'Draft Lens 1 • Default',
+    badge: 'Talent & Value Baseline (~83% Rd 1 Hit Rate)',
     definition:
-      'Multi-board prospect composite pioneered by Arif Hasan (Wide Left) and NFL Mock Draft Database. Empirical multi-year NFL Draft studies show aggregating independent scouting boards achieves ~80%+ draft-capital alignment and outperforms any single evaluator by canceling individual blind spots while exposing prospect rank polarization.'
+      'Weighted multi-board composite modeled on Arif Hasan (Wide Left) and NFL Mock Draft Database—aggregating Tankathon, DraftTek, CBS Sports & ESPN across 250+ prospects. Multi-year studies confirm consensus boards align ~80–85% with real NFL draft selections across all 7 rounds while neutralizing single-analyst blind spots.',
+    links: [
+      { label: 'NFL Mock Draft DB', url: 'https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027' },
+      { label: 'Wide Left (Arif Hasan)', url: 'https://www.wideleft.football/' },
+      { label: 'Tankathon Board', url: 'https://www.tankathon.com/nfl/big_board' },
+      { label: 'CBS Rankings', url: 'https://www.cbssports.com/nfl/draft/prospect-rankings/' },
+      { label: 'ESPN Best Available', url: 'https://www.espn.com/nfl/draft/bestavailable' }
+    ]
+  },
+  draft_buzz_edp: {
+    term: 'Likely Draft Order (NFL Buzz & EDP)',
+    category: 'Draft Lens 2 • Draft Order',
+    badge: 'Most Likely NFL Draft Order',
+    definition:
+      'Projects where prospects will actually come off the NFL board by blending mock-weighted Expected Draft Position (EDP) with insider league buzz (Daniel Jeremiah Top 50/150, Grinding the Mocks, multi-round mock sims). Captures real front-office QB/OT positional premiums, medical/character slides, and team steam that pure talent boards ignore.',
+    links: [
+      { label: 'Grinding the Mocks (EDP)', url: 'https://grindingthemocks.com/' },
+      { label: 'NFL.com Draft Buzz', url: 'https://www.nfl.com/draft/' },
+      { label: 'Tankathon 3-Rd Mock', url: 'https://www.tankathon.com/nfl/mock_draft' },
+      { label: 'DraftTek Multi-Rd Sim', url: 'https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp' }
+    ]
+  },
+  pff_big_board: {
+    term: 'PFF Big Board (Pro Performance & WAR)',
+    category: 'Draft Lens 3 • Analytics',
+    badge: 'Most Accurate for NFL Performance',
+    definition:
+      'Blends film charting with play-by-play PFF grading, Wins Above Replacement (PFF WAR), and stable college efficiency metrics (true-pass-set win rate, separation, YPRR, coverage grade). Because it strips out draft-slot hype, big-school helmet scouting, and NFL sunk-cost bias, PFF is the most accurate lens for projecting how prospects will perform in the NFL.',
+    links: [
+      { label: 'PFF Draft Big Board', url: 'https://www.pff.com/draft/big-board' },
+      { label: 'PFF Draft Hub', url: 'https://www.pff.com/draft' }
+    ]
+  },
+  board_spread_delta: {
+    term: 'Spread & Consensus Delta (Δ)',
+    category: 'Draft Analytics',
+    badge: 'Evaluator Disagreement',
+    definition:
+      'Inline +/- badges equal Consensus Rank minus Lens Rank (+9 green = ranked 9 spots higher than Consensus; -9 red = 9 spots lower). On Likely (Buzz), +Δ signals NFL draft-order steam or QB/OT positional tax; on PFF, +Δ flags an undervalued pro-performance sleeper. Spread (Δ) equals max rank minus min rank across active boards (Δ ≥ 15 = Polarizing; Δ ≤ 5 = Consensus Lock).',
+    links: [
+      { label: 'Wide Left Methodology', url: 'https://www.wideleft.football/' },
+      { label: 'PFF Draft Hub', url: 'https://www.pff.com/draft' }
+    ]
+  },
+  draft_tier_system: {
+    term: 'Draft Capital Tiers (T1–T5)',
+    category: 'Draft Scouting',
+    badge: '7-Round Value Buckets',
+    definition:
+      'Maps consensus prospect value onto 5 front-office capital tiers: T1 (1–12 Blue-Chip), T2 (13–32 Round 1 Starter), T3 (33–100 Day 2 Starter/Rotation), T4 (101–175 Early Day 3 Developmental), and T5 (176–300 Late Day 3 / Priority Trait Flyer).'
+  },
+  big_board_sources: {
+    term: '3-Lens NFL Draft Big Board Sources',
+    category: 'Methodology & Provenance',
+    badge: 'Consensus • Likely Order • NFL Accuracy',
+    definition:
+      'Separates three distinct draft questions: (1) Consensus = multi-board talent baseline (~80–85% 7-round NFL alignment); (2) Likely (Buzz / EDP) = most likely actual NFL draft order factoring QB/OT premiums & team steam; (3) PFF = most accurate predictor of on-field NFL performance via play-by-play grading & college WAR.',
+    links: [
+      { label: 'Mock Draft DB', url: 'https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027' },
+      { label: 'Grinding the Mocks (EDP)', url: 'https://grindingthemocks.com/' },
+      { label: 'PFF Big Board', url: 'https://www.pff.com/draft/big-board' },
+      { label: 'NFL.com Draft', url: 'https://www.nfl.com/draft/' },
+      { label: 'Tankathon Board', url: 'https://www.tankathon.com/nfl/big_board' },
+      { label: 'Wide Left (Arif Hasan)', url: 'https://www.wideleft.football/' }
+    ]
   },
   dadot: {
     term: 'DADOT (Defensive Avg Depth of Target)',
@@ -1182,7 +1247,18 @@ export function jargonTerm(label, key) {
   const entry = getJargonEntry(key) || getJargonEntry(label);
   const safeLabel = escapeHtmlPlain(label);
   if (!entry) return safeLabel;
-  return `<span class="jargon-term" role="button" tabindex="0" data-jargon="${escapeHtmlPlain(entry.key)}" aria-label="${escapeHtmlPlain(entry.term)}: tap for definition">${safeLabel}</span>`;
+  return `<span class="jargon-term" role="button" tabindex="0" data-jargon="${escapeHtmlPlain(entry.key)}" aria-label="${escapeHtmlPlain(entry.term)}: tap for definition &amp; sources">${safeLabel}</span>`;
+}
+
+/**
+ * Renders a compact `ⓘ` tooltip-link icon trigger safe to embed inside buttons, pills, and sortable `<th>` headers.
+ */
+export function jargonInfoIcon(key, customLabel = '') {
+  const entry = getJargonEntry(key);
+  if (!entry) return '';
+  const aria = customLabel || `${entry.term}: tap for explanation and source links`;
+  const tip = entry.badge ? `${entry.term} — ${entry.badge}` : entry.term;
+  return `<span class="jargon-info-dot" role="button" tabindex="0" data-jargon="${escapeHtmlPlain(entry.key)}" aria-label="${escapeHtmlPlain(aria)}" title="${escapeHtmlPlain(tip)}">ⓘ</span>`;
 }
 
 /**

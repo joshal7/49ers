@@ -21,8 +21,15 @@ import {
 import {
   JARGON_GLOSSARY,
   getJargonEntry,
+  jargonInfoIcon,
   annotateJargonPlainText
 } from '../src/engine/jargonGlossary.js';
+import {
+  normalizeBigBoardProspect,
+  queryBigBoardProspects,
+  parseBigBoardUrlParams,
+  buildBigBoardUrlSearch
+} from '../src/engine/draftBigBoardEngine.js';
 import {
   ROSTER_SORT_FIELDS,
   extractPlayerSortNameParts,
@@ -6363,6 +6370,137 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-Ne
   });
   assert.ok(rosterTabHtml.includes('DeForest Buckner') && rosterTabHtml.includes('CAP &amp; CONTRACT'), 'Trades & Roster must surface salient cap news with CAP & CONTRACT signal badge');
   assert.ok(!rosterTabHtml.includes('data-daily-news-brief'), 'Trades & Roster must not render an AI brief');
+});
+
+test('3-Lens NFL Draft Big Board Engine: 250+ Depth, NR-at-Bottom Sorting (Asc & Desc), Delta/Spread Math, Multi-Filters, URL Sync & Tooltip-Links', () => {
+  // 1. Exact Delta & Spread Math + NR handling
+  const synthetic = [
+    {
+      name: 'Prospect A',
+      pos: 'EDGE',
+      school: 'Texas',
+      boards: {
+        consensus: { rank: 1, updated_at: '2026-11-12' },
+        buzz: { rank: 1, updated_at: '2026-11-11' },
+        pff: { rank: 2, updated_at: '2026-11-08' }
+      }
+    },
+    {
+      name: 'Prospect B',
+      pos: 'QB',
+      school: 'Oregon',
+      boards: {
+        consensus: { rank: 14, updated_at: '2026-11-12' },
+        buzz: { rank: 5, updated_at: '2026-11-11' },
+        pff: { rank: 23, updated_at: '2026-11-08' }
+      }
+    },
+    {
+      name: 'Prospect C (Early Unranked)',
+      pos: 'IOL',
+      school: 'Iowa',
+      boards: {
+        consensus: { rank: 40, updated_at: '2026-11-12' },
+        buzz: { rank: null, updated_at: '2026-11-11' },
+        pff: { rank: 18, updated_at: '2026-11-08' }
+      }
+    },
+    {
+      name: 'Prospect D (Late Unranked)',
+      pos: 'CB',
+      school: 'Georgia',
+      boards: {
+        consensus: { rank: 195, updated_at: '2026-11-12' },
+        buzz: { rank: null, updated_at: '2026-11-11' },
+        pff: { rank: null, updated_at: '2026-11-08' }
+      }
+    }
+  ];
+
+  const normB = normalizeBigBoardProspect(synthetic[1], 1, 2027);
+  assert.equal(normB.boards.buzz.delta, 9, 'Consensus #14 vs Buzz #5 must yield +9 delta');
+  assert.equal(normB.boards.pff.delta, -9, 'Consensus #14 vs PFF #23 must yield -9 delta');
+  assert.equal(normB.spread, 18, 'Max(23, 14, 5) - Min(23, 14, 5) must equal 18');
+  assert.equal(normB.tier, 2, 'Rank #14 must map to Tier 2 (13–32)');
+
+  // 2. NR stays pinned to bottom on BOTH Asc and Desc, tiebreaking NR rows by Consensus Rank ASC
+  const buzzAsc = queryBigBoardProspects(synthetic, { sortField: 'buzz', sortDir: 'asc' }).items;
+  assert.deepEqual(
+    buzzAsc.map(p => p.name),
+    ['Prospect A', 'Prospect B', 'Prospect C (Early Unranked)', 'Prospect D (Late Unranked)'],
+    'Buzz ASC must sort #1 -> #5 -> NR(Cons #40) -> NR(Cons #195)'
+  );
+
+  const buzzDesc = queryBigBoardProspects(synthetic, { sortField: 'buzz', sortDir: 'desc' }).items;
+  assert.deepEqual(
+    buzzDesc.map(p => p.name),
+    ['Prospect B', 'Prospect A', 'Prospect C (Early Unranked)', 'Prospect D (Late Unranked)'],
+    'Buzz DESC must sort #5 -> #1 while keeping NR rows pinned at the bottom in Consensus ASC order'
+  );
+
+  const spreadDesc = queryBigBoardProspects(synthetic, { sortField: 'spread', sortDir: 'desc' }).items;
+  assert.equal(spreadDesc[0].name, 'Prospect C (Early Unranked)'); // spread 22 (40 - 18)
+  assert.equal(spreadDesc[1].name, 'Prospect B'); // spread 18
+  assert.equal(spreadDesc[3].name, 'Prospect D (Late Unranked)', 'Single-board null spread must stay pinned at bottom');
+
+  // 3. Multi-select Positions, Agreement (Polarizing / Locks), Range & Ranked-Only
+  const multiPos = queryBigBoardProspects(synthetic, { positions: ['QB', 'EDGE'] }).items;
+  assert.equal(multiPos.length, 2);
+  const polarizingOnly = queryBigBoardProspects(synthetic, { agreement: 'polarizing' }).items;
+  assert.equal(polarizingOnly.length, 2);
+  const locksOnly = queryBigBoardProspects(synthetic, { agreement: 'locks' }).items;
+  assert.equal(locksOnly.length, 1);
+  assert.equal(locksOnly[0].name, 'Prospect A');
+  const buzzRankedOnly = queryBigBoardProspects(synthetic, { lens: 'buzz', sortField: 'buzz', rankedOnly: true }).items;
+  assert.equal(buzzRankedOnly.length, 2, 'rankedOnly must hide NR rows on selected lens');
+
+  // 4. Shareable URL Query Param Serialization & Parsing
+  const builtQuery = buildBigBoardUrlSearch('', {
+    lens: 'buzz',
+    sortField: 'buzz',
+    sortDir: 'asc',
+    positions: ['QB', 'EDGE'],
+    range: 'rd1',
+    agreement: 'polarizing',
+    rankedOnly: true,
+    search: 'Oregon',
+    includeDraftNav: true
+  });
+  const parsedQuery = parseBigBoardUrlParams(builtQuery);
+  assert.equal(parsedQuery.hasBigBoardParams, true);
+  assert.equal(parsedQuery.openDraftTab, true);
+  assert.equal(parsedQuery.lens, 'buzz');
+  assert.equal(parsedQuery.sortField, 'buzz');
+  assert.equal(parsedQuery.sortDir, 'asc');
+  assert.deepEqual(parsedQuery.positions, ['QB', 'EDGE']);
+  assert.equal(parsedQuery.range, 'rd1');
+  assert.equal(parsedQuery.agreement, 'polarizing');
+  assert.equal(parsedQuery.rankedOnly, true);
+  assert.equal(parsedQuery.search, 'Oregon');
+  assert.equal(buildBigBoardUrlSearch('', {}), '', 'Default Big Board state must emit clean empty query string');
+
+  // 5. Tooltip-Links Glossary Integrity (Buzz = Most Likely Draft Order; PFF = Most Accurate NFL Performance)
+  const buzzTip = getJargonEntry('draft_buzz_edp');
+  const pffTip = getJargonEntry('pff_big_board');
+  const consTip = getJargonEntry('consensus_big_board');
+  const srcTip = getJargonEntry('big_board_sources');
+  assert.ok(buzzTip?.badge.includes('Most Likely') && /come off the NFL board|draft order/i.test(buzzTip.definition));
+  assert.ok(pffTip?.badge.includes('Most Accurate') && /perform in the NFL/i.test(pffTip.definition));
+  for (const tip of [consTip, buzzTip, pffTip, srcTip]) {
+    assert.ok(Array.isArray(tip?.links) && tip.links.length >= 2, `Missing tooltip links on ${tip?.term}`);
+    for (const l of tip.links) {
+      assert.ok(l.url.startsWith('https://') && !isPaywalledOrBlockedUrl(l.url), `Invalid tooltip link: ${l.url}`);
+    }
+  }
+  assert.ok(jargonInfoIcon('pff_big_board').includes('data-jargon="pff_big_board"'));
+
+  // 6. Live seasonal.json 250+ Prospect Dataset Audit
+  const liveSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const liveBb = liveSeasonal.draftPrep2027?.consensusBigBoard || [];
+  assert.ok(liveBb.length >= 250, `Expected >= 250 prospects in live Big Board, got ${liveBb.length}`);
+  assert.ok(liveBb.some(p => p.boards?.buzz?.rank === null), 'Live Big Board must include NR (null) late-round Buzz rows');
+  assert.ok(liveBb.some(p => p.boards?.pff?.rank === null), 'Live Big Board must include NR (null) late-round PFF rows');
+  assert.ok(liveBb.some(p => p.spread !== null && p.spread >= 15), 'Live Big Board must surface Polarizing (spread >= 15) prospects');
 });
 
 console.log(`\n======================================================`);

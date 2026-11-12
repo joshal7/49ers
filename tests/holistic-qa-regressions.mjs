@@ -2079,15 +2079,21 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
   const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
   const dp = seasonalJson.draftPrep2027;
 
-  // 1. Consensus Big Board integrity (Top 50 4-board composite, zero 2026 draftees, zero paywalls)
-  assert.ok(Array.isArray(dp.consensusBigBoard) && dp.consensusBigBoard.length >= 30, 'Consensus Big Board must contain >=30 ranked 2027 prospects');
+  // 1. 3-Lens NFL Draft Big Board integrity (250+ prospects across 7 rounds, zero 2026 draftees, zero paywalls)
+  assert.ok(Array.isArray(dp.consensusBigBoard) && dp.consensusBigBoard.length >= 250, 'NFL Draft Big Board must contain >=250 ranked 2027 prospects');
   assert.equal(dp.consensusBigBoard[0].consensusRank, 1);
   assert.equal(dp.consensusBigBoard[0].name, 'Jeremiah Smith');
+  assert.equal(dp.consensusBigBoard[0].boards.buzz.rank, 1);
+  assert.equal(dp.consensusBigBoard[0].boards.pff.rank, 1);
+  assert.equal(dp.consensusBigBoard[0].spread, 0);
   for (let i = 0; i < dp.consensusBigBoard.length; i++) {
     const b = dp.consensusBigBoard[i];
     assert.equal(b.consensusRank, i + 1, 'Consensus Big Board ranks must be sequential 1..N');
+    assert.equal(b.boards.consensus.rank, i + 1, 'boards.consensus.rank must match consensusRank');
     assert.ok(b.profileUrl && !isPaywalledOrBlockedUrl(b.profileUrl), `Blocked/invalid Big Board profileUrl: ${b.profileUrl}`);
     assert.ok(b.mockDbUrl && !isPaywalledOrBlockedUrl(b.mockDbUrl), `Blocked/invalid Big Board mockDbUrl: ${b.mockDbUrl}`);
+    assert.ok(b.pffUrl && !isPaywalledOrBlockedUrl(b.pffUrl), `Blocked/invalid Big Board pffUrl: ${b.pffUrl}`);
+    assert.ok(b.buzzUrl && !isPaywalledOrBlockedUrl(b.buzzUrl), `Blocked/invalid Big Board buzzUrl: ${b.buzzUrl}`);
   }
   const olFiltered = filterConsensusBigBoard(dp.consensusBigBoard, { posGroup: 'OL' });
   assert.ok(olFiltered.length >= 3 && olFiltered.every(p => /^(OT|IOL|OG|G|C|OL|T)$/i.test(p.pos)), 'OL Big Board filter must isolate offensive linemen');
@@ -2203,7 +2209,12 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
   const mockIdx = draftHtml.indexOf('id="consensusMockDraftCard"');
   const boardIdx = draftHtml.indexOf('id="consensusBigBoardCard"');
   const combineIdx = draftHtml.indexOf('id="combineLeaderboardCard"');
-  assert.ok(mockIdx > 0 && boardIdx > mockIdx && combineIdx > boardIdx, 'Consensus Big Board must render directly above Combine Leaderboard');
+  assert.ok(mockIdx > 0 && boardIdx > mockIdx && combineIdx > boardIdx, 'NFL Draft Big Board must render directly above Combine Leaderboard');
+  assert.ok(!draftHtml.includes('class="big-board-meta-note"'), 'Verbose static meta-note paragraph must be hidden in favor of sleek tooltip-links');
+  assert.ok(draftHtml.includes('data-jargon="big_board_sources"'), 'Big Board header must render clickable Sources & Accuracy tooltip-link');
+  assert.ok(draftHtml.includes('data-jargon="draft_buzz_edp"') && draftHtml.includes('data-jargon="pff_big_board"'), 'Big Board must render Likely (Buzz) and PFF tooltip-link triggers');
+  assert.ok(draftHtml.includes('id="bigBoardSortSelect"') && draftHtml.includes('id="bigBoardFilterDrawerBtn"'), 'Big Board must render Sort dropdown and Filters drawer toggle');
+  assert.ok(draftHtml.includes('class="big-board-desktop-thead"'), 'Big Board must render sortable desktop multi-column table header');
   assert.ok(draftHtml.includes('data-combine-blank="true"'), 'Combine Leaderboard must render blank state during Nov 2026 season');
   assert.ok(!draftHtml.includes('id="combineSearchInput"'), 'Blank Combine Leaderboard must not render stale search input/table');
   assert.ok(draftHtml.includes('data-mock-freshness-badge="30d"'), 'In-season Consensus Mock Draft card must display 30d freshness badge');

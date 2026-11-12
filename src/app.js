@@ -54,18 +54,26 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=48';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=48';
+} from './views/uiHelpers.js?v=50';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
+import { sanitizeExternalUrl } from './engine/linkIntegrity.js';
+import {
+  BIG_BOARD_SORT_FIELDS,
+  parseBigBoardUrlParams,
+  buildBigBoardUrlSearch,
+  normalizeBigBoardLens,
+  normalizeBigBoardSort
+} from './engine/draftBigBoardEngine.js?v=50';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=49';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=50';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=49';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=48';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=50';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=48';
 import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=48';
 
@@ -102,7 +110,18 @@ const state = {
   combineSearch: '',
   bigBoardSearch: '',
   bigBoardPosFilter: 'ALL',
+  bigBoardPositions: [],
+  bigBoardLens: 'consensus',
+  bigBoardSortField: 'consensus',
+  bigBoardSortDir: 'asc',
+  bigBoardRange: 'all',
+  bigBoardAgreement: 'all',
+  bigBoardRankedOnly: false,
+  bigBoardFilterDrawerOpen: false,
   bigBoardExpanded: false,
+  bigBoardShowAll: false,
+  bigBoardExpandedIds: new Set(),
+  bigBoardShareCopied: false,
   expandedDraftSpiderIdx: -1,
 
   // Audio & AI Studio state
@@ -183,6 +202,17 @@ function openJargonPopover(anchorEl, jargonKey) {
   const entry = getJargonEntry(jargonKey);
   if (!entry) return;
 
+  const dynDraftYr = Number(state.appData?.seasonal?.draftPrep2027?.draftYear) || 2027;
+  const safeLinks = Array.isArray(entry.links)
+    ? entry.links
+        .map(lnk => {
+          const rawUrl = String(lnk?.url || '').replace(/2027(?=\/|-|\.asp)/g, String(dynDraftYr));
+          const safeUrl = sanitizeExternalUrl(rawUrl, null);
+          return safeUrl && lnk?.label ? { label: String(lnk.label), url: safeUrl } : null;
+        })
+        .filter(Boolean)
+    : [];
+
   activeJargonAnchor = anchorEl;
   pop.setAttribute('aria-label', `${entry.term} definition`);
   pop.innerHTML = `
@@ -190,10 +220,20 @@ function openJargonPopover(anchorEl, jargonKey) {
       <div>
         <div class="jargon-popover-cat">${esc(entry.category)}</div>
         <div class="jargon-popover-title">${esc(entry.term)}</div>
+        ${entry.badge ? `<div class="jargon-popover-badge">${esc(entry.badge)}</div>` : ''}
       </div>
       <button type="button" class="jargon-popover-close" data-action="close-jargon-popover" aria-label="Close definition">✕</button>
     </div>
     <div class="jargon-popover-body">${esc(entry.definition)}</div>
+    ${
+      safeLinks.length > 0
+        ? `<div class="jargon-popover-links" aria-label="Data Sources">${safeLinks
+            .map(
+              l => `<a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link jargon-popover-link"><span>${esc(l.label)}</span>${iconSvg('externalLink', 9)}</a>`
+            )
+            .join('')}</div>`
+        : ''
+    }
   `;
   pop.style.left = '10px';
   pop.style.top = '10px';
@@ -215,6 +255,43 @@ function openJargonPopover(anchorEl, jargonKey) {
 
   pop.style.left = `${Math.round(left)}px`;
   pop.style.top = `${Math.round(top)}px`;
+}
+
+function syncBigBoardUrlIfActive({ includeDraftNav = false } = {}) {
+  try {
+    if (state.activeNavTab !== 'season' || state.seasonSubTab !== 'draft_prep') return;
+    const nextSearch = buildBigBoardUrlSearch(window.location.search || '', {
+      lens: state.bigBoardLens,
+      sortField: state.bigBoardSortField,
+      sortDir: state.bigBoardSortDir,
+      positions: state.bigBoardPositions,
+      posGroup: state.bigBoardPosFilter,
+      range: state.bigBoardRange,
+      agreement: state.bigBoardAgreement,
+      rankedOnly: state.bigBoardRankedOnly,
+      search: state.bigBoardSearch,
+      includeDraftNav
+    });
+    const nextUrl = `${window.location.pathname}${nextSearch}${window.location.hash || ''}`;
+    if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+      window.history.replaceState(null, '', nextUrl);
+    }
+  } catch {
+    // ignore history errors in restricted contexts
+  }
+}
+
+function resetBigBoardState() {
+  state.bigBoardSearch = '';
+  state.bigBoardPosFilter = 'ALL';
+  state.bigBoardPositions = [];
+  state.bigBoardLens = 'consensus';
+  state.bigBoardSortField = 'consensus';
+  state.bigBoardSortDir = 'asc';
+  state.bigBoardRange = 'all';
+  state.bigBoardAgreement = 'all';
+  state.bigBoardRankedOnly = false;
+  state.bigBoardShowAll = false;
 }
 
 function applyTheme(theme) {
@@ -507,7 +584,18 @@ function renderMain() {
         combineSearch: state.combineSearch,
         bigBoardSearch: state.bigBoardSearch,
         bigBoardPosFilter: state.bigBoardPosFilter,
+        bigBoardPositions: state.bigBoardPositions,
+        bigBoardLens: state.bigBoardLens,
+        bigBoardSortField: state.bigBoardSortField,
+        bigBoardSortDir: state.bigBoardSortDir,
+        bigBoardRange: state.bigBoardRange,
+        bigBoardAgreement: state.bigBoardAgreement,
+        bigBoardRankedOnly: state.bigBoardRankedOnly,
+        bigBoardFilterDrawerOpen: state.bigBoardFilterDrawerOpen,
         bigBoardExpanded: state.bigBoardExpanded,
+        bigBoardShowAll: state.bigBoardShowAll,
+        bigBoardExpandedIds: state.bigBoardExpandedIds,
+        bigBoardShareCopied: state.bigBoardShareCopied,
         expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
         activeVideosSet: state.activeVideosSet,
         schedulePrevExpanded: state.schedulePrevExpanded,
@@ -944,6 +1032,12 @@ function bindEvents() {
     e => {
       if (e.target?.matches?.('[data-schedule-previous-games]')) {
         state.schedulePrevExpanded = Boolean(e.target.open);
+      } else if (e.target?.matches?.('details.big-board-item[data-prospect-id]')) {
+        const pid = e.target.getAttribute('data-prospect-id');
+        if (pid) {
+          if (e.target.open) state.bigBoardExpandedIds.add(pid);
+          else state.bigBoardExpandedIds.delete(pid);
+        }
       }
     },
     true
@@ -1259,14 +1353,143 @@ function bindEvents() {
         break;
       }
 
-      case 'set-big-board-pos': {
-        state.bigBoardPosFilter = btn.getAttribute('data-pos-group') || 'ALL';
+      case 'set-big-board-lens': {
+        const nextLens = normalizeBigBoardLens(btn.getAttribute('data-lens') || 'consensus');
+        state.bigBoardLens = nextLens;
+        state.bigBoardSortField = nextLens;
+        state.bigBoardSortDir = 'asc';
+        syncBigBoardUrlIfActive();
         renderMain();
         break;
       }
 
+      case 'sort-big-board-col': {
+        const colKey = btn.getAttribute('data-sort-col') || 'consensus';
+        if (state.bigBoardSortField === colKey) {
+          state.bigBoardSortDir = state.bigBoardSortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          const { field, dir } = normalizeBigBoardSort(colKey, '');
+          state.bigBoardSortField = field;
+          state.bigBoardSortDir = dir;
+          if (field === 'consensus' || field === 'buzz' || field === 'pff') {
+            state.bigBoardLens = field;
+          }
+        }
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'toggle-big-board-sort-dir': {
+        state.bigBoardSortDir = state.bigBoardSortDir === 'asc' ? 'desc' : 'asc';
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'toggle-big-board-filter-drawer': {
+        state.bigBoardFilterDrawerOpen = !state.bigBoardFilterDrawerOpen;
+        renderMain();
+        break;
+      }
+
+      case 'set-big-board-pos': {
+        state.bigBoardPosFilter = btn.getAttribute('data-pos-group') || 'ALL';
+        state.bigBoardPositions = [];
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'toggle-big-board-pos-chip': {
+        const pKey = String(btn.getAttribute('data-pos') || '').toUpperCase();
+        if (pKey) {
+          const cur = new Set(state.bigBoardPositions || []);
+          if (cur.has(pKey)) cur.delete(pKey);
+          else cur.add(pKey);
+          state.bigBoardPositions = [...cur];
+          if (state.bigBoardPosFilter !== 'OFF' && state.bigBoardPosFilter !== 'DEF') {
+            state.bigBoardPosFilter = 'ALL';
+          }
+          syncBigBoardUrlIfActive();
+          renderMain();
+        }
+        break;
+      }
+
+      case 'set-big-board-range': {
+        state.bigBoardRange = btn.getAttribute('data-range') || 'all';
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'set-big-board-agreement': {
+        state.bigBoardAgreement = btn.getAttribute('data-agree') || 'all';
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'toggle-big-board-ranked-only': {
+        state.bigBoardRankedOnly = !state.bigBoardRankedOnly;
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'reset-big-board-filters': {
+        resetBigBoardState();
+        syncBigBoardUrlIfActive();
+        renderMain();
+        break;
+      }
+
+      case 'share-big-board-url': {
+        const shareSearch = buildBigBoardUrlSearch(window.location.search || '', {
+          lens: state.bigBoardLens,
+          sortField: state.bigBoardSortField,
+          sortDir: state.bigBoardSortDir,
+          positions: state.bigBoardPositions,
+          posGroup: state.bigBoardPosFilter,
+          range: state.bigBoardRange,
+          agreement: state.bigBoardAgreement,
+          rankedOnly: state.bigBoardRankedOnly,
+          search: state.bigBoardSearch,
+          includeDraftNav: true
+        });
+        const fullShareUrl = `${window.location.origin}${window.location.pathname}${shareSearch}`;
+        try {
+          window.history.replaceState(null, '', `${window.location.pathname}${shareSearch}${window.location.hash || ''}`);
+        } catch {}
+        try {
+          await navigator.clipboard?.writeText?.(fullShareUrl);
+        } catch {}
+        state.bigBoardShareCopied = true;
+        renderMain();
+        setTimeout(() => {
+          state.bigBoardShareCopied = false;
+          if (state.activeNavTab === 'season' && state.seasonSubTab === 'draft_prep') {
+            renderMain();
+          }
+        }, 1800);
+        break;
+      }
+
       case 'toggle-big-board-expand': {
-        state.bigBoardExpanded = !state.bigBoardExpanded;
+        if (state.bigBoardExpanded || state.bigBoardShowAll) {
+          state.bigBoardExpanded = false;
+          state.bigBoardShowAll = false;
+        } else {
+          state.bigBoardExpanded = true;
+        }
+        renderMain();
+        break;
+      }
+
+      case 'show-all-big-board': {
+        state.bigBoardExpanded = true;
+        state.bigBoardShowAll = true;
         renderMain();
         break;
       }
@@ -1945,6 +2168,7 @@ function bindEvents() {
       renderMain();
     } else if (t.id === 'bigBoardSearchInput') {
       state.bigBoardSearch = t.value;
+      syncBigBoardUrlIfActive();
       renderMain();
     } else if (t.id === 'podDurationSlider') {
       const nextMins = Math.max(2, Math.min(20, Number(t.value || 3)));
@@ -1985,6 +2209,16 @@ function bindEvents() {
       const def = ROSTER_SORT_FIELDS.find(f => f.key === nextField);
       state.rosterSort = nextField;
       if (def) state.rosterSortDir = def.defaultDir;
+      renderMain();
+    } else if (t.id === 'bigBoardSortSelect') {
+      const nextField = t.value;
+      const def = BIG_BOARD_SORT_FIELDS.find(f => f.key === nextField);
+      state.bigBoardSortField = nextField;
+      if (def) state.bigBoardSortDir = def.defaultDir;
+      if (nextField === 'consensus' || nextField === 'buzz' || nextField === 'pff') {
+        state.bigBoardLens = nextField;
+      }
+      syncBigBoardUrlIfActive();
       renderMain();
     } else if (t.classList.contains('gm-move-select')) {
       const pid = t.getAttribute('data-player-id');
@@ -2203,8 +2437,26 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 }
 
 async function handleIncomingSharedLink(locationLike = window.location) {
+  const bbParams = parseBigBoardUrlParams(locationLike?.search || '');
+  if (bbParams.hasBigBoardParams) {
+    state.bigBoardLens = bbParams.lens;
+    state.bigBoardSortField = bbParams.sortField;
+    state.bigBoardSortDir = bbParams.sortDir;
+    state.bigBoardPositions = bbParams.positions || [];
+    state.bigBoardPosFilter = bbParams.posGroup || 'ALL';
+    state.bigBoardRange = bbParams.range || 'all';
+    state.bigBoardAgreement = bbParams.agreement || 'all';
+    state.bigBoardRankedOnly = Boolean(bbParams.rankedOnly);
+    state.bigBoardSearch = bbParams.search || '';
+    if (bbParams.openDraftTab) {
+      state.activeNavTab = 'season';
+      state.seasonSubTab = 'draft_prep';
+    }
+    renderMain();
+  }
+
   const sharedRoute = await extractIncomingSharedRoute(locationLike);
-  if (!sharedRoute) return false;
+  if (!sharedRoute) return bbParams.hasBigBoardParams;
 
   if (sharedRoute.type === 'podcast') {
     state.activeNavTab = 'audio';

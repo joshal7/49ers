@@ -2,12 +2,12 @@
  * Shared UI Formatting & Safe HTML/Markdown Helpers
  */
 
-import { annotateJargonPlainText, jargonTerm } from '../engine/jargonGlossary.js';
+import { annotateJargonPlainText, jargonTerm, jargonInfoIcon } from '../engine/jargonGlossary.js';
 import { resolveReporterFromNameOrHandle } from '../engine/beatAttributionEngine.js';
 import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
 import { iconSvg } from './icons.js';
 
-export { jargonTerm };
+export { jargonTerm, jargonInfoIcon };
 
 let cachedRosterArrayRef = null;
 let inlinePlayerRegex = null;

@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v59';
+const CACHE_NAME = '49ers-faithful-v60';
 const NETWORK_TIMEOUT_MS = 7500;
 const CORE_ASSETS = [
   './',
@@ -7,6 +7,7 @@ const CORE_ASSETS = [
   './src/styles.css',
   './src/app.js',
   './src/engine/seasonStateMachine.js',
+  './src/engine/draftBigBoardEngine.js',
   './src/engine/capSimulator.js',
   './src/engine/injuryProbabilityModel.js',
   './src/engine/gameDayRosterEngine.js',

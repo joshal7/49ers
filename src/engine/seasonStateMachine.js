@@ -1517,7 +1517,13 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
         headshotUrl: raw.headshotUrl || boardHit?.headshotUrl || '',
         collegeLogoUrl: raw.collegeLogoUrl || boardHit?.collegeLogoUrl || '',
         collegeStats: raw.collegeStats || boardHit?.collegeStats || '',
-        bigBoardRank: boardHit?.consensusRank ?? raw.bigBoardRank ?? null,
+        bigBoardRank: boardHit?.boards?.consensus?.rank ?? boardHit?.consensusRank ?? raw.bigBoardRank ?? null,
+        buzzRank: boardHit?.boards?.buzz?.rank ?? null,
+        pffRank: boardHit?.boards?.pff?.rank ?? null,
+        activeLensRank:
+          options.activeLens && boardHit?.boards?.[options.activeLens]?.rank
+            ? boardHit.boards[options.activeLens].rank
+            : boardHit?.boards?.consensus?.rank ?? boardHit?.consensusRank ?? raw.bigBoardRank ?? null,
         shanahanLynchFitScore: raw.shanahanLynchFitScore ?? boardHit?.shanahanLynchFitScore ?? null,
         archetypeTraits: raw.archetypeTraits || boardHit?.archetypeNote || '',
         profileUrl:
@@ -1594,39 +1600,16 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
   };
 }
 
-const BIG_BOARD_POS_BUCKETS = {
-  OL: new Set(['OT', 'IOL', 'OG', 'G', 'C', 'OL', 'T', 'LT', 'RT']),
-  WR_TE: new Set(['WR', 'TE']),
-  DL_EDGE: new Set(['EDGE', 'DE', 'DT', 'DL', 'NT', 'IDL', 'OLB', 'ED']),
-  DB_LB: new Set(['CB', 'S', 'SAF', 'FS', 'SS', 'DB', 'LB', 'ILB', 'MLB']),
-  QB_RB: new Set(['QB', 'RB', 'FB', 'HB'])
-};
-
-export function filterConsensusBigBoard(
-  board = [],
-  { search = '', posGroup = 'ALL', sfPickOverall = 31 } = {}
-) {
-  const q = String(search || '').toLowerCase().trim();
-  const grp = String(posGroup || 'ALL').toUpperCase();
-  const minWindow = Math.max(1, Number(sfPickOverall || 31) - 11);
-  const maxWindow = Number(sfPickOverall || 31) + 14;
-
-  return (Array.isArray(board) ? board : []).filter(p => {
-    if (!p || !p.name) return false;
-    const pos = String(p.pos || '').toUpperCase().split('/')[0].trim();
-    if (grp === 'SF_RANGE') {
-      const r = Number(p.consensusRank || 999);
-      if (r < minWindow || r > maxWindow) return false;
-    } else if (grp !== 'ALL' && BIG_BOARD_POS_BUCKETS[grp]) {
-      const allPosTokens = String(p.pos || '')
-        .toUpperCase()
-        .split(/[/,\s]+/)
-        .filter(Boolean);
-      if (!allPosTokens.some(tok => BIG_BOARD_POS_BUCKETS[grp].has(tok))) return false;
-    }
-
-    if (!q) return true;
-    const hay = `${p.name} ${p.pos || ''} ${p.posRank || ''} ${p.school || ''} ${p.archetypeNote || ''}`.toLowerCase();
-    return hay.includes(q);
-  });
-}
+export {
+  BIG_BOARD_LENSES,
+  BIG_BOARD_LENS_ORDER,
+  BIG_BOARD_SORT_FIELDS,
+  BIG_BOARD_INDIVIDUAL_POSITIONS,
+  BIG_BOARD_RANGE_OPTIONS,
+  BIG_BOARD_AGREEMENT_OPTIONS,
+  normalizeBigBoardDataset,
+  queryBigBoardProspects,
+  filterConsensusBigBoard,
+  parseBigBoardUrlParams,
+  buildBigBoardUrlSearch
+} from './draftBigBoardEngine.js';

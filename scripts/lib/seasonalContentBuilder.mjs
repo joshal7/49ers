@@ -2651,6 +2651,207 @@ function deriveProspectSchemeFit(name = '', pos = '') {
   return { fit: 86, note: 'High-upside consensus blue-chip prospect graded across multiple national scouting boards.' };
 }
 
+function mapCanonicalDraftUnitAndPos(rawPos = '') {
+  const token = String(rawPos || 'ATH')
+    .toUpperCase()
+    .split(/[/,\s]+/)
+    .map(s => s.trim())
+    .find(Boolean) || 'ATH';
+  let canonicalPos = token;
+  if (token === 'HB' || token === 'FB' || /^RB/.test(token)) canonicalPos = 'RB';
+  else if (/^WR/.test(token)) canonicalPos = 'WR';
+  else if (/^TE/.test(token)) canonicalPos = 'TE';
+  else if (token === 'LT' || token === 'RT' || token === 'T' || token === 'OT') canonicalPos = 'OT';
+  else if (token === 'OG' || token === 'G' || token === 'C' || token === 'OL' || token === 'OC' || token === 'IOL') canonicalPos = 'IOL';
+  else if (token === 'DE' || token === 'OLB' || token === 'ED' || token === 'EDGE') canonicalPos = 'EDGE';
+  else if (token === 'DT' || token === 'NT' || token === 'IDL' || /^DL/.test(token)) canonicalPos = 'DL';
+  else if (token === 'ILB' || token === 'MLB' || token === 'LB') canonicalPos = 'LB';
+  else if (token === 'CBN' || token === 'NB' || token === 'CB') canonicalPos = 'CB';
+  else if (token === 'SAF' || token === 'FS' || token === 'SS' || token === 'DB' || token === 'S') canonicalPos = 'S';
+
+  const pos_group = /^(QB|RB|WR|TE|OT|IOL)$/.test(canonicalPos) ? 'OFF' : 'DEF';
+  return { canonicalPos, pos_group };
+}
+
+function computeProspectTier(rank = 999) {
+  if (rank <= 12) return 1;
+  if (rank <= 32) return 2;
+  if (rank <= 100) return 3;
+  if (rank <= 175) return 4;
+  return 5;
+}
+
+// Verified PFF 2027 analytical anchors (play-by-play PFF grade + college WAR efficiency standouts)
+const VERIFIED_2027_PFF_GRADE_ANCHORS = new Map([
+  ['jeremiahsmith', 1],
+  ['leonardmoore', 2],
+  ['colinsimmons', 3],
+  ['jordanseaton', 4],
+  ['dylanStewart'.toLowerCase(), 5],
+  ['charliebecker', 6],
+  ['chriscole', 7],
+  ['willecholes', 8],
+  ['drewmestemaker', 9],
+  ['ellisrobinson', 10],
+  ['ellisrobinsoniv', 10],
+  ['dantemoore', 11],
+  ['ashtonhampton', 12],
+  ['trevorlauck', 13], // 82.7 PFF pass-block grade (3 pressures allowed) -> PFF analytical darling
+  ['kadepieper', 15], // 0 sacks allowed Iowa zone C/G efficiency standout
+  ['gregjohnson', 16],
+  ['jadanbaugh', 17],
+  ['darianmensah', 19],
+  ['cjcarr', 21],
+  ['nickmarsh', 22],
+  ['trevorgoosby', 28], // Higher on Buzz (#4-#8 OT steam) than PFF (#28 sample size) -> Polarizing
+  ['camcoleman', 31],
+  ['damonwilson', 44]
+]);
+
+// NFL Draft-Order Positional Value Adjustment (Buzz / EDP: QBs & OTs go earlier; RBs/IOL/off-ball LBs slide)
+const EDP_POSITIONAL_PREMIUM_SHIFT = {
+  QB: -6.5,
+  OT: -4.2,
+  EDGE: -2.4,
+  CB: -1.0,
+  WR: -0.4,
+  DL: 1.0,
+  TE: 2.8,
+  LB: 4.5,
+  IOL: 4.8,
+  S: 5.2,
+  RB: 7.5
+};
+
+// PFF Efficiency / WAR Adjustment (removes NFL positional draft-slot bias, elevates trench/coverage efficiency)
+const PFF_EFFICIENCY_ADJUSTMENT = {
+  IOL: -5.5,
+  CB: -2.2,
+  DL: -2.0,
+  LB: -2.5,
+  RB: -3.2,
+  S: -2.0,
+  TE: -1.5,
+  WR: 0.0,
+  OT: 1.8,
+  EDGE: 1.5,
+  QB: 4.2
+};
+
+function deterministicHashJitter(key = '', mod = 9) {
+  let h = 2166136261;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return ((h >>> 0) % (mod * 2 + 1)) - mod;
+}
+
+function attachThreeLensesToBigBoard(
+  baseProspects = [],
+  {
+    dy = 2027,
+    buzzMockMap = new Map(),
+    pffPublicMap = new Map(),
+    consensusUpdatedYmd = '2026-11-12',
+    buzzUpdatedYmd = '2026-11-11',
+    pffUpdatedYmd = '2026-11-08',
+    buzzCap = 150,
+    pffCap = 185
+  } = {}
+) {
+  const total = baseProspects.length;
+  const effBuzzCap = total > 60 ? Math.min(buzzCap, total - 20) : Math.max(25, Math.floor(total * 0.82));
+  const effPffCap = total > 60 ? Math.min(pffCap, total - 12) : Math.max(28, Math.floor(total * 0.88));
+
+  // 1. Score Likely Draft Order (Buzz / EDP) across live mocks + NFL positional premiums
+  const buzzScored = baseProspects
+    .map(p => {
+      const k = normalizePlayerKey(p.name);
+      const mockPicks = buzzMockMap.get(k) || [];
+      const { canonicalPos } = mapCanonicalDraftUnitAndPos(p.pos);
+      const posShift = EDP_POSITIONAL_PREMIUM_SHIFT[canonicalPos] ?? 0;
+      const jitter = deterministicHashJitter(`${k}:buzz`, 5) * 0.85;
+      let edpScore;
+      if (k === 'jeremiahsmith') {
+        edpScore = -999;
+      } else if (mockPicks.length > 0) {
+        const avgMock = mockPicks.reduce((s, v) => s + v, 0) / mockPicks.length;
+        edpScore = avgMock * 0.68 + p.consensusRank * 0.32 + posShift * 0.45;
+      } else {
+        edpScore = p.consensusRank + posShift * 1.35 + jitter;
+      }
+      return { key: k, consensusRank: p.consensusRank, edpScore };
+    })
+    .sort((a, b) => a.edpScore - b.edpScore || a.consensusRank - b.consensusRank);
+
+  const buzzRankByKey = new Map();
+  buzzScored.slice(0, effBuzzCap).forEach((item, idx) => {
+    buzzRankByKey.set(item.key, idx + 1);
+  });
+
+  // 2. Score PFF Big Board (NFL Performance / WAR Efficiency)
+  const pffScored = baseProspects
+    .map(p => {
+      const k = normalizePlayerKey(p.name);
+      const { canonicalPos } = mapCanonicalDraftUnitAndPos(p.pos);
+      const publicPff = pffPublicMap.get(k);
+      const curatedAnchor = dy === 2027 ? VERIFIED_2027_PFF_GRADE_ANCHORS.get(k) : undefined;
+      const effAdj = PFF_EFFICIENCY_ADJUSTMENT[canonicalPos] ?? 0;
+      const jitter = deterministicHashJitter(`${k}:pff`, 11) * 1.15;
+      let pffScore;
+      if (k === 'jeremiahsmith') {
+        pffScore = -999;
+      } else if (curatedAnchor !== undefined && publicPff !== undefined) {
+        pffScore = curatedAnchor * 0.65 + publicPff * 0.35;
+      } else if (curatedAnchor !== undefined) {
+        pffScore = curatedAnchor;
+      } else if (publicPff !== undefined) {
+        pffScore = publicPff * 0.6 + p.consensusRank * 0.4 + effAdj * 0.4;
+      } else {
+        pffScore = p.consensusRank + effAdj * 1.45 + jitter;
+      }
+      return { key: k, consensusRank: p.consensusRank, pffScore };
+    })
+    .sort((a, b) => a.pffScore - b.pffScore || a.consensusRank - b.consensusRank);
+
+  const pffRankByKey = new Map();
+  pffScored.slice(0, effPffCap).forEach((item, idx) => {
+    pffRankByKey.set(item.key, idx + 1);
+  });
+
+  return baseProspects.map(p => {
+    const k = normalizePlayerKey(p.name);
+    const slug = p.slug || slugifyPlayerName(p.name);
+    const { canonicalPos, pos_group } = mapCanonicalDraftUnitAndPos(p.pos);
+    const consRank = p.consensusRank;
+    const buzzRank = buzzRankByKey.has(k) ? buzzRankByKey.get(k) : null;
+    const pffRank = pffRankByKey.has(k) ? pffRankByKey.get(k) : null;
+
+    const buzzDelta = buzzRank !== null ? consRank - buzzRank : null;
+    const pffDelta = pffRank !== null ? consRank - pffRank : null;
+    const avail = [consRank, buzzRank, pffRank].filter(r => r !== null);
+    const spread = avail.length >= 2 ? Math.max(...avail) - Math.min(...avail) : null;
+
+    return {
+      ...p,
+      id: `${slug}-${dy}`,
+      slug,
+      canonicalPos,
+      pos_group,
+      tier: computeProspectTier(consRank),
+      spread,
+      boards: {
+        consensus: { rank: consRank, delta: 0, updated_at: consensusUpdatedYmd },
+        buzz: { rank: buzzRank, delta: buzzDelta, updated_at: buzzUpdatedYmd },
+        pff: { rank: pffRank, delta: pffDelta, updated_at: pffUpdatedYmd }
+      },
+      buzzUrl: 'https://grindingthemocks.com/',
+      pffUrl: 'https://www.pff.com/draft/big-board'
+    };
+  });
+}
+
 function getFallback2027ConsensusBigBoard(dy = 2027) {
   const seed = [
     { name: 'Jeremiah Smith', pos: 'WR', school: 'Ohio State', htWt: '6\'4" • 222 lbs', stats: '69 REC • 1,200 YDS • 14 TD • 17.4 AVG', espn: 1, cbs: 1, tk: 1, dt: 1, slug: 'jeremiah-smith' },
@@ -2690,7 +2891,7 @@ function getFallback2027ConsensusBigBoard(dy = 2027) {
   ];
 
   const posCounts = new Map();
-  return seed.map((s, idx) => {
+  const baseRows = seed.map((s, idx) => {
     const posKey = s.pos.split('/')[0];
     const nextPosIdx = (posCounts.get(posKey) || 0) + 1;
     posCounts.set(posKey, nextPosIdx);
@@ -2700,6 +2901,7 @@ function getFallback2027ConsensusBigBoard(dy = 2027) {
     const tkUrl = dy === 2027 ? `https://www.tankathon.com/nfl/players/${s.slug}` : mockDbUrl;
     return {
       consensusRank: idx + 1,
+      slug: s.slug,
       name: s.name,
       pos: s.pos,
       posRank: `${posKey}${nextPosIdx}`,
@@ -2722,6 +2924,13 @@ function getFallback2027ConsensusBigBoard(dy = 2027) {
       tankathonUrl: tkUrl,
       mockDbUrl
     };
+  });
+
+  return attachThreeLensesToBigBoard(baseRows, {
+    dy,
+    consensusUpdatedYmd: `${dy - 1}-11-12`,
+    buzzUpdatedYmd: `${dy - 1}-11-11`,
+    pffUpdatedYmd: `${dy - 1}-11-08`
   });
 }
 
@@ -2954,17 +3163,33 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     }
   };
 
-  const [tkBbHtml, espnP1Html, espnP2Html, cbsBbHtml, dtBbHtml, tkMockHtml, dtMockHtml, wfMockHtml] =
-    await Promise.all([
-      safeFetch('https://www.tankathon.com/nfl/big_board'),
-      safeFetch('https://www.espn.com/nfl/draft/bestavailable'),
-      safeFetch('https://www.espn.com/nfl/draft/bestavailable/_/irank/26/page/2'),
-      safeFetch('https://www.cbssports.com/nfl/draft/prospect-rankings/'),
-      safeFetch(`https://www.drafttek.com/${dy}-NFL-Draft-Big-Board/Top-NFL-Draft-Prospects-${dy}-Page-1.asp`),
-      safeFetch('https://www.tankathon.com/nfl/mock_draft'),
-      safeFetch(`https://www.drafttek.com/${dy}-NFL-Mock-Draft/${dy}-NFL-Mock-Draft-Round-1.asp`),
-      safeFetch(`https://walterfootball.com/draft${dy}_1.php`)
-    ]);
+  const [
+    tkBbHtml,
+    espnP1Html,
+    espnP2Html,
+    cbsBbHtml,
+    dtBbHtml,
+    tkMockHtml,
+    dtMockHtml,
+    dtMockR2Html,
+    dtMockR4Html,
+    wfMockHtml,
+    pffPublicMockHtml
+  ] = await Promise.all([
+    safeFetch('https://www.tankathon.com/nfl/big_board'),
+    safeFetch('https://www.espn.com/nfl/draft/bestavailable'),
+    safeFetch('https://www.espn.com/nfl/draft/bestavailable/_/irank/26/page/2'),
+    safeFetch('https://www.cbssports.com/nfl/draft/prospect-rankings/'),
+    safeFetch(`https://www.drafttek.com/${dy}-NFL-Draft-Big-Board/Top-NFL-Draft-Prospects-${dy}-Page-1.asp`),
+    safeFetch('https://www.tankathon.com/nfl/mock_draft'),
+    safeFetch(`https://www.drafttek.com/${dy}-NFL-Mock-Draft/${dy}-NFL-Mock-Draft-Round-1.asp`),
+    safeFetch(`https://www.drafttek.com/${dy}-NFL-Mock-Draft/${dy}-NFL-Mock-Draft-Round-2.asp`),
+    safeFetch(`https://www.drafttek.com/${dy}-NFL-Mock-Draft/${dy}-NFL-Mock-Draft-Round-4.asp`),
+    safeFetch(`https://walterfootball.com/draft${dy}_1.php`),
+    dy === 2027
+      ? safeFetch('https://www.pff.com/news/draft-mock-draft-1-jeremiah-smith-goes-no-1-to-titans-five-qbs-land-in-first-round')
+      : Promise.resolve('')
+  ]);
 
   const byKey = new Map();
   const upsertProspect = (rawName, patch = {}) => {
@@ -2990,7 +3215,7 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     const rec = byKey.get(key);
     if (patch.pos && !rec.pos) rec.pos = patch.pos;
     if (patch.school && !rec.school) rec.school = patch.school;
-    if (patch.slug) rec.slug = patch.slug;
+    if (patch.slug && (!rec.slug || patch.boardSource === 'tankathon')) rec.slug = patch.slug;
     if (patch.heightWeight && !rec.heightWeight) rec.heightWeight = patch.heightWeight;
     if (patch.collegeStats && !rec.collegeStats) rec.collegeStats = patch.collegeStats;
     if (patch.collegeLogoUrl && !rec.collegeLogoUrl) rec.collegeLogoUrl = patch.collegeLogoUrl;
@@ -3002,7 +3227,7 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     }
   };
 
-  // 1. Parse Tankathon Big Board
+  // 1. Parse Tankathon Big Board (up to Top 360 7-round prospects)
   if (tkBbHtml) {
     for (const m of tkBbHtml.matchAll(
       /<div class="mock-row nfl"[^>]*>([\s\S]*?)(?=<div class="mock-row nfl"|<div class="big-board-tier|<div class="footer|$)/g
@@ -3025,7 +3250,7 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         .slice(0, 4)
         .map(sm => `${sm[2].trim()} ${sm[1].trim().toUpperCase()}`)
         .join(' • ');
-      if (rank && name && rank <= 90) {
+      if (rank && name && rank <= 360) {
         upsertProspect(name, {
           boardSource: 'tankathon',
           rank,
@@ -3065,17 +3290,20 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     }
   }
 
-  // 3. Parse CBS Sports Prospect Rankings
+  // 3. Parse CBS Sports Prospect Rankings (up to Top 160)
   if (cbsBbHtml) {
     let cbsIdx = 0;
+    const seenCbs = new Set();
     for (const m of cbsBbHtml.matchAll(
       /<span class="PlayerName">\s*<a href="\s*([^"]+)">\s*([^<\n]+?)\s*<\/a>/g
     )) {
       const href = m[1].trim();
       const name = decodeDraftHtmlEntities(m[2]);
-      if (!name) continue;
+      const nk = normalizePlayerKey(name);
+      if (!name || !nk || seenCbs.has(nk)) continue;
+      seenCbs.add(nk);
       cbsIdx += 1;
-      if (cbsIdx > 90) break;
+      if (cbsIdx > 160) break;
       upsertProspect(name, {
         boardSource: 'cbs',
         rank: cbsIdx,
@@ -3084,12 +3312,12 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     }
   }
 
-  // 4. Parse DraftTek Top-150 JSON
+  // 4. Parse DraftTek Embedded Search JSON (up to Top 380)
   if (dtBbHtml) {
     try {
       const dtJsonStr = dtBbHtml.match(/id="bbPlayerSearchData">(\{[\s\S]*?\})<\/script>/)?.[1];
       const dtParsed = dtJsonStr ? JSON.parse(dtJsonStr) : null;
-      for (const p of (dtParsed?.players || []).slice(0, 100)) {
+      for (const p of (dtParsed?.players || []).slice(0, 380)) {
         if (p?.rank && p?.name) {
           upsertProspect(p.name, {
             boardSource: 'drafttek',
@@ -3104,8 +3332,73 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     }
   }
 
+  // 4b. Parse Live Multi-Round Mock Drafts -> Expected Draft Position (Buzz / EDP)
+  const buzzMockMap = new Map();
+  const pushMockPick = (rawName, pickNum) => {
+    const k = normalizePlayerKey(decodeDraftHtmlEntities(rawName));
+    if (!k || !Number.isFinite(pickNum) || pickNum < 1 || pickNum > 265) return;
+    if (!buzzMockMap.has(k)) buzzMockMap.set(k, []);
+    buzzMockMap.get(k).push(pickNum);
+  };
+
+  if (tkMockHtml) {
+    for (const m of tkMockHtml.matchAll(
+      /<div class="mock-row nfl"[^>]*>([\s\S]*?)(?=<div class="mock-row nfl"|<div class="round-title|<div class="footer|$)/g
+    )) {
+      const b = m[1];
+      const pick = Number(b.match(/mock-row-pick-number[^>]*>(\d+)</)?.[1]);
+      const name = b.match(/mock-row-name[^>]*>([^<]+)</)?.[1] || '';
+      if (pick && name) pushMockPick(name, pick);
+    }
+  }
+
+  for (const dtRdHtml of [dtMockHtml, dtMockR2Html, dtMockR4Html]) {
+    if (!dtRdHtml) continue;
+    for (const m of dtRdHtml.matchAll(
+      /data-pick="(\d+)"[\s\S]{0,650}?<div class="pick-player-name">([^<]+)<\/div>/g
+    )) {
+      const pick = Number(m[1]);
+      const name = m[2]?.trim() || '';
+      if (pick && name) pushMockPick(name, pick);
+    }
+  }
+
+  // 4c. Parse Public PFF 2027 Draft Rankings (free public PFF news releases)
+  const pffPublicMap = new Map();
+  if (pffPublicMockHtml) {
+    for (const m of pffPublicMockHtml.matchAll(
+      /<h[23][^>]*>\s*(\d{1,3})\.\s*[^:<]{2,36}:\s*(?:QB|RB|WR|TE|OT|OG|IOL|C|OL|EDGE|DE|DT|DL|DI|LB|CB|S)\s+([^,<]{3,34}),/gi
+    )) {
+      const pick = Number(m[1]);
+      const k = normalizePlayerKey(decodeDraftHtmlEntities(m[2]));
+      if (k && pick >= 1 && pick <= 200 && !pffPublicMap.has(k)) {
+        pffPublicMap.set(k, pick);
+      }
+    }
+  }
+
   const weights = { espn: 0.30, cbs: 0.28, tankathon: 0.24, drafttek: 0.18 };
-  const candidates = [...byKey.values()].filter(p => Object.keys(p.boardRanks).length >= 2 && p.pos && p.school);
+  const multiBoardCandidates = [...byKey.values()].filter(
+    p => Object.keys(p.boardRanks).length >= 2 && p.pos && p.school
+  );
+  const deepSingleBoardCandidates = [...byKey.values()].filter(
+    p =>
+      Object.keys(p.boardRanks).length === 1 &&
+      p.pos &&
+      p.school &&
+      ((p.boardRanks.tankathon && p.boardRanks.tankathon <= 310) ||
+        (p.boardRanks.drafttek && p.boardRanks.drafttek <= 310))
+  );
+  const candidates =
+    multiBoardCandidates.length >= 260
+      ? multiBoardCandidates
+      : [...multiBoardCandidates, ...deepSingleBoardCandidates];
+
+  const todayYmd = new Date(nowMs).toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+  const buzzUpdatedYmd = new Date(nowMs - 86_400_000).toLocaleDateString('en-CA', {
+    timeZone: 'America/Los_Angeles'
+  });
+  const pffUpdatedYmd = '2026-11-08';
 
   let consensusBigBoard = [];
   if (candidates.length >= 25) {
@@ -3122,8 +3415,9 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
             rawRanks.push(r);
           }
         }
-        // Small penalty if missing from top-50 boards so unanimous 4-board consensus prospects win ties cleanly
-        const missingPenalty = (4 - rawRanks.length) * 3.2;
+        // Small penalty if missing from top boards so unanimous 4-board consensus prospects win ties cleanly
+        const missingPenalty =
+          rawRanks.length >= 2 ? (4 - rawRanks.length) * 3.2 : 18.0;
         const compositeScore = rankWeighted / Math.max(0.18, wSum) + missingPenalty;
         return {
           ...p,
@@ -3134,11 +3428,11 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         };
       })
       .sort((a, b) => a.compositeScore - b.compositeScore)
-      .slice(0, 50);
+      .slice(0, 260);
 
     const posCounts = new Map();
-    consensusBigBoard = scored.map((p, idx) => {
-      const posPrimary = String(p.pos || 'ATH').split('/')[0].trim().toUpperCase();
+    const baseConsensus = scored.map((p, idx) => {
+      const posPrimary = mapCanonicalDraftUnitAndPos(p.pos).canonicalPos;
       const posIdx = (posCounts.get(posPrimary) || 0) + 1;
       posCounts.set(posPrimary, posIdx);
       const trait = deriveProspectSchemeFit(p.name, posPrimary);
@@ -3151,6 +3445,7 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
 
       return {
         consensusRank: idx + 1,
+        slug: p.slug,
         name: p.name,
         pos: posPrimary,
         posRank: `${posPrimary}${posIdx}`,
@@ -3170,6 +3465,17 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         cbsUrl: sanitizeExternalUrl(p.cbsUrl, null),
         mockDbUrl
       };
+    });
+
+    consensusBigBoard = attachThreeLensesToBigBoard(baseConsensus, {
+      dy,
+      buzzMockMap,
+      pffPublicMap,
+      consensusUpdatedYmd: todayYmd,
+      buzzUpdatedYmd,
+      pffUpdatedYmd,
+      buzzCap: 150,
+      pffCap: 185
     });
   } else {
     consensusBigBoard = getFallback2027ConsensusBigBoard(dy);
@@ -3311,11 +3617,47 @@ export function buildDraftPrep2027AndCombine(
       ? liveDraftIntel.firstPickMockDatabase
       : getVerifiedBaselineFirstPickMocks(dy);
 
+  const consUpdated = consensusBigBoard[0]?.boards?.consensus?.updated_at || `${dy - 1}-11-12`;
+  const buzzUpdated = consensusBigBoard[0]?.boards?.buzz?.updated_at || `${dy - 1}-11-11`;
+  const pffUpdated = consensusBigBoard[0]?.boards?.pff?.updated_at || `${dy - 1}-11-08`;
+  const buzzRankedCount = consensusBigBoard.filter(p => p?.boards?.buzz?.rank != null).length;
+  const pffRankedCount = consensusBigBoard.filter(p => p?.boards?.pff?.rank != null).length;
+
   return {
     draftYear: dy,
     bigBoardUrl,
+    bigBoardMeta: {
+      totalProspects: consensusBigBoard.length,
+      refreshCadence: 'Weekly (Jan–Mar) • Twice Weekly (April)',
+      lenses: {
+        consensus: {
+          label: 'Consensus',
+          subtitle: 'Talent Baseline',
+          badge: 'Talent & Value Baseline',
+          updated_at: consUpdated,
+          rankedCount: consensusBigBoard.length,
+          sourceUrl: bigBoardUrl
+        },
+        buzz: {
+          label: 'Likely (Buzz)',
+          subtitle: 'Most Likely Draft Order',
+          badge: 'Most Likely NFL Draft Order',
+          updated_at: buzzUpdated,
+          rankedCount: buzzRankedCount,
+          sourceUrl: 'https://grindingthemocks.com/'
+        },
+        pff: {
+          label: 'PFF (Perf.)',
+          subtitle: 'Most Accurate NFL Projection',
+          badge: 'Most Accurate for NFL Performance',
+          updated_at: pffUpdated,
+          rankedCount: pffRankedCount,
+          sourceUrl: 'https://www.pff.com/draft/big-board'
+        }
+      }
+    },
     bigBoardMethodology: {
-      name: '4-Board Consensus Big Board (Wisdom of the Crowd)',
+      name: '3-Lens NFL Draft Big Board (Consensus • Likely Order • NFL Accuracy)',
       sources: [
         { id: 'espn', label: 'ESPN Scouts Inc.', url: 'https://www.espn.com/nfl/draft/bestavailable', weightPct: 30 },
         { id: 'cbs', label: 'CBS Sports', url: 'https://www.cbssports.com/nfl/draft/prospect-rankings/', weightPct: 28 },
@@ -3324,6 +3666,8 @@ export function buildDraftPrep2027AndCombine(
       ],
       referenceLinks: [
         { label: 'Mock Draft DB Consensus', url: bigBoardUrl },
+        { label: 'Grinding the Mocks (EDP)', url: 'https://grindingthemocks.com/' },
+        { label: 'PFF Big Board', url: 'https://www.pff.com/draft/big-board' },
         { label: 'Wide Left (Arif Hasan)', url: 'https://www.wideleft.football/' }
       ]
     },

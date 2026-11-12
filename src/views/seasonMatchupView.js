@@ -15,6 +15,7 @@ import {
   esc,
   escJargon,
   jargonTerm,
+  jargonInfoIcon,
   playProbBadgeClass,
   rankBadgeClass,
   renderPlayerAvatarHtml,
@@ -32,11 +33,20 @@ import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 import {
   evaluateCombineLeaderboardWindow,
-  filterConsensusBigBoard,
   partitionCompletedTradesByWindow,
   resolveCompleteScheduleModel,
   resolveFirstPickMockDatabase
 } from '../engine/seasonStateMachine.js';
+import {
+  BIG_BOARD_LENSES,
+  BIG_BOARD_LENS_ORDER,
+  BIG_BOARD_SORT_FIELDS,
+  BIG_BOARD_INDIVIDUAL_POSITIONS,
+  BIG_BOARD_RANGE_OPTIONS,
+  BIG_BOARD_AGREEMENT_OPTIONS,
+  formatShortBoardDate,
+  queryBigBoardProspects
+} from '../engine/draftBigBoardEngine.js';
 import {
   buildMockDraftBigBoardUrl,
   buildMockDraftTeamUrl,
@@ -318,7 +328,18 @@ export function renderSeasonMatchupViewHtml({
   combineSearch = '',
   bigBoardSearch = '',
   bigBoardPosFilter = 'ALL',
+  bigBoardPositions = [],
+  bigBoardLens = 'consensus',
+  bigBoardSortField = 'consensus',
+  bigBoardSortDir = 'asc',
+  bigBoardRange = 'all',
+  bigBoardAgreement = 'all',
+  bigBoardRankedOnly = false,
+  bigBoardFilterDrawerOpen = false,
   bigBoardExpanded = false,
+  bigBoardShowAll = false,
+  bigBoardExpandedIds = null,
+  bigBoardShareCopied = false,
   expandedDraftSpiderIdx = -1,
   activeVideosSet,
   schedulePrevExpanded = false,
@@ -371,7 +392,18 @@ export function renderSeasonMatchupViewHtml({
         combineSearch,
         bigBoardSearch,
         bigBoardPosFilter,
+        bigBoardPositions,
+        bigBoardLens,
+        bigBoardSortField,
+        bigBoardSortDir,
+        bigBoardRange,
+        bigBoardAgreement,
+        bigBoardRankedOnly,
+        bigBoardFilterDrawerOpen,
         bigBoardExpanded,
+        bigBoardShowAll,
+        bigBoardExpandedIds,
+        bigBoardShareCopied,
         mcSimResult
       })
     );
@@ -2140,13 +2172,28 @@ const BIG_BOARD_POS_PILLS = [
   { key: 'QB_RB', label: 'QB/RB' }
 ];
 
-function renderMockDbPlayerCardHtml(p) {
+function formatBoardRankLabelForMock(p, activeLens = 'consensus') {
+  if (activeLens === 'buzz' && p.buzzRank) {
+    return p.bigBoardRank
+      ? `(Likely #${p.buzzRank} • Cons #${p.bigBoardRank})`
+      : `(Likely #${p.buzzRank})`;
+  }
+  if (activeLens === 'pff' && p.pffRank) {
+    return p.bigBoardRank
+      ? `(PFF #${p.pffRank} • Cons #${p.bigBoardRank})`
+      : `(PFF #${p.pffRank})`;
+  }
+  return p.bigBoardRank ? `(Board #${p.bigBoardRank})` : '';
+}
+
+function renderMockDbPlayerCardHtml(p, activeLens = 'consensus') {
   const safeProf = sanitizeExternalUrl(p.profileUrl, null) || sanitizeExternalUrl(p.mockDbUrl, null);
   const safeMockDb = sanitizeExternalUrl(p.mockDbUrl, null);
   const safeTk = sanitizeExternalUrl(p.tankathonUrl, null);
   const siteCountBadgeCls =
     p.siteCount >= 3 ? 'badge-positive' : p.siteCount === 2 ? 'badge-gold' : 'badge-neutral';
   const barWidth = Math.max(8, Math.min(100, Number(p.sharePct || 0)));
+  const boardRankLbl = formatBoardRankLabelForMock(p, activeLens);
 
   const logoHtml = p.collegeLogoUrl
     ? `<img src="${esc(p.collegeLogoUrl)}" alt="" width="20" height="20" loading="lazy" class="ncaa-mini-logo" />`
@@ -2166,7 +2213,7 @@ function renderMockDbPlayerCardHtml(p) {
                   : `<strong>${esc(p.playerName)}</strong>`
               }
               <span class="mock-db-pos-school"><strong style="color:var(--gold-bright)">${esc(p.pos)}</strong> • ${esc(p.school)}${
-                p.bigBoardRank ? ` <span class="mono" style="color:var(--text-muted)">(Board #${p.bigBoardRank})</span>` : ''
+                boardRankLbl ? ` <span class="mono" style="color:var(--text-muted)">${esc(boardRankLbl)}</span>` : ''
               }</span>
             </div>
           </div>
@@ -2257,16 +2304,57 @@ function renderMockDbPlayerCardHtml(p) {
   `;
 }
 
-function renderBigBoardProspectItemHtml(b, sfPickOverall = 31) {
-  const rank = Number(b.consensusRank || 1);
-  const rankBadgeCls = rank <= 10 ? 'badge-positive' : rank <= 32 ? 'badge-gold' : 'badge-neutral';
-  const inSfRange = rank >= Math.max(1, sfPickOverall - 11) && rank <= sfPickOverall + 14;
-  const spreadTxt =
-    b.bestRank && b.worstRank
-      ? b.bestRank === b.worstRank
-        ? `Unanimous #${b.bestRank}`
-        : `Range #${b.bestRank}–#${b.worstRank}`
-      : `Board #${rank}`;
+function renderDeltaBadgeHtml(delta) {
+  if (delta === null || delta === undefined || !Number.isFinite(delta) || delta === 0) return '';
+  if (delta > 0) {
+    return `<span class="bb-delta bb-delta-pos mono" title="Ranked ${delta} spots higher than Consensus">+${delta}</span>`;
+  }
+  return `<span class="bb-delta bb-delta-neg mono" title="Ranked ${Math.abs(delta)} spots lower than Consensus">${delta}</span>`;
+}
+
+function renderLensRankCellHtml(lensObj) {
+  const r = lensObj?.rank ?? null;
+  if (r === null) {
+    return `<span class="bb-nr-pill mono" title="Unranked on this board (outside published Top 150/185)">NR</span>`;
+  }
+  return `<span class="bb-lens-cell-wrap mono"><span class="bb-lens-num">#${r}</span>${renderDeltaBadgeHtml(lensObj.delta)}</span>`;
+}
+
+function renderBigBoardProspectItemHtml(
+  b,
+  {
+    sfPickOverall = 31,
+    activeLens = 'consensus',
+    mockSitesByKey = null,
+    isOpen = false
+  } = {}
+) {
+  const consRank = Number(b.boards?.consensus?.rank ?? b.consensusRank ?? 1);
+  const activeLensObj = b.boards?.[activeLens] || b.boards?.consensus || { rank: consRank, delta: 0 };
+  const mobileRank = activeLensObj.rank;
+  const rankBadgeCls =
+    mobileRank === null
+      ? 'badge-neutral bb-rank-nr'
+      : mobileRank <= 12
+        ? 'badge-positive'
+        : mobileRank <= 32
+          ? 'badge-gold'
+          : 'badge-neutral';
+  const consBadgeCls =
+    consRank <= 12 ? 'badge-positive' : consRank <= 32 ? 'badge-gold' : 'badge-neutral';
+
+  const inSfRange = consRank >= Math.max(1, sfPickOverall - 11) && consRank <= sfPickOverall + 14;
+  const spreadVal = b.spread;
+  const spreadCls =
+    spreadVal === null
+      ? 'bb-spread-muted'
+      : spreadVal >= 15
+        ? 'bb-spread-polarizing'
+        : spreadVal <= 5
+          ? 'bb-spread-lock'
+          : '';
+  const mobileSpreadTxt =
+    spreadVal === null ? '—' : spreadVal === 0 ? 'Δ0' : `Δ${spreadVal}`;
 
   const br = b.boardRanks || {};
   const boardChips = [
@@ -2278,27 +2366,99 @@ function renderBigBoardProspectItemHtml(b, sfPickOverall = 31) {
 
   const safeProf = sanitizeExternalUrl(b.profileUrl, null);
   const safeMockDb = sanitizeExternalUrl(b.mockDbUrl, null);
+  const safeBuzzUrl = sanitizeExternalUrl(b.buzzUrl, 'https://grindingthemocks.com/');
+  const safePffUrl = sanitizeExternalUrl(b.pffUrl, 'https://www.pff.com/draft/big-board');
+  const safeBigBoardUrl = sanitizeExternalUrl(b.bigBoardUrl, safeMockDb);
+
   const logoHtml = b.collegeLogoUrl
     ? `<img src="${esc(b.collegeLogoUrl)}" alt="" width="19" height="19" loading="lazy" class="ncaa-mini-logo" />`
     : '';
 
+  const mockHit = mockSitesByKey?.get(b.playerKey) || null;
+  const consDate = formatShortBoardDate(b.boards?.consensus?.updated_at);
+  const buzzDate = formatShortBoardDate(b.boards?.buzz?.updated_at);
+  const pffDate = formatShortBoardDate(b.boards?.pff?.updated_at);
+
+  const buzzRank = b.boards?.buzz?.rank ?? null;
+  const pffRank = b.boards?.pff?.rank ?? null;
+  const buzzDeltaTxt =
+    buzzRank !== null && b.boards.buzz.delta
+      ? ` (${b.boards.buzz.delta > 0 ? `+${b.boards.buzz.delta}` : b.boards.buzz.delta})`
+      : '';
+  const pffDeltaTxt =
+    pffRank !== null && b.boards.pff.delta
+      ? ` (${b.boards.pff.delta > 0 ? `+${b.boards.pff.delta}` : b.boards.pff.delta})`
+      : '';
+
   return `
-    <details class="big-board-item" data-big-board-rank="${rank}" ${inSfRange ? 'data-in-sf-window="true"' : ''}>
+    <details class="big-board-item" data-big-board-rank="${consRank}" data-prospect-id="${esc(b.id)}" ${
+      inSfRange ? 'data-in-sf-window="true"' : ''
+    } ${isOpen ? 'open' : ''}>
       <summary class="big-board-summary">
-        <div class="big-board-left">
-          <span class="badge ${rankBadgeCls} mono big-board-rank-pill">#${rank}</span>
-          ${logoHtml}
-          <div class="big-board-identity">
-            <span class="big-board-name">${esc(b.name)}</span>
-            <span class="big-board-sub"><strong style="color:var(--gold-bright)">${esc(b.posRank || b.pos)}</strong> • ${esc(b.school)}</span>
+        <!-- Mobile Compact View (< 768px or Landscape < 500px height) -->
+        <div class="big-board-mobile-row">
+          <div class="big-board-left">
+            <span class="badge ${rankBadgeCls} mono big-board-rank-pill">${mobileRank !== null ? `#${mobileRank}` : 'NR'}</span>
+            ${logoHtml}
+            <div class="big-board-identity">
+              <span class="big-board-name">${esc(b.name)}</span>
+              <span class="big-board-sub"><strong style="color:var(--gold-bright)">${esc(b.pos)}</strong> • ${esc(b.school)} <span class="bb-tier-inline mono">T${b.tier}</span></span>
+            </div>
+          </div>
+          <div class="big-board-right">
+            ${
+              activeLens !== 'consensus'
+                ? mobileRank !== null
+                  ? renderDeltaBadgeHtml(activeLensObj.delta)
+                  : `<span class="bb-cons-fallback mono">Cons #${consRank}</span>`
+                : ''
+            }
+            ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag" title="Inside 49ers 1st-Pick Range">SF</span>` : ''}
+            <span class="mono big-board-spread ${spreadCls}">${esc(mobileSpreadTxt)}</span>
           </div>
         </div>
-        <div class="big-board-right">
-          ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag">SF Range</span>` : ''}
-          <span class="mono big-board-spread">${esc(spreadTxt)}</span>
+
+        <!-- Desktop 8-Column Comparison Row (>= 768px and height >= 500px) -->
+        <div class="big-board-desktop-row">
+          <div class="bb-col bb-col-cons">
+            <span class="badge ${consBadgeCls} mono big-board-rank-pill">#${consRank}</span>
+          </div>
+          <div class="bb-col bb-col-player">
+            ${logoHtml}
+            <span class="big-board-name">${esc(b.name)}</span>
+            ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag" title="Inside 49ers 1st-Pick Range">SF</span>` : ''}
+          </div>
+          <div class="bb-col bb-col-pos mono"><strong style="color:var(--gold-bright)">${esc(b.pos)}</strong></div>
+          <div class="bb-col bb-col-school">${esc(b.school)}</div>
+          <div class="bb-col bb-col-tier mono"><span class="bb-tier-pill">T${b.tier}</span></div>
+          <div class="bb-col bb-col-lens ${activeLens === 'buzz' ? 'is-active-lens' : ''}">${renderLensRankCellHtml(b.boards?.buzz)}</div>
+          <div class="bb-col bb-col-lens ${activeLens === 'pff' ? 'is-active-lens' : ''}">${renderLensRankCellHtml(b.boards?.pff)}</div>
+          <div class="bb-col bb-col-spread mono ${spreadCls}">
+            <span>${spreadVal !== null ? spreadVal : '—'}</span>
+            <span class="bb-row-caret" aria-hidden="true">▾</span>
+          </div>
         </div>
       </summary>
+
       <div class="big-board-detail-body">
+        <div class="big-board-lenses-detail-strip">
+          ${
+            safeBigBoardUrl
+              ? `<a href="${esc(safeBigBoardUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link mono" title="Talent &amp; Value Baseline • Updated ${esc(consDate)}"><span>Consensus #${consRank}${consDate ? ` · ${consDate}` : ''}</span>${iconSvg('externalLink', 9)}</a>`
+              : `<span class="badge badge-neutral mono">Consensus #${consRank}</span>`
+          }
+          ${
+            safeBuzzUrl
+              ? `<a href="${esc(safeBuzzUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link mono" title="Most Likely NFL Draft Order (Buzz &amp; EDP) • Updated ${esc(buzzDate)}"><span>Likely: ${buzzRank !== null ? `#${buzzRank}${buzzDeltaTxt}` : 'NR'}${buzzDate ? ` · ${buzzDate}` : ''}</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
+          ${
+            safePffUrl
+              ? `<a href="${esc(safePffUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link mono" title="Most Accurate for NFL Performance (PFF Grade &amp; WAR) • Updated ${esc(pffDate)}"><span>PFF: ${pffRank !== null ? `#${pffRank}${pffDeltaTxt}` : 'NR'}${pffDate ? ` · ${pffDate}` : ''}</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
+        </div>
+
         <div class="big-board-ranks-strip">
           ${boardChips
             .map(bc =>
@@ -2312,7 +2472,13 @@ function renderBigBoardProspectItemHtml(b, sfPickOverall = 31) {
               ? `<span class="badge badge-positive mono">SF Fit ${b.shanahanLynchFitScore}/100</span>`
               : ''
           }
+          ${
+            mockHit
+              ? `<span class="badge badge-gold mono">Mocked to SF (${mockHit.siteCount} ${mockHit.siteCount === 1 ? 'site' : 'sites'})</span>`
+              : ''
+          }
         </div>
+
         ${
           b.heightWeight || b.collegeStats
             ? `<div class="mock-db-meas-strip mono">${esc(
@@ -2338,11 +2504,48 @@ function renderBigBoardProspectItemHtml(b, sfPickOverall = 31) {
   `;
 }
 
+function renderDesktopSortHeaderCell({
+  colKey,
+  title,
+  sub = '',
+  jargonKey = '',
+  activeSortField = 'consensus',
+  activeSortDir = 'asc',
+  extraCls = ''
+}) {
+  const isSorted = activeSortField === colKey;
+  const arrow = isSorted ? (activeSortDir === 'asc' ? '▴' : '▾') : '⇅';
+  return `
+    <div class="bb-th ${extraCls} ${isSorted ? 'is-sorted' : ''}"
+         role="button" tabindex="0"
+         data-action="sort-big-board-col" data-sort-col="${esc(colKey)}"
+         aria-label="Sort by ${esc(title)}">
+      <div class="bb-th-top">
+        <span class="bb-th-title">${esc(title)}</span>
+        <span class="bb-th-arrow mono" aria-hidden="true">${arrow}</span>
+        ${jargonKey ? jargonInfoIcon(jargonKey) : ''}
+      </div>
+      ${sub ? `<div class="bb-th-sub">${esc(sub)}</div>` : ''}
+    </div>
+  `;
+}
+
 function renderDraftPrepAndCombine(appData, opts = {}) {
   const combineSearch = typeof opts === 'string' ? opts : opts.combineSearch || '';
   const bigBoardSearch = typeof opts === 'object' && opts ? opts.bigBoardSearch || '' : '';
   const bigBoardPosFilter = typeof opts === 'object' && opts ? opts.bigBoardPosFilter || 'ALL' : 'ALL';
-  const bigBoardExpanded = Boolean(typeof opts === 'object' && opts && opts.bigBoardExpanded);
+  const bigBoardPositions = typeof opts === 'object' && Array.isArray(opts.bigBoardPositions) ? opts.bigBoardPositions : [];
+  const bigBoardLens = typeof opts === 'object' && opts?.bigBoardLens ? opts.bigBoardLens : 'consensus';
+  const bigBoardSortField = typeof opts === 'object' && opts?.bigBoardSortField ? opts.bigBoardSortField : 'consensus';
+  const bigBoardSortDir = typeof opts === 'object' && opts?.bigBoardSortDir ? opts.bigBoardSortDir : 'asc';
+  const bigBoardRange = typeof opts === 'object' && opts?.bigBoardRange ? opts.bigBoardRange : 'all';
+  const bigBoardAgreement = typeof opts === 'object' && opts?.bigBoardAgreement ? opts.bigBoardAgreement : 'all';
+  const bigBoardRankedOnly = Boolean(typeof opts === 'object' && opts?.bigBoardRankedOnly);
+  const bigBoardFilterDrawerOpen = Boolean(typeof opts === 'object' && opts?.bigBoardFilterDrawerOpen);
+  const bigBoardExpanded = Boolean(typeof opts === 'object' && opts?.bigBoardExpanded);
+  const bigBoardShowAll = Boolean(typeof opts === 'object' && opts?.bigBoardShowAll);
+  const bigBoardExpandedIds = opts?.bigBoardExpandedIds instanceof Set ? opts.bigBoardExpandedIds : new Set();
+  const bigBoardShareCopied = Boolean(typeof opts === 'object' && opts?.bigBoardShareCopied);
   const mcSimResult = typeof opts === 'object' && opts ? opts.mcSimResult || null : null;
 
   const dp = appData?.seasonal?.draftPrep2027 || {};
@@ -2357,25 +2560,54 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
     mcSimResult,
     draftYear: nextDraftYr,
     projectedPick: sfFirstPickOverall,
+    activeLens: bigBoardLens,
     consensusBigBoard: dp.consensusBigBoard || []
   });
+  const mockSitesByKey = new Map(mockDb.players.map(p => [p.playerKey, p]));
   const mockDbTeamUrl =
     sanitizeExternalUrl(dp.sources?.[0]?.url, null) || buildMockDraftTeamUrl(nextDraftYr);
   const primaryMockPlayers = mockDb.players.slice(0, 5);
   const overflowMockPlayers = mockDb.players.slice(5);
 
-  // 2. Resolve 4-Board Consensus Big Board (above Combine Leaderboard)
+  // 2. Resolve 3-Lens NFL Draft Big Board (directly above Combine Leaderboard)
   const rawBigBoard = Array.isArray(dp.consensusBigBoard) ? dp.consensusBigBoard : [];
-  const filteredBigBoard = filterConsensusBigBoard(rawBigBoard, {
+  const boardQuery = queryBigBoardProspects(rawBigBoard, {
+    draftYear: nextDraftYr,
+    lens: bigBoardLens,
+    sortField: bigBoardSortField,
+    sortDir: bigBoardSortDir,
     search: bigBoardSearch,
     posGroup: bigBoardPosFilter,
+    positions: bigBoardPositions,
+    range: bigBoardRange,
+    agreement: bigBoardAgreement,
+    rankedOnly: bigBoardRankedOnly,
     sfPickOverall: sfFirstPickOverall
   });
-  const isBoardFiltered = Boolean(String(bigBoardSearch || '').trim()) || bigBoardPosFilter !== 'ALL';
-  const visibleBigBoard =
-    bigBoardExpanded || isBoardFiltered ? filteredBigBoard : filteredBigBoard.slice(0, 15);
-  const bigBoardRefUrl =
-    sanitizeExternalUrl(dp.bigBoardUrl, null) || buildMockDraftBigBoardUrl(nextDraftYr);
+
+  const activeLensSpec = BIG_BOARD_LENSES[boardQuery.activeLens] || BIG_BOARD_LENSES.consensus;
+  const lensMeta = dp.bigBoardMeta?.lenses?.[boardQuery.activeLens] || {};
+  const activeLensUpdatedRaw =
+    lensMeta.updated_at ||
+    boardQuery.items[0]?.boards?.[boardQuery.activeLens]?.updated_at ||
+    `${nextDraftYr - 1}-11-12`;
+  const activeLensUpdatedDisplay = formatShortBoardDate(activeLensUpdatedRaw);
+
+  const isNarrowedByFilter = boardQuery.activeFilterCount > 0;
+  let displayLimit = 25;
+  if (bigBoardShowAll) {
+    displayLimit = boardQuery.filteredCount;
+  } else if (bigBoardExpanded || isNarrowedByFilter) {
+    displayLimit = 100;
+  }
+  const visibleBigBoard = boardQuery.items.slice(0, displayLimit);
+
+  const drawerBadgeCount =
+    (boardQuery.positions.length > 0 ? 1 : 0) +
+    (boardQuery.posGroup === 'OFF' || boardQuery.posGroup === 'DEF' ? 1 : 0) +
+    (boardQuery.range !== 'all' ? 1 : 0) +
+    (boardQuery.agreement !== 'all' ? 1 : 0) +
+    (boardQuery.rankedOnly ? 1 : 0);
 
   // 3. Evaluate Combine Leaderboard Blank Window (blank from preseason start until Combine start)
   const combineWindow = evaluateCombineLeaderboardWindow({
@@ -2480,7 +2712,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
         primaryMockPlayers.length > 0
           ? `
         <div class="mock-db-list" data-mock-db-list>
-          ${primaryMockPlayers.map(p => renderMockDbPlayerCardHtml(p)).join('')}
+          ${primaryMockPlayers.map(p => renderMockDbPlayerCardHtml(p, boardQuery.activeLens)).join('')}
         </div>
         ${
           overflowMockPlayers.length > 0
@@ -2490,7 +2722,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
               <span>More 49ers 1st-Pick Projections (${overflowMockPlayers.length})</span>
             </summary>
             <div class="mock-db-list" style="margin-top:6px">
-              ${overflowMockPlayers.map(p => renderMockDbPlayerCardHtml(p)).join('')}
+              ${overflowMockPlayers.map(p => renderMockDbPlayerCardHtml(p, boardQuery.activeLens)).join('')}
             </div>
           </details>
         `
@@ -2541,36 +2773,102 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
       }
     </section>
 
-    <section class="card" id="consensusBigBoardCard" data-consensus-big-board>
-      <div class="card-header" style="margin-bottom:6px">
+    <section class="card" id="consensusBigBoardCard" data-consensus-big-board data-active-lens="${esc(boardQuery.activeLens)}">
+      <div class="card-header" style="margin-bottom:7px">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('radar', 17)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">4-Board Composite • ${jargonTerm('Wisdom of the Crowd', 'consensus_big_board')}</div>
-            <h3 class="card-title">${nextDraftYr} Consensus Big Board</h3>
+            <div class="card-eyebrow">3-Lens Composite • ${esc(activeLensSpec.badge)}</div>
+            <h3 class="card-title">${nextDraftYr} NFL Draft Big Board</h3>
           </div>
         </div>
-        <div class="source-link-strip">
-          <a href="${esc(bigBoardRefUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock DB Board</span>${iconSvg('externalLink', 10)}</a>
-          <a href="https://www.wideleft.football/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Wide Left</span>${iconSvg('externalLink', 10)}</a>
-          <a href="https://www.tankathon.com/nfl/big_board" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Tankathon</span>${iconSvg('externalLink', 10)}</a>
+        <span class="source-chip-link big-board-sources-trigger" role="button" tabindex="0"
+              data-jargon="big_board_sources"
+              aria-label="View 3-Lens Big Board sources and predictive accuracy">
+          <span>Sources &amp; Accuracy</span>
+          <span class="jargon-info-dot-inline" aria-hidden="true">ⓘ</span>
+        </span>
+      </div>
+
+      <!-- 3-Lens Pill Switcher (Consensus • Likely Draft Order • PFF NFL Accuracy) -->
+      <div class="segmented-control big-board-lens-bar" role="tablist" aria-label="Select Big Board Lens">
+        ${BIG_BOARD_LENS_ORDER.map(lk => {
+          const spec = BIG_BOARD_LENSES[lk];
+          const isSelected = boardQuery.activeLens === lk;
+          return `
+            <button type="button" role="tab" aria-selected="${isSelected ? 'true' : 'false'}"
+                    class="pill-btn seg-btn big-board-lens-pill ${isSelected ? 'active' : ''}"
+                    data-action="set-big-board-lens" data-lens="${lk}">
+              <span>${esc(spec.pillLabel)}</span>
+              ${jargonInfoIcon(spec.jargonKey, `${spec.label} — ${spec.badge}: tap for methodology & source links`)}
+            </button>
+          `;
+        }).join('')}
+      </div>
+
+      <!-- Live Count, Per-Lens Freshness & 1-Tap Share / Reset Strip -->
+      <div class="big-board-status-strip">
+        <div class="big-board-status-left">
+          <span class="big-board-count-txt" data-big-board-count>
+            Showing <strong>${boardQuery.filteredCount}</strong> of <strong>${boardQuery.totalCount}</strong> prospects
+          </span>
+          ${
+            activeLensUpdatedDisplay
+              ? `<span class="big-board-updated-pill mono" data-board-updated="${esc(activeLensUpdatedRaw)}">Updated ${esc(activeLensUpdatedDisplay)}</span>`
+              : ''
+          }
+        </div>
+        <div class="big-board-status-actions">
+          <button type="button" class="bb-micro-btn" data-action="share-big-board-url" title="Copy shareable link to current Big Board view">
+            ${iconSvg('share', 11)}
+            <span>${bigBoardShareCopied ? 'Copied!' : 'Share'}</span>
+          </button>
+          ${
+            boardQuery.hasActiveControls
+              ? `<button type="button" class="bb-micro-btn bb-reset-btn" data-action="reset-big-board-filters" title="Reset Big Board sort and filters">
+                  ${iconSvg('reset', 11)}
+                  <span>Reset</span>
+                </button>`
+              : ''
+          }
         </div>
       </div>
 
-      <div class="big-board-meta-note">
-        Aggregating <strong>ESPN Scouts Inc.</strong> (30%), <strong>CBS Sports</strong> (28%), <strong>Tankathon</strong> (24%) &amp; <strong>DraftTek</strong> (18%) — multi-year draft studies confirm consensus boards achieve ~80%+ draft-capital alignment and beat every individual evaluator.
+      <!-- Search, Roster-Consistent Sort Dropdown + Asc/Desc Arrow & Filters Drawer Toggle -->
+      <div class="big-board-toolbar">
+        <div class="search-input-wrap big-board-search-wrap">
+          ${iconSvg('search', 15, 'search-input-icon')}
+          <input type="search" id="bigBoardSearchInput" class="text-input has-lead-icon"
+                 placeholder="Search ${boardQuery.totalCount || 250} prospects by name, school, pos…"
+                 value="${esc(bigBoardSearch)}" aria-label="Search NFL Draft Big Board" />
+        </div>
+        <div class="big-board-controls-row">
+          <select id="bigBoardSortSelect" class="select-input big-board-sort-select" aria-label="Sort Big Board By">
+            ${BIG_BOARD_SORT_FIELDS.map(
+              f => `<option value="${f.key}" ${boardQuery.sortField === f.key ? 'selected' : ''}>Sort: ${esc(f.shortLabel)}</option>`
+            ).join('')}
+          </select>
+          <button type="button" id="bigBoardSortDirBtn" class="btn-secondary sort-dir-btn mono"
+                  data-action="toggle-big-board-sort-dir"
+                  data-sort-dir="${boardQuery.sortDir}"
+                  title="Toggle Sort Order (${boardQuery.sortDir === 'asc' ? 'Ascending' : 'Descending'})"
+                  aria-label="Toggle Big Board Sort Direction">
+            ${boardQuery.sortDir === 'asc' ? '↑' : '↓'}
+          </button>
+          <button type="button" id="bigBoardFilterDrawerBtn"
+                  class="btn-secondary big-board-filter-btn ${bigBoardFilterDrawerOpen || drawerBadgeCount > 0 ? 'has-active' : ''}"
+                  data-action="toggle-big-board-filter-drawer"
+                  aria-expanded="${bigBoardFilterDrawerOpen ? 'true' : 'false'}">
+            <span>Filters${drawerBadgeCount > 0 ? ` (${drawerBadgeCount})` : ''}</span>
+            ${iconSvg(bigBoardFilterDrawerOpen ? 'chevronUp' : 'chevronDown', 12)}
+          </button>
+        </div>
       </div>
 
-      <div class="search-input-wrap" style="margin-bottom:7px">
-        ${iconSvg('search', 15, 'search-input-icon')}
-        <input type="search" id="bigBoardSearchInput" class="text-input has-lead-icon"
-               placeholder="Search Top ${rawBigBoard.length || 50} prospects by name, position, college…"
-               value="${esc(bigBoardSearch)}" aria-label="Search Consensus Big Board" />
-      </div>
-
-      <div class="big-board-pos-bar" role="tablist" aria-label="Filter Consensus Big Board by Position">
+      <!-- Quick Position Group Filter Pills -->
+      <div class="big-board-pos-bar" role="tablist" aria-label="Filter Big Board by Position Group">
         ${BIG_BOARD_POS_PILLS.map(pill => {
-          const active = bigBoardPosFilter === pill.key;
+          const active = boardQuery.posGroup === pill.key && boardQuery.positions.length === 0;
           return `
             <button type="button" role="tab" aria-selected="${active ? 'true' : 'false'}"
                     class="pill-btn big-board-pos-pill ${active ? 'active' : ''}"
@@ -2581,22 +2879,169 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
         }).join('')}
       </div>
 
+      <!-- Progressive-Disclosure Advanced Filter Drawer -->
+      ${
+        bigBoardFilterDrawerOpen
+          ? `
+        <div class="big-board-filter-drawer" id="bigBoardFilterDrawer" data-big-board-drawer>
+          <div class="bb-drawer-group">
+            <div class="bb-drawer-label">Positions (Multi-Select) &amp; Unit</div>
+            <div class="bb-drawer-chips">
+              <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.posGroup === 'ALL' && boardQuery.positions.length === 0 ? 'active' : ''}"
+                      data-action="set-big-board-pos" data-pos-group="ALL">All</button>
+              <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.posGroup === 'OFF' ? 'active' : ''}"
+                      data-action="set-big-board-pos" data-pos-group="OFF">Offense</button>
+              <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.posGroup === 'DEF' ? 'active' : ''}"
+                      data-action="set-big-board-pos" data-pos-group="DEF">Defense</button>
+              ${BIG_BOARD_INDIVIDUAL_POSITIONS.map(posKey => {
+                const active = boardQuery.positions.includes(posKey);
+                return `
+                  <button type="button" class="pill-btn big-board-pos-pill ${active ? 'active' : ''}"
+                          data-action="toggle-big-board-pos-chip" data-pos="${posKey}">
+                    ${esc(posKey)}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="bb-drawer-group">
+            <div class="bb-drawer-label">Draft Range &amp; Capital Tier</div>
+            <div class="bb-drawer-chips">
+              ${BIG_BOARD_RANGE_OPTIONS.map(ro => `
+                <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.range === ro.key ? 'active' : ''}"
+                        data-action="set-big-board-range" data-range="${ro.key}">
+                  ${esc(ro.label)}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="bb-drawer-group">
+            <div class="bb-drawer-label">Board Agreement &amp; Coverage</div>
+            <div class="bb-drawer-chips">
+              ${BIG_BOARD_AGREEMENT_OPTIONS.map(ao => `
+                <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.agreement === ao.key ? 'active' : ''}"
+                        data-action="set-big-board-agreement" data-agree="${ao.key}">
+                  ${esc(ao.label)}
+                </button>
+              `).join('')}
+              <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.rankedOnly ? 'active' : ''}"
+                      data-action="toggle-big-board-ranked-only"
+                      aria-pressed="${boardQuery.rankedOnly ? 'true' : 'false'}">
+                ${boardQuery.rankedOnly ? '✓ ' : ''}Ranked on Selected Board (Hide NR)
+              </button>
+            </div>
+          </div>
+        </div>
+      `
+          : ''
+      }
+
       ${
         visibleBigBoard.length > 0
           ? `
-        <div class="big-board-list" data-big-board-list>
-          ${visibleBigBoard.map(b => renderBigBoardProspectItemHtml(b, sfFirstPickOverall)).join('')}
+        <!-- Desktop 8-Column Sortable Table Header (Hidden on Mobile via CSS) -->
+        <div class="big-board-desktop-thead" role="row" aria-label="Sortable Big Board Columns">
+          ${renderDesktopSortHeaderCell({
+            colKey: 'consensus',
+            title: 'Cons.',
+            sub: 'Baseline',
+            jargonKey: 'consensus_big_board',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-cons'
+          })}
+          ${renderDesktopSortHeaderCell({
+            colKey: 'name',
+            title: 'Player',
+            sub: 'Click row for dossier',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-player'
+          })}
+          ${renderDesktopSortHeaderCell({
+            colKey: 'pos',
+            title: 'Pos',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-pos'
+          })}
+          <div class="bb-th bb-th-static bb-col-school"><div class="bb-th-top"><span class="bb-th-title">School</span></div></div>
+          ${renderDesktopSortHeaderCell({
+            colKey: 'tier',
+            title: 'Tier',
+            jargonKey: 'draft_tier_system',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-tier'
+          })}
+          ${renderDesktopSortHeaderCell({
+            colKey: 'buzz',
+            title: 'Likely',
+            sub: 'Draft Order',
+            jargonKey: 'draft_buzz_edp',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-lens'
+          })}
+          ${renderDesktopSortHeaderCell({
+            colKey: 'pff',
+            title: 'PFF',
+            sub: 'NFL Perf.',
+            jargonKey: 'pff_big_board',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-lens'
+          })}
+          ${renderDesktopSortHeaderCell({
+            colKey: 'spread',
+            title: 'Spread',
+            sub: 'Max Δ',
+            jargonKey: 'board_spread_delta',
+            activeSortField: boardQuery.sortField,
+            activeSortDir: boardQuery.sortDir,
+            extraCls: 'bb-col-spread'
+          })}
         </div>
-        ${
-          !isBoardFiltered && filteredBigBoard.length > 15
-            ? `<button type="button" class="btn-ghost" style="width:100%;margin-top:8px" data-action="toggle-big-board-expand">
-                ${iconSvg(bigBoardExpanded ? 'chevronUp' : 'chevronDown', 13)}
-                <span>${bigBoardExpanded ? 'Show Top 15 Only' : `View Prospects #16–#${filteredBigBoard.length} (${filteredBigBoard.length - 15} more)`}</span>
-              </button>`
-            : ''
-        }
+
+        <div class="big-board-list" data-big-board-list>
+          ${visibleBigBoard
+            .map(b =>
+              renderBigBoardProspectItemHtml(b, {
+                sfPickOverall: sfFirstPickOverall,
+                activeLens: boardQuery.activeLens,
+                mockSitesByKey,
+                isOpen: bigBoardExpandedIds.has(b.id)
+              })
+            )
+            .join('')}
+        </div>
+
+        <div class="big-board-pagination-row">
+          ${
+            !isNarrowedByFilter && boardQuery.filteredCount > 25
+              ? `<button type="button" class="btn-ghost" style="flex:1" data-action="toggle-big-board-expand">
+                  ${iconSvg(bigBoardExpanded || bigBoardShowAll ? 'chevronUp' : 'chevronDown', 13)}
+                  <span>${
+                    bigBoardExpanded || bigBoardShowAll
+                      ? 'Show Top 25 Only'
+                      : `View Top 100 Prospects (${Math.min(100, boardQuery.filteredCount) - 25} more)`
+                  }</span>
+                </button>`
+              : ''
+          }
+          ${
+            (bigBoardExpanded || isNarrowedByFilter) && !bigBoardShowAll && boardQuery.filteredCount > visibleBigBoard.length
+              ? `<button type="button" class="btn-ghost" style="flex:1" data-action="show-all-big-board">
+                  ${iconSvg('chevronDown', 13)}
+                  <span>Show All ${boardQuery.filteredCount} Prospects</span>
+                </button>`
+              : ''
+          }
+        </div>
       `
-          : `<div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">No prospects match "${esc(bigBoardSearch)}".</div>`
+          : `<div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">No prospects match current filters. <button type="button" class="bb-inline-reset" data-action="reset-big-board-filters">Reset filters</button></div>`
       }
     </section>
 

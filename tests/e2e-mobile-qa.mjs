@@ -1851,6 +1851,41 @@ async function main() {
         const firstDrill = mockCard.querySelector('details[data-mock-drilldown]');
         if (firstDrill) firstDrill.open = true;
 
+        // Test 3-Lens Tooltip-Links (#jargonPopover badge + external links, without hijacking lens button)
+        const buzzInfoDot = document.querySelector('#consensusBigBoardCard [data-jargon="draft_buzz_edp"]');
+        buzzInfoDot?.click();
+        const popEl = document.getElementById('jargonPopover');
+        const buzzTooltipOk =
+          Boolean(popEl && !popEl.hidden) &&
+          (popEl.textContent || '').includes('Most Likely NFL Draft Order') &&
+          popEl.querySelectorAll('a.jargon-popover-link[href^="https://"]').length >= 2 &&
+          document.getElementById('consensusBigBoardCard')?.getAttribute('data-active-lens') === 'consensus';
+
+        const pffInfoDot = document.querySelector('#consensusBigBoardCard [data-jargon="pff_big_board"]');
+        pffInfoDot?.click();
+        const pffTooltipOk =
+          Boolean(popEl && !popEl.hidden) &&
+          (popEl.textContent || '').includes('Most Accurate for NFL Performance') &&
+          popEl.querySelectorAll('a.jargon-popover-link[href^="https://"]').length >= 2;
+        document.querySelector('[data-action="close-jargon-popover"]')?.click();
+
+        // Test 3-Lens pill switching + URL query param sync + Filter Drawer + Reset
+        document.querySelector('[data-action="set-big-board-lens"][data-lens="buzz"]')?.click();
+        const buzzActive =
+          document.getElementById('consensusBigBoardCard')?.getAttribute('data-active-lens') === 'buzz' &&
+          window.location.search.includes('lens=buzz');
+
+        document.getElementById('bigBoardFilterDrawerBtn')?.click();
+        const drawerOpen = Boolean(document.getElementById('bigBoardFilterDrawer'));
+        document.querySelector('[data-action="toggle-big-board-pos-chip"][data-pos="QB"]')?.click();
+        document.querySelector('[data-action="set-big-board-agreement"][data-agree="polarizing"]')?.click();
+        const urlSyncedFilters =
+          window.location.search.includes('pos=QB') && window.location.search.includes('agree=polarizing');
+
+        document.querySelector('[data-action="reset-big-board-filters"]')?.click();
+        const resetCleanedUrl = window.location.search === '' &&
+          document.getElementById('consensusBigBoardCard')?.getAttribute('data-active-lens') === 'consensus';
+
         // Test Consensus Big Board search focus preservation, pos filter, and expand toggle
         const inp = document.getElementById('bigBoardSearchInput');
         inp.focus();
@@ -1879,6 +1914,12 @@ async function main() {
           mockPlayersCount: mockCards.length,
           sortedDesc,
           allSiteLinksHttps,
+          buzzTooltipOk,
+          pffTooltipOk,
+          buzzActive,
+          drawerOpen,
+          urlSyncedFilters,
+          resetCleanedUrl,
           focused,
           searchMatches,
           olMatches,
@@ -1892,13 +1933,37 @@ async function main() {
           draftAudit.mockPlayersCount >= 4 &&
           draftAudit.sortedDesc &&
           draftAudit.allSiteLinksHttps &&
+          draftAudit.buzzTooltipOk &&
+          draftAudit.pffTooltipOk &&
+          draftAudit.buzzActive &&
+          draftAudit.drawerOpen &&
+          draftAudit.urlSyncedFilters &&
+          draftAudit.resetCleanedUrl &&
           draftAudit.focused &&
           draftAudit.searchMatches >= 1 &&
           draftAudit.olMatches >= 3 &&
           draftAudit.expandedCount >= 30,
         `Draft section audit failed: ${JSON.stringify(draftAudit)}`
       );
-      await cdp.assertNoOverflow('Game & Season: Draft Mock DB + Consensus Big Board Expanded');
+      await cdp.assertNoOverflow('Game & Season: Draft Mock DB + 3-Lens Big Board Expanded + Filter Drawer');
+
+      // Verify Desktop 8-Column Sortable Comparison Table (>= 768px) & NR-at-bottom sorting
+      await cdp.setViewport(1024, 900, false, 2);
+      const desktopBoardAudit = await cdp.eval(() => {
+        const thead = document.querySelector('#consensusBigBoardCard .big-board-desktop-thead');
+        const theadDisplay = thead ? getComputedStyle(thead).display : 'none';
+        document.querySelector('[data-action="sort-big-board-col"][data-sort-col="spread"]')?.click();
+        const sortVal = document.getElementById('bigBoardSortSelect')?.value;
+        document.querySelector('[data-action="reset-big-board-filters"]')?.click();
+        document.getElementById('bigBoardFilterDrawerBtn')?.click(); // close drawer
+        return { theadDisplay, sortVal };
+      });
+      assert(
+        desktopBoardAudit.theadDisplay === 'grid' && desktopBoardAudit.sortVal === 'spread',
+        `Desktop 8-column Big Board table failed: ${JSON.stringify(desktopBoardAudit)}`
+      );
+      await cdp.assertNoOverflow('Game & Season: Desktop 8-Column Big Board Table (1024x900)');
+      await cdp.setViewport(393, 852, true, 3);
       await cdp.eval(() => {
         document.querySelector('[data-action="toggle-big-board-expand"]')?.click();
       });
