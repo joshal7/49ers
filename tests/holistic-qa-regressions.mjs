@@ -56,6 +56,7 @@ import {
 import { hydrateLiveEspnOverlay, matchPlayersClient } from '../src/services/dataService.js';
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
 import {
+  buildEspnPlayerNewsAnchorUrl,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledOrBlockedUrl,
@@ -64,6 +65,7 @@ import {
 } from '../src/engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
+  isDirectSocialPostUrl,
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl,
   resolveReporterFromNameOrHandle,
@@ -702,34 +704,82 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
   }
   const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
   const directPosts = (newsJson.rawStream || []).filter(
-    it => (it.type === 'tweet' || it.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com)\//i.test(it.url || '')
+    it => (it.type === 'tweet' || it.type === 'social') && isDirectSocialPostUrl(it.url || '')
   );
   for (const tw of (newsJson.rawStream || []).filter(it => it.type === 'tweet' || it.type === 'social')) {
     const resolved = resolveOriginalTweetUrl(tw, directPosts);
     assert.ok(
-      /\/status\/|from%3A|49ers\.com\/team\/transactions/i.test(resolved),
-      `Tweet ${tw.id} (${tw.author}) lacked direct X status or from:<handle> query: ${resolved}`
+      isDirectSocialPostUrl(resolved),
+      `Tweet ${tw.id} (${tw.author}) must resolve to a verified direct social/transaction post URL (never dead x.com/search): ${resolved}`
     );
     assert.ok(
-      !resolved.includes('bsky.app'),
-      `Tweet ${tw.id} (${tw.author}) must not link to bsky.app: ${resolved}`
+      !resolved.includes('x.com/search'),
+      `Tweet ${tw.id} (${tw.author}) must not fall back to speculative x.com/search: ${resolved}`
     );
     assert.ok(
-      !String(tw.url || '').includes('bsky.app') && !String(tw.authorProfileUrl || '').includes('bsky.app'),
-      `Tweet ${tw.id} in news.json still contains bsky.app URL: ${tw.url}`
+      !String(tw.authorProfileUrl || '').includes('bsky.app'),
+      `Tweet ${tw.id} authorProfileUrl should remain canonical X profile: ${tw.authorProfileUrl}`
     );
   }
-  const legacyBskyResolved = resolveOriginalTweetUrl({
+
+  // Verified Bluesky post permalink is preserved when no matching X status tweet exists,
+  // and upgraded to `https://x.com/<handle>/status/<id>` ONLY when an exact mirror tweet exists on X!
+  const preservedBskyUrl = resolveOriginalTweetUrl({
     type: 'tweet',
-    url: 'https://bsky.app/profile/mattmaiocco.bsky.social/post/3mztosm6ikc2f',
-    title: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
-    fullText: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
-    publishedAt: '2026-11-09T00:39:17.526Z'
+    url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3n22svbobls27',
+    author: 'Matt Barrows',
+    reporterId: 'matt_barrows',
+    title: 'CBs Renardo Green (back) and Deommodore Lenoir (foot) are not practicing today.',
+    fullText: 'CBs Renardo Green (back) and Deommodore Lenoir (foot) are not practicing today.',
+    publishedAt: '2026-11-11T21:10:00.000Z'
   });
-  assert.ok(
-    legacyBskyResolved.startsWith('https://x.com/search?q=from%3AMaioccoNBCS') && legacyBskyResolved.includes('%22Halton%22'),
-    `Legacy bsky.app tweet URL must resolve to X original tweet search: ${legacyBskyResolved}`
+  assert.equal(
+    preservedBskyUrl,
+    'https://bsky.app/profile/mattbarrows.bsky.social/post/3n22svbobls27',
+    `Bluesky-primary post must preserve its live bsky.app permalink instead of a dead from:mattbarrows X search: ${preservedBskyUrl}`
   );
+
+  const upgradedMirrorXUrl = resolveOriginalTweetUrl(
+    {
+      type: 'tweet',
+      url: 'https://bsky.app/profile/mattmaiocco.bsky.social/post/3mztosm6ikc2f',
+      author: 'Matt Maiocco',
+      authorHandle: '@MaioccoNBCS',
+      title: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
+      fullText: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
+      publishedAt: '2026-11-09T00:39:17.526Z'
+    },
+    [
+      {
+        type: 'tweet',
+        url: 'https://x.com/MaioccoNBCS/status/2119551122334455667',
+        author: 'Matt Maiocco',
+        authorHandle: '@MaioccoNBCS',
+        fullText: 'Rookie DL Gracen Halton fractured his ankle, 49ers coach Kyle Shanahan said.',
+        publishedAt: '2026-11-09T00:38:55.000Z'
+      }
+    ]
+  );
+  assert.equal(
+    upgradedMirrorXUrl,
+    'https://x.com/MaioccoNBCS/status/2119551122334455667',
+    `Cross-posted Bluesky mirror with matching X status tweet must upgrade to x.com/<handle>/status/<id>: ${upgradedMirrorXUrl}`
+  );
+
+  // Verify blocked/broken URL patterns (bare ESPN /video/clip 404, RotoWire /football/headlines 403, Heavy Cloudflare 403) and ESPN #:~:text= anchor builder
+  assert.equal(isPaywalledOrBlockedUrl('https://www.espn.com/video/clip'), true);
+  assert.equal(isPaywalledOrBlockedUrl('https://www.rotowire.com/football/headlines/test-999'), true);
+  assert.equal(isPaywalledOrBlockedUrl('https://heavy.com/sports/nfl/san-francisco-49ers/test-story/'), true);
+  const espnAnchor = buildEspnPlayerNewsAnchorUrl(
+    '3126486',
+    'Deebo Samuel Sr.',
+    'Samuel (hamstring) was a limited practice participant Wednesday, Matt Barrows of The Athletic reports.'
+  );
+  assert.equal(
+    espnAnchor,
+    'https://www.espn.com/nfl/player/_/id/3126486/deebo-samuel-sr#:~:text=Samuel%20(hamstring)%20was%20a%20limited%20practice%20participant'
+  );
+  assert.equal(sanitizeExternalUrl(espnAnchor, null), espnAnchor);
 
   // 4. Redundant self-link suppressor catches utm_*, www., and trailing-slash variants
   assert.equal(
@@ -1738,8 +1788,11 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
   });
   assert.ok(thuSetback.probabilityPct <= 42, `Wed FP -> Thu DNP setback should drop <=42%, got ${thuSetback.probabilityPct}%`);
 
-  // Verify live generated `data/health.json` snapshot invariants
+  // Verify live generated `data/health.json` snapshot invariants AND 100% direct Injury News link integrity
   const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const liveRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const liveNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const liveSm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
   const liveDeebo = liveHealth.practiceReport.find(r => r.name === 'Deebo Samuel Sr.');
   const liveGreen = liveHealth.practiceReport.find(r => r.name === 'Renardo Green');
   if (liveDeebo && liveGreen && liveDeebo.wed === 'LP' && liveGreen.wed === 'DNP') {
@@ -1747,6 +1800,34 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
       liveDeebo.playProbabilityPct > liveGreen.playProbabilityPct,
       `Live data/health.json must rank Deebo LP (${liveDeebo.playProbabilityPct}%) > Green DNP (${liveGreen.playProbabilityPct}%)`
     );
+  }
+
+  const liveBundle = { roster: liveRoster, health: liveHealth, news: liveNews, scheduleMatchup: liveSm };
+  const liveDirectSocial = (liveNews.rawStream || []).filter(it => isDirectSocialPostUrl(it.url || ''));
+  const liveTeamInjFeed = buildTeamInjuryNewsFeed(liveBundle);
+  assert.ok(liveTeamInjFeed.length >= 1, 'Expected >=1 injured player entry in live Team Injury News feed');
+  for (const entry of liveTeamInjFeed) {
+    const it = entry.topItem;
+    const href =
+      it.type === 'tweet' || it.type === 'social'
+        ? sanitizeExternalUrl(resolveOriginalTweetUrl({ ...it, primaryPlayer: { name: entry.name } }, liveDirectSocial), null)
+        : sanitizeExternalUrl(it.url, null);
+    assert.ok(href && href.startsWith('https://'), `Invalid Team Injury News link for ${entry.name}: ${href}`);
+    assert.ok(!href.includes('x.com/search'), `Team Injury News for ${entry.name} must never use speculative x.com/search: ${href}`);
+    assert.equal(isPaywalledOrBlockedUrl(href), false, `Blocked/paywalled Team Injury News URL for ${entry.name}: ${href}`);
+  }
+  for (const rp of liveRoster.players || []) {
+    if (!isPlayerEligibleForInjuryNews(rp)) continue;
+    const pItems = rankPlayerInjuryNews(rp, { rawStream: liveNews.rawStream, appData: liveBundle });
+    for (const it of pItems) {
+      const href =
+        it.type === 'tweet' || it.type === 'social'
+          ? sanitizeExternalUrl(resolveOriginalTweetUrl({ ...it, primaryPlayer: { name: rp.name } }, liveDirectSocial), null)
+          : sanitizeExternalUrl(it.url, null);
+      assert.ok(href && href.startsWith('https://'), `Invalid Player Injury News link for ${rp.name}: ${href}`);
+      assert.ok(!href.includes('x.com/search'), `Player Injury News for ${rp.name} must never use speculative x.com/search: ${href}`);
+      assert.equal(isPaywalledOrBlockedUrl(href), false, `Blocked/paywalled Player Injury News URL for ${rp.name}: ${href}`);
+    }
   }
 });
 

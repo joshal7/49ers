@@ -1536,6 +1536,14 @@ async function main() {
             Boolean(el.querySelector('.health-injury-news-card'))
         );
 
+        const teamInjBadLinks = [];
+        for (const a of injNewsCard ? injNewsCard.querySelectorAll('.health-injury-news-card a[href]') : []) {
+          const href = a.getAttribute('href') || '';
+          if (!href.startsWith('https://') || href.includes('x.com/search') || href.includes('heavy.com') || /\/video\/clip\/?$/i.test(href)) {
+            teamInjBadLinks.push(href);
+          }
+        }
+
         // Click the first injured player's header button -> must open Player Dossier directly on `Health & Priors` (`health`) tab!
         const firstPlayerBtn = entries[0]?.querySelector('.health-injury-player-head[data-action="open-player-sheet"]');
         const expectedPlayerId = firstPlayerBtn?.getAttribute('data-player-id') || '';
@@ -1546,6 +1554,14 @@ async function main() {
         const practiceGrid = document.querySelector('#sheetBody [data-practice-days-grid]');
         const dossierInjNews = document.querySelector('#sheetBody [data-player-injury-news]');
         const availPrior = document.querySelector('#sheetBody [data-player-availability-prior]');
+
+        const dossierInjBadLinks = [];
+        for (const a of dossierInjNews ? dossierInjNews.querySelectorAll('a[href]') : []) {
+          const href = a.getAttribute('href') || '';
+          if (!href.startsWith('https://') || href.includes('x.com/search') || href.includes('heavy.com') || /\/video\/clip\/?$/i.test(href)) {
+            dossierInjBadLinks.push(href);
+          }
+        }
 
         const practiceBeforeNews = Boolean(
           practiceGrid && dossierInjNews && (practiceGrid.compareDocumentPosition(dossierInjNews) & Node.DOCUMENT_POSITION_FOLLOWING)
@@ -1602,10 +1618,17 @@ async function main() {
           practiceBeforeNews,
           newsBeforePrior,
           dossierNewsItemsCount,
+          teamInjBadLinks,
+          dossierInjBadLinks,
           purdyHasInjNews,
           irReturnerHasInjNews
         };
       });
+
+      assert(
+        injuryNewsDomAudit.teamInjBadLinks.length === 0 && injuryNewsDomAudit.dossierInjBadLinks.length === 0,
+        `Injury News rendered dead/search/blocked links: ${JSON.stringify({ team: injuryNewsDomAudit.teamInjBadLinks, dossier: injuryNewsDomAudit.dossierInjBadLinks })}`
+      );
 
       assert(
         injuryNewsDomAudit.reportBeforeNews && injuryNewsDomAudit.newsBeforeIr,

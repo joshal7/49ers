@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-12T02:13:19.969Z",
+  "updatedAt": "2026-11-12T06:36:15.767Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-26T02:13:19.969Z",
+  "nextAutoReviewAt": "2026-11-26T06:36:15.767Z",
   "totalTrackedReporters": 48,
   "outlets": [
     {
@@ -106,7 +106,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 150,
+      "liveWeeklyMentions": 154,
       "popularityScore": 99,
       "defaultEnabled": true
     },

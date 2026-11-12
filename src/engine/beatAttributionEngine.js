@@ -55,7 +55,11 @@ export const BEAT_REPORTER_DIRECTORY = [
   { id: 'guy_haberman', name: 'Guy Haberman', handle: '@GuyHaberman', outletId: 'youtube_film', outletName: 'Haberman & Middlekauff', trustTier: 2, credibilityScore: 91 },
   { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', outletName: '49ers Rush', trustTier: 2, credibilityScore: 90 },
   { id: 'eric_crocker', name: 'Eric Crocker', handle: '@eric_crocker', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 91 },
-  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydelsfa', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93 },
+  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydelsfa', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'] },
+  { id: 'jt_osullivan', name: "JT O'Sullivan", handle: '@theqbschool', outletId: 'youtube_film', outletName: 'The QB School', trustTier: 2, credibilityScore: 92, aliases: ['the qb school', 'qb school'] },
+  { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', outletId: 'youtube_film', outletName: 'Chase Daniel Film', trustTier: 2, credibilityScore: 90, aliases: ["chase daniel and bussin' with the boys"] },
+  { id: 'alex_rollins', name: 'Alex Rollins', handle: '@AlexRollinsNFL', outletId: 'youtube_film', outletName: 'Alex Rollins NFL', trustTier: 2, credibilityScore: 91, aliases: ['alex rollins nfl'] },
+  { id: 'mike_florio', name: 'ProFootballTalk', handle: '@ProFootballTalk', outletId: 'nfl_network', outletName: 'NBC ProFootballTalk', trustTier: 2, credibilityScore: 88, aliases: ['mike florio', 'pft'] },
   { id: 'jeff_deeney', name: 'Jeff Deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', outletName: '49ers Analytics', trustTier: 2, credibilityScore: 89 },
   { id: 'brad_graham', name: 'Brad Graham', handle: '@TheSFNiners', outletId: 'youtube_film', outletName: 'TheSFNiners', trustTier: 2, credibilityScore: 88 },
   { id: 'al_sacco', name: 'Al Sacco', handle: '@AlSacco49', outletId: '49ers_webzone', outletName: '49ers Webzone', trustTier: 2, credibilityScore: 85 },
@@ -256,6 +260,8 @@ export const BSKY_ACTOR_TO_X_HANDLE = {
   'adamscheftermirror.bsky.social': '@AdamSchefter',
   'rapsheet.bsky.social': '@RapSheet',
   'tompelissero.bsky.social': '@TomPelissero',
+  'diannarussini.bsky.social': '@DMRussini',
+  'profootballtalk.bsky.social': '@ProFootballTalk',
   'minakimes.bsky.social': '@minakimes',
   'nfltraderumors.bsky.social': '@nflrums',
   'insidenflnews.bsky.social': '@NFL',
@@ -440,25 +446,46 @@ const ACUTE_INJURY_OBSERVATION_REGEX =
 const SPECULATIVE_EXCLUSION_REGEX =
   /\b(mock trade|trade proposal|trade idea|trade pitch|hypothetical|what if|flashback|on this day|\d+\s+years ago|way-too-early|mailbag)\b/i;
 
+const SECONDARY_OR_TRIVIA_TOPIC_EXCLUSION_REGEX =
+  /\b(explains? why|reveals? (?:why|what)|freely gave|jersey (?:no\.|number)|addresses? (?:past )?beef|beef [\s\S]{0,25}(?:squashed|past)|feud resurfaces|called (?:the 49ers )?(?:about|to inquire)|inquired about|on (?:their )?trade radar|were eyeing a trade|traded for a reason|just because people are trading|isn['’]?t surprising|not (?:a )?(?:particularly )?surprising|wife celebrates|makes? strong statement|drops? strong [\s\S]{0,20}statement)\b/i;
+
+function extractPrimaryLeadClaim(item = {}) {
+  const isTw = item?.type === 'tweet' || item?.type === 'social';
+  const raw = isTw
+    ? String(item?.fullText || item?.title || item?.headline || '').trim()
+    : String(item?.title || item?.headline || '').trim();
+  if (!raw) return '';
+  const m = raw.match(/^[\s\S]{10,240}?[.!?](?=\s+[A-Z"“]|$)/);
+  return m ? m[0].trim() : raw.slice(0, 240).trim();
+}
+
 /**
  * Returns true if the text describes a concrete, actionable player injury, practice, warmup,
  * or game-availability observation (eligible for First-Mover Injury Scoop elevation).
  */
 export function isAcuteInjuryOrAvailabilityScoop(text = '') {
   const clean = String(text || '').trim();
-  if (!clean || SPECULATIVE_EXCLUSION_REGEX.test(clean)) return false;
+  if (!clean || SPECULATIVE_EXCLUSION_REGEX.test(clean) || SECONDARY_OR_TRIVIA_TOPIC_EXCLUSION_REGEX.test(clean)) {
+    return false;
+  }
   return ACUTE_INJURY_OBSERVATION_REGEX.test(clean);
 }
 
 function classifyWireEventTopic(text = '') {
-  const s = String(text || '');
-  if (/\b(activated from|placed on ir|placed on injured reserve|21-day|practice squad|waived|signed|traded|acquiring|released)\b/i.test(s)) {
+  const s = String(text || '').trim();
+  if (!s || SPECULATIVE_EXCLUSION_REGEX.test(s) || SECONDARY_OR_TRIVIA_TOPIC_EXCLUSION_REGEX.test(s)) {
+    return null;
+  }
+  if (/\b(activated (?:from|off)|placed on (?:ir|injured reserve)|21-day|practice window|designate[sd]? [\s\S]{0,35}(?:for|to) return)\b/i.test(s)) {
     return 'roster_ir_tx';
+  }
+  if (/\b(\btrade[!: ]|agree[sd]? to (?:a )?trade|completing a trade|finalizing a trade|sending [\s\S]{0,55}to (?:the )?(?:49ers|san francisco|niners)|traded (?:to|for)|(?:49ers|san francisco|niners) (?:officially )?(?:acquire[sd]?|acquiring|re-acquir(?:e[sd]?|ing)|sign(?:ed|s)?|re-sign(?:ed|s)?|waive[sd]?|release[sd]?|claim(?:ed|s)?)|practice squad)\b/i.test(s)) {
+    return 'roster_tx_move';
   }
   if (isAcuteInjuryOrAvailabilityScoop(s)) {
     return 'acute_injury';
   }
-  if (/\b(restructure|cap space|extension|contract|bonus)\b/i.test(s)) {
+  if (/\b(restructure[sd]?|cap space|contract extension|signed a \d+-year|signs a \d+-year)\b/i.test(s)) {
     return 'contract_cap';
   }
   return null;
@@ -522,12 +549,13 @@ export function corroborateAndAnnotateWireStream(items = [], nowMs = Date.now(),
     const dirEntry = rawDirEntry && !PODIUM_SUBJECT_IDS.has(rawDirEntry.id) ? rawDirEntry : null;
     const trustTier = Number(it.trustTier) || rawDirEntry?.trustTier || 2;
     const credibilityScore = Number(it.credibilityScore) || rawDirEntry?.credibilityScore || 86;
+    const leadClaimText = extractPrimaryLeadClaim(it);
     const combinedText = `${it.title || it.headline || ''} ${it.fullText || ''} ${it.summary || ''}`.trim();
-    const eventTopic = classifyWireEventTopic(combinedText);
+    const eventTopic = it.type === 'video' ? null : classifyWireEventTopic(leadClaimText);
     const explicitPlayerKeys = Array.isArray(it.mentionedPlayers)
       ? it.mentionedPlayers.map(mp => String(mp.name || mp.id || '').toLowerCase()).filter(Boolean)
       : [];
-    const playerKeys = explicitPlayerKeys.length > 0 ? explicitPlayerKeys : extractFallbackPlayerKeys(combinedText);
+    const playerKeys = explicitPlayerKeys.length > 0 ? explicitPlayerKeys : extractFallbackPlayerKeys(leadClaimText || combinedText);
     const pubMs = it.publishedAt ? new Date(it.publishedAt).getTime() : NaN;
     return {
       ...it,
@@ -582,7 +610,9 @@ export function corroborateAndAnnotateWireStream(items = [], nowMs = Date.now(),
 
     const firstAgeHours = Math.max(0, (nowMs - firstItem._pubMs) / 3_600_000);
     if (
-      (firstItem._eventTopic === 'acute_injury' || firstItem._eventTopic === 'roster_ir_tx') &&
+      (firstItem._eventTopic === 'acute_injury' ||
+        firstItem._eventTopic === 'roster_ir_tx' ||
+        firstItem._eventTopic === 'roster_tx_move') &&
       firstAgeHours <= 12
     ) {
       firstItem.isFirstMoverInjuryScoop = true;
@@ -696,13 +726,24 @@ export function isEspnPlayerProfileUrl(url = '') {
 }
 
 /**
- * Returns true if `url` is a genuine direct X status URL (`x.com/<handle>/status/<id>`)
- * or an official 49ers.com transaction log entry.
+ * Reporters whose daily beat social posts live on Bluesky rather than X (`from:<handle>` on X returns 0 results).
+ */
+export const BLUESKY_PRIMARY_REPORTER_IDS = new Set([
+  'matt_barrows',
+  'tim_kawakami',
+  'vic_tafur'
+]);
+
+/**
+ * Returns true if `url` is a verified direct social post permalink (`x.com/<handle>/status/<id>` or
+ * `bsky.app/profile/<actor>/post/<rkey>`), a RotoWire player news permalink, or an official 49ers transaction entry.
  */
 export function isDirectSocialPostUrl(url = '') {
   const clean = String(url || '').trim();
   if (/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/i.test(clean)) return true;
+  if (/^https?:\/\/bsky\.app\/profile\/[^/?#]+\/post\/[A-Za-z0-9]+/i.test(clean)) return true;
   if (/^https?:\/\/(?:www\.)?49ers\.com\/team\/transactions\//i.test(clean)) return true;
+  if (/^https?:\/\/(?:www\.)?rotowire\.com\/+football\/player\/[a-z0-9-]+/i.test(clean)) return true;
   return false;
 }
 
@@ -798,27 +839,34 @@ export function buildTargetedOriginalTweetUrl({
   }
   if (!focusTerm && cleanText) {
     const leadProper = cleanText.match(/^([A-Z][a-z'.-]{2,18})\b/);
-    if (
-      leadProper &&
-      !/^(The|San|Las|Los|New|Head|Coach|Week|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Rookie|Veteran|Starter|Backup|Injury|Update|Breaking|Practice|Report|Source|Sources|Official|Niners|Today|Tomorrow|Yesterday|Here|There|After|Before|During|Despite|While|With|From|More)$/i.test(
-        leadProper[1]
-      )
-    ) {
-      focusTerm = leadProper[1];
-    }
+  if (
+    leadProper &&
+    !/^(The|San|Las|Los|New|Head|Coach|Week|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Rookie|Veteran|Starter|Backup|Injury|Update|Breaking|Practice|Report|Source|Sources|Official|Niners|Today|Tomorrow|Yesterday|Here|There|After|Before|During|Despite|While|With|From|More|Pretty|Just|Watch|Teams|Another|If|Welcome|Agent)$/i.test(
+      leadProper[1]
+    )
+  ) {
+    focusTerm = leadProper[1];
   }
+}
 
-  let sinceClause = '';
-  const pubMs = publishedAt ? Date.parse(publishedAt) : NaN;
-  if (Number.isFinite(pubMs)) {
-    const sinceIso = new Date(pubMs - 36 * 3_600_000).toISOString().slice(0, 10);
-    sinceClause = ` since:${sinceIso}`;
-  }
+let sinceClause = '';
+const pubMs = publishedAt ? Date.parse(publishedAt) : NaN;
+if (Number.isFinite(pubMs)) {
+  const sinceIso = new Date(pubMs - 36 * 3_600_000).toISOString().slice(0, 10);
+  sinceClause = ` since:${sinceIso}`;
+}
 
-  if (cleanHandle) {
-    const q = focusTerm ? `from:${cleanHandle} "${focusTerm}"${sinceClause}` : `from:${cleanHandle} 49ers${sinceClause}`;
-    return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
-  }
+// Never lock X search to `from:<handle>` for Bluesky-primary writers who do not post daily updates on X
+if (resolvedEntry && BLUESKY_PRIMARY_REPORTER_IDS.has(resolvedEntry.id)) {
+  if (cleanPlayer) return buildXPlayerScoopSearchUrl(cleanPlayer);
+  if (focusTerm) return buildXPlayerScoopSearchUrl(focusTerm);
+  return buildXBeatListSearchUrl('trusted');
+}
+
+if (cleanHandle) {
+  const q = focusTerm ? `from:${cleanHandle} "${focusTerm}"${sinceClause}` : `from:${cleanHandle} 49ers${sinceClause}`;
+  return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+}
 
   const cleanAuthor = String(authorName || '').trim();
   if (cleanAuthor && cleanAuthor.length >= 4 && !/beat wire|espn|rotowire/i.test(cleanAuthor)) {
@@ -833,11 +881,13 @@ export function buildTargetedOriginalTweetUrl({
 }
 
 /**
- * Resolves the best authentic X (`x.com`) destination URL for a tweet item:
+ * Resolves the best authentic destination permalink for a social/wire item:
  * 1. Preserves real direct `x.com/<handle>/status/<id>` (upgrading `twitter.com` -> `x.com`) URLs.
- * 2. If `item.url` is a Bluesky mirror (`bsky.app/...`), an ESPN player bio page (`/nfl/player/_/id/...`), or missing,
- *    first checks `directSocialPosts` for a matching direct `x.com/<handle>/status/<id>` post by the same reporter within 8 hours.
- * 3. Otherwise builds a precision `x.com/search?q=from:<handle>+"<Player>"` lookup URL directly to the reporter's tweet on X.
+ * 2. Cross-matches against `directSocialPosts` for a matching direct `x.com/<handle>/status/<id>` or
+ *    `bsky.app/profile/<actor>/post/<rkey>` post by the same reporter within 10 hours.
+ * 3. Preserves real direct `bsky.app/profile/<actor>/post/<rkey>`, `rotowire.com/football/player/...`,
+ *    `49ers.com/team/transactions/...`, and verified article URLs so live permalinks are never overwritten by dead searches.
+ * 4. Falls back to `buildTargetedOriginalTweetUrl` only when a tweet item has no direct post URL.
  */
 export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
   const rawUrl = String(item?.url || '').trim();
@@ -845,19 +895,22 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
     const m = rawUrl.match(/\/([A-Za-z0-9_]+)\/status\/(\d+)/i);
     return `https://x.com/${m[1]}/status/${m[2]}`;
   }
-  if (isDirectSocialPostUrl(rawUrl)) {
+  if (/^https?:\/\/(?:www\.)?49ers\.com\/team\/transactions\//i.test(rawUrl)) {
+    return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
+  }
+  if (/^https?:\/\/(?:www\.)?rotowire\.com\/+football\/player\/[a-z0-9-]+/i.test(rawUrl)) {
+    const httpsRw = rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
+    return httpsRw.replace(/^(https:\/\/[^/?#]+)\/\/+/i, '$1/');
+  }
+
+  // Preserve direct ESPN full story URLs
+  if (/^https?:\/\/(?:www\.|m\.)?espn\.com\/nfl\/story\/_\/id\/\d+/i.test(rawUrl)) {
     return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
   }
 
-  // Preserve direct ESPN video highlight clips & full story URLs even if misclassified
-  if (/^https?:\/\/(?:www\.|m\.)?espn\.com\/(?:video\/clip|nfl\/story)\/_\/id\/\d+/i.test(rawUrl)) {
-    return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
-  }
-
-  // If it's a real article/headline URL that is NOT an ESPN player bio page, generic RotoWire index, or bsky mirror, keep it only for non-tweet types
+  // For non-tweet article items (including ESPN Injury Wire articles with #:~:text= anchors), keep their HTTPS URL
   if (
     rawUrl &&
-    !isEspnPlayerProfileUrl(rawUrl) &&
     !/^https?:\/\/bsky\.app\//i.test(rawUrl) &&
     item?.type !== 'tweet' &&
     item?.type !== 'social'
@@ -893,18 +946,32 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
     .toLowerCase();
   const itemPubMs = item?.publishedAt ? Date.parse(item.publishedAt) : NaN;
 
-  // Cross-match against direct `x.com/.../status/...` posts in the feed
+  const hasExistingBskyPermalink = /^https?:\/\/bsky\.app\/profile\/[^/?#]+\/post\/[A-Za-z0-9]+/i.test(rawUrl);
+  const itemTextTokens = new Set(
+    `${item?.fullText || ''} ${item?.title || ''} ${item?.headline || ''}`
+      .toLowerCase()
+      .replace(/https?:\/\/\S+/g, ' ')
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 4 && !/^(49ers|niners|francisco|today|practice|week|sunday|monday|wednesday|thursday|friday|coach|shanahan|said|report|reports)$/.test(w))
+  );
+
+  // Cross-match against direct `x.com/.../status/...` (preferred) or `bsky.app/profile/.../post/...` posts in the feed
   if (Array.isArray(directSocialPosts) && directSocialPosts.length > 0 && (itemHandleLower || itemAuthorLower)) {
-    let bestDirectUrl = null;
+    let bestDirectXUrl = null;
+    let bestDirectBskyUrl = null;
 
     for (const dp of directSocialPosts) {
       const dpUrl = String(dp?.url || '').trim();
-      if (!dpUrl || !isDirectSocialPostUrl(dpUrl) || dpUrl.includes('49ers.com/team/transactions')) continue;
+      if (!dpUrl || !isDirectSocialPostUrl(dpUrl) || dpUrl.includes('49ers.com/team/transactions') || dpUrl.includes('rotowire.com')) {
+        continue;
+      }
 
+      const dpBskyFallback = extractXHandleFromBskyUrl(dpUrl) || extractXHandleFromBskyUrl(dp?.authorProfileUrl);
       const dpEntry = resolveReporterFromNameOrHandle(
-        dp?.reporterId || dp?.authorHandle || dp?.author || dp?.reporterName
+        dp?.reporterId || dp?.authorHandle || dpBskyFallback || dp?.author || dp?.reporterName
       );
-      const dpHandleLower = String(dp?.authorHandle || dpEntry?.handle || '')
+      const dpHandleLower = String(dp?.authorHandle || dpEntry?.handle || dpBskyFallback || '')
         .replace(/^@/, '')
         .toLowerCase();
       const dpAuthorLower = String(dp?.author || dp?.reporterName || dpEntry?.name || '')
@@ -917,11 +984,13 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
       }
 
       const dpPubMs = dp?.publishedAt ? Date.parse(dp.publishedAt) : NaN;
+      const maxWindowMs = hasExistingBskyPermalink ? 2 * 3_600_000 : 10 * 3_600_000;
       if (Number.isFinite(itemPubMs) && Number.isFinite(dpPubMs)) {
-        if (Math.abs(itemPubMs - dpPubMs) > 8 * 3_600_000) continue;
+        if (Math.abs(itemPubMs - dpPubMs) > maxWindowMs) continue;
       }
 
-      const dpTextLower = `${dp?.fullText || ''} ${dp?.title || ''}`.toLowerCase();
+      const dpTextRaw = `${dp?.fullText || ''} ${dp?.title || ''}`;
+      const dpTextLower = dpTextRaw.toLowerCase();
       const mentionsSamePlayer =
         (normPlayer &&
           Array.isArray(dp?.mentionedPlayers) &&
@@ -934,17 +1003,39 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
           )) ||
         (surname && surname.length >= 4 && dpTextLower.includes(surname));
 
-      if (!mentionsSamePlayer) continue;
+      if (!mentionsSamePlayer && normPlayer) continue;
 
-      bestDirectUrl = /^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(dpUrl)
-        ? dpUrl.replace(/^https?:\/\/(?:www\.)?twitter\.com\//i, 'https://x.com/')
-        : dpUrl;
-      break;
+      if (itemTextTokens.size >= 3) {
+        const dpTokens = dpTextLower
+          .replace(/https?:\/\/\S+/g, ' ')
+          .replace(/[^a-z0-9\s]/g, ' ')
+          .split(/\s+/)
+          .filter(w => w.length >= 4);
+        let sharedCount = 0;
+        for (const w of dpTokens) {
+          if (itemTextTokens.has(w)) sharedCount++;
+        }
+        const minRequiredOverlap = Math.min(3, itemTextTokens.size);
+        if (sharedCount < minRequiredOverlap) continue;
+      }
+
+      if (/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/i.test(dpUrl)) {
+        bestDirectXUrl = dpUrl.replace(/^https?:\/\/(?:www\.)?twitter\.com\//i, 'https://x.com/');
+        break;
+      }
+      if (!hasExistingBskyPermalink && !bestDirectBskyUrl && /^https?:\/\/bsky\.app\/profile\/[^/?#]+\/post\/[A-Za-z0-9]+/i.test(dpUrl)) {
+        bestDirectBskyUrl = dpUrl.startsWith('http://') ? `https://${dpUrl.slice(7)}` : dpUrl;
+      }
     }
 
-    if (bestDirectUrl) {
-      return bestDirectUrl;
-    }
+    if (bestDirectXUrl) return bestDirectXUrl;
+    if (!hasExistingBskyPermalink && bestDirectBskyUrl) return bestDirectBskyUrl;
+  }
+
+  // Preserve verified direct Bluesky post permalinks (`https://bsky.app/profile/<actor>/post/<rkey>`)
+  // instead of overwriting them with speculative X search queries that may return "No results"!
+  if (/^https?:\/\/bsky\.app\/profile\/[^/?#]+\/post\/[A-Za-z0-9]+/i.test(rawUrl)) {
+    return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
   }
 
   return buildTargetedOriginalTweetUrl({

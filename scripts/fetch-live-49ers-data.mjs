@@ -77,10 +77,12 @@ import {
 } from '../src/engine/seasonStateMachine.js';
 import {
   classifyBreakingItem,
+  classifyNewsItemCategory,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
   resolveGameNewsContext,
-  filterOutCompletedGameAvailabilityItems
+  filterOutCompletedGameAvailabilityItems,
+  stripRedundantAuthorBoilerplate
 } from '../src/engine/breakingClassifier.js';
 import {
   isBeforeWeeklyPracticeWindow,
@@ -93,6 +95,7 @@ import {
 } from '../src/engine/groundingValidator.js';
 import {
   OTC_TEAM_CAP_URL,
+  buildEspnPlayerNewsAnchorUrl,
   buildEspnPlayerUrl,
   buildEspnTeamInjuriesUrl,
   buildOtcPlayerUrl,
@@ -109,6 +112,7 @@ import {
 } from '../src/engine/linkIntegrity.js';
 import {
   extractBeatAttributionFromText,
+  isDirectSocialPostUrl,
   isEspnPlayerProfileUrl,
   isPodiumSubjectId,
   resolveItemAuthorProfileUrl,
@@ -1712,7 +1716,9 @@ async function main() {
     sfStandardXml,
     heavy49ersXml,
     webzoneXml,
-    liveYtClips,
+    liveYtPodiumClips,
+    liveYtFilmClips1,
+    liveYtFilmClips2,
     beatPodcasts7d
   ] = await Promise.all([
     fetchLiveBeatSocialPosts().catch(() => []),
@@ -1724,9 +1730,21 @@ async function main() {
     fetchText('https://www.sfstandard.com/sports/feed/').catch(() => ''),
     fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
-    searchYouTubeVideos('San Francisco 49ers Kyle Shanahan 2026', 8),
+    searchYouTubeVideos('San Francisco 49ers Kyle Shanahan 2026', 6),
+    searchYouTubeVideos('49ers All 22 film breakdown Jonnydel', 4),
+    searchYouTubeVideos('Brock Purdy 49ers film breakdown', 4),
     fetchLatest49ersPodcasts7d().catch(() => ({ updatedAt: new Date().toISOString(), windowDays: 7, shows: [], episodes: [] }))
   ]);
+
+  const seenYtIds = new Set();
+  const liveYtClips = [];
+  for (const clip of [...(liveYtFilmClips1 || []), ...(liveYtFilmClips2 || []), ...(liveYtPodiumClips || [])]) {
+    if (!clip?.videoId || seenYtIds.has(clip.videoId)) continue;
+    const agoStr = String(clip.publishedAgo || '');
+    if (/\b(\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?)?|[4-9]\s*w(?:eeks?|ks?)?)\s+ago\b/i.test(agoStr)) continue;
+    seenYtIds.add(clip.videoId);
+    liveYtClips.push(clip);
+  }
 
   // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded in beat RSS feeds via oEmbed
   const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss([
@@ -1793,16 +1811,17 @@ async function main() {
             const isDirectArticleOrClip =
               Boolean(directWeb) &&
               !isEspnPlayerProfileUrl(directWeb) &&
-              /\/(nfl\/story|video\/clip)\/_\/id\/\d+/i.test(directWeb);
+              /\/nfl\/story\/_\/id\/\d+/i.test(directWeb);
             const isPlayerBlurb =
               !isDirectArticleOrClip &&
               (Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWeb || isEspnPlayerProfileUrl(directWeb));
             const pubIsoStr = new Date(pubMs).toISOString();
-            const itemUrl = isPlayerBlurb
+            const isStructuredWireStory = Boolean(rawStory && rawStory.length >= 80);
+            const candidateDirectSocialUrl = isPlayerBlurb && !isStructuredWireStory
               ? resolveOriginalTweetUrl(
                   {
                     type: 'tweet',
-                    url: directWeb || '',
+                    url: '',
                     author: attr.author,
                     reporterId: attr.reporterId,
                     reporterName: attr.reporterName,
@@ -1814,10 +1833,22 @@ async function main() {
                   },
                   liveBeatTweets
                 )
+              : null;
+            const hasVerifiedDirectPost = Boolean(
+              candidateDirectSocialUrl && isDirectSocialPostUrl(candidateDirectSocialUrl)
+            );
+            const effectiveType = isPlayerBlurb && hasVerifiedDirectPost ? 'tweet' : 'article';
+            const cleanLeadSentence = stripRedundantAuthorBoilerplate(rawDesc || rawHeadline || lead, attr.author);
+            const itemUrl = isPlayerBlurb
+              ? hasVerifiedDirectPost
+                ? candidateDirectSocialUrl
+                : buildEspnPlayerNewsAnchorUrl(p.id, p.name, rawDesc || rawHeadline)
               : directWeb;
+            if (!itemUrl) continue;
+
             const fmtTw = formatTweetBodyForDisplay(cleanFull);
             const brk = classifyBreakingItem({
-              title: isPlayerBlurb ? fmtTw.text : rawHeadline || fmtTw.text,
+              title: effectiveType === 'tweet' ? fmtTw.text : cleanLeadSentence || rawHeadline || fmtTw.text,
               fullText: cleanFull,
               summary: rawStory || rawDesc,
               publishedAt: pubIsoStr
@@ -1828,11 +1859,19 @@ async function main() {
             const validRepEntry = resolvedRepEntry && !isPodiumSubjectId(resolvedRepEntry.id) ? resolvedRepEntry : null;
             const pwItemDraft = {
               id: `espn_pwire_${p.id}_${wireToken}`,
-              type: isPlayerBlurb ? 'tweet' : 'article',
-              title: isPlayerBlurb ? fmtTw.text : rawHeadline || fmtTw.text,
-              fullText: isPlayerBlurb ? cleanFull : undefined,
-              isFullTweet: isPlayerBlurb ? fmtTw.isFullTweet : undefined,
-              summary: isPlayerBlurb ? (rawStory && rawStory !== cleanFull ? rawStory.slice(0, 260) : '') : rawDesc.slice(0, 240),
+              type: effectiveType,
+              title:
+                effectiveType === 'tweet'
+                  ? fmtTw.text
+                  : cleanLeadSentence || rawHeadline || fmtTw.text,
+              fullText: effectiveType === 'tweet' ? cleanFull : undefined,
+              isFullTweet: effectiveType === 'tweet' ? fmtTw.isFullTweet : undefined,
+              summary:
+                effectiveType === 'tweet'
+                  ? rawStory && rawStory !== cleanFull
+                    ? rawStory
+                    : ''
+                  : rawStory || (rawDesc !== cleanLeadSentence ? rawDesc : ''),
               imageUrl: p.headshotUrl || '',
               imageAlt: `${p.name} beat update`,
               primaryPlayer: p,
@@ -1841,13 +1880,14 @@ async function main() {
               externalUrl: null,
               externalTitle: null,
               outletId: attr.outletId || 'espn',
-              outletName: isPlayerBlurb ? (attr.outletName || 'ESPN / X Beat Wire') : 'ESPN',
+              outletName: isPlayerBlurb ? (attr.outletName || 'ESPN Injury Wire') : 'ESPN',
               reporterId: isPlayerBlurb ? attr.reporterId : (validRepEntry?.id || null),
               reporterName: resolvedAuthorName,
               author: resolvedAuthorName,
               authorHandle: isPlayerBlurb ? attr.authorHandle : (validRepEntry?.handle || ''),
               authorProfileUrl: isPlayerBlurb ? (attr.xUrl || null) : (validRepEntry?.xUrl || null),
               trustTier: attr.trustTier,
+              wireSource: 'espn_player_wire',
               isBreaking: brk.isBreaking,
               isInGameInjury: brk.isInGameInjury,
               breakingBadge: brk.breakingBadge,
@@ -2497,10 +2537,9 @@ async function main() {
     rawNewsStream.push(nnItem);
   }
 
-  // Parse Direct 49ers Webzone Original Articles RSS (`49erswebzone.com/articles/...`) & Heavy 49ers Beat RSS
+  // Parse Direct 49ers Webzone Original Articles RSS (`49erswebzone.com/articles/...`)
   for (const [feedKey, rawFeedXml, outletId, outletName, defaultUrl] of [
-    ['wz', webzoneXml, '49ers_webzone', '49ers Webzone', 'https://www.49erswebzone.com/'],
-    ['hvy', heavy49ersXml, '49ers_webzone', 'Heavy on 49ers', 'https://heavy.com/sports/nfl/san-francisco-49ers/']
+    ['wz', webzoneXml, '49ers_webzone', '49ers Webzone', 'https://www.49erswebzone.com/']
   ]) {
     for (const itemMatch of rawFeedXml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
       const xml = itemMatch[1];
@@ -2567,10 +2606,11 @@ async function main() {
     }
   }
 
-  // Add live YouTube clips to raw stream with verified domain embeddability flag & parsed relative publish time
+  // Add live YouTube clips (both All-22 Film Study & Podium/Pressers) with accurate channel attribution & category differentiation
   for (const vid of liveYtClips) {
-    const sig = scoreContentSignal(vid.title, vid.channel);
     const cleanVidTitle = cleanSensationalistText(vid.title);
+    const sig = scoreContentSignal(cleanVidTitle.replace(/\bACTUALLY\b/g, 'Actually').replace(/\bNOBODY\b/g, 'Nobody'), vid.channel);
+    if (sig.isClickbait) continue;
     const agoRaw = String(vid.publishedAgo || '');
     const dM = agoRaw.match(/(\d+)\s*d(?:ays?)?\s+ago/i);
     const hM = agoRaw.match(/(\d+)\s*h(?:ours?|rs?)?\s+ago/i);
@@ -2585,11 +2625,29 @@ async function main() {
           : mM
             ? Number(mM[1]) * 60_000
             : 3 * 3_600_000;
-    rawNewsStream.push({
+
+    const chStr = String(vid.channel || 'YouTube').trim();
+    const isOfficialTeamChannel = /^san francisco 49ers$/i.test(chStr);
+    const isNbcsbaChannel = /nbc sports bay area/i.test(chStr);
+    const matchedChRep = !isOfficialTeamChannel ? resolveReporterFromNameOrHandle(chStr) : null;
+    const validChRep = matchedChRep && !isPodiumSubjectId(matchedChRep.id) ? matchedChRep : null;
+    const resolvedOutletId = isOfficialTeamChannel
+      ? '49ers_official'
+      : isNbcsbaChannel
+        ? 'nbcsba'
+        : validChRep?.outletId || 'youtube_film';
+    const resolvedReporterId = isOfficialTeamChannel
+      ? '49ers_news'
+      : validChRep?.id || null;
+    const resolvedTrustTier = isOfficialTeamChannel || isNbcsbaChannel
+      ? 1
+      : validChRep?.trustTier || 2;
+
+    const vidDraft = {
       id: `yt_${vid.videoId}`,
       type: 'video',
       title: cleanVidTitle,
-      summary: `Video (${vid.duration || 'Clip'}) • ${vid.channel} • ${vid.publishedAgo || 'Recent'}`,
+      summary: `Video (${vid.duration || 'Clip'}) • ${chStr} • ${vid.publishedAgo || 'Recent'}`,
       imageUrl: vid.thumbnailUrl || `https://i.ytimg.com/vi/${vid.videoId}/hqdefault.jpg`,
       mentionedPlayers: matchMentionedPlayers(cleanVidTitle, 10),
       publishedAt: new Date(Date.now() - offsetMs).toISOString(),
@@ -2597,17 +2655,19 @@ async function main() {
       videoId: vid.videoId,
       embeddable: Boolean(vid.embeddable),
       duration: vid.duration,
-      outletId: vid.channel?.includes('49ers') ? '49ers_official' : 'youtube_film',
-      outletName: vid.channel,
-      reporterId: vid.channel?.includes('49ers') ? 'kyle_shanahan' : 'guy_haberman',
-      reporterName: vid.channel,
-      author: vid.channel,
-      isBreaking: false,
-      category: 'film',
-      signalScore: Math.max(68, sig.signalScore),
-      fluffScore: sig.fluffScore,
-      isClickbait: false
-    });
+      outletId: resolvedOutletId,
+      outletName: chStr,
+      reporterId: resolvedReporterId,
+      reporterName: chStr,
+      author: chStr,
+      trustTier: resolvedTrustTier,
+      isBreaking: false
+    };
+    vidDraft.category = classifyNewsItemCategory(vidDraft);
+    vidDraft.signalScore = Math.max(vidDraft.category === 'film' ? 84 : 68, sig.signalScore);
+    vidDraft.fluffScore = sig.fluffScore;
+    vidDraft.isClickbait = false;
+    rawNewsStream.push(vidDraft);
   }
 
   // Prune stale pre-game player availability items from completed games & sort breaking/post-game injury updates to #1!
@@ -2643,10 +2703,16 @@ async function main() {
   // First pass: map all multi-source tweets & articles in rawNewsStream to every mentioned player
   for (const item of rawNewsStream) {
     if (item.type === 'video' || item.isClickbait) continue;
+    const isPlayerWireBlurb = String(item.id || '').startsWith('espn_pwire_');
+    const primaryOwnerId = isPlayerWireBlurb ? String(item.mentionedPlayers?.[0]?.id || '') : '';
     for (const mp of item.mentionedPlayers || []) {
+      if (isPlayerWireBlurb && primaryOwnerId && String(mp.id) !== primaryOwnerId) {
+        continue;
+      }
       addMentionToPlayer(mp.id, {
         id: item.id,
         type: item.type === 'tweet' ? 'tweet' : 'article',
+        wireSource: item.wireSource || null,
         headline: item.title,
         fullText: item.type === 'tweet' ? item.fullText || item.title : null,
         isFullTweet: item.type === 'tweet' ? item.isFullTweet !== false : false,

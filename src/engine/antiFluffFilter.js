@@ -236,27 +236,39 @@ export function computeNewsSalienceScore(
     salience += 4;
   }
 
+  if (/\b(heavy on 49ers|heavy\.com|clutchpoints|athlon|yardbarker)\b/i.test(`${item.outletName || ''} ${item.url || ''}`)) {
+    salience -= 14;
+  }
+  if (item.storyTier === 'side_note') {
+    salience -= 16;
+  }
+
   const corroboration =
     Number(item.synthesizedFromCount) ||
+    Number(item.clusterSize) ||
+    (Array.isArray(item.confirmingReports) && item.confirmingReports.length > 0 ? item.confirmingReports.length + 1 : 0) ||
     Number(item.corroborationCount) ||
     (Array.isArray(item.corroboratedBy) ? item.corroboratedBy.length + 1 : 0) ||
     (Array.isArray(item.citedReporterIds) ? item.citedReporterIds.length : 0) ||
     (Array.isArray(item.mentionedPlayers) && item.mentionedPlayers.length > 0 ? 2 : 1);
-  salience += Math.min(14, Math.max(0, corroboration - 1) * 3);
+  salience += Math.min(16, Math.max(0, corroboration - 1) * 3.2);
 
   if (item.isInGameInjury) salience += 24;
   else if (item.breakingBadge === 'BREAKING') salience += 22;
   else if (item.isFirstMoverInjuryScoop || item.breakingBadge === 'TRADE INTEL') salience += 18;
+  else if (item.breakingBadge === 'ROSTER MOVE') salience += 14;
+  else if (item.breakingBadge === 'FILM & TRENCH' || item.category === 'film') salience += 11;
   else if (item.isBreaking) salience += 14;
   else if (/\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|mic'?d up)\b/i.test(`${title} ${body}`)) {
     salience += 10;
   }
 
-  const pubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;
+  const rawPubMs = item.publishedAt ? new Date(item.publishedAt).getTime() : NaN;
+  const pubMs = Number.isFinite(rawPubMs) ? Math.min(nowMs, rawPubMs) : NaN;
   if (Number.isFinite(pubMs) && halfLifeHours > 0) {
     const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
     const decayFactor = Math.pow(0.5, ageHours / halfLifeHours);
-    salience = salience * (0.68 + 0.32 * decayFactor);
+    salience = salience * (0.58 + 0.42 * decayFactor);
   }
 
   return Math.max(0, Math.min(100, Math.round(salience * 10) / 10));

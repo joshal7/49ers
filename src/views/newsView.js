@@ -13,6 +13,7 @@ import {
 import { iconSvg } from './icons.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
+  isUrgentBreakingBadge,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
@@ -198,8 +199,20 @@ export function renderNewsViewHtml({
     { appData }
   );
   const dedupedRaw = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritizedRaw), { appData });
-  const tweetCount = dedupedRaw.filter(i => i.type === 'tweet' || i.type === 'social').length;
-  const activeBreakingItems = dedupedRaw.filter(i => (i.breakingPriority || 0) > 0).slice(0, 3);
+  const dedupedTweets = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social'),
+    { preserveFormat: 'tweets' }
+  );
+  const dedupedArticles = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.type === 'article' || i.type === 'post'),
+    { preserveFormat: 'articles' }
+  );
+  const dedupedVideos = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.type === 'video'),
+    { preserveFormat: 'videos' }
+  );
+  const tweetCount = dedupedTweets.length;
+  const activeBreakingItems = dedupedRaw.filter(i => isUrgentBreakingBadge(i.breakingBadge)).slice(0, 3);
   const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'now';
 
   const topToolbar = `
@@ -468,14 +481,46 @@ export function renderNewsViewHtml({
     return `${topToolbar}${xBeatSearchStrip}${breakingAlertStrip}${clustersHtml}`;
   }
 
-  // Raw Stream Mode (Breaking-Prioritized Tweets, Articles & Videos)
-  const visibleRaw = dedupedRaw.filter(it => {
-    if (newsCategoryFilter === 'all') return true;
-    if (newsCategoryFilter === 'tweets') return it.type === 'tweet' || it.type === 'social';
-    if (newsCategoryFilter === 'articles') return it.type === 'article' || it.type === 'post';
-    if (newsCategoryFilter === 'videos') return it.type === 'video';
-    return it.category === newsCategoryFilter;
-  });
+  // Raw Stream Mode (StoryRank-Prioritized & Consolidated Stories, Tweets, Articles, Videos & All-22 Film)
+  const visibleRaw =
+    newsCategoryFilter === 'tweets'
+      ? balanceFeedTopSalience(dedupedTweets, { appData })
+      : newsCategoryFilter === 'articles'
+        ? balanceFeedTopSalience(dedupedArticles, { appData })
+        : newsCategoryFilter === 'videos'
+          ? dedupedVideos
+          : dedupedRaw.filter(it => {
+              if (newsCategoryFilter === 'all') return true;
+              return it.category === newsCategoryFilter;
+            });
+
+  const renderWireSignalBadgeHtml = (item, isVideo, isTweet) => {
+    const badge = item.breakingBadge || '';
+    if (badge && isUrgentBreakingBadge(badge)) {
+      const urgentCls = item.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill';
+      return `<span class="badge ${urgentCls}">${iconSvg('bolt', 11)}<span>${esc(badge)}</span></span>`;
+    }
+    if (badge === 'FILM & TRENCH' || (isVideo && item.category === 'film')) {
+      return `<span class="badge badge-positive">${iconSvg(isVideo ? 'video' : 'sparkles', 11)}<span>${isVideo ? 'All-22 Film' : 'Film & Trench'}</span></span>`;
+    }
+    if (badge === 'ROSTER MOVE' || badge === 'TRADE INTEL') {
+      return `<span class="badge badge-gold"><span>${esc(badge)}</span></span>`;
+    }
+    if (badge === 'INJURY SCOOP' || badge === 'INJURY UPDATE') {
+      return `<span class="badge badge-neutral"><span>${esc(badge)}</span></span>`;
+    }
+    if (isVideo) {
+      return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Video</span></span>`;
+    }
+    if (!isTweet) {
+      const artLabel =
+        item.wireSource === 'espn_player_wire' || String(item.id || '').startsWith('espn_pwire_')
+          ? 'Injury Wire'
+          : 'Article';
+      return `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${artLabel}</span></span>`;
+    }
+    return '';
+  };
 
   const rawListHtml =
     visibleRaw.length === 0
@@ -489,6 +534,7 @@ export function renderNewsViewHtml({
               const isVidOpen = vidKey && activeVideosSet.has(vidKey);
               const isTweet = item.type === 'tweet' || item.type === 'social';
               const isVideo = item.type === 'video';
+              const isUrgent = isUrgentBreakingBadge(item.breakingBadge);
 
               const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
               const resolvedItemUrl = isTweet
@@ -522,20 +568,24 @@ export function renderNewsViewHtml({
                 !isRedundantProfileSelfLink(safeExtUrl, item.url) &&
                 !/\bon X$/i.test(String(item.externalTitle || ''));
               const confirmingList = Array.isArray(item.confirmingReports) ? item.confirmingReports : [];
+              const relatedSourcesPreview =
+                confirmingList.length > 0
+                  ? Array.from(
+                      new Set(
+                        confirmingList
+                          .map(cr => cr.outletName || cr.author || cr.reporterName || '')
+                          .filter(s => s && s.toLowerCase() !== authorName.toLowerCase())
+                      )
+                    )
+                      .slice(0, 2)
+                      .join(', ')
+                  : '';
 
               return `
-                <div class="brief-card ${item.breakingPriority > 0 ? 'breaking-elevated' : ''}" data-raw-type="${esc(item.type || 'article')}">
+                <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
-                      ${
-                        item.breakingBadge
-                          ? `<span class="badge ${item.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill'}">${iconSvg('bolt', 11)}<span>${esc(item.breakingBadge)}</span></span>`
-                          : isVideo
-                            ? `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Video</span></span>`
-                            : !isTweet
-                              ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>Article</span></span>`
-                              : ''
-                      }
+                      ${renderWireSignalBadgeHtml(item, isVideo, isTweet)}
                       ${
                         authorHref
                           ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="wire-author-single-link" data-wire-author-link><strong>${esc(authorName)}</strong></a>`
@@ -557,14 +607,19 @@ export function renderNewsViewHtml({
                       ${
                         confirmingList.length > 0
                           ? `<details class="compact-details confirming-reports-toggle" data-confirming-reports>
-                               <summary class="compact-details-summary">+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}</summary>
-                               <div style="display:flex;flex-direction:column;gap:4px;margin-top:5px">
+                               <summary class="compact-details-summary" style="justify-content:space-between">
+                                 <span>+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}${relatedSourcesPreview ? ` · ${esc(relatedSourcesPreview)}` : ''}</span>
+                                 <span class="mono" style="font-size:10px;color:var(--text-muted)">Coverage ▾</span>
+                               </summary>
+                               <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
                                  ${confirmingList
-                                   .slice(0, 4)
+                                   .slice(0, 6)
                                    .map(cr => {
                                      const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
                                      const crBody = stripRedundantAuthorBoilerplate(cr.fullText || cr.title || '', crAuthor);
                                      const crIsTw = cr.type === 'tweet' || cr.type === 'social';
+                                     const crIsVid = cr.type === 'video' || Boolean(cr.videoId);
+                                     const crTypeTag = crIsVid ? 'Video' : crIsTw ? 'Tweet' : 'Article';
                                      const crHref = crIsTw
                                        ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
                                        : sanitizeExternalUrl(cr.url, '#');
@@ -572,7 +627,8 @@ export function renderNewsViewHtml({
                                        resolveItemAuthorProfileUrl(cr, crHref),
                                        crHref
                                      );
-                                     return `<div style="font-size:11.5px;color:var(--text-secondary)">
+                                     return `<div class="related-coverage-row">
+                                       <span class="badge badge-neutral" style="font-size:9.5px;padding:1px 5px">${esc(crTypeTag)}</span>
                                        ${
                                          crAuthorHref
                                            ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(crAuthor)}</strong></a>`

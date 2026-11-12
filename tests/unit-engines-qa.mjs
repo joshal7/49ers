@@ -1668,9 +1668,10 @@ await testAsync('Client-side Bluesky live wire hydrator strips paywalled externa
     const added = await hydrateLiveBlueskyBeatWire(liveTestData);
     assert.equal(added, 1);
     const post = liveTestData.news.rawStream[0];
-    assert.ok(
-      post.url.startsWith('https://x.com/search?q=from%3Amattbarrows') && post.url.includes('%22Purdy%22'),
-      `Expected Bluesky mirror post to resolve to X search URL for @mattbarrows, got: ${post.url}`
+    assert.equal(
+      post.url,
+      'https://bsky.app/profile/mattbarrows.bsky.social/post/paywallguard123',
+      `Expected Bluesky post permalink to be preserved directly rather than overwritten with a dead from:mattbarrows X search, got: ${post.url}`
     );
     assert.equal(post.authorProfileUrl, 'https://x.com/mattbarrows');
     assert.equal(post.externalUrl, null, 'Paywalled NYT/Athletic externalUrl must be stripped');

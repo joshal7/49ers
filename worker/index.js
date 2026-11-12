@@ -518,6 +518,69 @@ export default {
       );
     }
 
+    if (request.method === 'GET' && url.pathname === '/api/live-wire') {
+      const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v1', 'json');
+      if (cachedWire && Array.isArray(cachedWire.items)) {
+        return jsonResponse({ cached: true, ...cachedWire }, 200, cors);
+      }
+
+      const rssSources = [
+        { outletId: 'pfrumors', outletName: 'Pro Football Rumors', url: 'https://www.profootballrumors.com/san-francisco-49ers/feed', sfOnly: false },
+        { outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1', sfOnly: false },
+        { outletId: '49ers_official', outletName: '49ers.com Official', url: 'https://www.49ers.com/rss/news', sfOnly: false },
+        { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', sfOnly: false },
+        { outletId: 'sf_standard', outletName: 'The SF Standard', url: 'https://www.sfstandard.com/sports/feed/', sfOnly: true }
+      ];
+
+      const decodeBasic = str =>
+        String(str || '')
+          .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/&amp;/g, '&')
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;|&apos;/g, "'")
+          .replace(/\s+/g, ' ')
+          .trim();
+
+      const items = [];
+      await Promise.all(
+        rssSources.map(async src => {
+          try {
+            const r = await fetch(src.url, { headers: { 'User-Agent': '49ersFaithfulEdge/1.0' } });
+            if (!r.ok) return;
+            const xml = await r.text();
+            const blocks = xml.match(/<item\b[\s\S]*?<\/item>/gi) || [];
+            for (const block of blocks.slice(0, 8)) {
+              const title = decodeBasic((block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+              const summary = decodeBasic((block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 240);
+              const link = decodeBasic((block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+              const pubRaw = decodeBasic((block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+              if (!title || !/^https:\/\//i.test(link)) continue;
+              if (src.sfOnly && !/\b(49ers|niners|san francisco|shanahan|purdy|bosa|mccaffrey|kittle)\b/i.test(`${title} ${summary}`)) {
+                continue;
+              }
+              const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+              items.push({
+                type: 'article',
+                title,
+                summary,
+                url: link,
+                outletId: src.outletId,
+                outletName: src.outletName,
+                publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(Date.now(), pubMs)).toISOString() : new Date().toISOString()
+              });
+            }
+          } catch {}
+        })
+      );
+
+      const payload = { updatedAt: new Date().toISOString(), items };
+      if (env.SHARED_CACHE && items.length > 0) {
+        await env.SHARED_CACHE.put('wire:rss_live_v1', JSON.stringify(payload), { expirationTtl: 60 });
+      }
+      return jsonResponse({ cached: false, ...payload }, 200, cors);
+    }
+
     // Authenticate sync passcode on API endpoints
     const providedPasscode = request.headers.get('X-Group-Passcode') || '';
     if (env.GROUP_PASSCODE && providedPasscode !== env.GROUP_PASSCODE) {

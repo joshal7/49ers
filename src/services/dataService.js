@@ -24,11 +24,13 @@ import {
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   classifyBreakingItem,
+  classifyNewsItemCategory,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
   isStaleCompletedGameAvailabilityItem,
   filterOutCompletedGameAvailabilityItems,
-  filterAndCleanSynthesisClusters
+  filterAndCleanSynthesisClusters,
+  stripRedundantAuthorBoilerplate
 } from '../engine/breakingClassifier.js';
 import {
   evaluateGameDayWindow,
@@ -39,6 +41,7 @@ import {
   resolveEarlyWeekRolloverInput
 } from '../engine/gameDayRosterEngine.js';
 import {
+  buildEspnPlayerNewsAnchorUrl,
   buildEspnPlayerUrl,
   buildEspnTeamInjuriesUrl,
   buildEspnTeamLogoUrl,
@@ -49,6 +52,7 @@ import {
 import {
   buildTargetedOriginalTweetUrl,
   extractBeatAttributionFromText,
+  isDirectSocialPostUrl,
   isEspnPlayerProfileUrl,
   isPodiumSubjectId,
   resolveItemAuthorProfileUrl,
@@ -103,7 +107,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@timkawakami',
     outletId: 'sf_standard',
     outletName: 'The SF Standard',
-    isNationalInsider: false
+    isNationalInsider: true
   },
   {
     actor: 'nbcs49ers.bsky.social',
@@ -166,6 +170,25 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@TomPelissero',
     outletId: 'nfl_network',
     outletName: 'NFL Network',
+    isNationalInsider: true
+  },
+  {
+    actor: 'diannarussini.bsky.social',
+    reporterId: 'dianna_russini',
+    reporterName: 'Dianna Russini',
+    authorHandle: '@DMRussini',
+    outletId: 'athletic',
+    outletName: 'The Athletic',
+    isNationalInsider: true
+  },
+  {
+    actor: 'profootballtalk.bsky.social',
+    reporterId: 'mike_florio',
+    reporterName: 'ProFootballTalk',
+    authorHandle: '@ProFootballTalk',
+    authorProfileUrl: 'https://x.com/ProFootballTalk',
+    outletId: 'nfl_network',
+    outletName: 'NBC ProFootballTalk',
     isNationalInsider: true
   },
   {
@@ -517,7 +540,7 @@ function hydrateBundlePostLoad(rawFiles) {
   const bootCtxStub = { meta, scheduleMatchup };
   const directPosts = Array.isArray(news?.rawStream)
     ? news.rawStream.filter(
-        it => (it?.type === 'tweet' || it?.type === 'social') && /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com)\//i.test(String(it?.url || ''))
+        it => (it?.type === 'tweet' || it?.type === 'social') && isDirectSocialPostUrl(String(it?.url || ''))
       )
     : [];
   if (news && Array.isArray(news.rawStream)) {
@@ -543,6 +566,12 @@ function hydrateBundlePostLoad(rawFiles) {
       if (Array.isArray(p.recentNews)) {
         p.recentNews = p.recentNews
           .filter(rn => {
+            if (String(rn?.id || '').startsWith('espn_pwire_')) {
+              const ownerId = String(rn.id).split('_')[2] || '';
+              if (ownerId && /^\d+$/.test(ownerId) && /^\d+$/.test(String(p.id || '')) && ownerId !== String(p.id)) {
+                return false;
+              }
+            }
             const body = `${rn?.fullText || ''} ${rn?.title || ''} ${rn?.headline || ''} ${rn?.summary || ''}`.trim();
             return body && doesClauseMentionPlayer(body, p.name, { allowSurname: true });
           })
@@ -752,7 +781,11 @@ const AMBIGUOUS_BEAT_SURNAMES = new Set([
   'campbell',
   'collins',
   'turner',
-  'walker'
+  'walker',
+  'kirk',
+  'allen',
+  'neal',
+  'black'
 ]);
 
 function escapeClientRegex(s = '') {
@@ -904,7 +937,7 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
   await Promise.all(
     LIVE_BLUESKY_BEAT_ACCOUNTS.map(async acct => {
       try {
-        const limit = acct.isNationalInsider ? 10 : 6;
+        const limit = acct.isNationalInsider ? 25 : 10;
         const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acct.actor)}&limit=${limit}&filter=posts_no_replies`;
         const res = await fetch(apiUrl, { cache: 'no-store' });
         if (!res.ok) return;
@@ -913,12 +946,12 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
           if (row.reason) continue;
           const post = row.post;
           const rec = post?.record;
-          const rawOrig = String(rec?.text || '').replace(/\s+/g, ' ').trim();
+          const extEmbed = post?.embed?.external || rec?.embed?.external || null;
+          const rawOrig = String(rec?.text || extEmbed?.title || '').replace(/\s+/g, ' ').trim();
           if (!rawOrig || rawOrig.length < 18) continue;
 
           const parsedAttr = extractBeatAttributionFromText(rawOrig, acct);
           const cleanFull = cleanSensationalistText(parsedAttr.cleanedText || rawOrig);
-          const extEmbed = post?.embed?.external || rec?.embed?.external || null;
           const combinedCheck = `${cleanFull} ${extEmbed?.title || ''}`;
           const hasExplicitSfKeyword = sfKeywordsRe.test(combinedCheck);
           const mentioned = matchPlayersClient(combinedCheck, rosterPlayers, 12, {
@@ -952,13 +985,23 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
 
           const imgThumb = post?.embed?.images?.[0]?.thumb || extEmbed?.thumb || '';
           const safeExtUrl = sanitizeExternalUrl(extEmbed?.uri, null);
-          const postUrl = buildTargetedOriginalTweetUrl({
-            authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
-            authorName: parsedAttr.reporterName || acct.reporterName || '',
-            playerName: mentioned[0]?.name || '',
-            text: cleanFull,
-            publishedAt: pubIso
-          });
+          const postHandle = post?.author?.handle || acct.actor;
+          const bskyPermalink = `https://bsky.app/profile/${postHandle}/post/${rkey}`;
+          const postUrl = resolveOriginalTweetUrl(
+            {
+              type: 'tweet',
+              url: bskyPermalink,
+              author: parsedAttr.reporterName,
+              reporterId: parsedAttr.reporterId,
+              reporterName: parsedAttr.reporterName,
+              authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
+              mentionedPlayers: mentioned,
+              fullText: cleanFull,
+              title: cleanFull,
+              publishedAt: pubIso
+            },
+            appData.news.rawStream
+          );
 
           existingIds.add(postId);
           existingTextKeys.add(textKey);
@@ -992,10 +1035,12 @@ export async function hydrateLiveBlueskyBeatWire(appData) {
             isInGameInjury: brk.isInGameInjury,
             breakingBadge: brk.breakingBadge,
             breakingPriority: brk.breakingPriority,
-            category:
-              brk.isInGameInjury || /injur|practice|questionable|ruled out|tent|locker room|return/i.test(cleanFull)
-                ? 'injury'
-                : 'beat',
+            category: classifyNewsItemCategory({
+              type: 'tweet',
+              title: tweetDisplay.text,
+              fullText: cleanFull,
+              summary: safeExtUrl && extEmbed?.title ? cleanSensationalistText(extEmbed.title) : ''
+            }),
             signalScore: Math.max(brk.isBreaking ? 92 : 76, sig.signalScore),
             fluffScore: sig.fluffScore,
             isClickbait: false
@@ -1090,6 +1135,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
   }
 
   const cohort = [...priorityCohort, ...sweepCohort];
+  const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
   const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
   const existingTextKeys = new Set(
     appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
@@ -1150,15 +1196,17 @@ export async function hydrateLiveEspnPlayerBeatWire(
           const isDirectArticleOrClip =
             Boolean(directWebUrl) &&
             !isEspnPlayerProfileUrl(directWebUrl) &&
-            /\/(nfl\/story|video\/clip)\/_\/id\/\d+/i.test(directWebUrl);
+            /\/nfl\/story\/_\/id\/\d+/i.test(directWebUrl);
           const isPlayerBlurb =
             !isDirectArticleOrClip &&
             (Boolean(entry.story) || entry.type === 'PlayerNews' || entry.type === 'Rotowire' || !directWebUrl || isEspnPlayerProfileUrl(directWebUrl));
-          const itemUrl = isPlayerBlurb
+          const pubIsoStr = new Date(pubMs).toISOString();
+          const isStructuredWireStory = Boolean(rawStory && rawStory.length >= 80);
+          const candidateDirectSocialUrl = isPlayerBlurb && !isStructuredWireStory
             ? resolveOriginalTweetUrl(
                 {
                   type: 'tweet',
-                  url: directWebUrl || '',
+                  url: '',
                   author: parsedAttr.author,
                   reporterId: parsedAttr.reporterId,
                   reporterName: parsedAttr.reporterName,
@@ -1166,13 +1214,36 @@ export async function hydrateLiveEspnPlayerBeatWire(
                   primaryPlayer: player,
                   fullText: cleanFull,
                   title: cleanFull,
-                  publishedAt: new Date(pubMs).toISOString()
+                  publishedAt: pubIsoStr
                 },
                 appData.news.rawStream
               )
+            : null;
+          const hasVerifiedDirectPost = Boolean(
+            candidateDirectSocialUrl && isDirectSocialPostUrl(candidateDirectSocialUrl)
+          );
+          const effectiveType = isPlayerBlurb && hasVerifiedDirectPost ? 'tweet' : 'article';
+          const cleanLeadSentence = stripRedundantAuthorBoilerplate(
+            rawDesc || rawHeadline || leadText,
+            parsedAttr.author
+          );
+          const itemUrl = isPlayerBlurb
+            ? hasVerifiedDirectPost
+              ? candidateDirectSocialUrl
+              : buildEspnPlayerNewsAnchorUrl(player.id, player.name, rawDesc || rawHeadline)
             : directWebUrl;
+          const itemId = `espn_pwire_${player.id}_${wireIdToken}`;
           const textKey = cleanFull.toLowerCase().slice(0, 90);
-          if (!itemUrl || existingTextKeys.has(textKey)) continue;
+          const leadKey = (cleanLeadSentence || '').toLowerCase().slice(0, 90);
+          if (
+            !itemUrl ||
+            existingIds.has(itemId) ||
+            existingUrls.has(itemUrl) ||
+            existingTextKeys.has(textKey) ||
+            (leadKey && existingTextKeys.has(leadKey))
+          ) {
+            continue;
+          }
 
           const sig = scoreContentSignal(cleanFull, rawStory);
           if (sig.isClickbait) continue;
@@ -1186,45 +1257,54 @@ export async function hydrateLiveEspnPlayerBeatWire(
             jersey: player.jersey,
             headshotUrl: player.headshotUrl || ''
           };
-          const mentioned = [
-            primaryMention,
-            ...matchedOthers.filter(m => String(m.id) !== String(player.id))
-          ];
+          const mentioned =
+            effectiveType === 'tweet'
+              ? [primaryMention, ...matchedOthers.filter(m => String(m.id) !== String(player.id))]
+              : [primaryMention];
 
           const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
           const pwireCand = {
-            type: isPlayerBlurb ? 'tweet' : 'article',
-            title: isPlayerBlurb ? tweetDisplay.text : rawHeadline || tweetDisplay.text,
-            fullText: isPlayerBlurb ? cleanFull : undefined,
+            type: effectiveType,
+            title:
+              effectiveType === 'tweet'
+                ? tweetDisplay.text
+                : cleanLeadSentence || rawHeadline || tweetDisplay.text,
+            fullText: effectiveType === 'tweet' ? cleanFull : undefined,
             summary: rawStory || rawDesc,
-            publishedAt: pubIso
+            publishedAt: pubIsoStr
           };
           if (isStaleCompletedGameAvailabilityItem(pwireCand, appData)) continue;
           const brk = classifyBreakingItem(pwireCand, Date.now(), { appData });
 
+          existingIds.add(itemId);
           existingUrls.add(itemUrl);
           existingTextKeys.add(textKey);
+          if (leadKey) existingTextKeys.add(leadKey);
 
           discovered.push({
-            id: `espn_pwire_${player.id}_${wireIdToken}`,
-            type: isPlayerBlurb ? 'tweet' : 'article',
-            title: isPlayerBlurb ? tweetDisplay.text : rawHeadline || tweetDisplay.text,
-            fullText: isPlayerBlurb ? cleanFull : undefined,
-            isFullTweet: isPlayerBlurb ? tweetDisplay.isFullTweet : undefined,
-            summary: isPlayerBlurb
-              ? rawStory && rawStory !== cleanFull
-                ? rawStory
-                : ''
-              : rawDesc,
+            id: itemId,
+            type: effectiveType,
+            title:
+              effectiveType === 'tweet'
+                ? tweetDisplay.text
+                : cleanLeadSentence || rawHeadline || tweetDisplay.text,
+            fullText: effectiveType === 'tweet' ? cleanFull : undefined,
+            isFullTweet: effectiveType === 'tweet' ? tweetDisplay.isFullTweet : undefined,
+            summary:
+              effectiveType === 'tweet'
+                ? rawStory && rawStory !== cleanFull
+                  ? rawStory
+                  : ''
+                : rawStory || (rawDesc !== cleanLeadSentence ? rawDesc : ''),
             imageUrl: player.headshotUrl?.startsWith('https://') ? player.headshotUrl : '',
             imageAlt: `${player.name} beat update`,
             mentionedPlayers: mentioned,
-            publishedAt: new Date(pubMs).toISOString(),
+            publishedAt: pubIsoStr,
             url: itemUrl,
             externalUrl: null,
             externalTitle: null,
             outletId: parsedAttr.outletId || 'espn',
-            outletName: parsedAttr.outletName || 'ESPN / X Beat Wire',
+            outletName: parsedAttr.outletName || 'ESPN Injury Wire',
             reporterId: parsedAttr.reporterId,
             reporterName: parsedAttr.reporterName,
             author: parsedAttr.author,
@@ -1274,6 +1354,7 @@ export async function hydrateLiveRotoWireBeatRss(appData) {
     if (!xml || !xml.includes('<item')) return 0;
 
     const rosterPlayers = appData.roster?.players || [];
+    const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
     const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
     const existingTextKeys = new Set(
       appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
@@ -1307,14 +1388,29 @@ export async function hydrateLiveRotoWireBeatRss(appData) {
 
       const bodyText = cleanSensationalistText(rawDesc || rawTitle);
       const guidHash = hashWireKey(rawGuid || `${rawTitle}_${rawPub}`);
-      const safeUrl =
-        sanitizeExternalUrl(rawLink, null) ||
-        `https://www.rotowire.com/football/news.php#sf-${guidHash}`;
-      const textKey = bodyText.toLowerCase().slice(0, 90);
-      if (existingUrls.has(safeUrl) || existingTextKeys.has(textKey)) continue;
-
       const pubMs = rawPub ? new Date(rawPub).getTime() : Date.now();
       const pubIso = Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString();
+      const directRwUrl = sanitizeExternalUrl(rawLink, null);
+      const fallbackRwUrl = exactRosterMatches[0]?.id
+        ? buildEspnPlayerNewsAnchorUrl(exactRosterMatches[0].id, exactRosterMatches[0].name, rawDesc || rawTitle)
+        : resolveOriginalTweetUrl(
+            {
+              type: 'tweet',
+              url: '',
+              author: parsedAttr.author,
+              reporterId: parsedAttr.reporterId,
+              authorHandle: parsedAttr.authorHandle,
+              mentionedPlayers: exactRosterMatches,
+              fullText: bodyText,
+              title: bodyText,
+              publishedAt: pubIso
+            },
+            appData.news.rawStream
+          );
+      const safeUrl = directRwUrl || sanitizeExternalUrl(fallbackRwUrl, null);
+      const rwItemId = `rw_live_${guidHash}`;
+      const textKey = bodyText.toLowerCase().slice(0, 90);
+      if (!safeUrl || existingIds.has(rwItemId) || existingUrls.has(safeUrl) || existingTextKeys.has(textKey)) continue;
       const tweetDisplay = formatTweetBodyForDisplay(bodyText, SHORT_TWEET_FULL_TEXT_LIMIT);
       const rwCand = {
         type: 'tweet',
@@ -1326,14 +1422,16 @@ export async function hydrateLiveRotoWireBeatRss(appData) {
       if (isStaleCompletedGameAvailabilityItem(rwCand, appData)) continue;
       const brk = classifyBreakingItem(rwCand, Date.now(), { appData });
 
+      const rwType = isEspnPlayerProfileUrl(safeUrl) ? 'article' : 'tweet';
+      existingIds.add(rwItemId);
       existingUrls.add(safeUrl);
       existingTextKeys.add(textKey);
       discovered.push({
-        id: `rw_live_${guidHash}`,
-        type: 'tweet',
+        id: rwItemId,
+        type: rwType,
         title: tweetDisplay.text,
-        fullText: bodyText,
-        isFullTweet: tweetDisplay.isFullTweet,
+        fullText: rwType === 'tweet' ? bodyText : undefined,
+        isFullTweet: rwType === 'tweet' ? tweetDisplay.isFullTweet : undefined,
         summary: rawTitle && rawTitle !== bodyText ? cleanSensationalistText(rawTitle) : '',
         imageUrl: exactRosterMatches[0]?.headshotUrl || '',
         imageAlt: `${parsedAttr.reporterName} beat report`,
@@ -1393,6 +1491,7 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
     if (txList.length === 0) return 0;
 
     const rosterPlayers = appData.roster?.players || [];
+    const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
     const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
     const existingTextKeys = new Set(
       appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
@@ -1448,11 +1547,11 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
         authorProfileUrl: 'https://x.com/49ers',
         trustTier: 1,
         wireSource: 'official_transactions',
-        isBreaking: brk.isBreaking || nowMs - pubMs <= 18 * 3_600_000,
+        isBreaking: brk.isBreaking,
         isInGameInjury: brk.isInGameInjury,
         breakingBadge: brk.breakingBadge || (nowMs - pubMs <= 18 * 3_600_000 ? 'ROSTER MOVE' : null),
-        breakingPriority: Math.max(brk.breakingPriority || 0, nowMs - pubMs <= 18 * 3_600_000 ? 74 : 0),
-        category: /injured reserve|\bir\b|waived\/injured|physically unable/i.test(desc) ? 'injury' : 'roster',
+        breakingPriority: brk.breakingPriority || 0,
+        category: classifyNewsItemCategory({ type: 'tweet', title: tweetDisplay.text, fullText: fullLine }),
         signalScore: 95,
         fluffScore: 0,
         isClickbait: false
@@ -1470,17 +1569,202 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
 }
 
 /**
+ * Polls ESPN's CORS-enabled Rapid NFL Breaking Headlines & League-Wide Transaction Wire
+ * (`news?limit=35`, `news?team=25&limit=18`, `transactions?limit=35`) every sub-minute cycle
+ * so cross-team trades & acquisitions (e.g. Keenan Allen traded from Colts to 49ers) surface
+ * immediately at #1 BEFORE the player is added to `roster.json` or tagged under `team=25`.
+ */
+export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5 } = {}) {
+  if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  try {
+    const [nflNewsRes, sfNewsRes, nflTxRes] = await Promise.all([
+      fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=35', { cache: 'no-store' }).catch(
+        () => null
+      ),
+      fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=18', {
+        cache: 'no-store'
+      }).catch(() => null),
+      fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?limit=35', {
+        cache: 'no-store'
+      }).catch(() => null)
+    ]);
+
+    const [nflNewsJson, sfNewsJson, nflTxJson] = await Promise.all([
+      nflNewsRes?.ok ? nflNewsRes.json().catch(() => null) : Promise.resolve(null),
+      sfNewsRes?.ok ? sfNewsRes.json().catch(() => null) : Promise.resolve(null),
+      nflTxRes?.ok ? nflTxRes.json().catch(() => null) : Promise.resolve(null)
+    ]);
+
+    const rosterPlayers = appData.roster?.players || [];
+    const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
+    const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
+    const existingTextKeys = new Set(
+      appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
+    );
+    const sfTeamRe = /\b(49ers|niners|san francisco)\b/i;
+    const nowMs = Date.now();
+    const maxAgeMs = maxAgeDays * 86_400_000;
+    const discovered = [];
+
+    const allArticles = [
+      ...(Array.isArray(sfNewsJson?.articles) ? sfNewsJson.articles.map(a => ({ ...a, _isSfFeed: true })) : []),
+      ...(Array.isArray(nflNewsJson?.articles) ? nflNewsJson.articles.map(a => ({ ...a, _isSfFeed: false })) : [])
+    ];
+
+    for (const art of allArticles) {
+      if (!art || art.premium) continue;
+      const title = cleanSensationalistText(art.headline || '');
+      const summary = cleanSensationalistText(art.description || '');
+      if (!title) continue;
+      const combined = `${title} ${summary}`;
+      if (!art._isSfFeed && !sfTeamRe.test(combined)) continue;
+
+      const pubMs = art.published ? new Date(art.published).getTime() : 0;
+      if (!pubMs || Number.isNaN(pubMs) || nowMs - pubMs > maxAgeMs) continue;
+
+      const url = sanitizeExternalUrl(art.links?.web?.href, null);
+      const textKey = title.toLowerCase().slice(0, 90);
+      if (!url || existingUrls.has(url) || existingTextKeys.has(textKey)) continue;
+
+      const mentioned = matchPlayersClient(combined, rosterPlayers, 12);
+      if (isOffTopicLeagueFiller({ url, title, summary, hasRosterMatch: mentioned.length > 0 || sfTeamRe.test(title) })) {
+        continue;
+      }
+      const sig = scoreContentSignal(title, summary);
+      if (sig.isClickbait) continue;
+
+      const pubIso = new Date(pubMs).toISOString();
+      if (isStaleCompletedGameAvailabilityItem({ type: 'article', title, summary, publishedAt: pubIso }, appData)) {
+        continue;
+      }
+
+      const bylineClean = art.byline
+        ? cleanSensationalistText(String(art.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim())
+        : 'ESPN';
+      const rawDirEntry = resolveReporterFromNameOrHandle(bylineClean);
+      const dirEntry = rawDirEntry && !isPodiumSubjectId(rawDirEntry.id) ? rawDirEntry : null;
+      const brk = classifyBreakingItem({ type: 'article', title, summary, publishedAt: pubIso }, nowMs, { appData });
+      let imgUrl = art.images?.[0]?.url || '';
+      if (imgUrl.startsWith('http://')) imgUrl = `https://${imgUrl.slice(7)}`;
+
+      existingUrls.add(url);
+      existingTextKeys.add(textKey);
+      const itemDraft = {
+        id: `espn_rapid_${art.id || hashWireKey(url)}`,
+        type: 'article',
+        title,
+        summary,
+        imageUrl: imgUrl.startsWith('https://') ? imgUrl : '',
+        imageAlt: title,
+        mentionedPlayers: mentioned,
+        publishedAt: pubIso,
+        url,
+        outletId: dirEntry?.outletId || 'espn',
+        outletName: 'ESPN',
+        reporterId: dirEntry?.id || (/schefter/i.test(bylineClean) ? 'adam_schefter' : null),
+        reporterName: bylineClean,
+        author: bylineClean,
+        authorHandle: dirEntry?.handle || '',
+        authorProfileUrl: dirEntry?.xUrl || null,
+        trustTier: 1,
+        wireSource: 'espn_rapid_desk',
+        isBreaking: brk.isBreaking,
+        isInGameInjury: brk.isInGameInjury,
+        breakingBadge: brk.breakingBadge,
+        breakingPriority: brk.breakingPriority,
+        category: classifyNewsItemCategory({ type: 'article', title, summary }),
+        signalScore: Math.max(brk.isBreaking ? 95 : 78, sig.signalScore),
+        fluffScore: sig.fluffScore,
+        isClickbait: false
+      };
+      itemDraft.authorProfileUrl = resolveItemAuthorProfileUrl(itemDraft, url);
+      discovered.push(itemDraft);
+    }
+
+    for (const tx of Array.isArray(nflTxJson?.transactions) ? nflTxJson.transactions : []) {
+      const desc = cleanSensationalistText(String(tx?.description || '').trim());
+      const teamAbbr = String(tx?.team?.abbreviation || '').toUpperCase();
+      if (!desc || (teamAbbr !== 'SF' && !sfTeamRe.test(desc))) continue;
+      const pubMs = tx.date ? new Date(tx.date).getTime() : 0;
+      if (!pubMs || Number.isNaN(pubMs) || nowMs - pubMs > maxAgeMs) continue;
+
+      const fullLine = /^49ers\b|^San Francisco\b/i.test(desc) ? desc : `49ers roster move: ${desc}`;
+      const txHash = hashWireKey(`${tx.date}_${desc}`);
+      const txUrl = `https://www.49ers.com/team/transactions/#tx-${txHash}`;
+      const textKey = fullLine.toLowerCase().slice(0, 90);
+      if (existingUrls.has(txUrl) || existingTextKeys.has(textKey)) continue;
+
+      const mentioned = matchPlayersClient(desc, rosterPlayers, 8);
+      const pubIso = new Date(pubMs).toISOString();
+      const tweetDisplay = formatTweetBodyForDisplay(fullLine, SHORT_TWEET_FULL_TEXT_LIMIT);
+      const brk = classifyBreakingItem(
+        { type: 'tweet', title: tweetDisplay.text, fullText: fullLine, publishedAt: pubIso },
+        nowMs,
+        { appData }
+      );
+
+      existingUrls.add(txUrl);
+      existingTextKeys.add(textKey);
+      discovered.push({
+        id: `sf_nfltx_live_${txHash}`,
+        type: 'tweet',
+        title: tweetDisplay.text,
+        fullText: fullLine,
+        isFullTweet: tweetDisplay.isFullTweet,
+        summary: '',
+        imageUrl: mentioned[0]?.headshotUrl || '',
+        imageAlt: 'San Francisco 49ers transaction',
+        mentionedPlayers: mentioned,
+        publishedAt: pubIso,
+        url: txUrl,
+        externalUrl: null,
+        externalTitle: null,
+        outletId: '49ers_official',
+        outletName: '49ers.com Official',
+        reporterId: '49ers_news',
+        reporterName: 'San Francisco 49ers Official',
+        author: 'San Francisco 49ers Official',
+        authorHandle: '@49ers',
+        authorProfileUrl: 'https://x.com/49ers',
+        trustTier: 1,
+        wireSource: 'official_transactions',
+        isBreaking: brk.isBreaking,
+        isInGameInjury: brk.isInGameInjury,
+        breakingBadge: brk.breakingBadge,
+        breakingPriority: brk.breakingPriority,
+        category: classifyNewsItemCategory({ type: 'tweet', title: tweetDisplay.text, fullText: fullLine }),
+        signalScore: 95,
+        fluffScore: 0,
+        isClickbait: false
+      });
+    }
+
+    if (discovered.length > 0) {
+      appData.news.rawStream = sortNewsWithBreakingPriority([...discovered, ...appData.news.rawStream], nowMs, { appData });
+      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers);
+    }
+    return discovered.length;
+  } catch {
+    return 0;
+  }
+}
+
+/**
  * Unified Multi-Source Sub-Minute Beat & Injury Wire Orchestrator.
  * Simultaneously polls:
  * 1. ESPN X-Beat Player Wire (24/7 beat tweet extraction for Priority Injured/Core + Rotating Roster Sweep)
  * 2. RotoWire Live NFL RSS (sub-minute pregame warmup & sideline status updates)
  * 3. Official 49ers NFL Transaction Wire (IR activations, 21-day windows, signings, trades)
- * 4. Beat & Insider Social Mirrors (Bluesky public XRPC)
+ * 4. Beat & Insider Social Mirrors (Bluesky public XRPC — 25-post insider window)
+ * 5. ESPN Rapid NFL Breaking Desk & League-Wide Transactions (catches cross-team trades to SF in <45s!)
  * Then cross-corroborates stories across reporters, elevating First-Mover Injury Scoops & Tier-1 confirmations.
  */
 export async function hydrateLiveMultiSourceBeatWire(appData, { isGameLive = false } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) {
-    return { totalAdded: 0, bySource: { espnPlayerWire: 0, rotowireRss: 0, transactions: 0, bluesky: 0 } };
+    return {
+      totalAdded: 0,
+      bySource: { espnPlayerWire: 0, rotowireRss: 0, transactions: 0, bluesky: 0, espnRapidDesk: 0 }
+    };
   }
 
   const results = await Promise.allSettled([
@@ -1490,7 +1774,8 @@ export async function hydrateLiveMultiSourceBeatWire(appData, { isGameLive = fal
     }),
     hydrateLiveRotoWireBeatRss(appData),
     hydrateLiveTeamTransactionsWire(appData),
-    hydrateLiveBlueskyBeatWire(appData)
+    hydrateLiveBlueskyBeatWire(appData),
+    hydrateLiveEspnRapidBreakingDesk(appData)
   ]);
 
   const val = idx => (results[idx]?.status === 'fulfilled' ? Number(results[idx].value || 0) : 0);
@@ -1498,9 +1783,15 @@ export async function hydrateLiveMultiSourceBeatWire(appData, { isGameLive = fal
     espnPlayerWire: val(0),
     rotowireRss: val(1),
     transactions: val(2),
-    bluesky: val(3)
+    bluesky: val(3),
+    espnRapidDesk: val(4)
   };
-  const totalAdded = bySource.espnPlayerWire + bySource.rotowireRss + bySource.transactions + bySource.bluesky;
+  const totalAdded =
+    bySource.espnPlayerWire +
+    bySource.rotowireRss +
+    bySource.transactions +
+    bySource.bluesky +
+    bySource.espnRapidDesk;
 
   // Run cross-source corroboration, completed-game availability pruning & breaking/first-mover re-ranking across the combined stream
   appData.news.rawStream = sortNewsWithBreakingPriority(

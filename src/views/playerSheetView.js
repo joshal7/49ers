@@ -15,6 +15,7 @@ import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionL
 import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
+  isUrgentBreakingBadge,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   stripRedundantAuthorBoilerplate,
@@ -79,8 +80,16 @@ export function renderInjuryNewsItemCardHtml(
       ? stripRedundantAuthorBoilerplate(n.summary, authorName)
       : '';
 
+  const isUrgentCard = isUrgentBreakingBadge(n.breakingBadge);
+  const cardBadgeCls = n.isInGameInjury
+    ? 'badge-danger live-breaking-pill'
+    : isUrgentCard
+      ? 'badge-scarlet live-breaking-pill'
+      : n.breakingBadge === 'ROSTER MOVE' || n.breakingBadge === 'TRADE INTEL'
+        ? 'badge-gold'
+        : 'badge-neutral';
   const breakingPill = n.breakingBadge
-    ? `<span class="badge ${n.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill'}">${iconSvg('bolt', 11)}<span>${esc(n.breakingBadge)}</span></span>`
+    ? `<span class="badge ${cardBadgeCls}">${isUrgentCard ? iconSvg('bolt', 11) : ''}<span>${esc(n.breakingBadge)}</span></span>`
     : '';
 
   const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
@@ -93,12 +102,17 @@ export function renderInjuryNewsItemCardHtml(
   const confirmingList = Array.isArray(n.confirmingReports) ? n.confirmingReports : [];
   const headlineText = n.headline || n.title || '';
 
+  const nonTweetBadgeLabel =
+    n.wireSource === 'espn_player_wire' || String(n.id || '').startsWith('espn_pwire_')
+      ? 'Injury Wire'
+      : 'Article';
+
   return `
-    <div class="player-mention-card ${esc(outerClassName)} ${n.breakingPriority > 0 ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
+    <div class="player-mention-card ${esc(outerClassName)} ${isUrgentCard ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
       <div class="player-mention-meta">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
           ${breakingPill}
-          ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>Article</span></span>` : ''}
+          ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${esc(nonTweetBadgeLabel)}</span></span>` : ''}
           <span class="player-mention-author">
             ${
               authorHref
@@ -290,8 +304,16 @@ function renderOverviewTab(p, rawStream = [], appData = null) {
                     ? stripRedundantAuthorBoilerplate(n.summary, authorName)
                     : '';
 
+                const isUrgentMention = isUrgentBreakingBadge(n.breakingBadge);
+                const mentionBadgeCls = n.isInGameInjury
+                  ? 'badge-danger live-breaking-pill'
+                  : isUrgentMention
+                    ? 'badge-scarlet live-breaking-pill'
+                    : n.breakingBadge === 'ROSTER MOVE' || n.breakingBadge === 'TRADE INTEL'
+                      ? 'badge-gold'
+                      : 'badge-neutral';
                 const breakingPill = n.breakingBadge
-                  ? `<span class="badge ${n.isInGameInjury ? 'badge-danger live-breaking-pill' : 'badge-scarlet live-breaking-pill'}">${iconSvg('bolt', 11)}<span>${esc(n.breakingBadge)}</span></span>`
+                  ? `<span class="badge ${mentionBadgeCls}">${isUrgentMention ? iconSvg('bolt', 11) : ''}<span>${esc(n.breakingBadge)}</span></span>`
                   : '';
 
                 const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
@@ -302,11 +324,11 @@ function renderOverviewTab(p, rawStream = [], appData = null) {
                   !/\bon X$/i.test(String(n.externalTitle || ''));
 
                 return `
-              <div class="subcard-panel player-mention-card ${n.breakingPriority > 0 ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
+              <div class="subcard-panel player-mention-card ${isUrgentMention ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
                 <div class="player-mention-meta">
                   <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
                     ${breakingPill}
-                    ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>Article</span></span>` : ''}
+                    ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${n.wireSource === 'espn_player_wire' || String(n.id || '').startsWith('espn_pwire_') ? 'Injury Wire' : 'Article'}</span></span>` : ''}
                     <span class="player-mention-author">
                       ${
                         authorHref

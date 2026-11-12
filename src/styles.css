@@ -4327,16 +4327,31 @@ button.gameday-active-pill:hover {
   text-decoration: underline;
 }
 
-.confirming-reports-details {
-  margin-top: 5px;
+.confirming-reports-details,
+.confirming-reports-toggle {
+  margin-top: 4px;
   padding: 4px 8px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-subtle);
 }
 
-[data-theme="light"] .confirming-reports-details {
-  background: rgba(0, 0, 0, 0.025);
+[data-theme="light"] .confirming-reports-details,
+[data-theme="light"] .confirming-reports-toggle {
+  background: rgba(0, 0, 0, 0.024);
+}
+
+.related-coverage-row {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.related-coverage-row:first-child {
+  border-top: 0;
+  padding-top: 1px;
 }
 
 /* Clickable "XX reports" AI Synthesis Source Trigger & Slide-Up Report List */

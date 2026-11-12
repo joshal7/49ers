@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T02:13:43.260Z",
+  "updatedAt": "2026-11-12T06:36:36.894Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -26,9 +26,9 @@
         "Did Not Participate (DNP) on Wednesday; remains sidelined from practice",
         "Matches player's documented chronic history (Achilles)",
         "Soft-tissue re-aggravation caution (Achilles)",
-        "Coaching/beat consensus (4 corroborated reports): not expected to play this week"
+        "Coaching/beat consensus (5 corroborated reports): not expected to play this week"
       ],
-      "beatComment": "Evans (Achilles) was listed as a non-participant in Wednesday's practice, Cam Inman of The San Jose Mercury News reports."
+      "beatComment": "Evans (Achilles) was listed as a non-participant in Wednesday's practice."
     },
     {
       "playerId": "4427325",
@@ -183,7 +183,7 @@
       "factors": [
         "Habitual Veteran Rest prior (Christian McCaffrey maintenance schedule)"
       ],
-      "beatComment": "McCaffrey got banged up in San Francisco's Week 7 loss to the Falcons, but a Week 8 bye allowed his hamstring to heal, and the star running back handled 20 touches Sunday while scoring twice to bring his season total to 10 touchdowns. He capped San Francisco's opening drive with a one-yard touchdown run and added a 12-yard touchdown catch in the second quarter. Rookie third-round pick Kaelon Black led the 49ers with 70 rushing yards on 11 carries, but McCaffrey remains the lead back heading into a Week 10 trip to Dallas, during which CMC will try to extend a seven-game touchdown streak."
+      "beatComment": ""
     },
     {
       "playerId": "3916903",
@@ -202,7 +202,7 @@
       "factors": [
         "Habitual Veteran Rest prior (Dre Greenlaw maintenance schedule)"
       ],
-      "beatComment": ""
+      "beatComment": "Greenlaw jumped on the loose ball that was forced out of Brock Bowers' hands by Fred Warner midway through the third quarter. It was the fifth time this season that Greenlow logged at least eight stops, and the 2019 fifth-rounder is up to 57 tackles (27 solo), one forced fumble and one fumble recovery across seven regular-season games."
     }
   ],
   "irAndReserveTracker": [

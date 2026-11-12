@@ -26,6 +26,7 @@ import {
 } from '../engine/seasonStateMachine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
+  isUrgentBreakingBadge,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
@@ -142,42 +143,45 @@ function renderSingleDashboardCard({
   let deepDiveAttr = '';
   let externalHeaderLink = '';
 
-  const rawList = deduplicateAndGroupWireItems(
-    sortNewsWithBreakingPriority(
-      filterOutCompletedGameAvailabilityItems(
-        filteredRawItems || appData?.news?.rawStream || [],
-        appData
-      ),
-      Date.now(),
-      { appData }
-    )
+  const prioritizedHomeStream = sortNewsWithBreakingPriority(
+    filterOutCompletedGameAvailabilityItems(
+      filteredRawItems || appData?.news?.rawStream || [],
+      appData
+    ),
+    Date.now(),
+    { appData }
   );
+  const rawList = deduplicateAndGroupWireItems(prioritizedHomeStream);
 
   switch (block.id) {
     case 'news_briefs': {
       const top2 = filterAndCleanSynthesisClusters(filteredClusters || [], appData).slice(0, 2);
       const rankHomeSalience = (a, b) => {
-        const bpDiff = Number(b.breakingPriority || 0) - Number(a.breakingPriority || 0);
-        if (bpDiff !== 0) return bpDiff;
+        const srDiff = Number(b.storyRank || 0) - Number(a.storyRank || 0);
+        if (Math.abs(srDiff) >= 0.5) return srDiff;
         const salDiff = computeNewsSalienceScore(b) - computeNewsSalienceScore(a);
         if (Math.abs(salDiff) >= 1.5) return salDiff;
         return new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime();
       };
       const topTweets = balanceFeedTopSalience(
-        rawList
-          .filter(it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null))
-          .sort(rankHomeSalience),
+        deduplicateAndGroupWireItems(
+          prioritizedHomeStream.filter(
+            it => (it.type === 'tweet' || it.type === 'social') && sanitizeExternalUrl(it.url, null)
+          ),
+          { preserveFormat: 'tweets' }
+        ).sort(rankHomeSalience),
         { appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
       const topArticles = balanceFeedTopSalience(
-        rawList
-          .filter(
+        deduplicateAndGroupWireItems(
+          prioritizedHomeStream.filter(
             it =>
               (it.type === 'article' || it.type === 'post') &&
               sanitizeExternalUrl(it.url, null) &&
               !isPaywalledPublisher(it.outletName, it.url)
-          )
-          .sort(rankHomeSalience),
+          ),
+          { preserveFormat: 'articles' }
+        ).sort(rankHomeSalience),
         { appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
 
@@ -275,13 +279,23 @@ function renderSingleDashboardCard({
                       !isRedundantProfileSelfLink(safeTwExt, resolvedTwUrl) &&
                       !isRedundantProfileSelfLink(safeTwExt, tw.url) &&
                       !/\bon X$/i.test(String(tw.externalTitle || ''));
+                    const isUrgentTw = isUrgentBreakingBadge(tw.breakingBadge);
+                    const twBadgeCls = tw.isInGameInjury
+                      ? 'badge-danger'
+                      : isUrgentTw
+                        ? 'badge-scarlet'
+                        : tw.breakingBadge === 'FILM & TRENCH'
+                          ? 'badge-positive'
+                          : tw.breakingBadge === 'ROSTER MOVE' || tw.breakingBadge === 'TRADE INTEL'
+                            ? 'badge-gold'
+                            : 'badge-neutral';
                     return `
-                  <div class="home-wire-item ${tw.breakingPriority > 0 ? 'breaking-elevated' : ''}">
+                  <div class="home-wire-item ${isUrgentTw ? 'breaking-elevated' : ''}">
                     <div class="home-wire-meta">
                       <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0">
                         ${
                           tw.breakingBadge
-                            ? `<span class="badge ${tw.isInGameInjury ? 'badge-danger' : 'badge-scarlet'}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
+                            ? `<span class="badge ${twBadgeCls}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
                         <a href="${esc(sanitizeExternalUrl(resolveItemAuthorProfileUrl(tw, resolvedTwUrl), resolvedTwUrl))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">

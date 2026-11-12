@@ -13,10 +13,11 @@
  * 6. NFL CBA 4-Game IR Minimum Calculator (explicitly excluding Bye Weeks from the 4-game count!)
  */
 
-import { isPaywalledPublisher, sanitizeExternalUrl } from './linkIntegrity.js';
+import { isPaywalledPublisher, sanitizeExternalUrl, buildEspnPlayerNewsAnchorUrl } from './linkIntegrity.js';
 import {
   buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
+  isDirectSocialPostUrl,
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl,
   resolveReporterFromNameOrHandle
@@ -325,7 +326,14 @@ const AMBIGUOUS_CLAUSE_SURNAMES = new Set([
   'gray',
   'wood',
   'park',
-  'james'
+  'james',
+  'kirk',
+  'jones',
+  'allen',
+  'williams',
+  'robinson',
+  'evans',
+  'neal'
 ]);
 
 /**
@@ -3248,7 +3256,7 @@ export function isPlayerEligibleForInjuryNews(player = null, { currentWeek = 1, 
 }
 
 const INJURY_NEWS_TOPIC_RELEVANCE_RE =
-  /\b(injur(?:y|ed|ies)|practice[d]?|practicing|participat(?:e|ed|ing|ion|ant)|limited|dnp|did not practice|didn't practice|not practicing|no practice|full go|full participant|side\s*lines?|side\s+field|rehab(?:bing)?|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|sprinting|running\s+routes|working\s+with\s+trainers|individual\s+drills|team\s+drills|non-contact|walking\s+boot|brace|cleats|helmet|observer|locker\s+room|medical\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|concussion|protocol|hamstring|achilles|ankle|high-ankle|knee|meniscus|\bmcl\b|\bpcl\b|\bacl\b|foot|turf\s+toe|back|shoulder|groin|adductor|calf|quad|hip|oblique|pectoral|rib|wrist|hand|thumb|neck|elbow|illness|sprain|strain|tear|torn|fracture|day-to-day|week-to-week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|practice\s+window|designated\s+to\s+return|activated|setback|aggravat(?:e|ed)|clearance|cleared|healthy|recovery|recuperat|return(?:ed|ing)?\s+to\s+(?:practice|action|the\s+field)|sidelined|capped\s+session)\b/i;
+  /\b(injur(?:y|ed|ies)|practice[d]?|practicing|participat(?:e|ed|ing|ion|ant)|limited|dnp|did not practice|didn't practice|not practicing|no practice|full go|full participant|side\s*lines?|side\s+field|rehab(?:bing)?|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|sprinting|running\s+routes|working\s+with\s+trainers|individual\s+drills|team\s+drills|non-contact|walking\s+boot|brace|helmet\s+off|observer|locker\s+room|medical\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|concussion|protocol|hamstring|achilles|ankle|high-ankle|knee|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|(?:lower\s+|upper\s+)?back\s+(?:injury|spasms|tightness|issue|pain)|\(back\)|\(\s*foot\s*\)|foot\s+(?:injury|sprain|fracture|issue)|shoulder|groin|adductor|calf|quad|hip\s+(?:injury|pointer|flexor|issue)|\(hip\)|oblique|pectoral|rib|wrist|hand\s+(?:injury|fracture|surgery)|thumb|neck\s+(?:injury|stinger|spasms|issue)|\(neck\)|elbow|illness|sprain|strain|tear|torn|fracture|day-to-day|week-to-week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|practice\s+window|designated\s+to\s+return|activated|setback|aggravat(?:e|ed)|clearance|cleared|healthy|recovery|recuperat|return(?:ed|ing)?\s+to\s+(?:practice|action|the\s+field)|sidelined|capped\s+session)\b/i;
 
 const INJURY_REHAB_COLOR_DETAIL_RE =
   /\b(spotted\s+(?:running|sprinting|jogging|working|cutting|throwing|catching)|on\s+the\s+(?:side\s*lines?|side\s+field|rehab\s+field)|working\s+(?:on\s+(?:a|the)\s+(?:side|rehab)\s+field|with\s+trainers)|running\s+(?:on\s+the\s+side|routes|sprints)|cutting|individual\s+drills|indy\s+drills|team\s+drills|7-on-7|11-on-11|in\s+cleats|in\s+pads|with\s+a\s+helmet|without\s+a\s+(?:brace|boot|limp)|walking\s+boot|blue\s+non-contact|non-contact\s+jersey|was\s+an\s+observer|moving\s+well|full\s+speed|capped\s+session|for\s+the\s+first\s+time\s+since|making\s+solid\s+progress)\b/i;
@@ -3279,6 +3287,24 @@ export function computeInjuryNewsRankScore(
   } = {}
 ) {
   if (!item || !player?.name || item.isClickbait || item.type === 'video') return null;
+
+  // Prevent another player's ESPN/RotoWire player-page blurb (`espn_pwire_<ownerId>_*`) from leaking into `player`'s Injury News
+  const itemIdStr = String(item.id || '');
+  if (itemIdStr.startsWith('espn_pwire_')) {
+    const ownerId = itemIdStr.split('_')[2] || '';
+    if (ownerId && /^\d+$/.test(ownerId) && /^\d+$/.test(String(player.id || '')) && ownerId !== String(player.id)) {
+      return null;
+    }
+  }
+  if (
+    item.primaryPlayer?.id &&
+    /^\d+$/.test(String(item.primaryPlayer.id)) &&
+    /^\d+$/.test(String(player.id || '')) &&
+    String(item.primaryPlayer.id) !== String(player.id) &&
+    item.wireSource === 'espn_player_wire'
+  ) {
+    return null;
+  }
 
   const pubMs = parseFlexibleIsoMs(item.publishedAt);
   if (pubMs === null) return null;
@@ -3312,7 +3338,7 @@ export function computeInjuryNewsRankScore(
   const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
   const checkScope = scoped || fullBody;
 
-  if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(checkScope) && !INJURY_NEWS_TOPIC_RELEVANCE_RE.test(fullBody)) {
+  if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(checkScope)) {
     return null;
   }
   // Reject fantasy start/sit / betting props fluff
@@ -3450,7 +3476,7 @@ export function rankPlayerInjuryNews(
   const directPosts = combinedCandidates.filter(
     it =>
       (it?.type === 'tweet' || it?.type === 'social') &&
-      /^(?:https?:\/\/)(?:www\.)?(?:x\.com|twitter\.com)\//i.test(String(it?.url || ''))
+      isDirectSocialPostUrl(String(it?.url || ''))
   );
 
   const seenExact = new Set();

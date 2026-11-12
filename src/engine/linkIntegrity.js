@@ -39,7 +39,9 @@ const PAYWALLED_HOST_RULES = [
   // ESPN+ / Insider paywalled paths
   { host: /(^|\.)espn\.com$/i, path: /^\/(nfl\/insider|espnplus|insider)(\/|$)/i },
   // NFL Mock Draft Database paid Mock+ tier
-  { host: /(^|\.)nflmockdraftdatabase\.com$/i, path: /^\/mock-plus(\/|$)/i }
+  { host: /(^|\.)nflmockdraftdatabase\.com$/i, path: /^\/mock-plus(\/|$)/i },
+  // Cloudflare challenge-gated / clickbait aggregator domain (HTTP 403)
+  { host: /(^|\.)heavy\.com$/i }
 ];
 
 const PAYWALLED_OUTLET_NAME_REGEX =
@@ -49,7 +51,9 @@ const KNOWN_BROKEN_PATH_RULES = [
   { host: /(^|\.)nfl\.com$/i, path: /^\/news\/series\/power-rankings\/?$/i },
   { host: /(^|\.)nflmockdraftdatabase\.com$/i, path: /^\/team-needs-\d{4}\//i },
   { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/draft\d{4}\/?$/i },
-  { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/story\/_\/page\/nflpowerrankings\/?$/i }
+  { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/story\/_\/page\/nflpowerrankings\/?$/i },
+  { host: /(^|\.)espn\.com$/i, path: /^\/video\/clip\/?$/i },
+  { host: /(^|\.)rotowire\.com$/i, path: /^\/football\/(news\.php|headlines)(\/|$)/i }
 ];
 
 const OPAQUE_URL_SHORTENER_HOST_REGEX =
@@ -368,7 +372,9 @@ export function sanitizeExternalUrl(rawUrl, fallbackUrl = null) {
   if (typeof rawUrl !== 'string') return fallbackUrl;
   const trimmed = rawUrl.trim();
   if (!trimmed) return fallbackUrl;
-  const upgraded = stripTrackingParams(trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed);
+  const httpsUrl = trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed;
+  const collapsedSlashes = httpsUrl.replace(/^(https:\/\/[^/?#]+)\/\/+/i, '$1/');
+  const upgraded = stripTrackingParams(collapsedSlashes);
   if (isPaywalledOrBlockedUrl(upgraded)) return fallbackUrl;
   return upgraded;
 }
@@ -387,6 +393,25 @@ export function buildEspnPlayerUrl(espnId, playerName = '') {
   return slug
     ? `https://www.espn.com/nfl/player/_/id/${cleanId}/${slug}`
     : `https://www.espn.com/nfl/player/_/id/${cleanId}`;
+}
+
+/**
+ * Builds an HTTP-200 ESPN Player News URL with a W3C Scroll-To-Text fragment (`#:~:text=...`)
+ * so clicking an ESPN/RotoWire Injury Wire item scrolls directly to that exact verbatim update on ESPN.
+ */
+export function buildEspnPlayerNewsAnchorUrl(espnId, playerName = '', leadSentence = '') {
+  const baseUrl = buildEspnPlayerUrl(espnId, playerName);
+  if (!baseUrl) return null;
+  const words = String(leadSentence || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 7)
+    .join(' ')
+    .replace(/[.,;:!?]+$/, '');
+  if (!words || words.length < 10) return baseUrl;
+  return `${baseUrl}#:~:text=${encodeURIComponent(words)}`;
 }
 
 export function buildPfrPlayerUrl(pfrId) {

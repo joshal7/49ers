@@ -238,7 +238,7 @@ export async function fetchLiveBeatSocialPosts() {
       outletId: 'sf_standard',
       outletName: 'The SF Standard',
       tier: 2,
-      requireKeyword: false
+      requireKeyword: true
     },
     {
       actor: 'nbcs49ers.bsky.social',
@@ -308,6 +308,27 @@ export async function fetchLiveBeatSocialPosts() {
       outletId: 'nfl_network',
       outletName: 'NFL Network',
       tier: 1,
+      requireKeyword: true
+    },
+    {
+      actor: 'diannarussini.bsky.social',
+      reporterId: 'dianna_russini',
+      reporterName: 'Dianna Russini',
+      authorHandle: '@DMRussini',
+      outletId: 'athletic',
+      outletName: 'The Athletic',
+      tier: 2,
+      requireKeyword: true
+    },
+    {
+      actor: 'profootballtalk.bsky.social',
+      reporterId: 'mike_florio',
+      reporterName: 'ProFootballTalk',
+      authorHandle: '@ProFootballTalk',
+      authorProfileUrl: 'https://x.com/ProFootballTalk',
+      outletId: 'nfl_network',
+      outletName: 'NBC ProFootballTalk',
+      tier: 2,
       requireKeyword: true
     },
     {
@@ -382,12 +403,15 @@ export async function fetchLiveBeatSocialPosts() {
           const rkey = (post.uri || '').split('/').pop();
           const attr = extractBeatAttributionFromText(rawText, acc);
           const cleanedBody = attr.cleanedText || rawText;
-          const postUrl = buildTargetedOriginalTweetUrl({
-            authorHandle: attr.authorHandle || acc.authorHandle || '',
-            authorName: attr.reporterName || acc.reporterName || '',
-            text: cleanedBody,
-            publishedAt: pubIso
-          });
+          const postHandle = post?.author?.handle || acc.actor;
+          const postUrl = rkey
+            ? `https://bsky.app/profile/${postHandle}/post/${rkey}`
+            : buildTargetedOriginalTweetUrl({
+                authorHandle: attr.authorHandle || acc.authorHandle || '',
+                authorName: attr.reporterName || acc.reporterName || '',
+                text: cleanedBody,
+                publishedAt: pubIso
+              });
 
           const formatted = formatTweetBodyForDisplay(cleanedBody);
           const brk = classifyBreakingItem({
