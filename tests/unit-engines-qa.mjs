@@ -6531,6 +6531,118 @@ test('3-Lens NFL Draft Big Board Engine: 250+ Depth, NR-at-Bottom Sorting (Asc &
   }
 });
 
+await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safety', async () => {
+  const { splitTurnIntoSpokenSentences } = await import('../src/workers/neuralTtsWorker.js');
+
+  // 1. Verify neuralTtsWorker never loads 310 MB fp32 WebGPU weights that OOM-kill iOS Safari Workers
+  const workerSrc = fs.readFileSync(path.join(rootDir, 'src', 'workers', 'neuralTtsWorker.js'), 'utf8');
+  assert.ok(workerSrc.includes("device: 'wasm'") && workerSrc.includes("dtype: 'q8'"), 'Must use quantized WASM q8');
+  assert.ok(
+    !workerSrc.includes("loadWithBackend('webgpu'") && !workerSrc.includes("'fp32'"),
+    'Must never attempt 310 MB fp32 WebGPU load inside mobile WebKit Worker'
+  );
+
+  // 2. Verify sentence-level micro-chunking keeps ONNX passes compact while preserving short latches
+  const longTurn =
+    'Right! Look at how Keenan Allen wins from the slot against two-high quarters coverage on third and medium, especially when Ricky Pearsall stretches the field vertically outside the numbers. Furthermore, under CBA Article 13 rollover rules, every dollar spent on midseason wide receiver depth reduces San Francisco’s 2027 cap cushion, which means Kyle Shanahan has to maximize veteran route discipline immediately.';
+  const chunks = splitTurnIntoSpokenSentences(longTurn, 195);
+  assert.ok(chunks.length >= 2 && chunks.length <= 4, `Expected 2-4 sentence chunks, got ${chunks.length}`);
+  assert.ok(chunks[0].startsWith('Right! Look at how Keenan Allen'), 'Short interjection must stay latched to first sentence');
+  assert.ok(chunks.every(c => c.length <= 240), `Sentence chunk exceeded compact WASM bound: ${JSON.stringify(chunks)}`);
+
+  // 3. Verify Shared Podcast Hero renders ABOVE generator & API key box and never hijacks Create-Podcast stepper
+  const sharedEp = {
+    id: 'custom_ep_dad_share',
+    title: 'Keenan Allen Fit in 49ers Scheme',
+    topic: 'Keenan Allen Fit in 49ers Scheme',
+    format: 'Two-Host Analytical Banter',
+    presetLabel: '2m On-Demand Pod',
+    createdBy: 'Josh',
+    createdAt: '2026-11-12T01:00:00.000Z',
+    durationSec: 131,
+    isSharedImport: true,
+    transcript: [
+      { idx: 0, speaker: 'Marcus', startSec: 0, endSec: 15, text: 'Let us break down Keenan Allen in Kyle Shanahan’s offense.' },
+      { idx: 1, speaker: 'Elena', startSec: 15, endSec: 32, text: 'The slot leverage and 9/18ths cap math tell the whole story.' }
+    ]
+  };
+
+  const prepHtml = renderAudioAiViewHtml({
+    studioSub: 'podcast',
+    userPrefs: { geminiApiKey: '' },
+    audioState: {
+      episode: sharedEp,
+      isPlaying: false,
+      isBufferingAudio: true,
+      isAutoPlayQueued: false,
+      currentTimeSec: 0,
+      durationSec: 131
+    },
+    sharedAudioPrep: {
+      active: true,
+      episodeId: sharedEp.id,
+      startedAtMs: Date.now() - 4000,
+      percent: 44,
+      message: 'Caching studio voice weights (44% • 39 / 88 MB — 1-time download)…',
+      subDetail: 'No API key required — caching stereo audio directly on this device.'
+    },
+    allEpisodes: [sharedEp]
+  });
+
+  const sharedHeroIdx = prepHtml.indexOf('data-podcast-ready-card="custom_ep_dad_share"');
+  const genCardIdx = prepHtml.indexOf('data-podcast-generator-card');
+  const keyCardIdx = prepHtml.indexOf('data-gemini-setup-card="unconnected"');
+  assert.ok(
+    sharedHeroIdx > -1 && genCardIdx > -1 && sharedHeroIdx < genCardIdx && sharedHeroIdx < keyCardIdx,
+    'Shared Podcast Hero card must render ABOVE the Auto Podcast generator card and API key setup box'
+  );
+  assert.ok(prepHtml.includes('data-shared-audio-prep="active"'), 'Must render dedicated shared-audio prep progress inside hero card');
+  assert.ok(prepHtml.includes('width:44%') && prepHtml.includes('>44%<'), 'Shared-audio prep bar must reflect live percentage (never frozen at 20%)');
+  assert.ok(!prepHtml.includes('data-job-progress="active"'), 'Preparing shared audio must NEVER trigger "Creating Studio Podcast…" 3-step banner');
+  assert.ok(!prepHtml.includes('Creating 3-Min Podcast'), 'Generator CTA button must remain idle while shared link prepares audio');
+  assert.ok(prepHtml.includes('Play When Ready'), 'Primary button must invite 1-tap Play When Ready during prep');
+
+  // 4. Verify Auto-Play Armed state and graceful Retry + Device Voice error recovery UI
+  const queuedHtml = renderAudioAiViewHtml({
+    studioSub: 'podcast',
+    userPrefs: { geminiApiKey: '' },
+    audioState: {
+      episode: sharedEp,
+      isPlaying: false,
+      isBufferingAudio: true,
+      isAutoPlayQueued: true,
+      currentTimeSec: 0,
+      durationSec: 131
+    },
+    sharedAudioPrep: {
+      active: true,
+      episodeId: sharedEp.id,
+      startedAtMs: Date.now() - 6000,
+      percent: 68,
+      message: 'Synthesizing studio voices — Turn 2 of 2 (Elena)…'
+    },
+    allEpisodes: [sharedEp]
+  });
+  assert.ok(queuedHtml.includes('Auto-Play Queued…'), 'Must confirm Auto-Play Queued once user taps Play during prep');
+
+  const errorHtml = renderAudioAiViewHtml({
+    studioSub: 'podcast',
+    userPrefs: { geminiApiKey: '' },
+    audioState: { episode: sharedEp, isPlaying: false, isBufferingAudio: false, currentTimeSec: 0, durationSec: 131 },
+    sharedAudioPrep: {
+      active: false,
+      episodeId: sharedEp.id,
+      error: 'Network connection interrupted while caching voice weights.'
+    },
+    allEpisodes: [sharedEp]
+  });
+  assert.ok(
+    errorHtml.includes('data-action="retry-shared-audio"') &&
+      errorHtml.includes('data-action="play-device-voice"'),
+    'Shared audio error state must expose both Retry Studio Audio and Listen Now (Device Voice) recovery actions'
+  );
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

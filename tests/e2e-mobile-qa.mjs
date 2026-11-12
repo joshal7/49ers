@@ -2593,7 +2593,7 @@ async function main() {
       );
       await cdp.assertNoOverflow('Custom 3m WR Podcast Ready to Play + Expanded Transcript');
 
-      // 3. Test Share Icon + Colleague Deep-Link Import & Playback on 49ers.joshal.com
+      // 3. Test Share Icon + Keyless Recipient Safari Deep-Link Import, Hero Placement, In-Card Prep & Auto-Play Queue
       const shareRoundTrip = await cdp.eval(async () => {
         let nativeShareCaptured = null;
         const origShare = navigator.share;
@@ -2608,23 +2608,79 @@ async function main() {
         }
 
         const sharedUrl = window.__lastSharedUrl || nativeShareCaptured?.url || '';
+        const st = window.__49ersDiagnostics.getState();
+        const savedSenderKey = st.prefs.geminiApiKey;
+        const sharedEpId = st.audioState?.episode?.id;
+        const { deleteEpisodeAudioBlob, getEpisodeAudioUrl } = await import('/src/services/podcastAudioStore.js');
+
+        // Simulate recipient (Dad's iPhone Mobile Safari opened from iMessage): zero Safari API key + zero local IDB audio!
         document.getElementById('mpCloseBtn')?.click();
-        await window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
-        const loadedSharedEp = window.__49ersDiagnostics.getState().audioState?.episode;
-        return {
-          sharedUrl,
-          nativeTitle: nativeShareCaptured?.title || '',
-          loadedTitle: loadedSharedEp?.title || '',
-          loadedTurns: loadedSharedEp?.transcript?.length || 0
-        };
+        st.prefs.geminiApiKey = '';
+        st.prefs.localCustomEpisodes = [];
+        if (sharedEpId) {
+          await deleteEpisodeAudioBlob(sharedEpId);
+        }
+        window.__49ersFastTestTtsFallback = true;
+
+        try {
+          const openPromise = window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
+          await new Promise(r => setTimeout(r, 45));
+
+          const readyCardMid = document.querySelector('[data-podcast-ready-card]');
+          const genCardMid = document.querySelector('[data-podcast-generator-card]');
+          const heroAboveGenerator =
+            readyCardMid && genCardMid
+              ? readyCardMid.getBoundingClientRect().top < genCardMid.getBoundingClientRect().top
+              : false;
+          const sawSharedPrepBanner = Boolean(document.querySelector('[data-shared-audio-prep="active"]'));
+          const noConfusingCreateBanner = !document.querySelector('[data-job-progress="active"]');
+
+          // Tap "Play When Ready" mid-prep and verify Auto-Play Queued arms cleanly without duplicate synthesis
+          readyCardMid?.querySelector('[data-action="play-episode"]')?.click();
+          const armedAutoPlayMidPrep = Boolean(window.__49ersDiagnostics.getState().audioState?.isAutoPlayQueued);
+
+          await openPromise;
+          // Pause after auto-play resolves so subsequent archive/delete checks start from a clean resting state
+          window.__49ersDiagnostics.getState();
+          document.getElementById('mpPlayPauseBtn')?.click();
+
+          const loadedSharedEp = window.__49ersDiagnostics.getState().audioState?.episode;
+          const hydratedAudioUrl = loadedSharedEp?.id ? await getEpisodeAudioUrl(loadedSharedEp.id) : null;
+
+          return {
+            sharedUrl,
+            nativeTitle: nativeShareCaptured?.title || '',
+            loadedTitle: loadedSharedEp?.title || '',
+            loadedTurns: loadedSharedEp?.transcript?.length || 0,
+            isSharedImport: Boolean(loadedSharedEp?.isSharedImport),
+            heroAboveGenerator,
+            sawSharedPrepBanner,
+            noConfusingCreateBanner,
+            armedAutoPlayMidPrep,
+            prepClearedOnDone: !document.querySelector('[data-shared-audio-prep="active"]'),
+            hasHydratedAudioBlob: Boolean(hydratedAudioUrl)
+          };
+        } finally {
+          window.__49ersFastTestTtsFallback = false;
+          st.prefs.geminiApiKey = savedSenderKey;
+          window.__49ersDiagnostics.forceRender();
+        }
       });
       assert(
         shareRoundTrip.sharedUrl.includes('?pod=custom_ep_') &&
           shareRoundTrip.sharedUrl.includes('#shared-pod=z.') &&
           shareRoundTrip.nativeTitle.includes('49ers Faithful Podcast') &&
-          shareRoundTrip.loadedTurns >= 10,
-        `Podcast native share & colleague deep-link hydration failed: ${JSON.stringify(shareRoundTrip)}`
+          shareRoundTrip.loadedTurns >= 10 &&
+          shareRoundTrip.isSharedImport &&
+          shareRoundTrip.heroAboveGenerator &&
+          shareRoundTrip.sawSharedPrepBanner &&
+          shareRoundTrip.noConfusingCreateBanner &&
+          shareRoundTrip.armedAutoPlayMidPrep &&
+          shareRoundTrip.prepClearedOnDone &&
+          shareRoundTrip.hasHydratedAudioBlob,
+        `Podcast native share & keyless Safari recipient deep-link flow failed: ${JSON.stringify(shareRoundTrip)}`
       );
+      await cdp.assertNoOverflow('Shared Podcast Hero Card Above Generator');
 
       // 4. Test Podcast Archive -> Active/Archived Filter -> Archive Vault Sheet -> Restore -> Delete (+ IDB & Mini-Player cleanup!)
       const podArchiveAndDeleteAudit = await cdp.eval(async customEpId => {

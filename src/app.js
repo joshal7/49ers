@@ -11,7 +11,7 @@ import {
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
 } from './engine/breakingClassifier.js?v=49';
-import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=51';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
@@ -37,14 +37,14 @@ import {
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=48';
+} from './services/aiWorkerClient.js?v=51';
 import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
 import {
   buildShareablePodcastUrl,
   buildShareableAnalysisUrl,
   extractIncomingSharedRoute,
   shareItemNatively
-} from './services/shareService.js';
+} from './services/shareService.js?v=51';
 
 import {
   esc,
@@ -74,7 +74,7 @@ import {
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=51';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=48';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=51';
 import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=48';
 
 const state = {
@@ -137,6 +137,8 @@ const state = {
   geminiKeyNotice: '',
   showGeminiKeyGuide: false,
   jobStatus: null,
+  sharedAudioPrep: null,
+  sharedAnalysisHighlightId: null,
   workerSharedFeed: { analyses: [], episodes: [] },
   audioState: {},
   expandedTranscriptIds: new Set(),
@@ -616,6 +618,8 @@ function renderMain() {
         podTopicDraft: state.podTopicDraft,
         analysisPromptDraft: state.analysisPromptDraft,
         jobStatus: state.jobStatus,
+        sharedAudioPrep: state.sharedAudioPrep,
+        sharedAnalysisHighlightId: state.sharedAnalysisHighlightId,
         allEpisodes: getActiveEpisodes(),
         archivedEpisodes: getArchivedEpisodes(),
         podLibraryFilter: state.podLibraryFilter,
@@ -789,8 +793,12 @@ function renderSheet() {
 function renderMiniPlayer(audioSnapshot) {
   const prevEpId = state.audioState?.episode?.id || null;
   const prevPlaying = Boolean(state.audioState?.isPlaying);
+  const prevBuffering = Boolean(state.audioState?.isBufferingAudio);
+  const prevAutoPlayQueued = Boolean(state.audioState?.isAutoPlayQueued);
   const nextEpId = audioSnapshot?.episode?.id || null;
   const nextPlaying = Boolean(audioSnapshot?.isPlaying);
+  const nextBuffering = Boolean(audioSnapshot?.isBufferingAudio);
+  const nextAutoPlayQueued = Boolean(audioSnapshot?.isAutoPlayQueued);
   state.audioState = audioSnapshot || {};
   const miniEl = document.getElementById('miniPlayer');
   if (!miniEl) return;
@@ -807,9 +815,12 @@ function renderMiniPlayer(audioSnapshot) {
   miniEl.hidden = false;
   document.body.classList.add('has-mini-player');
 
-  // Keep Ready-to-Play / Library cards in sync when episode or play/pause state changes
+  // Keep Ready-to-Play / Shared Hero / Library cards in sync when episode or play/queue state changes
   if (
-    (prevEpId !== nextEpId || prevPlaying !== nextPlaying) &&
+    (prevEpId !== nextEpId ||
+      prevPlaying !== nextPlaying ||
+      prevBuffering !== nextBuffering ||
+      prevAutoPlayQueued !== nextAutoPlayQueued) &&
     state.activeNavTab === 'audio' &&
     state.studioSubTab === 'podcast' &&
     !state.jobStatus?.active
@@ -1607,13 +1618,46 @@ function bindEvents() {
       case 'play-episode': {
         audioController?.primeForUserGesture();
         const epId = btn.getAttribute('data-episode-id');
-        const ep = getAllEpisodes().find(x => x.id === epId);
+        const ep =
+          getAllEpisodes().find(x => x.id === epId) ||
+          (state.audioState?.episode?.id === epId ? state.audioState.episode : null);
         if (ep) {
+          if (state.sharedAudioPrep && !state.sharedAudioPrep.active && state.sharedAudioPrep.episodeId === ep.id) {
+            state.sharedAudioPrep = null;
+          }
           if (state.audioState?.episode?.id === ep.id) {
             await audioController.togglePlayPause();
           } else {
             await audioController.loadAndPlay(ep, 0);
           }
+          renderMain();
+        }
+        break;
+      }
+
+      case 'retry-shared-audio': {
+        audioController?.primeForUserGesture();
+        const epId = btn.getAttribute('data-episode-id');
+        const ep =
+          getAllEpisodes().find(x => x.id === epId) ||
+          (state.audioState?.episode?.id === epId ? state.audioState.episode : null);
+        if (ep) {
+          state.sharedAudioPrep = null;
+          await audioController.loadAndPlay(ep, 0);
+          renderMain();
+        }
+        break;
+      }
+
+      case 'play-device-voice': {
+        audioController?.primeForUserGesture();
+        const epId = btn.getAttribute('data-episode-id');
+        const ep =
+          getAllEpisodes().find(x => x.id === epId) ||
+          (state.audioState?.episode?.id === epId ? state.audioState.episode : null);
+        if (ep) {
+          state.sharedAudioPrep = null;
+          audioController?.playWithDeviceVoiceFallback(ep, 0);
           renderMain();
         }
         break;
@@ -1803,6 +1847,9 @@ function bindEvents() {
             ep => ep.id !== epId
           );
           state.expandedTranscriptIds.delete(epId);
+          if (state.sharedAudioPrep?.episodeId === epId) {
+            state.sharedAudioPrep = null;
+          }
           if (state.audioState?.episode?.id === epId) {
             audioController?.closePlayer();
           }
@@ -2462,6 +2509,7 @@ async function handleIncomingSharedLink(locationLike = window.location) {
     state.activeNavTab = 'audio';
     state.studioSubTab = 'podcast';
     state.podLibraryFilter = 'active';
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     if (sharedRoute.id) {
       state.prefs.deletedEpisodeIds = (state.prefs.deletedEpisodeIds || []).filter(
@@ -2479,12 +2527,17 @@ async function handleIncomingSharedLink(locationLike = window.location) {
         targetEp,
         ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== targetEp.id)
       ].slice(0, 20);
+    } else if (targetEp && sharedRoute.episode?.isSharedImport) {
+      targetEp.isSharedImport = true;
     }
     saveUserPrefs(state.prefs);
 
     renderMain();
     if (targetEp) {
       state.expandedTranscriptIds.delete(targetEp.id);
+      if (state.sharedAudioPrep && state.sharedAudioPrep.episodeId !== targetEp.id) {
+        state.sharedAudioPrep = null;
+      }
       await audioController.loadEpisodeReady(targetEp);
       renderMain();
     }
@@ -2495,6 +2548,7 @@ async function handleIncomingSharedLink(locationLike = window.location) {
     state.activeNavTab = 'audio';
     state.studioSubTab = 'analysis';
     state.analysisLibraryFilter = 'active';
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     if (sharedRoute.id) {
       state.prefs.deletedAnalysisIds = (state.prefs.deletedAnalysisIds || []).filter(
@@ -2513,12 +2567,35 @@ async function handleIncomingSharedLink(locationLike = window.location) {
         ...(state.prefs.localCustomAnalyses || []).filter(a => a.id !== targetReport.id)
       ].slice(0, 25);
     }
+    state.sharedAnalysisHighlightId = targetReport?.id || sharedRoute.id || null;
     saveUserPrefs(state.prefs);
     renderMain();
     return true;
   }
 
   return false;
+}
+
+function syncSharedAudioPrepDomInPlace(prep) {
+  if (!prep?.active) return false;
+  const box = document.querySelector('[data-shared-audio-prep="active"]');
+  if (!box) return false;
+
+  const pct = Math.max(8, Math.min(99, Math.round(Number(prep.percent || 12))));
+  const barEl = box.querySelector('[data-shared-prep-bar]');
+  if (barEl) barEl.style.width = `${pct}%`;
+
+  const pctBadge = box.querySelector('[data-shared-prep-pct]');
+  if (pctBadge) pctBadge.textContent = `${pct}%`;
+
+  const msgEl = box.querySelector('[data-shared-prep-message]');
+  if (msgEl && prep.message) msgEl.textContent = prep.message;
+
+  const subEl = box.querySelector('[data-shared-prep-subdetail]');
+  if (subEl && !state.audioState?.isAutoPlayQueued && prep.subDetail) {
+    subEl.textContent = prep.subDetail;
+  }
+  return true;
 }
 
 function syncActiveJobBannerDomInPlace(jobStatus) {
@@ -2705,43 +2782,68 @@ async function init() {
   audioController = new PodcastAudioController(renderMiniPlayer, {
     onSynthesizeMissingAudio: async ep => {
       const startedAtMs = Date.now();
-      const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
-      state.jobStatus = {
+      state.sharedAudioPrep = {
         active: true,
-        kind: 'podcast',
+        episodeId: ep.id,
         startedAtMs,
-        stepIdx: 3,
-        totalSteps: 3,
-        stages: PODCAST_PIPELINE_STAGES,
-        percent: 52,
-        stagePercents: [100, 100, 20],
-        stageElapsedSec: [0, 0, 0],
-        estLabel: '30–60 sec',
-        modelLabel: modelInfo.displayLabel,
-        message: 'Step 3 of 3: Preparing shared podcast studio audio…',
-        subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'
+        percent: 10,
+        message: ep?.isSharedImport
+          ? 'Preparing shared podcast studio audio…'
+          : 'Preparing podcast studio audio…',
+        subDetail:
+          'Tap "Play When Ready" below to start automatically when ready, or tap "Show Transcript" to read now.',
+        error: ''
       };
+      const elapsedTicker = setInterval(() => {
+        const clockEl = document.getElementById('sharedAudioElapsedClock');
+        if (clockEl) {
+          const sec = Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000));
+          clockEl.textContent = `Elapsed ${formatTimeMmSs(sec)}`;
+        }
+      }, 250);
+
       if (state.activeNavTab === 'audio') renderMain();
       try {
-        return await synthesizeMissingEpisodeAudio(
+        const renderedUrl = await synthesizeMissingEpisodeAudio(
           ep,
           p => {
-            state.jobStatus = {
-              ...state.jobStatus,
-              ...p,
+            const pct = Math.max(
+              state.sharedAudioPrep?.percent || 10,
+              Math.min(99, Math.round(Number(p.subPercent ?? p.percent ?? 18)))
+            );
+            state.sharedAudioPrep = {
+              ...state.sharedAudioPrep,
               active: true,
-              kind: 'podcast',
+              episodeId: ep.id,
               startedAtMs,
-              modelLabel: modelInfo.displayLabel
+              percent: pct,
+              message: p.message || state.sharedAudioPrep?.message || 'Preparing podcast studio audio…',
+              subDetail: p.subDetail || state.sharedAudioPrep?.subDetail || '',
+              error: ''
             };
-            if (state.activeNavTab === 'audio' && !syncActiveJobBannerDomInPlace(state.jobStatus)) {
+            if (state.activeNavTab === 'audio' && !syncSharedAudioPrepDomInPlace(state.sharedAudioPrep)) {
               renderMain();
             }
           },
           state.prefs
         );
+        state.sharedAudioPrep = null;
+        return renderedUrl;
+      } catch (err) {
+        state.sharedAudioPrep = {
+          active: false,
+          episodeId: ep.id,
+          startedAtMs,
+          percent: 0,
+          message: '',
+          subDetail: '',
+          error:
+            err?.message ||
+            'Unable to prepare studio audio right now. Tap Retry Studio Audio or Listen Now (Device Voice).'
+        };
+        return null;
       } finally {
-        state.jobStatus = null;
+        clearInterval(elapsedTicker);
         if (state.activeNavTab === 'audio') renderMain();
       }
     }
@@ -2809,7 +2911,13 @@ async function init() {
     const hadController = Boolean(navigator.serviceWorker.controller);
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!hadController || refreshingSw) return;
-      if (isBootingAppData || !state.appData || state.jobStatus?.active || state.audioState?.isPlaying) {
+      if (
+        isBootingAppData ||
+        !state.appData ||
+        state.jobStatus?.active ||
+        state.sharedAudioPrep?.active ||
+        state.audioState?.isPlaying
+      ) {
         return;
       }
       refreshingSw = true;
@@ -2817,7 +2925,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=56', { updateViaCache: 'none' })
+        .register('./sw.js?v=62', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };
