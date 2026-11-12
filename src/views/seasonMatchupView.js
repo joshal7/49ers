@@ -589,10 +589,6 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
   const sfIsAway = um.homeAway === 'away';
   const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
-  const oppShortName = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || um.oppName || 'Opponent';
-  const matchupHeadline = sfIsAway
-    ? `49ers (${sfRecShort}) @ ${um.oppName} (${um.oppRecord})`
-    : `${um.oppName} (${um.oppRecord}) @ 49ers (${sfRecShort})`;
   const awayColHtml = sfIsAway
     ? `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
         ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
@@ -630,8 +626,8 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('swords', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">Week ${um.week} • ${esc(um.kickoffDisplay)}</div>
-            <h2 class="card-title">${esc(matchupHeadline)}</h2>
+            <div class="card-eyebrow">${esc(um.kickoffDisplay)}</div>
+            <h2 class="card-title">Week ${um.week} Matchup</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
@@ -678,7 +674,6 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         <div class="card-header-left">
           ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 28)}
           <div class="card-title-group">
-            <div class="card-eyebrow">Bye Wk ${oppHealth.byeWeek || 13}</div>
             <h3 class="card-title">${esc(um.oppName)} Health</h3>
           </div>
         </div>
@@ -830,7 +825,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
                 ${oppIrList
                   .map(ir => {
-                    const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026);
+                    const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026, { isOpponent: true });
                     return `
                   <div class="subcard-panel" style="font-size:12px">
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -962,7 +957,6 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
           <span>PFR Box Scores</span>${iconSvg('externalLink', 11)}
         </a>
       </div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">${escJargon(um.franchiseHistory?.lastMeetingNote)}</div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead><tr><th>Season</th><th>Date</th><th>Site</th><th>Result</th></tr></thead>
@@ -994,18 +988,24 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
   `;
 }
 
-function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
+function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026, { isOpponent = false } = {}) {
   const projRaw =
     typeof ir.projectedReturnWeek === 'number'
       ? `Est. Week ${ir.projectedReturnWeek}`
       : String(ir.projectedReturnWeek || 'TBD').trim();
   const isSeasonEnd = Boolean(ir.isSeasonEnding) || /^out for (?:the )?(?:\d{4} )?season$/i.test(projRaw);
+  const cleanByeNote = isOpponent
+    ? String(ir.byeWeekNote || '')
+        .replace(/\b(?:[A-Z]{2,3}\s+)?Bye\s+Week\s+\d+\s*[•·-]\s*/gi, '')
+        .replace(/Excludes\s+[A-Z]{2,3}\s+Week\s+\d+\s+Bye\s+under\s+/gi, '')
+        .trim()
+    : String(ir.byeWeekNote || '').trim();
 
   if (isSeasonEnd) {
     return {
       badgeClass: 'badge-danger',
       badgeText: `Out for ${seasonYear} Season`,
-      subtitleHtml: `${esc(ir.status || 'Season-Ending IR')} • ${esc(ir.byeWeekNote || `Ineligible to return in ${seasonYear}`)}`
+      subtitleHtml: `${esc(ir.status || 'Season-Ending IR')} • ${esc(cleanByeNote || `Ineligible to return in ${seasonYear}`)}`
     };
   }
 
@@ -1016,7 +1016,7 @@ function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
       badgeText: badgeLabel,
       subtitleHtml: `${esc(ir.status || 'IR — 21-Day Window Open')}${
         ir.earliestEligibleWeek ? ` • Earliest Eligible: Wk ${ir.earliestEligibleWeek}` : ''
-      }${ir.byeWeekNote ? ` (${esc(ir.byeWeekNote)})` : ''}`
+      }${cleanByeNote ? ` (${esc(cleanByeNote)})` : ''}`
     };
   }
 
@@ -1024,7 +1024,7 @@ function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
     return {
       badgeClass: 'badge-neutral',
       badgeText: projRaw,
-      subtitleHtml: `${esc(ir.status || 'Reserve')}${ir.byeWeekNote ? ` • ${esc(ir.byeWeekNote)}` : ''}`
+      subtitleHtml: `${esc(ir.status || 'Reserve')}${cleanByeNote ? ` • ${esc(cleanByeNote)}` : ''}`
     };
   }
 
@@ -1039,7 +1039,7 @@ function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
     badgeClass: isTbd ? 'badge-neutral' : 'badge-gold',
     badgeText,
     subtitleHtml: `${esc(ir.status || 'Injured Reserve')} • Earliest Eligible: Wk ${ir.earliestEligibleWeek}${
-      ir.byeWeekNote ? ` (${esc(ir.byeWeekNote)})` : ''
+      cleanByeNote ? ` (${esc(cleanByeNote)})` : ''
     }`
   };
 }
@@ -1073,6 +1073,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('heartPulse', 18)}</div>
           <div class="card-title-group">
+            <div class="card-eyebrow">${jargonTerm('DNP', 'dnp')} · ${jargonTerm('LP', 'lp')} · ${jargonTerm('FP', 'fp')}</div>
             <h2 class="card-title">Week ${h.week || 9} Injury Report</h2>
           </div>
         </div>
@@ -1085,10 +1086,6 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
           </a>
           <span class="badge badge-gold mono">${jargonTerm('IR', 'ir')} Returns Left: ${h.remainingIrDesignations}/${h.maxRegularSeasonIrDesignations}</span>
         </div>
-      </div>
-
-      <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
-        ${jargonTerm('DNP', 'dnp')} / ${jargonTerm('LP', 'lp')} / ${jargonTerm('FP', 'fp')}
       </div>
 
       <div class="table-scroll health-table-scroll" data-health-table="sf">
@@ -1274,7 +1271,7 @@ function renderTeamStatsAndPower(appData) {
                 <tr class="unit-overall-banner overall-stat-row" data-overall-unit="${esc(u.id)}">
                   <td>
                     <div class="unit-overall-inline">
-                      <span class="unit-overall-heading">${esc(u.overall?.label || 'Overall Unit Rank')}</span>
+                      <span class="unit-overall-heading">Overall Rank</span>
                       <span class="unit-overall-sub mono overall-how-wrap">${jargonTerm('Composite Score', u.jargonKey)}</span>
                     </div>
                   </td>
@@ -1379,7 +1376,7 @@ function renderTeamStatsAndPower(appData) {
     <section class="card">
       <div class="card-header">
         <div class="card-title-group">
-          <div class="card-eyebrow">${esc(pwr.weekLabel)}</div>
+          <div class="card-eyebrow">${esc(String(pwr.weekLabel || '').replace(/\s+Consensus$/i, ''))}</div>
           <h2 class="card-title">Power Rankings</h2>
         </div>
         <span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus</span>
@@ -1544,7 +1541,7 @@ function renderTradeWindow(appData) {
                   <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
                     ${
                       t.sourceUrl
-                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(t.name)} (${esc(t.position)})</strong></a>`
+                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" title="Open OverTheCap Contract"><strong>${esc(t.name)} (${esc(t.position)})</strong> ${iconSvg('externalLink', 10)}</a>`
                         : `<strong>${esc(t.name)} (${esc(t.position)})</strong>`
                     }
                     ${t.teamAbbr ? renderTeamLogoHtml(t.teamAbbr, t.teamLogoUrl, 17) : ''}
@@ -1553,11 +1550,6 @@ function renderTradeWindow(appData) {
                         ? t.teamAbbr
                           ? `<a href="${esc(buildEspnNflTeamUrl(t.teamAbbr))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(t.currentTeam)}</a>`
                           : `<span style="font-size:11.5px;color:var(--gold-bright);font-weight:700">${esc(t.currentTeam)}</span>`
-                        : ''
-                    }
-                    ${
-                      t.sourceUrl
-                        ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:4px">OTC Contract ${iconSvg('externalLink', 10)}</a>`
                         : ''
                     }
                   </div>
@@ -1644,7 +1636,7 @@ function renderRootingGameRowHtml(g, forcedWinners) {
     <div class="scenario-game-row">
       <div style="min-width:0">
         <div style="font-weight:700;font-size:13px">
-          Wk ${g.week}: ${esc(g.matchupLabel)}
+          ${esc(g.matchupLabel)}
           ${g.is49ersGame ? `<span class="badge badge-scarlet">49ers</span>` : ''}
         </div>
         <div style="font-size:11.5px;color:var(--text-secondary)">
@@ -1694,10 +1686,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
         return `
           <div class="subcard-panel rooting-week-card" data-rooting-week="${wk}">
             <div class="rooting-week-header">
-              <div style="display:flex;align-items:center;gap:6px">
-                <span class="badge badge-gold mono">Week ${wk}</span>
-                <strong style="font-size:13px">Week ${wk} Rooting Slate</strong>
-              </div>
+              <strong style="font-size:13px;color:var(--gold-bright)">Week ${wk}</strong>
               <span class="mono" style="font-size:11px;color:var(--text-muted)">${games.length} ${games.length === 1 ? 'game' : 'games'}</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
@@ -1710,10 +1699,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
       return `
         <details class="subcard-panel rooting-week-card rooting-week-collapsible" data-rooting-week="${wk}" data-rooting-next-week${isOpen ? ' open' : ''}>
           <summary class="rooting-week-summary">
-            <div style="display:flex;align-items:center;gap:6px">
-              <span class="badge badge-neutral mono">Week ${wk}</span>
-              <strong style="font-size:13px">Week ${wk} Rooting Guide</strong>
-            </div>
+            <strong style="font-size:13px">Week ${wk}</strong>
             <span class="mono" style="font-size:11px;color:var(--gold-bright)">${games.length} ${games.length === 1 ? 'game' : 'games'} • Tap to expand ▾</span>
           </summary>
           <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
@@ -1739,7 +1725,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
           ${
             overrideCount > 0
               ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">${iconSvg('reset', 13)}<span>Clear (${overrideCount})</span></button>`
-              : `<span class="badge badge-gold mono">10,000 Runs</span>`
+              : ''
           }
         </div>
       </div>

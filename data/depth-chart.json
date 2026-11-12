@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T08:35:23.267Z",
+  "updatedAt": "2026-11-12T08:56:35.985Z",
   "week": 10,
   "units": [
     {
@@ -190,7 +190,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "SLWR (11 Pers)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "15818",
@@ -816,7 +816,7 @@
         },
         {
           "slotKey": "fb",
-          "slotLabel": "FB (21 Pers)",
+          "slotLabel": "FB (21 Personnel)",
           "baselineChain": [
             {
               "playerId": "16002",

@@ -120,7 +120,6 @@ export function renderSynthesisSourcesSheetHtml(cluster, rawStream = [], appData
   return `
     <div style="display:flex;flex-direction:column;gap:10px" data-synthesis-sources-sheet="${esc(cluster.id)}">
       <div class="subcard-panel" style="border-color:var(--gold-border)">
-        <div class="card-eyebrow" style="margin-bottom:3px">${esc(cluster.categoryLabel || 'AI Synthesis Story')}</div>
         <div style="font-weight:700;font-size:13.5px;line-height:1.38;color:var(--text-primary)">${esc(cluster.headline)}</div>
       </div>
 
@@ -250,7 +249,7 @@ export function renderNewsViewHtml({
       <div class="pill-bar" aria-label="News Category Filter">
         ${(newsMode === 'raw'
           ? [
-              ['all', `All (${dedupedRaw.length})`],
+              ['all', 'All'],
               ['tweets', `Tweets (${tweetCount})`],
               ['articles', 'Articles'],
               ['videos', 'Videos'],
@@ -675,7 +674,8 @@ export function renderNewsViewHtml({
                           item.title || `Watch Clip (${item.duration || 'Video'})`,
                           item.outletName,
                           isVidOpen,
-                          item.embeddable !== false
+                          item.embeddable !== false,
+                          { compactFooter: true }
                         )
                       : ''
                   }
@@ -696,7 +696,8 @@ export function renderVideoEmbedOrFacade(
   label = 'Watch Video',
   channel = 'YouTube',
   isPlaying = false,
-  embeddable = true
+  embeddable = true,
+  { compactFooter = false } = {}
 ) {
   const safeId = encodeURIComponent(videoId);
   const startNum = Number(startSec || 0);
@@ -719,13 +720,17 @@ export function renderVideoEmbedOrFacade(
               </span>
             </div>
           </div>
-          <div class="video-launch-bar">
-            <div style="min-width:0">
-              <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
-              <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube')} • Opens directly on YouTube</div>
-            </div>
-            <span class="source-chip-link"><span>YouTube</span>${iconSvg('externalLink', 11)}</span>
-          </div>
+          ${
+            compactFooter
+              ? ''
+              : `<div class="video-launch-bar">
+                  <div style="min-width:0">
+                    <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
+                    <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube')} • Opens directly on YouTube</div>
+                  </div>
+                  <span class="source-chip-link"><span>YouTube</span>${iconSvg('externalLink', 11)}</span>
+                </div>`
+          }
         </a>
       </div>
     `;
@@ -739,7 +744,11 @@ export function renderVideoEmbedOrFacade(
           <iframe src="${src}" title="${esc(label)}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="video-launch-bar">
-          <span class="inline-icon-meta" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${iconSvg('video', 14)}<span>${esc(label)}</span></span>
+          ${
+            compactFooter
+              ? `<span class="inline-icon-meta" style="min-width:0">${iconSvg('video', 14)}<span>Playing Inline</span></span>`
+              : `<span class="inline-icon-meta" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${iconSvg('video', 14)}<span>${esc(label)}</span></span>`
+          }
           <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Watch on YouTube ${iconSvg('externalLink', 12)}</a>
         </div>
       </div>
@@ -757,13 +766,19 @@ export function renderVideoEmbedOrFacade(
           </button>
         </div>
       </div>
-      <div class="video-launch-bar">
-        <div style="min-width:0">
-          <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
-          <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube Film & Podium')}</div>
-        </div>
-        <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">YouTube ${iconSvg('externalLink', 12)}</a>
-      </div>
+      ${
+        compactFooter
+          ? `<div class="video-launch-bar" style="justify-content:flex-end">
+              <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on YouTube ${iconSvg('externalLink', 12)}</a>
+            </div>`
+          : `<div class="video-launch-bar">
+              <div style="min-width:0">
+                <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
+                <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube Film & Podium')}</div>
+              </div>
+              <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">YouTube ${iconSvg('externalLink', 12)}</a>
+            </div>`
+      }
     </div>
   `;
 }

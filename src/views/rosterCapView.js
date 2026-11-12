@@ -348,31 +348,78 @@ function renderRosterExplorer({
   `;
 }
 
+function renderDepthUnitTitleHtml(rawUnitName = '') {
+  const norm = String(rawUnitName || '')
+    .trim()
+    .replace(/\b(\d+)\s*Pers\b/gi, '$1 Personnel');
+  if (/^Offense\s*\(11\s*&\s*21\s*Personnel\)$/i.test(norm)) {
+    return `Offense (${jargonTerm('11', 'personnel_11')} &amp; ${jargonTerm('21 Personnel', 'personnel_21')})`;
+  }
+  if (/^Defense\s*\(Wide[- ]?9\s+Base\s+4-3\s*&\s*Nickel\s+4-2-5\)$/i.test(norm)) {
+    return `Defense (${jargonTerm('Wide-9', 'wide_9')} ${jargonTerm('Base 4-3', 'base_4_3')} &amp; ${jargonTerm('Nickel 4-2-5', 'nickel_4_2_5')})`;
+  }
+  return escJargon(norm, { maxTerms: 6, maxPlayers: 0, seenKeys: new Set() });
+}
+
+function renderDepthSlotLabelHtml(rawSlotLabel = '') {
+  const norm = String(rawSlotLabel || '')
+    .trim()
+    .replace(/\b(\d+)\s*Pers\b/gi, '$1 Personnel');
+  const upper = norm.toUpperCase();
+
+  if (upper === 'WR (X)') return `WR (${jargonTerm('X', 'x_receiver')})`;
+  if (upper === 'WR (Z)') return `WR (${jargonTerm('Z', 'z_receiver')})`;
+  if (upper === 'SLWR (11 PERSONNEL)') {
+    return `${jargonTerm('SLWR', 'slot_wr')} (${jargonTerm('11 Personnel', 'personnel_11')})`;
+  }
+  if (upper === 'TE (Y)') return `TE (${jargonTerm('Y', 'y_tight_end')})`;
+  if (upper === 'FB (21 PERSONNEL)') {
+    return `${jargonTerm('FB', 'fullback')} (${jargonTerm('21 Personnel', 'personnel_21')})`;
+  }
+  if (upper === 'LDE (WIDE-9)' || upper === 'LDE (WIDE 9)') {
+    return `LDE (${jargonTerm('Wide-9', 'wide_9')})`;
+  }
+  if (upper === 'RDE (WIDE-9)' || upper === 'RDE (WIDE 9)') {
+    return `RDE (${jargonTerm('Wide-9', 'wide_9')})`;
+  }
+  if (upper === 'LDT (1/2I)') return `LDT (${jargonTerm('1/2i', 'one_two_i')})`;
+  if (upper === 'RDT (3-TECH)') return `RDT (${jargonTerm('3-Tech', 'three_tech')})`;
+  if (upper === 'WILL LB') return jargonTerm('WILL LB', 'will_lb');
+  if (upper === 'MIKE LB') return jargonTerm('MIKE LB', 'mike_lb');
+  if (upper === 'SAM LB (4-3)') {
+    return `${jargonTerm('SAM LB', 'sam_lb')} (${jargonTerm('4-3', 'base_4_3')})`;
+  }
+  if (upper === 'NICKEL CB (4-2-5)') {
+    return `${jargonTerm('NICKEL CB', 'nickel_cb')} (${jargonTerm('4-2-5', 'nickel_4_2_5')})`;
+  }
+  if (upper === 'SS') return jargonTerm('SS', 'strong_safety');
+  if (upper === 'FS') return jargonTerm('FS', 'free_safety');
+  if (upper === 'LS') return jargonTerm('LS', 'long_snapper');
+  if (upper === 'PR') return jargonTerm('PR', 'punt_returner');
+  if (upper === 'KR') return jargonTerm('KR', 'kick_returner');
+
+  return escJargon(norm, { maxTerms: 6, maxPlayers: 0, seenKeys: new Set() });
+}
+
 function renderDualDepthChart({ appData, depthMode }) {
   const units = appData?.depthChart?.units || [];
   const depthWk = appData?.depthChart?.week || appData?.meta?.currentWeek || '';
 
   const headerCard = `
     <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-icon-badge" aria-hidden="true">${iconSvg('layers', 18)}</div>
-          <div class="card-title-group">
-            <div class="card-eyebrow">${jargonTerm('11 personnel', '11_personnel')} / ${jargonTerm('21 personnel', '21_personnel')} • ${jargonTerm('Wide-9', 'wide_9')} &amp; Nickel 4-2-5</div>
-            <h2 class="card-title">Depth Chart</h2>
-          </div>
-        </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <span style="font-size:11.5px;color:var(--text-muted)">Tap underlined alignments for scheme notes, or any player for dossier</span>
         <div class="source-link-strip">
           <a href="https://www.espn.com/nfl/team/depth/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Depth</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://www.ourlads.com/nfldepthcharts/depthchart/SF" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
         </div>
       </div>
       <div class="segmented-control compact-seg" role="tablist" aria-label="Depth Chart Mode" style="margin-bottom:0">
-        <button type="button" class="pill-btn seg-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
+        <button type="button" role="tab" aria-selected="${depthMode === 'projected' ? 'true' : 'false'}" class="pill-btn seg-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
           ${iconSvg('bolt', 13)}
           <span>${depthWk ? `Wk ${depthWk} ` : ''}Active (Injury-Adj.)</span>
         </button>
-        <button type="button" class="pill-btn seg-btn ${depthMode === 'baseline' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="baseline">
+        <button type="button" role="tab" aria-selected="${depthMode === 'baseline' ? 'true' : 'false'}" class="pill-btn seg-btn ${depthMode === 'baseline' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="baseline">
           ${iconSvg('layers', 13)}
           <span>Full Hierarchy</span>
         </button>
@@ -388,7 +435,7 @@ function renderDualDepthChart({ appData, depthMode }) {
           return `
             <div class="depth-slot-row">
               <div class="depth-slot-head">
-                <span class="depth-pos-tag mono">${esc(row.slotLabel)}</span>
+                <span class="depth-pos-tag mono">${renderDepthSlotLabelHtml(row.slotLabel)}</span>
                 ${
                   depthMode === 'projected' && row.starterPromoted
                     ? `<span class="badge badge-warning">Injury Next-Man-Up</span>`
@@ -432,7 +479,7 @@ function renderDualDepthChart({ appData, depthMode }) {
 
       return `
         <section class="card">
-          <h3 class="card-title" style="margin-bottom:8px">${esc(u.unitName)}</h3>
+          <h3 class="card-title" style="margin-bottom:8px">${renderDepthUnitTitleHtml(u.unitName)}</h3>
           ${rowsHtml}
         </section>
       `;
@@ -694,7 +741,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
       <!-- Selected Year OverTheCap Top-of-Page Summary Metrics -->
       <div class="kpi-grid cap-summary-kpi-grid" style="margin-bottom:8px">
         <div class="kpi-box">
-          <div class="kpi-label">${esc(selectedYrKey)} Gross Space</div>
+          <div class="kpi-label">${jargonTerm('Gross Space', 'gross_cap_space')}</div>
           <div class="kpi-val mono" style="color:${yrGrossSpace >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">
             ${formatOtcDollars(yrGrossSpace)}
           </div>
@@ -724,7 +771,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
           </div>
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">${esc(selectedYrKey)} ${jargonTerm('Dead Cap', 'dead_cap')}</div>
+          <div class="kpi-label">${jargonTerm('Dead Cap', 'dead_cap')}</div>
           <div class="kpi-val mono" style="color:${yrDeadMoney > 0 ? 'var(--amber)' : 'var(--text-primary)'}">
             ${formatOtcDollars(yrDeadMoney)}
           </div>

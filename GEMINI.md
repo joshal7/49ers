@@ -39,7 +39,7 @@ When building or modifying features in this repository, adhere strictly to the t
 
 ## Holistic Application Makeup & File Map
 
-- **Entry & Shell**: `index.html`, `manifest.json`, `sw.js` (`CACHE_NAME = '49ers-faithful-v53'`), `src/app.js`, `src/styles.css`.
+- **Entry & Shell**: `index.html`, `manifest.json`, `sw.js` (`CACHE_NAME = '49ers-faithful-v54'`), `src/app.js`, `src/styles.css`.
 - **13 Deterministic Engines (`src/engine/`)**:
   - `seasonStateMachine.js`: Evaluates 6 NFL calendar phases (`YEAR_ROUND`, `IN_SEASON`, `TRADE_WINDOW`, `PLAYOFF_PUSH`, `DRAFT_PREP`, `DRAFT_LIVE_UDFA`), resolves the 12-block Home priority order, and partitions completed trades by a **30-day recency window** (`<=30d` in Trade Window; `>30d` in Archive Vault).
   - `capSimulator.js`: 5-year (`2026–2030`) OverTheCap simulator across all 53 active contracts; combines Prorated & Current-Yr Bonuses, defaults nominal Dead Money & Cap Savings to `$0`, enforces Top-53 replacement rules, `>2` Post-June 1 CBA designation warnings, and Article 13 rollover math.

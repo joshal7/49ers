@@ -717,6 +717,108 @@ export const JARGON_GLOSSARY = {
     category: 'Scheme & Film',
     definition:
       'Overhead sideline and end-zone stadium camera angles showing all 22 players, safety shells, route stems, and blocking mechanics simultaneously.'
+  },
+  one_two_i: {
+    term: '1 / 2i-Technique (Nose / Shade DT)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Interior defensive tackle aligned either on the center’s outside shoulder (1-technique) or the guard’s inside shoulder (2i-technique) in the A-gap, tasked with absorbing double-teams, controlling interior run gaps, and collapsing pocket depth.'
+  },
+  base_4_3: {
+    term: '4-3 Base Defense',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Defensive front featuring 4 defensive linemen (two Wide-9 ends, a 1/2i nose tackle, and a 3-tech DT), 3 off-ball linebackers (SAM, MIKE, WILL), and 4 defensive backs, primarily deployed against heavy 21/12/22 run personnel.'
+  },
+  nickel_4_2_5: {
+    term: '4-2-5 Nickel Defense',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Primary modern NFL sub-package (~70% of defensive snaps): 4 defensive linemen, 2 off-ball linebackers (MIKE + WILL), and 5 defensive backs (two outside corners, two safeties, and a slot Nickel CB replacing the SAM linebacker).'
+  },
+  nickel_cb: {
+    term: 'Nickel / Slot Cornerback (NB)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Fifth defensive back aligned inside over the slot receiver or detached tight end in 4-2-5 Nickel; must handle two-way slot route releases, perimeter run force, and apex blitzes.'
+  },
+  x_receiver: {
+    term: 'X-Receiver (Split End)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Outside perimeter wide receiver tethered on the line of scrimmage (typically opposite the tight end); often isolated single-side where he must beat press coverage off the snap without pre-snap motion.'
+  },
+  z_receiver: {
+    term: 'Z-Receiver (Flanker)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Movement wide receiver aligned off the line of scrimmage; free to run pre-snap jet/orbit motion, condensed bunches, and high-YAC in-breaking routes in Kyle Shanahan’s offense.'
+  },
+  slot_wr: {
+    term: 'SLWR (Slot Wide Receiver)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Inside wide receiver aligned between the offensive tackle and perimeter receiver in 11 personnel (3-WR sets), operating with a two-way go against nickels, safeties, and linebackers.'
+  },
+  y_tight_end: {
+    term: 'Y-Tight End (In-Line Tight End)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Primary tight end attached to the offensive tackle on the line of scrimmage (George Kittle role), anchoring C-gap run blocking and play-action pass protection while threatening vertical seams.'
+  },
+  fullback: {
+    term: 'FB (Fullback / Move-Back)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Hybrid lead blocker and versatile chess piece in 21 personnel (Kyle Juszczyk role) used to insert extra run gaps, chip Wide-9 edge rushers, and detach to the slot or boundary to create coverage mismatches.'
+  },
+  will_lb: {
+    term: 'WILL Linebacker (Weakside LB)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Off-ball linebacker aligned away from the offensive tight end / passing strength, protected by the 3-technique DT to chase sideline-to-sideline and cover backs and tight ends in space.'
+  },
+  mike_lb: {
+    term: 'MIKE Linebacker (Middle LB)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Defensive quarterback ("green dot" helmet communicator, Fred Warner role) aligned centrally to set front strength, fit interior run gaps, and carry deep middle seams in Tampa-2 and pattern-match zones.'
+  },
+  sam_lb: {
+    term: 'SAM Linebacker (Strongside LB)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Third linebacker on the field in Base 4-3 defense aligned to the tight-end strength side to set C/D-gap run edges and jam tight ends; subbed off for the Nickel CB in 4-2-5.'
+  },
+  strong_safety: {
+    term: 'SS (Strong Safety)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Safety versatile enough to rotate down into the box or curl/flat as an extra run defender and tight-end cover man while playing half-field or quarters deep in two-high shells.'
+  },
+  free_safety: {
+    term: 'FS (Free Safety)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Deep-ranging safety responsible for post/centerfield range in single-high shells and split-field vertical landmarks in two-high Quarters and Cover 2.'
+  },
+  long_snapper: {
+    term: 'LS (Long Snapper)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Specialist snapping 7–8 yards to the holder on field goals/PATs and 14–15 yards to the punter with precise spiral rotation (~0.70s punt snap velocity) before covering downfield.'
+  },
+  punt_returner: {
+    term: 'PR (Punt Returner)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Special-teams ball carrier tracking hang-time punts in traffic to decide between fair catch, bounce-away poison calls, or vertical hidden-yardage returns.'
+  },
+  kick_returner: {
+    term: 'KR (Kick Returner)',
+    category: 'Depth Chart & Alignment',
+    definition:
+      'Special-teams returner fielding kickoffs inside the NFL Dynamic Kickoff landing zone (goal line to 20-yard line) before coverage and return fronts converge.'
   }
 };
 
@@ -909,15 +1011,30 @@ const PHRASE_ALIASES = [
   ['12/21', 'personnel_multi'],
   ['21 personnel', 'personnel_21'],
   ['21-personnel', 'personnel_21'],
+  ['21 Pers', 'personnel_21'],
   ['13 personnel', 'personnel_13'],
   ['13-personnel', 'personnel_13'],
   ['12 personnel', 'personnel_12'],
   ['12-personnel', 'personnel_12'],
   ['11 personnel', 'personnel_11'],
   ['11-personnel', 'personnel_11'],
+  ['11 Pers', 'personnel_11'],
   ['22 personnel', 'personnel_22'],
   ['22-personnel', 'personnel_22'],
+  ['Nickel 4-2-5', 'nickel_4_2_5'],
+  ['4-2-5', 'nickel_4_2_5'],
+  ['Base 4-3', 'base_4_3'],
+  ['NICKEL CB', 'nickel_cb'],
+  ['Nickel CB', 'nickel_cb'],
+  ['WILL LB', 'will_lb'],
+  ['MIKE LB', 'mike_lb'],
+  ['SAM LB', 'sam_lb'],
+  ['SLWR', 'slot_wr'],
   ['Wide-9', 'wide_9'],
+  ['Wide 9', 'wide_9'],
+  ['1/2i-technique', 'one_two_i'],
+  ['1/2i-tech', 'one_two_i'],
+  ['1/2i', 'one_two_i'],
   ['3-technique', 'three_tech'],
   ['3-tech', 'three_tech'],
   ['1-technique', 'one_tech'],

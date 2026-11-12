@@ -1171,17 +1171,36 @@ async function main() {
         const baselineChipsCount = document.querySelectorAll('.depth-player-chip').length;
         document.querySelector('[data-action="set-depth-mode"][data-depth-mode="projected"]').click();
         const unitTitles = Array.from(document.querySelectorAll('#mainView section.card h3.card-title')).map(el => el.textContent.trim());
+        const slotTextAll = Array.from(document.querySelectorAll('#mainView .depth-pos-tag')).map(el => el.textContent.trim()).join(' | ');
+        const depthJargonKeys = Array.from(document.querySelectorAll('#mainView .jargon-term[data-jargon]')).map(el => el.getAttribute('data-jargon'));
+        const oneTwoITrigger = document.querySelector('#mainView .depth-pos-tag [data-jargon="one_two_i"]');
+        let oneTwoIPopoverOpened = false;
+        if (oneTwoITrigger) {
+          oneTwoITrigger.click();
+          const pop = document.getElementById('jargonPopover');
+          oneTwoIPopoverOpened = Boolean(pop && !pop.hidden && /2i-Technique/i.test(pop.textContent || ''));
+          document.querySelector('[data-action="close-jargon-popover"]')?.click();
+        }
         return {
           chipsCount,
           baselineChipsCount,
           hasUnits: projectedText.includes('Offense') && projectedText.includes('Defense'),
-          unitTitles
+          unitTitles,
+          hasPersAbbrev: /\b\d+\s*Pers\b/i.test(slotTextAll),
+          hasFullPersonnel: slotTextAll.includes('11 Personnel') && slotTextAll.includes('21 Personnel'),
+          depthJargonKeys,
+          oneTwoIPopoverOpened
         };
       });
       assert(depthCheck.hasUnits && depthCheck.chipsCount >= 30, 'Depth chart missing units or player chips');
       assert(depthCheck.unitTitles[0]?.includes('Offense'), `Expected first unit to be Offense, got ${depthCheck.unitTitles[0]}`);
       assert(depthCheck.unitTitles[1]?.includes('Defense'), `Expected second unit to be Defense, got ${depthCheck.unitTitles[1]}`);
       assert(depthCheck.unitTitles[2]?.includes('Special Teams'), `Expected third unit to be Special Teams, got ${depthCheck.unitTitles[2]}`);
+      assert(!depthCheck.hasPersAbbrev && depthCheck.hasFullPersonnel, 'Depth chart must spell out 11 Personnel & 21 Personnel');
+      for (const reqKey of ['one_two_i', 'three_tech', 'wide_9', 'personnel_11', 'personnel_21', 'nickel_4_2_5']) {
+        assert(depthCheck.depthJargonKeys.includes(reqKey), `Depth chart missing underlined jargon trigger for ${reqKey}`);
+      }
+      assert(depthCheck.oneTwoIPopoverOpened, 'Clicking (1/2i) in Depth Chart must open Jargon explanation popover');
       await cdp.assertNoOverflow('Dual Depth Chart View');
     });
 
@@ -2875,7 +2894,7 @@ async function main() {
       assert(edgeAudit.apostropheFound, "Searching De'Zhaun failed to match De'Zhaun Stribling");
       assert(edgeAudit.emptyGraceful, 'Empty roster search state did not render gracefully');
       assert(
-        edgeAudit.awayTitle.startsWith('49ers') && edgeAudit.sbCols[0] === '49ers' && edgeAudit.sbCols[1] === 'Dallas Cowboys',
+        edgeAudit.awayTitle === 'Week 10 Matchup' && edgeAudit.sbCols[0] === '49ers' && edgeAudit.sbCols[1] === 'Dallas Cowboys',
         `Away-game scoreboard orientation wrong: title="${edgeAudit.awayTitle}", cols=${JSON.stringify(edgeAudit.sbCols)}`
       );
       assert(edgeAudit.checkedExternalLinks >= 80, `Expected >=80 external links across tabs & modals, checked ${edgeAudit.checkedExternalLinks}`);

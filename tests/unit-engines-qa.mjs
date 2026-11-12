@@ -5832,6 +5832,108 @@ test('Film & Trench vs Videos are significantly differentiated in both engine cl
   assert.ok(nonVideoFilmCount >= 2, `Expected >=2 written articles/threads in Film & Trench, got ${nonVideoFilmCount}`);
 });
 
+await testAsync('Site-wide redundancy consolidation & Depth Chart scheme/alignment glossary underlines QA', async () => {
+  const { renderSeasonMatchupViewHtml } = await import('../src/views/seasonMatchupView.js');
+  const { renderRosterCapViewHtml } = await import('../src/views/rosterCapView.js');
+  const { renderNewsViewHtml } = await import('../src/views/newsView.js');
+  const { renderAudioAiViewHtml } = await import('../src/views/audioAiView.js');
+  const { getJargonEntry } = await import('../src/engine/jargonGlossary.js');
+
+  const fullAppData = {
+    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8')),
+    health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+    depthChart: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8')),
+    cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+    beatPodcasts: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'beat-podcasts.json'), 'utf8'))
+  };
+
+  // 1. Matchup View: Zero opponent "Bye Wk" / "Bye Week", zero "Most recent meeting" above table, and non-duplicated matchup title
+  const matchupHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'matchup',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: fullAppData,
+    activeVideosSet: new Set()
+  });
+  const oppSecStart = matchupHtml.indexOf('id="opponentHealthSection"');
+  const oppSecEnd = matchupHtml.indexOf('id="matchupTeamStatsCard"');
+  const oppSecHtml = matchupHtml.slice(oppSecStart, oppSecEnd > oppSecStart ? oppSecEnd : undefined);
+  assert.ok(!/Bye\s*Wk|Bye\s*Week/i.test(oppSecHtml), 'Opponent Health section must never display opponent Bye Week');
+  assert.ok(!/Most recent meeting/i.test(matchupHtml), 'Matchup Recent Meetings must not repeat Most recent meeting above table Row 1');
+  assert.ok(matchupHtml.includes('>Week ') && matchupHtml.includes(' Matchup</h2>'), 'Matchup hero card must use concise Week X Matchup heading above scoreboard');
+
+  // 2. Playoffs View: Zero duplicate "10,000 Runs" badge & clean Rooting Guide week headers/rows
+  const playoffsHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'playoffs',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON', 'PLAYOFF_PUSH'],
+    appData: fullAppData,
+    activeVideosSet: new Set()
+  });
+  assert.ok(playoffsHtml.includes('10,000-Run'), 'Playoffs view must keep 10,000-Run Monte Carlo eyebrow');
+  assert.ok(!playoffsHtml.includes('>10,000 Runs<'), 'Playoffs view must NOT repeat 10,000 Runs badge in header');
+  assert.ok(!/Rooting Slate|Week \d+ Rooting Guide/.test(playoffsHtml), 'Rooting Guide week cards must not stutter Week X + Week X Rooting Slate/Guide');
+  assert.ok(!/\bWk \d+:\s+[A-Z]{2,3}\s+@\s+[A-Z]{2,3}/.test(playoffsHtml), 'Rooting Guide game rows must not repeat Wk X: inside Week X card');
+
+  // 3. Depth Chart: Zero "Pers" abbreviation ("11 Personnel" / "21 Personnel") & underlined jargon explanations for all scheme/alignment tags
+  const depthHtml = renderRosterCapViewHtml({
+    subTab: 'depth',
+    depthMode: 'projected',
+    appData: fullAppData
+  });
+  assert.ok(!/\b\d+\s*Pers\b/i.test(depthHtml), 'Depth Chart must spell out Personnel (zero "11 Pers" / "21 Pers" abbreviations)');
+  assert.ok(depthHtml.includes('11 Personnel') && depthHtml.includes('21 Personnel'), 'Depth Chart must display 11 Personnel and 21 Personnel');
+  for (const requiredJargonKey of [
+    'one_two_i',
+    'three_tech',
+    'wide_9',
+    'personnel_11',
+    'personnel_21',
+    'nickel_4_2_5',
+    'base_4_3',
+    'x_receiver',
+    'z_receiver',
+    'slot_wr',
+    'y_tight_end',
+    'fullback',
+    'will_lb',
+    'mike_lb',
+    'sam_lb',
+    'nickel_cb'
+  ]) {
+    const entry = getJargonEntry(requiredJargonKey);
+    assert.ok(entry && entry.definition.length >= 40, `Missing or thin glossary entry for Depth Chart key "${requiredJargonKey}"`);
+    assert.ok(
+      depthHtml.includes(`data-jargon="${entry.key}"`),
+      `Depth Chart HTML must underline and wire data-jargon="${entry.key}"`
+    );
+  }
+
+  // 4. News & Audio rapid-succession count & video footer de-duplication
+  const newsHtml = renderNewsViewHtml({
+    appData: fullAppData,
+    newsMode: 'raw',
+    newsCategoryFilter: 'all',
+    filteredClusters: fullAppData.news.clusteredBriefs,
+    filteredRawItems: fullAppData.news.rawStream,
+    reportersById: new Map(),
+    activeVideosSet: new Set(),
+    userPrefs: {}
+  });
+  assert.ok(newsHtml.includes('data-category="all">All</button>'), 'Wire & Video All filter pill must not repeat total count directly under Wire & Video (N)');
+
+  const podsHtml = renderAudioAiViewHtml({
+    appData: fullAppData,
+    studioSub: 'beat_podcasts',
+    beatPodViewMode: 'date',
+    beatPodShowFilter: 'all'
+  });
+  assert.ok(podsHtml.includes('<h2 class="card-title">49ers Beat Podcasts</h2>'), '49ers Beat Podcasts title must not repeat episode count under Podcasts (N) tab');
+  assert.ok(podsHtml.includes('<span>All 6 Shows</span>'), 'All 6 Shows filter pill must not repeat episode count a third time');
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

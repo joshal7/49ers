@@ -519,12 +519,16 @@ function renderPodcastEpisodeRowCard(ep, { showPodcastBadge = true } = {}) {
             </span>
           </div>
           <div class="beat-podcast-ep-title">${esc(ep.title)}</div>
-          ${ep.hosts ? `<div style="font-size:11px;color:var(--text-muted);margin-top:1px">${esc(ep.hosts)}</div>` : ''}
+          ${showPodcastBadge && ep.hosts ? `<div style="font-size:11px;color:var(--text-muted);margin-top:1px">${esc(ep.hosts)}</div>` : ''}
         </div>
       </div>
       <div class="beat-podcast-ep-summary">${esc(ep.summary || '')}</div>
       <div class="beat-podcast-ep-footer">
-        <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc(ep.network || ep.showName)}</span>
+        <span class="mono" style="font-size:11px;color:var(--text-muted)">${
+          ep.network && String(ep.network).toLowerCase() !== String(ep.showName || '').toLowerCase()
+            ? esc(ep.network)
+            : ''
+        }</span>
         <span class="beat-podcast-launch-pill">
           ${iconSvg('play', 11)}
           <span>${esc(launch.ctaLabel)}</span>
@@ -561,7 +565,7 @@ function renderBeatPodcastsDirectory({
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Last 7 Days</div>
-            <h2 class="card-title">49ers Beat Podcasts (${episodes.length})</h2>
+            <h2 class="card-title">49ers Beat Podcasts</h2>
           </div>
         </div>
         <div class="podcast-view-toggle" role="group" aria-label="Organize Podcasts By">
@@ -583,7 +587,7 @@ function renderBeatPodcastsDirectory({
           ? `<div class="pill-bar" aria-label="Filter By Show">
               <button type="button" class="pill-btn ${showFilter === 'all' ? 'active' : ''}"
                       data-action="set-beat-pod-show-filter" data-show-id="all">
-                <span>All 6 Shows (${episodes.length})</span>
+                <span>All 6 Shows</span>
               </button>
               ${defaultShows
                 .map(s => {

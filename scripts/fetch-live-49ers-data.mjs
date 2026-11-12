@@ -1574,7 +1574,7 @@ async function main() {
   // 6. Build Dual-Mode Depth Chart (`data/depth-chart.json`)
   const depthUnits = [];
   const slotLabels = {
-    qb: 'QB', rb: 'RB', fb: 'FB (21 Pers)', wr1: 'WR (X)', wr2: 'WR (Z)', wr3: 'SLWR (11 Pers)',
+    qb: 'QB', rb: 'RB', fb: 'FB (21 Personnel)', wr1: 'WR (X)', wr2: 'WR (Z)', wr3: 'SLWR (11 Personnel)',
     te: 'TE (Y)', lt: 'LT', lg: 'LG', c: 'C', rg: 'RG', rt: 'RT',
     lde: 'LDE (Wide-9)', ldt: 'LDT (1/2i)', rdt: 'RDT (3-Tech)', rde: 'RDE (Wide-9)',
     wlb: 'WILL LB', mlb: 'MIKE LB', slb: 'SAM LB (4-3)', nb: 'NICKEL CB (4-2-5)',
@@ -3501,9 +3501,7 @@ async function main() {
           projectedReturnWeek: oppIrClass.projectedReturnWeek,
           byeWeekNote: oppIrClass.isSeasonEnding
             ? oppIrClass.byeWeekNote
-            : oppIrClass.byeWeekNote.includes('Bye excluded')
-              ? `Excludes ${oppAbbrTarget} Week ${oppByeWeek} Bye under NFL 4-game IR rule`
-              : `${oppAbbrTarget} Bye Week ${oppByeWeek} • 4-game NFL minimum`,
+            : '4-game NFL minimum',
           beatNote: oppIrClass.beatNote,
           playProbabilityPct: 0,
           playBadgeLabel: oppIrClass.isSeasonEnding
@@ -4148,12 +4146,12 @@ async function main() {
   );
   const consensusPowerRank = Math.max(1, Math.min(32, sfStandingsDetail.playoffSeed <= 2 ? 2 : sfStandingsDetail.playoffSeed + 1));
   const powerRankings = {
-    weekLabel: `Entering Week ${currentWeek} Consensus`,
+    weekLabel: `Entering Week ${currentWeek}`,
     consensusRank: consensusPowerRank,
     previousRank: Math.min(32, consensusPowerRank + 1),
     rangeDisplay: `#${Math.max(1, consensusPowerRank - 1)} – #${Math.min(32, consensusPowerRank + 1)} across 5 national & market power models`,
     synthesizedTakeaway:
-      `National evaluators and market Elo/EPA models place the ${sfStandingsDetail.record} 49ers at #${consensusPowerRank} overall (#${sfStandingsDetail.playoffSeed} Seed in the NFC, ${sfStandingsDetail.pointDifferentialDisplay}). Analysts highlight San Francisco's #${sfPassEpaRank.rank} passing EPA offense paired with an interior defensive line bolstered by DeForest Buckner and Osa Odighizuwa alongside Nick Bosa.`,
+      `National evaluators and market Elo/EPA models place the ${sfStandingsDetail.record} 49ers at #${consensusPowerRank} overall (#${sfStandingsDetail.playoffSeed} Seed in the NFC, ${sfStandingsDetail.pointDiff >= 0 ? '+' : ''}${sfStandingsDetail.pointDiff} pt diff). Analysts highlight San Francisco's #${sfPassEpaRank.rank} passing EPA offense paired with an interior defensive line bolstered by DeForest Buckner and Osa Odighizuwa alongside Nick Bosa.`,
     sources: [
       { outlet: 'Inpredictable / Betting Market Power Rating', url: 'https://stats.inpredictable.com/rankings/nfl.php', rank: Math.max(1, consensusPowerRank - 1), delta: '+1', blurb: `Market spreads price the ${sfStandingsDetail.record} 49ers in the NFL's elite tier entering Week ${currentWeek} vs. ${oppNameTarget}.` },
       { outlet: 'CBS Sports NFL Power Rankings', url: 'https://www.cbssports.com/nfl/powerrankings/', rank: consensusPowerRank, delta: '+1', blurb: `Sitting at ${sfStandingsDetail.record} (${sfStandingsDetail.divRecord} NFC West) with DeForest Buckner added to the interior keeps San Francisco atop NFC contenders.` },
@@ -4858,7 +4856,7 @@ async function main() {
         {
           target: 'NFC West Division Title (Seeds #1–#4)',
           currentProbPct: baselineMonteCarlo.sfOdds?.winDivisionPct ?? 83.7,
-          pathSummary: `Sitting at ${sfStandingsDetail.record} overall and ${sfStandingsDetail.divRecord} inside the NFC West (${sfStandingsDetail.pointDifferentialDisplay}), banked divisional head-to-head tiebreakers anchor NFC West division equity at ${baselineMonteCarlo.sfOdds?.winDivisionPct ?? 83.7}%.`
+          pathSummary: `Sitting at ${sfStandingsDetail.record} overall and ${sfStandingsDetail.divRecord} inside the NFC West (${sfStandingsDetail.pointDiff >= 0 ? '+' : ''}${sfStandingsDetail.pointDiff} pt diff), banked divisional head-to-head tiebreakers anchor NFC West division equity at ${baselineMonteCarlo.sfOdds?.winDivisionPct ?? 83.7}%.`
         },
         {
           target: 'Playoff Berth (Seeds #1–#7)',
