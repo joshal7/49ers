@@ -35,7 +35,8 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import {
   isPlayerEligibleForInjuryNews,
-  rankPlayerInjuryNews
+  rankPlayerInjuryNews,
+  rankPlayerOverviewMentions
 } from '../engine/injuryProbabilityModel.js';
 
 export function renderInjuryNewsItemCardHtml(
@@ -227,7 +228,7 @@ export function renderPlayerDossierSheetHtml({
   let contentHtml = '';
 
   if (activeTab === 'overview') {
-    contentHtml = renderOverviewTab(player, rawStream, appData);
+    contentHtml = renderOverviewTab(player, rawStream, appData, userPrefs, reportersById);
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(player, statsMode);
   } else if (activeTab === 'spider') {
@@ -241,135 +242,50 @@ export function renderPlayerDossierSheetHtml({
   return `${tabsBar}${contentHtml}`;
 }
 
-function renderOverviewTab(p, rawStream = [], appData = null) {
-  const sortedMentions = Array.isArray(p.recentNews)
-    ? deduplicateAndGroupWireItems(
-        sortNewsWithBreakingPriority(
-          filterOutCompletedGameAvailabilityItems(
-            p.recentNews.filter(
-              n => sanitizeExternalUrl(n?.url, null) && !isPaywalledPublisher(n?.outletName, n?.url)
-            ),
-            appData
-          ),
-          Date.now(),
-          { appData }
-        )
-      )
+function renderOverviewTab(p, rawStream = [], appData = null, userPrefs = null, reportersById = null) {
+  const nowMs = Date.now();
+  const classifiedRaw = Array.isArray(rawStream) && rawStream.length > 0
+    ? sortNewsWithBreakingPriority(rawStream, nowMs, { appData })
     : [];
-  const combinedDirectPosts = Array.isArray(rawStream) && rawStream.length > 0
-    ? [...rawStream, ...sortedMentions]
-    : sortedMentions;
+  const classifiedRecent = Array.isArray(p.recentNews) && p.recentNews.length > 0
+    ? sortNewsWithBreakingPriority(p.recentNews, nowMs, { appData })
+    : [];
+  const sortedMentions = rankPlayerOverviewMentions(
+    { ...p, recentNews: classifiedRecent },
+    {
+      rawStream: classifiedRaw,
+      appData: appData ? { ...appData, news: { ...(appData.news || {}), rawStream: classifiedRaw } } : null,
+      userPrefs,
+      reportersById,
+      nowMs,
+      maxAgeDays: 8,
+      maxItems: 10
+    }
+  );
+  const combinedDirectPosts = [
+    ...(Array.isArray(rawStream) ? rawStream : []),
+    ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
+    ...sortedMentions
+  ];
 
   const newsHtml =
     sortedMentions.length > 0
       ? `
-        <div class="player-mentions-section">
+        <div class="player-mentions-section" data-player-overview-mentions>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px">
             <div class="sub-label" style="margin:0">Recent Mentions (7d)</div>
-            <span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} updates</span>
+            <span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} update${sortedMentions.length === 1 ? '' : 's'}</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:7px">
             ${sortedMentions
-              .map(n => {
-                const isTweet = n.type === 'tweet' || n.type === 'social';
-                const hasImg = n.imageUrl && /^https:\/\//i.test(n.imageUrl);
-                const authorName = n.author || n.reporterName || n.outletName || '49ers Beat';
-                const resolvedMentionUrl = isTweet
-                  ? sanitizeExternalUrl(
-                      resolveOriginalTweetUrl(
-                        { ...n, primaryPlayer: { name: p.name } },
-                        combinedDirectPosts
-                      ),
-                      '#'
-                    )
-                  : sanitizeExternalUrl(n.url, '#');
-                const authorHref = sanitizeExternalUrl(
-                  resolveItemAuthorProfileUrl(n, resolvedMentionUrl),
-                  resolvedMentionUrl
-                );
-                const ageStr = n.publishedAt ? formatRelativeAge(n.publishedAt) : '';
-
-                const tweetFormatted = isTweet
-                  ? formatTweetBodyForDisplay(
-                      stripRedundantAuthorBoilerplate(n.fullText || n.headline || '', authorName),
-                      SHORT_TWEET_FULL_TEXT_LIMIT
-                    )
-                  : null;
-
-                const cleanSummary =
-                  !isTweet &&
-                  n.summary &&
-                  !n.summary.startsWith('Published via ') &&
-                  n.summary.toLowerCase() !== `${authorName} • ${n.outletName || ''}`.toLowerCase()
-                    ? stripRedundantAuthorBoilerplate(n.summary, authorName)
-                    : '';
-
-                const isUrgentMention = isUrgentBreakingBadge(n.breakingBadge);
-                const mentionBadgeCls = n.isInGameInjury
-                  ? 'badge-danger live-breaking-pill'
-                  : isUrgentMention
-                    ? 'badge-scarlet live-breaking-pill'
-                    : n.breakingBadge === 'ROSTER MOVE' || n.breakingBadge === 'TRADE INTEL'
-                      ? 'badge-gold'
-                      : 'badge-neutral';
-                const breakingPill = n.breakingBadge
-                  ? `<span class="badge ${mentionBadgeCls}">${isUrgentMention ? iconSvg('bolt', 11) : ''}<span>${esc(n.breakingBadge)}</span></span>`
-                  : '';
-
-                const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
-                const showMentionExt =
-                  Boolean(safeMentionExt) &&
-                  !isRedundantProfileSelfLink(safeMentionExt, resolvedMentionUrl) &&
-                  !isRedundantProfileSelfLink(safeMentionExt, n.url) &&
-                  !/\bon X$/i.test(String(n.externalTitle || ''));
-
-                return `
-              <div class="subcard-panel player-mention-card ${isUrgentMention ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
-                <div class="player-mention-meta">
-                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
-                    ${breakingPill}
-                    ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${n.wireSource === 'espn_player_wire' || String(n.id || '').startsWith('espn_pwire_') ? 'Injury Wire' : 'Article'}</span></span>` : ''}
-                    <span class="player-mention-author">
-                      ${
-                        authorHref
-                          ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(authorName)}</strong></a>`
-                          : `<strong>${esc(authorName)}</strong>`
-                      }
-                    </span>
-                  </div>
-                  ${ageStr ? `<span class="mono" style="font-size:11px;color:var(--text-muted);flex-shrink:0">${esc(ageStr)}</span>` : ''}
-                </div>
-
-                <div class="${hasImg ? 'media-split-row' : ''}" style="margin-top:5px">
-                  <div style="min-width:0">
-                    ${
-                      isTweet
-                        ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
-                           ${
-                             showMentionExt
-                               ? `<div style="margin-top:5px">
-                                    <a href="${esc(safeMentionExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                                      <span>Article: ${esc((n.externalTitle || n.headline || n.outletName || 'Read Story').slice(0, 56))}</span>
-                                      ${iconSvg('externalLink', 10)}
-                                    </a>
-                                  </div>`
-                               : ''
-                           }`
-                        : `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(n.headline)}</strong> ${iconSvg('externalLink', 12)}</a>
-                           ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(cleanSummary, { excludePlayerId: p.id })}</div>` : ''}`
-                    }
-                  </div>
-                  ${
-                    hasImg
-                      ? `<div class="raw-item-thumb compact" style="width:54px;height:54px">
-                          <img src="${esc(n.imageUrl)}" alt="${esc(n.headline)}" width="54" height="54" loading="lazy" decoding="async" />
-                        </div>`
-                      : ''
-                  }
-                </div>
-              </div>
-            `;
-              })
+              .map(n =>
+                renderInjuryNewsItemCardHtml(n, {
+                  playerName: p.name,
+                  directPosts: combinedDirectPosts,
+                  excludePlayerId: p.id,
+                  outerClassName: 'subcard-panel'
+                })
+              )
               .join('')}
           </div>
         </div>
@@ -794,15 +710,28 @@ function renderHealthTab(
     `
     : practiceBoxesHtml;
 
+  const nowMs = Date.now();
+  const classifiedHealthRaw =
+    showInjuryNewsCard && Array.isArray(rawStream) && rawStream.length > 0
+      ? sortNewsWithBreakingPriority(rawStream, nowMs, { appData })
+      : rawStream;
+  const classifiedHealthRecent =
+    showInjuryNewsCard && Array.isArray(p.recentNews) && p.recentNews.length > 0
+      ? sortNewsWithBreakingPriority(p.recentNews, nowMs, { appData })
+      : p.recentNews;
   const injuryItems = showInjuryNewsCard
-    ? rankPlayerInjuryNews(p, {
-        rawStream,
-        appData,
-        userPrefs,
-        reportersById,
-        maxAgeDays: 8,
-        maxItems: 5
-      })
+    ? rankPlayerInjuryNews(
+        { ...p, recentNews: classifiedHealthRecent },
+        {
+          rawStream: classifiedHealthRaw,
+          appData: appData ? { ...appData, news: { ...(appData.news || {}), rawStream: classifiedHealthRaw } } : null,
+          userPrefs,
+          reportersById,
+          nowMs,
+          maxAgeDays: 8,
+          maxItems: 5
+        }
+      )
     : [];
 
   const combinedDirectPosts = [

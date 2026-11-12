@@ -33,6 +33,7 @@ import {
   extractPracticeDaysFromText,
   isPlayerEligibleForInjuryNews,
   rankPlayerInjuryNews,
+  rankPlayerOverviewMentions,
   reconcileRosterAndHealthWithNews,
   resolvePlacedBeforeWeekFromDate,
   scopeBeatTextToPlayer
@@ -1829,6 +1830,78 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
       assert.equal(isPaywalledOrBlockedUrl(href), false, `Blocked/paywalled Player Injury News URL for ${rp.name}: ${href}`);
     }
   }
+
+  // Verify ALL 87 players' Overview `Recent Mentions (7d)` (`rankPlayerOverviewMentions`) enforce 100% direct link integrity,
+  // primary-subject ranking ahead of secondary ripple mentions/mock drafts, cross-player `espn_pwire_*` isolation, and user mute prefs
+  let totalOverviewMentionsChecked = 0;
+  for (const rp of liveRoster.players || []) {
+    const ovItems = rankPlayerOverviewMentions(rp, { rawStream: liveNews.rawStream, appData: liveBundle });
+    for (const it of ovItems) {
+      totalOverviewMentionsChecked++;
+      const href =
+        it.type === 'tweet' || it.type === 'social'
+          ? sanitizeExternalUrl(resolveOriginalTweetUrl({ ...it, primaryPlayer: { name: rp.name } }, liveDirectSocial), null)
+          : sanitizeExternalUrl(it.url, null);
+      assert.ok(href && href.startsWith('https://'), `Invalid Overview mention link for ${rp.name}: ${href}`);
+      assert.ok(!href.includes('x.com/search'), `Overview mention for ${rp.name} must never use speculative x.com/search: ${href}`);
+      assert.equal(isPaywalledOrBlockedUrl(href), false, `Blocked/paywalled Overview mention URL for ${rp.name}: ${href}`);
+      if (String(it.id || '').startsWith('espn_pwire_')) {
+        const ownerId = String(it.id).split('_')[2];
+        assert.equal(ownerId, String(rp.id), `Cross-player espn_pwire leak on ${rp.name}: ${it.id}`);
+      }
+    }
+  }
+  assert.ok(totalOverviewMentionsChecked >= 100, `Expected >=100 total Overview mentions audited across 87 players, got ${totalOverviewMentionsChecked}`);
+
+  const syntheticPurdy = { id: '4361741', name: 'Brock Purdy', position: 'QB', recentNews: [] };
+  const rankedPurdyOverview = rankPlayerOverviewMentions(syntheticPurdy, {
+    nowMs: roadPracticeNowMs,
+    rawStream: [
+      {
+        id: 'mock_draft_1',
+        type: 'article',
+        author: '49ers Webzone',
+        title: '49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft',
+        url: 'https://www.49erswebzone.com/articles/205051-mock-draft/',
+        publishedAt: new Date(roadPracticeNowMs - 2 * 3_600_000).toISOString()
+      },
+      {
+        id: 'ripple_trade_1',
+        type: 'tweet',
+        author: 'Ian Rapoport',
+        title: 'The 49ers are completing a trade for Colts WR Keenan Allen. Another pass-catcher for Brock Purdy.',
+        fullText: 'The 49ers are completing a trade for Colts WR Keenan Allen. Another pass-catcher for Brock Purdy.',
+        url: 'https://bsky.app/profile/rapsheet.bsky.social/post/3mzy45qejoc2l',
+        publishedAt: new Date(roadPracticeNowMs - 3 * 3_600_000).toISOString()
+      },
+      {
+        id: 'purdy_primary_1',
+        type: 'article',
+        author: 'Matt Maiocco',
+        reporterId: 'matt_maiocco',
+        title: 'Brock Purdy reaches 100 career passing touchdowns while dissecting two-high coverage shells',
+        url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-100-tds/',
+        publishedAt: new Date(roadPracticeNowMs - 6 * 3_600_000).toISOString()
+      },
+      {
+        id: 'espn_pwire_16737_99999',
+        type: 'article',
+        wireSource: 'espn_player_wire',
+        author: 'Cam Inman',
+        title: 'Evans (Achilles) did not practice while Brock Purdy threw in full.',
+        url: 'https://www.espn.com/nfl/player/_/id/16737/mike-evans#:~:text=Evans',
+        publishedAt: new Date(roadPracticeNowMs - 1 * 3_600_000).toISOString()
+      }
+    ]
+  });
+  assert.equal(rankedPurdyOverview.length, 3, 'Cross-player espn_pwire_16737_* must be excluded from Brock Purdy Overview');
+  assert.equal(rankedPurdyOverview[0].id, 'purdy_primary_1', 'Primary Purdy milestone/film article must rank #1 ahead of trade ripple & mock draft');
+  const mutedPurdyOverview = rankPlayerOverviewMentions(syntheticPurdy, {
+    nowMs: roadPracticeNowMs,
+    userPrefs: { disabledReporterIds: ['matt_maiocco'], disabledOutlets: [] },
+    rawStream: rankedPurdyOverview
+  });
+  assert.equal(mutedPurdyOverview.some(x => x.id === 'purdy_primary_1'), false, 'Overview mentions must respect userPrefs muted reporters');
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

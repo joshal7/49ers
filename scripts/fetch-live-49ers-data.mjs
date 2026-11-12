@@ -1731,8 +1731,8 @@ async function main() {
     fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
     searchYouTubeVideos('San Francisco 49ers Kyle Shanahan 2026', 6),
-    searchYouTubeVideos('49ers All 22 film breakdown Jonnydel', 4),
-    searchYouTubeVideos('Brock Purdy 49ers film breakdown', 4),
+    searchYouTubeVideos('49ers Playbook Jonnydel Football Academy', 4),
+    searchYouTubeVideos('San Francisco 49ers All 22 film breakdown 49ers Rush', 4),
     fetchLatest49ersPodcasts7d().catch(() => ({ updatedAt: new Date().toISOString(), windowDays: 7, shows: [], episodes: [] }))
   ]);
 
@@ -2609,7 +2609,15 @@ async function main() {
   // Add live YouTube clips (both All-22 Film Study & Podium/Pressers) with accurate channel attribution & category differentiation
   for (const vid of liveYtClips) {
     const cleanVidTitle = cleanSensationalistText(vid.title);
-    const sig = scoreContentSignal(cleanVidTitle.replace(/\bACTUALLY\b/g, 'Actually').replace(/\bNOBODY\b/g, 'Nobody'), vid.channel);
+    if (
+      !cleanVidTitle ||
+      cleanVidTitle.length < 12 ||
+      /\b(?:nobody|no one)\s+wants\s+to\s+(?:be\s+honest|admit)\b/i.test(cleanVidTitle) ||
+      isStaleSeasonHeadline(cleanVidTitle, detectedCurrentWeek)
+    ) {
+      continue;
+    }
+    const sig = scoreContentSignal(cleanVidTitle.replace(/\bACTUALLY\b/g, 'Actually'), vid.channel);
     if (sig.isClickbait) continue;
     const agoRaw = String(vid.publishedAgo || '');
     const dM = agoRaw.match(/(\d+)\s*d(?:ays?)?\s+ago/i);
@@ -2624,7 +2632,7 @@ async function main() {
           ? Number(hM[1]) * 3_600_000
           : mM
             ? Number(mM[1]) * 60_000
-            : 3 * 3_600_000;
+            : 12 * 3_600_000;
 
     const chStr = String(vid.channel || 'YouTube').trim();
     const isOfficialTeamChannel = /^san francisco 49ers$/i.test(chStr);
@@ -2641,7 +2649,7 @@ async function main() {
       : validChRep?.id || null;
     const resolvedTrustTier = isOfficialTeamChannel || isNbcsbaChannel
       ? 1
-      : validChRep?.trustTier || 2;
+      : validChRep?.trustTier || 3;
 
     const vidDraft = {
       id: `yt_${vid.videoId}`,

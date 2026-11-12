@@ -455,8 +455,13 @@ function extractPrimaryLeadClaim(item = {}) {
     ? String(item?.fullText || item?.title || item?.headline || '').trim()
     : String(item?.title || item?.headline || '').trim();
   if (!raw) return '';
-  const m = raw.match(/^[\s\S]{10,240}?[.!?](?=\s+[A-Z"“]|$)/);
-  return m ? m[0].trim() : raw.slice(0, 240).trim();
+  const masked = raw
+    .replace(/\b([A-Z])\.([A-Z])\./g, '$1\u0000$2\u0000')
+    .replace(/\b([A-Z])\.(?=\s+[A-Z])/g, '$1\u0000')
+    .replace(/\b(vs|no|st|jr|sr|mr|dr|mt)\./gi, '$1\u0000');
+  const m = masked.match(/^[\s\S]{10,240}?[.!?](?=\s+[A-Z"“]|$)/);
+  const picked = m ? m[0].trim() : masked.slice(0, 240).trim();
+  return picked.replace(/\u0000/g, '.');
 }
 
 /**
@@ -699,7 +704,9 @@ export function buildXPlayerScoopSearchUrl(playerName = '') {
     .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
     .trim();
   if (!cleanName) return buildXBeatListSearchUrl('trusted');
-  const q = `"${cleanName}" (49ers OR from:MaioccoNBCS OR from:nwagoner OR from:mattbarrows OR from:LombardiHimself OR from:Eric_Branch OR from:CamInman)`;
+  const dotlessName = cleanName.replace(/\b([A-Za-z])\.([A-Za-z])\./g, '$1$2');
+  const nameClause = dotlessName !== cleanName ? `("${cleanName}" OR "${dotlessName}")` : `"${cleanName}"`;
+  const q = `${nameClause} (49ers OR Niners OR from:MaioccoNBCS OR from:nwagoner OR from:LombardiHimself OR from:jenniferleechan OR from:Eric_Branch OR from:CamInman)`;
   return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
 }
 

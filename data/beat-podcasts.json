@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T06:36:36.894Z",
+  "updatedAt": "2026-11-12T08:35:23.267Z",
   "windowDays": 7,
   "shows": [
     {
@@ -60,7 +60,7 @@
       "feedUrl": "https://rss.pdrl.fm/f9f75c/feeds.simplecast.com/P83yLSb_",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-49ers-daily-podcast-on-the-san-francisco-49ers/id1143358718",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/0e/d3/6a/0ed36ab0-6611-777b-a25c-aec6a6cb8d9f/mza_1800402099958304952.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "lombardi_lounge",
@@ -655,26 +655,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/49ers-plus-minus/id1827546443",
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/49ers-plus-minus",
       "audioStreamUrl": "https://serve.castfire.com/audio/8945761/8945761_2026-11-05-011401.192.mp3?rssID=5944"
-    },
-    {
-      "id": "pod_locked_on_49ers_1000800002728",
-      "trackId": 1000800002728,
-      "collectionId": 1143358718,
-      "showId": "locked_on_49ers",
-      "showName": "Locked On 49ers",
-      "showFullTitle": "Locked On 49ers - Daily Podcast On The San Francisco 49ers",
-      "hosts": "Brian Peacock & Eric Crocker",
-      "network": "Locked On Podcast Network",
-      "title": "Kyle Shanahan's Familiarity with Raiders' Klint Kubiak and Kirk Cousins an ADVANTAGE for the 49ers?",
-      "summary": "San Francisco 49ers prepare to unleash a near-full-strength roster against the Las Vegas Raiders in a highly anticipated Week 9 Battle of the Bay. With Mike Evans and Nick Bosa potentially returning, and DeForest Buckner joining an elite defense led by Fred Warner, can the 6-1 49ers overwhelm a rebuilt but gritty…",
-      "publishedAt": "2026-11-05T08:05:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/0e/d3/6a/0ed36ab0-6611-777b-a25c-aec6a6cb8d9f/mza_1800402099958304952.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/kyle-shanahans-familiarity-with-raiders-klint-kubiak/id1143358718?i=1000800002728",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-49ers-daily-podcast-on-the-san-francisco-49ers/id1143358718",
-      "feedUrl": "https://rss.pdrl.fm/f9f75c/feeds.simplecast.com/P83yLSb_",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/f9f75c/lockedon.simplecastaudio.com/0a6076b9-74e2-4b01-846e-5cc0d0b8031c/episodes/23344636-0239-42a3-9776-6d43f80daacf/audio/128/default.mp3?aid=rss_feed&awCollectionId=0a6076b9-74e2-4b01-846e-5cc0d0b8031c&awEpisodeId=23344636-0239-42a3-9776-6d43f80daacf&feed=P83yLSb_"
     }
   ]
 }

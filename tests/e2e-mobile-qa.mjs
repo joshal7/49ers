@@ -884,15 +884,36 @@ async function main() {
 
         document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
         const videoCards = document.querySelectorAll('.brief-card').length;
+        const videoHeadlines = Array.from(document.querySelectorAll('.brief-card')).map(el => el.textContent.trim().slice(0, 60));
         const externalFallbackCards = document.querySelectorAll('a.video-external-card[href*="youtube.com/watch"]').length;
 
+        document.querySelector('[data-action="set-news-category"][data-category="film"]')?.click();
+        const filmCards = document.querySelectorAll('.brief-card').length;
+        const filmHeadlines = Array.from(document.querySelectorAll('.brief-card')).map(el => el.textContent.trim().slice(0, 60));
+
         document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
-        return { totalCards, tweetCards, articleCards, videoCards, externalFallbackCards };
+        const urgentBreakingCards = document.querySelectorAll('.brief-card.breaking-elevated').length;
+        const groupedClusters = document.querySelectorAll('.brief-card [data-confirming-reports]').length;
+        return {
+          totalCards,
+          tweetCards,
+          articleCards,
+          videoCards,
+          filmCards,
+          filmsDifferFromVideos: JSON.stringify(filmHeadlines) !== JSON.stringify(videoHeadlines),
+          urgentBreakingCards,
+          groupedClusters,
+          externalFallbackCards
+        };
       });
       assert(rawStreamAudit.totalCards >= 12, `Expected >=12 raw stream items, got ${rawStreamAudit.totalCards}`);
       assert(rawStreamAudit.tweetCards >= 5, `Expected >=5 tweets in Raw Tweets filter, got ${rawStreamAudit.tweetCards}`);
       assert(rawStreamAudit.articleCards >= 4, `Expected >=4 articles in Raw Articles filter, got ${rawStreamAudit.articleCards}`);
       assert(rawStreamAudit.videoCards >= 3, `Expected >=3 videos in Raw Videos filter, got ${rawStreamAudit.videoCards}`);
+      assert(rawStreamAudit.filmCards >= 3, `Expected >=3 items in Film & Trench filter, got ${rawStreamAudit.filmCards}`);
+      assert(rawStreamAudit.filmsDifferFromVideos, 'Film & Trench filter must be differentiated from Videos filter');
+      assert(rawStreamAudit.urgentBreakingCards <= 3, `Urgent BREAKING scarcity cap violated: got ${rawStreamAudit.urgentBreakingCards} red breaking cards`);
+      assert(rawStreamAudit.groupedClusters >= 2, `Expected >=2 consolidated story clusters in Wire & Video, got ${rawStreamAudit.groupedClusters}`);
       assert(rawStreamAudit.externalFallbackCards >= 1, 'Expected DRM-blocked channel videos to render external YouTube thumbnail card instead of broken iframe');
       await cdp.assertNoOverflow('News Raw Beat Stream');
 
@@ -1356,6 +1377,17 @@ async function main() {
             c => c.querySelector('.player-mention-tweet-body')?.textContent?.trim() || ''
           );
 
+          const badOverviewLinks = Array.from(
+            document.querySelectorAll('#sheetBody [data-player-overview-mentions] a[href]')
+          )
+            .map(a => a.getAttribute('href') || '')
+            .filter(
+              h =>
+                !h.startsWith('https://') ||
+                h.includes('x.com/search') ||
+                h.includes('heavy.com') ||
+                /\/video\/clip\/?$/i.test(h)
+            );
           const allText = cards.map(c => c.textContent || '').join(' ');
           document.getElementById('closeSheetBtn').click();
           inp.value = '';
@@ -1368,6 +1400,7 @@ async function main() {
             articleCount: articleCards.length,
             allHaveAuthor,
             shortTweetBodies,
+            badOverviewLinks,
             hasStaleWk9WontPlay: /\b(won['’]?t play|inactives\b|before raiders game)\b/i.test(allText)
           };
         };
@@ -1381,6 +1414,16 @@ async function main() {
 
       assert(mentionsAudit.mikeEvans.found, 'Mike Evans not found on Roster');
       assert(mentionsAudit.mikeEvans.allHaveAuthor, 'Mike Evans mentions missing author attribution');
+      assert(
+        mentionsAudit.mikeEvans.badOverviewLinks.length === 0 &&
+          mentionsAudit.brockPurdy.badOverviewLinks.length === 0 &&
+          mentionsAudit.nickBosa.badOverviewLinks.length === 0,
+        `Player Overview Recent Mentions rendered dead/search/blocked links: ${JSON.stringify({
+          evans: mentionsAudit.mikeEvans.badOverviewLinks,
+          purdy: mentionsAudit.brockPurdy.badOverviewLinks,
+          bosa: mentionsAudit.nickBosa.badOverviewLinks
+        })}`
+      );
       assert(
         !mentionsAudit.mikeEvans.hasStaleWk9WontPlay,
         `Mike Evans dossier still rendered stale completed-game availability blurb: ${JSON.stringify(mentionsAudit.mikeEvans)}`

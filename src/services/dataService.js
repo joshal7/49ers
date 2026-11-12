@@ -882,12 +882,23 @@ function propagateLiveItemsToPlayerMentions(newItems = [], rosterPlayers = []) {
   for (const it of newItems) {
     const pubMs = new Date(it.publishedAt || 0).getTime() || 0;
     if (nowMs - pubMs > sevenDaysMs) continue;
+    const isPlayerWireBlurb = String(it.id || '').startsWith('espn_pwire_') || it.wireSource === 'espn_player_wire';
+    const primaryOwnerId = isPlayerWireBlurb
+      ? String(it.id || '').startsWith('espn_pwire_')
+        ? String(it.id).split('_')[2] || ''
+        : String(it.mentionedPlayers?.[0]?.id || '')
+      : '';
     const mentioned = it.mentionedPlayers || [];
     for (const mp of mentioned) {
+      if (isPlayerWireBlurb && primaryOwnerId && String(mp.id) !== primaryOwnerId) {
+        continue;
+      }
       const rp = byId.get(String(mp.id));
       if (!rp) continue;
+      const checkText = `${it.fullText || ''} ${it.title || ''} ${it.summary || ''}`.trim();
+      if (!doesClauseMentionPlayer(checkText, rp.name, { allowSurname: true })) continue;
       if (!Array.isArray(rp.recentNews)) rp.recentNews = [];
-      if (rp.recentNews.some(existing => existing.url === it.url)) continue;
+      if (rp.recentNews.some(existing => (it.id && existing.id === it.id) || existing.url === it.url)) continue;
 
       const isTw = it.type === 'tweet' || it.type === 'social';
       const tweetFmt = isTw
@@ -895,15 +906,20 @@ function propagateLiveItemsToPlayerMentions(newItems = [], rosterPlayers = []) {
         : null;
 
       rp.recentNews.unshift({
+        id: it.id || undefined,
         type: it.type || 'article',
+        wireSource: it.wireSource || null,
         headline: isTw ? tweetFmt.text : it.title,
         fullText: isTw ? it.fullText || it.title : undefined,
         isFullTweet: isTw ? tweetFmt.isFullTweet : undefined,
         summary: isTw ? it.externalTitle || '' : it.summary || '',
         author: it.author || it.reporterName || it.outletName || '49ers Beat',
+        reporterId: it.reporterId || null,
+        outletId: it.outletId || null,
         authorHandle: it.authorHandle || '',
         authorProfileUrl: it.authorProfileUrl || '',
         outletName: it.outletName || '49ers Beat',
+        trustTier: it.trustTier || null,
         publishedAt: it.publishedAt,
         url: it.url,
         externalUrl: it.externalUrl || null,

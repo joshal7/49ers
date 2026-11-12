@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T06:36:36.894Z",
+  "updatedAt": "2026-11-12T08:35:23.267Z",
   "count": 87,
   "positionalLeaderboards": {
     "S:pfr_rat_allowed": {
@@ -12603,7 +12603,7 @@
       "totalQualified": 31,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 8.0684,
+      "posAvg": 8.069,
       "posAvgDisplay": "8.07 yds",
       "rows": [
         [
@@ -12735,8 +12735,8 @@
         [
           "00-0039918",
           22,
-          "7.65 yds",
-          7.6474
+          "7.66 yds",
+          7.6646
         ],
         [
           "00-0026498",
@@ -12804,7 +12804,7 @@
       "totalQualified": 31,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 14.9643,
+      "posAvg": 14.9808,
       "posAvgDisplay": "15.0%",
       "rows": [
         [
@@ -12816,8 +12816,8 @@
         [
           "00-0039918",
           2,
-          "10.3%",
-          10.2564
+          "10.8%",
+          10.7692
         ],
         [
           "00-0039732",
@@ -27903,7 +27903,7 @@
       "totalQualified": 80,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 2.8521,
+      "posAvg": 2.8528,
       "posAvgDisplay": "2.85 yds",
       "rows": [
         [
@@ -27967,22 +27967,22 @@
           3.5704
         ],
         [
-          "00-0041547",
+          "00-0036309",
           11,
+          "3.48 yds",
+          3.4803
+        ],
+        [
+          "00-0041547",
+          12,
           "3.44 yds",
           3.4369
         ],
         [
-          "00-0036309",
-          12,
-          "3.38 yds",
-          3.3839
-        ],
-        [
           "00-0040735",
           13,
-          "3.37 yds",
-          3.3706
+          "3.33 yds",
+          3.3279
         ],
         [
           "00-0034960",
@@ -28218,8 +28218,8 @@
       "totalQualified": 80,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.603,
-      "posAvgDisplay": "+0.60 yds",
+      "posAvg": 0.6087,
+      "posAvgDisplay": "+0.61 yds",
       "rows": [
         [
           "00-0041523",
@@ -28384,58 +28384,58 @@
           0.8983
         ],
         [
-          "00-0038608",
+          "00-0039919",
           28,
+          "+0.88 yds",
+          0.8834
+        ],
+        [
+          "00-0038608",
+          29,
           "+0.85 yds",
           0.8472
         ],
         [
           "00-0039880",
-          29,
+          30,
           "+0.83 yds",
           0.8285
         ],
         [
           "00-0036358",
-          30,
+          31,
           "+0.78 yds",
           0.7801
         ],
         [
           "00-0038563",
-          31,
+          32,
           "+0.77 yds",
           0.7703
         ],
         [
           "00-0036554",
-          32,
+          33,
           "+0.76 yds",
           0.755
         ],
         [
           "00-0032951",
-          33,
+          34,
           "+0.75 yds",
           0.7485
         ],
         [
           "00-0033555",
-          34,
+          35,
           "+0.72 yds",
           0.7209
         ],
         [
           "00-0038997",
-          35,
+          36,
           "+0.72 yds",
           0.7173
-        ],
-        [
-          "00-0039919",
-          36,
-          "+0.65 yds",
-          0.6525
         ],
         [
           "00-0037240",
@@ -39444,8 +39444,8 @@
       "totalQualified": 43,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 3.3459,
-      "posAvgDisplay": "3.35 yds",
+      "posAvg": 3.3565,
+      "posAvgDisplay": "3.36 yds",
       "rows": [
         [
           "00-0040663",
@@ -39454,22 +39454,22 @@
           4.658
         ],
         [
-          "00-0033090",
+          "00-0036244",
           2,
+          "4.57 yds",
+          4.57
+        ],
+        [
+          "00-0033090",
+          3,
           "4.25 yds",
           4.2549
         ],
         [
           "00-0035689",
-          3,
+          4,
           "4.14 yds",
           4.14
-        ],
-        [
-          "00-0036244",
-          4,
-          "4.11 yds",
-          4.1135
         ],
         [
           "00-0041032",
@@ -39717,7 +39717,7 @@
       "totalQualified": 43,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.3097,
+      "posAvg": 0.311,
       "posAvgDisplay": "+0.31 yds",
       "rows": [
         [
@@ -39757,16 +39757,16 @@
           1.1897
         ],
         [
-          "00-0039338",
+          "00-0036244",
           7,
-          "+1.04 yds",
-          1.0379
+          "+1.09 yds",
+          1.09
         ],
         [
-          "00-0036244",
+          "00-0039338",
           8,
-          "+1.03 yds",
-          1.0325
+          "+1.04 yds",
+          1.0379
         ],
         [
           "sf_3040151",
@@ -57886,7 +57886,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         }
       ],
       "statProfile2026": {
@@ -58476,7 +58476,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         }
       ],
       "statProfile2026": {
@@ -59196,7 +59196,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5701
+          "storyRank": 0.5272
         },
         {
           "id": "tweet_49erswebzone_3mzykr34zer2q",
@@ -59230,7 +59230,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5499
+          "storyRank": 0.5096
         },
         {
           "id": "tweet_mattmaiocco_3mzyjfyzay22l",
@@ -59264,7 +59264,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6184
+          "storyRank": 0.5735
         },
         {
           "id": "tweet_mattbarrows_3mzy7g6kox227",
@@ -59298,10 +59298,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5529
+          "storyRank": 0.5158
         },
         {
-          "id": "pfrumors_135",
+          "id": "pfrumors_133",
           "type": "article",
           "wireSource": null,
           "headline": "Brandon Aiyuk Passes 49ers Physical; Release Likely",
@@ -59332,7 +59332,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4467
+          "storyRank": 0.4184
         },
         {
           "id": "x_status_2120201789014221264",
@@ -59366,7 +59366,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4413
+          "storyRank": 0.4136
         },
         {
           "id": "espn_50435848",
@@ -59400,10 +59400,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3073
+          "storyRank": 0.2938
         },
         {
-          "id": "sfstd_181",
+          "id": "sfstd_179",
           "type": "article",
           "wireSource": null,
           "headline": "Kyle Shanahan on Brandon Aiyuk’s NFL reinstatement: ‘Means absolutely nothing’",
@@ -59434,41 +59434,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2676
-        },
-        {
-          "id": "tweet_mattmaiocco_3mzvyofg2jk2c",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "On the topic of Brandon Aiyuk being reinstated and the 49ers with a two-week roster exemption, coach Kyle Shanahan said: \"It means absolutely nothing to our team. ... That’s all administrative stuff to me.\"",
-          "fullText": "On the topic of Brandon Aiyuk being reinstated and the 49ers with a two-week roster exemption, coach Kyle Shanahan said: \"It means absolutely nothing to our team. ... That’s all administrative stuff to me.\"",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "authorProfileUrl": "https://x.com/MaioccoNBCS",
-          "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-09T22:41:13.111Z",
-          "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzvyofg2jk2c",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "roster",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 0.3035
+          "storyRank": 0.2559
         },
         {
           "id": "espn_pwire_4360438_64684528",
@@ -59502,7 +59468,41 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3024
+          "storyRank": 0.2892
+        },
+        {
+          "id": "tweet_jenniferleechan_3mzvwtn7u622r",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "The #49ers have been given a 2 week roster exemption in regards to Brandon Aiyuk who has been reinstated by the NFL. The exemption expires Nov 23",
+          "fullText": "The #49ers have been given a 2 week roster exemption in regards to Brandon Aiyuk who has been reinstated by the NFL. The exemption expires Nov 23",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "Jennifer Lee Chan",
+          "authorHandle": "@jenniferleechan",
+          "authorProfileUrl": "https://x.com/jenniferleechan",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-09T22:08:21.583Z",
+          "imageUrl": "",
+          "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3mzvwtn7u622r",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 95,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 0.2868
         }
       ],
       "statProfile2026": {
@@ -61237,40 +61237,6 @@
       },
       "recentNews": [
         {
-          "id": "tweet_49erswebzone_3n22jdseqhb2x",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
-          "fullText": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "49ers Webzone",
-          "authorHandle": "@49erswebzone",
-          "authorProfileUrl": "https://x.com/49erswebzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-11T09:50:02-08:00",
-          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigtzju73jffxrhupgnophctea7fhn5l3ssxkn4rb7qtymifywt7xe",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jdseqhb2x",
-          "externalUrl": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-          "externalTitle": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.393,
-          "credibilityScore": 86,
-          "category": "film",
-          "storyTier": "film_trench",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 3.0043
-        },
-        {
           "id": "tweet_49erswebzone_3n22xuqp2ux24",
           "type": "tweet",
           "wireSource": null,
@@ -61302,7 +61268,41 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.5905
+          "storyRank": 2.0537
+        },
+        {
+          "id": "tweet_49erswebzone_3n22jdseqhb2x",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
+          "fullText": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "49ers Webzone",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-11T09:50:02-08:00",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigtzju73jffxrhupgnophctea7fhn5l3ssxkn4rb7qtymifywt7xe",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jdseqhb2x",
+          "externalUrl": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
+          "externalTitle": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 1.3776
         },
         {
           "id": "tweet_rapsheet_3mzy45qejoc2l",
@@ -61336,7 +61336,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5341
+          "storyRank": 0.4992
         },
         {
           "id": "x_status_2120225625273221499",
@@ -61370,10 +61370,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4659
+          "storyRank": 0.4355
         },
         {
-          "id": "sf49_165",
+          "id": "sf49_163",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Purdy, McCaffrey Reach Milestones, 49ers React to Week 9 🗞️",
@@ -61404,10 +61404,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4167
+          "storyRank": 0.3916
         },
         {
-          "id": "sf49_168",
+          "id": "sf49_166",
           "type": "article",
           "wireSource": null,
           "headline": "What the 49ers and Raiders Had to Say After Week 9",
@@ -61438,10 +61438,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2801
+          "storyRank": 0.2674
         },
         {
-          "id": "sf49_169",
+          "id": "sf49_167",
           "type": "article",
           "wireSource": null,
           "headline": "Purdy Reaches 100 Passing TDs, McCaffrey Breaks NFL Record; Stats and Facts from #LVvsSF",
@@ -61467,12 +61467,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 86,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2702
+          "storyRank": 0.2583
         },
         {
           "id": "tweet_jenniferleechan_3mztjovoez22y",
@@ -61506,7 +61506,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1932
+          "storyRank": 0.1872
         }
       ],
       "statProfile2026": {
@@ -62303,11 +62303,52 @@
           "On Injured Reserve — requires 21-day window & 53-man activation"
         ],
         "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-        "weeklyHistory2026": []
+        "weeklyHistory2026": [
+          {
+            "week": 10,
+            "injury": "Knee",
+            "gameStatus": "",
+            "practiceStatus": "Limited Participation in Practice"
+          }
+        ]
       },
       "recentNews": [
         {
-          "id": "pfrumors_133",
+          "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "DeForest Buckner made sure to keep his promise, taking “care” of CJ West after he was gifted the 49ers’ No. 99 jersey (via @jenniferleechan.bsky.social)",
+          "fullText": "DeForest Buckner made sure to keep his promise, taking “care” of CJ West after he was gifted the 49ers’ No. 99 jersey (via @jenniferleechan.bsky.social)",
+          "isFullTweet": true,
+          "summary": "DeForest Buckner keeps his promise to CJ West after new 49ers teammate gifts him No. 99 jersey",
+          "author": "NBC Sports Bay Area",
+          "authorHandle": "@NBCSAuthentic",
+          "authorProfileUrl": "https://x.com/NBCSAuthentic",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-12T07:39:59.042Z",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:bm3onnf4abdvrh7z75skiqhn/bafkreigwkfwvociu7zm6lgrduh2vmqnakpt2gs67m5o6incjivdd7ptow4",
+          "url": "https://bsky.app/profile/nbcsportsbayarea.com/post/3n23xpmqpik2z",
+          "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/deforest-buckner-cj-west-99-jersey/1979260/?_osource=sm_npd_rsn_bay_bsky_sprtresocial",
+          "externalTitle": "DeForest Buckner keeps his promise to CJ West after new 49ers teammate gifts him No. 99 jersey",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "side_note",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 7.1852
+        },
+        {
+          "id": "pfrumors_131",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -62327,58 +62368,20 @@
           "isFirstMoverInjuryScoop": true,
           "corroborationCount": 1,
           "corroboratedBy": [
-            "Matt Maiocco",
-            "NFL Trade Rumors"
+            "Matt Maiocco"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.454,
+          "breakingPriority": 1.196,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 9.6347
-        },
-        {
-          "id": "tweet_nfltraderumors_3n22t2twx5b2u",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "49ers Designate DT CJ West To Return From IR",
-          "fullText": "49ers Designate DT CJ West To Return From IR",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "NFL Trade Rumors",
-          "authorHandle": "@nflrums",
-          "authorProfileUrl": "https://x.com/nflrums",
-          "outletName": "NFL Trade Rumors",
-          "publishedAt": "2026-11-11T20:44:07Z",
-          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:jxevm5w2bnaoijrhl65xyaxt/bafkreicrptofgg3ado7xn4vmhenmpog6l2zpho2byyxpsgkp2vddrbpmm4",
-          "url": "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n22t2twx5b2u",
-          "externalUrl": "https://nfltraderumors.co/49ers-designate-dt-cj-west-to-return-from-ir/",
-          "externalTitle": "49ers Designate DT CJ West To Return From IR",
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": true,
-          "corroborationCount": 1,
-          "corroboratedBy": [
-            "Matt Maiocco",
-            "Pro Football Rumors"
-          ],
-          "firstReportedBy": "Matt Maiocco",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.008,
-          "credibilityScore": 86,
-          "category": "roster",
-          "storyTier": "tier2_roster",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 6.0661
+          "storyRank": 7.3624
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -62399,57 +62402,22 @@
           "externalTitle": null,
           "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
+          "corroborationCount": 2,
           "corroboratedBy": [
-            "NFL Trade Rumors",
             "Pro Football Rumors"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
+          "breakingPriority": 0.826,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
-        },
-        {
-          "id": "espn_pwire_4686308_64726328",
-          "type": "article",
-          "wireSource": "espn_player_wire",
-          "headline": "West (knee) was a limited participant in Wednesday's practice.",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The 49ers opened West's 21-day practice window open Wednesday, and he was limited in his return to on-field practice. He landed on injured reserve in late September due to a knee injury, and he would need to be activated from IR in order to be available for Sunday's road game against the Cowboys.",
-          "author": "Matt Barrows",
-          "authorHandle": "@mattbarrows",
-          "authorProfileUrl": "https://x.com/mattbarrows",
-          "outletName": "The Athletic",
-          "publishedAt": "2026-11-12T00:46:57.000Z",
-          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-          "url": "https://www.espn.com/nfl/player/_/id/4686308/cj-west#:~:text=West%20(knee)%20was%20a%20limited%20participant%20in",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "injury",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 4.3579
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -62483,26 +62451,26 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
         },
         {
-          "id": "tweet_49erswebzone_3n234mpm34424",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
-          "fullText": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "49ers Webzone",
-          "authorHandle": "@49erswebzone",
-          "authorProfileUrl": "https://x.com/49erswebzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-11T15:35:02-08:00",
-          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreicwjfinapp7g7ckrbhy7jtdgfce25yayuvxluhkmwvheaavzloosy",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n234mpm34424",
-          "externalUrl": "https://www.49erswebzone.com/articles/205068-49ers-reveals-freely-deforest-buckner/",
-          "externalTitle": "49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99",
-          "trustTier": 2,
+          "id": "espn_pwire_4686308_64726328",
+          "type": "article",
+          "wireSource": "espn_player_wire",
+          "headline": "West (knee) was a limited participant in Wednesday's practice.",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "The 49ers opened West's 21-day practice window open Wednesday, and he was limited in his return to on-field practice. He landed on injured reserve in late September due to a knee injury, and he would need to be activated from IR in order to be available for Sunday's road game against the Cowboys.",
+          "author": "Matt Barrows",
+          "authorHandle": "@mattbarrows",
+          "authorProfileUrl": "https://x.com/mattbarrows",
+          "outletName": "The Athletic",
+          "publishedAt": "2026-11-12T00:46:57.000Z",
+          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+          "url": "https://www.espn.com/nfl/player/_/id/4686308/cj-west#:~:text=West%20(knee)%20was%20a%20limited%20participant%20in",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
           "corroborationCount": 1,
           "corroboratedBy": null,
@@ -62511,13 +62479,13 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "beat",
+          "credibilityScore": 98,
+          "category": "injury",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1498
+          "storyRank": 3.2193
         },
         {
           "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
@@ -62551,7 +62519,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         },
         {
           "id": "tweet_nbcs49ers_3n237eirfs22u",
@@ -62585,7 +62553,41 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3592
+          "storyRank": 0.9648
+        },
+        {
+          "id": "tweet_49erswebzone_3n234mpm34424",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
+          "fullText": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "49ers Webzone",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-11T15:35:02-08:00",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreicwjfinapp7g7ckrbhy7jtdgfce25yayuvxluhkmwvheaavzloosy",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n234mpm34424",
+          "externalUrl": "https://www.49erswebzone.com/articles/205068-49ers-reveals-freely-deforest-buckner/",
+          "externalTitle": "49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "side_note",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 0.8534
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -62614,12 +62616,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 98,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3336
+          "storyRank": 0.318
         },
         {
           "id": "espn_pwire_4686308_64689928",
@@ -62653,7 +62655,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3305
+          "storyRank": 0.3152
         }
       ],
       "statProfile2026": {
@@ -63774,7 +63776,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         },
         {
           "id": "tweet_mattmaiocco_3n22rbixa5k2s",
@@ -63808,7 +63810,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.8663
+          "storyRank": 0.6859
         },
         {
           "id": "x_status_2120228671122284835",
@@ -63842,7 +63844,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5359
+          "storyRank": 0.5008
         },
         {
           "id": "espn_pwire_3895856_64644128",
@@ -63876,7 +63878,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1352
+          "storyRank": 0.1319
         },
         {
           "id": "x_status_2119179932555165967",
@@ -63910,10 +63912,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1345
+          "storyRank": 0.1313
         },
         {
-          "id": "pfrumors_138",
+          "id": "pfrumors_136",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Lose WR Christian Kirk To IR, Activate WR Demarcus Robinson",
@@ -63944,7 +63946,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1179
+          "storyRank": 0.115
         },
         {
           "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -63978,7 +63980,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.115
+          "storyRank": 0.1126
         }
       ],
       "statProfile2026": {
@@ -64841,7 +64843,7 @@
       },
       "recentNews": [
         {
-          "id": "sf49_165",
+          "id": "sf49_163",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Purdy, McCaffrey Reach Milestones, 49ers React to Week 9 🗞️",
@@ -64872,7 +64874,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4167
+          "storyRank": 0.3916
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -64901,15 +64903,15 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 98,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3336
+          "storyRank": 0.318
         },
         {
-          "id": "sf49_169",
+          "id": "sf49_167",
           "type": "article",
           "wireSource": null,
           "headline": "Purdy Reaches 100 Passing TDs, McCaffrey Breaks NFL Record; Stats and Facts from #LVvsSF",
@@ -64935,12 +64937,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 86,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2702
+          "storyRank": 0.2583
         },
         {
           "id": "espn_pwire_3117251_64627928",
@@ -64974,7 +64976,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1024
+          "storyRank": 0.1004
         }
       ],
       "statProfile2026": {
@@ -67280,7 +67282,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.8663
+          "storyRank": 0.6859
         }
       ],
       "statProfile2026": {
@@ -68064,7 +68066,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         },
         {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -68098,7 +68100,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         },
         {
           "id": "x_status_2120228671122284835",
@@ -68132,7 +68134,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5359
+          "storyRank": 0.5008
         }
       ],
       "statProfile2026": {
@@ -68797,12 +68799,18 @@
             "injury": "Hamstring",
             "gameStatus": "Out",
             "practiceStatus": "Did Not Participate In Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Hamstring",
+            "gameStatus": "",
+            "practiceStatus": "Limited Participation in Practice"
           }
         ]
       },
       "recentNews": [
         {
-          "id": "pfrumors_133",
+          "id": "pfrumors_131",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -68822,21 +68830,56 @@
           "isFirstMoverInjuryScoop": true,
           "corroborationCount": 1,
           "corroboratedBy": [
-            "Matt Maiocco",
-            "NFL Trade Rumors"
+            "Matt Maiocco"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.454,
+          "breakingPriority": 1.196,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 9.6347
+          "storyRank": 7.3624
+        },
+        {
+          "id": "tweet_mattmaiocco_3n22swmtays2e",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal. No practice for Mike Evans (Achilles), Renardo Green (back) or Deommodore Lenoir (foot).",
+          "fullText": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal. No practice for Mike Evans (Achilles), Renardo Green (back) or Deommodore Lenoir (foot).",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "Matt Maiocco",
+          "authorHandle": "@MaioccoNBCS",
+          "authorProfileUrl": "https://x.com/MaioccoNBCS",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-11T20:41:45.559Z",
+          "imageUrl": "",
+          "url": "https://x.com/MaioccoNBCS/status/2120617948138401832",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 2,
+          "corroboratedBy": [
+            "Pro Football Rumors"
+          ],
+          "firstReportedBy": "Matt Maiocco",
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": "ROSTER MOVE",
+          "breakingPriority": 0.826,
+          "credibilityScore": 98,
+          "category": "roster",
+          "storyTier": "tier2_roster",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_profootballtalk_3n237rx2tuc2q",
@@ -68863,51 +68906,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "INJURY UPDATE",
-          "breakingPriority": 1.015,
+          "breakingPriority": 0.845,
           "credibilityScore": 88,
           "category": "injury",
           "storyTier": "practice_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 6.9382
-        },
-        {
-          "id": "tweet_mattmaiocco_3n22swmtays2e",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal. No practice for Mike Evans (Achilles), Renardo Green (back) or Deommodore Lenoir (foot).",
-          "fullText": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal. No practice for Mike Evans (Achilles), Renardo Green (back) or Deommodore Lenoir (foot).",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "authorProfileUrl": "https://x.com/MaioccoNBCS",
-          "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:41:45.559Z",
-          "imageUrl": "",
-          "url": "https://x.com/MaioccoNBCS/status/2120617948138401832",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
-          "corroboratedBy": [
-            "NFL Trade Rumors",
-            "Pro Football Rumors"
-          ],
-          "firstReportedBy": "Matt Maiocco",
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
-          "credibilityScore": 98,
-          "category": "roster",
-          "storyTier": "tier2_roster",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
+          "storyRank": 5.2163
         },
         {
           "id": "tweet_49erswebzone_3n2342tnfkw2o",
@@ -68941,10 +68947,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 5.4914
+          "storyRank": 4.2962
         },
         {
-          "id": "wz_183",
+          "id": "wz_181",
           "type": "article",
           "wireSource": null,
           "headline": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
@@ -68975,7 +68981,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 5.4785
+          "storyRank": 4.2878
         },
         {
           "id": "tweet_49erswebzone_3n22ujgufqp2t",
@@ -69002,14 +69008,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "INJURY UPDATE",
-          "breakingPriority": 0.744,
+          "breakingPriority": 0.62,
           "credibilityScore": 86,
           "category": "injury",
           "storyTier": "practice_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.4125
+          "storyRank": 3.5884
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -69043,7 +69049,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
         },
         {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -69077,7 +69083,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         },
         {
           "id": "x_status_2120228671122284835",
@@ -69111,7 +69117,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5359
+          "storyRank": 0.5008
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -69140,12 +69146,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 98,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3336
+          "storyRank": 0.318
         }
       ],
       "statProfile2026": {
@@ -69367,7 +69373,7 @@
                 "totalPeers": 80,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.60 yds",
+                "posAvgDisplay": "+0.61 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -70022,7 +70028,41 @@
       },
       "recentNews": [
         {
-          "id": "pfrumors_133",
+          "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "DeForest Buckner made sure to keep his promise, taking “care” of CJ West after he was gifted the 49ers’ No. 99 jersey (via @jenniferleechan.bsky.social)",
+          "fullText": "DeForest Buckner made sure to keep his promise, taking “care” of CJ West after he was gifted the 49ers’ No. 99 jersey (via @jenniferleechan.bsky.social)",
+          "isFullTweet": true,
+          "summary": "DeForest Buckner keeps his promise to CJ West after new 49ers teammate gifts him No. 99 jersey",
+          "author": "NBC Sports Bay Area",
+          "authorHandle": "@NBCSAuthentic",
+          "authorProfileUrl": "https://x.com/NBCSAuthentic",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-12T07:39:59.042Z",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:bm3onnf4abdvrh7z75skiqhn/bafkreigwkfwvociu7zm6lgrduh2vmqnakpt2gs67m5o6incjivdd7ptow4",
+          "url": "https://bsky.app/profile/nbcsportsbayarea.com/post/3n23xpmqpik2z",
+          "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/deforest-buckner-cj-west-99-jersey/1979260/?_osource=sm_npd_rsn_bay_bsky_sprtresocial",
+          "externalTitle": "DeForest Buckner keeps his promise to CJ West after new 49ers teammate gifts him No. 99 jersey",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "side_note",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 7.1852
+        },
+        {
+          "id": "pfrumors_131",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -70042,55 +70082,20 @@
           "isFirstMoverInjuryScoop": true,
           "corroborationCount": 1,
           "corroboratedBy": [
-            "Matt Maiocco",
-            "NFL Trade Rumors"
+            "Matt Maiocco"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.454,
+          "breakingPriority": 1.196,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 9.6347
-        },
-        {
-          "id": "tweet_49erswebzone_3n234mpm34424",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
-          "fullText": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "49ers Webzone",
-          "authorHandle": "@49erswebzone",
-          "authorProfileUrl": "https://x.com/49erswebzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-11T15:35:02-08:00",
-          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreicwjfinapp7g7ckrbhy7jtdgfce25yayuvxluhkmwvheaavzloosy",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n234mpm34424",
-          "externalUrl": "https://www.49erswebzone.com/articles/205068-49ers-reveals-freely-deforest-buckner/",
-          "externalTitle": "49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99",
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "beat",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 3.1498
+          "storyRank": 7.3624
         },
         {
           "id": "tweet_nbcs49ers_3n237eirfs22u",
@@ -70124,10 +70129,44 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3592
+          "storyRank": 0.9648
         },
         {
-          "id": "sfstd_179",
+          "id": "tweet_49erswebzone_3n234mpm34424",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
+          "fullText": "#49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99 Read:",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "49ers Webzone",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-11T15:35:02-08:00",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreicwjfinapp7g7ckrbhy7jtdgfce25yayuvxluhkmwvheaavzloosy",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n234mpm34424",
+          "externalUrl": "https://www.49erswebzone.com/articles/205068-49ers-reveals-freely-deforest-buckner/",
+          "externalTitle": "49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "side_note",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 0.8534
+        },
+        {
+          "id": "sfstd_177",
           "type": "article",
           "wireSource": null,
           "headline": "‘Section 415’ podcast: Analyzing the 49ers’ trades for DeForest Buckner and Keenan Allen",
@@ -70158,10 +70197,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5928
+          "storyRank": 0.5469
         },
         {
-          "id": "sfstd_180",
+          "id": "sfstd_178",
           "type": "article",
           "wireSource": null,
           "headline": "The Keenan Allen trade: Why the 49ers added a receiver and what he brings to the offense",
@@ -70187,12 +70226,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 95,
-          "category": "roster",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5546
+          "storyRank": 0.5173
         },
         {
           "id": "tweet_jenniferleechan_3mzwj2oq2cc2y",
@@ -70221,15 +70260,15 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 95,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.341
+          "storyRank": 0.3249
         },
         {
-          "id": "sf49_173",
+          "id": "sf49_171",
           "type": "article",
           "wireSource": null,
           "headline": "DeForest Buckner Returns to The Bay: 49ers Locker Room Reacts to His Homecoming",
@@ -70260,7 +70299,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1183
+          "storyRank": 0.1155
         },
         {
           "id": "espn_50382587",
@@ -70294,7 +70333,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0762
+          "storyRank": 0.075
         }
       ],
       "statProfile2026": {
@@ -71207,6 +71246,12 @@
             "injury": "Ankle",
             "gameStatus": "Questionable",
             "practiceStatus": "Limited Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Ankle",
+            "gameStatus": "",
+            "practiceStatus": "Full Participation in Practice"
           }
         ]
       },
@@ -71243,7 +71288,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         },
         {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -71277,7 +71322,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzrroopdhc2r",
@@ -71311,10 +71356,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1322
+          "storyRank": 0.1287
         },
         {
-          "id": "pfrumors_138",
+          "id": "pfrumors_136",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Lose WR Christian Kirk To IR, Activate WR Demarcus Robinson",
@@ -71345,7 +71390,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1179
+          "storyRank": 0.115
         },
         {
           "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -71379,7 +71424,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.115
+          "storyRank": 0.1126
         }
       ],
       "statProfile2026": {
@@ -72308,7 +72353,14 @@
           "Did Not Participate (DNP) on Wednesday"
         ],
         "archetypeNote": "High snap durability across boundary and slot corner alignments.",
-        "weeklyHistory2026": []
+        "weeklyHistory2026": [
+          {
+            "week": 10,
+            "injury": "Foot",
+            "gameStatus": "",
+            "practiceStatus": "Did Not Participate In Practice"
+          }
+        ]
       },
       "recentNews": [
         {
@@ -72330,23 +72382,22 @@
           "externalTitle": null,
           "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
+          "corroborationCount": 2,
           "corroboratedBy": [
-            "NFL Trade Rumors",
             "Pro Football Rumors"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
+          "breakingPriority": 0.826,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -72373,14 +72424,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "INJURY UPDATE",
-          "breakingPriority": 0.711,
+          "breakingPriority": 0.593,
           "credibilityScore": 98,
           "category": "injury",
           "storyTier": "practice_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.5224
+          "storyRank": 3.7068
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -72414,7 +72465,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
         },
         {
           "id": "espn_pwire_4242488_64688528",
@@ -72448,7 +72499,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3231
+          "storyRank": 0.3084
         }
       ],
       "statProfile2026": {
@@ -74279,7 +74330,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1936
+          "storyRank": 0.1875
         }
       ],
       "statProfile2026": {
@@ -76216,7 +76267,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7208
+          "storyRank": 2.8349
         }
       ],
       "statProfile2026": {
@@ -77363,7 +77414,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4834
+          "storyRank": 0.451
         },
         {
           "id": "tweet_mattmaiocco_3mzxypiznlc2c",
@@ -77397,10 +77448,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5155
+          "storyRank": 0.4826
         },
         {
-          "id": "sf49_168",
+          "id": "sf49_166",
           "type": "article",
           "wireSource": null,
           "headline": "What the 49ers and Raiders Had to Say After Week 9",
@@ -77431,7 +77482,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2801
+          "storyRank": 0.2674
         },
         {
           "id": "tweet_jenniferleechan_3mztkgzr76c2y",
@@ -77465,7 +77516,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1939
+          "storyRank": 0.1878
         },
         {
           "id": "tweet_jenniferleechan_3mztk2s6plk2y",
@@ -77499,7 +77550,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1936
+          "storyRank": 0.1875
         },
         {
           "id": "tweet_victafur_3mznn5rvack2s",
@@ -77533,7 +77584,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0845
+          "storyRank": 0.0829
         }
       ],
       "statProfile2026": {
@@ -79192,7 +79243,7 @@
       },
       "recentNews": [
         {
-          "id": "sf49_168",
+          "id": "sf49_166",
           "type": "article",
           "wireSource": null,
           "headline": "What the 49ers and Raiders Had to Say After Week 9",
@@ -79223,7 +79274,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2801
+          "storyRank": 0.2674
         },
         {
           "id": "tweet_jenniferleechan_3mztjovoez22y",
@@ -79257,7 +79308,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1932
+          "storyRank": 0.1872
         }
       ],
       "statProfile2026": {
@@ -79451,7 +79502,7 @@
                 "totalPeers": 43,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "3.35 yds",
+                "posAvgDisplay": "3.36 yds",
                 "scope": "player",
                 "leaderboardKey": "TE:ngs_sep"
               },
@@ -79975,7 +80026,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6184
+          "storyRank": 0.5735
         },
         {
           "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -80009,10 +80060,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6136
+          "storyRank": 0.5693
         },
         {
-          "id": "sf49_164",
+          "id": "sf49_162",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Place DL Gracen Halton on Injured Reserve",
@@ -80043,7 +80094,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5285
+          "storyRank": 0.4908
         },
         {
           "id": "x_status_2120212022298321242",
@@ -80077,7 +80128,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5159
+          "storyRank": 0.483
         },
         {
           "id": "tweet_mattmaiocco_3mzxypiznlc2c",
@@ -80111,7 +80162,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5155
+          "storyRank": 0.4826
         },
         {
           "id": "sf_tx_MjAyNi0xMS0xMF",
@@ -80145,7 +80196,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3827
+          "storyRank": 0.363
         },
         {
           "id": "tweet_jenniferleechan_3mzwgrzbioc2y",
@@ -80179,7 +80230,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3353
+          "storyRank": 0.3196
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzvrrp3ak22w",
@@ -80213,7 +80264,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2536
+          "storyRank": 0.243
         },
         {
           "id": "espn_50428583",
@@ -80247,7 +80298,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2148
+          "storyRank": 0.2075
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzu7axdmzs2k",
@@ -80281,7 +80332,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1886
+          "storyRank": 0.1822
         }
       ],
       "statProfile2026": {
@@ -81577,14 +81628,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.314,
+          "breakingPriority": 1.137,
           "credibilityScore": 99,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.5376
+          "storyRank": 6.4916
         },
         {
           "id": "tweet_jenniferleechan_3n22jmhzcxk2w",
@@ -81611,17 +81662,17 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.288,
+          "breakingPriority": 1.114,
           "credibilityScore": 95,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.3743
+          "storyRank": 6.3678
         },
         {
-          "id": "sf49_159",
+          "id": "sf49_157",
           "type": "article",
           "wireSource": null,
           "headline": "The 49ers Acquire WR Keenan Allen",
@@ -81645,14 +81696,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.281,
+          "breakingPriority": 1.109,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 6.9671
+          "storyRank": 6.0202
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -81679,14 +81730,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "INJURY UPDATE",
-          "breakingPriority": 0.711,
+          "breakingPriority": 0.593,
           "credibilityScore": 98,
           "category": "injury",
           "storyTier": "practice_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.5224
+          "storyRank": 3.7068
         },
         {
           "id": "tweet_mattbarrows_3n235ed3xrs27",
@@ -81720,41 +81771,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7208
-        },
-        {
-          "id": "sf_tx_MjAyNi0xMS0xMV",
-          "type": "tweet",
-          "wireSource": "official_transactions",
-          "headline": "49ers roster move: Re-signed DB Jack Jones to the practice squad.",
-          "fullText": "49ers roster move: Re-signed DB Jack Jones to the practice squad.",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "San Francisco 49ers Official",
-          "authorHandle": "@49ers",
-          "authorProfileUrl": "https://x.com/49ers",
-          "outletName": "49ers.com Official",
-          "publishedAt": "2026-11-11T08:00:00.000Z",
-          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035686.png",
-          "url": "https://www.49ers.com/team/transactions/#tx-MjAyNi0xMS0xMV",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.286,
-          "credibilityScore": 98,
-          "category": "roster",
-          "storyTier": "tier2_roster",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 2.6349
+          "storyRank": 2.8349
         },
         {
           "id": "tweet_mattbarrows_3n22jonltyc27",
@@ -81788,7 +81805,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.8783
+          "storyRank": 1.5868
         },
         {
           "id": "tweet_mattmaiocco_3n22jnucqf22s",
@@ -81822,7 +81839,41 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.877
+          "storyRank": 1.5858
+        },
+        {
+          "id": "sf_tx_MjAyNi0xMS0xMV",
+          "type": "tweet",
+          "wireSource": "official_transactions",
+          "headline": "49ers roster move: Re-signed DB Jack Jones to the practice squad.",
+          "fullText": "49ers roster move: Re-signed DB Jack Jones to the practice squad.",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "San Francisco 49ers Official",
+          "authorHandle": "@49ers",
+          "authorProfileUrl": "https://x.com/49ers",
+          "outletName": "49ers.com Official",
+          "publishedAt": "2026-11-11T08:00:00.000Z",
+          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035686.png",
+          "url": "https://www.49ers.com/team/transactions/#tx-MjAyNi0xMS0xMV",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 98,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 0.8516
         }
       ],
       "statProfile2026": {
@@ -83004,7 +83055,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         }
       ],
       "statProfile2026": {
@@ -83226,7 +83277,7 @@
                 "totalPeers": 80,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.60 yds",
+                "posAvgDisplay": "+0.61 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -83753,7 +83804,7 @@
       },
       "recentNews": [
         {
-          "id": "sf49_162",
+          "id": "sf49_160",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Dugger and Rookies Stepping Up, Latest Rankings 🗞️",
@@ -83784,10 +83835,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2915
+          "storyRank": 1.1206
         },
         {
-          "id": "sf49_166",
+          "id": "sf49_164",
           "type": "article",
           "wireSource": null,
           "headline": "Jaden Dugger's Impactful Play Shows 49ers Rookie Class Is Delivering",
@@ -83818,7 +83869,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3005
+          "storyRank": 0.2862
         },
         {
           "id": "espn_50433470",
@@ -83852,10 +83903,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2953
+          "storyRank": 0.2827
         },
         {
-          "id": "sf49_170",
+          "id": "sf49_168",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: 49ers Go 7-1, Dugger Scores First Career Touchdown 🗞️",
@@ -83886,7 +83937,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2386
+          "storyRank": 0.229
         },
         {
           "id": "espn_50427438",
@@ -83915,12 +83966,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 86,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2318
+          "storyRank": 0.2227
         }
       ],
       "statProfile2026": {
@@ -88180,7 +88231,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1929
+          "storyRank": 0.1869
         }
       ],
       "statProfile2026": {
@@ -88743,7 +88794,7 @@
       },
       "recentNews": [
         {
-          "id": "sf49_178",
+          "id": "sf49_176",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Jon Weeks Named Perry/Yonamine Unity Award Recipient 🗞️",
@@ -88774,7 +88825,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0849
+          "storyRank": 0.0833
         }
       ],
       "statProfile2026": {
@@ -90051,7 +90102,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -90080,12 +90131,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 98,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3336
+          "storyRank": 0.318
         },
         {
           "id": "espn_50433470",
@@ -90119,7 +90170,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2953
+          "storyRank": 0.2827
         },
         {
           "id": "tweet_jenniferleechan_3mztkvmirnk2y",
@@ -90153,7 +90204,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1943
+          "storyRank": 0.1882
         }
       ],
       "statProfile2026": {
@@ -90375,7 +90426,7 @@
                 "totalPeers": 80,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.60 yds",
+                "posAvgDisplay": "+0.61 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -90928,7 +90979,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2953
+          "storyRank": 0.2827
         }
       ],
       "statProfile2026": {
@@ -91704,7 +91755,7 @@
       },
       "recentNews": [
         {
-          "id": "pfrumors_133",
+          "id": "pfrumors_131",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -91724,21 +91775,20 @@
           "isFirstMoverInjuryScoop": true,
           "corroborationCount": 1,
           "corroboratedBy": [
-            "Matt Maiocco",
-            "NFL Trade Rumors"
+            "Matt Maiocco"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.454,
+          "breakingPriority": 1.196,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 9.6347
+          "storyRank": 7.3624
         },
         {
           "id": "x_status_2120580183589880060",
@@ -91765,14 +91815,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.314,
+          "breakingPriority": 1.137,
           "credibilityScore": 99,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.5376
+          "storyRank": 6.4916
         },
         {
           "id": "tweet_jenniferleechan_3n22jmhzcxk2w",
@@ -91799,14 +91849,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.288,
+          "breakingPriority": 1.114,
           "credibilityScore": 95,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.3743
+          "storyRank": 6.3678
         },
         {
           "id": "tweet_49erswebzone_3n22jvpl2lv24",
@@ -91833,17 +91883,17 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.295,
+          "breakingPriority": 1.121,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.0528
+          "storyRank": 6.0853
         },
         {
-          "id": "wz_191",
+          "id": "wz_189",
           "type": "article",
           "wireSource": null,
           "headline": "49ers officially announce Keenan Allen trade, re-sign cornerback",
@@ -91867,17 +91917,17 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.288,
+          "breakingPriority": 1.114,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.0058
+          "storyRank": 6.0497
         },
         {
-          "id": "sf49_159",
+          "id": "sf49_157",
           "type": "article",
           "wireSource": null,
           "headline": "The 49ers Acquire WR Keenan Allen",
@@ -91901,17 +91951,17 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.281,
+          "breakingPriority": 1.109,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 6.9671
+          "storyRank": 6.0202
         },
         {
-          "id": "wz_183",
+          "id": "wz_181",
           "type": "article",
           "wireSource": null,
           "headline": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
@@ -91942,7 +91992,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 5.4785
+          "storyRank": 4.2878
         },
         {
           "id": "espn_50456881",
@@ -91976,44 +92026,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.9366
+          "storyRank": 3.5513
         },
         {
-          "id": "tweet_profootballtalk_3n23lrrzsnk2q",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "Keenan Allen says his beef with Mike Evans is in the past.",
-          "fullText": "Keenan Allen says his beef with Mike Evans is in the past.",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "ProFootballTalk",
-          "authorHandle": "@ProFootballTalk",
-          "authorProfileUrl": "https://x.com/ProFootballTalk",
-          "outletName": "NBC ProFootballTalk",
-          "publishedAt": "2026-11-12T04:06:26.790Z",
-          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:6yldqhxynki4isg36iszsvr3/bafkreieow4pdfuxgos7cuqltew3zbcdrdj5kns57xkaiqu65otc2uzbaa4",
-          "url": "https://bsky.app/profile/profootballtalk.bsky.social/post/3n23lrrzsnk2q",
-          "externalUrl": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/keenan-allen-says-his-beef-with-mike-evans-is-in-the-past",
-          "externalTitle": "Keenan Allen says his beef with Mike Evans is in the past",
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 88,
-          "category": "beat",
-          "storyTier": "side_note",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 3.553
-        },
-        {
-          "id": "pfrumors_134",
+          "id": "pfrumors_132",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Acquire Keenan Allen From Colts",
@@ -92044,7 +92060,41 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5758
+          "storyRank": 3.2992
+        },
+        {
+          "id": "tweet_nbcs49ers_3n233smlhck27",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "“Super excited to be back in the Bay.\" Keenan Allen is thrilled to be with the 49ers, but admitted his head is \"spinning\" after the trade (via @jenniferleechan.bsky.social)",
+          "fullText": "“Super excited to be back in the Bay.\" Keenan Allen is thrilled to be with the 49ers, but admitted his head is \"spinning\" after the trade (via @jenniferleechan.bsky.social)",
+          "isFullTweet": true,
+          "summary": "New 49ers WR Keenan Allen recalls dizzying 24 hours after NFL trade deadline move from Colts",
+          "author": "49ers on NBCSBA",
+          "authorHandle": "@NBCS49ers",
+          "authorProfileUrl": "https://x.com/NBCS49ers",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-11T23:20:34.762Z",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:oovjmbx2gv3o4tolrzuegtl2/bafkreie4jx5fanfllbbka75vzg7f6uw3ygddjj3qmxvfmb5romfdg5m2km",
+          "url": "https://x.com/NBCS49ers/status/2120640440341037224",
+          "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/keenan-allen-reflects-trade-colts/1979238/",
+          "externalTitle": "New 49ers WR Keenan Allen recalls dizzying 24 hours after NFL trade deadline move from Colts",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 2.3458
         }
       ],
       "statProfile2026": {
@@ -92266,7 +92316,7 @@
                 "totalPeers": 80,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.60 yds",
+                "posAvgDisplay": "+0.61 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -93579,7 +93629,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzrroopdhc2r",
@@ -93613,7 +93663,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1322
+          "storyRank": 0.1287
         },
         {
           "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -93647,7 +93697,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.115
+          "storyRank": 0.1126
         }
       ],
       "statProfile2026": {
@@ -98715,7 +98765,41 @@
       },
       "recentNews": [
         {
-          "id": "wz_187",
+          "id": "tweet_mattmaiocco_3n23uphkxbc2k",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "Mac Jones is having fun with the 49ers. “What's the price tag on that? To me, it's multiple millions of dollars to have fun and be on a winning team because I've been on the other side of that, too...” To read: www.nbcsportsbayarea.com/nfl/san-fran...",
+          "fullText": "Mac Jones is having fun with the 49ers. “What's the price tag on that? To me, it's multiple millions of dollars to have fun and be on a winning team because I've been on the other side of that, too...” To read: www.nbcsportsbayarea.com/nfl/san-fran...",
+          "isFullTweet": true,
+          "summary": "Backup QB Mac Jones happy to still be with 49ers after being involved in trade discussions",
+          "author": "Matt Maiocco",
+          "authorHandle": "@MaioccoNBCS",
+          "authorProfileUrl": "https://x.com/MaioccoNBCS",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-12T06:46:12.382Z",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:q63yqr2zcd47x5swrern3vam/bafkreiebx7v6nsz4tdn6ntelhha4muz7dwbqegqqkzl26fgd5r2a7fu7hu",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n23uphkxbc2k",
+          "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/mac-jones-trade-deadline-reaction/1979250/",
+          "externalTitle": "Backup QB Mac Jones happy to still be with 49ers after being involved in trade discussions",
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 98,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 11.5574
+        },
+        {
+          "id": "wz_185",
           "type": "article",
           "wireSource": null,
           "headline": "49ers' Kyle Shanahan reveals his reaction to Mac Jones trade interest",
@@ -98746,7 +98830,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4071
+          "storyRank": 1.9305
         },
         {
           "id": "tweet_mattmaiocco_3n22tdmxdb22e",
@@ -98780,7 +98864,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9389
+          "storyRank": 0.7349
         },
         {
           "id": "tweet_nfltraderumors_3n22tsznikd2p",
@@ -98814,7 +98898,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.78
+          "storyRank": 0.6088
         },
         {
           "id": "espn_pwire_4241464_64699628",
@@ -98848,7 +98932,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4732
+          "storyRank": 0.442
         },
         {
           "id": "x_status_2120225602657784121",
@@ -98882,7 +98966,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4658
+          "storyRank": 0.4355
         }
       ],
       "statProfile2026": {
@@ -99531,7 +99615,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1929
+          "storyRank": 0.1869
         }
       ],
       "statProfile2026": {
@@ -101831,12 +101915,18 @@
             "injury": "Ribs",
             "gameStatus": "Out",
             "practiceStatus": "Did Not Participate In Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Achilles",
+            "gameStatus": "",
+            "practiceStatus": "Did Not Participate In Practice"
           }
         ]
       },
       "recentNews": [
         {
-          "id": "pfrumors_133",
+          "id": "pfrumors_131",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -101856,21 +101946,20 @@
           "isFirstMoverInjuryScoop": true,
           "corroborationCount": 1,
           "corroboratedBy": [
-            "Matt Maiocco",
-            "NFL Trade Rumors"
+            "Matt Maiocco"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.454,
+          "breakingPriority": 1.196,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 9.6347
+          "storyRank": 7.3624
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -101891,23 +101980,22 @@
           "externalTitle": null,
           "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
+          "corroborationCount": 2,
           "corroboratedBy": [
-            "NFL Trade Rumors",
             "Pro Football Rumors"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
+          "breakingPriority": 0.826,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -101941,7 +102029,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
         },
         {
           "id": "tweet_profootballtalk_3n23lrrzsnk2q",
@@ -101975,7 +102063,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.553
+          "storyRank": 1.9794
         },
         {
           "id": "tweet_49erswebzone_3n22xuqp2ux24",
@@ -102009,7 +102097,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.5905
+          "storyRank": 2.0537
         },
         {
           "id": "espn_pwire_16737_64716228",
@@ -102043,7 +102131,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.516
+          "storyRank": 2.0449
         },
         {
           "id": "tweet_nbcs49ers_3n23b2cukis2d",
@@ -102077,10 +102165,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.5027
+          "storyRank": 1.0452
         },
         {
-          "id": "sf49_161",
+          "id": "sf49_159",
           "type": "article",
           "wireSource": null,
           "headline": "Mike Evans Hits the Hardwood as Dad, Coach, and Bay Area Fan | Off the Field",
@@ -102111,7 +102199,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4124
+          "storyRank": 1.214
         },
         {
           "id": "x_status_2120640440341037224",
@@ -102145,26 +102233,26 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9293
+          "storyRank": 0.7061
         },
         {
-          "id": "tweet_mattmaiocco_3mzy4oiyim22c",
+          "id": "tweet_nbcs49ers_3mzyufy4a7c23",
           "type": "tweet",
           "wireSource": null,
-          "headline": "49ers WRs Keenan Allen Demarcus Robinson Jordan Watkins Jacob Cowing Brandin Cooks On the mend Deebo Samuel (hamstring, expected to practice Wed) Mike Evans (Achilles) De’Zhaun Stribling (ankle, back in Dec) P squad KhaDarel Hodge Xavier Smith Wesley Grimes Will Pauling",
-          "fullText": "49ers WRs Keenan Allen Demarcus Robinson Jordan Watkins Jacob Cowing Brandin Cooks On the mend Deebo Samuel (hamstring, expected to practice Wed) Mike Evans (Achilles) De’Zhaun Stribling (ankle, back in Dec) P squad KhaDarel Hodge Xavier Smith Wesley Grimes Will Pauling",
+          "headline": "From a social media beef to teammates, Keenan Allen and Mike Evans will now anchor the 49ers’ receiver room together 🤝",
+          "fullText": "From a social media beef to teammates, Keenan Allen and Mike Evans will now anchor the 49ers’ receiver room together 🤝",
           "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "authorProfileUrl": "https://x.com/MaioccoNBCS",
+          "summary": "Keenan Allen, Mike Evans becoming 49ers teammates is full-circle moment after 2020 social media beef",
+          "author": "49ers on NBCSBA",
+          "authorHandle": "@NBCS49ers",
+          "authorProfileUrl": "https://x.com/NBCS49ers",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-10T18:58:11.304Z",
-          "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzy4oiyim22c",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
+          "publishedAt": "2026-11-11T02:02:54.969Z",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:oovjmbx2gv3o4tolrzuegtl2/bafkreidjo4mql2cc5waggzuso4iuodxzlzotvsorgixwioc5fj4pseubiq",
+          "url": "https://bsky.app/profile/nbcs49ers.bsky.social/post/3mzyufy4a7c23",
+          "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/keenan-allen-mike-evans-social-media-beef/1979016/",
+          "externalTitle": "Keenan Allen, Mike Evans becoming 49ers teammates is full-circle moment after 2020 social media beef",
+          "trustTier": 2,
           "isFirstMoverInjuryScoop": false,
           "corroborationCount": 1,
           "corroboratedBy": null,
@@ -102173,13 +102261,13 @@
           "isInGameInjury": false,
           "breakingBadge": null,
           "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "injury",
-          "storyTier": "standard",
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "side_note",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.155
         }
       ],
       "statProfile2026": {
@@ -102401,7 +102489,7 @@
                 "totalPeers": 80,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.60 yds",
+                "posAvgDisplay": "+0.61 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -103542,6 +103630,12 @@
             "injury": "Groin",
             "gameStatus": "Questionable",
             "practiceStatus": "Limited Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Groin",
+            "gameStatus": "",
+            "practiceStatus": "Full Participation in Practice"
           }
         ]
       },
@@ -103578,7 +103672,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7208
+          "storyRank": 2.8349
         },
         {
           "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
@@ -103612,7 +103706,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         },
         {
           "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -103646,7 +103740,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6136
+          "storyRank": 0.5693
         }
       ],
       "statProfile2026": {
@@ -104462,12 +104556,12 @@
           "breakingBadge": null,
           "breakingPriority": 0,
           "credibilityScore": 95,
-          "category": "beat",
+          "category": "film",
           "storyTier": "standard",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.341
+          "storyRank": 0.3249
         }
       ],
       "statProfile2026": {
@@ -105040,7 +105134,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         }
       ],
       "statProfile2026": {
@@ -107425,6 +107519,12 @@
             "injury": "Hamstring",
             "gameStatus": "",
             "practiceStatus": "Full Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Back",
+            "gameStatus": "",
+            "practiceStatus": "Did Not Participate In Practice"
           }
         ]
       },
@@ -107448,57 +107548,22 @@
           "externalTitle": null,
           "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
+          "corroborationCount": 2,
           "corroboratedBy": [
-            "NFL Trade Rumors",
             "Pro Football Rumors"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
+          "breakingPriority": 0.826,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
-        },
-        {
-          "id": "espn_pwire_4427325_64726128",
-          "type": "article",
-          "wireSource": "espn_player_wire",
-          "headline": "Green (back) did not practice Wednesday.",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Green injured his back in the second half of the 49ers' win over the Raiders in Week 9, and he finished that game with four tackles (two solo) and one interception. Per Barrows, head coach Kyle Shanahan indicated Monday that Green is considered day-to-day, so the third-year defensive back's practice participation over the next two days will determine whether he'll be available for Sunday's game against the Cowboys.",
-          "author": "Matt Barrows",
-          "authorHandle": "@mattbarrows",
-          "authorProfileUrl": "https://x.com/mattbarrows",
-          "outletName": "The Athletic",
-          "publishedAt": "2026-11-12T00:43:00.000Z",
-          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
-          "url": "https://www.espn.com/nfl/player/_/id/4427325/renardo-green#:~:text=Green%20(back)%20did%20not%20practice%20Wednesday%2C%20Matt",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "injury",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 4.3091
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -107525,14 +107590,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "INJURY UPDATE",
-          "breakingPriority": 0.711,
+          "breakingPriority": 0.593,
           "credibilityScore": 98,
           "category": "injury",
           "storyTier": "practice_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.5224
+          "storyRank": 3.7068
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -107566,7 +107631,41 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
+        },
+        {
+          "id": "espn_pwire_4427325_64726128",
+          "type": "article",
+          "wireSource": "espn_player_wire",
+          "headline": "Green (back) did not practice Wednesday.",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "Green injured his back in the second half of the 49ers' win over the Raiders in Week 9, and he finished that game with four tackles (two solo) and one interception. Per Barrows, head coach Kyle Shanahan indicated Monday that Green is considered day-to-day, so the third-year defensive back's practice participation over the next two days will determine whether he'll be available for Sunday's game against the Cowboys.",
+          "author": "Matt Barrows",
+          "authorHandle": "@mattbarrows",
+          "authorProfileUrl": "https://x.com/mattbarrows",
+          "outletName": "The Athletic",
+          "publishedAt": "2026-11-12T00:43:00.000Z",
+          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
+          "url": "https://www.espn.com/nfl/player/_/id/4427325/renardo-green#:~:text=Green%20(back)%20did%20not%20practice%20Wednesday%2C%20Matt",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 98,
+          "category": "injury",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 3.1906
         },
         {
           "id": "espn_pwire_4427325_64688428",
@@ -107600,7 +107699,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3226
+          "storyRank": 0.3079
         },
         {
           "id": "espn_pwire_4427325_64671528",
@@ -107634,7 +107733,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1999
+          "storyRank": 0.1935
         },
         {
           "id": "tweet_jenniferleechan_3mztmcvkzck2y",
@@ -107668,7 +107767,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1957
+          "storyRank": 0.1895
         },
         {
           "id": "tweet_jenniferleechan_3mztm5pvnqs2y",
@@ -107702,7 +107801,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1955
+          "storyRank": 0.1894
         },
         {
           "id": "tweet_jenniferleechan_3mztlmmcsck2y",
@@ -107736,7 +107835,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.195
+          "storyRank": 0.1889
         }
       ],
       "statProfile2026": {
@@ -108340,7 +108439,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5359
+          "storyRank": 0.5008
         }
       ],
       "statProfile2026": {
@@ -110082,7 +110181,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4919
+          "storyRank": 2.0281
         }
       ],
       "statProfile2026": {
@@ -111614,6 +111713,12 @@
             "injury": "Knee",
             "gameStatus": "Questionable",
             "practiceStatus": "Limited Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Knee",
+            "gameStatus": "",
+            "practiceStatus": "Limited Participation in Practice"
           }
         ]
       },
@@ -111637,23 +111742,22 @@
           "externalTitle": null,
           "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
+          "corroborationCount": 2,
           "corroboratedBy": [
-            "NFL Trade Rumors",
             "Pro Football Rumors"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
+          "breakingPriority": 0.826,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -111687,7 +111791,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
         }
       ],
       "statProfile2026": {
@@ -113175,6 +113279,12 @@
             "injury": "Not injury related - resting player",
             "gameStatus": "",
             "practiceStatus": "Full Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Not injury related - resting player",
+            "gameStatus": "",
+            "practiceStatus": "Did Not Participate In Practice"
           }
         ]
       },
@@ -113859,6 +113969,12 @@
             "injury": "Shoulder",
             "gameStatus": "Questionable",
             "practiceStatus": "Limited Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Shoulder",
+            "gameStatus": "",
+            "practiceStatus": "Limited Participation in Practice"
           }
         ]
       },
@@ -113882,23 +113998,22 @@
           "externalTitle": null,
           "trustTier": 1,
           "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 3,
+          "corroborationCount": 2,
           "corroboratedBy": [
-            "NFL Trade Rumors",
             "Pro Football Rumors"
           ],
           "firstReportedBy": "Matt Maiocco",
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 1.004,
+          "breakingPriority": 0.826,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.1029
+          "storyRank": 5.6721
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -113932,7 +114047,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3322
+          "storyRank": 3.5732
         }
       ],
       "statProfile2026": {
@@ -115573,7 +115688,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         }
       ],
       "statProfile2026": {
@@ -115805,7 +115920,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.537
+          "storyRank": 0.5018
         }
       ],
       "statProfile2026": {

@@ -3595,29 +3595,30 @@ export function rankPlayerInjuryNews(
         outletId: 'espn',
         outletName: 'ESPN / 49ers Beat'
       });
-      const fallbackUrl =
-        sanitizeExternalUrl(
-          parsedAttr.viaWire
-            ? buildXPlayerScoopSearchUrl(player.name)
-            : player.espnUrl || 'https://www.49ers.com/team/injury-report/',
-          'https://www.49ers.com/team/injury-report/'
-        );
+      const hasEspnId = /^\d+$/.test(String(player.id || ''));
+      const fallbackUrl = sanitizeExternalUrl(
+        hasEspnId
+          ? buildEspnPlayerNewsAnchorUrl(player.id, player.name, fallbackProse)
+          : player.espnUrl || 'https://www.49ers.com/team/injury-report/',
+        'https://www.49ers.com/team/injury-report/'
+      );
       const authorProfile = sanitizeExternalUrl(
         parsedAttr.xUrl || parsedAttr.authorProfileUrl || fallbackUrl,
         fallbackUrl
       );
       deduped.push({
         id: `inj_fallback_${player.id || player.name}`,
-        type: 'tweet',
+        type: 'article',
+        wireSource: 'espn_player_wire',
         title: fallbackProse,
         headline: fallbackProse,
-        fullText: fallbackProse,
-        isFullTweet: fallbackProse.length <= 320,
+        fullText: null,
+        isFullTweet: false,
         summary: '',
         author: parsedAttr.author || '49ers Beat & Medical Desk',
         authorHandle: parsedAttr.authorHandle || '',
         authorProfileUrl: authorProfile,
-        outletName: parsedAttr.outletName || '49ers Beat',
+        outletName: parsedAttr.outletName || 'ESPN Injury Wire',
         publishedAt: appData?.health?.updatedAt || appData?.meta?.updatedAt || new Date(nowMs).toISOString(),
         url: fallbackUrl,
         injuryRankScore: 50,
@@ -3626,6 +3627,336 @@ export function rankPlayerInjuryNews(
         confirmingReports: []
       });
     }
+  }
+
+  return deduped;
+}
+
+const OVERVIEW_ON_FIELD_SUBSTANCE_RE =
+  /\b(all-22|all 22|film|tape|epa|cpoe|qbr|pff|pass[- ]block|run[- ]block|pressure|sack|touchdown|passing tds|rushing tds|receiving|interception|pick-six|milestone|nfl record|franchise record|hall of fame|\bhof\b|snap count|snap share|extension|restructure|activated|21-day|practice window|designated to return|wide-9|two-high|red-zone|third-down)\b/i;
+
+const OVERVIEW_TRIVIA_OR_BEEF_RE =
+  /\b(beef|squashed|feud|all good now|temporary jersey|jersey no\.|gifts him no\.|freely gave[\s\S]{0,30}no\.\s*\d+|off the field)\b/i;
+
+const OVERVIEW_MOCK_DRAFT_RE =
+  /\b(mock draft|3-round|7-round|way-too-early|draft simulator)\b/i;
+
+/**
+ * Computes a deterministic player-centric Joint Recency + Primary-Focus Salience score for a candidate
+ * tweet or article on a player's `Overview -> Recent Mentions (7d)` card.
+ * Ensures updates *primarily about this player* (injuries, milestones, film, transactions, quotes)
+ * outrank passing secondary mentions in another player's trade/IR headline or mock-draft filler.
+ */
+export function computeOverviewMentionRankScore(
+  item = {},
+  {
+    player = null,
+    rosterPlayerNames = [],
+    nowMs = Date.now(),
+    maxAgeDays = 8,
+    lastCompletedKickoffMs = null
+  } = {}
+) {
+  if (!item || !player?.name || item.isClickbait || item.type === 'video') return null;
+
+  // Enforce strict primary-owner isolation on ESPN/RotoWire player bio blurbs (`espn_pwire_<ownerId>_*`)
+  const itemIdStr = String(item.id || '');
+  if (itemIdStr.startsWith('espn_pwire_')) {
+    const ownerId = itemIdStr.split('_')[2] || '';
+    if (ownerId && /^\d+$/.test(ownerId) && /^\d+$/.test(String(player.id || '')) && ownerId !== String(player.id)) {
+      return null;
+    }
+  }
+  if (
+    item.primaryPlayer?.id &&
+    /^\d+$/.test(String(item.primaryPlayer.id)) &&
+    /^\d+$/.test(String(player.id || '')) &&
+    String(item.primaryPlayer.id) !== String(player.id) &&
+    item.wireSource === 'espn_player_wire'
+  ) {
+    return null;
+  }
+
+  const pubMs = parseFlexibleIsoMs(item.publishedAt);
+  if (pubMs === null) return null;
+  const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
+  if (ageHours > maxAgeDays * 24 || pubMs > nowMs + 3_600_000) return null;
+
+  const primaryText = String(item.fullText || item.title || item.headline || '').trim();
+  const secondaryText = String(item.summary || item.externalTitle || '').trim();
+  const fullBody =
+    secondaryText && !primaryText.toLowerCase().includes(secondaryText.toLowerCase().slice(0, 32))
+      ? `${primaryText} ${secondaryText}`.trim()
+      : primaryText;
+  if (!fullBody || fullBody.length < 14) return null;
+
+  // Verify genuine mention of `player` (blocking homonyms like "Kirk Cousins" or "NFC West")
+  if (!doesClauseMentionPlayer(fullBody, player.name, { allowSurname: true })) {
+    return null;
+  }
+
+  // Filter out stale prior-completed-game availability / inactives noise
+  if (
+    Number.isFinite(lastCompletedKickoffMs) &&
+    pubMs < lastCompletedKickoffMs + 20 * 60_000 &&
+    /\b(?:won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|before\s+[a-z]+\s+game)\b/i.test(
+      fullBody
+    ) &&
+    !INJURY_REHAB_COLOR_DETAIL_RE.test(fullBody) &&
+    !/\b(placed\s+on\s+(?:injured\s+reserve|ir\b)|activated\s+from)\b/i.test(fullBody)
+  ) {
+    return null;
+  }
+
+  // Reject fantasy start/sit / betting props fluff
+  if (/\b(fantasy\s+managers|waiver\s+wire|start\/sit|draftkings|fanduel|parlay|over\/under\s+prop)\b/i.test(fullBody)) {
+    return null;
+  }
+
+  const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
+  const checkScope = scoped || fullBody;
+
+  // 1. Urgent Live In-Game Injury / Breaking Override
+  let urgentBoost = 0;
+  if (item.isInGameInjury && ageHours <= 6) {
+    urgentBoost = 95;
+  } else if (
+    (item.breakingBadge === 'BREAKING' || item.breakingBadge === 'LIVE INJURY UPDATE') &&
+    ageHours <= 8 &&
+    doesClauseMentionPlayer(primaryText.split(/[.;!?]/)[0] || primaryText, player.name, { allowSurname: true })
+  ) {
+    urgentBoost = 46;
+  }
+
+  // 2. Smooth Recency Curve (0..46 pts, 26h half-life across 7d window)
+  const recencyScore = 46 * Math.pow(0.5, ageHours / 26);
+
+  // 3. Primary Subject vs. Secondary Ripple Mention (-12..+24 pts)
+  const leadClause = (primaryText.split(/[.;!?\n]/)[0] || primaryText).trim();
+  const inLeadClause = doesClauseMentionPlayer(leadClause, player.name, { allowSurname: true });
+  const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
+  const focusRatio = scoped ? scoped.length / Math.max(1, fullBody.length) : 0.45;
+
+  let focusScore = 0;
+  if (inLeadClause) {
+    focusScore += 16;
+  } else if (
+    /\b(trade[sd]?\s+for|completing\s+a\s+trade|acquir(?:e|ed|ing)|designate[sd]?|opened\s+the\s+practice\s+window\s+for|signed|waived)\b/i.test(
+      leadClause
+    )
+  ) {
+    // Lead announces another player's transaction while `player` is only a secondary ripple/tail mention
+    focusScore -= 10;
+  }
+  if (focusRatio >= 0.55 && mentionedCnt <= 2) {
+    focusScore += 8;
+  } else if (mentionedCnt >= 5) {
+    focusScore -= 4;
+  }
+
+  // 4. Football, Injury, Film & Milestone Substance (-18..+24 pts)
+  let substanceScore = 0;
+  if (INJURY_REHAB_COLOR_DETAIL_RE.test(checkScope)) {
+    substanceScore += 16;
+  } else if (
+    INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE.test(checkScope) ||
+    INJURY_STATUS_MILESTONE_RE.test(checkScope) ||
+    /\b(limited\s+(?:practice\s+)?participant|limited\s+in\s+his\s+return|did\s+not\s+practice|not\s+practicing|non-participant)\b/i.test(
+      checkScope
+    )
+  ) {
+    substanceScore += 13;
+  }
+  if (OVERVIEW_ON_FIELD_SUBSTANCE_RE.test(checkScope)) {
+    substanceScore += 12;
+  }
+  substanceScore = Math.min(24, substanceScore);
+
+  if (OVERVIEW_MOCK_DRAFT_RE.test(fullBody)) {
+    substanceScore -= 18;
+  } else if (OVERVIEW_TRIVIA_OR_BEEF_RE.test(fullBody)) {
+    substanceScore -= 9;
+  }
+
+  // 5. Reporter Trust Tier & Multi-Reporter Corroboration (+4..+16 pts)
+  const repEntry = resolveReporterFromNameOrHandle(
+    item.reporterId || item.author || item.reporterName || item.authorHandle
+  );
+  const effectiveTier =
+    Number(item.trustTier) || repEntry?.trustTier || (VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody) ? 1 : 2);
+  const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
+  let authorityScore = isOfficial || effectiveTier <= 1 ? 12 : effectiveTier === 2 ? 8 : 4;
+  if (item.isFirstMoverInjuryScoop || Number(item.corroborationCount || 1) >= 2) {
+    authorityScore += 4;
+  }
+
+  const totalScore = Number(
+    (urgentBoost + recencyScore + focusScore + substanceScore + authorityScore).toFixed(2)
+  );
+
+  return {
+    totalScore,
+    recencyScore: Number(recencyScore.toFixed(2)),
+    focusScore,
+    substanceScore,
+    ageHours: Number(ageHours.toFixed(2))
+  };
+}
+
+/**
+ * Stack-ranks, link-verifies, and deduplicates `Overview -> Recent Mentions (7d)` for `player`,
+ * merging live `rawStream` updates with `player.recentNews` and collapsing same-topic echoes into
+ * `confirmingReports` while preserving rich Tweet + Article variety.
+ */
+export function rankPlayerOverviewMentions(
+  player = null,
+  {
+    rawStream = [],
+    appData = null,
+    userPrefs = null,
+    reportersById = null,
+    nowMs = Date.now(),
+    maxAgeDays = 8,
+    maxItems = 10
+  } = {}
+) {
+  if (!player?.name) return [];
+  const rosterPlayers = appData?.roster?.players || [];
+  const rosterPlayerNames = rosterPlayers.map(rp => rp?.name).filter(Boolean);
+
+  const schedule = appData?.scheduleMatchup?.schedule || [];
+  const completedKickoffs = schedule
+    .filter(g => g?.completed && (g.dateIso || g.kickoffIso))
+    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
+    .filter(ms => ms !== null)
+    .sort((a, b) => b - a);
+  const lastCompletedKickoffMs = completedKickoffs.length > 0 ? completedKickoffs[0] : null;
+
+  const combinedCandidates = [
+    ...(Array.isArray(rawStream) ? rawStream : []),
+    ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
+    ...(Array.isArray(player.recentNews) ? player.recentNews : [])
+  ];
+
+  const directPosts = combinedCandidates.filter(
+    it =>
+      (it?.type === 'tweet' || it?.type === 'social') &&
+      isDirectSocialPostUrl(String(it?.url || ''))
+  );
+
+  const seenUrlKeys = new Set();
+  const seenLeadKeys = new Set();
+  const scored = [];
+
+  for (const cand of combinedCandidates) {
+    if (!cand || isItemMutedByPrefs(cand, userPrefs, reportersById)) continue;
+    const isTw =
+      cand.type === 'tweet' ||
+      cand.type === 'social' ||
+      /^https?:\/\/bsky\.app\/profile\/[^/?#]+\/post\//i.test(String(cand.url || ''));
+    const rawUrl = isTw
+      ? resolveOriginalTweetUrl(
+          {
+            ...cand,
+            type: 'tweet',
+            primaryPlayer: { name: player.name },
+            title: cand.title || cand.headline || ''
+          },
+          directPosts
+        )
+      : cand.url;
+    const safeUrl = sanitizeExternalUrl(rawUrl, null);
+    if (!safeUrl || isPaywalledPublisher(cand.outletName, safeUrl)) continue;
+
+    const leadKey = String(cand.fullText || cand.title || cand.headline || '')
+      .toLowerCase()
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .slice(0, 68);
+    if (!leadKey || seenLeadKeys.has(leadKey)) continue;
+    const normUrlKey = safeUrl.toLowerCase().replace(/\/+$/, '');
+    // Allow shared practice-list tweet URL across different players, but never twice on the SAME player!
+    if (!safeUrl.includes('#:~:text=') && seenUrlKeys.has(normUrlKey)) continue;
+
+    const rankMeta = computeOverviewMentionRankScore(cand, {
+      player,
+      rosterPlayerNames,
+      nowMs,
+      maxAgeDays,
+      lastCompletedKickoffMs
+    });
+    if (!rankMeta) continue;
+
+    seenLeadKeys.add(leadKey);
+    seenUrlKeys.add(normUrlKey);
+
+    const authorName = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
+    const authorProfileUrl = sanitizeExternalUrl(
+      resolveItemAuthorProfileUrl(cand, safeUrl),
+      safeUrl
+    );
+
+    scored.push({
+      ...cand,
+      type: isTw ? 'tweet' : 'article',
+      headline: cand.headline || cand.title || '',
+      title: cand.title || cand.headline || '',
+      fullText: isTw ? cand.fullText || cand.title || cand.headline || '' : cand.fullText || null,
+      author: authorName,
+      authorProfileUrl,
+      url: safeUrl,
+      overviewRankScore: rankMeta.totalScore
+    });
+  }
+
+  scored.sort(
+    (a, b) =>
+      b.overviewRankScore - a.overviewRankScore ||
+      (parseFlexibleIsoMs(b.publishedAt) || 0) - (parseFlexibleIsoMs(a.publishedAt) || 0)
+  );
+
+  // Consolidate same-day duplicate quote/status echoes (e.g. 4 "beef" quote posts or duplicate dry practice lists)
+  // into `confirmingReports` on the strongest lead card while preserving distinct articles & tweets!
+  const deduped = [];
+  for (const item of scored) {
+    const itemMs = parseFlexibleIsoMs(item.publishedAt) || 0;
+    const itemText = `${item.fullText || ''} ${item.title || ''} ${item.summary || ''}`.toLowerCase();
+    const echoTag = OVERVIEW_TRIVIA_OR_BEEF_RE.test(itemText)
+      ? /\bbeef|squashed|feud|all good now\b/.test(itemText)
+        ? 'quote_beef'
+        : /\bjersey|no\.\s*\d+\b/.test(itemText)
+          ? 'quote_jersey'
+          : null
+      : !INJURY_REHAB_COLOR_DETAIL_RE.test(itemText) &&
+          item.wireSource !== 'espn_player_wire' &&
+          /\b(pre\s+practice\s+report|not\s+participating\s+wr|no\s+practice\s+for\s+.*or)\b/.test(itemText)
+        ? 'multi_player_practice_list'
+        : null;
+
+    if (echoTag) {
+      const existingLead = deduped.find(d => {
+        if (d._overviewEchoTag !== echoTag) return false;
+        const dMs = parseFlexibleIsoMs(d.publishedAt) || 0;
+        return Math.abs(dMs - itemMs) <= 24 * 3_600_000;
+      });
+      if (existingLead) {
+        if (!Array.isArray(existingLead.confirmingReports)) existingLead.confirmingReports = [];
+        if (
+          !existingLead.confirmingReports.some(cr => cr.url === item.url) &&
+          existingLead.url !== item.url
+        ) {
+          existingLead.confirmingReports.push(item);
+        }
+        continue;
+      }
+    }
+
+    deduped.push({
+      ...item,
+      _overviewEchoTag: echoTag,
+      confirmingReports: Array.isArray(item.confirmingReports) ? [...item.confirmingReports] : []
+    });
+    if (deduped.length >= maxItems) break;
   }
 
   return deduped;

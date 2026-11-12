@@ -109,7 +109,7 @@ const TRUE_FILM_VIDEO_TITLE_REGEX =
   /\b(all-22|all 22|film breakdown|film study|film room|tape breakdown|tape study|49ers playbook|qb film|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush breakdown|coverage breakdown|coaching tape)\b/i;
 
 const WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX =
-  /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|snap count|snap share|pass[- ]block win rate|run[- ]block win rate|\bpbwr\b|\brswr\b|pressure rate|epa\/play|passing epa|rushing epa|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|success rate|wide-9|stunt geometry|t-e stunt|sim pressure|simulated pressure|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [2346]|split-safety|motion rate|trench(?:es)?|pass protection|run fits?)\b/i;
+  /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|snap count|snap share|pass[- ]block|run[- ]block|\bpbwr\b|\brswr\b|pressure rate|pass rush|pass-rush|qb sack|pff\s+grad|pff\s+gard|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards)\b/i;
 
 const NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX =
   /\b(press conference|media availability|locker room|podium|postgame interview|explains why|reveals (?:why|what)|discusses addition|pumped about|previews week \d+|ways to watch|highlights|reacts to|trade rumor|mailbag)\b/i;
@@ -119,8 +119,14 @@ export function extractFirstLeadSentence(text = '') {
     .replace(/\s+/g, ' ')
     .trim();
   if (!s) return '';
-  const m = s.match(/^[\s\S]{10,240}?[.!?](?=\s+[A-Z"“‘#]|$)/);
-  return m ? m[0].trim() : s.slice(0, 240).trim();
+  // Temporarily mask periods in initials (C.J., A.J.) and common football abbreviations (vs., No., Jr., Sr., St., Dr.)
+  const masked = s
+    .replace(/\b([A-Z])\.([A-Z])\./g, '$1\u0000$2\u0000')
+    .replace(/\b([A-Z])\.(?=\s+[A-Z])/g, '$1\u0000')
+    .replace(/\b(vs|no|st|jr|sr|mr|dr|mt)\./gi, '$1\u0000');
+  const m = masked.match(/^[\s\S]{10,240}?[.!?](?=\s+[A-Z"“‘#]|$)/);
+  const picked = m ? m[0].trim() : masked.slice(0, 240).trim();
+  return picked.replace(/\u0000/g, '.');
 }
 
 function extractPrimaryClaimText(item = {}) {
@@ -197,18 +203,22 @@ export function classifyNewsItemCategory(item = {}) {
   }
 
   // Genuine X's & O's, All-22 tape, snap-count, EPA/CPOE, and trench breakdowns -> 'film'
+  const isMockOrOffseasonDraft = /\b(mock draft|draft simulator|7-round|3-round|draft profile|combine)\b/i.test(
+    combined
+  );
   const filmMatches = combined.match(new RegExp(WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX.source, 'gi')) || [];
   const headlineHasFilmCue =
-    TRUE_FILM_VIDEO_TITLE_REGEX.test(title) ||
-    /\b(snap count|film|all-22|tape|playbook|scheme|trench|pass rush|protection|epa|cpoe|dvoa|wide-9|coverage|grades?)\b/i.test(
-      title
-    );
+    !isMockOrOffseasonDraft &&
+    (TRUE_FILM_VIDEO_TITLE_REGEX.test(title) ||
+      /\b(snap count|film|all-22|tape|playbook|scheme|trench|pass rush|pass-rush|pff\s+grad|pff\s+gard|o-linem[ae]n|offensive line|run defense|epa|cpoe|dvoa|wide-9|coverage|questions at corner|what he brings to the offense|stats and facts|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|play-action|red-zone|third-down)\b/i.test(
+        title
+      ));
   const isPureInjuryLead =
-    /\b(injury report|injury update|did not practice|non-participant|limited participant|questionable|doubtful|ruled out|inactives?)\b/i.test(
+    /\b(injury report|injury update|did not practice|non-participant|limited participant|not practicing|questionable|doubtful|ruled out|inactives?)\b/i.test(
       lead
     ) && !headlineHasFilmCue;
 
-  if (!isPureInjuryLead && (headlineHasFilmCue || filmMatches.length >= 2)) {
+  if (!isMockOrOffseasonDraft && !isPureInjuryLead && (headlineHasFilmCue || filmMatches.length >= 2)) {
     return 'film';
   }
 
@@ -823,8 +833,8 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       gravity = 1.24;
       break;
     case 'film_trench':
-      eventMagnitude = 63;
-      gravity = 1.18;
+      eventMagnitude = item.type === 'video' ? 54 : 62;
+      gravity = 1.24;
       break;
     case 'side_note':
       eventMagnitude = 27;
@@ -1221,11 +1231,9 @@ export function sortNewsWithBreakingPriority(
       const trustTier = Number(it.trustTier) || repEntry?.trustTier || 2;
       const withinWindow = cls.breakingPriority < 0 || cls.ageHours <= effectiveWindowHours;
       const resolvedCat =
-        !it.category || (it.type === 'video' && it.category === 'film')
-          ? classifyNewsItemCategory(it)
-          : it.category === 'beat'
-            ? classifyNewsItemCategory(it)
-            : it.category;
+        it.category === 'cap' || it.category === 'scheme'
+          ? it.category
+          : classifyNewsItemCategory(it);
 
       const enriched = {
         ...it,
@@ -1428,15 +1436,41 @@ function extractHeadlineTokens(item = {}) {
   return tokenSet;
 }
 
+function extractLeadProperNameSlugs(lead = '') {
+  const slugs = [];
+  const clean = String(lead || '').replace(/^[#"'“‘]+/, '');
+  const re = /\b([A-Z]\.?[A-Za-z'.-]{1,14}\s+[A-Z][a-zA-Z'.-]{2,16})(?:\s+(?:Jr\.?|Sr\.?|II|III|IV|V))?\b/g;
+  const ignore = new Set([
+    'sanfrancisco', 'kyleshanahan', 'johnlynch', 'probowl', 'superbowl', 'nfltrade', 'traderumors',
+    'bayarea', 'nbcsports', 'injurylists', 'injuredreserve', 'practicereport', 'injuryreport',
+    'lasvegas', 'newyork', 'losangeles', 'greenbay', 'tampabay', 'kansascity', 'newengland', 'neworleans'
+  ]);
+  let m;
+  while ((m = re.exec(clean)) !== null) {
+    const slug = m[1].toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (slug.length >= 5 && !ignore.has(slug) && !slugs.includes(slug)) {
+      slugs.push(slug);
+    }
+  }
+  return slugs;
+}
+
 function extractEntitySet(item = {}) {
   const set = new Set();
   for (const mp of item?.mentionedPlayers || []) {
-    const key = mp?.id
-      ? `pid:${mp.id}`
-      : mp?.name
-        ? `pname:${String(mp.name).toLowerCase().replace(/[^a-z0-9]/g, '')}`
-        : '';
-    if (key) set.add(key);
+    const nameSlug = String(mp?.name || mp?.id || '')
+      .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+    if (nameSlug) set.add(`pname:${nameSlug}`);
+  }
+  const urlMatch = String(item?.url || '').match(/espn\.com\/nfl\/player\/_\/id\/\d+\/([a-z0-9-]+)/i);
+  if (urlMatch?.[1]) {
+    const uSlug = urlMatch[1].toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (uSlug) set.add(`pname:${uSlug}`);
+  }
+  for (const leadSlug of extractLeadProperNameSlugs(extractPrimaryClaimText(item))) {
+    set.add(`pname:${leadSlug}`);
   }
   const lead = extractPrimaryClaimText(item).toLowerCase();
   if (/\bshanahan\b/.test(lead)) set.add('coach:shanahan');
@@ -1450,6 +1484,30 @@ function extractEntitySet(item = {}) {
   return set;
 }
 
+function resolvePracticeStatusBucket(text = '') {
+  const t = String(text || '').toLowerCase();
+  if (/\b(did not practice|not practicing|non-participant|no practice|missed practice|\bdnp\b)\b/.test(t)) {
+    return 'dnp';
+  }
+  if (/\b(limited in (?:his )?(?:return to )?practice|limited today at practice|was limited|limited participant)\b/.test(t)) {
+    return 'lp';
+  }
+  if (/\b(full participant|practiced in full)\b/.test(t)) {
+    return 'fp';
+  }
+  if (/\bday-to-day\b/.test(t)) {
+    return 'day_to_day';
+  }
+  return null;
+}
+
+function isPlayerBioWireBlurbItem(item = {}) {
+  return (
+    /^espn_pwire_/i.test(String(item?.id || '')) ||
+    /espn\.com\/nfl\/player\/_\/id\//i.test(String(item?.url || ''))
+  );
+}
+
 /**
  * Builds a deterministic semantic angle key (`entity::angle`) for exact same-event stories so
  * cross-outlet coverage (Articles + Tweets + Videos) merges reliably without touching distinct angles.
@@ -1460,11 +1518,28 @@ function buildStorySignatureKey(item = {}) {
   const lower = lead.toLowerCase();
 
   const primaryPlayer = item?.mentionedPlayers?.[0];
-  const pKey = primaryPlayer?.id
-    ? String(primaryPlayer.id)
-    : primaryPlayer?.name
-      ? String(primaryPlayer.name).toLowerCase().replace(/[^a-z0-9]/g, '')
-      : '';
+  const leadSlugs = extractLeadProperNameSlugs(lead);
+  const pKey = primaryPlayer?.name
+    ? String(primaryPlayer.name)
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '')
+    : primaryPlayer?.id
+      ? String(primaryPlayer.id).toLowerCase().replace(/[^a-z0-9]/g, '')
+      : leadSlugs[0] || '';
+
+  const collectPlayerSlugs = () => {
+    const combined = new Set();
+    for (const mp of item?.mentionedPlayers || []) {
+      const s = String(mp?.name || mp?.id || '')
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '');
+      if (s) combined.add(s);
+    }
+    for (const ls of leadSlugs) combined.add(ls);
+    return [...combined].sort().slice(0, 2).join('_');
+  };
 
   // 1. Multi-player team-wide Injury / Practice Report summaries ("49ers vs Cowboys injury report: Deebo returns, 6 miss practice")
   if (
@@ -1477,32 +1552,22 @@ function buildStorySignatureKey(item = {}) {
 
   // 2. Beef / Feud squashed angle (e.g. Keenan Allen + Mike Evans past beef)
   if (/\b(beef|feud)\b/.test(lower) || (/\ball good now\b/.test(lower) && pKey)) {
-    const sortedIds = (item?.mentionedPlayers || [])
-      .map(p => String(p.id || p.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
-      .filter(Boolean)
-      .sort()
-      .slice(0, 2)
-      .join('_');
+    const sortedIds = collectPlayerSlugs();
     return `players_${sortedIds || pKey}::beef_feud`;
   }
 
   // 3. Jersey number handover / temporary jersey trivia
-  if (/\b(freely gave|kept his promise|jersey no\.|number \d+|no\. \d+)\b/.test(lower) && pKey) {
-    const sortedIds = (item?.mentionedPlayers || [])
-      .map(p => String(p.id || p.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
-      .filter(Boolean)
-      .sort()
-      .slice(0, 2)
-      .join('_');
+  if (/\b(freely gave|kept his promise|jersey no\.|number \d+|no\. \d+)\b/.test(lower) && (pKey || leadSlugs.length > 0)) {
+    const sortedIds = collectPlayerSlugs();
     return `players_${sortedIds || pKey}::jersey_number`;
   }
 
   // 4. Retrospective unexecuted trade inquiries / "on trade radar"
   if (RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead)) {
-    if (pKey) return `${pKey}::retro_trade_inquiry`;
     if (/\b(tight end|\bte\b)\b/.test(lower) && /\bpro bowl\b/.test(lower)) {
       return 'target_probowl_te::retro_trade_radar';
     }
+    if (pKey) return `${pKey}::retro_trade_inquiry`;
   }
 
   // 5. Podium / Coach explaining why 49ers traded for / what newly acquired player brings
@@ -1516,16 +1581,47 @@ function buildStorySignatureKey(item = {}) {
     return `${pKey}::shanahan_podium_fit`;
   }
 
-  // 6. Primary Trade Acquisition / Official Trade Announcement for a specific player
+  // 5b. Newly acquired player introductory locker-room reaction ("energized / thrilled / super excited to be back in the Bay / with the 49ers")
   if (
     pKey &&
+    /\b(energized|thrilled|super excited|excited to be (?:back|with|here)|head is ['"“]?spinning)\b/.test(lower) &&
+    /\b(trade|49ers|niners|bay)\b/.test(lower)
+  ) {
+    return `${pKey}::player_arrival_reaction`;
+  }
+
+  // 6. Primary Trade Acquisition / Official Trade Announcement for a specific player
+  if (
     !SECONDARY_COMMENTARY_OR_REACTION_REGEX.test(lead) &&
     !RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead) &&
-    /\b(\btrade[!:]|trade alert|agree[sd]? to (?:a )?trade|completing a trade|sending [\s\S]{1,50}to (?:the )?(?:49ers|san francisco|niners)|heading to (?:the )?(?:49ers|san francisco|niners)|(?:49ers|san francisco|niners) (?:officially )?(?:trade[sd]? for|acquire[sd]?|acquiring|have (?:officially )?acquired|officially announce [\s\S]{0,25}trade)|49ers roster move:\s*acquired|swap draft pick)\b/i.test(
+    /\b(\btrade[!:]|trade alert|agree[sd]? to (?:a )?trade|completing a trade|sending [\s\S]{1,50}to (?:the )?(?:49ers|san francisco|niners)|heading to (?:the )?(?:49ers|san francisco|niners)|(?:49ers|san francisco|niners) (?:officially )?(?:trade[sd]? for|acquire[sd]?|acquiring|have (?:officially )?acquired|announced? [\s\S]{0,35}(?:acquired|trade))|officially announce [\s\S]{0,30}trade|49ers roster move:\s*acquired|swap draft pick)\b/i.test(
       lead
     )
   ) {
-    return `${pKey}::trade_acquisition`;
+    // Match the player whose name actually appears in the lead trade headline, normalizing by name slug so matched vs unmatched player objects still share one key!
+    const leadMentioned = (item?.mentionedPlayers || []).find(mp => {
+      const surname = String(mp?.name || '')
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .trim()
+        .split(/\s+/)
+        .slice(-1)[0];
+      return surname && surname.length >= 3 && new RegExp(`\\b${escapeRegexToken(surname)}\\b`, 'i').test(lead);
+    });
+    const posNameMatch = lead.match(
+      /\b(?:WR|RB|QB|TE|DT|DE|CB|LB|OT|OG|OL|DL|S|FB|K|P)\s+([A-Z][a-z'.-]+\s+[A-Z][a-z'.-]+)/
+    );
+    const rawTradeName =
+      (posNameMatch ? posNameMatch[1] : '') ||
+      leadMentioned?.name ||
+      primaryPlayer?.name ||
+      '';
+    const tradeSlug = String(rawTradeName)
+      .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+    if (tradeSlug) {
+      return `${tradeSlug}::trade_acquisition`;
+    }
   }
 
   // 7. Player-specific Injury Milestone Bucket (IR/21d return, MRI/X-ray, recovery timeline, in-game status, pre-game availability)
@@ -1558,15 +1654,24 @@ function scoreClusterLeadQuality(item = {}) {
   const trustTier = Number(item.trustTier) || 2;
   const isVideo = item.type === 'video' || Boolean(item.videoId);
   const isArticle = item.type === 'article' || item.type === 'post';
+  const isPlayerBioBlurb = isPlayerBioWireBlurbItem(item);
   const titleText = String(item.title || item.headline || '').trim();
   const isPromoLinkTweet = !isArticle && /\bread:\s*$/i.test(titleText);
   const isConversationalAside = /^(?:if it helps|pretty interesting|fwiw|fun fact)\b/i.test(titleText);
   const isRewriteAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${item.outletName || ''} ${item.url || ''}`);
 
   const tierScore = isRewriteAgg ? 8 : trustTier === 1 ? 34 : trustTier === 2 ? 24 : 4;
-  const formatScore = isArticle ? 18 : isVideo ? 6 : isPromoLinkTweet ? 2 : 11;
+  const formatScore = isPlayerBioBlurb
+    ? 6
+    : isArticle
+      ? 18
+      : isVideo
+        ? 6
+        : isPromoLinkTweet
+          ? 2
+          : 12;
   const conversationalPenalty = isConversationalAside ? -10 : 0;
-  const thumbBonus = !isVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl) ? 6 : 0;
+  const thumbBonus = !isVideo && !isPlayerBioBlurb && item.imageUrl && /^https:\/\//i.test(item.imageUrl) ? 6 : 0;
   const sigBonus = Math.min(18, (Number(item.signalScore) || 65) * 0.18);
   const primaryMoveBonus =
     item.storyTier === 'tier1_major' || item.storyTier === 'tier2_roster' ? 16 : 0;
@@ -1604,6 +1709,10 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
     const tokens = extractHeadlineTokens(item);
     const entities = extractEntitySet(item);
     const outletKey = String(item.outletId || item.outletName || '').toLowerCase();
+    const itemPracticeBucket = resolvePracticeStatusBucket(extractPrimaryClaimText(item));
+    const itemIsBioBlurb = isPlayerBioWireBlurbItem(item);
+    const itemPrimaryUrl = canonicalComparableUrl(item.url || '');
+    const itemExternalUrl = canonicalComparableUrl(item.externalUrl || '');
 
     let matchedCluster = null;
     let bestSim = 0;
@@ -1619,22 +1728,43 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
         continue;
       }
 
-      // 1. Exact semantic story signature (`entity::angle`) match
-      if (sigKey && cl.sigKey && sigKey === cl.sigKey) {
+      // 0. Exact shared article URL (`tweet.externalUrl === article.url` or vice versa)
+      const leadUrl = canonicalComparableUrl(cl.lead.url || '');
+      const leadExtUrl = canonicalComparableUrl(cl.lead.externalUrl || '');
+      if (
+        (itemExternalUrl && (itemExternalUrl === leadUrl || itemExternalUrl === leadExtUrl)) ||
+        (leadExtUrl && (leadExtUrl === itemPrimaryUrl || leadExtUrl === itemExternalUrl))
+      ) {
         matchedCluster = cl;
         bestSim = 1.0;
         break;
       }
 
-      // Prevent merging items that have DIFFERENT explicit player-specific injury milestones
-      if (sigKey && cl.sigKey && sigKey !== cl.sigKey) {
-        continue;
+      // 1. Exact semantic story signature (`entity::angle`) match (or shared-entity `::beef_feud` / `::jersey_number`)
+      if (sigKey && cl.sigKey) {
+        if (sigKey === cl.sigKey) {
+          matchedCluster = cl;
+          bestSim = 1.0;
+          break;
+        }
+        const itemAngle = sigKey.split('::')[1];
+        const clAngle = cl.sigKey.split('::')[1];
+        if (
+          itemAngle &&
+          itemAngle === clAngle &&
+          (itemAngle === 'beef_feud' || itemAngle === 'jersey_number') &&
+          setOverlapSimilarity(entities, cl.entities).jaccard > 0
+        ) {
+          matchedCluster = cl;
+          bestSim = 0.98;
+          break;
+        }
       }
 
-      // 2. Same-outlet Article + promotional Tweet echo ("Kyle Shanahan reveals... Read:")
       const tokSim = setOverlapSimilarity(tokens, cl.tokens);
       const entSim = setOverlapSimilarity(entities, cl.entities);
 
+      // 2. Same-outlet Article + promotional Tweet echo ("Kyle Shanahan reveals... Read:")
       if (
         outletKey &&
         outletKey === cl.outletKey &&
@@ -1644,6 +1774,31 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
         matchedCluster = cl;
         bestSim = 0.92;
         break;
+      }
+
+      // 2b. Secondary ESPN/RotoWire player-bio paraphrase of a beat reporter's original practice/injury tweet
+      //     (e.g. Matt Barrows tweet "CBs Renardo Green (back) and Deommodore Lenoir (foot) are not practicing today"
+      //      + ESPN player blurb "Green (back) did not practice Wednesday, Matt Barrows reports")
+      const leadIsBioBlurb = isPlayerBioWireBlurbItem(cl.lead);
+      if (
+        (itemIsBioBlurb || leadIsBioBlurb) &&
+        itemIsBioBlurb !== leadIsBioBlurb &&
+        item.reporterId &&
+        item.reporterId === cl.lead.reporterId &&
+        entSim.jaccard > 0 &&
+        (!itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= 14 * 3_600_000)
+      ) {
+        const leadPracticeBucket = resolvePracticeStatusBucket(extractPrimaryClaimText(cl.lead));
+        if (itemPracticeBucket && itemPracticeBucket === leadPracticeBucket) {
+          matchedCluster = cl;
+          bestSim = 0.9;
+          break;
+        }
+      }
+
+      // Prevent merging items that have DIFFERENT explicit player-specific injury milestones
+      if (sigKey && cl.sigKey && sigKey !== cl.sigKey) {
+        continue;
       }
 
       // 3. Cross-outlet TF-IDF Headline Token + Entity Hybrid Similarity (Google News single-pass threshold)

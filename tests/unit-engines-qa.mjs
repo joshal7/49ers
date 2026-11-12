@@ -86,6 +86,7 @@ import {
   hydrateLiveEspnOverlay,
   reconcileLiveEspnSfRosterAndDepthChart,
   hydrateLiveBlueskyBeatWire,
+  hydrateLiveEspnRapidBreakingDesk,
   hydrateLiveMultiSourceBeatWire
 } from '../src/services/dataService.js';
 import {
@@ -118,7 +119,10 @@ import {
 } from '../src/engine/groundingValidator.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
+  isUrgentBreakingBadge,
+  classifyNewsItemCategory,
   classifyBreakingItem,
+  computeWireStoryRank,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
   is49ersGameLiveWindow,
@@ -5501,6 +5505,331 @@ await testAsync('Expanded Football Jargon Glossary, Non-Overlapping Coaching Che
     globalThis.localStorage = origLocalStorage;
     globalThis.fetch = origFetchDaily;
   }
+});
+
+console.log('\n=== [12/12] StoryRank Latency, Strict Breaking Precision, Google News Clustering & Film/Video Differentiation QA ===');
+
+await testAsync('Keenan Allen trade surfaces at #1 in <1m via StoryRank + hydrateLiveEspnRapidBreakingDesk even before roster.json updates', async () => {
+  const tueBreakNow = Date.parse('2026-11-10T18:40:00Z'); // Tuesday morning inside 48h post-game window!
+  const wk9PostGameAppData = {
+    meta: { seasonYear: 2026, currentWeek: 10, calendar: { tradeDeadlineIso: '2026-11-10T21:00:00Z' } },
+    scheduleMatchup: {
+      schedule: [{ id: 'g9', week: 9, dateIso: '2026-11-08T21:25:00Z', completed: true, statusDetail: 'Final' }],
+      upcomingMatchup: { week: 10, oppAbbr: 'DAL', oppName: 'Dallas Cowboys', kickoffIso: '2026-11-15T21:25:00Z' }
+    }
+  };
+
+  // 1. Verify ALL real-world breaking trade phrasings match Tier-1 BREAKING and outrank 48h post-game injury items at T+2m
+  const phrasings = [
+    'Trade! The Colts are sending six-time Pro Bowl WR Keenan Allen to the 49ers for a 2027 sixth-round pick.',
+    'Colts agree to trade veteran WR Keenan Allen to 49ers for sixth-round pick.',
+    "49ers trade for Colts' Keenan Allen to bolster injury-plagued WR room",
+    'The 49ers are adding a WR, completing a trade for Colts WR Keenan Allen.',
+    'WR Keenan Allen is heading to the 49ers from Indy for a sixth-round pick, ESPN reports.',
+    'The 49ers Acquire WR Keenan Allen'
+  ];
+  for (const headline of phrasings) {
+    const cls = classifyBreakingItem(
+      { type: 'tweet', author: 'Tom Pelissero', trustTier: 1, title: headline, fullText: headline, publishedAt: new Date(tueBreakNow - 2 * 60_000).toISOString() },
+      tueBreakNow,
+      { appData: wk9PostGameAppData }
+    );
+    assert.equal(cls.isBreaking, true, `Expected BREAKING=true for "${headline}"`);
+    assert.equal(cls.breakingBadge, 'BREAKING', `Expected badge=BREAKING for "${headline}"`);
+    assert.ok(cls.breakingPriority >= 3.1, `Expected Tier-1 breakingPriority >= 3.1 for "${headline}", got ${cls.breakingPriority}`);
+  }
+
+  const rankedAtBreak = sortNewsWithBreakingPriority(
+    [
+      {
+        id: 'postgame_halton_inj',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        trustTier: 1,
+        title: '49ers rookie DT Gracen Halton sustained an ankle injury Sunday against the Raiders and underwent an MRI.',
+        fullText: '49ers rookie DT Gracen Halton sustained an ankle injury Sunday against the Raiders and underwent an MRI.',
+        publishedAt: new Date(tueBreakNow - 50 * 60_000).toISOString()
+      },
+      {
+        id: 'pelissero_keenan_trade',
+        type: 'tweet',
+        author: 'Tom Pelissero',
+        trustTier: 1,
+        title: 'Trade! The Colts are sending six-time Pro Bowl WR Keenan Allen to the 49ers for a 2027 sixth-round pick.',
+        fullText: 'Trade! The Colts are sending six-time Pro Bowl WR Keenan Allen to the 49ers for a 2027 sixth-round pick.',
+        publishedAt: new Date(tueBreakNow - 2 * 60_000).toISOString()
+      }
+    ],
+    tueBreakNow,
+    { appData: wk9PostGameAppData }
+  );
+  assert.equal(rankedAtBreak[0].id, 'pelissero_keenan_trade', 'New Keenan Allen trade scoop must immediately rank #1 ahead of post-game injury notes');
+  assert.equal(rankedAtBreak[0].breakingBadge, 'BREAKING');
+
+  // 2. Verify hydrateLiveEspnRapidBreakingDesk ingests external-team-to-49ers trade BEFORE player is in roster.json
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async url => {
+    const u = String(url);
+    if (u.includes('/nfl/news?limit=35')) {
+      return new Response(
+        JSON.stringify({
+          articles: [
+            {
+              id: '50999901',
+              headline: 'Colts agree to trade Pro Bowl WR Keenan Allen to San Francisco 49ers',
+              description: 'Indianapolis sends veteran wideout Keenan Allen to San Francisco for a 2027 sixth-round pick.',
+              byline: 'By Adam Schefter',
+              published: new Date().toISOString(),
+              links: { web: { href: 'https://www.espn.com/nfl/story/_/id/50999901/colts-trade-keenan-allen-49ers' } }
+            }
+          ]
+        }),
+        { status: 200 }
+      );
+    }
+    return new Response(JSON.stringify({ articles: [], transactions: [] }), { status: 200 });
+  };
+
+  try {
+    const mockPreRosterApp = {
+      roster: { players: [{ id: '4361741', name: 'Brock Purdy', position: 'QB', jersey: 13 }] }, // Keenan Allen NOT yet on roster!
+      news: {
+        rawStream: [
+          {
+            id: 'older_beat_1',
+            type: 'article',
+            title: '49ers Week 10 practice lookahead',
+            url: 'https://www.49ers.com/news/lookahead',
+            publishedAt: new Date(Date.now() - 2 * 3600_000).toISOString()
+          }
+        ]
+      }
+    };
+    const added = await hydrateLiveEspnRapidBreakingDesk(mockPreRosterApp);
+    assert.equal(added, 1, 'Expected league-wide ESPN breaking desk to catch external-player trade to 49ers');
+    assert.equal(mockPreRosterApp.news.rawStream[0].id, 'espn_rapid_50999901', 'External trade must rocket directly to #1');
+    assert.equal(mockPreRosterApp.news.rawStream[0].breakingBadge, 'BREAKING');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+test('User screenshot regression: zero false-positive BREAKING wall, strict badge decay, story consolidation & side-note demotion', () => {
+  const wedNow = Date.parse('2026-11-12T03:30:00Z');
+  const wedAppData = {
+    meta: { seasonYear: 2026, currentWeek: 10, calendar: { tradeDeadlineIso: '2026-11-10T21:00:00Z' } },
+    scheduleMatchup: {
+      schedule: [{ id: 'g9', week: 9, dateIso: '2026-11-08T21:25:00Z', completed: true, statusDetail: 'Final' }],
+      upcomingMatchup: { week: 10, oppAbbr: 'DAL', oppName: 'Dallas Cowboys', kickoffIso: '2026-11-15T21:25:00Z' }
+    }
+  };
+
+  const screenshotFeed = [
+    {
+      id: 'cj_west_ir_return',
+      type: 'article',
+      outletName: 'Pro Football Rumors',
+      author: 'Pro Football Rumors',
+      trustTier: 2,
+      title: '49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel',
+      summary: 'The 49ers made in-season trades at defensive tackle and wide receiver, acquiring DeForest Buckner and Keenan Allen.',
+      mentionedPlayers: [{ id: '4686308', name: 'C.J. West' }],
+      url: 'https://www.profootballrumors.com/2026/11/cj-west-return',
+      publishedAt: new Date(wedNow - 3 * 3600_000).toISOString()
+    },
+    {
+      id: 'kawakami_quote',
+      type: 'tweet',
+      outletName: 'The SF Standard',
+      author: 'Tim Kawakami',
+      trustTier: 2,
+      title: 'Pretty interesting Shanahan answer when I asked if it was a tough trade market to get somebody: "Just because people are trading doesn\'t mean it\'s always the right thing, though, and sometimes a lot of people are being traded for a reason."',
+      fullText: 'Pretty interesting Shanahan answer when I asked if it was a tough trade market to get somebody: "Just because people are trading doesn\'t mean it\'s always the right thing, though, and sometimes a lot of people are being traded for a reason."',
+      url: 'https://bsky.app/profile/timkawakami.bsky.social/post/tk1',
+      publishedAt: new Date(wedNow - 3.6 * 3600_000).toISOString()
+    },
+    {
+      id: 'cj_west_jersey_99',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      title: "49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99",
+      summary: 'When the team traded for defensive tackle DeForest Buckner, West willingly—and freely—gave up his No. 99 jersey.',
+      mentionedPlayers: [{ id: '4686308', name: 'C.J. West' }, { id: '2971282', name: 'DeForest Buckner' }],
+      url: 'https://www.49erswebzone.com/articles/cj-west-99/',
+      publishedAt: new Date(wedNow - 4 * 3600_000).toISOString()
+    },
+    {
+      id: 'cohn_keenan_video',
+      type: 'video',
+      videoId: 'ciu3raFg6Fg',
+      outletName: 'Grant Cohn',
+      author: 'Grant Cohn',
+      trustTier: 3,
+      title: 'Kyle Shanahan Explains Why the 49ers Traded for Keenan Allen',
+      summary: 'Video (13:51) • Grant Cohn • 6h ago',
+      mentionedPlayers: [{ id: '15818', name: 'Keenan Allen' }],
+      url: 'https://www.youtube.com/watch?v=ciu3raFg6Fg',
+      publishedAt: new Date(wedNow - 6 * 3600_000).toISOString()
+    },
+    {
+      id: 'wz_shanahan_keenan_art',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      title: 'Kyle Shanahan reveals what Keenan Allen brings to the 49ers after trade',
+      summary: 'The San Francisco 49ers made a move ahead of Tuesday’s NFL trade deadline, acquiring wide receiver Keenan Allen.',
+      mentionedPlayers: [{ id: '15818', name: 'Keenan Allen' }],
+      url: 'https://www.49erswebzone.com/articles/shanahan-keenan/',
+      publishedAt: new Date(wedNow - 6.5 * 3600_000).toISOString()
+    },
+    {
+      id: 'inman_evans_expected_dnp',
+      type: 'tweet',
+      outletName: 'Bay Area News Group',
+      author: 'Cam Inman',
+      trustTier: 1,
+      title: "Evans (Achilles) was listed as a non-participant in Wednesday's practice. The veteran wideout's absence Wednesday isn't surprising, having previously reported that Evans is not expected to be ready...",
+      fullText: "Evans (Achilles) was listed as a non-participant in Wednesday's practice. The veteran wideout's absence Wednesday isn't surprising, with Brooke Evans having previously reported that Evans is not expected to be ready this week. Meanwhile the team added depth by acquiring Keenan Allen.",
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }],
+      url: 'https://x.com/CamInman/status/1888888888888888888',
+      publishedAt: new Date(wedNow - 6.8 * 3600_000).toISOString()
+    },
+    {
+      id: 'mac_jones_calls_1',
+      type: 'article',
+      outletName: 'NFL Trade Rumors',
+      author: 'NFL Trade Rumors',
+      trustTier: 2,
+      title: "Shanahan: 'A Lot Of Teams' Called About Acquiring 49ers QB Mac Jones",
+      mentionedPlayers: [{ id: '4241464', name: 'Mac Jones' }],
+      url: 'https://nfltraderumors.co/mac-jones-calls/',
+      publishedAt: new Date(wedNow - 7 * 3600_000).toISOString()
+    },
+    {
+      id: 'mac_jones_calls_2',
+      type: 'tweet',
+      outletName: 'NBC Sports Bay Area',
+      author: 'Matt Maiocco',
+      trustTier: 1,
+      title: "Kyle Shanahan said teams called the 49ers to inquire about Mac Jones' availability.",
+      fullText: "Kyle Shanahan said teams called the 49ers to inquire about Mac Jones' availability.",
+      mentionedPlayers: [{ id: '4241464', name: 'Mac Jones' }],
+      url: 'https://bsky.app/profile/mattmaiocco.bsky.social/post/mj1',
+      publishedAt: new Date(wedNow - 7.1 * 3600_000).toISOString()
+    },
+    {
+      id: 'te_radar_wz',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      title: '49ers had 2-time Pro Bowl tight end on their trade radar',
+      summary: 'The 49ers made a move ahead of Tuesday’s NFL trade deadline, acquiring wide receiver Keenan Allen.',
+      url: 'https://www.49erswebzone.com/articles/te-radar/',
+      publishedAt: new Date(wedNow - 11 * 3600_000).toISOString()
+    },
+    {
+      id: 'te_radar_hvy',
+      type: 'article',
+      outletName: 'Heavy on 49ers',
+      author: 'Heavy on 49ers',
+      trustTier: 3,
+      title: 'San Francisco 49ers Were Eyeing a Trade for 2-Time Pro Bowl TE: Report',
+      url: 'https://heavy.com/sports/nfl/san-francisco-49ers/te-radar/',
+      publishedAt: new Date(wedNow - 11.2 * 3600_000).toISOString()
+    }
+  ];
+
+  const sorted = sortNewsWithBreakingPriority(screenshotFeed, wedNow, { appData: wedAppData });
+  const consolidated = deduplicateAndGroupWireItems(sorted, { nowMs: wedNow });
+
+  // 1. ONLY CJ West's fresh (3h-old) IR return designation wears BREAKING!
+  const urgentItems = consolidated.filter(x => isUrgentBreakingBadge(x.breakingBadge));
+  assert.equal(urgentItems.length, 1, `Expected ONLY 1 urgent BREAKING item from screenshot set, got ${urgentItems.length}`);
+  assert.equal(urgentItems[0].id, 'cj_west_ir_return');
+  assert.equal(consolidated[0].id, 'cj_west_ir_return', 'CJ West IR return designation must rank #1');
+
+  // 2. Once CJ West's move is >5h old (e.g. 6h), its badge transitions cleanly from BREAKING -> ROSTER MOVE
+  const sixHoursLaterCls = classifyBreakingItem(screenshotFeed[0], wedNow + 3 * 3600_000, { appData: wedAppData });
+  assert.equal(sixHoursLaterCls.isBreaking, false);
+  assert.equal(sixHoursLaterCls.breakingBadge, 'ROSTER MOVE');
+
+  // 3. Zero false BREAKING badges on quotes, jersey trivia, expected Wednesday DNPs, or post-deadline retrospectives
+  for (const nonBrkId of ['kawakami_quote', 'cj_west_jersey_99', 'wz_shanahan_keenan_art', 'inman_evans_expected_dnp', 'mac_jones_calls_1', 'mac_jones_calls_2', 'te_radar_wz']) {
+    const hit = sorted.find(x => x.id === nonBrkId);
+    assert.ok(hit && !isUrgentBreakingBadge(hit.breakingBadge), `Item ${nonBrkId} must NOT carry urgent BREAKING badge, got ${hit?.breakingBadge}`);
+  }
+
+  // 4. Redundant stories consolidate cleanly:
+  //    - Grant Cohn video + Webzone article on Shanahan/Keenan Allen merge (led by Webzone article over Tier-3 vlog)
+  //    - Mac Jones trade inquiry tweet + article merge
+  //    - 2-time Pro Bowl TE radar Webzone + Heavy articles merge
+  assert.equal(consolidated.length, 7, `Expected 10 redundant items to consolidate into 7 distinct story clusters, got ${consolidated.length}`);
+  const shanahanKeenanCluster = consolidated.find(x => x.id === 'wz_shanahan_keenan_art');
+  assert.ok(shanahanKeenanCluster && shanahanKeenanCluster.confirmingReports?.length === 1, 'Shanahan + Keenan Allen article & video must cluster together');
+
+  // 5. Side notes (Mac Jones inquiries, CJ West #99 jersey, Pro Bowl TE radar) rank below real team news
+  const top3Ids = consolidated.slice(0, 3).map(x => x.id);
+  assert.ok(!top3Ids.includes('cj_west_jersey_99'), 'Jersey trivia must not sit in Top 3');
+  assert.ok(!top3Ids.includes('te_radar_wz'), 'Retrospective TE radar must not sit in Top 3');
+});
+
+test('Film & Trench vs Videos are significantly differentiated in both engine classification and live data/news.json', () => {
+  assert.equal(
+    classifyNewsItemCategory({
+      type: 'video',
+      outletName: 'Grant Cohn',
+      title: 'Kyle Shanahan Explains Why the 49ers Traded for Keenan Allen'
+    }),
+    'roster',
+    'Podium trade reaction video must NOT be classified as film'
+  );
+  assert.equal(
+    classifyNewsItemCategory({
+      type: 'video',
+      outletName: "Jonnydel's Football Academy",
+      title: '49ers Playbook: SF Sinks the Raiders in the Bay'
+    }),
+    'film',
+    'All-22 Playbook breakdown video MUST be classified as film'
+  );
+  assert.equal(
+    classifyNewsItemCategory({
+      type: 'article',
+      outletName: 'Niners Nation',
+      title: '49ers All-22 Film Breakdown: How Brock Purdy attacked Cover 4 out of 21 personnel (+0.34 EPA/play)'
+    }),
+    'film',
+    'Written All-22 / EPA / coverage breakdown article MUST be classified as film'
+  );
+
+  const liveNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const liveMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+  const liveSched = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const appStub = { meta: liveMeta, scheduleMatchup: liveSched };
+  const sortedLive = sortNewsWithBreakingPriority(
+    filterOutCompletedGameAvailabilityItems(liveNews.rawStream || [], appStub),
+    Date.now(),
+    { appData: appStub }
+  );
+  const videoIds = deduplicateAndGroupWireItems(
+    sortedLive.filter(x => x.type === 'video'),
+    { preserveFormat: 'videos' }
+  ).map(x => x.id);
+  const filmIds = deduplicateAndGroupWireItems(sortedLive)
+    .filter(x => x.category === 'film')
+    .map(x => x.id);
+
+  assert.ok(videoIds.length >= 3, `Expected >=3 videos in live feed, got ${videoIds.length}`);
+  assert.ok(filmIds.length >= 3, `Expected >=3 Film & Trench items in live feed, got ${filmIds.length}`);
+  assert.notDeepEqual(filmIds, videoIds, 'Film & Trench filter must NEVER be identical to Videos filter');
+  const nonVideoFilmCount = deduplicateAndGroupWireItems(sortedLive).filter(
+    x => x.category === 'film' && x.type !== 'video'
+  ).length;
+  assert.ok(nonVideoFilmCount >= 2, `Expected >=2 written articles/threads in Film & Trench, got ${nonVideoFilmCount}`);
 });
 
 console.log(`\n======================================================`);

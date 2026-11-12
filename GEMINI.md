@@ -39,7 +39,7 @@ When building or modifying features in this repository, adhere strictly to the t
 
 ## Holistic Application Makeup & File Map
 
-- **Entry & Shell**: `index.html`, `manifest.json`, `sw.js` (`CACHE_NAME = '49ers-faithful-v29'`), `src/app.js`, `src/styles.css`.
+- **Entry & Shell**: `index.html`, `manifest.json`, `sw.js` (`CACHE_NAME = '49ers-faithful-v53'`), `src/app.js`, `src/styles.css`.
 - **13 Deterministic Engines (`src/engine/`)**:
   - `seasonStateMachine.js`: Evaluates 6 NFL calendar phases (`YEAR_ROUND`, `IN_SEASON`, `TRADE_WINDOW`, `PLAYOFF_PUSH`, `DRAFT_PREP`, `DRAFT_LIVE_UDFA`), resolves the 12-block Home priority order, and partitions completed trades by a **30-day recency window** (`<=30d` in Trade Window; `>30d` in Archive Vault).
   - `capSimulator.js`: 5-year (`2026–2030`) OverTheCap simulator across all 53 active contracts; combines Prorated & Current-Yr Bonuses, defaults nominal Dead Money & Cap Savings to `$0`, enforces Top-53 replacement rules, `>2` Post-June 1 CBA designation warnings, and Article 13 rollover math.
@@ -49,7 +49,7 @@ When building or modifying features in this repository, adhere strictly to the t
   - `antiFluffFilter.js`: Signal vs. clickbait scoring, salience weighting, and per-user reporter/outlet mute filtering.
   - `beatAttributionEngine.js`: Maps 48 X beat voices, prevents podium subjects (`Kyle Shanahan`, `John Lynch`) or cross-reporter defaults from hijacking journalist authorship, resolves tweets directly to original `x.com`/`bsky.app` posts (never ESPN player bios), and clusters multi-reporter corroboration.
   - `groundingValidator.js`: Anti-hallucination guardrail (`DISALLOWED_FORMER_49ERS` including Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, etc.) ensuring departed players are never cited as active 2026 49ers while allowing verified historical, dead-cap, or external trade-target mentions.
-  - `breakingClassifier.js`: Sub-minute live in-game & 48h post-game injury classifier, pre-game availability demotion after kickoff, milestone deduplication (`+N confirming reports`), `balanceFeedTopSalience`, single-author boilerplate stripping, and short-tweet full-text preservation (`<=320` chars).
+  - `breakingClassifier.js`: Hybrid `StoryRank` ranker (`Event Magnitude + Source Authority + Corroboration Velocity / (Age + tau)^Gravity`), strict lead-claim `BREAKING` precision & expiration (`<=8h` Tier-1 blockbusters, `<=4.5h` Tier-2 roster/IR moves, max-3 scarcity cap), cross-format story clustering (`+N related`), `Film & Trench` vs. `Videos` category classifier, sub-minute live in-game & 48h post-game injury classifier, `balanceFeedTopSalience`, and short-tweet full-text preservation (`<=320` chars).
   - `linkIntegrity.js`: Enforces `https://`, blocks paywalled/404 domains (`nytimes.com/athletic`, `sfchronicle.com`, `mercurynews.com`, `pff.com/nfl/players/`, `espn.com/nfl/insider/`), blocks opaque shorteners/wrappers (`dlvr.it`, `bit.ly`, `news.google.com/rss/articles`), strips `utm_*`, filters off-topic league fantasy/betting filler, and resolves `nflverse` retired homonym collisions (`ThomJa06` vs `ThomJa01`, `Ogbo` ↔ `Ogbonnia Okoronkwo`, `Khalil Dinkins` OTC `13810`).
   - `geminiStudioPrompts.js`: High-Thinking Gemini Studio system instructions, v1beta thinking-config builders, and anti-robotic NotebookLM conversational script rules.
   - `jargonGlossary.js`: 45+ analytics, scheme, and CBA glossary terms with XSS-safe inline annotation and viewport-clamped popovers (`#jargonPopover`).
