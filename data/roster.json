@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T15:53:15.713Z",
+  "updatedAt": "2026-11-12T18:10:50.934Z",
   "count": 87,
   "positionalLeaderboards": {
     "S:pfr_rat_allowed": {
@@ -9570,11 +9570,11 @@
       "label": "Offensive Snap Share %",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 36 Snaps",
-      "totalQualified": 126,
+      "totalQualified": 127,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 41.1802,
-      "posAvgDisplay": "41.2%",
+      "posAvg": 40.9087,
+      "posAvgDisplay": "40.9%",
       "rows": [
         [
           "00-0038129",
@@ -18765,10 +18765,10 @@
       "label": "Active Games Logged",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 36 Snaps",
-      "totalQualified": 117,
+      "totalQualified": 116,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 7.4274,
+      "posAvg": 7.4138,
       "posAvgDisplay": "7",
       "rows": [
         [
@@ -18814,266 +18814,266 @@
           9
         ],
         [
-          "00-0039109",
+          "00-0041541",
           8,
           "9",
           9
         ],
         [
-          "00-0041541",
+          "00-0040070",
           9,
           "9",
           9
         ],
         [
-          "00-0040070",
+          "00-0040151",
           10,
           "9",
           9
         ],
         [
-          "00-0040151",
+          "00-0034768",
           11,
           "9",
           9
         ],
         [
-          "00-0034768",
+          "00-0038932",
           12,
           "9",
           9
         ],
         [
-          "00-0038932",
+          "00-0030097",
           13,
           "9",
           9
         ],
         [
-          "00-0030097",
+          "00-0039014",
           14,
           "9",
           9
         ],
         [
-          "00-0039014",
+          "00-0039349",
           15,
           "9",
           9
         ],
         [
-          "00-0039349",
+          "00-0033676",
           16,
           "9",
           9
         ],
         [
-          "00-0033676",
+          "00-0033538",
           17,
           "9",
           9
         ],
         [
-          "00-0033538",
+          "00-0031279",
           18,
           "9",
           9
         ],
         [
-          "00-0031279",
+          "00-0040163",
           19,
           "9",
           9
         ],
         [
-          "00-0040163",
+          "00-0035237",
           20,
           "9",
           9
         ],
         [
-          "00-0035237",
+          "00-0034429",
           21,
           "9",
           9
         ],
         [
-          "00-0034429",
+          "00-0039904",
           22,
           "9",
           9
         ],
         [
-          "00-0039904",
+          "00-0034759",
           23,
           "9",
           9
         ],
         [
-          "00-0034759",
+          "00-0037305",
           24,
           "9",
           9
         ],
         [
-          "00-0037305",
+          "00-0041554",
           25,
           "9",
           9
         ],
         [
-          "00-0041554",
+          "00-0034847",
           26,
           "9",
           9
         ],
         [
-          "00-0034847",
+          "00-0031330",
           27,
           "9",
           9
         ],
         [
-          "00-0031330",
+          "00-0039790",
           28,
           "9",
           9
         ],
         [
-          "00-0039790",
+          "00-0039233",
           29,
           "9",
           9
         ],
         [
-          "00-0039233",
+          "00-0041030",
           30,
           "9",
           9
         ],
         [
-          "00-0041030",
+          "00-0036036",
           31,
           "9",
           9
         ],
         [
-          "00-0036036",
+          "00-0039459",
           32,
           "9",
           9
         ],
         [
-          "00-0039459",
+          "00-0036406",
           33,
           "9",
           9
         ],
         [
-          "00-0036406",
+          "00-0039341",
           34,
           "9",
           9
         ],
         [
-          "00-0039341",
+          "00-0035234",
           35,
           "9",
           9
         ],
         [
-          "00-0035234",
+          "00-0039077",
           36,
           "9",
           9
         ],
         [
-          "00-0039077",
+          "00-0040699",
           37,
           "9",
           9
         ],
         [
-          "00-0040699",
-          38,
-          "9",
-          9
-        ],
-        [
           "00-0040745",
-          39,
+          38,
           "8",
           8
         ],
         [
           "00-0036603",
-          40,
+          39,
           "8",
           8
         ],
         [
           "00-0039925",
-          41,
+          40,
           "8",
           8
         ],
         [
           "00-0036386",
-          42,
+          41,
           "8",
           8
         ],
         [
           "00-0033831",
-          43,
+          42,
           "8",
           8
         ],
         [
           "00-0038601",
-          44,
+          43,
           "8",
           8
         ],
         [
           "00-0036248",
-          45,
+          44,
           "8",
           8
         ],
         [
           "00-0039913",
-          46,
+          45,
           "8",
           8
         ],
         [
           "00-0034158",
-          47,
+          46,
           "8",
           8
         ],
         [
           "sf_4565779",
+          47,
+          "8",
+          8
+        ],
+        [
+          "00-0036655",
           48,
           "8",
           8
         ],
         [
           "sf_3916075",
-          50,
+          49,
           "8",
           8
         ],
         [
           "sf_13241",
-          75,
+          74,
           "8",
           8
         ],
         [
           "sf_4240554",
-          77,
+          76,
           "8",
           8
         ]
@@ -19086,10 +19086,10 @@
       "label": "Special Teams Snaps",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 36 Snaps",
-      "totalQualified": 117,
+      "totalQualified": 116,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 27.8632,
+      "posAvg": 27.8966,
       "posAvgDisplay": "28",
       "rows": [
         [
@@ -19382,7 +19382,7 @@
         ],
         [
           "sf_13241",
-          116,
+          115,
           "0",
           0
         ]
@@ -32370,10 +32370,10 @@
       "label": "Total Tackles",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 41.2389,
+      "posAvg": 41.4911,
       "posAvgDisplay": "41",
       "rows": [
         [
@@ -32673,10 +32673,10 @@
       "label": "Solo Tackles",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 19.9381,
+      "posAvg": 20.0625,
       "posAvgDisplay": "20",
       "rows": [
         [
@@ -32976,10 +32976,10 @@
       "label": "Tackles For Loss (TFL)",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 2.3717,
+      "posAvg": 2.3839,
       "posAvgDisplay": "2",
       "rows": [
         [
@@ -33279,10 +33279,10 @@
       "label": "Sacks",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.7168,
+      "posAvg": 0.7232,
       "posAvgDisplay": "0.7",
       "rows": [
         [
@@ -33891,10 +33891,10 @@
       "label": "Passes Defended",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 1.469,
+      "posAvg": 1.4821,
       "posAvgDisplay": "1",
       "rows": [
         [
@@ -34200,10 +34200,10 @@
       "label": "Interceptions",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.354,
+      "posAvg": 0.3571,
       "posAvgDisplay": "0",
       "rows": [
         [
@@ -34502,7 +34502,7 @@
         ],
         [
           "sf_3138826",
-          62,
+          61,
           "0",
           0
         ]
@@ -35454,10 +35454,10 @@
       "label": "Forced Fumbles",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.5044,
+      "posAvg": 0.5089,
       "posAvgDisplay": "1",
       "rows": [
         [
@@ -36072,11 +36072,11 @@
       "label": "Defensive Snap Share %",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 113,
+      "totalQualified": 112,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 58.3894,
-      "posAvgDisplay": "58.4%",
+      "posAvg": 58.8848,
+      "posAvgDisplay": "58.9%",
       "rows": [
         [
           "00-0040579",
@@ -40608,10 +40608,10 @@
       "label": "Sacks",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 2.068,
+      "posAvg": 2.0559,
       "posAvgDisplay": "2.1",
       "rows": [
         [
@@ -40922,13 +40922,13 @@
         ],
         [
           "sf_4039029",
-          155,
+          156,
           "0.0",
           0
         ],
         [
           "sf_3116097",
-          157,
+          158,
           "0.0",
           0
         ]
@@ -41286,10 +41286,10 @@
       "label": "QB Hits",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 5.2426,
+      "posAvg": 5.2118,
       "posAvgDisplay": "5",
       "rows": [
         [
@@ -41612,7 +41612,7 @@
         ],
         [
           "sf_3116097",
-          162,
+          163,
           "0",
           0
         ]
@@ -41625,10 +41625,10 @@
       "label": "Tackles For Loss (TFL)",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 2.8994,
+      "posAvg": 2.8882,
       "posAvgDisplay": "3",
       "rows": [
         [
@@ -41927,25 +41927,25 @@
         ],
         [
           "sf_4039029",
-          155,
+          156,
           "0",
           0
         ],
         [
           "sf_3116097",
-          157,
+          158,
           "0",
           0
         ],
         [
           "sf_3052667",
-          161,
+          162,
           "0",
           0
         ],
         [
           "sf_4432244",
-          162,
+          163,
           "0",
           0
         ]
@@ -41958,10 +41958,10 @@
       "label": "Total Tackles",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 17.9941,
+      "posAvg": 17.9647,
       "posAvgDisplay": "18",
       "rows": [
         [
@@ -42260,25 +42260,25 @@
         ],
         [
           "sf_4039029",
-          136,
+          137,
           "11",
           11
         ],
         [
           "sf_3116097",
-          141,
+          142,
           "10",
           10
         ],
         [
           "sf_4432244",
-          153,
+          154,
           "9",
           9
         ],
         [
           "sf_3052667",
-          169,
+          170,
           "2",
           2
         ]
@@ -42291,10 +42291,10 @@
       "label": "Forced Fumbles",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.4142,
+      "posAvg": 0.4118,
       "posAvgDisplay": "0",
       "rows": [
         [
@@ -42587,37 +42587,37 @@
         ],
         [
           "sf_5086161",
-          98,
+          99,
           "0",
           0
         ],
         [
           "sf_4243493",
-          115,
+          116,
           "0",
           0
         ],
         [
           "sf_4039029",
-          118,
+          119,
           "0",
           0
         ],
         [
           "sf_3116097",
-          129,
+          130,
           "0",
           0
         ],
         [
           "sf_3052667",
-          139,
+          140,
           "0",
           0
         ],
         [
           "sf_4432244",
-          146,
+          147,
           "0",
           0
         ]
@@ -43320,10 +43320,10 @@
       "label": "Solo Tackles",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 8.645,
+      "posAvg": 8.6294,
       "posAvgDisplay": "9",
       "rows": [
         [
@@ -43616,31 +43616,31 @@
         ],
         [
           "sf_4243493",
-          110,
-          "6",
-          6
-        ],
-        [
-          "sf_4039029",
           111,
           "6",
           6
         ],
         [
-          "sf_3116097",
-          160,
-          "3",
-          3
+          "sf_4039029",
+          112,
+          "6",
+          6
         ],
         [
-          "sf_4432244",
+          "sf_3116097",
           161,
           "3",
           3
         ],
         [
+          "sf_4432244",
+          162,
+          "3",
+          3
+        ],
+        [
           "sf_3052667",
-          165,
+          166,
           "2",
           2
         ]
@@ -43974,10 +43974,10 @@
       "label": "Passes Defended / Bats",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.7988,
+      "posAvg": 0.7941,
       "posAvgDisplay": "1",
       "rows": [
         [
@@ -44282,25 +44282,25 @@
         ],
         [
           "sf_4039029",
-          127,
+          128,
           "0",
           0
         ],
         [
           "sf_3116097",
-          134,
+          135,
           "0",
           0
         ],
         [
           "sf_3052667",
-          147,
+          148,
           "0",
           0
         ],
         [
           "sf_4432244",
-          152,
+          153,
           "0",
           0
         ]
@@ -44313,11 +44313,11 @@
       "label": "Defensive Snap Share %",
       "higherIsBetter": true,
       "qualifierLabel": "Min. 135 Def Snaps",
-      "totalQualified": 169,
+      "totalQualified": 170,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 50.1036,
-      "posAvgDisplay": "50.1%",
+      "posAvg": 49.8259,
+      "posAvgDisplay": "49.8%",
       "rows": [
         [
           "00-0033336",
@@ -49397,16 +49397,6 @@
       "sfPlayerId": null,
       "pfrGames": null
     },
-    "00-0039109": {
-      "name": "Broderick Jones",
-      "team": "DAL",
-      "pos": "T",
-      "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gbmsdldjyvnomoqgcrxq",
-      "pfrUrl": "https://www.pro-football-reference.com/players/J/JoneBr09.htm",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428990",
-      "sfPlayerId": null,
-      "pfrGames": null
-    },
     "00-0041541": {
       "name": "Caleb Lomu",
       "team": "NE",
@@ -49504,6 +49494,16 @@
       "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gwr3pl53zw4v4xbm0ef6",
       "pfrUrl": "https://www.pro-football-reference.com/players/R/RichAs00.htm",
       "espnUrl": "https://www.espn.com/nfl/player/_/id/4430379",
+      "sfPlayerId": null,
+      "pfrGames": null
+    },
+    "00-0036655": {
+      "name": "Cole Van Lanen",
+      "team": "JAX",
+      "pos": "G",
+      "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/oe5pfxi1iqbeskvwciii",
+      "pfrUrl": "https://www.pro-football-reference.com/players/V/VanxCo00.htm",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035791",
       "sfPlayerId": null,
       "pfrGames": null
     },
@@ -50098,7 +50098,7 @@
       "pfrGames": 7
     },
     "00-0039373": {
-      "name": "Audric Estimé",
+      "name": "Audric Estime",
       "team": "NO",
       "pos": "RB",
       "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lcoend1mysjfhl8f4rrt",
@@ -57855,20 +57855,20 @@
       },
       "recentNews": [
         {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
           "type": "tweet",
           "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
           "isFullTweet": true,
           "summary": "",
           "author": "Matt Maiocco",
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
           "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
           "externalUrl": null,
           "externalTitle": null,
           "trustTier": 1,
@@ -57886,7 +57886,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 25.575
         }
       ],
       "statProfile2026": {
@@ -58476,7 +58476,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         }
       ],
       "statProfile2026": {
@@ -59165,6 +59165,40 @@
       },
       "recentNews": [
         {
+          "id": "tweet_49erswebzone_3n24xkzixyr2x",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "John Lynch calls Brandon Aiyuk situation 'fluid' as #49ers weigh next steps Read:",
+          "fullText": "John Lynch calls Brandon Aiyuk situation 'fluid' as #49ers weigh next steps Read:",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "49ers Webzone",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-12T09:10:03-08:00",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigpfnosynnc33hpd3owqcexwdg6pcoikibpwgnocg5yy6emyqb5nm",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24xkzixyr2x",
+          "externalUrl": "https://www.49erswebzone.com/articles/205081-lynch-calls-brandon-aiyuk-situation/",
+          "externalTitle": "John Lynch calls Brandon Aiyuk situation 'fluid' as 49ers weigh next steps",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 14.0357
+        },
+        {
           "id": "tweet_mattmaiocco_3mzyjfyzay22l",
           "type": "tweet",
           "wireSource": null,
@@ -59196,7 +59230,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4485
+          "storyRank": 0.4188
         },
         {
           "id": "tweet_mattbarrows_3mzy7g6kox227",
@@ -59230,10 +59264,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4105
+          "storyRank": 0.385
         },
         {
-          "id": "pfrumors_132",
+          "id": "pfrumors_135",
           "type": "article",
           "wireSource": null,
           "headline": "Brandon Aiyuk Passes 49ers Physical; Release Likely",
@@ -59264,7 +59298,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3369
+          "storyRank": 0.3169
         },
         {
           "id": "x_status_2120201789014221264",
@@ -59298,7 +59332,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3337
+          "storyRank": 0.314
         },
         {
           "id": "espn_50435848",
@@ -59332,7 +59366,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.252
+          "storyRank": 0.241
         },
         {
           "id": "espn_pwire_4360438_64684528",
@@ -59366,7 +59400,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2485
+          "storyRank": 0.2377
         },
         {
           "id": "tweet_jenniferleechan_3mzvwtn7u622r",
@@ -59400,7 +59434,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2466
+          "storyRank": 0.236
         },
         {
           "id": "tweet_rapsheet_3mzvvlphr7s27",
@@ -59434,10 +59468,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2448
+          "storyRank": 0.2344
         },
         {
-          "id": "pfrumors_133",
+          "id": "pfrumors_136",
           "type": "article",
           "wireSource": null,
           "headline": "Brandon Aiyuk, Rosenhaus Meet With 49ers Brass",
@@ -59468,41 +59502,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2143
-        },
-        {
-          "id": "sf_tx_MjAyNi0xMS0wOV",
-          "type": "tweet",
-          "wireSource": "official_transactions",
-          "headline": "49ers roster move: Reinstated WR Brandon Aiyuk from the reserve/left squad list.",
-          "fullText": "49ers roster move: Reinstated WR Brandon Aiyuk from the reserve/left squad list.",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "San Francisco 49ers Official",
-          "authorHandle": "@49ers",
-          "authorProfileUrl": "https://x.com/49ers",
-          "outletName": "49ers.com Official",
-          "publishedAt": "2026-11-09T08:00:00.000Z",
-          "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
-          "url": "https://www.49ers.com/team/transactions/#tx-MjAyNi0xMS0wOV",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "roster",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 0.1919
+          "storyRank": 0.2051
         }
       ],
       "statProfile2026": {
@@ -60488,10 +60488,10 @@
                 "value": 12,
                 "displayValue": "12.0%",
                 "rank": 112,
-                "totalPeers": 126,
+                "totalPeers": 127,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "41.2%",
+                "posAvgDisplay": "40.9%",
                 "scope": "player",
                 "leaderboardKey": "TE:off_snap_pct"
               }
@@ -61268,7 +61268,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 17.4332
+          "storyRank": 7.7165
         },
         {
           "id": "tweet_49erswebzone_3n22xuqp2ux24",
@@ -61302,41 +61302,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.109
-        },
-        {
-          "id": "tweet_49erswebzone_3n22jdseqhb2x",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
-          "fullText": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "49ers Webzone",
-          "authorHandle": "@49erswebzone",
-          "authorProfileUrl": "https://x.com/49erswebzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-11T09:50:02-08:00",
-          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigtzju73jffxrhupgnophctea7fhn5l3ssxkn4rb7qtymifywt7xe",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jdseqhb2x",
-          "externalUrl": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-          "externalTitle": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "beat",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 0.8516
+          "storyRank": 0.958
         },
         {
           "id": "tweet_rapsheet_3mzy45qejoc2l",
@@ -61370,7 +61336,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3993
+          "storyRank": 0.3749
         },
         {
           "id": "x_status_2120225625273221499",
@@ -61404,10 +61370,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3485
+          "storyRank": 0.3273
         },
         {
-          "id": "sf49_161",
+          "id": "sf49_165",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Purdy, McCaffrey Reach Milestones, 49ers React to Week 9 🗞️",
@@ -61438,10 +61404,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3185
+          "storyRank": 0.3003
         },
         {
-          "id": "sf49_164",
+          "id": "sf49_168",
           "type": "article",
           "wireSource": null,
           "headline": "What the 49ers and Raiders Had to Say After Week 9",
@@ -61472,10 +61438,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2284
+          "storyRank": 0.2181
         },
         {
-          "id": "sf49_165",
+          "id": "sf49_169",
           "type": "article",
           "wireSource": null,
           "headline": "Purdy Reaches 100 Passing TDs, McCaffrey Breaks NFL Record; Stats and Facts from #LVvsSF",
@@ -61506,7 +61472,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2215
+          "storyRank": 0.2117
         },
         {
           "id": "tweet_jenniferleechan_3mztjovoez22y",
@@ -61540,7 +61506,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1675
+          "storyRank": 0.1621
         }
       ],
       "statProfile2026": {
@@ -62348,7 +62314,41 @@
       },
       "recentNews": [
         {
-          "id": "pfrumors_130",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "Matt Maiocco",
+          "authorHandle": "@MaioccoNBCS",
+          "authorProfileUrl": "https://x.com/MaioccoNBCS",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
+          "imageUrl": "",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 98,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 25.575
+        },
+        {
+          "id": "pfrumors_133",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -62372,14 +62372,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.58,
+          "breakingPriority": 0.462,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7727
+          "storyRank": 3.2412
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -62406,14 +62406,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -62447,7 +62447,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         },
         {
           "id": "espn_pwire_4686308_64726328",
@@ -62481,7 +62481,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.5309
+          "storyRank": 1.2949
         },
         {
           "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
@@ -62515,41 +62515,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9592
-        },
-        {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "authorProfileUrl": "https://x.com/MaioccoNBCS",
-          "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
-          "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "beat",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 0.6965
         },
         {
           "id": "tweet_nbcs49ers_3n237eirfs22u",
@@ -62583,7 +62549,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4112
+          "storyRank": 0.3387
         },
         {
           "id": "tweet_49erswebzone_3n234mpm34424",
@@ -62617,7 +62583,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3825
+          "storyRank": 0.3177
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -62651,7 +62617,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2704
+          "storyRank": 0.2579
         },
         {
           "id": "espn_pwire_4686308_64689928",
@@ -62685,7 +62651,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2683
+          "storyRank": 0.256
         }
       ],
       "statProfile2026": {
@@ -63298,8 +63264,8 @@
                 "group": null,
                 "value": 8,
                 "displayValue": "8",
-                "rank": 48,
-                "totalPeers": 117,
+                "rank": 47,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "7",
@@ -63354,7 +63320,7 @@
                 "value": 40,
                 "displayValue": "40",
                 "rank": 18,
-                "totalPeers": 117,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "28",
@@ -63775,20 +63741,20 @@
       },
       "recentNews": [
         {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
           "type": "tweet",
           "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
           "isFullTweet": true,
           "summary": "",
           "author": "Matt Maiocco",
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
           "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
           "externalUrl": null,
           "externalTitle": null,
           "trustTier": 1,
@@ -63806,7 +63772,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 25.5749
         },
         {
           "id": "tweet_mattmaiocco_3n22rbixa5k2s",
@@ -63840,7 +63806,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3596
+          "storyRank": 0.3071
         },
         {
           "id": "x_status_2120228671122284835",
@@ -63874,7 +63840,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4004
+          "storyRank": 0.3759
         },
         {
           "id": "espn_pwire_3895856_64644128",
@@ -63908,7 +63874,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1211
+          "storyRank": 0.118
         },
         {
           "id": "x_status_2119179932555165967",
@@ -63942,10 +63908,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1205
+          "storyRank": 0.1175
         },
         {
-          "id": "pfrumors_135",
+          "id": "pfrumors_138",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Lose WR Christian Kirk To IR, Activate WR Demarcus Robinson",
@@ -63976,7 +63942,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1056
+          "storyRank": 0.1029
         },
         {
           "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -64010,7 +63976,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1043
+          "storyRank": 0.1019
         }
       ],
       "statProfile2026": {
@@ -64868,12 +64834,18 @@
             "injury": "Hamstring",
             "gameStatus": "",
             "practiceStatus": "Full Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Not injury related - resting player",
+            "gameStatus": "",
+            "practiceStatus": "Did Not Participate In Practice"
           }
         ]
       },
       "recentNews": [
         {
-          "id": "sf49_161",
+          "id": "sf49_165",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Purdy, McCaffrey Reach Milestones, 49ers React to Week 9 🗞️",
@@ -64904,7 +64876,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3185
+          "storyRank": 0.3003
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -64938,10 +64910,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2704
+          "storyRank": 0.2579
         },
         {
-          "id": "sf49_165",
+          "id": "sf49_169",
           "type": "article",
           "wireSource": null,
           "headline": "Purdy Reaches 100 Passing TDs, McCaffrey Breaks NFL Record; Stats and Facts from #LVvsSF",
@@ -64972,7 +64944,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2215
+          "storyRank": 0.2117
         },
         {
           "id": "espn_pwire_3117251_64627928",
@@ -65006,7 +64978,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0936
+          "storyRank": 0.0916
         }
       ],
       "statProfile2026": {
@@ -66096,8 +66068,8 @@
                 "group": null,
                 "value": 8,
                 "displayValue": "8",
-                "rank": 50,
-                "totalPeers": 117,
+                "rank": 49,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "7",
@@ -66152,7 +66124,7 @@
                 "value": 40,
                 "displayValue": "40",
                 "rank": 19,
-                "totalPeers": 117,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "28",
@@ -67312,7 +67284,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3596
+          "storyRank": 0.3071
         }
       ],
       "statProfile2026": {
@@ -68065,20 +68037,20 @@
       },
       "recentNews": [
         {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
           "type": "tweet",
           "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
           "isFullTweet": true,
           "summary": "",
           "author": "Matt Maiocco",
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
           "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
           "externalUrl": null,
           "externalTitle": null,
           "trustTier": 1,
@@ -68096,7 +68068,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 25.5749
         },
         {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -68130,7 +68102,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         },
         {
           "id": "x_status_2120228671122284835",
@@ -68164,7 +68136,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4004
+          "storyRank": 0.3759
         }
       ],
       "statProfile2026": {
@@ -68840,7 +68812,41 @@
       },
       "recentNews": [
         {
-          "id": "pfrumors_130",
+          "id": "wz_182",
+          "type": "article",
+          "wireSource": null,
+          "headline": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "The San Francisco 49ers acquired wide receiver Keenan Allen just ahead of Tuesday's NFL trade deadline to address a significant need on offense. The team's receiving corps has been hit hard by injuries this season, with Mike Evans and Deebo",
+          "author": "49ers Webzone",
+          "authorHandle": "",
+          "authorProfileUrl": "https://www.49erswebzone.com/",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-12T16:45:22.000Z",
+          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33075-1794501922.jpg",
+          "url": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 11.7544
+        },
+        {
+          "id": "pfrumors_133",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -68864,14 +68870,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.58,
+          "breakingPriority": 0.462,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7727
+          "storyRank": 3.2412
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -68898,14 +68904,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_49erswebzone_3n2342tnfkw2o",
@@ -68939,10 +68945,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2875
+          "storyRank": 1.9762
         },
         {
-          "id": "wz_179",
+          "id": "wz_185",
           "type": "article",
           "wireSource": null,
           "headline": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
@@ -68973,7 +68979,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2848
+          "storyRank": 1.9742
         },
         {
           "id": "tweet_49erswebzone_3n22ujgufqp2t",
@@ -69007,7 +69013,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9814
+          "storyRank": 1.738
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -69041,7 +69047,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         },
         {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -69075,7 +69081,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         },
         {
           "id": "x_status_2120228671122284835",
@@ -69109,7 +69115,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4004
+          "storyRank": 0.3759
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -69143,7 +69149,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2704
+          "storyRank": 0.2579
         }
       ],
       "statProfile2026": {
@@ -70135,10 +70141,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 12.1179
+          "storyRank": 5.9354
         },
         {
-          "id": "pfrumors_130",
+          "id": "pfrumors_133",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -70162,14 +70168,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.58,
+          "breakingPriority": 0.462,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7727
+          "storyRank": 3.2412
         },
         {
           "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
@@ -70203,7 +70209,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9592
+          "storyRank": 0.6965
         },
         {
           "id": "tweet_nbcs49ers_3n237eirfs22u",
@@ -70237,7 +70243,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4112
+          "storyRank": 0.3387
         },
         {
           "id": "tweet_49erswebzone_3n234mpm34424",
@@ -70271,10 +70277,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3825
+          "storyRank": 0.3177
         },
         {
-          "id": "sfstd_175",
+          "id": "sfstd_179",
           "type": "article",
           "wireSource": null,
           "headline": "‘Section 415’ podcast: Analyzing the 49ers’ trades for DeForest Buckner and Keenan Allen",
@@ -70305,10 +70311,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4214
+          "storyRank": 0.392
         },
         {
-          "id": "sfstd_176",
+          "id": "sfstd_180",
           "type": "article",
           "wireSource": null,
           "headline": "The Keenan Allen trade: Why the 49ers added a receiver and what he brings to the offense",
@@ -70339,7 +70345,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4115
+          "storyRank": 0.3858
         },
         {
           "id": "tweet_jenniferleechan_3mzwj2oq2cc2y",
@@ -70373,10 +70379,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2755
+          "storyRank": 0.2626
         },
         {
-          "id": "sf49_169",
+          "id": "sf49_173",
           "type": "article",
           "wireSource": null,
           "headline": "DeForest Buckner Returns to The Bay: 49ers Locker Room Reacts to His Homecoming",
@@ -70407,7 +70413,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.106
+          "storyRank": 0.1033
         }
       ],
       "statProfile2026": {
@@ -71331,20 +71337,20 @@
       },
       "recentNews": [
         {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
           "type": "tweet",
           "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
           "isFullTweet": true,
           "summary": "",
           "author": "Matt Maiocco",
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
           "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
           "externalUrl": null,
           "externalTitle": null,
           "trustTier": 1,
@@ -71362,7 +71368,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 25.5749
         },
         {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -71396,7 +71402,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzrroopdhc2r",
@@ -71430,10 +71436,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1173
+          "storyRank": 0.1141
         },
         {
-          "id": "pfrumors_135",
+          "id": "pfrumors_138",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Lose WR Christian Kirk To IR, Activate WR Demarcus Robinson",
@@ -71464,7 +71470,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1056
+          "storyRank": 0.1029
         },
         {
           "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -71498,7 +71504,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1043
+          "storyRank": 0.1019
         }
       ],
       "statProfile2026": {
@@ -72438,7 +72444,7 @@
       },
       "recentNews": [
         {
-          "id": "wz_177",
+          "id": "wz_183",
           "type": "article",
           "wireSource": null,
           "headline": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
@@ -72469,7 +72475,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.2167
+          "storyRank": 4.2847
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -72496,14 +72502,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -72537,7 +72543,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         },
         {
           "id": "espn_pwire_4242488_64726228",
@@ -72571,7 +72577,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.5276
+          "storyRank": 1.2923
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -72605,7 +72611,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1503
+          "storyRank": 1.0035
         },
         {
           "id": "espn_pwire_4242488_64688528",
@@ -72639,7 +72645,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2631
+          "storyRank": 0.2512
         }
       ],
       "statProfile2026": {
@@ -74434,6 +74440,12 @@
             "injury": "Not injury related - resting player",
             "gameStatus": "",
             "practiceStatus": "Full Participation in Practice"
+          },
+          {
+            "week": 10,
+            "injury": "Not injury related - resting player",
+            "gameStatus": "",
+            "practiceStatus": "Did Not Participate In Practice"
           }
         ]
       },
@@ -74470,7 +74482,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1678
+          "storyRank": 0.1623
         }
       ],
       "statProfile2026": {
@@ -74491,7 +74503,7 @@
                 "value": 57,
                 "displayValue": "57",
                 "rank": 35,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -74505,7 +74517,7 @@
                 "value": 27,
                 "displayValue": "27",
                 "rank": 38,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -74519,7 +74531,7 @@
                 "value": 3,
                 "displayValue": "3",
                 "rank": 38,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -74533,7 +74545,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 75,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -74561,7 +74573,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 84,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -74575,7 +74587,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 57,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -74633,7 +74645,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 20,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -74661,10 +74673,10 @@
                 "value": 74.4,
                 "displayValue": "74.4%",
                 "rank": 53,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -76407,7 +76419,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4219
+          "storyRank": 1.213
         }
       ],
       "statProfile2026": {
@@ -77554,10 +77566,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.359
+          "storyRank": 0.3367
         },
         {
-          "id": "tweet_mattmaiocco_3mzxypiznlc2c",
+          "id": "x_status_2120211657771385327",
           "type": "tweet",
           "wireSource": null,
           "headline": "49ers rookie DT Gracen Halton sustained a broken and dislocated ankle on Sunday. Fred Warner had the same injury last season and would've been able to play 105 days later. That same time period for Halton would be Feb. 21, 2026, which is one week after Super Bowl 61.",
@@ -77568,7 +77580,7 @@
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-10T17:47:09.929Z",
+          "publishedAt": "2026-11-10T17:47:05.497Z",
           "imageUrl": "",
           "url": "https://x.com/MaioccoNBCS/status/2120211657771385327",
           "externalUrl": null,
@@ -77588,10 +77600,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3881
+          "storyRank": 0.3648
         },
         {
-          "id": "sf49_164",
+          "id": "sf49_168",
           "type": "article",
           "wireSource": null,
           "headline": "What the 49ers and Raiders Had to Say After Week 9",
@@ -77622,7 +77634,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2284
+          "storyRank": 0.2181
         },
         {
           "id": "tweet_jenniferleechan_3mztkgzr76c2y",
@@ -77656,7 +77668,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1681
+          "storyRank": 0.1626
         },
         {
           "id": "tweet_jenniferleechan_3mztk2s6plk2y",
@@ -77690,7 +77702,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1678
+          "storyRank": 0.1623
         },
         {
           "id": "tweet_victafur_3mznn5rvack2s",
@@ -77724,7 +77736,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0775
+          "storyRank": 0.076
         }
       ],
       "statProfile2026": {
@@ -77745,7 +77757,7 @@
                 "value": 76,
                 "displayValue": "76",
                 "rank": 10,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -77759,7 +77771,7 @@
                 "value": 36,
                 "displayValue": "36",
                 "rank": 10,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -77773,7 +77785,7 @@
                 "value": 4,
                 "displayValue": "4",
                 "rank": 27,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -77787,7 +77799,7 @@
                 "value": 0.5,
                 "displayValue": "0.5",
                 "rank": 48,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -77815,7 +77827,7 @@
                 "value": 3,
                 "displayValue": "3",
                 "rank": 19,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -77828,8 +77840,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 62,
-                "totalPeers": 113,
+                "rank": 61,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -77887,7 +77899,7 @@
                 "value": 4,
                 "displayValue": "4",
                 "rank": 1,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -77915,10 +77927,10 @@
                 "value": 96,
                 "displayValue": "96.0%",
                 "rank": 22,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -78461,8 +78473,8 @@
                 "group": null,
                 "value": 7,
                 "displayValue": "7",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -78475,8 +78487,8 @@
                 "group": null,
                 "value": 5,
                 "displayValue": "5",
-                "rank": 103,
-                "totalPeers": 113,
+                "rank": 102,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -78489,8 +78501,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 81,
-                "totalPeers": 113,
+                "rank": 80,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -78504,7 +78516,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 55,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -78532,7 +78544,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 75,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -78546,7 +78558,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 34,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -78604,7 +78616,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 41,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -78632,10 +78644,10 @@
                 "value": 13.2,
                 "displayValue": "13.2%",
                 "rank": 91,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -79383,7 +79395,7 @@
       },
       "recentNews": [
         {
-          "id": "sf49_164",
+          "id": "sf49_168",
           "type": "article",
           "wireSource": null,
           "headline": "What the 49ers and Raiders Had to Say After Week 9",
@@ -79414,7 +79426,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2284
+          "storyRank": 0.2181
         },
         {
           "id": "tweet_jenniferleechan_3mztjovoez22y",
@@ -79448,7 +79460,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1675
+          "storyRank": 0.1621
         }
       ],
       "statProfile2026": {
@@ -79611,10 +79623,10 @@
                 "value": 77.5,
                 "displayValue": "77.5%",
                 "rank": 11,
-                "totalPeers": 126,
+                "totalPeers": 127,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "41.2%",
+                "posAvgDisplay": "40.9%",
                 "scope": "player",
                 "leaderboardKey": "TE:off_snap_pct"
               },
@@ -80166,7 +80178,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4485
+          "storyRank": 0.4188
         },
         {
           "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -80200,10 +80212,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4458
+          "storyRank": 0.4164
         },
         {
-          "id": "sf49_160",
+          "id": "sf49_164",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Place DL Gracen Halton on Injured Reserve",
@@ -80234,7 +80246,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3853
+          "storyRank": 0.3601
         },
         {
           "id": "x_status_2120212022298321242",
@@ -80268,10 +80280,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3883
+          "storyRank": 0.3651
         },
         {
-          "id": "tweet_mattmaiocco_3mzxypiznlc2c",
+          "id": "x_status_2120211657771385327",
           "type": "tweet",
           "wireSource": null,
           "headline": "49ers rookie DT Gracen Halton sustained a broken and dislocated ankle on Sunday. Fred Warner had the same injury last season and would've been able to play 105 days later. That same time period for Halton would be Feb. 21, 2026, which is one week after Super Bowl 61.",
@@ -80282,7 +80294,7 @@
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-10T17:47:09.929Z",
+          "publishedAt": "2026-11-10T17:47:05.497Z",
           "imageUrl": "",
           "url": "https://x.com/MaioccoNBCS/status/2120211657771385327",
           "externalUrl": null,
@@ -80302,7 +80314,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3881
+          "storyRank": 0.3648
         },
         {
           "id": "sf_tx_MjAyNi0xMS0xMF",
@@ -80336,7 +80348,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3037
+          "storyRank": 0.2885
         },
         {
           "id": "tweet_jenniferleechan_3mzwgrzbioc2y",
@@ -80370,7 +80382,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2716
+          "storyRank": 0.259
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzvrrp3ak22w",
@@ -80404,7 +80416,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2097
+          "storyRank": 0.2008
         },
         {
           "id": "espn_50428583",
@@ -80438,7 +80450,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1842
+          "storyRank": 0.1778
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzu7axdmzs2k",
@@ -80472,7 +80484,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1616
+          "storyRank": 0.156
         }
       ],
       "statProfile2026": {
@@ -81768,14 +81780,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.668,
+          "breakingPriority": 0.565,
           "credibilityScore": 99,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.2366
+          "storyRank": 3.8071
         },
         {
           "id": "tweet_jenniferleechan_3n22jmhzcxk2w",
@@ -81801,18 +81813,18 @@
           "firstReportedBy": null,
           "isBreaking": false,
           "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.654,
+          "breakingBadge": null,
+          "breakingPriority": 0,
           "credibilityScore": 95,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.1805
+          "storyRank": 3.7611
         },
         {
-          "id": "sf49_155",
+          "id": "sf49_159",
           "type": "article",
           "wireSource": null,
           "headline": "The 49ers Acquire WR Keenan Allen",
@@ -81835,15 +81847,15 @@
           "firstReportedBy": null,
           "isBreaking": false,
           "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.651,
+          "breakingBadge": null,
+          "breakingPriority": 0,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.9582
+          "storyRank": 3.5622
         },
         {
           "id": "tweet_mattbarrows_3n235ed3xrs27",
@@ -81877,7 +81889,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4219
+          "storyRank": 1.213
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -81911,7 +81923,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1503
+          "storyRank": 1.0035
         },
         {
           "id": "tweet_mattbarrows_3n22jonltyc27",
@@ -81945,7 +81957,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9784
+          "storyRank": 0.8665
         },
         {
           "id": "tweet_mattmaiocco_3n22jnucqf22s",
@@ -81979,7 +81991,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.978
+          "storyRank": 0.8662
         },
         {
           "id": "sf_tx_MjAyNi0xMS0xMV",
@@ -82013,7 +82025,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6173
+          "storyRank": 0.5659
         }
       ],
       "statProfile2026": {
@@ -82670,11 +82682,11 @@
                 "group": "Hands, Chains & Snap Share",
                 "value": 0,
                 "displayValue": "0.0%",
-                "rank": 126,
-                "totalPeers": 126,
+                "rank": 127,
+                "totalPeers": 127,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "41.2%",
+                "posAvgDisplay": "40.9%",
                 "scope": "player",
                 "leaderboardKey": "TE:off_snap_pct"
               }
@@ -83195,7 +83207,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         }
       ],
       "statProfile2026": {
@@ -83944,7 +83956,7 @@
       },
       "recentNews": [
         {
-          "id": "sf49_158",
+          "id": "sf49_162",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Dugger and Rookies Stepping Up, Latest Rankings 🗞️",
@@ -83975,10 +83987,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.7353
+          "storyRank": 0.6596
         },
         {
-          "id": "sf49_162",
+          "id": "sf49_166",
           "type": "article",
           "wireSource": null,
           "headline": "Jaden Dugger's Impactful Play Shows 49ers Rookie Class Is Delivering",
@@ -84009,7 +84021,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2425
+          "storyRank": 0.2312
         },
         {
           "id": "espn_50433470",
@@ -84043,10 +84055,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2435
+          "storyRank": 0.2331
         },
         {
-          "id": "sf49_166",
+          "id": "sf49_170",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: 49ers Go 7-1, Dugger Scores First Career Touchdown 🗞️",
@@ -84077,7 +84089,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1988
+          "storyRank": 0.1908
         },
         {
           "id": "espn_50427438",
@@ -84111,7 +84123,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1939
+          "storyRank": 0.1862
         }
       ],
       "statProfile2026": {
@@ -84132,7 +84144,7 @@
                 "value": 36,
                 "displayValue": "36",
                 "rank": 62,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -84146,7 +84158,7 @@
                 "value": 25,
                 "displayValue": "25",
                 "rank": 42,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -84160,7 +84172,7 @@
                 "value": 2,
                 "displayValue": "2",
                 "rank": 54,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -84174,7 +84186,7 @@
                 "value": 1,
                 "displayValue": "1.0",
                 "rank": 26,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -84202,7 +84214,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 45,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -84216,7 +84228,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 6,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -84274,7 +84286,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 41,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -84302,10 +84314,10 @@
                 "value": 48.6,
                 "displayValue": "48.6%",
                 "rank": 68,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -85699,10 +85711,10 @@
                 "value": 12,
                 "displayValue": "12.0%",
                 "rank": 112,
-                "totalPeers": 126,
+                "totalPeers": 127,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "41.2%",
+                "posAvgDisplay": "40.9%",
                 "scope": "player",
                 "leaderboardKey": "TE:off_snap_pct"
               }
@@ -86246,8 +86258,8 @@
                 "group": null,
                 "value": 4,
                 "displayValue": "4",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -86260,8 +86272,8 @@
                 "group": null,
                 "value": 3,
                 "displayValue": "3",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -86274,8 +86286,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 81,
-                "totalPeers": 113,
+                "rank": 80,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -86289,7 +86301,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 55,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -86317,7 +86329,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 75,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -86331,7 +86343,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 34,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -86389,7 +86401,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 41,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -86417,10 +86429,10 @@
                 "value": 7,
                 "displayValue": "7.0%",
                 "rank": 100,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -88371,7 +88383,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1673
+          "storyRank": 0.1619
         }
       ],
       "statProfile2026": {
@@ -88932,7 +88944,42 @@
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "x_status_2120915197582094569",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "#49ers John Lynch on Keenan Allen Trade: \"Really we kind of focused on Josh Downs as an option that we had some interested in....in the process Kyle was like what about Keenan? I said let me ask about that...there started a conversation about two and half weeks ago....I think…",
+          "fullText": "#49ers John Lynch on Keenan Allen Trade: \"Really we kind of focused on Josh Downs as an option that we had some interested in....in the process Kyle was like what about Keenan? I said let me ask about that...there started a conversation about two and half weeks ago....I think…",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "KNBR",
+          "authorHandle": "@KNBR",
+          "authorProfileUrl": "https://x.com/KNBR",
+          "outletName": "X Beat",
+          "publishedAt": "2026-11-12T16:22:42.459Z",
+          "imageUrl": "",
+          "url": "https://x.com/KNBR/status/2120915197582094569",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 10.1761
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LS",
@@ -90176,6 +90223,40 @@
       },
       "recentNews": [
         {
+          "id": "tweet_49erswebzone_3n2523hwdae2t",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "John Lynch on where #49ers WR Jordan Watkins stands: 'I don't see him coming off' Read:",
+          "fullText": "John Lynch on where #49ers WR Jordan Watkins stands: 'I don't see him coming off' Read:",
+          "isFullTweet": true,
+          "summary": "John Lynch on where 49ers WR Jordan Watkins stands: 'I don't see him coming off'",
+          "author": "49ers Webzone",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-12T09:55:03-08:00",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreidykekjex2ixixwd6ine5ty6d6hgi4io2tfts5xf3ozbfwhucmzvi",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2523hwdae2t",
+          "externalUrl": "https://www.49erswebzone.com/articles/205084-lynch-jordan-watkins-stands-coming/",
+          "externalTitle": "John Lynch on where 49ers WR Jordan Watkins stands: 'I don't see him coming off'",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 20.9675
+        },
+        {
           "id": "tweet_mattmaiocco_3mzy4oiyim22c",
           "type": "tweet",
           "wireSource": null,
@@ -90207,7 +90288,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         },
         {
           "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -90241,7 +90322,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2704
+          "storyRank": 0.2579
         },
         {
           "id": "espn_50433470",
@@ -90275,7 +90356,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2435
+          "storyRank": 0.2331
         },
         {
           "id": "tweet_jenniferleechan_3mztkvmirnk2y",
@@ -90309,7 +90390,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1684
+          "storyRank": 0.1629
         }
       ],
       "statProfile2026": {
@@ -91084,7 +91165,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2435
+          "storyRank": 0.2331
         }
       ],
       "statProfile2026": {
@@ -91860,7 +91941,109 @@
       },
       "recentNews": [
         {
-          "id": "sf49_154",
+          "id": "tweet_49erswebzone_3n24whajozw2q",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "John Lynch explains why #49ers shifted trade focus from Josh Downs to Keenan Allen Read:",
+          "fullText": "John Lynch explains why #49ers shifted trade focus from Josh Downs to Keenan Allen Read:",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "49ers Webzone",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-12T08:50:03-08:00",
+          "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreiduq4ndg7lxuzhrnmph3tpp32bkkyzcylt3dzkm3tvq6k5ycbfcri",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24whajozw2q",
+          "externalUrl": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
+          "externalTitle": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 12.1351
+        },
+        {
+          "id": "x_status_2120911034584338510",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "John Lynch on KNBR said the 49ers initially focused on Josh Downs (their interest had been reported) in the WR trade pursuit. In watching Downs, fellow Colts WR Keenan Allen grew on them — and they feel he's a perfect fit for the Shanahan offense and current WR situation",
+          "fullText": "John Lynch on KNBR said the 49ers initially focused on Josh Downs (their interest had been reported) in the WR trade pursuit. In watching Downs, fellow Colts WR Keenan Allen grew on them — and they feel he's a perfect fit for the Shanahan offense and current WR situation",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "David Lombardi",
+          "authorHandle": "@LombardiHimself",
+          "authorProfileUrl": "https://x.com/LombardiHimself",
+          "outletName": "The SF Standard",
+          "publishedAt": "2026-11-12T16:06:09.923Z",
+          "imageUrl": "",
+          "url": "https://x.com/LombardiHimself/status/2120911034584338510",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": true,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 95,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 11.7105
+        },
+        {
+          "id": "x_status_2120915197582094569",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "#49ers John Lynch on Keenan Allen Trade: \"Really we kind of focused on Josh Downs as an option that we had some interested in....in the process Kyle was like what about Keenan? I said let me ask about that...there started a conversation about two and half weeks ago....I think…",
+          "fullText": "#49ers John Lynch on Keenan Allen Trade: \"Really we kind of focused on Josh Downs as an option that we had some interested in....in the process Kyle was like what about Keenan? I said let me ask about that...there started a conversation about two and half weeks ago....I think…",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "KNBR",
+          "authorHandle": "@KNBR",
+          "authorProfileUrl": "https://x.com/KNBR",
+          "outletName": "X Beat",
+          "publishedAt": "2026-11-12T16:22:42.459Z",
+          "imageUrl": "",
+          "url": "https://x.com/KNBR/status/2120915197582094569",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 10.1761
+        },
+        {
+          "id": "sf49_158",
           "type": "article",
           "wireSource": null,
           "headline": "Morning Report: Allen Arrives to The Bay, 49ers Preview Week 10 Against Cowboys 🗞️",
@@ -91891,10 +92074,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 15.9724
+          "storyRank": 6.9217
         },
         {
-          "id": "sfstd_174",
+          "id": "sfstd_178",
           "type": "article",
           "wireSource": null,
           "headline": "‘Everybody’s open’: How Keenan Allen can make the 49ers’ top-ranked offense even better",
@@ -91925,7 +92108,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 11.2758
+          "storyRank": 5.9938
         },
         {
           "id": "x_status_2120580183589880060",
@@ -91952,14 +92135,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.668,
+          "breakingPriority": 0.565,
           "credibilityScore": 99,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.2366
+          "storyRank": 3.8071
         },
         {
           "id": "tweet_jenniferleechan_3n22jmhzcxk2w",
@@ -91985,18 +92168,18 @@
           "firstReportedBy": null,
           "isBreaking": false,
           "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.654,
+          "breakingBadge": null,
+          "breakingPriority": 0,
           "credibilityScore": 95,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.1805
+          "storyRank": 3.7611
         },
         {
-          "id": "pfrumors_130",
+          "id": "pfrumors_133",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -92020,14 +92203,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.58,
+          "breakingPriority": 0.462,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7727
+          "storyRank": 3.2412
         },
         {
           "id": "tweet_49erswebzone_3n22jvpl2lv24",
@@ -92053,18 +92236,18 @@
           "firstReportedBy": null,
           "isBreaking": false,
           "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.658,
+          "breakingBadge": null,
+          "breakingPriority": 0,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.9879
+          "storyRank": 3.5865
         },
         {
-          "id": "wz_187",
+          "id": "wz_193",
           "type": "article",
           "wireSource": null,
           "headline": "49ers officially announce Keenan Allen trade, re-sign cornerback",
@@ -92087,117 +92270,15 @@
           "firstReportedBy": null,
           "isBreaking": false,
           "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.654,
+          "breakingBadge": null,
+          "breakingPriority": 0,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier1_major",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.9717
-        },
-        {
-          "id": "sf49_155",
-          "type": "article",
-          "wireSource": null,
-          "headline": "The 49ers Acquire WR Keenan Allen",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The 49ers announced they have acquired WR Keenan Allen from the Indianapolis Colts in exchange for a 2027 sixth-round pick. In addition, the team signed CB Jack Jones to the team’s practice squad.",
-          "author": "49ers.com Staff",
-          "authorHandle": "@49ers",
-          "authorProfileUrl": "https://www.49ers.com/news/",
-          "outletName": "49ers.com Official",
-          "publishedAt": "2026-11-11T17:50:47.000Z",
-          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/ozlj5rljqvf0ba5htoz2.png",
-          "url": "https://www.49ers.com/news/the-49ers-acquire-wr-keenan-allen",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.651,
-          "credibilityScore": 86,
-          "category": "roster",
-          "storyTier": "tier1_major",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 3.9582
-        },
-        {
-          "id": "wz_179",
-          "type": "article",
-          "wireSource": null,
-          "headline": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The San Francisco 49ers are preparing for their Week 10 contest against the Dallas Cowboys on Sunday at AT&T Stadium in Arlington, Texas. Wednesday was wide receiver Keenan Allen's first practice since being traded from the Indianapolis Col",
-          "author": "49ers Webzone",
-          "authorHandle": "",
-          "authorProfileUrl": "https://www.49erswebzone.com/",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-11T23:24:00.000Z",
-          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33072-1794439457.jpg",
-          "url": "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "injury",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 2.2848
-        },
-        {
-          "id": "espn_50456881",
-          "type": "article",
-          "wireSource": null,
-          "headline": "Veteran WR Keenan Allen feeling energized by trade to 49ers",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "Keenan Allen said while he didn't expect to get traded, landing with a contending team in the 49ers has him feeling energized.",
-          "author": "Nick Wagoner",
-          "authorHandle": "@nwagoner",
-          "authorProfileUrl": "https://x.com/nwagoner",
-          "outletName": "ESPN",
-          "publishedAt": "2026-11-12T01:28:27Z",
-          "imageUrl": "https://a.espncdn.com/photo/2026/0916/r1717521_600x400_3-2.jpg",
-          "url": "https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "roster",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 1.6175
+          "storyRank": 3.5732
         }
       ],
       "statProfile2026": {
@@ -93020,7 +93101,7 @@
                 "value": 3.5,
                 "displayValue": "3.5",
                 "rank": 31,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -93048,7 +93129,7 @@
                 "value": 6,
                 "displayValue": "6",
                 "rank": 60,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -93062,7 +93143,7 @@
                 "value": 5,
                 "displayValue": "5",
                 "rank": 35,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -93076,7 +93157,7 @@
                 "value": 14,
                 "displayValue": "14",
                 "rank": 112,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -93089,8 +93170,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 115,
-                "totalPeers": 169,
+                "rank": 116,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -93133,8 +93214,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 6,
                 "displayValue": "6",
-                "rank": 110,
-                "totalPeers": 169,
+                "rank": 111,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -93162,7 +93243,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 61,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -93176,10 +93257,10 @@
                 "value": 60.6,
                 "displayValue": "60.6%",
                 "rank": 58,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -93732,7 +93813,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         },
         {
           "id": "tweet_nbcsportsbayarea_3mzrroopdhc2r",
@@ -93766,7 +93847,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1173
+          "storyRank": 0.1141
         },
         {
           "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -93800,7 +93881,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1043
+          "storyRank": 0.1019
         }
       ],
       "statProfile2026": {
@@ -94588,8 +94669,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0.0",
-                "rank": 155,
-                "totalPeers": 169,
+                "rank": 156,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -94617,7 +94698,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 144,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -94630,8 +94711,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 155,
-                "totalPeers": 169,
+                "rank": 156,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -94644,8 +94725,8 @@
                 "group": null,
                 "value": 11,
                 "displayValue": "11",
-                "rank": 136,
-                "totalPeers": 169,
+                "rank": 137,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -94658,8 +94739,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 118,
-                "totalPeers": 169,
+                "rank": 119,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -94702,8 +94783,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 6,
                 "displayValue": "6",
-                "rank": 111,
-                "totalPeers": 169,
+                "rank": 112,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -94730,8 +94811,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 0,
                 "displayValue": "0",
-                "rank": 127,
-                "totalPeers": 169,
+                "rank": 128,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -94745,10 +94826,10 @@
                 "value": 29.7,
                 "displayValue": "29.7%",
                 "rank": 142,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -97157,10 +97238,10 @@
                 "value": 49.3,
                 "displayValue": "49.3%",
                 "rank": 47,
-                "totalPeers": 126,
+                "totalPeers": 127,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "41.2%",
+                "posAvgDisplay": "40.9%",
                 "scope": "player",
                 "leaderboardKey": "TE:off_snap_pct"
               },
@@ -97948,8 +98029,8 @@
                 "group": null,
                 "value": 10,
                 "displayValue": "10",
-                "rank": 106,
-                "totalPeers": 113,
+                "rank": 105,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -97962,8 +98043,8 @@
                 "group": null,
                 "value": 3,
                 "displayValue": "3",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -97976,8 +98057,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 81,
-                "totalPeers": 113,
+                "rank": 80,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -97991,7 +98072,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 55,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -98019,7 +98100,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 75,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -98033,7 +98114,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 34,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -98091,7 +98172,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 41,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -98119,10 +98200,10 @@
                 "value": 5.4,
                 "displayValue": "5.4%",
                 "rank": 102,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -98899,7 +98980,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7211
+          "storyRank": 2.1177
         },
         {
           "id": "tweet_49erswebzone_3n22vw5fkva2q",
@@ -98933,7 +99014,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.0668
+          "storyRank": 0.9253
         },
         {
           "id": "tweet_mattmaiocco_3n22tdmxdb22e",
@@ -98967,7 +99048,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3763
+          "storyRank": 0.3199
         },
         {
           "id": "espn_pwire_4241464_64699628",
@@ -99001,7 +99082,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3529
+          "storyRank": 0.3312
         },
         {
           "id": "x_status_2120225602657784121",
@@ -99035,7 +99116,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3485
+          "storyRank": 0.3273
         }
       ],
       "statProfile2026": {
@@ -99684,7 +99765,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1673
+          "storyRank": 0.1619
         }
       ],
       "statProfile2026": {
@@ -101995,7 +102076,41 @@
       },
       "recentNews": [
         {
-          "id": "sfstd_174",
+          "id": "wz_182",
+          "type": "article",
+          "wireSource": null,
+          "headline": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "The San Francisco 49ers acquired wide receiver Keenan Allen just ahead of Tuesday's NFL trade deadline to address a significant need on offense. The team's receiving corps has been hit hard by injuries this season, with Mike Evans and Deebo",
+          "author": "49ers Webzone",
+          "authorHandle": "",
+          "authorProfileUrl": "https://www.49erswebzone.com/",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-12T16:45:22.000Z",
+          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33075-1794501922.jpg",
+          "url": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "roster",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 11.7544
+        },
+        {
+          "id": "sfstd_178",
           "type": "article",
           "wireSource": null,
           "headline": "‘Everybody’s open’: How Keenan Allen can make the 49ers’ top-ranked offense even better",
@@ -102026,10 +102141,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 11.2758
+          "storyRank": 5.9938
         },
         {
-          "id": "pfrumors_130",
+          "id": "pfrumors_133",
           "type": "article",
           "wireSource": null,
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -102053,14 +102168,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.58,
+          "breakingPriority": 0.462,
           "credibilityScore": 86,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.7727
+          "storyRank": 3.2412
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -102087,14 +102202,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -102128,7 +102243,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         },
         {
           "id": "tweet_49erswebzone_3n22xuqp2ux24",
@@ -102162,7 +102277,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.109
+          "storyRank": 0.958
         },
         {
           "id": "espn_pwire_16737_64716228",
@@ -102196,7 +102311,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1603
+          "storyRank": 1.0114
         },
         {
           "id": "tweet_profootballtalk_3n23lrrzsnk2q",
@@ -102230,7 +102345,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5982
+          "storyRank": 0.4693
         },
         {
           "id": "tweet_nbcs49ers_3n23b2cukis2d",
@@ -102264,10 +102379,10 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4304
+          "storyRank": 0.3527
         },
         {
-          "id": "sf49_157",
+          "id": "sf49_161",
           "type": "article",
           "wireSource": null,
           "headline": "Mike Evans Hits the Hardwood as Dad, Coach, and Bay Area Fan | Off the Field",
@@ -102298,41 +102413,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.779
-        },
-        {
-          "id": "x_status_2120640440341037224",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "Keenan Allen and Mike Evans are all good now 😂",
-          "fullText": "Keenan Allen and Mike Evans are all good now 😂",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "49ers on NBCS",
-          "authorHandle": "@NBCS49ers",
-          "authorProfileUrl": "https://x.com/NBCS49ers",
-          "outletName": "X Beat",
-          "publishedAt": "2026-11-11T22:10:55.228Z",
-          "imageUrl": "",
-          "url": "https://x.com/NBCS49ers/status/2120640440341037224",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "beat",
-          "storyTier": "side_note",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 0.3406
+          "storyRank": 0.6955
         }
       ],
       "statProfile2026": {
@@ -103131,7 +103212,7 @@
                 "value": 1,
                 "displayValue": "1.0",
                 "rank": 93,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -103159,7 +103240,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 133,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -103173,7 +103254,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 110,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -103186,8 +103267,8 @@
                 "group": null,
                 "value": 7,
                 "displayValue": "7",
-                "rank": 162,
-                "totalPeers": 169,
+                "rank": 163,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -103201,7 +103282,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 54,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -103244,8 +103325,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 4,
                 "displayValue": "4",
-                "rank": 143,
-                "totalPeers": 169,
+                "rank": 144,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -103273,7 +103354,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 77,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -103287,10 +103368,10 @@
                 "value": 42.8,
                 "displayValue": "42.8%",
                 "rank": 113,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -103706,6 +103787,40 @@
       },
       "recentNews": [
         {
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "Matt Maiocco",
+          "authorHandle": "@MaioccoNBCS",
+          "authorProfileUrl": "https://x.com/MaioccoNBCS",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
+          "imageUrl": "",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
+          "externalUrl": null,
+          "externalTitle": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 98,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 25.5749
+        },
+        {
           "id": "tweet_mattbarrows_3n235ed3xrs27",
           "type": "tweet",
           "wireSource": null,
@@ -103737,41 +103852,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4219
-        },
-        {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "authorProfileUrl": "https://x.com/MaioccoNBCS",
-          "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
-          "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
-          "externalUrl": null,
-          "externalTitle": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 98,
-          "category": "beat",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 1.213
         },
         {
           "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -103805,7 +103886,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4458
+          "storyRank": 0.4164
         }
       ],
       "statProfile2026": {
@@ -104626,7 +104707,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2755
+          "storyRank": 0.2626
         }
       ],
       "statProfile2026": {
@@ -104647,7 +104728,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 135,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -104675,7 +104756,7 @@
                 "value": 1,
                 "displayValue": "1",
                 "rank": 133,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -104689,7 +104770,7 @@
                 "value": 3,
                 "displayValue": "3",
                 "rank": 57,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -104702,8 +104783,8 @@
                 "group": null,
                 "value": 8,
                 "displayValue": "8",
-                "rank": 155,
-                "totalPeers": 169,
+                "rank": 156,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -104717,7 +104798,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 54,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -104760,8 +104841,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 4,
                 "displayValue": "4",
-                "rank": 143,
-                "totalPeers": 169,
+                "rank": 144,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -104789,7 +104870,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 77,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -104803,10 +104884,10 @@
                 "value": 68.3,
                 "displayValue": "68.3%",
                 "rank": 32,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -105168,20 +105249,20 @@
       },
       "recentNews": [
         {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
           "type": "tweet",
           "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
           "isFullTweet": true,
           "summary": "",
           "author": "Matt Maiocco",
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
           "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
           "externalUrl": null,
           "externalTitle": null,
           "trustTier": 1,
@@ -105199,7 +105280,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 25.5749
         }
       ],
       "statProfile2026": {
@@ -105943,8 +106024,8 @@
                 "group": null,
                 "value": 2,
                 "displayValue": "2",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -105957,8 +106038,8 @@
                 "group": null,
                 "value": 2,
                 "displayValue": "2",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -105971,8 +106052,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 81,
-                "totalPeers": 113,
+                "rank": 80,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -105986,7 +106067,7 @@
                 "value": 1,
                 "displayValue": "1.0",
                 "rank": 26,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -106014,7 +106095,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 75,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -106028,7 +106109,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 34,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -106086,7 +106167,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 41,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -106114,10 +106195,10 @@
                 "value": 30.3,
                 "displayValue": "30.3%",
                 "rank": 78,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -107595,7 +107676,7 @@
       },
       "recentNews": [
         {
-          "id": "wz_177",
+          "id": "wz_183",
           "type": "article",
           "wireSource": null,
           "headline": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
@@ -107626,7 +107707,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.2167
+          "storyRank": 4.2847
         },
         {
           "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -107653,14 +107734,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -107694,7 +107775,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         },
         {
           "id": "espn_pwire_4427325_64726128",
@@ -107728,7 +107809,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.5231
+          "storyRank": 1.289
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -107762,7 +107843,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1503
+          "storyRank": 1.0035
         },
         {
           "id": "espn_pwire_4427325_64688428",
@@ -107796,7 +107877,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2627
+          "storyRank": 0.2509
         },
         {
           "id": "espn_pwire_4427325_64671528",
@@ -107830,7 +107911,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1727
+          "storyRank": 0.167
         },
         {
           "id": "tweet_jenniferleechan_3mztmcvkzck2y",
@@ -107864,7 +107945,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1695
+          "storyRank": 0.1639
         },
         {
           "id": "tweet_jenniferleechan_3mztm5pvnqs2y",
@@ -107898,7 +107979,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1693
+          "storyRank": 0.1638
         },
         {
           "id": "tweet_jenniferleechan_3mztlmmcsck2y",
@@ -107932,7 +108013,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1689
+          "storyRank": 0.1634
         }
       ],
       "statProfile2026": {
@@ -108536,7 +108617,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4004
+          "storyRank": 0.3759
         }
       ],
       "statProfile2026": {
@@ -109083,7 +109164,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 135,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -109097,7 +109178,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 154,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -109110,8 +109191,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 146,
-                "totalPeers": 169,
+                "rank": 147,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -109124,8 +109205,8 @@
                 "group": null,
                 "value": 1,
                 "displayValue": "1",
-                "rank": 169,
-                "totalPeers": 169,
+                "rank": 170,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -109139,7 +109220,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 54,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -109154,8 +109235,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 1,
                 "displayValue": "1",
-                "rank": 169,
-                "totalPeers": 169,
+                "rank": 170,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -109169,7 +109250,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 77,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -109183,10 +109264,10 @@
                 "value": 29.5,
                 "displayValue": "29.5%",
                 "rank": 143,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -109748,7 +109829,7 @@
                 "value": 1.5,
                 "displayValue": "1.5",
                 "rank": 90,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -109776,7 +109857,7 @@
                 "value": 6,
                 "displayValue": "6",
                 "rank": 66,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -109789,8 +109870,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 162,
-                "totalPeers": 169,
+                "rank": 163,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -109803,8 +109884,8 @@
                 "group": null,
                 "value": 9,
                 "displayValue": "9",
-                "rank": 153,
-                "totalPeers": 169,
+                "rank": 154,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -109817,8 +109898,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 146,
-                "totalPeers": 169,
+                "rank": 147,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -109861,8 +109942,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 3,
                 "displayValue": "3",
-                "rank": 161,
-                "totalPeers": 169,
+                "rank": 162,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -109889,8 +109970,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 0,
                 "displayValue": "0",
-                "rank": 152,
-                "totalPeers": 169,
+                "rank": 153,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -109904,10 +109985,10 @@
                 "value": 54.6,
                 "displayValue": "54.6%",
                 "rank": 73,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -110247,20 +110328,20 @@
       },
       "recentNews": [
         {
-          "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
+          "id": "tweet_mattmaiocco_3n252gg5rk22k",
           "type": "tweet",
           "wireSource": null,
-          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
-          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Returned Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "headline": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+          "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
           "isFullTweet": true,
           "summary": "",
           "author": "Matt Maiocco",
           "authorHandle": "@MaioccoNBCS",
           "authorProfileUrl": "https://x.com/MaioccoNBCS",
           "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-11T20:44:10.727Z",
+          "publishedAt": "2026-11-12T18:01:11.101Z",
           "imageUrl": "",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
           "externalUrl": null,
           "externalTitle": null,
           "trustTier": 1,
@@ -110278,7 +110359,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1541
+          "storyRank": 25.5749
         }
       ],
       "statProfile2026": {
@@ -111845,14 +111926,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -111886,7 +111967,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         }
       ],
       "statProfile2026": {
@@ -112507,8 +112588,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "41",
@@ -112521,8 +112602,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 113,
-                "totalPeers": 113,
+                "rank": 112,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "20",
@@ -112535,8 +112616,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 81,
-                "totalPeers": 113,
+                "rank": 80,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2",
@@ -112550,7 +112631,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 55,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0.7",
@@ -112564,7 +112645,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 75,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -112578,7 +112659,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 34,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -112594,7 +112675,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 41,
-                "totalPeers": 113,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -112607,11 +112688,11 @@
                 "group": "Tackling Reliability, Blitz & Snaps",
                 "value": 0,
                 "displayValue": "0.0%",
-                "rank": 111,
-                "totalPeers": 113,
+                "rank": 110,
+                "totalPeers": 112,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "58.4%",
+                "posAvgDisplay": "58.9%",
                 "scope": "player",
                 "leaderboardKey": "LB:def_snap_pct"
               }
@@ -113443,8 +113524,8 @@
                 "group": null,
                 "value": 8,
                 "displayValue": "8",
-                "rank": 75,
-                "totalPeers": 117,
+                "rank": 74,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "7",
@@ -113498,8 +113579,8 @@
                 "group": "Special Teams Participation",
                 "value": 0,
                 "displayValue": "0",
-                "rank": 116,
-                "totalPeers": 117,
+                "rank": 115,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "28",
@@ -114099,14 +114180,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "ROSTER MOVE",
-          "breakingPriority": 0.401,
+          "breakingPriority": 0.319,
           "credibilityScore": 98,
           "category": "roster",
           "storyTier": "tier2_roster",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.1661
+          "storyRank": 2.7907
         },
         {
           "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -114140,7 +114221,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1077
+          "storyRank": 1.8541
         }
       ],
       "statProfile2026": {
@@ -115103,8 +115184,8 @@
                 "group": null,
                 "value": 8,
                 "displayValue": "8",
-                "rank": 77,
-                "totalPeers": 117,
+                "rank": 76,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "7",
@@ -115159,7 +115240,7 @@
                 "value": 40,
                 "displayValue": "40",
                 "rank": 20,
-                "totalPeers": 117,
+                "totalPeers": 116,
                 "qualified": true,
                 "higherIsBetter": true,
                 "posAvgDisplay": "28",
@@ -115392,7 +115473,7 @@
                 "value": 0,
                 "displayValue": "0.0",
                 "rank": 135,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "2.1",
@@ -115420,7 +115501,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 154,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "5",
@@ -115433,8 +115514,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 146,
-                "totalPeers": 169,
+                "rank": 147,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "3",
@@ -115447,8 +115528,8 @@
                 "group": null,
                 "value": 0,
                 "displayValue": "0",
-                "rank": 169,
-                "totalPeers": 169,
+                "rank": 170,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "18",
@@ -115462,7 +115543,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 54,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "0",
@@ -115505,8 +115586,8 @@
                 "group": "Tackling Precision, Disruption & Snaps",
                 "value": 0,
                 "displayValue": "0",
-                "rank": 169,
-                "totalPeers": 169,
+                "rank": 170,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "9",
@@ -115534,7 +115615,7 @@
                 "value": 0,
                 "displayValue": "0",
                 "rank": 77,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
                 "posAvgDisplay": "1",
@@ -115548,10 +115629,10 @@
                 "value": 15,
                 "displayValue": "15.0%",
                 "rank": 165,
-                "totalPeers": 169,
+                "totalPeers": 170,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "50.1%",
+                "posAvgDisplay": "49.8%",
                 "scope": "player",
                 "leaderboardKey": "EDGE:def_snap_pct"
               }
@@ -115781,7 +115862,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         }
       ],
       "statProfile2026": {
@@ -116013,7 +116094,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4011
+          "storyRank": 0.3765
         }
       ],
       "statProfile2026": {

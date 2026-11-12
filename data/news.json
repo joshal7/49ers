@@ -1,86 +1,39 @@
 {
-  "updatedAt": "2026-11-12T15:53:15.713Z",
+  "updatedAt": "2026-11-12T18:10:50.934Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-11_17PT",
     "cycleKey": "2026-11-11@17PT",
     "scheduledHourPt": 17,
-    "generatedAt": "2026-11-12T15:53:15.713Z",
+    "generatedAt": "2026-11-12T18:10:50.895Z",
     "modelUsed": "gemini-3.8-flash",
     "thinkingLevel": "HIGH",
     "source": "pipeline-grounded",
-    "wordCount": 258,
-    "headline": "49ers (7-1) Week 10 Briefing: Keenan Allen Addition, Buckner Cap Restructure, Wednesday Injury Report",
-    "summary": "San Francisco (7-1) enters Week 10 against the Dallas Cowboys (SF -3.5) after adding veteran WR Keenan Allen at the trade deadline and clearing $5.2M in immediate cap room via a DeForest Buckner restructure [David Lombardi](https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/). On the practice field, Wednesday's report balanced an IR return window activation and key skill-position return against early-week absences in the starting secondary [Matt Maiocco](https://x.com/MaioccoNBCS/status/2120617948138401832).",
+    "wordCount": 199,
+    "headline": "49ers (7-1) Week 10 Briefing: Buckner Cap Restructure, Wednesday Injury Report",
+    "summary": "San Francisco (7-1) turns to Week 10 preparations against the Dallas Cowboys (SF -3.5) while managing $39.18M in 2026 salary cap flexibility [NFL Trade Rumors](https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n). On the practice field, Wednesday's report balanced an IR return window activation and key skill-position return against early-week absences in the starting secondary [Pro Football Rumors](https://www.profootballrumors.com/2026/11/chiefs-49ers-showed-trade-interest-in-jets-wr-garrett-wilson).",
     "bullets": [
-      "Trades, Roster & Cap Moves: John Lynch finalized the trade for WR Keenan Allen from Indianapolis for a 2027 6th-round pick and signed CB Jack Jones to the practice squad [Adam Schefter](https://x.com/AdamSchefter/status/2120580183589880060). Paraag Marathe converted base salary on DT DeForest Buckner to open $5.2M [NFL Trade Rumors](https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n), lifting 2026 room to $39.18M for CBA Article 13 rollover against 2027's -$36.74M void years projection.",
-      "Injury & Practice Availability: The 49ers opened DT C.J. West's 21-day IR practice window alongside limited sessions for WR Deebo Samuel Sr. (hamstring), S Siran Neal (knee, foot), and CB Upton Stout (shoulder, neck) [Pro Football Rumors](https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel). WR Mike Evans (Achilles), CB Renardo Green (back), and CB Deommodore Lenoir (foot) did not practice Wednesday, whereas WR Demarcus Robinson (ankle) practiced in full [49ers Webzone](https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/).",
-      "Matchup & Team Storylines: With starting cornerbacks Renardo Green and Deommodore Lenoir sidelined Wednesday [49ers Webzone](https://www.49erswebzone.com/articles/205075-49ers-ground-defense-against-cowboys/), Kyle Shanahan can insulate the secondary against the Dallas Cowboys through San Francisco's top-ranked EPA offense, play-action passing, and ball-control run game [49ers Webzone](https://bsky.app/profile/49erswebzone.bsky.social/post/3n24jlxkhgh2y). Working Keenan Allen into intermediate routes gives QB Brock Purdy another veteran separator without rushing Mike Evans back [Nick Wagoner](https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers), while Purdy earns midseason MVP buzz [Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u)."
+      "Trades, Roster & Cap Moves: Paraag Marathe converted base salary on DT DeForest Buckner to open $5.2M [NFL Trade Rumors](https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n), lifting 2026 room to $39.18M for CBA Article 13 rollover against 2027's -$36.74M void years projection.",
+      "Injury & Practice Availability: The 49ers opened DT C.J. West's 21-day IR practice window alongside limited sessions for WR Deebo Samuel Sr. (hamstring), S Siran Neal (knee, foot), and CB Upton Stout (shoulder, neck) [Matt Maiocco](https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k). WR Mike Evans (Achilles), CB Renardo Green (back), and CB Deommodore Lenoir (foot) did not practice Wednesday, whereas WR Demarcus Robinson (ankle) practiced in full.",
+      "Matchup & Team Storylines: With starting cornerbacks Renardo Green and Deommodore Lenoir sidelined Wednesday, Kyle Shanahan can insulate the secondary against the Dallas Cowboys through San Francisco's top-ranked EPA offense, play-action passing, and ball-control run game [49ers Webzone](https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/). QB Brock Purdy continues to draw midseason MVP recognition [Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u)."
     ],
-    "coveredStoryKeys": [
-      "cjwest::ir_roster_move",
-      "keenanallen::trade_acquisition",
-      "team::weekly_injury_report"
-    ],
+    "coveredStoryKeys": [],
     "coveredUrls": [
-      "https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/",
-      "https://x.com/MaioccoNBCS/status/2120617948138401832",
-      "https://x.com/AdamSchefter/status/2120580183589880060",
       "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n",
-      "https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel",
-      "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
-      "https://www.49erswebzone.com/articles/205075-49ers-ground-defense-against-cowboys/",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24jlxkhgh2y",
-      "https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers",
+      "https://www.profootballrumors.com/2026/11/chiefs-49ers-showed-trade-interest-in-jets-wr-garrett-wilson",
+      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
+      "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
       "https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n23uphkxbc2k",
-      "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jdseqhb2x",
-      "https://www.espn.com/nfl/player/_/id/4686308/cj-west#:~:text=West%20(knee)%20was%20a%20limited%20participant%20in",
-      "https://www.49erswebzone.com/articles/205052-49ers-officially-announce-keenan-cornerback/",
-      "https://www.49ers.com/news/the-49ers-acquire-wr-keenan-allen",
-      "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n22jmhzcxk2w",
-      "https://www.49ers.com/team/transactions/#tx-MjAyNi0xMS0xMF",
-      "https://www.profootballrumors.com/2026/11/49ers-to-acquire-wr-keenan-allen",
-      "https://bsky.app/profile/rapsheet.bsky.social/post/3mzy45qejoc2l",
-      "https://x.com/TomPelissero/status/2120224371361116598",
-      "https://www.espn.com/nfl/story/_/id/50444457/sources-49ers-acquire-keenan-allen-trade-colts",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jvpl2lv24",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22jnucqf22s",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzy3ytrh6k2c",
-      "https://bsky.app/profile/victafur.bsky.social/post/3mzy7kpu4722x",
-      "https://www.espn.com/nfl/player/_/id/15818/keenan-allen#:~:text=The%2049ers%20acquired%20Allen%20from%20the%20Colts",
-      "https://www.espn.com/video/clip/_/id/50458517/49ers-face-questions-corner-heading-week-10",
-      "https://www.49erswebzone.com/articles/205057-injury-updates-returns-practice-several/",
-      "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n22suzupbc2g",
-      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n23fbofoos27",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2342tnfkw2o",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22ujgufqp2t"
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2523hwdae2t",
+      "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24zblqem62i",
+      "https://www.49erswebzone.com/articles/205081-lynch-calls-brandon-aiyuk-situation/",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24xkzixyr2x",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24whajozw2q",
+      "https://x.com/LombardiHimself/status/2120911034584338510",
+      "https://www.espn.com/nfl/preview?gameId=401873063",
+      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n22t2xbfnk2e",
+      "https://x.com/KNBR/status/2120915197582094569"
     ],
     "sources": [
-      {
-        "type": "article",
-        "author": "David Lombardi",
-        "outlet": "The SF Standard",
-        "title": "‘Everybody’s open’: How Keenan Allen can make the 49ers’ top-ranked offense even better",
-        "url": "https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/",
-        "publishedAt": "2026-11-12T14:00:00.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Matt Maiocco",
-        "outlet": "NBC Sports Bay Area",
-        "title": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal. No",
-        "url": "https://x.com/MaioccoNBCS/status/2120617948138401832",
-        "publishedAt": "2026-11-11T20:41:45.559Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Adam Schefter",
-        "outlet": "ESPN NFL Insider",
-        "title": "49ers officially have acquired WR Keenan Allen from the Indianapolis Colts in exchange for a 2027 sixth-round pick. 49ers also signed CB Jack Jones to the team’s practice squad.",
-        "url": "https://x.com/AdamSchefter/status/2120580183589880060",
-        "publishedAt": "2026-11-11T18:11:28.899Z"
-      },
       {
         "type": "tweet",
         "author": "NFL Trade Rumors",
@@ -93,41 +46,25 @@
         "type": "article",
         "author": "Pro Football Rumors",
         "outlet": "Pro Football Rumors",
-        "title": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
-        "url": "https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel",
-        "publishedAt": "2026-11-12T00:26:05.000Z"
-      },
-      {
-        "type": "article",
-        "author": "49ers Webzone",
-        "outlet": "49ers Webzone",
-        "title": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
-        "url": "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
-        "publishedAt": "2026-11-11T23:24:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "49ers Webzone",
-        "outlet": "49ers Webzone",
-        "title": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
-        "url": "https://www.49erswebzone.com/articles/205075-49ers-ground-defense-against-cowboys/",
-        "publishedAt": "2026-11-12T13:00:00.000Z"
+        "title": "Chiefs, 49ers Showed Trade Interest In Jets WR Garrett Wilson",
+        "url": "https://www.profootballrumors.com/2026/11/chiefs-49ers-showed-trade-interest-in-jets-wr-garrett-wilson",
+        "publishedAt": "2026-11-12T16:37:55.000Z"
       },
       {
         "type": "tweet",
-        "author": "49ers Webzone",
-        "outlet": "49ers Webzone",
-        "title": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
-        "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24jlxkhgh2y",
-        "publishedAt": "2026-11-12T05:00:02-08:00"
+        "author": "Matt Maiocco",
+        "outlet": "NBC Sports Bay Area",
+        "title": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ",
+        "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
+        "publishedAt": "2026-11-12T18:01:11.101Z"
       },
       {
         "type": "article",
-        "author": "Nick Wagoner",
-        "outlet": "ESPN",
-        "title": "Veteran WR Keenan Allen feeling energized by trade to 49ers",
-        "url": "https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers",
-        "publishedAt": "2026-11-12T01:28:27Z"
+        "author": "49ers Webzone",
+        "outlet": "49ers Webzone",
+        "title": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+        "url": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
+        "publishedAt": "2026-11-12T16:45:22.000Z"
       },
       {
         "type": "tweet",
@@ -139,19 +76,59 @@
       },
       {
         "type": "tweet",
-        "author": "Matt Maiocco",
-        "outlet": "NBC Sports Bay Area",
-        "title": "Mac Jones is having fun with the 49ers. “What's the price tag on that? To me, it's multiple millions of dollars to have fun and be on a winning team because I've been on the",
-        "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n23uphkxbc2k",
-        "publishedAt": "2026-11-12T06:46:12.382Z"
+        "author": "49ers Webzone",
+        "outlet": "49ers Webzone",
+        "title": "John Lynch on where WR Jordan Watkins stands: 'I don't see him coming off'",
+        "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2523hwdae2t",
+        "publishedAt": "2026-11-12T09:55:03-08:00"
+      },
+      {
+        "type": "tweet",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "49ers & Chiefs Were Interested In Garrett Wilson Before Trade Deadline",
+        "url": "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24zblqem62i",
+        "publishedAt": "2026-11-12T17:40:35Z"
       },
       {
         "type": "article",
         "author": "49ers Webzone",
         "outlet": "49ers Webzone",
-        "title": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-        "url": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-        "publishedAt": "2026-11-11T17:48:10.000Z"
+        "title": "John Lynch calls Brandon Aiyuk situation 'fluid' as 49ers weigh next steps",
+        "url": "https://www.49erswebzone.com/articles/205081-lynch-calls-brandon-aiyuk-situation/",
+        "publishedAt": "2026-11-12T17:07:35.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "49ers Webzone",
+        "outlet": "49ers Webzone",
+        "title": "John Lynch calls Brandon Aiyuk situation 'fluid' as weigh next steps",
+        "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24xkzixyr2x",
+        "publishedAt": "2026-11-12T09:10:03-08:00"
+      },
+      {
+        "type": "tweet",
+        "author": "49ers Webzone",
+        "outlet": "49ers Webzone",
+        "title": "John Lynch explains why shifted trade focus from Josh Downs to Keenan Allen",
+        "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24whajozw2q",
+        "publishedAt": "2026-11-12T08:50:03-08:00"
+      },
+      {
+        "type": "tweet",
+        "author": "David Lombardi",
+        "outlet": "The SF Standard",
+        "title": "John Lynch on KNBR said the 49ers initially focused on Josh Downs (their interest had been reported) in the WR trade pursuit. In watching Downs, fellow Colts WR Keenan Allen",
+        "url": "https://x.com/LombardiHimself/status/2120911034584338510",
+        "publishedAt": "2026-11-12T16:06:09.923Z"
+      },
+      {
+        "type": "article",
+        "author": "ESPN",
+        "outlet": "ESPN",
+        "title": "Cowboys host NFC-leading 49ers as they seek elusive winning streak under Schottenheimer",
+        "url": "https://www.espn.com/nfl/preview?gameId=401873063",
+        "publishedAt": "2026-11-12T16:52:35Z"
       }
     ]
   },
@@ -171,10 +148,10 @@
         "david_lombardi",
         "kyle_shanahan"
       ],
-      "heroImageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/orkxkzqag0oqdv0ijn0e.jpg",
-      "heroImageAlt": "Morning Report: Allen Arrives to The Bay, 49ers Preview Week 10 Against Cowboys 🗞️",
-      "heroImageSource": "49ers.com Official",
-      "heroImageLink": "https://www.49ers.com/news/morning-reports/morning-report-allen-arrives-to-the-bay-49ers-preview-week-10-against-cowboys",
+      "heroImageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33076-1794503255.jpg",
+      "heroImageAlt": "John Lynch calls Brandon Aiyuk situation 'fluid' as 49ers weigh next steps",
+      "heroImageSource": "49ers Webzone",
+      "heroImageLink": "https://www.49erswebzone.com/articles/205081-lynch-calls-brandon-aiyuk-situation/",
       "heroImageIsEditorial": true,
       "featuredPlayers": [
         {
@@ -330,16 +307,6 @@
           "publishedAt": "2026-11-11T14:10:03-08:00"
         },
         {
-          "title": "#49ers vs. Cowboys in Week 10: How to watch, stream, and listen, plus odds Read:",
-          "label": "49ers Webzone",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22di2eo3c2p",
-          "author": "49ers Webzone",
-          "authorHandle": "@49erswebzone",
-          "outlet": "49ers Webzone",
-          "type": "tweet",
-          "publishedAt": "2026-11-11T08:05:02-08:00"
-        },
-        {
           "title": "The #49ers lose Gracen Halton for the season but Kyle Shanahan delivered a little bit of positive injury new…",
           "label": "NBC Sports Bay Area",
           "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3mzwgrzbioc2y",
@@ -348,6 +315,16 @@
           "outlet": "NBC Sports Bay Area",
           "type": "tweet",
           "publishedAt": "2026-11-10T02:53:46.982Z"
+        },
+        {
+          "title": "West (knee) was a limited participant in Wednesday's practice.",
+          "label": "The Athletic",
+          "url": "https://www.espn.com/nfl/player/_/id/4686308/cj-west#:~:text=West%20(knee)%20was%20a%20limited%20participant%20in",
+          "author": "Matt Barrows",
+          "authorHandle": "@mattbarrows",
+          "outlet": "The Athletic",
+          "type": "article",
+          "publishedAt": "2026-11-12T00:46:57.000Z"
         },
         {
           "title": "Dallas Cowboys vs. 49ers Week 10 Gamecast — ESPN",
@@ -368,15 +345,15 @@
       ],
       "consensusVsDissent": "Beat reporting emphasizes trench health, red-zone efficiency, and clean turnover margin as the decisive Week-to-Week swing variables.",
       "videoClip": {
-        "videoId": "miYvAF9Rg6U",
-        "url": "https://www.youtube.com/watch?v=miYvAF9Rg6U",
+        "videoId": "TNDUPx5u8t0",
+        "url": "https://www.youtube.com/watch?v=TNDUPx5u8t0",
         "embeddable": true,
-        "title": "49ers Playbook: SF Sinks the Raiders in the Bay",
-        "channel": "Jonnydel's Football Academy",
-        "duration": "Video",
-        "thumbnailUrl": "https://i.ytimg.com/vi/miYvAF9Rg6U/hqdefault.jpg",
+        "title": "Nov 8, 2026 Week 9 San Francisco 49ers vs Las Vegas Raiders Highlights. Tim Ryan & Guy Haberman",
+        "channel": "Forever Faithful",
+        "duration": "12:38",
+        "thumbnailUrl": "https://i.ytimg.com/vi/TNDUPx5u8t0/hqdefault.jpg",
         "startSeconds": 0,
-        "timestampLabel": "49ers Playbook: SF Sinks the Raiders in the Bay"
+        "timestampLabel": "Nov 8, 2026 Week 9 San Francisco 49ers vs Las Vegas Raiders Highlights. Tim Ryan & Guy Haberman"
       }
     },
     {
@@ -590,15 +567,15 @@
       ],
       "consensusVsDissent": "Friday practice participation remains the primary clearance gate for soft-tissue game-time decisions.",
       "videoClip": {
-        "videoId": "jAMuZ3TqXOg",
-        "url": "https://www.youtube.com/watch?v=jAMuZ3TqXOg",
+        "videoId": "miYvAF9Rg6U",
+        "url": "https://www.youtube.com/watch?v=miYvAF9Rg6U",
         "embeddable": true,
-        "title": "NO ONE Wants To Be Honest About Brock Purdy - 49ers QB Film Breakdown",
-        "channel": "Chase Daniel",
-        "duration": "Video",
-        "thumbnailUrl": "https://i.ytimg.com/vi/jAMuZ3TqXOg/hqdefault.jpg",
+        "title": "49ers Playbook: SF Sinks the Raiders in the Bay",
+        "channel": "Jonnydel's Football Academy",
+        "duration": "16:41",
+        "thumbnailUrl": "https://i.ytimg.com/vi/miYvAF9Rg6U/hqdefault.jpg",
         "startSeconds": 0,
-        "timestampLabel": "NO ONE Wants To Be Honest About Brock Purdy - 49ers QB Film Breakdown"
+        "timestampLabel": "49ers Playbook: SF Sinks the Raiders in the Bay"
       }
     },
     {
@@ -616,10 +593,10 @@
         "field_yates",
         "adam_schefter"
       ],
-      "heroImageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33064-1794419727.jpg",
-      "heroImageAlt": "49ers officially announce Keenan Allen trade, re-sign cornerback",
+      "heroImageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33075-1794501922.jpg",
+      "heroImageAlt": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
       "heroImageSource": "49ers Webzone",
-      "heroImageLink": "https://www.49erswebzone.com/articles/205052-49ers-officially-announce-keenan-cornerback/",
+      "heroImageLink": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
       "heroImageIsEditorial": true,
       "featuredPlayers": [
         {
@@ -693,16 +670,6 @@
           "outlet": "The SF Standard",
           "type": "article",
           "publishedAt": "2026-11-10T19:52:12.000Z"
-        },
-        {
-          "title": "49ers had 2-time Pro Bowl tight end on their trade radar",
-          "label": "49ers Webzone",
-          "url": "https://www.49erswebzone.com/articles/205049-49ers-2-time-tight-trade-radar/",
-          "author": "49ers Webzone",
-          "authorHandle": null,
-          "outlet": "49ers Webzone",
-          "type": "article",
-          "publishedAt": "2026-11-11T16:31:39.000Z"
         },
         {
           "title": "“Super excited to be back in the Bay.\" Keenan Allen is thrilled to be with the 49ers, but admitted his head…",
@@ -795,6 +762,16 @@
           "publishedAt": "2026-11-12T14:00:00.000Z"
         },
         {
+          "title": "‘Section 415’ podcast: Analyzing the 49ers’ trades for DeForest Buckner and Keenan Allen",
+          "label": "The SF Standard",
+          "url": "https://sfstandard.com/section-415/2026/11/10/49ers-trade-deadline-podcast-keenan-allen/",
+          "author": "Kerry Crowley",
+          "authorHandle": null,
+          "outlet": "The SF Standard",
+          "type": "article",
+          "publishedAt": "2026-11-11T01:00:28.000Z"
+        },
+        {
           "title": "San Francisco 49ers Salary Cap Table — OverTheCap",
           "url": "https://overthecap.com/salary-cap/san-francisco-49ers",
           "outlet": "OverTheCap",
@@ -816,6 +793,557 @@
     }
   ],
   "rawStream": [
+    {
+      "id": "tweet_mattmaiocco_3n252gg5rk22k",
+      "type": "tweet",
+      "title": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+      "fullText": "Teams are allowed to bring back eight players off injured reserve during the regular season. For the 49ers, this is the update: Christian Kirk Demarcus Robinson Nate Hobbs CJ West Could return off IR De’Zhaun Stribling Nick Martin Austen Pleasants Sam Okuayinonu Christian Kirk",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Matt Maiocco social post",
+      "mentionedPlayers": [
+        {
+          "id": "3920814",
+          "name": "Austen Pleasants",
+          "shortName": "A. Pleasants",
+          "position": "OT",
+          "jersey": 62,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3920814.png"
+        },
+        {
+          "id": "4686308",
+          "name": "C.J. West",
+          "shortName": "C.J. West",
+          "position": "DT",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png"
+        },
+        {
+          "id": "3895856",
+          "name": "Christian Kirk",
+          "shortName": "C. Kirk",
+          "position": "WR",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png"
+        },
+        {
+          "id": "4710714",
+          "name": "De'Zhaun Stribling",
+          "shortName": "D. Stribling",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png"
+        },
+        {
+          "id": "3043116",
+          "name": "Demarcus Robinson",
+          "shortName": "D. Robinson",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png"
+        },
+        {
+          "id": "4240542",
+          "name": "Nate Hobbs",
+          "shortName": "N. Hobbs",
+          "position": "CB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png"
+        },
+        {
+          "id": "4573188",
+          "name": "Nick Martin",
+          "shortName": "N. Martin",
+          "position": "LB",
+          "jersey": 45,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573188.png"
+        },
+        {
+          "id": "4569497",
+          "name": "Sam Okuayinonu",
+          "shortName": "S. Okuayinonu",
+          "position": "DT",
+          "jersey": 91,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569497.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T18:01:11.101Z",
+      "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n252gg5rk22k",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "matt_maiocco",
+      "reporterName": "Matt Maiocco",
+      "author": "Matt Maiocco",
+      "authorHandle": "@MaioccoNBCS",
+      "authorProfileUrl": "https://x.com/MaioccoNBCS",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.7174
+    },
+    {
+      "id": "pfrumors_132",
+      "type": "article",
+      "title": "Chiefs, 49ers Showed Trade Interest In Jets WR Garrett Wilson",
+      "summary": "Garrett Wilson was once again floated as a potential trade candidate with the Jets not in position to contend in 2026. New York’s stance on the fifth-year receiver nevertheless remained consistent, and he is still in the fold. As expected, ",
+      "imageUrl": "",
+      "imageAlt": "Chiefs, 49ers Showed Trade Interest In Jets WR Garrett Wilson",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-12T16:37:55.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-49ers-showed-trade-interest-in-jets-wr-garrett-wilson",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "pfrumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": null,
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.profootballrumors.com/san-francisco-49ers",
+      "trustTier": 2,
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "TRADE INTEL",
+      "breakingPriority": 2.098,
+      "category": "roster",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "trade_intel",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 25.7276
+    },
+    {
+      "id": "tweet_nfltraderumors_3n24zblqem62i",
+      "type": "tweet",
+      "title": "49ers & Chiefs Were Interested In Garrett Wilson Before Trade Deadline",
+      "fullText": "49ers & Chiefs Were Interested In Garrett Wilson Before Trade Deadline",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:jxevm5w2bnaoijrhl65xyaxt/bafkreibqaotug7p76p4n434l7j6zzhkrm7qbdjhwjgog6v2rgvkzo4yppy",
+      "imageAlt": "NFL Trade Rumors social post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-12T17:40:35Z",
+      "url": "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24zblqem62i",
+      "externalUrl": "https://nfltraderumors.co/49ers-chiefs-were-interested-in-garrett-wilson-before-trade-deadline/",
+      "externalTitle": "49ers & Chiefs Were Interested In Garrett Wilson Before Trade Deadline",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": null,
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nflrums",
+      "authorProfileUrl": "https://x.com/nflrums",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 21.3688
+    },
+    {
+      "id": "tweet_49erswebzone_3n2523hwdae2t",
+      "type": "tweet",
+      "title": "John Lynch on where #49ers WR Jordan Watkins stands: 'I don't see him coming off' Read:",
+      "fullText": "John Lynch on where #49ers WR Jordan Watkins stands: 'I don't see him coming off' Read:",
+      "isFullTweet": true,
+      "summary": "John Lynch on where 49ers WR Jordan Watkins stands: 'I don't see him coming off'",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreidykekjex2ixixwd6ine5ty6d6hgi4io2tfts5xf3ozbfwhucmzvi",
+      "imageAlt": "49ers Webzone social post",
+      "mentionedPlayers": [
+        {
+          "id": "4431466",
+          "name": "Jordan Watkins",
+          "shortName": "J. Watkins",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431466.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T09:55:03-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2523hwdae2t",
+      "externalUrl": "https://www.49erswebzone.com/articles/205084-lynch-jordan-watkins-stands-coming/",
+      "externalTitle": "John Lynch on where 49ers WR Jordan Watkins stands: 'I don't see him coming off'",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 22.037
+    },
+    {
+      "id": "tweet_49erswebzone_3n24xkzixyr2x",
+      "type": "tweet",
+      "title": "John Lynch calls Brandon Aiyuk situation 'fluid' as #49ers weigh next steps Read:",
+      "fullText": "John Lynch calls Brandon Aiyuk situation 'fluid' as #49ers weigh next steps Read:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigpfnosynnc33hpd3owqcexwdg6pcoikibpwgnocg5yy6emyqb5nm",
+      "imageAlt": "49ers Webzone social post",
+      "mentionedPlayers": [
+        {
+          "id": "4360438",
+          "name": "Brandon Aiyuk",
+          "shortName": "B. Aiyuk",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T09:10:03-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24xkzixyr2x",
+      "externalUrl": "https://www.49erswebzone.com/articles/205081-lynch-calls-brandon-aiyuk-situation/",
+      "externalTitle": "John Lynch calls Brandon Aiyuk situation 'fluid' as 49ers weigh next steps",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.7511
+    },
+    {
+      "id": "wz_181",
+      "type": "article",
+      "title": "John Lynch calls Brandon Aiyuk situation 'fluid' as 49ers weigh next steps",
+      "summary": "San Francisco 49ers general manager John Lynch wasn't ready to discuss the Brandon Aiyuk situation last week, ahead of the team's scheduled meeting with the wide receiver. Aiyuk was granted reinstatement by the NFL on Monday after reporting",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33076-1794503255.jpg",
+      "imageAlt": "John Lynch calls Brandon Aiyuk situation 'fluid' as 49ers weigh next steps",
+      "mentionedPlayers": [
+        {
+          "id": "4360438",
+          "name": "Brandon Aiyuk",
+          "shortName": "B. Aiyuk",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T17:07:35.000Z",
+      "url": "https://www.49erswebzone.com/articles/205081-lynch-calls-brandon-aiyuk-situation/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.1523
+    },
+    {
+      "id": "tweet_49erswebzone_3n24whajozw2q",
+      "type": "tweet",
+      "title": "John Lynch explains why #49ers shifted trade focus from Josh Downs to Keenan Allen Read:",
+      "fullText": "John Lynch explains why #49ers shifted trade focus from Josh Downs to Keenan Allen Read:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreiduq4ndg7lxuzhrnmph3tpp32bkkyzcylt3dzkm3tvq6k5ycbfcri",
+      "imageAlt": "49ers Webzone social post",
+      "mentionedPlayers": [
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T08:50:03-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24whajozw2q",
+      "externalUrl": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
+      "externalTitle": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.7536
+    },
+    {
+      "id": "wz_182",
+      "type": "article",
+      "title": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+      "summary": "The San Francisco 49ers acquired wide receiver Keenan Allen just ahead of Tuesday's NFL trade deadline to address a significant need on offense. The team's receiving corps has been hit hard by injuries this season, with Mike Evans and Deebo",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33075-1794501922.jpg",
+      "imageAlt": "John Lynch explains why 49ers shifted trade focus from Josh Downs to Keenan Allen",
+      "mentionedPlayers": [
+        {
+          "id": "3126486",
+          "name": "Deebo Samuel Sr.",
+          "shortName": "D. Samuel Sr.",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
+        },
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        },
+        {
+          "id": "16737",
+          "name": "Mike Evans",
+          "shortName": "M. Evans",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T16:45:22.000Z",
+      "url": "https://www.49erswebzone.com/articles/205079-lynch-explains-49ers-shifted-keenan/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.0774
+    },
+    {
+      "id": "x_status_2120911034584338510",
+      "type": "tweet",
+      "title": "John Lynch on KNBR said the 49ers initially focused on Josh Downs (their interest had been reported) in the WR trade pursuit. In watching Downs, fellow Colts WR Keenan Allen grew on them — and they feel he's a perfect fit for the Shanahan offense and current WR situation",
+      "fullText": "John Lynch on KNBR said the 49ers initially focused on Josh Downs (their interest had been reported) in the WR trade pursuit. In watching Downs, fellow Colts WR Keenan Allen grew on them — and they feel he's a perfect fit for the Shanahan offense and current WR situation",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "David Lombardi social post",
+      "mentionedPlayers": [
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T16:06:09.923Z",
+      "url": "https://x.com/LombardiHimself/status/2120911034584338510",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "sf_standard",
+      "outletName": "The SF Standard",
+      "reporterId": "david_lombardi",
+      "reporterName": "David Lombardi",
+      "author": "David Lombardi",
+      "authorHandle": "@LombardiHimself",
+      "authorProfileUrl": "https://x.com/LombardiHimself",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 95,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.1816
+    },
+    {
+      "id": "espn_50462761",
+      "type": "article",
+      "title": "Cowboys host NFC-leading 49ers as they seek elusive winning streak under Schottenheimer",
+      "summary": "— Winning streaks have been elusive for the Dallas Cowboys in two seasons under coach Brian Schottenheimer, and the next attempt won't be easy.",
+      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873063.png?templateId=espn.applewatch.awayhome.1",
+      "imageAlt": "Cowboys host NFC-leading 49ers as they seek elusive winning streak under Schottenheimer",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-12T16:52:35Z",
+      "url": "https://www.espn.com/nfl/preview?gameId=401873063",
+      "outletId": "espn",
+      "outletName": "ESPN",
+      "reporterId": null,
+      "reporterName": "ESPN",
+      "author": "ESPN",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 35,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.9006
+    },
+    {
+      "id": "x_status_2120915197582094569",
+      "type": "tweet",
+      "title": "#49ers John Lynch on Keenan Allen Trade: \"Really we kind of focused on Josh Downs as an option that we had some interested in....in the process Kyle was like what about Keenan? I said let me ask about that...there started a conversation about two and half weeks ago....I think…",
+      "fullText": "#49ers John Lynch on Keenan Allen Trade: \"Really we kind of focused on Josh Downs as an option that we had some interested in....in the process Kyle was like what about Keenan? I said let me ask about that...there started a conversation about two and half weeks ago....I think…",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "KNBR social post",
+      "mentionedPlayers": [
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        },
+        {
+          "id": "13729",
+          "name": "Jon Weeks",
+          "shortName": "J. Weeks",
+          "position": "LS",
+          "jersey": 46,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13729.png"
+        }
+      ],
+      "publishedAt": "2026-11-12T16:22:42.459Z",
+      "url": "https://x.com/KNBR/status/2120915197582094569",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "KNBR",
+      "author": "KNBR",
+      "authorHandle": "@KNBR",
+      "authorProfileUrl": "https://x.com/KNBR",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.6947
+    },
     {
       "id": "tweet_mattbarrows_3n24qhsd6c22u",
       "type": "tweet",
@@ -860,10 +1388,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.2111
+      "storyRank": 8.0607
     },
     {
-      "id": "sf49_154",
+      "id": "sf49_158",
       "type": "article",
       "title": "Morning Report: Allen Arrives to The Bay, 49ers Preview Week 10 Against Cowboys 🗞️",
       "summary": "Catch up on the latest San Francisco 49ers headlines, powered by Cisco.",
@@ -902,7 +1430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.4113
+      "storyRank": 7.1117
     },
     {
       "id": "tweet_nfltraderumors_3n24oqtlffn2n",
@@ -949,10 +1477,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.7353
+      "storyRank": 6.2377
     },
     {
-      "id": "sfstd_174",
+      "id": "sfstd_178",
       "type": "article",
       "title": "‘Everybody’s open’: How Keenan Allen can make the 49ers’ top-ranked offense even better",
       "summary": "After executing a trade with the Colts on Tuesday, the 49ers don’t need to rush Mike Evans back from his injury.",
@@ -999,7 +1527,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.6628
+      "storyRank": 6.1995
     },
     {
       "id": "tweet_49erswebzone_3n24jlxkhgh2y",
@@ -1036,10 +1564,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5855
+      "storyRank": 4.5033
     },
     {
-      "id": "wz_177",
+      "id": "wz_183",
       "type": "article",
       "title": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
       "summary": "The San Francisco 49ers could be facing the Dallas Cowboys on Sunday without their two starting cornerbacks, and Kyle Shanahan may have a way to help his defense by controlling what happens on offense. Deommodore Lenoir and Renardo Green bo",
@@ -1086,7 +1614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.4148
+      "storyRank": 4.4022
     },
     {
       "id": "x_status_2120580183589880060",
@@ -1140,7 +1668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3122
+      "storyRank": 3.8751
     },
     {
       "id": "tweet_jenniferleechan_3n22jmhzcxk2w",
@@ -1194,10 +1722,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2551
+      "storyRank": 3.8283
     },
     {
-      "id": "pfrumors_130",
+      "id": "pfrumors_133",
       "type": "article",
       "title": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
       "summary": "The 49ers made in-season trades at defensive tackle and wide receiver, adding to a roster already laden with 30-somethings by acquiring DeForest Buckner and Keenan Allen. Some key updates at those positions came out of San Francisco today. ",
@@ -1260,7 +1788,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.58,
+      "breakingPriority": 0.462,
       "category": "roster",
       "signalScore": 78,
       "fluffScore": 0,
@@ -1270,7 +1798,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.861
+      "storyRank": 3.3171
     },
     {
       "id": "tweet_49erswebzone_3n22jvpl2lv24",
@@ -1316,10 +1844,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0628
+      "storyRank": 3.6539
     },
     {
-      "id": "wz_187",
+      "id": "wz_193",
       "type": "article",
       "title": "49ers officially announce Keenan Allen trade, re-sign cornerback",
       "summary": "The San Francisco 49ers have officially announced their trade to acquire wide receiver Keenan Allen from the Indianapolis Colts in exchange for a 2027 sixth-round draft pick. The move to bolster San Francisco's wide receiver depth was...",
@@ -1358,10 +1886,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0119
+      "storyRank": 3.6094
     },
     {
-      "id": "sf49_155",
+      "id": "sf49_159",
       "type": "article",
       "title": "The 49ers Acquire WR Keenan Allen",
       "summary": "The 49ers announced they have acquired WR Keenan Allen from the Indianapolis Colts in exchange for a 2027 sixth-round pick. In addition, the team signed CB Jack Jones to the team’s practice squad.",
@@ -1408,7 +1936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9983
+      "storyRank": 3.5983
     },
     {
       "id": "tweet_mattmaiocco_3n22swmtays2e",
@@ -1502,7 +2030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2357
+      "storyRank": 2.852
     },
     {
       "id": "x_status_2120617948138401832",
@@ -1596,7 +2124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.235
+      "storyRank": 2.8515
     },
     {
       "id": "tweet_mattmaiocco_3n23uphkxbc2k",
@@ -1642,13 +2170,177 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8423
+      "storyRank": 2.2121
+    },
+    {
+      "id": "tweet_49erswebzone_3n2342tnfkw2o",
+      "type": "tweet",
+      "title": "#49ers vs. Cowboys injury report: Deebo Samuel returns while 6 players miss practice Read:",
+      "fullText": "#49ers vs. Cowboys injury report: Deebo Samuel returns while 6 players miss practice Read:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreicajm4jjg4oiwxsfl2w4zclenlmxr57gjyvoz46v6fxqxprbcxtse",
+      "imageAlt": "49ers Webzone social post",
+      "mentionedPlayers": [
+        {
+          "id": "3126486",
+          "name": "Deebo Samuel Sr.",
+          "shortName": "D. Samuel Sr.",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
+        }
+      ],
+      "publishedAt": "2026-11-11T15:25:02-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2342tnfkw2o",
+      "externalUrl": "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
+      "externalTitle": "49ers vs. Cowboys injury report: Deebo Samuel returns while 6 players miss practice",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.0434
+    },
+    {
+      "id": "yt_bgKkQX4AnHM",
+      "type": "video",
+      "title": "Forty Niner Way: “Back to the Bay” | Week 7 & 9 (vs. Falcons + Raiders)",
+      "summary": "Video (15:25) • San Francisco 49ers • 14h ago",
+      "imageUrl": "https://i.ytimg.com/vi/bgKkQX4AnHM/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-12T03:52:16.000Z",
+      "url": "https://www.youtube.com/watch?v=bgKkQX4AnHM",
+      "videoId": "bgKkQX4AnHM",
+      "embeddable": false,
+      "duration": "15:25",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 1.6815
+    },
+    {
+      "id": "wz_185",
+      "type": "article",
+      "title": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
+      "summary": "The San Francisco 49ers are preparing for their Week 10 contest against the Dallas Cowboys on Sunday at AT&T Stadium in Arlington, Texas. Wednesday was wide receiver Keenan Allen's first practice since being traded from the Indianapolis Col",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33072-1794439457.jpg",
+      "imageAlt": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
+      "mentionedPlayers": [
+        {
+          "id": "3126486",
+          "name": "Deebo Samuel Sr.",
+          "shortName": "D. Samuel Sr.",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
+        },
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-11T23:24:00.000Z",
+      "url": "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.0103
+    },
+    {
+      "id": "espn_50458517",
+      "type": "article",
+      "title": "49ers face questions at corner heading into Week 10",
+      "summary": "Nick Wagoner details the various injuries the 49ers face at corner ahead of their matchup with the Cowboys.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1111/dm_261111_Niners_corners_IA/dm_261111_Niners_corners_IA.jpg",
+      "imageAlt": "Nick Wagoner details the various injuries the 49ers face at corner ahead of their matchup with the Cowboys.",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-12T03:55:29Z",
+      "url": "https://www.espn.com/video/clip/_/id/50458517/49ers-face-questions-corner-heading-week-10",
+      "outletId": "espn",
+      "outletName": "ESPN",
+      "reporterId": "nick_wagoner",
+      "reporterName": "Nick Wagoner",
+      "author": "Nick Wagoner",
+      "authorHandle": "@nwagoner",
+      "authorProfileUrl": "https://x.com/nwagoner",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 35,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.4699
     },
     {
       "id": "yt_RySpf9w8Y2s",
       "type": "video",
       "title": "Deebo, Buckner, Warner, Allen, McCaffrey, Bosa Talk New Additions, Preview Cowboys | 49ers",
-      "summary": "Video • San Francisco 49ers • 12h ago",
+      "summary": "Video • San Francisco 49ers • 14h ago",
       "imageUrl": "https://i.ytimg.com/vi/RySpf9w8Y2s/hqdefault.jpg",
       "mentionedPlayers": [
         {
@@ -1726,136 +2418,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 2.026
-    },
-    {
-      "id": "tweet_49erswebzone_3n2342tnfkw2o",
-      "type": "tweet",
-      "title": "#49ers vs. Cowboys injury report: Deebo Samuel returns while 6 players miss practice Read:",
-      "fullText": "#49ers vs. Cowboys injury report: Deebo Samuel returns while 6 players miss practice Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreicajm4jjg4oiwxsfl2w4zclenlmxr57gjyvoz46v6fxqxprbcxtse",
-      "imageAlt": "49ers Webzone social post",
-      "mentionedPlayers": [
-        {
-          "id": "3126486",
-          "name": "Deebo Samuel Sr.",
-          "shortName": "D. Samuel Sr.",
-          "position": "WR",
-          "jersey": 19,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T15:25:02-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2342tnfkw2o",
-      "externalUrl": "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
-      "externalTitle": "49ers vs. Cowboys injury report: Deebo Samuel returns while 6 players miss practice",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3652
-    },
-    {
-      "id": "wz_179",
-      "type": "article",
-      "title": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
-      "summary": "The San Francisco 49ers are preparing for their Week 10 contest against the Dallas Cowboys on Sunday at AT&T Stadium in Arlington, Texas. Wednesday was wide receiver Keenan Allen's first practice since being traded from the Indianapolis Col",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33072-1794439457.jpg",
-      "imageAlt": "49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice",
-      "mentionedPlayers": [
-        {
-          "id": "3126486",
-          "name": "Deebo Samuel Sr.",
-          "shortName": "D. Samuel Sr.",
-          "position": "WR",
-          "jersey": 19,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
-        },
-        {
-          "id": "15818",
-          "name": "Keenan Allen",
-          "shortName": "K. Allen",
-          "position": "WR",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T23:24:00.000Z",
-      "url": "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3266
-    },
-    {
-      "id": "espn_50458517",
-      "type": "article",
-      "title": "49ers face questions at corner heading into Week 10",
-      "summary": "Nick Wagoner details the various injuries the 49ers face at corner ahead of their matchup with the Cowboys.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1111/dm_261111_Niners_corners_IA/dm_261111_Niners_corners_IA.jpg",
-      "imageAlt": "Nick Wagoner details the various injuries the 49ers face at corner ahead of their matchup with the Cowboys.",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-12T03:55:29Z",
-      "url": "https://www.espn.com/video/clip/_/id/50458517/49ers-face-questions-corner-heading-week-10",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "nick_wagoner",
-      "reporterName": "Nick Wagoner",
-      "author": "Nick Wagoner",
-      "authorHandle": "@nwagoner",
-      "authorProfileUrl": "https://x.com/nwagoner",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "film",
-      "signalScore": 35,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 1,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8004
+      "storyRank": 1.659
     },
     {
       "id": "tweet_mattbarrows_3n23fbofoos27",
@@ -1892,7 +2455,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7896
+      "storyRank": 1.4927
     },
     {
       "id": "tweet_49erswebzone_3n22ujgufqp2t",
@@ -1938,10 +2501,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0487
+      "storyRank": 1.797
     },
     {
-      "id": "wz_185",
+      "id": "wz_191",
       "type": "article",
       "title": "49ers injury updates: Deebo Samuel returns to practice, several others out",
       "summary": "The San Francisco 49ers will return to the practice field Wednesday at 1:30 p.m. PT to begin preparing for their Week 10 road matchup against the Dallas Cowboys. Ahead of practice, head coach Kyle Shanahan spoke with reporters. He shared th",
@@ -1980,7 +2543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0095
+      "storyRank": 1.7633
     },
     {
       "id": "tweet_jenniferleechan_3n22suzupbc2g",
@@ -2074,42 +2637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1731
-    },
-    {
-      "id": "yt_S3sCPMbTP4U",
-      "type": "video",
-      "title": "TDL #Raiders Show: Raiders defense struggles! Week 9 film review vs the San Francisco 49ers",
-      "summary": "Video (1:30:03) • Tape Don't Lie • 14h ago",
-      "imageUrl": "https://i.ytimg.com/vi/S3sCPMbTP4U/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-12T01:53:04.663Z",
-      "url": "https://www.youtube.com/watch?v=S3sCPMbTP4U",
-      "videoId": "S3sCPMbTP4U",
-      "embeddable": true,
-      "duration": "1:30:03",
-      "outletId": "youtube_film",
-      "outletName": "Tape Don't Lie",
-      "reporterId": null,
-      "reporterName": "Tape Don't Lie",
-      "author": "Tape Don't Lie",
-      "trustTier": 2,
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.youtube.com/watch?v=S3sCPMbTP4U",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 1.5161
+      "storyRank": 1.9116
     },
     {
       "id": "espn_50456881",
@@ -2151,7 +2679,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4512
+      "storyRank": 1.2193
     },
     {
       "id": "espn_pwire_4686308_64726328",
@@ -2196,7 +2724,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6201
+      "storyRank": 1.3703
     },
     {
       "id": "espn_pwire_4242488_64726228",
@@ -2241,7 +2769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6166
+      "storyRank": 1.3676
     },
     {
       "id": "espn_pwire_4427325_64726128",
@@ -2286,7 +2814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6119
+      "storyRank": 1.3641
     },
     {
       "id": "tweet_mattbarrows_3n235ed3xrs27",
@@ -2348,7 +2876,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4852
+      "storyRank": 1.267
+    },
+    {
+      "id": "tweet_nbcs49ers_3n2356b3dys2s",
+      "type": "tweet",
+      "title": "“Week 1 is coming and I don’t know if I can handle all this.” Kyle Shanahan candidly discussed how his July car accident affected him before the season started",
+      "fullText": "“Week 1 is coming and I don’t know if I can handle all this.” Kyle Shanahan candidly discussed how his July car accident affected him before the season started",
+      "isFullTweet": true,
+      "summary": "49ers coach Kyle Shanahan had initial concerns about his health after car accident over the summer",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:oovjmbx2gv3o4tolrzuegtl2/bafkreifjstzfzawx2ubljpighgmjoveo5nubwo7pty4qmmsdhbdxlcftyu",
+      "imageAlt": "49ers on NBCSBA social post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-11T23:44:59.095Z",
+      "url": "https://bsky.app/profile/nbcs49ers.bsky.social/post/3n2356b3dys2s",
+      "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/kyle-shanahan-health-concerns-car-accident/1979225/",
+      "externalTitle": "49ers coach Kyle Shanahan had initial concerns about his health after car accident over the summer",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": null,
+      "reporterName": "49ers on NBCSBA",
+      "author": "49ers on NBCSBA",
+      "authorHandle": "@NBCS49ers",
+      "authorProfileUrl": "https://x.com/NBCS49ers",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1118
     },
     {
       "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
@@ -2402,81 +2967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0372
-    },
-    {
-      "id": "tweet_timkawakami_3n235iknubs2j",
-      "type": "tweet",
-      "title": "Pretty interesting Shanahan answer when I asked if it was a tough trade market to get somebody: \"Just because people are trading doesn't mean it's always the right thing, though, and sometimes a lot of people are being traded for a reason.\"",
-      "fullText": "Pretty interesting Shanahan answer when I asked if it was a tough trade market to get somebody: \"Just because people are trading doesn't mean it's always the right thing, though, and sometimes a lot of people are being traded for a reason.\"",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Tim Kawakami social post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T23:50:44.682Z",
-      "url": "https://bsky.app/profile/timkawakami.bsky.social/post/3n235iknubs2j",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "sf_standard",
-      "outletName": "The SF Standard",
-      "reporterId": "tim_kawakami",
-      "reporterName": "Tim Kawakami",
-      "author": "Tim Kawakami",
-      "authorHandle": "@timkawakami",
-      "authorProfileUrl": "https://x.com/timkawakami",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 89,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.3118
-    },
-    {
-      "id": "tweet_nbcs49ers_3n2356b3dys2s",
-      "type": "tweet",
-      "title": "“Week 1 is coming and I don’t know if I can handle all this.” Kyle Shanahan candidly discussed how his July car accident affected him before the season started",
-      "fullText": "“Week 1 is coming and I don’t know if I can handle all this.” Kyle Shanahan candidly discussed how his July car accident affected him before the season started",
-      "isFullTweet": true,
-      "summary": "49ers coach Kyle Shanahan had initial concerns about his health after car accident over the summer",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:oovjmbx2gv3o4tolrzuegtl2/bafkreifjstzfzawx2ubljpighgmjoveo5nubwo7pty4qmmsdhbdxlcftyu",
-      "imageAlt": "49ers on NBCSBA social post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T23:44:59.095Z",
-      "url": "https://bsky.app/profile/nbcs49ers.bsky.social/post/3n2356b3dys2s",
-      "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/kyle-shanahan-health-concerns-car-accident/1979225/",
-      "externalTitle": "49ers coach Kyle Shanahan had initial concerns about his health after car accident over the summer",
-      "outletId": "nbcsba",
-      "outletName": "NBC Sports Bay Area",
-      "reporterId": null,
-      "reporterName": "49ers on NBCSBA",
-      "author": "49ers on NBCSBA",
-      "authorHandle": "@NBCS49ers",
-      "authorProfileUrl": "https://x.com/NBCS49ers",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.3026
+      "storyRank": 0.7531
     },
     {
       "id": "tweet_nbcs49ers_3n233smlhck27",
@@ -2522,7 +3013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2647
+      "storyRank": 1.083
     },
     {
       "id": "tweet_49erswebzone_3n2324asgg32x",
@@ -2568,10 +3059,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2199
+      "storyRank": 1.0488
     },
     {
-      "id": "wz_180",
+      "id": "wz_186",
       "type": "article",
       "title": "Transcript: Kyle Shanahan shares 49ers injury updates, discusses Keenan Allen, Cowboys matchup",
       "summary": "San Francisco 49ers head coach Kyle Shanahan spoke with reporters ahead of Wednesday's practice as the team prepares for its Week 10 matchup against the Dallas Cowboys. Here's everything he said. Transcript provided by the San Francisco 49e",
@@ -2610,7 +3101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1901
+      "storyRank": 1.0234
     },
     {
       "id": "tweet_49erswebzone_3n22zbg6jva2t",
@@ -2647,10 +3138,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.199
+      "storyRank": 1.0327
     },
     {
-      "id": "wz_181",
+      "id": "wz_187",
       "type": "article",
       "title": "49ers Stock Watch: Which Players Are Trending Up and Down?",
       "summary": "The San Francisco 49ers are off to a strong start to the 2026 season. While some players have taken advantage of increased opportunities and established themselves as important pieces of the roster, others have seen their production or play",
@@ -2680,7 +3171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1668
+      "storyRank": 1.0055
     },
     {
       "id": "tweet_49erswebzone_3n22xuqp2ux24",
@@ -2742,10 +3233,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1654
+      "storyRank": 1.0068
     },
     {
-      "id": "wz_182",
+      "id": "wz_188",
       "type": "article",
       "title": "49ers' Keenan Allen impressed with Brock Purdy, Kyle Shanahan, addresses Mike Evans beef",
       "summary": "Wide receiver Keenan Allen will participate in his first practice with the San Francisco 49ers on Wednesday, giving him his first opportunity to catch passes from quarterback Brock Purdy as he begins learning head coach Kyle Shanahan's offe",
@@ -2800,7 +3291,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1342
+      "storyRank": 0.9803
     },
     {
       "id": "tweet_49erswebzone_3n22vw5fkva2q",
@@ -2846,10 +3337,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1211
+      "storyRank": 0.9724
     },
     {
-      "id": "wz_183",
+      "id": "wz_189",
       "type": "article",
       "title": "49ers' Kyle Shanahan reveals his reaction to Mac Jones trade interest",
       "summary": "Kyle Shanahan confirmed that multiple teams inquired about San Francisco 49ers quarterback Mac Jones ahead of the NFL trade deadline. However, nothing came of those discussions, with the 49ers' reported asking price exceeding what intereste",
@@ -2888,7 +3379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0956
+      "storyRank": 0.9504
     },
     {
       "id": "x_status_2120630512658329820",
@@ -2925,7 +3416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1167
+      "storyRank": 0.969
     },
     {
       "id": "tweet_49erswebzone_3n22v3d6mli2f",
@@ -2971,10 +3462,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.103
+      "storyRank": 0.9583
     },
     {
-      "id": "wz_184",
+      "id": "wz_190",
       "type": "article",
       "title": "Kyle Shanahan reveals what Keenan Allen brings to the 49ers after trade",
       "summary": "The San Francisco 49ers made a move just hours before Tuesday's NFL trade deadline, acquiring wide receiver Keenan Allen from the Indianapolis Colts. The trade addresses a significant need for the 49ers, whose wide receiver depth has been d",
@@ -3013,20 +3504,20 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0725
+      "storyRank": 0.9323
     },
     {
       "id": "yt_7on3PQSGsu0",
       "type": "video",
       "title": "Kyle Shanahan Previews Week 10 Matchup vs. Cowboys| 49ers",
-      "summary": "Video • San Francisco 49ers • 19h ago",
+      "summary": "Video (17:36) • San Francisco 49ers • 21h ago",
       "imageUrl": "https://i.ytimg.com/vi/7on3PQSGsu0/hqdefault.jpg",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-11T20:55:41.000Z",
       "url": "https://www.youtube.com/watch?v=7on3PQSGsu0",
       "videoId": "7on3PQSGsu0",
       "embeddable": false,
-      "duration": "",
+      "duration": "17:36",
       "outletId": "49ers_official",
       "outletName": "San Francisco 49ers",
       "reporterId": "49ers_news",
@@ -3048,7 +3539,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 1.2009
+      "storyRank": 1.049
     },
     {
       "id": "espn_pwire_16737_64716228",
@@ -3109,7 +3600,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2279
+      "storyRank": 1.0704
     },
     {
       "id": "tweet_mattmaiocco_3n22t2xbfnk2e",
@@ -3211,7 +3702,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2055
+      "storyRank": 1.0514
     },
     {
       "id": "tweet_mattbarrows_3n22svbobls27",
@@ -3273,7 +3764,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2015
+      "storyRank": 1.0482
     },
     {
       "id": "tweet_49erswebzone_3n22q2fhuq22t",
@@ -3310,10 +3801,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0044
+      "storyRank": 0.8807
     },
     {
-      "id": "wz_186",
+      "id": "wz_192",
       "type": "article",
       "title": "49ers overwhelming favorite to win NFC West, secure No. 1 seed",
       "summary": "With nine games remaining on the San Francisco 49ers' 2026 schedule, there is still plenty of work to be done. However, the team has built a comfortable lead in the NFC West with a 7-1 record and hopes to maintain that momentum throughout t",
@@ -3343,86 +3834,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9809
-    },
-    {
-      "id": "yt_2rWYmh7dkmk",
-      "type": "video",
-      "title": "Kyle Shanahan Shares Final Updates Ahead of Week 10 Game vs. Cowboys | 49ers",
-      "summary": "Video • San Francisco 49ers • 21h ago",
-      "imageUrl": "https://i.ytimg.com/vi/2rWYmh7dkmk/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T18:46:59.000Z",
-      "url": "https://www.youtube.com/watch?v=2rWYmh7dkmk",
-      "videoId": "2rWYmh7dkmk",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 1.0579
-    },
-    {
-      "id": "yt_ZBVndt-vibA",
-      "type": "video",
-      "title": "Raheem Morris, Klay Kubiak, and Brock Purdy Speak Ahead of Week 10 vs. Cowboys | 49ers",
-      "summary": "Video • San Francisco 49ers • 21h ago",
-      "imageUrl": "https://i.ytimg.com/vi/ZBVndt-vibA/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T18:38:57.000Z",
-      "url": "https://www.youtube.com/watch?v=ZBVndt-vibA",
-      "videoId": "ZBVndt-vibA",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 1.0498
+      "storyRank": 0.8602
     },
     {
       "id": "tweet_mattbarrows_3n22jonltyc27",
@@ -3476,7 +3888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.022
+      "storyRank": 0.9051
     },
     {
       "id": "tweet_mattmaiocco_3n22jnucqf22s",
@@ -3530,7 +3942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0216
+      "storyRank": 0.9048
     },
     {
       "id": "tweet_profootballtalk_3n23lrrzsnk2q",
@@ -3584,98 +3996,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6468
+      "storyRank": 0.5075
     },
     {
-      "id": "tweet_49erswebzone_3n22jdseqhb2x",
-      "type": "tweet",
-      "title": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
-      "fullText": "#49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigtzju73jffxrhupgnophctea7fhn5l3ssxkn4rb7qtymifywt7xe",
-      "imageAlt": "49ers Webzone social post",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T09:50:02-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jdseqhb2x",
-      "externalUrl": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-      "externalTitle": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8949
-    },
-    {
-      "id": "wz_188",
-      "type": "article",
-      "title": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-      "summary": "The San Francisco 49ers could go in several directions in the 2027 NFL Draft, but one analyst believes the team could prioritize protecting quarterback Brock Purdy. San Francisco has generally refrained from investing significant draft capi",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33063-1794419290.jpg",
-      "imageAlt": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T17:48:10.000Z",
-      "url": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8734
-    },
-    {
-      "id": "sf49_156",
+      "id": "sf49_160",
       "type": "article",
       "title": "Ways to Watch and Listen: 49ers vs. Cowboys | Week 10",
       "summary": "Broadcast and streaming information for the San Francisco 49ers Week 10 matchup against the Dallas Cowboys at AT&T Stadium.",
@@ -3705,51 +4029,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8433
-    },
-    {
-      "id": "yt_2Syx2u_1Nus",
-      "type": "video",
-      "title": "49ers Insider Matt Barrows on Writing a Novel, Brock Purdy’s Mind & 24 Years Covering the Team",
-      "summary": "Video • San Francisco 49ers • 23h ago",
-      "imageUrl": "https://i.ytimg.com/vi/2Syx2u_1Nus/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T17:00:05.000Z",
-      "url": "https://www.youtube.com/watch?v=2Syx2u_1Nus",
-      "videoId": "2Syx2u_1Nus",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.9526
+      "storyRank": 0.7496
     },
     {
       "id": "tweet_mattmaiocco_3n22d56hdf22b",
@@ -3795,7 +4075,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.921
+      "storyRank": 0.8229
     },
     {
       "id": "tweet_nbcs49ers_3n23b2cukis2d",
@@ -3849,86 +4129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4654
-    },
-    {
-      "id": "sf49_157",
-      "type": "article",
-      "title": "Mike Evans Hits the Hardwood as Dad, Coach, and Bay Area Fan | Off the Field",
-      "summary": "San Francisco 49ers WR Mike Evans shares his love of basketball with his daughter, her AAU team, and Bay Area fans.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/abra0nzlig6mthucd78j.png",
-      "imageAlt": "Mike Evans Hits the Hardwood as Dad, Coach, and Bay Area Fan | Off the Field",
-      "mentionedPlayers": [
-        {
-          "id": "16737",
-          "name": "Mike Evans",
-          "shortName": "M. Evans",
-          "position": "WR",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T16:09:56.000Z",
-      "url": "https://www.49ers.com/news/mike-evans-hits-the-hardwood-as-dad-coach-and-bay-area-fan-off-the-field",
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "49ers.com Staff",
-      "author": "49ers.com Staff",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8004
-    },
-    {
-      "id": "tweet_49erswebzone_3n22di2eo3c2p",
-      "type": "tweet",
-      "title": "#49ers vs. Cowboys in Week 10: How to watch, stream, and listen, plus odds Read:",
-      "fullText": "#49ers vs. Cowboys in Week 10: How to watch, stream, and listen, plus odds Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreihqw43k7ydez6kbjnjlpsiu77r3wugah5h63h3xizy2moyad6azuu",
-      "imageAlt": "49ers Webzone social post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T08:05:02-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22di2eo3c2p",
-      "externalUrl": "https://www.49erswebzone.com/articles/205047-49ers-cowboys-watch-stream-listen/",
-      "externalTitle": "49ers vs. Cowboys in Week 10: How to watch, stream, and listen, plus odds",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8152
+      "storyRank": 0.3813
     },
     {
       "id": "tweet_nbcs49ers_3n237eirfs22u",
@@ -3982,7 +4183,49 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4446
+      "storyRank": 0.3662
+    },
+    {
+      "id": "sf49_161",
+      "type": "article",
+      "title": "Mike Evans Hits the Hardwood as Dad, Coach, and Bay Area Fan | Off the Field",
+      "summary": "San Francisco 49ers WR Mike Evans shares his love of basketball with his daughter, her AAU team, and Bay Area fans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/abra0nzlig6mthucd78j.png",
+      "imageAlt": "Mike Evans Hits the Hardwood as Dad, Coach, and Bay Area Fan | Off the Field",
+      "mentionedPlayers": [
+        {
+          "id": "16737",
+          "name": "Mike Evans",
+          "shortName": "M. Evans",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png"
+        }
+      ],
+      "publishedAt": "2026-11-11T16:09:56.000Z",
+      "url": "https://www.49ers.com/news/mike-evans-hits-the-hardwood-as-dad-coach-and-bay-area-fan-off-the-field",
+      "outletId": "49ers_official",
+      "outletName": "49ers.com Official",
+      "reporterId": "49ers_news",
+      "reporterName": "49ers.com Staff",
+      "author": "49ers.com Staff",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7146
     },
     {
       "id": "tweet_49erswebzone_3n234mpm34424",
@@ -4036,52 +4279,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4136
+      "storyRank": 0.3435
     },
     {
-      "id": "sf49_158",
-      "type": "article",
-      "title": "Morning Report: Dugger and Rookies Stepping Up, Latest Rankings 🗞️",
-      "summary": "Catch up on the latest San Francisco 49ers headlines, powered by Cisco.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/lnv9vgyfyyos1enwtbxx.jpg",
-      "imageAlt": "Morning Report: Dugger and Rookies Stepping Up, Latest Rankings 🗞️",
-      "mentionedPlayers": [
-        {
-          "id": "5086161",
-          "name": "Jaden Dugger",
-          "shortName": "J. Dugger",
-          "position": "LB",
-          "jersey": 53,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5086161.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T15:01:23.000Z",
-      "url": "https://www.49ers.com/news/morning-reports/morning-report-dugger-and-rookies-stepping-up-latest-rankings",
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "49ers.com Staff",
-      "author": "49ers.com Staff",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.7555
-    },
-    {
-      "id": "wz_178",
+      "id": "wz_184",
       "type": "article",
       "title": "49ers' C.J. West reveals why he freely gave DeForest Buckner No. 99",
       "summary": "Some might say San Francisco 49ers defensive tackle C.J. West missed an opportunity to add to his bank account. When the team traded for defensive tackle DeForest Buckner, West willingly—and freely—gave up his No. 99 jersey for the veteran.",
@@ -4128,7 +4329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3964
+      "storyRank": 0.3295
     },
     {
       "id": "x_status_2120640440341037224",
@@ -4182,7 +4383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3683
+      "storyRank": 0.3098
     },
     {
       "id": "tweet_mattmaiocco_3n22tdmxdb22e",
@@ -4228,7 +4429,49 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4012
+      "storyRank": 0.3411
+    },
+    {
+      "id": "sf49_162",
+      "type": "article",
+      "title": "Morning Report: Dugger and Rookies Stepping Up, Latest Rankings 🗞️",
+      "summary": "Catch up on the latest San Francisco 49ers headlines, powered by Cisco.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/lnv9vgyfyyos1enwtbxx.jpg",
+      "imageAlt": "Morning Report: Dugger and Rookies Stepping Up, Latest Rankings 🗞️",
+      "mentionedPlayers": [
+        {
+          "id": "5086161",
+          "name": "Jaden Dugger",
+          "shortName": "J. Dugger",
+          "position": "LB",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5086161.png"
+        }
+      ],
+      "publishedAt": "2026-11-11T15:01:23.000Z",
+      "url": "https://www.49ers.com/news/morning-reports/morning-report-dugger-and-rookies-stepping-up-latest-rankings",
+      "outletId": "49ers_official",
+      "outletName": "49ers.com Official",
+      "reporterId": "49ers_news",
+      "reporterName": "49ers.com Staff",
+      "author": "49ers.com Staff",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6777
     },
     {
       "id": "tweet_mattmaiocco_3n22rbixa5k2s",
@@ -4290,7 +4533,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3834
+      "storyRank": 0.3274
     },
     {
       "id": "sf_tx_MjAyNi0xMS0xMV",
@@ -4337,86 +4580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6807
-    },
-    {
-      "id": "tweet_49erswebzone_3n22f5ovfqx27",
-      "type": "tweet",
-      "title": "#49ers had 2-time Pro Bowl tight end on their trade radar Read:",
-      "fullText": "#49ers had 2-time Pro Bowl tight end on their trade radar Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreih3jquxjhe5yffbzeczq6yzhw5mwh5srwheahdyj2r2reyfe5yosq",
-      "imageAlt": "49ers Webzone social post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T08:35:02-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22f5ovfqx27",
-      "externalUrl": "https://www.49erswebzone.com/articles/205049-49ers-2-time-tight-trade-radar/",
-      "externalTitle": "49ers had 2-time Pro Bowl tight end on their trade radar",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "side_note",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2487
-    },
-    {
-      "id": "wz_189",
-      "type": "article",
-      "title": "49ers had 2-time Pro Bowl tight end on their trade radar",
-      "summary": "The San Francisco 49ers made a move ahead of Tuesday's NFL trade deadline, acquiring wide receiver Keenan Allen from the Indianapolis Colts. However, it appears the 49ers weren't limiting their search for additional...",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33062-1794414699.jpg",
-      "imageAlt": "49ers had 2-time Pro Bowl tight end on their trade radar",
-      "mentionedPlayers": [
-        {
-          "id": "15818",
-          "name": "Keenan Allen",
-          "shortName": "K. Allen",
-          "position": "WR",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T16:31:39.000Z",
-      "url": "https://www.49erswebzone.com/articles/205049-49ers-2-time-tight-trade-radar/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "side_note",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2392
+      "storyRank": 0.6241
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzzd74iuu22f",
@@ -4462,10 +4626,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5353
+      "storyRank": 0.4926
     },
     {
-      "id": "pfrumors_131",
+      "id": "pfrumors_134",
       "type": "article",
       "title": "49ers Acquire Keenan Allen From Colts",
       "summary": "The 49ers are acquiring wide receiver Keenan Allen from the Colts, Tom Pelissero of The Ringer reports. The Colts will receive a 2027 sixth-round pick in return. The trade is now official. This deal will send Allen back to the West Coast, w",
@@ -4506,7 +4670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5798
+      "storyRank": 0.5351
     },
     {
       "id": "tweet_mattbarrows_3mzyunub4ck2q",
@@ -4552,7 +4716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5216
+      "storyRank": 0.4842
     },
     {
       "id": "tweet_nbcs49ers_3mzyufy4a7c23",
@@ -4606,7 +4770,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1221
+      "storyRank": 0.1118
     },
     {
       "id": "espn_50447640",
@@ -4648,10 +4812,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4323
+      "storyRank": 0.4021
     },
     {
-      "id": "sf49_159",
+      "id": "sf49_163",
       "type": "article",
       "title": "Power Rankings: Where the 49ers Stand Entering Week 10",
       "summary": "Find out where the San Francisco 49ers landed in the latest set of NFL power rankings according to several national outlets following their 38-17 win over the Las Vegas Raiders.",
@@ -4681,10 +4845,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4365
+      "storyRank": 0.4059
     },
     {
-      "id": "sfstd_175",
+      "id": "sfstd_179",
       "type": "article",
       "title": "‘Section 415’ podcast: Analyzing the 49ers’ trades for DeForest Buckner and Keenan Allen",
       "summary": "General manager John Lynch made two trades with the Indianapolis Colts to bolster the 49ers’ defensive line and receiving corps.",
@@ -4731,7 +4895,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4379
+      "storyRank": 0.4073
     },
     {
       "id": "espn_50444457",
@@ -4773,7 +4937,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.406
+      "storyRank": 0.3789
     },
     {
       "id": "tweet_mattmaiocco_3mzyjfyzay22l",
@@ -4835,7 +4999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4685
+      "storyRank": 0.4374
     },
     {
       "id": "tweet_victafur_3mzyjsxoqys2x",
@@ -4881,7 +5045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4142
+      "storyRank": 0.3866
     },
     {
       "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -4943,10 +5107,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4657
+      "storyRank": 0.4349
     },
     {
-      "id": "sf49_160",
+      "id": "sf49_164",
       "type": "article",
       "title": "49ers Place DL Gracen Halton on Injured Reserve",
       "summary": "The San Francisco 49ers announced they have placed DL Gracen Halton on the Injured Reserve List.",
@@ -4985,7 +5149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3959
+      "storyRank": 0.37
     },
     {
       "id": "espn_50444620",
@@ -5027,7 +5191,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3274
+      "storyRank": 0.3066
     },
     {
       "id": "tweet_mattmaiocco_3mzya7jjaw22c",
@@ -5073,7 +5237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4317
+      "storyRank": 0.4047
     },
     {
       "id": "tweet_mattmaiocco_3mzya53mbjk2c",
@@ -5119,10 +5283,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4315
+      "storyRank": 0.4045
     },
     {
-      "id": "sfstd_176",
+      "id": "sfstd_180",
       "type": "article",
       "title": "The Keenan Allen trade: Why the 49ers added a receiver and what he brings to the offense",
       "summary": "After acquiring DeForest Buckner from the Colts last week, San Francisco GM John Lynch called Indianapolis to trade for Allen.",
@@ -5169,7 +5333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4256
+      "storyRank": 0.3991
     },
     {
       "id": "tweet_mattbarrows_3mzy7g6kox227",
@@ -5215,7 +5379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4288
+      "storyRank": 0.4021
     },
     {
       "id": "tweet_mattmaiocco_3mzy6uu7gp22j",
@@ -5252,7 +5416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4268
+      "storyRank": 0.4004
     },
     {
       "id": "tweet_victafur_3mzy7nm7u6k2x",
@@ -5298,7 +5462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3784
+      "storyRank": 0.3548
     },
     {
       "id": "tweet_mattbarrows_3mzy6rgplnk27",
@@ -5335,7 +5499,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4265
+      "storyRank": 0.4
     },
     {
       "id": "tweet_victafur_3mzy7kpu4722x",
@@ -5381,7 +5545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3781
+      "storyRank": 0.3546
     },
     {
       "id": "tweet_nbcs49ers_3mzy7dzikdk2p",
@@ -5427,7 +5591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3774
+      "storyRank": 0.354
     },
     {
       "id": "espn_50434129",
@@ -5469,7 +5633,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3169
+      "storyRank": 0.2972
     },
     {
       "id": "tweet_mattmaiocco_3mzy4oiyim22c",
@@ -5595,7 +5759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.419
+      "storyRank": 0.3933
     },
     {
       "id": "x_status_2120228671122284835",
@@ -5673,7 +5837,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4183
+      "storyRank": 0.3927
     },
     {
       "id": "espn_pwire_4241464_64699628",
@@ -5726,7 +5890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3764
+      "storyRank": 0.3533
     },
     {
       "id": "tweet_rapsheet_3mzy45qejoc2l",
@@ -5780,7 +5944,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4171
+      "storyRank": 0.3917
     },
     {
       "id": "tweet_mattmaiocco_3mzy3ytrh6k2c",
@@ -5826,7 +5990,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4166
+      "storyRank": 0.3912
     },
     {
       "id": "espn_pwire_15818_64699428",
@@ -5887,7 +6051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4215
+      "storyRank": 0.3958
     },
     {
       "id": "tweet_nbcs49ers_3mzy4o2eizc2o",
@@ -5924,7 +6088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3689
+      "storyRank": 0.3463
     },
     {
       "id": "tweet_nflnewsreposterbot_3mzy3kuhefk26",
@@ -5970,7 +6134,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4151
+      "storyRank": 0.3898
     },
     {
       "id": "x_status_2120224371361116598",
@@ -6016,7 +6180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4149
+      "storyRank": 0.3897
     },
     {
       "id": "x_status_2120225625273221499",
@@ -6070,7 +6234,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3663
+      "storyRank": 0.344
     },
     {
       "id": "x_status_2120225602657784121",
@@ -6116,7 +6280,253 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3663
+      "storyRank": 0.344
+    },
+    {
+      "id": "yt_hzT9YM6d6Zo",
+      "type": "video",
+      "title": "Mic’d Up: Colton McKivitz Stands His Ground vs. the Raiders | 49ers",
+      "summary": "Video (4:43) • San Francisco 49ers • 2d ago",
+      "imageUrl": "https://i.ytimg.com/vi/hzT9YM6d6Zo/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "3916075",
+          "name": "Colton McKivitz",
+          "shortName": "C. McKivitz",
+          "position": "OT",
+          "jersey": 68,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916075.png"
+        }
+      ],
+      "publishedAt": "2026-11-11T03:00:30.000Z",
+      "url": "https://www.youtube.com/watch?v=hzT9YM6d6Zo",
+      "videoId": "hzT9YM6d6Zo",
+      "embeddable": false,
+      "duration": "4:43",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.38
+    },
+    {
+      "id": "yt_cwV989gSLY8",
+      "type": "video",
+      "title": "From the Trenches: 49ers Keep the Raiders at Bay at Levi’s® Stadium in Week 9",
+      "summary": "Video (11:01) • San Francisco 49ers • 2d ago",
+      "imageUrl": "https://i.ytimg.com/vi/cwV989gSLY8/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-10T18:00:04.000Z",
+      "url": "https://www.youtube.com/watch?v=cwV989gSLY8",
+      "videoId": "cwV989gSLY8",
+      "embeddable": false,
+      "duration": "11:01",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.3783
+    },
+    {
+      "id": "yt_miYvAF9Rg6U",
+      "type": "video",
+      "title": "49ers Playbook: SF Sinks the Raiders in the Bay",
+      "summary": "Video (16:41) • Jonnydel's Football Academy • 2d ago",
+      "imageUrl": "https://i.ytimg.com/vi/miYvAF9Rg6U/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-11T01:00:22.000Z",
+      "url": "https://www.youtube.com/watch?v=miYvAF9Rg6U",
+      "videoId": "miYvAF9Rg6U",
+      "embeddable": true,
+      "duration": "16:41",
+      "outletId": "youtube_film",
+      "outletName": "Jonnydel's Football Academy",
+      "reporterId": "jonnydel",
+      "reporterName": "Jonnydel's Football Academy",
+      "author": "Jonnydel's Football Academy",
+      "trustTier": 2,
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 86,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 93,
+      "authorHandle": "@jonnydelsfa",
+      "authorProfileUrl": "https://x.com/jonnydelsfa",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.3492
+    },
+    {
+      "id": "yt_4F7OCHuayAU",
+      "type": "video",
+      "title": "Jordan Watkins - Highlights - San Francisco 49ers vs Las Vegas Raiders - NFL Week 9 2026",
+      "summary": "Video (1:10) • San Francisco 49ers Fans • 2d ago",
+      "imageUrl": "https://i.ytimg.com/vi/4F7OCHuayAU/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "4431466",
+          "name": "Jordan Watkins",
+          "shortName": "J. Watkins",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431466.png"
+        }
+      ],
+      "publishedAt": "2026-11-10T18:10:40.159Z",
+      "url": "https://www.youtube.com/watch?v=4F7OCHuayAU",
+      "videoId": "4F7OCHuayAU",
+      "embeddable": false,
+      "duration": "1:10",
+      "outletId": "youtube_film",
+      "outletName": "San Francisco 49ers Fans",
+      "reporterId": null,
+      "reporterName": "San Francisco 49ers Fans",
+      "author": "San Francisco 49ers Fans",
+      "trustTier": 2,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.youtube.com/watch?v=4F7OCHuayAU",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.3341
+    },
+    {
+      "id": "yt_E30tGdDqt3w",
+      "type": "video",
+      "title": "Fred Warner - Highlights - San Francisco 49ers vs Las Vegas Raiders - NFL Week 9 2026",
+      "summary": "Video (1:46) • San Francisco 49ers Fans • 2d ago",
+      "imageUrl": "https://i.ytimg.com/vi/E30tGdDqt3w/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "3138826",
+          "name": "Fred Warner",
+          "shortName": "F. Warner",
+          "position": "LB",
+          "jersey": 54,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3138826.png"
+        }
+      ],
+      "publishedAt": "2026-11-10T18:10:40.159Z",
+      "url": "https://www.youtube.com/watch?v=E30tGdDqt3w",
+      "videoId": "E30tGdDqt3w",
+      "embeddable": false,
+      "duration": "1:46",
+      "outletId": "youtube_film",
+      "outletName": "San Francisco 49ers Fans",
+      "reporterId": null,
+      "reporterName": "San Francisco 49ers Fans",
+      "author": "San Francisco 49ers Fans",
+      "trustTier": 2,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.youtube.com/watch?v=E30tGdDqt3w",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.3341
+    },
+    {
+      "id": "yt_2z9463dSlug",
+      "type": "video",
+      "title": "Brock Purdy - Every Completed Pass - San Francisco 49ers vs Las Vegas Raiders - NFL Week 9 2026",
+      "summary": "Video (2:38) • San Francisco 49ers Fans • 2d ago",
+      "imageUrl": "https://i.ytimg.com/vi/2z9463dSlug/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "publishedAt": "2026-11-10T18:10:40.159Z",
+      "url": "https://www.youtube.com/watch?v=2z9463dSlug",
+      "videoId": "2z9463dSlug",
+      "embeddable": false,
+      "duration": "2:38",
+      "outletId": "youtube_film",
+      "outletName": "San Francisco 49ers Fans",
+      "reporterId": null,
+      "reporterName": "San Francisco 49ers Fans",
+      "author": "San Francisco 49ers Fans",
+      "trustTier": 2,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.youtube.com/watch?v=2z9463dSlug",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.3341
     },
     {
       "id": "x_status_2120212022298321242",
@@ -6162,61 +6572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4056
-    },
-    {
-      "id": "tweet_mattmaiocco_3mzxypiznlc2c",
-      "type": "tweet",
-      "title": "49ers rookie DT Gracen Halton sustained a broken and dislocated ankle on Sunday. Fred Warner had the same injury last season and would've been able to play 105 days later. That same time period for Halton would be Feb. 21, 2026, which is one week after Super Bowl 61.",
-      "fullText": "49ers rookie DT Gracen Halton sustained a broken and dislocated ankle on Sunday. Fred Warner had the same injury last season and would've been able to play 105 days later. That same time period for Halton would be Feb. 21, 2026, which is one week after Super Bowl 61.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Matt Maiocco social post",
-      "mentionedPlayers": [
-        {
-          "id": "3138826",
-          "name": "Fred Warner",
-          "shortName": "F. Warner",
-          "position": "LB",
-          "jersey": 54,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3138826.png"
-        },
-        {
-          "id": "4685369",
-          "name": "Gracen Halton",
-          "shortName": "G. Halton",
-          "position": "DT",
-          "jersey": 93,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png"
-        }
-      ],
-      "publishedAt": "2026-11-10T17:47:09.929Z",
-      "url": "https://x.com/MaioccoNBCS/status/2120211657771385327",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "nbcsba",
-      "outletName": "NBC Sports Bay Area",
-      "reporterId": "matt_maiocco",
-      "reporterName": "Matt Maiocco",
-      "author": "Matt Maiocco",
-      "authorHandle": "@MaioccoNBCS",
-      "authorProfileUrl": "https://x.com/MaioccoNBCS",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 1,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.4054
+      "storyRank": 0.3813
     },
     {
       "id": "x_status_2120211657771385327",
@@ -6270,10 +6626,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4053
+      "storyRank": 0.3811
     },
     {
-      "id": "pfrumors_132",
+      "id": "pfrumors_135",
       "type": "article",
       "title": "Brandon Aiyuk Passes 49ers Physical; Release Likely",
       "summary": "As the wide receiver trade market looks slim hours before the deadline, a team that misses out on Josh Downs (or another available receiver) could take a flier on Brandon Aiyuk. It looks like Aiyuk’s six-plus-year 49ers relationship will en",
@@ -6314,7 +6670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3541
+      "storyRank": 0.333
     },
     {
       "id": "x_status_2120201789014221264",
@@ -6360,7 +6716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3507
+      "storyRank": 0.33
     },
     {
       "id": "tweet_nbcs49ers_3mzxvcjhqtk2z",
@@ -6397,7 +6753,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3473
+      "storyRank": 0.3269
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzxufphuss2p",
@@ -6434,7 +6790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6941
+      "storyRank": 0.656
     },
     {
       "id": "espn_pwire_16737_64698228",
@@ -6479,165 +6835,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3931
-    },
-    {
-      "id": "yt_hzT9YM6d6Zo",
-      "type": "video",
-      "title": "Mic’d Up: Colton McKivitz Stands His Ground vs. the Raiders | 49ers",
-      "summary": "Video • San Francisco 49ers • 2d ago",
-      "imageUrl": "https://i.ytimg.com/vi/hzT9YM6d6Zo/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "3916075",
-          "name": "Colton McKivitz",
-          "shortName": "C. McKivitz",
-          "position": "OT",
-          "jersey": 68,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916075.png"
-        }
-      ],
-      "publishedAt": "2026-11-11T03:00:30.000Z",
-      "url": "https://www.youtube.com/watch?v=hzT9YM6d6Zo",
-      "videoId": "hzT9YM6d6Zo",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.38
-    },
-    {
-      "id": "yt_cwV989gSLY8",
-      "type": "video",
-      "title": "From the Trenches: 49ers Keep the Raiders at Bay at Levi’s® Stadium in Week 9",
-      "summary": "Video • San Francisco 49ers • 2d ago",
-      "imageUrl": "https://i.ytimg.com/vi/cwV989gSLY8/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-10T18:00:04.000Z",
-      "url": "https://www.youtube.com/watch?v=cwV989gSLY8",
-      "videoId": "cwV989gSLY8",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.38
-    },
-    {
-      "id": "yt_t94uMj5y6zg",
-      "type": "video",
-      "title": "Leveling the Playing Field with Grecia Barboza | Inside the Oval",
-      "summary": "Video • San Francisco 49ers • 2d ago",
-      "imageUrl": "https://i.ytimg.com/vi/t94uMj5y6zg/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T00:33:14.000Z",
-      "url": "https://www.youtube.com/watch?v=t94uMj5y6zg",
-      "videoId": "t94uMj5y6zg",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.38
-    },
-    {
-      "id": "yt_PXUm6A25LJg",
-      "type": "video",
-      "title": "17 Seasons Strong: Jon Weeks on His NFL Journey & More | You've Got Mail",
-      "summary": "Video • San Francisco 49ers • 2d ago",
-      "imageUrl": "https://i.ytimg.com/vi/PXUm6A25LJg/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "13729",
-          "name": "Jon Weeks",
-          "shortName": "J. Weeks",
-          "position": "LS",
-          "jersey": 46,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13729.png"
-        }
-      ],
-      "publishedAt": "2026-11-10T23:54:14.000Z",
-      "url": "https://www.youtube.com/watch?v=PXUm6A25LJg",
-      "videoId": "PXUm6A25LJg",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.38
+      "storyRank": 0.3704
     },
     {
       "id": "tweet_nbcs49ers_3mzxsgnykes2f",
@@ -6683,45 +6881,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3394
+      "storyRank": 0.3198
     },
     {
-      "id": "yt_miYvAF9Rg6U",
-      "type": "video",
-      "title": "49ers Playbook: SF Sinks the Raiders in the Bay",
-      "summary": "Video • Jonnydel's Football Academy • 2d ago",
-      "imageUrl": "https://i.ytimg.com/vi/miYvAF9Rg6U/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-11T01:00:22.000Z",
-      "url": "https://www.youtube.com/watch?v=miYvAF9Rg6U",
-      "videoId": "miYvAF9Rg6U",
-      "embeddable": true,
-      "duration": "",
-      "outletId": "youtube_film",
-      "outletName": "Jonnydel's Football Academy",
-      "reporterId": "jonnydel",
-      "reporterName": "Jonnydel's Football Academy",
-      "author": "Jonnydel's Football Academy",
-      "trustTier": 2,
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 86,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 93,
-      "authorHandle": "@jonnydelsfa",
-      "authorProfileUrl": "https://x.com/jonnydelsfa",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.3492
-    },
-    {
-      "id": "sf49_161",
+      "id": "sf49_165",
       "type": "article",
       "title": "Morning Report: Purdy, McCaffrey Reach Milestones, 49ers React to Week 9 🗞️",
       "summary": "Catch up on the latest San Francisco 49ers headlines, powered by Cisco.",
@@ -6768,7 +6931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3272
+      "storyRank": 0.3085
     },
     {
       "id": "sf_tx_MjAyNi0xMS0xMF",
@@ -6823,7 +6986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3349
+      "storyRank": 0.3181
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzwlvdliss2n",
@@ -6860,10 +7023,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.258
+      "storyRank": 0.2458
     },
     {
-      "id": "sf49_162",
+      "id": "sf49_166",
       "type": "article",
       "title": "Jaden Dugger's Impactful Play Shows 49ers Rookie Class Is Delivering",
       "summary": "LB Jaden Dugger’s first career pick-six is another sign of the immediate impact made by the 49ers rookie class.",
@@ -6902,7 +7065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2492
+      "storyRank": 0.2375
     },
     {
       "id": "tweet_jenniferleechan_3mzwj2oq2cc2y",
@@ -6956,7 +7119,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2878
+      "storyRank": 0.2743
     },
     {
       "id": "tweet_jenniferleechan_3mzwgrzbioc2y",
@@ -7002,7 +7165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2837
+      "storyRank": 0.2706
     },
     {
       "id": "tweet_mattbarrows_3mzwg2zztvs2r",
@@ -7080,7 +7243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2824
+      "storyRank": 0.2694
     },
     {
       "id": "espn_50438189",
@@ -7113,10 +7276,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2417
+      "storyRank": 0.2306
     },
     {
-      "id": "sf49_163",
+      "id": "sf49_167",
       "type": "article",
       "title": "After Further Review: Shanahan Shares Injury Updates, Talks Defensive Performance Following Week 9 Win",
       "summary": "Kyle Shanahan joined a media call following the 49ers Week 9 matchup vs. the Las Vegas Raiders to provide injury updates and discuss the team's performance.",
@@ -7146,7 +7309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2427
+      "storyRank": 0.2315
     },
     {
       "id": "espn_pwire_4686308_64689928",
@@ -7191,7 +7354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2839
+      "storyRank": 0.2709
     },
     {
       "id": "tweet_mattbarrows_3mzwbuyr43k2r",
@@ -7228,7 +7391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2752
+      "storyRank": 0.2627
     },
     {
       "id": "espn_pwire_4242488_64688528",
@@ -7273,7 +7436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2784
+      "storyRank": 0.2659
     },
     {
       "id": "espn_pwire_4427325_64688428",
@@ -7318,7 +7481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.278
+      "storyRank": 0.2655
     },
     {
       "id": "tweet_nbcs49ers_3mzwadjjhr22y",
@@ -7355,10 +7518,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2401
+      "storyRank": 0.2293
     },
     {
-      "id": "sf49_164",
+      "id": "sf49_168",
       "type": "article",
       "title": "What the 49ers and Raiders Had to Say After Week 9",
       "summary": "See what Kyle Shanahan, Brock Purdy, Fred Warner, George Kittle, Klint Kubiak, and Kirk Cousins had to say following the Week 9 contest.",
@@ -7413,7 +7576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2346
+      "storyRank": 0.2241
     },
     {
       "id": "espn_50435848",
@@ -7455,10 +7618,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2261
+      "storyRank": 0.2162
     },
     {
-      "id": "sf49_165",
+      "id": "sf49_169",
       "type": "article",
       "title": "Purdy Reaches 100 Passing TDs, McCaffrey Breaks NFL Record; Stats and Facts from #LVvsSF",
       "summary": "Take a look at key stats from the San Francisco 49ers Week 9 matchup vs. the Las Vegas Raiders.",
@@ -7505,7 +7668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2275
+      "storyRank": 0.2175
     },
     {
       "id": "espn_pwire_16737_64685028",
@@ -7558,7 +7721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2653
+      "storyRank": 0.2538
     },
     {
       "id": "espn_pwire_4360438_64684528",
@@ -7603,7 +7766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.263
+      "storyRank": 0.2516
     },
     {
       "id": "tweet_jenniferleechan_3mzvwtn7u622r",
@@ -7649,7 +7812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2576
+      "storyRank": 0.2465
     },
     {
       "id": "tweet_rapsheet_3mzvvlphr7s27",
@@ -7695,10 +7858,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2558
+      "storyRank": 0.2448
     },
     {
-      "id": "pfrumors_133",
+      "id": "pfrumors_136",
       "type": "article",
       "title": "Brandon Aiyuk, Rosenhaus Meet With 49ers Brass",
       "summary": "NOVEMBER 9: Aiyuk reported for his physical Monday, The Athletic’s Jonathan Jones tweets. The ensuing step in this drawn-out process will be the 49ers receiving a two-week roster exemption for a player who reported late. NOVEMBER 6: As estr",
@@ -7739,7 +7902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2252
+      "storyRank": 0.2156
     },
     {
       "id": "espn_50433470",
@@ -7797,7 +7960,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2226
+      "storyRank": 0.2131
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzvrrp3ak22w",
@@ -7843,10 +8006,238 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2204
+      "storyRank": 0.2111
     },
     {
-      "id": "sf49_166",
+      "id": "yt_sHwzc9C4rqU",
+      "type": "video",
+      "title": "Shanahan Reflects on Dominant Win Over Raiders, Praises Defense’s Takeaways | 49ers",
+      "summary": "Video (10:50) • San Francisco 49ers • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/sHwzc9C4rqU/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-09T18:10:40.160Z",
+      "url": "https://www.youtube.com/watch?v=sHwzc9C4rqU",
+      "videoId": "sHwzc9C4rqU",
+      "embeddable": false,
+      "duration": "10:50",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.2262
+    },
+    {
+      "id": "yt_sNQJenFh30k",
+      "type": "video",
+      "title": "Las Vegas Raiders vs. San Francisco 49ers Game Highlights | 2026 NFL Season Week 9",
+      "summary": "Video (15:15) • NFL • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/sNQJenFh30k/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-09T18:10:40.157Z",
+      "url": "https://www.youtube.com/watch?v=sNQJenFh30k",
+      "videoId": "sNQJenFh30k",
+      "embeddable": false,
+      "duration": "15:15",
+      "outletId": "nfl_network",
+      "outletName": "NFL",
+      "reporterId": null,
+      "reporterName": "NFL",
+      "author": "NFL",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.2262
+    },
+    {
+      "id": "yt_cTQUeSNRzPM",
+      "type": "video",
+      "title": "Las Vegas Raiders vs. San Francisco 49ers Highlights | Week 9",
+      "summary": "Video (2:20) • San Francisco 49ers • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/cTQUeSNRzPM/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-09T18:10:40.157Z",
+      "url": "https://www.youtube.com/watch?v=cTQUeSNRzPM",
+      "videoId": "cTQUeSNRzPM",
+      "embeddable": false,
+      "duration": "2:20",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.2262
+    },
+    {
+      "id": "yt_hhnWAF__07U",
+      "type": "video",
+      "title": "Christian McCaffrey's Best Plays from 2-TD Game vs. Raiders | Week 9",
+      "summary": "Video (2:11) • San Francisco 49ers • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/hhnWAF__07U/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "3117251",
+          "name": "Christian McCaffrey",
+          "shortName": "C. McCaffrey",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png"
+        }
+      ],
+      "publishedAt": "2026-11-09T18:10:40.156Z",
+      "url": "https://www.youtube.com/watch?v=hhnWAF__07U",
+      "videoId": "hhnWAF__07U",
+      "embeddable": false,
+      "duration": "2:11",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.2262
+    },
+    {
+      "id": "yt_SRhTR-ev0NM",
+      "type": "video",
+      "title": "Brock Purdy's Best Plays from 3-TD Game vs. Raiders | Week 9",
+      "summary": "Video (2:59) • San Francisco 49ers • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/SRhTR-ev0NM/hqdefault.jpg",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "publishedAt": "2026-11-09T18:10:40.155Z",
+      "url": "https://www.youtube.com/watch?v=SRhTR-ev0NM",
+      "videoId": "SRhTR-ev0NM",
+      "embeddable": false,
+      "duration": "2:59",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "trustTier": 1,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.2262
+    },
+    {
+      "id": "yt_TNDUPx5u8t0",
+      "type": "video",
+      "title": "Nov 8, 2026 Week 9 San Francisco 49ers vs Las Vegas Raiders Highlights. Tim Ryan & Guy Haberman",
+      "summary": "Video (12:38) • Forever Faithful • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/TNDUPx5u8t0/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-09T18:10:40.158Z",
+      "url": "https://www.youtube.com/watch?v=TNDUPx5u8t0",
+      "videoId": "TNDUPx5u8t0",
+      "embeddable": true,
+      "duration": "12:38",
+      "outletId": "youtube_film",
+      "outletName": "Forever Faithful",
+      "reporterId": null,
+      "reporterName": "Forever Faithful",
+      "author": "Forever Faithful",
+      "trustTier": 2,
+      "isBreaking": false,
+      "category": "beat",
+      "signalScore": 74,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.youtube.com/watch?v=TNDUPx5u8t0",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.1989
+    },
+    {
+      "id": "sf49_170",
       "type": "article",
       "title": "Morning Report: 49ers Go 7-1, Dugger Scores First Career Touchdown 🗞️",
       "summary": "Catch up on the latest San Francisco 49ers headlines, powered by Cisco.",
@@ -7885,7 +8276,42 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2043
+      "storyRank": 0.196
+    },
+    {
+      "id": "yt_JccrrItNZmg",
+      "type": "video",
+      "title": "JFA Podcast 351: Victory Monday - 49ers Sink the Raiders",
+      "summary": "Video • Jonnydel's Football Academy • 3d ago",
+      "imageUrl": "https://i.ytimg.com/vi/JccrrItNZmg/hqdefault.jpg",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-09T16:34:50.000Z",
+      "url": "https://www.youtube.com/watch?v=JccrrItNZmg",
+      "videoId": "JccrrItNZmg",
+      "embeddable": true,
+      "duration": "",
+      "outletId": "youtube_film",
+      "outletName": "Jonnydel's Football Academy",
+      "reporterId": "jonnydel",
+      "reporterName": "Jonnydel's Football Academy",
+      "author": "Jonnydel's Football Academy",
+      "trustTier": 2,
+      "isBreaking": false,
+      "category": "film",
+      "signalScore": 86,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 93,
+      "authorHandle": "@jonnydelsfa",
+      "authorProfileUrl": "https://x.com/jonnydelsfa",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isInGameInjury": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "breakingPriority": 0,
+      "breakingBadge": null,
+      "storyRank": 0.2021
     },
     {
       "id": "espn_50427438",
@@ -7927,147 +8353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1749
-    },
-    {
-      "id": "yt_cTQUeSNRzPM",
-      "type": "video",
-      "title": "Las Vegas Raiders vs. San Francisco 49ers Highlights | Week 9",
-      "summary": "Video (2:20) • San Francisco 49ers • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/cTQUeSNRzPM/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-09T15:53:04.658Z",
-      "url": "https://www.youtube.com/watch?v=cTQUeSNRzPM",
-      "videoId": "cTQUeSNRzPM",
-      "embeddable": false,
-      "duration": "2:20",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.2262
-    },
-    {
-      "id": "yt_sNQJenFh30k",
-      "type": "video",
-      "title": "Las Vegas Raiders vs. San Francisco 49ers Game Highlights | 2026 NFL Season Week 9",
-      "summary": "Video (15:15) • NFL • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/sNQJenFh30k/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-09T15:53:04.657Z",
-      "url": "https://www.youtube.com/watch?v=sNQJenFh30k",
-      "videoId": "sNQJenFh30k",
-      "embeddable": false,
-      "duration": "15:15",
-      "outletId": "nfl_network",
-      "outletName": "NFL",
-      "reporterId": null,
-      "reporterName": "NFL",
-      "author": "NFL",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nfl.com/teams/san-francisco-49ers/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.2262
-    },
-    {
-      "id": "yt_JccrrItNZmg",
-      "type": "video",
-      "title": "JFA Podcast 351: Victory Monday - 49ers Sink the Raiders",
-      "summary": "Video • Jonnydel's Football Academy • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/JccrrItNZmg/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-09T16:34:50.000Z",
-      "url": "https://www.youtube.com/watch?v=JccrrItNZmg",
-      "videoId": "JccrrItNZmg",
-      "embeddable": true,
-      "duration": "",
-      "outletId": "youtube_film",
-      "outletName": "Jonnydel's Football Academy",
-      "reporterId": "jonnydel",
-      "reporterName": "Jonnydel's Football Academy",
-      "author": "Jonnydel's Football Academy",
-      "trustTier": 2,
-      "isBreaking": false,
-      "category": "film",
-      "signalScore": 86,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 93,
-      "authorHandle": "@jonnydelsfa",
-      "authorProfileUrl": "https://x.com/jonnydelsfa",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.2079
-    },
-    {
-      "id": "yt_TNDUPx5u8t0",
-      "type": "video",
-      "title": "Nov 8, 2026 Week 9 San Francisco 49ers vs Las Vegas Raiders Highlights. Tim Ryan & Guy Haberman",
-      "summary": "Video (12:38) • Forever Faithful • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/TNDUPx5u8t0/hqdefault.jpg",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-09T15:53:04.660Z",
-      "url": "https://www.youtube.com/watch?v=TNDUPx5u8t0",
-      "videoId": "TNDUPx5u8t0",
-      "embeddable": true,
-      "duration": "12:38",
-      "outletId": "youtube_film",
-      "outletName": "Forever Faithful",
-      "reporterId": null,
-      "reporterName": "Forever Faithful",
-      "author": "Forever Faithful",
-      "trustTier": 2,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.youtube.com/watch?v=TNDUPx5u8t0",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.1989
+      "storyRank": 0.168
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzvboexeqs2x",
@@ -8104,7 +8390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2017
+      "storyRank": 0.1937
     },
     {
       "id": "tweet_victafur_3mzv2frwpgk2x",
@@ -8141,7 +8427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1941
+      "storyRank": 0.1866
     },
     {
       "id": "sf_tx_MjAyNi0xMS0wOV",
@@ -8188,7 +8474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2117
+      "storyRank": 0.2041
     },
     {
       "id": "espn_50428583",
@@ -8230,7 +8516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1652
+      "storyRank": 0.1595
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzu7axdmzs2k",
@@ -8276,54 +8562,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1698
+      "storyRank": 0.1639
     },
     {
-      "id": "yt_y7lP1TuSuKI",
-      "type": "video",
-      "title": "Watkins on First Career Touchdown, Taking On Bigger Role | 49ers",
-      "summary": "Video • San Francisco 49ers • 3d ago",
-      "imageUrl": "https://i.ytimg.com/vi/y7lP1TuSuKI/hqdefault.jpg",
-      "mentionedPlayers": [
-        {
-          "id": "4431466",
-          "name": "Jordan Watkins",
-          "shortName": "J. Watkins",
-          "position": "WR",
-          "jersey": 17,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431466.png"
-        }
-      ],
-      "publishedAt": "2026-11-09T04:12:56.000Z",
-      "url": "https://www.youtube.com/watch?v=y7lP1TuSuKI",
-      "videoId": "y7lP1TuSuKI",
-      "embeddable": false,
-      "duration": "",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "trustTier": 1,
-      "isBreaking": false,
-      "category": "beat",
-      "signalScore": 74,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isInGameInjury": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "breakingPriority": 0,
-      "breakingBadge": null,
-      "storyRank": 0.1864
-    },
-    {
-      "id": "pfrumors_134",
+      "id": "pfrumors_137",
       "type": "article",
       "title": "49ers’ Rookie DT Gracen Halton Out For Season",
       "summary": "Injury issues have continuously plagued the 49ers in recent history. Their misfortunes continue to develop as ESPN’s Nick Wagoner reported after today’s game that rookie defensive tackle Gracen Halton will miss the remainder of the season w",
@@ -8364,10 +8606,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1628
+      "storyRank": 0.1573
     },
     {
-      "id": "sf49_167",
+      "id": "sf49_171",
       "type": "article",
       "title": "49ers Defense Forces Five Turnovers in 38-17 Win Over Raiders; Takeaways from #LVvsSF",
       "summary": "The San Francisco 49ers returned from their Bye with a 38-17 Week 9 win over the Las Vegas Raiders. Here are the top five takeaways.",
@@ -8397,7 +8639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1581
+      "storyRank": 0.1527
     },
     {
       "id": "espn_pwire_4427325_64671528",
@@ -8450,7 +8692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1828
+      "storyRank": 0.1767
     },
     {
       "id": "x_status_2119588958581731702",
@@ -8496,7 +8738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1787
+      "storyRank": 0.1728
     },
     {
       "id": "espn_pwire_4685369_64668828",
@@ -8557,7 +8799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1807
+      "storyRank": 0.1748
     },
     {
       "id": "espn_pwire_4685369_64670228",
@@ -8618,7 +8860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1599
+      "storyRank": 0.1546
     },
     {
       "id": "tweet_jenniferleechan_3mztmcvkzck2y",
@@ -8664,7 +8906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.177
+      "storyRank": 0.1712
     },
     {
       "id": "tweet_jenniferleechan_3mztm5pvnqs2y",
@@ -8710,7 +8952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1769
+      "storyRank": 0.1711
     },
     {
       "id": "tweet_jenniferleechan_3mztlmmcsck2y",
@@ -8756,7 +8998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1765
+      "storyRank": 0.1707
     },
     {
       "id": "tweet_jenniferleechan_3mztkvmirnk2y",
@@ -8802,7 +9044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1759
+      "storyRank": 0.1702
     },
     {
       "id": "tweet_jenniferleechan_3mztkgzr76c2y",
@@ -8848,7 +9090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1756
+      "storyRank": 0.1699
     },
     {
       "id": "tweet_jenniferleechan_3mztk2s6plk2y",
@@ -8902,7 +9144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1753
+      "storyRank": 0.1696
     },
     {
       "id": "tweet_jenniferleechan_3mztjovoez22y",
@@ -8956,7 +9198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.175
+      "storyRank": 0.1693
     },
     {
       "id": "tweet_jenniferleechan_3mztjfkg2ms2y",
@@ -9010,7 +9252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1748
+      "storyRank": 0.1691
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzst5h253s2s",
@@ -9047,7 +9289,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1402
+      "storyRank": 0.136
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzrroopdhc2r",
@@ -9101,7 +9343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1233
+      "storyRank": 0.1199
     },
     {
       "id": "espn_pwire_3895856_64644128",
@@ -9146,10 +9388,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1281
+      "storyRank": 0.1248
     },
     {
-      "id": "sf49_169",
+      "id": "sf49_173",
       "type": "article",
       "title": "DeForest Buckner Returns to The Bay: 49ers Locker Room Reacts to His Homecoming",
       "summary": "San Francisco 49ers first-round pick in 2016, DL DeForest Buckner, returns to The Bay and reflects on his homecoming, reuniting with former teammates, and the unfinished business ahead of Sunday's matchup against the Las Vegas Raiders.",
@@ -9188,7 +9430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1089
+      "storyRank": 0.1061
     },
     {
       "id": "x_status_2119179932555165967",
@@ -9234,10 +9476,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1259
+      "storyRank": 0.1227
     },
     {
-      "id": "pfrumors_135",
+      "id": "pfrumors_138",
       "type": "article",
       "title": "49ers Lose WR Christian Kirk To IR, Activate WR Demarcus Robinson",
       "summary": "It was expected that the 49ers would return veteran wide receiver Demarcus Robinson from the injured reserve list this week, but another veteran pass catcher, Christian Kirk, whom Robinson was supposed to be joining on the active roster, wi",
@@ -9286,10 +9528,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.111
+      "storyRank": 0.1082
     },
     {
-      "id": "sf49_170",
+      "id": "sf49_174",
       "type": "article",
       "title": "49ers Make a Series of Moves Ahead of #LVvsSF",
       "summary": "The San Francisco 49ers announced the following roster moves ahead of #LVvsSF",
@@ -9319,7 +9561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1082
+      "storyRank": 0.1055
     },
     {
       "id": "sf_tx_MjAyNi0xMS0wN1",
@@ -9382,7 +9624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.115
+      "storyRank": 0.1124
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzp7hlcrgc2q",
@@ -9428,7 +9670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0939
+      "storyRank": 0.0918
     },
     {
       "id": "espn_50402899",
@@ -9470,10 +9712,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0872
+      "storyRank": 0.0853
     },
     {
-      "id": "sf49_171",
+      "id": "sf49_175",
       "type": "article",
       "title": "5 Things to Know: 49ers Week 9 Matchup vs. Raiders & Salute to Service",
       "summary": "The San Francisco 49ers return to Levi’s® Stadium for a historic matchup vs. the Las Vegas Raiders. Here are five things to know.",
@@ -9503,7 +9745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0875
+      "storyRank": 0.0856
     },
     {
       "id": "x_status_2118826161350549631",
@@ -9549,7 +9791,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0988
+      "storyRank": 0.0967
     },
     {
       "id": "x_status_2118817548649308267",
@@ -9595,7 +9837,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0983
+      "storyRank": 0.0962
     },
     {
       "id": "espn_pwire_3117251_64627928",
@@ -9640,10 +9882,10 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.099
+      "storyRank": 0.097
     },
     {
-      "id": "sf49_173",
+      "id": "sf49_177",
       "type": "article",
       "title": "Between the Teams: Notable Players, Coaches, and Moments from 49ers-Raiders History",
       "summary": "Revisit the shared history of the San Francisco 49ers and Las Vegas Raiders, from Hall of Fame coaches and players, to stadiums both teams called home.",
@@ -9673,7 +9915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0842
+      "storyRank": 0.0825
     },
     {
       "id": "tweet_victafur_3mznn5rvack2s",
@@ -9719,7 +9961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0815
+      "storyRank": 0.0798
     },
     {
       "id": "espn_pwire_4360438_64618528",
@@ -9764,7 +10006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0843
+      "storyRank": 0.0828
     },
     {
       "id": "x_status_2118529511285198959",
@@ -9810,7 +10052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0831
+      "storyRank": 0.0815
     },
     {
       "id": "espn_50391499",
@@ -9843,7 +10085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0584
+      "storyRank": 0.0574
     },
     {
       "id": "espn_pwire_4360438_64605928",
@@ -9888,7 +10130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0794
+      "storyRank": 0.0779
     },
     {
       "id": "espn_50378691",
@@ -9930,7 +10172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0663
+      "storyRank": 0.0652
     },
     {
       "id": "espn_50382587",
@@ -9972,7 +10214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0636
+      "storyRank": 0.0625
     },
     {
       "id": "espn_50382895",
@@ -10005,7 +10247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0636
+      "storyRank": 0.0625
     }
   ]
 }

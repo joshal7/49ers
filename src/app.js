@@ -10,7 +10,7 @@ import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
-} from './engine/breakingClassifier.js?v=48';
+} from './engine/breakingClassifier.js?v=49';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
 import {
   loadAll49ersData,
@@ -58,11 +58,11 @@ import {
 import { getJargonEntry } from './engine/jargonGlossary.js?v=48';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=48';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=49';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=48';
+} from './views/newsView.js?v=49';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=48';

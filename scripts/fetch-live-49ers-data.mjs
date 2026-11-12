@@ -18,6 +18,7 @@ import { parseOverTheCapHtml } from './lib/otcParser.mjs';
 import { buildCombineIndexer } from './lib/combineSpider.mjs';
 import {
   searchYouTubeVideos,
+  searchYouTubeChannelVideos,
   fetchCuratedYouTubeChannelVideos,
   fetchLiveBeatSocialPosts,
   harvestEmbeddedXStatusTweetsFromRss,
@@ -1733,7 +1734,11 @@ async function main() {
     heavy49ersXml,
     webzoneXml,
     curatedYtChannelClips,
+    official49ersGameClips,
+    officialNflGameClips,
     liveYtHighlightClips,
+    liveYtPlayerCutupClips,
+    liveYtPlayActionClips,
     liveYtTeamInterestClips,
     liveYtPodiumClips,
     liveYtQbSchoolClips,
@@ -1751,11 +1756,35 @@ async function main() {
     fetchText('https://heavy.com/sports/nfl/san-francisco-49ers/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
     fetchCuratedYouTubeChannelVideos({ qbNames: active49ersQbNames, maxAgeDays: 11 }).catch(() => []),
+    searchYouTubeChannelVideos(
+      'UCeIOarQkwmGhimim9cDUTng',
+      'San Francisco 49ers',
+      latestCompOppForYt || (latestCompWkForYt ? `Week ${latestCompWkForYt}` : 'Highlights'),
+      14
+    ),
+    searchYouTubeChannelVideos(
+      'UCDVYQ4Zhbm3S2dlz7P1GBDg',
+      'NFL',
+      latestCompWkForYt ? `49ers Week ${latestCompWkForYt}` : `San Francisco 49ers ${seasonYear}`,
+      8
+    ),
     searchYouTubeVideos(
       latestCompWkForYt && latestCompOppForYt
         ? `San Francisco 49ers vs ${latestCompOppForYt} Week ${latestCompWkForYt} ${seasonYear} highlights NFL`
         : `San Francisco 49ers game highlights ${seasonYear} NFL`,
-      6
+      8
+    ),
+    searchYouTubeVideos(
+      latestCompWkForYt && latestCompOppForYt
+        ? `"49ers" "${latestCompOppForYt}" "NFL Week ${latestCompWkForYt} ${seasonYear}"`
+        : `"San Francisco 49ers" player highlights ${seasonYear} NFL`,
+      10
+    ),
+    searchYouTubeVideos(
+      latestCompWkForYt && latestCompOppForYt
+        ? `"San Francisco 49ers" "${latestCompOppForYt}" "Week ${latestCompWkForYt}" touchdown OR interception OR highlights ${seasonYear}`
+        : `San Francisco 49ers every touchdown highlights ${seasonYear}`,
+      8
     ),
     searchYouTubeVideos(
       latestCompWkForYt && latestCompOppForYt
@@ -1788,54 +1817,146 @@ async function main() {
     `\\b(${['49ers', 'niners', 'san francisco', 'shanahan', ...qbNameFilterTokens].join('|')})\\b`,
     'i'
   );
-  const sfVideoRelevanceRe =
-    /\b(49ers|niners|san francisco|forty niner|purdy|bosa|mccaffrey|kittle|warner|buckner|shanahan|mckivitz|allen|lenoir|deebo|levi)\b/i;
+
+  // Dynamically include active 2026 49ers player full names & distinctive surnames (Watkins, Dugger, Mustapha, etc.)
+  const dynamicRosterVideoTokens = rosterPlayers
+    .filter(p => p && p.name && p.rosterBucket === 'active')
+    .flatMap(p => {
+      const clean = String(p.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+      const last = clean.split(/\s+/).pop() || '';
+      return [
+        clean,
+        last.length >= 5 && !/^(jones|smith|brown|allen|young|white|green|davis|moore|scott|williams|thomas|wilson|jackson|martin|robinson|walker)$/i.test(last)
+          ? last
+          : ''
+      ];
+    })
+    .filter(Boolean)
+    .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  const sfVideoRelevanceRe = new RegExp(
+    `\\b(${[
+      '49ers',
+      'niners',
+      'san francisco',
+      'forty niner',
+      'shanahan',
+      'levi',
+      ...dynamicRosterVideoTokens
+    ].join('|')})\\b`,
+    'i'
+  );
   const opposingOfficialChannelRe =
     /^(?:las vegas )?raiders$|^(?:dallas )?cowboys$|^(?:seattle )?seahawks$|^(?:los angeles )?rams$|^(?:arizona )?cardinals$|^(?:kansas city )?chiefs$|^(?:atlanta )?falcons$|^(?:green bay )?packers$|^(?:detroit )?lions$|^(?:philadelphia )?eagles$|^(?:minnesota )?vikings$|^(?:chicago )?bears$/i;
 
-  const seenYtIds = new Set();
-  const seenYtTitleKeys = new Set();
-  const rawCandidateYtClips = [];
-  for (const clip of [
+  const parseYtDurSec = dur => {
+    const parts = String(dur || '').trim().split(':').map(Number);
+    if (parts.length === 2 && parts.every(Number.isFinite)) return parts[0] * 60 + parts[1];
+    if (parts.length === 3 && parts.every(Number.isFinite)) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    return null;
+  };
+
+  const allRawYtClipSources = [
     ...(curatedYtChannelClips || []),
+    ...(official49ersGameClips || []),
+    ...(officialNflGameClips || []),
     ...(liveYtHighlightClips || []),
+    ...(liveYtPlayerCutupClips || []),
+    ...(liveYtPlayActionClips || []),
     ...(liveYtTeamInterestClips || []),
     ...(liveYtQbSchoolClips || []),
     ...(liveYtFilmClips1 || []),
     ...(liveYtFilmClips2 || []),
     ...(liveYtPodiumClips || [])
-  ]) {
-    if (!clip?.videoId || seenYtIds.has(clip.videoId)) continue;
+  ];
+
+  // Backfill exact MM:SS durations onto Atom XML clips when YouTube search also returned the same videoId
+  const durationByVideoId = new Map();
+  for (const c of allRawYtClipSources) {
+    if (c?.videoId && c.duration && !durationByVideoId.has(c.videoId)) {
+      durationByVideoId.set(c.videoId, c.duration);
+    }
+  }
+
+  const seenYtIds = new Set();
+  const seenYtTitleKeys = new Set();
+  const rawCandidateYtClips = [];
+  for (const rawClip of allRawYtClipSources) {
+    if (!rawClip?.videoId || seenYtIds.has(rawClip.videoId)) continue;
+    const clip =
+      !rawClip.duration && durationByVideoId.has(rawClip.videoId)
+        ? { ...rawClip, duration: durationByVideoId.get(rawClip.videoId) }
+        : rawClip;
     const chClean = String(clip.channel || '').trim();
     const titleClean = String(clip.title || '').trim();
-    const normTitleKey = titleClean.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 70);
+    const normTitleKey = titleClean
+      .replace(/\|\s*(?:49ers|nfl|week\s*\d+.*)$/i, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim()
+      .slice(0, 70);
     if (!normTitleKey || seenYtTitleKeys.has(normTitleKey)) continue;
-    // Exclude non-Latin bootleg highlight re-uploaders, Madden sims, and opposing-team official channels
+    // Exclude non-Latin bootleg highlight re-uploaders, Madden sims, talking-head reaction channels, and opposing-team channels
     if (/[^\x00-\x7F‘’“”—–®™•&'’-]/.test(chClean)) continue;
-    if (/\b(madden|ea sports|simulation|retro bowl|cf25|ncaa)\b/i.test(`${chClean} ${titleClean}`)) continue;
+    if (/\b(madden|ea sports|simulation|retro bowl|cf25|ncaa|reacts|highlights reaction|janky rondo|kang ps|wizez)\b/i.test(`${chClean} ${titleClean}`)) continue;
+    if (/\b(the vault|nfl throwback|preseason)\b/i.test(titleClean)) continue;
     if (opposingOfficialChannelRe.test(chClean)) continue;
     if (!/^san francisco 49ers$/i.test(chClean) && !sfVideoRelevanceRe.test(titleClean)) continue;
+    if (/^nfl$/i.test(chClean) && !sfVideoRelevanceRe.test(titleClean)) continue;
     if (/\bqb school\b/i.test(chClean) && !sfQbVideoTitleRe.test(titleClean)) continue;
+    if (!/^san francisco 49ers$|^nfl$/i.test(chClean) && !validateNoHallucinatedRosterClaims(titleClean, rosterPlayers).valid) {
+      continue;
+    }
+
+    // Reject videos explicitly tagged with an older season year (e.g. 2018..2025 when seasonYear is 2026)
+    const explicitYears = [...titleClean.matchAll(/\b(19\d{2}|20\d{2})\b/g)].map(m => Number(m[1]));
+    if (explicitYears.some(yr => yr < Number(seasonYear))) continue;
 
     const agoStr = String(clip.publishedAgo || '');
+    if (/^streamed\b/i.test(agoStr)) continue;
     if (/\b(\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?)?|[2-9]\s*w(?:eeks?|ks?)?)\s+ago\b/i.test(agoStr)) continue;
+
+    const durSec = parseYtDurSec(clip.duration);
+    const isDedicatedFilmClip = /\b(qb school|jonnydel|football academy|all-?22|film breakdown|film review|49ers playbook)\b/i.test(
+      `${chClean} ${titleClean}`
+    );
+    // Skip ultra-short <25s vertical social teasers and >25m unedited talk streams on non-film channels
+    if (durSec !== null && (durSec < 25 || (!isDedicatedFilmClip && durSec > 25 * 60))) continue;
+
     seenYtIds.add(clip.videoId);
     seenYtTitleKeys.add(normTitleKey);
     rawCandidateYtClips.push(clip);
   }
 
+  const isGameOrPlayerHighlightClip = c =>
+    /\b(game highlights|\bhighlights\b|best plays|every completed pass|every throw|every touchdown|pick[- ]?6|interceptions?|forty niner way|49hours|mic['’]?d up|from the trenches|inside the 49ers locker room)\b/i.test(
+      c.title || ''
+    ) && !/\b(qb school|jonnydel|49ers playbook|all-?22|film review|film breakdown)\b/i.test(`${c.channel || ''} ${c.title || ''}`);
+
+  const isPureFilmClip = c =>
+    /\b(qb school|jonnydel|football academy|49ers playbook|all-?22|film breakdown|film review)\b/i.test(
+      `${c.channel || ''} ${c.title || ''}`
+    );
+
   const scoreYtIngestPriority = c => {
     const t = `${c.channel || ''} ${c.title || ''}`;
     let s = 0;
-    if (/\b(qb school|49ers playbook|all-?22|film breakdown)\b/i.test(t) && !/\bpodcast\b/i.test(c.title || '')) s += 45;
-    if (/\b(game highlights|highlights|best plays|every touchdown|condensed game)\b/i.test(c.title || '')) s += 42;
-    if (/\b(forty niner way|49hours|mic['’]?d up|from the trenches|locker room|sights and sounds)\b/i.test(c.title || '')) s += 38;
-    if (/^(?:nfl|san francisco 49ers)$/i.test(String(c.channel || '').trim())) s += 12;
+    if (isPureFilmClip(c) && !/\bpodcast\b/i.test(c.title || '')) s += 50;
+    if (/\b(game highlights|\bhighlights\b|best plays|every completed pass|every touchdown|pick[- ]?6|interceptions?)\b/i.test(c.title || '')) s += 48;
+    if (/\b(forty niner way|49hours|mic['’]?d up|from the trenches|locker room|sights and sounds)\b/i.test(c.title || '')) s += 42;
+    if (/^(?:nfl|san francisco 49ers)$/i.test(String(c.channel || '').trim())) s += 14;
+    if (latestCompOppForYt && new RegExp(`\\b${latestCompOppForYt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(c.title || '')) {
+      s += 8;
+    }
     return s;
   };
-  const liveYtClips = rawCandidateYtClips
-    .sort((a, b) => scoreYtIngestPriority(b) - scoreYtIngestPriority(a))
-    .slice(0, 22);
+
+  // Guarantee dedicated capacity for 10+ game & player highlight clips (short clips + full mashups) alongside All-22 film & key podiums
+  const sortedYtCandidates = [...rawCandidateYtClips].sort((a, b) => scoreYtIngestPriority(b) - scoreYtIngestPriority(a));
+  const highlightBucket = sortedYtCandidates.filter(isGameOrPlayerHighlightClip).slice(0, 16);
+  const filmBucket = sortedYtCandidates.filter(c => !highlightBucket.includes(c) && isPureFilmClip(c)).slice(0, 8);
+  const otherBucket = sortedYtCandidates.filter(c => !highlightBucket.includes(c) && !filmBucket.includes(c)).slice(0, 6);
+  const liveYtClips = [...highlightBucket, ...filmBucket, ...otherBucket];
 
   // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded in beat RSS feeds via oEmbed
   const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss([

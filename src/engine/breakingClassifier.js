@@ -115,7 +115,7 @@ const TRUE_FILM_VIDEO_TITLE_REGEX =
   /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|49ers playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush breakdown|coverage breakdown|coaching tape)\b/i;
 
 const HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX =
-  /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|top plays|condensed game|end of game|final drive|game-winning|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes)\b/i;
+  /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|every completed pass|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|top plays|condensed game|end of game|final drive|game-winning|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes|tim ryan|knbr)\b/i;
 
 const WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX =
   /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|snap count|snap share|pass[- ]block|run[- ]block|\bpbwr\b|\brswr\b|pressure rate|pass rush|pass-rush|qb sack|pff\s+grad|pff\s+gard|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards)\b/i;
@@ -948,10 +948,13 @@ function resolveEffectivePublishTimestampMs(item = {}, nowMs = Date.now()) {
 
 function extractReferencedWeekNumbers(text = '') {
   const weeks = [];
-  for (const m of String(text || '').matchAll(/\b(?:week|wk)\s*(\d{1,2})\b/gi)) {
-    const n = Number(m[1]);
-    if (Number.isFinite(n) && n >= 1 && n <= 22 && !weeks.includes(n)) {
-      weeks.push(n);
+  for (const m of String(text || '').matchAll(/\b(?:weeks?|wks?)\s*(\d{1,2})(?:\s*(?:&|and|\+|\/|-)\s*(\d{1,2}))?\b/gi)) {
+    for (const grp of [m[1], m[2]]) {
+      if (!grp) continue;
+      const n = Number(grp);
+      if (Number.isFinite(n) && n >= 1 && n <= 22 && !weeks.includes(n)) {
+        weeks.push(n);
+      }
     }
   }
   return weeks;
@@ -1826,6 +1829,54 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
         continue;
       }
 
+      // 2c. Distinct playable videos (e.g. 2:20 quick recap vs 15:15 full NFL game mashup vs 12:38 radio mashup
+      //     vs 1:10 Jordan Watkins / 0:58 Jaden Dugger / 2:59 Brock Purdy player highlight cutups) MUST remain
+      //     separate video cards rather than getting swallowed into text `confirmingReports`! Only merge two
+      //     videos when they are syndicated twin uploads of the exact same clip (matching entities, ~same runtime, Jaccard >= 0.80).
+      const itemIsVideo = item.type === 'video' || Boolean(item.videoId);
+      const leadIsVideo = cl.lead.type === 'video' || Boolean(cl.lead.videoId);
+      if (itemIsVideo && leadIsVideo) {
+        if (item.videoId && cl.lead.videoId && item.videoId === cl.lead.videoId) {
+          matchedCluster = cl;
+          bestSim = 1.0;
+          break;
+        }
+        const parseDurSec = d => {
+          const p = String(d || '').trim().split(':').map(Number);
+          if (p.length === 2 && p.every(Number.isFinite)) return p[0] * 60 + p[1];
+          if (p.length === 3 && p.every(Number.isFinite)) return p[0] * 3600 + p[1] * 60 + p[2];
+          return null;
+        };
+        const durA = parseDurSec(item.duration);
+        const durB = parseDurSec(cl.lead.duration);
+        const normPlayerKeys = arr =>
+          Array.from(
+            new Set(
+              (arr || [])
+                .map(mp =>
+                  String(mp?.name || mp?.id || '')
+                    .toLowerCase()
+                    .replace(/\b(jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+                    .replace(/[^a-z0-9]/g, '')
+                )
+                .filter(Boolean)
+            )
+          ).sort();
+        const pA = normPlayerKeys(item.mentionedPlayers);
+        const pB = normPlayerKeys(cl.lead.mentionedPlayers);
+        const samePlayers = pA.length === pB.length && pA.every((k, idx) => k === pB[idx]);
+        const sameRuntime = durA !== null && durB !== null ? Math.abs(durA - durB) <= 20 : false;
+        const isTwinVideoUpload =
+          samePlayers &&
+          (durA === null || durB === null || sameRuntime) &&
+          tokSim.jaccard >= (sameRuntime ? 0.8 : 0.88);
+        if (isTwinVideoUpload && tokSim.jaccard > bestSim) {
+          bestSim = tokSim.jaccard;
+          matchedCluster = cl;
+        }
+        continue;
+      }
+
       // 3. Cross-outlet TF-IDF Headline Token + Entity Hybrid Similarity (Google News single-pass threshold)
       //    Require shared entities when both items mention players so unrelated player stories never merge!
       const bothHavePlayers =
@@ -2200,19 +2251,35 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
 
   let score = 40;
 
-  if (/\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|top plays|condensed game|end of game|final drive)\b/i.test(title)) {
-    score += 48;
-  } else if (/\b(forty niner way|49hours|brick by brick|mic['’]?d up|locker room|victory speech|from the trenches|sights and sounds|wired|postgame recap|week \d+ recap|game recap)\b/i.test(title)) {
-    score += 42;
+  const isInterviewOrPodium =
+    /\b(press conference|media availability|reflects on|chats about|breaks down win|previews week|shares final updates|speak ahead|talk new additions|on first career touchdown|taking on bigger role|you['’]?ve got mail|inside the oval|writing a novel)\b/i.test(
+      title
+    ) && !/\b(forty niner way|49hours|mic['’]?d up|from the trenches|inside the 49ers locker room)\b/i.test(title);
+
+  const isPlayerHighlightOrBigPlayClip =
+    !isInterviewOrPodium &&
+    ((item.mentionedPlayers?.length || 0) > 0 || /\b(best plays|every completed pass|every throw|pick[- ]?6|interceptions?)\b/i.test(title)) &&
+    /\b(highlights|best plays|every completed pass|every throw|every catch|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|touchdown|big catch|sacks?)\b/i.test(
+      title
+    );
+
+  if (!isInterviewOrPodium && /\b(game highlights|full game highlights|condensed game|end of game|final drive)\b/i.test(title)) {
+    score += 58;
+  } else if (isPlayerHighlightOrBigPlayClip) {
+    score += 53;
+  } else if (!isInterviewOrPodium && /\b(\bhighlights\b|best plays|every touchdown|top plays)\b/i.test(title)) {
+    score += 55;
+  } else if (/\b(forty niner way|49hours|brick by brick|mic['’]?d up|inside the 49ers locker room|locker room|victory speech|from the trenches|sights and sounds|wired|postgame recap|week \d+ recap|game recap)\b/i.test(title)) {
+    score += 46;
   } else if (HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX.test(title) || SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(title)) {
-    score += 30;
+    score += 24;
   } else if (/\b(preview|talk new additions|speak ahead)\b/i.test(title)) {
-    score += 16;
+    score += 14;
   }
 
   if (/^(?:nfl|san francisco 49ers)$/i.test(channel)) {
-    score += 16;
-  } else if (/nbc sports bay area|espn|fox sports|cbs sports|knbr/i.test(channel)) {
+    score += 14;
+  } else if (/nbc sports bay area|espn|fox sports|cbs sports|knbr|forever faithful|san francisco 49ers fans/i.test(channel)) {
     score += 10;
   }
 
@@ -2220,11 +2287,11 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
     score += 10;
   }
   if (ctx?.upcomingOppNickname && new RegExp(`\\b${escapeRegexToken(ctx.upcomingOppNickname)}\\b`, 'i').test(title)) {
-    score += 8;
+    score += 6;
   }
 
-  // Gentle age decay so newest post-game highlights & features stay near the top
-  score -= Math.min(34, ageHours * 0.28);
+  // Gentle age tiebreaker so game highlights & player cutups from Sunday stay above midweek podium pressers all week
+  score -= Math.min(14, ageHours * 0.09);
   return Number(score.toFixed(2));
 }
 

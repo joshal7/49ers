@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-12T15:52:56.956Z",
+  "updatedAt": "2026-11-12T18:10:31.518Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-26T15:52:56.956Z",
+  "nextAutoReviewAt": "2026-11-26T18:10:31.518Z",
   "totalTrackedReporters": 49,
   "outlets": [
     {
@@ -106,7 +106,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 148,
+      "liveWeeklyMentions": 152,
       "popularityScore": 99,
       "defaultEnabled": true
     },
@@ -206,7 +206,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/JohnLynch49ers",
       "outletUrl": "https://www.49ers.com/news/",
-      "liveWeeklyMentions": 26,
+      "liveWeeklyMentions": 32,
       "popularityScore": 96,
       "defaultEnabled": true
     },
@@ -251,26 +251,6 @@
       "defaultEnabled": true
     },
     {
-      "id": "matt_barrows",
-      "name": "Matt Barrows",
-      "handle": "@mattbarrows",
-      "outletId": "athletic",
-      "role": "Senior 49ers Beat Writer • Hear It From",
-      "category": "beat",
-      "styleTag": "factual-beat",
-      "baseScore": 97,
-      "trustTier": 1,
-      "trustTierLabel": "Tier 1 • Primary Trusted",
-      "xUrl": "https://x.com/mattbarrows",
-      "bskyHandle": "mattbarrows.bsky.social",
-      "bskyUrl": null,
-      "profileUrl": "https://x.com/mattbarrows",
-      "outletUrl": "https://x.com/mattbarrows",
-      "liveWeeklyMentions": 9,
-      "popularityScore": 93,
-      "defaultEnabled": true
-    },
-    {
       "id": "david_lombardi",
       "name": "David Lombardi",
       "handle": "@LombardiHimself",
@@ -286,8 +266,28 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/LombardiHimself",
       "outletUrl": "https://sfstandard.com/sports/",
-      "liveWeeklyMentions": 4,
-      "popularityScore": 86,
+      "liveWeeklyMentions": 5,
+      "popularityScore": 87,
+      "defaultEnabled": true
+    },
+    {
+      "id": "matt_barrows",
+      "name": "Matt Barrows",
+      "handle": "@mattbarrows",
+      "outletId": "athletic",
+      "role": "Senior 49ers Beat Writer • Hear It From",
+      "category": "beat",
+      "styleTag": "factual-beat",
+      "baseScore": 97,
+      "trustTier": 1,
+      "trustTierLabel": "Tier 1 • Primary Trusted",
+      "xUrl": "https://x.com/mattbarrows",
+      "bskyHandle": "mattbarrows.bsky.social",
+      "bskyUrl": null,
+      "profileUrl": "https://x.com/mattbarrows",
+      "outletUrl": "https://x.com/mattbarrows",
+      "liveWeeklyMentions": 0,
+      "popularityScore": 85,
       "defaultEnabled": true
     },
     {
@@ -466,8 +466,8 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/KP_Show",
       "outletUrl": "https://www.ninersnation.com/",
-      "liveWeeklyMentions": 12,
-      "popularityScore": 89,
+      "liveWeeklyMentions": 9,
+      "popularityScore": 86,
       "defaultEnabled": true
     },
     {
@@ -506,8 +506,8 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/JFowlerESPN",
       "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-      "liveWeeklyMentions": 5,
-      "popularityScore": 83,
+      "liveWeeklyMentions": 4,
+      "popularityScore": 82,
       "defaultEnabled": true
     },
     {

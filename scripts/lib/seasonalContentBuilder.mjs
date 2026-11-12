@@ -136,6 +136,72 @@ export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbedd
 }
 
 /**
+ * Searches directly inside a specific YouTube channel (`https://www.youtube.com/channel/<id>/search?query=...`)
+ * so official `@49ers` and `@NFL` player highlight clips (`Brock Purdy's Best Plays`, `CMC Best Plays`,
+ * `Forty Niner Way`, `Go Inside the 49ers Locker Room`, `Full Game Highlights`) remain discoverable
+ * with exact `MM:SS` durations even after midweek press conferences push Sunday clips past the 15-item Atom XML limit.
+ */
+export async function searchYouTubeChannelVideos(channelId, channelName, query, maxResults = 8) {
+  if (!channelId || !query) return [];
+  try {
+    const scanLimit = Math.max(maxResults + 6, 12);
+    const url = `https://www.youtube.com/channel/${encodeURIComponent(channelId)}/search?query=${encodeURIComponent(query)}`;
+    const r = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' },
+      signal: AbortSignal.timeout(7000)
+    });
+    if (!r.ok) return [];
+    const html = await r.text();
+    const m = html.match(/var ytInitialData = (\{.*?\});<\/script>/);
+    if (!m) return [];
+    const data = JSON.parse(m[1]);
+    const candidates = [];
+    function walk(o) {
+      if (!o || typeof o !== 'object' || candidates.length >= scanLimit) return;
+      if (o.videoRenderer && o.videoRenderer.videoId) {
+        const vr = o.videoRenderer;
+        const ago = vr.publishedTimeText?.simpleText || '';
+        // Skip multi-week/month/year archive results and raw unedited livestreams right at scan time
+        if (/\b(\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?)?|[2-9]\s*w(?:eeks?|ks?)?)\s+ago\b/i.test(ago)) {
+          return;
+        }
+        if (/^streamed\b/i.test(ago)) {
+          return;
+        }
+        candidates.push({
+          videoId: vr.videoId,
+          url: `https://www.youtube.com/watch?v=${vr.videoId}`,
+          title: vr.title?.runs?.[0]?.text || vr.title?.simpleText || query,
+          channel: channelName || vr.ownerText?.runs?.[0]?.text || 'YouTube',
+          publishedAgo: ago,
+          duration: vr.lengthText?.simpleText || '',
+          thumbnailUrl: `https://i.ytimg.com/vi/${vr.videoId}/hqdefault.jpg`
+        });
+        return;
+      }
+      for (const k of Object.keys(o)) walk(o[k]);
+    }
+    walk(data);
+
+    const checked = await Promise.all(
+      candidates.slice(0, maxResults + 3).map(async c => {
+        const check = await verifyYouTubeEmbeddable(c.videoId);
+        return {
+          ...c,
+          title: c.title || check.title || query,
+          channel: channelName || c.channel || check.authorName || 'YouTube',
+          exists: check.exists,
+          embeddable: check.embeddable
+        };
+      })
+    );
+    return checked.filter(c => c.exists).slice(0, maxResults);
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Polls official YouTube channel Atom feeds (`https://www.youtube.com/feeds/videos.xml?channel_id=...`)
  * for exact ISO-8601 `<published>` timestamps across San Francisco 49ers (`@49ers`), NFL (`@NFL`),
  * JT O'Sullivan's `The QB School` (`@TheQBSchool`), `Jonnydel's Football Academy`, and `Chase Daniel`.

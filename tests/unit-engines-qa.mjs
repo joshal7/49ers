@@ -6252,7 +6252,90 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-Ne
     );
   const hlVidIds = extractRenderedVidIds(videosTabHtml);
   const filmVidIds = extractRenderedVidIds(filmTabHtml);
-  assert.ok(hlVidIds.size >= 3, `Expected >=3 videos in Highlights & Videos, got ${hlVidIds.size}`);
+  assert.ok(hlVidIds.size >= 8, `Expected >=8 distinct highlight/team videos in Highlights & Videos, got ${hlVidIds.size}`);
+  assert.ok(
+    videosTabHtml.includes('Player Highlights') && videosTabHtml.includes('Highlights'),
+    'Highlights & Videos must render both Player Highlights cutups and full/team Game Highlights badges'
+  );
+  assert.ok(
+    videosTabHtml.includes('Jordan Watkins') && videosTabHtml.includes('Brock Purdy') && videosTabHtml.includes('Christian McCaffrey'),
+    'Highlights & Videos must surface individual player highlight cutups (e.g. Jordan Watkins, Brock Purdy, Christian McCaffrey) without collapsing them into a single card'
+  );
+  // Multi-week documentary titles ("Forty Niner Way: Week 7 & 9") must NOT be misclassified as stale
+  assert.equal(
+    isStalePriorGameVideo(
+      {
+        id: 'yt_49way',
+        type: 'video',
+        videoId: 'bgKkQX4AnHM',
+        title: 'Forty Niner Way: “Back to the Bay” | Week 7 & 9 (vs. Falcons + Raiders)',
+        outletName: 'San Francisco 49ers',
+        publishedAt: new Date(Date.now() - 12 * 3_600_000).toISOString()
+      },
+      fullAppData
+    ),
+    false,
+    'Multi-week Forty Niner Way covering latest completed week (Week 7 & 9) must be preserved'
+  );
+  // Verify distinct short vs long highlight videos stay separate while exact twin uploads merge
+  const distinctAndTwinVideos = deduplicateAndGroupWireItems(
+    [
+      {
+        id: 'yt_short_hl',
+        type: 'video',
+        videoId: 'shortHl1',
+        duration: '2:20',
+        title: 'Las Vegas Raiders vs. San Francisco 49ers Highlights | Week 9',
+        outletName: 'San Francisco 49ers',
+        publishedAt: new Date().toISOString()
+      },
+      {
+        id: 'yt_long_hl',
+        type: 'video',
+        videoId: 'longHl1',
+        duration: '15:15',
+        title: 'Las Vegas Raiders vs. San Francisco 49ers Game Highlights | 2026 NFL Season Week 9',
+        outletName: 'NFL',
+        publishedAt: new Date().toISOString()
+      },
+      {
+        id: 'yt_watkins_hl',
+        type: 'video',
+        videoId: 'watkinsHl1',
+        duration: '1:10',
+        title: 'Jordan Watkins - Highlights - San Francisco 49ers vs Las Vegas Raiders - NFL Week 9 2026',
+        mentionedPlayers: [{ id: 'watkins', name: 'Jordan Watkins' }],
+        outletName: 'San Francisco 49ers Fans',
+        publishedAt: new Date().toISOString()
+      },
+      {
+        id: 'yt_purdy_sf',
+        type: 'video',
+        videoId: 'purdySf1',
+        duration: '2:59',
+        title: "Brock Purdy's Best Plays from 3-TD Game vs. Raiders | Week 9",
+        mentionedPlayers: [{ id: 'purdy', name: 'Brock Purdy' }],
+        outletName: 'San Francisco 49ers',
+        publishedAt: new Date().toISOString()
+      },
+      {
+        id: 'yt_purdy_nfl',
+        type: 'video',
+        videoId: 'purdyNfl1',
+        duration: '2:59',
+        title: "Brock Purdy's best plays from 3-TD game vs. Raiders | Week 9",
+        mentionedPlayers: [{ id: 'purdy', name: 'Brock Purdy' }],
+        outletName: 'NFL',
+        publishedAt: new Date().toISOString()
+      }
+    ],
+    { preserveFormat: 'videos' }
+  );
+  assert.equal(
+    distinctAndTwinVideos.length,
+    4,
+    `Expected 4 distinct playable video cards (2:20 recap, 15:15 full mashup, 1:10 Watkins clip, 2:59 Purdy clip with twin deduped), got ${distinctAndTwinVideos.length}`
+  );
   assert.ok(filmVidIds.has('qbschoolPurdy1'), "Expected JT O'Sullivan QB School video in Film & Trench");
   for (const vidId of hlVidIds) {
     assert.ok(!filmVidIds.has(vidId), `Duplicate video "${vidId}" appeared in both Highlights & Videos and Film & Trench`);

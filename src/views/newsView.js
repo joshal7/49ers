@@ -314,7 +314,22 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
   }
   if (isVideo) {
     const title = String(item?.title || '');
-    if (/\b(highlights|best plays|top plays|every touchdown|condensed game)\b/i.test(title)) {
+    const isInterviewClip = /\b(press conference|reflects on|chats about|previews week|shares final updates|speak ahead|talk new additions|on first career touchdown|you['’]?ve got mail|inside the oval)\b/i.test(
+      title
+    );
+    const hasPlayerFocus =
+      (item?.mentionedPlayers?.length || 0) > 0 ||
+      /\b(best plays|every completed pass|every throw|pick[- ]?6|interceptions?)\b/i.test(title);
+    if (
+      !isInterviewClip &&
+      hasPlayerFocus &&
+      /\b(highlights|best plays|every completed pass|every throw|every catch|rushing|pick[- ]?6|interceptions?|touchdown|big catch|sacks?)\b/i.test(
+        title
+      )
+    ) {
+      return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Player Highlights</span></span>`;
+    }
+    if (!isInterviewClip && /\b(highlights|best plays|top plays|every touchdown|condensed game)\b/i.test(title)) {
       return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Highlights</span></span>`;
     }
     if (/\b(forty niner way|49hours|mic['’]?d up|locker room|from the trenches|recap)\b/i.test(title)) {
@@ -405,7 +420,7 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
               : `<strong style="font-size:12.5px;color:var(--gold-bright)">${esc(authorName)}</strong>`
           }
         </div>
-        <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(formatRelativeAge(item.publishedAt))}</span>
+        <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${isVideo && item.duration ? `${esc(item.duration)} • ` : ''}${esc(formatRelativeAge(item.publishedAt))}</span>
       </div>
       <div class="${hasThumb ? 'media-split-row' : ''}">
         <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
