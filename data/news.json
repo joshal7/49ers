@@ -8,31 +8,32 @@
     "modelUsed": "gemini-3.8-flash",
     "thinkingLevel": "HIGH",
     "source": "pipeline-grounded",
-    "wordCount": 204,
-    "headline": "49ers (7-1) Week 10 Briefing: Roster & Cap Moves, Practice Wire & Dallas Cowboys Prep",
-    "summary": "San Francisco (7-1) enters Week 10 vs. Dallas Cowboys headlined by 49ers Restructured DT DeForest Buckner For $5.2M In Cap Space ([NFL Trade Rumors](https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n)). Around the facility, Brock Purdy for MVP? For real? He’s among the 49ers nominated for midseason honors ([Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u)) frames preparations ahead of kickoff.",
+    "wordCount": 258,
+    "headline": "49ers (7-1) Week 10 Briefing: Keenan Allen Addition, Buckner Cap Restructure, Wednesday Injury Report",
+    "summary": "San Francisco (7-1) enters Week 10 against the Dallas Cowboys (SF -3.5) after adding veteran WR Keenan Allen at the trade deadline and clearing $5.2M in immediate cap room via a DeForest Buckner restructure [David Lombardi](https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/). On the practice field, Wednesday's report balanced an IR return window activation and key skill-position return against early-week absences in the starting secondary [Matt Maiocco](https://x.com/MaioccoNBCS/status/2120617948138401832).",
     "bullets": [
-      "Roster & Cap Ledger: 49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel)), alongside 49ers officially have acquired WR Keenan Allen from the Indianapolis Colts in… ([Adam Schefter](https://x.com/AdamSchefter/status/2120580183589880060)), while Paraag Marathe preserves $39.18M in 2026 space for CBA Article 13 rollover against 2027's -$36.74M void years projection.",
-      "Practice & IR Wire: 49ers vs. Cowboys injury report: Deebo Samuel returns; 6 players miss practice ([49ers Webzone](https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/)), headlining IR return windows and practice tracking around Mike Evans (Achilles), Renardo Green (Back), Deommodore Lenoir (Foot) ahead of kickoff.",
-      "Team & Matchup Pulse: 49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft ([49ers Webzone](https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/)), while Morning Report: Allen Arrives to The Bay, 49ers Preview Week 10 Against Cowboys 🗞️ ([49ers.com Official](https://www.49ers.com/news/morning-reports/morning-report-allen-arrives-to-the-bay-49ers-preview-week-10-against-cowboys)) frames EPA efficiency and play-action sequencing for Week 10 vs. Dallas Cowboys (SF -3.5)."
+      "Trades, Roster & Cap Moves: John Lynch finalized the trade for WR Keenan Allen from Indianapolis for a 2027 6th-round pick and signed CB Jack Jones to the practice squad [Adam Schefter](https://x.com/AdamSchefter/status/2120580183589880060). Paraag Marathe converted base salary on DT DeForest Buckner to open $5.2M [NFL Trade Rumors](https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n), lifting 2026 room to $39.18M for CBA Article 13 rollover against 2027's -$36.74M void years projection.",
+      "Injury & Practice Availability: The 49ers opened DT C.J. West's 21-day IR practice window alongside limited sessions for WR Deebo Samuel Sr. (hamstring), S Siran Neal (knee, foot), and CB Upton Stout (shoulder, neck) [Pro Football Rumors](https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel). WR Mike Evans (Achilles), CB Renardo Green (back), and CB Deommodore Lenoir (foot) did not practice Wednesday, whereas WR Demarcus Robinson (ankle) practiced in full [49ers Webzone](https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/).",
+      "Matchup & Team Storylines: With starting cornerbacks Renardo Green and Deommodore Lenoir sidelined Wednesday [49ers Webzone](https://www.49erswebzone.com/articles/205075-49ers-ground-defense-against-cowboys/), Kyle Shanahan can insulate the secondary against the Dallas Cowboys through San Francisco's top-ranked EPA offense, play-action passing, and ball-control run game [49ers Webzone](https://bsky.app/profile/49erswebzone.bsky.social/post/3n24jlxkhgh2y). Working Keenan Allen into intermediate routes gives QB Brock Purdy another veteran separator without rushing Mike Evans back [Nick Wagoner](https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers), while Purdy earns midseason MVP buzz [Matt Barrows](https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u)."
     ],
     "coveredStoryKeys": [
       "cjwest::ir_roster_move",
-      "keenanallen::trade_acquisition"
+      "keenanallen::trade_acquisition",
+      "team::weekly_injury_report"
     ],
     "coveredUrls": [
-      "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n",
-      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u",
-      "https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel",
-      "https://x.com/AdamSchefter/status/2120580183589880060",
-      "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
-      "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-      "https://www.49ers.com/news/morning-reports/morning-report-allen-arrives-to-the-bay-49ers-preview-week-10-against-cowboys",
       "https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/",
+      "https://x.com/MaioccoNBCS/status/2120617948138401832",
+      "https://x.com/AdamSchefter/status/2120580183589880060",
+      "https://bsky.app/profile/nfltraderumors.bsky.social/post/3n24oqtlffn2n",
+      "https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel",
+      "https://www.49erswebzone.com/articles/205067-cowboys-injury-returns-players-practice/",
       "https://www.49erswebzone.com/articles/205075-49ers-ground-defense-against-cowboys/",
       "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24jlxkhgh2y",
-      "https://x.com/MaioccoNBCS/status/2120617948138401832",
+      "https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers",
+      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u",
       "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n23uphkxbc2k",
+      "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
       "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22jdseqhb2x",
       "https://www.espn.com/nfl/player/_/id/4686308/cj-west#:~:text=West%20(knee)%20was%20a%20limited%20participant%20in",
       "https://www.49erswebzone.com/articles/205052-49ers-officially-announce-keenan-cornerback/",
@@ -48,9 +49,38 @@
       "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzy3ytrh6k2c",
       "https://bsky.app/profile/victafur.bsky.social/post/3mzy7kpu4722x",
       "https://www.espn.com/nfl/player/_/id/15818/keenan-allen#:~:text=The%2049ers%20acquired%20Allen%20from%20the%20Colts",
-      "https://www.espn.com/video/clip/_/id/50458517/49ers-face-questions-corner-heading-week-10"
+      "https://www.espn.com/video/clip/_/id/50458517/49ers-face-questions-corner-heading-week-10",
+      "https://www.49erswebzone.com/articles/205057-injury-updates-returns-practice-several/",
+      "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n22suzupbc2g",
+      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n23fbofoos27",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2342tnfkw2o",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n22ujgufqp2t"
     ],
     "sources": [
+      {
+        "type": "article",
+        "author": "David Lombardi",
+        "outlet": "The SF Standard",
+        "title": "‘Everybody’s open’: How Keenan Allen can make the 49ers’ top-ranked offense even better",
+        "url": "https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/",
+        "publishedAt": "2026-11-12T14:00:00.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Matt Maiocco",
+        "outlet": "NBC Sports Bay Area",
+        "title": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal. No",
+        "url": "https://x.com/MaioccoNBCS/status/2120617948138401832",
+        "publishedAt": "2026-11-11T20:41:45.559Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Adam Schefter",
+        "outlet": "ESPN NFL Insider",
+        "title": "49ers officially have acquired WR Keenan Allen from the Indianapolis Colts in exchange for a 2027 sixth-round pick. 49ers also signed CB Jack Jones to the team’s practice squad.",
+        "url": "https://x.com/AdamSchefter/status/2120580183589880060",
+        "publishedAt": "2026-11-11T18:11:28.899Z"
+      },
       {
         "type": "tweet",
         "author": "NFL Trade Rumors",
@@ -60,28 +90,12 @@
         "publishedAt": "2026-11-12T14:32:15Z"
       },
       {
-        "type": "tweet",
-        "author": "Matt Barrows",
-        "outlet": "The Athletic",
-        "title": "Brock Purdy for MVP? For real? He’s among the 49ers nominated for midseason honors",
-        "url": "https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u",
-        "publishedAt": "2026-11-12T15:02:59.999Z"
-      },
-      {
         "type": "article",
         "author": "Pro Football Rumors",
         "outlet": "Pro Football Rumors",
         "title": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
         "url": "https://www.profootballrumors.com/2026/11/49ers-designate-dt-cj-west-for-return-latest-on-mike-evans-deebo-samuel",
         "publishedAt": "2026-11-12T00:26:05.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Adam Schefter",
-        "outlet": "ESPN NFL Insider",
-        "title": "49ers officially have acquired WR Keenan Allen from the Indianapolis Colts in exchange for a 2027 sixth-round pick. 49ers also signed CB…",
-        "url": "https://x.com/AdamSchefter/status/2120580183589880060",
-        "publishedAt": "2026-11-11T18:11:28.899Z"
       },
       {
         "type": "article",
@@ -95,30 +109,6 @@
         "type": "article",
         "author": "49ers Webzone",
         "outlet": "49ers Webzone",
-        "title": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
-        "url": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
-        "publishedAt": "2026-11-11T17:48:10.000Z"
-      },
-      {
-        "type": "article",
-        "author": "49ers.com Staff",
-        "outlet": "49ers.com Official",
-        "title": "Morning Report: Allen Arrives to The Bay, 49ers Preview Week 10 Against Cowboys 🗞️",
-        "url": "https://www.49ers.com/news/morning-reports/morning-report-allen-arrives-to-the-bay-49ers-preview-week-10-against-cowboys",
-        "publishedAt": "2026-11-12T15:08:28.000Z"
-      },
-      {
-        "type": "article",
-        "author": "David Lombardi",
-        "outlet": "The SF Standard",
-        "title": "‘Everybody’s open’: How Keenan Allen can make the 49ers’ top-ranked offense even better",
-        "url": "https://sfstandard.com/2026/11/12/keenan-allen-49ers-offense-plans-top-ranking/",
-        "publishedAt": "2026-11-12T14:00:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "49ers Webzone",
-        "outlet": "49ers Webzone",
         "title": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
         "url": "https://www.49erswebzone.com/articles/205075-49ers-ground-defense-against-cowboys/",
         "publishedAt": "2026-11-12T13:00:00.000Z"
@@ -127,25 +117,41 @@
         "type": "tweet",
         "author": "49ers Webzone",
         "outlet": "49ers Webzone",
-        "title": "#49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
+        "title": "49ers' Ground Game Could Be Their Best Defense Against The Cowboys",
         "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n24jlxkhgh2y",
         "publishedAt": "2026-11-12T05:00:02-08:00"
       },
       {
+        "type": "article",
+        "author": "Nick Wagoner",
+        "outlet": "ESPN",
+        "title": "Veteran WR Keenan Allen feeling energized by trade to 49ers",
+        "url": "https://www.espn.com/nfl/story/_/id/50456881/veteran-wr-keenan-allen-feels-energized-trade-49ers",
+        "publishedAt": "2026-11-12T01:28:27Z"
+      },
+      {
         "type": "tweet",
-        "author": "Matt Maiocco",
-        "outlet": "NBC Sports Bay Area",
-        "title": "The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel…",
-        "url": "https://x.com/MaioccoNBCS/status/2120617948138401832",
-        "publishedAt": "2026-11-11T20:41:45.559Z"
+        "author": "Matt Barrows",
+        "outlet": "The Athletic",
+        "title": "Brock Purdy for MVP? For real? He’s among the 49ers nominated for midseason honors",
+        "url": "https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u",
+        "publishedAt": "2026-11-12T15:02:59.999Z"
       },
       {
         "type": "tweet",
         "author": "Matt Maiocco",
         "outlet": "NBC Sports Bay Area",
-        "title": "Mac Jones is having fun with the 49ers. “What's the price tag on that? To me, it's multiple millions of dollars to have fun and be on a…",
+        "title": "Mac Jones is having fun with the 49ers. “What's the price tag on that? To me, it's multiple millions of dollars to have fun and be on a winning team because I've been on the",
         "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n23uphkxbc2k",
         "publishedAt": "2026-11-12T06:46:12.382Z"
+      },
+      {
+        "type": "article",
+        "author": "49ers Webzone",
+        "outlet": "49ers Webzone",
+        "title": "49ers add protection for Brock Purdy in 3-round 2027 NFL mock draft",
+        "url": "https://www.49erswebzone.com/articles/205051-49ers-protection-brock-3-round-nfl/",
+        "publishedAt": "2026-11-11T17:48:10.000Z"
       }
     ]
   },

@@ -72,7 +72,8 @@ import {
   corroborateAndAnnotateWireStream,
   buildXBeatListSearchUrl,
   buildXPlayerScoopSearchUrl,
-  getReporterTrustTier
+  getReporterTrustTier,
+  MAX_X_SEARCH_RAW_QUERY_LENGTH
 } from '../src/engine/beatAttributionEngine.js';
 import {
   buildClusteredNewsBriefs,
@@ -3819,10 +3820,61 @@ await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranki
   );
   assert.ok(tier1BeatSalience > tier3OpinionSalience + 20, 'Tier-1 factual beat must strongly outscore Tier-3 opinion');
 
-  // 4. Live X Search URLs
-  const xInjUrl = buildXBeatListSearchUrl('injuries');
+  // 4. Live X Search URLs + Full Settings Tier 1–3 Coverage within X 500-char Query Limit
+  const liveReportersJson = JSON.parse(
+    fs.readFileSync(path.join(rootDir, 'data/reporters.json'), 'utf8')
+  );
+  const settingsReporters = liveReportersJson.reporters || [];
+  const xTrustedUrl = buildXBeatListSearchUrl('trusted', { reporters: settingsReporters });
+  const xFilmUrl = buildXBeatListSearchUrl('film', { reporters: settingsReporters });
+  const xInjUrl = buildXBeatListSearchUrl('injuries', { reporters: settingsReporters });
+  const xInsidersUrl = buildXBeatListSearchUrl('insiders', { reporters: settingsReporters });
   const xPlayerUrl = buildXPlayerScoopSearchUrl('Brock Purdy');
-  assert.ok(xInjUrl.startsWith('https://x.com/search?q=') && xInjUrl.includes('f=live') && xInjUrl.includes('MaioccoNBCS'));
+
+  for (const [label, urlStr] of [
+    ['trusted', xTrustedUrl],
+    ['film', xFilmUrl],
+    ['injuries', xInjUrl],
+    ['insiders', xInsidersUrl]
+  ]) {
+    assert.ok(urlStr.startsWith('https://x.com/search?q=') && urlStr.includes('f=live'), `Invalid ${label} X URL: ${urlStr}`);
+    const parsedQ = new URL(urlStr).searchParams.get('q') || '';
+    assert.ok(
+      parsedQ.length > 10 && parsedQ.length <= MAX_X_SEARCH_RAW_QUERY_LENGTH,
+      `${label} X rawQuery exceeded ${MAX_X_SEARCH_RAW_QUERY_LENGTH} chars (got ${parsedQ.length}): ${parsedQ}`
+    );
+  }
+
+  const combinedDirectXQueries = ['trusted', 'film', 'insiders']
+    .map(m => (new URL(buildXBeatListSearchUrl(m, { reporters: settingsReporters })).searchParams.get('q') || '').toLowerCase())
+    .join(' ');
+  for (const rep of settingsReporters) {
+    const cleanHandle = String(rep.handle || '').replace(/^@/, '').toLowerCase();
+    assert.ok(
+      combinedDirectXQueries.includes(`from:${cleanHandle}`),
+      `Expected Settings Tier ${rep.trustTier} reporter ${rep.name} (@${cleanHandle}) to be included in Direct X Beat Lists`
+    );
+  }
+  const trustedQ = new URL(xTrustedUrl).searchParams.get('q') || '';
+  assert.ok(
+    trustedQ.includes('from:MaioccoNBCS') &&
+      trustedQ.includes('from:SamWarren_SF') &&
+      trustedQ.includes('from:noah_furtado') &&
+      trustedQ.includes('from:dkurtenbach') &&
+      trustedQ.includes('from:grantcohn'),
+    `Trusted Beat must include Tier 1, Tier 2, and Tier 3 49ers beat writers from Settings: ${trustedQ}`
+  );
+  const mutedTrustedQ = new URL(
+    buildXBeatListSearchUrl('trusted', {
+      reporters: settingsReporters,
+      userPrefs: { disabledReporterIds: ['grant_cohn'], muteHotTakePersonalities: true }
+    })
+  ).searchParams.get('q') || '';
+  assert.ok(
+    !mutedTrustedQ.includes('from:grantcohn') && !mutedTrustedQ.includes('from:dkurtenbach'),
+    `Direct X Beat Lists must respect Settings disabledReporterIds & muteHotTakePersonalities: ${mutedTrustedQ}`
+  );
+  assert.ok(xInjUrl.includes('MaioccoNBCS'));
   assert.ok(xPlayerUrl.startsWith('https://x.com/search?q=') && xPlayerUrl.includes('Brock%20Purdy') && xPlayerUrl.includes('f=live'));
 
   // 5. Multi-source live wire orchestrator (ESPN Player Wire + RotoWire RSS + Official Transactions + Bluesky)
@@ -6007,14 +6059,42 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-Ne
   assert.ok(briefCardHtml.includes('data-daily-brief-sources'), 'Missing expandable full source list at bottom of brief');
   assert.ok(!/<a\b[^>]*>(?:(?!<\/a>)[\s\S])*<a\b/i.test(briefCardHtml), 'Found nested <a> tags inside Daily Top News Brief HTML');
 
-  // Verify LLM JSON parser resolves [Author](S#) references cleanly and strips departed-player hallucinations
+  // Verify inline source links render ONLY a small clickable link icon (zero full reporter/outlet names inside prose)
+  const briefBodyBeforeDrawer = briefCardHtml.split('<details')[0];
+  const inlineAnchors = [...briefBodyBeforeDrawer.matchAll(/<a\b[^>]*data-brief-inline-source[^>]*>([\s\S]*?)<\/a>/gi)];
+  assert.ok(inlineAnchors.length >= 4, `Expected >=4 inline link icon pills in Daily Brief, got ${inlineAnchors.length}`);
+  for (const [, innerAnchorHtml] of inlineAnchors) {
+    const visibleAnchorText = innerAnchorHtml.replace(/<[^>]+>/g, '').trim();
+    assert.equal(visibleAnchorText, '', `Inline link item must be icon-only without full source name text, got "${visibleAnchorText}"`);
+  }
+  const visibleProseOnly = briefBodyBeforeDrawer.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  assert.ok(!/\.{3}|…/.test(visibleProseOnly), `Daily Brief prose must NEVER contain truncated ellipses: "${visibleProseOnly}"`);
+  assert.ok(!/\b(latest on|click here|read more|pro football rumors|adam schefter|49ers webzone)\b/i.test(visibleProseOnly), `Daily Brief prose must not contain teaser copy or inline outlet/reporter names: "${visibleProseOnly}"`);
+
+  // Verify LLM JSON parser resolves [S#] references cleanly, rejects lazy teaser/ellipsis copy, and strips departed-player hallucinations
   const cands = selectTopNewsBriefSourceCandidates(fullAppData, 10);
   const promptText = buildDailyTopNewsBriefPrompt(fullAppData, cands);
-  assert.ok(promptText.includes('~215–245 words'), 'Prompt must enforce ~2/3 Coaching Matchup word budget');
+  assert.ok(promptText.includes('~205–240 words'), 'Prompt must enforce ~2/3 Coaching Matchup word budget');
+  assert.equal(
+    parseAndSanitizeDailyTopNewsBrief(
+      JSON.stringify({
+        headline: '49ers Update',
+        summary: 'Click here for the latest on Mike Evans and Deebo Samuel after acquiring Allen in...',
+        bullets: [
+          'Roster: Latest on Mike Evans [S1].',
+          'Health: Updates on Deebo Samuel [S2].'
+        ]
+      }),
+      cands,
+      fullAppData
+    ),
+    null,
+    'Parser must reject lazy teaser ("latest on" / "click here") or truncated brief copy'
+  );
   const parsedAiBrief = parseAndSanitizeDailyTopNewsBrief(
     JSON.stringify({
       headline: '49ers Finalize Keenan Allen Trade & DeForest Buckner Cap Restructure Before Cowboys Tilt',
-      summary: 'San Francisco cleared $5.2M in 2026 cap space while integrating WR Keenan Allen ([S1]) and opening DT C.J. West\'s 21-day practice window ([Matt Maiocco](S2)).',
+      summary: 'San Francisco cleared $5.2M in 2026 cap space while integrating WR Keenan Allen ([S1]) and opening DT C.J. West\'s 21-day practice window, per [Matt Maiocco](S2).',
       bullets: [
         'Trades & Cap Ledger: Paraag Marathe converted DeForest Buckner base salary into bonus proration ([NFL Trade Rumors](S1)) to preserve $39.18M in Article 13 rollover.',
         'Practice Participation: Deebo Samuel returned on a limited basis while Kyle Shanahan monitored mid-week reps ([49ers Webzone](S3)).',
@@ -6027,6 +6107,7 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-Ne
   );
   assert.ok(parsedAiBrief && parsedAiBrief.sources.length >= 4, 'Failed to parse valid Gemini 3.8 Flash High brief JSON');
   assert.ok(/\[[^\]]+\]\(https:\/\/[^)]+\)/.test(parsedAiBrief.summary), 'Expected S# citations converted to verified HTTPS links');
+  assert.ok(!/\(\[|\bper\s+\[/i.test(parsedAiBrief.summary), 'Expected wrapping parens and "per " stripped around inline link icons');
 
   // 4. Breaking-Above-Brief Ordering Rule (Identical in News -> All AND Home)
   const nowOrderMs = Date.now();

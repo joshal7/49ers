@@ -914,12 +914,21 @@ async function main() {
 
         const hRect = headEl?.getBoundingClientRect();
         const aRect = ageEl?.getBoundingClientRect();
+        const proseText = [
+          briefEl?.querySelector('.daily-brief-headline')?.textContent || '',
+          briefEl?.querySelector('.daily-brief-summary')?.textContent || '',
+          briefEl?.querySelector('.daily-brief-bullets')?.textContent || ''
+        ].join(' ');
         return {
           exists: Boolean(briefEl),
           ageText: ageEl?.textContent?.trim() || '',
           ageInUpperRight: Boolean(hRect && aRect && aRect.right >= hRect.right - 20 && aRect.top <= hRect.top + 26),
           inlineLinkCount: inlineLinks.length,
           allInlineHttps: inlineLinks.every(a => (a.getAttribute('href') || '').startsWith('https://')),
+          allInlineIconOnly: inlineLinks.every(
+            a => a.textContent.trim() === '' && Boolean(a.querySelector('svg')) && (a.getAttribute('aria-label') || '').length >= 4
+          ),
+          hasEllipsisOrTeaser: /\.{3}|…|\blatest on\b|\bclick here\b|\bpro football rumors\b|\badam schefter\b/i.test(proseText),
           startedCollapsed,
           expandedOpen,
           sourceRowCount: sourceRows.length,
@@ -927,7 +936,11 @@ async function main() {
         };
       });
       assert(briefAudit.exists && briefAudit.ageText.length >= 2 && briefAudit.ageInUpperRight, `Daily Brief upper-right age timestamp failed: ${JSON.stringify(briefAudit)}`);
-      assert(briefAudit.inlineLinkCount >= 3 && briefAudit.allInlineHttps, `Expected >=3 HTTPS inline source links in Daily Brief, got: ${JSON.stringify(briefAudit)}`);
+      assert(
+        briefAudit.inlineLinkCount >= 4 && briefAudit.allInlineHttps && briefAudit.allInlineIconOnly,
+        `Expected >=4 icon-only HTTPS inline source links in Daily Brief, got: ${JSON.stringify(briefAudit)}`
+      );
+      assert(!briefAudit.hasEllipsisOrTeaser, `Daily Brief prose contained truncated ellipsis, teaser phrase, or distracting inline source name: ${JSON.stringify(briefAudit)}`);
       assert(
         briefAudit.startedCollapsed && briefAudit.expandedOpen && briefAudit.sourceRowCount >= 5 && briefAudit.allSourcesHttps,
         `Expandable Daily Brief Sources list failed: ${JSON.stringify(briefAudit)}`
@@ -3456,19 +3469,45 @@ async function main() {
         const cfg = window.__49ersDiagnostics?.getLiveWireConfig?.() || {};
         document.querySelector('.nav-tab-btn[data-nav-tab="news"]')?.click();
         const strip = document.querySelector('.x-beat-launch-strip');
-        const stripLinks = Array.from(strip?.querySelectorAll('a.x-beat-chip') || []).map(a => ({
-          label: a.textContent.trim(),
-          href: a.getAttribute('href') || ''
-        }));
+        const detailsEl = strip?.closest('details');
         const headH = Math.round(document.querySelector('.news-toolbar-head')?.getBoundingClientRect().height || 0);
         const cardH = Math.round(document.querySelector('.news-toolbar-card')?.getBoundingClientRect().height || 0);
+        if (detailsEl) detailsEl.open = true;
+        const stripLinks = Array.from(strip?.querySelectorAll('a.x-beat-chip') || []).map(a => ({
+          label: a.textContent.trim(),
+          href: a.getAttribute('href') || '',
+          qLen: (() => {
+            try {
+              return (new URL(a.getAttribute('href') || '').searchParams.get('q') || '').length;
+            } catch {
+              return 9999;
+            }
+          })()
+        }));
+        if (detailsEl) detailsEl.open = false;
 
-        // Open Settings and verify X-first reporter links + Trust Tier badges
+        // Open Settings and verify X-first reporter links + Trust Tier badges + full Direct X handle coverage
         document.getElementById('openSettingsBtn')?.click();
         const sheetBody = document.getElementById('sheetBody');
         const repAnchorHrefs = Array.from(sheetBody?.querySelectorAll('label a[href]') || [])
-          .map(a => a.getAttribute('href') || '')
-          .slice(0, 8);
+          .map(a => a.getAttribute('href') || '');
+        const settingsHandles = Array.from(
+          new Set(
+            repAnchorHrefs
+              .map(h => (h.match(/^https:\/\/x\.com\/([A-Za-z0-9_]+)/i)?.[1] || '').toLowerCase())
+              .filter(Boolean)
+          )
+        );
+        const combinedStripQuery = stripLinks
+          .map(l => {
+            try {
+              return (new URL(l.href).searchParams.get('q') || '').toLowerCase();
+            } catch {
+              return '';
+            }
+          })
+          .join(' ');
+        const missingSettingsHandles = settingsHandles.filter(h => !combinedStripQuery.includes(`from:${h}`));
         const hasTierBadges = (sheetBody?.textContent || '').includes('Tier 1 Trusted');
         document.getElementById('closeSheetBtn')?.click();
 
@@ -3482,7 +3521,17 @@ async function main() {
         document.getElementById('closeSheetBtn')?.click();
         document.querySelector('.nav-tab-btn[data-nav-tab="home"]')?.click();
 
-        return { cfg, stripExists: Boolean(strip), stripLinks, headH, cardH, repAnchorHrefs, hasTierBadges, dossierLinks };
+        return {
+          cfg,
+          stripExists: Boolean(strip),
+          stripLinks,
+          missingSettingsHandles,
+          headH,
+          cardH,
+          repAnchorHrefs: repAnchorHrefs.slice(0, 8),
+          hasTierBadges,
+          dossierLinks
+        };
       });
 
       assert(
@@ -3491,9 +3540,15 @@ async function main() {
       );
       assert(
         xAudit.stripExists &&
-          xAudit.stripLinks.length === 3 &&
-          xAudit.stripLinks.every(l => l.href.startsWith('https://x.com/search?q=') && l.href.includes('f=live')),
-        `Live X Search strip missing or invalid links: ${JSON.stringify(xAudit.stripLinks)}`
+          xAudit.stripLinks.length === 4 &&
+          xAudit.stripLinks.every(
+            l => l.href.startsWith('https://x.com/search?q=') && l.href.includes('f=live') && l.qLen <= 500
+          ),
+        `Live X Search strip missing, invalid, or exceeded 500-char X query cap: ${JSON.stringify(xAudit.stripLinks)}`
+      );
+      assert(
+        xAudit.missingSettingsHandles.length === 0,
+        `Direct X Beat Lists omitted Settings Tier 1–3 handles: ${JSON.stringify(xAudit.missingSettingsHandles)}`
       );
       assert(
         xAudit.headH <= 68 && xAudit.cardH <= 180,

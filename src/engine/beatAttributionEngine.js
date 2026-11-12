@@ -72,8 +72,6 @@ export const BEAT_REPORTER_DIRECTORY = [
   { id: 'mina_kimes', name: 'Mina Kimes', handle: '@minakimes', outletId: 'espn', outletName: 'ESPN NFL', trustTier: 2, credibilityScore: 93 },
   { id: 'ben_solak', name: 'Ben Solak', handle: '@BenjaminSolak', outletId: 'espn', outletName: 'ESPN NFL', trustTier: 2, credibilityScore: 91 },
   { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', outletId: 'youtube_film', outletName: 'The Film Room', trustTier: 2, credibilityScore: 89 },
-  { id: 'dane_brugler', name: 'Dane Brugler', handle: '@dpbrugler', outletId: 'athletic', outletName: 'The Athletic Draft', trustTier: 2, credibilityScore: 94 },
-  { id: 'daniel_jeremiah', name: 'Daniel Jeremiah', handle: '@MoveTheSticks', outletId: 'nfl_network', outletName: 'NFL Network', trustTier: 2, credibilityScore: 93 },
 
   // Tier 3: Viable Columnists, Camp & Sideline Observers (lower weight on opinion, full First-Mover elevation on acute injury observations)
   { id: 'dieter_kurtenbach', name: 'Dieter Kurtenbach', handle: '@dkurtenbach', outletId: 'bay_area_news', outletName: 'Bay Area News Group', trustTier: 3, credibilityScore: 80 },
@@ -648,20 +646,98 @@ export function corroborateAndAnnotateWireStream(items = [], nowMs = Date.now(),
   return annotated.map(({ _eventTopic, _playerKeys, _pubMs, ...clean }) => clean);
 }
 
-export const TOP_TRUSTED_49ERS_X_HANDLES = [
-  'MaioccoNBCS',
-  'nwagoner',
-  'mattbarrows',
-  'LombardiHimself',
-  'jenniferleechan',
-  'Eric_Branch',
-  'CamInman',
-  '49ers',
-  'AdamSchefter',
-  'RapSheet',
-  'TomPelissero',
-  'MikeGarafolo'
+export const MAX_X_SEARCH_RAW_QUERY_LENGTH = 500;
+
+/**
+ * League-wide NFL insiders, draft evaluators, and national film/analytics voices in Settings (`5. Beat Reporters & Analysts`).
+ * Scoped with 49ers keywords (`(49ers OR Niners OR Shanahan OR Lynch OR Purdy)`) on X so non-49ers league chatter never floods the feed.
+ */
+export const NATIONAL_NFL_SETTINGS_REPORTER_IDS = new Set([
+  'adam_schefter',
+  'ian_rapoport',
+  'tom_pelissero',
+  'mike_garafolo',
+  'dianna_russini',
+  'jeremy_fowler',
+  'albert_breer',
+  'field_yates',
+  'jordan_schultz',
+  'dane_brugler',
+  'daniel_jeremiah',
+  'ben_solak',
+  'jt_osullivan',
+  'mina_kimes',
+  'brett_kollmann'
+]);
+
+/**
+ * Canonical fallback seed matching all 49 Tier 1–3 reporters & analysts in `Settings -> 5. Beat Reporters & Analysts`
+ * (`data/reporters.json`), used whenever live `appData.reporters.reporters` is not passed explicitly.
+ */
+export const SETTINGS_DIRECT_X_REPORTER_SEEDS = [
+  // Local 49ers Beat & Official Voices (Tiers 1–3: 21 entries, 20 unique X handles)
+  { id: 'kyle_shanahan', handle: '@49ers', outletId: '49ers_official', category: 'official', styleTag: 'factual-scheme', trustTier: 1 },
+  { id: '49ers_news', handle: '@49ers', outletId: '49ers_official', category: 'official', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'john_lynch', handle: '@JohnLynch49ers', outletId: '49ers_official', category: 'official', styleTag: 'factual-roster', trustTier: 1 },
+  { id: 'brianna_jeannel', handle: '@BrianaJeannel', outletId: '49ers_official', category: 'official', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'matt_maiocco', handle: '@MaioccoNBCS', outletId: 'nbcsba', category: 'beat', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'nick_wagoner', handle: '@nwagoner', outletId: 'espn', category: 'beat', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'jennifer_lee_chan', handle: '@jenniferleechan', outletId: 'nbcsba', category: 'beat', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'matt_barrows', handle: '@mattbarrows', outletId: 'athletic', category: 'beat', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'david_lombardi', handle: '@LombardiHimself', outletId: 'sf_standard', category: 'beat', styleTag: 'analytics-cap', trustTier: 1 },
+  { id: 'eric_branch', handle: '@Eric_Branch', outletId: 'sf_chronicle', category: 'beat', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'cam_inman', handle: '@CamInman', outletId: 'bay_area_news', category: 'beat', styleTag: 'factual-beat', trustTier: 1 },
+  { id: 'sam_warren', handle: '@SamWarren_SF', outletId: 'athletic', category: 'beat', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'noah_furtado', handle: '@noah_furtado', outletId: 'sf_chronicle', category: 'beat', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'rohan_chakravarthi', handle: '@RohanChakrav', outletId: 'niners_nation', category: 'beat', styleTag: 'analytics-cap', trustTier: 2 },
+  { id: 'chris_biderman', handle: '@ChrisBiderman', outletId: 'bay_area_news', category: 'beat', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'greg_papa', handle: '@GregPapa', outletId: 'knbr_radio', category: 'beat', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'tim_kawakami', handle: '@timkawakami', outletId: 'sf_standard', category: 'beat', styleTag: 'columnist-insider', trustTier: 2 },
+  { id: 'vic_tafur', handle: '@VicTafur', outletId: 'athletic', category: 'beat', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'al_sacco', handle: '@AlSacco49', outletId: '49ers_webzone', category: 'beat', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'dieter_kurtenbach', handle: '@dkurtenbach', outletId: 'bay_area_news', category: 'beat', styleTag: 'opinion-hot-take', trustTier: 3 },
+  { id: 'grant_cohn', handle: '@grantcohn', outletId: 'youtube_film', category: 'beat', styleTag: 'opinion-hot-take', trustTier: 3 },
+
+  // Dedicated 49ers Film, Analytics & Podcast Voices (Tiers 2–3: 13 unique X handles)
+  { id: 'kyle_posey', handle: '@KP_Show', outletId: 'niners_nation', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'jonnydel', handle: '@jonnydelsfa', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'tim_ryan', handle: '@TimRyan49ers', outletId: 'knbr_radio', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'guy_haberman', handle: '@GuyHaberman', outletId: 'youtube_film', category: 'video_pod', styleTag: 'analytical-pod', trustTier: 2 },
+  { id: 'eric_crocker', handle: '@eric_crocker', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'jason_aponte', handle: '@JasonAponte2103', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'john_chapman', handle: '@JL_Chapman', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'jeff_deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', category: 'analytics', styleTag: 'analytics-cap', trustTier: 2 },
+  { id: 'akash_anavarathan', handle: '@akashanav', outletId: 'youtube_film', category: 'analytics', styleTag: 'analytics-cap', trustTier: 2 },
+  { id: 'brad_graham', handle: '@TheSFNiners', outletId: 'youtube_film', category: 'video_pod', styleTag: 'factual-beat', trustTier: 2 },
+  { id: 'vish_kumaran', handle: '@VishKumaran', outletId: 'niners_nation', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'steph_sanchez', handle: '@Steph49K', outletId: 'youtube_film', category: 'analytics', styleTag: 'analytics-cap', trustTier: 2 },
+  { id: 'larry_krueger', handle: '@sportslarryknbr', outletId: 'youtube_film', category: 'video_pod', styleTag: 'opinion-hot-take', trustTier: 3 },
+
+  // National NFL Insiders, Draft Evaluators & League-Wide Film/Analytics Voices (Tiers 1–2: 15 unique X handles)
+  { id: 'adam_schefter', handle: '@AdamSchefter', outletId: 'espn', category: 'national_insider', styleTag: 'factual-roster', trustTier: 1 },
+  { id: 'ian_rapoport', handle: '@RapSheet', outletId: 'nfl_network', category: 'national_insider', styleTag: 'factual-roster', trustTier: 1 },
+  { id: 'tom_pelissero', handle: '@TomPelissero', outletId: 'nfl_network', category: 'national_insider', styleTag: 'factual-roster', trustTier: 1 },
+  { id: 'mike_garafolo', handle: '@MikeGarafolo', outletId: 'nfl_network', category: 'national_insider', styleTag: 'factual-roster', trustTier: 1 },
+  { id: 'dane_brugler', handle: '@dpbrugler', outletId: 'athletic', category: 'draft', styleTag: 'film-breakdown', trustTier: 1 },
+  { id: 'daniel_jeremiah', handle: '@MoveTheSticks', outletId: 'nfl_network', category: 'draft', styleTag: 'film-breakdown', trustTier: 1 },
+  { id: 'dianna_russini', handle: '@DMRussini', outletId: 'athletic', category: 'national_insider', styleTag: 'factual-roster', trustTier: 2 },
+  { id: 'jeremy_fowler', handle: '@JFowlerESPN', outletId: 'espn', category: 'national_insider', styleTag: 'factual-roster', trustTier: 2 },
+  { id: 'albert_breer', handle: '@AlbertBreer', outletId: 'nfl_network', category: 'national_insider', styleTag: 'factual-scheme', trustTier: 2 },
+  { id: 'field_yates', handle: '@FieldYates', outletId: 'espn', category: 'national_insider', styleTag: 'analytics-cap', trustTier: 2 },
+  { id: 'jordan_schultz', handle: '@Schultz_Report', outletId: 'nfl_network', category: 'national_insider', styleTag: 'factual-roster', trustTier: 2 },
+  { id: 'ben_solak', handle: '@BenjaminSolak', outletId: 'espn', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'jt_osullivan', handle: '@theqbschool', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'mina_kimes', handle: '@minakimes', outletId: 'espn', category: 'analytics', styleTag: 'film-breakdown', trustTier: 2 },
+  { id: 'brett_kollmann', handle: '@BrettKollmann', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 }
 ];
+
+export const TOP_TRUSTED_49ERS_X_HANDLES = Array.from(
+  new Set(
+    SETTINGS_DIRECT_X_REPORTER_SEEDS
+      .filter(r => !NATIONAL_NFL_SETTINGS_REPORTER_IDS.has(r.id) && (r.category === 'beat' || r.category === 'official'))
+      .map(r => r.handle.replace(/^@/, ''))
+  )
+);
 
 export const ALL_VIABLE_49ERS_INJURY_X_HANDLES = [
   'MaioccoNBCS',
@@ -671,29 +747,141 @@ export const ALL_VIABLE_49ERS_INJURY_X_HANDLES = [
   'jenniferleechan',
   'Eric_Branch',
   'CamInman',
-  'SamWarren_SF',
   'BrianaJeannel',
+  '49ers',
+  'SamWarren_SF',
+  'noah_furtado',
+  'ChrisBiderman',
+  'GregPapa',
+  'timkawakami',
+  'VicTafur',
+  'AlSacco49',
   'TheSFNiners',
-  'grantcohn',
-  '49ers'
+  'dkurtenbach',
+  'sportslarryknbr',
+  'grantcohn'
 ];
 
 /**
- * Builds a 1-tap Live X (`x.com`) search URL sorted by Latest (`f=live`) across the top trusted
- * 49ers beat writers & national insiders, or filtered specifically for live sideline/practice injury tweets.
+ * Resolves the enabled Settings (`5. Beat Reporters & Analysts`) Tier 1–3 entries after applying
+ * user mute preferences (`disabledReporterIds`, `disabledOutlets`, and `muteHotTakePersonalities`).
  */
-export function buildXBeatListSearchUrl(mode = 'trusted') {
+export function resolveEnabledDirectXReporters({
+  reporters = null,
+  userPrefs = null,
+  includeHotTakes = false
+} = {}) {
+  const sourceList =
+    Array.isArray(reporters) && reporters.length > 0 ? reporters : SETTINGS_DIRECT_X_REPORTER_SEEDS;
+  const disabledReps = new Set(userPrefs?.disabledReporterIds || []);
+  const disabledOutlets = new Set(userPrefs?.disabledOutlets || []);
+  const muteHotTakes = !includeHotTakes && Boolean(userPrefs?.muteHotTakePersonalities);
+
+  return sourceList.filter(r => {
+    if (!r || !r.handle) return false;
+    if (r.id && disabledReps.has(r.id)) return false;
+    if (r.outletId && disabledOutlets.has(r.outletId)) return false;
+    if (muteHotTakes && r.styleTag === 'opinion-hot-take') return false;
+    const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
+    return tier >= 1 && tier <= 3;
+  });
+}
+
+function packXSearchQueryWithinBudget(handles = [], suffixClause = '', maxChars = MAX_X_SEARCH_RAW_QUERY_LENGTH) {
+  const seen = new Set();
+  const cleanHandles = [];
+  for (const h of handles) {
+    const clean = String(h || '').replace(/^@/, '').trim();
+    if (!clean) continue;
+    const lower = clean.toLowerCase();
+    if (seen.has(lower)) continue;
+    seen.add(lower);
+    cleanHandles.push(clean);
+  }
+  if (cleanHandles.length === 0) {
+    cleanHandles.push('49ers');
+  }
+
+  const suffix = suffixClause ? ` ${suffixClause.trim()}` : '';
+  const selected = [];
+  for (const h of cleanHandles) {
+    const next = [...selected, `from:${h}`];
+    const candidateQuery = `(${next.join(' OR ')})${suffix}`;
+    if (candidateQuery.length > maxChars && selected.length > 0) {
+      break;
+    }
+    selected.push(`from:${h}`);
+  }
+  return `(${selected.join(' OR ')})${suffix}`;
+}
+
+/**
+ * Builds a 1-tap Live X (`x.com`) search URL sorted by Latest (`f=live`) across ALL enabled Tier 1–3
+ * reporters & analysts in `Settings -> 5. Beat Reporters & Analysts`, partitioned cleanly so every
+ * link stays strictly under X's 512-character `rawQuery` limit and national NFL voices stay 49ers-scoped:
+ * - `'trusted'`: All Tier 1–3 local 49ers Beat Reporters, Columnists, Broadcast & Official Team handles
+ * - `'film'`: All Tier 1–3 dedicated 49ers Film, Analytics & Podcast Analysts
+ * - `'injuries'`: Tier 1–3 49ers Beat, Official & Camp Sideline observers filtered for acute injury/practice scoops
+ * - `'insiders'`: All Tier 1–3 National NFL Insiders, Draft Evaluators & League-Wide Analysts scoped to 49ers
+ */
+export function buildXBeatListSearchUrl(mode = 'trusted', options = {}) {
+  const isNationalReporter = r =>
+    NATIONAL_NFL_SETTINGS_REPORTER_IDS.has(r.id) ||
+    r.category === 'national_insider' ||
+    r.category === 'draft';
+
   if (mode === 'injuries') {
-    const fromClause = ALL_VIABLE_49ERS_INJURY_X_HANDLES.map(h => `from:${h}`).join(' OR ');
-    const q = `(${fromClause}) (injury OR tent OR practice OR questionable OR return OR IR OR warmups OR DNP)`;
+    const enabled = resolveEnabledDirectXReporters({ ...options, includeHotTakes: true });
+    // Prioritize frontline beat/sideline injury reporters first so the 500-char budget always keeps acute practice/warmup voices
+    const priorityOrder = new Map(ALL_VIABLE_49ERS_INJURY_X_HANDLES.map((h, idx) => [h.toLowerCase(), idx]));
+    const injuryCandidates = enabled
+      .filter(
+        r =>
+          !isNationalReporter(r) &&
+          (r.category === 'beat' ||
+            r.category === 'official' ||
+            priorityOrder.has(String(r.handle || '').replace(/^@/, '').toLowerCase()))
+      )
+      .sort((a, b) => {
+        const ha = String(a.handle || '').replace(/^@/, '').toLowerCase();
+        const hb = String(b.handle || '').replace(/^@/, '').toLowerCase();
+        const pa = priorityOrder.has(ha) ? priorityOrder.get(ha) : 999;
+        const pb = priorityOrder.has(hb) ? priorityOrder.get(hb) : 999;
+        return pa - pb || (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2);
+      })
+      .map(r => r.handle);
+    const q = packXSearchQueryWithinBudget(
+      injuryCandidates,
+      '(injury OR tent OR practice OR questionable OR return OR IR OR warmups OR DNP)'
+    );
     return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
   }
+
+  const enabled = resolveEnabledDirectXReporters(options);
+
   if (mode === 'insiders') {
-    const q = `(from:AdamSchefter OR from:RapSheet OR from:TomPelissero OR from:MikeGarafolo OR from:DMRussini OR from:FieldYates) (49ers OR Niners OR Shanahan OR Lynch)`;
+    const nationalHandles = enabled.filter(isNationalReporter).map(r => r.handle);
+    const q = packXSearchQueryWithinBudget(
+      nationalHandles,
+      '(49ers OR Niners OR Shanahan OR Lynch OR Purdy)'
+    );
     return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
   }
-  const coreBeat = TOP_TRUSTED_49ERS_X_HANDLES.slice(0, 8).map(h => `from:${h}`).join(' OR ');
-  return `https://x.com/search?q=${encodeURIComponent(`(${coreBeat})`)}&src=typed_query&f=live`;
+
+  if (mode === 'film') {
+    const localFilmAndAnalyticsHandles = enabled
+      .filter(r => !isNationalReporter(r) && r.category !== 'beat' && r.category !== 'official')
+      .map(r => r.handle);
+    const q = packXSearchQueryWithinBudget(localFilmAndAnalyticsHandles);
+    return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+  }
+
+  // Default `'trusted'`: All enabled Tier 1–3 local 49ers Beat Reporters & Official Team Voices
+  const localBeatHandles = enabled
+    .filter(r => !isNationalReporter(r) && (r.category === 'beat' || r.category === 'official'))
+    .map(r => r.handle);
+  const q = packXSearchQueryWithinBudget(localBeatHandles);
+  return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
 }
 
 /**

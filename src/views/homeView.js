@@ -66,6 +66,7 @@ export function renderHomeDashboardHtml({
   mcSimResult,
   filteredClusters,
   filteredRawItems,
+  userPrefs = null,
   isCustomizingLayout
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
@@ -108,6 +109,7 @@ export function renderHomeDashboardHtml({
         mcSimResult,
         filteredClusters,
         filteredRawItems,
+        userPrefs,
         isCustomizingLayout
       })
     )
@@ -125,6 +127,7 @@ function renderSingleDashboardCard({
   mcSimResult,
   filteredClusters,
   filteredRawItems,
+  userPrefs = null,
   isCustomizingLayout
 }) {
   const isTemporal = block.phase !== 'YEAR_ROUND' && block.phase !== 'IN_SEASON';
@@ -236,7 +239,7 @@ function renderSingleDashboardCard({
             <div>
               <div class="home-wire-heading">
                 <span>Latest Tweets</span>
-                <a href="${esc(buildXBeatListSearchUrl('injuries'))}" target="_blank" rel="noopener noreferrer" class="ext-link mono" style="font-size:10.5px">Live X Beat ${iconSvg('external', 10)}</a>
+                <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="ext-link mono" style="font-size:10.5px">Live X Beat ${iconSvg('external', 10)}</a>
               </div>
               <div class="home-wire-list">
                 ${topTweets

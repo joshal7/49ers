@@ -673,7 +673,7 @@ export default {
         return jsonResponse({ error: 'Invalid daily news brief request' }, 400, cors);
       }
       const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
-      const cacheKey = `daily_news_brief:${cycleKey}`;
+      const cacheKey = `daily_news_brief_v2:${cycleKey}`;
 
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {

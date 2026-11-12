@@ -5216,31 +5216,47 @@ tr.unit-overall-banner.overall-stat-row td {
 }
 
 .brief-inline-source-link {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  margin: 0 1px 0 3px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-border);
   color: var(--gold-bright);
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-color: var(--gold-border);
-  text-underline-offset: 2px;
-  transition: color 0.14s ease, text-decoration-color 0.14s ease;
+  text-decoration: none;
+  vertical-align: -2.5px;
+  line-height: 1;
+  transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease, transform 0.12s ease;
 }
 
 [data-theme="light"] .brief-inline-source-link {
+  background: rgba(170, 0, 0, 0.08);
+  border-color: rgba(170, 0, 0, 0.28);
   color: var(--scarlet);
-  text-decoration-color: rgba(170, 0, 0, 0.36);
 }
 
 .brief-inline-source-link:hover,
 .brief-inline-source-link:focus-visible {
+  background: var(--gold-border);
+  border-color: var(--gold-bright);
   color: var(--text-primary);
-  text-decoration-color: var(--gold-bright);
+  transform: translateY(-0.5px);
+}
+
+[data-theme="light"] .brief-inline-source-link:hover,
+[data-theme="light"] .brief-inline-source-link:focus-visible {
+  background: rgba(170, 0, 0, 0.16);
+  border-color: var(--scarlet);
+  color: var(--scarlet);
 }
 
 .brief-inline-source-link .ui-icon {
-  display: inline-block;
-  vertical-align: -1px;
-  margin-left: 2px;
-  opacity: 0.82;
+  display: block;
+  margin: 0;
+  opacity: 0.92;
 }
 
 .daily-brief-sources-details {

@@ -151,15 +151,24 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
 
 /**
  * Safely renders prose containing markdown inline source citations `[Label](https://...)`
- * into clickable `<a class="brief-inline-source-link">` anchors while annotating plain prose
+ * into compact, distraction-free clickable link icon pills (`a.brief-inline-source-link`)
+ * without rendering full reporter/outlet names inside the paragraph, while annotating plain prose
  * segments between links with football jargon popovers and clickable roster player links
  * (guaranteeing zero nested `<a>` tags!).
  */
 export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null) {
-  const raw = String(text || '').trim();
-  if (!raw) return '';
+  const rawInput = String(text || '').trim();
+  if (!rawInput) return '';
+
+  // Clean up any wrapping parentheses or "per / via / according to" prefixes around inline links
+  const raw = rawInput
+    .replace(/,?\s*\b(?:per|via|according to)\s+\(\s*(\[[^\]]{1,80}\]\(https:\/\/[^)\s]+\))\s*\)/gi, ' $1')
+    .replace(/,?\s*\b(?:per|via|according to)\s+(\[[^\]]{1,80}\]\(https:\/\/[^)\s]+\))/gi, ' $1')
+    .replace(/\(\s*(\[[^\]]{1,80}\]\(https:\/\/[^)\s]+\))\s*\)/g, '$1')
+    .replace(/\s+([,.;:!?])/g, '$1');
+
   const opts = { maxTerms: 14, maxPlayers: 5, seenKeys: seenJargon };
-  const linkRe = /\[([^\]]{2,68})\]\((https:\/\/[^)\s]+)\)/g;
+  const linkRe = /\[([^\]]{1,80})\]\((https:\/\/[^)\s]+)\)/g;
 
   let outHtml = '';
   let lastIdx = 0;
@@ -171,9 +180,8 @@ export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null
     const label = decodeInlineEntities(match[1]).trim();
     const safeUrl = sanitizeExternalUrl(match[2], null);
     if (safeUrl && !isPaywalledPublisher('', safeUrl)) {
-      outHtml += `<a href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" class="brief-inline-source-link" data-brief-inline-source>${esc(label)}${iconSvg('externalLink', 9)}</a>`;
-    } else {
-      outHtml += escJargon(label, opts);
+      const cleanTip = label && !/^s\d+$/i.test(label) ? `Source: ${label}` : 'Open source';
+      outHtml += `<a href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" class="brief-inline-source-link" data-brief-inline-source title="${esc(cleanTip)}" aria-label="${esc(cleanTip)}">${iconSvg('link', 10)}</a>`;
     }
     lastIdx = match.index + match[0].length;
   }
@@ -605,13 +613,16 @@ export function renderNewsViewHtml({
           <span>Direct X Beat Lists</span>
         </summary>
         <div class="x-beat-launch-strip" aria-label="Live X Beat Search" style="margin-top:6px">
-          <a href="${esc(buildXBeatListSearchUrl('trusted'))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip">
+          <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Beat Reporters, Columnists &amp; Official Team handles from Settings">
             <span>Trusted Beat</span>${iconSvg('externalLink', 10)}
           </a>
-          <a href="${esc(buildXBeatListSearchUrl('injuries'))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip">
+          <a href="${esc(buildXBeatListSearchUrl('film', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Film, Analytics &amp; Podcast Analysts from Settings">
+            <span>Film &amp; Analysts</span>${iconSvg('externalLink', 10)}
+          </a>
+          <a href="${esc(buildXBeatListSearchUrl('injuries', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="Live 49ers sideline, practice &amp; warmup injury updates across Tier 1–3 beat voices">
             <span>Injury Scoops</span>${iconSvg('externalLink', 10)}
           </a>
-          <a href="${esc(buildXBeatListSearchUrl('insiders'))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip">
+          <a href="${esc(buildXBeatListSearchUrl('insiders', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 National NFL Insiders, Draft Evaluators &amp; League Analysts scoped to 49ers">
             <span>NFL Insiders</span>${iconSvg('externalLink', 10)}
           </a>
         </div>
