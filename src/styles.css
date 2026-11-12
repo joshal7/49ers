@@ -5322,3 +5322,331 @@ tr.unit-overall-banner.overall-stat-row td {
 .breaking-above-brief-card {
   border-color: rgba(212, 25, 25, 0.45);
 }
+
+/* ==========================================================================
+   2027 NFL Draft: 49ers 1st-Pick Mock Draft Database & Consensus Big Board
+   ========================================================================== */
+
+.mock-freshness-banner,
+.big-board-meta-note {
+  font-size: 11.5px;
+  line-height: 1.38;
+  color: var(--text-secondary);
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 6px 9px;
+  margin-bottom: 8px;
+}
+
+.mock-db-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mock-db-card {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 9px 10px;
+  min-width: 0;
+  transition: border-color 0.14s ease;
+}
+
+.mock-db-card:hover {
+  border-color: var(--gold-border);
+}
+
+.mock-db-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mock-db-player-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+}
+
+.mock-db-rank {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--gold-bright);
+  flex-shrink: 0;
+}
+
+.ncaa-mini-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px;
+}
+
+.mock-db-name-wrap {
+  min-width: 0;
+  flex: 1;
+}
+
+.mock-db-name-line {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.mock-db-player-link {
+  color: var(--text-primary);
+  font-size: 13.5px;
+}
+
+.mock-db-pos-school {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.mock-db-count-badge {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.mock-db-share-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.mock-db-share-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--scarlet-bright), var(--gold-bright));
+}
+
+.mock-db-sites-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 6px;
+  min-width: 0;
+}
+
+.mock-db-sites-label {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-right: 1px;
+}
+
+.mock-site-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-strong);
+  max-width: 100%;
+  transition: border-color 0.14s ease, color 0.14s ease;
+}
+
+.mock-site-chip:hover {
+  border-color: var(--gold-border);
+  color: var(--gold-bright);
+}
+
+.mock-site-chip-meta {
+  font-size: 10px;
+  color: var(--gold-bright);
+}
+
+.mock-db-drilldown {
+  margin-top: 2px;
+}
+
+.mock-db-drill-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 6px;
+}
+
+.mock-db-meas-strip {
+  font-size: 11px;
+  color: var(--gold-bright);
+  background: rgba(179, 153, 93, 0.08);
+  border: 1px solid rgba(179, 153, 93, 0.22);
+  border-radius: 6px;
+  padding: 4px 7px;
+  overflow-wrap: anywhere;
+}
+
+.mock-db-site-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mock-db-site-detail-row {
+  padding: 5px 7px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border-subtle);
+  min-width: 0;
+}
+
+.mock-db-site-detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+/* Consensus Big Board */
+.big-board-pos-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.big-board-pos-pill {
+  min-height: 27px;
+  padding: 3px 9px;
+  font-size: 11.2px;
+}
+
+.big-board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.big-board-item {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.big-board-item[data-in-sf-window="true"] {
+  border-color: rgba(179, 153, 93, 0.34);
+}
+
+.big-board-summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.big-board-summary::-webkit-details-marker {
+  display: none;
+}
+
+.big-board-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+}
+
+.big-board-rank-pill {
+  min-width: 32px;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.big-board-identity {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.big-board-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.big-board-sub {
+  font-size: 11.2px;
+  color: var(--text-secondary);
+}
+
+.big-board-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.big-board-right::after {
+  content: '▾';
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 1px;
+}
+
+.big-board-item[open] .big-board-right::after {
+  content: '▴';
+  color: var(--gold-bright);
+}
+
+.big-board-sf-tag {
+  font-size: 9.5px;
+  padding: 1px 5px;
+}
+
+.big-board-spread {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.big-board-detail-body {
+  padding: 7px 9px 9px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.big-board-ranks-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.combine-blank-panel {
+  border-style: dashed;
+  border-color: var(--gold-border);
+}

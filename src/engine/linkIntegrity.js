@@ -339,7 +339,7 @@ export function isStaleSeasonHeadline(headline = '', currentWeek = null) {
 }
 
 const DIRECT_FREE_PUBLIC_HOST_REGEX =
-  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com)$/i;
+  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com|tankathon\.com|drafttek\.com|walterfootball\.com|bleacherreport\.com|si\.com|yahoo\.com|thegamehaus\.com|wideleft\.football|nflmockdraftdatabase\.com)$/i;
 
 /**
  * Detects whether an RSS or syndication publisher is paywalled (even when wrapped in a redirect URL).

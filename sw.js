@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v58';
+const CACHE_NAME = '49ers-faithful-v59';
 const NETWORK_TIMEOUT_MS = 7500;
 const CORE_ASSETS = [
   './',

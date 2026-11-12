@@ -100,6 +100,9 @@ const state = {
   schedulePrevExpanded: false,
   expandedRootingWeeks: new Set(),
   combineSearch: '',
+  bigBoardSearch: '',
+  bigBoardPosFilter: 'ALL',
+  bigBoardExpanded: false,
   expandedDraftSpiderIdx: -1,
 
   // Audio & AI Studio state
@@ -502,6 +505,9 @@ function renderMain() {
         mcSimResult,
         forcedWinners: state.prefs.playoffForcedWinners,
         combineSearch: state.combineSearch,
+        bigBoardSearch: state.bigBoardSearch,
+        bigBoardPosFilter: state.bigBoardPosFilter,
+        bigBoardExpanded: state.bigBoardExpanded,
         expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
         activeVideosSet: state.activeVideosSet,
         schedulePrevExpanded: state.schedulePrevExpanded,
@@ -1253,6 +1259,18 @@ function bindEvents() {
         break;
       }
 
+      case 'set-big-board-pos': {
+        state.bigBoardPosFilter = btn.getAttribute('data-pos-group') || 'ALL';
+        renderMain();
+        break;
+      }
+
+      case 'toggle-big-board-expand': {
+        state.bigBoardExpanded = !state.bigBoardExpanded;
+        renderMain();
+        break;
+      }
+
       case 'open-stat-rank-modal': {
         const scope = btn.getAttribute('data-rank-scope') || 'team';
         const key = btn.getAttribute('data-rank-key') || '';
@@ -1924,6 +1942,9 @@ function bindEvents() {
       renderMain();
     } else if (t.id === 'combineSearchInput') {
       state.combineSearch = t.value;
+      renderMain();
+    } else if (t.id === 'bigBoardSearchInput') {
+      state.bigBoardSearch = t.value;
       renderMain();
     } else if (t.id === 'podDurationSlider') {
       const nextMins = Math.max(2, Math.min(20, Number(t.value || 3)));

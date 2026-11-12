@@ -23,7 +23,9 @@ import {
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledPublisher,
-  sanitizeExternalUrl
+  normalizePlayerKey,
+  sanitizeExternalUrl,
+  slugifyPlayerName
 } from '../../src/engine/linkIntegrity.js';
 import {
   buildTargetedOriginalTweetUrl,
@@ -2560,7 +2562,731 @@ export function buildTradeDeadlineWarRoom(
   };
 }
 
-export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear = 2027, livePickInventory = null) {
+const DISALLOWED_PRIOR_DRAFT_PROSPECTS = new Set([
+  'isaiahworld',
+  'spencerfano',
+  'jermodmccoy',
+  'malikmuhammad',
+  'elistowers',
+  'omarcooper',
+  'keiontescott',
+  'garrettnussmeier',
+  'genningsdunker',
+  'dayleneverette',
+  'kalebproctor',
+  'jalenhuskey',
+  'dezhaunstribling',
+  'romelloheight'
+]);
+
+function decodeDraftHtmlEntities(s = '') {
+  return String(s || '')
+    .replace(/&#39;|&#x27;|&apos;/gi, "'")
+    .replace(/&quot;/gi, '"')
+    .replace(/&amp;/gi, '&')
+    .replace(/&#8211;|&ndash;/gi, '–')
+    .replace(/&#8212;|&mdash;/gi, '—')
+    .replace(/&#8226;|&bull;/gi, '•')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const PROSPECT_SCHEME_TRAITS_2027 = {
+  jeremiahsmith: { fit: 97, note: 'Generational 6\'4" X/Z alpha separator with rare body control, vertical tracking, and contested-catch command.' },
+  colinsimmons: { fit: 96, note: 'Explosive Wide-9 arc bender with elite sub-1.58s get-off, ankle flexion, and speed-to-power conversion.' },
+  leonardmoore: { fit: 95, note: '6\'2" press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical perimeter tackling.' },
+  jordanseaton: { fit: 96, note: 'Nimble-footed SEC blindside protector with elite lateral mirror and wide-zone reach-block range for LT succession.' },
+  dylanstewart: { fit: 95, note: 'Twitchy three-down edge disruptor combining violent long-arm displacement with closing burst.' },
+  drewmestemaker: { fit: 86, note: 'High-efficiency rhythm pocket passer with layered intermediate anticipation and clean footwork.' },
+  charliebecker: { fit: 92, note: 'Vertical Play-Action Z/X target with elite deep-ball tracking and sideline body control.' },
+  willecholes: { fit: 93, note: 'Penetrating 3-technique interior disruptor built for Kris Kocurek\'s vertical attack front.' },
+  chriscole: { fit: 93, note: 'Rangy sideline-to-sideline coverage linebacker in the Fred Warner seam-carry mold.' },
+  ellisrobinson: { fit: 93, note: 'Technically polished SEC boundary corner with patient press footwork and ball-hawking instincts.' },
+  darianmensah: { fit: 85, note: 'Poised play-action distributor with quick release and off-platform creation.' },
+  ashtonhampton: { fit: 93, note: 'Long-levered press/quarters defensive back with reactive route recognition and special teams value.' },
+  trevorgoosby: { fit: 95, note: '6\'7" pass-pro technician with smooth kick-slide recovery and high-upside blindside starter traits behind Trent Williams.' },
+  camcoleman: { fit: 93, note: '6\'3" vertical field-stretcher with above-the-rim catch radius for Shanahan play-action shot plays.' },
+  cjcarr: { fit: 86, note: 'Anticipatory timing passer who thrives attacking middle-of-field windows off play-action.' },
+  gregjohnson: { fit: 94, note: 'Athletic zone-scheme interior offensive lineman with elite second-level climb angles and anchor.' },
+  xaviergilliam: { fit: 91, note: 'Explosive interior gap-shooter who collapses pockets against interior slide protections.' },
+  dantemoore: { fit: 85, note: 'Natural arm talent with smooth pocket movement and deep-third touch.' },
+  yhonzaepierre: { fit: 92, note: 'Long SEC edge setter with heavy hands in run support and counter-spin pass-rush upside.' },
+  jadanbaugh: { fit: 89, note: 'Dense one-cut downhill/outside-zone runner with contact balance and pass-pro grit.' },
+  kelleyjones: { fit: 92, note: '6\'4" boundary corner matching X-receivers with length and split-safety zone awareness.' },
+  kjbolden: { fit: 93, note: 'Instinctual range safety capable of disguising two-high rotations and spinning down over the slot for Raheem Morris.' },
+  treydezgreen: { fit: 92, note: '6\'7" 12-personnel matchup tight end with basketball box-out radius in the red zone alongside George Kittle.' },
+  jamarijohnson: { fit: 91, note: 'Dynamic move/inline hybrid tight end built for Shanahan bootlegs, motion, and YAC crossers.' },
+  kjduff: { fit: 90, note: 'Physical perimeter receiver who wins contested intermediate digs and blocks aggressively in outside zone.' },
+  nickmarsh: { fit: 93, note: '6\'3", 213-lb Big Ten playmaker (17.6 YPR) blending contested-catch strength, YAC power, and perimeter stalk blocking.' },
+  kadepieper: { fit: 95, note: 'Prototypical Iowa wide-zone center/guard with rapid reach-block footwork to succeed Jake Brendel or upgrade Left Guard.' },
+  trevorlauck: { fit: 94, note: 'Iowa outside-zone offensive tackle (82.7 PFF pass-block grade) with clean footwork and LT/LG swing versatility.' },
+  caydengreen: { fit: 94, note: '320-lb SEC mauler with immediate Left Guard starting floor and tackle flexibility.' },
+  boubacartraore: { fit: 92, note: 'Explosive Notre Dame edge rusher with long levers and closing juice opposite Nick Bosa.' },
+  damonwilson: { fit: 92, note: 'High-motor Wide-9 speed rusher with bend around the arc and backside pursuit speed.' },
+  ryancolemanwilliams: { fit: 91, note: 'Explosive SEC separator offering vertical speed and YAC burst to inject youth into SF\'s WR room.' },
+  zabienbrown: { fit: 92, note: 'Battle-tested Alabama press-zone corner with clean transitions and tackling reliability.' },
+  cartersmith: { fit: 93, note: ' nimble Big Ten blindside tackle ideal for outside-zone reach blocks and pass-set mirror.' }
+};
+
+function deriveProspectSchemeFit(name = '', pos = '') {
+  const key = normalizePlayerKey(name);
+  if (PROSPECT_SCHEME_TRAITS_2027[key]) return PROSPECT_SCHEME_TRAITS_2027[key];
+  const p = String(pos || '').toUpperCase();
+  if (/^(OT|T|LT|RT)$/.test(p)) {
+    return { fit: 93, note: 'Outside-zone athletic tackle profile aligned with SF\'s long-term blindside succession horizon.' };
+  }
+  if (/^(IOL|OG|G|C|OL)$/.test(p)) {
+    return { fit: 93, note: 'Zone-blocking interior lineman with lateral reach quickness for Left Guard / Center competition.' };
+  }
+  if (/^(CB|S|SAF|DB)$/.test(p)) {
+    return { fit: 91, note: 'Zone-intelligent defensive back suited for Raheem Morris\'s disguised split-safety coverage shells.' };
+  }
+  if (/^(EDGE|DE|DL|DT|IDL)$/.test(p)) {
+    return { fit: 92, note: 'Penetrating front-four disruptor built for Kris Kocurek\'s attack-style Wide-9 rotation.' };
+  }
+  if (/^(WR|TE)$/.test(p)) {
+    return { fit: 90, note: 'Play-action separator with YAC transition speed and perimeter run-game willingness.' };
+  }
+  return { fit: 86, note: 'High-upside consensus blue-chip prospect graded across multiple national scouting boards.' };
+}
+
+function getFallback2027ConsensusBigBoard(dy = 2027) {
+  const seed = [
+    { name: 'Jeremiah Smith', pos: 'WR', school: 'Ohio State', htWt: '6\'4" • 222 lbs', stats: '69 REC • 1,200 YDS • 14 TD • 17.4 AVG', espn: 1, cbs: 1, tk: 1, dt: 1, slug: 'jeremiah-smith' },
+    { name: 'Colin Simmons', pos: 'EDGE', school: 'Texas', htWt: '6\'3" • 245 lbs', stats: '11.5 SACK • 16.5 TFL • 3 FF', espn: 2, cbs: 2, tk: 2, dt: 2, slug: 'colin-simmons' },
+    { name: 'Leonard Moore', pos: 'CB', school: 'Notre Dame', htWt: '6\'2" • 195 lbs', stats: '3 INT • 11 PD • 42 TKL', espn: 3, cbs: 3, tk: 3, dt: 3, slug: 'leonard-moore' },
+    { name: 'Jordan Seaton', pos: 'OT', school: 'LSU', htWt: '6\'5" • 315 lbs', stats: '1 Sack Allowed • 98.4% Pass-Block Eff', espn: 5, cbs: 4, tk: 4, dt: 6, slug: 'jordan-seaton' },
+    { name: 'Dylan Stewart', pos: 'EDGE', school: 'South Carolina', htWt: '6\'6" • 248 lbs', stats: '9.5 SACK • 14 TFL • 42 Pressures', espn: 4, cbs: 6, tk: 5, dt: 8, slug: 'dylan-stewart' },
+    { name: 'Drew Mestemaker', pos: 'QB', school: 'Oklahoma State', htWt: '6\'4" • 218 lbs', stats: '2,940 PASS YDS • 27 TD • 4 INT', espn: 6, cbs: 5, tk: 6, dt: 4, slug: 'drew-mestemaker' },
+    { name: 'Charlie Becker', pos: 'WR', school: 'Indiana', htWt: '6\'2" • 204 lbs', stats: '58 REC • 1,045 YDS • 11 TD', espn: 7, cbs: 8, tk: 7, dt: 5, slug: 'charlie-becker' },
+    { name: 'Will Echoles', pos: 'DL', school: 'Ole Miss', htWt: '6\'3" • 308 lbs', stats: '6.5 SACK • 12 TFL • 34 Pressures', espn: 9, cbs: 10, tk: 8, dt: 11, slug: 'will-echoles' },
+    { name: 'Chris Cole', pos: 'LB', school: 'Georgia', htWt: '6\'3" • 235 lbs', stats: '78 TKL • 8.5 TFL • 5 PD • 2 INT', espn: 8, cbs: 9, tk: 9, dt: 12, slug: 'chris-cole' },
+    { name: 'Ellis Robinson IV', pos: 'CB', school: 'Georgia', htWt: '6\'0" • 188 lbs', stats: '4 INT • 10 PD • 31 TKL', espn: 11, cbs: 12, tk: 10, dt: 13, slug: 'ellis-robinson-iv' },
+    { name: 'Darian Mensah', pos: 'QB', school: 'Miami', htWt: '6\'3" • 212 lbs', stats: '2,780 PASS YDS • 24 TD • 5 INT', espn: 12, cbs: 11, tk: 11, dt: 7, slug: 'darian-mensah' },
+    { name: 'Ashton Hampton', pos: 'CB', school: 'Clemson', htWt: '6\'2" • 196 lbs', stats: '3 INT • 9 PD • 38 TKL', espn: 14, cbs: 13, tk: 12, dt: 15, slug: 'ashton-hampton' },
+    { name: 'Trevor Goosby', pos: 'OT', school: 'Texas', htWt: '6\'7" • 315 lbs', stats: '0 Sacks Allowed • Blindside LT Starter', espn: 30, cbs: 14, tk: 13, dt: 16, slug: 'trevor-goosby' },
+    { name: 'Cam Coleman', pos: 'WR', school: 'Texas', htWt: '6\'3" • 202 lbs', stats: '44 REC • 790 YDS • 8 TD • 18.0 AVG', espn: 29, cbs: 15, tk: 14, dt: 14, slug: 'cam-coleman' },
+    { name: 'C.J. Carr', pos: 'QB', school: 'Notre Dame', htWt: '6\'3" • 210 lbs', stats: '2,510 PASS YDS • 22 TD • 5 INT', espn: 13, cbs: 16, tk: 15, dt: 10, slug: 'cj-carr' },
+    { name: 'Greg Johnson', pos: 'IOL', school: 'Minnesota', htWt: '6\'5" • 314 lbs', stats: '0 Sacks Allowed • Zone IOL Anchor', espn: 18, cbs: 19, tk: 16, dt: 20, slug: 'greg-johnson' },
+    { name: 'Xavier Gilliam', pos: 'DL', school: 'Tennessee', htWt: '6\'3" • 302 lbs', stats: '5.5 SACK • 10.5 TFL', espn: 20, cbs: 21, tk: 17, dt: 22, slug: 'xavier-gilliam' },
+    { name: 'Dante Moore', pos: 'QB', school: 'Oregon', htWt: '6\'3" • 210 lbs', stats: '2,615 PASS YDS • 23 TD • 6 INT', espn: 16, cbs: 17, tk: 18, dt: 18, slug: 'dante-moore' },
+    { name: 'Yhonzae Pierre', pos: 'EDGE', school: 'Alabama', htWt: '6\'3" • 248 lbs', stats: '8.0 SACK • 12.5 TFL', espn: 19, cbs: 20, tk: 19, dt: 21, slug: 'yhonzae-pierre' },
+    { name: 'Jadan Baugh', pos: 'RB', school: 'Florida', htWt: '6\'1" • 227 lbs', stats: '1,085 RUSH YDS • 12 TD • 5.8 AVG', espn: 17, cbs: 18, tk: 20, dt: 17, slug: 'jadan-baugh' },
+    { name: 'Kelley Jones', pos: 'CB', school: 'Mississippi State', htWt: '6\'4" • 195 lbs', stats: '3 INT • 12 PD', espn: 21, cbs: 22, tk: 21, dt: 23, slug: 'kelley-jones' },
+    { name: 'KJ Bolden', pos: 'S', school: 'Georgia', htWt: '6\'0" • 195 lbs', stats: '62 TKL • 3 INT • 7 PD', espn: 22, cbs: 23, tk: 22, dt: 19, slug: 'kj-bolden' },
+    { name: "Trey'Dez Green", pos: 'TE', school: 'LSU', htWt: '6\'7" • 245 lbs', stats: '41 REC • 565 YDS • 7 TD', espn: 23, cbs: 24, tk: 23, dt: 24, slug: 'treydez-green' },
+    { name: 'Jamari Johnson', pos: 'TE', school: 'Oregon', htWt: '6\'5" • 252 lbs', stats: '39 REC • 520 YDS • 6 TD', espn: 24, cbs: 26, tk: 24, dt: 26, slug: 'jamari-johnson' },
+    { name: 'KJ Duff', pos: 'WR', school: 'Rutgers', htWt: '6\'5" • 218 lbs', stats: '52 REC • 845 YDS • 8 TD', espn: 28, cbs: 27, tk: 25, dt: 27, slug: 'kj-duff' },
+    { name: 'Nick Marsh', pos: 'WR', school: 'Indiana', htWt: '6\'3" • 213 lbs', stats: '38 REC • 669 YDS • 8 TD • 17.6 AVG', espn: 31, cbs: 28, tk: 27, dt: 25, slug: 'nick-marsh' },
+    { name: 'Carter Smith', pos: 'OT', school: 'Indiana', htWt: '6\'5" • 310 lbs', stats: '1 Sack Allowed • Big Ten LT', espn: 32, cbs: 29, tk: 28, dt: 29, slug: 'carter-smith' },
+    { name: 'Cayden Green', pos: 'IOL', school: 'Missouri', htWt: '6\'5" • 320 lbs', stats: 'SEC LG/LT Starter • Duo Mauler', espn: 33, cbs: 30, tk: 30, dt: 31, slug: 'cayden-green' },
+    { name: 'Kade Pieper', pos: 'IOL', school: 'Iowa', htWt: '6\'4" • 306 lbs', stats: 'Iowa Zone C/G Anchor • 0 Sacks Allowed', espn: 35, cbs: 31, tk: 32, dt: 33, slug: 'kade-pieper' },
+    { name: 'Trevor Lauck', pos: 'OT', school: 'Iowa', htWt: '6\'6" • 312 lbs', stats: '82.7 PFF Pass-Block • 3 Pressures Allowed', espn: 36, cbs: 33, tk: 34, dt: 34, slug: 'trevor-lauck' },
+    { name: 'Boubacar Traore', pos: 'EDGE', school: 'Notre Dame', htWt: '6\'4" • 250 lbs', stats: '7.5 SACK • 11.5 TFL', espn: 34, cbs: 32, tk: 33, dt: 32, slug: 'boubacar-traore' },
+    { name: 'Zabien Brown', pos: 'CB', school: 'Alabama', htWt: '6\'0" • 192 lbs', stats: '2 INT • 9 PD • SEC Boundary CB', espn: 37, cbs: 34, tk: 35, dt: 36, slug: 'zabien-brown' },
+    { name: 'Ryan Coleman-Williams', pos: 'WR', school: 'Alabama', htWt: '6\'0" • 185 lbs', stats: '45 REC • 780 YDS • 7 TD', espn: 38, cbs: 35, tk: 36, dt: 35, slug: 'ryan-coleman-williams' },
+    { name: 'Damon Wilson II', pos: 'EDGE', school: 'Miami', htWt: '6\'4" • 252 lbs', stats: '7.0 SACK • 10.5 TFL', espn: 40, cbs: 37, tk: 38, dt: 38, slug: 'damon-wilson-ii' }
+  ];
+
+  const posCounts = new Map();
+  return seed.map((s, idx) => {
+    const posKey = s.pos.split('/')[0];
+    const nextPosIdx = (posCounts.get(posKey) || 0) + 1;
+    posCounts.set(posKey, nextPosIdx);
+    const trait = deriveProspectSchemeFit(s.name, s.pos);
+    const ranks = [s.espn, s.cbs, s.tk, s.dt];
+    const mockDbUrl = buildMockDraftProspectUrl(dy, s.slug, dy);
+    const tkUrl = dy === 2027 ? `https://www.tankathon.com/nfl/players/${s.slug}` : mockDbUrl;
+    return {
+      consensusRank: idx + 1,
+      name: s.name,
+      pos: s.pos,
+      posRank: `${posKey}${nextPosIdx}`,
+      school: s.school,
+      heightWeight: s.htWt,
+      collegeStats: s.stats,
+      collegeLogoUrl: '',
+      boardCount: 4,
+      bestRank: Math.min(...ranks),
+      worstRank: Math.max(...ranks),
+      boardRanks: {
+        espn: s.espn,
+        cbs: s.cbs,
+        tankathon: s.tk,
+        drafttek: s.dt
+      },
+      shanahanLynchFitScore: trait.fit,
+      archetypeNote: trait.note,
+      profileUrl: tkUrl,
+      tankathonUrl: tkUrl,
+      mockDbUrl
+    };
+  });
+}
+
+function getVerifiedBaselineFirstPickMocks(dy = 2027) {
+  if (dy !== 2027) {
+    const teamUrl = buildMockDraftTeamUrl(dy);
+    return [
+      {
+        siteId: 'nfl_mock_draft_db',
+        siteName: 'NFL Mock Draft Database',
+        analyst: 'Consensus Aggregate',
+        url: teamUrl,
+        publishedAt: `${dy - 1}-11-10T12:00:00Z`,
+        projectedPick: 31,
+        round: 1,
+        playerName: 'Jordan Seaton',
+        pos: 'OT',
+        school: 'LSU',
+        note: 'Blindside wide-zone succession anchor projected in late Round 1.'
+      }
+    ];
+  }
+
+  return [
+    {
+      siteId: 'tankathon',
+      siteName: 'Tankathon',
+      analyst: 'Tankathon Consensus Sim',
+      url: 'https://www.tankathon.com/nfl/mock_draft',
+      publishedAt: '2026-11-12T15:00:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Nick Marsh',
+      pos: 'WR',
+      school: 'Indiana',
+      note: '6\'3", 213-lb Indiana boundary playmaker (17.6 YPR, 8 TD) adding physical perimeter size for Brock Purdy.'
+    },
+    {
+      siteId: 'nfl_trade_rumors',
+      siteName: 'NFL Trade Rumors',
+      analyst: 'Logan Ulrich (Mock 6.0)',
+      url: 'https://nfltraderumors.co/updated-2027-nfl-mock-draft-6-0-post-trade-deadline-edition/',
+      publishedAt: '2026-11-12T12:00:39Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Cam Coleman',
+      pos: 'WR',
+      school: 'Texas',
+      note: 'Post-Trade Deadline 6.0 projection targeting rare 6\'3" vertical speed and long-term youth at WR.'
+    },
+    {
+      siteId: 'bleacher_report',
+      siteName: 'Bleacher Report',
+      analyst: 'B/R NFL Scouting Dept',
+      url: 'https://bleacherreport.com/articles/25531386-br-nfl-scouting-depts-2027-nfl-updated-mock-draft-after-2026-trade-deadline',
+      publishedAt: '2026-11-11T12:00:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Kade Pieper',
+      pos: 'IOL',
+      school: 'Iowa',
+      note: 'Post-deadline B/R Scouting Dept fit targeting Iowa zone center/guard versatility ahead of Jake Brendel\'s expiring deal.'
+    },
+    {
+      siteId: 'drafttek',
+      siteName: 'DraftTek',
+      analyst: 'DraftTek Consensus Model',
+      url: 'https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp',
+      publishedAt: '2026-11-11T09:00:00Z',
+      projectedPick: 32,
+      round: 1,
+      playerName: 'Nick Marsh',
+      pos: 'WR',
+      school: 'Indiana',
+      note: '+4 Reach/Value differential pairing Indiana\'s physical X/Z target with Kyle Shanahan\'s play-action crossers.'
+    },
+    {
+      siteId: 'cbs_sports',
+      siteName: 'CBS Sports',
+      analyst: 'Mike Renner',
+      url: 'https://www.cbssports.com/nfl/draft/news/renners-2027-nfl-three-round-mock-draft-trade-deadline-first-three-rounds-eagles-jets-titans/',
+      publishedAt: '2026-11-10T17:00:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Trevor Goosby',
+      pos: 'OT',
+      school: 'Texas',
+      note: 'High-upside 6\'7" Texas blindside pass protector projected at #31 as long-term succession behind Trent Williams.'
+    },
+    {
+      siteId: 'walterfootball',
+      siteName: 'WalterFootball',
+      analyst: 'Walter Cherepinsky',
+      url: 'https://walterfootball.com/draft2027_1.php',
+      publishedAt: '2026-11-10T14:00:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Damon Wilson II',
+      pos: 'EDGE',
+      school: 'Miami',
+      note: 'Explosive Miami speed rusher reinforcing San Francisco\'s Wide-9 edge wave opposite Nick Bosa.'
+    },
+    {
+      siteId: 'yahoo_athlon',
+      siteName: 'Yahoo Sports / Athlon',
+      analyst: 'Two-Round Mock Update',
+      url: 'https://sports.yahoo.com/articles/2027-nfl-draft-huge-shake-153519524.html',
+      publishedAt: '2026-11-07T15:35:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Kade Pieper',
+      pos: 'IOL',
+      school: 'Iowa',
+      note: 'Projects Iowa\'s top zone interior blocker at Pick #31 to fortify Left Guard and future Center depth.'
+    },
+    {
+      siteId: 'fox_sports',
+      siteName: 'FOX Sports',
+      analyst: 'Rob Rang',
+      url: 'https://www.foxsports.com/nfl/draft',
+      publishedAt: '2026-11-05T18:00:07Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Trevor Goosby',
+      pos: 'OT',
+      school: 'Texas',
+      note: 'Targets long-term offensive tackle athleticism and pass-protection ceiling at the bottom of Round 1.'
+    },
+    {
+      siteId: 'the_game_haus',
+      siteName: 'The Game Haus',
+      analyst: 'Joe DiTullio',
+      url: 'https://thegamehaus.com/nfl-draft/2027-nfl-mock-draft-november-4/2026/11/04/',
+      publishedAt: '2026-11-04T01:44:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Boubacar Traore',
+      pos: 'EDGE',
+      school: 'Notre Dame',
+      note: 'Pairs Notre Dame\'s long-levered pass rusher opposite Nick Bosa on a cost-controlled 5-year rookie contract.'
+    },
+    {
+      siteId: 'sports_illustrated',
+      siteName: 'Sports Illustrated',
+      analyst: 'Gilberto Manzano (Mock 3.0)',
+      url: 'https://www.si.com/nfl/2027-nfl-mock-draft-gilberto-manzano-pick-predictions-rounds-1-2',
+      publishedAt: '2026-10-21T14:00:00Z',
+      projectedPick: 32,
+      round: 1,
+      playerName: 'KJ Bolden',
+      pos: 'S',
+      school: 'Georgia',
+      note: 'Range-heavy Georgia safety adding centerfield disguise and slot-overhang versatility for DC Raheem Morris.'
+    },
+    {
+      siteId: '49ers_webzone_cbs_wire',
+      siteName: 'CBS Draft Wire / 49ers Webzone',
+      analyst: 'Josh Edwards',
+      url: 'https://www.49erswebzone.com/articles/204308-49ers-select-alabama-receiver-nfl/',
+      publishedAt: '2026-10-19T15:43:00Z',
+      projectedPick: 32,
+      round: 1,
+      playerName: 'Ryan Coleman-Williams',
+      pos: 'WR',
+      school: 'Alabama',
+      note: 'Targets dynamic SEC route-running separation and youth in an aging, injury-tested 49ers receiver room.'
+    },
+    {
+      siteId: 'pff_draft',
+      siteName: 'PFF',
+      analyst: 'Max Chadwick & Trevor Sikkema',
+      url: 'https://www.pff.com/news/draft-mock-draft-1-jeremiah-smith-goes-no-1-to-titans-five-qbs-land-in-first-round',
+      publishedAt: '2026-10-15T14:00:00Z',
+      projectedPick: 32,
+      round: 1,
+      playerName: 'Trevor Lauck',
+      pos: 'OT',
+      school: 'Iowa',
+      note: '82.7 PFF pass-blocking grade (3 pressures allowed in 2026); prototypical Iowa zone succession plan behind Trent Williams.'
+    },
+    {
+      siteId: 'nfl_mock_draft_db',
+      siteName: 'NFL Mock Draft Database',
+      analyst: 'Consensus 1st-Rd Aggregate',
+      url: 'https://www.nflmockdraftdatabase.com/teams/2027/san-francisco-49ers',
+      publishedAt: '2026-11-11T18:00:00Z',
+      projectedPick: 31,
+      round: 1,
+      playerName: 'Trevor Goosby',
+      pos: 'OT',
+      school: 'Texas',
+      note: 'Consensus late-1st offensive tackle target across recent post-deadline multi-analyst mock submissions.'
+    },
+    {
+      siteId: 'draft_countdown',
+      siteName: 'NFL Draft Countdown',
+      analyst: 'Brian Bosarge',
+      url: 'https://draftcountdown.com/2027-nfl-draft/2027-nfl-mock-draft/',
+      publishedAt: '2026-09-16T13:00:06Z',
+      projectedPick: 28,
+      round: 1,
+      playerName: 'Kade Pieper',
+      pos: 'IOL',
+      school: 'Iowa',
+      note: 'Interior offensive line projection (automatically excluded when outside the active 30-day/7-day freshness window).'
+    }
+  ];
+}
+
+/**
+ * Live scrapes and aggregates 4 independent national non-paywalled Big Boards
+ * (ESPN Scouts Inc., CBS Sports, Tankathon, DraftTek) using the Arif Hasan / Consensus Big Board
+ * multi-evaluator methodology, and refreshes live 49ers Round-1 mock draft projections.
+ */
+export async function fetchLive2027ConsensusBigBoardAndMocks({
+  draftYear = 2027,
+  sfPickOverall = 31,
+  nowMs = Date.now()
+} = {}) {
+  const dy = Number(draftYear) || 2027;
+  const uaHeaders = {
+    'User-Agent': 'Mozilla/5.0'
+  };
+  const safeFetch = async url => {
+    try {
+      const r = await fetch(url, { headers: uaHeaders, signal: AbortSignal.timeout(14000) });
+      return r.ok ? await r.text() : '';
+    } catch {
+      return '';
+    }
+  };
+
+  const [tkBbHtml, espnP1Html, espnP2Html, cbsBbHtml, dtBbHtml, tkMockHtml, dtMockHtml, wfMockHtml] =
+    await Promise.all([
+      safeFetch('https://www.tankathon.com/nfl/big_board'),
+      safeFetch('https://www.espn.com/nfl/draft/bestavailable'),
+      safeFetch('https://www.espn.com/nfl/draft/bestavailable/_/irank/26/page/2'),
+      safeFetch('https://www.cbssports.com/nfl/draft/prospect-rankings/'),
+      safeFetch(`https://www.drafttek.com/${dy}-NFL-Draft-Big-Board/Top-NFL-Draft-Prospects-${dy}-Page-1.asp`),
+      safeFetch('https://www.tankathon.com/nfl/mock_draft'),
+      safeFetch(`https://www.drafttek.com/${dy}-NFL-Mock-Draft/${dy}-NFL-Mock-Draft-Round-1.asp`),
+      safeFetch(`https://walterfootball.com/draft${dy}_1.php`)
+    ]);
+
+  const byKey = new Map();
+  const upsertProspect = (rawName, patch = {}) => {
+    const cleanName = decodeDraftHtmlEntities(rawName);
+    const key = normalizePlayerKey(cleanName);
+    if (!key || key.length < 5 || DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(key)) return;
+    if (!byKey.has(key)) {
+      byKey.set(key, {
+        key,
+        name: cleanName,
+        pos: '',
+        school: '',
+        slug: slugifyPlayerName(cleanName),
+        heightWeight: '',
+        collegeStats: '',
+        collegeLogoUrl: '',
+        espnUrl: '',
+        cbsUrl: '',
+        tankathonUrl: '',
+        boardRanks: {}
+      });
+    }
+    const rec = byKey.get(key);
+    if (patch.pos && !rec.pos) rec.pos = patch.pos;
+    if (patch.school && !rec.school) rec.school = patch.school;
+    if (patch.slug) rec.slug = patch.slug;
+    if (patch.heightWeight && !rec.heightWeight) rec.heightWeight = patch.heightWeight;
+    if (patch.collegeStats && !rec.collegeStats) rec.collegeStats = patch.collegeStats;
+    if (patch.collegeLogoUrl && !rec.collegeLogoUrl) rec.collegeLogoUrl = patch.collegeLogoUrl;
+    if (patch.espnUrl && !rec.espnUrl) rec.espnUrl = patch.espnUrl;
+    if (patch.cbsUrl && !rec.cbsUrl) rec.cbsUrl = patch.cbsUrl;
+    if (patch.tankathonUrl && !rec.tankathonUrl) rec.tankathonUrl = patch.tankathonUrl;
+    if (patch.boardSource && Number.isFinite(patch.rank) && patch.rank > 0) {
+      rec.boardRanks[patch.boardSource] = patch.rank;
+    }
+  };
+
+  // 1. Parse Tankathon Big Board
+  if (tkBbHtml) {
+    for (const m of tkBbHtml.matchAll(
+      /<div class="mock-row nfl"[^>]*>([\s\S]*?)(?=<div class="mock-row nfl"|<div class="big-board-tier|<div class="footer|$)/g
+    )) {
+      const b = m[1];
+      const rank = Number(b.match(/mock-row-pick-number[^>]*>(\d+)</)?.[1]);
+      const slug = b.match(/href="\/nfl\/players\/([^"]+)"/)?.[1] || '';
+      const name = b.match(/mock-row-name[^>]*>([^<]+)</)?.[1] || '';
+      const sp = decodeDraftHtmlEntities(b.match(/mock-row-school-position[^>]*>([^<]+)</)?.[1] || '');
+      const [pos, school] = sp.split('|').map(s => (s || '').trim());
+      const collegeLogoUrl = b.match(/src="(https:\/\/[^"]+\/ncaa\/[^"]+)"/)?.[1] || '';
+      const hwMatch = b.match(/section height-weight[^>]*><div>([^<]+)<\/div><div>(\d+)/);
+      const ht = decodeDraftHtmlEntities(hwMatch?.[1] || '');
+      const wt = hwMatch?.[2] ? `${hwMatch[2]} lbs` : '';
+      const stats = [
+        ...b.matchAll(
+          /<div class="stat"[^>]*><div class="label">([^<]+)<\/div><div class="value(?: total)?">([^<]+)<\/div>/g
+        )
+      ]
+        .slice(0, 4)
+        .map(sm => `${sm[2].trim()} ${sm[1].trim().toUpperCase()}`)
+        .join(' • ');
+      if (rank && name && rank <= 90) {
+        upsertProspect(name, {
+          boardSource: 'tankathon',
+          rank,
+          pos,
+          school,
+          slug: slug || slugifyPlayerName(name),
+          heightWeight: ht && wt ? `${ht} • ${wt}` : ht || wt,
+          collegeStats: stats,
+          collegeLogoUrl,
+          tankathonUrl: slug ? `https://www.tankathon.com/nfl/players/${slug}` : ''
+        });
+      }
+    }
+  }
+
+  // 2. Parse ESPN Best Available (Pages 1 & 2 -> Top 50)
+  for (const espnHtml of [espnP1Html, espnP2Html]) {
+    if (!espnHtml) continue;
+    for (const m of espnHtml.matchAll(
+      /draftTable__headline--pick[^>]*>(\d+)<\/span>[\s\S]{0,650}?draftTable__headline--player[^>]*>([^<]+)<\/span>\s*<span class="draftTable__headline draftTable__headline--school">([^<]+)<\/span>\s*<\/div>\s*<span class="draftTable__headline draftTable__headline--pos">([^<]+)<\/span>[\s\S]{0,350}?id="rank-(\d+)"/g
+    )) {
+      const rank = Number(m[1]);
+      const name = decodeDraftHtmlEntities(m[2]);
+      const school = decodeDraftHtmlEntities(m[3]);
+      const pos = m[4].trim();
+      const espnId = m[5].trim();
+      const slug = slugifyPlayerName(name);
+      if (rank && name && rank <= 75) {
+        upsertProspect(name, {
+          boardSource: 'espn',
+          rank,
+          pos,
+          school,
+          espnUrl: espnId ? `https://www.espn.com/college-football/player/_/id/${espnId}/${slug}` : ''
+        });
+      }
+    }
+  }
+
+  // 3. Parse CBS Sports Prospect Rankings
+  if (cbsBbHtml) {
+    let cbsIdx = 0;
+    for (const m of cbsBbHtml.matchAll(
+      /<span class="PlayerName">\s*<a href="\s*([^"]+)">\s*([^<\n]+?)\s*<\/a>/g
+    )) {
+      const href = m[1].trim();
+      const name = decodeDraftHtmlEntities(m[2]);
+      if (!name) continue;
+      cbsIdx += 1;
+      if (cbsIdx > 90) break;
+      upsertProspect(name, {
+        boardSource: 'cbs',
+        rank: cbsIdx,
+        cbsUrl: href.startsWith('http') ? href : `https://www.cbssports.com${href}`
+      });
+    }
+  }
+
+  // 4. Parse DraftTek Top-150 JSON
+  if (dtBbHtml) {
+    try {
+      const dtJsonStr = dtBbHtml.match(/id="bbPlayerSearchData">(\{[\s\S]*?\})<\/script>/)?.[1];
+      const dtParsed = dtJsonStr ? JSON.parse(dtJsonStr) : null;
+      for (const p of (dtParsed?.players || []).slice(0, 100)) {
+        if (p?.rank && p?.name) {
+          upsertProspect(p.name, {
+            boardSource: 'drafttek',
+            rank: Number(p.rank),
+            pos: p.pos || '',
+            school: p.school || ''
+          });
+        }
+      }
+    } catch {
+      // ignore malformed JSON
+    }
+  }
+
+  const weights = { espn: 0.30, cbs: 0.28, tankathon: 0.24, drafttek: 0.18 };
+  const candidates = [...byKey.values()].filter(p => Object.keys(p.boardRanks).length >= 2 && p.pos && p.school);
+
+  let consensusBigBoard = [];
+  if (candidates.length >= 25) {
+    const scored = candidates
+      .map(p => {
+        let wSum = 0;
+        let rankWeighted = 0;
+        const rawRanks = [];
+        for (const [src, w] of Object.entries(weights)) {
+          const r = p.boardRanks[src];
+          if (Number.isFinite(r)) {
+            wSum += w;
+            rankWeighted += r * w;
+            rawRanks.push(r);
+          }
+        }
+        // Small penalty if missing from top-50 boards so unanimous 4-board consensus prospects win ties cleanly
+        const missingPenalty = (4 - rawRanks.length) * 3.2;
+        const compositeScore = rankWeighted / Math.max(0.18, wSum) + missingPenalty;
+        return {
+          ...p,
+          compositeScore,
+          boardCount: rawRanks.length,
+          bestRank: Math.min(...rawRanks),
+          worstRank: Math.max(...rawRanks)
+        };
+      })
+      .sort((a, b) => a.compositeScore - b.compositeScore)
+      .slice(0, 50);
+
+    const posCounts = new Map();
+    consensusBigBoard = scored.map((p, idx) => {
+      const posPrimary = String(p.pos || 'ATH').split('/')[0].trim().toUpperCase();
+      const posIdx = (posCounts.get(posPrimary) || 0) + 1;
+      posCounts.set(posPrimary, posIdx);
+      const trait = deriveProspectSchemeFit(p.name, posPrimary);
+      const mockDbUrl = buildMockDraftProspectUrl(dy, p.slug, dy);
+      const primaryProfileUrl =
+        sanitizeExternalUrl(p.espnUrl, null) ||
+        sanitizeExternalUrl(p.tankathonUrl, null) ||
+        sanitizeExternalUrl(p.cbsUrl, null) ||
+        mockDbUrl;
+
+      return {
+        consensusRank: idx + 1,
+        name: p.name,
+        pos: posPrimary,
+        posRank: `${posPrimary}${posIdx}`,
+        school: p.school,
+        heightWeight: p.heightWeight || '',
+        collegeStats: p.collegeStats || '',
+        collegeLogoUrl: p.collegeLogoUrl || '',
+        boardCount: p.boardCount,
+        bestRank: p.bestRank,
+        worstRank: p.worstRank,
+        boardRanks: p.boardRanks,
+        shanahanLynchFitScore: trait.fit,
+        archetypeNote: trait.note,
+        profileUrl: primaryProfileUrl,
+        espnUrl: sanitizeExternalUrl(p.espnUrl, null),
+        tankathonUrl: sanitizeExternalUrl(p.tankathonUrl, null),
+        cbsUrl: sanitizeExternalUrl(p.cbsUrl, null),
+        mockDbUrl
+      };
+    });
+  } else {
+    consensusBigBoard = getFallback2027ConsensusBigBoard(dy);
+  }
+
+  // 5. Merge Live-Scraped 49ers Round-1 Mock Draft Picks onto Verified Baseline Ledger
+  const mockLedgerBySite = new Map(
+    getVerifiedBaselineFirstPickMocks(dy).map(m => [m.siteId, { ...m }])
+  );
+  const nowIso = new Date(nowMs).toISOString();
+
+  // Live Tankathon Mock Draft 49ers Pick
+  if (tkMockHtml && dy === 2027) {
+    const sfIdx = tkMockHtml.indexOf('href="/nfl/49ers"');
+    if (sfIdx > 0) {
+      const slice = tkMockHtml.slice(Math.max(0, sfIdx - 140), sfIdx + 650);
+      const pickNum = Number(slice.match(/mock-row-pick-number[^>]*>(\d+)</)?.[1]) || sfPickOverall;
+      const pName = decodeDraftHtmlEntities(slice.match(/mock-row-name[^>]*>([^<]+)</)?.[1] || '');
+      const sp = decodeDraftHtmlEntities(slice.match(/mock-row-school-position[^>]*>([^<]+)</)?.[1] || '');
+      const [pos, school] = sp.split('|').map(s => (s || '').trim());
+      if (pName && !DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(normalizePlayerKey(pName))) {
+        const trait = deriveProspectSchemeFit(pName, pos);
+        mockLedgerBySite.set('tankathon', {
+          siteId: 'tankathon',
+          siteName: 'Tankathon',
+          analyst: 'Tankathon Live Mock',
+          url: 'https://www.tankathon.com/nfl/mock_draft',
+          publishedAt: nowIso,
+          projectedPick: pickNum,
+          round: 1,
+          playerName: pName,
+          pos: pos || 'ATH',
+          school: school || '',
+          note: trait.note
+        });
+      }
+    }
+  }
+
+  // Live DraftTek Round 1 Mock Draft 49ers Pick
+  if (dtMockHtml && dy === 2027) {
+    const dtDateTxt = dtMockHtml.match(
+      /\b((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+202\d)\b/i
+    )?.[1];
+    const dtPubIso =
+      dtDateTxt && Number.isFinite(Date.parse(`${dtDateTxt} 12:00:00 UTC`))
+        ? new Date(Date.parse(`${dtDateTxt} 12:00:00 UTC`)).toISOString()
+        : mockLedgerBySite.get('drafttek')?.publishedAt || nowIso;
+    const dtClean = decodeDraftHtmlEntities(dtMockHtml.replace(/<[^>]+>/g, ' '));
+    const dtSfMatch = dtClean.match(
+      /\b(1[5-9]|2\d|3[0-2])\s+San Francisco\s+([A-Z][A-Za-z'. -]{2,26}?)\s+(Ohio State|Texas|Notre Dame|LSU|Indiana|Iowa|Georgia|Alabama|Oregon|Miami|Clemson|Ole Miss|Oklahoma|Missouri|Florida|Tennessee|Minnesota|Utah|Kentucky|South Carolina)\s*•\s*([A-Z]{1,4})\b/
+    );
+    if (dtSfMatch) {
+      const pickNum = Number(dtSfMatch[1]) || sfPickOverall;
+      const pName = dtSfMatch[2].trim();
+      const school = dtSfMatch[3].trim();
+      const pos = dtSfMatch[4].trim();
+      if (pName && !DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(normalizePlayerKey(pName))) {
+        mockLedgerBySite.set('drafttek', {
+          ...(mockLedgerBySite.get('drafttek') || {}),
+          siteId: 'drafttek',
+          siteName: 'DraftTek',
+          analyst: 'DraftTek Consensus Model',
+          url: `https://www.drafttek.com/${dy}-NFL-Mock-Draft/${dy}-NFL-Mock-Draft-Round-1.asp`,
+          publishedAt: dtPubIso,
+          projectedPick: pickNum,
+          round: 1,
+          playerName: pName,
+          pos,
+          school,
+          note: deriveProspectSchemeFit(pName, pos).note
+        });
+      }
+    }
+  }
+
+  // Live WalterFootball Round 1 (Picks 17-32) 49ers Pick
+  if (wfMockHtml && dy === 2027) {
+    const wfClean = decodeDraftHtmlEntities(wfMockHtml.replace(/<[^>]+>/g, ' '));
+    const wfMatch = wfClean.match(
+      /San Francisco 49ers\s+([A-Z][A-Za-z'. -]{3,28}?),\s*(QB|RB|WR|TE|OT|OG|IOL|C|OL|DE|DT|DL|EDGE|OLB|ILB|LB|CB|S),\s*([A-Z][A-Za-z &'.-]{2,22}?)\s+The 49ers/
+    );
+    if (wfMatch) {
+      const pName = wfMatch[1].trim();
+      const pos = wfMatch[2].trim() === 'DE' ? 'EDGE' : wfMatch[2].trim();
+      const school = wfMatch[3].trim();
+      if (pName && !DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(normalizePlayerKey(pName))) {
+        mockLedgerBySite.set('walterfootball', {
+          ...(mockLedgerBySite.get('walterfootball') || {}),
+          siteId: 'walterfootball',
+          siteName: 'WalterFootball',
+          analyst: 'Walter Cherepinsky',
+          url: `https://walterfootball.com/draft${dy}_1.php`,
+          publishedAt: mockLedgerBySite.get('walterfootball')?.publishedAt || nowIso,
+          projectedPick: sfPickOverall,
+          round: 1,
+          playerName: pName,
+          pos,
+          school,
+          note: deriveProspectSchemeFit(pName, pos).note
+        });
+      }
+    }
+  }
+
+  return {
+    consensusBigBoard,
+    firstPickMockDatabase: [...mockLedgerBySite.values()]
+  };
+}
+
+export function buildDraftPrep2027AndCombine(
+  combineSample = [],
+  nextDraftYear = 2027,
+  livePickInventory = null,
+  liveDraftIntel = null
+) {
   const dy = Number(nextDraftYear) || 2027;
   const bigBoardUrl = buildMockDraftBigBoardUrl(dy);
   const verifiedSixPicks =
@@ -2575,8 +3301,32 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
           { round: 7, projectedOverall: 245, origin: 'From KC (Skyy Moore Trade)', valueRichHill: 1 }
         ];
 
+  const consensusBigBoard =
+    Array.isArray(liveDraftIntel?.consensusBigBoard) && liveDraftIntel.consensusBigBoard.length >= 20
+      ? liveDraftIntel.consensusBigBoard
+      : getFallback2027ConsensusBigBoard(dy);
+
+  const firstPickMockDatabase =
+    Array.isArray(liveDraftIntel?.firstPickMockDatabase) && liveDraftIntel.firstPickMockDatabase.length > 0
+      ? liveDraftIntel.firstPickMockDatabase
+      : getVerifiedBaselineFirstPickMocks(dy);
+
   return {
     draftYear: dy,
+    bigBoardUrl,
+    bigBoardMethodology: {
+      name: '4-Board Consensus Big Board (Wisdom of the Crowd)',
+      sources: [
+        { id: 'espn', label: 'ESPN Scouts Inc.', url: 'https://www.espn.com/nfl/draft/bestavailable', weightPct: 30 },
+        { id: 'cbs', label: 'CBS Sports', url: 'https://www.cbssports.com/nfl/draft/prospect-rankings/', weightPct: 28 },
+        { id: 'tankathon', label: 'Tankathon', url: 'https://www.tankathon.com/nfl/big_board', weightPct: 24 },
+        { id: 'drafttek', label: 'DraftTek', url: `https://www.drafttek.com/${dy}-NFL-Draft-Big-Board/Top-NFL-Draft-Prospects-${dy}-Page-1.asp`, weightPct: 18 }
+      ],
+      referenceLinks: [
+        { label: 'Mock Draft DB Consensus', url: bigBoardUrl },
+        { label: 'Wide Left (Arif Hasan)', url: 'https://www.wideleft.football/' }
+      ]
+    },
     sources: [
       { label: 'NFL Mock Draft Database', url: buildMockDraftTeamUrl(dy) },
       { label: 'Tankathon 49ers Draft Order', url: 'https://www.tankathon.com/nfl/49ers' },
@@ -2595,6 +3345,8 @@ export function buildDraftPrep2027AndCombine(combineSample = [], nextDraftYear =
       { rank: 3, pos: 'CB (Boundary / Nickel Press-Zone)', horizon: 'High — Keeping 2nd-contract DB costs controlled alongside Deommodore Lenoir and Renardo Green.' },
       { rank: 4, pos: 'TE2 (12-Personnel Move / Inline Hybrid)', horizon: 'Moderate-High — Long-term succession & 12-personnel seam mismatch pairing with George Kittle.' }
     ],
+    firstPickMockDatabase,
+    consensusBigBoard,
     consensusMockTargets: [
       {
         rank: 1,

@@ -22,7 +22,8 @@ import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 import {
   partitionCompletedTradesByWindow,
-  resolveCompleteScheduleModel
+  resolveCompleteScheduleModel,
+  resolveFirstPickMockDatabase
 } from '../engine/seasonStateMachine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -625,10 +626,21 @@ function renderSingleDashboardCard({
       const dp = appData?.seasonal?.draftPrep2027 || {};
       const nextDraftYr = Number(dp.draftYear) || (Number(appData?.meta?.seasonYear) || 2026) + 1;
       const dpTeamUrl = sanitizeExternalUrl(dp.sources?.[0]?.url, null) || buildMockDraftTeamUrl(nextDraftYr);
+      const mockDb = resolveFirstPickMockDatabase(dp.firstPickMockDatabase || [], {
+        appData,
+        now: appData?.meta?.now,
+        draftYear: nextDraftYr,
+        consensusBigBoard: dp.consensusBigBoard || []
+      });
+      const topMock = mockDb.players[0] || null;
       externalHeaderLink = `<a href="${esc(dpTeamUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock DB</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="font-size:12.5px;color:var(--text-secondary)">
-          <strong>Top ${nextDraftYr} Horizons:</strong> ${(dp.topNeeds2027 || []).slice(0, 3).map(n => esc(n.pos)).join(' • ')}
+          <strong>Top ${nextDraftYr} Horizons:</strong> ${(dp.topNeeds2027 || []).slice(0, 3).map(n => esc(n.pos)).join(' • ')}${
+            topMock
+              ? `<div style="margin-top:4px;font-size:12px"><strong>1st-Pick Consensus (${esc(mockDb.shortWindowBadge)}):</strong> ${esc(topMock.playerName)} (${esc(topMock.pos)} • ${esc(topMock.school)}) — <span class="mono" style="color:var(--gold-bright)">${topMock.siteCount} ${topMock.siteCount === 1 ? 'site' : 'sites'}</span></div>`
+              : ''
+          }
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="draft_prep"`;

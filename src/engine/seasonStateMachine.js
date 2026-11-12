@@ -4,6 +4,13 @@
  * vs. move to the Off-Cycle / Archive Vault.
  */
 
+import {
+  buildMockDraftProspectUrl,
+  normalizePlayerKey,
+  sanitizeExternalUrl,
+  slugifyPlayerName
+} from './linkIntegrity.js';
+
 export const ALL_DASHBOARD_BLOCKS = [
   {
     id: 'news_briefs',
@@ -1199,4 +1206,427 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
     upcomingGames,
     postseasonStatus
   };
+}
+
+function resolveLastThursdayOfFebruaryUtcMs(year) {
+  // Day 0 of March = last day of February (handles 28-day and 29-day leap years)
+  const febEndMs = Date.UTC(year, 2, 0, 12, 0, 0);
+  const dow = new Date(febEndMs).getUTCDay(); // 0=Sun..4=Thu..6=Sat
+  const daysBackToThu = (dow - 4 + 7) % 7;
+  return febEndMs - daysBackToThu * 86_400_000;
+}
+
+function resolveFirstThursdayOfAugustUtcMs(year) {
+  const aug1Ms = Date.UTC(year, 7, 1, 12, 0, 0);
+  const dow = new Date(aug1Ms).getUTCDay();
+  const daysToThu = (4 - dow + 7) % 7;
+  return aug1Ms + daysToThu * 86_400_000;
+}
+
+/**
+ * Evaluates whether the NFL Scouting Combine Leaderboard should be blank vs. populated.
+ * Rule: Blank from after the NFL Preseason starts (early August of `seasonYear`) until the
+ * actual NFL Scouting Combine drills begin in Indianapolis (last Thursday of February of `draftYear`),
+ * preventing stale prior-year Combine testing from appearing during the NFL season.
+ */
+export function evaluateCombineLeaderboardWindow({
+  now = undefined,
+  seasonYear = 2026,
+  draftYear = null,
+  schedule = [],
+  combineLeaderboard = []
+} = {}) {
+  const nowDate =
+    now instanceof Date
+      ? now
+      : now !== undefined && now !== null
+        ? new Date(now)
+        : new Date();
+  const nowMs = Number.isFinite(nowDate.getTime()) ? nowDate.getTime() : Date.now();
+  const seasonYr = Number(seasonYear) || 2026;
+  const draftYr = Number(draftYear) || seasonYr + 1;
+
+  // Preseason start: earliest PRE game in schedule for `seasonYr`, capped at Aug 1 / HoF Week kickoff
+  const aug1AnchorIso = `${seasonYr}-08-01T00:00:00-07:00`;
+  const firstAugThuIso = `${formatUtcYmd(resolveFirstThursdayOfAugustUtcMs(seasonYr))}T00:00:00-07:00`;
+  let preseasonStartMs = Math.min(Date.parse(aug1AnchorIso), Date.parse(firstAugThuIso));
+
+  for (const g of Array.isArray(schedule) ? schedule : []) {
+    const st = String(g?.seasonType || g?.phase || '').toUpperCase();
+    const isPre = st === 'PRE' || st === 'PRESEASON' || Number(g?.week) < 0;
+    if (!isPre) continue;
+    const gMs = Date.parse(g?.dateIso || g?.date || g?.kickoffIso || '');
+    if (
+      Number.isFinite(gMs) &&
+      gMs >= Date.parse(`${seasonYr}-07-20T00:00:00Z`) &&
+      gMs < Date.parse(`${seasonYr}-09-05T00:00:00Z`)
+    ) {
+      if (gMs < preseasonStartMs) preseasonStartMs = gMs;
+    }
+  }
+
+  const prevCombineStartIso = `${formatUtcYmd(resolveLastThursdayOfFebruaryUtcMs(seasonYr))}T06:00:00-08:00`;
+  const combineStartIso = `${formatUtcYmd(resolveLastThursdayOfFebruaryUtcMs(draftYr))}T06:00:00-08:00`;
+  const nextPreseasonStartIso = `${draftYr}-08-01T00:00:00-07:00`;
+
+  const prevCombineStartMs = Date.parse(prevCombineStartIso);
+  const combineStartMs = Date.parse(combineStartIso);
+  const nextPreseasonStartMs = Date.parse(nextPreseasonStartIso);
+
+  let isBlankWindow = false;
+  let targetCombineYear = draftYr;
+  let reason = 'active_combine_window';
+
+  if (nowMs >= preseasonStartMs && nowMs < combineStartMs) {
+    isBlankWindow = true;
+    targetCombineYear = draftYr;
+    reason = 'between_preseason_and_combine';
+  } else if (nowMs < prevCombineStartMs) {
+    isBlankWindow = true;
+    targetCombineYear = seasonYr;
+    reason = 'before_combine_start';
+  } else if (nowMs >= nextPreseasonStartMs) {
+    isBlankWindow = true;
+    targetCombineYear = draftYr + 1;
+    reason = 'between_preseason_and_combine';
+  } else if (nowMs >= combineStartMs) {
+    isBlankWindow = false;
+    targetCombineYear = draftYr;
+    reason = 'combine_active';
+  } else {
+    isBlankWindow = false;
+    targetCombineYear = seasonYr;
+    reason = 'prior_spring_combine_active';
+  }
+
+  const combineStartDate = new Date(combineStartMs);
+  const combineStartDisplay = combineStartDate.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'America/Los_Angeles'
+  });
+
+  const validRows = isBlankWindow
+    ? []
+    : (Array.isArray(combineLeaderboard) ? combineLeaderboard : []).filter(row => {
+        if (!row || !row.name) return false;
+        if (row.season != null && Number.isFinite(Number(row.season))) {
+          return Number(row.season) === targetCombineYear;
+        }
+        return true;
+      });
+
+  return {
+    isBlankWindow,
+    reason,
+    targetCombineYear,
+    preseasonStartIso: new Date(preseasonStartMs).toISOString(),
+    combineStartIso,
+    combineStartDisplay,
+    rows: validRows
+  };
+}
+
+/**
+ * Determines whether the 49ers have been eliminated from the current NFL season
+ * (switching the First-Pick Mock Draft Database from 1-month in-season freshness to 1-week post-elimination freshness).
+ */
+export function is49ersEliminatedForDraftMocks(appData = {}, options = {}) {
+  if (typeof options.isEliminated === 'boolean') {
+    return {
+      isEliminated: options.isEliminated,
+      reason: options.isEliminated ? 'explicit_eliminated' : 'explicit_in_season'
+    };
+  }
+
+  const nowDate =
+    options.now instanceof Date
+      ? options.now
+      : options.now !== undefined && options.now !== null
+        ? new Date(options.now)
+        : appData?.meta?.now
+          ? new Date(appData.meta.now)
+          : new Date();
+  const nowMs = Number.isFinite(nowDate.getTime()) ? nowDate.getTime() : Date.now();
+  const seasonYr = Number(options.seasonYear || appData?.meta?.seasonYear) || 2026;
+  const cal = {
+    ...buildNflCalendarForSeasonYear(seasonYr),
+    ...(appData?.meta?.calendar || {}),
+    ...(options.calendar || {})
+  };
+  const teamStatus = {
+    ...(appData?.meta?.teamStatus || {}),
+    ...(options.teamStatus || {})
+  };
+
+  const elimAtMs = teamStatus.eliminatedAt ? Date.parse(teamStatus.eliminatedAt) : NaN;
+  if (
+    teamStatus.mathematicallyEliminated === true ||
+    (Number.isFinite(elimAtMs) && nowMs >= elimAtMs) ||
+    String(teamStatus.clinchCode || appData?.meta?.clinchCode || '').toLowerCase() === 'e'
+  ) {
+    return { isEliminated: true, reason: 'team_status_eliminated' };
+  }
+
+  const schedModel = resolveCompleteScheduleModel(
+    {
+      ...appData,
+      meta: {
+        ...(appData?.meta || {}),
+        seasonYear: seasonYr,
+        now: nowDate.toISOString(),
+        teamStatus
+      }
+    },
+    options.mcSimResult || null
+  );
+  if (schedModel.postseasonStatus?.isEliminated) {
+    return {
+      isEliminated: true,
+      reason:
+        schedModel.postseasonStatus.state === 'POSTSEASON_ELIMINATED'
+          ? 'postseason_loss'
+          : 'missed_playoffs'
+    };
+  }
+
+  const sbEndMs = Date.parse(cal.superBowlEnd);
+  const draftStartMs = Date.parse(cal.draftDay1Start);
+  if (Number.isFinite(sbEndMs) && Number.isFinite(draftStartMs) && nowMs >= sbEndMs && nowMs < draftStartMs) {
+    return { isEliminated: true, reason: 'post_season_pre_draft' };
+  }
+
+  return { isEliminated: false, reason: 'in_season_alive' };
+}
+
+function formatMockAgeLabel(ageMs, pubMs) {
+  const safeAgeMs = Math.max(0, ageMs);
+  const hours = safeAgeMs / 3_600_000;
+  const days = Math.floor(safeAgeMs / 86_400_000);
+  const shortDate = new Date(pubMs).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'America/Los_Angeles'
+  });
+  if (hours < 20) return { ageLabel: 'Today', shortDate };
+  if (days <= 1) return { ageLabel: '1d ago', shortDate };
+  if (days < 14) return { ageLabel: `${days}d ago`, shortDate };
+  return { ageLabel: `${Math.round(days / 7)}w ago`, shortDate };
+}
+
+/**
+ * Resolves the 49ers First-Pick Mock Draft Database view:
+ * - Filters strictly to 1-month (30-day) freshness while the 49ers are alive in the NFL season,
+ *   and 1-week (7-day) freshness once the 49ers are eliminated.
+ * - Deduplicates to at most 1 projection per independent mock draft site (most recent inside window).
+ * - Ranks projected players by number of sites projecting them to SF's first pick (`siteCount` DESC),
+ *   with clickable site names/links and prospect scouting drill-down metadata.
+ */
+export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
+  const nowDate =
+    options.now instanceof Date
+      ? options.now
+      : options.now !== undefined && options.now !== null
+        ? new Date(options.now)
+        : new Date();
+  const refMs = Number.isFinite(nowDate.getTime()) ? nowDate.getTime() : Date.now();
+
+  const elim = is49ersEliminatedForDraftMocks(options.appData || {}, options);
+  const freshnessDays = elim.isEliminated ? 7 : 30;
+  const maxAgeMs = freshnessDays * 86_400_000;
+
+  const dp = options.appData?.seasonal?.draftPrep2027 || {};
+  const draftYear = Number(options.draftYear || dp.draftYear) || (Number(options.appData?.meta?.seasonYear) || 2026) + 1;
+  const firstPickInv = (options.pickInventory || dp.pickInventory || [])[0] || {
+    round: 1,
+    projectedOverall: 31
+  };
+  const projectedFirstPickOverall = Number(options.projectedPick || firstPickInv.projectedOverall) || 31;
+  const projectedFirstPickRound = Number(firstPickInv.round) || 1;
+
+  const boardList = Array.isArray(options.consensusBigBoard)
+    ? options.consensusBigBoard
+    : Array.isArray(dp.consensusBigBoard)
+      ? dp.consensusBigBoard
+      : [];
+  const boardByKey = new Map();
+  for (const b of boardList) {
+    const k = normalizePlayerKey(b?.name || '');
+    if (k && !boardByKey.has(k)) boardByKey.set(k, b);
+  }
+
+  let staleExcludedCount = 0;
+  const newestBySite = new Map();
+
+  for (const raw of Array.isArray(mockEntries) ? mockEntries : []) {
+    if (!raw || !(raw.playerName || raw.name) || !raw.siteName) continue;
+    const safeUrl = sanitizeExternalUrl(raw.url || raw.sourceUrl || '', null);
+    if (!safeUrl) continue;
+
+    const rawDate = String(raw.publishedAt || raw.dateIso || '').trim();
+    const normalizedIso = /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? `${rawDate}T12:00:00Z` : rawDate;
+    const pubMs = normalizedIso ? Date.parse(normalizedIso) : NaN;
+    if (!Number.isFinite(pubMs)) continue;
+
+    const ageMs = refMs - pubMs;
+    if (ageMs < -2 * 86_400_000) continue;
+    if (ageMs > maxAgeMs) {
+      staleExcludedCount += 1;
+      continue;
+    }
+
+    const siteKey = String(raw.siteId || raw.siteName)
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+    if (!siteKey) continue;
+
+    const prev = newestBySite.get(siteKey);
+    if (!prev || pubMs > prev.pubMs) {
+      newestBySite.set(siteKey, {
+        raw,
+        safeUrl,
+        pubMs,
+        ageMs
+      });
+    }
+  }
+
+  const totalFreshSites = newestBySite.size;
+  const groupsByPlayer = new Map();
+
+  for (const [siteKey, item] of newestBySite.entries()) {
+    const { raw, safeUrl, pubMs, ageMs } = item;
+    const pName = String(raw.playerName || raw.name).trim();
+    const pKey = normalizePlayerKey(pName);
+    if (!pKey) continue;
+
+    const boardHit = boardByKey.get(pKey) || null;
+    const { ageLabel, shortDate } = formatMockAgeLabel(ageMs, pubMs);
+    const pickNum = Number(raw.projectedPick) || projectedFirstPickOverall;
+
+    if (!groupsByPlayer.has(pKey)) {
+      const slug = slugifyPlayerName(pName);
+      groupsByPlayer.set(pKey, {
+        playerKey: pKey,
+        playerName: boardHit?.name || pName,
+        pos: raw.pos || boardHit?.pos || 'ATH',
+        posRank: boardHit?.posRank || '',
+        school: raw.school || boardHit?.school || '',
+        heightWeight: raw.heightWeight || boardHit?.heightWeight || '',
+        headshotUrl: raw.headshotUrl || boardHit?.headshotUrl || '',
+        collegeLogoUrl: raw.collegeLogoUrl || boardHit?.collegeLogoUrl || '',
+        collegeStats: raw.collegeStats || boardHit?.collegeStats || '',
+        bigBoardRank: boardHit?.consensusRank ?? raw.bigBoardRank ?? null,
+        shanahanLynchFitScore: raw.shanahanLynchFitScore ?? boardHit?.shanahanLynchFitScore ?? null,
+        archetypeTraits: raw.archetypeTraits || boardHit?.archetypeNote || '',
+        profileUrl:
+          sanitizeExternalUrl(raw.profileUrl || boardHit?.profileUrl || '', null) ||
+          buildMockDraftProspectUrl(draftYear, slug, draftYear),
+        mockDbUrl: buildMockDraftProspectUrl(draftYear, slug, draftYear),
+        tankathonUrl: sanitizeExternalUrl(boardHit?.tankathonUrl || '', null),
+        latestPublishedMs: pubMs,
+        sites: []
+      });
+    }
+
+    const grp = groupsByPlayer.get(pKey);
+    if (pubMs > grp.latestPublishedMs) grp.latestPublishedMs = pubMs;
+    if (!grp.archetypeTraits && raw.note) grp.archetypeTraits = raw.note;
+
+    grp.sites.push({
+      siteId: siteKey,
+      siteName: String(raw.siteName).trim(),
+      analyst: raw.analyst ? String(raw.analyst).trim() : '',
+      url: safeUrl,
+      publishedAt: new Date(pubMs).toISOString(),
+      pubMs,
+      ageDays: Math.max(0, Math.floor(ageMs / 86_400_000)),
+      ageLabel,
+      shortDate,
+      projectedPick: pickNum,
+      round: Number(raw.round) || projectedFirstPickRound,
+      note: raw.note ? String(raw.note).trim() : ''
+    });
+  }
+
+  const players = [...groupsByPlayer.values()]
+    .map((grp, _i) => {
+      grp.sites.sort((a, b) => b.pubMs - a.pubMs);
+      const siteCount = grp.sites.length;
+      const sharePct = totalFreshSites > 0 ? Math.round((siteCount / totalFreshSites) * 100) : 0;
+      const picks = grp.sites.map(s => s.projectedPick).filter(Number.isFinite);
+      const minPick = picks.length ? Math.min(...picks) : projectedFirstPickOverall;
+      const maxPick = picks.length ? Math.max(...picks) : projectedFirstPickOverall;
+      const pickRangeLabel = minPick === maxPick ? `#${minPick}` : `#${minPick}–#${maxPick}`;
+      return {
+        ...grp,
+        siteCount,
+        sharePct,
+        pickRangeLabel,
+        freshestSite: grp.sites[0] || null
+      };
+    })
+    .sort((a, b) => {
+      if (b.siteCount !== a.siteCount) return b.siteCount - a.siteCount;
+      if (b.latestPublishedMs !== a.latestPublishedMs) return b.latestPublishedMs - a.latestPublishedMs;
+      return (a.bigBoardRank ?? 999) - (b.bigBoardRank ?? 999);
+    })
+    .map((grp, idx) => ({
+      ...grp,
+      rank: idx + 1
+    }));
+
+  return {
+    draftYear,
+    isEliminated: elim.isEliminated,
+    eliminationReason: elim.reason,
+    freshnessDays,
+    freshnessLabel: elim.isEliminated
+      ? '1-Week Freshness (Post-Elimination)'
+      : '1-Month Freshness (In-Season)',
+    shortWindowBadge: elim.isEliminated ? '1W Window' : '1M Window',
+    totalFreshSites,
+    staleExcludedCount,
+    projectedFirstPickRound,
+    projectedFirstPickOverall,
+    players
+  };
+}
+
+const BIG_BOARD_POS_BUCKETS = {
+  OL: new Set(['OT', 'IOL', 'OG', 'G', 'C', 'OL', 'T', 'LT', 'RT']),
+  WR_TE: new Set(['WR', 'TE']),
+  DL_EDGE: new Set(['EDGE', 'DE', 'DT', 'DL', 'NT', 'IDL', 'OLB', 'ED']),
+  DB_LB: new Set(['CB', 'S', 'SAF', 'FS', 'SS', 'DB', 'LB', 'ILB', 'MLB']),
+  QB_RB: new Set(['QB', 'RB', 'FB', 'HB'])
+};
+
+export function filterConsensusBigBoard(
+  board = [],
+  { search = '', posGroup = 'ALL', sfPickOverall = 31 } = {}
+) {
+  const q = String(search || '').toLowerCase().trim();
+  const grp = String(posGroup || 'ALL').toUpperCase();
+  const minWindow = Math.max(1, Number(sfPickOverall || 31) - 11);
+  const maxWindow = Number(sfPickOverall || 31) + 14;
+
+  return (Array.isArray(board) ? board : []).filter(p => {
+    if (!p || !p.name) return false;
+    const pos = String(p.pos || '').toUpperCase().split('/')[0].trim();
+    if (grp === 'SF_RANGE') {
+      const r = Number(p.consensusRank || 999);
+      if (r < minWindow || r > maxWindow) return false;
+    } else if (grp !== 'ALL' && BIG_BOARD_POS_BUCKETS[grp]) {
+      const allPosTokens = String(p.pos || '')
+        .toUpperCase()
+        .split(/[/,\s]+/)
+        .filter(Boolean);
+      if (!allPosTokens.some(tok => BIG_BOARD_POS_BUCKETS[grp].has(tok))) return false;
+    }
+
+    if (!q) return true;
+    const hay = `${p.name} ${p.pos || ''} ${p.posRank || ''} ${p.school || ''} ${p.archetypeNote || ''}`.toLowerCase();
+    return hay.includes(q);
+  });
 }

@@ -31,10 +31,15 @@ import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 import {
+  evaluateCombineLeaderboardWindow,
+  filterConsensusBigBoard,
   partitionCompletedTradesByWindow,
-  resolveCompleteScheduleModel
+  resolveCompleteScheduleModel,
+  resolveFirstPickMockDatabase
 } from '../engine/seasonStateMachine.js';
 import {
+  buildMockDraftBigBoardUrl,
+  buildMockDraftTeamUrl,
   buildPfrTeamDraftUrl,
   buildPfrTeamSeasonUrl,
   sanitizeExternalUrl
@@ -311,6 +316,9 @@ export function renderSeasonMatchupViewHtml({
   mcSimResult,
   forcedWinners = {},
   combineSearch = '',
+  bigBoardSearch = '',
+  bigBoardPosFilter = 'ALL',
+  bigBoardExpanded = false,
   expandedDraftSpiderIdx = -1,
   activeVideosSet,
   schedulePrevExpanded = false,
@@ -356,7 +364,18 @@ export function renderSeasonMatchupViewHtml({
   if (seasonSub === 'playoffs')
     return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks);
   if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
-  if (seasonSub === 'draft_prep') return switcherCard + renderDraftPrepAndCombine(appData, combineSearch);
+  if (seasonSub === 'draft_prep') {
+    return (
+      switcherCard +
+      renderDraftPrepAndCombine(appData, {
+        combineSearch,
+        bigBoardSearch,
+        bigBoardPosFilter,
+        bigBoardExpanded,
+        mcSimResult
+      })
+    );
+  }
   return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
 }
 
@@ -2111,11 +2130,263 @@ function renderFullSchedule(appData, schedulePrevExpanded = false, mcSimResult =
   `;
 }
 
-function renderDraftPrepAndCombine(appData, combineSearch) {
+const BIG_BOARD_POS_PILLS = [
+  { key: 'ALL', label: 'All' },
+  { key: 'SF_RANGE', label: 'SF Window' },
+  { key: 'OL', label: 'OL' },
+  { key: 'WR_TE', label: 'WR/TE' },
+  { key: 'DL_EDGE', label: 'DL/EDGE' },
+  { key: 'DB_LB', label: 'DB/LB' },
+  { key: 'QB_RB', label: 'QB/RB' }
+];
+
+function renderMockDbPlayerCardHtml(p) {
+  const safeProf = sanitizeExternalUrl(p.profileUrl, null) || sanitizeExternalUrl(p.mockDbUrl, null);
+  const safeMockDb = sanitizeExternalUrl(p.mockDbUrl, null);
+  const safeTk = sanitizeExternalUrl(p.tankathonUrl, null);
+  const siteCountBadgeCls =
+    p.siteCount >= 3 ? 'badge-positive' : p.siteCount === 2 ? 'badge-gold' : 'badge-neutral';
+  const barWidth = Math.max(8, Math.min(100, Number(p.sharePct || 0)));
+
+  const logoHtml = p.collegeLogoUrl
+    ? `<img src="${esc(p.collegeLogoUrl)}" alt="" width="20" height="20" loading="lazy" class="ncaa-mini-logo" />`
+    : '';
+
+  return `
+    <div class="mock-db-card" data-mock-db-player="${esc(p.playerKey)}" data-mock-site-count="${p.siteCount}">
+      <div class="mock-db-top">
+        <div class="mock-db-player-head">
+          <span class="mock-db-rank mono">#${p.rank}</span>
+          ${logoHtml}
+          <div class="mock-db-name-wrap">
+            <div class="mock-db-name-line">
+              ${
+                safeProf
+                  ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="ext-link mock-db-player-link"><strong>${esc(p.playerName)}</strong> ${iconSvg('externalLink', 9)}</a>`
+                  : `<strong>${esc(p.playerName)}</strong>`
+              }
+              <span class="mock-db-pos-school"><strong style="color:var(--gold-bright)">${esc(p.pos)}</strong> • ${esc(p.school)}${
+                p.bigBoardRank ? ` <span class="mono" style="color:var(--text-muted)">(Board #${p.bigBoardRank})</span>` : ''
+              }</span>
+            </div>
+          </div>
+        </div>
+        <span class="badge ${siteCountBadgeCls} mono mock-db-count-badge">
+          ${p.siteCount} ${p.siteCount === 1 ? 'Site' : 'Sites'} • ${p.sharePct}%
+        </span>
+      </div>
+
+      <div class="mock-db-share-track" aria-hidden="true">
+        <div class="mock-db-share-fill" style="width:${barWidth}%"></div>
+      </div>
+
+      <div class="mock-db-sites-strip" data-mock-projecting-sites>
+        <span class="mock-db-sites-label mono">Projecting:</span>
+        ${p.sites
+          .map(
+            s => `
+          <a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"
+             class="mock-site-chip" data-mock-site-link="${esc(s.siteId)}"
+             title="${esc(`${s.siteName}${s.analyst ? ` (${s.analyst})` : ''} — Pick #${s.projectedPick} • ${s.shortDate}`)}">
+            <span>${esc(s.siteName)}</span>
+            <span class="mono mock-site-chip-meta">#${s.projectedPick}</span>
+            ${iconSvg('externalLink', 9)}
+          </a>
+        `
+          )
+          .join('')}
+      </div>
+
+      <details class="compact-details mock-db-drilldown" data-mock-drilldown="${esc(p.playerKey)}">
+        <summary class="compact-details-summary">
+          <span>Drill Down: Scouting &amp; Site Notes (${p.siteCount})</span>
+          <span class="mono" style="font-size:10.5px;color:var(--gold-bright)">${
+            p.shanahanLynchFitScore ? `SF Fit ${p.shanahanLynchFitScore}/100 • ` : ''
+          }Pick ${esc(p.pickRangeLabel)}</span>
+        </summary>
+        <div class="mock-db-drill-body">
+          ${
+            p.heightWeight || p.collegeStats
+              ? `<div class="mock-db-meas-strip mono">${esc(
+                  [p.heightWeight, p.collegeStats].filter(Boolean).join('  |  ')
+                )}</div>`
+              : ''
+          }
+          ${
+            p.archetypeTraits
+              ? `<div style="font-size:12px;color:var(--text-secondary)">${escJargon(p.archetypeTraits)}</div>`
+              : ''
+          }
+          <div class="mock-db-site-detail-list">
+            ${p.sites
+              .map(
+                s => `
+              <div class="mock-db-site-detail-row">
+                <div class="mock-db-site-detail-head">
+                  <a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">
+                    <strong>${esc(s.siteName)}</strong>${s.analyst ? ` <span style="color:var(--text-muted)">(${esc(s.analyst)})</span>` : ''} ${iconSvg('externalLink', 9)}
+                  </a>
+                  <span class="mono" style="font-size:10.5px;color:var(--text-muted)">Rd ${s.round} #${s.projectedPick} • ${esc(s.shortDate)} (${esc(s.ageLabel)})</span>
+                </div>
+                ${s.note ? `<div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">${escJargon(s.note)}</div>` : ''}
+              </div>
+            `
+              )
+              .join('')}
+          </div>
+          <div class="source-link-strip" style="margin-top:4px">
+            ${
+              safeProf
+                ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Scouting Profile</span>${iconSvg('externalLink', 9)}</a>`
+                : ''
+            }
+            ${
+              safeTk && safeTk !== safeProf
+                ? `<a href="${esc(safeTk)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Tankathon Tape</span>${iconSvg('externalLink', 9)}</a>`
+                : ''
+            }
+            ${
+              safeMockDb && safeMockDb !== safeProf
+                ? `<a href="${esc(safeMockDb)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock Draft DB</span>${iconSvg('externalLink', 9)}</a>`
+                : ''
+            }
+          </div>
+        </div>
+      </details>
+    </div>
+  `;
+}
+
+function renderBigBoardProspectItemHtml(b, sfPickOverall = 31) {
+  const rank = Number(b.consensusRank || 1);
+  const rankBadgeCls = rank <= 10 ? 'badge-positive' : rank <= 32 ? 'badge-gold' : 'badge-neutral';
+  const inSfRange = rank >= Math.max(1, sfPickOverall - 11) && rank <= sfPickOverall + 14;
+  const spreadTxt =
+    b.bestRank && b.worstRank
+      ? b.bestRank === b.worstRank
+        ? `Unanimous #${b.bestRank}`
+        : `Range #${b.bestRank}–#${b.worstRank}`
+      : `Board #${rank}`;
+
+  const br = b.boardRanks || {};
+  const boardChips = [
+    br.espn ? { lbl: `ESPN #${br.espn}`, url: sanitizeExternalUrl(b.espnUrl || 'https://www.espn.com/nfl/draft/bestavailable', null) } : null,
+    br.cbs ? { lbl: `CBS #${br.cbs}`, url: sanitizeExternalUrl(b.cbsUrl || 'https://www.cbssports.com/nfl/draft/prospect-rankings/', null) } : null,
+    br.tankathon ? { lbl: `Tankathon #${br.tankathon}`, url: sanitizeExternalUrl(b.tankathonUrl || 'https://www.tankathon.com/nfl/big_board', null) } : null,
+    br.drafttek ? { lbl: `DraftTek #${br.drafttek}`, url: null } : null
+  ].filter(Boolean);
+
+  const safeProf = sanitizeExternalUrl(b.profileUrl, null);
+  const safeMockDb = sanitizeExternalUrl(b.mockDbUrl, null);
+  const logoHtml = b.collegeLogoUrl
+    ? `<img src="${esc(b.collegeLogoUrl)}" alt="" width="19" height="19" loading="lazy" class="ncaa-mini-logo" />`
+    : '';
+
+  return `
+    <details class="big-board-item" data-big-board-rank="${rank}" ${inSfRange ? 'data-in-sf-window="true"' : ''}>
+      <summary class="big-board-summary">
+        <div class="big-board-left">
+          <span class="badge ${rankBadgeCls} mono big-board-rank-pill">#${rank}</span>
+          ${logoHtml}
+          <div class="big-board-identity">
+            <span class="big-board-name">${esc(b.name)}</span>
+            <span class="big-board-sub"><strong style="color:var(--gold-bright)">${esc(b.posRank || b.pos)}</strong> • ${esc(b.school)}</span>
+          </div>
+        </div>
+        <div class="big-board-right">
+          ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag">SF Range</span>` : ''}
+          <span class="mono big-board-spread">${esc(spreadTxt)}</span>
+        </div>
+      </summary>
+      <div class="big-board-detail-body">
+        <div class="big-board-ranks-strip">
+          ${boardChips
+            .map(bc =>
+              bc.url
+                ? `<a href="${esc(bc.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link mono">${esc(bc.lbl)} ${iconSvg('externalLink', 9)}</a>`
+                : `<span class="badge badge-neutral mono">${esc(bc.lbl)}</span>`
+            )
+            .join('')}
+          ${
+            b.shanahanLynchFitScore
+              ? `<span class="badge badge-positive mono">SF Fit ${b.shanahanLynchFitScore}/100</span>`
+              : ''
+          }
+        </div>
+        ${
+          b.heightWeight || b.collegeStats
+            ? `<div class="mock-db-meas-strip mono">${esc(
+                [b.heightWeight, b.collegeStats].filter(Boolean).join('  |  ')
+              )}</div>`
+            : ''
+        }
+        ${b.archetypeNote ? `<div style="font-size:12px;color:var(--text-secondary)">${escJargon(b.archetypeNote)}</div>` : ''}
+        <div class="source-link-strip">
+          ${
+            safeProf
+              ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Prospect Profile</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
+          ${
+            safeMockDb && safeMockDb !== safeProf
+              ? `<a href="${esc(safeMockDb)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock Draft DB</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
+        </div>
+      </div>
+    </details>
+  `;
+}
+
+function renderDraftPrepAndCombine(appData, opts = {}) {
+  const combineSearch = typeof opts === 'string' ? opts : opts.combineSearch || '';
+  const bigBoardSearch = typeof opts === 'object' && opts ? opts.bigBoardSearch || '' : '';
+  const bigBoardPosFilter = typeof opts === 'object' && opts ? opts.bigBoardPosFilter || 'ALL' : 'ALL';
+  const bigBoardExpanded = Boolean(typeof opts === 'object' && opts && opts.bigBoardExpanded);
+  const mcSimResult = typeof opts === 'object' && opts ? opts.mcSimResult || null : null;
+
   const dp = appData?.seasonal?.draftPrep2027 || {};
-  const nextDraftYr = Number(dp.draftYear) || (Number(appData?.meta?.seasonYear) || 2026) + 1;
+  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const nextDraftYr = Number(dp.draftYear) || seasonYr + 1;
+  const sfFirstPickOverall = Number(dp.pickInventory?.[0]?.projectedOverall) || 31;
+
+  // 1. Resolve 49ers First-Pick Mock Draft Database (1-month in-season vs 1-week post-elimination)
+  const mockDb = resolveFirstPickMockDatabase(dp.firstPickMockDatabase || [], {
+    appData,
+    now: appData?.meta?.now,
+    mcSimResult,
+    draftYear: nextDraftYr,
+    projectedPick: sfFirstPickOverall,
+    consensusBigBoard: dp.consensusBigBoard || []
+  });
+  const mockDbTeamUrl =
+    sanitizeExternalUrl(dp.sources?.[0]?.url, null) || buildMockDraftTeamUrl(nextDraftYr);
+  const primaryMockPlayers = mockDb.players.slice(0, 5);
+  const overflowMockPlayers = mockDb.players.slice(5);
+
+  // 2. Resolve 4-Board Consensus Big Board (above Combine Leaderboard)
+  const rawBigBoard = Array.isArray(dp.consensusBigBoard) ? dp.consensusBigBoard : [];
+  const filteredBigBoard = filterConsensusBigBoard(rawBigBoard, {
+    search: bigBoardSearch,
+    posGroup: bigBoardPosFilter,
+    sfPickOverall: sfFirstPickOverall
+  });
+  const isBoardFiltered = Boolean(String(bigBoardSearch || '').trim()) || bigBoardPosFilter !== 'ALL';
+  const visibleBigBoard =
+    bigBoardExpanded || isBoardFiltered ? filteredBigBoard : filteredBigBoard.slice(0, 15);
+  const bigBoardRefUrl =
+    sanitizeExternalUrl(dp.bigBoardUrl, null) || buildMockDraftBigBoardUrl(nextDraftYr);
+
+  // 3. Evaluate Combine Leaderboard Blank Window (blank from preseason start until Combine start)
+  const combineWindow = evaluateCombineLeaderboardWindow({
+    now: appData?.meta?.now,
+    seasonYear: seasonYr,
+    draftYear: nextDraftYr,
+    schedule: appData?.scheduleMatchup?.schedule || [],
+    combineLeaderboard: dp.combineLeaderboard || []
+  });
   const q = String(combineSearch || '').toLowerCase().trim();
-  const filteredCombine = (dp.combineLeaderboard || []).filter(
+  const filteredCombine = combineWindow.rows.filter(
     c => !q || c.name.toLowerCase().includes(q) || c.pos.toLowerCase().includes(q) || c.school.toLowerCase().includes(q)
   );
 
@@ -2151,7 +2422,7 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
           .join('')}
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">${Number(dp.draftYear) || 2027} Draft Picks (${(dp.pickInventory || []).length})</div>
+      <div class="sub-label" style="margin-bottom:6px">${nextDraftYr} Draft Picks (${(dp.pickInventory || []).length})</div>
       ${dp.tradedPicksNote ? `<div class="subcard-panel" style="font-size:11.5px;color:var(--text-secondary);margin-bottom:8px">${escJargon(dp.tradedPicksNote)}</div>` : ''}
       <div class="table-scroll">
         <table class="data-table mono">
@@ -2173,84 +2444,226 @@ function renderDraftPrepAndCombine(appData, combineSearch) {
       </div>
     </section>
 
-    <section class="card">
-      <h3 class="card-title" style="margin-bottom:8px">Consensus Mock Targets</h3>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${(dp.consensusMockTargets || [])
-          .map(m => {
-            const pLinks = Array.isArray(m.prospectLinks) && m.prospectLinks.length > 0 ? m.prospectLinks : null;
-            const headerLinksHtml = pLinks
-              ? `<span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">${pLinks
-                  .map(pl => {
-                    const safePl = sanitizeExternalUrl(pl.url, null);
-                    const lbl = `${pl.name} (${pl.pos} • ${pl.school})`;
-                    return safePl
-                      ? `<a href="${esc(safePl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(lbl)}</strong> ${iconSvg('externalLink', 10)}</a>`
-                      : `<strong>${esc(lbl)}</strong>`;
-                  })
-                  .join('<span style="color:var(--text-muted)">/</span>')}</span>`
-              : m.sourceUrl
-                ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong> ${iconSvg('externalLink', 11)}</a>`
-                : `<strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>`;
-            return `
-          <div class="subcard-panel">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-              ${headerLinksHtml}
-              <span class="badge badge-positive mono">SF Fit ${m.shanahanLynchFitScore}/100 • ${m.mockFrequencyToSfPct}% Mocks</span>
-            </div>
-            <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.heightWeight)} • Mocked by: ${renderReporterSourceLinksHtml(m.sourcesMocking || [], m.sourceUrl)}</div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(m.archetypeTraits)}</div>
+    <section class="card" id="consensusMockDraftCard" data-consensus-mock-card>
+      <div class="card-header" style="margin-bottom:6px">
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('trophy', 17)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">49ers 1st Pick • Rd ${mockDb.projectedFirstPickRound} Est. #${mockDb.projectedFirstPickOverall}</div>
+            <h3 class="card-title">Consensus Mock Draft</h3>
           </div>
-        `;
-          })
-          .join('')}
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span class="badge ${mockDb.isEliminated ? 'badge-scarlet' : 'badge-gold'} mono"
+                data-mock-freshness-badge="${mockDb.freshnessDays}d">
+            ${esc(mockDb.shortWindowBadge)} • ${mockDb.totalFreshSites} ${mockDb.totalFreshSites === 1 ? 'Site' : 'Sites'}
+          </span>
+          <a href="${esc(mockDbTeamUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>Mock DB</span>${iconSvg('externalLink', 10)}
+          </a>
+        </div>
       </div>
+
+      <div class="mock-freshness-banner" data-mock-freshness-note>
+        ${
+          mockDb.isEliminated
+            ? `Post-elimination filter active: showing <strong>last 7 days</strong> of 49ers 1st-pick projections (${mockDb.totalFreshSites} verified sites${
+                mockDb.staleExcludedCount > 0 ? ` • ${mockDb.staleExcludedCount} older >7d excluded` : ''
+              }).`
+            : `In-season filter active: showing <strong>last 1 month (30 days)</strong> of 49ers 1st-pick projections (${mockDb.totalFreshSites} verified sites${
+                mockDb.staleExcludedCount > 0 ? ` • ${mockDb.staleExcludedCount} stale >30d excluded` : ''
+              }; tightens to 1 week post-elimination).`
+        }
+      </div>
+
+      ${
+        primaryMockPlayers.length > 0
+          ? `
+        <div class="mock-db-list" data-mock-db-list>
+          ${primaryMockPlayers.map(p => renderMockDbPlayerCardHtml(p)).join('')}
+        </div>
+        ${
+          overflowMockPlayers.length > 0
+            ? `
+          <details class="compact-details" style="margin-top:8px" data-mock-db-more>
+            <summary class="compact-details-summary">
+              <span>More 49ers 1st-Pick Projections (${overflowMockPlayers.length})</span>
+            </summary>
+            <div class="mock-db-list" style="margin-top:6px">
+              ${overflowMockPlayers.map(p => renderMockDbPlayerCardHtml(p)).join('')}
+            </div>
+          </details>
+        `
+            : ''
+        }
+      `
+          : `<div class="subcard-panel" data-mock-db-empty style="font-size:12px;color:var(--text-secondary)">No verified 49ers 1st-pick mock drafts published within the active ${mockDb.freshnessDays}-day freshness window yet.</div>`
+      }
+
+      ${
+        (dp.consensusMockTargets || []).length > 0
+          ? `
+        <details class="compact-details" style="margin-top:9px" data-mock-archetypes-details>
+          <summary class="compact-details-summary">
+            <span>Shanahan / Lynch Scheme Fit Clusters (${(dp.consensusMockTargets || []).length})</span>
+          </summary>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px">
+            ${(dp.consensusMockTargets || [])
+              .map(m => {
+                const pLinks = Array.isArray(m.prospectLinks) && m.prospectLinks.length > 0 ? m.prospectLinks : null;
+                const headerLinksHtml = pLinks
+                  ? `<span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">${pLinks
+                      .map(pl => {
+                        const safePl = sanitizeExternalUrl(pl.url, null);
+                        const lbl = `${pl.name} (${pl.pos} • ${pl.school})`;
+                        return safePl
+                          ? `<a href="${esc(safePl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(lbl)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                          : `<strong>${esc(lbl)}</strong>`;
+                      })
+                      .join('<span style="color:var(--text-muted)">/</span>')}</span>`
+                  : `<strong>${esc(m.name)} (${esc(m.pos)} • ${esc(m.school)})</strong>`;
+                return `
+              <div class="subcard-panel">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+                  ${headerLinksHtml}
+                  <span class="badge badge-positive mono">SF Fit ${m.shanahanLynchFitScore}/100</span>
+                </div>
+                <div style="font-size:11.5px;color:var(--gold-bright);margin:2px 0">${esc(m.heightWeight)} • ${renderReporterSourceLinksHtml(m.sourcesMocking || [], m.sourceUrl)}</div>
+                <div style="font-size:12px;color:var(--text-secondary)">${escJargon(m.archetypeTraits)}</div>
+              </div>
+            `;
+              })
+              .join('')}
+          </div>
+        </details>
+      `
+          : ''
+      }
     </section>
 
-    <section class="card">
+    <section class="card" id="consensusBigBoardCard" data-consensus-big-board>
+      <div class="card-header" style="margin-bottom:6px">
+        <div class="card-header-left">
+          <div class="card-icon-badge" aria-hidden="true">${iconSvg('radar', 17)}</div>
+          <div class="card-title-group">
+            <div class="card-eyebrow">4-Board Composite • ${jargonTerm('Wisdom of the Crowd', 'consensus_big_board')}</div>
+            <h3 class="card-title">${nextDraftYr} Consensus Big Board</h3>
+          </div>
+        </div>
+        <div class="source-link-strip">
+          <a href="${esc(bigBoardRefUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock DB Board</span>${iconSvg('externalLink', 10)}</a>
+          <a href="https://www.wideleft.football/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Wide Left</span>${iconSvg('externalLink', 10)}</a>
+          <a href="https://www.tankathon.com/nfl/big_board" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Tankathon</span>${iconSvg('externalLink', 10)}</a>
+        </div>
+      </div>
+
+      <div class="big-board-meta-note">
+        Aggregating <strong>ESPN Scouts Inc.</strong> (30%), <strong>CBS Sports</strong> (28%), <strong>Tankathon</strong> (24%) &amp; <strong>DraftTek</strong> (18%) — multi-year draft studies confirm consensus boards achieve ~80%+ draft-capital alignment and beat every individual evaluator.
+      </div>
+
+      <div class="search-input-wrap" style="margin-bottom:7px">
+        ${iconSvg('search', 15, 'search-input-icon')}
+        <input type="search" id="bigBoardSearchInput" class="text-input has-lead-icon"
+               placeholder="Search Top ${rawBigBoard.length || 50} prospects by name, position, college…"
+               value="${esc(bigBoardSearch)}" aria-label="Search Consensus Big Board" />
+      </div>
+
+      <div class="big-board-pos-bar" role="tablist" aria-label="Filter Consensus Big Board by Position">
+        ${BIG_BOARD_POS_PILLS.map(pill => {
+          const active = bigBoardPosFilter === pill.key;
+          return `
+            <button type="button" role="tab" aria-selected="${active ? 'true' : 'false'}"
+                    class="pill-btn big-board-pos-pill ${active ? 'active' : ''}"
+                    data-action="set-big-board-pos" data-pos-group="${pill.key}">
+              <span>${esc(pill.label)}</span>
+            </button>
+          `;
+        }).join('')}
+      </div>
+
+      ${
+        visibleBigBoard.length > 0
+          ? `
+        <div class="big-board-list" data-big-board-list>
+          ${visibleBigBoard.map(b => renderBigBoardProspectItemHtml(b, sfFirstPickOverall)).join('')}
+        </div>
+        ${
+          !isBoardFiltered && filteredBigBoard.length > 15
+            ? `<button type="button" class="btn-ghost" style="width:100%;margin-top:8px" data-action="toggle-big-board-expand">
+                ${iconSvg(bigBoardExpanded ? 'chevronUp' : 'chevronDown', 13)}
+                <span>${bigBoardExpanded ? 'Show Top 15 Only' : `View Prospects #16–#${filteredBigBoard.length} (${filteredBigBoard.length - 15} more)`}</span>
+              </button>`
+            : ''
+        }
+      `
+          : `<div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">No prospects match "${esc(bigBoardSearch)}".</div>`
+      }
+    </section>
+
+    <section class="card" id="combineLeaderboardCard" data-combine-card data-combine-blank="${combineWindow.isBlankWindow ? 'true' : 'false'}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <h3 class="card-title">Combine Leaderboard (${filteredCombine.length})</h3>
+        <h3 class="card-title">${
+          combineWindow.isBlankWindow
+            ? `${combineWindow.targetCombineYear} Combine Leaderboard`
+            : `Combine Leaderboard (${filteredCombine.length})`
+        }</h3>
         <div class="source-link-strip">
           <a href="https://www.nfl.com/combine/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Combine</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://ras.football/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RAS.football</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://www.mockdraftable.com/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>MockDraftable</span>${iconSvg('externalLink', 10)}</a>
         </div>
       </div>
-      <div class="search-input-wrap" style="margin-bottom:8px">
-        ${iconSvg('search', 15, 'search-input-icon')}
-        <input type="search" id="combineSearchInput" class="text-input has-lead-icon"
-               placeholder="Filter Combine athletes by name, position, college…" value="${esc(combineSearch)}" aria-label="Search Combine Results" />
-      </div>
-      <div class="table-scroll">
-        <table class="data-table mono">
-          <thead><tr><th>Athlete</th><th>Pos</th><th>School</th><th>Ht / Wt</th><th>40-Yd</th><th>Vert</th><th>3-Cone</th><th>${jargonTerm('RAS', 'ras')}</th></tr></thead>
-          <tbody>
-            ${filteredCombine
-              .slice(0, 35)
-              .map(c => {
-                const sfMatch = c.playerId ? { id: c.playerId } : lookupRosterPlayerByName(c.name);
-                const fallbackPfr = `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(c.name || '')}`;
-                const safeProfUrl = sanitizeExternalUrl(c.profileUrl, fallbackPfr);
-                const athleteCellHtml = sfMatch?.id
-                  ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(sfMatch.id)}" data-initial-tab="spider">${esc(c.name)}</span>`
-                  : `<a href="${esc(safeProfUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(c.name)}</strong> ${iconSvg('externalLink', 9)}</a>`;
-                return `
-              <tr>
-                <td style="font-family:var(--font-sans)">${athleteCellHtml}</td>
-                <td>${esc(c.pos)}</td>
-                <td style="font-family:var(--font-sans)">${esc(c.school)}</td>
-                <td>${esc(c.ht)} / ${c.wt ?? '—'}</td>
-                <td>${c.forty ?? '—'}</td>
-                <td>${c.vertical ?? '—'}</td>
-                <td>${c.threeCone ?? '—'}</td>
-                <td><span class="badge badge-positive">${Number(c.ras).toFixed(2)}</span></td>
-              </tr>
-            `;
-              })
-              .join('')}
-          </tbody>
-        </table>
-      </div>
+      ${
+        combineWindow.isBlankWindow
+          ? `
+        <div class="subcard-panel combine-blank-panel" data-combine-blank-note>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+            <strong style="font-size:12.5px;color:var(--gold-bright)">Blank Until ${combineWindow.targetCombineYear} NFL Scouting Combine Starts</strong>
+            <span class="badge badge-neutral mono">Opens ${esc(combineWindow.combineStartDisplay)}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-secondary)">
+            Cleared after preseason kickoff so prior-year NFL Combine results never mix with the ${combineWindow.targetCombineYear} prospect class. Live 40-yard dash, 10-yard split, jumps, 3-cone, and ${jargonTerm('RAS', 'ras')} percentiles populate once drills begin in Indianapolis.
+          </div>
+        </div>
+      `
+          : `
+        <div class="search-input-wrap" style="margin-bottom:8px">
+          ${iconSvg('search', 15, 'search-input-icon')}
+          <input type="search" id="combineSearchInput" class="text-input has-lead-icon"
+                 placeholder="Filter Combine athletes by name, position, college…" value="${esc(combineSearch)}" aria-label="Search Combine Results" />
+        </div>
+        <div class="table-scroll">
+          <table class="data-table mono">
+            <thead><tr><th>Athlete</th><th>Pos</th><th>School</th><th>Ht / Wt</th><th>40-Yd</th><th>Vert</th><th>3-Cone</th><th>${jargonTerm('RAS', 'ras')}</th></tr></thead>
+            <tbody>
+              ${filteredCombine
+                .slice(0, 35)
+                .map(c => {
+                  const sfMatch = c.playerId ? { id: c.playerId } : lookupRosterPlayerByName(c.name);
+                  const fallbackPfr = `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(c.name || '')}`;
+                  const safeProfUrl = sanitizeExternalUrl(c.profileUrl, fallbackPfr);
+                  const athleteCellHtml = sfMatch?.id
+                    ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(sfMatch.id)}" data-initial-tab="spider">${esc(c.name)}</span>`
+                    : `<a href="${esc(safeProfUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(c.name)}</strong> ${iconSvg('externalLink', 9)}</a>`;
+                  return `
+                <tr>
+                  <td style="font-family:var(--font-sans)">${athleteCellHtml}</td>
+                  <td>${esc(c.pos)}</td>
+                  <td style="font-family:var(--font-sans)">${esc(c.school)}</td>
+                  <td>${esc(c.ht)} / ${c.wt ?? '—'}</td>
+                  <td>${c.forty ?? '—'}</td>
+                  <td>${c.vertical ?? '—'}</td>
+                  <td>${c.threeCone ?? '—'}</td>
+                  <td><span class="badge badge-positive">${Number(c.ras).toFixed(2)}</span></td>
+                </tr>
+              `;
+                })
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      `
+      }
     </section>
   `;
 }

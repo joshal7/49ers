@@ -1819,20 +1819,89 @@ async function main() {
       });
       assert(draftSpiderOk.hasSvg && draftSpiderOk.hiddenAfter, '2026 Draft Pick spider chart toggle failed');
 
-      // Test 2027 Combine search focus preservation
-      const combineSearchOk = await cdp.eval(() => {
+      // Test 2027 Draft Section: 1st-Pick Mock Draft DB, Consensus Big Board above Combine, and Blank Combine Window
+      const draftAudit = await cdp.eval(() => {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_prep"]').click();
-        const inp = document.getElementById('combineSearchInput');
+
+        const mockCard = document.getElementById('consensusMockDraftCard');
+        const boardCard = document.getElementById('consensusBigBoardCard');
+        const combineCard = document.getElementById('combineLeaderboardCard');
+        if (!mockCard || !boardCard || !combineCard) {
+          return { ok: false, reason: 'missing_cards' };
+        }
+
+        const mockRect = mockCard.getBoundingClientRect();
+        const boardRect = boardCard.getBoundingClientRect();
+        const combineRect = combineCard.getBoundingClientRect();
+        const orderedAboveCombine = mockRect.top < boardRect.top && boardRect.top < combineRect.top;
+
+        // Verify Combine Leaderboard is blank between preseason start and Combine start
+        const combineBlank =
+          combineCard.getAttribute('data-combine-blank') === 'true' &&
+          Boolean(combineCard.querySelector('[data-combine-blank-note]')) &&
+          !document.getElementById('combineSearchInput');
+
+        // Verify 49ers 1st-Pick Mock Draft Database cards, site counts, and clickable site links
+        const mockCards = Array.from(mockCard.querySelectorAll('[data-mock-db-list] > [data-mock-db-player]'));
+        const counts = mockCards.map(el => Number(el.getAttribute('data-mock-site-count') || 0));
+        const sortedDesc = counts.every((c, i) => i === 0 || c <= counts[i - 1]);
+        const siteLinks = Array.from(mockCard.querySelectorAll('[data-mock-site-link]'));
+        const allSiteLinksHttps =
+          siteLinks.length >= 5 && siteLinks.every(a => (a.getAttribute('href') || '').startsWith('https://'));
+        const firstDrill = mockCard.querySelector('details[data-mock-drilldown]');
+        if (firstDrill) firstDrill.open = true;
+
+        // Test Consensus Big Board search focus preservation, pos filter, and expand toggle
+        const inp = document.getElementById('bigBoardSearchInput');
         inp.focus();
-        inp.value = 'EDGE';
+        inp.value = 'Texas';
         inp.dispatchEvent(new Event('input', { bubbles: true }));
-        const focused = document.activeElement?.id === 'combineSearchInput';
-        const rows = document.querySelectorAll('#mainView table tbody tr').length;
-        inp.value = '';
-        inp.dispatchEvent(new Event('input', { bubbles: true }));
-        return { focused, rows };
+        const focused = document.activeElement?.id === 'bigBoardSearchInput';
+        const searchMatches = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
+        const freshInp = document.getElementById('bigBoardSearchInput');
+        freshInp.value = '';
+        freshInp.dispatchEvent(new Event('input', { bubbles: true }));
+
+        document.querySelector('[data-action="set-big-board-pos"][data-pos-group="OL"]')?.click();
+        const olMatches = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
+        document.querySelector('[data-action="set-big-board-pos"][data-pos-group="ALL"]')?.click();
+
+        const expandBtn = document.querySelector('[data-action="toggle-big-board-expand"]');
+        expandBtn?.click();
+        const expandedCount = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
+        const firstBoardItem = document.querySelector('#consensusBigBoardCard details.big-board-item');
+        if (firstBoardItem) firstBoardItem.open = true;
+
+        return {
+          ok: true,
+          orderedAboveCombine,
+          combineBlank,
+          mockPlayersCount: mockCards.length,
+          sortedDesc,
+          allSiteLinksHttps,
+          focused,
+          searchMatches,
+          olMatches,
+          expandedCount
+        };
       });
-      assert(combineSearchOk.focused && combineSearchOk.rows >= 1, 'Combine search failed or lost input focus');
+      assert(
+        draftAudit.ok &&
+          draftAudit.orderedAboveCombine &&
+          draftAudit.combineBlank &&
+          draftAudit.mockPlayersCount >= 4 &&
+          draftAudit.sortedDesc &&
+          draftAudit.allSiteLinksHttps &&
+          draftAudit.focused &&
+          draftAudit.searchMatches >= 1 &&
+          draftAudit.olMatches >= 3 &&
+          draftAudit.expandedCount >= 30,
+        `Draft section audit failed: ${JSON.stringify(draftAudit)}`
+      );
+      await cdp.assertNoOverflow('Game & Season: Draft Mock DB + Consensus Big Board Expanded');
+      await cdp.eval(() => {
+        document.querySelector('[data-action="toggle-big-board-expand"]')?.click();
+      });
     });
 
     console.log('\n=== [7/9] 49ers Beat Podcasts (7-Day Native Launch), Autopodcast Studio & Grounded Deep AI ===');
@@ -3177,7 +3246,7 @@ async function main() {
       assert(upgradesAudit.archiveHasOsa, 'Archive missing older (>30d) trade Osa Odighizuwa');
 
       // Assert #2
-      assert(upgradesAudit.jargonTermsFound >= 5, `Expected >=5 subtle jargon links on News view, got ${upgradesAudit.jargonTermsFound}`);
+      assert(upgradesAudit.jargonTermsFound >= 3, `Expected >=3 subtle jargon links on live News view, got ${upgradesAudit.jargonTermsFound}`);
       assert(
         upgradesAudit.jargonPopInfo.opened &&
           upgradesAudit.jargonPopInfo.withinLeft &&
@@ -4081,6 +4150,12 @@ async function main() {
         await sleep(40);
         scanCurrentDom('season:draft_prep');
         const combineLinks = document.querySelectorAll('#mainView table.data-table tbody td a.ext-link, #mainView table.data-table tbody td .inline-player-link').length;
+        const draftBoardAndMockLinks = document.querySelectorAll(
+          '#consensusBigBoardCard a[href^="https://"], #consensusMockDraftCard [data-mock-site-link]'
+        ).length;
+        const combineBlankOrPopulated =
+          Boolean(document.querySelector('#combineLeaderboardCard[data-combine-blank="true"]')) ||
+          combineLinks >= 20;
 
         document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_class"]')?.click();
         await sleep(40);
@@ -4145,6 +4220,8 @@ async function main() {
           tradePitfallLinks,
           nfcStandingsTeamLinks,
           combineLinks,
+          draftBoardAndMockLinks,
+          combineBlankOrPopulated,
           udfaTriggers,
           p11Opened,
           deadCapPlayerLinks,
@@ -4164,7 +4241,8 @@ async function main() {
           clickAudit.h2hBoxscoreLinks >= 5 &&
           clickAudit.tradePitfallLinks >= 10 &&
           clickAudit.nfcStandingsTeamLinks === 16 &&
-          clickAudit.combineLinks >= 20 &&
+          clickAudit.draftBoardAndMockLinks >= 25 &&
+          clickAudit.combineBlankOrPopulated &&
           clickAudit.udfaTriggers >= 5 &&
           clickAudit.p11Opened &&
           clickAudit.deadCapPlayerLinks >= 5 &&

@@ -14,8 +14,12 @@ import { fileURLToPath } from 'node:url';
 import {
   DEFAULT_NFL_CALENDAR_2026,
   buildNflCalendarForSeasonYear,
+  evaluateCombineLeaderboardWindow,
   evaluateSeasonState,
-  partitionCompletedTradesByWindow
+  filterConsensusBigBoard,
+  is49ersEliminatedForDraftMocks,
+  partitionCompletedTradesByWindow,
+  resolveFirstPickMockDatabase
 } from '../src/engine/seasonStateMachine.js';
 import {
   sanitizeHallucinatedRosterText,
@@ -78,6 +82,7 @@ import {
 } from '../src/engine/beatAttributionEngine.js';
 import { selectTopNewsBriefSourceCandidates } from '../src/services/aiWorkerClient.js';
 import { renderDailyTopNewsBriefHtml } from '../src/views/newsView.js';
+import { renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
 import {
   registerRosterPlayersForInlineLinks,
   escJargon,
@@ -2066,6 +2071,143 @@ test('X-first social link priority: upgrades Bluesky mirrors to analogous X stat
     renderedBriefHtml.includes('https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u'),
     'Undiscoverable X status fallback must cleanly keep verified Bluesky URL'
   );
+});
+
+await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Preseason-to-Combine Blank Window, and 1-Month In-Season vs 1-Week Post-Elimination First-Pick Mock Database', async () => {
+  const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const metaJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const dp = seasonalJson.draftPrep2027;
+
+  // 1. Consensus Big Board integrity (Top 50 4-board composite, zero 2026 draftees, zero paywalls)
+  assert.ok(Array.isArray(dp.consensusBigBoard) && dp.consensusBigBoard.length >= 30, 'Consensus Big Board must contain >=30 ranked 2027 prospects');
+  assert.equal(dp.consensusBigBoard[0].consensusRank, 1);
+  assert.equal(dp.consensusBigBoard[0].name, 'Jeremiah Smith');
+  for (let i = 0; i < dp.consensusBigBoard.length; i++) {
+    const b = dp.consensusBigBoard[i];
+    assert.equal(b.consensusRank, i + 1, 'Consensus Big Board ranks must be sequential 1..N');
+    assert.ok(b.profileUrl && !isPaywalledOrBlockedUrl(b.profileUrl), `Blocked/invalid Big Board profileUrl: ${b.profileUrl}`);
+    assert.ok(b.mockDbUrl && !isPaywalledOrBlockedUrl(b.mockDbUrl), `Blocked/invalid Big Board mockDbUrl: ${b.mockDbUrl}`);
+  }
+  const olFiltered = filterConsensusBigBoard(dp.consensusBigBoard, { posGroup: 'OL' });
+  assert.ok(olFiltered.length >= 3 && olFiltered.every(p => /^(OT|IOL|OG|G|C|OL|T)$/i.test(p.pos)), 'OL Big Board filter must isolate offensive linemen');
+  const sfWindowFiltered = filterConsensusBigBoard(dp.consensusBigBoard, { posGroup: 'SF_RANGE', sfPickOverall: 31 });
+  assert.ok(sfWindowFiltered.length >= 5 && sfWindowFiltered.every(p => p.consensusRank >= 20 && p.consensusRank <= 45));
+
+  // 2. Combine Leaderboard Blank Window: blank from after preseason starts (Aug) until actual Combine starts (late Feb)
+  const sampleCombineRows = [
+    { name: 'Stale 2026 Draftee', pos: 'EDGE', school: 'Texas Tech', season: 2026, forty: 4.52, ras: 9.41 },
+    { name: 'Fresh 2027 Prospect', pos: 'EDGE', school: 'Texas', season: 2027, forty: 4.46, ras: 9.82 }
+  ];
+  const julyPreCamp = evaluateCombineLeaderboardWindow({
+    now: '2026-07-20T18:00:00Z',
+    seasonYear: 2026,
+    draftYear: 2027,
+    combineLeaderboard: sampleCombineRows
+  });
+  assert.equal(julyPreCamp.isBlankWindow, false, 'Before August preseason starts, prior spring Combine remains visible');
+  assert.equal(julyPreCamp.rows.length, 1);
+  assert.equal(julyPreCamp.rows[0].season, 2026);
+
+  for (const blankDate of ['2026-08-08T18:00:00Z', '2026-11-12T18:00:00Z', '2027-01-20T18:00:00Z', '2027-02-20T18:00:00Z']) {
+    const win = evaluateCombineLeaderboardWindow({
+      now: blankDate,
+      seasonYear: 2026,
+      draftYear: 2027,
+      schedule: smJson.schedule,
+      combineLeaderboard: sampleCombineRows
+    });
+    assert.equal(win.isBlankWindow, true, `Combine Leaderboard must be blank at ${blankDate}`);
+    assert.equal(win.rows.length, 0, `Combine Leaderboard must emit 0 rows at ${blankDate}`);
+  }
+
+  const marchCombineLive = evaluateCombineLeaderboardWindow({
+    now: '2027-03-02T18:00:00Z',
+    seasonYear: 2026,
+    draftYear: 2027,
+    schedule: smJson.schedule,
+    combineLeaderboard: sampleCombineRows
+  });
+  assert.equal(marchCombineLive.isBlankWindow, false, 'Once 2027 NFL Combine starts in late February, Combine Leaderboard turns active');
+  assert.equal(marchCombineLive.rows.length, 1);
+  assert.equal(marchCombineLive.rows[0].name, 'Fresh 2027 Prospect', 'Only 2027 Combine class rows may appear in 2027 Combine window');
+
+  assert.equal(dp.combineLeaderboard.length, 0, 'Live Nov 2026 seasonal.json must store 0 stale Combine rows during in-season blank window');
+
+  // 3. 49ers First-Pick Mock Draft Database: 1-Month (30d) In-Season vs 1-Week (7d) Post-Elimination Freshness
+  const syntheticMocks = [
+    { siteId: 'cbs', siteName: 'CBS Sports', url: 'https://www.cbssports.com/nfl/draft/mock-draft/', publishedAt: '2026-11-10T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
+    { siteId: 'fox', siteName: 'FOX Sports', url: 'https://www.foxsports.com/nfl/draft', publishedAt: '2026-11-08T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
+    { siteId: 'si', siteName: 'Sports Illustrated', url: 'https://www.si.com/nfl/2027-nfl-mock-draft-gilberto-manzano-pick-predictions-rounds-1-2', publishedAt: '2026-10-22T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
+    { siteId: 'tk', siteName: 'Tankathon', url: 'https://www.tankathon.com/nfl/mock_draft', publishedAt: '2026-11-11T12:00:00Z', projectedPick: 31, playerName: 'Nick Marsh', pos: 'WR', school: 'Indiana' },
+    { siteId: 'dt', siteName: 'DraftTek', url: 'https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp', publishedAt: '2026-10-25T12:00:00Z', projectedPick: 32, playerName: 'Nick Marsh', pos: 'WR', school: 'Indiana' },
+    { siteId: 'old_sept', siteName: 'NFL Draft Countdown', url: 'https://draftcountdown.com/2027-nfl-draft/2027-nfl-mock-draft/', publishedAt: '2026-09-16T12:00:00Z', projectedPick: 28, playerName: 'Kade Pieper', pos: 'IOL', school: 'Iowa' }
+  ];
+
+  // 3a. In-Season (49ers alive on Nov 12, 2026 -> 30-day freshness window)
+  const inSeasonDb = resolveFirstPickMockDatabase(syntheticMocks, {
+    now: '2026-11-12T18:00:00Z',
+    appData: { meta: { seasonYear: 2026, teamStatus: { mathematicallyEliminated: false } }, scheduleMatchup: { schedule: [] } }
+  });
+  assert.equal(inSeasonDb.isEliminated, false);
+  assert.equal(inSeasonDb.freshnessDays, 30);
+  assert.equal(inSeasonDb.totalFreshSites, 5, '5 sites within 30d kept; 1 stale Sept mock (>30d) excluded');
+  assert.equal(inSeasonDb.staleExcludedCount, 1);
+  assert.equal(inSeasonDb.players[0].playerName, 'Trevor Goosby');
+  assert.equal(inSeasonDb.players[0].siteCount, 3);
+  assert.equal(inSeasonDb.players[1].playerName, 'Nick Marsh');
+  assert.equal(inSeasonDb.players[1].siteCount, 2);
+
+  // 3b. Post-Elimination (49ers eliminated -> tightens immediately to 7-day freshness window!)
+  const postElimDb = resolveFirstPickMockDatabase(syntheticMocks, {
+    now: '2026-11-12T18:00:00Z',
+    appData: {
+      meta: {
+        seasonYear: 2026,
+        teamStatus: { mathematicallyEliminated: true, eliminatedAt: '2026-11-11T23:59:00Z' }
+      },
+      scheduleMatchup: { schedule: [] }
+    }
+  });
+  assert.equal(postElimDb.isEliminated, true);
+  assert.equal(postElimDb.freshnessDays, 7);
+  assert.equal(postElimDb.totalFreshSites, 3, 'Under 7-day post-elimination window, Oct 22 & Oct 25 mocks (18d–21d old) must be excluded');
+  assert.equal(postElimDb.players[0].playerName, 'Trevor Goosby');
+  assert.equal(postElimDb.players[0].siteCount, 2);
+  assert.equal(postElimDb.players[1].playerName, 'Nick Marsh');
+  assert.equal(postElimDb.players[1].siteCount, 1);
+
+  // 3c. Postseason playoff loss in schedule also triggers 7-day post-elimination window automatically
+  const elimFromPlayoffLoss = is49ersEliminatedForDraftMocks({
+    meta: { seasonYear: 2026, teamStatus: { mathematicallyEliminated: false } },
+    scheduleMatchup: {
+      schedule: [
+        { seasonType: 'POST', postseasonRound: 'DIV', week: 20, completed: true, result: 'L', sfScore: 20, oppScore: 24, opponent: { abbr: 'DET', name: 'Detroit Lions' } }
+      ]
+    }
+  }, { now: '2027-01-25T18:00:00Z' });
+  assert.equal(elimFromPlayoffLoss.isEliminated, true);
+  assert.equal(elimFromPlayoffLoss.reason, 'postseason_loss');
+
+  // 4. Rendered Draft view card ordering: Consensus Mock Draft -> Consensus Big Board -> Combine Leaderboard (blank)
+  const draftHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'draft_prep',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: {
+      meta: { ...metaJson, now: '2026-11-12T18:00:00Z' },
+      roster: { players: [] },
+      scheduleMatchup: smJson,
+      seasonal: seasonalJson
+    }
+  });
+  const mockIdx = draftHtml.indexOf('id="consensusMockDraftCard"');
+  const boardIdx = draftHtml.indexOf('id="consensusBigBoardCard"');
+  const combineIdx = draftHtml.indexOf('id="combineLeaderboardCard"');
+  assert.ok(mockIdx > 0 && boardIdx > mockIdx && combineIdx > boardIdx, 'Consensus Big Board must render directly above Combine Leaderboard');
+  assert.ok(draftHtml.includes('data-combine-blank="true"'), 'Combine Leaderboard must render blank state during Nov 2026 season');
+  assert.ok(!draftHtml.includes('id="combineSearchInput"'), 'Blank Combine Leaderboard must not render stale search input/table');
+  assert.ok(draftHtml.includes('data-mock-freshness-badge="30d"'), 'In-season Consensus Mock Draft card must display 30d freshness badge');
+  assert.ok(draftHtml.includes('data-mock-site-link='), 'Consensus Mock Draft card must render clickable projecting site links');
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

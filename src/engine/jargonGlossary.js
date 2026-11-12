@@ -52,6 +52,12 @@ export const JARGON_GLOSSARY = {
     definition:
       '0.00-to-10.00 composite score normalizing a prospect’s height, weight, speed, explosion, and agility drills against historical NFL Combine athletes at the same position.'
   },
+  consensus_big_board: {
+    term: 'Consensus Big Board (Wisdom of the Crowd)',
+    category: 'Scouting',
+    definition:
+      'Multi-board prospect composite pioneered by Arif Hasan (Wide Left) and NFL Mock Draft Database. Empirical multi-year NFL Draft studies show aggregating independent scouting boards achieves ~80%+ draft-capital alignment and outperforms any single evaluator by canceling individual blind spots while exposing prospect rank polarization.'
+  },
   dadot: {
     term: 'DADOT (Defensive Avg Depth of Target)',
     category: 'Analytics',
