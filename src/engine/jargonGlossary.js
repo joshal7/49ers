@@ -477,6 +477,246 @@ export const JARGON_GLOSSARY = {
     category: 'Film & Box',
     definition:
       'Traditional 0.0-to-158.3 NFL passing efficiency formula weighting completion percentage, yards per attempt, touchdowns per attempt, and interceptions per attempt.'
+  },
+  a_b_gap: {
+    term: 'A- & B-Gaps (Interior Trench Lanes)',
+    category: 'Scheme & Film',
+    definition:
+      'The four interior trench lanes flanking the center (A-gaps, center-to-guard) and guards (B-gaps, guard-to-tackle). Anchoring the A- and B-gaps denies downhill interior runs, eliminates internal QB step-up lanes, and keeps linebackers clean from climbing blockers.'
+  },
+  a_gap: {
+    term: 'A-Gap',
+    category: 'Scheme & Film',
+    definition:
+      'Interior trench lane directly between the center and either offensive guard (left or right). Controlling the A-gaps stops immediate inside runs and collapses pocket depth in the quarterback’s face.'
+  },
+  b_gap: {
+    term: 'B-Gap',
+    category: 'Scheme & Film',
+    definition:
+      'Interior trench lane between the offensive guard and offensive tackle—primary alignment and penetration lane for 3-technique defensive tackles.'
+  },
+  c_gap: {
+    term: 'C-Gap',
+    category: 'Scheme & Film',
+    definition:
+      'Off-tackle trench lane between the offensive tackle and an inline tight end (or the open outside edge when no tight end is attached).'
+  },
+  between_the_numbers: {
+    term: 'Between the Numbers',
+    category: 'Scheme & Film',
+    definition:
+      'Central ~30-yard field corridor inside the painted yard-line numbers (12 yards from each sideline). Throws between the numbers demand rhythm anticipation and vertical layering between linebackers and safeties.'
+  },
+  outside_the_numbers: {
+    term: 'Outside the Numbers',
+    category: 'Scheme & Film',
+    definition:
+      'The 12-yard perimeter alleys between the painted yard-line numbers and either sideline, where X/Z receivers work isolation go-balls, comebacks, outs, and back-shoulder throws.'
+  },
+  between_the_hashes: {
+    term: 'Between the Hashes',
+    category: 'Scheme & Film',
+    definition:
+      'The 18.5-foot central spine of the NFL field between the inbound hash marks. Spacing seams and option routes between the hashes stretches middle-hook linebackers and split safeties horizontally.'
+  },
+  honey_hole: {
+    term: 'Zone Coverage Honey-Hole',
+    category: 'Scheme & Film',
+    definition:
+      'Soft intermediate void in zone coverage—either the 15–22 yard sideline window behind a flat corner and in front of a deep safety (Cover 2), or the 12–22 yard seam pocket behind underneath hook/curl linebackers and in front of bailing safeties.'
+  },
+  hook_curl: {
+    term: 'Hook / Curl Defenders & Zones',
+    category: 'Scheme & Film',
+    definition:
+      'Underneath intermediate zone defenders (typically inside linebackers or strong safeties) dropping 8–14 yards deep between the hash marks and numbers to wall off digs, crossers, and curl routes.'
+  },
+  curl_flat: {
+    term: 'Curl / Flat Defender',
+    category: 'Scheme & Film',
+    definition:
+      'Underneath perimeter zone defender (outside linebacker, nickel apex, or rolled-down safety in Cover 3) put in high-low conflict: sinking under a 12-yard curl/out before rallying downhill to tackle a quick flat throw.'
+  },
+  choice_dagger: {
+    term: 'Choice & Dagger Route Concepts',
+    category: 'Scheme & Film',
+    definition:
+      'Middle-field zone and man beaters pairing a vertical seam clear-out + 15-yard inward-breaking Dagger dig behind linebackers with an underneath Choice/Option route breaking opposite the hook defender’s leverage.'
+  },
+  choice_route: {
+    term: 'Choice / Option Route',
+    category: 'Scheme & Film',
+    definition:
+      'Isolating route (run by RBs like Christian McCaffrey or slot technicians like Keenan Allen) where the receiver reads the defender’s hip leverage post-snap to break out, break in, or sit down in an open zone void.'
+  },
+  dagger: {
+    term: 'Dagger Concept',
+    category: 'Scheme & Film',
+    definition:
+      'Two-man middle-field pass combo: the inside receiver runs a vertical clear-out route to lift deep safeties while the outside receiver snaps off a sharp 14–16 yard dig route into the vacated intermediate window.'
+  },
+  pin_and_pull: {
+    term: 'Pin-and-Pull',
+    category: 'Scheme & Film',
+    definition:
+      'Perimeter run scheme combining angle down-blocks and pullers: linemen or tight ends with outside leverage "pin" interior defenders inside while uncovered linemen "pull" around the edge to lead the back into space.'
+  },
+  counter: {
+    term: 'Counter Run Scheme',
+    category: 'Scheme & Film',
+    definition:
+      'Misdirection gap-scheme run where the back steps counter first while two backside blockers (Guard + Tackle in GT Counter, or Guard + TE/FB in GH Counter) pull across the formation to kick out the edge defender and wrap up to the playside linebacker.'
+  },
+  gap_scheme: {
+    term: 'Gap-Scheme Run Blocking',
+    category: 'Scheme & Film',
+    definition:
+      'Downhill run family (Counter, Power, Pin-and-Pull, Trap) using angle down-blocks to wall off interior defenders and pulling linemen to lead through a designated gap, contrasting with lateral Zone blocking.'
+  },
+  tampa_2: {
+    term: 'Tampa-2 Coverage',
+    category: 'Scheme & Film',
+    definition:
+      'Modified Cover-2 zone shell where the middle linebacker sprints deep down the central seam ("running the pole") between two deep half-field safeties, closing vertical post/seam windows while opening underneath checkdowns.'
+  },
+  cover_2: {
+    term: 'Cover 2',
+    category: 'Scheme & Film',
+    definition:
+      'Zone structure pairing two deep half-field safeties with five underneath zone defenders (including squat flat corners), strong against perimeter quick game while vulnerable down the deep middle seam or sideline honey-hole.'
+  },
+  cover_6: {
+    term: 'Cover 6 (Quarter-Quarter-Half)',
+    category: 'Scheme & Film',
+    definition:
+      'Split-field two-high coverage playing Quarters (Cover 4) to the passing strength and Cover 2 (deep half safety + squat flat corner) to the boundary/weak side.'
+  },
+  robber: {
+    term: 'Robber / Cover-3 Buzz',
+    category: 'Scheme & Film',
+    definition:
+      'Disguised post-snap coverage rotation where one safety spins down into the intermediate middle ("robbing" crossers, digs, and slants) while the other safety rotates to deep centerfield.'
+  },
+  cloud_trap: {
+    term: 'Cloud / Cover-2 Trap',
+    category: 'Scheme & Film',
+    definition:
+      'Disguised perimeter zone look where the outside corner squats aggressively in the flat—baiting the quarterback into throwing a quick out or hitch before jumping it—while the safety caps vertical routes over the top.'
+  },
+  spot_drop: {
+    term: 'Spot-Drop Zone (Landmark Drops)',
+    category: 'Scheme & Film',
+    definition:
+      'Zone coverage style where defenders sink to fixed field landmarks with eyes on the quarterback to rally and tackle the catch, rather than converting to man-like pattern-match rules.'
+  },
+  pattern_match: {
+    term: 'Pattern-Match Zone',
+    category: 'Scheme & Film',
+    definition:
+      'Hybrid zone coverage where defenders read receiver release distributions post-snap and match routes tightly like man coverage within their assigned zone quadrants.'
+  },
+  split_safety: {
+    term: 'Split-Safety Disguise',
+    category: 'Scheme & Film',
+    definition:
+      'Pre-snap defensive alignment showing two deep safeties at balanced depth (~12 yards) to conceal whether the secondary will play Quarters/Cover 2/Cover 6 or spin post-snap into single-high Cover 3/Robber.'
+  },
+  condensed_splits: {
+    term: 'Condensed / Reduced Splits',
+    category: 'Scheme & Film',
+    definition:
+      'Offensive alignment tucking wide receivers tight near the offensive tackle/tight end core, giving receivers a true two-way release, creating natural traffic against man coverage, and setting up crack/pin angles in the run game.'
+  },
+  combo_block: {
+    term: 'Combo Block',
+    category: 'Scheme & Film',
+    definition:
+      'Trench run/play-action technique where two adjacent linemen initially double-team and displace a defensive tackle together before one climbs vertically to seal the playside linebacker.'
+  },
+  slide_protection: {
+    term: 'Slide / Half-Slide Protection',
+    category: 'Scheme & Film',
+    definition:
+      'Pass-protection rule where the center and playside linemen step laterally in unison to wall off interior gaps and stunts as a zone unit while backside blockers work man-to-man.'
+  },
+  check_release: {
+    term: 'Check-Release',
+    category: 'Scheme & Film',
+    definition:
+      'Dual-purpose RB or TE pass-play assignment: scan or chip an assigned pass rusher/blitzer first, then leak out into an underneath flat or hook outlet if the defender drops.'
+  },
+  high_low: {
+    term: 'High-Low Conflict',
+    category: 'Scheme & Film',
+    definition:
+      'Route-spacing principle placing two receivers at different vertical depths in a single zone defender’s area so whichever route he defends, the other opens up.'
+  },
+  seam_over: {
+    term: 'Seam / Deep Over Route',
+    category: 'Scheme & Film',
+    definition:
+      'Staple Shanahan play-action route: stemming vertically up the interior seam before breaking across the field at 16–22 yards behind linebackers and in front of deep safeties.'
+  },
+  texas_route: {
+    term: 'Angle / Texas Route',
+    category: 'Scheme & Film',
+    definition:
+      'Backfield route where the RB or FB widens toward the flat to widen the linebacker’s leverage before planting sharply back inside at 5–7 yards over the middle.'
+  },
+  back_shoulder: {
+    term: 'Back-Shoulder Throw',
+    category: 'Scheme & Film',
+    definition:
+      'Boundary vertical pass intentionally placed behind and outside the receiver’s back hip so he can adjust before a trailing cornerback whose eyes are turned away from the ball.'
+  },
+  route_stem: {
+    term: 'Route Stem (Top of the Stem)',
+    category: 'Scheme & Film',
+    definition:
+      'Initial vertical release phase of a pass route used to eat a defender’s cushion and threaten deep leverage right before snapping off at the breakpoint.'
+  },
+  bracket_coverage: {
+    term: 'Bracket Coverage',
+    category: 'Scheme & Film',
+    definition:
+      'Coordinated two-defender double coverage (inside-out or high-low) shading an opponent’s primary receiving weapon on money downs.'
+  },
+  hot_read: {
+    term: 'Hot Read / Sight Adjustment',
+    category: 'Scheme & Film',
+    definition:
+      'Built-in quick route and quarterback throw triggered automatically when a defense brings one more blitzer than the protection scheme can block.'
+  },
+  four_man_rush: {
+    term: 'Four-Man Rush',
+    category: 'Scheme & Film',
+    definition:
+      'Generating quarterback pressure strictly with four rushers (via Wide-9 speed, interior push, or stunts) while keeping seven defenders in pass coverage.'
+  },
+  box_count: {
+    term: 'Light Box vs. Stacked Box',
+    category: 'Scheme & Film',
+    definition:
+      'Count of defenders aligned near the line of scrimmage: a Light Box (6 or fewer defenders, standard in two-high shells) favors offense blocker math, while a Stacked Box (8+ defenders) drops an extra safety down to stop the run.'
+  },
+  personnel_13: {
+    term: '13 Personnel',
+    category: 'Scheme & Film',
+    definition:
+      'Heavy offensive grouping with 1 Running Back, 3 Tight Ends, and 1 Wide Receiver, creating extra run-blocking edges and max-protect play-action looks.'
+  },
+  personnel_multi: {
+    term: 'Heavy Multi-Back / Multi-TE Personnel (12/21)',
+    category: 'Scheme & Film',
+    definition:
+      'Cycling between 12 personnel (1 RB, 2 TE, 2 WR) and 21 personnel (2 RB/FB, 1 TE, 2 WR) to force defenses into heavier base lineups that can be stressed horizontally via motion and play-action.'
+  },
+  all_22: {
+    term: 'All-22 Coaches Film',
+    category: 'Scheme & Film',
+    definition:
+      'Overhead sideline and end-zone stadium camera angles showing all 22 players, safety shells, route stems, and blocking mechanics simultaneously.'
   }
 };
 
@@ -484,8 +724,14 @@ const KEY_SYNONYMS = {
   dead_cap: 'dead_money',
   '11_personnel': 'personnel_11',
   '12_personnel': 'personnel_12',
+  '13_personnel': 'personnel_13',
   '21_personnel': 'personnel_21',
-  '22_personnel': 'personnel_22'
+  '22_personnel': 'personnel_22',
+  ab_gap: 'a_b_gap',
+  option_route: 'choice_route',
+  over_route: 'seam_over',
+  angle_route: 'texas_route',
+  cover_4: 'quarters'
 };
 
 /**
@@ -494,77 +740,194 @@ const KEY_SYNONYMS = {
  */
 const PHRASE_ALIASES = [
   ['Effective Cap Space', 'effective_cap_space'],
-  ['effective cap space', 'effective_cap_space'],
   ['Team Cap Space', 'gross_cap_space'],
   ['Gross Cap Space', 'gross_cap_space'],
-  ['gross cap space', 'gross_cap_space'],
   ['Post-June 1', 'post_june_1'],
-  ['post-June 1', 'post_june_1'],
   ['Pre-June 1', 'pre_june_1'],
-  ['pre-June 1', 'pre_june_1'],
   ['Prorated Bonus', 'prorated_bonus'],
-  ['prorated bonus', 'prorated_bonus'],
   ['prorated bonuses', 'prorated_bonus'],
   ['Option Bonus', 'option_bonus'],
-  ['option bonus', 'option_bonus'],
   ['Guaranteed Salary', 'guaranteed_salary'],
-  ['guaranteed salary', 'guaranteed_salary'],
   ['Void Years', 'void_years'],
-  ['void years', 'void_years'],
   ['void year', 'void_years'],
   ['Dead Money', 'dead_money'],
-  ['dead money', 'dead_money'],
   ['Dead Cap', 'dead_money'],
-  ['dead cap', 'dead_money'],
   ['Top-51', 'top_51'],
   ['Top 51', 'top_51'],
   ['Rich Hill', 'rich_hill'],
   ['Monte Carlo', 'monte_carlo'],
+  ['A- and B-gaps', 'a_b_gap'],
+  ['A- and B- gaps', 'a_b_gap'],
+  ['A- and B-gap', 'a_b_gap'],
+  ['A & B gaps', 'a_b_gap'],
+  ['A and B gaps', 'a_b_gap'],
+  ['A/B-gaps', 'a_b_gap'],
+  ['A/B-gap', 'a_b_gap'],
+  ['A/B gaps', 'a_b_gap'],
+  ['A/B gap', 'a_b_gap'],
+  ['A-gaps', 'a_gap'],
+  ['A-gap', 'a_gap'],
+  ['A gap', 'a_gap'],
+  ['B-gaps', 'b_gap'],
+  ['B-gap', 'b_gap'],
+  ['B gap', 'b_gap'],
+  ['C-gaps', 'c_gap'],
+  ['C-gap', 'c_gap'],
+  ['C gap', 'c_gap'],
+  ['between the numbers', 'between_the_numbers'],
+  ['outside the numbers', 'outside_the_numbers'],
+  ['between the hashes', 'between_the_hashes'],
+  ['honey-hole', 'honey_hole'],
+  ['honey hole', 'honey_hole'],
+  ['hole shot', 'honey_hole'],
+  ['hook/curl linebackers', 'hook_curl'],
+  ['hook/curl linebacker', 'hook_curl'],
+  ['hook/curl zones', 'hook_curl'],
+  ['hook/curl zone', 'hook_curl'],
+  ['seam & hook zones', 'hook_curl'],
+  ['hook/curl', 'hook_curl'],
+  ['hook-to-curl', 'hook_curl'],
+  ['middle-hook', 'hook_curl'],
+  ['hook zones', 'hook_curl'],
+  ['hook zone', 'hook_curl'],
+  ['curl/flat defenders', 'curl_flat'],
+  ['curl/flat defender', 'curl_flat'],
+  ['curl/flat zones', 'curl_flat'],
+  ['curl/flat zone', 'curl_flat'],
+  ['curl/flat', 'curl_flat'],
+  ['curl-to-flat', 'curl_flat'],
+  ['choice/dagger concepts', 'choice_dagger'],
+  ['choice/dagger', 'choice_dagger'],
+  ['choice & dagger', 'choice_dagger'],
+  ['choice routes', 'choice_route'],
+  ['choice route', 'choice_route'],
+  ['option routes', 'choice_route'],
+  ['option route', 'choice_route'],
+  ['option-route', 'choice_route'],
+  ['dagger concepts', 'dagger'],
+  ['dagger concept', 'dagger'],
+  ['dagger route', 'dagger'],
+  ['dagger', 'dagger'],
+  ['pin-and-pull', 'pin_and_pull'],
+  ['pin-and-pul', 'pin_and_pull'],
+  ['pin & pull', 'pin_and_pull'],
+  ['GT counter', 'counter'],
+  ['GH counter', 'counter'],
+  ['counter run', 'counter'],
+  ['counter', 'counter'],
+  ['gap-scheme', 'gap_scheme'],
+  ['gap schemes', 'gap_scheme'],
+  ['gap scheme', 'gap_scheme'],
+  ['Tampa-2', 'tampa_2'],
+  ['Tampa 2', 'tampa_2'],
+  ['Cover 4 Quarters', 'quarters'],
+  ['Cover 4/6', 'cover_6'],
+  ['Cover 6', 'cover_6'],
+  ['Cover-6', 'cover_6'],
+  ['Cover 2', 'cover_2'],
+  ['Cover-2', 'cover_2'],
+  ['Cover-3 Buzz', 'robber'],
+  ['Robber', 'robber'],
+  ['cloud-trap', 'cloud_trap'],
+  ['Cover-2 Trap', 'cloud_trap'],
+  ['trap coverage', 'cloud_trap'],
+  ['spot-drop zone', 'spot_drop'],
+  ['spot-drop', 'spot_drop'],
+  ['landmark drops', 'spot_drop'],
+  ['pattern-match', 'pattern_match'],
+  ['match Quarters', 'pattern_match'],
+  ['split-safety rotations', 'split_safety'],
+  ['split-safety', 'split_safety'],
+  ['condensed splits', 'condensed_splits'],
+  ['condenses splits', 'condensed_splits'],
+  ['reduced splits', 'condensed_splits'],
+  ['combo-blocks', 'combo_block'],
+  ['combo-block', 'combo_block'],
+  ['combo blocks', 'combo_block'],
+  ['combo block', 'combo_block'],
+  ['double-teams', 'combo_block'],
+  ['double-team', 'combo_block'],
+  ['slide protection', 'slide_protection'],
+  ['half-slide', 'slide_protection'],
+  ['check-release', 'check_release'],
+  ['chip releases', 'check_release'],
+  ['chip release', 'check_release'],
+  ['play-action chips', 'check_release'],
+  ['high-low conflict', 'high_low'],
+  ['high-low', 'high_low'],
+  ['seam/over routes', 'seam_over'],
+  ['seam/over', 'seam_over'],
+  ['deep over', 'seam_over'],
+  ['over routes', 'seam_over'],
+  ['over route', 'seam_over'],
+  ['seam routes', 'seam_over'],
+  ['seam route', 'seam_over'],
+  ['angle/Texas routes', 'texas_route'],
+  ['angle/Texas', 'texas_route'],
+  ['Texas routes', 'texas_route'],
+  ['Texas-route', 'texas_route'],
+  ['Texas route', 'texas_route'],
+  ['angle routes', 'texas_route'],
+  ['angle route', 'texas_route'],
+  ['back-shoulder fades', 'back_shoulder'],
+  ['back-shoulder fade', 'back_shoulder'],
+  ['back-shoulder', 'back_shoulder'],
+  ['top of the stem', 'route_stem'],
+  ['route stem', 'route_stem'],
+  ['bracket coverage', 'bracket_coverage'],
+  ['brackets', 'bracket_coverage'],
+  ['sight adjustments', 'hot_read'],
+  ['sight adjustment', 'hot_read'],
+  ['sight adjust', 'hot_read'],
+  ['hot read', 'hot_read'],
+  ['four-man rush', 'four_man_rush'],
+  ['4-man rush', 'four_man_rush'],
+  ['light boxes', 'box_count'],
+  ['light box', 'box_count'],
+  ['stacked box', 'box_count'],
+  ['8-man box', 'box_count'],
+  ['All-22', 'all_22'],
   ['simulated pressure', 'sim_pressure'],
+  ['sim pressures', 'sim_pressure'],
   ['sim pressure', 'sim_pressure'],
-  ['Sim Pressure', 'sim_pressure'],
+  ['outside-zone', 'outside_zone'],
   ['outside zone', 'outside_zone'],
-  ['Outside Zone', 'outside_zone'],
+  ['wide-zone', 'outside_zone'],
   ['wide zone', 'outside_zone'],
-  ['Wide Zone', 'outside_zone'],
+  ['inside-zone', 'inside_zone'],
   ['inside zone', 'inside_zone'],
-  ['Inside Zone', 'inside_zone'],
   ['jet motion', 'jet_motion'],
-  ['Jet motion', 'jet_motion'],
-  ['Jet Motion', 'jet_motion'],
   ['orbit motion', 'orbit_motion'],
-  ['Orbit Motion', 'orbit_motion'],
   ['play-action', 'play_action'],
-  ['Play-Action', 'play_action'],
-  ['Play-action', 'play_action'],
   ['play action', 'play_action'],
   ['naked boot', 'boot'],
   ['bootleg', 'boot'],
-  ['Bootleg', 'boot'],
+  ['boot flood', 'boot'],
+  ['12/21 red-zone personnel', 'personnel_multi'],
+  ['12/21 personnel', 'personnel_multi'],
+  ['21/11-personnel', 'personnel_multi'],
+  ['12/21', 'personnel_multi'],
   ['21 personnel', 'personnel_21'],
-  ['21 Personnel', 'personnel_21'],
   ['21-personnel', 'personnel_21'],
+  ['13 personnel', 'personnel_13'],
+  ['13-personnel', 'personnel_13'],
   ['12 personnel', 'personnel_12'],
-  ['12 Personnel', 'personnel_12'],
   ['12-personnel', 'personnel_12'],
   ['11 personnel', 'personnel_11'],
-  ['11 Personnel', 'personnel_11'],
   ['11-personnel', 'personnel_11'],
   ['22 personnel', 'personnel_22'],
-  ['22 Personnel', 'personnel_22'],
+  ['22-personnel', 'personnel_22'],
   ['Wide-9', 'wide_9'],
-  ['wide-9', 'wide_9'],
   ['3-technique', 'three_tech'],
-  ['3-Technique', 'three_tech'],
   ['3-tech', 'three_tech'],
-  ['3-Tech', 'three_tech'],
   ['1-technique', 'one_tech'],
   ['1-tech', 'one_tech'],
-  ['1-Tech', 'one_tech'],
   ['2i-technique', 'two_i'],
   ['2i-tech', 'two_i'],
   ['2i', 'two_i'],
+  ['T-E stunts', 'stunt'],
   ['T-E stunt', 'stunt'],
+  ['E-T stunts', 'stunt'],
   ['E-T stunt', 'stunt'],
   ['stunts', 'stunt'],
   ['stunt', 'stunt'],
@@ -572,26 +935,30 @@ const PHRASE_ALIASES = [
   ['Cover 3', 'cover_3'],
   ['Cover-3', 'cover_3'],
   ['Cover 4', 'quarters'],
+  ['Cover-4', 'quarters'],
   ['Quarters', 'quarters'],
+  ['two-high shells', 'two_high'],
+  ['two-high shell', 'two_high'],
   ['two-high', 'two_high'],
-  ['Two-High', 'two_high'],
   ['2-high', 'two_high'],
   ['single-high', 'single_high'],
-  ['Single-High', 'single_high'],
   ['1-high', 'single_high'],
   ['press-zone', 'press_zone'],
-  ['Press-Zone', 'press_zone'],
   ['big nickel', 'nickel'],
-  ['Big Nickel', 'nickel'],
+  ['nickel packages', 'nickel'],
+  ['nickel', 'nickel'],
+  ['dime packages', 'dime'],
   ['EPA/play', 'epa'],
-  ['EPA/Play', 'epa'],
   ['EPA/db', 'epa'],
+  ['EPA/gm', 'epa'],
   ['EPA', 'epa'],
   ['CPOE', 'cpoe'],
   ['Total QBR', 'qbr'],
   ['QBR', 'qbr'],
   ['WOPR', 'wopr'],
   ['RACR', 'racr'],
+  ['RYOE/Att', 'ryoe'],
+  ['RYOE/att', 'ryoe'],
   ['RYOE', 'ryoe'],
   ['DADOT', 'dadot'],
   ['YPRR', 'yprr'],
@@ -601,7 +968,6 @@ const PHRASE_ALIASES = [
   ['SOS', 'sos'],
   ['Article 13', 'article_13'],
   ['concussion protocol', 'concussion_protocol'],
-  ['Concussion Protocol', 'concussion_protocol'],
   ['YAC', 'yac'],
   ['RAS', 'ras'],
   ['TFL', 'tfl'],
@@ -611,7 +977,6 @@ const PHRASE_ALIASES = [
   ['21-day return window', 'ir'],
   ['Injured Reserve', 'ir'],
   ['game-time decision', 'gtd'],
-  ['Game-Time Decision', 'gtd'],
   ['GTD', 'gtd'],
   ['DNP', 'dnp'],
   ['LP', 'lp'],
@@ -620,22 +985,49 @@ const PHRASE_ALIASES = [
   ['PUP', 'pup'],
   ['Duo', 'duo'],
   ['Explosive Plays', 'explosive_plays'],
-  ['explosive plays', 'explosive_plays'],
   ['Sacks Allowed Rate', 'sack_rate'],
   ['Net Yards / Pass Att', 'ny_pa'],
   ['Def. Takeaways', 'takeaways']
 ];
 
+const STRICT_UPPERCASE_ACRONYMS = new Set([
+  'EPA',
+  'CPOE',
+  'QBR',
+  'WOPR',
+  'RACR',
+  'RYOE',
+  'DADOT',
+  'YPRR',
+  'PBWR',
+  'RSWR',
+  'SOV',
+  'SOS',
+  'YAC',
+  'RAS',
+  'TFL',
+  'UDFA',
+  'UDFAs',
+  'GTD',
+  'DNP',
+  'LP',
+  'FP',
+  'NIR',
+  'PUP',
+  'IR'
+]);
+
 const SORTED_ALIASES = [...PHRASE_ALIASES].sort((a, b) => b[0].length - a[0].length);
 const ALIAS_TO_KEY = new Map(SORTED_ALIASES.map(([p, k]) => [p.toLowerCase(), k]));
+const ALIAS_CANONICAL_BY_LOWER = new Map(SORTED_ALIASES.map(([p]) => [p.toLowerCase(), p]));
 
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 const JARGON_REGEX = new RegExp(
-  `(?<![A-Za-z0-9_/-])(${SORTED_ALIASES.map(([p]) => escapeRegex(p)).join('|')})(?![A-Za-z0-9_-])`,
-  'g'
+  `(?<![A-Za-z0-9_])(${SORTED_ALIASES.map(([p]) => escapeRegex(p)).join('|')})(?![A-Za-z0-9_])`,
+  'gi'
 );
 
 function escapeHtmlPlain(str) {
@@ -674,7 +1066,7 @@ export function jargonTerm(label, key) {
  * Escapes plain text safely and wraps the first occurrence of each recognized football/cap jargon term
  * with a subtle clickable quick-bubble trigger.
  */
-export function annotateJargonPlainText(rawText, { maxTerms = 8, seenKeys = null } = {}) {
+export function annotateJargonPlainText(rawText, { maxTerms = 16, seenKeys = null } = {}) {
   if (rawText === null || rawText === undefined) return '';
   const text = String(rawText);
   if (!text) return '';
@@ -692,7 +1084,12 @@ export function annotateJargonPlainText(rawText, { maxTerms = 8, seenKeys = null
     const mEnd = mStart + phrase.length;
     out += escapeHtmlPlain(text.slice(lastIdx, mStart));
 
-    const key = ALIAS_TO_KEY.get(phrase.toLowerCase());
+    const lower = phrase.toLowerCase();
+    const canonical = ALIAS_CANONICAL_BY_LOWER.get(lower);
+    const acronymMismatch = canonical && STRICT_UPPERCASE_ACRONYMS.has(canonical) && phrase !== canonical;
+    const insideUrl = /https?:\/\/\S*$/i.test(text.slice(0, mStart));
+
+    const key = !acronymMismatch && !insideUrl ? ALIAS_TO_KEY.get(lower) : null;
     const entry = key ? JARGON_GLOSSARY[key] : null;
     if (entry && !used.has(key) && count < maxTerms) {
       used.add(key);

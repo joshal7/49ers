@@ -30,14 +30,21 @@ import {
 import {
   parseTankathonTeamPicksHtml,
   discoverBestFreeGeminiModel,
-  runVerifiedDeepGeminiSynthesis
+  runVerifiedDeepGeminiSynthesis,
+  runSinglePassDailyGeminiSynthesis
 } from './lib/aiSynthesisEngine.mjs';
+import {
+  getPacificDateKey,
+  buildDailyMatchupIntelPrompt,
+  parseAndSanitizeDailyMatchupIntel
+} from '../src/services/aiWorkerClient.js';
 import { buildReporterRegistry } from './update-reporter-registry.mjs';
 import {
   collapseInitialDots,
   computePlayerPlayProbability,
   computeTeamHealthSummary,
   calculateIrReturnTimeline,
+  doesClauseMentionPlayer,
   extractPracticeDaysFromText,
   classifyIrAndReserveTimeline,
   pickMeaningfulInjuryComment,
@@ -1032,6 +1039,13 @@ async function main() {
             `${rawShortComment} ${rawLongComment}`
           ));
 
+      const hasOfficialIrPractice =
+        bucket === 'ir' &&
+        Boolean(offInjRec) &&
+        ((offInjRec.wed && offInjRec.wed !== '-') ||
+          (offInjRec.thu && offInjRec.thu !== '-') ||
+          (offInjRec.fri && offInjRec.fri !== '-'));
+
       // Pre-classify IR/Reserve timeline when player is in the IR/Reserve bucket
       const irClassification =
         bucket === 'ir' || bucket === 'suspended'
@@ -1047,7 +1061,7 @@ async function main() {
               beatNote: rawLongComment || rawShortComment,
               txNote: txRec?.placedOnIrNote || '',
               cbsStatusText: cbsInjRec?.statusText || '',
-              isDesignatedToReturnOpen: Boolean(txRec?.designatedToReturnOpen),
+              isDesignatedToReturnOpen: Boolean(txRec?.designatedToReturnOpen || hasOfficialIrPractice),
               isActivated: false,
               currentWeek: detectedCurrentWeek,
               byeWeek: detectedByeWeek,
@@ -1100,7 +1114,7 @@ async function main() {
       let wed = '-';
       let thu = '-';
       let fri = '-';
-      if (offInjRec && (bucket === 'active' || isIrReturnQuestionable || txRec?.designatedToReturnOpen)) {
+      if (offInjRec && (bucket === 'active' || isIrReturnQuestionable || txRec?.designatedToReturnOpen || hasOfficialIrPractice)) {
         wed = offInjRec.wed;
         thu = offInjRec.thu;
         fri = offInjRec.fri;
@@ -1109,16 +1123,46 @@ async function main() {
           statusRaw: rawStatus,
           injuryType,
           shortComment,
-          longComment
+          longComment,
+          kickoffIso: nextEspnEvent?.date || ''
         });
         wed = extracted.wed;
         thu = extracted.thu;
         fri = extracted.fri;
       } else if (!sfBeforePracticeWindow && isIrReturnQuestionable) {
         wed = 'LP';
-        thu = 'LP';
-        fri = 'LP';
+        thu = '-';
+        fri = '-';
       }
+
+      const resolveOfficialMidWeekOrFinalStatus = (offRec, fbRaw = '') => {
+        if (!offRec) return fbRaw;
+        if (offRec.gameStatus) return offRec.gameStatus;
+        if (
+          offRec.wed === 'Vet Rest' ||
+          offRec.thu === 'Vet Rest' ||
+          offRec.fri === 'Vet Rest' ||
+          /not injury related|\brest\b/i.test(offRec.injuryType || '')
+        ) {
+          return 'Active';
+        }
+        // Only when Friday's final practice column is populated (`fri !== '-'`) does blank `gameStatus` mean Cleared/Active!
+        if (offRec.fri && offRec.fri !== '-') {
+          return 'Active';
+        }
+        const fbL = String(fbRaw || '').trim().toLowerCase();
+        if (
+          fbL === 'out' &&
+          offRec.wed !== 'LP' &&
+          offRec.wed !== 'FP' &&
+          offRec.thu !== 'LP' &&
+          offRec.thu !== 'FP'
+        ) {
+          return 'Out';
+        }
+        if (fbL === 'doubtful') return 'Doubtful';
+        return 'Questionable';
+      };
 
       const effectiveGameStatusForModel = isIrReturnQuestionable
         ? 'Questionable'
@@ -1127,7 +1171,7 @@ async function main() {
           : recentlyActivatedFromIr && offInjRec?.gameStatus === 'Questionable'
             ? 'Active'
             : offInjRec
-              ? offInjRec.gameStatus || 'Active'
+              ? resolveOfficialMidWeekOrFinalStatus(offInjRec, rawStatus)
               : sfEarlyRoll && isGenuineInjuryReportEntry
                 ? sfEarlyRoll.effectiveStatus
                 : isGenuineInjuryReportEntry
@@ -1175,8 +1219,8 @@ async function main() {
           if (art.premium) return false;
           const safeArtUrl = sanitizeExternalUrl(art.links?.web?.href, null);
           if (!safeArtUrl && art.links?.web?.href) return false;
-          const text = `${art.headline || ''} ${art.description || ''}`.toLowerCase();
-          return text.includes(fullName.toLowerCase()) || (ath.lastName?.length >= 5 && text.includes(ath.lastName.toLowerCase()));
+          const text = `${art.headline || ''} ${art.description || ''}`;
+          return doesClauseMentionPlayer(text, fullName, { allowSurname: false });
         })
         .slice(0, 3)
         .map(art => ({
@@ -1241,8 +1285,12 @@ async function main() {
             ? 'Questionable (IR Return Window)'
             : irClassification
               ? irClassification.status
-              : offInjRec?.gameStatus
-                ? offInjRec.gameStatus
+              : offInjRec
+                ? effectiveGameStatusForModel === 'Active'
+                  ? wed === 'Vet Rest'
+                    ? 'Active'
+                    : 'No Designation (Cleared)'
+                  : effectiveGameStatusForModel
                 : sfEarlyRoll && isGenuineInjuryReportEntry
                   ? sfEarlyRoll.effectiveStatus
                   : isGenuineInjuryReportEntry && rawStatus
@@ -1361,17 +1409,25 @@ async function main() {
   }
 
   const uniqueLastNameIndex = new Map();
+  const singleRosterSurnameIndex = new Map();
   const lastNameCounts = new Map();
+  const allRosterLastCounts = new Map();
   for (const p of rosterPlayers) {
     const cleanFull = stripSuffixName(p.name);
     const last = cleanFull.split(/\s+/).slice(-1)[0]?.replace(/[^a-zA-Z']/g, '').toLowerCase() || '';
-    if (last.length >= 4 && !COMMON_SURNAME_REQUIRE_FULL.has(last)) {
-      lastNameCounts.set(last, (lastNameCounts.get(last) || 0) + 1);
+    if (last.length >= 4) {
+      allRosterLastCounts.set(last, (allRosterLastCounts.get(last) || 0) + 1);
+      if (!COMMON_SURNAME_REQUIRE_FULL.has(last)) {
+        lastNameCounts.set(last, (lastNameCounts.get(last) || 0) + 1);
+      }
     }
   }
   for (const p of rosterPlayers) {
     const cleanFull = stripSuffixName(p.name);
     const last = cleanFull.split(/\s+/).slice(-1)[0]?.replace(/[^a-zA-Z']/g, '').toLowerCase() || '';
+    if (last.length >= 4 && allRosterLastCounts.get(last) === 1) {
+      singleRosterSurnameIndex.set(last, p);
+    }
     if (last.length >= 4 && lastNameCounts.get(last) === 1 && !COMMON_SURNAME_REQUIRE_FULL.has(last)) {
       uniqueLastNameIndex.set(last, p);
     }
@@ -1434,6 +1490,17 @@ async function main() {
       if (seen.has(p.id)) continue;
       const re = new RegExp(`\\b${last.replace(/'/g, "'?")}\\b`, 'i');
       if (re.test(hay)) {
+        pushPlayer(p);
+        if (found.length >= maxCount) return found;
+      }
+    }
+    for (const [last, p] of singleRosterSurnameIndex.entries()) {
+      if (seen.has(p.id)) continue;
+      const ctxRe = new RegExp(
+        `(?:\\b(?:qb|rb|fb|wr|te|ot|og|ol|dt|de|dl|nt|lb|cb|db|saf)s?\\s+${escapeMatchRegex(last)}\\b|\\b${escapeMatchRegex(last)}\\s*\\([a-z /,-]{3,28}\\))`,
+        'i'
+      );
+      if (ctxRe.test(hayCollapsed)) {
         pushPlayer(p);
         if (found.length >= maxCount) return found;
       }
@@ -2641,6 +2708,7 @@ async function main() {
               isEspnPlayerProfileUrl(link) ||
               !Number.isFinite(pubMs) ||
               pubMs < sevenDayCutoffMs ||
+              !doesClauseMentionPlayer(`${headline} ${desc}`, p.name, { allowSurname: true }) ||
               isOffTopicLeagueFiller({ url: link, title: headline, summary: desc, hasRosterMatch: true }) ||
               isStaleSeasonHeadline(headline, detectedCurrentWeek)
             ) {
@@ -3429,14 +3497,31 @@ async function main() {
                 injuryType: specificInjuryType,
                 shortComment: rawShort,
                 longComment: rawLong,
-                nflversePracticeStatus: nflInjRec?.week === currentWeek ? nflInjRec.practiceStatus : ''
+                nflversePracticeStatus: nflInjRec?.week === currentWeek ? nflInjRec.practiceStatus : '',
+                kickoffIso: nextEspnEvent?.date || ''
               });
         const { wed, thu, fri } = extractedDays;
 
         const effectiveOppStatus = isIrReturnQuestionable
           ? 'Questionable'
           : offOppInjRec
-            ? offOppInjRec.gameStatus || 'Active'
+            ? offOppInjRec.gameStatus
+              ? offOppInjRec.gameStatus
+              : offOppInjRec.wed === 'Vet Rest' ||
+                  offOppInjRec.thu === 'Vet Rest' ||
+                  offOppInjRec.fri === 'Vet Rest' ||
+                  /not injury related|\brest\b/i.test(offOppInjRec.injuryType || '') ||
+                  (offOppInjRec.fri && offOppInjRec.fri !== '-')
+                ? 'Active'
+                : String(rawStatus || '').trim().toLowerCase() === 'doubtful'
+                  ? 'Doubtful'
+                  : String(rawStatus || '').trim().toLowerCase() === 'out' &&
+                      offOppInjRec.wed !== 'LP' &&
+                      offOppInjRec.wed !== 'FP' &&
+                      offOppInjRec.thu !== 'LP' &&
+                      offOppInjRec.thu !== 'FP'
+                    ? 'Out'
+                    : 'Questionable'
             : oppEarlyRoll
               ? oppEarlyRoll.effectiveStatus
               : rawStatus;
@@ -3561,7 +3646,8 @@ async function main() {
           statusRaw: rawStatus,
           injuryType,
           shortComment: rawShort,
-          longComment: rawLong
+          longComment: rawLong,
+          kickoffIso: nextEspnEvent?.date || ''
         });
     const effectiveFallbackStatus = oppFallbackEarlyRoll ? oppFallbackEarlyRoll.effectiveStatus : rawStatus;
     const prob = computePlayerPlayProbability({
@@ -3744,80 +3830,151 @@ async function main() {
     .filter(Boolean)
     .join(', ');
 
+  const getUnitMetricEntry = (metricKey, abbr) => {
+    for (const u of teamStats?.units || []) {
+      const all = [...(u.coreRows || []), ...(u.expandedGroups || []).flatMap(g => g.rows || [])];
+      const row = all.find(r => r.key === metricKey);
+      if (row) {
+        return (row.leaderboard || []).find(x => x.team === abbr) || { rank: 16, disp: '—' };
+      }
+    }
+    return { rank: 16, disp: '—' };
+  };
+
+  const sfOffEpaStat = getUnitMetricEntry('total_off_epa_game', 'SF');
+  const oppOffPtsStat = getUnitMetricEntry('off_pts_game', oppAbbrTarget);
+  const sf3rdStat = getUnitMetricEntry('off_third_down_pct', 'SF');
+  const oppDef3rdStat = getUnitMetricEntry('def_third_down_pct_allowed', oppAbbrTarget);
+  const sfRzStat = getUnitMetricEntry('off_red_zone_td_pct', 'SF');
+  const oppDefRzStat = getUnitMetricEntry('def_red_zone_td_pct_allowed', oppAbbrTarget);
+  const oppDefEpaStat = getUnitMetricEntry('def_epa_allowed_game', oppAbbrTarget);
+  const sfDefRushEpaStat = getUnitMetricEntry('def_rush_epa_allowed_game', 'SF');
+  const sfDefYpcStat = getUnitMetricEntry('def_yds_per_carry_allowed', 'SF');
+  const sfDefExpAllowed = getUnitMetricEntry('def_explosive_plays_allowed_game', 'SF');
+  const oppDefRushYdsStat = getUnitMetricEntry('def_rush_yds_allowed_game', oppAbbrTarget);
+  const oppDefYpcStat = getUnitMetricEntry('def_yds_per_carry_allowed', oppAbbrTarget);
+  const sfPenYdsStat = getUnitMetricEntry('margin_pen_yds_game', 'SF');
+  const oppPenYdsStat = getUnitMetricEntry('margin_pen_yds_game', oppAbbrTarget);
+
+  // Strictly orthogonalized: Coaching Matchup = 100% Coordinator Tendencies, Scheme Families & Situational Chess (zero player lists!)
   const coachingMatchupDynamic =
     oppAbbrTarget === 'DAL'
       ? {
           headline: `Kyle Shanahan & DC Raheem Morris vs. Cowboys ${oppStaffTitle}`,
-          summary: `This Week 10 clash at AT&T Stadium is a high-leverage schematic chess match between two top-7 NFL passing attacks (#${sfPassEpaRank.rank} SF at +${sfPassEpaRank.value.toFixed(2)} EPA/gm vs. #${oppPassEpaRank.rank} DAL at +${oppPassEpaRank.value.toFixed(2)} EPA/gm) that win in completely different ways. Kyle Shanahan will use pre-snap shift/orbit motion, 21-personnel formations, and newly acquired slot technician Keenan Allen to stress DC Matt Eberflus's spot-drop Cover 3 and Tampa-2 zone spacing between the hashes. On the other side of the ball, Raheem Morris's disguised two-high shells and Wide-9 interior stunt packages (featuring DeForest Buckner and former Cowboy Osa Odighizuwa alongside Nick Bosa) are built to collapse Dak Prescott's internal pocket and force checkdowns in front of Fred Warner and Deommodore Lenoir.`,
+          summary: `Dallas wins high-possession track meets (${oppOffPtsStat.disp} PPG, #${oppOffPtsStat.rank} NFL) to mask the league's #${oppDefEpaStat.rank} defense in EPA allowed/game (${oppDefEpaStat.disp}) and #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}). That script plays directly into Kyle Shanahan's ball-control efficiency (#${sfOffEpaStat.rank} Off. EPA at ${sfOffEpaStat.disp}/gm) while DC Raheem Morris's #${sfDefRushEpaStat.rank} run-stopping structure (${sfDefYpcStat.disp}/carry allowed) dares HC Brian Schottenheimer and OC Klayton Adams to abandon balance.`,
           bullets: [
-            `Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%). Against Matt Eberflus's zone-heavy structure—which relies on four-man rush integrity (#${oppDefSacksRank.rank} in sacks/gm) and disciplined landmark drops rather than heavy blitzing—watch Brock Purdy attack the 12-to-22 yard intermediate honey-hole between the hook/curl linebackers and deep safeties off play-action.`,
-            `Keenan Allen's Option-Route Integration & 21-Personnel Spacing: With Deebo Samuel Sr. (hamstring, GTD) managing his workload, Tuesday's trade for Keenan Allen gives Shanahan an elite zone-beating separator from the slot. When SF condenses splits or motions Christian McCaffrey out of the backfield, Eberflus must choose between widening his curl/flat defender (opening George Kittle and Allen on choice/dagger concepts over the middle) or staying tight inside (conceding perimeter leverage to McCaffrey and Brandin Cooks).`,
-            `Klayton Adams's Gap-Scheme Run Game vs. SF's Rebuilt Interior Front: Cowboys OC Klayton Adams pairs Brian Schottenheimer's West Coast pass concepts with heavy pin-and-pull, counter, and duo run schemes behind interior maulers Tyler Smith, Cooper Beebe, and Tyler Booker. Watch how DeForest Buckner and Osa Odighizuwa (who practiced against this exact Dallas O-line daily before joining SF) anchor the A- and B-gaps on early downs so Fred Warner can stay clean to trigger downhill.`,
-            `Raheem Morris's Disguised Split-Safety Rotations vs. Dak Prescott: Prescott ranks #${oppPassEpaRank.rank} in Passing EPA/game (+${oppPassEpaRank.value.toFixed(2)}) and feasts when he can diagnose single-high vs. two-high pre-snap to isolate CeeDee Lamb and George Pickens. Expect Morris to hold static two-high shells until the snap before rotating late into Cover 4 Quarters, Cover 6, or cloud-trap looks—forcing Prescott to hold the ball an extra hitch while Nick Bosa works 1-on-1 against LT Tyler Guyton or RT Terence Steele.`,
-            `Red-Zone & Tight-End Attrition Leverage: With Dallas tight ends Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin) banged up and safety P.J. Locke (18% Doubtful, concussion) unlikely to clear protocol, watch Shanahan hunt safety Caleb Downs and linebacker Donovan Ezeiruaku (45% Long Shot, ankle) in heavy 12/21 red-zone personnel while Morris brackets CeeDee Lamb on 3rd-and-medium.`
+            `Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%) against DC Matt Eberflus's low-blitz four-man rush (#${oppDefSacksRank.rank} in sacks/gm) and spot-drop Cover 3 and Tampa-2 shells. Shanahan counters landmark zone drops by pairing 21 personnel and condensed splits with pre-snap jet motion and orbit motion—widening curl/flat defenders to attack the 12-to-22 yard honey-hole between hook/curl linebackers and deep safeties on play-action choice/dagger concepts between the numbers and between the hashes.`,
+            `Gap-Scheme Run Script vs. Split-Safety Box Math: Cowboys OC Klayton Adams leans on downhill gap-scheme runs—pin-and-pull, counter, and duo targeting the A- and B-gaps—to stay ahead of the chains, yet runs into SF's #${sfDefRushEpaStat.rank} NFL rush defense (${sfDefRushEpaStat.disp} Rush EPA/gm). Morris holds disguised two-high shells until the snap before spinning into Quarters, Cover 6, or cloud-trap, stuffing early-down runs out of light boxes while holding opponents to an NFL-best ${sfDefExpAllowed.disp} explosive plays/gm (#${sfDefExpAllowed.rank}).`,
+            `Money-Down, Red-Zone & Penalty Asymmetry: Situational execution is the steepest coaching mismatch on the Week 10 slate—SF converts ${sf3rdStat.disp} on 3rd down (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips into TDs (#${sfRzStat.rank}), whereas Eberflus's unit surrenders ${oppDef3rdStat.disp} on 3rd down (#${oppDef3rdStat.rank}) and ${oppDefRzStat.disp} red-zone TDs (#${oppDefRzStat.rank}). Compounded by Dallas's #${oppPenYdsStat.rank} penalty discipline (${oppPenYdsStat.disp}/gm vs. SF's ${sfPenYdsStat.disp} at #${sfPenYdsStat.rank}), sustained 10-play 12/21 personnel drives bleed the clock and strand Dallas's #${oppOffPtsStat.rank} scoring offense on the bench.`,
+            `Late-Down Disguise & Game-Script Trigger: Brian Schottenheimer's West Coast passing attack (#${oppPassEpaRank.rank} Passing EPA at +${oppPassEpaRank.value.toFixed(2)}/gm) thrives on rhythm sight adjustments when ahead of the sticks, but becomes vulnerable when trailing by two scores. If Shanahan scripts an early lead off opening bootleg and play-action sequenced looks, Morris unlocks 3rd-and-long sim pressure and Wide-9 interior T-E stunt packages without sacrificing seven-man coverage.`
           ]
         }
       : {
           headline: `Kyle Shanahan & DC Raheem Morris vs. ${oppNameTarget} ${oppStaffTitle}`,
-          summary: `San Francisco (${sfStandingsDetail.record}) brings its #${sfPassEpaRank.rank} NFL passing EPA offense (+${sfPassEpaRank.value.toFixed(2)}/gm) and #${sfSackAllowRank.rank} pass protection (${sfSackAllowRank.value.toFixed(1)}% sack rate) into a critical tactical chess match against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}) and ${oppStaffTitle}. What to watch on Sunday is how Kyle Shanahan uses pre-snap motion and 21-personnel formation variety to dictate linebacker leverage on early downs, while DC Raheem Morris deploys disguised split-safety rotations and Wide-9 interior T-E stunts to disrupt ${oppQbStarter}'s rhythm and force ${oppNameTarget}'s offense off schedule.`,
+          summary: `San Francisco (${sfStandingsDetail.record}) brings the NFL's #${sfOffEpaStat.rank} Offensive EPA unit (${sfOffEpaStat.disp}/gm) and #${sfDefRushEpaStat.rank} Rush EPA defense (${sfDefRushEpaStat.disp}/gm) into a contrasting coordinator duel against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}) and ${oppStaffTitle}. Shanahan's play-calling script centers on 21 personnel and pre-snap motion to dictate box counts, while Raheem Morris's split-safety rotations cap explosive plays (${sfDefExpAllowed.disp}/gm, #${sfDefExpAllowed.rank} NFL).`,
           bullets: [
-            `Pass-Game Efficiency & Coverage Shell Delta: SF enters ranked #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) vs. ${oppAbbrTarget}'s #${oppPassEpaRank.rank} offensive passing EPA mark (${oppPassEpaRank.value >= 0 ? '+' : ''}${oppPassEpaRank.value.toFixed(2)}/gm). Watch Brock Purdy use condensed splits and play-action boot/over concepts to attack intermediate windows between 10 and 20 air yards.`,
-            `Early-Down Motion & Personnel Dictation: By cycling between 21 personnel (Kyle Juszczyk + Christian McCaffrey) and 11 personnel (with George Kittle and Keenan Allen working the middle), Shanahan forces ${oppStaff.dc ? `DC ${oppStaff.dc}` : `${oppShortName}'s defense`} to declare base vs. nickel personnel and tip coverage rotations before the snap.`,
-            `Raheem Morris Trench & Stunt Blueprint: ${oppAbbrTarget} allows sacks on ${oppSackAllowRank.value.toFixed(1)}% of dropbacks (#${oppSackAllowRank.rank} NFL) entering its matchup with Nick Bosa, DeForest Buckner, and Osa Odighizuwa. Expect Morris to align Buckner and Odighizuwa over the guards on 3rd-and-long to prevent ${oppAbbrTarget} from sliding its center toward Bosa's Wide-9 edge rush.`,
-            `Situational 3rd-Down & Red-Zone Chess Match: Watch Fred Warner and Deommodore Lenoir disguise middle-of-field closure until the snap to take away ${oppQbStarter}'s primary hot read (${oppSkillStar}) on 3rd-and-4-to-7.`,
-            `Venue, Surface & Tempo Factor: ${venueDisplayDynamic} • ${restAdvDisplay}.`
+            `Pass-Game Efficiency & Coverage Shell Delta: Entering #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%), Shanahan uses condensed splits, jet motion, and orbit motion to force ${oppStaff.dc ? `DC ${oppStaff.dc}` : `${oppShortName}'s defense`} to tip single-high vs. two-high rotations pre-snap before attacking the intermediate honey-hole between hook/curl and curl/flat defenders on play-action choice/dagger and boot flood concepts.`,
+            `Trench Run-Fit & Box-Count Chess: Against ${oppStaff.oc ? `OC ${oppStaff.oc}'s` : `${oppShortName}'s`} early-down run script (#${oppRushEpaRank.rank} Rushing EPA), Morris anchors the A- and B-gaps out of light boxes (#${sfDefYpcStat.rank} at ${sfDefYpcStat.disp}/carry allowed) while disguising Quarters, Cover 6, and Robber shells behind a Wide-9 four-man rush.`,
+            `Money-Down & Red-Zone Execution: SF converts ${sf3rdStat.disp} of 3rd downs (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips (#${sfRzStat.rank}) versus ${oppAbbrTarget}'s #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}) and #${oppDefRzStat.rank} red-zone TD rate allowed (${oppDefRzStat.disp}), giving Shanahan clear 4th-and-short go-for-it leverage inside plus territory.`,
+            `Tempo, Penalty & Rest Leverage: ${venueDisplayDynamic} • ${restAdvDisplay} (SF ${sfPenYdsStat.disp} penalty yds/gm, #${sfPenYdsStat.rank} vs. ${oppAbbrTarget} ${oppPenYdsStat.disp}, #${oppPenYdsStat.rank}).`
           ]
         };
 
+  // Key Matchups = 5 Specific 1-on-1 / Unit Scouting Battles with Tale-of-the-Tape stats & Broadcast Film Tells
   const keyMatchupsMatrixDynamic =
     oppAbbrTarget === 'DAL'
       ? [
           {
-            unitMatchup: `DeForest Buckner + Osa Odighizuwa & Nick Bosa vs. Dak Prescott & Cowboys Interior O-Line (#${oppSackAllowRank.rank} Sack Rate Allowed, ${oppSackAllowRank.value.toFixed(1)}%)`,
-            advantage: 'SF Trench Edge',
-            tacticalDetail: `Dallas protects Dak Prescott well overall (${oppSackAllowRank.value.toFixed(1)}% sack rate allowed, #${oppSackAllowRank.rank} NFL) behind young interior anchors Cooper Beebe (C #56), Tyler Smith (LG #73), and Tyler Booker (RG #52). The key to watch is Osa Odighizuwa (#92) facing his former teammates alongside DeForest Buckner: when Buckner and Odighizuwa win vertical A/B-gap penetration on T-E stunts, Cooper Beebe cannot slide protection help to LT Tyler Guyton or RT Terence Steele, leaving Nick Bosa isolated 1-on-1 on the Wide-9 rail.`
-          },
-          {
-            unitMatchup: `Brock Purdy, George Kittle & Keenan Allen vs. DC Matt Eberflus's Tampa-2 / Cover 3 Seam & Hook Zones`,
+            phaseTag: 'Middle-Field Spine',
+            unitMatchup: `Brock Purdy, George Kittle & Keenan Allen vs. LB DeMarvion Overshown & CB DaRon Bland`,
             advantage: 'SF Heavy Edge',
-            tacticalDetail: `Purdy (#${sfPassEpaRank.rank} Passing EPA/gm at +${sfPassEpaRank.value.toFixed(2)}) thrives on anticipation throws between the numbers. With Dallas safety P.J. Locke (18% Doubtful, concussion) and LB Donovan Ezeiruaku (45% Long Shot, ankle) compromised—and LB DeMarvion Overshown (77% GTD) playing through a knee tag—watch Shanahan pair George Kittle's seam/over routes with Keenan Allen's underneath option routes to high-low Dallas's middle-hook linebacker and force CB DaRon Bland to tackle in space.`
+            sfPlayers: ['Brock Purdy', 'George Kittle', 'Keenan Allen'],
+            statComparison: `SF: Purdy +70.5 EPA (81.4 QBR, +4.9% CPOE) · Kittle 483 Yds, 5 TD | DAL: #27 Pass EPA Allowed (+6.10/gm)`,
+            tacticalDetail: `With Mike Evans (22% Long Shot, Achilles) unlikely to go and Deebo Samuel Sr. (56% GTD, hamstring) on a managed pitch count, deadline pickup Keenan Allen (40 rec, 20 1st downs, 2.41 yds separation) steps immediately into Brock Purdy's anticipation tree between the numbers alongside George Kittle (3.41 yds separation, 0.51 WOPR). Dallas's middle spine is heavily compromised with S P.J. Locke (18% Doubtful, concussion protocol) and LB Donovan Ezeiruaku (45% Long Shot, ankle) hurting while LB DeMarvion Overshown (77% GTD, hamstring) plays through a soft-tissue tag.`,
+            filmTell: `Watch #85 George Kittle's vertical seam/over stem against S #13 Caleb Downs: when Downs sinks to cap Kittle at 18 yards, Purdy rips 8-yard option routes to Keenan Allen breaking off Overshown's leverage.`
           },
           {
-            unitMatchup: `49ers Pass Protection (#${sfSackAllowRank.rank} NFL, ${sfSackAllowRank.value.toFixed(1)}% Sack Rate) vs. Quinnen Williams, Kenny Clark & Rashan Gary (#${oppDefSacksRank.rank} Sacks/Gm)`,
+            phaseTag: 'Interior Pass-Rush Revenge',
+            unitMatchup: `DeForest Buckner, Osa Odighizuwa & Nick Bosa vs. Dak Prescott, C Cooper Beebe & RG Tyler Booker`,
+            advantage: 'SF Trench Edge',
+            sfPlayers: ['DeForest Buckner', 'Osa Odighizuwa', 'Nick Bosa'],
+            statComparison: `SF: Buckner + Odighizuwa 6.0 Sacks, 21 Pressures, 19 QB Hits | DAL: ${oppSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${oppSackAllowRank.rank} NFL)`,
+            tacticalDetail: `Former Cowboy Osa Odighizuwa (#92 — 11 pressures, 9 QB hits) knows every pass-set tell of Dallas interior starters Tyler Smith (LG #73), Cooper Beebe (C #56), and Tyler Booker (RG #52), and now pairs with DeForest Buckner (#99 — 4.0 sacks, 10 QB hits, 81% snaps). Winning immediate 3-tech and 2i A/B-gap penetration on T-E stunts prevents Beebe from sliding protection toward LT Tyler Guyton (#60) or RT Terence Steele (#78), isolating Nick Bosa 1-on-1 on the Wide-9 rail to collapse Dak Prescott's step-up lane.`,
+            filmTell: `On 3rd-and-5+, key C #56 Cooper Beebe's initial slide direction—whenever Beebe turns toward Buckner (#99), Odighizuwa (#92) and Bosa (#97) get two-on-two twist lanes on the opposite side.`
+          },
+          {
+            phaseTag: 'Perimeter & Slot Star Clash',
+            unitMatchup: `Renardo Green, Deommodore Lenoir & Fred Warner vs. CeeDee Lamb & George Pickens`,
+            advantage: 'Even Star Clash',
+            sfPlayers: ['Renardo Green', 'Deommodore Lenoir', 'Fred Warner'],
+            statComparison: `SF: Green 4 INT, 61.6 Passer Rtg Allowed · Lenoir 6.3 Yds/Tgt | DAL: 256.9 Pass Yds/Gm (#6 NFL)`,
+            tacticalDetail: `Both Deommodore Lenoir (82% GTD, foot) and ballhawk Renardo Green (82% GTD, back; team-high 4 INT, 58.1% comp allowed) carry late-week tags into an elite test against CeeDee Lamb's Z/slot motion stacks and George Pickens's (77% GTD, hamstring) boundary back-shoulder fades outside the numbers. Lenoir sliding inside in nickel packages to disrupt Lamb at the top of the stem while Fred Warner (76 tackles, 4 FF) walls off deep dig windows is Sunday's premier talent-on-talent duel.`,
+            filmTell: `When CeeDee Lamb motions into a tight slot stack on 3rd down, check whether Lenoir (#2) travels inside with S Malik Mustapha (#6, 59.4 passer rating allowed) shading over the top in bracket coverage.`
+          },
+          {
+            phaseTag: 'Wide-Zone & Space Mismatch',
+            unitMatchup: `Christian McCaffrey & Kyle Juszczyk vs. LB Dee Winters, S Caleb Downs & Cowboys Run Fits`,
+            advantage: 'SF Heavy Edge',
+            sfPlayers: ['Christian McCaffrey', 'Kyle Juszczyk'],
+            statComparison: `SF: McCaffrey 727 Scrimmage Yds, 10 TD, +0.32 RYOE/Att | DAL: ${oppDefRushYdsStat.disp}/Gm Allowed (#${oppDefRushYdsStat.rank} NFL)`,
+            tacticalDetail: `Christian McCaffrey (457 rush yds, 9 rush TD; 36 rec, 198 YAC) attacks a Dallas front surrendering ${oppDefYpcStat.disp} per carry (#${oppDefYpcStat.rank} NFL). Behind Kyle Juszczyk's lead insert blocks on outside zone and duo, McCaffrey forces S Caleb Downs (93% snaps) into exhausting alley tackle duty on early downs before isolating LB Dee Winters in space on angle/Texas routes and check-release choice routes.`,
+            filmTell: `Watch McCaffrey (#23) aligned offset in shotgun on 2nd-and-medium: if Dallas's linebackers flow hard laterally with wide-zone action, look for the backside B-gap cutback or immediate Texas-route pivot.`
+          },
+          {
+            phaseTag: 'Pocket Integrity & TE Attrition',
+            unitMatchup: `Trent Williams, Dominick Puni & Jake Brendel vs. Quinnen Williams, Kenny Clark & Rashan Gary`,
             advantage: 'SF Edge',
-            tacticalDetail: `Dallas generates sacks on just ${oppDefSacksRank.value.toFixed(2)} plays per game (#${oppDefSacksRank.rank} NFL), relying on interior push from DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge power from Rashan Gary (#7). Watch LT Trent Williams erase Dallas's right-side rush solo while RG Dominick Puni and C Jake Brendel use combo-blocks and 21-personnel Kittle/Juszczyk play-action chips to keep Purdy's internal throwing lanes clean.`
-          },
-          {
-            unitMatchup: `Deommodore Lenoir, Renardo Green & Fred Warner vs. CeeDee Lamb & George Pickens (77% GTD)`,
-            advantage: 'Even High-Stakes Battle',
-            tacticalDetail: `Brian Schottenheimer moves CeeDee Lamb across the formation (Z, slot, and motion stacks) while using George Pickens on boundary verticals and back-shoulder fades. Watch Deommodore Lenoir travel into the slot in nickel packages to disrupt Lamb's release timing at the top of the stem, while Fred Warner carries deep middle crossers to prevent Prescott from hitting explosive chunk plays off play-action.`
-          },
-          {
-            unitMatchup: `Christian McCaffrey Outside Zone & Choice Routes vs. Cowboys Second-Level Run Fits`,
-            advantage: 'SF Edge',
-            tacticalDetail: `San Francisco ranks #${sfRushEpaRank.rank} in Rushing EPA/game and uses McCaffrey as both an outside-zone tempo setter and a 3rd-down mismatch weapon. Watch how jet/orbit motion forces Dallas's safeties (Caleb Downs) to widen pre-snap—creating cutback lanes behind Trent Williams and George Kittle on early downs and isolating McCaffrey on angle/Texas routes against linebackers in pass coverage.`
+            sfPlayers: ['Trent Williams', 'Dominick Puni', 'Jake Brendel'],
+            statComparison: `SF: ${sfSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${sfSackAllowRank.rank} NFL), 17.9% Pressure | DAL: ${oppDefSacksRank.value.toFixed(2)} Sacks/Gm (#${oppDefSacksRank.rank} NFL)`,
+            tacticalDetail: `Dallas features heavyweight interior talent in DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge rusher Rashan Gary (#7), yet ranks #${oppDefSacksRank.rank} in sacks/gm (${oppDefSacksRank.value.toFixed(2)}). LT Trent Williams (#71) erasing Gary 1-on-1 on the blindside lets C Jake Brendel (#64) and RG Dominick Puni (#77, 99% snaps) sustain firm interior combo-blocks on Quinnen Williams—giving Purdy 3.01s average time-to-throw while Dallas's own TE unit is thinned by Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin).`,
+            filmTell: `Watch RG #77 Dominick Puni and C #64 Jake Brendel on play-action: when they stalemate #92 Quinnen Williams without RB chip help, McCaffrey gets a free check-release into the flat.`
           }
         ]
       : [
           {
-            unitMatchup: `49ers Pass Protection (${sfSackAllowRank.value.toFixed(1)}% Sack Rate, #${sfSackAllowRank.rank} NFL) vs. ${oppEdgeOrStar} & ${oppShortName} Rush (#${oppDefSacksRank.rank} Sacks/Gm)`,
+            phaseTag: 'Middle-Field Passing Spine',
+            unitMatchup: `Brock Purdy, George Kittle & Keenan Allen vs. ${oppShortName} Seam & Slot Coverage`,
+            advantage: 'SF Edge',
+            sfPlayers: ['Brock Purdy', 'George Kittle', 'Keenan Allen'],
+            statComparison: `SF: +${sfPassEpaRank.value.toFixed(2)} Pass EPA/Gm (#${sfPassEpaRank.rank}) | ${oppAbbrTarget}: #${oppDef3rdStat.rank} 3rd-Down Def (${oppDef3rdStat.disp})`,
+            tacticalDetail: `Brock Purdy pairs George Kittle's intermediate seam/over separation with Keenan Allen's veteran slot option routes between the numbers, forcing ${oppNameTarget}'s linebackers into constant high-low conflict.`,
+            filmTell: `Watch Kittle (#85) and Allen align in reduced splits on 3rd-and-medium—whichever defender widens with motion opens the inward-breaking dagger or option sit route.`
+          },
+          {
+            phaseTag: 'Interior & Wide-9 Rush',
+            unitMatchup: `Nick Bosa, DeForest Buckner & Osa Odighizuwa vs. ${oppQbStarter} & ${oppShortName} O-Line`,
+            advantage: oppSackAllowRank.rank >= 12 ? 'SF Heavy Edge' : 'SF Trench Edge',
+            sfPlayers: ['Nick Bosa', 'DeForest Buckner', 'Osa Odighizuwa'],
+            statComparison: `SF: Buckner + Odighizuwa 6.0 Sacks, 21 Pressures | ${oppAbbrTarget}: ${oppSackAllowRank.value.toFixed(1)}% Sack Rate (#${oppSackAllowRank.rank})`,
+            tacticalDetail: `Aligning DeForest Buckner and Osa Odighizuwa as 3-tech and 2i penetrators forces ${oppNameTarget}'s center and guards to honor interior A/B-gap T-E stunts, isolating Nick Bosa 1-on-1 on the Wide-9 edge against ${oppQbStarter}.`,
+            filmTell: `Key the opposing center's slide protection on 3rd-and-long—sliding inside toward Buckner (#99) leaves Bosa (#97) singled up on the edge.`
+          },
+          {
+            phaseTag: 'Perimeter & Nickel Coverage',
+            unitMatchup: `Renardo Green, Deommodore Lenoir & Fred Warner vs. ${oppQbStarter} & ${oppSkillStar}`,
+            advantage: 'Even Star Clash',
+            sfPlayers: ['Renardo Green', 'Deommodore Lenoir', 'Fred Warner'],
+            statComparison: `SF: Green 4 INT (61.6 Rtg) · Warner 76 Tkl, 4 FF | ${oppAbbrTarget}: #${oppPassEpaRank.rank} Pass EPA`,
+            tacticalDetail: `Deommodore Lenoir sliding into the nickel slot alongside Renardo Green outside and Fred Warner patrolling deep middle crossers challenges ${oppQbStarter}'s primary timing windows to ${oppSkillStar}.`,
+            filmTell: `Watch Lenoir (#2) bump inside in nickel on 3rd-and-4-to-7 while Warner (#54) disguises middle-hook depth until the snap.`
+          },
+          {
+            phaseTag: 'Wide-Zone & Choice Mismatch',
+            unitMatchup: `Christian McCaffrey & Kyle Juszczyk vs. ${oppShortName} Second-Level Run Fits`,
+            advantage: 'SF Edge',
+            sfPlayers: ['Christian McCaffrey', 'Kyle Juszczyk'],
+            statComparison: `SF: #${sfRushEpaRank.rank} Rush EPA (+${sfRushEpaRank.value.toFixed(2)}/gm) | ${oppAbbrTarget}: ${oppDefRushYdsStat.disp}/Gm Allowed (#${oppDefRushYdsStat.rank})`,
+            tacticalDetail: `Christian McCaffrey stretches horizontal edges on outside zone behind Kyle Juszczyk before punishing over-pursuing linebackers on backside B-gap cutbacks and angle/Texas choice routes.`,
+            filmTell: `When Juszczyk (#44) inserts weakside off pre-snap motion, look for McCaffrey (#23) pressing the frontside C-gap before planting vertical in one cut.`
+          },
+          {
+            phaseTag: 'Blindside & Pocket Anchor',
+            unitMatchup: `Trent Williams, Dominick Puni & Jake Brendel vs. ${oppEdgeOrStar} & ${oppShortName} Pass Rush`,
             advantage: sfSackAllowRank.rank <= oppDefSacksRank.rank ? 'SF Edge' : 'Even Trench Battle',
-            tacticalDetail: `Watch LT Trent Williams lock down the blindside solo while Kyle Shanahan uses 21-personnel Kittle/Juszczyk chip releases and moving play-action pockets to neutralize ${oppEdgeOrStar} and give Brock Purdy clean intermediate throwing windows.`
-          },
-          {
-            unitMatchup: `Purdy Play-Action, Kittle & Keenan Allen (#${sfPassEpaRank.rank} Pass EPA) vs. ${oppShortName} Middle-of-Field Coverage`,
-            advantage: 'SF Edge',
-            tacticalDetail: `George Kittle's intermediate over routes paired with Keenan Allen's slot option-route leverage and Christian McCaffrey's check-release spacing put constant horizontal and vertical conflict on ${oppNameTarget}'s linebackers and safeties.`
-          },
-          {
-            unitMatchup: `Nick Bosa + DeForest Buckner + Osa Odighizuwa vs. ${oppQbStarter} & ${oppShortName} O-Line (#${oppSackAllowRank.rank} Sack Rate Allowed)`,
-            advantage: oppSackAllowRank.rank >= 12 ? 'SF Heavy Edge' : 'SF Slight Edge',
-            tacticalDetail: `Aligning DeForest Buckner and Osa Odighizuwa over the interior guards forces ${oppNameTarget}'s center and guards to honor A/B-gap T-E stunts, isolating Nick Bosa 1-on-1 on the Wide-9 edge.`
-          },
-          {
-            unitMatchup: `Fred Warner & Deommodore Lenoir vs. ${oppQbStarter} & ${oppSkillStar} on Situational Downs`,
-            advantage: 'SF Edge',
-            tacticalDetail: `DC Raheem Morris disguises two-high shells until the snap before rotating into Cover 4/6 or Robber looks, allowing Fred Warner to wall off ${oppQbStarter}'s primary middle-of-field progression on 3rd-and-medium.`
+            sfPlayers: ['Trent Williams', 'Dominick Puni', 'Jake Brendel'],
+            statComparison: `SF: ${sfSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${sfSackAllowRank.rank}) | ${oppAbbrTarget}: ${oppDefSacksRank.value.toFixed(2)} Sacks/Gm (#${oppDefSacksRank.rank})`,
+            tacticalDetail: `LT Trent Williams locking down the blindside solo allows C Jake Brendel and RG Dominick Puni to sustain interior combo-blocks and slide protection against ${oppEdgeOrStar}.`,
+            filmTell: `Watch whether SF leaves Trent Williams (#71) on a true island without TE chip help so George Kittle (#85) can release cleanly into intermediate routes.`
           }
         ];
 
@@ -4290,14 +4447,92 @@ async function main() {
     }
   );
 
-  // Poll Google AI Studio /v1beta/models to resolve the highest-ranked Free-Tier High-Thinking model
-  const aiModelDiscovery = await discoverBestFreeGeminiModel(process.env.GEMINI_API_KEY);
+  const todayPt = getPacificDateKey(Date.now());
+  let prevUmAiCached = null;
+  let prevCapNoteCached = null;
+  try {
+    const prevSmPath = path.join(dataDir, 'schedule-matchup.json');
+    if (fs.existsSync(prevSmPath)) {
+      const prevSm = JSON.parse(fs.readFileSync(prevSmPath, 'utf8'));
+      const prevUm = prevSm?.upcomingMatchup;
+      if (
+        !process.env.FORCE_MATCHUP_AI &&
+        prevUm?.aiMatchupMeta?.datePt === todayPt &&
+        Number(prevUm?.week) === Number(currentWeek) &&
+        String(prevUm?.oppAbbr || '').toUpperCase() === oppAbbrTarget &&
+        prevUm?.coachingMatchup?.bullets?.length >= 3 &&
+        prevUm?.keyMatchupsMatrix?.length >= 4
+      ) {
+        prevUmAiCached = prevUm;
+      }
+    }
+    const prevSeasonalPath = path.join(dataDir, 'seasonal.json');
+    if (fs.existsSync(prevSeasonalPath)) {
+      const prevSeas = JSON.parse(fs.readFileSync(prevSeasonalPath, 'utf8'));
+      if (prevSeas?.tradeWarRoom?.aiCapNoteDatePt === todayPt && prevSeas?.tradeWarRoom?.capPurchasingPowerNote) {
+        prevCapNoteCached = prevSeas.tradeWarRoom.capPurchasingPowerNote;
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // Poll Google AI Studio /v1beta/models only when key is absent or daily AI refresh is due
+  const aiModelDiscovery = await discoverBestFreeGeminiModel(process.env.GEMINI_API_KEY, {
+    probeQuota: Boolean(process.env.GEMINI_API_KEY && !prevUmAiCached)
+  });
   console.log(
     `[AI Model Discovery] Active free model: ${aiModelDiscovery.activeModel} (${aiModelDiscovery.thinkingLevel} thinking, budget ${aiModelDiscovery.thinkingBudget}, source: ${aiModelDiscovery.source})`
   );
 
-  // Optional 2-Pass Deep Gemini Synthesis (when GEMINI_API_KEY is present in CI/scheduled refresh)
-  if (process.env.GEMINI_API_KEY) {
+  if (prevUmAiCached) {
+    upcomingMatchup.coachingMatchup = prevUmAiCached.coachingMatchup;
+    upcomingMatchup.keyMatchupsMatrix = prevUmAiCached.keyMatchupsMatrix;
+    upcomingMatchup.aiMatchupMeta = prevUmAiCached.aiMatchupMeta;
+    console.log(`[1/Day Matchup AI] Reusing cached ${todayPt} PT Gemini 3.8 matchup briefing (0 credits spent).`);
+  } else if (process.env.GEMINI_API_KEY) {
+    try {
+      const livePromptAppData = {
+        meta: { seasonYear, currentWeek, teamRecord: sfStandingsDetail.record },
+        roster: { players: rosterPlayers },
+        health: { practiceReport: practiceReportPlayers, irAndReserveTracker: irTrackerPlayers },
+        scheduleMatchup: { upcomingMatchup, teamStats }
+      };
+      const aiMatchupRes = await runSinglePassDailyGeminiSynthesis({
+        apiKey: process.env.GEMINI_API_KEY,
+        preferredModel: aiModelDiscovery.activeModel,
+        promptText: buildDailyMatchupIntelPrompt(livePromptAppData),
+        appData: livePromptAppData,
+        rosterPlayers
+      });
+      if (aiMatchupRes.ok && aiMatchupRes.rawText) {
+        const normalized = parseAndSanitizeDailyMatchupIntel(
+          aiMatchupRes.rawText,
+          upcomingMatchup,
+          rosterPlayers
+        );
+        if (normalized) {
+          upcomingMatchup.coachingMatchup = normalized.coachingMatchup;
+          upcomingMatchup.keyMatchupsMatrix = normalized.keyMatchupsMatrix;
+          upcomingMatchup.aiMatchupMeta = {
+            datePt: todayPt,
+            week: currentWeek,
+            oppAbbr: oppAbbrTarget,
+            source: 'pipeline-gemini-daily'
+          };
+          console.log(`[1/Day Matchup AI] Synthesized fresh Week ${currentWeek} matchup briefing via ${aiMatchupRes.modelUsed} (1 credit).`);
+        }
+      }
+    } catch (matchupAiErr) {
+      console.warn('1/Day Gemini Matchup synthesis skipped:', matchupAiErr.message);
+    }
+  }
+
+  // 1/Day Deep Gemini Cap Note Synthesis (gated by PT date so scheduled crons never burn extra RPD credits)
+  if (prevCapNoteCached) {
+    tradeWarRoom.capPurchasingPowerNote = prevCapNoteCached;
+    tradeWarRoom.aiCapNoteDatePt = todayPt;
+  } else if (process.env.GEMINI_API_KEY && !process.env.SKIP_TRADE_AI) {
     try {
       const aiTradeAudit = await runVerifiedDeepGeminiSynthesis({
         apiKey: process.env.GEMINI_API_KEY,
@@ -4321,6 +4556,7 @@ async function main() {
           aiTradeAudit.data.capNote,
           rosterPlayers
         );
+        tradeWarRoom.aiCapNoteDatePt = todayPt;
       }
     } catch (aiErr) {
       console.warn('Optional deep Gemini synthesis skipped:', aiErr.message);

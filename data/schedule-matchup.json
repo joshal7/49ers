@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T04:24:01.491Z",
+  "updatedAt": "2026-11-12T02:13:43.260Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -23,10 +23,9 @@
       "id": "401874392",
       "seasonType": "PRE",
       "preseasonWeek": 1,
-      "week": -3,
       "weekLabel": "PRE 1",
-      "roundBadgeLabel": "Preseason",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401874392/titans-49ers",
+      "week": -3,
       "dateIso": "2026-08-14T01:00Z",
       "statusDetail": "Final",
       "completed": true,
@@ -40,7 +39,7 @@
         "name": "Tennessee Titans",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
         "record": "1-7",
-        "pointDiff": 0,
+        "pointDiff": -55,
         "coach": ""
       },
       "venue": {
@@ -55,16 +54,16 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "NFL Net"
+      "broadcast": "NFL Net",
+      "roundBadgeLabel": "Preseason"
     },
     {
       "id": "401873285",
       "seasonType": "PRE",
       "preseasonWeek": 2,
-      "week": -2,
       "weekLabel": "PRE 2",
-      "roundBadgeLabel": "Preseason",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873285/49ers-chargers",
+      "week": -2,
       "dateIso": "2026-08-21T02:00Z",
       "statusDetail": "Final",
       "completed": true,
@@ -79,7 +78,7 @@
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
         "record": "0-8",
         "pointDiff": -98,
-        "coach": "Jim Harbaugh"
+        "coach": ""
       },
       "venue": {
         "name": "SoFi Stadium",
@@ -93,16 +92,16 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "NFL Net"
+      "broadcast": "NFL Net",
+      "roundBadgeLabel": "Preseason"
     },
     {
       "id": "401873641",
       "seasonType": "PRE",
       "preseasonWeek": 3,
-      "week": -1,
       "weekLabel": "PRE 3",
-      "roundBadgeLabel": "Preseason",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873641/49ers-raiders",
+      "week": -1,
       "dateIso": "2026-08-28T00:00Z",
       "statusDetail": "Final",
       "completed": true,
@@ -117,7 +116,7 @@
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
         "record": "4-5",
         "pointDiff": -30,
-        "coach": "Klint Kubiak"
+        "coach": ""
       },
       "venue": {
         "name": "Allegiant Stadium",
@@ -131,10 +130,13 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "ESPN Unlmtd"
+      "broadcast": "ESPN Unlmtd",
+      "roundBadgeLabel": "Preseason"
     },
     {
       "id": "401872657",
+      "seasonType": "REG",
+      "weekLabel": "WK 1",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872657/49ers-rams",
       "week": 1,
       "dateIso": "2026-09-11T00:35Z",
@@ -165,12 +167,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": 3.5,
       "totalLine": 47.5,
-      "broadcast": "Netflix",
-      "seasonType": "REG",
-      "weekLabel": "WK 1"
+      "broadcast": "Netflix"
     },
     {
       "id": "401872942",
+      "seasonType": "REG",
+      "weekLabel": "WK 2",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872942/dolphins-49ers",
       "week": 2,
       "dateIso": "2026-09-20T20:25Z",
@@ -201,12 +203,12 @@
       "restAdvantageDays": 3,
       "spreadLineSf": -12.5,
       "totalLine": 44.5,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 2"
+      "broadcast": "FOX"
     },
     {
       "id": "401872958",
+      "seasonType": "REG",
+      "weekLabel": "WK 3",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872958/cardinals-49ers",
       "week": 3,
       "dateIso": "2026-09-27T20:05Z",
@@ -237,12 +239,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -7.5,
       "totalLine": 48.5,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 3"
+      "broadcast": "FOX"
     },
     {
       "id": "401872975",
+      "seasonType": "REG",
+      "weekLabel": "WK 4",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872975/broncos-49ers",
       "week": 4,
       "dateIso": "2026-10-04T20:25Z",
@@ -273,12 +275,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -3,
       "totalLine": 48.5,
-      "broadcast": "CBS",
-      "seasonType": "REG",
-      "weekLabel": "WK 4"
+      "broadcast": "CBS"
     },
     {
       "id": "401872992",
+      "seasonType": "REG",
+      "weekLabel": "WK 5",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401872992/49ers-seahawks",
       "week": 5,
       "dateIso": "2026-10-11T20:25Z",
@@ -309,12 +311,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": 3,
       "totalLine": 46.5,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 5"
+      "broadcast": "FOX"
     },
     {
       "id": "401873008",
+      "seasonType": "REG",
+      "weekLabel": "WK 6",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873008/commanders-49ers",
       "week": 6,
       "dateIso": "2026-10-20T00:15Z",
@@ -340,17 +342,17 @@
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
-        "surface": "Synthetic Turf"
+        "surface": "Natural Grass"
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -7.5,
       "totalLine": 51.5,
-      "broadcast": "ESPN",
-      "seasonType": "REG",
-      "weekLabel": "WK 6"
+      "broadcast": "ESPN"
     },
     {
       "id": "401873017",
+      "seasonType": "REG",
+      "weekLabel": "WK 7",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873017/49ers-falcons",
       "week": 7,
       "dateIso": "2026-10-25T17:00Z",
@@ -381,12 +383,12 @@
       "restAdvantageDays": -1,
       "spreadLineSf": -2.5,
       "totalLine": 49.5,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 7"
+      "broadcast": "FOX"
     },
     {
       "id": "401873047",
+      "seasonType": "REG",
+      "weekLabel": "WK 9",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873047/raiders-49ers",
       "week": 9,
       "dateIso": "2026-11-08T21:25Z",
@@ -412,17 +414,17 @@
         "country": "USA",
         "isInternational": false,
         "internationalNote": null,
-        "surface": "Synthetic Turf"
+        "surface": "Natural Grass"
       },
       "restAdvantageDays": 7,
       "spreadLineSf": -8.5,
       "totalLine": 51.5,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 9"
+      "broadcast": "FOX"
     },
     {
       "id": "401873063",
+      "seasonType": "REG",
+      "weekLabel": "WK 10",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873063/49ers-cowboys",
       "week": 10,
       "dateIso": "2026-11-15T21:25Z",
@@ -453,12 +455,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": -3.5,
       "totalLine": 55.5,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 10"
+      "broadcast": "FOX"
     },
     {
       "id": "401873077",
+      "seasonType": "REG",
+      "weekLabel": "WK 11",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873077/vikings-49ers",
       "week": 11,
       "dateIso": "2026-11-23T01:20Z",
@@ -488,13 +490,13 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -3.5,
-      "totalLine": 45.5,
-      "broadcast": "NBC",
-      "seasonType": "REG",
-      "weekLabel": "WK 11"
+      "totalLine": 46.5,
+      "broadcast": "NBC"
     },
     {
       "id": "401873091",
+      "seasonType": "REG",
+      "weekLabel": "WK 12",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873091/seahawks-49ers",
       "week": 12,
       "dateIso": "2026-11-29T21:25Z",
@@ -525,12 +527,12 @@
       "restAdvantageDays": -7,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 12"
+      "broadcast": "FOX"
     },
     {
       "id": "401873095",
+      "seasonType": "REG",
+      "weekLabel": "WK 13",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873095/49ers-giants",
       "week": 13,
       "dateIso": "2026-12-06T18:00Z",
@@ -561,12 +563,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 13"
+      "broadcast": "FOX"
     },
     {
       "id": "401873120",
+      "seasonType": "REG",
+      "weekLabel": "WK 14",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873120/rams-49ers",
       "week": 14,
       "dateIso": "2026-12-13T21:25Z",
@@ -597,12 +599,12 @@
       "restAdvantageDays": -3,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "FOX",
-      "seasonType": "REG",
-      "weekLabel": "WK 14"
+      "broadcast": "FOX"
     },
     {
       "id": "401873124",
+      "seasonType": "REG",
+      "weekLabel": "WK 15",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873124/49ers-chargers",
       "week": 15,
       "dateIso": "2026-12-18T01:15Z",
@@ -633,12 +635,12 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "Prime Video",
-      "seasonType": "REG",
-      "weekLabel": "WK 15"
+      "broadcast": "Prime Video"
     },
     {
       "id": "401873153",
+      "seasonType": "REG",
+      "weekLabel": "WK 16",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873153/49ers-chiefs",
       "week": 16,
       "dateIso": "2026-12-27T21:25Z",
@@ -669,12 +671,12 @@
       "restAdvantageDays": 4,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "CBS",
-      "seasonType": "REG",
-      "weekLabel": "WK 16"
+      "broadcast": "CBS"
     },
     {
       "id": "401873170",
+      "seasonType": "REG",
+      "weekLabel": "WK 17",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873170/eagles-49ers",
       "week": 17,
       "dateIso": "2027-01-04T01:20Z",
@@ -705,12 +707,12 @@
       "restAdvantageDays": -3,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "NBC",
-      "seasonType": "REG",
-      "weekLabel": "WK 17"
+      "broadcast": "NBC"
     },
     {
       "id": "401873184",
+      "seasonType": "REG",
+      "weekLabel": "WK 18",
       "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873184/49ers-cardinals",
       "week": 18,
       "dateIso": "2027-01-10T05:00Z",
@@ -741,9 +743,7 @@
       "restAdvantageDays": 0,
       "spreadLineSf": null,
       "totalLine": null,
-      "broadcast": "NFL",
-      "seasonType": "REG",
-      "weekLabel": "WK 18"
+      "broadcast": "NFL"
     }
   ],
   "teamStats": {
@@ -1062,7 +1062,7 @@
       },
       "LAR": {
         "off_epa_play": 0.04526,
-        "def_epa_play_allowed": -0.10823,
+        "def_epa_play_allowed": -0.10815,
         "margin_turnover_diff_game": -0.44444
       },
       "LV": {
@@ -1131,7 +1131,7 @@
         "margin_turnover_diff_game": -0.125
       },
       "WAS": {
-        "off_epa_play": -0.00957,
+        "off_epa_play": -0.00949,
         "def_epa_play_allowed": 0.04,
         "margin_turnover_diff_game": 0.875
       }
@@ -1562,7 +1562,7 @@
             "rank": 6,
             "value": 376.75,
             "displayValue": "376.8 yds",
-            "leagueAvg": 331.4097,
+            "leagueAvg": 331.4136,
             "leagueAvgDisplay": "331.4 yds",
             "leaderboard": [
               {
@@ -1682,8 +1682,8 @@
               {
                 "team": "WAS",
                 "rank": 20,
-                "val": 325.25,
-                "disp": "325.3 yds"
+                "val": 325.375,
+                "disp": "325.4 yds"
               },
               {
                 "team": "ATL",
@@ -1767,7 +1767,7 @@
             "rank": 1,
             "value": 11.5141,
             "displayValue": "+11.51",
-            "leagueAvg": 0.1103,
+            "leagueAvg": 0.1105,
             "leagueAvgDisplay": "+0.11",
             "leaderboard": [
               {
@@ -1875,7 +1875,7 @@
               {
                 "team": "WAS",
                 "rank": 18,
-                "val": -0.5933,
+                "val": -0.5883,
                 "disp": "-0.59"
               },
               {
@@ -1972,7 +1972,7 @@
             "rank": 11,
             "value": 241.5,
             "displayValue": "241.5 yds",
-            "leagueAvg": 218.9115,
+            "leagueAvg": 218.9154,
             "leagueAvgDisplay": "218.9 yds",
             "leaderboard": [
               {
@@ -2098,8 +2098,8 @@
               {
                 "team": "WAS",
                 "rank": 21,
-                "val": 207,
-                "disp": "207.0 yds"
+                "val": 207.125,
+                "disp": "207.1 yds"
               },
               {
                 "team": "NYJ",
@@ -2177,7 +2177,7 @@
             "rank": 2,
             "value": 8.8083,
             "displayValue": "+8.81",
-            "leagueAvg": 1.6653,
+            "leagueAvg": 1.6654,
             "leagueAvgDisplay": "+1.67",
             "leaderboard": [
               {
@@ -2297,7 +2297,7 @@
               {
                 "team": "WAS",
                 "rank": 20,
-                "val": 0.3683,
+                "val": 0.3733,
                 "disp": "+0.37"
               },
               {
@@ -2797,7 +2797,7 @@
                 "rank": 1,
                 "value": 7.918,
                 "displayValue": "7.92 yds",
-                "leagueAvg": 6.2068,
+                "leagueAvg": 6.2069,
                 "leagueAvgDisplay": "6.21 yds",
                 "leaderboard": [
                   {
@@ -2923,7 +2923,7 @@
                   {
                     "team": "WAS",
                     "rank": 21,
-                    "val": 5.7902,
+                    "val": 5.7937,
                     "disp": "5.79 yds"
                   },
                   {
@@ -3002,7 +3002,7 @@
                 "rank": 3,
                 "value": 4.8541,
                 "displayValue": "+4.85%",
-                "leagueAvg": 0.3344,
+                "leagueAvg": 0.3338,
                 "leagueAvgDisplay": "+0.33%",
                 "leaderboard": [
                   {
@@ -3050,8 +3050,8 @@
                   {
                     "team": "WAS",
                     "rank": 8,
-                    "val": 2.3236,
-                    "disp": "+2.32%"
+                    "val": 2.3065,
+                    "disp": "+2.31%"
                   },
                   {
                     "team": "KC",
@@ -4867,7 +4867,7 @@
           "rank": 9,
           "value": 55.8,
           "displayValue": "55.8%",
-          "leagueAvg": 40.0937,
+          "leagueAvg": 40.0906,
           "leagueAvgDisplay": "40.1%",
           "leaderboard": [
             {
@@ -4897,8 +4897,8 @@
             {
               "team": "LAR",
               "rank": 5,
-              "val": 69.4,
-              "disp": "69.4%"
+              "val": 69.3,
+              "disp": "69.3%"
             },
             {
               "team": "PIT",
@@ -5278,7 +5278,7 @@
             "rank": 3,
             "value": 291.875,
             "displayValue": "291.9 yds",
-            "leagueAvg": 331.0773,
+            "leagueAvg": 331.0807,
             "leagueAvgDisplay": "331.1 yds",
             "leaderboard": [
               {
@@ -5314,8 +5314,8 @@
               {
                 "team": "LAR",
                 "rank": 6,
-                "val": 302.3333,
-                "disp": "302.3 yds"
+                "val": 302.4444,
+                "disp": "302.4 yds"
               },
               {
                 "team": "PIT",
@@ -5483,7 +5483,7 @@
             "rank": 10,
             "value": -2.31,
             "displayValue": "-2.31",
-            "leagueAvg": 0.0157,
+            "leagueAvg": 0.0158,
             "leagueAvgDisplay": "+0.02",
             "leaderboard": [
               {
@@ -5507,7 +5507,7 @@
               {
                 "team": "LAR",
                 "rank": 4,
-                "val": -6.5538,
+                "val": -6.5493,
                 "disp": "-6.55"
               },
               {
@@ -5688,7 +5688,7 @@
             "rank": 8,
             "value": 211,
             "displayValue": "211.0 yds",
-            "leagueAvg": 218.8663,
+            "leagueAvg": 218.8698,
             "leagueAvgDisplay": "218.9 yds",
             "leaderboard": [
               {
@@ -5718,8 +5718,8 @@
               {
                 "team": "LAR",
                 "rank": 5,
-                "val": 198.5556,
-                "disp": "198.6 yds"
+                "val": 198.6667,
+                "disp": "198.7 yds"
               },
               {
                 "team": "CLE",
@@ -5893,7 +5893,7 @@
             "rank": 15,
             "value": 1.6418,
             "displayValue": "+1.64",
-            "leagueAvg": 1.6067,
+            "leagueAvg": 1.6069,
             "leagueAvgDisplay": "+1.61",
             "leaderboard": [
               {
@@ -5911,8 +5911,8 @@
               {
                 "team": "LAR",
                 "rank": 3,
-                "val": -3.9756,
-                "disp": "-3.98"
+                "val": -3.9711,
+                "disp": "-3.97"
               },
               {
                 "team": "JAX",
@@ -6513,7 +6513,7 @@
                 "rank": 7,
                 "value": 5.722,
                 "displayValue": "5.72 yds",
-                "leagueAvg": 6.2116,
+                "leagueAvg": 6.2117,
                 "leagueAvgDisplay": "6.21 yds",
                 "leaderboard": [
                   {
@@ -6561,8 +6561,8 @@
                   {
                     "team": "LAR",
                     "rank": 8,
-                    "val": 5.7832,
-                    "disp": "5.78 yds"
+                    "val": 5.7864,
+                    "disp": "5.79 yds"
                   },
                   {
                     "team": "PIT",
@@ -6718,7 +6718,7 @@
                 "rank": 27,
                 "value": 3.5343,
                 "displayValue": "+3.53%",
-                "leagueAvg": 0.4816,
+                "leagueAvg": 0.4811,
                 "leagueAvgDisplay": "+0.48%",
                 "leaderboard": [
                   {
@@ -6730,8 +6730,8 @@
                   {
                     "team": "LAR",
                     "rank": 2,
-                    "val": -5.7686,
-                    "disp": "-5.77%"
+                    "val": -5.7835,
+                    "disp": "-5.78%"
                   },
                   {
                     "team": "KC",
@@ -11500,7 +11500,7 @@
               {
                 "team": "LAR",
                 "rank": 5,
-                "val": 0.1535,
+                "val": 0.1534,
                 "disp": "+0.153"
               },
               {
@@ -11596,8 +11596,8 @@
               {
                 "team": "WAS",
                 "rank": 21,
-                "val": -0.0496,
-                "disp": "-0.050"
+                "val": -0.0495,
+                "disp": "-0.049"
               },
               {
                 "team": "CLE",
@@ -12090,7 +12090,7 @@
                 "rank": 1,
                 "value": 84.875,
                 "displayValue": "+84.9 yds",
-                "leagueAvg": 0.3325,
+                "leagueAvg": 0.3329,
                 "leagueAvgDisplay": "+0.3 yds",
                 "leaderboard": [
                   {
@@ -12108,8 +12108,8 @@
                   {
                     "team": "LAR",
                     "rank": 3,
-                    "val": 77.4444,
-                    "disp": "+77.4 yds"
+                    "val": 77.3333,
+                    "disp": "+77.3 yds"
                   },
                   {
                     "team": "KC",
@@ -12216,8 +12216,8 @@
                   {
                     "team": "WAS",
                     "rank": 21,
-                    "val": -17,
-                    "disp": "-17.0 yds"
+                    "val": -16.875,
+                    "disp": "-16.9 yds"
                   },
                   {
                     "team": "ARI",
@@ -13121,7 +13121,7 @@
         "rank": 6,
         "value": 376.75,
         "displayValue": "376.8 yds",
-        "leagueAvg": 331.4097,
+        "leagueAvg": 331.4136,
         "leagueAvgDisplay": "331.4 yds",
         "leaderboard": [
           {
@@ -13241,8 +13241,8 @@
           {
             "team": "WAS",
             "rank": 20,
-            "val": 325.25,
-            "disp": "325.3 yds"
+            "val": 325.375,
+            "disp": "325.4 yds"
           },
           {
             "team": "ATL",
@@ -13326,7 +13326,7 @@
         "rank": 1,
         "value": 11.5141,
         "displayValue": "+11.51",
-        "leagueAvg": 0.1103,
+        "leagueAvg": 0.1105,
         "leagueAvgDisplay": "+0.11",
         "leaderboard": [
           {
@@ -13434,7 +13434,7 @@
           {
             "team": "WAS",
             "rank": 18,
-            "val": -0.5933,
+            "val": -0.5883,
             "disp": "-0.59"
           },
           {
@@ -13531,7 +13531,7 @@
         "rank": 11,
         "value": 241.5,
         "displayValue": "241.5 yds",
-        "leagueAvg": 218.9115,
+        "leagueAvg": 218.9154,
         "leagueAvgDisplay": "218.9 yds",
         "leaderboard": [
           {
@@ -13657,8 +13657,8 @@
           {
             "team": "WAS",
             "rank": 21,
-            "val": 207,
-            "disp": "207.0 yds"
+            "val": 207.125,
+            "disp": "207.1 yds"
           },
           {
             "team": "NYJ",
@@ -13736,7 +13736,7 @@
         "rank": 2,
         "value": 8.8083,
         "displayValue": "+8.81",
-        "leagueAvg": 1.6653,
+        "leagueAvg": 1.6654,
         "leagueAvgDisplay": "+1.67",
         "leaderboard": [
           {
@@ -13856,7 +13856,7 @@
           {
             "team": "WAS",
             "rank": 20,
-            "val": 0.3683,
+            "val": 0.3733,
             "disp": "+0.37"
           },
           {
@@ -14351,7 +14351,7 @@
         "rank": 1,
         "value": 7.918,
         "displayValue": "7.92 yds",
-        "leagueAvg": 6.2068,
+        "leagueAvg": 6.2069,
         "leagueAvgDisplay": "6.21 yds",
         "leaderboard": [
           {
@@ -14477,7 +14477,7 @@
           {
             "team": "WAS",
             "rank": 21,
-            "val": 5.7902,
+            "val": 5.7937,
             "disp": "5.79 yds"
           },
           {
@@ -14556,7 +14556,7 @@
         "rank": 3,
         "value": 4.8541,
         "displayValue": "+4.85%",
-        "leagueAvg": 0.3344,
+        "leagueAvg": 0.3338,
         "leagueAvgDisplay": "+0.33%",
         "leaderboard": [
           {
@@ -14604,8 +14604,8 @@
           {
             "team": "WAS",
             "rank": 8,
-            "val": 2.3236,
-            "disp": "+2.32%"
+            "val": 2.3065,
+            "disp": "+2.31%"
           },
           {
             "team": "KC",
@@ -16401,7 +16401,7 @@
         "rank": 9,
         "value": 55.8,
         "displayValue": "55.8%",
-        "leagueAvg": 40.0937,
+        "leagueAvg": 40.0906,
         "leagueAvgDisplay": "40.1%",
         "leaderboard": [
           {
@@ -16431,8 +16431,8 @@
           {
             "team": "LAR",
             "rank": 5,
-            "val": 69.4,
-            "disp": "69.4%"
+            "val": 69.3,
+            "disp": "69.3%"
           },
           {
             "team": "PIT",
@@ -16811,7 +16811,7 @@
         "rank": 3,
         "value": 291.875,
         "displayValue": "291.9 yds",
-        "leagueAvg": 331.0773,
+        "leagueAvg": 331.0807,
         "leagueAvgDisplay": "331.1 yds",
         "leaderboard": [
           {
@@ -16847,8 +16847,8 @@
           {
             "team": "LAR",
             "rank": 6,
-            "val": 302.3333,
-            "disp": "302.3 yds"
+            "val": 302.4444,
+            "disp": "302.4 yds"
           },
           {
             "team": "PIT",
@@ -17016,7 +17016,7 @@
         "rank": 10,
         "value": -2.31,
         "displayValue": "-2.31",
-        "leagueAvg": 0.0157,
+        "leagueAvg": 0.0158,
         "leagueAvgDisplay": "+0.02",
         "leaderboard": [
           {
@@ -17040,7 +17040,7 @@
           {
             "team": "LAR",
             "rank": 4,
-            "val": -6.5538,
+            "val": -6.5493,
             "disp": "-6.55"
           },
           {
@@ -17221,7 +17221,7 @@
         "rank": 8,
         "value": 211,
         "displayValue": "211.0 yds",
-        "leagueAvg": 218.8663,
+        "leagueAvg": 218.8698,
         "leagueAvgDisplay": "218.9 yds",
         "leaderboard": [
           {
@@ -17251,8 +17251,8 @@
           {
             "team": "LAR",
             "rank": 5,
-            "val": 198.5556,
-            "disp": "198.6 yds"
+            "val": 198.6667,
+            "disp": "198.7 yds"
           },
           {
             "team": "CLE",
@@ -17426,7 +17426,7 @@
         "rank": 15,
         "value": 1.6418,
         "displayValue": "+1.64",
-        "leagueAvg": 1.6067,
+        "leagueAvg": 1.6069,
         "leagueAvgDisplay": "+1.61",
         "leaderboard": [
           {
@@ -17444,8 +17444,8 @@
           {
             "team": "LAR",
             "rank": 3,
-            "val": -3.9756,
-            "disp": "-3.98"
+            "val": -3.9711,
+            "disp": "-3.97"
           },
           {
             "team": "JAX",
@@ -18041,7 +18041,7 @@
         "rank": 7,
         "value": 5.722,
         "displayValue": "5.72 yds",
-        "leagueAvg": 6.2116,
+        "leagueAvg": 6.2117,
         "leagueAvgDisplay": "6.21 yds",
         "leaderboard": [
           {
@@ -18089,8 +18089,8 @@
           {
             "team": "LAR",
             "rank": 8,
-            "val": 5.7832,
-            "disp": "5.78 yds"
+            "val": 5.7864,
+            "disp": "5.79 yds"
           },
           {
             "team": "PIT",
@@ -18246,7 +18246,7 @@
         "rank": 27,
         "value": 3.5343,
         "displayValue": "+3.53%",
-        "leagueAvg": 0.4816,
+        "leagueAvg": 0.4811,
         "leagueAvgDisplay": "+0.48%",
         "leaderboard": [
           {
@@ -18258,8 +18258,8 @@
           {
             "team": "LAR",
             "rank": 2,
-            "val": -5.7686,
-            "disp": "-5.77%"
+            "val": -5.7835,
+            "disp": "-5.78%"
           },
           {
             "team": "KC",
@@ -22991,7 +22991,7 @@
           {
             "team": "LAR",
             "rank": 5,
-            "val": 0.1535,
+            "val": 0.1534,
             "disp": "+0.153"
           },
           {
@@ -23087,8 +23087,8 @@
           {
             "team": "WAS",
             "rank": 21,
-            "val": -0.0496,
-            "disp": "-0.050"
+            "val": -0.0495,
+            "disp": "-0.049"
           },
           {
             "team": "CLE",
@@ -23576,7 +23576,7 @@
         "rank": 1,
         "value": 84.875,
         "displayValue": "+84.9 yds",
-        "leagueAvg": 0.3325,
+        "leagueAvg": 0.3329,
         "leagueAvgDisplay": "+0.3 yds",
         "leaderboard": [
           {
@@ -23594,8 +23594,8 @@
           {
             "team": "LAR",
             "rank": 3,
-            "val": 77.4444,
-            "disp": "+77.4 yds"
+            "val": 77.3333,
+            "disp": "+77.3 yds"
           },
           {
             "team": "KC",
@@ -23702,8 +23702,8 @@
           {
             "team": "WAS",
             "rank": 21,
-            "val": -17,
-            "disp": "-17.0 yds"
+            "val": -16.875,
+            "disp": "-16.9 yds"
           },
           {
             "team": "ARI",
@@ -24405,23 +24405,23 @@
       "teamInjuriesUrl": "https://www.espn.com/nfl/team/injuries/_/name/dal",
       "byeWeek": 14,
       "summary": {
-        "overallAvailabilityScore": 78,
-        "activeStartersHealthy": 16,
+        "overallAvailabilityScore": 70,
+        "activeStartersHealthy": 15,
         "totalStarters": 22,
-        "startersOutCount": 0,
-        "startersDoubtfulOnlyCount": 1,
-        "startersLongShotCount": 2,
+        "startersOutCount": 2,
+        "startersDoubtfulOnlyCount": 0,
+        "startersLongShotCount": 3,
         "startersDoubtfulCount": 3,
-        "startersQuestionableCount": 3,
-        "startersGtdCount": 3,
-        "startersUnresolvedCount": 6,
-        "ruledOutCount": 0,
-        "doubtfulCount": 1,
-        "longShotCount": 3,
+        "startersQuestionableCount": 2,
+        "startersGtdCount": 2,
+        "startersUnresolvedCount": 7,
+        "ruledOutCount": 3,
+        "doubtfulCount": 0,
+        "longShotCount": 4,
         "doubtfulOrLongShotCount": 4,
-        "gtdCount": 6,
-        "questionableOrDoubtfulCount": 10,
-        "clearedCount": 0,
+        "gtdCount": 3,
+        "questionableOrDoubtfulCount": 7,
+        "clearedCount": 4,
         "irCount": 7,
         "irOpenWindowCount": 2,
         "irSeasonEndingCount": 3
@@ -25114,27 +25114,27 @@
       ],
       "injuryReport": [
         {
-          "name": "P.J. Locke",
-          "position": "S",
-          "unit": "Defense",
-          "jersey": 1,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929850.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3929850/pj-locke",
-          "snapPct": 53,
-          "wed": "-",
+          "name": "Jake Ferguson",
+          "position": "TE",
+          "unit": "Offense",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242355.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4242355/jake-ferguson",
+          "snapPct": 56,
+          "wed": "DNP",
           "thu": "-",
           "fri": "-",
-          "injuryType": "Concussion",
-          "gameStatus": "Questionable",
+          "injuryType": "Knee/Ankle",
+          "gameStatus": "Out",
           "shortComment": "out",
           "longComment": "out",
           "isStarter": true,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 18,
-          "playTier": "DOUBTFUL",
-          "playBadgeLabel": "18% • Doubtful",
+          "playProbabilityPct": 0,
+          "playTier": "OUT",
+          "playBadgeLabel": "0% • Out",
           "factors": [
-            "Remains in early stages of NFL 5-Step Concussion Protocol"
+            "Officially ruled Out on weekly game status report"
           ],
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
@@ -25146,97 +25146,45 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429676.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4429676/tyler-goodson",
           "snapPct": 20,
-          "wed": "-",
+          "wed": "DNP",
           "thu": "-",
           "fri": "-",
-          "injuryType": "Knee - ACL + MCL",
-          "gameStatus": "Questionable",
+          "injuryType": "Ankle/Knee",
+          "gameStatus": "Out",
           "shortComment": "Goodson sustained ACL and MCL sprains in his knee during Sunday's 27-23 win over the Colts, a source tells Todd Archer of ESPN.com.",
           "longComment": "Cowboys head coach Brian Schottenheimer already confirmed Monday that Goodson would be sidelined for multiple weeks due to the injury, and now that details have emerged regarding the severity of the issue, it's conceivable that the 26-year-old could be headed for injured reserve. The loss of Goodson leaves the Cowboys with no healthy running backs on the active roster beyond starter Javonte Williams, but team owner Jerry jones said that the team plans to sign a free-agent back Tuesday, per Archer. Dallas also has Israel Abanikanda and Jashaun Corbin as backfield options on the practice squad.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 35,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "35% • Long Shot",
+          "playProbabilityPct": 0,
+          "playTier": "OUT",
+          "playBadgeLabel": "0% • Out",
           "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report",
-            "High-caution structural joint/ligament stability profile (Knee - ACL + MCL)"
+            "Officially ruled Out on weekly game status report"
           ],
           "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
         },
         {
-          "name": "Jake Ferguson",
-          "position": "TE",
-          "unit": "Offense",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242355.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4242355/jake-ferguson",
-          "snapPct": 56,
-          "wed": "-",
+          "name": "P.J. Locke",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929850.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3929850/pj-locke",
+          "snapPct": 53,
+          "wed": "DNP",
           "thu": "-",
           "fri": "-",
-          "injuryType": "Knee",
-          "gameStatus": "Questionable",
+          "injuryType": "Concussion",
+          "gameStatus": "Out",
           "shortComment": "out",
           "longComment": "out",
           "isStarter": true,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 44,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "44% • Long Shot",
+          "playProbabilityPct": 0,
+          "playTier": "OUT",
+          "playBadgeLabel": "0% • Out",
           "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report"
-          ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
-        },
-        {
-          "name": "Donovan Ezeiruaku",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 6,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683848.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4683848/donovan-ezeiruaku",
-          "snapPct": 65,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Ankle",
-          "gameStatus": "Questionable",
-          "shortComment": "Ezeiruaku (ankle) is considered day-to-day, Nick Harris of the Fort Worth Star-Telegram reports.",
-          "longComment": "Ezeiruaku suffered an ankle injury in Sunday's meeting with the Colts and didn't return. While he hasn't been ruled out for Week 10 versus the 49ers, Ezeiruaku may not be able to suit up for that one. If that's the case, Von Miller and Marist Liufau could see more snaps.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 45,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "45% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report"
-          ],
-          "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
-        },
-        {
-          "name": "Luke Schoonmaker",
-          "position": "TE",
-          "unit": "Offense",
-          "jersey": 86,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
-          "snapPct": 51,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Groin",
-          "gameStatus": "Questionable",
-          "shortComment": "questionable",
-          "longComment": "questionable",
-          "isStarter": false,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 73,
-          "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "73% • GTD",
-          "factors": [
-            "Questionable tag adjusted by player career prior (78%)",
-            "Soft-tissue re-aggravation caution (Groin)"
+            "Officially ruled Out on weekly game status report"
           ],
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
@@ -25248,7 +25196,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426485.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426485/jonathan-mingo",
           "snapPct": 37,
-          "wed": "-",
+          "wed": "DNP",
           "thu": "-",
           "fri": "-",
           "injuryType": "Ankle",
@@ -25257,11 +25205,11 @@
           "longComment": "Mingo was hurt in the second half and may not be able to return to the game. Prior to his exit, he caught one of three targets for 23 yards. With George Pickens (hamstring) and KaVontae Turpin (ribs) inactive Sunday, the Cowboys will be down to CeeDee Lamb, Ryan Flournoy, Camden Brown and Jordan Hudson at wideout if Mingo can't return.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 76,
-          "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "76% • GTD",
+          "playProbabilityPct": 35,
+          "playTier": "UNLIKELY",
+          "playBadgeLabel": "35% • Long Shot",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)"
+            "Did Not Participate (DNP) on Wednesday"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
         },
@@ -25273,7 +25221,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
           "snapPct": 54,
-          "wed": "-",
+          "wed": "DNP",
           "thu": "-",
           "fri": "-",
           "injuryType": "Ankle",
@@ -25282,13 +25230,63 @@
           "longComment": "questionable",
           "isStarter": true,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 76,
-          "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "76% • GTD",
+          "playProbabilityPct": 35,
+          "playTier": "UNLIKELY",
+          "playBadgeLabel": "35% • Long Shot",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)"
+            "Did Not Participate (DNP) on Wednesday"
           ],
           "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
+        },
+        {
+          "name": "Malik Hooker",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 24,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121415.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3121415/malik-hooker",
+          "snapPct": 64,
+          "wed": "DNP",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "NIR-Personal",
+          "gameStatus": "Questionable",
+          "shortComment": "",
+          "longComment": "",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 36,
+          "playTier": "UNLIKELY",
+          "playBadgeLabel": "36% • Long Shot",
+          "factors": [
+            "Did Not Participate (DNP) on Wednesday"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+        },
+        {
+          "name": "Donovan Ezeiruaku",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683848.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4683848/donovan-ezeiruaku",
+          "snapPct": 65,
+          "wed": "DNP",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Ankle",
+          "gameStatus": "Questionable",
+          "shortComment": "Ezeiruaku (ankle) is considered day-to-day, Nick Harris of the Fort Worth Star-Telegram reports.",
+          "longComment": "Ezeiruaku suffered an ankle injury in Sunday's meeting with the Colts and didn't return. While he hasn't been ruled out for Week 10 versus the 49ers, Ezeiruaku may not be able to suit up for that one. If that's the case, Von Miller and Marist Liufau could see more snaps.",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 37,
+          "playTier": "UNLIKELY",
+          "playBadgeLabel": "37% • Long Shot",
+          "factors": [
+            "Did Not Participate (DNP) on Wednesday"
+          ],
+          "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
         },
         {
           "name": "George Pickens",
@@ -25298,7 +25296,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426354.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426354/george-pickens",
           "snapPct": 78,
-          "wed": "-",
+          "wed": "LP",
           "thu": "-",
           "fri": "-",
           "injuryType": "Hamstring",
@@ -25311,7 +25309,7 @@
           "playTier": "FIFTY_FIFTY",
           "playBadgeLabel": "77% • GTD",
           "factors": [
-            "Questionable tag adjusted by player career prior (82%)",
+            "Wednesday Limited Participation (LP); player toughness prior = 82%",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
           "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps."
@@ -25324,10 +25322,10 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
           "snapPct": 71,
-          "wed": "-",
+          "wed": "LP",
           "thu": "-",
           "fri": "-",
-          "injuryType": "Hamstring",
+          "injuryType": "Hamstring/Back",
           "gameStatus": "Questionable",
           "shortComment": "questionable",
           "longComment": "questionable",
@@ -25337,8 +25335,8 @@
           "playTier": "FIFTY_FIFTY",
           "playBadgeLabel": "77% • GTD",
           "factors": [
-            "Questionable tag adjusted by player career prior (82%)",
-            "Soft-tissue re-aggravation caution (Hamstring)"
+            "Wednesday Limited Participation (LP); player toughness prior = 82%",
+            "Soft-tissue re-aggravation caution (Hamstring/Back)"
           ],
           "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         },
@@ -25350,7 +25348,7 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3676833.png",
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
           "snapPct": 27,
-          "wed": "-",
+          "wed": "LP",
           "thu": "-",
           "fri": "-",
           "injuryType": "Ribs",
@@ -25363,10 +25361,112 @@
           "playTier": "FIFTY_FIFTY",
           "playBadgeLabel": "80% • GTD",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)",
+            "Wednesday Limited Participation (LP); player toughness prior = 76%",
             "Manageable pain-tolerance injury profile (Ribs)"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
+        },
+        {
+          "name": "Luke Schoonmaker",
+          "position": "TE",
+          "unit": "Offense",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
+          "snapPct": 51,
+          "wed": "FP",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Groin",
+          "gameStatus": "Questionable",
+          "shortComment": "Schoonmaker (groin) was a full participant in Wednesday's practice, Tommy Yarrish of the Cowboys' official site reports.",
+          "longComment": "The tight end has missed the past two games for Dallas, but appears to be ready to return and could see significant snaps behind Brevyn Spann-Ford while Jake Ferguson (knee) is sidelined.",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 86,
+          "playTier": "LIKELY",
+          "playBadgeLabel": "86% • Cleared",
+          "factors": [
+            "Full Participation (FP) logged on Wednesday",
+            "Soft-tissue re-aggravation caution (Groin)"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+        },
+        {
+          "name": "Marist Liufau",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427816.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4427816/marist-liufau",
+          "snapPct": 82,
+          "wed": "FP",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Forearm",
+          "gameStatus": "Questionable",
+          "shortComment": "Liufau (forearm) is active for Sunday's game against the Colts.",
+          "longComment": "Liufau broke his left forearm in the Cowboys' preseason finale against the Saints and has yet to play in the 2026 regular season. The linebacker is set to make his debut in Sunday's contest after being activated from IR on Saturday.",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 91,
+          "playTier": "LIKELY",
+          "playBadgeLabel": "91% • Cleared",
+          "factors": [
+            "Full Participation (FP) logged on Wednesday"
+          ],
+          "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
+          "name": "Brevyn Spann-Ford",
+          "position": "TE",
+          "unit": "Offense",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360967.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4360967/brevyn-spann-ford",
+          "snapPct": 59,
+          "wed": "FP",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Shoulder",
+          "gameStatus": "Questionable",
+          "shortComment": "Spann-Ford caught two of three targets for 20 yards during Sunday's 27-23 win versus the Colts.",
+          "longComment": "Spann-Ford opened Week 9 in his typical reserve role behind Jake Ferguson at tight end, but Ferguson suffered a knee injury in the third quarter. With Ferguson set to miss multiple weeks of action, Spann-Ford will have a chance to operate as the team's primary option at tight end beginning in Week 10 versus the 49ers. On the season thus far, Spann-Ford has reeled in 19 of 27 targets for 136 yards and four touchdowns over nine contests.",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 95,
+          "playTier": "LIKELY",
+          "playBadgeLabel": "95% • Cleared",
+          "factors": [
+            "Full Participation (FP) logged on Wednesday",
+            "Manageable pain-tolerance injury profile (Shoulder)"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+        },
+        {
+          "name": "Von Miller",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 40,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13976.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/13976/von-miller",
+          "snapPct": 23,
+          "wed": "Vet Rest",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "NIR-Rest",
+          "gameStatus": "No Designation (Cleared)",
+          "shortComment": "",
+          "longComment": "",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 98,
+          "playTier": "ACTIVE",
+          "playBadgeLabel": "98% • Vet Rest (Full Go)",
+          "factors": [
+            "Habitual Veteran Rest prior (Von Miller maintenance schedule)"
+          ],
+          "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
         }
       ],
       "keyStartersHealthy": [
@@ -25608,11 +25708,11 @@
           "injuryType": "Hip",
           "isSeasonEnding": false,
           "isPracticeWindowOpen": false,
-          "placedWeek": 1,
-          "earliestEligibleWeek": 5,
+          "placedWeek": 6,
+          "earliestEligibleWeek": 10,
           "projectedReturnWeek": "TBD (21d Window Not Open)",
           "byeWeekNote": "DAL Bye Week 14 • 4-game NFL minimum",
-          "beatNote": "ir",
+          "beatNote": "The fourth-round rookie cornerback has yet to play in a game this season after being placed on injured reserve ahead of the Week 1 opener. Once he does return to action, Moore will provide depth behind Joey Porter (ankle), DaRon Bland, Caleb Downs and Cobie Durant.",
           "playProbabilityPct": 0,
           "playBadgeLabel": "0% • IR"
         },
@@ -25765,40 +25865,78 @@
     },
     "coachingMatchup": {
       "headline": "Kyle Shanahan & DC Raheem Morris vs. Cowboys HC Brian Schottenheimer, OC Klayton Adams, DC Matt Eberflus",
-      "summary": "This Week 10 clash at AT&T Stadium is a high-leverage schematic chess match between two top-7 NFL passing attacks (#2 SF at +8.81 EPA/gm vs. #7 DAL at +7.09 EPA/gm) that win in completely different ways. Kyle Shanahan will use pre-snap shift/orbit motion, 21-personnel formations, and newly acquired slot technician Keenan Allen to stress DC Matt Eberflus's spot-drop Cover 3 and Tampa-2 zone spacing between the hashes. On the other side of the ball, Raheem Morris's disguised two-high shells and Wide-9 interior stunt packages (featuring DeForest Buckner and former Cowboy Osa Odighizuwa alongside Nick Bosa) are built to collapse Dak Prescott's internal pocket and force checkdowns in front of Fred Warner and Deommodore Lenoir.",
+      "summary": "Dallas wins high-possession track meets (27.3 PPG, #6 NFL) to mask the league's #32 defense in EPA allowed/game (+6.15) and #32 3rd-down defense (48.3%). That script plays directly into Kyle Shanahan's ball-control efficiency (#1 Off. EPA at +11.51/gm) while DC Raheem Morris's #1 run-stopping structure (3.34 yds/carry allowed) dares HC Brian Schottenheimer and OC Klayton Adams to abandon balance.",
       "bullets": [
-        "Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #2 in Passing EPA/game (+8.81) and #1 in Sack Rate Allowed (3.3%). Against Matt Eberflus's zone-heavy structure—which relies on four-man rush integrity (#23 in sacks/gm) and disciplined landmark drops rather than heavy blitzing—watch Brock Purdy attack the 12-to-22 yard intermediate honey-hole between the hook/curl linebackers and deep safeties off play-action.",
-        "Keenan Allen's Option-Route Integration & 21-Personnel Spacing: With Deebo Samuel Sr. (hamstring, GTD) managing his workload, Tuesday's trade for Keenan Allen gives Shanahan an elite zone-beating separator from the slot. When SF condenses splits or motions Christian McCaffrey out of the backfield, Eberflus must choose between widening his curl/flat defender (opening George Kittle and Allen on choice/dagger concepts over the middle) or staying tight inside (conceding perimeter leverage to McCaffrey and Brandin Cooks).",
-        "Klayton Adams's Gap-Scheme Run Game vs. SF's Rebuilt Interior Front: Cowboys OC Klayton Adams pairs Brian Schottenheimer's West Coast pass concepts with heavy pin-and-pull, counter, and duo run schemes behind interior maulers Tyler Smith, Cooper Beebe, and Tyler Booker. Watch how DeForest Buckner and Osa Odighizuwa (who practiced against this exact Dallas O-line daily before joining SF) anchor the A- and B-gaps on early downs so Fred Warner can stay clean to trigger downhill.",
-        "Raheem Morris's Disguised Split-Safety Rotations vs. Dak Prescott: Prescott ranks #7 in Passing EPA/game (+7.09) and feasts when he can diagnose single-high vs. two-high pre-snap to isolate CeeDee Lamb and George Pickens. Expect Morris to hold static two-high shells until the snap before rotating late into Cover 4 Quarters, Cover 6, or cloud-trap looks—forcing Prescott to hold the ball an extra hitch while Nick Bosa works 1-on-1 against LT Tyler Guyton or RT Terence Steele.",
-        "Red-Zone & Tight-End Attrition Leverage: With Dallas tight ends Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin) banged up and safety P.J. Locke (18% Doubtful, concussion) unlikely to clear protocol, watch Shanahan hunt safety Caleb Downs and linebacker Donovan Ezeiruaku (45% Long Shot, ankle) in heavy 12/21 red-zone personnel while Morris brackets CeeDee Lamb on 3rd-and-medium."
+        "Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #2 in Passing EPA/game (+8.81) and #1 in Sack Rate Allowed (3.3%) against DC Matt Eberflus's low-blitz four-man rush (#23 in sacks/gm) and spot-drop Cover 3 and Tampa-2 shells. Shanahan counters landmark zone drops by pairing 21 personnel and condensed splits with pre-snap jet motion and orbit motion—widening curl/flat defenders to attack the 12-to-22 yard honey-hole between hook/curl linebackers and deep safeties on play-action choice/dagger concepts between the numbers and between the hashes.",
+        "Gap-Scheme Run Script vs. Split-Safety Box Math: Cowboys OC Klayton Adams leans on downhill gap-scheme runs—pin-and-pull, counter, and duo targeting the A- and B-gaps—to stay ahead of the chains, yet runs into SF's #1 NFL rush defense (-3.95 Rush EPA/gm). Morris holds disguised two-high shells until the snap before spinning into Quarters, Cover 6, or cloud-trap, stuffing early-down runs out of light boxes while holding opponents to an NFL-best 2.9 explosive plays/gm (#1).",
+        "Money-Down, Red-Zone & Penalty Asymmetry: Situational execution is the steepest coaching mismatch on the Week 10 slate—SF converts 51.7% on 3rd down (#2) and 84.6% of red-zone trips into TDs (#1), whereas Eberflus's unit surrenders 48.3% on 3rd down (#32) and 67.7% red-zone TDs (#25). Compounded by Dallas's #31 penalty discipline (74.1 yds/gm vs. SF's 55.6 yds at #12), sustained 10-play 12/21 personnel drives bleed the clock and strand Dallas's #6 scoring offense on the bench.",
+        "Late-Down Disguise & Game-Script Trigger: Brian Schottenheimer's West Coast passing attack (#7 Passing EPA at +7.09/gm) thrives on rhythm sight adjustments when ahead of the sticks, but becomes vulnerable when trailing by two scores. If Shanahan scripts an early lead off opening bootleg and play-action sequenced looks, Morris unlocks 3rd-and-long sim pressure and Wide-9 interior T-E stunt packages without sacrificing seven-man coverage."
       ]
     },
     "keyMatchupsMatrix": [
       {
-        "unitMatchup": "DeForest Buckner + Osa Odighizuwa & Nick Bosa vs. Dak Prescott & Cowboys Interior O-Line (#5 Sack Rate Allowed, 4.0%)",
-        "advantage": "SF Trench Edge",
-        "tacticalDetail": "Dallas protects Dak Prescott well overall (4.0% sack rate allowed, #5 NFL) behind young interior anchors Cooper Beebe (C #56), Tyler Smith (LG #73), and Tyler Booker (RG #52). The key to watch is Osa Odighizuwa (#92) facing his former teammates alongside DeForest Buckner: when Buckner and Odighizuwa win vertical A/B-gap penetration on T-E stunts, Cooper Beebe cannot slide protection help to LT Tyler Guyton or RT Terence Steele, leaving Nick Bosa isolated 1-on-1 on the Wide-9 rail."
-      },
-      {
-        "unitMatchup": "Brock Purdy, George Kittle & Keenan Allen vs. DC Matt Eberflus's Tampa-2 / Cover 3 Seam & Hook Zones",
+        "phaseTag": "Middle-Field Spine",
+        "unitMatchup": "Brock Purdy, George Kittle & Keenan Allen vs. LB DeMarvion Overshown & CB DaRon Bland",
         "advantage": "SF Heavy Edge",
-        "tacticalDetail": "Purdy (#2 Passing EPA/gm at +8.81) thrives on anticipation throws between the numbers. With Dallas safety P.J. Locke (18% Doubtful, concussion) and LB Donovan Ezeiruaku (45% Long Shot, ankle) compromised—and LB DeMarvion Overshown (77% GTD) playing through a knee tag—watch Shanahan pair George Kittle's seam/over routes with Keenan Allen's underneath option routes to high-low Dallas's middle-hook linebacker and force CB DaRon Bland to tackle in space."
+        "sfPlayers": [
+          "Brock Purdy",
+          "George Kittle",
+          "Keenan Allen"
+        ],
+        "statComparison": "SF: Purdy +70.5 EPA (81.4 QBR, +4.9% CPOE) · Kittle 483 Yds, 5 TD | DAL: #27 Pass EPA Allowed (+6.10/gm)",
+        "tacticalDetail": "With Mike Evans (22% Long Shot, Achilles) unlikely to go and Deebo Samuel Sr. (56% GTD, hamstring) on a managed pitch count, deadline pickup Keenan Allen (40 rec, 20 1st downs, 2.41 yds separation) steps immediately into Brock Purdy's anticipation tree between the numbers alongside George Kittle (3.41 yds separation, 0.51 WOPR). Dallas's middle spine is heavily compromised with S P.J. Locke (18% Doubtful, concussion protocol) and LB Donovan Ezeiruaku (45% Long Shot, ankle) hurting while LB DeMarvion Overshown (77% GTD, hamstring) plays through a soft-tissue tag.",
+        "filmTell": "Watch #85 George Kittle's vertical seam/over stem against S #13 Caleb Downs: when Downs sinks to cap Kittle at 18 yards, Purdy rips 8-yard option routes to Keenan Allen breaking off Overshown's leverage."
       },
       {
-        "unitMatchup": "49ers Pass Protection (#1 NFL, 3.3% Sack Rate) vs. Quinnen Williams, Kenny Clark & Rashan Gary (#23 Sacks/Gm)",
+        "phaseTag": "Interior Pass-Rush Revenge",
+        "unitMatchup": "DeForest Buckner, Osa Odighizuwa & Nick Bosa vs. Dak Prescott, C Cooper Beebe & RG Tyler Booker",
+        "advantage": "SF Trench Edge",
+        "sfPlayers": [
+          "DeForest Buckner",
+          "Osa Odighizuwa",
+          "Nick Bosa"
+        ],
+        "statComparison": "SF: Buckner + Odighizuwa 6.0 Sacks, 21 Pressures, 19 QB Hits | DAL: 4.0% Sack Rate Allowed (#5 NFL)",
+        "tacticalDetail": "Former Cowboy Osa Odighizuwa (#92 — 11 pressures, 9 QB hits) knows every pass-set tell of Dallas interior starters Tyler Smith (LG #73), Cooper Beebe (C #56), and Tyler Booker (RG #52), and now pairs with DeForest Buckner (#99 — 4.0 sacks, 10 QB hits, 81% snaps). Winning immediate 3-tech and 2i A/B-gap penetration on T-E stunts prevents Beebe from sliding protection toward LT Tyler Guyton (#60) or RT Terence Steele (#78), isolating Nick Bosa 1-on-1 on the Wide-9 rail to collapse Dak Prescott's step-up lane.",
+        "filmTell": "On 3rd-and-5+, key C #56 Cooper Beebe's initial slide direction—whenever Beebe turns toward Buckner (#99), Odighizuwa (#92) and Bosa (#97) get two-on-two twist lanes on the opposite side."
+      },
+      {
+        "phaseTag": "Perimeter & Slot Star Clash",
+        "unitMatchup": "Renardo Green, Deommodore Lenoir & Fred Warner vs. CeeDee Lamb & George Pickens",
+        "advantage": "Even Star Clash",
+        "sfPlayers": [
+          "Renardo Green",
+          "Deommodore Lenoir",
+          "Fred Warner"
+        ],
+        "statComparison": "SF: Green 4 INT, 61.6 Passer Rtg Allowed · Lenoir 6.3 Yds/Tgt | DAL: 256.9 Pass Yds/Gm (#6 NFL)",
+        "tacticalDetail": "Both Deommodore Lenoir (82% GTD, foot) and ballhawk Renardo Green (82% GTD, back; team-high 4 INT, 58.1% comp allowed) carry late-week tags into an elite test against CeeDee Lamb's Z/slot motion stacks and George Pickens's (77% GTD, hamstring) boundary back-shoulder fades outside the numbers. Lenoir sliding inside in nickel packages to disrupt Lamb at the top of the stem while Fred Warner (76 tackles, 4 FF) walls off deep dig windows is Sunday's premier talent-on-talent duel.",
+        "filmTell": "When CeeDee Lamb motions into a tight slot stack on 3rd down, check whether Lenoir (#2) travels inside with S Malik Mustapha (#6, 59.4 passer rating allowed) shading over the top in bracket coverage."
+      },
+      {
+        "phaseTag": "Wide-Zone & Space Mismatch",
+        "unitMatchup": "Christian McCaffrey & Kyle Juszczyk vs. LB Dee Winters, S Caleb Downs & Cowboys Run Fits",
+        "advantage": "SF Heavy Edge",
+        "sfPlayers": [
+          "Christian McCaffrey",
+          "Kyle Juszczyk"
+        ],
+        "statComparison": "SF: McCaffrey 727 Scrimmage Yds, 10 TD, +0.32 RYOE/Att | DAL: 147.4 yds/Gm Allowed (#31 NFL)",
+        "tacticalDetail": "Christian McCaffrey (457 rush yds, 9 rush TD; 36 rec, 198 YAC) attacks a Dallas front surrendering 4.99 yds per carry (#30 NFL). Behind Kyle Juszczyk's lead insert blocks on outside zone and duo, McCaffrey forces S Caleb Downs (93% snaps) into exhausting alley tackle duty on early downs before isolating LB Dee Winters in space on angle/Texas routes and check-release choice routes.",
+        "filmTell": "Watch McCaffrey (#23) aligned offset in shotgun on 2nd-and-medium: if Dallas's linebackers flow hard laterally with wide-zone action, look for the backside B-gap cutback or immediate Texas-route pivot."
+      },
+      {
+        "phaseTag": "Pocket Integrity & TE Attrition",
+        "unitMatchup": "Trent Williams, Dominick Puni & Jake Brendel vs. Quinnen Williams, Kenny Clark & Rashan Gary",
         "advantage": "SF Edge",
-        "tacticalDetail": "Dallas generates sacks on just 2.00 plays per game (#23 NFL), relying on interior push from DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge power from Rashan Gary (#7). Watch LT Trent Williams erase Dallas's right-side rush solo while RG Dominick Puni and C Jake Brendel use combo-blocks and 21-personnel Kittle/Juszczyk play-action chips to keep Purdy's internal throwing lanes clean."
-      },
-      {
-        "unitMatchup": "Deommodore Lenoir, Renardo Green & Fred Warner vs. CeeDee Lamb & George Pickens (77% GTD)",
-        "advantage": "Even High-Stakes Battle",
-        "tacticalDetail": "Brian Schottenheimer moves CeeDee Lamb across the formation (Z, slot, and motion stacks) while using George Pickens on boundary verticals and back-shoulder fades. Watch Deommodore Lenoir travel into the slot in nickel packages to disrupt Lamb's release timing at the top of the stem, while Fred Warner carries deep middle crossers to prevent Prescott from hitting explosive chunk plays off play-action."
-      },
-      {
-        "unitMatchup": "Christian McCaffrey Outside Zone & Choice Routes vs. Cowboys Second-Level Run Fits",
-        "advantage": "SF Edge",
-        "tacticalDetail": "San Francisco ranks #3 in Rushing EPA/game and uses McCaffrey as both an outside-zone tempo setter and a 3rd-down mismatch weapon. Watch how jet/orbit motion forces Dallas's safeties (Caleb Downs) to widen pre-snap—creating cutback lanes behind Trent Williams and George Kittle on early downs and isolating McCaffrey on angle/Texas routes against linebackers in pass coverage."
+        "sfPlayers": [
+          "Trent Williams",
+          "Dominick Puni",
+          "Jake Brendel"
+        ],
+        "statComparison": "SF: 3.3% Sack Rate Allowed (#1 NFL), 17.9% Pressure | DAL: 1.89 Sacks/Gm (#23 NFL)",
+        "tacticalDetail": "Dallas features heavyweight interior talent in DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge rusher Rashan Gary (#7), yet ranks #23 in sacks/gm (1.89). LT Trent Williams (#71) erasing Gary 1-on-1 on the blindside lets C Jake Brendel (#64) and RG Dominick Puni (#77, 99% snaps) sustain firm interior combo-blocks on Quinnen Williams—giving Purdy 3.01s average time-to-throw while Dallas's own TE unit is thinned by Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin).",
+        "filmTell": "Watch RG #77 Dominick Puni and C #64 Jake Brendel on play-action: when they stalemate #92 Quinnen Williams without RB chip help, McCaffrey gets a free check-release into the flat."
       }
     ]
   }

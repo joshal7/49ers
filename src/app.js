@@ -21,7 +21,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=39';
+} from './services/dataService.js?v=41';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -32,8 +32,10 @@ import {
   estimateGenerationWait,
   resolveActiveHighQualityModelLabel,
   verifyGeminiApiKey,
-  checkAndAutoUpdateBestGeminiModel
-} from './services/aiWorkerClient.js?v=39';
+  checkAndAutoUpdateBestGeminiModel,
+  hydrateCachedDailyMatchupIntel,
+  refreshDailyMatchupIntelIfDue
+} from './services/aiWorkerClient.js?v=41';
 import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
 import {
   buildShareablePodcastUrl,
@@ -50,21 +52,21 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=39';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=39';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=39';
-import { iconSvg } from './views/icons.js?v=39';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=39';
+} from './views/uiHelpers.js?v=41';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=41';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=41';
+import { iconSvg } from './views/icons.js?v=41';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=41';
 import {
   renderNewsViewHtml,
   resolveClusterSafeReports,
   renderSynthesisSourcesSheetHtml
-} from './views/newsView.js?v=39';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=39';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=39';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=39';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=39';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=39';
+} from './views/newsView.js?v=41';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=41';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=41';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=41';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=41';
+import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=41';
 
 const state = {
   appData: null,
@@ -424,7 +426,10 @@ function renderMain() {
   state.capSelectedYear = activeCapYear;
 
   const tab = state.activeNavTab;
-  const reportersMap = tab === 'home' || tab === 'news' ? getReportersMap() : null;
+  const reportersMap =
+    tab === 'home' || tab === 'news' || (tab === 'season' && state.seasonSubTab === 'health')
+      ? getReportersMap()
+      : null;
 
   preserveFocusAroundRender(() => {
     if (tab === 'home') {
@@ -513,7 +518,9 @@ function renderMain() {
         activeVideosSet: state.activeVideosSet,
         schedulePrevExpanded: state.schedulePrevExpanded,
         expandedRootingWeeks: state.expandedRootingWeeks,
-        matchupStatsUnit: state.matchupStatsUnit
+        matchupStatsUnit: state.matchupStatsUnit,
+        userPrefs: state.prefs,
+        reportersById: reportersMap
       });
     } else if (tab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
@@ -672,7 +679,9 @@ function renderSheet() {
         statsMode: state.sheetPlayerStatsMode,
         txScenario: state.sheetPlayerTxScenario,
         rawStream: state.appData?.news?.rawStream || [],
-        appData: state.appData
+        appData: state.appData,
+        userPrefs: state.prefs,
+        reportersById: getReportersMap()
       });
     } else if (state.sheetMode === 'settings') {
       if (eyebrow) eyebrow.textContent = 'Preferences';
@@ -802,6 +811,24 @@ function reorderBlockBeforeTarget(draggedId, targetId) {
   renderMain();
 }
 
+function triggerDailyMatchupIntelSync() {
+  if (!state.appData) return;
+  refreshDailyMatchupIntelIfDue({
+    appData: state.appData,
+    prefs: state.prefs
+  })
+    .then(res => {
+      if (
+        res?.updated &&
+        (state.activeNavTab === 'home' ||
+          (state.activeNavTab === 'season' && state.seasonSubTab === 'matchup'))
+      ) {
+        renderMain();
+      }
+    })
+    .catch(() => {});
+}
+
 function bindEvents() {
   // Bottom Nav Tabs
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
@@ -818,6 +845,9 @@ function bindEvents() {
           saveUserPrefs(state.prefs);
           renderMain();
         });
+      }
+      if (state.activeNavTab === 'season' && state.seasonSubTab === 'matchup') {
+        triggerDailyMatchupIntelSync();
       }
       renderMain();
     });
@@ -1242,6 +1272,9 @@ function bindEvents() {
         const nextSeasonSub = btn.getAttribute('data-season-sub') || 'matchup';
         if (nextSeasonSub === 'schedule') state.schedulePrevExpanded = false;
         state.seasonSubTab = nextSeasonSub;
+        if (nextSeasonSub === 'matchup') {
+          triggerDailyMatchupIntelSync();
+        }
         renderMain();
         break;
       }
@@ -1903,6 +1936,9 @@ function bindEvents() {
         if (state.jobStatus?.error) state.jobStatus = null;
         const shared = await fetchSharedWorkerFeed(state.prefs);
         if (shared) state.workerSharedFeed = shared;
+        if (state.activeNavTab === 'home' || state.activeNavTab === 'season') {
+          triggerDailyMatchupIntelSync();
+        }
         renderMain();
         btn.innerHTML = `${iconSvg('check', 14)}<span>Saved!</span>`;
         setTimeout(() => {
@@ -2059,7 +2095,14 @@ async function pollLowLatencyTweetAndInjuryWire(manual = false) {
   try {
     const gameLive = is49ersGameLiveWindow(state.appData);
     wirePollCount += 1;
-    const shouldCheckEspn = manual || gameLive || wirePollCount % 2 === 0;
+    const viewingHealthSurface =
+      (state.activeNavTab === 'season' && (state.seasonSubTab === 'health' || state.seasonSubTab === 'matchup')) ||
+      (state.sheetMode === 'player' && state.sheetPlayerTab === 'health');
+    const hasPendingPracticeSlots = (state.appData?.health?.practiceReport || []).some(
+      r => r.wed === '-' || r.thu === '-' || r.fri === '-'
+    );
+    const shouldCheckEspn =
+      manual || gameLive || viewingHealthSurface || hasPendingPracticeSlots || wirePollCount % 2 === 0;
 
     const [wireResult, espnChanged] = await Promise.all([
       hydrateLiveMultiSourceBeatWire(state.appData, { isGameLive: gameLive }),
@@ -2324,6 +2367,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
 
   try {
     state.appData = await loadAll49ersData();
+    hydrateCachedDailyMatchupIntel(state.appData);
     bootFailureCount = 0;
     state.lastWireSyncAt = state.appData.meta?.updatedAt || new Date().toISOString();
     lastLiveCheckMs = Date.now();
@@ -2385,6 +2429,9 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
           if (state.activeNavTab === 'audio') renderMain();
         });
       }
+
+      // 1/day live Gemini 3.8 High Matchup Intel refresh (<= 1 credit/day)
+      triggerDailyMatchupIntelSync();
     }
     return true;
   } catch (err) {
@@ -2527,7 +2574,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=46', { updateViaCache: 'none' })
+        .register('./sw.js?v=49', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

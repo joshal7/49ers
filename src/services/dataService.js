@@ -8,8 +8,10 @@ import {
   collapseInitialDots,
   computePlayerPlayProbability,
   computeTeamHealthSummary,
+  doesClauseMentionPlayer,
   extractPracticeDaysFromText,
   isBareStatusPlaceholderComment,
+  isPlayerEligibleForInjuryNews,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
   select22OffDefStartersFromDepthChart
@@ -539,17 +541,22 @@ function hydrateBundlePostLoad(rawFiles) {
   if (roster && Array.isArray(roster.players)) {
     for (const p of roster.players) {
       if (Array.isArray(p.recentNews)) {
-        p.recentNews = p.recentNews.map(rn =>
-          rn?.type === 'tweet' || rn?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(rn?.url || ''))
-            ? {
-                ...rn,
-                url: resolveOriginalTweetUrl(
-                  { ...rn, type: rn.type || 'tweet', primaryPlayer: p, title: rn.title || rn.headline || '' },
-                  directPosts
-                )
-              }
-            : rn
-        );
+        p.recentNews = p.recentNews
+          .filter(rn => {
+            const body = `${rn?.fullText || ''} ${rn?.title || ''} ${rn?.headline || ''} ${rn?.summary || ''}`.trim();
+            return body && doesClauseMentionPlayer(body, p.name, { allowSurname: true });
+          })
+          .map(rn =>
+            rn?.type === 'tweet' || rn?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(rn?.url || ''))
+              ? {
+                  ...rn,
+                  url: resolveOriginalTweetUrl(
+                    { ...rn, type: rn.type || 'tweet', primaryPlayer: p, title: rn.title || rn.headline || '' },
+                    directPosts
+                  )
+                }
+              : rn
+          );
       }
     }
   }
@@ -792,22 +799,34 @@ export function matchPlayersClient(
 
     const matchedFull =
       new RegExp(`(?<![a-z0-9])${escapeClientRegex(fullLower)}(?![a-z0-9])`, 'i').test(hay) ||
-      (strippedLower.length >= 6 &&
+      (strippedLower.length >= 5 &&
+        strippedLower.includes(' ') &&
         new RegExp(`(?<![a-z0-9])${escapeClientRegex(strippedLower)}(?![a-z0-9])`, 'i').test(hay)) ||
-      (collapsedStripped.length >= 6 &&
+      (collapsedStripped.length >= 5 &&
+        collapsedStripped.includes(' ') &&
         new RegExp(`(?<![a-z0-9])${escapeClientRegex(collapsedStripped)}(?![a-z0-9])`, 'i').test(hayCollapsed)) ||
       (p.name === 'Deebo Samuel Sr.' && /\bdeebo\b/i.test(hay)) ||
       (p.name === 'Christian McCaffrey' && /\bcmc\b/i.test(hay));
 
+    const matchedContextualSurname =
+      !matchedFull &&
+      surnameLower.length >= 4 &&
+      surnameCounts.get(surnameLower) === 1 &&
+      new RegExp(
+        `(?:\\b(?:qb|rb|fb|wr|te|ot|og|ol|dt|de|dl|nt|lb|cb|db|saf)s?\\s+${escapeClientRegex(surnameLower)}\\b|\\b${escapeClientRegex(surnameLower)}\\s*\\([a-z /,-]{3,28}\\))`,
+        'i'
+      ).test(hayCollapsed);
+
     const matchedUniqueSurname =
       !matchedFull &&
+      !matchedContextualSurname &&
       allowUniqueSurnames &&
       surnameLower.length >= 4 &&
       surnameCounts.get(surnameLower) === 1 &&
       !AMBIGUOUS_BEAT_SURNAMES.has(surnameLower) &&
       new RegExp(`\\b${escapeClientRegex(surnameLower)}\\b`, 'i').test(hay);
 
-    if (matchedFull || matchedUniqueSurname) {
+    if (matchedFull || matchedContextualSurname || matchedUniqueSurname) {
       hits.push({
         id: p.id,
         name: p.name,
@@ -1019,7 +1038,7 @@ let espnPlayerSweepCursor = 0;
  */
 export async function hydrateLiveEspnPlayerBeatWire(
   appData,
-  { maxPriority = 12, sweepBatchSize = 6, maxAgeDays = 7 } = {}
+  { maxPriority = 18, sweepBatchSize = 6, maxAgeDays = 8 } = {}
 ) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   const rosterPlayers = appData.roster?.players || [];
@@ -1028,14 +1047,17 @@ export async function hydrateLiveEspnPlayerBeatWire(
 
   const priorityCohort = [];
   const priorityIds = new Set();
+  const curWk = Number(appData.health?.week || appData.scheduleMatchup?.upcomingMatchup?.week || appData.meta?.currentWeek || 1);
+  const byeWk = Number(appData.health?.byeWeek || 8);
 
-  // 1. Injured, Questionable/Doubtful/Out, or active 21-day IR return window players first
+  // 1. Injured, Questionable/Doubtful/Out, or 2-3 week IR return window players first (polled EVERY cycle)
   const injuryCandidates = validPlayers.filter(p => {
     const st = String(p.health?.status || '').toLowerCase();
     return (
+      isPlayerEligibleForInjuryNews(p, { currentWeek: curWk, byeWeek: byeWk }) ||
       Boolean(p.health?.isOnPracticeReport) ||
       ['out', 'doubtful', 'questionable'].includes(st) ||
-      (p.rosterBucket === 'ir' && !p.health?.isSeasonEnding)
+      (p.rosterBucket === 'ir' && !p.health?.isSeasonEnding && Boolean(p.health?.isPracticeWindowOpen))
     );
   });
   for (const p of injuryCandidates) {
@@ -1463,7 +1485,7 @@ export async function hydrateLiveMultiSourceBeatWire(appData, { isGameLive = fal
 
   const results = await Promise.allSettled([
     hydrateLiveEspnPlayerBeatWire(appData, {
-      maxPriority: isGameLive ? 16 : 12,
+      maxPriority: isGameLive ? 20 : 18,
       sweepBatchSize: isGameLive ? 8 : 6
     }),
     hydrateLiveRotoWireBeatRss(appData),
@@ -2346,9 +2368,14 @@ export async function hydrateLiveEspnOverlay(appData) {
         um.completed = false;
         um.kickoffDisplay = kickoffFmt;
         um.venue = `${nextGame.venue?.name || ''}${nextGame.venue?.city ? ` (${nextGame.venue.city})` : ''} • ${nextGame.venue?.surface || 'Grass'}`;
+        um.aiMatchupMeta = null;
         um.coachingMatchup = {
-          headline: `Kyle Shanahan vs. ${nextGame.opponent?.coach || `${um.oppName} Staff`} (${nextGame.homeAway === 'home' ? "Levi's Stadium" : 'Road Test'})`,
-          summary: `Week ${nextWk} schematic matchup pitting Kyle Shanahan's 21/11-personnel motion and Wide-9 defensive front against ${um.oppName} (${um.oppRecord}).`
+          headline: `Kyle Shanahan & DC Raheem Morris vs. ${nextGame.opponent?.coach || `${um.oppName} Staff`} (${nextGame.homeAway === 'home' ? "Levi's Stadium" : 'Road Test'})`,
+          summary: `Week ${nextWk} coordinator duel pitting Kyle Shanahan's 21 personnel motion sequencing and DC Raheem Morris's disguised split-safety rotations against ${um.oppName} (${um.oppRecord}).`,
+          bullets: [
+            `Pass-Game Efficiency & Coverage Shell Delta: Shanahan uses condensed splits, jet motion, and orbit motion to force ${um.oppName}'s secondary to declare single-high vs. two-high leverage before attacking the intermediate honey-hole between hook/curl and curl/flat defenders on play-action choice/dagger concepts.`,
+            `Trench Run-Fit & Split-Safety Box Math: Raheem Morris anchors the A- and B-gaps out of light boxes while holding disguised two-high shells until the snap before spinning into Quarters, Cover 6, or Robber.`
+          ]
         };
         if (um.franchiseHistory) {
           um.franchiseHistory.pfrQueryUrl = buildPfrHeadToHeadUrl('SF', oppAbbr);
@@ -2664,6 +2691,20 @@ export async function hydrateLiveEspnOverlay(appData) {
           rp.health.wed = '-';
           rp.health.thu = '-';
           rp.health.fri = '-';
+        } else if (rp.rosterBucket === 'active' || isIrReturnQ) {
+          const freshProseText = `${!isBareStatusPlaceholderComment(rawShortIn) ? rawShortIn : ''} ${!isBareStatusPlaceholderComment(rawLongIn) ? rawLongIn : ''}`.trim();
+          if (freshProseText) {
+            const parsedDays = extractPracticeDaysFromText({
+              statusRaw: rawStatus,
+              injuryType: bodyPart,
+              shortComment: !isBareStatusPlaceholderComment(rawShortIn) ? rawShortIn : '',
+              longComment: !isBareStatusPlaceholderComment(rawLongIn) ? rawLongIn : '',
+              kickoffIso: nextGameKickoffIso
+            });
+            if (parsedDays.wed && parsedDays.wed !== '-') rp.health.wed = parsedDays.wed;
+            if (parsedDays.thu && parsedDays.thu !== '-') rp.health.thu = parsedDays.thu;
+            if (parsedDays.fri && parsedDays.fri !== '-') rp.health.fri = parsedDays.fri;
+          }
         }
 
         const effectiveStatusForModel = isIrReturnQ
@@ -2843,7 +2884,8 @@ export async function hydrateLiveEspnOverlay(appData) {
                 statusRaw: isIrRetQ ? 'Questionable' : rawSt,
                 injuryType: bodyPart,
                 shortComment: shortC,
-                longComment: longC
+                longComment: longC,
+                kickoffIso: nextGameKickoffIso
               });
         const effectiveOppGameSt = isIrRetQ
           ? 'Questionable'

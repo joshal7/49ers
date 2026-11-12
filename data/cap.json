@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T04:24:01.491Z",
+  "updatedAt": "2026-11-12T02:13:43.260Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -10,21 +10,21 @@
       "capCeiling": 340563099,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 305398241,
-      "top51": 239503827,
-      "teamCapSpace": 35164858,
-      "otcRawTeamCapSpace": 35164858,
-      "effectiveCapSpace": 35164858,
-      "activeCapSpending": 259377542,
-      "offenseSpend": 144191411,
-      "defenseSpend": 111085131,
+      "totalCapLiabilities": 306582113,
+      "top51": 239390880,
+      "teamCapSpace": 33980986,
+      "otcRawTeamCapSpace": 33980986,
+      "effectiveCapSpace": 33980986,
+      "activeCapSpending": 260561414,
+      "offenseSpend": 145376783,
+      "defenseSpend": 111083631,
       "specialSpend": 4101000,
       "deadMoneyTotal": 46020699,
-      "injuredReserveTotal": 24467903,
-      "practiceSquadTotal": 3633444,
+      "injuredReserveTotal": 25478109,
+      "practiceSquadTotal": 4082316,
       "pupTotal": 1251132,
-      "suspendedTotal": 12450790,
-      "reserveAndPsTotal": 41803269,
+      "suspendedTotal": 0,
+      "reserveAndPsTotal": 30811557,
       "topDeadMoneyEntries": [
         {
           "name": "Javon Hargrave",
@@ -103,7 +103,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 84
+      "totalSignedCount": 87
     },
     "2027": {
       "year": 2027,
@@ -114,7 +114,7 @@
       "top51": 358455063,
       "teamCapSpace": -31540066,
       "otcRawTeamCapSpace": -31540066,
-      "effectiveCapSpace": -36468381,
+      "effectiveCapSpace": -36296645,
       "activeCapSpending": 358455063,
       "offenseSpend": 191170555,
       "defenseSpend": 164559508,
@@ -204,15 +204,15 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-    "executiveSummary": "Paraag Marathe & John Lynch hold $35.16M in gross 2026 cap space ($35.16M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$31.54M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $27M–$32M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
+    "executiveSummary": "Paraag Marathe & John Lynch hold $33.98M in gross 2026 cap space ($33.98M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$31.54M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $26M–$30M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($27M–$32M Target vs. -$31.54M 2027 Projection)",
-        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027. Preserving $27M+ of 2026 room nearly erases San Francisco's projected -$31.54M 2027 deficit without forcing premature void-year restructures on aging veterans."
+        "title": "1. CBA Article 13 Rollover Bridge ($26M–$30M Target vs. -$31.54M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027. Preserving $26M+ of 2026 room nearly erases San Francisco's projected -$31.54M 2027 deficit without forcing premature void-year restructures on aging veterans."
       },
       {
         "title": "2. Expiring Rental Purchasing Power & Option-Bonus Architecture",
-        "detail": "Leading the NFC with $35.16M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
+        "detail": "Leading the NFC with $33.98M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
       },
       {
         "title": "3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks",
@@ -3434,64 +3434,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": -1184000
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "15818",
-      "otcId": "2227",
-      "otcSlug": "keenan-allen",
-      "otcUrl": "https://overthecap.com/player/keenan-allen/2227/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/15818/keenan-allen",
-      "pfrUrl": "https://www.pro-football-reference.com/players/A/AlleKe00.htm",
-      "name": "Keenan Allen",
-      "position": "WR",
-      "jersey": null,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1300000,
-          "proratedSigning": 1510000,
-          "proratedOption": 0,
-          "proratedBonus": 1510000,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 510000,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 510000,
-          "guaranteedSalary": 1300000,
-          "capNumber": 3320000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 2810000,
-              "capSavings": 510000
-            },
-            "june_1_cut": {
-              "deadMoney": 2810000,
-              "capSavings": 510000
-            },
-            "trade": {
-              "deadMoney": 1510000,
-              "capSavings": 1810000
-            },
-            "june_1_trade": {
-              "deadMoney": 1510000,
-              "capSavings": 1810000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 0
             }
           }
         }
@@ -8052,6 +7994,64 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 208000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "15818",
+      "otcId": "2227",
+      "otcSlug": "keenan-allen",
+      "otcUrl": "https://overthecap.com/player/keenan-allen/2227/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/15818/keenan-allen",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/AlleKe00.htm",
+      "name": "Keenan Allen",
+      "position": "WR",
+      "jersey": null,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1300000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 510000,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 510000,
+          "guaranteedSalary": 650000,
+          "capNumber": 920000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 650000,
+              "capSavings": 270000
+            },
+            "june_1_cut": {
+              "deadMoney": 650000,
+              "capSavings": 270000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 920000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 920000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
             }
           }
         }

@@ -92,7 +92,7 @@ export function lookupRosterPlayerByName(name = '') {
 
 export function annotateRosterAndJargonPlainText(
   rawText,
-  { maxTerms = 8, maxPlayers = 6, seenKeys = null, seenPlayerIds = null, excludePlayerId = null } = {}
+  { maxTerms = 16, maxPlayers = 10, seenKeys = null, seenPlayerIds = null, excludePlayerId = null } = {}
 ) {
   if (rawText === null || rawText === undefined) return '';
   const text = String(rawText);

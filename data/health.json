@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-11T04:24:01.491Z",
+  "updatedAt": "2026-11-12T02:13:43.260Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/injuries",
-  "usedIrDesignations": 4,
-  "remainingIrDesignations": 4,
+  "usedIrDesignations": 5,
+  "remainingIrDesignations": 3,
   "maxRegularSeasonIrDesignations": 8,
   "practiceReport": [
     {
@@ -14,63 +14,21 @@
       "position": "WR",
       "jersey": 5,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Achilles",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 22,
-      "playBadgeLabel": "22% • Long Shot",
+      "playProbabilityPct": 19,
+      "playBadgeLabel": "19% • Doubtful",
       "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue/Achilles sprint clearance.",
       "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice",
         "Matches player's documented chronic history (Achilles)",
         "Soft-tissue re-aggravation caution (Achilles)",
-        "Coaching/beat consensus (3 corroborated reports): not expected to play this week"
+        "Coaching/beat consensus (4 corroborated reports): not expected to play this week"
       ],
-      "beatComment": "They are not expecting WR Mike Evans to be ready this week."
-    },
-    {
-      "playerId": "3126486",
-      "name": "Deebo Samuel Sr.",
-      "position": "WR",
-      "jersey": 19,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 56,
-      "playBadgeLabel": "56% • GTD",
-      "archetypeNote": "High-contact YAC style; plays through upper-body pain tags (~86%) with extra caution on lower-body soft tissue.",
-      "factors": [
-        "Missed 3 consecutive games without practice participation — awaiting Wednesday report",
-        "Matches player's documented chronic history (Hamstring)",
-        "Soft-tissue re-aggravation caution (Hamstring)",
-        "Coaching/beat update (2 corroborated reports): expected back at practice Wednesday (pending Wed–Fri workload)"
-      ],
-      "beatComment": "The 49ers expect WR Deebo Samuel and DT CJ West to be back at practice on Wednesday, coach Kyle Shanahan said."
-    },
-    {
-      "playerId": "4242488",
-      "name": "Deommodore Lenoir",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Foot",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 82,
-      "playBadgeLabel": "82% • GTD",
-      "archetypeNote": "High snap durability across boundary and slot corner alignments.",
-      "factors": [
-        "Questionable tag adjusted by player career prior (92%)",
-        "Coaching update (coaching staff report): considered day-to-day ahead of Wednesday practice"
-      ],
-      "beatComment": "Lenoir came away from San Francisco's victory over the Raiders in Week 9 with a foot injury, and now his status for Week 10 is uncertain. It will be worth keeping an eye on whether he's able to practice in full during the week, and the 49ers' first official injury report of the week Wednesday should give more context on his condition."
+      "beatComment": "Evans (Achilles) was listed as a non-participant in Wednesday's practice, Cam Inman of The San Jose Mercury News reports."
     },
     {
       "playerId": "4427325",
@@ -78,29 +36,200 @@
       "position": "CB",
       "jersey": 0,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Back",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 82,
-      "playBadgeLabel": "82% • GTD",
+      "playProbabilityPct": 37,
+      "playBadgeLabel": "37% • Long Shot",
       "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Questionable tag adjusted by player career prior (82%)",
-        "Coaching update (coaching staff report): considered day-to-day ahead of Wednesday practice"
+        "Did Not Participate (DNP) on Wednesday"
       ],
-      "beatComment": "Green sustained a back injury during San Francisco's win versus the Raiders in Week 9, and now his availability for Week 10 is in question. His activity at practice will be worth monitoring over the course of the week, and the 49ers' first official injury report of the week Wednesday should provide further insight into his status."
+      "beatComment": "Green injured his back in the second half of the 49ers' win over the Raiders in Week 9, and he finished that game with four tackles (two solo) and one interception. Per Barrows, head coach Kyle Shanahan indicated Monday that Green is considered day-to-day, so the third-year defensive back's practice participation over the next two days will determine whether he'll be available for Sunday's game against the Cowboys."
+    },
+    {
+      "playerId": "4242488",
+      "name": "Deommodore Lenoir",
+      "position": "CB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
+      "wed": "DNP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Foot",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 41,
+      "playBadgeLabel": "41% • Long Shot",
+      "archetypeNote": "High snap durability across boundary and slot corner alignments.",
+      "factors": [
+        "Did Not Participate (DNP) on Wednesday"
+      ],
+      "beatComment": "Lenoir is considered day-to-day due to a foot injury that he picked up in Week 9 against the Raiders. He was an observer for Wednesday's session, and he'll have two more opportunities to practice in at least a limited capacity ahead of Sunday's tilt against the Cowboys. Lenoir has accumulated 33 tackles (20 solo) and one pass defense through eight regular-season games."
+    },
+    {
+      "playerId": "3126486",
+      "name": "Deebo Samuel Sr.",
+      "position": "WR",
+      "jersey": 19,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hamstring",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 66,
+      "playBadgeLabel": "66% • GTD",
+      "archetypeNote": "High-contact YAC style; plays through upper-body pain tags (~86%) with extra caution on lower-body soft tissue.",
+      "factors": [
+        "Returned to Limited Participation (LP) on Wednesday following 3-game absence",
+        "Matches player's documented chronic history (Hamstring)",
+        "Soft-tissue re-aggravation caution (Hamstring)"
+      ],
+      "beatComment": "He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal."
+    },
+    {
+      "playerId": "3057524",
+      "name": "Siran Neal",
+      "position": "S",
+      "jersey": 33,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3057524.png",
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee, Foot",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 78,
+      "playBadgeLabel": "78% • GTD",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Wednesday Limited Participation (LP); player toughness prior = 78%"
+      ],
+      "beatComment": "He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal."
+    },
+    {
+      "playerId": "4565200",
+      "name": "Upton Stout",
+      "position": "CB",
+      "jersey": 20,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565200.png",
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Shoulder, Neck",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 80,
+      "playBadgeLabel": "80% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Wednesday Limited Participation (LP); player toughness prior = 76%",
+        "Manageable pain-tolerance injury profile (Shoulder, Neck)"
+      ],
+      "beatComment": "He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal."
+    },
+    {
+      "playerId": "3043116",
+      "name": "Demarcus Robinson",
+      "position": "WR",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
+      "wed": "FP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 91,
+      "playBadgeLabel": "91% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Full Participation (FP) logged on Wednesday"
+      ],
+      "beatComment": "Playing in his first game since Week 2 due to a high ankle sprain, Robinson played 51 percent of the Niners' offensive snaps against Las Vegas. San Francisco's wideout situation is a week-to-week thing moving forward, with the Tuesday addition of Keenan Allen and Deebo Samuel (hamstring), Mike Evans (Achilles) and rookie De'Zhaun Stribling (ankle) all likely to return at some point in the near future. Robinson isn't someone to roster in 12-team fantasy leagues."
+    },
+    {
+      "playerId": "13241",
+      "name": "Trent Williams",
+      "position": "OT",
+      "jersey": 71,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Habitual Wed/Thu veteran rest; suits up at ~98% when NIR-Rest, but historically cautious with acute high/low ankle sprains.",
+      "factors": [
+        "Habitual Veteran Rest prior (Trent Williams maintenance schedule)"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "3117251",
+      "name": "Christian McCaffrey",
+      "position": "RB",
+      "jersey": 23,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Scheduled Wednesday maintenance workload; high vigilance on calf/Achilles tightness.",
+      "factors": [
+        "Habitual Veteran Rest prior (Christian McCaffrey maintenance schedule)"
+      ],
+      "beatComment": "McCaffrey got banged up in San Francisco's Week 7 loss to the Falcons, but a Week 8 bye allowed his hamstring to heal, and the star running back handled 20 touches Sunday while scoring twice to bring his season total to 10 touchdowns. He capped San Francisco's opening drive with a one-yard touchdown run and added a 12-yard touchdown catch in the second quarter. Rookie third-round pick Kaelon Black led the 49ers with 70 rushing yards on 11 carries, but McCaffrey remains the lead back heading into a Week 10 trip to Dallas, during which CMC will try to extend a seven-game touchdown streak."
+    },
+    {
+      "playerId": "3916903",
+      "name": "Dre Greenlaw",
+      "position": "LB",
+      "jersey": 57,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916903.png",
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 74% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Habitual Veteran Rest prior (Dre Greenlaw maintenance schedule)"
+      ],
+      "beatComment": ""
     }
   ],
   "irAndReserveTracker": [
+    {
+      "playerId": "4686308",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+      "injuryType": "Knee",
+      "status": "IR — 21-Day Window Open",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Week 10 Activation Window (Nov 15)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "beatNote": "The 49ers opened West's 21-day practice window open Wednesday, and he was limited in his return to on-field practice. He landed on injured reserve in late September due to a knee injury, and he would need to be activated from IR in order to be available for Sunday's road game against the Cowboys."
+    },
     {
       "playerId": "4240542",
       "name": "Nate Hobbs",
       "position": "CB",
       "jersey": 22,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-      "injuryType": "Groin",
+      "injuryType": "Adductor",
       "status": "IR — 21-Day Window Open",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
@@ -178,23 +307,6 @@
       "projectedReturnWeek": "TBD (21d Window Not Open)",
       "byeWeekNote": "4-game NFL minimum requirement",
       "beatNote": "Pleasants sustained a knee injury during the 49ers' preseason game against the Chargers on Aug. 20. The injury is severe enough for 29-year-old offensive tackle to open the year on IR, meaning he'll be forced to miss at least the first four games of the regular season."
-    },
-    {
-      "playerId": "4686308",
-      "name": "C.J. West",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "placedBeforeWeek": 3,
-      "earliestEligibleWeek": 7,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "beatNote": "West was placed on injured reserve in late September due to an undisclosed injury but is now nearing his return. Once the practice window is officially opened, San Francisco will have 21 days to activate the 2025 fourth-round pick, or else he'll be forced to stay on injured reserve for the remainder of the campaign."
     },
     {
       "playerId": "4372561",

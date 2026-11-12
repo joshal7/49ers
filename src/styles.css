@@ -3984,13 +3984,18 @@ button.featured-player-chip:active {
 
 .narrow-health-table {
   width: 100%;
-  min-width: 440px;
+  min-width: 420px;
 }
 
 .narrow-health-table th,
 .narrow-health-table td {
-  padding: 6.5px 8px;
+  padding: 6px 6px;
   vertical-align: middle;
+}
+
+.narrow-health-table td:nth-child(3) {
+  white-space: nowrap;
+  font-size: 11.3px;
 }
 
 .sticky-col-table th.sticky-first-col,
@@ -4058,16 +4063,16 @@ button.featured-player-chip:active {
   line-height: 1.2;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .narrow-health-table {
-    min-width: 420px;
+    min-width: 416px;
   }
   .narrow-health-table td:nth-child(2) {
-    max-width: 96px;
+    max-width: 84px;
   }
   .sticky-player-cell {
-    min-width: 118px;
-    max-width: 154px;
+    min-width: 114px;
+    max-width: 146px;
     gap: 6px;
   }
   .sticky-player-name {
@@ -4837,4 +4842,233 @@ tr.unit-overall-banner.overall-stat-row td {
   content: '';
   flex: 1;
   border-top: 1px dashed var(--gold-border);
+}
+
+/* ==========================================================================
+   Coaching Tendencies & 1-on-1 Key Matchup Scouting Cards
+   ========================================================================== */
+.coaching-thesis-copy {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: var(--bg-elevated);
+  border-left: 3px solid var(--gold);
+  font-size: 13px;
+  line-height: 1.48;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+.coaching-bullets li {
+  line-height: 1.48;
+  margin-bottom: 7px;
+  overflow-wrap: anywhere;
+}
+
+.coaching-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+.key-matchup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.key-matchup-phase {
+  font-size: 9.8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gold-bright);
+}
+
+.key-matchup-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.key-matchup-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.key-matchup-title-row .avatar-stack {
+  flex-shrink: 0;
+}
+
+.key-matchup-title {
+  font-size: 13px;
+  line-height: 1.32;
+  color: var(--text-primary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.key-matchup-adv {
+  flex-shrink: 0;
+}
+
+.matchup-tape-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px 8px;
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  font-size: 11px;
+  line-height: 1.35;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.matchup-tape-sf {
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.matchup-tape-sep {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.matchup-tape-opp {
+  color: var(--text-secondary);
+}
+
+.key-matchup-detail {
+  font-size: 12.5px;
+  line-height: 1.46;
+  color: var(--text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.matchup-film-tell {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-subtle);
+  font-size: 12px;
+  line-height: 1.42;
+  color: var(--text-primary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.film-tell-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1.5px 5.5px;
+  border-radius: 4px;
+  background: rgba(179, 153, 93, 0.16);
+  color: var(--gold-bright);
+  border: 1px solid var(--gold-border);
+  flex-shrink: 0;
+}
+
+/* Injury News Cards (Player Dossier Health & Priors + Team Health Injury News) */
+.injury-news-dossier-card {
+  padding: 11px 12px;
+  margin: 2px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.injury-news-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.injury-news-items-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.injury-news-item-card,
+.health-injury-news-card {
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.health-injury-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.health-injury-news-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  min-width: 0;
+}
+
+.health-injury-player-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 2px 2px 3px;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+  transition: opacity 0.14s ease;
+}
+
+.health-injury-player-head:hover .health-injury-player-label strong {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.health-injury-player-ident {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.health-injury-player-label {
+  font-size: 13px;
+  line-height: 1.32;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

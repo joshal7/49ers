@@ -18,6 +18,7 @@ import {
   playProbBadgeClass,
   rankBadgeClass,
   renderPlayerAvatarHtml,
+  renderAvatarStackHtml,
   renderTeamLogoHtml,
   renderMiniMeterHtml,
   renderReporterSourceLinksHtml,
@@ -44,24 +45,92 @@ import {
   resolveTeamGameDayModel
 } from '../engine/gameDayRosterEngine.js';
 import {
+  buildTeamInjuryNewsFeed,
   computeTeamHealthSummary,
   isEffectiveOffDefStarter
 } from '../engine/injuryProbabilityModel.js';
+import { renderInjuryNewsItemCardHtml } from './playerSheetView.js';
 
 function formatPracCell(val) {
   const s = String(val ?? '').trim();
-  return !s || s === '-' ? '—' : s;
+  if (!s || s === '-') return '—';
+  if (/^vet\s*rest$/i.test(s)) return 'Rest';
+  return s;
 }
 
-function formatCoachingBulletHtml(bullet = '') {
+function formatCompactPlayBadge(label) {
+  return String(label || '').replace(/Vet Rest\s*\(Full Go\)/i, 'Vet Rest');
+}
+
+function formatCoachingBulletHtml(bullet = '', seenJargon = null) {
   const raw = String(bullet || '').trim();
   const colonIdx = raw.indexOf(':');
+  const opts = { maxTerms: 20, maxPlayers: 6, seenKeys: seenJargon };
   if (colonIdx > 0 && colonIdx <= 95) {
     const headClean = raw.slice(0, colonIdx).replace(/\*\*/g, '').trim();
     const bodyClean = raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim();
-    return `<li><strong>${escJargon(headClean)}:</strong> ${escJargon(bodyClean)}</li>`;
+    return `<li><strong>${escJargon(headClean, opts)}:</strong> ${escJargon(bodyClean, opts)}</li>`;
   }
-  return `<li>${escJargon(raw)}</li>`;
+  return `<li>${escJargon(raw, opts)}</li>`;
+}
+
+function matchupAdvantageBadgeClass(advantage = '') {
+  const s = String(advantage || '').trim();
+  if (/\beven\b|\btoss[-\s]?up\b|\bpush\b|\bsplit\b/i.test(s)) return 'badge-gold';
+  if (/\b(?:sf|49ers|niners|san francisco)\b/i.test(s)) return 'badge-positive';
+  return 'badge-warning';
+}
+
+function resolveKeyMatchupSfPlayers(matchupItem = {}, rosterPlayers = []) {
+  if (!Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return [];
+  const byId = new Map(rosterPlayers.map(p => [String(p.id), p]));
+  const out = [];
+  const seen = new Set();
+
+  const explicitNames = Array.isArray(matchupItem.sfPlayers) ? matchupItem.sfPlayers : [];
+  for (const nm of explicitNames) {
+    const found = lookupRosterPlayerByName(nm);
+    const full = found ? byId.get(String(found.id)) : null;
+    if (full && !seen.has(full.id)) {
+      seen.add(full.id);
+      out.push(full);
+    }
+  }
+  if (out.length > 0) return out.slice(0, 3);
+
+  const searchHaystack = `${matchupItem.unitMatchup || ''} ${matchupItem.tacticalDetail || ''}`.toLowerCase();
+  for (const p of rosterPlayers) {
+    if (!p?.name || p.name.length < 6) continue;
+    const lowerName = p.name.toLowerCase();
+    const noSuffix = lowerName.replace(/,?\s+\b(?:jr\.?|sr\.?|ii|iii|iv|v)\b\.?$/i, '').trim();
+    if (searchHaystack.includes(lowerName) || (noSuffix.length >= 6 && searchHaystack.includes(noSuffix))) {
+      if (!seen.has(p.id)) {
+        seen.add(p.id);
+        out.push(p);
+        if (out.length >= 3) break;
+      }
+    }
+  }
+  return out;
+}
+
+function renderKeyMatchupStatStripHtml(statComparison = '') {
+  const raw = String(statComparison || '').trim();
+  if (!raw) return '';
+  const parts = raw
+    .split(/\s*\|\s*/)
+    .map(s => s.trim())
+    .filter(Boolean);
+  if (parts.length >= 2) {
+    return `
+      <div class="matchup-tape-strip mono" data-matchup-stat-strip>
+        <span class="matchup-tape-sf">${escJargon(parts[0], { maxTerms: 4, maxPlayers: 0 })}</span>
+        <span class="matchup-tape-sep" aria-hidden="true">vs.</span>
+        <span class="matchup-tape-opp">${escJargon(parts.slice(1).join(' · '), { maxTerms: 4, maxPlayers: 0 })}</span>
+      </div>
+    `;
+  }
+  return `<div class="matchup-tape-strip mono" data-matchup-stat-strip><span class="matchup-tape-sf">${escJargon(raw, { maxTerms: 6, maxPlayers: 0 })}</span></div>`;
 }
 
 function formatOppImportanceTag(op) {
@@ -246,7 +315,9 @@ export function renderSeasonMatchupViewHtml({
   activeVideosSet,
   schedulePrevExpanded = false,
   expandedRootingWeeks = null,
-  matchupStatsUnit = 'offense'
+  matchupStatsUnit = 'offense',
+  userPrefs = null,
+  reportersById = null
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const phaseSet = new Set(activePhases || []);
@@ -279,7 +350,7 @@ export function renderSeasonMatchupViewHtml({
   `;
 
   if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit);
-  if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData);
+  if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData, userPrefs, reportersById);
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (seasonSub === 'playoffs')
@@ -685,7 +756,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
                       </td>
                       <td>${esc(op.injuryType || op.gameStatus || 'Undisclosed')}</td>
                       <td class="mono">${esc(formatPracCell(op.wed))} / ${esc(formatPracCell(op.thu))} / ${esc(formatPracCell(op.fri))}</td>
-                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span></td>
+                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(op.playBadgeLabel))}</span></td>
                     </tr>
                   `
                     )
@@ -810,30 +881,76 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
     ${renderMatchupTeamStatsComparison(appData, matchupStatsUnit)}
 
-    <section class="card">
-      <div class="card-eyebrow">Coaching Matchup</div>
-      <h3 class="card-title" style="margin-bottom:8px">${escJargon(um.coachingMatchup?.headline)}</h3>
-      <p style="margin:0 0 8px;font-size:13px;line-height:1.48;color:var(--text-secondary)">${escJargon(um.coachingMatchup?.summary)}</p>
-      <ul class="brief-bullets">
-        ${(um.coachingMatchup?.bullets || []).map(b => formatCoachingBulletHtml(b)).join('')}
-      </ul>
-    </section>
-
-    <section class="card">
-      <h3 class="card-title" style="margin-bottom:8px">Key Matchups</h3>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${(um.keyMatchupsMatrix || [])
-          .map(
-            m => `
-          <div class="subcard-panel">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
-              <strong style="font-size:13px">${esc(m.unitMatchup)}</strong>
-              <span class="badge badge-positive">${esc(m.advantage)}</span>
+    ${(() => {
+      const seenCoachJargon = new Set();
+      const aiDatePt = um.aiMatchupMeta?.datePt || '';
+      return `
+        <section class="card" id="coachingMatchupSection" data-coaching-matchup-card>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+            <div style="min-width:0;flex:1">
+              <div class="card-eyebrow">Coaching Matchup • Coordinator Tendencies</div>
+              <h3 class="card-title">${escJargon(um.coachingMatchup?.headline, { maxTerms: 12, maxPlayers: 0, seenKeys: seenCoachJargon })}</h3>
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(m.tacticalDetail || '')}</div>
+            ${aiDatePt ? `<span class="badge badge-gold mono" data-daily-ai-matchup-badge title="Refreshed daily (${esc(aiDatePt)} PT)">Daily AI Brief</span>` : ''}
           </div>
-        `
-          )
+          <p class="coaching-thesis-copy">${escJargon(um.coachingMatchup?.summary, { maxTerms: 20, maxPlayers: 0, seenKeys: seenCoachJargon })}</p>
+          <ul class="brief-bullets coaching-bullets">
+            ${(um.coachingMatchup?.bullets || []).map(b => formatCoachingBulletHtml(b, seenCoachJargon)).join('')}
+          </ul>
+        </section>
+      `;
+    })()}
+
+    <section class="card" id="keyMatchupsSection" data-key-matchups-card>
+      <div class="card-eyebrow">1-on-1 &amp; Trench Battles</div>
+      <h3 class="card-title" style="margin-bottom:8px">Key Matchups</h3>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        ${(um.keyMatchupsMatrix || [])
+          .map(m => {
+            const cardJargonSeen = new Set();
+            const cardPlayerSeen = new Set();
+            const sfStars = resolveKeyMatchupSfPlayers(m, appData?.roster?.players || []);
+            const rawTell = String(m.filmTell || '')
+              .replace(/^(?:broadcast\s+tell|film\s+tell|tv\s+tell)\s*:\s*/i, '')
+              .trim();
+            return `
+          <div class="subcard-panel key-matchup-card" data-key-matchup-item>
+            ${m.phaseTag ? `<div class="key-matchup-phase mono">${esc(m.phaseTag)}</div>` : ''}
+            <div class="key-matchup-head">
+              <div class="key-matchup-title-row">
+                ${sfStars.length > 0 ? renderAvatarStackHtml(sfStars, 24, 3) : ''}
+                <strong class="key-matchup-title">${escJargon(m.unitMatchup, {
+                  maxTerms: 10,
+                  maxPlayers: 6,
+                  seenKeys: cardJargonSeen,
+                  seenPlayerIds: cardPlayerSeen
+                })}</strong>
+              </div>
+              <span class="badge ${matchupAdvantageBadgeClass(m.advantage)} mono key-matchup-adv">${esc(m.advantage)}</span>
+            </div>
+            ${renderKeyMatchupStatStripHtml(m.statComparison)}
+            <div class="key-matchup-detail">${escJargon(m.tacticalDetail || '', {
+              maxTerms: 16,
+              maxPlayers: 8,
+              seenKeys: cardJargonSeen,
+              seenPlayerIds: cardPlayerSeen
+            })}</div>
+            ${
+              rawTell
+                ? `<div class="matchup-film-tell" data-matchup-film-tell>
+                    <span class="film-tell-label mono">Broadcast Tell</span>
+                    <span>${escJargon(rawTell, {
+                      maxTerms: 12,
+                      maxPlayers: 6,
+                      seenKeys: cardJargonSeen,
+                      seenPlayerIds: cardPlayerSeen
+                    })}</span>
+                  </div>`
+                : ''
+            }
+          </div>
+        `;
+          })
           .join('')}
       </div>
     </section>
@@ -927,13 +1044,20 @@ function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026) {
   };
 }
 
-function renderTeamHealthAndIr(appData) {
+function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) {
   const h = appData?.health || {};
   const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
   const rawSfReport = h.practiceReport || [];
   const sfReport = sfGameDay?.isActive
     ? resolveGameDayInjuryRows(rawSfReport, sfGameDay)
     : rawSfReport;
+
+  const injuryNewsEntries = buildTeamInjuryNewsFeed(appData, {
+    userPrefs,
+    reportersById,
+    injuryRowsOverride: sfReport
+  });
+  const directPosts = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
 
   return `
     ${renderGameDayRosterCard(sfGameDay, {
@@ -944,7 +1068,7 @@ function renderTeamHealthAndIr(appData) {
       teamLogoUrl: appData?.scheduleMatchup?.upcomingMatchup?.sfLogoUrl
     })}
 
-    <section class="card">
+    <section class="card" id="weeklyInjuryReportCard">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('heartPulse', 18)}</div>
@@ -993,7 +1117,7 @@ function renderTeamHealthAndIr(appData) {
                 </td>
                 <td>${esc(p.injuryType)}</td>
                 <td class="mono">${esc(formatPracCell(p.wed))} / ${esc(formatPracCell(p.thu))} / ${esc(formatPracCell(p.fri))}</td>
-                <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(p.playBadgeLabel)}</span></td>
+                <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(p.playBadgeLabel))}</span></td>
               </tr>
             `
               )
@@ -1003,7 +1127,52 @@ function renderTeamHealthAndIr(appData) {
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="teamInjuryNewsCard" data-health-injury-news>
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('news', 16)}</div>
+          <div class="card-title-group">
+            <h3 class="card-title">Injury News (${injuryNewsEntries.length})</h3>
+          </div>
+        </div>
+        <span class="mono" style="font-size:11px;color:var(--text-muted)">Lowest → Highest Play %</span>
+      </div>
+      ${
+        injuryNewsEntries.length > 0
+          ? `<div class="health-injury-news-list">
+              ${injuryNewsEntries
+                .map(
+                  entry => `
+                <div class="health-injury-news-entry" data-injury-news-player="${esc(entry.playerId)}" data-play-prob="${entry.playProbabilityPct}">
+                  <button type="button" class="health-injury-player-head"
+                          data-action="open-player-sheet"
+                          data-player-id="${esc(entry.playerId)}"
+                          data-initial-tab="health"
+                          aria-label="Open ${esc(entry.name)} Health and Priors">
+                    <span class="health-injury-player-ident">
+                      ${renderPlayerAvatarHtml(entry, 34, { showJerseyBadge: entry.jersey != null })}
+                      <span class="health-injury-player-label">
+                        <strong>${esc(entry.name)} <span style="color:var(--gold-bright)">(${esc(entry.position)}${entry.injuryType ? ` • ${esc(entry.injuryType)}` : ''})</span></strong>
+                      </span>
+                    </span>
+                    <span class="badge ${playProbBadgeClass(entry.playProbabilityPct)} mono">${esc(entry.playBadgeLabel)}</span>
+                  </button>
+                  ${renderInjuryNewsItemCardHtml(entry.topItem, {
+                    playerName: entry.name,
+                    directPosts,
+                    excludePlayerId: entry.playerId,
+                    outerClassName: 'health-injury-news-card'
+                  })}
+                </div>
+              `
+                )
+                .join('')}
+            </div>`
+          : `<div style="font-size:12.5px;color:var(--text-muted)">No active injury designations on the weekly report.</div>`
+      }
+    </section>
+
+    <section class="card" id="injuredReserveCard">
       <div class="card-eyebrow">Week ${h.byeWeek || 8} Bye Excluded</div>
       <h3 class="card-title" style="margin-bottom:8px">Injured Reserve (${(h.irAndReserveTracker || []).length})</h3>
       <div style="display:flex;flex-direction:column;gap:8px">

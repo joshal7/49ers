@@ -1887,3 +1887,385 @@ export async function generateOnDemandAutopodcast({
     tracker.stop();
   }
 }
+
+/* ==========================================================================
+   1/Day Live Gemini 3.8 High Matchup Intel (Strictly <= 1 Credit / PT Day)
+   ========================================================================== */
+const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v1';
+const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v1';
+let inFlightDailyMatchupPromise = null;
+
+export function getPacificDateKey(nowMs = Date.now()) {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Los_Angeles',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).format(new Date(nowMs));
+  } catch {
+    return new Date(nowMs).toISOString().slice(0, 10);
+  }
+}
+
+function safeReadLocalJson(storageKey) {
+  try {
+    if (typeof localStorage === 'undefined') return null;
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function safeWriteLocalJson(storageKey, value) {
+  try {
+    if (typeof localStorage === 'undefined') return;
+    localStorage.setItem(storageKey, JSON.stringify(value));
+  } catch {}
+}
+
+function extractBalancedJsonObject(rawText = '') {
+  const cleaned = String(rawText || '')
+    .trim()
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+  if (!cleaned) return null;
+  try {
+    const direct = JSON.parse(cleaned);
+    if (direct && typeof direct === 'object' && !Array.isArray(direct)) return direct;
+  } catch {}
+
+  const startIdx = cleaned.indexOf('{');
+  if (startIdx < 0) return null;
+  let depth = 0;
+  let inStr = false;
+  let escCh = false;
+  for (let i = startIdx; i < cleaned.length; i++) {
+    const ch = cleaned[i];
+    if (inStr) {
+      if (escCh) escCh = false;
+      else if (ch === '\\') escCh = true;
+      else if (ch === '"') inStr = false;
+      continue;
+    }
+    if (ch === '"') inStr = true;
+    else if (ch === '{') depth++;
+    else if (ch === '}') {
+      depth--;
+      if (depth === 0) {
+        try {
+          const obj = JSON.parse(cleaned.slice(startIdx, i + 1));
+          if (obj && typeof obj === 'object' && !Array.isArray(obj)) return obj;
+        } catch {}
+        break;
+      }
+    }
+  }
+  return null;
+}
+
+export function buildDailyMatchupIntelPrompt(appData) {
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const tsUnits = appData?.scheduleMatchup?.teamStats?.units || [];
+  const oppAbbr = String(um.oppAbbr || 'OPP').toUpperCase();
+  const oppName = um.oppName || oppAbbr;
+  const sfPr = (appData?.health?.practiceReport || [])
+    .slice(0, 8)
+    .map(p => `${p.name} (${p.position}, ${p.injuryType}: ${p.playBadgeLabel})`)
+    .join('; ');
+  const oppInj = (um.opponentHealth?.injuryReport || [])
+    .slice(0, 10)
+    .map(p => `${p.name} (${p.position}, ${p.injuryType}: ${p.playBadgeLabel}, ${p.snapPct || 0}% snaps)`)
+    .join('; ');
+  const oppHealthy = (um.opponentHealth?.keyStartersHealthy || [])
+    .slice(0, 12)
+    .map(p => `${p.name} (${p.position}${p.jersey != null ? ` #${p.jersey}` : ''})`)
+    .join(', ');
+
+  const unitBenchmarks = tsUnits
+    .map(u => {
+      const rows = [...(u.coreRows || []), ...(u.expandedGroups || []).flatMap(g => g.rows || [])];
+      const top = rows
+        .slice(0, 8)
+        .map(r => {
+          const sf = (r.leaderboard || []).find(x => x.team === 'SF');
+          const op = (r.leaderboard || []).find(x => x.team === oppAbbr);
+          return `${r.label}: SF ${sf?.disp || '—'} (#${sf?.rank || '—'}) vs ${oppAbbr} ${op?.disp || '—'} (#${op?.rank || '—'})`;
+        })
+        .join(' | ');
+      return `[${u.shortLabel}] ${top}`;
+    })
+    .join('\n');
+
+  const activeSfStars = (appData?.roster?.players || [])
+    .filter(p => (p.rosterBucket || 'active') === 'active' && (p.primarySnapPct || 0) >= 50)
+    .slice(0, 18)
+    .map(p => {
+      const st = p.stats2026 || {};
+      const statBits = [];
+      if (st.passing?.attempts > 20) {
+        statBits.push(
+          `${st.passing.yards} pass yds, ${st.passing.tds} TD, +${Number(st.passing.epa || 0).toFixed(1)} EPA, +${Number(st.passing.cpoe || 0).toFixed(1)}% CPOE, ${Number(st.passing.qbr || 0).toFixed(1)} QBR`
+        );
+      }
+      if (st.rushing?.carries > 20) {
+        statBits.push(`${st.rushing.yards} rush yds, ${st.rushing.tds} TD, +${Number(st.rushing.epa || 0).toFixed(1)} EPA`);
+      }
+      if (st.receiving?.receptions >= 12) {
+        statBits.push(`${st.receiving.receptions} rec, ${st.receiving.yards} yds, ${st.receiving.tds} TD, +${Number(st.receiving.epa || 0).toFixed(1)} EPA`);
+      }
+      if ((st.defense?.sacks || 0) > 0 || (st.defense?.ints || 0) > 0 || (st.defense?.totalTackles || 0) >= 25) {
+        statBits.push(
+          `${st.defense.totalTackles || 0} tkl, ${st.defense.sacks || 0} sk, ${st.defense.qbHits || 0} QBH, ${st.defense.ints || 0} INT, ${st.defense.passDefended || 0} PD`
+        );
+      }
+      return `${p.name} (${p.position}${p.jersey != null ? ` #${p.jersey}` : ''}${statBits.length ? ` — ${statBits.join('; ')}` : ''})`;
+    })
+    .join('\n');
+
+  return [
+    `DAILY_MATCHUP_INTEL_JSON — Synthesize today's All-22 film & situational preview for Week ${um.week || ''} San Francisco 49ers (${um.sfRecord || ''}) vs. ${oppName} (${um.oppRecord || ''}).`,
+    `Current Coaching Headline to preserve/refine (keep salient HC/OC/DC names): "${um.coachingMatchup?.headline || `Kyle Shanahan & DC Raheem Morris vs. ${oppName} Staff`}"`,
+    `Venue & Line: ${um.venue || ''} | Spread ${um.betting?.spread || '—'}, O/U ${um.betting?.overUnder || '—'}, ${um.betting?.restAdvantage || ''}`,
+    `49ers Injury Designations: ${sfPr || 'None'}`,
+    `${oppAbbr} Injury Designations: ${oppInj || 'None'}`,
+    `${oppAbbr} Healthy Starters: ${oppHealthy || 'See live roster'}`,
+    `2026 Unit Rank Benchmarks:\n${unitBenchmarks}`,
+    `Active 2026 49ers Starters & Verified Stats:\n${activeSfStars}`,
+    '',
+    'STRICT NON-OVERLAP EDITORIAL ARCHITECTURE (MANDATORY):',
+    '1. `coachingMatchup` = PURE COORDINATOR CHESS, SCHEME TENDENCIES & SITUATIONAL LEVERS ONLY:',
+    '   - ZERO active player names inside `coachingMatchup.summary` or `coachingMatchup.bullets`! Talk strictly about coaches/coordinators (Kyle Shanahan, Raheem Morris, and opponent HC/OC/DC), personnel groupings (21 personnel, 12/21, condensed splits), motion & coverage tendencies (jet motion, orbit motion, spot-drop Cover 3, Tampa-2, two-high, Quarters, Cover 6, cloud-trap, honey-hole, hook/curl, curl/flat, between the numbers, between the hashes), run-scheme vs box math (gap-scheme, pin-and-pull, counter, duo, A- and B-gaps, light boxes), and 3rd-down / red-zone / penalty / game-script triggers backed by exact rankings.',
+    '   - `bullets` must have 4 items, each formatted `"Bold Subtopic: Crisp 2-sentence coordinator analysis"`.Bullet 1 MUST begin with `"Pass-Game Efficiency & Coverage Shell Delta:"`.',
+    '2. `keyMatchupsMatrix` = 5 SPECIFIC PLAYER-VS-PLAYER / TRENCH SCOUTING BATTLES:',
+    '   - Zero repetition of generic coordinator summaries! Put ALL specific 49ers & opponent player names, 2026 player stats, injury/GTD leverage, and physical technique clashes here.',
+    '   - Each of the 5 objects MUST include: `phaseTag` (short 2-3 word label), `unitMatchup` ("SF Player(s) vs. Opp Player(s)"), `advantage` (e.g. "SF Heavy Edge", "SF Trench Edge", "Even Star Clash"), `sfPlayers` (array of 1-3 exact 49ers player full names), `statComparison` ("SF: <exact metric> | OPP: <exact metric>"), `tacticalDetail` (2 vivid sentences on 1-on-1 leverage, technique & health), and `filmTell` (1 concrete TV viewing tell starting without a prefix).',
+    '3. Output ONLY valid raw JSON matching: {"coachingMatchup":{"headline":"...","summary":"...","bullets":["..."]},"keyMatchupsMatrix":[{"phaseTag":"...","unitMatchup":"...","advantage":"...","sfPlayers":["..."],"statComparison":"...","tacticalDetail":"...","filmTell":"..."}]}.'
+  ].join('\n');
+}
+
+export function parseAndSanitizeDailyMatchupIntel(rawTextOrObj, um = {}, rosterPlayers = []) {
+  const parsed =
+    rawTextOrObj && typeof rawTextOrObj === 'object' && !Array.isArray(rawTextOrObj)
+      ? rawTextOrObj
+      : extractBalancedJsonObject(rawTextOrObj);
+  if (!parsed) return null;
+
+  const cm = parsed.coachingMatchup;
+  const km = parsed.keyMatchupsMatrix;
+  if (!cm || typeof cm !== 'object' || !Array.isArray(cm.bullets) || cm.bullets.length < 3) {
+    return null;
+  }
+  if (!Array.isArray(km) || km.length < 4) {
+    return null;
+  }
+
+  const cleanStr = s => sanitizeHallucinatedRosterText(String(s || '').trim(), rosterPlayers);
+  const headline = cleanStr(cm.headline) || um.coachingMatchup?.headline || '';
+  const summary = cleanStr(cm.summary);
+  if (!headline || summary.length < 50) return null;
+
+  const bullets = cm.bullets
+    .map(b => cleanStr(b))
+    .filter(b => b.length >= 35)
+    .slice(0, 5);
+  if (bullets.length < 3) return null;
+
+  const matrix = km
+    .map(item => {
+      if (!item || typeof item !== 'object') return null;
+      const unitMatchup = cleanStr(item.unitMatchup);
+      const tacticalDetail = cleanStr(item.tacticalDetail);
+      if (!unitMatchup || tacticalDetail.length < 35) return null;
+      return {
+        phaseTag: cleanStr(item.phaseTag || ''),
+        unitMatchup,
+        advantage: cleanStr(item.advantage || 'Even Matchup'),
+        sfPlayers: Array.isArray(item.sfPlayers)
+          ? item.sfPlayers.map(n => cleanStr(n)).filter(Boolean).slice(0, 3)
+          : [],
+        statComparison: cleanStr(item.statComparison || ''),
+        tacticalDetail,
+        filmTell: cleanStr(item.filmTell || '').replace(/^(?:broadcast\s+tell|film\s+tell|tv\s+tell)\s*:\s*/i, '')
+      };
+    })
+    .filter(Boolean)
+    .slice(0, 5);
+
+  if (matrix.length < 4) return null;
+
+  return {
+    coachingMatchup: { headline, summary, bullets },
+    keyMatchupsMatrix: matrix
+  };
+}
+
+export function hydrateCachedDailyMatchupIntel(appData) {
+  const um = appData?.scheduleMatchup?.upcomingMatchup;
+  if (!um || !um.week || !um.oppAbbr) return false;
+  const seasonYear = Number(appData?.meta?.seasonYear || 2026);
+  const scopeId = `${seasonYear}:wk${um.week}:${String(um.oppAbbr).toUpperCase()}`;
+  const cached = safeReadLocalJson(DAILY_MATCHUP_CACHE_KEY);
+  if (!cached || cached.scopeId !== scopeId || !cached.coachingMatchup || !cached.keyMatchupsMatrix) {
+    return false;
+  }
+  // Only overlay if cached date is >= upstream aiMatchupMeta date
+  const upstreamDate = String(um.aiMatchupMeta?.datePt || '');
+  if (upstreamDate && cached.datePt && cached.datePt < upstreamDate) {
+    return false;
+  }
+  um.coachingMatchup = cached.coachingMatchup;
+  um.keyMatchupsMatrix = cached.keyMatchupsMatrix;
+  um.aiMatchupMeta = {
+    datePt: cached.datePt,
+    week: um.week,
+    oppAbbr: String(um.oppAbbr).toUpperCase(),
+    source: cached.source || 'live-gemini-daily'
+  };
+  return true;
+}
+
+/**
+ * Refreshes Coaching Matchup + 5 Key Matchups using 1 single-pass Gemini 3.8 High + Google Search
+ * request at most ONCE per Pacific calendar day (`<= 1` of the user's 20 daily Free-Tier credits).
+ */
+export async function refreshDailyMatchupIntelIfDue({
+  appData,
+  prefs = {},
+  force = false,
+  nowMs = Date.now()
+} = {}) {
+  if (!hasLiveAiConnection(prefs)) {
+    return { updated: false, reason: 'no_ai_connection' };
+  }
+  const um = appData?.scheduleMatchup?.upcomingMatchup;
+  const oppAbbr = String(um?.oppAbbr || '').toUpperCase().trim();
+  if (!um || !um.week || !oppAbbr || oppAbbr === 'BYE') {
+    return { updated: false, reason: 'no_active_matchup' };
+  }
+
+  const seasonYear = Number(appData?.meta?.seasonYear || 2026);
+  const todayPt = getPacificDateKey(nowMs);
+  const scopeId = `${seasonYear}:wk${um.week}:${oppAbbr}`;
+
+  hydrateCachedDailyMatchupIntel(appData);
+
+  if (!force) {
+    if (
+      um.aiMatchupMeta?.datePt === todayPt &&
+      Number(um.aiMatchupMeta?.week) === Number(um.week) &&
+      String(um.aiMatchupMeta?.oppAbbr || '').toUpperCase() === oppAbbr
+    ) {
+      return { updated: false, fromCache: true, datePt: todayPt };
+    }
+    const cached = safeReadLocalJson(DAILY_MATCHUP_CACHE_KEY);
+    if (cached && cached.scopeId === scopeId && cached.datePt === todayPt) {
+      return { updated: false, fromCache: true, datePt: todayPt };
+    }
+    const attempt = safeReadLocalJson(DAILY_MATCHUP_ATTEMPT_KEY);
+    if (attempt && attempt.attemptId === `${todayPt}:${scopeId}`) {
+      return { updated: false, alreadyAttemptedToday: true, datePt: todayPt };
+    }
+  }
+
+  if (inFlightDailyMatchupPromise) {
+    return inFlightDailyMatchupPromise;
+  }
+
+  inFlightDailyMatchupPromise = (async () => {
+    safeWriteLocalJson(DAILY_MATCHUP_ATTEMPT_KEY, {
+      attemptId: `${todayPt}:${scopeId}`,
+      attemptedAt: new Date(nowMs).toISOString()
+    });
+
+    const rosterPlayers = appData?.roster?.players || [];
+    const promptText = buildDailyMatchupIntelPrompt(appData);
+    const systemPrompt = buildLiveGroundingSystemPrompt(appData);
+
+    try {
+      let normalized = null;
+      let modelUsed = 'gemini-3.8-flash';
+
+      const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+      const directKey = String(prefs?.geminiApiKey || '').trim();
+
+      if (baseUrl && !directKey) {
+        const res = await fetch(`${baseUrl}/api/matchup-intel`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Group-Passcode': prefs?.groupPasscode || ''
+          },
+          body: JSON.stringify({
+            seasonYear,
+            week: um.week,
+            oppAbbr,
+            datePt: todayPt,
+            forceRefresh: Boolean(force),
+            prompt: promptText,
+            systemPrompt
+          })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          modelUsed = json?.modelUsed || modelUsed;
+          normalized = parseAndSanitizeDailyMatchupIntel(json?.data || json?.rawText, um, rosterPlayers);
+        }
+      } else if (directKey) {
+        const conn = await resolveDirectGeminiCascades(prefs);
+        // Single-pass High-Thinking + Google Search call (= strictly 1 credit/day)
+        const gen = await callGeminiDirectWithCascade({
+          apiBase: conn.apiBase,
+          key: conn.key,
+          cascade: conn.cascade,
+          systemInstructionText: systemPrompt,
+          userText: promptText,
+          useGoogleSearch: true,
+          temperature: 0.18,
+          perAttemptTimeoutMs: 45000
+        });
+        modelUsed = gen.modelUsed || modelUsed;
+        normalized = parseAndSanitizeDailyMatchupIntel(gen.text, um, rosterPlayers);
+      }
+
+      if (!normalized) {
+        return { updated: false, reason: 'invalid_or_empty_payload' };
+      }
+
+      const record = {
+        scopeId,
+        datePt: todayPt,
+        seasonYear,
+        week: um.week,
+        oppAbbr,
+        modelUsed,
+        source: 'live-gemini-daily',
+        generatedAt: new Date().toISOString(),
+        coachingMatchup: normalized.coachingMatchup,
+        keyMatchupsMatrix: normalized.keyMatchupsMatrix
+      };
+      safeWriteLocalJson(DAILY_MATCHUP_CACHE_KEY, record);
+
+      um.coachingMatchup = normalized.coachingMatchup;
+      um.keyMatchupsMatrix = normalized.keyMatchupsMatrix;
+      um.aiMatchupMeta = {
+        datePt: todayPt,
+        week: um.week,
+        oppAbbr,
+        source: 'live-gemini-daily'
+      };
+
+      return { updated: true, modelUsed, datePt: todayPt };
+    } catch {
+      return { updated: false, reason: 'request_failed_graceful_fallback' };
+    } finally {
+      inFlightDailyMatchupPromise = null;
+    }
+  })();
+
+  return inFlightDailyMatchupPromise;
+}

@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-11T04:24:01.491Z",
+  "updatedAt": "2026-11-12T02:13:43.260Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
-    "availableGrossCap": 35164858,
+    "availableGrossCap": 33980986,
     "projected2027CapSpace": -31540066,
     "capSourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
     "transactionsUrl": "https://www.espn.com/nfl/transactions",
     "purchasingPower": [
       {
         "metric": "2026 Salary Cap Space",
-        "figure": "$35.16M Gross (~$41.26M Pre-Buckner)",
+        "figure": "$33.98M Gross (~$41.26M Pre-Buckner)",
         "strategicImpact": "#1 in NFC. Lets SF absorb 9/18ths prorated 2026 base salaries directly on 1-year rentals—keeping draft compensation down to Day 3 instead of paying sellers to eat cash."
       },
       {
@@ -307,7 +307,7 @@
         "tier": "Tier 1 • Verified Beat & National",
         "sources": "Adam Schefter, Ian Rapoport, Matt Barrows",
         "sourceUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-        "summary": "With six WRs sidelined and $35.16M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.",
+        "summary": "With six WRs sidelined and $33.98M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.",
         "credibilityPct": 96
       },
       {
@@ -1238,7 +1238,7 @@
           "confLosses": 2,
           "confTies": 0,
           "pointDiff": 33,
-          "netEpaPerGame": 9.591,
+          "netEpaPerGame": 9.587,
           "sosSpreadAdj": -0.6,
           "powerRating": 1551
         },
@@ -1371,7 +1371,7 @@
           "confLosses": 4,
           "confTies": 1,
           "pointDiff": -30,
-          "netEpaPerGame": -3.203,
+          "netEpaPerGame": -3.198,
           "sosSpreadAdj": -0.23,
           "powerRating": 1468
         },
@@ -12570,13 +12570,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "BNMI2jqhOas",
-          "url": "https://www.youtube.com/watch?v=BNMI2jqhOas",
-          "title": "Kaelon Black NFL Debut Highlights | Every Play",
-          "channel": "Curtain Call Replays",
-          "publishedAgo": "1mo ago",
-          "duration": "1:53",
-          "thumbnailUrl": "https://i.ytimg.com/vi/BNMI2jqhOas/hqdefault.jpg",
+          "videoId": "BqPoRb11ni0",
+          "url": "https://www.youtube.com/watch?v=BqPoRb11ni0",
+          "title": "Kaelon Black 🔥 Physical Indiana RB Prospect 2025 Highlights ",
+          "channel": "Ball Game Productions ",
+          "publishedAgo": "8mo ago",
+          "duration": "3:07",
+          "thumbnailUrl": "https://i.ytimg.com/vi/BqPoRb11ni0/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }
@@ -12724,13 +12724,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "vwyKFf_WQX8",
-          "url": "https://www.youtube.com/watch?v=vwyKFf_WQX8",
-          "title": "Gracen Halton Full College Football Highlights💥| Oklahoma Defensive Tackle | NFL Draft Film",
-          "channel": "The NFL Film Room",
-          "publishedAgo": "7mo ago",
-          "duration": "8:14",
-          "thumbnailUrl": "https://i.ytimg.com/vi/vwyKFf_WQX8/hqdefault.jpg",
+          "videoId": "1Zfw4pl5YHo",
+          "url": "https://www.youtube.com/watch?v=1Zfw4pl5YHo",
+          "title": "Gracen Halton Highlights | San Francisco 49ers Defensive Lineman | Oklahoma | 2026 NFL Draft",
+          "channel": "Under The Radar Prospects",
+          "publishedAgo": "10mo ago",
+          "duration": "4:23",
+          "thumbnailUrl": "https://i.ytimg.com/vi/1Zfw4pl5YHo/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }
@@ -12878,13 +12878,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "VDkuIBpwlWs",
-          "url": "https://www.youtube.com/watch?v=VDkuIBpwlWs",
-          "title": "Watch 49ers fourth-round draft pick Carver Willis' college highlights | NBC Sports Bay Area",
-          "channel": "NBC Sports Bay Area & California",
+          "videoId": "jBcd7gXjWRI",
+          "url": "https://www.youtube.com/watch?v=jBcd7gXjWRI",
+          "title": "Carver Willis All-22 Highlights | San Francisco 49ers",
+          "channel": "Ryder McConville",
           "publishedAgo": "6mo ago",
-          "duration": "1:30",
-          "thumbnailUrl": "https://i.ytimg.com/vi/VDkuIBpwlWs/hqdefault.jpg",
+          "duration": "1:07",
+          "thumbnailUrl": "https://i.ytimg.com/vi/jBcd7gXjWRI/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }

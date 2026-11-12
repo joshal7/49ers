@@ -445,6 +445,49 @@ export async function runVerifiedDeepGeminiSynthesis({
 }
 
 /**
+ * Single-pass High-Thinking + Google Search Grounding synthesis for 1/day scheduled artifacts
+ * (strictly consumes 1 RPD credit per invocation).
+ */
+export async function runSinglePassDailyGeminiSynthesis({
+  apiKey = process.env.GEMINI_API_KEY,
+  preferredModel = null,
+  promptText,
+  appData,
+  rosterPlayers = [],
+  thinkingBudget = HIGH_THINKING_BUDGET,
+  timeoutMs = 75000
+} = {}) {
+  if (!apiKey || !promptText) return { ok: false, rawText: '', modelUsed: null };
+  const discovery = await discoverBestFreeGeminiModel(apiKey, { probeQuota: false });
+  const cascade = preferredModel
+    ? [preferredModel, ...discovery.candidateCascade.filter(m => m !== preferredModel)]
+    : discovery.candidateCascade;
+  const systemPrompt = buildLiveGroundingSystemPrompt(appData);
+
+  try {
+    const genCall = await callGeminiCascade(
+      apiKey,
+      cascade,
+      {
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        tools: [{ google_search: {} }],
+        generationConfig: {
+          temperature: 0.18,
+          thinkingConfig: { thinkingBudget }
+        },
+        contents: [{ role: 'user', parts: [{ text: promptText }] }]
+      },
+      timeoutMs
+    );
+    if (!genCall.ok || !genCall.json) return { ok: false, rawText: '', modelUsed: null };
+    const rawText = auditAndSanitizeTextBlock(extractGeminiResponseText(genCall.json), rosterPlayers);
+    return { ok: Boolean(rawText), rawText, modelUsed: genCall.modelUsed };
+  } catch {
+    return { ok: false, rawText: '', modelUsed: null };
+  }
+}
+
+/**
  * Deterministic post-synthesis auditor ensuring zero hallucinated active 49ers,
  * zero stale probability numbers, and zero forbidden terminology across text blocks.
  */

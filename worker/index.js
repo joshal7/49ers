@@ -543,6 +543,67 @@ export default {
       return jsonResponse({ analyses, episodes }, 200, cors);
     }
 
+    if (request.method === 'POST' && url.pathname === '/api/matchup-intel') {
+      const body = await parseJsonBodySafe(request);
+      if (!body || !body.prompt) {
+        return jsonResponse({ error: 'Invalid matchup intel request' }, 400, cors);
+      }
+      const seasonYear = Number(body.seasonYear || 2026);
+      const week = Number(body.week || 1);
+      const oppAbbr = String(body.oppAbbr || 'OPP').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+      const datePt = String(body.datePt || new Date().toISOString().slice(0, 10)).replace(/[^0-9-]/g, '');
+      const cacheKey = `matchup_intel:${seasonYear}:wk${week}:${oppAbbr}:${datePt}`;
+
+      const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
+      if (existing && !body.forceRefresh) {
+        return jsonResponse({ cached: true, ...existing }, 200, cors);
+      }
+
+      if (!env.GEMINI_API_KEY) {
+        return jsonResponse({ error: 'GEMINI_API_KEY secret is not configured on this Worker.' }, 503, cors);
+      }
+
+      const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+      const clientSystem = String(body.systemPrompt || '').slice(0, 8000);
+      const effectiveSystem = clientSystem
+        ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystem}`
+        : EDITORIAL_SYSTEM_PROMPT;
+
+      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(env, {
+        systemInstruction: { parts: [{ text: effectiveSystem }] },
+        tools: [{ google_search: {} }],
+        generationConfig: {
+          temperature: 0.18,
+          thinkingConfig: { thinkingBudget }
+        },
+        contents: [{ role: 'user', parts: [{ text: String(body.prompt).slice(0, 24000) }] }]
+      });
+
+      if (!geminiRes || !geminiRes.ok) {
+        const errText = geminiRes ? await geminiRes.text() : 'No response';
+        return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 240)}` }, 502, cors);
+      }
+
+      const rawJson = await geminiRes.json();
+      const rawText = scrubStaleWeightHallucinations(extractNonThoughtText(rawJson), String(body.prompt));
+      const payloadOut = {
+        datePt,
+        seasonYear,
+        week,
+        oppAbbr,
+        modelUsed,
+        generatedAt: new Date().toISOString(),
+        rawText
+      };
+
+      if (env.SHARED_CACHE && rawText) {
+        await env.SHARED_CACHE.put(cacheKey, JSON.stringify(payloadOut), {
+          expirationTtl: 60 * 60 * 26
+        });
+      }
+      return jsonResponse({ cached: false, ...payloadOut }, 200, cors);
+    }
+
     if (request.method === 'POST' && url.pathname === '/api/analyze') {
       const body = await parseJsonBodySafe(request);
       if (!body) {

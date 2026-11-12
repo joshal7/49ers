@@ -22,11 +22,17 @@ import {
   buildAuthoritativeLiveContextSnapshot
 } from '../src/engine/groundingValidator.js';
 import {
+  buildTeamInjuryNewsFeed,
   classifyIrAndReserveTimeline,
   collapseInitialDots,
+  computeInjuryNewsRankScore,
   computePlayerPlayProbability,
   doesClauseMentionPlayer,
   evaluateCorroboratedNewsInjurySignal,
+  extractLivePracticeParticipationFromWire,
+  extractPracticeDaysFromText,
+  isPlayerEligibleForInjuryNews,
+  rankPlayerInjuryNews,
   reconcileRosterAndHealthWithNews,
   resolvePlacedBeforeWeekFromDate,
   scopeBeatTextToPlayer
@@ -1404,6 +1410,344 @@ test('Statistical datasource refresh cadences (Thursday PFR charting, Tuesday nf
     seasonYear: 2026
   });
   assert.equal(ngsAgg.ngsRec2026.get('DEEBO').avgSeparation, 4.6); // (4*4.0 + 6*5.0)/10 = 4.60
+});
+
+test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report Wire Sync & Play Likelihood Calibration (Deebo LP > Green DNP)', () => {
+  const nowMs = Date.parse('2026-11-11T23:30:00Z'); // Wednesday 3:30 PM PST (Week 10)
+  const kickoffIso = '2026-11-15T21:25:00Z';
+  const lastCompletedGameEndMs = Date.parse('2026-11-09T00:30:00Z');
+
+  // 1. Eligibility Gate (`isPlayerEligibleForInjuryNews`):
+  //    Active injured = true, 2–3wk IR = true, Vet Rest = false, healthy starter = false, >3wk IR = false, season-ending IR = false
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: 'Deebo Samuel Sr.', rosterBucket: 'active', health: { status: 'Questionable', injuryType: 'Hamstring', isOnPracticeReport: true, wed: 'LP' } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    true
+  );
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: 'Trent Williams', rosterBucket: 'active', health: { status: 'Active', injuryType: 'NIR - Rest', isOnPracticeReport: true, wed: 'Vet Rest' } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    false,
+    'Veteran Rest maintenance days must NOT trigger an Injury News card'
+  );
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: 'Brock Purdy', rosterBucket: 'active', health: { status: 'Active', injuryType: '', isOnPracticeReport: false } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    false
+  );
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: 'C.J. West', rosterBucket: 'ir', health: { status: 'IR — 21-Day Window Open', injuryType: 'Knee', isPracticeWindowOpen: true, projectedReturnWeek: 'Week 10 Activation Window' } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    true
+  );
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: "De'Zhaun Stribling", rosterBucket: 'ir', health: { status: 'Injured Reserve', injuryType: 'Ankle', isSeasonEnding: false, projectedReturnWeek: 'Est. Week 13 (Dec 6)' } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    true,
+    'IR player projected within 3 weeks (Week 13 from Week 10) must be eligible for Injury News'
+  );
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: 'Sam Okuayinonu', rosterBucket: 'ir', health: { status: 'Injured Reserve', injuryType: 'Pectoral', isSeasonEnding: false, projectedReturnWeek: 'Est. Week 15 (Dec 20)' } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    false,
+    'IR player >3 weeks away must not show Injury News card'
+  );
+  assert.equal(
+    isPlayerEligibleForInjuryNews(
+      { name: 'Alfred Collins', rosterBucket: 'ir', health: { status: 'Season-Ending IR', injuryType: 'Shoulder', isSeasonEnding: true, projectedReturnWeek: 'Out for Season' } },
+      { currentWeek: 10, byeWeek: 8 }
+    ),
+    false
+  );
+
+  // 2. Joint Recency + Salience Stack Ranking (`rankPlayerInjuryNews` & `computeInjuryNewsRankScore`):
+  //    Observational rehab color ("Evans didn't practice, but was spotted running on the sidelines") MUST outrank a bare DNP list item!
+  const evansPlayer = {
+    id: '16737',
+    name: 'Mike Evans',
+    position: 'WR',
+    rosterBucket: 'active',
+    health: { status: 'Questionable', injuryType: 'Achilles', isOnPracticeReport: true, wed: 'DNP', thu: '-', fri: '-' },
+    recentNews: []
+  };
+  const candidateStream = [
+    {
+      id: 'bare_dnp_list',
+      type: 'tweet',
+      author: 'Jennifer Lee Chan',
+      outletName: 'NBC Sports Bay Area',
+      trustTier: 1,
+      publishedAt: '2026-11-11T21:10:00Z',
+      url: 'https://x.com/jenniferleechan/status/1001',
+      fullText: '#49ers practice report: Not participating WR Mike Evans, CB Renardo Green, CB Deommodore Lenoir, S JiAyir Brown, LB Luke Gifford.'
+    },
+    {
+      id: 'sideline_color_tweet',
+      type: 'tweet',
+      author: 'Matt Barrows',
+      outletName: 'The Athletic',
+      trustTier: 1,
+      publishedAt: '2026-11-11T20:55:00Z',
+      url: 'https://x.com/mattbarrows/status/1002',
+      fullText: "Mike Evans (Achilles) didn't practice Wednesday, but was spotted running on the sidelines with trainers during open media viewing."
+    },
+    {
+      id: 'mahomes_offtopic_noise',
+      type: 'article',
+      author: 'ESPN',
+      outletName: 'ESPN',
+      trustTier: 2,
+      publishedAt: '2026-11-11T23:25:00Z',
+      url: 'https://www.espn.com/nfl/story/_/id/999/mahomes-news',
+      headline: 'Patrick and Brittany Mahomes announce baby No. 4 on NFL trade deadline day',
+      summary: 'The couple shared the news on a busy trade deadline afternoon.'
+    },
+    {
+      id: 'stale_pre_practice_expectation',
+      type: 'tweet',
+      author: 'Nick Wagoner',
+      outletName: 'ESPN',
+      trustTier: 1,
+      publishedAt: '2026-11-10T18:00:00Z',
+      url: 'https://x.com/nwagoner/status/1003',
+      fullText: 'Mike Evans is unlikely to participate in practice Wednesday.'
+    }
+  ];
+
+  const rankedEvans = rankPlayerInjuryNews(evansPlayer, {
+    rawStream: candidateStream,
+    appData: { roster: { players: [evansPlayer] }, scheduleMatchup: { schedule: [] } },
+    nowMs
+  });
+  assert.equal(rankedEvans[0]?.id, 'sideline_color_tweet', 'Sideline rehab color tweet must rank #1 over bare multi-player DNP list');
+  assert.equal(rankedEvans[0]?.hasRehabColor, true);
+  assert.ok(
+    !rankedEvans.some(it => it.id === 'mahomes_offtopic_noise'),
+    'Unrelated general NFL article must never leak into player Injury News'
+  );
+  assert.ok(
+    rankedEvans.findIndex(it => it.id === 'sideline_color_tweet') <
+      rankedEvans.findIndex(it => it.id === 'stale_pre_practice_expectation'),
+    'Observed Wednesday sideline/practice update must outrank Tuesday pre-practice expectation'
+  );
+
+  // 3. Bug #3 + Bug #4 End-to-End Verification:
+  //    Immediate W/T/F sync from live beat reports (even before static JSON refresh & across timezones)
+  //    AND calibrated Play Likelihood (`Deebo Samuel Sr. LP` strictly > `Renardo Green DNP`, zero future Thu/Fri hallucination)
+  const simAppData = {
+    meta: { seasonYear: 2026, currentWeek: 10 },
+    roster: {
+      players: [
+        {
+          id: '3126486',
+          name: 'Deebo Samuel Sr.',
+          position: 'WR',
+          jersey: 19,
+          rosterBucket: 'active',
+          primarySnapPct: 74,
+          capHit2026: 15_000_000,
+          health: {
+            status: 'Questionable',
+            injuryType: 'Hamstring',
+            isOnPracticeReport: true,
+            wed: '-',
+            thu: '-',
+            fri: '-',
+            shortComment: 'questionable',
+            longComment: 'questionable',
+            playProbabilityPct: 58,
+            playBadgeLabel: '58% • GTD',
+            weeklyHistory2026: [
+              { week: 6, gameStatus: 'Out', practiceStatus: 'Did Not Participate' },
+              { week: 7, gameStatus: 'Out', practiceStatus: 'Did Not Participate' },
+              { week: 9, gameStatus: 'Out', practiceStatus: 'Did Not Participate' }
+            ]
+          },
+          recentNews: []
+        },
+        {
+          id: '4427325',
+          name: 'Renardo Green',
+          position: 'CB',
+          jersey: 0,
+          rosterBucket: 'active',
+          primarySnapPct: 97,
+          capHit2026: 2_100_000,
+          health: {
+            status: 'Questionable',
+            injuryType: 'Back',
+            isOnPracticeReport: true,
+            wed: '-',
+            thu: '-',
+            fri: '-',
+            shortComment: 'Shanahan indicated Monday that Green is considered day-to-day.',
+            longComment: 'Shanahan indicated Monday that Green is considered day-to-day.',
+            playProbabilityPct: 82,
+            playBadgeLabel: '82% • GTD',
+            weeklyHistory2026: []
+          },
+          recentNews: []
+        },
+        {
+          id: '4565200',
+          name: 'Upton Stout',
+          position: 'CB',
+          jersey: 20,
+          rosterBucket: 'active',
+          primarySnapPct: 62,
+          capHit2026: 1_200_000,
+          health: {
+            status: 'Active',
+            injuryType: '',
+            isOnPracticeReport: false,
+            wed: '-',
+            thu: '-',
+            fri: '-',
+            shortComment: '',
+            longComment: '',
+            playProbabilityPct: 99,
+            playBadgeLabel: '99% • Full Go',
+            weeklyHistory2026: []
+          },
+          recentNews: []
+        },
+        {
+          id: '4686308',
+          name: 'C.J. West',
+          position: 'DT',
+          jersey: 99,
+          rosterBucket: 'ir',
+          primarySnapPct: 28,
+          capHit2026: 0,
+          health: {
+            status: 'Injured Reserve',
+            injuryType: 'Knee',
+            isSeasonEnding: false,
+            isPracticeWindowOpen: false,
+            earliestEligibleWeek: 7,
+            projectedReturnWeek: 'TBD (21d Window Not Open)',
+            isOnPracticeReport: false,
+            wed: '-',
+            thu: '-',
+            fri: '-'
+          },
+          recentNews: []
+        }
+      ]
+    },
+    health: {
+      week: 10,
+      byeWeek: 8,
+      practiceReport: [
+        { playerId: '3126486', name: 'Deebo Samuel Sr.', wed: '-', thu: '-', fri: '-', injuryType: 'Hamstring', gameStatus: 'Questionable', playProbabilityPct: 58, playBadgeLabel: '58% • GTD' },
+        { playerId: '4427325', name: 'Renardo Green', wed: '-', thu: '-', fri: '-', injuryType: 'Back', gameStatus: 'Questionable', playProbabilityPct: 82, playBadgeLabel: '82% • GTD' }
+      ],
+      irAndReserveTracker: [
+        { playerId: '4686308', name: 'C.J. West', status: 'Injured Reserve', injuryType: 'Knee', isSeasonEnding: false, isPracticeWindowOpen: false, projectedReturnWeek: 'TBD (21d Window Not Open)' }
+      ]
+    },
+    news: {
+      rawStream: [
+        {
+          id: 'maiocco_wed_prac',
+          type: 'tweet',
+          author: 'Matt Maiocco',
+          outletName: 'NBC Sports Bay Area',
+          trustTier: 1,
+          // Simulate early Eastern-Time / road-practice release (11:30 AM PST = 2:30 PM EST!)
+          publishedAt: '2026-11-11T19:30:00Z',
+          url: 'https://x.com/MaioccoNBCS/status/2120617948138401832',
+          fullText:
+            'The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He is limited today at practice, along with Deebo Samuel and Upton Stout (shoulder). No practice for Renardo Green (back).'
+        },
+        {
+          id: 'speculative_thu_fri_blurb',
+          type: 'tweet',
+          author: 'RotoWire',
+          outletName: 'RotoWire',
+          wireSource: 'espn_player_wire',
+          trustTier: 2,
+          publishedAt: '2026-11-10T16:10:00Z',
+          url: 'https://www.espn.com/nfl/player/_/id/4427325',
+          fullText: 'Green (back) appears unlikely to be anything more than a limited participant Thursday or Friday.'
+        }
+      ]
+    },
+    scheduleMatchup: {
+      schedule: [
+        { week: 9, dateIso: '2026-11-08T21:25:00Z', completed: true },
+        { week: 10, dateIso: kickoffIso, completed: false }
+      ],
+      upcomingMatchup: { week: 10, oppAbbr: 'DAL', oppName: 'Dallas Cowboys', kickoffIso }
+    }
+  };
+
+  // Run at 11:45 AM PST (before 12:15 PM PT static threshold, proving road/ET practice reports still appear immediately!)
+  const roadPracticeNowMs = Date.parse('2026-11-11T19:45:00Z');
+  reconcileRosterAndHealthWithNews(simAppData, { nowMs: roadPracticeNowMs });
+
+  const deeboRow = simAppData.health.practiceReport.find(r => r.name === 'Deebo Samuel Sr.');
+  const greenRow = simAppData.health.practiceReport.find(r => r.name === 'Renardo Green');
+  const stoutRow = simAppData.health.practiceReport.find(r => r.name === 'Upton Stout');
+  const westIrRow = simAppData.health.irAndReserveTracker.find(r => r.name === 'C.J. West');
+
+  assert.equal(deeboRow?.wed, 'LP', 'Deebo Samuel Sr. must immediately show Wednesday LP');
+  assert.equal(deeboRow?.thu, '-', 'Future Thursday slot must remain blank on Wednesday');
+  assert.equal(greenRow?.wed, 'DNP', 'Renardo Green must immediately show Wednesday DNP');
+  assert.equal(greenRow?.thu, '-', 'Speculative Thursday blurb must never populate thu=LP on Wednesday');
+  assert.equal(stoutRow?.wed, 'LP', 'Newly injured Upton Stout must be added to practiceReport with Wednesday LP');
+  assert.equal(westIrRow?.isPracticeWindowOpen, true, 'C.J. West 21-day window must open immediately upon Maiocco report');
+
+  assert.ok(
+    deeboRow.playProbabilityPct >= greenRow.playProbabilityPct + 20,
+    `Deebo LP (${deeboRow.playProbabilityPct}%) must score well above Renardo Green DNP (${greenRow.playProbabilityPct}%)`
+  );
+
+  // Verify Team Injury News feed sorts strictly lowest -> highest play likelihood
+  const teamFeed = buildTeamInjuryNewsFeed(simAppData, { nowMs: roadPracticeNowMs });
+  assert.equal(teamFeed.length, 3);
+  assert.equal(teamFeed[0].name, 'Renardo Green', 'Lowest play likelihood player (Green DNP) must appear first in Team Injury News');
+  assert.ok(
+    teamFeed[0].playProbabilityPct <= teamFeed[1].playProbabilityPct &&
+      teamFeed[1].playProbabilityPct <= teamFeed[2].playProbabilityPct,
+    `Team Injury News must sort lowest -> highest play likelihood: ${JSON.stringify(teamFeed.map(e => [e.name, e.playProbabilityPct]))}`
+  );
+
+  // Verify Thursday downgrade (Wed FP -> Thu DNP) setback penalty is reachable and severe
+  const thuSetback = computePlayerPlayProbability({
+    name: 'Renardo Green',
+    position: 'CB',
+    snapPct: 97,
+    gameStatus: 'Questionable',
+    injuryType: 'Hamstring',
+    wed: 'FP',
+    thu: 'DNP',
+    fri: '-'
+  });
+  assert.ok(thuSetback.probabilityPct <= 42, `Wed FP -> Thu DNP setback should drop <=42%, got ${thuSetback.probabilityPct}%`);
+
+  // Verify live generated `data/health.json` snapshot invariants
+  const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const liveDeebo = liveHealth.practiceReport.find(r => r.name === 'Deebo Samuel Sr.');
+  const liveGreen = liveHealth.practiceReport.find(r => r.name === 'Renardo Green');
+  if (liveDeebo && liveGreen && liveDeebo.wed === 'LP' && liveGreen.wed === 'DNP') {
+    assert.ok(
+      liveDeebo.playProbabilityPct > liveGreen.playProbabilityPct,
+      `Live data/health.json must rank Deebo LP (${liveDeebo.playProbabilityPct}%) > Green DNP (${liveGreen.playProbabilityPct}%)`
+    );
+  }
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
