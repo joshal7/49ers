@@ -106,6 +106,38 @@ const LIVE_PRODUCTION_FALLBACK_CASCADE = [
 ];
 const discoveredCascadeByKey = new Map();
 const unavailableModelsByKey = new Map();
+const unavailableTtsModelsByKey = new Map();
+
+function getDailyDeadModelSet(storeMap, cacheKey) {
+  const todayPt = getPacificDateKey();
+  const scopedKey = `${cacheKey}::${todayPt}`;
+  let set = storeMap.get(scopedKey);
+  if (!set) {
+    // Prune prior-day entries so daily token replenishment at midnight PT automatically restores Gemini 4 Hydrogen (XHIGH)
+    for (const k of storeMap.keys()) {
+      if (k.startsWith(`${cacheKey}::`) && k !== scopedKey) {
+        storeMap.delete(k);
+      }
+    }
+    set = new Set(['gemini-3-pro-preview']);
+    storeMap.set(scopedKey, set);
+  }
+  return set;
+}
+
+function isDailyOrHardModelExhaustion(status, errText = '') {
+  if (status === 404) return true;
+  if (status === 403 && /free tier|not available|permission/i.test(errText)) return true;
+  if (status === 429) {
+    if (/limit:\s*0\b|per_day|PerDay|daily/i.test(errText)) return true;
+    // Do NOT blacklist a model for the day if it only hit a rolling 60-second per-minute RPM/TPM cap
+    if (/requests_per_minute|tokens_per_minute|per_minute|retry(?:\s+in|Delay)/i.test(errText)) {
+      return false;
+    }
+    if (/exceeded your current quota|free_tier|RESOURCE_EXHAUSTED/i.test(errText)) return true;
+  }
+  return false;
+}
 
 function isGeminiQuotaExhaustedError(err) {
   const msg = String(err?.message || err || '');
@@ -236,7 +268,7 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
     .trim()
     .replace(/\/+$/, '');
 
-  const res = await fetch(`${apiBase}/models?key=${encodeURIComponent(key)}`);
+  const res = await fetch(`${apiBase}/models?key=${encodeURIComponent(key)}&pageSize=1000`);
   if (!res.ok) {
     let detail = '';
     try {
@@ -254,22 +286,32 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
   const models = Array.isArray(json?.models) ? json.models : [];
   const catalogIds = models.map(m => String(m?.name || '').replace(/^models\//i, '').trim()).filter(Boolean);
   const cacheKey = `${apiBase}:${key}`;
-  const deadSet = unavailableModelsByKey.get(cacheKey) || new Set();
+  const deadSet = getDailyDeadModelSet(unavailableModelsByKey, cacheKey);
 
-  // Rank strictly among models actually present on this key first; only fall back to static list if catalog was empty
+  // Rank strictly among models present on this key first (with Gemini 4 Hydrogen XHIGH #1 -> Gemini 3.8 Flash HIGH #2)
   const keyPresentRanked = rankBestGeminiReasoningModels(models).filter(
     id => (catalogIds.length === 0 || catalogIds.includes(id)) && !deadSet.has(id)
   );
   const matchingCatalogFallbacks = LIVE_PRODUCTION_FALLBACK_CASCADE.filter(
     m => (catalogIds.length === 0 || catalogIds.includes(m)) && !keyPresentRanked.includes(m) && !deadSet.has(m)
   );
-  const fullCascade =
+  let fullCascade =
     keyPresentRanked.length > 0
       ? [...keyPresentRanked, ...matchingCatalogFallbacks]
       : [...DEFAULT_BEST_REASONING_CASCADE.filter(m => !deadSet.has(m))];
 
-  // Dynamically rank all multi-speaker Gemini TTS models available on this key (`2.5-flash-preview-tts` -> `3.8-flash-tts` -> `3.8-flash-lite-tts`)
-  const resolvedTtsCascade = rankGeminiTtsModels(models);
+  // If a large real `/v1beta/models` catalog (>= 50 items) omits preview aliases, still try Gemini 4 Hydrogen (XHIGH) first until tokens run out
+  if (
+    catalogIds.length >= 50 &&
+    !deadSet.has(PRIMARY_GEMINI_REASONING_MODEL) &&
+    !fullCascade.includes(PRIMARY_GEMINI_REASONING_MODEL)
+  ) {
+    fullCascade = [PRIMARY_GEMINI_REASONING_MODEL, ...fullCascade];
+  }
+
+  // Dynamically rank all multi-speaker Gemini TTS models available on this key (Hydrogen TTS -> 3.8 TTS -> 2.5 TTS)
+  const deadTtsSet = getDailyDeadModelSet(unavailableTtsModelsByKey, cacheKey);
+  const resolvedTtsCascade = rankGeminiTtsModels(models).filter(id => !deadTtsSet.has(id));
 
   const state = {
     ok: true,
@@ -452,11 +494,7 @@ async function callGeminiDirectWithCascade({
   let hasPrimaryModelError = false;
 
   const cacheKey = `${apiBase}:${key}`;
-  let deadSet = unavailableModelsByKey.get(cacheKey);
-  if (!deadSet) {
-    deadSet = new Set(['gemini-3-pro-preview']);
-    unavailableModelsByKey.set(cacheKey, deadSet);
-  }
+  const deadSet = getDailyDeadModelSet(unavailableModelsByKey, cacheKey);
 
   const sanitizedCascade = [];
   for (const rawModel of cascade || []) {
@@ -573,12 +611,15 @@ async function callGeminiDirectWithCascade({
       const json = await res.json();
       const text = extractGeminiResponseText(json);
       if (text) {
-        const activeRemaining = sanitizedCascade.filter(m => m !== model && !deadSet.has(m));
+        // Keep higher-priority unexhausted models (e.g. Gemini 4 Hydrogen XHIGH after a transient 60s RPM blip)
+        // ahead of lower tiers, only dropping models whose daily tokens actually ran out (`deadSet`)!
+        const preservedOrder = sanitizedCascade.filter(m => !deadSet.has(m));
+        const finalCascade = preservedOrder.length > 0 ? preservedOrder : [model];
         const existingState = discoveredCascadeByKey.get(cacheKey);
         discoveredCascadeByKey.set(cacheKey, {
           ok: true,
-          bestModel: model,
-          cascade: [model, ...activeRemaining],
+          bestModel: finalCascade[0],
+          cascade: finalCascade,
           ttsCascade: existingState?.ttsCascade || [...FAST_FALLBACK_TTS_CASCADE],
           checkedAtMs: Date.now()
         });
@@ -598,12 +639,8 @@ async function callGeminiDirectWithCascade({
         throw new Error('Invalid Gemini API Key. Update your key in Audio & AI or Settings.');
       }
 
-      // Permanently skip 404 or quota-exhausted Free Tier models for the rest of this session
-      if (
-        res.status === 404 ||
-        (res.status === 403 && /free tier|not available/i.test(errText)) ||
-        (res.status === 429 && /exceeded your current quota|limit:\s*0\b|free_tier|RESOURCE_EXHAUSTED/i.test(errText))
-      ) {
+      // Skip 404 or daily-token-exhausted models for the rest of the Pacific day (never on transient 60s RPM limits)
+      if (isDailyOrHardModelExhaustion(res.status, errText)) {
         deadSet.add(model);
       }
 
@@ -1024,10 +1061,15 @@ async function synthesizeWithGeminiNotebookLmTts({
     format: solo ? 'solo' : 'two_host'
   });
 
-  const activeTtsCascade =
+  const cacheKey = `${apiBase}:${key}`;
+  const deadTtsSet = getDailyDeadModelSet(unavailableTtsModelsByKey, cacheKey);
+  const rawTtsCascade =
     Array.isArray(ttsCascade) && ttsCascade.length > 0
       ? ttsCascade
       : [...DEFAULT_NOTEBOOKLM_TTS_CASCADE];
+  const filteredTtsCascade = rawTtsCascade.filter(m => !deadTtsSet.has(m));
+  const activeTtsCascade =
+    filteredTtsCascade.length > 0 ? filteredTtsCascade : [...rawTtsCascade];
 
   const pcmChunks = new Array(chunks.length).fill(null);
   const chunkDurationsSec = new Array(chunks.length).fill(0);
@@ -1101,6 +1143,9 @@ async function synthesizeWithGeminiNotebookLmTts({
 
     for (const ttsModel of activeTtsCascade) {
       if (abortedBatch) return;
+      if (deadTtsSet.has(ttsModel) && activeTtsCascade.some(m => !deadTtsSet.has(m))) {
+        continue;
+      }
       const outcome = await attemptModelOnBlock(ttsModel, block);
       if (abortedBatch) return;
       if (outcome.ok) {
@@ -1109,6 +1154,9 @@ async function synthesizeWithGeminiNotebookLmTts({
         break;
       }
       lastTtsErr = outcome.errText || `HTTP ${outcome.status}`;
+      if (isDailyOrHardModelExhaustion(outcome.status, lastTtsErr)) {
+        deadTtsSet.add(ttsModel);
+      }
       const isTransientMinuteThrottle =
         outcome.status === 503 ||
         (outcome.status === 429 &&
@@ -2000,7 +2048,8 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
         temperature: 0.2
       });
       if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
-        prefs.verifiedGeminiModel = synthRes.modelUsed;
+        prefs.verifiedGeminiModel =
+          discoveredCascadeByKey.get(`${conn.apiBase}:${conn.key}`)?.bestModel || synthRes.modelUsed;
       }
       groundingChips = synthRes.groundingChips || [];
       finalMarkdown = synthRes.text;
@@ -2241,7 +2290,8 @@ export async function generateOnDemandAutopodcast({
       });
 
       if (prefs && typeof prefs === 'object' && stage2Draft.modelUsed) {
-        prefs.verifiedGeminiModel = stage2Draft.modelUsed;
+        prefs.verifiedGeminiModel =
+          discoveredCascadeByKey.get(`${conn.apiBase}:${conn.key}`)?.bestModel || stage2Draft.modelUsed;
       }
       groundingChips = stage2Draft.groundingChips || [];
       parsedTurns = parseJsonTurnsSafe(stage2Draft.text);

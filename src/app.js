@@ -11,7 +11,7 @@ import {
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
 } from './engine/breakingClassifier.js?v=49';
-import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=59';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=60';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
@@ -37,7 +37,7 @@ import {
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=59';
+} from './services/aiWorkerClient.js?v=60';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -48,7 +48,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=59';
+} from './services/shareService.js?v=60';
 
 import {
   esc,
@@ -2977,7 +2977,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=70', { updateViaCache: 'none' })
+        .register('./sw.js?v=71', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

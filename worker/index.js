@@ -103,9 +103,9 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
   const freeTierBonus = isHydrogen
     ? 360
     : isFlash
-      ? 260
+      ? 285
       : isPro && versionNum >= 3.8
-        ? 275
+        ? 270
         : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
@@ -146,7 +146,7 @@ export async function pollAndCacheBestFreeModel(env) {
 
   if (env.GEMINI_API_KEY) {
     try {
-      const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}`;
+      const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}&pageSize=1000`;
       const res = await fetch(listUrl);
       if (res.ok) {
         const json = await res.json();

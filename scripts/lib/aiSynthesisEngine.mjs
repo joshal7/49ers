@@ -89,14 +89,14 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
   const isCarbonOrArgon = /\b(carbon|argon)\b/.test(id);
   if (!isHydrogen && !isFlash && !isPro && !isCarbonOrArgon) return -1;
 
-  // Google AI Studio Free Tier prioritizes Gemini 4 Hydrogen (`XHIGH`), followed by 3.8+ High-Thinking models;
+  // Google AI Studio Free Tier prioritizes Gemini 4 Hydrogen (`XHIGH`), followed by 3.8+ Flash High-Thinking models;
   // paid-only Carbon/Argon & 3.1/2.5 Pro remain lower fallback tiers.
   const freeTierBonus = isHydrogen
     ? 360
     : isFlash
-      ? 260
+      ? 285
       : isPro && versionNum >= 3.8
-        ? 275
+        ? 270
         : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
@@ -159,7 +159,7 @@ export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_AP
   let catalogModels = [];
   let catalogSource = 'fallback-cascade';
   try {
-    const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+    const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}&pageSize=1000`;
     const res = await fetch(listUrl, { signal: AbortSignal.timeout(timeoutMs) });
     if (res.ok) {
       const json = await res.json();

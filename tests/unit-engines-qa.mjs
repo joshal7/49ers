@@ -2656,10 +2656,10 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
     'Worker EDITORIAL_SYSTEM_PROMPT must explicitly prioritize accuracy & quality over generation time'
   );
 
-  // Highest-quality model ranking: Gemini 4 Hydrogen (XHIGH) #1, 3.8+ Pro/Flash failover, Studio Pro TTS cascade
+  // Highest-quality Free-Tier model ranking: Gemini 4 Hydrogen (XHIGH) #1 -> 3.8 Flash (HIGH) #2 ahead of 0-quota Pro tiers
   assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-4-hydrogen');
-  assert.ok(scoreFreeTierGeminiModel('gemini-4-hydrogen') > scoreFreeTierGeminiModel('gemini-3.8-pro'));
-  assert.ok(scoreFreeTierGeminiModel('gemini-3.8-pro') > scoreFreeTierGeminiModel('gemini-3.8-flash'));
+  assert.ok(scoreFreeTierGeminiModel('gemini-4-hydrogen') > scoreFreeTierGeminiModel('gemini-3.8-flash'));
+  assert.ok(scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-3.8-pro'));
   assert.ok(scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-2.5-pro'));
   assert.deepEqual(DEFAULT_AUDIO_TTS_CASCADE, ['gemini-2.5-pro-preview-tts', 'gemini-2.5-flash-preview-tts']);
 
@@ -6652,14 +6652,16 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
   );
 
   const rankedTts = rankGeminiTtsModels([
+    { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.8-flash-lite-tts', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.8-flash-tts', supportedGenerationMethods: ['generateContent'] },
-    { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
+    { name: 'models/gemini-4-hydrogen-tts', supportedGenerationMethods: ['generateContent'] }
   ]);
-  assert.deepEqual(rankedTts.slice(0, 3), [
-    'gemini-2.5-flash-preview-tts',
+  assert.deepEqual(rankedTts.slice(0, 4), [
+    'gemini-4-hydrogen-tts',
     'gemini-3.8-flash-tts',
-    'gemini-3.8-flash-lite-tts'
+    'gemini-3.8-flash-lite-tts',
+    'gemini-2.5-flash-preview-tts'
   ]);
 
   // 3. Verify Self-Healing Truncated Audio Guard (purges 0:38 partial WAV on a 3:06 episode while keeping full 3:06 WAV)
@@ -7073,6 +7075,99 @@ await testAsync('Cross-surface Gemini 4 Hydrogen (XHIGH) audit: AI Briefs, Match
     const hydrated = await extractIncomingSharedRoute(new URL(shareUrl));
     assert.equal(hydrated?.analysis?.modelUsed, 'gemini-4-hydrogen');
     assert.equal(hydrated?.analysis?.thinkingLevel, 'XHIGH');
+
+    // 6. Verify Hydrogen XHIGH stays #1 across transient 60s RPM 429s until daily tokens actually run out, then falls back cleanly to 3.8 HIGH
+    const { scoreBestGeminiReasoningModel } = await import('../src/engine/geminiStudioPrompts.js');
+    assert.ok(
+      scoreBestGeminiReasoningModel('gemini-4-hydrogen') > scoreBestGeminiReasoningModel('gemini-3.8-flash') &&
+        scoreBestGeminiReasoningModel('gemini-3.8-flash') > scoreBestGeminiReasoningModel('gemini-3.8-pro'),
+      'Reasoning cascade must rank gemini-4-hydrogen (XHIGH) #1 -> gemini-3.8-flash (HIGH) #2 ahead of 0-quota 3.8-pro'
+    );
+
+    let h2Mode = 'transient_rpm'; // 'transient_rpm' -> 'ok' -> 'daily_exhausted'
+    const failoverCalls = [];
+    globalThis.fetch = async (url, init) => {
+      const u = String(url);
+      const body = init?.body ? JSON.parse(init.body) : null;
+      failoverCalls.push({ url: u, body });
+
+      if (u.includes('/models?key=')) {
+        assert.ok(u.includes('pageSize=1000'), 'Must request pageSize=1000 so /v1beta/models never truncates Hydrogen at 50 items');
+        return new Response(
+          JSON.stringify({
+            models: [
+              { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.8-pro', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }
+            ]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      if (u.includes('models/gemini-4-hydrogen:generateContent')) {
+        if (h2Mode === 'transient_rpm') {
+          return new Response(
+            JSON.stringify({ error: { message: 'RESOURCE_EXHAUSTED: requests_per_minute exceeded, please retry in 8s' } }),
+            { status: 429, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        if (h2Mode === 'daily_exhausted') {
+          return new Response(
+            JSON.stringify({ error: { message: 'You exceeded your current quota (GenerateRequestsPerDayPerProjectPerModel).' } }),
+            { status: 429, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        return new Response(
+          JSON.stringify({
+            candidates: [{ content: { parts: [{ text: '### Hydrogen XHIGH Report\n* Synthesized on Gemini 4 Hydrogen.' }] } }]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      if (u.includes('models/gemini-3.8-flash:generateContent')) {
+        return new Response(
+          JSON.stringify({
+            candidates: [{ content: { parts: [{ text: '### 3.8 High Failover Report\n* Synthesized on Gemini 3.8 Flash High.' }] } }]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('{}', { status: 404 });
+    };
+
+    const cascadePrefs = {
+      geminiApiKey: 'AIzaHydrogenUntilTokensOutKey',
+      geminiApiBaseUrl: 'https://mock-h2-token-budget.local/v1beta',
+      verifiedGeminiModel: 'gemini-4-hydrogen'
+    };
+
+    // Call 1: Hydrogen hits temporary 60s RPM limit -> falls back to 3.8 HIGH for this call, WITHOUT permanently demoting Hydrogen!
+    const run1 = await runOnDemandDeepAnalysis({ prompt: 'Nick Bosa Wide-9', appData: fullAppData, prefs: cascadePrefs });
+    assert.equal(run1.modelUsed, 'gemini-3.8-flash');
+    assert.equal(run1.thinkingLevel, 'HIGH');
+    assert.equal(cascadePrefs.verifiedGeminiModel, 'gemini-4-hydrogen', 'Transient 60s RPM blip must NOT demote default model away from Hydrogen');
+
+    // Call 2: 60s RPM window cleared -> MUST automatically use Gemini 4 Hydrogen (XHIGH) again!
+    h2Mode = 'ok';
+    const run2 = await runOnDemandDeepAnalysis({ prompt: 'Fred Warner Quarters', appData: fullAppData, prefs: cascadePrefs });
+    assert.equal(run2.modelUsed, 'gemini-4-hydrogen', 'Must return to Gemini 4 Hydrogen (XHIGH) while daily tokens remain');
+    assert.equal(run2.thinkingLevel, 'XHIGH');
+
+    // Call 3: Hydrogen daily tokens run out -> falls back cleanly to 3.8 HIGH (skipping 0-quota 3.8-pro!)
+    h2Mode = 'daily_exhausted';
+    const run3 = await runOnDemandDeepAnalysis({ prompt: 'Trent Williams Anchor', appData: fullAppData, prefs: cascadePrefs });
+    assert.equal(run3.modelUsed, 'gemini-3.8-flash');
+    assert.equal(run3.thinkingLevel, 'HIGH');
+    assert.equal(cascadePrefs.verifiedGeminiModel, 'gemini-3.8-flash', 'Once Hydrogen daily tokens run out, active model must shift to 3.8-flash HIGH');
+
+    // Call 4: Subsequent call on same day goes straight to 3.8 HIGH without wasting a round-trip on exhausted Hydrogen
+    failoverCalls.length = 0;
+    const run4 = await runOnDemandDeepAnalysis({ prompt: 'George Kittle Seam', appData: fullAppData, prefs: cascadePrefs });
+    assert.equal(run4.modelUsed, 'gemini-3.8-flash');
+    assert.ok(
+      !failoverCalls.some(c => c.url.includes('models/gemini-4-hydrogen:generateContent')),
+      'Exhausted daily Hydrogen bucket must be skipped directly to 3.8 HIGH for the rest of the PT day'
+    );
   } finally {
     globalThis.fetch = origFetch;
     globalThis.localStorage = origLocalStorage;

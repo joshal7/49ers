@@ -42,22 +42,21 @@ export const DEFAULT_BEST_REASONING_CASCADE = [
 ];
 
 export const DEFAULT_NOTEBOOKLM_TTS_CASCADE = [
-  'gemini-2.5-flash-preview-tts',
-  'gemini-3.8-flash-tts',
-  'gemini-3.8-flash-lite-tts',
-  'gemini-3.8-flash-preview-tts',
-  'gemini-3.1-flash-preview-tts',
-  'gemini-3.1-flash-tts',
-  'gemini-4-hydrogen-preview-tts',
   'gemini-4-hydrogen-tts',
+  'gemini-4-hydrogen-preview-tts',
+  'gemini-3.8-flash-tts',
+  'gemini-3.8-flash-preview-tts',
+  'gemini-3.8-flash-lite-tts',
+  'gemini-3.1-flash-tts',
+  'gemini-3.1-flash-preview-tts',
+  'gemini-2.5-flash-preview-tts',
   'gemini-2.5-pro-preview-tts'
 ];
 
 /**
  * Dynamically discovers and orders all Gemini Multi-Speaker TTS models available on an API key's
- * `/v1beta/models` catalog, prioritizing `gemini-2.5-flash-preview-tts` (proven smooth NotebookLM
- * conversational delivery) followed immediately by `gemini-3.8-flash-tts` and high-quota
- * `gemini-3.8-flash-lite-tts` (separate Free-Tier RPM/RPD buckets) and `gemini-2.5-pro-preview-tts`.
+ * `/v1beta/models` catalog, defaulting to Gemini 4 Hydrogen TTS first until tokens run out,
+ * then falling back to Gemini 3.8 TTS (`3.8-flash-tts` -> `3.8-flash-lite-tts`) and `2.5` TTS.
  */
 export function rankGeminiTtsModels(catalogModels = []) {
   const catalogTtsIds = [];
@@ -93,11 +92,12 @@ export function rankGeminiTtsModels(catalogModels = []) {
       ordered.push(discovered);
     }
   }
-  // Always include core cross-bucket fallbacks at tail in case `/v1beta/models` paginates or omits preview aliases
+  // Append core Hydrogen -> 3.8 -> 2.5 cross-bucket fallbacks at tail in case `/v1beta/models` omits unlisted aliases
   for (const coreFallback of [
-    'gemini-2.5-flash-preview-tts',
+    'gemini-4-hydrogen-tts',
     'gemini-3.8-flash-tts',
     'gemini-3.8-flash-lite-tts',
+    'gemini-2.5-flash-preview-tts',
     'gemini-2.5-pro-preview-tts'
   ]) {
     if (!ordered.includes(coreFallback)) {
@@ -176,13 +176,13 @@ export function scoreBestGeminiReasoningModel(modelEntryOrId) {
   if (!isHydrogen && !isPro && !isFlash && !isCarbonOrArgon) return -1;
 
   // Gemini 4 Hydrogen (`gemini-4-hydrogen` on `XHIGH`) is #1 on Google AI Studio Free Tier & API;
-  // 3.8+ Flash (`HIGH`) is #2 Free-Tier failover; paid-only Carbon/Argon & 3.1/2.5 Pro carry 0/0 Free-Tier quota.
+  // 3.8+ Flash (`HIGH`) is #2 Free-Tier failover ahead of 0-quota Carbon/Argon & Pro tiers.
   const tierBonus = isHydrogen
     ? 360
     : isFlash
-      ? 260
+      ? 285
       : isPro && versionNum >= 3.8
-        ? 275
+        ? 270
         : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
