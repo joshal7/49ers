@@ -2615,7 +2615,7 @@ async function main() {
       );
       await cdp.assertNoOverflow('Custom 3m WR Podcast Ready to Play + Expanded Transcript');
 
-      // 3. Test Snappy Share Flow: MP3 Audio Export + <250ms Keyless Safari/Chrome Instant Play + Keyed Fast-Start Studio TTS
+      // 3. Test Human-Voice Share Flow: MP3 Audio Export + Keyless Safari/Chrome Recipient Hearing Smooth Puck & Aoede Studio WAV
       const shareRoundTrip = await cdp.eval(async () => {
         const hasSenderMp3ShareBtn = Boolean(
           document.querySelector('[data-podcast-ready-card] [data-action="share-podcast-audio"]')
@@ -2635,10 +2635,12 @@ async function main() {
         const sharedUrl = window.__lastSharedUrl || nativeShareCaptured?.url || '';
         const st = window.__49ersDiagnostics.getState();
         const savedSenderKey = st.prefs.geminiApiKey;
+        const rawKeyMaskedInUrl = Boolean(savedSenderKey && !sharedUrl.includes(savedSenderKey));
         const sharedEpId = st.audioState?.episode?.id;
         const { deleteEpisodeAudioBlob, getEpisodeAudioUrl } = await import('/src/services/podcastAudioStore.js');
 
-        // 3A. Simulate keyless recipient browser (Chrome iOS / Dad's Safari opened from iMessage): must load in <250ms with ZERO blocking spinner!
+        // 3A. Simulate keyless recipient browser (Chrome iOS / Dad's Safari opened from iMessage):
+        //     Must show Shared Podcast Hero ABOVE generator, support 1-tap Play When Ready, and synthesize smooth Stereo WAV (never robotic OS speech!)
         document.getElementById('mpCloseBtn')?.click();
         st.prefs.geminiApiKey = '';
         st.prefs.localCustomEpisodes = [];
@@ -2647,51 +2649,91 @@ async function main() {
         }
 
         try {
-          const tKeylessStart = performance.now();
-          await window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
-          const keylessOpenMs = Math.round(performance.now() - tKeylessStart);
-
-          const readyCardKeyless = document.querySelector('[data-podcast-ready-card]');
-          const genCardKeyless = document.querySelector('[data-podcast-generator-card]');
-          const heroAboveGenerator =
-            readyCardKeyless && genCardKeyless
-              ? readyCardKeyless.getBoundingClientRect().top < genCardKeyless.getBoundingClientRect().top
-              : false;
-          const zeroBlockingSpinnerKeyless = !document.querySelector('[data-shared-audio-prep="active"]');
-          const noConfusingCreateBanner = !document.querySelector('[data-job-progress="active"]');
-          const readyHeaderImmediate = (readyCardKeyless?.textContent || '').includes('Shared Podcast Ready to Play');
-
-          // Tap Play Shared Podcast -> must start playing immediately with zero blocking spinner!
-          readyCardKeyless?.querySelector('[data-action="play-episode"]')?.click();
+          const openPromise = window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
+          // Inspect live preparing state while Gemini NotebookLM TTS (~750ms mock) is in flight
           await new Promise(r => setTimeout(r, 150));
-          const playingImmediatelyKeyless = Boolean(window.__49ersDiagnostics.getState().audioState?.isPlaying);
+
+          const readyCardPrep = document.querySelector('[data-podcast-ready-card]');
+          const genCardPrep = document.querySelector('[data-podcast-generator-card]');
+          const heroAboveGenerator =
+            readyCardPrep && genCardPrep
+              ? readyCardPrep.getBoundingClientRect().top < genCardPrep.getBoundingClientRect().top
+              : false;
+          const hasSharedPrepBanner = Boolean(document.querySelector('[data-shared-audio-prep="active"]'));
+          const noConfusingCreateBanner = !document.querySelector('[data-job-progress="active"]');
+
+          // Tap "Play When Ready" during prep -> must arm Auto-Play Queued… and unlock speaker
+          readyCardPrep?.querySelector('[data-action="play-episode"]')?.click();
+          await new Promise(r => setTimeout(r, 25));
+          const armedAutoPlayQueued =
+            Boolean(window.__49ersDiagnostics.getState().audioState?.isAutoPlayQueued) &&
+            (document.querySelector('[data-podcast-ready-card]')?.textContent || '').includes('Auto-Play Queued');
+
+          await openPromise;
+          await new Promise(r => setTimeout(r, 120));
+
+          const loadedSharedEp = window.__49ersDiagnostics.getState().audioState?.episode;
+          const autoStartedPlaying = Boolean(window.__49ersDiagnostics.getState().audioState?.isPlaying);
+          const usingRoboticDeviceSpeech = Boolean(
+            window.__49ersDiagnostics.getState().audioState?.usingDeviceSpeech
+          );
+          const recipientKeyRemainedPrivate = st.prefs.geminiApiKey === '';
+          const hydratedAudioUrl = loadedSharedEp?.id ? await getEpisodeAudioUrl(loadedSharedEp.id) : null;
+
+          let wavHeader = '';
+          let wavChannels = 0;
+          let wavByteLength = 0;
+          if (hydratedAudioUrl) {
+            const wavBuf = await (await fetch(hydratedAudioUrl)).arrayBuffer();
+            const dv = new DataView(wavBuf);
+            wavHeader = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
+            wavChannels = dv.getUint16(22, true);
+            wavByteLength = wavBuf.byteLength;
+          }
           document.getElementById('mpPlayPauseBtn')?.click();
 
-          // 3B. Simulate keyed recipient browser -> Progressive Fast-Start Gemini Studio TTS hydrates Stereo WAV
+          // 3B. Verify legacy keyless link (without vk token) also prepares WAV audio cleanly without robotic speech
           document.getElementById('mpCloseBtn')?.click();
-          st.prefs.geminiApiKey = savedSenderKey;
-          st.prefs.localCustomEpisodes = [];
-          await window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
-          const loadedSharedEp = window.__49ersDiagnostics.getState().audioState?.episode;
-          if (loadedSharedEp?._backgroundFullAudioPromise) {
-            await loadedSharedEp._backgroundFullAudioPromise;
+          if (sharedEpId) {
+            await deleteEpisodeAudioBlob(sharedEpId);
           }
-          const hydratedAudioUrl = loadedSharedEp?.id ? await getEpisodeAudioUrl(loadedSharedEp.id) : null;
+          st.prefs.localCustomEpisodes = [];
+          const { buildShareablePodcastUrl } = await import('/src/services/shareService.js');
+          const legacyNoKeyUrl = await buildShareablePodcastUrl(
+            { ...loadedSharedEp, audioUrl: null, _sharedVoiceKey: '' },
+            window.location,
+            { geminiApiKey: '' }
+          );
+          window.__49ersFastTestTtsFallback = true;
+          try {
+            await window.__49ersDiagnostics.openSharedUrl(new URL(legacyNoKeyUrl));
+          } finally {
+            window.__49ersFastTestTtsFallback = false;
+          }
+          const legacyHydratedUrl = sharedEpId ? await getEpisodeAudioUrl(sharedEpId) : null;
+          const legacyNotRobotic = !window.__49ersDiagnostics.getState().audioState?.usingDeviceSpeech;
 
           return {
             hasSenderMp3ShareBtn,
             sharedUrl,
+            rawKeyMaskedInUrl,
             nativeTitle: nativeShareCaptured?.title || '',
             loadedTitle: loadedSharedEp?.title || '',
             loadedTurns: loadedSharedEp?.transcript?.length || 0,
             isSharedImport: Boolean(loadedSharedEp?.isSharedImport),
-            keylessOpenMs,
             heroAboveGenerator,
-            zeroBlockingSpinnerKeyless,
+            hasSharedPrepBanner,
             noConfusingCreateBanner,
-            readyHeaderImmediate,
-            playingImmediatelyKeyless,
-            hasHydratedAudioBlob: Boolean(hydratedAudioUrl)
+            armedAutoPlayQueued,
+            autoStartedPlaying,
+            usingRoboticDeviceSpeech,
+            recipientKeyRemainedPrivate,
+            hasHydratedAudioBlob: Boolean(hydratedAudioUrl),
+            wavHeader,
+            wavChannels,
+            wavByteLength,
+            hasLegacyHydratedBlob: Boolean(legacyHydratedUrl),
+            legacyNotRobotic
           };
         } finally {
           st.prefs.geminiApiKey = savedSenderKey;
@@ -2702,17 +2744,24 @@ async function main() {
         shareRoundTrip.hasSenderMp3ShareBtn &&
           shareRoundTrip.sharedUrl.includes('?pod=custom_ep_') &&
           shareRoundTrip.sharedUrl.includes('#shared-pod=z.') &&
+          shareRoundTrip.rawKeyMaskedInUrl &&
           shareRoundTrip.nativeTitle.includes('49ers Faithful Podcast') &&
           shareRoundTrip.loadedTurns >= 10 &&
           shareRoundTrip.isSharedImport &&
-          shareRoundTrip.keylessOpenMs < 2500 &&
           shareRoundTrip.heroAboveGenerator &&
-          shareRoundTrip.zeroBlockingSpinnerKeyless &&
+          shareRoundTrip.hasSharedPrepBanner &&
           shareRoundTrip.noConfusingCreateBanner &&
-          shareRoundTrip.readyHeaderImmediate &&
-          shareRoundTrip.playingImmediatelyKeyless &&
-          shareRoundTrip.hasHydratedAudioBlob,
-        `Snappy podcast share & keyless/keyed recipient playback failed: ${JSON.stringify(shareRoundTrip)}`
+          shareRoundTrip.armedAutoPlayQueued &&
+          shareRoundTrip.autoStartedPlaying &&
+          !shareRoundTrip.usingRoboticDeviceSpeech &&
+          shareRoundTrip.recipientKeyRemainedPrivate &&
+          shareRoundTrip.hasHydratedAudioBlob &&
+          shareRoundTrip.wavHeader === 'RIFF' &&
+          shareRoundTrip.wavChannels === 2 &&
+          shareRoundTrip.wavByteLength > 1_000_000 &&
+          shareRoundTrip.hasLegacyHydratedBlob &&
+          shareRoundTrip.legacyNotRobotic,
+        `Human-voice podcast share & keyless recipient studio WAV playback failed: ${JSON.stringify(shareRoundTrip)}`
       );
       await cdp.assertNoOverflow('Shared Podcast Hero Card Above Generator');
 

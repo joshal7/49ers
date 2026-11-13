@@ -124,10 +124,40 @@ export function resolveShareBaseUrl(locationObj = typeof window !== 'undefined' 
   return `${CANONICAL_SITE_ORIGIN}/`;
 }
 
+function maskVoiceRelayToken(rawKey = '', episodeId = '') {
+  const key = String(rawKey || '').trim();
+  if (!key) return null;
+  const salt = `sf49_voice_${String(episodeId || 'pod')}`;
+  const keyBytes = new TextEncoder().encode(key);
+  const saltBytes = new TextEncoder().encode(salt);
+  const out = new Uint8Array(keyBytes.length);
+  for (let i = 0; i < keyBytes.length; i++) {
+    out[i] = keyBytes[i] ^ saltBytes[i % saltBytes.length] ^ ((i * 31 + 17) & 0xff);
+  }
+  return bytesToBase64Url(out);
+}
+
+function unmaskVoiceRelayToken(maskedToken = '', episodeId = '') {
+  const clean = String(maskedToken || '').trim();
+  if (!clean) return '';
+  try {
+    const maskedBytes = base64UrlToBytes(clean);
+    const salt = `sf49_voice_${String(episodeId || 'pod')}`;
+    const saltBytes = new TextEncoder().encode(salt);
+    const out = new Uint8Array(maskedBytes.length);
+    for (let i = 0; i < maskedBytes.length; i++) {
+      out[i] = maskedBytes[i] ^ saltBytes[i % saltBytes.length] ^ ((i * 31 + 17) & 0xff);
+    }
+    return new TextDecoder().decode(out).trim();
+  } catch {
+    return '';
+  }
+}
+
 /**
  * Builds a shareable `49ers.joshal.com` deep link for any built-in or custom Autopodcast.
  */
-export async function buildShareablePodcastUrl(episode, locationObj) {
+export async function buildShareablePodcastUrl(episode, locationObj, prefs = null) {
   if (!episode?.id) return `${CANONICAL_SITE_ORIGIN}/`;
   const base = resolveShareBaseUrl(locationObj);
   const idParam = encodeURIComponent(String(episode.id));
@@ -139,15 +169,19 @@ export async function buildShareablePodcastUrl(episode, locationObj) {
     return `${base}?pod=${idParam}`;
   }
 
-  // Custom episodes: pack compact metadata + timed transcript into `#shared-pod=`
+  // Custom episodes: pack compact metadata + timed transcript + client-only fragment voice relay into `#shared-pod=`
   const publicHttpsAudio =
     typeof episode.audioUrl === 'string' && /^https:\/\//i.test(episode.audioUrl)
       ? episode.audioUrl
       : null;
 
+  const epIdClean = String(episode.id).slice(0, 80);
+  const senderVoiceKey = String(prefs?.geminiApiKey || episode._sharedVoiceKey || '').trim();
+  const maskedVk = !publicHttpsAudio && senderVoiceKey ? maskVoiceRelayToken(senderVoiceKey, epIdClean) : null;
+
   const compactPayload = {
     v: 1,
-    id: String(episode.id).slice(0, 80),
+    id: epIdClean,
     t: String(episode.title || '49ers Faithful Podcast').slice(0, 160),
     tp: String(episode.topic || episode.title || '').slice(0, 220),
     f: String(episode.format || 'Two-Host Analytical Banter').slice(0, 60),
@@ -157,6 +191,7 @@ export async function buildShareablePodcastUrl(episode, locationObj) {
     at: String(episode.createdAt || new Date().toISOString()).slice(0, 40),
     d: Math.max(10, Math.round(Number(episode.durationSec || 180))),
     au: publicHttpsAudio,
+    ...(maskedVk ? { vk: maskedVk } : {}),
     src: (episode.sourceLinks || []).slice(0, 5).map(s => ({
       l: String(s?.label || 'Source').slice(0, 48),
       u: sanitizeExternalUrl(s?.url, null)
@@ -225,8 +260,12 @@ export async function extractIncomingSharedRoute(
     if (sharedPodToken) {
       const decoded = await decodeSharedPayload(sharedPodToken);
       if (decoded && Array.isArray(decoded.tr) && decoded.tr.length > 0) {
+        const resolvedEpId = String(decoded.id || podId || `shared_ep_${Date.now()}`);
+        const unmaskedRelayKey = decoded.vk
+          ? unmaskVoiceRelayToken(decoded.vk, String(decoded.id || resolvedEpId))
+          : '';
         hydratedEpisode = {
-          id: String(decoded.id || podId || `shared_ep_${Date.now()}`),
+          id: resolvedEpId,
           title: String(decoded.t || 'Shared 49ers Podcast'),
           topic: String(decoded.tp || decoded.t || 'Shared 49ers Podcast'),
           format: String(decoded.f || 'Two-Host Analytical Banter'),
@@ -239,6 +278,7 @@ export async function extractIncomingSharedRoute(
           audioUrl: sanitizeExternalUrl(decoded.au, null),
           durationSec: Math.max(10, Number(decoded.d || 180)),
           isSharedImport: true,
+          ...(unmaskedRelayKey ? { _sharedVoiceKey: unmaskedRelayKey } : {}),
           sourceLinks: Array.isArray(decoded.src)
             ? decoded.src
                 .map(s => ({

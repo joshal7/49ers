@@ -399,15 +399,7 @@ export class PodcastAudioController {
       const storedUrl = await getEpisodeAudioUrl(epId);
       if (storedUrl) {
         episode.audioUrl = storedUrl;
-        episode.useInstantSpeech = false;
         return storedUrl;
-      }
-
-      // If no API key is configured in this browser, skip multi-minute WASM downloads completely
-      // so the shared episode opens in `0ms` and plays immediately on tap!
-      if (!this._hasCloudStudioTtsCapability()) {
-        episode.useInstantSpeech = true;
-        return null;
       }
 
       if (typeof this.onSynthesizeMissingAudio === 'function') {
@@ -417,7 +409,6 @@ export class PodcastAudioController {
           const renderedUrl = await this.onSynthesizeMissingAudio(episode);
           if (renderedUrl) {
             episode.audioUrl = renderedUrl;
-            episode.useInstantSpeech = false;
             if (this.currentEpisode?.id === episode.id && episode.durationSec) {
               this.durationSec = Number(episode.durationSec) || this.durationSec;
             }
@@ -428,7 +419,6 @@ export class PodcastAudioController {
         }
       }
 
-      episode.useInstantSpeech = true;
       return getDirectNonStaleUrl(episode);
     })();
 
@@ -464,8 +454,9 @@ export class PodcastAudioController {
   }
 
   /**
-   * Preloads an episode into the Ready-to-Play state (0:00 / duration) in `<10ms` when keyless
-   * or cached, or via ~2s fast-start progressive TTS when a Gemini API key is connected.
+   * Preloads an episode into the Ready-to-Play state (0:00 / duration), synthesizing smooth
+   * human studio audio (~18–28s Gemini NotebookLM `Puck` & `Aoede` or ~12–18s progressive
+   * StyleTTS2) and auto-starting playback if the user tapped Play When Ready.
    */
   async loadEpisodeReady(episode) {
     if (!episode) return;
@@ -502,12 +493,7 @@ export class PodcastAudioController {
         }
       }
     } else {
-      const shouldAutoStartSpeech = this.autoPlayEpisodeId === episode.id;
       this.autoPlayEpisodeId = null;
-      if (shouldAutoStartSpeech && episode.useInstantSpeech) {
-        this.playWithDeviceVoiceFallback(episode, 0);
-        return;
-      }
       this._stopSilentCarrierGestureLock();
     }
     this._emit();
@@ -523,7 +509,7 @@ export class PodcastAudioController {
     this.currentTimeSec = Math.max(0, startSec);
     this._setupMediaSession(episode);
 
-    // 1. Fast synchronous path inside the user gesture whenever URL is already resolved!
+    // Fast synchronous path inside the user gesture whenever URL is already resolved!
     const syncUrl = getDirectNonStaleUrl(episode);
     if (syncUrl) {
       this.autoPlayEpisodeId = null;
@@ -539,36 +525,7 @@ export class PodcastAudioController {
       return;
     }
 
-    // 2. Instant `<100ms` synchronous path inside the user gesture for keyless shared episodes!
-    if (
-      (episode.useInstantSpeech || !this._hasCloudStudioTtsCapability()) &&
-      !this.isBufferingAudio &&
-      Array.isArray(episode.transcript) &&
-      episode.transcript.length > 0
-    ) {
-      // Check IndexedDB only if this episode was created locally (not a fresh keyless shared import)
-      if (!episode.isSharedImport && !episode.useInstantSpeech) {
-        this._startSilentCarrierGestureLock();
-        const storedUrl = await getEpisodeAudioUrl(episode.id);
-        if (storedUrl) {
-          episode.audioUrl = storedUrl;
-          this._assignAudioSrcIfNeeded(storedUrl, startSec);
-          try {
-            await this.audio.play();
-            this.isPlaying = true;
-          } catch {
-            this.isPlaying = false;
-          }
-          this._emit();
-          return;
-        }
-      }
-      episode.useInstantSpeech = true;
-      this.playWithDeviceVoiceFallback(episode, startSec);
-      return;
-    }
-
-    // 3. Keyed progressive cloud TTS (~2s lead pass): keep iOS speaker unlocked via silent carrier
+    // Keep iOS HTMLAudioElement unlocked via near-silent Stereo WAV carrier while studio voices prepare
     this.autoPlayEpisodeId = episode.id;
     this._startSilentCarrierGestureLock();
     this._emit();
@@ -578,19 +535,7 @@ export class PodcastAudioController {
 
     const stillWantsAutoPlay = this.autoPlayEpisodeId === episode.id;
     this.autoPlayEpisodeId = null;
-    if (!stillWantsAutoPlay) {
-      this._stopSilentCarrierGestureLock();
-      this.isPlaying = false;
-      this._emit();
-      return;
-    }
-
-    if (!asyncUrl) {
-      if (Array.isArray(episode.transcript) && episode.transcript.length > 0) {
-        episode.useInstantSpeech = true;
-        this.playWithDeviceVoiceFallback(episode, this.currentTimeSec || startSec);
-        return;
-      }
+    if (!asyncUrl || !stillWantsAutoPlay) {
       this._stopSilentCarrierGestureLock();
       this.isPlaying = false;
       this._emit();
@@ -775,7 +720,7 @@ export class PodcastAudioController {
     if (!this.currentEpisode) return;
     this._enforcePlaybackSession();
 
-    if (this.currentEpisode.useInstantSpeech || (!this._activeSrcUrl && !getDirectNonStaleUrl(this.currentEpisode))) {
+    if (!this._activeSrcUrl) {
       await this.loadAndPlay(this.currentEpisode, this.currentTimeSec);
       return;
     }

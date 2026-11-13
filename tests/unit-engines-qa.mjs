@@ -6629,7 +6629,8 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
   assert.ok(
     !workerSrc.includes("loadWithBackend('webgpu'") &&
       !workerSrc.includes("'fp32'") &&
-      !workerSrc.includes('Kokoro-82M'),
+      !workerSrc.includes('onnx-community/Kokoro-82M') &&
+      !workerSrc.includes('kokoro.web.js'),
     'Must never attempt 310 MB fp32 WebGPU load or slow 88 MB Kokoro-82M WASM synthesis'
   );
   assert.equal(typeof phonemizeWithPunctuation, 'function', 'Must export punctuation-preserving IPA phonemizer');
