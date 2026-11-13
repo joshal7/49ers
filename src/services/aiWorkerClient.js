@@ -5,14 +5,15 @@
  * 1. **Direct Browser Gemini Studio Mode (`prefs.geminiApiKey`)**:
  *    Calls `generativelanguage.googleapis.com/v1beta` directly from the browser (key stored privately
  *    in device `localStorage`, never committed to GitHub), dynamically discovering `gemini-4-hydrogen`
- *    at its highest reasoning level (`thinkingConfig: { thinkingLevel: "XHIGH" }`, cascading to
- *    `gemini-3.8-flash` on `"HIGH"` / `gemini-2.5` with `thinkingBudget`), live `google_search` grounding,
- *    3-pass Deep Research -> Synthesis -> Audit, and **Gemini Native Multi-Speaker NotebookLM TTS**
- *    (`gemini-2.5-pro-preview-tts` -> `gemini-2.5-flash-preview-tts`, voices `Puck` + `Aoede` for two-host,
- *    `Charon` for solo).
+ *    (using `"HIGH"` thinking on live user-waiting Auto Pod & On-Demand AI Analysis for notably faster
+ *    turnaround over compiled Stage-1 dossiers, while keeping `"XHIGH"` on non-time-sensitive 1/day
+ *    Daily Top-News Briefs & Matchup Intel; cascading to `gemini-3.8-flash` `"HIGH"` / `gemini-2.5`),
+ *    live `google_search` grounding, and **Gemini Native Multi-Speaker NotebookLM TTS**
+ *    (`gemini-4-hydrogen-tts` -> `gemini-3.8-flash-tts` -> `gemini-2.5-pro/flash-preview-tts`, voices
+ *    `Puck` + `Aoede` for two-host, `Charon` for solo).
  * 2. **Shared Cloudflare Edge Worker Mode (`prefs.workerBaseUrl`)**:
- *    Routes the same 3-stage `gemini-4-hydrogen` `XHIGH` + NotebookLM TTS pipeline through `worker/index.js`
- *    with shared Cloudflare KV/R2 group caching.
+ *    Routes the same `gemini-4-hydrogen` (`HIGH` live / `XHIGH` scheduled) + NotebookLM TTS pipeline
+ *    through `worker/index.js` with shared Cloudflare KV/R2 group caching.
  *
  * For shared links opened by colleagues without an API key or R2 stream, `synthesizeMissingEpisodeAudio`
  * renders the verified NotebookLM script through StyleTTS2-based **Kokoro-82M** (`af_heart` + `am_fenrir`)
@@ -56,6 +57,8 @@ import {
 } from '../engine/deepResearchEngine.js';
 import {
   PRIMARY_GEMINI_REASONING_MODEL,
+  PRIMARY_GEMINI_THINKING_LEVEL,
+  LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL,
   DEFAULT_BEST_REASONING_CASCADE,
   DEFAULT_NOTEBOOKLM_TTS_CASCADE,
   NOTEBOOKLM_VOICE_PROFILES,
@@ -196,9 +199,9 @@ export function estimateGenerationWait({
   const isCloud = hasLiveAiConnection(prefs);
 
   if (kind === 'analysis') {
-    const minSec = 25;
-    const maxSec = 60;
-    const rangeLabel = '25–60 sec';
+    const minSec = 15;
+    const maxSec = 40;
+    const rangeLabel = '15–40 sec';
     return {
       isCloud,
       minSec,
@@ -211,18 +214,18 @@ export function estimateGenerationWait({
   }
 
   const mins = Math.max(2, Math.min(20, Number(durationMinutes || 3)));
-  let minSec = 45;
-  let maxSec = 90;
-  let rangeLabel = '45–90 sec';
+  let minSec = 30;
+  let maxSec = 65;
+  let rangeLabel = '30–65 sec';
 
   if (mins >= 5 && mins <= 10) {
-    minSec = 60;
-    maxSec = 180;
-    rangeLabel = '1–3 min';
+    minSec = 45;
+    maxSec = 120;
+    rangeLabel = '45–120 sec';
   } else if (mins > 10) {
-    minSec = 120;
-    maxSec = 240;
-    rangeLabel = '2–4 min';
+    minSec = 90;
+    maxSec = 180;
+    rangeLabel = '1.5–3 min';
   }
 
   return {
@@ -487,7 +490,8 @@ async function callGeminiDirectWithCascade({
   userText,
   useGoogleSearch = false,
   temperature = 0.2,
-  perAttemptTimeoutMs = 55000
+  perAttemptTimeoutMs = 55000,
+  preferredThinkingLevel = PRIMARY_GEMINI_THINKING_LEVEL
 }) {
   let lastErrorText = '';
   let lastStatus = 500;
@@ -516,7 +520,11 @@ async function callGeminiDirectWithCascade({
 
   for (let i = 0; i < sanitizedCascade.length; i++) {
     const model = sanitizedCascade[i];
-    const thinkingConfig = buildGeminiThinkingConfig(model);
+    const thinkingConfig = buildGeminiThinkingConfig(model, null, {
+      preferredThinkingLevel
+    });
+    let thinkingLevelUsed =
+      thinkingConfig?.thinkingLevel || resolveGeminiThinkingLevelLabel(model, preferredThinkingLevel);
     const payload = {
       systemInstruction: { parts: [{ text: systemInstructionText }] },
       ...(useGoogleSearch ? { tools: [{ google_search: {} }] } : {}),
@@ -590,6 +598,7 @@ async function callGeminiDirectWithCascade({
           };
           try {
             res = await fetchPostJsonWithTimeout(url, highFallbackPayload, perAttemptTimeoutMs);
+            if (res.ok) thinkingLevelUsed = 'HIGH';
           } catch {}
         }
         if (res.status === 400) {
@@ -611,7 +620,7 @@ async function callGeminiDirectWithCascade({
       const json = await res.json();
       const text = extractGeminiResponseText(json);
       if (text) {
-        // Keep higher-priority unexhausted models (e.g. Gemini 4 Hydrogen XHIGH after a transient 60s RPM blip)
+        // Keep higher-priority unexhausted models (e.g. Gemini 4 Hydrogen after a transient 60s RPM blip)
         // ahead of lower tiers, only dropping models whose daily tokens actually ran out (`deadSet`)!
         const preservedOrder = sanitizedCascade.filter(m => !deadSet.has(m));
         const finalCascade = preservedOrder.length > 0 ? preservedOrder : [model];
@@ -626,6 +635,7 @@ async function callGeminiDirectWithCascade({
         return {
           text,
           modelUsed: model,
+          thinkingLevelUsed,
           groundingChips: extractGroundingSourceChips(json)
         };
       }
@@ -1930,12 +1940,25 @@ function createPipelineStageTracker({
   };
 }
 
-export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs, onProgress }) {
+export async function runOnDemandDeepAnalysis({
+  prompt,
+  category,
+  appData,
+  prefs,
+  onProgress,
+  thinkingLevel
+}) {
   const rawPrompt = String(prompt || '').trim();
   if (!rawPrompt) throw new Error('Please enter an analysis topic or question.');
   if (!hasLiveAiConnection(prefs)) {
     throw createMissingGeminiKeyError();
   }
+
+  // Live user-waiting analysis defaults to Gemini 4 Hydrogen `HIGH` (~35–50% faster over compiled Stage-1 OverTheCap/EPA dossier)
+  const effectiveThinkingLevel =
+    String(thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL).trim().toUpperCase() === 'XHIGH'
+      ? 'XHIGH'
+      : 'HIGH';
 
   const cleanPrompt = normalizeDisplayTopic(rawPrompt) || rawPrompt;
   const modelInfo = resolveActiveHighQualityModelLabel(appData, prefs);
@@ -1984,7 +2007,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
           author: prefs?.authorName || 'Josh',
           deepResearchPass: false,
           verifyPass: false,
-          thinkingLevel: 'XHIGH',
+          thinkingLevel: effectiveThinkingLevel,
           qualityPriority: 'accuracy_over_latency',
           systemPrompt: groundingRules,
           contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
@@ -2030,10 +2053,11 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
 
     let finalMarkdown = '';
     let finalModel = conn.bestModel;
+    let synthThinkingLevel = null;
     let groundingChips = [];
 
     try {
-      // Single focused High-Thinking + Google Search Grounding synthesis over compiled Stage-1 Dossier (~20–50s)
+      // Single focused High-Thinking + Google Search Grounding synthesis over compiled Stage-1 Dossier (~15–35s on Hydrogen HIGH)
       const synthRes = await callGeminiDirectWithCascade({
         apiBase: conn.apiBase,
         key: conn.key,
@@ -2045,7 +2069,8 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
           liveContextSnapshot: liveSnapshot
         }),
         useGoogleSearch: true,
-        temperature: 0.2
+        temperature: 0.2,
+        preferredThinkingLevel: effectiveThinkingLevel
       });
       if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
         prefs.verifiedGeminiModel =
@@ -2054,6 +2079,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
       groundingChips = synthRes.groundingChips || [];
       finalMarkdown = synthRes.text;
       finalModel = synthRes.modelUsed;
+      synthThinkingLevel = synthRes.thinkingLevelUsed || null;
 
       // Ensure fast/cached responses still step cleanly through Stage 2 -> Stage 3 without flashing in <1s
       await tracker.ensureMinimumVisualStageDwell(420);
@@ -2107,7 +2133,8 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
         ? `${dossier.primaryGroup.label} Deep Dive`
         : category || 'Deep Scouting & Cap Synthesis',
       modelUsed: finalModel,
-      thinkingLevel: resolveGeminiThinkingLevelLabel(finalModel),
+      thinkingLevel:
+        synthThinkingLevel || resolveGeminiThinkingLevelLabel(finalModel, effectiveThinkingLevel),
       qualityPriority: 'accuracy_over_latency',
       verifiedPasses: 3,
       createdAt: new Date().toISOString(),
@@ -2126,13 +2153,20 @@ export async function generateOnDemandAutopodcast({
   format,
   appData,
   prefs,
-  onProgress
+  onProgress,
+  thinkingLevel
 }) {
   const rawTopic = String(topic || '').trim();
   if (!rawTopic) throw new Error('Please enter or select a podcast topic.');
   if (!hasLiveAiConnection(prefs)) {
     throw createMissingGeminiKeyError();
   }
+
+  // Live Auto Pod defaults to Gemini 4 Hydrogen `HIGH` (~40–55% faster script synthesis ahead of Studio TTS)
+  const effectiveThinkingLevel =
+    String(thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL).trim().toUpperCase() === 'XHIGH'
+      ? 'XHIGH'
+      : 'HIGH';
 
   const cleanTopic = normalizeDisplayTopic(rawTopic) || rawTopic;
   const mins = Math.max(2, Math.min(20, Number(durationMinutes || 3)));
@@ -2193,7 +2227,7 @@ export async function generateOnDemandAutopodcast({
           author: prefs?.authorName || 'Josh',
           deepResearchPass: false,
           verifyPass: false,
-          thinkingLevel: 'XHIGH',
+          thinkingLevel: effectiveThinkingLevel,
           qualityPriority: 'accuracy_over_latency',
           systemPrompt: groundingRules,
           researchDossier: dossier.dossierSummaryText,
@@ -2269,10 +2303,11 @@ export async function generateOnDemandAutopodcast({
 
     let parsedTurns = null;
     let scriptModelUsed = conn.bestModel;
+    let scriptThinkingLevel = null;
     let groundingChips = [];
 
     try {
-      // Unified High-Thinking + Google Search Grounding script synthesis (~22–40s, smoothly spanning Stage 1 -> Stage 2)
+      // Unified High-Thinking + Google Search Grounding script synthesis (~12–25s on Hydrogen HIGH, spanning Stage 1 -> Stage 2)
       const stage2Draft = await callGeminiDirectWithCascade({
         apiBase: conn.apiBase,
         key: conn.key,
@@ -2286,7 +2321,8 @@ export async function generateOnDemandAutopodcast({
           liveContextSnapshot: liveSnapshot
         }),
         useGoogleSearch: true,
-        temperature: 0.3
+        temperature: 0.3,
+        preferredThinkingLevel: effectiveThinkingLevel
       });
 
       if (prefs && typeof prefs === 'object' && stage2Draft.modelUsed) {
@@ -2296,6 +2332,7 @@ export async function generateOnDemandAutopodcast({
       groundingChips = stage2Draft.groundingChips || [];
       parsedTurns = parseJsonTurnsSafe(stage2Draft.text);
       scriptModelUsed = stage2Draft.modelUsed;
+      scriptThinkingLevel = stage2Draft.thinkingLevelUsed || null;
     } catch (err) {
       if (!isGeminiQuotaExhaustedError(err)) {
         throw err;
@@ -2399,7 +2436,9 @@ export async function generateOnDemandAutopodcast({
       presetLabel: `${mins}m On-Demand Pod`,
       modelUsed: scriptModelUsed,
       audioModelUsed: renderedAudio.audioModelUsed,
-      thinkingLevel: resolveGeminiThinkingLevelLabel(scriptModelUsed),
+      thinkingLevel:
+        scriptThinkingLevel ||
+        resolveGeminiThinkingLevelLabel(scriptModelUsed, effectiveThinkingLevel),
       qualityPriority: 'accuracy_over_latency',
       createdBy: prefs?.authorName || 'Josh',
       createdAt: new Date().toISOString(),
@@ -2742,7 +2781,7 @@ export async function refreshDailyMatchupIntelIfDue({
         }
       } else if (directKey) {
         const conn = await resolveDirectGeminiCascades(prefs);
-        // Single-pass High-Thinking + Google Search call (= strictly 1 credit/day)
+        // Non-time-sensitive 1/day background Matchup Intel keeps Gemini 4 Hydrogen `XHIGH`
         const gen = await callGeminiDirectWithCascade({
           apiBase: conn.apiBase,
           key: conn.key,
@@ -2751,7 +2790,8 @@ export async function refreshDailyMatchupIntelIfDue({
           userText: promptText,
           useGoogleSearch: true,
           temperature: 0.18,
-          perAttemptTimeoutMs: 45000
+          perAttemptTimeoutMs: 45000,
+          preferredThinkingLevel: 'XHIGH'
         });
         modelUsed = gen.modelUsed || modelUsed;
         normalized = parseAndSanitizeDailyMatchupIntel(gen.text, um, rosterPlayers);
@@ -3829,6 +3869,7 @@ export async function refreshDailyTopNewsBriefIfDue({
           Array.isArray(conn.cascade) && conn.cascade.length > 0
             ? conn.cascade
             : [...DEFAULT_BEST_REASONING_CASCADE];
+        // Non-time-sensitive 1/day 5:00 PM PT Top-News Brief keeps Gemini 4 Hydrogen `XHIGH`
         const gen = await callGeminiDirectWithCascade({
           apiBase: conn.apiBase,
           key: effectiveKey,
@@ -3837,7 +3878,8 @@ export async function refreshDailyTopNewsBriefIfDue({
           userText: promptText,
           useGoogleSearch: true,
           temperature: 0.16,
-          perAttemptTimeoutMs: 45000
+          perAttemptTimeoutMs: 45000,
+          preferredThinkingLevel: 'XHIGH'
         });
         modelUsed = gen.modelUsed || modelUsed;
         normalized = parseAndSanitizeDailyTopNewsBrief(gen.text, sourceCandidates, appData, {

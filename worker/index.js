@@ -5,13 +5,16 @@
  * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts
  * - GET  /api/model-status       -> Returns active Free-Tier Gemini model & cascade (`?poll=1` forces live `/v1beta/models` poll)
  * - GET  /api/audio/:episodeId   -> Streams cached MP3/WAV from Cloudflare R2 (supports HTTP Range for iOS Safari)
- * - POST /api/analyze            -> Runs best available Free-Tier Gemini model (Gemini 4 Hydrogen XHIGH Thinking + Google Search Grounding)
- * - POST /api/podcast            -> Generates verified script + Gemini Multi-Speaker TTS audio, stores in R2 & indexes in KV
+ * - POST /api/analyze            -> Runs live On-Demand Deep Analysis (Gemini 4 Hydrogen HIGH Thinking + Google Search Grounding)
+ * - POST /api/podcast            -> Generates live Auto Pod script (Gemini 4 Hydrogen HIGH) + Multi-Speaker TTS audio, stores in R2 & indexes in KV
+ * - POST /api/daily-news-brief   -> Generates non-time-sensitive 1/day 5:00 PM PT Top-News Brief (Gemini 4 Hydrogen XHIGH)
+ * - POST /api/matchup-intel      -> Generates non-time-sensitive 1/day Matchup Intel Briefing (Gemini 4 Hydrogen XHIGH)
  * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
  */
 
 import {
   PRIMARY_GEMINI_REASONING_MODEL,
+  LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL,
   buildGeminiThinkingConfig,
   resolveGeminiThinkingLevelLabel,
   DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
@@ -382,16 +385,25 @@ async function resolveModelCascade(env) {
   return [primary, ...baseCascade.filter(m => m !== primary)];
 }
 
-async function callGeminiTextWithFallback(env, payload) {
+async function callGeminiTextWithFallback(env, payload, options = {}) {
   const cascade = await resolveModelCascade(env);
   let lastRes = null;
   const requestedBudget =
     payload?.generationConfig?.thinkingConfig?.thinkingBudget ||
     Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+  const preferredThinkingLevel =
+    options?.preferredThinkingLevel ||
+    payload?.generationConfig?.thinkingConfig?.thinkingLevel ||
+    null;
 
   for (let i = 0; i < cascade.length; i++) {
     const model = cascade[i];
-    const modelThinkingConfig = buildGeminiThinkingConfig(model, requestedBudget);
+    const modelThinkingConfig = buildGeminiThinkingConfig(model, requestedBudget, {
+      preferredThinkingLevel
+    });
+    let thinkingLevelUsed =
+      modelThinkingConfig?.thinkingLevel ||
+      resolveGeminiThinkingLevelLabel(model, preferredThinkingLevel);
     const modelPayload = {
       ...payload,
       generationConfig: {
@@ -429,6 +441,7 @@ async function callGeminiTextWithFallback(env, payload) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(highFallbackPayload)
       });
+      if (res.ok) thinkingLevelUsed = 'HIGH';
     }
 
     lastRes = res;
@@ -448,7 +461,7 @@ async function callGeminiTextWithFallback(env, payload) {
           { expirationTtl: 60 * 60 * 6 }
         );
       }
-      return { res, modelUsed: model };
+      return { res, modelUsed: model, thinkingLevelUsed };
     }
 
     // Cascade to the next model if the endpoint returned 400 (unsupported tool/param),
@@ -458,7 +471,11 @@ async function callGeminiTextWithFallback(env, payload) {
     }
   }
 
-  return { res: lastRes, modelUsed: cascade[0] };
+  return {
+    res: lastRes,
+    modelUsed: cascade[0],
+    thinkingLevelUsed: resolveGeminiThinkingLevelLabel(cascade[0], preferredThinkingLevel)
+  };
 }
 
 async function callGeminiAudioTtsWithFallback(env, payload) {
@@ -538,6 +555,7 @@ export default {
           defaultFreeModel,
           defaultAudioModel: DEFAULT_AUDIO_TTS_CASCADE[0],
           thinkingLevel: resolveGeminiThinkingLevelLabel(defaultFreeModel),
+          liveInteractiveThinkingLevel: LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL,
           thinkingBudget: HIGH_THINKING_BUDGET,
           qualityPriority: 'accuracy_over_latency'
         },
@@ -660,15 +678,19 @@ export default {
         ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystem}`
         : EDITORIAL_SYSTEM_PROMPT;
 
-      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(env, {
-        systemInstruction: { parts: [{ text: effectiveSystem }] },
-        tools: [{ google_search: {} }],
-        generationConfig: {
-          temperature: 0.18,
-          thinkingConfig: { thinkingBudget }
+      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(
+        env,
+        {
+          systemInstruction: { parts: [{ text: effectiveSystem }] },
+          tools: [{ google_search: {} }],
+          generationConfig: {
+            temperature: 0.18,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [{ role: 'user', parts: [{ text: String(body.prompt).slice(0, 24000) }] }]
         },
-        contents: [{ role: 'user', parts: [{ text: String(body.prompt).slice(0, 24000) }] }]
-      });
+        { preferredThinkingLevel: 'XHIGH' }
+      );
 
       if (!geminiRes || !geminiRes.ok) {
         const errText = geminiRes ? await geminiRes.text() : 'No response';
@@ -724,15 +746,23 @@ export default {
         GEMINI_API_KEY: newsKey,
         GEMINI_DEFAULT_FREE_MODEL: PRIMARY_GEMINI_REASONING_MODEL
       };
-      const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(scopedEnv, {
-        systemInstruction: { parts: [{ text: effectiveSystem }] },
-        tools: [{ google_search: {} }],
-        generationConfig: {
-          temperature: 0.16,
-          thinkingConfig: { thinkingBudget }
+      const {
+        res: geminiRes,
+        modelUsed,
+        thinkingLevelUsed: newsThinkingLevelUsed
+      } = await callGeminiTextWithFallback(
+        scopedEnv,
+        {
+          systemInstruction: { parts: [{ text: effectiveSystem }] },
+          tools: [{ google_search: {} }],
+          generationConfig: {
+            temperature: 0.16,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [{ role: 'user', parts: [{ text: String(body.prompt).slice(0, 24000) }] }]
         },
-        contents: [{ role: 'user', parts: [{ text: String(body.prompt).slice(0, 24000) }] }]
-      });
+        { preferredThinkingLevel: 'XHIGH' }
+      );
 
       if (!geminiRes || !geminiRes.ok) {
         const errText = geminiRes ? await geminiRes.text() : 'No response';
@@ -745,7 +775,8 @@ export default {
       const payloadOut = {
         cycleKey,
         modelUsed: resolvedNewsModel,
-        thinkingLevel: resolveGeminiThinkingLevelLabel(resolvedNewsModel),
+        thinkingLevel:
+          newsThinkingLevelUsed || resolveGeminiThinkingLevelLabel(resolvedNewsModel, 'XHIGH'),
         generatedAt: new Date().toISOString(),
         rawText
       };
@@ -791,38 +822,51 @@ export default {
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+      const requestedThinkingLevel =
+        String(body.thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL).trim().toUpperCase() === 'XHIGH'
+          ? 'XHIGH'
+          : 'HIGH';
       let modelUsed = DEFAULT_FREE_MODEL_CASCADE[0];
+      let resolvedThinkingLevel = null;
       let verifiedPasses = 1;
       let rawMarkdown = '';
       let primaryGroundingJson = null;
 
       if (body.deepResearchPass === true) {
         // Stage 1: Exhaustive Deep Research Investigation + Live Google Search Grounding
-        const { res: researchRes, modelUsed: researchModel } = await callGeminiTextWithFallback(env, {
-          systemInstruction: {
-            parts: [{ text: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+        const {
+          res: researchRes,
+          modelUsed: researchModel,
+          thinkingLevelUsed: researchThinking
+        } = await callGeminiTextWithFallback(
+          env,
+          {
+            systemInstruction: {
+              parts: [{ text: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            tools: [{ google_search: {} }],
+            generationConfig: {
+              temperature: 0.18,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: buildStage1DeepResearchUserPrompt({
+                      topicOrQuestion: prompt,
+                      kind: 'analysis',
+                      dossierSummaryText: '',
+                      liveContextSnapshot: sectionContext
+                    })
+                  }
+                ]
+              }
+            ]
           },
-          tools: [{ google_search: {} }],
-          generationConfig: {
-            temperature: 0.18,
-            thinkingConfig: { thinkingBudget }
-          },
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: buildStage1DeepResearchUserPrompt({
-                    topicOrQuestion: prompt,
-                    kind: 'analysis',
-                    dossierSummaryText: '',
-                    liveContextSnapshot: sectionContext
-                  })
-                }
-              ]
-            }
-          ]
-        });
+          { preferredThinkingLevel: requestedThinkingLevel }
+        );
 
         if (!researchRes.ok) {
           const errText = await researchRes.text();
@@ -832,46 +876,18 @@ export default {
         const researchMemo = extractNonThoughtText(primaryGroundingJson) || '';
 
         // Stage 2: Bespoke Thesis-First Film & Cap Synthesis
-        const { res: synthRes, modelUsed: synthModel } = await callGeminiTextWithFallback(env, {
-          systemInstruction: {
-            parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
-          },
-          generationConfig: {
-            temperature: 0.2,
-            thinkingConfig: { thinkingBudget }
-          },
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: buildStage2AnalysisSynthesisPrompt({
-                    question: prompt,
-                    researchMemo,
-                    liveContextSnapshot: sectionContext
-                  })
-                }
-              ]
-            }
-          ]
-        });
-
-        if (!synthRes.ok) {
-          const errText = await synthRes.text();
-          return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 300)}` }, 502, cors);
-        }
-        const synthJson = await synthRes.json();
-        modelUsed = synthModel || researchModel;
-        verifiedPasses = 2;
-        rawMarkdown = extractNonThoughtText(synthJson) || researchMemo || 'No synthesis generated.';
-
-        if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
-          const { res: auditRes, modelUsed: auditModel } = await callGeminiTextWithFallback(env, {
+        const {
+          res: synthRes,
+          modelUsed: synthModel,
+          thinkingLevelUsed: synthThinking
+        } = await callGeminiTextWithFallback(
+          env,
+          {
             systemInstruction: {
               parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
             },
             generationConfig: {
-              temperature: 0.1,
+              temperature: 0.2,
               thinkingConfig: { thinkingBudget }
             },
             contents: [
@@ -879,16 +895,57 @@ export default {
                 role: 'user',
                 parts: [
                   {
-                    text: buildStage3AnalysisAuditPrompt({
+                    text: buildStage2AnalysisSynthesisPrompt({
                       question: prompt,
-                      draftMarkdown: rawMarkdown,
+                      researchMemo,
                       liveContextSnapshot: sectionContext
                     })
                   }
                 ]
               }
             ]
-          });
+          },
+          { preferredThinkingLevel: requestedThinkingLevel }
+        );
+
+        if (!synthRes.ok) {
+          const errText = await synthRes.text();
+          return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 300)}` }, 502, cors);
+        }
+        const synthJson = await synthRes.json();
+        modelUsed = synthModel || researchModel;
+        resolvedThinkingLevel = synthThinking || researchThinking;
+        verifiedPasses = 2;
+        rawMarkdown = extractNonThoughtText(synthJson) || researchMemo || 'No synthesis generated.';
+
+        if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
+          const { res: auditRes, modelUsed: auditModel } = await callGeminiTextWithFallback(
+            env,
+            {
+              systemInstruction: {
+                parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+              },
+              generationConfig: {
+                temperature: 0.1,
+                thinkingConfig: { thinkingBudget }
+              },
+              contents: [
+                {
+                  role: 'user',
+                  parts: [
+                    {
+                      text: buildStage3AnalysisAuditPrompt({
+                        question: prompt,
+                        draftMarkdown: rawMarkdown,
+                        liveContextSnapshot: sectionContext
+                      })
+                    }
+                  ]
+                }
+              ]
+            },
+            { preferredThinkingLevel: 'HIGH' }
+          );
           if (auditRes && auditRes.ok) {
             const auditJson = await auditRes.json();
             const auditedText = extractNonThoughtText(auditJson);
@@ -900,26 +957,34 @@ export default {
           }
         }
       } else {
-        const { res: geminiRes, modelUsed: initialModelUsed } = await callGeminiTextWithFallback(env, {
-          systemInstruction: {
-            parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+        const {
+          res: geminiRes,
+          modelUsed: initialModelUsed,
+          thinkingLevelUsed: initialThinking
+        } = await callGeminiTextWithFallback(
+          env,
+          {
+            systemInstruction: {
+              parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            tools: [{ google_search: {} }],
+            generationConfig: {
+              temperature: 0.15,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nDirectly and thoughtfully answer this exact 49ers question with zero generic AI throat-clearing, using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts, All-22 film mechanics, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nQUESTION / TOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+                  }
+                ]
+              }
+            ]
           },
-          tools: [{ google_search: {} }],
-          generationConfig: {
-            temperature: 0.15,
-            thinkingConfig: { thinkingBudget }
-          },
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nDirectly and thoughtfully answer this exact 49ers question with zero generic AI throat-clearing, using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts, All-22 film mechanics, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nQUESTION / TOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
-                }
-              ]
-            }
-          ]
-        });
+          { preferredThinkingLevel: requestedThinkingLevel }
+        );
 
         if (!geminiRes.ok) {
           const errText = await geminiRes.text();
@@ -928,33 +993,38 @@ export default {
 
         primaryGroundingJson = await geminiRes.json();
         modelUsed = initialModelUsed;
+        resolvedThinkingLevel = initialThinking;
         verifiedPasses = 1;
         rawMarkdown = extractNonThoughtText(primaryGroundingJson) || 'No synthesis generated.';
 
         if (body.verifyPass === true && rawMarkdown && rawMarkdown !== 'No synthesis generated.') {
-          const { res: verifyRes, modelUsed: verifyModel } = await callGeminiTextWithFallback(env, {
-            systemInstruction: {
-              parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          const { res: verifyRes, modelUsed: verifyModel } = await callGeminiTextWithFallback(
+            env,
+            {
+              systemInstruction: {
+                parts: [{ text: `${DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+              },
+              generationConfig: {
+                temperature: 0.1,
+                thinkingConfig: { thinkingBudget }
+              },
+              contents: [
+                {
+                  role: 'user',
+                  parts: [
+                    {
+                      text: buildStage3AnalysisAuditPrompt({
+                        question: prompt,
+                        draftMarkdown: rawMarkdown,
+                        liveContextSnapshot: sectionContext
+                      })
+                    }
+                  ]
+                }
+              ]
             },
-            generationConfig: {
-              temperature: 0.1,
-              thinkingConfig: { thinkingBudget }
-            },
-            contents: [
-              {
-                role: 'user',
-                parts: [
-                  {
-                    text: buildStage3AnalysisAuditPrompt({
-                      question: prompt,
-                      draftMarkdown: rawMarkdown,
-                      liveContextSnapshot: sectionContext
-                    })
-                  }
-                ]
-              }
-            ]
-          });
+            { preferredThinkingLevel: 'HIGH' }
+          );
           if (verifyRes && verifyRes.ok) {
             const verifyJson = await verifyRes.json();
             const auditedText = extractNonThoughtText(verifyJson);
@@ -979,7 +1049,9 @@ export default {
         title: prompt.length > 88 ? `${prompt.slice(0, 85)}...` : prompt,
         category: body.category || 'On-Demand Deep Dive',
         modelUsed,
-        thinkingLevel: resolveGeminiThinkingLevelLabel(modelUsed),
+        thinkingLevel:
+          resolvedThinkingLevel ||
+          resolveGeminiThinkingLevelLabel(modelUsed, requestedThinkingLevel),
         qualityPriority: 'accuracy_over_latency',
         verifiedPasses,
         createdAt: new Date().toISOString(),
@@ -1033,39 +1105,52 @@ export default {
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+      const requestedPodThinkingLevel =
+        String(body.thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL).trim().toUpperCase() === 'XHIGH'
+          ? 'XHIGH'
+          : 'HIGH';
       const researchDossier = String(body.researchDossier || '').slice(0, 14000);
       const solo = body.format === 'solo';
       let modelUsed = DEFAULT_FREE_MODEL_CASCADE[0];
+      let resolvedPodThinkingLevel = null;
       let verifiedPasses = 1;
       let rawScriptText = '[]';
 
       if (body.deepResearchPass === true) {
         // Stage 1: Exhaustive Deep Research Investigation on the Podcast Topic
-        const { res: researchRes, modelUsed: researchModel } = await callGeminiTextWithFallback(env, {
-          systemInstruction: {
-            parts: [{ text: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+        const {
+          res: researchRes,
+          modelUsed: researchModel,
+          thinkingLevelUsed: researchThinking
+        } = await callGeminiTextWithFallback(
+          env,
+          {
+            systemInstruction: {
+              parts: [{ text: `${DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            tools: [{ google_search: {} }],
+            generationConfig: {
+              temperature: 0.2,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: buildStage1DeepResearchUserPrompt({
+                      topicOrQuestion: topic,
+                      kind: 'podcast',
+                      dossierSummaryText: researchDossier,
+                      liveContextSnapshot: contextSummary
+                    })
+                  }
+                ]
+              }
+            ]
           },
-          tools: [{ google_search: {} }],
-          generationConfig: {
-            temperature: 0.2,
-            thinkingConfig: { thinkingBudget }
-          },
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: buildStage1DeepResearchUserPrompt({
-                    topicOrQuestion: topic,
-                    kind: 'podcast',
-                    dossierSummaryText: researchDossier,
-                    liveContextSnapshot: contextSummary
-                  })
-                }
-              ]
-            }
-          ]
-        });
+          { preferredThinkingLevel: requestedPodThinkingLevel }
+        );
 
         if (!researchRes.ok) {
           return jsonResponse({ error: 'Failed Stage-1 Deep Research for podcast' }, 502, cors);
@@ -1074,47 +1159,18 @@ export default {
         const researchMemo = extractNonThoughtText(researchJson) || researchDossier;
 
         // Stage 2: Restructure into Smooth Gemini NotebookLM Audio Overview Script
-        const { res: scriptRes, modelUsed: stage2Model } = await callGeminiTextWithFallback(env, {
-          systemInstruction: {
-            parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
-          },
-          generationConfig: {
-            temperature: 0.3,
-            thinkingConfig: { thinkingBudget }
-          },
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: buildStage2NotebookLmScriptPrompt({
-                    topic,
-                    durationMinutes,
-                    format: solo ? 'solo' : 'two_host',
-                    researchMemo,
-                    liveContextSnapshot: contextSummary
-                  })
-                }
-              ]
-            }
-          ]
-        });
-
-        if (!scriptRes.ok) {
-          return jsonResponse({ error: 'Failed to synthesize podcast script' }, 502, cors);
-        }
-        const scriptJson = await scriptRes.json();
-        modelUsed = stage2Model || researchModel;
-        verifiedPasses = 2;
-        rawScriptText = extractNonThoughtText(scriptJson) || '[]';
-
-        if (body.verifyPass === true) {
-          const { res: polishRes, modelUsed: polishModel } = await callGeminiTextWithFallback(env, {
+        const {
+          res: scriptRes,
+          modelUsed: stage2Model,
+          thinkingLevelUsed: stage2Thinking
+        } = await callGeminiTextWithFallback(
+          env,
+          {
             systemInstruction: {
               parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
             },
             generationConfig: {
-              temperature: 0.22,
+              temperature: 0.3,
               thinkingConfig: { thinkingBudget }
             },
             contents: [
@@ -1122,18 +1178,60 @@ export default {
                 role: 'user',
                 parts: [
                   {
-                    text: buildStage2NotebookLmPolishPrompt({
+                    text: buildStage2NotebookLmScriptPrompt({
                       topic,
                       durationMinutes,
                       format: solo ? 'solo' : 'two_host',
-                      draftJsonText: rawScriptText,
+                      researchMemo,
                       liveContextSnapshot: contextSummary
                     })
                   }
                 ]
               }
             ]
-          });
+          },
+          { preferredThinkingLevel: requestedPodThinkingLevel }
+        );
+
+        if (!scriptRes.ok) {
+          return jsonResponse({ error: 'Failed to synthesize podcast script' }, 502, cors);
+        }
+        const scriptJson = await scriptRes.json();
+        modelUsed = stage2Model || researchModel;
+        resolvedPodThinkingLevel = stage2Thinking || researchThinking;
+        verifiedPasses = 2;
+        rawScriptText = extractNonThoughtText(scriptJson) || '[]';
+
+        if (body.verifyPass === true) {
+          const { res: polishRes, modelUsed: polishModel } = await callGeminiTextWithFallback(
+            env,
+            {
+              systemInstruction: {
+                parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+              },
+              generationConfig: {
+                temperature: 0.22,
+                thinkingConfig: { thinkingBudget }
+              },
+              contents: [
+                {
+                  role: 'user',
+                  parts: [
+                    {
+                      text: buildStage2NotebookLmPolishPrompt({
+                        topic,
+                        durationMinutes,
+                        format: solo ? 'solo' : 'two_host',
+                        draftJsonText: rawScriptText,
+                        liveContextSnapshot: contextSummary
+                      })
+                    }
+                  ]
+                }
+              ]
+            },
+            { preferredThinkingLevel: 'HIGH' }
+          );
           if (polishRes && polishRes.ok) {
             const polishJson = await polishRes.json();
             const auditedScriptText = extractNonThoughtText(polishJson);
@@ -1157,17 +1255,25 @@ export default {
           liveContextSnapshot: contextSummary
         });
 
-        const { res: scriptRes, modelUsed: initialScriptModel } = await callGeminiTextWithFallback(env, {
-          systemInstruction: {
-            parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+        const {
+          res: scriptRes,
+          modelUsed: initialScriptModel,
+          thinkingLevelUsed: initialScriptThinking
+        } = await callGeminiTextWithFallback(
+          env,
+          {
+            systemInstruction: {
+              parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+            },
+            tools: [{ google_search: {} }],
+            generationConfig: {
+              temperature: 0.25,
+              thinkingConfig: { thinkingBudget }
+            },
+            contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
           },
-          tools: [{ google_search: {} }],
-          generationConfig: {
-            temperature: 0.25,
-            thinkingConfig: { thinkingBudget }
-          },
-          contents: [{ role: 'user', parts: [{ text: scriptPrompt }] }]
-        });
+          { preferredThinkingLevel: requestedPodThinkingLevel }
+        );
 
         if (!scriptRes.ok) {
           return jsonResponse({ error: 'Failed to synthesize podcast script' }, 502, cors);
@@ -1175,35 +1281,40 @@ export default {
 
         const scriptJson = await scriptRes.json();
         modelUsed = initialScriptModel;
+        resolvedPodThinkingLevel = initialScriptThinking;
         verifiedPasses = 1;
         rawScriptText = extractNonThoughtText(scriptJson) || '[]';
 
         if (body.verifyPass === true) {
-          const { res: verifyScriptRes, modelUsed: verifyScriptModel } = await callGeminiTextWithFallback(env, {
-            systemInstruction: {
-              parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+          const { res: verifyScriptRes, modelUsed: verifyScriptModel } = await callGeminiTextWithFallback(
+            env,
+            {
+              systemInstruction: {
+                parts: [{ text: `${NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT}\n\n${effectiveSystemPrompt}` }]
+              },
+              generationConfig: {
+                temperature: 0.2,
+                thinkingConfig: { thinkingBudget }
+              },
+              contents: [
+                {
+                  role: 'user',
+                  parts: [
+                    {
+                      text: buildStage2NotebookLmPolishPrompt({
+                        topic,
+                        durationMinutes,
+                        format: solo ? 'solo' : 'two_host',
+                        draftJsonText: rawScriptText,
+                        liveContextSnapshot: contextSummary
+                      })
+                    }
+                  ]
+                }
+              ]
             },
-            generationConfig: {
-              temperature: 0.2,
-              thinkingConfig: { thinkingBudget }
-            },
-            contents: [
-              {
-                role: 'user',
-                parts: [
-                  {
-                    text: buildStage2NotebookLmPolishPrompt({
-                      topic,
-                      durationMinutes,
-                      format: solo ? 'solo' : 'two_host',
-                      draftJsonText: rawScriptText,
-                      liveContextSnapshot: contextSummary
-                    })
-                  }
-                ]
-              }
-            ]
-          });
+            { preferredThinkingLevel: 'HIGH' }
+          );
           if (verifyScriptRes && verifyScriptRes.ok) {
             const verifyScriptJson = await verifyScriptRes.json();
             const auditedScriptText = extractNonThoughtText(verifyScriptJson);
@@ -1349,7 +1460,9 @@ export default {
         presetLabel: `${durationMinutes}m Custom Pod`,
         modelUsed,
         audioModelUsed,
-        thinkingLevel: resolveGeminiThinkingLevelLabel(modelUsed),
+        thinkingLevel:
+          resolvedPodThinkingLevel ||
+          resolveGeminiThinkingLevelLabel(modelUsed, requestedPodThinkingLevel),
         qualityPriority: 'accuracy_over_latency',
         verifiedPasses,
         createdBy: String(body.author || 'Friend Group'),

@@ -7,22 +7,25 @@
  *
  * Core Mandates:
  * 1. Always select the highest-capability reasoning model available on the key (prioritizing
- *    `gemini-4-hydrogen` at maximum `XHIGH` thinking on Google AI Studio Free Tier & API,
- *    cascading cleanly to `gemini-3.8-flash` / `gemini-3.6-flash` on `HIGH` thinking).
+ *    `gemini-4-hydrogen` on Google AI Studio Free Tier & API—using `XHIGH` thinking for
+ *    non-time-sensitive daily briefs/matchups/scheduled pipelines and `HIGH` thinking for live
+ *    user-waiting Auto Pod & On-Demand AI Analysis—cascading cleanly to `gemini-3.8-flash` `HIGH`).
  * 2. Respect Gemini API `thinkingConfig` generation boundaries strictly:
- *    - Gemini 4 Hydrogen & Gemini 4+ models (`gemini-4-hydrogen*`, `gemini-4*`): `{ thinkingLevel: "XHIGH" }`
- *      (highest reasoning level; mutually exclusive with `thinkingBudget`).
+ *    - Gemini 4 Hydrogen & Gemini 4+ models (`gemini-4-hydrogen*`, `gemini-4*`):
+ *      `{ thinkingLevel: "XHIGH" }` (scheduled/background default) or `{ thinkingLevel: "HIGH" }`
+ *      (live interactive processing)—strictly mutually exclusive with `thinkingBudget`.
  *    - Gemini 3.x models (`gemini-3*`): `{ thinkingLevel: "HIGH" }`
- *      (passing `thinkingBudget` to Gemini 3+ causes HTTP 400 INVALID_ARGUMENT).
+ *      (passing `thinkingBudget` or `"XHIGH"` to Gemini 3.x causes HTTP 400 INVALID_ARGUMENT).
  *    - Gemini 2.5 models (`gemini-2.5-pro`, `gemini-2.5-flash`): `{ thinkingBudget: 32768 }` (Pro)
  *      or `{ thinkingBudget: 24576 }` (Flash) (passing `thinkingLevel` to 2.5 causes HTTP 400).
- * 3. Enforce genuine multi-stage deep thinking (~20–60+ seconds) that directly answers the user's
+ * 3. Enforce genuine multi-stage deep thinking that directly answers the user's
  *    exact question with zero generic "AI slop", zero surface-level roster list-dumping, and
  *    authentic Gemini NotebookLM Audio Overview conversational voice delivery (`Puck` + `Aoede`).
  */
 
 export const PRIMARY_GEMINI_REASONING_MODEL = 'gemini-4-hydrogen';
 export const PRIMARY_GEMINI_THINKING_LEVEL = 'XHIGH';
+export const LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL = 'HIGH';
 
 /**
  * Ordered default cascade prioritizing `gemini-4-hydrogen` (`Gemini 4 Hydrogen` at maximum
@@ -220,36 +223,60 @@ export function rankBestGeminiReasoningModels(catalogModels = []) {
 }
 
 /**
- * Resolves the canonical highest thinking level label for a given Gemini model:
- * - Gemini 4 Hydrogen / Gemini 4+ (`gemini-4*`, `*hydrogen*`): `'XHIGH'`
- * - Gemini 3.x / 2.5 (`gemini-3*`, `gemini-2.5*`): `'HIGH'`
+ * Resolves the effective thinking level label for a given Gemini model and optional preferred tier:
+ * - Gemini 4 Hydrogen / Gemini 4+ (`gemini-4*`, `*hydrogen*`): `'XHIGH'` by default (non-time-sensitive
+ *   daily briefs/matchups/scheduled jobs), or `'HIGH'` when `preferredLevel === 'HIGH'` (live processing)
+ * - Gemini 3.x / 2.5 (`gemini-3*`, `gemini-2.5*`): `'HIGH'` (capped so `'XHIGH'` is never attributed to 3.x)
  */
-export function resolveGeminiThinkingLevelLabel(modelId = '') {
+export function resolveGeminiThinkingLevelLabel(modelId = '', preferredLevel = null) {
   const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
-  if (!clean) return PRIMARY_GEMINI_THINKING_LEVEL;
-  if (/\bhydrogen\b/.test(clean)) return 'XHIGH';
-  const verMatch = clean.match(/^gemini-(\d+(?:\.\d+)?)/);
-  const ver = verMatch ? parseFloat(verMatch[1]) : 4.0;
-  return ver >= 4.0 ? 'XHIGH' : 'HIGH';
+  const requested = String(preferredLevel || '').trim().toUpperCase();
+  if (!clean) {
+    return requested === 'HIGH' ? 'HIGH' : PRIMARY_GEMINI_THINKING_LEVEL;
+  }
+  const isGen4OrHydrogen =
+    /\bhydrogen\b/.test(clean) ||
+    (() => {
+      const verMatch = clean.match(/^gemini-(\d+(?:\.\d+)?)/);
+      const ver = verMatch ? parseFloat(verMatch[1]) : 4.0;
+      return ver >= 4.0;
+    })();
+  if (!isGen4OrHydrogen) {
+    return 'HIGH';
+  }
+  return requested === 'HIGH' ? 'HIGH' : 'XHIGH';
 }
 
 /**
  * Builds the exact generation-compatible `thinkingConfig` object for `generativelanguage.googleapis.com/v1beta`.
- * - Gemini 4 Hydrogen & Gemini 4+ (`gemini-4-hydrogen`, `gemini-4*`): `{ thinkingLevel: 'XHIGH' }` (highest reasoning tier; mutually exclusive with `thinkingBudget`!)
+ * - Gemini 4 Hydrogen & Gemini 4+ (`gemini-4-hydrogen`, `gemini-4*`):
+ *   `{ thinkingLevel: 'XHIGH' }` by default (scheduled/non-time-sensitive) or `{ thinkingLevel: 'HIGH' }`
+ *   when `options.preferredThinkingLevel === 'HIGH'` (live interactive Auto Pod / AI Analysis / quota probes).
+ *   Strictly mutually exclusive with `thinkingBudget`!
  * - Gemini 3.x (`gemini-3*`): `{ thinkingLevel: 'HIGH' }` (mutually exclusive with `thinkingBudget`!)
  * - Gemini 2.5 Pro: `{ thinkingBudget: 32768 }`
  * - Gemini 2.5 Flash: `{ thinkingBudget: 24576 }`
  */
-export function buildGeminiThinkingConfig(modelId = '', customBudget = null) {
+export function buildGeminiThinkingConfig(modelId = '', customBudget = null, options = {}) {
+  const opts =
+    customBudget && typeof customBudget === 'object'
+      ? customBudget
+      : options && typeof options === 'object'
+        ? options
+        : {};
+  const numericBudget = customBudget && typeof customBudget === 'object' ? null : customBudget;
+  const preferredLevel = String(opts.preferredThinkingLevel || '').trim().toUpperCase();
+  const gen4Level = preferredLevel === 'HIGH' ? 'HIGH' : 'XHIGH';
+
   const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
   if (/\bhydrogen\b/.test(clean)) {
-    return { thinkingLevel: 'XHIGH' };
+    return { thinkingLevel: gen4Level };
   }
   const verMatch = clean.match(/^gemini-(\d+(?:\.\d+)?)/);
   const ver = verMatch ? parseFloat(verMatch[1]) : 4.0;
 
   if (ver >= 4.0) {
-    return { thinkingLevel: 'XHIGH' };
+    return { thinkingLevel: gen4Level };
   }
   if (ver >= 3.0) {
     return { thinkingLevel: 'HIGH' };
@@ -257,7 +284,7 @@ export function buildGeminiThinkingConfig(modelId = '', customBudget = null) {
 
   const isPro = /\bpro\b/.test(clean);
   const defaultBudget = isPro ? PRO_MAX_THINKING_BUDGET : FLASH_HIGH_THINKING_BUDGET;
-  const budget = Number(customBudget);
+  const budget = Number(numericBudget);
   const safeBudget =
     Number.isFinite(budget) && budget >= 1024
       ? Math.min(isPro ? 32768 : 24576, Math.round(budget))

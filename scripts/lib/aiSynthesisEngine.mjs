@@ -185,7 +185,9 @@ export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_AP
             generationConfig: {
               maxOutputTokens: 8,
               temperature: 0,
-              thinkingConfig: buildGeminiThinkingConfig(candidate, 1024)
+              thinkingConfig: buildGeminiThinkingConfig(candidate, 1024, {
+                preferredThinkingLevel: 'HIGH'
+              })
             },
             contents: [{ role: 'user', parts: [{ text: 'Reply OK' }] }]
           })

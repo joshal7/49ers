@@ -2022,7 +2022,7 @@ test('Trade Window purchasing power, real targets, pitfalls to avoid, and 6-pick
   assert.equal(parsedSample[1].fromTeam, 'BAL');
 });
 
-await testAsync('Worker defaults to best free model (gemini-4-hydrogen on XHIGH Thinking), strips internal thought parts, and preserves external trade/dead-cap context', async () => {
+await testAsync('Worker live /api/analyze defaults to gemini-4-hydrogen on HIGH Thinking (while honoring explicit XHIGH), strips internal thought parts, and preserves external trade/dead-cap context', async () => {
   const origFetch = globalThis.fetch;
   let capturedUrl = '';
   let capturedBody = null;
@@ -2050,7 +2050,7 @@ await testAsync('Worker defaults to best free model (gemini-4-hydrogen on XHIGH 
 
   try {
     const envPro = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-key' });
-    delete envPro.GEMINI_TEXT_MODEL; // verify default fallback is gemini-4-hydrogen on XHIGH thinking!
+    delete envPro.GEMINI_TEXT_MODEL; // verify live /api/analyze uses gemini-4-hydrogen on HIGH thinking!
     const res = await (
       await edgeWorker.fetch(
         new Request('https://worker.example/api/analyze', {
@@ -2066,9 +2066,9 @@ await testAsync('Worker defaults to best free model (gemini-4-hydrogen on XHIGH 
     ).json();
 
     assert.ok(capturedUrl.includes('models/gemini-4-hydrogen:generateContent'), `Expected gemini-4-hydrogen URL, got ${capturedUrl}`);
-    assert.deepEqual(capturedBody.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' }, 'Expected Gemini 4 Hydrogen XHIGH thinkingLevel');
+    assert.deepEqual(capturedBody.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' }, 'Expected live /api/analyze Gemini 4 Hydrogen HIGH thinkingLevel');
     assert.equal(res.item.modelUsed, 'gemini-4-hydrogen');
-    assert.equal(res.item.thinkingLevel, 'XHIGH');
+    assert.equal(res.item.thinkingLevel, 'HIGH');
     assert.ok(!res.item.markdown.includes('INTERNAL_SECRET_THOUGHT_SCRATCHPAD'), 'Thought part must never leak into output');
     assert.ok(!/Bryce Huff/i.test(res.item.markdown), 'Active-49er Bryce Huff hallucination must be scrubbed');
     assert.ok(/Javon Hargrave/i.test(res.item.markdown), 'Legitimate 2026 dead-cap mention of Javon Hargrave must be preserved');
@@ -2709,15 +2709,15 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   });
   assert.equal(cloud3.isCloud, true);
   assert.ok(cloud15.minSec > cloud8.minSec && cloud8.minSec > cloud3.minSec, 'Longer podcasts must estimate longer High-Thinking wait');
-  assert.equal(cloud3.summaryText, '3 min pod • Est. 45–90 sec');
-  assert.equal(cloud8.summaryText, '8 min pod • Est. 1–3 min');
-  assert.equal(cloud15.summaryText, '15 min pod • Est. 2–4 min');
+  assert.equal(cloud3.summaryText, '3 min pod • Est. 30–65 sec');
+  assert.equal(cloud8.summaryText, '8 min pod • Est. 45–120 sec');
+  assert.equal(cloud15.summaryText, '15 min pod • Est. 1.5–3 min');
 
   const localEst = estimateGenerationWait({ kind: 'podcast', durationMinutes: 3, prefs: {} });
   assert.equal(localEst.isCloud, false);
-  assert.equal(localEst.summaryText, '3 min pod • Est. 45–90 sec');
+  assert.equal(localEst.summaryText, '3 min pod • Est. 30–65 sec');
   const analysisEst = estimateGenerationWait({ kind: 'analysis', prefs: {} });
-  assert.equal(analysisEst.summaryText, 'Est. 25–60 sec');
+  assert.equal(analysisEst.summaryText, 'Est. 15–40 sec');
   assert.equal(PODCAST_PIPELINE_STAGES.length, 3);
   assert.equal(ANALYSIS_PIPELINE_STAGES.length, 3);
 });
@@ -2801,7 +2801,7 @@ await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking ver
     assert.equal(analyzeRes.status, 200);
     const analyzeJson = await analyzeRes.json();
     assert.equal(analyzeJson.item.modelUsed, 'gemini-4-hydrogen');
-    assert.equal(analyzeJson.item.thinkingLevel, 'XHIGH');
+    assert.equal(analyzeJson.item.thinkingLevel, 'HIGH');
     assert.equal(analyzeJson.item.qualityPriority, 'accuracy_over_latency');
     assert.equal(analyzeJson.item.verifiedPasses, 2);
 
@@ -2822,7 +2822,7 @@ await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking ver
     assert.equal(podRes.status, 200);
     const podJson = await podRes.json();
     assert.equal(podJson.episode.modelUsed, 'gemini-4-hydrogen');
-    assert.equal(podJson.episode.thinkingLevel, 'XHIGH');
+    assert.equal(podJson.episode.thinkingLevel, 'HIGH');
     assert.equal(podJson.episode.verifiedPasses, 2);
     assert.equal(podJson.episode.qualityPriority, 'accuracy_over_latency');
     assert.equal(podJson.episode.audioModelUsed, 'gemini-2.5-flash-preview-tts');
@@ -3049,11 +3049,22 @@ await testAsync('Gemini Studio Prompts & Thinking Config enforce Gemini 4 Hydrog
   assert.equal(ranked[2], 'gemini-3.6-flash');
   assert.equal(ranked.includes('gemini-3-pro-preview'), false, 'Ranked cascade must never include retired gemini-3-pro-preview');
 
-  // Gemini 4 Hydrogen uses thinkingLevel: 'XHIGH'; Gemini 3.x uses 'HIGH'; Gemini 2.5 uses thinkingBudget
+  // Gemini 4 Hydrogen defaults to thinkingLevel: 'XHIGH' (scheduled) and supports 'HIGH' (live interactive); Gemini 3.x uses 'HIGH'; Gemini 2.5 uses thinkingBudget
   const cfgH = buildGeminiThinkingConfig('gemini-4-hydrogen');
   assert.deepEqual(cfgH, { thinkingLevel: 'XHIGH' });
   assert.equal('thinkingBudget' in cfgH, false);
   assert.equal(resolveGeminiThinkingLevelLabel('gemini-4-hydrogen'), 'XHIGH');
+
+  const cfgHLive = buildGeminiThinkingConfig('gemini-4-hydrogen', null, {
+    preferredThinkingLevel: 'HIGH'
+  });
+  assert.deepEqual(cfgHLive, { thinkingLevel: 'HIGH' });
+  assert.equal('thinkingBudget' in cfgHLive, false);
+  assert.equal(resolveGeminiThinkingLevelLabel('gemini-4-hydrogen', 'HIGH'), 'HIGH');
+  assert.deepEqual(
+    buildGeminiThinkingConfig('gemini-3.8-flash', null, { preferredThinkingLevel: 'XHIGH' }),
+    { thinkingLevel: 'HIGH' }
+  );
 
   const cfg38 = buildGeminiThinkingConfig('gemini-3.8-pro');
   assert.deepEqual(cfg38, { thinkingLevel: 'HIGH' });
@@ -6947,21 +6958,25 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
   }
 });
 
-await testAsync('Cross-surface Gemini 4 Hydrogen (XHIGH) audit: AI Briefs, Matchups, Auto Pod, AI Analysis, Worker health & XHIGH->HIGH retry resilience', async () => {
-  const { refreshDailyTopNewsBriefIfDue, runOnDemandDeepAnalysis } = await import(
-    '../src/services/aiWorkerClient.js'
-  );
+await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHIGH on scheduled/daily briefs & matchups, HIGH on live Auto Pod/AI Analysis/probes & XHIGH->HIGH retry resilience', async () => {
+  const {
+    refreshDailyTopNewsBriefIfDue,
+    runOnDemandDeepAnalysis,
+    generateOnDemandAutopodcast
+  } = await import('../src/services/aiWorkerClient.js');
   const { extractIncomingSharedRoute, buildShareableAnalysisUrl } = await import(
     '../src/services/shareService.js'
   );
+  const { discoverBestFreeGeminiModel } = await import('../scripts/lib/aiSynthesisEngine.mjs');
 
-  // 1. Worker /api/health reports gemini-4-hydrogen + XHIGH
+  // 1. Worker /api/health reports gemini-4-hydrogen + XHIGH default + HIGH live interactive
   const env = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-hydrogen-key' });
   const healthJson = await (
     await edgeWorker.fetch(new Request('https://worker.example/api/health'), env)
   ).json();
   assert.equal(healthJson.defaultFreeModel, 'gemini-4-hydrogen');
   assert.equal(healthJson.thinkingLevel, 'XHIGH');
+  assert.equal(healthJson.liveInteractiveThinkingLevel, 'HIGH');
 
   // 2. Worker /api/daily-news-brief & /api/matchup-intel target gemini-4-hydrogen with XHIGH thinkingLevel
   const origFetch = globalThis.fetch;
@@ -7075,20 +7090,56 @@ await testAsync('Cross-surface Gemini 4 Hydrogen (XHIGH) audit: AI Briefs, Match
     const briefGenCall = captured.find(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
     assert.deepEqual(briefGenCall?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' });
 
-    // 4. Verify XHIGH -> HIGH retry resilience on same model if endpoint returns 400 INVALID_ARGUMENT on XHIGH
+    // 4A. Verify live interactive runOnDemandDeepAnalysis defaults to Gemini 4 Hydrogen `HIGH` (fast live turnaround)
+    captured.length = 0;
+    const liveDefaultReport = await runOnDemandDeepAnalysis({
+      prompt: 'Brock Purdy EPA live interactive',
+      appData: fullAppData,
+      prefs: { geminiApiKey: 'AIzaHydrogenLiveHighKey', geminiApiBaseUrl: 'https://mock-h2-live.local/v1beta' }
+    });
+    assert.equal(liveDefaultReport.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(liveDefaultReport.thinkingLevel, 'HIGH');
+    const liveH2Calls = captured.filter(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.equal(liveH2Calls.length, 1);
+    assert.deepEqual(liveH2Calls[0]?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+
+    // 4B. Verify XHIGH -> HIGH retry resilience on same model when XHIGH is requested and endpoint returns 400 INVALID_ARGUMENT
     captured.length = 0;
     simulateXhigh400Once = true;
     const retryReport = await runOnDemandDeepAnalysis({
       prompt: 'Brock Purdy EPA',
       appData: fullAppData,
-      prefs: { geminiApiKey: 'AIzaHydrogenRetryKey', geminiApiBaseUrl: 'https://mock-h2-retry.local/v1beta' }
+      prefs: { geminiApiKey: 'AIzaHydrogenRetryKey', geminiApiBaseUrl: 'https://mock-h2-retry.local/v1beta' },
+      thinkingLevel: 'XHIGH'
     });
     assert.equal(retryReport.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(retryReport.thinkingLevel, 'HIGH');
     const h2GenCalls = captured.filter(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
     assert.ok(h2GenCalls.some(c => c.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'XHIGH'));
     assert.ok(h2GenCalls.some(c => c.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH'));
 
-    // 5. Verify shareService defaults to gemini-4-hydrogen + XHIGH
+    // 4C. Verify live quota probe in discoverBestFreeGeminiModel uses `HIGH` (fast health check) while reporting `XHIGH` for scheduled runs
+    captured.length = 0;
+    const probedModelState = await discoverBestFreeGeminiModel('AIzaProbeKey', { probeQuota: true });
+    assert.equal(probedModelState.activeModel, 'gemini-4-hydrogen');
+    assert.equal(probedModelState.thinkingLevel, 'XHIGH');
+    const probeGenCall = captured.find(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.deepEqual(probeGenCall?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+
+    // 5. Verify shareService preserves `HIGH` on live reports and defaults legacy un-tagged payloads to `XHIGH`
+    const liveShareUrl = await buildShareableAnalysisUrl(
+      {
+        id: 'local_analysis_live_high',
+        title: 'Live Cap Dive',
+        thinkingLevel: 'HIGH',
+        markdown: '### Cap\n* Verified.'
+      },
+      new URL('https://49ers.joshal.com/')
+    );
+    const hydratedLive = await extractIncomingSharedRoute(new URL(liveShareUrl));
+    assert.equal(hydratedLive?.analysis?.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(hydratedLive?.analysis?.thinkingLevel, 'HIGH');
+
     const shareUrl = await buildShareableAnalysisUrl(
       { id: 'local_analysis_h2', title: 'Cap Dive', markdown: '### Cap\n* Verified.' },
       new URL('https://49ers.joshal.com/')
@@ -7168,11 +7219,11 @@ await testAsync('Cross-surface Gemini 4 Hydrogen (XHIGH) audit: AI Briefs, Match
     assert.equal(run1.thinkingLevel, 'HIGH');
     assert.equal(cascadePrefs.verifiedGeminiModel, 'gemini-4-hydrogen', 'Transient 60s RPM blip must NOT demote default model away from Hydrogen');
 
-    // Call 2: 60s RPM window cleared -> MUST automatically use Gemini 4 Hydrogen (XHIGH) again!
+    // Call 2: 60s RPM window cleared -> MUST automatically use Gemini 4 Hydrogen (HIGH live) again!
     h2Mode = 'ok';
     const run2 = await runOnDemandDeepAnalysis({ prompt: 'Fred Warner Quarters', appData: fullAppData, prefs: cascadePrefs });
-    assert.equal(run2.modelUsed, 'gemini-4-hydrogen', 'Must return to Gemini 4 Hydrogen (XHIGH) while daily tokens remain');
-    assert.equal(run2.thinkingLevel, 'XHIGH');
+    assert.equal(run2.modelUsed, 'gemini-4-hydrogen', 'Must return to Gemini 4 Hydrogen while daily tokens remain');
+    assert.equal(run2.thinkingLevel, 'HIGH');
 
     // Call 3: Hydrogen daily tokens run out -> falls back cleanly to 3.8 HIGH (skipping 0-quota 3.8-pro!)
     h2Mode = 'daily_exhausted';

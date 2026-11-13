@@ -187,6 +187,7 @@ export async function buildShareablePodcastUrl(episode, locationObj, prefs = nul
     f: String(episode.format || 'Two-Host Analytical Banter').slice(0, 60),
     pl: String(episode.presetLabel || 'Custom Pod').slice(0, 48),
     m: String(episode.modelUsed || PRIMARY_GEMINI_REASONING_MODEL).slice(0, 48),
+    ...(episode.thinkingLevel ? { tl: String(episode.thinkingLevel).slice(0, 12) } : {}),
     by: String(episode.createdBy || '49ers Faithful').slice(0, 40),
     at: String(episode.createdAt || new Date().toISOString()).slice(0, 40),
     d: Math.max(10, Math.round(Number(episode.durationSec || 180))),
@@ -227,6 +228,7 @@ export async function buildShareableAnalysisUrl(report, locationObj) {
     t: String(report.title || '49ers Scouting & Cap Analysis').slice(0, 180),
     c: String(report.category || 'Deep Scouting & Cap Dive').slice(0, 60),
     m: String(report.modelUsed || PRIMARY_GEMINI_REASONING_MODEL).slice(0, 48),
+    ...(report.thinkingLevel ? { tl: String(report.thinkingLevel).slice(0, 12) } : {}),
     by: String(report.createdBy || '49ers Faithful').slice(0, 40),
     at: String(report.createdAt || new Date().toISOString()).slice(0, 40),
     src: (report.sourcesCited || []).slice(0, 6).map(s =>
@@ -271,7 +273,10 @@ export async function extractIncomingSharedRoute(
           format: String(decoded.f || 'Two-Host Analytical Banter'),
           presetLabel: String(decoded.pl || 'Shared Pod'),
           modelUsed: String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL),
-          thinkingLevel: resolveGeminiThinkingLevelLabel(String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL)),
+          thinkingLevel: resolveGeminiThinkingLevelLabel(
+            String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL),
+            decoded.tl || null
+          ),
           qualityPriority: 'accuracy_over_latency',
           createdBy: String(decoded.by || '49ers Faithful'),
           createdAt: String(decoded.at || new Date().toISOString()),
@@ -323,7 +328,10 @@ export async function extractIncomingSharedRoute(
           title: String(decoded.t || 'Shared 49ers Scouting Report'),
           category: String(decoded.c || 'Shared Deep Dive'),
           modelUsed: String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL),
-          thinkingLevel: resolveGeminiThinkingLevelLabel(String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL)),
+          thinkingLevel: resolveGeminiThinkingLevelLabel(
+            String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL),
+            decoded.tl || null
+          ),
           qualityPriority: 'accuracy_over_latency',
           createdBy: String(decoded.by || '49ers Faithful'),
           createdAt: String(decoded.at || new Date().toISOString()),

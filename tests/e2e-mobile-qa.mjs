@@ -642,10 +642,16 @@ async function main() {
     await cdp.send('Page.reload', { ignoreCache: true });
 
     // Wait for live JSON feeds & dashboard cards to render
-    await cdp.waitFor(() => {
-      return document.querySelectorAll('[data-dashboard-block], .reorder-bar').length > 0 ||
-        document.getElementById('mainView')?.textContent?.includes('Customize Order');
-    });
+    await cdp.waitFor(
+      () => {
+        return (
+          document.querySelectorAll('[data-dashboard-block], .reorder-bar').length > 0 ||
+          document.getElementById('mainView')?.textContent?.includes('Customize Order')
+        );
+      },
+      undefined,
+      20000
+    );
 
     console.log('\n=== [1/9] PWA Meta, iPhone 16 Home Screen Shortcut, CNAME & Service Worker ===');
 
@@ -2418,11 +2424,11 @@ async function main() {
         `New-user Gemini API key guide audit failed: ${JSON.stringify(gateAndConnectAudit)}`
       );
       assert(
-        gateAndConnectAudit.preClickHint3m === '3 min pod • Est. 45–90 sec',
+        gateAndConnectAudit.preClickHint3m === '3 min pod • Est. 30–65 sec',
         `Unexpected 3m pre-click text: "${gateAndConnectAudit.preClickHint3m}"`
       );
       assert(
-        gateAndConnectAudit.preClickHint8m === '8 min pod • Est. 1–3 min',
+        gateAndConnectAudit.preClickHint8m === '8 min pod • Est. 45–120 sec',
         `Unexpected 8m coarse pre-click text: "${gateAndConnectAudit.preClickHint8m}"`
       );
       assert(
@@ -2521,20 +2527,36 @@ async function main() {
         `Generation finished suspiciously fast (${totalGenWallMs}ms); expected multi-stage deep research + NotebookLM TTS`
       );
 
-      // Verify actual v1beta Gemini requests sent from browser: Gemini 4 Hydrogen XHIGH Thinking + Google Search Grounding + Puck/Aoede Multi-Speaker TTS!
-      const textReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-4-hydrogen:generateContent'));
-      const ttsReqs = mockGeminiRequests.filter(r => r.urlPath.includes('preview-tts:generateContent'));
-      assert(textReqs.length >= 1, `Expected >=1 Gemini 4 Hydrogen XHIGH stage (Research + Script), got ${textReqs.length}`);
+      // Verify actual v1beta Gemini requests sent from browser:
+      // - Live Auto Pod uses Gemini 4 Hydrogen HIGH Thinking + Google Search Grounding + Puck/Aoede Multi-Speaker TTS
+      // - Any concurrent non-time-sensitive 1/day background brief/matchup sync keeps Gemini 4 Hydrogen XHIGH!
+      const allH2Reqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-4-hydrogen:generateContent'));
+      const isDailyBackgroundPrompt = r => {
+        const txt = String(r.body?.contents?.[0]?.parts?.[0]?.text || '');
+        return /DAILY_TOP_NEWS_BRIEF_JSON|coachingMatchup|keyMatchupsMatrix/i.test(txt);
+      };
+      const podTextReqs = allH2Reqs.filter(r => !isDailyBackgroundPrompt(r));
+      const bgDailyReqs = allH2Reqs.filter(r => isDailyBackgroundPrompt(r));
+      const ttsReqs = mockGeminiRequests.filter(r => r.urlPath.includes('tts:generateContent'));
+      assert(podTextReqs.length >= 1, `Expected >=1 Gemini 4 Hydrogen HIGH Auto Pod stage, got ${podTextReqs.length}`);
       assert(
-        textReqs.every(
+        podTextReqs.every(
+          r =>
+            r.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH' &&
+            !('thinkingBudget' in (r.body?.generationConfig?.thinkingConfig || {}))
+        ),
+        'Live Auto Pod Gemini 4 Hydrogen requests must send thinkingConfig: { thinkingLevel: "HIGH" } without thinkingBudget'
+      );
+      assert(
+        bgDailyReqs.every(
           r =>
             r.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'XHIGH' &&
             !('thinkingBudget' in (r.body?.generationConfig?.thinkingConfig || {}))
         ),
-        'Gemini 4 Hydrogen requests must send thinkingConfig: { thinkingLevel: "XHIGH" } without thinkingBudget'
+        'Background 1/day brief & matchup Gemini 4 Hydrogen requests must keep thinkingConfig: { thinkingLevel: "XHIGH" }'
       );
       assert(
-        Array.isArray(textReqs[0].body?.tools) && Boolean(textReqs[0].body.tools[0]?.google_search),
+        Array.isArray(podTextReqs[0].body?.tools) && Boolean(podTextReqs[0].body.tools[0]?.google_search),
         'Stage 1 Deep Research must enable live google_search grounding tool'
       );
       assert(ttsReqs.length >= 1, 'Expected Gemini 2.5 Pro Preview Multi-Speaker NotebookLM TTS call');
@@ -2917,7 +2939,7 @@ async function main() {
         };
       });
       assert(
-        analysisProgress.preHint === 'Est. 25–60 sec' &&
+        analysisProgress.preHint === 'Est. 15–40 sec' &&
           analysisProgress.hasBanner &&
           analysisProgress.hasSpinner &&
           analysisProgress.stageLabels.length === 3 &&
@@ -2933,6 +2955,17 @@ async function main() {
         prev => document.querySelectorAll('#mainView article.brief-card').length > prev,
         beforeReportCount,
         20_000
+      );
+      const latestAnalysisReq = mockGeminiRequests
+        .filter(r => {
+          if (!r.urlPath.includes('gemini-4-hydrogen:generateContent')) return false;
+          const txt = String(r.body?.contents?.[0]?.parts?.[0]?.text || '');
+          return !/DAILY_TOP_NEWS_BRIEF_JSON|coachingMatchup|keyMatchupsMatrix/i.test(txt);
+        })
+        .at(-1);
+      assert(
+        latestAnalysisReq?.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH',
+        `Live AI Analysis request must send Gemini 4 Hydrogen thinkingLevel: "HIGH", got: ${JSON.stringify(latestAnalysisReq?.body?.generationConfig?.thinkingConfig)}`
       );
 
       // Verify Share icon + Delete-only lifecycle on AI Analysis report card (zero Archive controls)
