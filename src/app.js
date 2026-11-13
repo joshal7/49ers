@@ -11,7 +11,7 @@ import {
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
 } from './engine/breakingClassifier.js?v=49';
-import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=51';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=53';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
@@ -37,14 +37,18 @@ import {
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=51';
-import { deleteEpisodeAudioBlob } from './services/podcastAudioStore.js';
+} from './services/aiWorkerClient.js?v=53';
+import {
+  deleteEpisodeAudioBlob,
+  exportEpisodeShareableAudioFile
+} from './services/podcastAudioStore.js';
 import {
   buildShareablePodcastUrl,
   buildShareableAnalysisUrl,
   extractIncomingSharedRoute,
-  shareItemNatively
-} from './services/shareService.js?v=51';
+  shareItemNatively,
+  shareAudioFileNatively
+} from './services/shareService.js?v=53';
 
 import {
   esc,
@@ -74,7 +78,7 @@ import {
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=51';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=51';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=53';
 import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=48';
 
 const state = {
@@ -1719,6 +1723,32 @@ function bindEvents() {
         break;
       }
 
+      case 'share-podcast-audio': {
+        const epId = btn.getAttribute('data-episode-id');
+        const ep =
+          getAllEpisodes().find(x => x.id === epId) ||
+          (state.audioState?.episode?.id === epId ? state.audioState.episode : null);
+        if (ep) {
+          const origHtml = btn.innerHTML;
+          btn.disabled = true;
+          btn.innerHTML = `${iconSvg('loader', 13, 'btn-spin-icon')}<span>MP3…</span>`;
+          try {
+            const audioFile = await exportEpisodeShareableAudioFile(ep, 48);
+            if (audioFile) {
+              await shareAudioFileNatively({
+                file: audioFile,
+                title: `49ers Faithful Podcast: ${ep.title}`,
+                text: `${ep.title} (${formatTimeMmSs(ep.durationSec)}) — 49ers Faithful`
+              });
+            }
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = origHtml;
+          }
+        }
+        break;
+      }
+
       case 'share-analysis': {
         const analysisId = btn.getAttribute('data-analysis-id');
         const rep = getAllAnalyses().find(x => x.id === analysisId);
@@ -2780,18 +2810,17 @@ async function init() {
   state.podFormat = state.prefs?.podFormat === 'solo' ? 'solo' : 'two_host';
   state.podDurationMin = Math.max(2, Math.min(20, Number(state.prefs?.defaultPodDurationMin || 3)));
   audioController = new PodcastAudioController(renderMiniPlayer, {
+    canSynthesizeCloudStudioAudio: () => Boolean(String(state.prefs?.geminiApiKey || '').trim()),
     onSynthesizeMissingAudio: async ep => {
       const startedAtMs = Date.now();
       state.sharedAudioPrep = {
         active: true,
         episodeId: ep.id,
         startedAtMs,
-        percent: 10,
-        message: ep?.isSharedImport
-          ? 'Preparing shared podcast studio audio…'
-          : 'Preparing podcast studio audio…',
+        percent: 24,
+        message: 'Buffering opening studio audio (~2 sec)…',
         subDetail:
-          'Tap "Play When Ready" below to start automatically when ready, or tap "Show Transcript" to read now.',
+          'Streaming opening turns first while remaining segments buffer in the background.',
         error: ''
       };
       const elapsedTicker = setInterval(() => {
@@ -2808,8 +2837,8 @@ async function init() {
           ep,
           p => {
             const pct = Math.max(
-              state.sharedAudioPrep?.percent || 10,
-              Math.min(99, Math.round(Number(p.subPercent ?? p.percent ?? 18)))
+              state.sharedAudioPrep?.percent || 24,
+              Math.min(99, Math.round(Number(p.subPercent ?? p.percent ?? 35)))
             );
             state.sharedAudioPrep = {
               ...state.sharedAudioPrep,
@@ -2817,7 +2846,7 @@ async function init() {
               episodeId: ep.id,
               startedAtMs,
               percent: pct,
-              message: p.message || state.sharedAudioPrep?.message || 'Preparing podcast studio audio…',
+              message: p.message || state.sharedAudioPrep?.message || 'Buffering opening studio audio…',
               subDetail: p.subDetail || state.sharedAudioPrep?.subDetail || '',
               error: ''
             };
@@ -2825,22 +2854,21 @@ async function init() {
               renderMain();
             }
           },
-          state.prefs
+          state.prefs,
+          {
+            onBackgroundFullAudioReady: (updatedEp, fullBlobUrl) => {
+              audioController?.upgradeActiveAudioSource(updatedEp, fullBlobUrl);
+              if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+                renderMain();
+              }
+            }
+          }
         );
         state.sharedAudioPrep = null;
         return renderedUrl;
-      } catch (err) {
-        state.sharedAudioPrep = {
-          active: false,
-          episodeId: ep.id,
-          startedAtMs,
-          percent: 0,
-          message: '',
-          subDetail: '',
-          error:
-            err?.message ||
-            'Unable to prepare studio audio right now. Tap Retry Studio Audio or Listen Now (Device Voice).'
-        };
+      } catch {
+        state.sharedAudioPrep = null;
+        ep.useInstantSpeech = true;
         return null;
       } finally {
         clearInterval(elapsedTicker);
@@ -2925,7 +2953,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=62', { updateViaCache: 'none' })
+        .register('./sw.js?v=63', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

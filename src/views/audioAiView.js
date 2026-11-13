@@ -12,6 +12,7 @@ import {
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
+import { hasCachedEpisodeAudioSync } from '../services/podcastAudioStore.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
   PODCAST_PIPELINE_STAGES,
@@ -867,6 +868,14 @@ function renderPodcastStudio({
               <span>${isActiveSharedToast ? 'Link Copied' : 'Share'}</span>
             </button>
             ${
+              hasCachedEpisodeAudioSync(activeEp.id)
+                ? `<button type="button" class="icon-btn share-action-btn" data-action="share-podcast-audio" data-episode-id="${esc(activeEp.id)}" aria-label="Send podcast MP3 audio file" title="Send compact MP3 studio audio file via iMessage, AirDrop, or Download">
+                     ${iconSvg('audio', 13)}
+                     <span>MP3</span>
+                   </button>`
+                : ''
+            }
+            ${
               isActiveEpArchived
                 ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Restore podcast" title="Restore to active library">
                      ${iconSvg('restore', 13)}
@@ -1023,6 +1032,14 @@ function renderPodcastStudio({
                             ${iconSvg(isCopied ? 'check' : 'share', 13)}
                             <span>${isCopied ? 'Link Copied' : 'Share'}</span>
                           </button>
+                          ${
+                            hasCachedEpisodeAudioSync(ep.id)
+                              ? `<button type="button" class="icon-btn share-action-btn" data-action="share-podcast-audio" data-episode-id="${esc(ep.id)}" aria-label="Send MP3 audio file for ${esc(ep.title)}" title="Send compact MP3 studio audio file via iMessage, AirDrop, or Download">
+                                   ${iconSvg('audio', 13)}
+                                   <span>MP3</span>
+                                 </button>`
+                              : ''
+                          }
                           ${
                             turnCnt > 0
                               ? `<button type="button" class="btn-ghost" data-action="toggle-podcast-transcript" data-episode-id="${esc(ep.id)}" aria-expanded="${isCardTranscriptExpanded ? 'true' : 'false'}">

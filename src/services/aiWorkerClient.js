@@ -708,6 +708,7 @@ async function synthesizeWithGeminiNotebookLmTts({
   episodeId,
   turns,
   solo = false,
+  skipBlobSave = false,
   onProgress
 }) {
   // 3800-char studio blocks fit an entire 2-to-4-minute podcast (~420-560 words) into ONE continuous
@@ -843,7 +844,7 @@ async function synthesizeWithGeminiNotebookLmTts({
   });
 
   const { wavBuffer, durationSec } = stitchGeminiPcmChunksToStereoWav(pcmChunks, sampleRate);
-  const blobUrl = await saveEpisodeAudioBlob(episodeId, wavBuffer);
+  const blobUrl = skipBlobSave ? null : await saveEpisodeAudioBlob(episodeId, wavBuffer);
 
   // Compute proportional turn timestamps per recorded studio segment
   const timedTranscript = [];
@@ -882,6 +883,8 @@ async function synthesizeWithGeminiNotebookLmTts({
     audioUrl: blobUrl,
     audioModelUsed: resolvedAudioModel,
     durationSec,
+    sampleRate,
+    pcmChunks,
     transcript: timedTranscript
   };
 }
@@ -1138,71 +1141,138 @@ async function synthesizeTurnsWithKokoroWorker(episodeId, turns, onWorkerProgres
 }
 
 /**
- * Synthesizes and caches studio `.wav` audio for a shared or reloaded custom podcast episode.
- * Uses Gemini Native Multi-Speaker NotebookLM TTS when a Gemini API key is configured,
- * and quantized WASM Kokoro-82M (`af_heart` + `am_fenrir`) when opened without an API key.
+ * Resolves snappy playback audio for a shared or reloaded custom podcast episode:
+ * - **Without a Gemini API key**: Returns immediately in `0ms` (`episode.useInstantSpeech = true`)
+ *   so the Shared Podcast card opens right away with zero 88 MB neural-weight download and plays
+ *   in `<100ms` via Dual-Host Native OS Speech.
+ * - **With a Gemini API key**: Uses Progressive Fast-Start Gemini NotebookLM TTS — synthesizing the
+ *   opening 2 turns in `~2–3s` for immediate studio playback while seamlessly stitching and caching
+ *   the remaining turns in the background.
  */
-export async function synthesizeMissingEpisodeAudio(episode, onProgress, prefs = {}) {
+export async function synthesizeMissingEpisodeAudio(
+  episode,
+  onProgress,
+  prefs = {},
+  options = {}
+) {
   if (!episode?.id || !Array.isArray(episode.transcript) || episode.transcript.length === 0) {
     return null;
   }
 
+  const rawKey = String(prefs?.geminiApiKey || '').trim();
+  if (!rawKey) {
+    episode.useInstantSpeech = true;
+    return null;
+  }
+
   const solo = episode.format === 'Solo Executive Briefing';
-  let rendered = null;
+  const originalDurationSec = Math.max(10, Number(episode.durationSec || 180));
+  const fullTurns = episode.transcript;
 
-  if (String(prefs?.geminiApiKey || '').trim()) {
-    try {
-      const conn = await resolveDirectGeminiCascades(prefs);
-      rendered = await synthesizeWithGeminiNotebookLmTts({
-        apiBase: conn.apiBase,
-        key: conn.key,
-        ttsCascade: conn.ttsCascade,
-        episodeId: episode.id,
-        turns: episode.transcript,
-        solo,
-        onProgress: info => {
-          const subPct = Math.min(99, Math.max(10, Math.round(Number(info.subPercent || 24))));
-          onProgress?.({
-            stepIdx: 3,
-            totalSteps: 3,
-            stages: PODCAST_PIPELINE_STAGES,
-            subPercent: subPct,
-            percent: subPct,
-            stagePercents: [100, 100, subPct],
-            engineLabel: 'NotebookLM Studio TTS',
-            message: info.detail || 'Recording shared podcast with Gemini NotebookLM voices…',
-            subDetail: 'Synthesizing 2-channel Stereo WAV for instant playback on your device.'
-          });
-        }
-      });
-    } catch {
-      rendered = null;
-    }
-  }
+  try {
+    const conn = await resolveDirectGeminiCascades(prefs);
+    const hasRemainder = fullTurns.length > 2;
+    const leadTurns = hasRemainder ? fullTurns.slice(0, 2) : fullTurns;
 
-  if (!rendered) {
-    rendered = await synthesizeTurnsWithKokoroWorker(episode.id, episode.transcript, info => {
-      const subPct = Math.min(99, Math.max(8, Math.round(Number(info.subPercent || 15))));
-      onProgress?.({
-        stepIdx: 3,
-        totalSteps: 3,
-        stages: PODCAST_PIPELINE_STAGES,
-        subPercent: subPct,
-        percent: subPct,
-        stagePercents: [100, 100, subPct],
-        engineLabel: 'On-Device Studio Audio',
-        message: info.detail || 'Preparing shared podcast studio audio…',
-        subDetail: 'No API key required — caching stereo audio directly on this device.'
-      });
+    onProgress?.({
+      stepIdx: 3,
+      totalSteps: 3,
+      stages: PODCAST_PIPELINE_STAGES,
+      subPercent: 28,
+      percent: 28,
+      stagePercents: [100, 100, 28],
+      engineLabel: 'NotebookLM Fast-Start TTS',
+      message: 'Buffering opening studio audio (~2 sec)…',
+      subDetail: hasRemainder
+        ? 'Streaming opening turns first while remaining segments buffer in the background.'
+        : 'Synthesizing 2-channel Stereo WAV for instant playback.'
     });
-  }
 
-  if (rendered?.audioUrl) {
-    episode.audioUrl = rendered.audioUrl;
-    episode.durationSec = rendered.durationSec;
-    episode.transcript = rendered.transcript;
+    const leadAudio = await synthesizeWithGeminiNotebookLmTts({
+      apiBase: conn.apiBase,
+      key: conn.key,
+      ttsCascade: conn.ttsCascade,
+      episodeId: episode.id,
+      turns: leadTurns,
+      solo,
+      onProgress: info => {
+        const subPct = Math.min(96, Math.max(30, Math.round(Number(info.subPercent || 55))));
+        onProgress?.({
+          stepIdx: 3,
+          totalSteps: 3,
+          stages: PODCAST_PIPELINE_STAGES,
+          subPercent: subPct,
+          percent: subPct,
+          stagePercents: [100, 100, subPct],
+          engineLabel: 'NotebookLM Fast-Start TTS',
+          message: 'Buffering opening studio audio (~2 sec)…',
+          subDetail: 'Preparing Gemini NotebookLM voices for immediate playback.'
+        });
+      }
+    });
+
+    if (!leadAudio?.audioUrl) {
+      episode.useInstantSpeech = true;
+      return null;
+    }
+
+    episode.useInstantSpeech = false;
+    episode.audioUrl = leadAudio.audioUrl;
+    if (!hasRemainder) {
+      episode.durationSec = leadAudio.durationSec;
+      episode.transcript = leadAudio.transcript;
+      return leadAudio.audioUrl;
+    }
+
+    // Preserve full episode duration & transcript while the remaining turns synthesize in the background
+    episode.durationSec = originalDurationSec;
+    const remainderTurns = fullTurns.slice(2);
+
+    episode._backgroundFullAudioPromise = (async () => {
+      try {
+        const restAudio = await synthesizeWithGeminiNotebookLmTts({
+          apiBase: conn.apiBase,
+          key: conn.key,
+          ttsCascade: conn.ttsCascade,
+          episodeId: episode.id,
+          turns: remainderTurns,
+          solo,
+          skipBlobSave: true
+        });
+        if (!restAudio?.pcmChunks?.length) return null;
+
+        const combinedPcm = [...(leadAudio.pcmChunks || []), ...restAudio.pcmChunks];
+        const sampleRate = leadAudio.sampleRate || 24000;
+        const fullStitched = stitchGeminiPcmChunksToStereoWav(combinedPcm, sampleRate);
+        const fullBlobUrl = await saveEpisodeAudioBlob(episode.id, fullStitched.wavBuffer);
+        if (!fullBlobUrl) return null;
+
+        const leadEndOffset =
+          leadAudio.transcript.length > 0
+            ? leadAudio.transcript[leadAudio.transcript.length - 1].endSec + 0.14
+            : 0;
+        const shiftedRestTranscript = restAudio.transcript.map((seg, i) => ({
+          ...seg,
+          idx: leadAudio.transcript.length + i,
+          startSec: Math.floor(seg.startSec + leadEndOffset),
+          endSec: Math.max(Math.floor(seg.startSec + leadEndOffset) + 1, Math.round(seg.endSec + leadEndOffset))
+        }));
+
+        episode.audioUrl = fullBlobUrl;
+        episode.durationSec = fullStitched.durationSec;
+        episode.transcript = [...leadAudio.transcript, ...shiftedRestTranscript];
+        options.onBackgroundFullAudioReady?.(episode, fullBlobUrl);
+        return fullBlobUrl;
+      } catch {
+        return null;
+      }
+    })();
+
+    return leadAudio.audioUrl;
+  } catch {
+    episode.useInstantSpeech = true;
+    return null;
   }
-  return rendered?.audioUrl || null;
 }
 
 function createMissingGeminiKeyError() {
@@ -1916,6 +1986,7 @@ export async function generateOnDemandAutopodcast({
     });
 
     let renderedAudio = null;
+    let useInstantSpeechOnQuota = false;
     try {
       renderedAudio = await synthesizeWithGeminiNotebookLmTts({
         apiBase: conn.apiBase,
@@ -1934,21 +2005,36 @@ export async function generateOnDemandAutopodcast({
         }
       });
     } catch {
-      // Fallback strictly to Kokoro-82M human voices (`af_heart` + `am_fenrir`) if Gemini TTS hits free-tier daily quota
-      renderedAudio = await synthesizeTurnsWithKokoroWorker(episodeId, sanitizedTurns, info => {
-        tracker.updateStage3Progress({
-          subPercent: Number(info.subPercent || 12),
-          msg: 'Step 3 of 3: Converting script to natural studio podcast audio…',
-          detail: info.detail || 'Synthesizing Kokoro-82M human voices…',
-          badge: formatActiveModelBadge(scriptModelUsed, 'Kokoro-82M')
+      const isMobileUa =
+        typeof navigator !== 'undefined' &&
+        /iPhone|iPad|iPod|Android/i.test(String(navigator.userAgent || ''));
+      if (isMobileUa) {
+        const instantFallback = buildNodeFallbackWavAndTranscript(sanitizedTurns);
+        useInstantSpeechOnQuota = true;
+        renderedAudio = {
+          audioUrl: null,
+          audioModelUsed: 'instant-dual-host-speech',
+          durationSec: instantFallback.durationSec,
+          transcript: instantFallback.transcript
+        };
+      } else {
+        renderedAudio = await synthesizeTurnsWithKokoroWorker(episodeId, sanitizedTurns, info => {
+          tracker.updateStage3Progress({
+            subPercent: Number(info.subPercent || 12),
+            msg: 'Step 3 of 3: Converting script to natural studio podcast audio…',
+            detail: info.detail || 'Synthesizing Kokoro-82M human voices…',
+            badge: formatActiveModelBadge(scriptModelUsed, 'Kokoro-82M')
+          });
         });
-      });
+      }
     }
 
     await tracker.ensureMinimumVisualStageDwell(1150);
     tracker.complete(
       'Podcast ready to play!',
-      `Mastered 2-channel Stereo WAV (${Math.floor(renderedAudio.durationSec / 60)}m ${renderedAudio.durationSec % 60}s).`
+      useInstantSpeechOnQuota
+        ? `Ready for instant playback (${Math.floor(renderedAudio.durationSec / 60)}m ${renderedAudio.durationSec % 60}s).`
+        : `Mastered 2-channel Stereo WAV (${Math.floor(renderedAudio.durationSec / 60)}m ${renderedAudio.durationSec % 60}s).`
     );
 
     const sourceLinks = [
@@ -1971,6 +2057,7 @@ export async function generateOnDemandAutopodcast({
       createdBy: prefs?.authorName || 'Josh',
       createdAt: new Date().toISOString(),
       audioUrl: renderedAudio.audioUrl,
+      useInstantSpeech: useInstantSpeechOnQuota,
       durationSec: renderedAudio.durationSec,
       sourceLinks,
       transcript: renderedAudio.transcript

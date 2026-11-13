@@ -365,3 +365,61 @@ export async function shareItemNatively({
   await copyTextToClipboard(shareData.url, navigatorObj);
   return { method: 'clipboard', url: shareData.url };
 }
+
+/**
+ * Shares a compressed `.mp3` / `.wav` studio audio file directly via the native mobile share sheet
+ * (iMessage inline audio bubble, WhatsApp, AirDrop, Mail) with automatic desktop download fallback.
+ */
+export async function shareAudioFileNatively({
+  file,
+  title,
+  text = '',
+  navigatorObj = typeof navigator !== 'undefined' ? navigator : null
+}) {
+  if (!file) return { method: 'unavailable' };
+
+  if (navigatorObj && typeof navigatorObj.share === 'function' && typeof File === 'function' && file instanceof File) {
+    const fileSharePayload = {
+      files: [file],
+      title: String(title || '49ers Faithful Podcast'),
+      ...(text ? { text: String(text) } : {})
+    };
+    let canShareFiles = true;
+    if (typeof navigatorObj.canShare === 'function') {
+      try {
+        canShareFiles = Boolean(navigatorObj.canShare({ files: [file] }));
+      } catch {
+        canShareFiles = false;
+      }
+    }
+    if (canShareFiles) {
+      try {
+        await navigatorObj.share(fileSharePayload);
+        return { method: 'native_file', fileName: file.name };
+      } catch (err) {
+        if (err?.name === 'AbortError') {
+          return { method: 'cancelled', fileName: file.name };
+        }
+      }
+    }
+  }
+
+  if (typeof document !== 'undefined' && typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
+    const dlUrl = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = dlUrl;
+    a.download = file.name || '49ers-podcast.mp3';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => {
+      try {
+        URL.revokeObjectURL(dlUrl);
+      } catch {}
+    }, 8000);
+    return { method: 'download', fileName: file.name || '49ers-podcast.mp3' };
+  }
+
+  return { method: 'unavailable' };
+}

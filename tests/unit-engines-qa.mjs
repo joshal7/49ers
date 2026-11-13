@@ -6641,6 +6641,37 @@ await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safe
       errorHtml.includes('data-action="play-device-voice"'),
     'Shared audio error state must expose both Retry Studio Audio and Listen Now (Device Voice) recovery actions'
   );
+
+  // 5. Verify keyless synthesizeMissingEpisodeAudio resolves in <25ms (zero 88 MB WASM download bottleneck)
+  const { synthesizeMissingEpisodeAudio } = await import('../src/services/aiWorkerClient.js');
+  const { shareAudioFileNatively } = await import('../src/services/shareService.js');
+  const keylessEp = { ...sharedEp, id: 'custom_ep_keyless_instant_test' };
+  const t0 = Date.now();
+  const keylessUrl = await synthesizeMissingEpisodeAudio(keylessEp, null, { geminiApiKey: '' });
+  const keylessElapsedMs = Date.now() - t0;
+  assert.equal(keylessUrl, null, 'Keyless shared episode must skip heavy local WASM synthesis');
+  assert.equal(keylessEp.useInstantSpeech, true, 'Keyless shared episode must arm instant dual-host speech');
+  assert.ok(keylessElapsedMs < 50, `Expected <50ms instant keyless resolution, took ${keylessElapsedMs}ms`);
+
+  // 6. Verify native MP3 File sharing via navigator.share({ files })
+  if (typeof File === 'function') {
+    const mockMp3 = new File([new Uint8Array([0xff, 0xfb, 0x90, 0x64])], 'keenan-allen.mp3', {
+      type: 'audio/mpeg'
+    });
+    let sharedFilesCount = 0;
+    const fileRes = await shareAudioFileNatively({
+      file: mockMp3,
+      title: '49ers Faithful Podcast',
+      navigatorObj: {
+        canShare: data => Array.isArray(data?.files) && data.files.length === 1,
+        share: async data => {
+          sharedFilesCount = data?.files?.length || 0;
+        }
+      }
+    });
+    assert.equal(fileRes.method, 'native_file');
+    assert.equal(sharedFilesCount, 1);
+  }
 });
 
 console.log(`\n======================================================`);

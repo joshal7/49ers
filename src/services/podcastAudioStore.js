@@ -171,6 +171,122 @@ export async function getEpisodeAudioUrl(episodeId) {
 }
 
 /**
+ * Synchronously returns true if a synthesized studio audio blob is currently loaded in memory.
+ */
+export function hasCachedEpisodeAudioSync(episodeId) {
+  if (!episodeId) return false;
+  const id = String(episodeId);
+  return objectUrlCache.has(id) || memoryBlobFallback.has(id);
+}
+
+/**
+ * Retrieves the raw stored Blob for a locally synthesized episode (from memory or IndexedDB).
+ */
+export async function getEpisodeAudioBlob(episodeId) {
+  if (!episodeId) return null;
+  const id = String(episodeId);
+  if (memoryBlobFallback.has(id)) {
+    return memoryBlobFallback.get(id);
+  }
+  await getEpisodeAudioUrl(id);
+  return memoryBlobFallback.get(id) || null;
+}
+
+let lameLoaderPromise = null;
+
+function ensureLameMp3Encoder() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return Promise.resolve(null);
+  }
+  if (window.lamejs?.Mp3Encoder) {
+    return Promise.resolve(window.lamejs);
+  }
+  if (lameLoaderPromise) return lameLoaderPromise;
+
+  lameLoaderPromise = new Promise(resolve => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js';
+    script.async = true;
+    const timer = setTimeout(() => resolve(null), 3500);
+    script.onload = () => {
+      clearTimeout(timer);
+      resolve(window.lamejs?.Mp3Encoder ? window.lamejs : null);
+    };
+    script.onerror = () => {
+      clearTimeout(timer);
+      lameLoaderPromise = null;
+      resolve(null);
+    };
+    document.head.appendChild(script);
+  });
+
+  return lameLoaderPromise;
+}
+
+/**
+ * Exports a compact ~600–800 KB 48 kbps `.mp3` `File` (18x smaller than raw 12.5 MB WAV)
+ * for instant native iMessage / WhatsApp / AirDrop audio sharing or download.
+ */
+export async function exportEpisodeShareableAudioFile(episode, kbps = 48) {
+  if (!episode?.id) return null;
+  const rawBlob = await getEpisodeAudioBlob(episode.id);
+  if (!rawBlob) return null;
+
+  const safeSlug = String(episode.title || '49ers-podcast')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 48) || '49ers-podcast';
+
+  try {
+    const arrBuf = await rawBlob.arrayBuffer();
+    if (arrBuf.byteLength > 44) {
+      const view = new DataView(arrBuf);
+      const riff =
+        String.fromCharCode(view.getUint8(0), view.getUint8(1), view.getUint8(2), view.getUint8(3)) ===
+        'RIFF';
+      const lame = riff ? await ensureLameMp3Encoder() : null;
+      if (lame?.Mp3Encoder) {
+        const numChannels = Math.max(1, view.getUint16(22, true));
+        const sampleRate = Math.max(8000, view.getUint32(24, true));
+        const bytesPerFrame = numChannels * 2;
+        const numFrames = Math.floor((arrBuf.byteLength - 44) / bytesPerFrame);
+        const monoSamples = new Int16Array(numFrames);
+        let byteOff = 44;
+        for (let i = 0; i < numFrames; i++) {
+          monoSamples[i] = view.getInt16(byteOff, true);
+          byteOff += bytesPerFrame;
+        }
+
+        const encoder = new lame.Mp3Encoder(1, sampleRate, kbps);
+        const mp3Chunks = [];
+        const blockSize = 1152 * 10;
+        for (let i = 0; i < monoSamples.length; i += blockSize) {
+          const buf = encoder.encodeBuffer(monoSamples.subarray(i, i + blockSize));
+          if (buf.length > 0) mp3Chunks.push(new Uint8Array(buf));
+        }
+        const tail = encoder.flush();
+        if (tail.length > 0) mp3Chunks.push(new Uint8Array(tail));
+
+        if (typeof File === 'function') {
+          return new File(mp3Chunks, `${safeSlug}.mp3`, { type: 'audio/mpeg' });
+        }
+        const mp3Blob = new Blob(mp3Chunks, { type: 'audio/mpeg' });
+        mp3Blob.name = `${safeSlug}.mp3`;
+        return mp3Blob;
+      }
+    }
+  } catch {
+    // Fall back cleanly to original WAV Blob below
+  }
+
+  if (typeof File === 'function') {
+    return new File([rawBlob], `${safeSlug}.wav`, { type: rawBlob.type || 'audio/wav' });
+  }
+  return rawBlob;
+}
+
+/**
  * Permanently removes a synthesized podcast's cached audio Blob & Object URL
  * from memory and IndexedDB when the user deletes the episode.
  */
