@@ -6581,39 +6581,58 @@ test('3-Lens NFL Draft Big Board Engine: 250+ Depth, NR-at-Bottom Sorting (Asc &
     assert.ok(grpRes.every(p => allowedSet.has(p.canonicalPos)), `Split filter ${grpKey} leaked unexpected position`);
   }
 
-  // 7. Prospect Profile Link Integrity: block forged Scouts Inc. 45828xx 404 IDs & guarantee 100% unique verified profileUrls
+  // 7. Scouting Profile Link Integrity: replace stat-only ESPN/CBS college bios with written Scouting Reports & NFL.com Zierlein Profiles
   assert.equal(
     isPaywalledOrBlockedUrl('https://www.espn.com/college-football/player/_/id/4582818/jeremiah-smith'),
     true,
     'Forged ESPN Scouts Inc. draft-rank ID (45828xx) must be flagged as broken 404 URL'
   );
-  assert.equal(
-    isPaywalledOrBlockedUrl('https://www.espn.com/college-football/player/_/id/5079720/jeremiah-smith'),
-    false,
-    'Verified real ESPN NCAA athlete ID (5079720) must pass URL validation'
-  );
   const uniqueProfileSet = new Set(liveBb.map(p => p.profileUrl));
-  assert.equal(uniqueProfileSet.size, liveBb.length, 'Every Big Board prospect must resolve to a distinct verified profileUrl');
+  assert.equal(uniqueProfileSet.size, liveBb.length, 'Every Big Board prospect must resolve to a distinct verified scouting URL');
   for (const p of liveBb) {
     assert.ok(
       p.profileUrl &&
         !isPaywalledOrBlockedUrl(p.profileUrl) &&
-        !p.profileUrl.includes('nflmockdraftdatabase.com/players/'),
-      `Invalid or Cloudflare-gated Prospect Profile URL for ${p.name}: ${p.profileUrl}`
+        !p.profileUrl.includes('nflmockdraftdatabase.com/players/') &&
+        !p.profileUrl.includes('espn.com/college-football/player/') &&
+        !p.profileUrl.includes('cbssports.com/college-football/players/') &&
+        (p.profileUrl.startsWith('https://www.nfl.com/prospects/') ||
+          p.profileUrl.startsWith('https://sticktothemodel.com/player/')),
+      `Prospect profile must link to a written Scouting Analysis page (never stat-only ESPN/CBS bio) for ${p.name}: ${p.profileUrl}`
+    );
+  }
+  const live2026Picks = liveSeasonal.draftClass2026?.picks || [];
+  assert.ok(live2026Picks.length >= 8, 'Expected 2026 49ers Draft Class picks');
+  for (const pk of live2026Picks) {
+    assert.ok(
+      typeof pk.nflScoutingUrl === 'string' && pk.nflScoutingUrl.startsWith('https://www.nfl.com/prospects/'),
+      `Expected official NFL.com Zierlein scouting profile URL on 2026 pick ${pk.name}, got ${pk.nflScoutingUrl}`
     );
   }
 });
 
-await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safety', async () => {
-  const { splitTurnIntoSpokenSentences } = await import('../src/workers/neuralTtsWorker.js');
+await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safety', async () => {
+  const { splitTurnIntoSpokenSentences, phonemizeWithPunctuation } = await import(
+    '../src/workers/neuralTtsWorker.js'
+  );
 
-  // 1. Verify neuralTtsWorker never loads 310 MB fp32 WebGPU weights that OOM-kill iOS Safari Workers
+  // 1. Verify neuralTtsWorker uses compact 23 MB kitten-tts-nano WASM q8 (never 310 MB fp32 WebGPU or 88 MB Kokoro-82M)
   const workerSrc = fs.readFileSync(path.join(rootDir, 'src', 'workers', 'neuralTtsWorker.js'), 'utf8');
   assert.ok(workerSrc.includes("device: 'wasm'") && workerSrc.includes("dtype: 'q8'"), 'Must use quantized WASM q8');
   assert.ok(
-    !workerSrc.includes("loadWithBackend('webgpu'") && !workerSrc.includes("'fp32'"),
-    'Must never attempt 310 MB fp32 WebGPU load inside mobile WebKit Worker'
+    workerSrc.includes('onnx-community/kitten-tts-nano-0.1-ONNX') &&
+      workerSrc.includes('expr-voice-2-m') &&
+      workerSrc.includes('expr-voice-2-f') &&
+      workerSrc.includes("type: 'lead_ready'"),
+    'Must use compact expressive dual-host StyleTTS2 with progressive lead_ready fast-start'
   );
+  assert.ok(
+    !workerSrc.includes("loadWithBackend('webgpu'") &&
+      !workerSrc.includes("'fp32'") &&
+      !workerSrc.includes('Kokoro-82M'),
+    'Must never attempt 310 MB fp32 WebGPU load or slow 88 MB Kokoro-82M WASM synthesis'
+  );
+  assert.equal(typeof phonemizeWithPunctuation, 'function', 'Must export punctuation-preserving IPA phonemizer');
 
   // 2. Verify sentence-level micro-chunking keeps ONNX passes compact while preserving short latches
   const longTurn =
@@ -6656,8 +6675,8 @@ await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safe
       episodeId: sharedEp.id,
       startedAtMs: Date.now() - 4000,
       percent: 44,
-      message: 'Caching studio voice weights (44% • 39 / 88 MB — 1-time download)…',
-      subDetail: 'No API key required — caching stereo audio directly on this device.'
+      message: 'Recording shared podcast with Gemini NotebookLM voices (Puck & Aoede)…',
+      subDetail: 'Preparing smooth human multi-speaker studio audio (~20–30 sec).'
     },
     allEpisodes: [sharedEp]
   });
@@ -6692,7 +6711,7 @@ await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safe
       episodeId: sharedEp.id,
       startedAtMs: Date.now() - 6000,
       percent: 68,
-      message: 'Synthesizing studio voices — Turn 2 of 2 (Elena)…'
+      message: 'Recording shared podcast with Gemini NotebookLM voices (Puck & Aoede)…'
     },
     allEpisodes: [sharedEp]
   });
@@ -6705,7 +6724,7 @@ await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safe
     sharedAudioPrep: {
       active: false,
       episodeId: sharedEp.id,
-      error: 'Network connection interrupted while caching voice weights.'
+      error: 'Network connection interrupted while preparing studio voices.'
     },
     allEpisodes: [sharedEp]
   });
@@ -6715,16 +6734,91 @@ await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safe
     'Shared audio error state must expose both Retry Studio Audio and Listen Now (Device Voice) recovery actions'
   );
 
-  // 5. Verify keyless synthesizeMissingEpisodeAudio resolves in <25ms (zero 88 MB WASM download bottleneck)
+  // 5. Verify human-voice share relay (masked vk in #shared-pod fragment) + zero robotic speech auto-bypass
   const { synthesizeMissingEpisodeAudio } = await import('../src/services/aiWorkerClient.js');
-  const { shareAudioFileNatively } = await import('../src/services/shareService.js');
-  const keylessEp = { ...sharedEp, id: 'custom_ep_keyless_instant_test' };
-  const t0 = Date.now();
-  const keylessUrl = await synthesizeMissingEpisodeAudio(keylessEp, null, { geminiApiKey: '' });
-  const keylessElapsedMs = Date.now() - t0;
-  assert.equal(keylessUrl, null, 'Keyless shared episode must skip heavy local WASM synthesis');
-  assert.equal(keylessEp.useInstantSpeech, true, 'Keyless shared episode must arm instant dual-host speech');
-  assert.ok(keylessElapsedMs < 50, `Expected <50ms instant keyless resolution, took ${keylessElapsedMs}ms`);
+  const {
+    buildShareablePodcastUrl,
+    extractIncomingSharedRoute,
+    shareAudioFileNatively
+  } = await import('../src/services/shareService.js');
+
+  const senderKey = 'AIzaTestRelayStudioKey999';
+  const shareHref = await buildShareablePodcastUrl(
+    sharedEp,
+    new URL('https://49ers.joshal.com/'),
+    { geminiApiKey: senderKey }
+  );
+  assert.ok(shareHref.includes('#shared-pod=z.'), 'Must deflate shared podcast payload into #shared-pod fragment');
+  assert.ok(!shareHref.includes(senderKey), 'Raw Gemini API key must never appear unmasked in shared URL');
+
+  const incoming = await extractIncomingSharedRoute(new URL(shareHref));
+  assert.equal(incoming?.type, 'podcast');
+  assert.equal(incoming?.episode?.isSharedImport, true);
+  assert.equal(
+    incoming?.episode?._sharedVoiceKey,
+    senderKey,
+    'Incoming shared route must restore masked voice relay token in memory for smooth NotebookLM voices'
+  );
+
+  // Simulate keyless recipient browser calling synthesizeMissingEpisodeAudio -> hits Gemini NotebookLM TTS (Puck & Aoede)
+  const origFetch = globalThis.fetch;
+  let capturedTtsBody = null;
+  try {
+    globalThis.fetch = async (url, init) => {
+      const u = String(url);
+      if (u.includes('/models?')) {
+        return new Response(
+          JSON.stringify({
+            models: [{ name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] }]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      capturedTtsBody = init?.body ? JSON.parse(init.body) : null;
+      const pcmBytes = new Uint8Array(4800);
+      pcmBytes[10] = 0x18;
+      pcmBytes[11] = 0x04;
+      const b64 = Buffer.from(pcmBytes).toString('base64');
+      return new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              content: {
+                parts: [{ inlineData: { mimeType: 'audio/L16;rate=24000', data: b64 } }]
+              }
+            }
+          ]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    };
+
+    const recipientEp = { ...incoming.episode, id: 'custom_ep_recipient_human_voice' };
+    const studioWavUrl = await synthesizeMissingEpisodeAudio(recipientEp, null, {
+      geminiApiKey: '',
+      geminiApiBaseUrl: 'https://mock-relay-tts.local/v1beta'
+    });
+    assert.ok(
+      typeof studioWavUrl === 'string' && (studioWavUrl.startsWith('blob:') || studioWavUrl.startsWith('data:audio/wav')),
+      `Expected real NotebookLM Stereo WAV URL for keyless recipient, got ${studioWavUrl}`
+    );
+    assert.equal(Boolean(recipientEp.useInstantSpeech), false, 'Must NEVER auto-downgrade shared podcast to robotic OS speech');
+    const voiceNames = (
+      capturedTtsBody?.generationConfig?.speechConfig?.multiSpeakerVoiceConfig?.speakerVoiceConfigs || []
+    ).map(v => v?.voiceConfig?.prebuiltVoiceConfig?.voiceName);
+    assert.deepEqual(voiceNames, ['Puck', 'Aoede'], 'Recipient must hear exact same Puck & Aoede NotebookLM voices as creator');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+
+  // Legacy link without vk also synthesizes real WAV (never robotic useInstantSpeech)
+  const legacyKeylessEp = { ...sharedEp, id: 'custom_ep_legacy_keyless_wav' };
+  const legacyWavUrl = await synthesizeMissingEpisodeAudio(legacyKeylessEp, null, { geminiApiKey: '' });
+  assert.ok(
+    typeof legacyWavUrl === 'string' && (legacyWavUrl.startsWith('blob:') || legacyWavUrl.startsWith('data:audio/wav')),
+    'Legacy keyless shared episode must produce human WAV audio rather than null/robotic speech'
+  );
+  assert.equal(Boolean(legacyKeylessEp.useInstantSpeech), false);
 
   // 6. Verify native MP3 File sharing via navigator.share({ files })
   if (typeof File === 'function') {

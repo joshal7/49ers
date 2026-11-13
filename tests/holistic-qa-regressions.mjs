@@ -2219,6 +2219,66 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
   assert.ok(!draftHtml.includes('id="combineSearchInput"'), 'Blank Combine Leaderboard must not render stale search input/table');
   assert.ok(draftHtml.includes('data-mock-freshness-badge="30d"'), 'In-season Consensus Mock Draft card must display 30d freshness badge');
   assert.ok(draftHtml.includes('data-mock-site-link='), 'Consensus Mock Draft card must render clickable projecting site links');
+  assert.ok(
+    !draftHtml.includes('espn.com/college-football/player/') &&
+      !draftHtml.includes('cbssports.com/college-football/players/') &&
+      !draftHtml.includes('>CBS Profile<') &&
+      !draftHtml.includes('>ESPN Profile<'),
+    'Draft view must never render stat-only ESPN/CBS college bio links'
+  );
+  assert.ok(
+    draftHtml.includes('https://sticktothemodel.com/player/jeremiah-smith') &&
+      draftHtml.includes('>Scouting Report<') &&
+      draftHtml.includes('https://www.nfl.com/draft/tracker/2027/prospects'),
+    'Draft view must render written Scouting Report + Official NFL Draft Tracker links'
+  );
+
+  // Verify automatic promotion to "NFL Scouting Profile" as soon as nflScoutingUrl is published on NFL.com
+  const withNflScoutingUrlHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'draft_prep',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: {
+      meta: { ...metaJson, now: '2027-02-20T18:00:00Z' },
+      roster: { players: [] },
+      scheduleMatchup: smJson,
+      seasonal: {
+        ...seasonalJson,
+        draftPrep2027: {
+          ...seasonalJson.draftPrep2027,
+          consensusBigBoard: seasonalJson.draftPrep2027.consensusBigBoard.map((p, idx) =>
+            idx === 0
+              ? {
+                  ...p,
+                  nflScoutingUrl: 'https://www.nfl.com/prospects/jeremiah-smith/3200534d-4900-0001-aaaa-bbbbccccdddd'
+                }
+              : p
+          )
+        }
+      }
+    }
+  });
+  assert.ok(
+    withNflScoutingUrlHtml.includes('https://www.nfl.com/prospects/jeremiah-smith/3200534d-4900-0001-aaaa-bbbbccccdddd') &&
+      withNflScoutingUrlHtml.includes('>NFL Scouting Profile<'),
+    'Once NFL.com publishes Zierlein prospect profiles, Big Board must promote NFL Scouting Profile as primary link'
+  );
+
+  // Verify 2026 Draft Recap renders direct Lance Zierlein NFL.com Scouting Profile links on all 8 picks
+  const draftRecapHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'draft_class',
+    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+    appData: {
+      meta: metaJson,
+      roster: { players: [] },
+      scheduleMatchup: smJson,
+      seasonal: seasonalJson
+    }
+  });
+  assert.ok(
+    draftRecapHtml.includes('https://www.nfl.com/prospects/dezhaun-stribling/32005354-5233-6088-e514-5b10403eaf1e') &&
+      draftRecapHtml.includes('NFL Scouting'),
+    '2026 Draft Recap must link directly to official NFL.com Zierlein Scouting Profiles'
+  );
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

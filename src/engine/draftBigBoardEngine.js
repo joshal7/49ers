@@ -182,6 +182,15 @@ export function formatShortBoardDate(isoOrYmd = '') {
   });
 }
 
+function isStatsOnlyCollegeBioUrl(url = '') {
+  const u = String(url || '').toLowerCase();
+  return (
+    u.includes('espn.com/college-football/player/') ||
+    u.includes('cbssports.com/college-football/players/') ||
+    u.includes('tankathon.com/nfl/players/')
+  );
+}
+
 /**
  * Normalizes a raw prospect record (either v2 3-lens schema or legacy v1 schema)
  * into a guaranteed, deterministic prospect object with `NR` (`null`) safety.
@@ -226,17 +235,24 @@ export function normalizeBigBoardProspect(raw, index = 0, draftYear = 2027) {
   const defaultUpdated = String(rawBoards.consensus?.updated_at || raw.updatedAt || `${dy - 1}-11-12`);
   const mockDbUrl =
     sanitizeExternalUrl(raw.mockDbUrl, null) || buildMockDraftBigBoardUrl(dy);
-  const fallbackSearchUrl = `https://www.sports-reference.com/cfb/search/search.fcgi?search=${encodeURIComponent(name)}`;
-  const profileUrl =
-    sanitizeExternalUrl(raw.espnUrl, null) ||
-    sanitizeExternalUrl(raw.profileUrl, null) ||
-    sanitizeExternalUrl(raw.tankathonUrl, null) ||
-    sanitizeExternalUrl(raw.cbsUrl, null) ||
-    fallbackSearchUrl;
+  const nflScoutingUrl = sanitizeExternalUrl(raw.nflScoutingUrl, null);
+  const rawScoutingUrl = sanitizeExternalUrl(raw.scoutingReportUrl, null);
+  const rawProfileUrl = sanitizeExternalUrl(raw.profileUrl, null);
+  const nonStatProfileUrl = rawProfileUrl && !isStatsOnlyCollegeBioUrl(rawProfileUrl) ? rawProfileUrl : null;
+  const sttmFallbackSlug = slug === 'ryan-coleman-williams' ? 'ryan-williams-alabama' : slug;
+  const fallbackScoutingUrl =
+    dy === 2027
+      ? `https://sticktothemodel.com/player/${sttmFallbackSlug}`
+      : `https://www.nfl.com/draft/tracker/${dy}/prospects`;
+  const scoutingReportUrl =
+    nflScoutingUrl || rawScoutingUrl || nonStatProfileUrl || fallbackScoutingUrl;
+  const profileUrl = scoutingReportUrl;
+  const nflDraftTrackerUrl = `https://www.nfl.com/draft/tracker/${dy}/prospects`;
 
   return {
     ...raw,
     id: String(raw.id || `${slug}-${dy}`),
+    draftYear: dy,
     slug,
     name,
     playerKey: normalizePlayerKey(name),
@@ -265,6 +281,9 @@ export function normalizeBigBoardProspect(raw, index = 0, draftYear = 2027) {
         updated_at: String(rawBoards.pff?.updated_at || rawBoards.alt?.updated_at || defaultUpdated)
       }
     },
+    nflScoutingUrl,
+    scoutingReportUrl,
+    nflDraftTrackerUrl,
     profileUrl,
     mockDbUrl,
     buzzUrl:

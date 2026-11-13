@@ -2186,9 +2186,17 @@ function formatBoardRankLabelForMock(p, activeLens = 'consensus') {
 }
 
 function renderMockDbPlayerCardHtml(p, activeLens = 'consensus') {
-  const safeProf = sanitizeExternalUrl(p.profileUrl, null) || sanitizeExternalUrl(p.mockDbUrl, null);
+  const safeNflScouting = sanitizeExternalUrl(p.nflScoutingUrl, null);
+  const safeScouting =
+    safeNflScouting ||
+    sanitizeExternalUrl(p.scoutingReportUrl || p.profileUrl, null) ||
+    sanitizeExternalUrl(p.mockDbUrl, null);
   const safeMockDb = sanitizeExternalUrl(p.mockDbUrl, null);
-  const safeTk = sanitizeExternalUrl(p.tankathonUrl, null);
+  const safeNflTracker = sanitizeExternalUrl(
+    p.nflDraftTrackerUrl || `https://www.nfl.com/draft/tracker/${p.draftYear || 2027}/prospects`,
+    null
+  );
+  const scoutingChipLabel = safeNflScouting ? 'NFL Scouting Profile' : 'Scouting Report';
   const siteCountBadgeCls =
     p.siteCount >= 3 ? 'badge-positive' : p.siteCount === 2 ? 'badge-gold' : 'badge-neutral';
   const barWidth = Math.max(8, Math.min(100, Number(p.sharePct || 0)));
@@ -2207,8 +2215,8 @@ function renderMockDbPlayerCardHtml(p, activeLens = 'consensus') {
           <div class="mock-db-name-wrap">
             <div class="mock-db-name-line">
               ${
-                safeProf
-                  ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="ext-link mock-db-player-link"><strong>${esc(p.playerName)}</strong> ${iconSvg('externalLink', 9)}</a>`
+                safeScouting
+                  ? `<a href="${esc(safeScouting)}" target="_blank" rel="noopener noreferrer" class="ext-link mock-db-player-link" title="Open ${esc(p.playerName)} Scouting Analysis"><strong>${esc(p.playerName)}</strong> ${iconSvg('externalLink', 9)}</a>`
                   : `<strong>${esc(p.playerName)}</strong>`
               }
               <span class="mock-db-pos-school"><strong style="color:var(--gold-bright)">${esc(p.pos)}</strong> • ${esc(p.school)}${
@@ -2282,17 +2290,17 @@ function renderMockDbPlayerCardHtml(p, activeLens = 'consensus') {
           </div>
           <div class="source-link-strip" style="margin-top:4px">
             ${
-              safeProf
-                ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Scouting Profile</span>${iconSvg('externalLink', 9)}</a>`
+              safeScouting
+                ? `<a href="${esc(safeScouting)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(scoutingChipLabel)}</span>${iconSvg('externalLink', 9)}</a>`
                 : ''
             }
             ${
-              safeTk && safeTk !== safeProf
-                ? `<a href="${esc(safeTk)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Tankathon Tape</span>${iconSvg('externalLink', 9)}</a>`
+              !safeNflScouting && safeNflTracker && safeNflTracker !== safeScouting
+                ? `<a href="${esc(safeNflTracker)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Draft Tracker</span>${iconSvg('externalLink', 9)}</a>`
                 : ''
             }
             ${
-              safeMockDb && safeMockDb !== safeProf
+              safeMockDb && safeMockDb !== safeScouting
                 ? `<a href="${esc(safeMockDb)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock Draft DB</span>${iconSvg('externalLink', 9)}</a>`
                 : ''
             }
@@ -2355,18 +2363,28 @@ function renderBigBoardProspectItemHtml(
   const mobileSpreadTxt =
     spreadVal === null ? '—' : spreadVal === 0 ? 'Δ0' : `Δ${spreadVal}`;
 
+  const dy = Number(b.draftYear) || 2027;
   const br = b.boardRanks || {};
   const boardChips = [
-    br.espn ? { lbl: `ESPN #${br.espn}`, url: sanitizeExternalUrl(b.espnUrl || 'https://www.espn.com/nfl/draft/bestavailable', null) } : null,
-    br.cbs ? { lbl: `CBS #${br.cbs}`, url: sanitizeExternalUrl(b.cbsUrl || 'https://www.cbssports.com/nfl/draft/prospect-rankings/', null) } : null,
-    br.tankathon ? { lbl: `Tankathon #${br.tankathon}`, url: sanitizeExternalUrl(b.tankathonUrl || 'https://www.tankathon.com/nfl/big_board', null) } : null,
-    br.drafttek ? { lbl: `DraftTek #${br.drafttek}`, url: null } : null
+    br.espn ? { lbl: `ESPN #${br.espn}`, url: 'https://www.espn.com/nfl/draft/bestavailable' } : null,
+    br.cbs ? { lbl: `CBS #${br.cbs}`, url: 'https://www.cbssports.com/nfl/draft/prospect-rankings/' } : null,
+    br.tankathon ? { lbl: `Tankathon #${br.tankathon}`, url: 'https://www.tankathon.com/nfl/big_board' } : null,
+    br.drafttek
+      ? {
+          lbl: `DraftTek #${br.drafttek}`,
+          url: `https://www.drafttek.com/${dy}-NFL-Draft-Big-Board/Top-NFL-Draft-Prospects-${dy}-Page-1.asp`
+        }
+      : null
   ].filter(Boolean);
 
-  const safeTk = sanitizeExternalUrl(b.tankathonUrl, null);
-  const safeEspn = sanitizeExternalUrl(b.espnUrl, null);
-  const safeCbs = sanitizeExternalUrl(b.cbsUrl, null);
-  const safeProf = safeEspn || sanitizeExternalUrl(b.profileUrl, null) || safeTk || safeCbs;
+  const safeNflScouting = sanitizeExternalUrl(b.nflScoutingUrl, null);
+  const safeScouting =
+    safeNflScouting || sanitizeExternalUrl(b.scoutingReportUrl || b.profileUrl, null);
+  const scoutingChipLabel = safeNflScouting ? 'NFL Scouting Profile' : 'Scouting Report';
+  const safeNflTracker = sanitizeExternalUrl(
+    b.nflDraftTrackerUrl || `https://www.nfl.com/draft/tracker/${dy}/prospects`,
+    null
+  );
   const safeMockDb = sanitizeExternalUrl(b.mockDbUrl, null);
   const safeBuzzUrl = sanitizeExternalUrl(b.buzzUrl, 'https://grindingthemocks.com/');
   const safePffUrl = sanitizeExternalUrl(b.pffUrl, 'https://www.pff.com/draft/big-board');
@@ -2491,22 +2509,17 @@ function renderBigBoardProspectItemHtml(
         ${b.archetypeNote ? `<div style="font-size:12px;color:var(--text-secondary)">${escJargon(b.archetypeNote)}</div>` : ''}
         <div class="source-link-strip">
           ${
-            safeProf
-              ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Prospect Profile</span>${iconSvg('externalLink', 9)}</a>`
+            safeScouting
+              ? `<a href="${esc(safeScouting)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" title="Scouting Overview, Strengths, Weaknesses &amp; Pro Comps"><span>${esc(scoutingChipLabel)}</span>${iconSvg('externalLink', 9)}</a>`
               : ''
           }
           ${
-            safeTk && safeTk !== safeProf
-              ? `<a href="${esc(safeTk)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Draft Scouting</span>${iconSvg('externalLink', 9)}</a>`
+            !safeNflScouting && safeNflTracker && safeNflTracker !== safeScouting
+              ? `<a href="${esc(safeNflTracker)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" title="Official NFL.com Draft Prospect Tracker"><span>NFL Draft Tracker</span>${iconSvg('externalLink', 9)}</a>`
               : ''
           }
           ${
-            safeCbs && safeCbs !== safeProf
-              ? `<a href="${esc(safeCbs)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>CBS Profile</span>${iconSvg('externalLink', 9)}</a>`
-              : ''
-          }
-          ${
-            safeMockDb && safeMockDb !== safeProf
+            safeMockDb && safeMockDb !== safeScouting
               ? `<a href="${esc(safeMockDb)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Mock Draft DB</span>${iconSvg('externalLink', 9)}</a>`
               : ''
           }
@@ -3146,7 +3159,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
   `;
 }
 
-function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet) {
+function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet = new Set()) {
   const dc = appData?.seasonal?.draftClass2026 || {};
   const draftYear = Number(dc.draftYear) || Number(appData?.meta?.seasonYear) || 2026;
   const pfrDraftUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl('SF', draftYear);
@@ -3194,6 +3207,11 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                           : `<strong style="font-size:14.5px;margin-left:5px">${esc(pk.name)}</strong>`
                       }
                       <span style="color:var(--gold-bright);font-weight:700"> ${esc(pk.position)} • ${esc(pk.college)}</span>
+                      ${
+                        sanitizeExternalUrl(pk.nflScoutingUrl, null)
+                          ? `<a href="${esc(sanitizeExternalUrl(pk.nflScoutingUrl))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:6px" title="Lance Zierlein NFL.com Scouting Profile">NFL Scouting ${iconSvg('externalLink', 10)}</a>`
+                          : ''
+                      }
                       ${
                         pk.pfrUrl
                           ? `<a href="${esc(pk.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px;margin-left:6px">PFR ${iconSvg('externalLink', 10)}</a>`

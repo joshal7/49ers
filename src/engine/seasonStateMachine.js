@@ -1508,8 +1508,17 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
 
     if (!groupsByPlayer.has(pKey)) {
       const slug = slugifyPlayerName(pName);
+      const sttmSlug = slug === 'ryan-coleman-williams' ? 'ryan-williams-alabama' : slug;
+      const nflScoutingUrl = sanitizeExternalUrl(raw.nflScoutingUrl || boardHit?.nflScoutingUrl || '', null);
+      const scoutingReportUrl =
+        nflScoutingUrl ||
+        sanitizeExternalUrl(raw.scoutingReportUrl || boardHit?.scoutingReportUrl || boardHit?.profileUrl || '', null) ||
+        (draftYear === 2027
+          ? `https://sticktothemodel.com/player/${sttmSlug}`
+          : `https://www.nfl.com/draft/tracker/${draftYear}/prospects`);
       groupsByPlayer.set(pKey, {
         playerKey: pKey,
+        draftYear,
         playerName: boardHit?.name || pName,
         pos: raw.pos || boardHit?.pos || 'ATH',
         posRank: boardHit?.posRank || '',
@@ -1527,19 +1536,11 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
             : boardHit?.boards?.consensus?.rank ?? boardHit?.consensusRank ?? raw.bigBoardRank ?? null,
         shanahanLynchFitScore: raw.shanahanLynchFitScore ?? boardHit?.shanahanLynchFitScore ?? null,
         archetypeTraits: raw.archetypeTraits || boardHit?.archetypeNote || '',
-        profileUrl:
-          sanitizeExternalUrl(
-            raw.profileUrl ||
-              boardHit?.espnUrl ||
-              boardHit?.profileUrl ||
-              boardHit?.tankathonUrl ||
-              boardHit?.cbsUrl ||
-              '',
-            null
-          ) || `https://www.sports-reference.com/cfb/search/search.fcgi?search=${encodeURIComponent(pName)}`,
+        nflScoutingUrl,
+        scoutingReportUrl,
+        nflDraftTrackerUrl: `https://www.nfl.com/draft/tracker/${draftYear}/prospects`,
+        profileUrl: scoutingReportUrl,
         mockDbUrl: buildMockDraftBigBoardUrl(draftYear),
-        tankathonUrl: sanitizeExternalUrl(boardHit?.tankathonUrl || '', null),
-        espnUrl: sanitizeExternalUrl(boardHit?.espnUrl || '', null),
         latestPublishedMs: pubMs,
         sites: []
       });

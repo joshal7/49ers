@@ -11,7 +11,7 @@ import {
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
 } from './engine/breakingClassifier.js?v=49';
-import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=53';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=56';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
@@ -37,7 +37,7 @@ import {
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=55';
+} from './services/aiWorkerClient.js?v=56';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -48,7 +48,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=55';
+} from './services/shareService.js?v=56';
 
 import {
   esc,
@@ -60,14 +60,14 @@ import {
   registerRosterPlayersForInlineLinks
 } from './views/uiHelpers.js?v=50';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
-import { sanitizeExternalUrl } from './engine/linkIntegrity.js?v=54';
+import { sanitizeExternalUrl } from './engine/linkIntegrity.js?v=56';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
   buildBigBoardUrlSearch,
   normalizeBigBoardLens,
   normalizeBigBoardSort
-} from './engine/draftBigBoardEngine.js?v=54';
+} from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
 import { renderHomeDashboardHtml } from './views/homeView.js?v=50';
@@ -77,8 +77,8 @@ import {
 } from './views/newsView.js?v=55';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=54';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=55';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=56';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=56';
 import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=48';
 
 const state = {
@@ -159,6 +159,7 @@ const state = {
 };
 
 let audioController = null;
+const inMemorySharedVoiceKeys = new Map();
 let cachedMonteCarloKey = '';
 let cachedMonteCarloResult = null;
 let activeJargonAnchor = null;
@@ -1702,7 +1703,10 @@ function bindEvents() {
           getAllEpisodes().find(x => x.id === epId) ||
           (state.audioState?.episode?.id === epId ? state.audioState.episode : null);
         if (ep) {
-          const shareUrl = await buildShareablePodcastUrl(ep, window.location);
+          if (!ep._sharedVoiceKey && inMemorySharedVoiceKeys.has(ep.id)) {
+            ep._sharedVoiceKey = inMemorySharedVoiceKeys.get(ep.id);
+          }
+          const shareUrl = await buildShareablePodcastUrl(ep, window.location, state.prefs);
           window.__lastSharedUrl = shareUrl;
           const shareRes = await shareItemNatively({
             title: `49ers Faithful Podcast: ${ep.title}`,
@@ -1877,6 +1881,7 @@ function bindEvents() {
             ep => ep.id !== epId
           );
           state.expandedTranscriptIds.delete(epId);
+          inMemorySharedVoiceKeys.delete(epId);
           if (state.sharedAudioPrep?.episodeId === epId) {
             state.sharedAudioPrep = null;
           }
@@ -2550,15 +2555,23 @@ async function handleIncomingSharedLink(locationLike = window.location) {
       );
     }
 
+    if (sharedRoute.episode?._sharedVoiceKey && sharedRoute.id) {
+      inMemorySharedVoiceKeys.set(sharedRoute.id, sharedRoute.episode._sharedVoiceKey);
+    }
+
     let targetEp = getAllEpisodes().find(ep => ep.id === sharedRoute.id) || null;
     if (!targetEp && sharedRoute.episode) {
       targetEp = sharedRoute.episode;
+      const { _sharedVoiceKey: _omitRelay, ...persistableSharedEp } = targetEp;
       state.prefs.localCustomEpisodes = [
-        targetEp,
+        persistableSharedEp,
         ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== targetEp.id)
       ].slice(0, 20);
     } else if (targetEp && sharedRoute.episode?.isSharedImport) {
       targetEp.isSharedImport = true;
+      if (sharedRoute.episode._sharedVoiceKey) {
+        targetEp._sharedVoiceKey = sharedRoute.episode._sharedVoiceKey;
+      }
     }
     saveUserPrefs(state.prefs);
 
@@ -2810,17 +2823,19 @@ async function init() {
   state.podFormat = state.prefs?.podFormat === 'solo' ? 'solo' : 'two_host';
   state.podDurationMin = Math.max(2, Math.min(20, Number(state.prefs?.defaultPodDurationMin || 3)));
   audioController = new PodcastAudioController(renderMiniPlayer, {
-    canSynthesizeCloudStudioAudio: () => Boolean(String(state.prefs?.geminiApiKey || '').trim()),
     onSynthesizeMissingAudio: async ep => {
+      if (ep?.id && !ep._sharedVoiceKey && inMemorySharedVoiceKeys.has(ep.id)) {
+        ep._sharedVoiceKey = inMemorySharedVoiceKeys.get(ep.id);
+      }
       const startedAtMs = Date.now();
       state.sharedAudioPrep = {
         active: true,
         episodeId: ep.id,
         startedAtMs,
-        percent: 24,
-        message: 'Buffering opening studio audio (~2 sec)…',
+        percent: 12,
+        message: 'Preparing smooth human studio voices (~20–30 sec)…',
         subDetail:
-          'Streaming opening turns first while remaining segments buffer in the background.',
+          'Tap "Play When Ready" below to start automatically when ready, or tap "Show Transcript" to read now.',
         error: ''
       };
       const elapsedTicker = setInterval(() => {
@@ -2837,8 +2852,8 @@ async function init() {
           ep,
           p => {
             const pct = Math.max(
-              state.sharedAudioPrep?.percent || 24,
-              Math.min(99, Math.round(Number(p.subPercent ?? p.percent ?? 35)))
+              state.sharedAudioPrep?.percent || 12,
+              Math.min(99, Math.round(Number(p.subPercent ?? p.percent ?? 22)))
             );
             state.sharedAudioPrep = {
               ...state.sharedAudioPrep,
@@ -2846,7 +2861,7 @@ async function init() {
               episodeId: ep.id,
               startedAtMs,
               percent: pct,
-              message: p.message || state.sharedAudioPrep?.message || 'Buffering opening studio audio…',
+              message: p.message || state.sharedAudioPrep?.message || 'Preparing smooth human studio voices…',
               subDetail: p.subDetail || state.sharedAudioPrep?.subDetail || '',
               error: ''
             };
@@ -2866,9 +2881,18 @@ async function init() {
         );
         state.sharedAudioPrep = null;
         return renderedUrl;
-      } catch {
-        state.sharedAudioPrep = null;
-        ep.useInstantSpeech = true;
+      } catch (err) {
+        state.sharedAudioPrep = {
+          active: false,
+          episodeId: ep.id,
+          startedAtMs,
+          percent: 0,
+          message: '',
+          subDetail: '',
+          error:
+            err?.message ||
+            'Unable to prepare studio audio right now. Tap Retry Studio Audio or Listen Now (Device Voice).'
+        };
         return null;
       } finally {
         clearInterval(elapsedTicker);
@@ -2953,7 +2977,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=63', { updateViaCache: 'none' })
+        .register('./sw.js?v=67', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

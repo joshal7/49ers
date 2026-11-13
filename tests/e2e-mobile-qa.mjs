@@ -1809,16 +1809,20 @@ async function main() {
       });
       assert(mcInteractive.hasClearBtn && mcInteractive.cleared, 'Playoff Monte Carlo override toggle/clear failed');
 
-      // Test 2026 Draft Class inline Spider Chart expand/collapse
+      // Test 2026 Draft Class inline Spider Chart expand/collapse + official NFL.com Scouting Profile links
       const draftSpiderOk = await cdp.eval(() => {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_class"]').click();
         document.querySelector('[data-action="toggle-draft-spider"][data-draft-idx="0"]').click();
         const hasSvg = Boolean(document.querySelector('#mainView svg.spider-svg'));
+        const nflScoutingCount = document.querySelectorAll('#mainView a[href^="https://www.nfl.com/prospects/"]').length;
         document.querySelector('[data-action="toggle-draft-spider"][data-draft-idx="0"]').click();
         const hiddenAfter = !document.querySelector('#mainView svg.spider-svg');
-        return { hasSvg, hiddenAfter };
+        return { hasSvg, hiddenAfter, nflScoutingCount };
       });
-      assert(draftSpiderOk.hasSvg && draftSpiderOk.hiddenAfter, '2026 Draft Pick spider chart toggle failed');
+      assert(
+        draftSpiderOk.hasSvg && draftSpiderOk.hiddenAfter && draftSpiderOk.nflScoutingCount >= 8,
+        `2026 Draft Pick spider chart / NFL Scouting links failed: ${JSON.stringify(draftSpiderOk)}`
+      );
 
       // Test 2027 Draft Section: 1st-Pick Mock Draft DB, Consensus Big Board above Combine, and Blank Combine Window
       const draftAudit = await cdp.eval(() => {
@@ -1915,6 +1919,18 @@ async function main() {
         const expandedCount = document.querySelectorAll('#consensusBigBoardCard [data-big-board-rank]').length;
         const firstBoardItem = document.querySelector('#consensusBigBoardCard details.big-board-item');
         if (firstBoardItem) firstBoardItem.open = true;
+        const allDraftHrefs = Array.from(document.querySelectorAll('#mainView a[href]')).map(
+          a => a.getAttribute('href') || ''
+        );
+        const hasStatOnlyCollegeBioLink = allDraftHrefs.some(
+          h => h.includes('espn.com/college-football/player/') || h.includes('cbssports.com/college-football/players/')
+        );
+        const firstBoardDetailLinks = Array.from(
+          firstBoardItem?.querySelectorAll('.source-link-strip a[href]') || []
+        ).map(a => a.getAttribute('href') || '');
+        const hasScoutingAnalysisLink = firstBoardDetailLinks.some(
+          h => h.startsWith('https://www.nfl.com/prospects/') || h.startsWith('https://sticktothemodel.com/player/')
+        );
 
         return {
           ok: true,
@@ -1935,7 +1951,9 @@ async function main() {
           qbMatches,
           dbMatches,
           olMatches,
-          expandedCount
+          expandedCount,
+          hasStatOnlyCollegeBioLink,
+          hasScoutingAnalysisLink
         };
       });
       assert(
@@ -1958,7 +1976,9 @@ async function main() {
           draftAudit.qbMatches >= 5 &&
           draftAudit.dbMatches >= 5 &&
           draftAudit.olMatches >= 3 &&
-          draftAudit.expandedCount >= 30,
+          draftAudit.expandedCount >= 30 &&
+          !draftAudit.hasStatOnlyCollegeBioLink &&
+          draftAudit.hasScoutingAnalysisLink,
         `Draft section audit failed: ${JSON.stringify(draftAudit)}`
       );
       await cdp.assertNoOverflow('Game & Season: Draft Mock DB + 3-Lens Big Board Expanded + Filter Drawer');
@@ -2641,8 +2661,9 @@ async function main() {
           const noConfusingCreateBanner = !document.querySelector('[data-job-progress="active"]');
           const readyHeaderImmediate = (readyCardKeyless?.textContent || '').includes('Shared Podcast Ready to Play');
 
-          // Tap Play Shared Podcast -> must start playing immediately (<100ms) with zero download wait!
+          // Tap Play Shared Podcast -> must start playing immediately with zero blocking spinner!
           readyCardKeyless?.querySelector('[data-action="play-episode"]')?.click();
+          await new Promise(r => setTimeout(r, 150));
           const playingImmediatelyKeyless = Boolean(window.__49ersDiagnostics.getState().audioState?.isPlaying);
           document.getElementById('mpPlayPauseBtn')?.click();
 
@@ -2684,7 +2705,7 @@ async function main() {
           shareRoundTrip.nativeTitle.includes('49ers Faithful Podcast') &&
           shareRoundTrip.loadedTurns >= 10 &&
           shareRoundTrip.isSharedImport &&
-          shareRoundTrip.keylessOpenMs < 400 &&
+          shareRoundTrip.keylessOpenMs < 2500 &&
           shareRoundTrip.heroAboveGenerator &&
           shareRoundTrip.zeroBlockingSpinnerKeyless &&
           shareRoundTrip.noConfusingCreateBanner &&

@@ -449,7 +449,9 @@ export function doesClauseMentionPlayer(
       // Guard 1: Reject immediately if every occurrence of `<CapitalizedWord> <Surname>` in `rawClause`
       // is a DIFFERENT person's first name (e.g., "LT Trent Williams (shoulder)" must NEVER match "Mykel Williams"!)
       const capBeforeMatches = [
-        ...rawClause.matchAll(new RegExp(`\\b([A-Z][A-Za-z.'-]{1,})\\s+${escapeRegexLiteral(rawSurname)}\\b`, 'g'))
+        ...rawClause.matchAll(
+          new RegExp(`\\b((?:[A-Z]\\.){1,3}|[A-Z][A-Za-z'-]*[A-Za-z])\\s+${escapeRegexLiteral(rawSurname)}\\b`, 'g')
+        )
       ];
       if (capBeforeMatches.length > 0) {
         let sawConflictingFirstName = false;

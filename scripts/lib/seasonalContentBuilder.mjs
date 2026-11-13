@@ -2898,7 +2898,9 @@ function getFallback2027ConsensusBigBoard(dy = 2027) {
     posCounts.set(posKey, nextPosIdx);
     const trait = deriveProspectSchemeFit(s.name, s.pos);
     const ranks = [s.espn, s.cbs, s.tk, s.dt];
-    const mockDbUrl = buildMockDraftProspectUrl(dy, s.slug, dy);
+    const mockDbUrl = buildMockDraftBigBoardUrl(dy);
+    const sttmSlug = s.slug === 'ryan-coleman-williams' ? 'ryan-williams-alabama' : s.slug;
+    const scoutingUrl = dy === 2027 ? `https://sticktothemodel.com/player/${sttmSlug}` : mockDbUrl;
     const tkUrl = dy === 2027 ? `https://www.tankathon.com/nfl/players/${s.slug}` : mockDbUrl;
     return {
       consensusRank: idx + 1,
@@ -2921,7 +2923,9 @@ function getFallback2027ConsensusBigBoard(dy = 2027) {
       },
       shanahanLynchFitScore: trait.fit,
       archetypeNote: trait.note,
-      profileUrl: tkUrl,
+      nflScoutingUrl: null,
+      scoutingReportUrl: scoutingUrl,
+      profileUrl: scoutingUrl,
       tankathonUrl: tkUrl,
       mockDbUrl
     };
@@ -3175,7 +3179,10 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     dtMockR2Html,
     dtMockR4Html,
     wfMockHtml,
-    pffPublicMockHtml
+    pffPublicMockHtml,
+    nflTrackerHtml,
+    sttmBbHtml,
+    sttmCfbHtml
   ] = await Promise.all([
     safeFetch('https://www.tankathon.com/nfl/big_board'),
     safeFetch('https://www.espn.com/nfl/draft/bestavailable'),
@@ -3189,12 +3196,17 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     safeFetch(`https://walterfootball.com/draft${dy}_1.php`),
     dy === 2027
       ? safeFetch('https://www.pff.com/news/draft-mock-draft-1-jeremiah-smith-goes-no-1-to-titans-five-qbs-land-in-first-round')
-      : Promise.resolve('')
+      : Promise.resolve(''),
+    safeFetch(`https://www.nfl.com/draft/tracker/${dy}/prospects`),
+    dy === 2027 ? safeFetch('https://sticktothemodel.com/draft/big-board') : Promise.resolve(''),
+    dy === 2027 ? safeFetch('https://sticktothemodel.com/college/players') : Promise.resolve('')
   ]);
 
   const byKey = new Map();
   const upsertProspect = (rawName, patch = {}) => {
-    const cleanName = decodeDraftHtmlEntities(rawName);
+    const rawDecoded = decodeDraftHtmlEntities(rawName);
+    const cleanName =
+      rawDecoded === "Mi'Qui. Humphrey-Grace" ? "Mi'Quise Humphrey-Grace" : rawDecoded;
     const lookupKeys = getPlayerLookupKeys(cleanName);
     const baseKey = lookupKeys[0] || normalizePlayerKey(cleanName);
     if (!baseKey || baseKey.length < 5 || lookupKeys.some(k => DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(k))) return;
@@ -3445,66 +3457,103 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
       .sort((a, b) => a.compositeScore - b.compositeScore)
       .slice(0, 260);
 
-    // Verified ESPN NCAA athlete IDs for nickname/portal/truncated-first-name prospects
-    const VERIFIED_ESPN_CFB_OVERRIDES = new Map([
-      ['taejohnson', 'https://www.espn.com/college-football/player/_/id/5218506/brauntae-johnson'],
-      ['ojfrederique', 'https://www.espn.com/college-football/player/_/id/5226976/romanas-frederique-jr'],
-      ['brendansorsby', 'https://www.espn.com/college-football/player/_/id/4899046/brendan-sorsby'],
-      ['samuelomosigho', 'https://www.espn.com/college-football/player/_/id/4899483/sammy-omosigho'],
-      ['sammyomosigho', 'https://www.espn.com/college-football/player/_/id/4899483/sammy-omosigho'],
-      ['miquihumphreygrace', 'https://www.espn.com/college-football/player/_/id/5088438/miquise-humphrey-grace'],
-      ['miquisehumphreygrace', 'https://www.espn.com/college-football/player/_/id/5088438/miquise-humphrey-grace'],
-      ['ezrachristensen', 'https://www.espn.com/college-football/player/_/id/5151421/ezra-christensen']
-    ]);
-
-    // Resolve REAL verified ESPN NCAA College Football athlete profile URLs via ESPN's public v3 Search API
-    const resolveOneEspnCfbUrl = async p => {
-      const targetKey = normalizePlayerKey(p.name);
-      if (VERIFIED_ESPN_CFB_OVERRIDES.has(targetKey)) {
-        return VERIFIED_ESPN_CFB_OVERRIDES.get(targetKey);
+    // 4d. Harvest Official NFL.com Scouting Profiles (`https://www.nfl.com/prospects/<slug>/<uuid>`)
+    // strictly from `nfl.com/draft/tracker/<draftYear>/prospects` once Lance Zierlein's profiles publish,
+    // cascading to StickToTheModel's full 2027 Scouting Reports (`Overview`, `Strengths`, `Weaknesses`, `Comps`)
+    // while NFL.com's 2027 tracker displays "Prospect Data Not Yet Available".
+    const nflProspectUrlBySlugKey = new Map();
+    if (nflTrackerHtml && !/PROSPECT DATA NOT YET AVAILABLE/i.test(nflTrackerHtml)) {
+      for (const nm of nflTrackerHtml.matchAll(/\/prospects\/([a-z0-9-]+)\/([a-f0-9-]{20,40})/gi)) {
+        const slugClean = nm[1].toLowerCase().replace(/-(?:jr|sr|ii|iii|iv|v)$/, '').replace(/[^a-z0-9]/g, '');
+        if (slugClean && !nflProspectUrlBySlugKey.has(slugClean)) {
+          nflProspectUrlBySlugKey.set(slugClean, `https://www.nfl.com/prospects/${nm[1]}/${nm[2]}`);
+        }
       }
-      const cleanQ = String(p.name || '')
-        .replace(/\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?/gi, '')
-        .replace(/\./g, '')
-        .trim();
-      if (!cleanQ) return '';
-      try {
-        const searchUrl = `https://site.web.api.espn.com/apis/common/v3/search?query=${encodeURIComponent(cleanQ)}&limit=8&type=player`;
-        const res = await fetch(searchUrl, { headers: uaHeaders, signal: AbortSignal.timeout(7000) });
-        if (!res.ok) return '';
-        const json = await res.json();
-        const cfbMatches = (json?.items || []).filter(
-          it =>
-            it?.sport === 'football' &&
-            it?.league === 'college-football' &&
-            normalizePlayerKey(it.displayName || '') === targetKey
-        );
-        if (cfbMatches.length === 0) return '';
-        const schoolLower = String(p.school || '').toLowerCase().trim();
-        const schoolAlias = schoolLower === 'cal' ? 'california' : schoolLower;
-        const hit =
-          cfbMatches.find(it =>
-            (it.teamRelationships || []).some(tr =>
-              String(tr?.displayName || '').toLowerCase().includes(schoolAlias)
-            )
-          ) || cfbMatches[0];
-        const cardHref = hit?.links?.find(
-          l => Array.isArray(l?.rel) && l.rel.includes('playercard') && l.rel.includes('desktop')
-        )?.href;
-        return sanitizeExternalUrl(cardHref || '', null) || '';
-      } catch {
-        return '';
+    }
+
+    const sttmCandidatesByKey = new Map();
+    const registerSttmEntry = (hrefPath, rawLabel, rawMeta = '') => {
+      if (!hrefPath || hrefPath.includes('#')) return;
+      const fullUrl = `https://sticktothemodel.com${hrefPath}`;
+      const cleanLabel = decodeDraftHtmlEntities(rawLabel || '').trim();
+      if (!cleanLabel) return;
+      for (const lk of getPlayerLookupKeys(cleanLabel)) {
+        if (!sttmCandidatesByKey.has(lk)) sttmCandidatesByKey.set(lk, []);
+        const list = sttmCandidatesByKey.get(lk);
+        if (!list.some(x => x.url === fullUrl)) {
+          list.push({ url: fullUrl, meta: decodeDraftHtmlEntities(rawMeta || '').toLowerCase() });
+        }
       }
     };
 
-    const CONCURRENCY = 20;
-    for (let i = 0; i < scored.length; i += CONCURRENCY) {
-      const slice = scored.slice(i, i + CONCURRENCY);
-      const urls = await Promise.all(slice.map(resolveOneEspnCfbUrl));
-      slice.forEach((p, idx) => {
-        if (urls[idx]) p.espnUrl = urls[idx];
-      });
+    if (sttmBbHtml) {
+      for (const sm of sttmBbHtml.matchAll(/href="(\/player\/[a-z0-9-]+)"[^>]*>([\s\S]*?)<\/a>/gi)) {
+        const inner = sm[2];
+        const bName = (inner.match(/<b>([^<]+)<\/b>/i) || [])[1] || inner.replace(/<[^>]+>/g, ' ').trim();
+        const metaTxt = (inner.match(/class="bc-meta"[^>]*>([\s\S]*?)<\/span>/i) || [])[1]?.replace(/<[^>]+>/g, ' ') || '';
+        registerSttmEntry(sm[1], bName, metaTxt);
+      }
     }
+    if (sttmCfbHtml) {
+      for (const cm of sttmCfbHtml.matchAll(
+        /href="(\/player\/[a-z0-9-]+)"[^>]*>([^<]+)<\/a>[\s\S]{0,260}?<span class="tmn">([^<]+)<\/span>/gi
+      )) {
+        registerSttmEntry(cm[1], cm[2], cm[3]);
+      }
+    }
+
+    const VERIFIED_STTM_OVERRIDES = new Map([
+      ['ryancolemanwilliams', 'https://sticktothemodel.com/player/ryan-williams-alabama'],
+      ['samuelomosigho', 'https://sticktothemodel.com/player/samuel-omosigho'],
+      ['sammyomosigho', 'https://sticktothemodel.com/player/samuel-omosigho'],
+      ['miquihumphreygrace', 'https://sticktothemodel.com/player/miquise-humphrey-grace'],
+      ['miquisehumphreygrace', 'https://sticktothemodel.com/player/miquise-humphrey-grace'],
+      ['jabarimack', 'https://sticktothemodel.com/player/jabari-mack-louisiana-state']
+    ]);
+
+    const resolveProspectScoutingUrls = (displayName, school, fallbackSlug) => {
+      const lookupKeys = getPlayerLookupKeys(displayName);
+      let nflScoutingUrl = null;
+      for (const lk of lookupKeys) {
+        if (nflProspectUrlBySlugKey.has(lk)) {
+          nflScoutingUrl = sanitizeExternalUrl(nflProspectUrlBySlugKey.get(lk), null);
+          break;
+        }
+      }
+
+      let sttmUrl = null;
+      for (const lk of lookupKeys) {
+        if (VERIFIED_STTM_OVERRIDES.has(lk)) {
+          sttmUrl = VERIFIED_STTM_OVERRIDES.get(lk);
+          break;
+        }
+      }
+      if (!sttmUrl) {
+        const schoolNorm = String(school || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        for (const lk of lookupKeys) {
+          const cands = sttmCandidatesByKey.get(lk) || [];
+          if (cands.length > 0) {
+            const best =
+              cands.find(
+                c =>
+                  (schoolNorm && c.meta.replace(/[^a-z0-9]/g, '').includes(schoolNorm)) ||
+                  (schoolNorm && c.url.replace(/[^a-z0-9]/g, '').includes(schoolNorm))
+              ) || cands[0];
+            sttmUrl = sanitizeExternalUrl(best.url, null);
+            break;
+          }
+        }
+      }
+      if (!sttmUrl && dy === 2027 && fallbackSlug) {
+        sttmUrl = `https://sticktothemodel.com/player/${fallbackSlug}`;
+      }
+
+      const scoutingReportUrl =
+        nflScoutingUrl ||
+        sttmUrl ||
+        `https://www.nfl.com/draft/tracker/${dy}/prospects`;
+      return { nflScoutingUrl, scoutingReportUrl };
+    };
 
     const posCounts = new Map();
     const bigBoardLandingUrl = buildMockDraftBigBoardUrl(dy);
@@ -3515,15 +3564,12 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
       const posIdx = (posCounts.get(posPrimary) || 0) + 1;
       posCounts.set(posPrimary, posIdx);
       const trait = deriveProspectSchemeFit(displayName, posPrimary);
-      const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
       const safeTankathonUrl = sanitizeExternalUrl(p.tankathonUrl, null);
-      const safeCbsUrl = sanitizeExternalUrl(p.cbsUrl, null);
-      const fallbackCfbRefUrl = `https://www.sports-reference.com/cfb/search/search.fcgi?search=${encodeURIComponent(displayName)}`;
-      const primaryProfileUrl =
-        safeEspnUrl ||
-        safeTankathonUrl ||
-        safeCbsUrl ||
-        fallbackCfbRefUrl;
+      const { nflScoutingUrl, scoutingReportUrl } = resolveProspectScoutingUrls(
+        displayName,
+        p.school,
+        p.slug
+      );
 
       return {
         consensusRank: idx + 1,
@@ -3541,10 +3587,10 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         boardRanks: p.boardRanks,
         shanahanLynchFitScore: trait.fit,
         archetypeNote: trait.note,
-        profileUrl: primaryProfileUrl,
-        espnUrl: safeEspnUrl,
+        nflScoutingUrl,
+        scoutingReportUrl,
+        profileUrl: scoutingReportUrl,
         tankathonUrl: safeTankathonUrl,
-        cbsUrl: safeCbsUrl,
         mockDbUrl: bigBoardLandingUrl
       };
     });
@@ -3706,8 +3752,8 @@ export function buildDraftPrep2027AndCombine(
     }
     const hit = bbByKey.get(normalizePlayerKey(name));
     return (
-      sanitizeExternalUrl(hit?.espnUrl || hit?.profileUrl || hit?.tankathonUrl || hit?.cbsUrl || '', null) ||
-      `https://www.tankathon.com/nfl/players/${slug}`
+      sanitizeExternalUrl(hit?.nflScoutingUrl || hit?.scoutingReportUrl || hit?.profileUrl || '', null) ||
+      `https://sticktothemodel.com/player/${slug}`
     );
   };
   const consUpdated = consensusBigBoard[0]?.boards?.consensus?.updated_at || `${dy - 1}-11-12`;
@@ -3916,6 +3962,33 @@ export async function build2026DraftAndUdfaClass(
     }
   };
 
+  const verifiedNfl2026ScoutingByKey = new Map([
+    ['dezhaunstribling', 'https://www.nfl.com/prospects/dezhaun-stribling/32005354-5233-6088-e514-5b10403eaf1e'],
+    ['romelloheight', 'https://www.nfl.com/prospects/romello-height/32004845-4913-7526-f4d5-2a07d32f4c27'],
+    ['kaelonblack', 'https://www.nfl.com/prospects/kaelon-black/3200424c-4109-7235-2975-c002348bcd9e'],
+    ['gracenhalton', 'https://www.nfl.com/prospects/gracen-halton/32004841-4c77-3343-f24c-4b4e67aafae9'],
+    ['carverwillis', 'https://www.nfl.com/prospects/carver-willis/32005749-4c59-7533-d219-46af4a7076b3'],
+    ['ephesiansprysock', 'https://www.nfl.com/prospects/ephesians-prysock/32005052-5948-5791-8dca-9b324832f06a'],
+    ['jadendugger', 'https://www.nfl.com/prospects/jaden-dugger/32004455-4761-7307-f0d7-9251b783bb59'],
+    ['enriquecruz', 'https://www.nfl.com/prospects/enrique-cruz-jr/32004352-5584-0186-3098-c873145ae2c7'],
+    ['enriquecruzjr', 'https://www.nfl.com/prospects/enrique-cruz-jr/32004352-5584-0186-3098-c873145ae2c7']
+  ]);
+  try {
+    const nflSfRes = await fetch(`https://www.nfl.com/draft/tracker/${dy}/teams/san-francisco-49ers`, {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      signal: AbortSignal.timeout(10000)
+    });
+    if (nflSfRes.ok) {
+      const nflSfHtml = await nflSfRes.text();
+      for (const m of nflSfHtml.matchAll(/\/prospects\/([a-z0-9-]+)\/([a-f0-9-]{20,40})/gi)) {
+        const sk = m[1].toLowerCase().replace(/-(?:jr|sr|ii|iii|iv|v)$/, '').replace(/[^a-z0-9]/g, '');
+        if (sk) verifiedNfl2026ScoutingByKey.set(sk, `https://www.nfl.com/prospects/${m[1]}/${m[2]}`);
+      }
+    }
+  } catch {
+    // Fallback to verified map above if offline
+  }
+
   const draftPicks = [];
   for (const row of sfDraft2026Rows) {
     const name = row.pfr_player_name;
@@ -3946,6 +4019,7 @@ export async function build2026DraftAndUdfaClass(
       url: `https://www.youtube.com/watch?v=${fbVid.videoId}`,
       embeddable: fbCheck.embeddable
     };
+    const nflScoutingUrl = verifiedNfl2026ScoutingByKey.get(normalizePlayerKey(name)) || null;
 
     draftPicks.push({
       season: dy,
@@ -3955,6 +4029,7 @@ export async function build2026DraftAndUdfaClass(
       name,
       playerId: playerMeta?.playerId || '',
       pfrUrl: buildPfrPlayerUrl(row.pfr_player_id) || playerMeta?.pfrUrl || teamDraftFallbackUrl,
+      nflScoutingUrl,
       jersey: playerMeta?.jersey ?? null,
       headshotUrl: playerMeta?.headshotUrl || '',
       position: row.position,
