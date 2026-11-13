@@ -11,7 +11,7 @@ import {
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster
 } from './engine/breakingClassifier.js?v=49';
-import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=57';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=59';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
@@ -37,7 +37,7 @@ import {
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=57';
+} from './services/aiWorkerClient.js?v=59';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -48,7 +48,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=57';
+} from './services/shareService.js?v=59';
 
 import {
   esc,
@@ -2560,28 +2560,36 @@ async function handleIncomingSharedLink(locationLike = window.location) {
     }
 
     let targetEp = getAllEpisodes().find(ep => ep.id === sharedRoute.id) || null;
+    let readyEpisode = null;
     if (!targetEp && sharedRoute.episode) {
       targetEp = sharedRoute.episode;
+      readyEpisode = targetEp;
       const { _sharedVoiceKey: _omitRelay, ...persistableSharedEp } = targetEp;
       state.prefs.localCustomEpisodes = [
         persistableSharedEp,
         ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== targetEp.id)
       ].slice(0, 20);
-    } else if (targetEp && sharedRoute.episode?.isSharedImport) {
-      targetEp.isSharedImport = true;
-      if (sharedRoute.episode._sharedVoiceKey) {
-        targetEp._sharedVoiceKey = sharedRoute.episode._sharedVoiceKey;
-      }
+      saveUserPrefs(state.prefs);
+    } else if (targetEp) {
+      readyEpisode = sharedRoute.episode?.isSharedImport
+        ? {
+            ...targetEp,
+            isSharedImport: true,
+            ...(sharedRoute.episode._sharedVoiceKey
+              ? { _sharedVoiceKey: sharedRoute.episode._sharedVoiceKey }
+              : {})
+          }
+        : targetEp;
+      saveUserPrefs(state.prefs);
     }
-    saveUserPrefs(state.prefs);
 
     renderMain();
-    if (targetEp) {
-      state.expandedTranscriptIds.delete(targetEp.id);
-      if (state.sharedAudioPrep && state.sharedAudioPrep.episodeId !== targetEp.id) {
+    if (readyEpisode) {
+      state.expandedTranscriptIds.delete(readyEpisode.id);
+      if (state.sharedAudioPrep && state.sharedAudioPrep.episodeId !== readyEpisode.id) {
         state.sharedAudioPrep = null;
       }
-      await audioController.loadEpisodeReady(targetEp);
+      await audioController.loadEpisodeReady(readyEpisode);
       renderMain();
     }
     return true;
@@ -2869,15 +2877,7 @@ async function init() {
               renderMain();
             }
           },
-          state.prefs,
-          {
-            onBackgroundFullAudioReady: (updatedEp, fullBlobUrl) => {
-              audioController?.upgradeActiveAudioSource(updatedEp, fullBlobUrl);
-              if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
-                renderMain();
-              }
-            }
-          }
+          state.prefs
         );
         state.sharedAudioPrep = null;
         return renderedUrl;
@@ -2977,7 +2977,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=68', { updateViaCache: 'none' })
+        .register('./sw.js?v=70', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

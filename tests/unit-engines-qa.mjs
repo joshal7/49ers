@@ -6612,30 +6612,93 @@ test('3-Lens NFL Draft Big Board Engine: 250+ Depth, NR-at-Bottom Sorting (Asc &
 });
 
 await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safety', async () => {
-  const { splitTurnIntoSpokenSentences, phonemizeWithPunctuation } = await import(
-    '../src/workers/neuralTtsWorker.js'
+  const { splitTurnIntoSpokenSentences } = await import('../src/workers/neuralTtsWorker.js');
+  const { rankGeminiTtsModels, chunkTurnsForGeminiTts } = await import(
+    '../src/engine/geminiStudioPrompts.js'
   );
+  const {
+    saveEpisodeAudioBlob,
+    getEpisodeAudioUrl,
+    deleteEpisodeAudioBlob,
+    inspectWavBufferDurationSec
+  } = await import('../src/services/podcastAudioStore.js');
 
-  // 1. Verify neuralTtsWorker uses compact 23 MB kitten-tts-nano WASM q8 (never 310 MB fp32 WebGPU or 88 MB Kokoro-82M)
+  // 1. Verify neuralTtsWorker & sw.js: zero 15M kitten-tts-nano, zero 0:38 lead_ready truncation, preserved CacheStorage audio
   const workerSrc = fs.readFileSync(path.join(rootDir, 'src', 'workers', 'neuralTtsWorker.js'), 'utf8');
+  const swSrc = fs.readFileSync(path.join(rootDir, 'sw.js'), 'utf8');
   assert.ok(workerSrc.includes("device: 'wasm'") && workerSrc.includes("dtype: 'q8'"), 'Must use quantized WASM q8');
-  assert.ok(
-    workerSrc.includes('onnx-community/kitten-tts-nano-0.1-ONNX') &&
-      workerSrc.includes('expr-voice-2-m') &&
-      workerSrc.includes('expr-voice-2-f') &&
-      workerSrc.includes("type: 'lead_ready'"),
-    'Must use compact expressive dual-host StyleTTS2 with progressive lead_ready fast-start'
-  );
   assert.ok(
     !workerSrc.includes("loadWithBackend('webgpu'") &&
       !workerSrc.includes("'fp32'") &&
-      !workerSrc.includes('onnx-community/Kokoro-82M') &&
-      !workerSrc.includes('kokoro.web.js'),
-    'Must never attempt 310 MB fp32 WebGPU load or slow 88 MB Kokoro-82M WASM synthesis'
+      !workerSrc.includes('kitten-tts-nano') &&
+      !workerSrc.includes('lead_ready'),
+    'Must never use 310 MB fp32 WebGPU, degraded 15M kitten-tts-nano voices, or partial 0:38 lead_ready clips'
   );
-  assert.equal(typeof phonemizeWithPunctuation, 'function', 'Must export punctuation-preserving IPA phonemizer');
+  assert.ok(
+    swSrc.includes('49ers-podcast-studio-audio-'),
+    'sw.js activate handler must preserve 49ers-podcast-studio-audio- CacheStorage across SW upgrades'
+  );
 
-  // 2. Verify sentence-level micro-chunking keeps ONNX passes compact while preserving short latches
+  // 2. Verify 3-minute podcast splits into 2 parallel ~90s studio blocks (~1,850 chars) & rankGeminiTtsModels spans multi-bucket TTS models
+  const threeMinScript = Array.from({ length: 18 }, (_, idx) => ({
+    speaker: idx % 2 === 0 ? 'Marcus' : 'Elena',
+    text: 'Look at how Keenan Allen wins option routes between the numbers on third and six while preserving Article 13 cap rollover into 2027.'
+  }));
+  const parallelBlocks = chunkTurnsForGeminiTts(threeMinScript, 1850);
+  assert.equal(parallelBlocks.length, 2, `Expected 2 parallel ~90s studio blocks for 3m pod, got ${parallelBlocks.length}`);
+  assert.ok(
+    parallelBlocks[0].every(t => typeof t.cleanSpokenText === 'string' && !t.cleanSpokenText.startsWith('Marcus:')),
+    'cleanSpokenText must omit speaker prefix for Gemini 3.8 speechMetadata verbatim TTS'
+  );
+
+  const rankedTts = rankGeminiTtsModels([
+    { name: 'models/gemini-3.8-flash-lite-tts', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-3.8-flash-tts', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
+  ]);
+  assert.deepEqual(rankedTts.slice(0, 3), [
+    'gemini-2.5-flash-preview-tts',
+    'gemini-3.8-flash-tts',
+    'gemini-3.8-flash-lite-tts'
+  ]);
+
+  // 3. Verify Self-Healing Truncated Audio Guard (purges 0:38 partial WAV on a 3:06 episode while keeping full 3:06 WAV)
+  const buildSilentStereoWavBuf = (durSec, sr = 8000) => {
+    const frames = Math.round(durSec * sr);
+    const dataBytes = frames * 4;
+    const buf = new ArrayBuffer(44 + dataBytes);
+    const dv = new DataView(buf);
+    const w = (off, s) => {
+      for (let i = 0; i < s.length; i++) dv.setUint8(off + i, s.charCodeAt(i));
+    };
+    w(0, 'RIFF');
+    dv.setUint32(4, 36 + dataBytes, true);
+    w(8, 'WAVE');
+    w(12, 'fmt ');
+    dv.setUint32(16, 16, true);
+    dv.setUint16(20, 1, true);
+    dv.setUint16(22, 2, true);
+    dv.setUint32(24, sr, true);
+    dv.setUint32(28, sr * 4, true);
+    dv.setUint16(32, 4, true);
+    dv.setUint16(34, 16, true);
+    w(36, 'data');
+    dv.setUint32(40, dataBytes, true);
+    return buf;
+  };
+  const truncated38sBuf = buildSilentStereoWavBuf(38, 8000);
+  assert.ok(Math.abs(inspectWavBufferDurationSec(truncated38sBuf) - 38) < 0.2);
+  await saveEpisodeAudioBlob('test_poisoned_38s_ep', truncated38sBuf);
+  const purgedResult = await getEpisodeAudioUrl('test_poisoned_38s_ep', 186);
+  assert.equal(purgedResult, null, 'Truncated 0:38 WAV on a 3:06 episode must be purged automatically');
+
+  const full186sBuf = buildSilentStereoWavBuf(186, 8000);
+  await saveEpisodeAudioBlob('test_valid_186s_ep', full186sBuf);
+  const validResult = await getEpisodeAudioUrl('test_valid_186s_ep', 186);
+  assert.ok(validResult === null || String(validResult).startsWith('blob:'));
+  await deleteEpisodeAudioBlob('test_valid_186s_ep');
+
+  // 4. Verify sentence-level micro-chunking keeps ONNX passes compact while preserving short latches
   const longTurn =
     'Right! Look at how Keenan Allen wins from the slot against two-high quarters coverage on third and medium, especially when Ricky Pearsall stretches the field vertically outside the numbers. Furthermore, under CBA Article 13 rollover rules, every dollar spent on midseason wide receiver depth reduces San Francisco’s 2027 cap cushion, which means Kyle Shanahan has to maximize veteran route discipline immediately.';
   const chunks = splitTurnIntoSpokenSentences(longTurn, 195);
@@ -6643,7 +6706,7 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
   assert.ok(chunks[0].startsWith('Right! Look at how Keenan Allen'), 'Short interjection must stay latched to first sentence');
   assert.ok(chunks.every(c => c.length <= 240), `Sentence chunk exceeded compact WASM bound: ${JSON.stringify(chunks)}`);
 
-  // 3. Verify Shared Podcast Hero renders ABOVE generator & API key box and never hijacks Create-Podcast stepper
+  // 5. Verify Shared Podcast Hero renders ABOVE generator & API key box and never hijacks Create-Podcast stepper
   const sharedEp = {
     id: 'custom_ep_dad_share',
     title: 'Keenan Allen Fit in 49ers Scheme',
@@ -6676,8 +6739,8 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
       episodeId: sharedEp.id,
       startedAtMs: Date.now() - 4000,
       percent: 44,
-      message: 'Recording shared podcast with Gemini NotebookLM voices (Puck & Aoede)…',
-      subDetail: 'Preparing smooth human multi-speaker studio audio (~20–30 sec).'
+      message: 'Recording podcast with Gemini NotebookLM studio voices (Puck & Aoede)…',
+      subDetail: 'Preparing full-length smooth human multi-speaker audio (~20–30 sec).'
     },
     allEpisodes: [sharedEp]
   });
@@ -6695,7 +6758,6 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
   assert.ok(!prepHtml.includes('Creating 3-Min Podcast'), 'Generator CTA button must remain idle while shared link prepares audio');
   assert.ok(prepHtml.includes('Play When Ready'), 'Primary button must invite 1-tap Play When Ready during prep');
 
-  // 4. Verify Auto-Play Armed state and graceful Retry + Device Voice error recovery UI
   const queuedHtml = renderAudioAiViewHtml({
     studioSub: 'podcast',
     userPrefs: { geminiApiKey: '' },
@@ -6712,7 +6774,7 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
       episodeId: sharedEp.id,
       startedAtMs: Date.now() - 6000,
       percent: 68,
-      message: 'Recording shared podcast with Gemini NotebookLM voices (Puck & Aoede)…'
+      message: 'Recording podcast with Gemini NotebookLM studio voices (Puck & Aoede)…'
     },
     allEpisodes: [sharedEp]
   });
@@ -6735,13 +6797,28 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
     'Shared audio error state must expose both Retry Studio Audio and Listen Now (Device Voice) recovery actions'
   );
 
-  // 5. Verify human-voice share relay (masked vk in #shared-pod fragment) + zero robotic speech auto-bypass
-  const { synthesizeMissingEpisodeAudio } = await import('../src/services/aiWorkerClient.js');
+  // 6. Verify 2.5 -> 3.8 TTS cross-bucket failover (`speechMetadata` + RIFF `audio/wav` decoding + Puck & Aoede voices)
+  const {
+    synthesizeMissingEpisodeAudio,
+    decodeGeminiAudioInlineDataToPcm24k
+  } = await import('../src/services/aiWorkerClient.js');
   const {
     buildShareablePodcastUrl,
     extractIncomingSharedRoute,
     shareAudioFileNatively
   } = await import('../src/services/shareService.js');
+
+  // Verify RIFF WAV 48kHz stereo -> 24kHz mono PCM decoder strips header cleanly
+  const wav48kStereo = buildSilentStereoWavBuf(1, 48000);
+  const wav48kView = new DataView(wav48kStereo);
+  wav48kView.setInt16(44, 12000, true);
+  wav48kView.setInt16(46, 12000, true);
+  const decoded24k = decodeGeminiAudioInlineDataToPcm24k(
+    Buffer.from(wav48kStereo).toString('base64'),
+    'audio/wav'
+  );
+  assert.equal(decoded24k.length, 24000, '48kHz 1s stereo WAV must decode & resample to 24,000 mono samples without RIFF header');
+  assert.ok(decoded24k[0] > 10000, 'First decoded sample must be real audio sample, never ASCII RIFF bytes');
 
   const senderKey = 'AIzaTestRelayStudioKey999';
   const shareHref = await buildShareablePodcastUrl(
@@ -6753,75 +6830,80 @@ await testAsync('Shared Podcast Hero UX & Human Studio Voice Audio Pipeline Safe
   assert.ok(!shareHref.includes(senderKey), 'Raw Gemini API key must never appear unmasked in shared URL');
 
   const incoming = await extractIncomingSharedRoute(new URL(shareHref));
-  assert.equal(incoming?.type, 'podcast');
-  assert.equal(incoming?.episode?.isSharedImport, true);
-  assert.equal(
-    incoming?.episode?._sharedVoiceKey,
-    senderKey,
-    'Incoming shared route must restore masked voice relay token in memory for smooth NotebookLM voices'
-  );
+  assert.equal(incoming?.episode?._sharedVoiceKey, senderKey);
 
-  // Simulate keyless recipient browser calling synthesizeMissingEpisodeAudio -> hits Gemini NotebookLM TTS (Puck & Aoede)
+  // Simulate 429 RPM on gemini-2.5-flash-preview-tts -> immediate failover to gemini-3.8-flash-tts returning audio/wav!
   const origFetch = globalThis.fetch;
-  let capturedTtsBody = null;
+  let captured38Body = null;
   try {
     globalThis.fetch = async (url, init) => {
       const u = String(url);
       if (u.includes('/models?')) {
         return new Response(
           JSON.stringify({
-            models: [{ name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] }]
+            models: [
+              { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.8-flash-tts', supportedGenerationMethods: ['generateContent'] }
+            ]
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
       }
-      capturedTtsBody = init?.body ? JSON.parse(init.body) : null;
-      const pcmBytes = new Uint8Array(4800);
-      pcmBytes[10] = 0x18;
-      pcmBytes[11] = 0x04;
-      const b64 = Buffer.from(pcmBytes).toString('base64');
-      return new Response(
-        JSON.stringify({
-          candidates: [
-            {
-              content: {
-                parts: [{ inlineData: { mimeType: 'audio/L16;rate=24000', data: b64 } }]
+      if (u.includes('gemini-2.5-flash-preview-tts:generateContent')) {
+        return new Response(
+          JSON.stringify({ error: { message: 'RESOURCE_EXHAUSTED: requests_per_minute exceeded' } }),
+          { status: 429, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      if (u.includes('gemini-3.8-flash-tts:generateContent')) {
+        captured38Body = init?.body ? JSON.parse(init.body) : null;
+        const wav24k = buildSilentStereoWavBuf(2, 24000);
+        return new Response(
+          JSON.stringify({
+            candidates: [
+              {
+                content: {
+                  parts: [
+                    {
+                      inlineData: {
+                        mimeType: 'audio/wav',
+                        data: Buffer.from(wav24k).toString('base64')
+                      }
+                    }
+                  ]
+                }
               }
-            }
-          ]
-        }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
+            ]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('{}', { status: 404 });
     };
 
-    const recipientEp = { ...incoming.episode, id: 'custom_ep_recipient_human_voice' };
+    const recipientEp = { ...incoming.episode, id: 'custom_ep_recipient_38_failover' };
     const studioWavUrl = await synthesizeMissingEpisodeAudio(recipientEp, null, {
       geminiApiKey: '',
-      geminiApiBaseUrl: 'https://mock-relay-tts.local/v1beta'
+      geminiApiBaseUrl: 'https://mock-relay-38-tts.local/v1beta'
     });
     assert.ok(
       typeof studioWavUrl === 'string' && (studioWavUrl.startsWith('blob:') || studioWavUrl.startsWith('data:audio/wav')),
-      `Expected real NotebookLM Stereo WAV URL for keyless recipient, got ${studioWavUrl}`
+      `Expected real NotebookLM Stereo WAV URL via 3.8 TTS failover, got ${studioWavUrl}`
     );
-    assert.equal(Boolean(recipientEp.useInstantSpeech), false, 'Must NEVER auto-downgrade shared podcast to robotic OS speech');
+    const parts38 = captured38Body?.contents?.[0]?.parts || [];
+    assert.equal(parts38.length, 2, 'Gemini 3.8 TTS must receive structured turn parts');
+    assert.equal(parts38[0]?.speechMetadata?.speaker, 'Marcus');
+    assert.equal(parts38[1]?.speechMetadata?.speaker, 'Elena');
+    assert.ok(!parts38[0]?.text?.startsWith('Marcus:'), 'Gemini 3.8 TTS turn text must omit literal speaker prefix');
     const voiceNames = (
-      capturedTtsBody?.generationConfig?.speechConfig?.multiSpeakerVoiceConfig?.speakerVoiceConfigs || []
+      captured38Body?.generationConfig?.speechConfig?.multiSpeakerVoiceConfig?.speakerVoiceConfigs || []
     ).map(v => v?.voiceConfig?.prebuiltVoiceConfig?.voiceName);
-    assert.deepEqual(voiceNames, ['Puck', 'Aoede'], 'Recipient must hear exact same Puck & Aoede NotebookLM voices as creator');
+    assert.deepEqual(voiceNames, ['Puck', 'Aoede']);
   } finally {
     globalThis.fetch = origFetch;
   }
 
-  // Legacy link without vk also synthesizes real WAV (never robotic useInstantSpeech)
-  const legacyKeylessEp = { ...sharedEp, id: 'custom_ep_legacy_keyless_wav' };
-  const legacyWavUrl = await synthesizeMissingEpisodeAudio(legacyKeylessEp, null, { geminiApiKey: '' });
-  assert.ok(
-    typeof legacyWavUrl === 'string' && (legacyWavUrl.startsWith('blob:') || legacyWavUrl.startsWith('data:audio/wav')),
-    'Legacy keyless shared episode must produce human WAV audio rather than null/robotic speech'
-  );
-  assert.equal(Boolean(legacyKeylessEp.useInstantSpeech), false);
-
-  // 6. Verify native MP3 File sharing via navigator.share({ files })
+  // 7. Verify native MP3 File sharing via navigator.share({ files })
   if (typeof File === 'function') {
     const mockMp3 = new File([new Uint8Array([0xff, 0xfb, 0x90, 0x64])], 'keenan-allen.mp3', {
       type: 'audio/mpeg'

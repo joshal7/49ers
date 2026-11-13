@@ -396,7 +396,7 @@ export class PodcastAudioController {
     }
 
     const promise = (async () => {
-      const storedUrl = await getEpisodeAudioUrl(epId);
+      const storedUrl = await getEpisodeAudioUrl(epId, Number(episode.durationSec || 0));
       if (storedUrl) {
         episode.audioUrl = storedUrl;
         return storedUrl;

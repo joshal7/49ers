@@ -42,15 +42,70 @@ export const DEFAULT_BEST_REASONING_CASCADE = [
 ];
 
 export const DEFAULT_NOTEBOOKLM_TTS_CASCADE = [
-  'gemini-4-hydrogen-preview-tts',
-  'gemini-4-hydrogen-tts',
-  'gemini-3.8-flash-preview-tts',
+  'gemini-2.5-flash-preview-tts',
   'gemini-3.8-flash-tts',
+  'gemini-3.8-flash-lite-tts',
+  'gemini-3.8-flash-preview-tts',
   'gemini-3.1-flash-preview-tts',
   'gemini-3.1-flash-tts',
-  'gemini-2.5-flash-preview-tts',
+  'gemini-4-hydrogen-preview-tts',
+  'gemini-4-hydrogen-tts',
   'gemini-2.5-pro-preview-tts'
 ];
+
+/**
+ * Dynamically discovers and orders all Gemini Multi-Speaker TTS models available on an API key's
+ * `/v1beta/models` catalog, prioritizing `gemini-2.5-flash-preview-tts` (proven smooth NotebookLM
+ * conversational delivery) followed immediately by `gemini-3.8-flash-tts` and high-quota
+ * `gemini-3.8-flash-lite-tts` (separate Free-Tier RPM/RPD buckets) and `gemini-2.5-pro-preview-tts`.
+ */
+export function rankGeminiTtsModels(catalogModels = []) {
+  const catalogTtsIds = [];
+  for (const entry of catalogModels) {
+    const rawName = typeof entry === 'string' ? entry : String(entry?.name || entry?.id || '');
+    const cleanId = rawName.replace(/^models\//i, '').trim();
+    if (!cleanId || !/^gemini-.*tts/i.test(cleanId)) continue;
+    if (
+      typeof entry === 'object' &&
+      entry !== null &&
+      Array.isArray(entry.supportedGenerationMethods) &&
+      !entry.supportedGenerationMethods.includes('generateContent')
+    ) {
+      continue;
+    }
+    if (!catalogTtsIds.includes(cleanId)) {
+      catalogTtsIds.push(cleanId);
+    }
+  }
+
+  if (catalogTtsIds.length === 0) {
+    return [...DEFAULT_NOTEBOOKLM_TTS_CASCADE];
+  }
+
+  const ordered = [];
+  for (const preferred of DEFAULT_NOTEBOOKLM_TTS_CASCADE) {
+    if (catalogTtsIds.includes(preferred) && !ordered.includes(preferred)) {
+      ordered.push(preferred);
+    }
+  }
+  for (const discovered of catalogTtsIds) {
+    if (!ordered.includes(discovered)) {
+      ordered.push(discovered);
+    }
+  }
+  // Always include core cross-bucket fallbacks at tail in case `/v1beta/models` paginates or omits preview aliases
+  for (const coreFallback of [
+    'gemini-2.5-flash-preview-tts',
+    'gemini-3.8-flash-tts',
+    'gemini-3.8-flash-lite-tts',
+    'gemini-2.5-pro-preview-tts'
+  ]) {
+    if (!ordered.includes(coreFallback)) {
+      ordered.push(coreFallback);
+    }
+  }
+  return ordered;
+}
 
 /**
  * Gemini Native Audio Voices tuned for Google NotebookLM Audio Overview realism:
@@ -472,7 +527,7 @@ export function buildNotebookLmTtsDirectorHeader({ format = 'two_host' } = {}) {
  * boundaries so Gemini Native TTS never hits its ~4,000-char single-request input limit on 8m/15m pods
  * while preserving multi-turn conversational context inside every block.
  */
-export function chunkTurnsForGeminiTts(turns = [], maxChars = 2500) {
+export function chunkTurnsForGeminiTts(turns = [], maxChars = 1850) {
   if (!Array.isArray(turns) || turns.length === 0) return [];
   const chunks = [];
   let currentTurns = [];
@@ -494,6 +549,7 @@ export function chunkTurnsForGeminiTts(turns = [], maxChars = 2500) {
     currentTurns.push({
       ...turn,
       speaker,
+      cleanSpokenText: spokenText,
       spokenLine: formattedLine,
       wordCount: spokenText.split(/\s+/).filter(Boolean).length
     });

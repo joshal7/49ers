@@ -1,4 +1,5 @@
-const CACHE_NAME = '49ers-faithful-v69';
+const CACHE_NAME = '49ers-faithful-v70';
+const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const CORE_ASSETS = [
   './',
@@ -84,7 +85,9 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
-      const oldKeys = keys.filter(k => k !== CACHE_NAME);
+      const oldKeys = keys.filter(
+        k => k !== CACHE_NAME && !PRESERVED_CACHE_PREFIXES.some(prefix => k.startsWith(prefix))
+      );
       if (oldKeys.length > 0) {
         try {
           const nextCache = await caches.open(CACHE_NAME);

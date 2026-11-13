@@ -60,6 +60,7 @@ import {
   DEFAULT_NOTEBOOKLM_TTS_CASCADE,
   NOTEBOOKLM_VOICE_PROFILES,
   rankBestGeminiReasoningModels,
+  rankGeminiTtsModels,
   resolveGeminiThinkingLevelLabel,
   buildGeminiThinkingConfig,
   DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
@@ -267,16 +268,8 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
       ? [...keyPresentRanked, ...matchingCatalogFallbacks]
       : [...DEFAULT_BEST_REASONING_CASCADE.filter(m => !deadSet.has(m))];
 
-  // Prefer fast Gemini Flash Native Multi-Speaker TTS first when present on key so 3-min pods render in ~25-40s
-  const orderedTtsCandidates = [
-    'gemini-2.5-flash-preview-tts',
-    ...DEFAULT_NOTEBOOKLM_TTS_CASCADE.filter(id => id !== 'gemini-2.5-flash-preview-tts')
-  ];
-  const ttsCascade = orderedTtsCandidates.filter(
-    id => catalogIds.length === 0 || catalogIds.includes(id)
-  );
-  const resolvedTtsCascade =
-    ttsCascade.length > 0 ? ttsCascade : [...orderedTtsCandidates];
+  // Dynamically rank all multi-speaker Gemini TTS models available on this key (`2.5-flash-preview-tts` -> `3.8-flash-tts` -> `3.8-flash-lite-tts`)
+  const resolvedTtsCascade = rankGeminiTtsModels(models);
 
   const state = {
     ok: true,
@@ -312,13 +305,7 @@ export async function checkAndAutoUpdateBestGeminiModel(prefs = {}, onModelUpdat
   }
 }
 
-const FAST_FALLBACK_TTS_CASCADE = [
-  'gemini-2.5-flash-preview-tts',
-  'gemini-2.5-pro-preview-tts',
-  ...DEFAULT_NOTEBOOKLM_TTS_CASCADE.filter(
-    id => id !== 'gemini-2.5-flash-preview-tts' && id !== 'gemini-2.5-pro-preview-tts'
-  )
-];
+const FAST_FALLBACK_TTS_CASCADE = [...DEFAULT_NOTEBOOKLM_TTS_CASCADE];
 
 async function resolveDirectGeminiCascades(prefs = {}) {
   const key = String(prefs?.geminiApiKey || '').trim();
@@ -644,19 +631,136 @@ async function callGeminiDirectWithCascade({
   );
 }
 
-function decodeBase64ToInt16Mono(b64String) {
+function resampleFloatMono(samples, fromRate, toRate = 24000) {
+  if (!samples || samples.length === 0) return new Int16Array(0);
+  if (!fromRate || fromRate === toRate) {
+    const out = new Int16Array(samples.length);
+    for (let i = 0; i < samples.length; i++) {
+      const clamped = Math.max(-1, Math.min(1, samples[i]));
+      out[i] = Math.round(clamped * 32767);
+    }
+    return out;
+  }
+  const ratio = fromRate / toRate;
+  const outLen = Math.max(1, Math.round(samples.length / ratio));
+  const out = new Int16Array(outLen);
+  for (let i = 0; i < outLen; i++) {
+    const srcPos = i * ratio;
+    const idx0 = Math.min(samples.length - 1, Math.floor(srcPos));
+    const idx1 = Math.min(samples.length - 1, idx0 + 1);
+    const frac = srcPos - idx0;
+    const interp = samples[idx0] * (1 - frac) + samples[idx1] * frac;
+    const clamped = Math.max(-1, Math.min(1, interp));
+    out[i] = Math.round(clamped * 32767);
+  }
+  return out;
+}
+
+/**
+ * Decodes Gemini TTS `inlineData` (`audio/L16;rate=24000` raw PCM on Gemini 2.5 TTS OR
+ * containerized RIFF `audio/wav` on `gemini-3.8-flash-tts` / `gemini-3.8-flash-lite-tts`)
+ * into clean, header-free 24 kHz mono `Int16Array` PCM samples.
+ */
+export function decodeGeminiAudioInlineDataToPcm24k(b64String, mimeType = '') {
   const bin = atob(b64String);
-  const byteLen = bin.length - (bin.length % 2);
-  const bytes = new Uint8Array(byteLen);
-  for (let i = 0; i < byteLen; i++) {
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) {
     bytes[i] = bin.charCodeAt(i);
   }
-  const view = new DataView(bytes.buffer);
-  const samples = new Int16Array(byteLen / 2);
-  for (let i = 0; i < samples.length; i++) {
-    samples[i] = view.getInt16(i * 2, true);
+
+  const isRiffWav =
+    bytes.byteLength >= 44 &&
+    bytes[0] === 0x52 &&
+    bytes[1] === 0x49 &&
+    bytes[2] === 0x46 &&
+    bytes[3] === 0x46 &&
+    bytes[8] === 0x57 &&
+    bytes[9] === 0x41 &&
+    bytes[10] === 0x56 &&
+    bytes[11] === 0x45;
+
+  if (isRiffWav) {
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    let audioFormat = 1;
+    let numChannels = 1;
+    let wavSampleRate = 24000;
+    let bitsPerSample = 16;
+    let dataOffset = 44;
+    let dataBytes = Math.max(0, bytes.byteLength - 44);
+
+    let cursor = 12;
+    while (cursor + 8 <= bytes.byteLength) {
+      const id = String.fromCharCode(
+        bytes[cursor],
+        bytes[cursor + 1],
+        bytes[cursor + 2],
+        bytes[cursor + 3]
+      );
+      const size = view.getUint32(cursor + 4, true);
+      if (id === 'fmt ' && cursor + 24 <= bytes.byteLength) {
+        audioFormat = view.getUint16(cursor + 8, true);
+        numChannels = Math.max(1, view.getUint16(cursor + 10, true));
+        wavSampleRate = view.getUint32(cursor + 12, true) || 24000;
+        bitsPerSample = view.getUint16(cursor + 22, true) || 16;
+      } else if (id === 'data') {
+        dataOffset = cursor + 8;
+        dataBytes = Math.min(size, bytes.byteLength - dataOffset);
+        break;
+      }
+      cursor += 8 + size + (size % 2);
+    }
+
+    const bytesPerSample = Math.max(2, Math.floor(bitsPerSample / 8));
+    const blockAlign = numChannels * bytesPerSample;
+    const frameCount = Math.floor(dataBytes / blockAlign);
+    const monoFloat = new Float32Array(frameCount);
+
+    for (let f = 0; f < frameCount; f++) {
+      let sum = 0;
+      const frameBase = dataOffset + f * blockAlign;
+      for (let ch = 0; ch < numChannels; ch++) {
+        const sampleOff = frameBase + ch * bytesPerSample;
+        if (audioFormat === 3 && bitsPerSample === 32) {
+          sum += view.getFloat32(sampleOff, true);
+        } else if (bitsPerSample === 24) {
+          const b0 = bytes[sampleOff];
+          const b1 = bytes[sampleOff + 1];
+          const b2 = bytes[sampleOff + 2];
+          let int24 = b0 | (b1 << 8) | (b2 << 16);
+          if (int24 & 0x800000) int24 |= ~0xffffff;
+          sum += int24 / 8388608;
+        } else if (bitsPerSample === 32) {
+          sum += view.getInt32(sampleOff, true) / 2147483648;
+        } else {
+          sum += view.getInt16(sampleOff, true) / 32768;
+        }
+      }
+      monoFloat[f] = sum / numChannels;
+    }
+
+    return resampleFloatMono(monoFloat, wavSampleRate, 24000);
   }
-  return samples;
+
+  // Raw headerless signed 16-bit little-endian PCM (`audio/L16;codec=pcm;rate=24000`)
+  const rateMatch = String(mimeType || '').match(/rate=(\d+)/i);
+  const rawRate = rateMatch ? Number(rateMatch[1]) || 24000 : 24000;
+  const evenByteLen = bytes.byteLength - (bytes.byteLength % 2);
+  const view = new DataView(bytes.buffer, bytes.byteOffset, evenByteLen);
+  const sampleCount = evenByteLen / 2;
+
+  if (rawRate === 24000) {
+    const samples = new Int16Array(sampleCount);
+    for (let i = 0; i < sampleCount; i++) {
+      samples[i] = view.getInt16(i * 2, true);
+    }
+    return samples;
+  }
+
+  const monoFloat = new Float32Array(sampleCount);
+  for (let i = 0; i < sampleCount; i++) {
+    monoFloat[i] = view.getInt16(i * 2, true) / 32768;
+  }
+  return resampleFloatMono(monoFloat, rawRate, 24000);
 }
 
 /**
@@ -735,10 +839,169 @@ function stitchGeminiPcmChunksToStereoWav(pcmChunks = [], sampleRate = 24000) {
   };
 }
 
+function isStructuredSpeechMetadataTtsModel(modelId = '') {
+  const clean = String(modelId || '').toLowerCase();
+  if (/^gemini-2\.5-/i.test(clean)) return false;
+  // Preview checkpoints (`*-preview-tts`) use the 2.5 Transcript prompt format; GA `gemini-3.x-*-tts` / `gemini-4*-tts` use `speechMetadata`
+  if (clean.includes('-preview-tts')) return false;
+  return /^gemini-(?:[3-9]|\d{2}|.*hydrogen)/i.test(clean);
+}
+
+function buildGeminiTtsRequestPayload(block, { solo = false, directorHeader = '', useSpeechMetadata = false } = {}) {
+  const uniqueSpeakers = [...new Set(block.map(t => (t.speaker === 'Elena' ? 'Elena' : 'Marcus')))];
+
+  if (solo) {
+    const singleVoiceConfig = {
+      voiceConfig: {
+        prebuiltVoiceConfig: {
+          voiceName: NOTEBOOKLM_VOICE_PROFILES.solo.Marcus
+        }
+      }
+    };
+    if (useSpeechMetadata) {
+      return {
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              {
+                text: block.map(t => t.cleanSpokenText || t.text || '').join(' '),
+                speechMetadata: {
+                  style: 'warm, relaxed, smooth, natural conversational podcast host'
+                }
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          responseModalities: ['AUDIO'],
+          speechConfig: singleVoiceConfig
+        }
+      };
+    }
+    return {
+      contents: [{ parts: [{ text: directorHeader + block.map(t => t.spokenLine).join('\n') }] }],
+      generationConfig: {
+        responseModalities: ['AUDIO'],
+        speechConfig: singleVoiceConfig
+      }
+    };
+  }
+
+  // Handle single-speaker tail blocks cleanly so multi-speaker validation never rejects a 1-turn closing remark
+  if (uniqueSpeakers.length === 1) {
+    const onlySpeaker = uniqueSpeakers[0];
+    const matchingVoiceName =
+      onlySpeaker === 'Elena'
+        ? NOTEBOOKLM_VOICE_PROFILES.twoHost.Elena
+        : NOTEBOOKLM_VOICE_PROFILES.twoHost.Marcus;
+    const singleSpeakerCfg = {
+      voiceConfig: {
+        prebuiltVoiceConfig: { voiceName: matchingVoiceName }
+      }
+    };
+    if (useSpeechMetadata) {
+      return {
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              {
+                text: block.map(t => t.cleanSpokenText || t.text || '').join(' '),
+                speechMetadata: {
+                  style:
+                    onlySpeaker === 'Elena'
+                      ? 'warm, breezy, articulate, natural conversational podcast co-host'
+                      : 'lively, curious, smooth, natural conversational podcast host'
+                }
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          responseModalities: ['AUDIO'],
+          speechConfig: singleSpeakerCfg
+        }
+      };
+    }
+    return {
+      contents: [
+        {
+          parts: [{ text: block.map(t => t.cleanSpokenText || t.text || '').join(' ') }]
+        }
+      ],
+      generationConfig: {
+        responseModalities: ['AUDIO'],
+        speechConfig: singleSpeakerCfg
+      }
+    };
+  }
+
+  const multiVoiceConfig = {
+    multiSpeakerVoiceConfig: {
+      speakerVoiceConfigs: [
+        {
+          speaker: 'Marcus',
+          voiceConfig: {
+            prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.twoHost.Marcus }
+          }
+        },
+        {
+          speaker: 'Elena',
+          voiceConfig: {
+            prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.twoHost.Elena }
+          }
+        }
+      ]
+    }
+  };
+
+  if (useSpeechMetadata) {
+    return {
+      contents: [
+        {
+          role: 'user',
+          parts: block.map(t => ({
+            text: t.cleanSpokenText || t.text || '',
+            speechMetadata: {
+              speaker: t.speaker === 'Elena' ? 'Elena' : 'Marcus',
+              style:
+                t.speaker === 'Elena'
+                  ? 'warm, breezy, articulate, natural conversational podcast co-host'
+                  : 'lively, curious, smooth, natural conversational podcast host'
+            }
+          }))
+        }
+      ],
+      generationConfig: {
+        responseModalities: ['AUDIO'],
+        speechConfig: multiVoiceConfig
+      }
+    };
+  }
+
+  return {
+    contents: [{ parts: [{ text: directorHeader + block.map(t => t.spokenLine).join('\n') }] }],
+    generationConfig: {
+      responseModalities: ['AUDIO'],
+      speechConfig: multiVoiceConfig
+    }
+  };
+}
+
+function parseRetryDelayMs(errText = '') {
+  const m = String(errText || '').match(/retry(?:\s+in|Delay["']?\s*:\s*["']?)\s*(\d+(?:\.\d+)?)\s*s/i);
+  if (!m) return 5500;
+  const sec = Number(m[1]);
+  if (!Number.isFinite(sec) || sec <= 0) return 5500;
+  return Math.min(16000, Math.max(2000, Math.ceil(sec * 1000) + 400));
+}
+
 /**
  * Renders smooth, ultra-natural multi-speaker podcast audio using Google's native
- * Gemini NotebookLM TTS engine (`gemini-2.5-pro-preview-tts` -> `gemini-2.5-flash-preview-tts`)
- * with `Puck` (Marcus) + `Aoede` (Elena) or `Charon` (Solo).
+ * Gemini NotebookLM TTS cascade (`gemini-2.5-flash-preview-tts` -> `gemini-3.8-flash-tts` ->
+ * `gemini-3.8-flash-lite-tts` -> `gemini-2.5-pro-preview-tts`) with `Puck` (Marcus) + `Aoede` (Elena)
+ * or `Charon` (Solo), splitting 3-min episodes into 2 parallel ~90s studio blocks (~18-26s total).
  */
 async function synthesizeWithGeminiNotebookLmTts({
   apiBase,
@@ -750,9 +1013,9 @@ async function synthesizeWithGeminiNotebookLmTts({
   skipBlobSave = false,
   onProgress
 }) {
-  // 3800-char studio blocks fit an entire 2-to-4-minute podcast (~420-560 words) into ONE continuous
-  // multi-speaker pass (~22-38s) with seamless vocal prosody instead of 2 sequential HTTP calls
-  const chunks = chunkTurnsForGeminiTts(turns, 3800);
+  // ~1,850-char studio blocks split a 3-min podcast (~3,000 chars) into 2 parallel ~90s studio halves
+  // that synthesize simultaneously in ~18–26s instead of hitting 65s+ single-call latency ceilings.
+  const chunks = chunkTurnsForGeminiTts(turns, 1850);
   if (chunks.length === 0) {
     throw new Error('No spoken podcast dialogue generated.');
   }
@@ -761,90 +1024,118 @@ async function synthesizeWithGeminiNotebookLmTts({
     format: solo ? 'solo' : 'two_host'
   });
 
-  const speechConfig = solo
-    ? {
-        voiceConfig: {
-          prebuiltVoiceConfig: {
-            voiceName: NOTEBOOKLM_VOICE_PROFILES.solo.Marcus
-          }
-        }
-      }
-    : {
-        multiSpeakerVoiceConfig: {
-          speakerVoiceConfigs: [
-            {
-              speaker: 'Marcus',
-              voiceConfig: {
-                prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.twoHost.Marcus }
-              }
-            },
-            {
-              speaker: 'Elena',
-              voiceConfig: {
-                prebuiltVoiceConfig: { voiceName: NOTEBOOKLM_VOICE_PROFILES.twoHost.Elena }
-              }
-            }
-          ]
-        }
-      };
+  const activeTtsCascade =
+    Array.isArray(ttsCascade) && ttsCascade.length > 0
+      ? ttsCascade
+      : [...DEFAULT_NOTEBOOKLM_TTS_CASCADE];
 
   const pcmChunks = new Array(chunks.length).fill(null);
   const chunkDurationsSec = new Array(chunks.length).fill(0);
-  let resolvedAudioModel = ttsCascade[0] || DEFAULT_NOTEBOOKLM_TTS_CASCADE[0];
+  let resolvedAudioModel = activeTtsCascade[0] || DEFAULT_NOTEBOOKLM_TTS_CASCADE[0];
   const sampleRate = 24000;
   let completedBlocks = 0;
 
+  const attemptModelOnBlock = async (ttsModel, block) => {
+    const ttsUrl = `${apiBase}/models/${encodeURIComponent(ttsModel)}:generateContent?key=${encodeURIComponent(key)}`;
+    const primarySchema = isStructuredSpeechMetadataTtsModel(ttsModel);
+    const schemasToTry = [primarySchema, !primarySchema];
+    let lastStatus = 0;
+    let lastErr = '';
+
+    for (let sIdx = 0; sIdx < schemasToTry.length; sIdx++) {
+      const useSpeechMetadata = schemasToTry[sIdx];
+      const payload = buildGeminiTtsRequestPayload(block, {
+        solo,
+        directorHeader,
+        useSpeechMetadata
+      });
+
+      let res;
+      try {
+        res = await fetchPostJsonWithTimeout(ttsUrl, payload, 105000);
+      } catch (timeoutErr) {
+        return {
+          ok: false,
+          status: 408,
+          errText: timeoutErr?.message || 'TTS request timed out'
+        };
+      }
+
+      if (res.ok) {
+        const json = await res.json();
+        const audioPart = json?.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data);
+        if (audioPart?.inlineData?.data) {
+          const samples = decodeGeminiAudioInlineDataToPcm24k(
+            audioPart.inlineData.data,
+            audioPart.inlineData.mimeType || ''
+          );
+          if (samples && samples.length > 0) {
+            return { ok: true, samples, model: ttsModel };
+          }
+        }
+        return { ok: false, status: 502, errText: 'Empty audio payload from Gemini TTS' };
+      }
+
+      lastStatus = res.status;
+      try {
+        lastErr = await res.text();
+      } catch {}
+
+      // If endpoint returned HTTP 400 on schema mismatch, immediately try the alternate TTS payload schema
+      if (res.status === 400 && sIdx === 0) {
+        continue;
+      }
+      break;
+    }
+
+    return { ok: false, status: lastStatus, errText: lastErr };
+  };
+
+  let abortedBatch = false;
+
   const synthesizeSingleBlock = async cIdx => {
     const block = chunks[cIdx];
-    const blockDialogue = directorHeader + block.map(t => t.spokenLine).join('\n');
     let chunkSamples = null;
     let lastTtsErr = '';
+    let transientRpmCandidate = null;
 
-    for (const ttsModel of ttsCascade) {
-      const ttsUrl = `${apiBase}/models/${encodeURIComponent(ttsModel)}:generateContent?key=${encodeURIComponent(key)}`;
-      for (let retry = 0; retry < 2; retry++) {
-        let res;
-        try {
-          res = await fetchPostJsonWithTimeout(
-            ttsUrl,
-            {
-              contents: [{ parts: [{ text: blockDialogue }] }],
-              generationConfig: {
-                responseModalities: ['AUDIO'],
-                speechConfig
-              }
-            },
-            65000
-          );
-        } catch (timeoutErr) {
-          lastTtsErr = timeoutErr?.message || 'TTS request timed out';
-          break;
-        }
-
-        if (res.ok) {
-          const json = await res.json();
-          const b64 = json?.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data)?.inlineData?.data;
-          if (b64) {
-            chunkSamples = decodeBase64ToInt16Mono(b64);
-            resolvedAudioModel = ttsModel;
-            break;
-          }
-        } else {
-          try {
-            lastTtsErr = await res.text();
-          } catch {}
-          if ((res.status === 429 || res.status === 503) && retry === 0 && !/limit:\s*0\b/i.test(lastTtsErr)) {
-            await new Promise(r => setTimeout(r, 1200));
-            continue;
-          }
-          break;
-        }
+    for (const ttsModel of activeTtsCascade) {
+      if (abortedBatch) return;
+      const outcome = await attemptModelOnBlock(ttsModel, block);
+      if (abortedBatch) return;
+      if (outcome.ok) {
+        chunkSamples = outcome.samples;
+        resolvedAudioModel = outcome.model;
+        break;
       }
-      if (chunkSamples && chunkSamples.length > 0) break;
+      lastTtsErr = outcome.errText || `HTTP ${outcome.status}`;
+      const isTransientMinuteThrottle =
+        outcome.status === 503 ||
+        (outcome.status === 429 &&
+          /retry(?:\s+in|Delay)|requests_per_minute|per_minute/i.test(lastTtsErr) &&
+          !/limit:\s*0\b|per_day|PerDay/i.test(lastTtsErr));
+      if (isTransientMinuteThrottle && !transientRpmCandidate) {
+        transientRpmCandidate = { model: ttsModel, delayMs: parseRetryDelayMs(lastTtsErr) };
+      }
+    }
+
+    // If every model in the cascade missed due to a rolling 60s RPM window, honor retryDelay once
+    if ((!chunkSamples || chunkSamples.length === 0) && transientRpmCandidate && !abortedBatch) {
+      await new Promise(r => setTimeout(r, transientRpmCandidate.delayMs));
+      if (abortedBatch) return;
+      const retryOutcome = await attemptModelOnBlock(transientRpmCandidate.model, block);
+      if (abortedBatch) return;
+      if (retryOutcome.ok) {
+        chunkSamples = retryOutcome.samples;
+        resolvedAudioModel = retryOutcome.model;
+      } else {
+        lastTtsErr = retryOutcome.errText || lastTtsErr;
+      }
     }
 
     if (!chunkSamples || chunkSamples.length === 0) {
-      throw new Error(`Gemini NotebookLM TTS unavailable (${String(lastTtsErr).slice(0, 120)})`);
+      abortedBatch = true;
+      throw new Error(`Gemini NotebookLM TTS unavailable (${String(lastTtsErr).slice(0, 140)})`);
     }
 
     pcmChunks[cIdx] = chunkSamples;
@@ -867,14 +1158,19 @@ async function synthesizeWithGeminiNotebookLmTts({
         : `Recording ${chunks.length} studio segments with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`
   });
 
-  // Synthesize up to 2 TTS blocks in parallel for multi-segment 6-20m podcasts (single-pass for 2-4m pods)
+  // Synthesize up to 2 TTS blocks in parallel (~18–26s wall-clock for 3-min podcasts)
   const maxConcurrency = 2;
-  for (let start = 0; start < chunks.length; start += maxConcurrency) {
-    const indices = [];
-    for (let j = start; j < Math.min(chunks.length, start + maxConcurrency); j++) {
-      indices.push(j);
+  try {
+    for (let start = 0; start < chunks.length; start += maxConcurrency) {
+      const indices = [];
+      for (let j = start; j < Math.min(chunks.length, start + maxConcurrency); j++) {
+        indices.push(j);
+      }
+      await Promise.all(indices.map(idx => synthesizeSingleBlock(idx)));
     }
-    await Promise.all(indices.map(idx => synthesizeSingleBlock(idx)));
+  } catch (batchErr) {
+    abortedBatch = true;
+    throw batchErr;
   }
 
   onProgress?.({
@@ -997,7 +1293,7 @@ export async function fetchLiveTopicSignals(rawTopic = '') {
 let sharedTtsWorker = null;
 let nextTtsJobSeq = 1;
 const pendingTtsJobs = new Map();
-const TTS_WORKER_INACTIVITY_TIMEOUT_MS = 45_000;
+const TTS_WORKER_INACTIVITY_TIMEOUT_MS = 90_000;
 
 function terminateAndResetTtsWorker(reasonError = null) {
   if (sharedTtsWorker) {
@@ -1019,7 +1315,7 @@ function getOrCreateTtsWorker() {
   if (typeof Worker === 'undefined') return null;
   if (sharedTtsWorker) return sharedTtsWorker;
 
-  sharedTtsWorker = new Worker(new URL('../workers/neuralTtsWorker.js?v=57', import.meta.url), {
+  sharedTtsWorker = new Worker(new URL('../workers/neuralTtsWorker.js?v=59', import.meta.url), {
     type: 'module'
   });
 
@@ -1031,9 +1327,6 @@ function getOrCreateTtsWorker() {
     if (msg.type === 'progress') {
       job.touchWatchdog?.();
       job.onProgress?.(msg);
-    } else if (msg.type === 'lead_ready') {
-      job.touchWatchdog?.();
-      job.onLeadReady?.(msg);
     } else if (msg.type === 'complete') {
       job.clearWatchdog?.();
       pendingTtsJobs.delete(msg.jobId);
@@ -1081,7 +1374,7 @@ function buildNodeFallbackWavAndTranscript(turns = []) {
   });
 
   const sampleRate = 8000;
-  const numFrames = sampleRate;
+  const numFrames = Math.max(sampleRate, cursor * sampleRate);
   const dataBytes = numFrames * 4;
   const buf = new ArrayBuffer(44 + dataBytes);
   const view = new DataView(buf);
@@ -1109,12 +1402,7 @@ function buildNodeFallbackWavAndTranscript(turns = []) {
   };
 }
 
-async function synthesizeTurnsWithKokoroWorker(
-  episodeId,
-  turns,
-  onWorkerProgress,
-  { allowProgressiveLead = false, onBackgroundFullReady = null } = {}
-) {
+async function synthesizeTurnsWithKokoroWorker(episodeId, turns, onWorkerProgress) {
   const isFastTestStub =
     typeof globalThis !== 'undefined' && Boolean(globalThis.__49ersFastTestTtsFallback);
   const worker = isFastTestStub ? null : getOrCreateTtsWorker();
@@ -1122,12 +1410,12 @@ async function synthesizeTurnsWithKokoroWorker(
     if (isFastTestStub) {
       onWorkerProgress?.({
         subPercent: 32,
-        detail: 'Caching compact studio voices (48% • 11 / 23 MB — 1-time download)…'
+        detail: 'Caching studio voice weights (48% • 42 / 88 MB — 1-time download)…'
       });
       await new Promise(r => setTimeout(r, 80));
       onWorkerProgress?.({
         subPercent: 78,
-        detail: `Synthesizing expressive studio voices — Turn ${Math.max(1, Math.ceil((turns?.length || 2) / 2))} of ${turns?.length || 2} (Elena)…`
+        detail: `Synthesizing studio voices — Turn ${Math.max(1, Math.ceil((turns?.length || 2) / 2))} of ${turns?.length || 2} (Elena)…`
       });
       await new Promise(r => setTimeout(r, 80));
     }
@@ -1137,21 +1425,11 @@ async function synthesizeTurnsWithKokoroWorker(
       audioUrl: url,
       audioModelUsed: 'node-test-fallback',
       durationSec: fallback.durationSec,
-      transcript: fallback.transcript,
-      isLeadPreview: false
+      transcript: fallback.transcript
     };
   }
 
   const jobId = `tts_${Date.now()}_${nextTtsJobSeq++}`;
-  let resolvedViaLead = false;
-  let resolveOuter = null;
-  let rejectOuter = null;
-
-  const outerPromise = new Promise((resolve, reject) => {
-    resolveOuter = resolve;
-    rejectOuter = reject;
-  });
-
   let watchdogTimer = null;
   const clearWatchdog = () => {
     if (watchdogTimer) {
@@ -1159,63 +1437,33 @@ async function synthesizeTurnsWithKokoroWorker(
       watchdogTimer = null;
     }
   };
-  const touchWatchdog = () => {
-    clearWatchdog();
-    watchdogTimer = setTimeout(() => {
-      pendingTtsJobs.delete(jobId);
-      const stallErr = new Error(
-        'Studio audio synthesis timed out waiting for voice weights or browser memory. Tap Retry Studio Audio or Listen with Device Voice.'
-      );
-      terminateAndResetTtsWorker(stallErr);
-      if (!resolvedViaLead) {
-        rejectOuter?.(stallErr);
-      }
-    }, TTS_WORKER_INACTIVITY_TIMEOUT_MS);
-  };
 
-  const fullCompletionPromise = new Promise((resolveFull, rejectFull) => {
+  return new Promise((resolve, reject) => {
+    const touchWatchdog = () => {
+      clearWatchdog();
+      watchdogTimer = setTimeout(() => {
+        pendingTtsJobs.delete(jobId);
+        const stallErr = new Error(
+          'Studio audio synthesis timed out waiting for voice weights or browser memory. Tap Retry Studio Audio or Listen Now (Device Voice).'
+        );
+        terminateAndResetTtsWorker(stallErr);
+        reject(stallErr);
+      }, TTS_WORKER_INACTIVITY_TIMEOUT_MS);
+    };
+
     touchWatchdog();
     pendingTtsJobs.set(jobId, {
-      onProgress: msg => {
-        if (!resolvedViaLead) {
-          onWorkerProgress?.(msg);
-        }
-      },
-      onLeadReady: async leadMsg => {
-        if (!allowProgressiveLead || resolvedViaLead || !leadMsg?.wavBuffer) return;
-        resolvedViaLead = true;
-        const leadUrl = await saveEpisodeAudioBlob(episodeId, leadMsg.wavBuffer);
-        resolveOuter?.({
-          audioUrl: leadUrl,
-          audioModelUsed: 'styletts2-23m-progressive',
-          durationSec: null,
-          transcript: null,
-          isLeadPreview: true,
-          backgroundPromise: fullCompletionPromise
-        });
-      },
+      onProgress: onWorkerProgress,
       resolve: async fullMsg => {
         const fullUrl = await saveEpisodeAudioBlob(episodeId, fullMsg.wavBuffer);
-        const fullResult = {
+        resolve({
           audioUrl: fullUrl,
-          audioModelUsed: 'styletts2-23m-studio',
+          audioModelUsed: 'kokoro-82m-studio',
           durationSec: fullMsg.durationSec,
-          transcript: fullMsg.transcript,
-          isLeadPreview: false
-        };
-        if (resolvedViaLead) {
-          onBackgroundFullReady?.(fullResult);
-        } else {
-          resolveOuter?.(fullResult);
-        }
-        resolveFull(fullResult);
+          transcript: fullMsg.transcript
+        });
       },
-      reject: err => {
-        if (!resolvedViaLead) {
-          rejectOuter?.(err);
-        }
-        rejectFull(err);
-      },
+      reject,
       touchWatchdog,
       clearWatchdog
     });
@@ -1223,33 +1471,22 @@ async function synthesizeTurnsWithKokoroWorker(
     worker.postMessage({
       type: 'synthesize_podcast',
       jobId,
-      turns,
-      emitLeadAtTurn: allowProgressiveLead ? 3 : 0
+      turns
     });
   });
-
-  // Prevent unhandled rejection if progressive lead already resolved
-  fullCompletionPromise.catch(() => {});
-
-  return outerPromise;
 }
 
 /**
- * Synthesizes smooth, human studio `.wav` audio for a shared or reloaded custom podcast episode:
- * 1. **Primary (~18–28s, 0 MB download)**: Uses Google Gemini Native Multi-Speaker NotebookLM TTS
- *    (`Puck` & `Aoede` — 100% identical to podcast creation voices) via either the recipient's saved
- *    `geminiApiKey` or the sender's fragment-scoped `_sharedVoiceKey`.
- * 2. **Fallback (~12–18s progressive fast-start)**: For legacy links without a voice token or when
- *    daily free-tier TTS quota is exhausted, uses the compact 23 MB quantized StyleTTS2 human voice
- *    worker (`expr-voice-2-m` + `expr-voice-2-f`), starting playback after the opening 3 turns while
- *    mastering the remainder seamlessly in the background.
+ * Synthesizes smooth, full-duration human studio `.wav` audio for a shared or uncached custom podcast:
+ * - Uses Google Gemini Native Multi-Speaker NotebookLM TTS (`Puck` & `Aoede` / `Charon` across
+ *   2 parallel studio blocks in ~18–26s, 0 MB weight download, cascading across `2.5-flash-preview-tts`,
+ *   `3.8-flash-tts`, `3.8-flash-lite-tts`, and `2.5-pro-preview-tts`) via either `prefs.geminiApiKey`
+ *   or the sender's fragment-scoped `_sharedVoiceKey`.
+ * - Never writes partial/truncated clips (`0:38`) to storage and never silently degrades studio voices
+ *   on transient network hiccups (surfaces `Retry Studio Audio` unless all Gemini TTS daily RPD quotas
+ *   are genuinely exhausted or opening an older keyless link without `_sharedVoiceKey`).
  */
-export async function synthesizeMissingEpisodeAudio(
-  episode,
-  onProgress,
-  prefs = {},
-  options = {}
-) {
+export async function synthesizeMissingEpisodeAudio(episode, onProgress, prefs = {}) {
   if (!episode?.id || !Array.isArray(episode.transcript) || episode.transcript.length === 0) {
     return null;
   }
@@ -1265,7 +1502,7 @@ export async function synthesizeMissingEpisodeAudio(
       typeof setInterval === 'function' && typeof onProgress === 'function'
         ? setInterval(() => {
             const elapsedSec = Math.max(0, (Date.now() - startedMs) / 1000);
-            const curvePct = Math.min(93, Math.round(14 + 79 * (1 - Math.exp(-elapsedSec / 13.5))));
+            const curvePct = Math.min(93, Math.round(14 + 79 * (1 - Math.exp(-elapsedSec / 11.5))));
             if (curvePct > cloudMaxPct) {
               cloudMaxPct = curvePct;
               onProgress({
@@ -1276,8 +1513,8 @@ export async function synthesizeMissingEpisodeAudio(
                 percent: cloudMaxPct,
                 stagePercents: [100, 100, cloudMaxPct],
                 engineLabel: 'NotebookLM Studio TTS',
-                message: `Recording shared podcast with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`,
-                subDetail: 'Preparing smooth human multi-speaker studio audio (~20–30 sec).'
+                message: `Recording podcast with Gemini NotebookLM studio voices (${solo ? 'Charon' : 'Puck & Aoede'})…`,
+                subDetail: 'Preparing full-length smooth human multi-speaker audio (~20–30 sec).'
               });
             }
           }, 350)
@@ -1309,12 +1546,15 @@ export async function synthesizeMissingEpisodeAudio(
             engineLabel: 'NotebookLM Studio TTS',
             message:
               info.detail ||
-              `Recording shared podcast with Gemini NotebookLM voices (${solo ? 'Charon' : 'Puck & Aoede'})…`,
-            subDetail: 'Preparing smooth human multi-speaker studio audio (~20–30 sec).'
+              `Recording podcast with Gemini NotebookLM studio voices (${solo ? 'Charon' : 'Puck & Aoede'})…`,
+            subDetail: 'Preparing full-length smooth human multi-speaker audio (~20–30 sec).'
           });
         }
       });
-    } catch {
+    } catch (ttsErr) {
+      if (!isGeminiQuotaExhaustedError(ttsErr)) {
+        throw ttsErr;
+      }
       rendered = null;
     } finally {
       if (smoothTicker) clearInterval(smoothTicker);
@@ -1322,43 +1562,20 @@ export async function synthesizeMissingEpisodeAudio(
   }
 
   if (!rendered) {
-    const originalDurationSec = Math.max(10, Number(episode.durationSec || 180));
-    rendered = await synthesizeTurnsWithKokoroWorker(
-      episode.id,
-      episode.transcript,
-      info => {
-        const subPct = Math.min(99, Math.max(10, Math.round(Number(info.subPercent || 16))));
-        onProgress?.({
-          stepIdx: 3,
-          totalSteps: 3,
-          stages: PODCAST_PIPELINE_STAGES,
-          subPercent: subPct,
-          percent: subPct,
-          stagePercents: [100, 100, subPct],
-          engineLabel: 'Expressive Studio Audio',
-          message: info.detail || 'Synthesizing expressive human studio voices…',
-          subDetail: 'Caching natural multi-speaker Stereo WAV on this device (~15–30 sec).'
-        });
-      },
-      {
-        allowProgressiveLead: episode.transcript.length >= 6,
-        onBackgroundFullReady: fullRes => {
-          if (fullRes?.audioUrl) {
-            episode.audioUrl = fullRes.audioUrl;
-            if (fullRes.durationSec) episode.durationSec = fullRes.durationSec;
-            if (Array.isArray(fullRes.transcript)) episode.transcript = fullRes.transcript;
-            options.onBackgroundFullAudioReady?.(episode, fullRes.audioUrl);
-          }
-        }
-      }
-    );
-
-    if (rendered?.isLeadPreview) {
-      episode.audioUrl = rendered.audioUrl;
-      episode.durationSec = originalDurationSec;
-      episode._backgroundFullAudioPromise = rendered.backgroundPromise;
-      return rendered.audioUrl;
-    }
+    rendered = await synthesizeTurnsWithKokoroWorker(episode.id, episode.transcript, info => {
+      const subPct = Math.min(99, Math.max(10, Math.round(Number(info.subPercent || 16))));
+      onProgress?.({
+        stepIdx: 3,
+        totalSteps: 3,
+        stages: PODCAST_PIPELINE_STAGES,
+        subPercent: subPct,
+        percent: subPct,
+        stagePercents: [100, 100, subPct],
+        engineLabel: 'Kokoro-82M Studio',
+        message: info.detail || 'Synthesizing full-episode Kokoro-82M human studio voices…',
+        subDetail: 'Caching complete 2-channel Stereo WAV on this device.'
+      });
+    });
   }
 
   if (rendered?.audioUrl) {
@@ -2097,13 +2314,16 @@ export async function generateOnDemandAutopodcast({
           });
         }
       });
-    } catch {
+    } catch (ttsErr) {
+      if (!isGeminiQuotaExhaustedError(ttsErr)) {
+        throw ttsErr;
+      }
       renderedAudio = await synthesizeTurnsWithKokoroWorker(episodeId, sanitizedTurns, info => {
         tracker.updateStage3Progress({
           subPercent: Number(info.subPercent || 12),
-          msg: 'Step 3 of 3: Converting script to expressive human podcast audio…',
-          detail: info.detail || 'Synthesizing StyleTTS2 human voices…',
-          badge: formatActiveModelBadge(scriptModelUsed, 'Studio TTS')
+          msg: 'Step 3 of 3: Converting script to Kokoro-82M human podcast audio…',
+          detail: info.detail || 'Synthesizing Kokoro-82M human voices…',
+          badge: formatActiveModelBadge(scriptModelUsed, 'Kokoro-82M')
         });
       });
     }

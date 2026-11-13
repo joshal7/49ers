@@ -165,12 +165,15 @@ function startStaticServer(port) {
           } catch {}
           mockGeminiRequests.push({ urlPath, body: parsed });
 
-          if (urlPath.includes('preview-tts:generateContent')) {
+          if (urlPath.includes('tts:generateContent')) {
             await new Promise(r => setTimeout(r, 750));
-            const fullText = String(parsed?.contents?.[0]?.parts?.[0]?.text || '');
-            const afterHeader = fullText.includes('Transcript:\n')
-              ? fullText.split('Transcript:\n')[1]
-              : fullText;
+            const partsArr = Array.isArray(parsed?.contents?.[0]?.parts)
+              ? parsed.contents[0].parts
+              : [];
+            const joinedPartsText = partsArr.map(p => String(p?.text || '')).join('\n');
+            const afterHeader = joinedPartsText.includes('Transcript:\n')
+              ? joinedPartsText.split('Transcript:\n')[1]
+              : joinedPartsText;
             const spokenWords = afterHeader
               .trim()
               .split(/\s+/)
@@ -2624,7 +2627,7 @@ async function main() {
       );
       await cdp.assertNoOverflow('Custom 3m WR Podcast Ready to Play + Expanded Transcript');
 
-      // 3. Test Human-Voice Share Flow: MP3 Audio Export + Keyless Safari/Chrome Recipient Hearing Smooth Puck & Aoede Studio WAV
+      // 3. Test Human-Voice Share Flow: Same-Device 0ms CacheStorage Persistence, Self-Healing 0:38 Truncation Guard, & Keyless Recipient Full-Duration Studio WAV
       const shareRoundTrip = await cdp.eval(async () => {
         const hasSenderMp3ShareBtn = Boolean(
           document.querySelector('[data-podcast-ready-card] [data-action="share-podcast-audio"]')
@@ -2644,12 +2647,56 @@ async function main() {
         const sharedUrl = window.__lastSharedUrl || nativeShareCaptured?.url || '';
         const st = window.__49ersDiagnostics.getState();
         const savedSenderKey = st.prefs.geminiApiKey;
+        const savedCreatorEpisodes = [...(st.prefs.localCustomEpisodes || [])];
         const rawKeyMaskedInUrl = Boolean(savedSenderKey && !sharedUrl.includes(savedSenderKey));
         const sharedEpId = st.audioState?.episode?.id;
-        const { deleteEpisodeAudioBlob, getEpisodeAudioUrl } = await import('/src/services/podcastAudioStore.js');
+        const {
+          deleteEpisodeAudioBlob,
+          getEpisodeAudioUrl,
+          saveEpisodeAudioBlob,
+          inspectWavBufferDurationSec,
+          PODCAST_AUDIO_CACHE_NAME
+        } = await import('/src/services/podcastAudioStore.js');
 
-        // 3A. Simulate keyless recipient browser (Chrome iOS / Dad's Safari opened from iMessage):
-        //     Must show Shared Podcast Hero ABOVE generator, support 1-tap Play When Ready, and synthesize smooth Stereo WAV (never robotic OS speech!)
+        // 3A. Verify CacheStorage (`49ers-podcast-studio-audio-v1`) persisted the saved podcast & Share-to-Self resolves in <100ms without re-synthesizing or mutating saved episode!
+        const audioCache = await caches.open(PODCAST_AUDIO_CACHE_NAME);
+        const cacheKeysBefore = await audioCache.keys();
+        const persistedInCacheStorage = cacheKeysBefore.some(req => req.url.includes(encodeURIComponent(sharedEpId)));
+
+        const tSameDeviceStart = performance.now();
+        await window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
+        const sameDeviceShareOpenMs = Math.round(performance.now() - tSameDeviceStart);
+        const creatorSavedRecordUnmutated = !st.prefs.localCustomEpisodes.find(e => e.id === sharedEpId)?.isSharedImport;
+
+        // 3B. Verify Self-Healing Guard purges any poisoned 0:38 (38s) clip on a ~3:00 episode
+        const sr8k = 8000;
+        const frames38s = 38 * sr8k;
+        const dataBytes38s = frames38s * 4;
+        const poisoned38sBuf = new ArrayBuffer(44 + dataBytes38s);
+        const dv38 = new DataView(poisoned38sBuf);
+        const wAscii = (off, s) => {
+          for (let i = 0; i < s.length; i++) dv38.setUint8(off + i, s.charCodeAt(i));
+        };
+        wAscii(0, 'RIFF');
+        dv38.setUint32(4, 36 + dataBytes38s, true);
+        wAscii(8, 'WAVE');
+        wAscii(12, 'fmt ');
+        dv38.setUint32(16, 16, true);
+        dv38.setUint16(20, 1, true);
+        dv38.setUint16(22, 2, true);
+        dv38.setUint32(24, sr8k, true);
+        dv38.setUint32(28, sr8k * 4, true);
+        dv38.setUint16(32, 4, true);
+        dv38.setUint16(34, 16, true);
+        wAscii(36, 'data');
+        dv38.setUint32(40, dataBytes38s, true);
+
+        await saveEpisodeAudioBlob(sharedEpId, poisoned38sBuf);
+        const purgedTruncatedUrl = await getEpisodeAudioUrl(sharedEpId, 186);
+        const selfHealedTruncated38s = purgedTruncatedUrl === null;
+
+        // 3C. Simulate keyless recipient browser (Chrome iOS / Dad's Safari opened from iMessage):
+        //     Must show Shared Podcast Hero ABOVE generator, support 1-tap Play When Ready, and synthesize FULL-DURATION (~3:00) smooth Stereo WAV (never stopping at 0:38!)
         document.getElementById('mpCloseBtn')?.click();
         st.prefs.geminiApiKey = '';
         st.prefs.localCustomEpisodes = [];
@@ -2659,7 +2706,7 @@ async function main() {
 
         try {
           const openPromise = window.__49ersDiagnostics.openSharedUrl(new URL(sharedUrl));
-          // Inspect live preparing state while Gemini NotebookLM TTS (~750ms mock) is in flight
+          // Inspect live preparing state while Gemini NotebookLM parallel TTS (~750ms mock) is in flight
           await new Promise(r => setTimeout(r, 150));
 
           const readyCardPrep = document.querySelector('[data-podcast-ready-card]');
@@ -2687,21 +2734,25 @@ async function main() {
             window.__49ersDiagnostics.getState().audioState?.usingDeviceSpeech
           );
           const recipientKeyRemainedPrivate = st.prefs.geminiApiKey === '';
-          const hydratedAudioUrl = loadedSharedEp?.id ? await getEpisodeAudioUrl(loadedSharedEp.id) : null;
+          const hydratedAudioUrl = loadedSharedEp?.id
+            ? await getEpisodeAudioUrl(loadedSharedEp.id, loadedSharedEp.durationSec)
+            : null;
 
           let wavHeader = '';
           let wavChannels = 0;
           let wavByteLength = 0;
+          let wavActualDurationSec = 0;
           if (hydratedAudioUrl) {
             const wavBuf = await (await fetch(hydratedAudioUrl)).arrayBuffer();
             const dv = new DataView(wavBuf);
             wavHeader = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
             wavChannels = dv.getUint16(22, true);
             wavByteLength = wavBuf.byteLength;
+            wavActualDurationSec = Math.round(inspectWavBufferDurationSec(wavBuf));
           }
           document.getElementById('mpPlayPauseBtn')?.click();
 
-          // 3B. Verify legacy keyless link (without vk token) also prepares WAV audio cleanly without robotic speech
+          // 3D. Verify legacy keyless link (without vk token) also prepares full-duration WAV audio cleanly without robotic speech
           document.getElementById('mpCloseBtn')?.click();
           if (sharedEpId) {
             await deleteEpisodeAudioBlob(sharedEpId);
@@ -2719,13 +2770,17 @@ async function main() {
           } finally {
             window.__49ersFastTestTtsFallback = false;
           }
-          const legacyHydratedUrl = sharedEpId ? await getEpisodeAudioUrl(sharedEpId) : null;
+          const legacyHydratedUrl = sharedEpId ? await getEpisodeAudioUrl(sharedEpId, 140) : null;
           const legacyNotRobotic = !window.__49ersDiagnostics.getState().audioState?.usingDeviceSpeech;
 
           return {
             hasSenderMp3ShareBtn,
             sharedUrl,
             rawKeyMaskedInUrl,
+            persistedInCacheStorage,
+            sameDeviceShareOpenMs,
+            creatorSavedRecordUnmutated,
+            selfHealedTruncated38s,
             nativeTitle: nativeShareCaptured?.title || '',
             loadedTitle: loadedSharedEp?.title || '',
             loadedTurns: loadedSharedEp?.transcript?.length || 0,
@@ -2741,11 +2796,13 @@ async function main() {
             wavHeader,
             wavChannels,
             wavByteLength,
+            wavActualDurationSec,
             hasLegacyHydratedBlob: Boolean(legacyHydratedUrl),
             legacyNotRobotic
           };
         } finally {
           st.prefs.geminiApiKey = savedSenderKey;
+          st.prefs.localCustomEpisodes = savedCreatorEpisodes;
           window.__49ersDiagnostics.forceRender();
         }
       });
@@ -2754,6 +2811,10 @@ async function main() {
           shareRoundTrip.sharedUrl.includes('?pod=custom_ep_') &&
           shareRoundTrip.sharedUrl.includes('#shared-pod=z.') &&
           shareRoundTrip.rawKeyMaskedInUrl &&
+          shareRoundTrip.persistedInCacheStorage &&
+          shareRoundTrip.sameDeviceShareOpenMs < 200 &&
+          shareRoundTrip.creatorSavedRecordUnmutated &&
+          shareRoundTrip.selfHealedTruncated38s &&
           shareRoundTrip.nativeTitle.includes('49ers Faithful Podcast') &&
           shareRoundTrip.loadedTurns >= 10 &&
           shareRoundTrip.isSharedImport &&
@@ -2767,7 +2828,8 @@ async function main() {
           shareRoundTrip.hasHydratedAudioBlob &&
           shareRoundTrip.wavHeader === 'RIFF' &&
           shareRoundTrip.wavChannels === 2 &&
-          shareRoundTrip.wavByteLength > 1_000_000 &&
+          shareRoundTrip.wavByteLength > 10_000_000 &&
+          shareRoundTrip.wavActualDurationSec >= 145 &&
           shareRoundTrip.hasLegacyHydratedBlob &&
           shareRoundTrip.legacyNotRobotic,
         `Human-voice podcast share & keyless recipient studio WAV playback failed: ${JSON.stringify(shareRoundTrip)}`
