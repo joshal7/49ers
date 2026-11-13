@@ -2002,7 +2002,7 @@ test('Trade Window purchasing power, real targets, pitfalls to avoid, and 6-pick
   assert.equal(parsedSample[1].fromTeam, 'BAL');
 });
 
-await testAsync('Worker defaults to best free model (gemini-3.8-flash on High Thinking), strips internal thought parts, and preserves external trade/dead-cap context', async () => {
+await testAsync('Worker defaults to best free model (gemini-4-hydrogen on XHIGH Thinking), strips internal thought parts, and preserves external trade/dead-cap context', async () => {
   const origFetch = globalThis.fetch;
   let capturedUrl = '';
   let capturedBody = null;
@@ -2030,7 +2030,7 @@ await testAsync('Worker defaults to best free model (gemini-3.8-flash on High Th
 
   try {
     const envPro = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-key' });
-    delete envPro.GEMINI_TEXT_MODEL; // verify default fallback is gemini-3.8-flash on HIGH thinking!
+    delete envPro.GEMINI_TEXT_MODEL; // verify default fallback is gemini-4-hydrogen on XHIGH thinking!
     const res = await (
       await edgeWorker.fetch(
         new Request('https://worker.example/api/analyze', {
@@ -2045,8 +2045,10 @@ await testAsync('Worker defaults to best free model (gemini-3.8-flash on High Th
       )
     ).json();
 
-    assert.ok(capturedUrl.includes('models/gemini-3.8-flash:generateContent'), `Expected gemini-3.8-flash URL, got ${capturedUrl}`);
-    assert.deepEqual(capturedBody.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' }, 'Expected Gemini 3+ HIGH thinkingLevel');
+    assert.ok(capturedUrl.includes('models/gemini-4-hydrogen:generateContent'), `Expected gemini-4-hydrogen URL, got ${capturedUrl}`);
+    assert.deepEqual(capturedBody.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' }, 'Expected Gemini 4 Hydrogen XHIGH thinkingLevel');
+    assert.equal(res.item.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(res.item.thinkingLevel, 'XHIGH');
     assert.ok(!res.item.markdown.includes('INTERNAL_SECRET_THOUGHT_SCRATCHPAD'), 'Thought part must never leak into output');
     assert.ok(!/Bryce Huff/i.test(res.item.markdown), 'Active-49er Bryce Huff hallucination must be scrubbed');
     assert.ok(/Javon Hargrave/i.test(res.item.markdown), 'Legitimate 2026 dead-cap mention of Javon Hargrave must be preserved');
@@ -2056,8 +2058,17 @@ await testAsync('Worker defaults to best free model (gemini-3.8-flash on High Th
   }
 });
 
-await testAsync('Free-tier model discovery & Worker /api/model-status automatically rank newer Flash High-Thinking models and fail over cleanly', async () => {
-  assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-3.8-flash');
+await testAsync('Free-tier model discovery & Worker /api/model-status automatically rank Gemini 4 Hydrogen (XHIGH) #1 and fail over cleanly', async () => {
+  assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-4-hydrogen');
+  assert.ok(
+    scoreFreeTierGeminiModel('gemini-4-hydrogen') > scoreFreeTierGeminiModel('gemini-4.0-flash'),
+    'gemini-4-hydrogen on XHIGH must outscore gemini-4.0-flash and all 3.x models'
+  );
+  assert.ok(
+    scoreFreeTierGeminiModel('gemini-4-hydrogen') > scoreFreeTierGeminiModel('gemini-4-carbon') &&
+      scoreFreeTierGeminiModel('gemini-4-hydrogen') > scoreFreeTierGeminiModel('gemini-4-argon'),
+    'Free-Tier gemini-4-hydrogen must outscore paid-only Carbon/Argon tiers'
+  );
   assert.ok(
     scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-2.5-pro'),
     'Newer gemini-3.8-flash on High Thinking must outscore older restricted gemini-2.5-pro for free-tier synthesis'
@@ -2075,8 +2086,9 @@ await testAsync('Free-tier model discovery & Worker /api/model-status automatica
     { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
   ]);
-  assert.equal(ranked[0], 'gemini-3.9-flash', 'Catalog poll must auto-upgrade to newly released gemini-3.9-flash');
-  assert.equal(ranked[1], 'gemini-3.8-flash');
+  assert.equal(ranked[0], 'gemini-4-hydrogen', 'Merged fallback cascade must keep gemini-4-hydrogen at #1');
+  assert.equal(ranked[1], 'gemini-3.9-flash', 'Catalog poll must rank newly released gemini-3.9-flash right behind Hydrogen');
+  assert.equal(ranked[2], 'gemini-3.8-flash');
 
   const origFetch = globalThis.fetch;
   const calledUrls = [];
@@ -2087,15 +2099,15 @@ await testAsync('Free-tier model discovery & Worker /api/model-status automatica
       return new Response(
         JSON.stringify({
           models: [
-            { name: 'models/gemini-4.0-flash', supportedGenerationMethods: ['generateContent'] },
+            { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
             { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }
           ]
         }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
     }
-    if (u.includes('models/gemini-4.0-flash:generateContent')) {
-      // Simulate quota exhaustion / 429 on 4.0-flash to verify automatic failover to 3.8-flash
+    if (u.includes('models/gemini-4-hydrogen:generateContent')) {
+      // Simulate quota exhaustion / 429 on gemini-4-hydrogen to verify automatic failover to 3.8-flash
       return new Response(JSON.stringify({ error: { message: 'Quota exceeded' } }), { status: 429 });
     }
     return new Response(
@@ -2116,8 +2128,8 @@ await testAsync('Free-tier model discovery & Worker /api/model-status automatica
         envAuto
       )
     ).json();
-    assert.equal(statusRes.bestModel, 'gemini-4.0-flash', 'Polling /api/model-status?poll=1 must discover gemini-4.0-flash');
-    assert.equal(statusRes.thinkingLevel, 'HIGH');
+    assert.equal(statusRes.bestModel, 'gemini-4-hydrogen', 'Polling /api/model-status?poll=1 must discover gemini-4-hydrogen');
+    assert.equal(statusRes.thinkingLevel, 'XHIGH');
     assert.equal(statusRes.thinkingBudget, 24576);
 
     const analyzeRes = await (
@@ -2131,7 +2143,7 @@ await testAsync('Free-tier model discovery & Worker /api/model-status automatica
       )
     ).json();
     assert.ok(analyzeRes.item.markdown.includes('Verified Failover Synthesis'));
-    assert.ok(calledUrls.some(u => u.includes('models/gemini-4.0-flash:generateContent')));
+    assert.ok(calledUrls.some(u => u.includes('models/gemini-4-hydrogen:generateContent')));
     assert.ok(calledUrls.some(u => u.includes('models/gemini-3.8-flash:generateContent')));
   } finally {
     globalThis.fetch = origFetch;
@@ -2644,17 +2656,19 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
     'Worker EDITORIAL_SYSTEM_PROMPT must explicitly prioritize accuracy & quality over generation time'
   );
 
-  // Highest-quality model ranking: 3.8+ Pro outranks 3.8 Flash when available in catalog, while 3.8 Flash outranks legacy 2.5 Pro
-  assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-3.8-flash');
+  // Highest-quality model ranking: Gemini 4 Hydrogen (XHIGH) #1, 3.8+ Pro/Flash failover, Studio Pro TTS cascade
+  assert.equal(DEFAULT_FREE_MODEL_CASCADE[0], 'gemini-4-hydrogen');
+  assert.ok(scoreFreeTierGeminiModel('gemini-4-hydrogen') > scoreFreeTierGeminiModel('gemini-3.8-pro'));
   assert.ok(scoreFreeTierGeminiModel('gemini-3.8-pro') > scoreFreeTierGeminiModel('gemini-3.8-flash'));
   assert.ok(scoreFreeTierGeminiModel('gemini-3.8-flash') > scoreFreeTierGeminiModel('gemini-2.5-pro'));
   assert.deepEqual(DEFAULT_AUDIO_TTS_CASCADE, ['gemini-2.5-pro-preview-tts', 'gemini-2.5-flash-preview-tts']);
 
   // Clutter-free model label & rough estimated generation time scaling
   const labelInfo = resolveActiveHighQualityModelLabel({
-    meta: { aiEngine: { activeModel: 'gemini-3.8-flash', thinkingLevel: 'HIGH' } }
+    meta: { aiEngine: { activeModel: 'gemini-4-hydrogen', thinkingLevel: 'XHIGH' } }
   });
-  assert.equal(labelInfo.modelId, 'gemini-3.8-flash');
+  assert.equal(labelInfo.modelId, 'gemini-4-hydrogen');
+  assert.equal(labelInfo.thinkingLevel, 'XHIGH');
   assert.equal(labelInfo.displayLabel, 'Accuracy-First');
   assert.ok(!/gemini/i.test(labelInfo.displayLabel), 'UI displayLabel must omit internal Gemini model branding');
 
@@ -2766,8 +2780,8 @@ await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking ver
     );
     assert.equal(analyzeRes.status, 200);
     const analyzeJson = await analyzeRes.json();
-    assert.equal(analyzeJson.item.modelUsed, 'gemini-3.8-flash');
-    assert.equal(analyzeJson.item.thinkingLevel, 'HIGH');
+    assert.equal(analyzeJson.item.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(analyzeJson.item.thinkingLevel, 'XHIGH');
     assert.equal(analyzeJson.item.qualityPriority, 'accuracy_over_latency');
     assert.equal(analyzeJson.item.verifiedPasses, 2);
 
@@ -2787,7 +2801,8 @@ await testAsync('Worker /api/analyze & /api/podcast run 2-pass High-Thinking ver
     );
     assert.equal(podRes.status, 200);
     const podJson = await podRes.json();
-    assert.equal(podJson.episode.modelUsed, 'gemini-3.8-flash');
+    assert.equal(podJson.episode.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(podJson.episode.thinkingLevel, 'XHIGH');
     assert.equal(podJson.episode.verifiedPasses, 2);
     assert.equal(podJson.episode.qualityPriority, 'accuracy_over_latency');
     assert.equal(podJson.episode.audioModelUsed, 'gemini-2.5-flash-preview-tts');
@@ -2969,11 +2984,12 @@ await testAsync('Share Service compresses custom podcasts/analyses into 49ers.jo
   assert.ok(hydratedAnalysis?.analysis?.markdown.includes('Jordan Watkins'));
 });
 
-await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranking, v1beta thinkingLevel/thinkingBudget exclusivity, and anti-robotic NotebookLM TTS preparation', async () => {
+await testAsync('Gemini Studio Prompts & Thinking Config enforce Gemini 4 Hydrogen (XHIGH) ranking, v1beta thinkingLevel/thinkingBudget exclusivity, and anti-robotic NotebookLM TTS preparation', async () => {
   const {
     scoreBestGeminiReasoningModel,
     rankBestGeminiReasoningModels,
     buildGeminiThinkingConfig,
+    resolveGeminiThinkingLevelLabel,
     prepareConversationalTextForModernNeuralTts,
     chunkTurnsForGeminiTts,
     DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
@@ -2982,7 +2998,11 @@ await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranki
     NOTEBOOKLM_VOICE_PROFILES
   } = await import('../src/engine/geminiStudioPrompts.js');
 
-  // Free-Tier High-Thinking Flash models (`gemini-3.8-flash` -> `Gemini 3.8 High`, 20 RPD) strictly outrank 0/0-quota 3.1/2.5 Pro
+  // Gemini 4 Hydrogen (`gemini-4-hydrogen` on `XHIGH`) strictly outranks 3.8 Flash/Pro, paid-only Carbon/Argon, and 0/0-quota 3.1/2.5 Pro
+  assert.ok(scoreBestGeminiReasoningModel('gemini-4-hydrogen') > scoreBestGeminiReasoningModel('gemini-3.8-pro'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-4-hydrogen') > scoreBestGeminiReasoningModel('gemini-3.8-flash'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-4-hydrogen') > scoreBestGeminiReasoningModel('gemini-4-carbon'));
+  assert.ok(scoreBestGeminiReasoningModel('gemini-4-hydrogen') > scoreBestGeminiReasoningModel('gemini-4-argon'));
   assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-flash') > scoreBestGeminiReasoningModel('gemini-3.6-flash'));
   assert.ok(scoreBestGeminiReasoningModel('gemini-3.6-flash') > scoreBestGeminiReasoningModel('gemini-3-flash-preview'));
   assert.ok(scoreBestGeminiReasoningModel('gemini-3.8-flash') > scoreBestGeminiReasoningModel('gemini-3.1-pro-preview'));
@@ -2997,19 +3017,28 @@ await testAsync('Gemini Studio Prompts & Thinking Config enforce Pro-first ranki
 
   const ranked = rankBestGeminiReasoningModels([
     { name: 'models/gemini-3-pro-preview', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
+    { name: 'models/gemini-4-carbon', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.6-flash', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
     { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] }
   ]);
-  assert.equal(ranked[0], 'gemini-3.8-flash');
-  assert.equal(ranked[1], 'gemini-3.6-flash');
+  assert.equal(ranked[0], 'gemini-4-hydrogen');
+  assert.equal(ranked[1], 'gemini-3.8-flash');
+  assert.equal(ranked[2], 'gemini-3.6-flash');
   assert.equal(ranked.includes('gemini-3-pro-preview'), false, 'Ranked cascade must never include retired gemini-3-pro-preview');
 
-  // Gemini 3.0+ uses thinkingLevel: 'HIGH' (never thinkingBudget); Gemini 2.5 uses thinkingBudget
+  // Gemini 4 Hydrogen uses thinkingLevel: 'XHIGH'; Gemini 3.x uses 'HIGH'; Gemini 2.5 uses thinkingBudget
+  const cfgH = buildGeminiThinkingConfig('gemini-4-hydrogen');
+  assert.deepEqual(cfgH, { thinkingLevel: 'XHIGH' });
+  assert.equal('thinkingBudget' in cfgH, false);
+  assert.equal(resolveGeminiThinkingLevelLabel('gemini-4-hydrogen'), 'XHIGH');
+
   const cfg38 = buildGeminiThinkingConfig('gemini-3.8-pro');
   assert.deepEqual(cfg38, { thinkingLevel: 'HIGH' });
   assert.equal('thinkingBudget' in cfg38, false);
+  assert.equal(resolveGeminiThinkingLevelLabel('gemini-3.8-flash'), 'HIGH');
 
   const cfg31 = buildGeminiThinkingConfig('gemini-3.1-pro-preview');
   assert.deepEqual(cfg31, { thinkingLevel: 'HIGH' });
@@ -3218,7 +3247,7 @@ await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQU
   }
 });
 
-await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-flash), migrates 0-quota Pro prefs, and gracefully handles HTTP 429 quota exhaustion', async () => {
+await testAsync('Dynamic Gemini Auto-Update selects Gemini 4 Hydrogen (XHIGH), migrates 0-quota Pro/Carbon prefs, and gracefully handles HTTP 429 quota exhaustion', async () => {
   const {
     checkAndAutoUpdateBestGeminiModel,
     resolveActiveHighQualityModelLabel,
@@ -3230,7 +3259,7 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
   try {
     const userPrefs = {
       geminiApiKey: 'AIzaMockAutoUpdateKey',
-      verifiedGeminiModel: 'gemini-3.1-pro-preview'
+      verifiedGeminiModel: 'gemini-3.8-flash'
     };
 
     let updatedModelReported = null;
@@ -3245,6 +3274,8 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
               { name: 'models/gemini-3.1-pro-preview', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-3.6-flash', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-4-carbon', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-3.8-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
             ]
           }),
@@ -3259,21 +3290,29 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
     });
 
     assert.ok(res?.ok, 'checkAndAutoUpdateBestGeminiModel should return ok: true');
-    assert.equal(res.bestModel, 'gemini-3.8-flash', 'Should select Gemini 3.8 High (gemini-3.8-flash, 20 RPD Free Tier) over 0/0-quota 3.1 Pro');
-    assert.equal(userPrefs.verifiedGeminiModel, 'gemini-3.8-flash', 'Should auto-update userPrefs in place');
-    assert.equal(updatedModelReported, 'gemini-3.8-flash', 'Should trigger onModelUpdated callback');
+    assert.equal(res.bestModel, 'gemini-4-hydrogen', 'Should select Gemini 4 Hydrogen (gemini-4-hydrogen, XHIGH Free Tier) over 3.8-flash and 0-quota Carbon/Pro');
+    assert.equal(userPrefs.verifiedGeminiModel, 'gemini-4-hydrogen', 'Should auto-update userPrefs in place');
+    assert.equal(updatedModelReported, 'gemini-4-hydrogen', 'Should trigger onModelUpdated callback');
 
     // Verify resolved label migrates modelId internally while keeping UI shortModelName clutter-free
     const label = resolveActiveHighQualityModelLabel(null, userPrefs);
     assert.equal(label.shortModelName, 'Deep Research');
-    assert.equal(label.modelId, 'gemini-3.8-flash');
+    assert.equal(label.modelId, 'gemini-4-hydrogen');
+    assert.equal(label.thinkingLevel, 'XHIGH');
 
-    // Verify stale retired gemini-3-pro-preview or 0-quota gemini-3.1-pro-preview in localStorage prefs is migrated to gemini-3.8-flash
+    // Verify stale retired gemini-3-pro-preview or 0-quota gemini-4-carbon in localStorage prefs is migrated to gemini-4-hydrogen
     const migratedLabel = resolveActiveHighQualityModelLabel(null, {
       verifiedGeminiModel: 'gemini-3-pro-preview'
     });
-    assert.equal(migratedLabel.modelId, 'gemini-3.8-flash');
+    assert.equal(migratedLabel.modelId, 'gemini-4-hydrogen');
+    assert.equal(migratedLabel.thinkingLevel, 'XHIGH');
     assert.equal(migratedLabel.shortModelName, 'Deep Research');
+
+    const migratedCarbon = resolveActiveHighQualityModelLabel(null, {
+      verifiedGeminiModel: 'gemini-4-carbon'
+    });
+    assert.equal(migratedCarbon.modelId, 'gemini-4-hydrogen');
+    assert.equal(migratedCarbon.thinkingLevel, 'XHIGH');
 
     // Run a second time with no new models: should NOT trigger callback
     let reTriggered = false;
@@ -3288,7 +3327,7 @@ await testAsync('Dynamic Gemini Auto-Update selects Gemini 3.8 High (gemini-3.8-
       if (u.includes('/models?key=')) {
         return new Response(
           JSON.stringify({
-            models: [{ name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }]
+            models: [{ name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] }]
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
@@ -5516,7 +5555,7 @@ await testAsync('Expanded Football Jargon Glossary, Non-Overlapping Coaching Che
     'Even Key Matchup cards must use gold badge rather than emerald SF-edge badge'
   );
 
-  // Verify 1/Day Live Gemini 3.8 Matchup Intel spends strictly 1 credit/day and 0 on same-day repeat calls
+  // Verify 1/Day Live Gemini 4 Hydrogen (XHIGH) Matchup Intel spends strictly 1 credit/day and 0 on same-day repeat calls
   const { refreshDailyMatchupIntelIfDue, getPacificDateKey } = await import('../src/services/aiWorkerClient.js');
   const origLocalStorage = globalThis.localStorage;
   const origFetchDaily = globalThis.fetch;
@@ -5528,17 +5567,24 @@ await testAsync('Expanded Football Jargon Glossary, Non-Overlapping Coaching Che
       removeItem: k => memStore.delete(k)
     };
     let generateCalls = 0;
-    globalThis.fetch = async url => {
+    let lastMatchupReqUrl = '';
+    let lastMatchupReqBody = null;
+    globalThis.fetch = async (url, init) => {
       const u = String(url);
       if (u.includes('/models?')) {
         return new Response(
           JSON.stringify({
-            models: [{ name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }]
+            models: [
+              { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] }
+            ]
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
       }
       generateCalls += 1;
+      lastMatchupReqUrl = u;
+      lastMatchupReqBody = init?.body ? JSON.parse(init.body) : null;
       return new Response(
         JSON.stringify({
           candidates: [
@@ -5572,8 +5618,11 @@ await testAsync('Expanded Football Jargon Glossary, Non-Overlapping Coaching Che
       nowMs: day1Ms
     });
     assert.equal(firstRun.updated, true, 'First call of PT day must synthesize daily matchup intel');
+    assert.equal(firstRun.modelUsed, 'gemini-4-hydrogen');
+    assert.ok(lastMatchupReqUrl.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.deepEqual(lastMatchupReqBody?.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' });
     assert.equal(firstRun.datePt, day1Pt);
-    assert.equal(generateCalls, 1, 'Daily refresh must burn strictly 1 Gemini 3.8 request (1 credit)');
+    assert.equal(generateCalls, 1, 'Daily refresh must burn strictly 1 Gemini 4 Hydrogen request (1 credit)');
 
     const secondSameDay = await refreshDailyMatchupIntelIfDue({
       appData: cloneAppData,
@@ -6022,7 +6071,7 @@ await testAsync('Site-wide redundancy consolidation & Depth Chart scheme/alignme
   assert.ok(podsHtml.includes('<span>All 6 Shows</span>'), 'All 6 Shows filter pill must not repeat episode count a third time');
 });
 
-test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-News Brief, Breaking-Above-Brief Ordering & Disjoint Video/Cap Partitioning', () => {
+test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 4 Hydrogen (XHIGH) Top-News Brief, Breaking-Above-Brief Ordering & Disjoint Video/Cap Partitioning', () => {
   const fullAppData = {
     meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
     roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
@@ -6116,7 +6165,9 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 3.8 Flash High Top-Ne
     cands,
     fullAppData
   );
-  assert.ok(parsedAiBrief && parsedAiBrief.sources.length >= 4, 'Failed to parse valid Gemini 3.8 Flash High brief JSON');
+  assert.ok(parsedAiBrief && parsedAiBrief.sources.length >= 4, 'Failed to parse valid Gemini 4 Hydrogen XHIGH brief JSON');
+  assert.equal(parsedAiBrief.modelUsed, 'gemini-4-hydrogen');
+  assert.equal(parsedAiBrief.thinkingLevel, 'XHIGH');
   assert.ok(/\[[^\]]+\]\(https:\/\/[^)]+\)/.test(parsedAiBrief.summary), 'Expected S# citations converted to verified HTTPS links');
   assert.ok(!/\(\[|\bper\s+\[/i.test(parsedAiBrief.summary), 'Expected wrapping parens and "per " stripped around inline link icons');
 
@@ -6529,6 +6580,28 @@ test('3-Lens NFL Draft Big Board Engine: 250+ Depth, NR-at-Bottom Sorting (Asc &
     assert.ok(grpRes.length >= 5, `Expected >=5 prospects for split filter ${grpKey}, got ${grpRes.length}`);
     assert.ok(grpRes.every(p => allowedSet.has(p.canonicalPos)), `Split filter ${grpKey} leaked unexpected position`);
   }
+
+  // 7. Prospect Profile Link Integrity: block forged Scouts Inc. 45828xx 404 IDs & guarantee 100% unique verified profileUrls
+  assert.equal(
+    isPaywalledOrBlockedUrl('https://www.espn.com/college-football/player/_/id/4582818/jeremiah-smith'),
+    true,
+    'Forged ESPN Scouts Inc. draft-rank ID (45828xx) must be flagged as broken 404 URL'
+  );
+  assert.equal(
+    isPaywalledOrBlockedUrl('https://www.espn.com/college-football/player/_/id/5079720/jeremiah-smith'),
+    false,
+    'Verified real ESPN NCAA athlete ID (5079720) must pass URL validation'
+  );
+  const uniqueProfileSet = new Set(liveBb.map(p => p.profileUrl));
+  assert.equal(uniqueProfileSet.size, liveBb.length, 'Every Big Board prospect must resolve to a distinct verified profileUrl');
+  for (const p of liveBb) {
+    assert.ok(
+      p.profileUrl &&
+        !isPaywalledOrBlockedUrl(p.profileUrl) &&
+        !p.profileUrl.includes('nflmockdraftdatabase.com/players/'),
+      `Invalid or Cloudflare-gated Prospect Profile URL for ${p.name}: ${p.profileUrl}`
+    );
+  }
 });
 
 await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safety', async () => {
@@ -6671,6 +6744,161 @@ await testAsync('Shared Podcast Hero UX & iOS Safari WASM q8 Audio Pipeline Safe
     });
     assert.equal(fileRes.method, 'native_file');
     assert.equal(sharedFilesCount, 1);
+  }
+});
+
+await testAsync('Cross-surface Gemini 4 Hydrogen (XHIGH) audit: AI Briefs, Matchups, Auto Pod, AI Analysis, Worker health & XHIGH->HIGH retry resilience', async () => {
+  const { refreshDailyTopNewsBriefIfDue, runOnDemandDeepAnalysis } = await import(
+    '../src/services/aiWorkerClient.js'
+  );
+  const { extractIncomingSharedRoute, buildShareableAnalysisUrl } = await import(
+    '../src/services/shareService.js'
+  );
+
+  // 1. Worker /api/health reports gemini-4-hydrogen + XHIGH
+  const env = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-hydrogen-key' });
+  const healthJson = await (
+    await edgeWorker.fetch(new Request('https://worker.example/api/health'), env)
+  ).json();
+  assert.equal(healthJson.defaultFreeModel, 'gemini-4-hydrogen');
+  assert.equal(healthJson.thinkingLevel, 'XHIGH');
+
+  // 2. Worker /api/daily-news-brief & /api/matchup-intel target gemini-4-hydrogen with XHIGH thinkingLevel
+  const origFetch = globalThis.fetch;
+  const origLocalStorage = globalThis.localStorage;
+  const captured = [];
+  let simulateXhigh400Once = false;
+  try {
+    const mem = new Map();
+    globalThis.localStorage = {
+      getItem: k => (mem.has(k) ? mem.get(k) : null),
+      setItem: (k, v) => mem.set(k, String(v)),
+      removeItem: k => mem.delete(k)
+    };
+    globalThis.fetch = async (url, init) => {
+      const u = String(url);
+      const body = init?.body ? JSON.parse(init.body) : null;
+      captured.push({ url: u, body });
+
+      if (u.includes('/models?')) {
+        return new Response(
+          JSON.stringify({
+            models: [{ name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] }]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      if (simulateXhigh400Once && body?.generationConfig?.thinkingConfig?.thinkingLevel === 'XHIGH') {
+        simulateXhigh400Once = false;
+        return new Response(
+          JSON.stringify({ error: { message: 'INVALID_ARGUMENT: thinkingConfig XHIGH preview gate' } }),
+          { status: 400, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              content: {
+                parts: [
+                  { thought: true, text: 'XHIGH deep reasoning...' },
+                  {
+                    text: JSON.stringify({
+                      headline: '49ers Week 10 Briefing: Cap Rollover & Secondary Prep',
+                      summary:
+                        'San Francisco (7-1) prepares for Dallas while holding $39.18M in 2026 cap room [S1] and monitoring Thursday practice participation [S2].',
+                      bullets: [
+                        'Trades & Cap Moves: Paraag Marathe preserves $39.18M for Article 13 rollover into 2027 [S1].',
+                        'Injury & Practice Availability: DT C.J. West opened his 21-day IR window while veterans managed mid-week reps [S2].',
+                        'Matchup Storylines: Kyle Shanahan and Raheem Morris game-plan around top-ranked offensive EPA [S3].'
+                      ],
+                      citedSourceIds: ['S1', 'S2', 'S3']
+                    })
+                  }
+                ]
+              }
+            }
+          ]
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    };
+
+    const workerBriefRes = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/daily-news-brief', {
+          method: 'POST',
+          headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cycleKey: '2026-11-12@17PT', prompt: 'Synthesize daily brief' })
+        }),
+        env
+      )
+    ).json();
+    assert.equal(workerBriefRes.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(workerBriefRes.thinkingLevel, 'XHIGH');
+    assert.ok(captured[0].url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.deepEqual(captured[0].body.generationConfig.thinkingConfig, { thinkingLevel: 'XHIGH' });
+
+    const workerMatchupRes = await (
+      await edgeWorker.fetch(
+        new Request('https://worker.example/api/matchup-intel', {
+          method: 'POST',
+          headers: { 'X-Group-Passcode': 'faithful49', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ seasonYear: 2026, week: 10, oppAbbr: 'DAL', datePt: '2026-11-12', prompt: 'Matchup intel' })
+        }),
+        env
+      )
+    ).json();
+    assert.equal(workerMatchupRes.modelUsed, 'gemini-4-hydrogen');
+
+    // 3. Browser refreshDailyTopNewsBriefIfDue hits gemini-4-hydrogen with XHIGH
+    const fullAppData = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+      seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+    };
+    fullAppData.news.dailyTopNewsBrief.source = 'pipeline-grounded';
+    captured.length = 0;
+
+    const liveBriefRun = await refreshDailyTopNewsBriefIfDue({
+      appData: fullAppData,
+      prefs: { geminiApiKey: 'AIzaHydrogenBriefKey', geminiApiBaseUrl: 'https://mock-h2.local/v1beta' },
+      force: true
+    });
+    assert.equal(liveBriefRun.updated, true);
+    assert.equal(liveBriefRun.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(fullAppData.news.dailyTopNewsBrief.thinkingLevel, 'XHIGH');
+    const briefGenCall = captured.find(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.deepEqual(briefGenCall?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' });
+
+    // 4. Verify XHIGH -> HIGH retry resilience on same model if endpoint returns 400 INVALID_ARGUMENT on XHIGH
+    captured.length = 0;
+    simulateXhigh400Once = true;
+    const retryReport = await runOnDemandDeepAnalysis({
+      prompt: 'Brock Purdy EPA',
+      appData: fullAppData,
+      prefs: { geminiApiKey: 'AIzaHydrogenRetryKey', geminiApiBaseUrl: 'https://mock-h2-retry.local/v1beta' }
+    });
+    assert.equal(retryReport.modelUsed, 'gemini-4-hydrogen');
+    const h2GenCalls = captured.filter(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.ok(h2GenCalls.some(c => c.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'XHIGH'));
+    assert.ok(h2GenCalls.some(c => c.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH'));
+
+    // 5. Verify shareService defaults to gemini-4-hydrogen + XHIGH
+    const shareUrl = await buildShareableAnalysisUrl(
+      { id: 'local_analysis_h2', title: 'Cap Dive', markdown: '### Cap\n* Verified.' },
+      new URL('https://49ers.joshal.com/')
+    );
+    const hydrated = await extractIncomingSharedRoute(new URL(shareUrl));
+    assert.equal(hydrated?.analysis?.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(hydrated?.analysis?.thinkingLevel, 'XHIGH');
+  } finally {
+    globalThis.fetch = origFetch;
+    globalThis.localStorage = origLocalStorage;
   }
 });
 

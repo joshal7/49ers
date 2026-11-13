@@ -20,8 +20,8 @@ crons = ["15 */6 * * *"]
 [vars]
 ALLOWED_ORIGIN = "https://49ers.joshal.com"
 GEMINI_TEXT_MODEL = "auto"
-GEMINI_DEFAULT_FREE_MODEL = "gemini-3.8-flash"
-GEMINI_THINKING_LEVEL = "HIGH"
+GEMINI_DEFAULT_FREE_MODEL = "gemini-4-hydrogen"
+GEMINI_THINKING_LEVEL = "XHIGH"
 GEMINI_THINKING_BUDGET = "24576"
 # "auto" cascades highest-quality Studio Pro TTS (gemini-2.5-pro-preview-tts -> gemini-2.5-flash-preview-tts)
 GEMINI_AUDIO_MODEL = "auto"

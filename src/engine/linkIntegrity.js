@@ -53,6 +53,8 @@ const KNOWN_BROKEN_PATH_RULES = [
   { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/draft\d{4}\/?$/i },
   { host: /(^|\.)espn\.com$/i, path: /^\/nfl\/story\/_\/page\/nflpowerrankings\/?$/i },
   { host: /(^|\.)espn\.com$/i, path: /^\/video\/clip\/?$/i },
+  // ESPN Scouts Inc. internal draft-ranking IDs (id="rank-45828xx") are NOT valid CFB athlete IDs and return HTTP 404
+  { host: /(^|\.)espn\.com$/i, path: /^\/college-football\/player\/_\/id\/4582[6789]\d{2}(\/|$)/i },
   { host: /(^|\.)rotowire\.com$/i, path: /^\/football\/(news\.php|headlines)(\/|$)/i }
 ];
 
@@ -160,6 +162,10 @@ const NICKNAME_ALIASES = {
   christopher: 'chris',
   nate: 'nathan',
   nathan: 'nate',
+  sammy: 'samuel',
+  samuel: 'sammy',
+  cam: 'cameron',
+  cameron: 'cam',
   dre: 'javondre',
   javondre: 'dre'
 };

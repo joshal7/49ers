@@ -12,7 +12,7 @@
 
 ## 1. Holistic System Overview
 
-**49ers Faithful (`49ers.joshal.com`)** is a zero-cost, mobile-first Progressive Web App engineered for ~25 analytically minded San Francisco 49ers fans. It combines deterministic client-side quantitative engines (5-year CBA salary cap simulation, player-specific injury play-probability modeling, 10,000-run Empirical-Bayes playoff Monte Carlo, X-beat reporter attribution & corroboration, and anti-fluff news clustering) with 5-channel X-Beat-First sub-minute live client telemetry (ESPN 24/7 X-Beat Player Wire, RotoWire Live NFL RSS, Official 49ers/ESPN Transactions, Bluesky Beat Mirrors, and ESPN Live Game Summary) and accuracy-first generative AI synthesis (Gemini `3.8-flash` / `3.8-pro` on `HIGH` Thinking + Studio Multi-Speaker Neural Audio).
+**49ers Faithful (`49ers.joshal.com`)** is a zero-cost, mobile-first Progressive Web App engineered for ~25 analytically minded San Francisco 49ers fans. It combines deterministic client-side quantitative engines (5-year CBA salary cap simulation, player-specific injury play-probability modeling, 10,000-run Empirical-Bayes playoff Monte Carlo, X-beat reporter attribution & corroboration, and anti-fluff news clustering) with 5-channel X-Beat-First sub-minute live client telemetry (ESPN 24/7 X-Beat Player Wire, RotoWire Live NFL RSS, Official 49ers/ESPN Transactions, Bluesky Beat Mirrors, and ESPN Live Game Summary) and accuracy-first generative AI synthesis (Gemini 4 Hydrogen `gemini-4-hydrogen` on `XHIGH` Thinking + Studio Multi-Speaker Neural Audio).
 
 ```mermaid
 flowchart TD
@@ -33,7 +33,7 @@ flowchart TD
         Worker["Worker API (X-Group-Passcode Auth + 6h Model Auto-Upgrade Cron)"]
         KV["Cloudflare KV (SHARED_CACHE: Deduplicated Reports, Episode Index & Model Catalog)"]
         R2["Cloudflare R2 (PODCAST_BUCKET: 2-Ch Stereo WAV / Audio Streams)"]
-        Gemini["Google Gemini Free Tier (3.8-flash HIGH Thinking 2-Pass Audit + Pro/Flash TTS)"]
+        Gemini["Google Gemini Free Tier (gemini-4-hydrogen XHIGH Thinking 2-Pass Audit + Pro/Flash TTS)"]
     end
 
     subgraph Pipeline["Scheduled Ingestion & Studio Audio Pipeline (scripts/)"]
@@ -54,7 +54,7 @@ flowchart TD
     App -->|"POST /api/analyze & /api/podcast"| Worker
     Worker <--> KV
     Worker <--> R2
-    Worker -->|"thinkingBudget=24576 + Search Grounding"| Gemini
+    Worker -->|"thinkingLevel=XHIGH + Search Grounding"| Gemini
 ```
 
 ---
@@ -65,7 +65,7 @@ A foundational design principle of this codebase is knowing **when to push uncom
 
 | Subsystem / Workflow | Priority Mode | Target Latency | Architectural Rationale & Enforcement Mechanism |
 | :--- | :--- | :--- | :--- |
-| **On-Demand AI Deep Analysis (`/api/analyze`)** | **Accuracy & Depth Over Speed** (`accuracy_over_latency`) | `~20–40 sec` (Cloud) / `~2–3 sec` (Local fallback) | Readers gladly wait 30 seconds for coaching-tape-grade X's & O's and exact CBA cap math rather than receiving a fast, shallow, or hallucinated summary. Uses `gemini-3.8-flash` (or `gemini-3.8-pro` when available) with `thinkingBudget: 24576` (`HIGH`), live Google Search Grounding, and a **2-pass internal verification audit** (`verifyPass: true`). |
+| **On-Demand AI Deep Analysis (`/api/analyze`)** | **Accuracy & Depth Over Speed** (`accuracy_over_latency`) | `~20–40 sec` (Cloud) / `~2–3 sec` (Local fallback) | Readers gladly wait 30 seconds for coaching-tape-grade X's & O's and exact CBA cap math rather than receiving a fast, shallow, or hallucinated summary. Uses `gemini-4-hydrogen` with `thinkingLevel: "XHIGH"` (cascading to `gemini-3.8-flash` `HIGH`), live Google Search Grounding, and a **2-pass internal verification audit** (`verifyPass: true`). |
 | **On-Demand & Pre-Built Autopodcasts (`/api/podcast`, `build-podcasts.mjs`)** | **Audio Realism & Fact Rigor Over Speed** | `~30–130 sec` (scaled by `2–20 min` duration) | Listeners expect natural human prosody, spoken football notation (`humanizeNflTextForTts`), zero retired-player hallucinations, and broadcast-level loudness leveling. Uses 2-pass script verification + `gemini-2.5-pro-preview-tts` → `gemini-2.5-flash-preview-tts` cascade (or 44.1 kHz 7-stage DSP mastering with `edge-tts` Multilingual Neural voices). |
 | **Shared Friend-Group Cache Hits (`/api/shared-feed`, KV/R2)** | **Instant Shared Read** | `< 50 ms` | Once one user pays the 30–90s High-Thinking generation wait, the resulting report or stereo audio episode is cached in Cloudflare KV/R2 keyed by `sha256(prompt + liveContextHash)` so the other ~24 friends read/stream it instantaneously. |
 | **App Startup & Navigation (`sw.js`, `src/app.js`)** | **Instant Boot & Zero Layout Shift** | `< 300 ms` first paint; `< 16 ms` tab switch | Pre-compiled `/data/*.json` feeds load immediately from Service Worker `CacheStorage` (`49ers-faithful-v29`) before background live overlays run; `renderMain()` lazily evaluates per-tab engines so typing in Roster search or toggling News filters never invokes Monte Carlo or Cap simulations. |
@@ -119,7 +119,7 @@ Whenever a user triggers an accuracy-first AI or audio job in [`src/views/audioA
 | Path | Role & Data Contracts |
 | :--- | :--- |
 | [`scripts/github-workflow-refresh-data.yml`](file:///Users/joshal/workspace/49ers/scripts/github-workflow-refresh-data.yml) | Ready-to-enable GitHub Actions workflow template (30-minute gameday/practice window cron + 2-hour year-round cron + `workflow_dispatch`) running `npm run refresh-data` and `npm run test:unit` before committing `/data/*.json`. |
-| [`scripts/fetch-live-49ers-data.mjs`](file:///Users/joshal/workspace/49ers/scripts/fetch-live-49ers-data.mjs) | Master ingestion pipeline (`npm run refresh-data`). Compiles all `/data/*.json` files from ESPN, ESPN 24/7 X-Beat Player Wire across all 86 players, RotoWire NFL RSS, NBC Sports Bay Area RSS, Pro Football Rumors RSS, `nflverse`, OverTheCap, `49ers.com`, CBS Sports, Tankathon, Bluesky, YouTube, and Gemini `3.8-flash` High. |
+| [`scripts/fetch-live-49ers-data.mjs`](file:///Users/joshal/workspace/49ers/scripts/fetch-live-49ers-data.mjs) | Master ingestion pipeline (`npm run refresh-data`). Compiles all `/data/*.json` files from ESPN, ESPN 24/7 X-Beat Player Wire across all 86 players, RotoWire NFL RSS, NBC Sports Bay Area RSS, Pro Football Rumors RSS, `nflverse`, OverTheCap, `49ers.com`, CBS Sports, Tankathon, Bluesky, YouTube, and Gemini 4 Hydrogen (`gemini-4-hydrogen` `XHIGH`). |
 | [`scripts/lib/liveHealthAndRosterResolver.mjs`](file:///Users/joshal/workspace/49ers/scripts/lib/liveHealthAndRosterResolver.mjs) | Parses official `49ers.com` Roster & Injury Report HTML (with opponent-match guard), CBS Injuries HTML, and ESPN transactions to eliminate roster ghosts and classify Season-Ending IR vs. open 21-day windows. |
 | [`scripts/lib/otcParser.mjs`](file:///Users/joshal/workspace/49ers/scripts/lib/otcParser.mjs) | Parses 5-year rolling OverTheCap HTML tables (`2026–2030`), dead money ledgers, and per-player cut/trade/restructure/extension deltas. |
 | [`scripts/lib/aiSynthesisEngine.mjs`](file:///Users/joshal/workspace/49ers/scripts/lib/aiSynthesisEngine.mjs) | Discovers the highest-scoring free-tier Gemini model (`discoverBestFreeGeminiModel`), runs High-Thinking synthesis, and parses Tankathon draft pick HTML (`parseTankathonTeamPicksHtml`). |
@@ -230,7 +230,7 @@ File: [`tests/unit-engines-qa.mjs`](file:///Users/joshal/workspace/49ers/tests/u
 - **Suite 4 — Calibrated Playoff Monte Carlo**: Verifies `<150ms` deterministic execution, 16-team probability conservation (`700%` playoffs, `400%` division, `100%` #1 seed), Empirical-Bayes calibration (`#1 Seed` in `[25%, 45%]`), and NFL 3-club H2H sweep tiebreakers.
 - **Suite 5 — Anti-Fluff Classifier, Salience Balance & Jargon Glossary**: Verifies clickbait rejection, reporter/outlet mute filtering, `balanceFeedTopSalience` non-injury diversity (arrests/legal, `TRADE INTEL`, salient player interviews), and 45+ jargon annotations with XSS escaping.
 - **Suite 6 — Live 2026 Dataset & URL Integrity**: Audits all 86+ roster players, 48 reporters, 11 JSON feeds (`2,000+` HTTPS URLs with zero paywalls, zero shorteners, and zero `undefined`/`NaN`), verified YouTube `embeddable` booleans, 6 flagship 49ers beat podcasts (7-day window + native `podcasts://` / `intent://` deep links), and `sw.js` `CORE_ASSETS` existence.
-- **Suite 7 — Serverless Edge Worker & High-Thinking AI**: Tests CORS, `X-Group-Passcode` auth (`401` vs `200`), KV shared cache deduplication, live context cache busting, `gemini-3.8-flash` High-Thinking (`thinkingBudget: 24576`), 2-pass verification (`verifyPass: true`), Pro TTS → Flash TTS cascade, and 2-channel Stereo R2 WAV headers.
+- **Suite 7 — Serverless Edge Worker & High-Thinking AI**: Tests CORS, `X-Group-Passcode` auth (`401` vs `200`), KV shared cache deduplication, live context cache busting, `gemini-4-hydrogen` `XHIGH`-Thinking (`thinkingLevel: "XHIGH"`), 2-pass verification (`verifyPass: true`), Pro TTS → Flash TTS cascade, and 2-channel Stereo R2 WAV headers.
 - **Suite 8 — Broadcast DSP, Spoken-NFL Speech & Game-Day Roster Lifecycle**: Verifies `humanizeNflTextForTts`, conversational turn dynamics, browser neural voice selection, RMS loudness leveling, true-peak limiting, 2-channel Stereo `-84 dBFS` dithered iPhone speaker carrier WAV, `[T-90m, Final)` game-day rosters, clause-scoped wire signals, `Questionable → In/Out` resolution, post-game `Week N+1` rollover, and 48h post-game injury priority/deduplication.
 
 ### 6.2 Holistic Multi-Year Rollover, Live Telemetry & Link Scrub QA

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T21:20:03.738Z",
+  "updatedAt": "2026-11-13T05:21:30.571Z",
   "week": 10,
   "units": [
     {
@@ -16,8 +16,8 @@
               "jersey": 5,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
               "baselineRank": 1,
-              "playProbabilityPct": 18,
-              "statusBadge": "18% • Doubtful",
+              "playProbabilityPct": 14,
+              "statusBadge": "14% • Doubtful",
               "isAvailable": false
             },
             {
@@ -26,8 +26,8 @@
               "jersey": 11,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
               "baselineRank": 2,
-              "playProbabilityPct": 91,
-              "statusBadge": "91% • Cleared",
+              "playProbabilityPct": 92,
+              "statusBadge": "92% • Cleared",
               "isAvailable": true
             },
             {
@@ -58,8 +58,8 @@
               "jersey": 11,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
               "baselineRank": 2,
-              "playProbabilityPct": 91,
-              "statusBadge": "91% • Cleared",
+              "playProbabilityPct": 92,
+              "statusBadge": "92% • Cleared",
               "isAvailable": true
             },
             {
@@ -78,8 +78,8 @@
               "jersey": 5,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
               "baselineRank": 1,
-              "playProbabilityPct": 18,
-              "statusBadge": "18% • Doubtful",
+              "playProbabilityPct": 14,
+              "statusBadge": "14% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -107,8 +107,8 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
               "baselineRank": 1,
-              "playProbabilityPct": 66,
-              "statusBadge": "66% • GTD",
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
               "isAvailable": true
             },
             {
@@ -149,8 +149,8 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
               "baselineRank": 1,
-              "playProbabilityPct": 66,
-              "statusBadge": "66% • GTD",
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
               "isAvailable": true
             },
             {
@@ -1369,8 +1369,8 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
               "baselineRank": 1,
-              "playProbabilityPct": 37,
-              "statusBadge": "37% • Long Shot",
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
               "isAvailable": false
             }
           ],
@@ -1381,8 +1381,8 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
               "baselineRank": 1,
-              "playProbabilityPct": 37,
-              "statusBadge": "37% • Long Shot",
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1538,9 +1538,9 @@
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
               "baselineRank": 1,
-              "playProbabilityPct": 41,
-              "statusBadge": "41% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "4685523",
@@ -1565,16 +1565,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4242488",
-              "name": "Deommodore Lenoir",
-              "jersey": 2,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 41,
-              "statusBadge": "41% • Long Shot",
-              "isAvailable": true
-            },
-            {
               "playerId": "4685523",
               "name": "Ephesians Prysock",
               "jersey": 28,
@@ -1583,6 +1573,17 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4242488",
+              "name": "Deommodore Lenoir",
+              "jersey": 2,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             },
             {
               "playerId": "4240542",
@@ -1596,7 +1597,7 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "nb",
@@ -1841,8 +1842,8 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
               "baselineRank": 1,
-              "playProbabilityPct": 66,
-              "statusBadge": "66% • GTD",
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
               "isAvailable": true
             },
             {
@@ -1883,8 +1884,8 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
               "baselineRank": 1,
-              "playProbabilityPct": 66,
-              "statusBadge": "66% • GTD",
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
               "isAvailable": true
             },
             {

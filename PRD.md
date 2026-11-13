@@ -19,7 +19,7 @@
 
 Modeled after the zero-cost GitHub Pages deployment pattern of `workouts.joshal.com`, the app combines:
 1. **Automated Scheduled Ingestion & Sub-Minute Client Live Wire**: Continually pulls and normalizes 49ers roster data (`49ers.com`, ESPN, `nflverse`), play-by-play EPA/NextGen metrics, 5-year OverTheCap contract structures (`2026–2030`), 10-axis Combine spider-chart percentiles, official injury/practice logs, CBS/Tankathon trackers, 7-day flagship 49ers beat podcasts, and live Bluesky/ESPN feeds (`20s` in-game polling / `45s` standard polling).
-2. **Accuracy-First On-Demand AI Deep Synthesis & Autopodcast Studio (Cloudflare Workers + KV + R2 + Gemini 3.8 High Free Tier)**: Allows any member of the friend group (authenticated via a shared group passcode) to trigger unhurried, 2-pass verified deep-dive analyses (`gemini-3.8-flash` / `gemini-3.8-pro` with `thinkingBudget: 24576` + Google Search Grounding) or generate custom-duration (`2–20 min`), natural multi-speaker audio podcasts—which are immediately cached and shared across all ~25 friends.
+2. **Accuracy-First On-Demand AI Deep Synthesis & Autopodcast Studio (Cloudflare Workers + KV + R2 + Gemini 4 Hydrogen XHIGH Free Tier)**: Allows any member of the friend group (authenticated via a shared group passcode) to trigger unhurried, 2-pass verified deep-dive analyses (`gemini-4-hydrogen` on `XHIGH` thinking + Google Search Grounding) or generate custom-duration (`2–20 min`), natural multi-speaker audio podcasts—which are immediately cached and shared across all ~25 friends.
 3. **Season-Aware Dynamic Information Architecture**: Automatically adapts its dashboard modules to the NFL calendar and the 49ers' real-time status (`YEAR_ROUND`, `IN_SEASON`, `TRADE_WINDOW`, `PLAYOFF_PUSH`, `DRAFT_PREP`, `DRAFT_LIVE_UDFA`) while allowing each user to reorder high-level dashboard blocks via Up/Down controls or HTML5 Drag-and-Drop.
 
 ---
@@ -42,7 +42,7 @@ Every AI synthesis prompt, audio script builder, and feed classifier enforces th
    * Player links use a multi-signal **Player Identity Resolver** that defeats upstream `nflverse` retired homonym collisions (e.g., 1978 NYG WR James Thompson `ThomJa01` vs. active 2026 49ers DT James Thompson Jr. `ThomJa06`) and never conflates ESPN IDs with OverTheCap IDs.
 
 ### 2.3 Quality vs. Speed Decision Philosophy
-* **Push for Accuracy & Studio Quality Over Speed (`accuracy_over_latency`)**: On-demand Deep Analysis (`~20–40s`) and Autopodcast generation (`~30–130s`) use `gemini-3.8-flash` (or `gemini-3.8-pro`) on `HIGH` Thinking (`thinkingBudget: 24576`) with a **2-pass internal self-audit** and Studio Pro TTS cascade (`gemini-2.5-pro-preview-tts` → `gemini-2.5-flash-preview-tts`). Concise pre-click wait hints (`[data-est-wait-preview]`, without verbose internal model-version clutter) and a live active job banner (`[data-job-progress="active"]`) keep wait times transparent, while Cloudflare KV/R2 deduplication gives the other ~24 friends `<50ms` instant reads.
+* **Push for Accuracy & Studio Quality Over Speed (`accuracy_over_latency`)**: On-demand Deep Analysis (`~20–40s`) and Autopodcast generation (`~30–130s`) use `gemini-4-hydrogen` on `XHIGH` Thinking (`thinkingLevel: "XHIGH"`) with a **2-pass internal self-audit** and Studio Pro TTS cascade (`gemini-2.5-pro-preview-tts` → `gemini-2.5-flash-preview-tts`). Concise pre-click wait hints (`[data-est-wait-preview]`, without verbose internal model-version clutter) and a live active job banner (`[data-job-progress="active"]`) keep wait times transparent, while Cloudflare KV/R2 deduplication gives the other ~24 friends `<50ms` instant reads.
 * **Push for Sub-Second / Sub-Minute Speed**: App boot (`<300ms` via Service Worker `CacheStorage` `49ers-faithful-v28`), lazy per-tab rendering, 5-year cap moves (`<5ms`), 10,000-run Monte Carlo re-simulations (`<150ms`), and live X-Beat/Bluesky/ESPN breaking injury polling (`20s` in-game / `45s` standard) execute with sub-second / sub-minute responsiveness.
 
 ---
@@ -72,7 +72,7 @@ flowchart TD
         NFL["nflverse / ESPN API / 49ers.com / CBS / Tankathon"]
         Cap["OverTheCap (2026-2030) / MockDraftable / Combine RAS"]
         Wire["ESPN X-Beat Player Wire / RotoWire / Bluesky XRPC / YouTube oEmbed / Apple Podcasts"]
-        Gemini["Google Gemini 3.8 High (2-Pass Audit + Search Grounding) + Pro/Flash TTS"]
+        Gemini["Google Gemini 4 Hydrogen XHIGH (2-Pass Audit + Search Grounding) + Pro/Flash TTS"]
     end
 
     Cron -->|"Fetch, Reconcile & Validate"| NFL
@@ -86,7 +86,7 @@ flowchart TD
     UI -->|"POST /api/analyze & /api/podcast"| Worker
     Worker <--> KV
     Worker <--> R2
-    Worker -->|"thinkingBudget=24576 + 2-Pass Audit"| Gemini
+    Worker -->|"thinkingLevel=XHIGH + 2-Pass Audit"| Gemini
 ```
 
 ---
@@ -194,6 +194,6 @@ The app dynamically computes active modules based on the current date, the NFL s
 ## 7. Automated Quality Assurance (`npm test`)
 
 All requirements in this PRD are continuously verified by three automated test suites:
-1. **`tests/unit-engines-qa.mjs`**: Verifies all 13 deterministic engines, `[T-90m, Final)` game-day roster & `Week N+1` rollover models, 5-year OverTheCap math, Season-Ending IR & `49ers.com` parsers, calibrated Monte Carlo tiebreakers, anti-hallucination scrubbing, `2,000+` HTTPS non-paywalled URLs, 7-day beat podcasts, Edge Worker 2-pass `gemini-3.8-flash` High synthesis, and 44.1 kHz broadcast DSP / stereo carrier generation.
+1. **`tests/unit-engines-qa.mjs`**: Verifies all 13 deterministic engines, `[T-90m, Final)` game-day roster & `Week N+1` rollover models, 5-year OverTheCap math, Season-Ending IR & `49ers.com` parsers, calibrated Monte Carlo tiebreakers, anti-hallucination scrubbing, `2,000+` HTTPS non-paywalled URLs, 7-day beat podcasts, Edge Worker 2-pass `gemini-4-hydrogen` `XHIGH` synthesis, and 44.1 kHz broadcast DSP / stereo carrier generation.
 2. **`tests/holistic-qa-regressions.mjs`**: Verifies `2027–2030+` season rollovers, post-Week-18 elimination states, 17-game standings conservation, clause-scoped game-day tweet signals, outbound link/shortener scrubbing, journalist vs. podium-coach attribution, and early-week injury rollover invariants.
 3. **`tests/e2e-mobile-qa.mjs` (`npm run test:e2e`)**: Drives Headless Chrome via CDP across 8 mobile/tablet/desktop viewports (`320x640` through `1280x900`) verifying every interactive workflow, sticky Column 1 dark/light opaque backgrounds, clickable `XX reports` synthesis sources sheet, `0px` horizontal overflow, portrait/landscape table geometry, and `0` console/page/network errors.

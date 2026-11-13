@@ -20,6 +20,7 @@ import {
   buildOtcPositionUrl,
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
+  getPlayerLookupKeys,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledPublisher,
@@ -3194,8 +3195,10 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
   const byKey = new Map();
   const upsertProspect = (rawName, patch = {}) => {
     const cleanName = decodeDraftHtmlEntities(rawName);
-    const key = normalizePlayerKey(cleanName);
-    if (!key || key.length < 5 || DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(key)) return;
+    const lookupKeys = getPlayerLookupKeys(cleanName);
+    const baseKey = lookupKeys[0] || normalizePlayerKey(cleanName);
+    if (!baseKey || baseKey.length < 5 || lookupKeys.some(k => DISALLOWED_PRIOR_DRAFT_PROSPECTS.has(k))) return;
+    const key = lookupKeys.find(k => byKey.has(k)) || baseKey;
     if (!byKey.has(key)) {
       byKey.set(key, {
         key,
@@ -3227,7 +3230,7 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
     }
   };
 
-  // 1. Parse Tankathon Big Board (up to Top 360 7-round prospects)
+  // 1. Parse Tankathon Big Board (both numbered Top 175+ rows AND unnumbered Watchlist/Positional rows for verified /nfl/players/<slug> Draft Profiles)
   if (tkBbHtml) {
     for (const m of tkBbHtml.matchAll(
       /<div class="mock-row nfl"[^>]*>([\s\S]*?)(?=<div class="mock-row nfl"|<div class="big-board-tier|<div class="footer|$)/g
@@ -3250,10 +3253,10 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         .slice(0, 4)
         .map(sm => `${sm[2].trim()} ${sm[1].trim().toUpperCase()}`)
         .join(' • ');
-      if (rank && name && rank <= 360) {
+      if (name && (!rank || rank <= 360)) {
         upsertProspect(name, {
-          boardSource: 'tankathon',
-          rank,
+          boardSource: rank ? 'tankathon' : '',
+          rank: rank || null,
           pos,
           school,
           slug: slug || slugifyPlayerName(name),
@@ -3264,27 +3267,39 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         });
       }
     }
+    // Also harvest any positional-tab /nfl/players/<slug> links on Tankathon Big Board
+    for (const pm of tkBbHtml.matchAll(
+      /href="\/nfl\/players\/([^"]+)"[^>]*>\s*<div class="mock-row-name">([^<]+)<\/div>/g
+    )) {
+      const slug = pm[1]?.trim() || '';
+      const name = pm[2]?.trim() || '';
+      if (slug && name) {
+        upsertProspect(name, {
+          slug,
+          tankathonUrl: `https://www.tankathon.com/nfl/players/${slug}`
+        });
+      }
+    }
   }
 
   // 2. Parse ESPN Best Available (Pages 1 & 2 -> Top 50)
+  // NOTE: ESPN's `id="rank-45828xx"` is an internal Scouts Inc. draft-table ID (NOT a valid CFB athleteId!).
+  // Real ESPN CFB athlete profile URLs are resolved via ESPN's v3 athlete search API below.
   for (const espnHtml of [espnP1Html, espnP2Html]) {
     if (!espnHtml) continue;
     for (const m of espnHtml.matchAll(
-      /draftTable__headline--pick[^>]*>(\d+)<\/span>[\s\S]{0,650}?draftTable__headline--player[^>]*>([^<]+)<\/span>\s*<span class="draftTable__headline draftTable__headline--school">([^<]+)<\/span>\s*<\/div>\s*<span class="draftTable__headline draftTable__headline--pos">([^<]+)<\/span>[\s\S]{0,350}?id="rank-(\d+)"/g
+      /draftTable__headline--pick[^>]*>(\d+)<\/span>[\s\S]{0,650}?draftTable__headline--player[^>]*>([^<]+)<\/span>\s*<span class="draftTable__headline draftTable__headline--school">([^<]+)<\/span>\s*<\/div>\s*<span class="draftTable__headline draftTable__headline--pos">([^<]+)<\/span>/g
     )) {
       const rank = Number(m[1]);
       const name = decodeDraftHtmlEntities(m[2]);
       const school = decodeDraftHtmlEntities(m[3]);
       const pos = m[4].trim();
-      const espnId = m[5].trim();
-      const slug = slugifyPlayerName(name);
       if (rank && name && rank <= 75) {
         upsertProspect(name, {
           boardSource: 'espn',
           rank,
           pos,
-          school,
-          espnUrl: espnId ? `https://www.espn.com/college-football/player/_/id/${espnId}/${slug}` : ''
+          school
         });
       }
     }
@@ -3430,23 +3445,90 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
       .sort((a, b) => a.compositeScore - b.compositeScore)
       .slice(0, 260);
 
+    // Verified ESPN NCAA athlete IDs for nickname/portal/truncated-first-name prospects
+    const VERIFIED_ESPN_CFB_OVERRIDES = new Map([
+      ['taejohnson', 'https://www.espn.com/college-football/player/_/id/5218506/brauntae-johnson'],
+      ['ojfrederique', 'https://www.espn.com/college-football/player/_/id/5226976/romanas-frederique-jr'],
+      ['brendansorsby', 'https://www.espn.com/college-football/player/_/id/4899046/brendan-sorsby'],
+      ['samuelomosigho', 'https://www.espn.com/college-football/player/_/id/4899483/sammy-omosigho'],
+      ['sammyomosigho', 'https://www.espn.com/college-football/player/_/id/4899483/sammy-omosigho'],
+      ['miquihumphreygrace', 'https://www.espn.com/college-football/player/_/id/5088438/miquise-humphrey-grace'],
+      ['miquisehumphreygrace', 'https://www.espn.com/college-football/player/_/id/5088438/miquise-humphrey-grace'],
+      ['ezrachristensen', 'https://www.espn.com/college-football/player/_/id/5151421/ezra-christensen']
+    ]);
+
+    // Resolve REAL verified ESPN NCAA College Football athlete profile URLs via ESPN's public v3 Search API
+    const resolveOneEspnCfbUrl = async p => {
+      const targetKey = normalizePlayerKey(p.name);
+      if (VERIFIED_ESPN_CFB_OVERRIDES.has(targetKey)) {
+        return VERIFIED_ESPN_CFB_OVERRIDES.get(targetKey);
+      }
+      const cleanQ = String(p.name || '')
+        .replace(/\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?/gi, '')
+        .replace(/\./g, '')
+        .trim();
+      if (!cleanQ) return '';
+      try {
+        const searchUrl = `https://site.web.api.espn.com/apis/common/v3/search?query=${encodeURIComponent(cleanQ)}&limit=8&type=player`;
+        const res = await fetch(searchUrl, { headers: uaHeaders, signal: AbortSignal.timeout(7000) });
+        if (!res.ok) return '';
+        const json = await res.json();
+        const cfbMatches = (json?.items || []).filter(
+          it =>
+            it?.sport === 'football' &&
+            it?.league === 'college-football' &&
+            normalizePlayerKey(it.displayName || '') === targetKey
+        );
+        if (cfbMatches.length === 0) return '';
+        const schoolLower = String(p.school || '').toLowerCase().trim();
+        const schoolAlias = schoolLower === 'cal' ? 'california' : schoolLower;
+        const hit =
+          cfbMatches.find(it =>
+            (it.teamRelationships || []).some(tr =>
+              String(tr?.displayName || '').toLowerCase().includes(schoolAlias)
+            )
+          ) || cfbMatches[0];
+        const cardHref = hit?.links?.find(
+          l => Array.isArray(l?.rel) && l.rel.includes('playercard') && l.rel.includes('desktop')
+        )?.href;
+        return sanitizeExternalUrl(cardHref || '', null) || '';
+      } catch {
+        return '';
+      }
+    };
+
+    const CONCURRENCY = 20;
+    for (let i = 0; i < scored.length; i += CONCURRENCY) {
+      const slice = scored.slice(i, i + CONCURRENCY);
+      const urls = await Promise.all(slice.map(resolveOneEspnCfbUrl));
+      slice.forEach((p, idx) => {
+        if (urls[idx]) p.espnUrl = urls[idx];
+      });
+    }
+
     const posCounts = new Map();
+    const bigBoardLandingUrl = buildMockDraftBigBoardUrl(dy);
     const baseConsensus = scored.map((p, idx) => {
+      const displayName =
+        p.name === "Mi'Qui. Humphrey-Grace" ? "Mi'Quise Humphrey-Grace" : p.name;
       const posPrimary = mapCanonicalDraftUnitAndPos(p.pos).canonicalPos;
       const posIdx = (posCounts.get(posPrimary) || 0) + 1;
       posCounts.set(posPrimary, posIdx);
-      const trait = deriveProspectSchemeFit(p.name, posPrimary);
-      const mockDbUrl = buildMockDraftProspectUrl(dy, p.slug, dy);
+      const trait = deriveProspectSchemeFit(displayName, posPrimary);
+      const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
+      const safeTankathonUrl = sanitizeExternalUrl(p.tankathonUrl, null);
+      const safeCbsUrl = sanitizeExternalUrl(p.cbsUrl, null);
+      const fallbackCfbRefUrl = `https://www.sports-reference.com/cfb/search/search.fcgi?search=${encodeURIComponent(displayName)}`;
       const primaryProfileUrl =
-        sanitizeExternalUrl(p.espnUrl, null) ||
-        sanitizeExternalUrl(p.tankathonUrl, null) ||
-        sanitizeExternalUrl(p.cbsUrl, null) ||
-        mockDbUrl;
+        safeEspnUrl ||
+        safeTankathonUrl ||
+        safeCbsUrl ||
+        fallbackCfbRefUrl;
 
       return {
         consensusRank: idx + 1,
         slug: p.slug,
-        name: p.name,
+        name: displayName,
         pos: posPrimary,
         posRank: `${posPrimary}${posIdx}`,
         school: p.school,
@@ -3460,10 +3542,10 @@ export async function fetchLive2027ConsensusBigBoardAndMocks({
         shanahanLynchFitScore: trait.fit,
         archetypeNote: trait.note,
         profileUrl: primaryProfileUrl,
-        espnUrl: sanitizeExternalUrl(p.espnUrl, null),
-        tankathonUrl: sanitizeExternalUrl(p.tankathonUrl, null),
-        cbsUrl: sanitizeExternalUrl(p.cbsUrl, null),
-        mockDbUrl
+        espnUrl: safeEspnUrl,
+        tankathonUrl: safeTankathonUrl,
+        cbsUrl: safeCbsUrl,
+        mockDbUrl: bigBoardLandingUrl
       };
     });
 
@@ -3617,6 +3699,17 @@ export function buildDraftPrep2027AndCombine(
       ? liveDraftIntel.firstPickMockDatabase
       : getVerifiedBaselineFirstPickMocks(dy);
 
+  const bbByKey = new Map(consensusBigBoard.map(b => [normalizePlayerKey(b?.name || ''), b]));
+  const resolveVerifiedProspectTargetUrl = (name, slug) => {
+    if (dy !== 2027) {
+      return buildMockDraftProspectUrl(dy, slug, 2027);
+    }
+    const hit = bbByKey.get(normalizePlayerKey(name));
+    return (
+      sanitizeExternalUrl(hit?.espnUrl || hit?.profileUrl || hit?.tankathonUrl || hit?.cbsUrl || '', null) ||
+      `https://www.tankathon.com/nfl/players/${slug}`
+    );
+  };
   const consUpdated = consensusBigBoard[0]?.boards?.consensus?.updated_at || `${dy - 1}-11-12`;
   const buzzUpdated = consensusBigBoard[0]?.boards?.buzz?.updated_at || `${dy - 1}-11-11`;
   const pffUpdated = consensusBigBoard[0]?.boards?.pff?.updated_at || `${dy - 1}-11-08`;
@@ -3700,9 +3793,9 @@ export function buildDraftPrep2027AndCombine(
         heightWeight: '6\'5" • 315 lbs',
         mockFrequencyToSfPct: 27,
         shanahanLynchFitScore: 95,
-        sourceUrl: buildMockDraftProspectUrl(dy, 'jordan-seaton', 2027),
+        sourceUrl: resolveVerifiedProspectTargetUrl('Jordan Seaton', 'jordan-seaton'),
         prospectLinks: [
-          { name: 'Jordan Seaton', pos: 'OT', school: 'LSU', url: buildMockDraftProspectUrl(dy, 'jordan-seaton', 2027) }
+          { name: 'Jordan Seaton', pos: 'OT', school: 'LSU', url: resolveVerifiedProspectTargetUrl('Jordan Seaton', 'jordan-seaton') }
         ],
         archetypeTraits: 'Explosive 10-yard split & lateral mirror in outside zone; SEC blindside anchor built for LT succession.',
         sourcesMocking: ['Dane Brugler', 'Mel Kiper Jr.', 'NFL Mock Draft DB']
@@ -3715,10 +3808,10 @@ export function buildDraftPrep2027AndCombine(
         heightWeight: '6\'7" • 315 lbs / 6\'5" • 320 lbs',
         mockFrequencyToSfPct: 22,
         shanahanLynchFitScore: 94,
-        sourceUrl: buildMockDraftProspectUrl(dy, 'trevor-goosby', 2027),
+        sourceUrl: resolveVerifiedProspectTargetUrl('Trevor Goosby', 'trevor-goosby'),
         prospectLinks: [
-          { name: 'Trevor Goosby', pos: 'OT', school: 'Texas', url: buildMockDraftProspectUrl(dy, 'trevor-goosby', 2027) },
-          { name: 'Cayden Green', pos: 'IOL', school: 'Missouri', url: buildMockDraftProspectUrl(dy, 'cayden-green', 2027) }
+          { name: 'Trevor Goosby', pos: 'OT', school: 'Texas', url: resolveVerifiedProspectTargetUrl('Trevor Goosby', 'trevor-goosby') },
+          { name: 'Cayden Green', pos: 'IOL', school: 'Missouri', url: resolveVerifiedProspectTargetUrl('Cayden Green', 'cayden-green') }
         ],
         archetypeTraits: 'Dense displacement torque on duo/wide-zone combo blocks with immediate Left Guard floor and tackle versatility.',
         sourcesMocking: ['Field Yates', 'Daniel Jeremiah', 'NFL Mock Draft DB']
@@ -3731,10 +3824,10 @@ export function buildDraftPrep2027AndCombine(
         heightWeight: '6\'2" • 195 lbs',
         mockFrequencyToSfPct: 19,
         shanahanLynchFitScore: 92,
-        sourceUrl: buildMockDraftProspectUrl(dy, 'leonard-moore', 2027),
+        sourceUrl: resolveVerifiedProspectTargetUrl('Leonard Moore', 'leonard-moore'),
         prospectLinks: [
-          { name: 'Leonard Moore', pos: 'CB', school: 'Notre Dame', url: buildMockDraftProspectUrl(dy, 'leonard-moore', 2027) },
-          { name: 'Ashton Hampton', pos: 'CB', school: 'Clemson', url: buildMockDraftProspectUrl(dy, 'ashton-hampton', 2027) }
+          { name: 'Leonard Moore', pos: 'CB', school: 'Notre Dame', url: resolveVerifiedProspectTargetUrl('Leonard Moore', 'leonard-moore') },
+          { name: 'Ashton Hampton', pos: 'CB', school: 'Clemson', url: resolveVerifiedProspectTargetUrl('Ashton Hampton', 'ashton-hampton') }
         ],
         archetypeTraits: 'Long-levered press-zone boundary cornerback with fluid Cover-3/Quarters eyes and physical run support.',
         sourcesMocking: ['Lance Zierlein', 'CBS Sports']
@@ -3747,10 +3840,10 @@ export function buildDraftPrep2027AndCombine(
         heightWeight: '6\'7" • 245 lbs / 6\'5" • 252 lbs',
         mockFrequencyToSfPct: 15,
         shanahanLynchFitScore: 90,
-        sourceUrl: buildMockDraftProspectUrl(dy, 'treydez-green', 2027),
+        sourceUrl: resolveVerifiedProspectTargetUrl("Trey'Dez Green", 'treydez-green'),
         prospectLinks: [
-          { name: "Trey'Dez Green", pos: 'TE', school: 'LSU', url: buildMockDraftProspectUrl(dy, 'treydez-green', 2027) },
-          { name: 'Jamari Johnson', pos: 'TE', school: 'Oregon', url: buildMockDraftProspectUrl(dy, 'jamari-johnson', 2027) }
+          { name: "Trey'Dez Green", pos: 'TE', school: 'LSU', url: resolveVerifiedProspectTargetUrl("Trey'Dez Green", 'treydez-green') },
+          { name: 'Jamari Johnson', pos: 'TE', school: 'Oregon', url: resolveVerifiedProspectTargetUrl('Jamari Johnson', 'jamari-johnson') }
         ],
         archetypeTraits: 'Dynamic 12-personnel move-TE seam separator and red-zone mismatch pairing behind George Kittle.',
         sourcesMocking: ['NFL Mock Draft DB', 'CBS Sports']

@@ -6,11 +6,13 @@
  * Serverless Edge Worker (`worker/index.js`), and scheduled ingestion (`scripts/lib/aiSynthesisEngine.mjs`).
  *
  * Core Mandates:
- * 1. Always select the highest-capability reasoning model available on the key (prioritizing Pro
- *    frontier reasoning tiers: `gemini-3.8-pro` / `gemini-3.1-pro-preview` /
- *    `gemini-2.5-pro` before High-Thinking Flash fallbacks).
+ * 1. Always select the highest-capability reasoning model available on the key (prioritizing
+ *    `gemini-4-hydrogen` at maximum `XHIGH` thinking on Google AI Studio Free Tier & API,
+ *    cascading cleanly to `gemini-3.8-flash` / `gemini-3.6-flash` on `HIGH` thinking).
  * 2. Respect Gemini API `thinkingConfig` generation boundaries strictly:
- *    - Gemini 3.0+ models (`gemini-3*`, `gemini-4*`): `{ thinkingLevel: "HIGH" }`
+ *    - Gemini 4 Hydrogen & Gemini 4+ models (`gemini-4-hydrogen*`, `gemini-4*`): `{ thinkingLevel: "XHIGH" }`
+ *      (highest reasoning level; mutually exclusive with `thinkingBudget`).
+ *    - Gemini 3.x models (`gemini-3*`): `{ thinkingLevel: "HIGH" }`
  *      (passing `thinkingBudget` to Gemini 3+ causes HTTP 400 INVALID_ARGUMENT).
  *    - Gemini 2.5 models (`gemini-2.5-pro`, `gemini-2.5-flash`): `{ thinkingBudget: 32768 }` (Pro)
  *      or `{ thinkingBudget: 24576 }` (Flash) (passing `thinkingLevel` to 2.5 causes HTTP 400).
@@ -19,14 +21,18 @@
  *    authentic Gemini NotebookLM Audio Overview conversational voice delivery (`Puck` + `Aoede`).
  */
 
+export const PRIMARY_GEMINI_REASONING_MODEL = 'gemini-4-hydrogen';
+export const PRIMARY_GEMINI_THINKING_LEVEL = 'XHIGH';
+
 /**
- * Ordered default cascade prioritizing `gemini-3.8-flash` (`Gemini 3.8 High`, 20 RPD Free-Tier quota
- * with `thinkingLevel: "HIGH"`), followed by `gemini-3.6-flash` (20 RPD), `gemini-3-flash-preview` (20 RPD),
- * `gemini-2.5-flash`, and high-quota Flash-Lite fallbacks (500 RPD).
- * Note: `gemini-3-pro-preview` was retired by Google and is excluded; `gemini-3.1-pro` and `gemini-2.5-pro`
- * have `0/0` Free-Tier quota on Google AI Studio unless billing is enabled.
+ * Ordered default cascade prioritizing `gemini-4-hydrogen` (`Gemini 4 Hydrogen` at maximum
+ * `thinkingLevel: "XHIGH"` on Google AI Studio Free Tier & API), followed by `gemini-3.8-flash` (`HIGH`),
+ * `gemini-3.6-flash`, `gemini-3-flash-preview`, `gemini-2.5-flash`, and high-quota Flash-Lite fallbacks.
+ * Note: `gemini-3-pro-preview` was retired by Google and is excluded; paid-only `Carbon`/`Argon` and
+ * `3.1-pro`/`2.5-pro` have `0/0` Free-Tier quota on Google AI Studio unless billing is enabled.
  */
 export const DEFAULT_BEST_REASONING_CASCADE = [
+  'gemini-4-hydrogen',
   'gemini-3.8-flash',
   'gemini-3.6-flash',
   'gemini-3-flash-preview',
@@ -36,6 +42,8 @@ export const DEFAULT_BEST_REASONING_CASCADE = [
 ];
 
 export const DEFAULT_NOTEBOOKLM_TTS_CASCADE = [
+  'gemini-4-hydrogen-preview-tts',
+  'gemini-4-hydrogen-tts',
   'gemini-3.8-flash-preview-tts',
   'gemini-3.8-flash-tts',
   'gemini-3.1-flash-preview-tts',
@@ -65,9 +73,9 @@ export const FLASH_HIGH_THINKING_BUDGET = 24576;
 
 /**
  * Scores a Gemini model ID or `/v1beta/models` catalog object for deep football & cap reasoning
- * on Google AI Studio Free-Tier keys.
- * Prioritizes newer High-Thinking Flash models (`gemini-3.8-flash` -> `Gemini 3.8 High`) which carry
- * active Free-Tier quota (20 RPD / 5 RPM / 250K TPM) over 0-quota legacy 3.1/2.5 Pro tiers.
+ * on Google AI Studio Free-Tier & API keys.
+ * Prioritizes `gemini-4-hydrogen` (`Gemini 4 Hydrogen` at `XHIGH` thinking, active Free-Tier quota),
+ * followed by High-Thinking Flash models (`gemini-3.8-flash`) ahead of 0-quota paid-only tiers.
  */
 export function scoreBestGeminiReasoningModel(modelEntryOrId) {
   const rawName =
@@ -103,16 +111,24 @@ export function scoreBestGeminiReasoningModel(modelEntryOrId) {
   }
 
   const verMatch = id.match(/^gemini-(\d+(?:\.\d+)?)/);
-  const versionNum = verMatch ? parseFloat(verMatch[1]) : 2.0;
+  const versionNum = verMatch ? parseFloat(verMatch[1]) : /\bhydrogen\b/.test(id) ? 4.0 : 2.0;
   if (!Number.isFinite(versionNum) || versionNum < 2.5) return -1;
 
+  const isHydrogen = /\bhydrogen\b/.test(id);
   const isPro = /\bpro\b/.test(id);
   const isFlash = /\bflash\b/.test(id);
-  if (!isPro && !isFlash) return -1;
+  const isCarbonOrArgon = /\b(carbon|argon)\b/.test(id);
+  if (!isHydrogen && !isPro && !isFlash && !isCarbonOrArgon) return -1;
 
-  // On Google AI Studio Free Tier, 3.8+ Flash (`Gemini 3.8 High`) has active 20 RPD quota,
-  // whereas 3.1 Pro and 2.5 Pro have 0/0 Free-Tier quota.
-  const tierBonus = isFlash ? 260 : versionNum >= 3.8 ? 275 : 80;
+  // Gemini 4 Hydrogen (`gemini-4-hydrogen` on `XHIGH`) is #1 on Google AI Studio Free Tier & API;
+  // 3.8+ Flash (`HIGH`) is #2 Free-Tier failover; paid-only Carbon/Argon & 3.1/2.5 Pro carry 0/0 Free-Tier quota.
+  const tierBonus = isHydrogen
+    ? 360
+    : isFlash
+      ? 260
+      : isPro && versionNum >= 3.8
+        ? 275
+        : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
   const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
@@ -121,7 +137,7 @@ export function scoreBestGeminiReasoningModel(modelEntryOrId) {
 }
 
 /**
- * Ranks discovered `/v1beta/models` entries first (by Pro-first reasoning score),
+ * Ranks discovered `/v1beta/models` entries first (by Hydrogen XHIGH-first reasoning score),
  * then appends any remaining fallback entries from `DEFAULT_BEST_REASONING_CASCADE`.
  */
 export function rankBestGeminiReasoningModels(catalogModels = []) {
@@ -149,16 +165,37 @@ export function rankBestGeminiReasoningModels(catalogModels = []) {
 }
 
 /**
+ * Resolves the canonical highest thinking level label for a given Gemini model:
+ * - Gemini 4 Hydrogen / Gemini 4+ (`gemini-4*`, `*hydrogen*`): `'XHIGH'`
+ * - Gemini 3.x / 2.5 (`gemini-3*`, `gemini-2.5*`): `'HIGH'`
+ */
+export function resolveGeminiThinkingLevelLabel(modelId = '') {
+  const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
+  if (!clean) return PRIMARY_GEMINI_THINKING_LEVEL;
+  if (/\bhydrogen\b/.test(clean)) return 'XHIGH';
+  const verMatch = clean.match(/^gemini-(\d+(?:\.\d+)?)/);
+  const ver = verMatch ? parseFloat(verMatch[1]) : 4.0;
+  return ver >= 4.0 ? 'XHIGH' : 'HIGH';
+}
+
+/**
  * Builds the exact generation-compatible `thinkingConfig` object for `generativelanguage.googleapis.com/v1beta`.
- * - Gemini 3+ (`gemini-3*`, `gemini-4*`): `{ thinkingLevel: 'HIGH' }` (mutually exclusive with `thinkingBudget`!)
+ * - Gemini 4 Hydrogen & Gemini 4+ (`gemini-4-hydrogen`, `gemini-4*`): `{ thinkingLevel: 'XHIGH' }` (highest reasoning tier; mutually exclusive with `thinkingBudget`!)
+ * - Gemini 3.x (`gemini-3*`): `{ thinkingLevel: 'HIGH' }` (mutually exclusive with `thinkingBudget`!)
  * - Gemini 2.5 Pro: `{ thinkingBudget: 32768 }`
  * - Gemini 2.5 Flash: `{ thinkingBudget: 24576 }`
  */
 export function buildGeminiThinkingConfig(modelId = '', customBudget = null) {
   const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
+  if (/\bhydrogen\b/.test(clean)) {
+    return { thinkingLevel: 'XHIGH' };
+  }
   const verMatch = clean.match(/^gemini-(\d+(?:\.\d+)?)/);
-  const ver = verMatch ? parseFloat(verMatch[1]) : 3.0;
+  const ver = verMatch ? parseFloat(verMatch[1]) : 4.0;
 
+  if (ver >= 4.0) {
+    return { thinkingLevel: 'XHIGH' };
+  }
   if (ver >= 3.0) {
     return { thinkingLevel: 'HIGH' };
   }

@@ -134,7 +134,7 @@ function startStaticServer(port) {
     const server = http.createServer((req, res) => {
       const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
 
-      // Local Mock Gemini v1beta API for deterministic E2E testing of Browser -> Gemini Pro High + NotebookLM TTS
+      // Local Mock Gemini v1beta API for deterministic E2E testing of Browser -> Gemini 4 Hydrogen XHIGH + NotebookLM TTS
       if (urlPath === '/v1beta/models' && req.method === 'GET') {
         res.writeHead(200, {
           'Content-Type': 'application/json; charset=utf-8',
@@ -143,7 +143,8 @@ function startStaticServer(port) {
         res.end(
           JSON.stringify({
             models: [
-              { name: 'models/gemini-3.8-pro', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
+              { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-2.5-pro-preview-tts', supportedGenerationMethods: ['generateContent'] },
               { name: 'models/gemini-2.5-flash-preview-tts', supportedGenerationMethods: ['generateContent'] }
             ]
@@ -2460,6 +2461,7 @@ async function main() {
           podSetupAndProgress.hasProgressBar &&
           podSetupAndProgress.bannerText.includes('Est. wait:') &&
           !podSetupAndProgress.bannerText.includes('Gemini 3.8') &&
+          !podSetupAndProgress.bannerText.includes('Gemini 4') &&
           podSetupAndProgress.elapsedClock.startsWith('Elapsed') &&
           podSetupAndProgress.btnDisabled &&
           podSetupAndProgress.btnSpinIcon,
@@ -2479,17 +2481,17 @@ async function main() {
         `Generation finished suspiciously fast (${totalGenWallMs}ms); expected multi-stage deep research + NotebookLM TTS`
       );
 
-      // Verify actual v1beta Gemini requests sent from browser: High Thinking + Google Search Grounding + Puck/Aoede Multi-Speaker TTS!
-      const textReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-3.8-pro:generateContent'));
+      // Verify actual v1beta Gemini requests sent from browser: Gemini 4 Hydrogen XHIGH Thinking + Google Search Grounding + Puck/Aoede Multi-Speaker TTS!
+      const textReqs = mockGeminiRequests.filter(r => r.urlPath.includes('gemini-4-hydrogen:generateContent'));
       const ttsReqs = mockGeminiRequests.filter(r => r.urlPath.includes('preview-tts:generateContent'));
-      assert(textReqs.length >= 1, `Expected >=1 High-Thinking stage (Research + Script), got ${textReqs.length}`);
+      assert(textReqs.length >= 1, `Expected >=1 Gemini 4 Hydrogen XHIGH stage (Research + Script), got ${textReqs.length}`);
       assert(
         textReqs.every(
           r =>
-            r.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH' &&
+            r.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'XHIGH' &&
             !('thinkingBudget' in (r.body?.generationConfig?.thinkingConfig || {}))
         ),
-        'Gemini 3+ requests must send thinkingConfig: { thinkingLevel: "HIGH" } without thinkingBudget'
+        'Gemini 4 Hydrogen requests must send thinkingConfig: { thinkingLevel: "XHIGH" } without thinkingBudget'
       );
       assert(
         Array.isArray(textReqs[0].body?.tools) && Boolean(textReqs[0].body.tools[0]?.google_search),
@@ -2789,7 +2791,8 @@ async function main() {
           analysisProgress.stageBarsCount === 3 &&
           analysisProgress.stageStatuses.length === 3 &&
           analysisProgress.bannerText.includes('Est. wait:') &&
-          !analysisProgress.bannerText.includes('Gemini 3.8'),
+          !analysisProgress.bannerText.includes('Gemini 3.8') &&
+          !analysisProgress.bannerText.includes('Gemini 4'),
         `Analysis 3-stage wait bar / estimate check failed: ${JSON.stringify(analysisProgress)}`
       );
 
@@ -2957,7 +2960,7 @@ async function main() {
         const st = window.__49ersDiagnostics.getState();
         const expectedRec = st.appData.meta.teamRecord;
         st.prefs.geminiApiKey = 'AIzaMockE2EStudioKey49ers';
-        st.prefs.verifiedGeminiModel = 'gemini-3.8-pro';
+        st.prefs.verifiedGeminiModel = 'gemini-4-hydrogen';
         st.prefs.geminiApiBaseUrl = `http://127.0.0.1:${portNum}/v1beta`;
         window.__49ersDiagnostics.forceRender();
         return { rec, expectedRec };

@@ -2,14 +2,13 @@
  * Deep Thinking & Chain-of-Verification AI Synthesis Engine for 49ers Faithful
  *
  * Design Principles (Accuracy > Velocity + Automatic Free-Tier Model Upgrading):
- * 1. Newer Gemini 3.x Flash models on HIGH thinking (`gemini-3.8-flash` / `gemini-3.5-flash`
- *    with `thinkingBudget: 24576`) outperform older `gemini-2.5-pro` architectures on
- *    multi-step NFL math, CBA salary cap proration, and Google Search Grounding while
- *    remaining 100% eligible on the Google AI Studio Free Tier.
+ * 1. Gemini 4 Hydrogen on `XHIGH` thinking (`gemini-4-hydrogen` with `{ thinkingLevel: "XHIGH" }`)
+ *    delivers frontier multi-step NFL math, CBA salary cap proration, and Google Search Grounding
+ *    while remaining 100% eligible on the Google AI Studio Free Tier, cascading cleanly to
+ *    `gemini-3.8-flash` (`HIGH`) and `gemini-2.5` fallbacks.
  * 2. Periodically polls `GET https://generativelanguage.googleapis.com/v1beta/models`
  *    via `discoverBestFreeGeminiModel()` to detect newly released free-tier Gemini models
- *    (e.g. `gemini-3.9-flash`, `gemini-4.0-flash`) and automatically upgrades to the
- *    highest-ranked free model that passes a live quota check.
+ *    and automatically upgrades to the highest-ranked free model that passes a live quota check.
  * 3. Strips internal reasoning parts (`!part.thought`) before parsing output.
  * 4. Runs a two-stage Chain-of-Verification (Generator -> Adversarial Fact-Checker)
  *    plus deterministic programmatic validation against OverTheCap cap tables,
@@ -22,13 +21,17 @@ import {
   sanitizeHallucinatedRosterText,
   validateNoHallucinatedRosterClaims
 } from '../../src/engine/groundingValidator.js';
-import { buildGeminiThinkingConfig } from '../../src/engine/geminiStudioPrompts.js';
+import {
+  buildGeminiThinkingConfig,
+  resolveGeminiThinkingLevelLabel
+} from '../../src/engine/geminiStudioPrompts.js';
 
 /**
- * Default ordered cascade of best available Free-Tier Gemini models (all run on HIGH thinking).
- * Newer 3.x Flash models on High Thinking beat legacy 2.5 Pro and have active Free Tier quota.
+ * Default ordered cascade of best available Free-Tier Gemini models.
+ * `gemini-4-hydrogen` runs at `thinkingLevel: "XHIGH"`, cascading to 3.8+ Flash (`"HIGH"`) & 2.5.
  */
 export const DEFAULT_FREE_MODEL_CASCADE = [
+  'gemini-4-hydrogen',
   'gemini-3.8-flash',
   'gemini-3.5-flash',
   'gemini-3-flash-preview',
@@ -41,7 +44,7 @@ export const HIGH_THINKING_BUDGET = 24576;
 /**
  * Scores a Gemini model identifier or `/v1beta/models` catalog entry for Free-Tier
  * high-reasoning suitability. Higher score = better free-tier reasoning model.
- * Automatically ranks future versions (e.g. `gemini-3.9-flash`, `gemini-4.0-flash`) above 3.8.
+ * Prioritizes `gemini-4-hydrogen` (`XHIGH` thinking) at #1, followed by newer Flash High tiers.
  */
 export function scoreFreeTierGeminiModel(modelEntryOrId) {
   const rawName =
@@ -77,16 +80,24 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
   }
 
   const verMatch = id.match(/^gemini-(\d+(?:\.\d+)?)/);
-  const versionNum = verMatch ? parseFloat(verMatch[1]) : 2.0;
+  const versionNum = verMatch ? parseFloat(verMatch[1]) : /\bhydrogen\b/.test(id) ? 4.0 : 2.0;
   if (!Number.isFinite(versionNum) || versionNum < 2.5) return -1;
 
+  const isHydrogen = /\bhydrogen\b/.test(id);
   const isFlash = /\bflash\b/.test(id);
   const isPro = /\bpro\b/.test(id);
-  if (!isFlash && !isPro) return -1;
+  const isCarbonOrArgon = /\b(carbon|argon)\b/.test(id);
+  if (!isHydrogen && !isFlash && !isPro && !isCarbonOrArgon) return -1;
 
-  // Google AI Studio Free Tier prioritizes 3.x/4.x High-Thinking models; if a 3.8+ Pro
-  // tier is exposed on the key's catalog, rank it at the top with automatic failover to Flash High.
-  const freeTierBonus = isFlash ? 260 : versionNum >= 3.8 ? 275 : 80;
+  // Google AI Studio Free Tier prioritizes Gemini 4 Hydrogen (`XHIGH`), followed by 3.8+ High-Thinking models;
+  // paid-only Carbon/Argon & 3.1/2.5 Pro remain lower fallback tiers.
+  const freeTierBonus = isHydrogen
+    ? 360
+    : isFlash
+      ? 260
+      : isPro && versionNum >= 3.8
+        ? 275
+        : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
   const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
@@ -135,12 +146,12 @@ export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_AP
   if (!apiKey) {
     return {
       activeModel: DEFAULT_FREE_MODEL_CASCADE[0],
-      thinkingLevel: 'HIGH',
+      thinkingLevel: resolveGeminiThinkingLevelLabel(DEFAULT_FREE_MODEL_CASCADE[0]),
       thinkingBudget: HIGH_THINKING_BUDGET,
       autoPollEnabled: true,
       pollIntervalHours: 2,
       candidateCascade: [...DEFAULT_FREE_MODEL_CASCADE],
-      source: 'default-free-tier-cascade (gemini-3.8-flash HIGH)',
+      source: 'default-free-tier-cascade (gemini-4-hydrogen XHIGH)',
       lastCheckedAt: nowIso
     };
   }
@@ -190,7 +201,7 @@ export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_AP
 
   return {
     activeModel: selectedModel,
-    thinkingLevel: 'HIGH',
+    thinkingLevel: resolveGeminiThinkingLevelLabel(selectedModel),
     thinkingBudget: HIGH_THINKING_BUDGET,
     autoPollEnabled: true,
     pollIntervalHours: 2,
@@ -323,12 +334,27 @@ async function callGeminiCascade(apiKey, modelsCascade, payload, timeoutMs) {
         }
       };
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-      const res = await fetch(endpoint, {
+      let res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: AbortSignal.timeout(timeoutMs),
         body: JSON.stringify(modelPayload)
       });
+      if (res.status === 400 && modelThinkingConfig?.thinkingLevel === 'XHIGH') {
+        const highFallbackPayload = {
+          ...modelPayload,
+          generationConfig: {
+            ...(modelPayload.generationConfig || {}),
+            thinkingConfig: { thinkingLevel: 'HIGH' }
+          }
+        };
+        res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: AbortSignal.timeout(timeoutMs),
+          body: JSON.stringify(highFallbackPayload)
+        });
+      }
       if (res.ok) {
         return { ok: true, modelUsed: model, json: await res.json() };
       }

@@ -2,10 +2,10 @@ name: Refresh Live 49ers Data Feeds
 
 on:
   schedule:
-    # Runs every 30 minutes during NFL game, Friday injury-designation, and practice windows (UTC),
+    # Runs every 30 minutes across all 7 days during NFL practice, transaction & game windows (16:00-04:59 UTC = 8am-8:59pm PST / 9am-9:59pm PDT),
     # explicitly triggers right after the 5:00 PM PT daily NFL news peak (00:05 & 01:05 UTC for PDT/PST)
-    # for the 1/day Gemini 3.8 Flash High Top News Brief, plus every 2 hours around the clock.
-    - cron: '*/30 16-23,0-4 * * 0,1,2,4,5'
+    # for the 1/day Gemini 4 Hydrogen (XHIGH) Top News Brief, plus every 2 hours around the clock.
+    - cron: '*/30 16-23,0-4 * * *'
     - cron: '5 0,1 * * *'
     - cron: '23 */2 * * *'
   workflow_dispatch:

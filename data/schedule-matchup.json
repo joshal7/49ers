@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T21:20:03.738Z",
+  "updatedAt": "2026-11-13T05:21:30.571Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -331,8 +331,8 @@
         "abbr": "WAS",
         "name": "Washington Commanders",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
-        "record": "2-5-1",
-        "pointDiff": -30,
+        "record": "3-5-1",
+        "pointDiff": -27,
         "coach": "Dan Quinn"
       },
       "venue": {
@@ -490,7 +490,7 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -3.5,
-      "totalLine": 46.5,
+      "totalLine": 45.5,
       "broadcast": "NBC"
     },
     {
@@ -547,8 +547,8 @@
         "abbr": "NYG",
         "name": "New York Giants",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
-        "record": "5-2-1",
-        "pointDiff": 10,
+        "record": "5-3-1",
+        "pointDiff": 7,
         "coach": "John Harbaugh"
       },
       "venue": {
@@ -914,7 +914,7 @@
         "abbr": "NYG",
         "name": "New York Giants",
         "shortName": "Giants",
-        "record": "5-2-1",
+        "record": "5-3-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png"
       },
       "NYJ": {
@@ -970,7 +970,7 @@
         "abbr": "WAS",
         "name": "Washington Commanders",
         "shortName": "Commanders",
-        "record": "2-5-1",
+        "record": "3-5-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
       }
     },
@@ -1151,7 +1151,7 @@
           "rank": 1,
           "value": 92.9,
           "displayValue": "92.9%",
-          "leagueAvg": 49.7594,
+          "leagueAvg": 49.7656,
           "leagueAvgDisplay": "49.8%",
           "leaderboard": [
             {
@@ -1247,8 +1247,8 @@
             {
               "team": "NYG",
               "rank": 16,
-              "val": 49.5,
-              "disp": "49.5%"
+              "val": 49.2,
+              "disp": "49.2%"
             },
             {
               "team": "PIT",
@@ -1271,8 +1271,8 @@
             {
               "team": "WAS",
               "rank": 20,
-              "val": 39.8,
-              "disp": "39.8%"
+              "val": 40.3,
+              "disp": "40.3%"
             },
             {
               "team": "NYJ",
@@ -1357,7 +1357,7 @@
             "rank": 3,
             "value": 29.375,
             "displayValue": "29.4",
-            "leagueAvg": 23.0104,
+            "leagueAvg": 23.013,
             "leagueAvgDisplay": "23.0",
             "leaderboard": [
               {
@@ -1453,8 +1453,8 @@
               {
                 "team": "NYG",
                 "rank": 16,
-                "val": 22.75,
-                "disp": "22.8"
+                "val": 22.5556,
+                "disp": "22.6"
               },
               {
                 "team": "PIT",
@@ -1483,8 +1483,8 @@
               {
                 "team": "WAS",
                 "rank": 21,
-                "val": 21.5,
-                "disp": "21.5"
+                "val": 21.7778,
+                "disp": "21.8"
               },
               {
                 "team": "BAL",
@@ -4867,7 +4867,7 @@
           "rank": 9,
           "value": 55.8,
           "displayValue": "55.8%",
-          "leagueAvg": 40.0906,
+          "leagueAvg": 40.1031,
           "leagueAvgDisplay": "40.1%",
           "leaderboard": [
             {
@@ -4927,8 +4927,8 @@
             {
               "team": "NYG",
               "rank": 10,
-              "val": 53,
-              "disp": "53.0%"
+              "val": 52.4,
+              "disp": "52.4%"
             },
             {
               "team": "GB",
@@ -4993,8 +4993,8 @@
             {
               "team": "WAS",
               "rank": 21,
-              "val": 27.6,
-              "disp": "27.6%"
+              "val": 28.6,
+              "disp": "28.6%"
             },
             {
               "team": "BAL",
@@ -5073,7 +5073,7 @@
             "rank": 6,
             "value": 19.5,
             "displayValue": "19.5",
-            "leagueAvg": 22.9245,
+            "leagueAvg": 22.9184,
             "leagueAvgDisplay": "22.9",
             "leaderboard": [
               {
@@ -5143,13 +5143,13 @@
                 "disp": "21.2"
               },
               {
-                "team": "NYG",
+                "team": "CLE",
                 "rank": 12,
-                "val": 21.5,
-                "disp": "21.5"
+                "val": 21.7778,
+                "disp": "21.8"
               },
               {
-                "team": "CLE",
+                "team": "NYG",
                 "rank": 13,
                 "val": 21.7778,
                 "disp": "21.8"
@@ -5203,22 +5203,22 @@
                 "disp": "24.8"
               },
               {
-                "team": "TEN",
+                "team": "WAS",
                 "rank": 22,
+                "val": 24.7778,
+                "disp": "24.8"
+              },
+              {
+                "team": "TEN",
+                "rank": 23,
                 "val": 24.875,
                 "disp": "24.9"
               },
               {
                 "team": "MIA",
-                "rank": 23,
+                "rank": 24,
                 "val": 25,
                 "disp": "25.0"
-              },
-              {
-                "team": "WAS",
-                "rank": 24,
-                "val": 25.25,
-                "disp": "25.3"
               },
               {
                 "team": "BAL",
@@ -10854,7 +10854,7 @@
           "rank": 2,
           "value": 80.3,
           "displayValue": "80.3%",
-          "leagueAvg": 47.6969,
+          "leagueAvg": 47.7094,
           "leagueAvgDisplay": "47.7%",
           "leaderboard": [
             {
@@ -10954,16 +10954,16 @@
               "disp": "49.0%"
             },
             {
-              "team": "NYG",
+              "team": "WAS",
               "rank": 17,
-              "val": 49,
-              "disp": "49.0%"
+              "val": 48.5,
+              "disp": "48.5%"
             },
             {
-              "team": "WAS",
+              "team": "NYG",
               "rank": 18,
-              "val": 47.4,
-              "disp": "47.4%"
+              "val": 48.3,
+              "disp": "48.3%"
             },
             {
               "team": "NYJ",
@@ -11265,7 +11265,7 @@
             "rank": 2,
             "value": 9.875,
             "displayValue": "+9.9",
-            "leagueAvg": 0.0859,
+            "leagueAvg": 0.0946,
             "leagueAvgDisplay": "+0.1",
             "leaderboard": [
               {
@@ -11359,16 +11359,16 @@
                 "disp": "+1.3"
               },
               {
-                "team": "NYG",
-                "rank": 16,
-                "val": 1.25,
-                "disp": "+1.3"
-              },
-              {
                 "team": "DAL",
-                "rank": 17,
+                "rank": 16,
                 "val": 1.1111,
                 "disp": "+1.1"
+              },
+              {
+                "team": "NYG",
+                "rank": 17,
+                "val": 0.7778,
+                "disp": "+0.8"
               },
               {
                 "team": "NE",
@@ -11383,16 +11383,16 @@
                 "disp": "-2.5"
               },
               {
-                "team": "LV",
+                "team": "WAS",
                 "rank": 20,
-                "val": -3.3333,
-                "disp": "-3.3"
+                "val": -3,
+                "disp": "-3.0"
               },
               {
-                "team": "WAS",
+                "team": "LV",
                 "rank": 21,
-                "val": -3.75,
-                "disp": "-3.8"
+                "val": -3.3333,
+                "disp": "-3.3"
               },
               {
                 "team": "NO",
@@ -12711,7 +12711,7 @@
         "rank": 1,
         "value": 92.9,
         "displayValue": "92.9%",
-        "leagueAvg": 49.7594,
+        "leagueAvg": 49.7656,
         "leagueAvgDisplay": "49.8%",
         "leaderboard": [
           {
@@ -12807,8 +12807,8 @@
           {
             "team": "NYG",
             "rank": 16,
-            "val": 49.5,
-            "disp": "49.5%"
+            "val": 49.2,
+            "disp": "49.2%"
           },
           {
             "team": "PIT",
@@ -12831,8 +12831,8 @@
           {
             "team": "WAS",
             "rank": 20,
-            "val": 39.8,
-            "disp": "39.8%"
+            "val": 40.3,
+            "disp": "40.3%"
           },
           {
             "team": "NYJ",
@@ -12916,7 +12916,7 @@
         "rank": 3,
         "value": 29.375,
         "displayValue": "29.4",
-        "leagueAvg": 23.0104,
+        "leagueAvg": 23.013,
         "leagueAvgDisplay": "23.0",
         "leaderboard": [
           {
@@ -13012,8 +13012,8 @@
           {
             "team": "NYG",
             "rank": 16,
-            "val": 22.75,
-            "disp": "22.8"
+            "val": 22.5556,
+            "disp": "22.6"
           },
           {
             "team": "PIT",
@@ -13042,8 +13042,8 @@
           {
             "team": "WAS",
             "rank": 21,
-            "val": 21.5,
-            "disp": "21.5"
+            "val": 21.7778,
+            "disp": "21.8"
           },
           {
             "team": "BAL",
@@ -16401,7 +16401,7 @@
         "rank": 9,
         "value": 55.8,
         "displayValue": "55.8%",
-        "leagueAvg": 40.0906,
+        "leagueAvg": 40.1031,
         "leagueAvgDisplay": "40.1%",
         "leaderboard": [
           {
@@ -16461,8 +16461,8 @@
           {
             "team": "NYG",
             "rank": 10,
-            "val": 53,
-            "disp": "53.0%"
+            "val": 52.4,
+            "disp": "52.4%"
           },
           {
             "team": "GB",
@@ -16527,8 +16527,8 @@
           {
             "team": "WAS",
             "rank": 21,
-            "val": 27.6,
-            "disp": "27.6%"
+            "val": 28.6,
+            "disp": "28.6%"
           },
           {
             "team": "BAL",
@@ -16606,7 +16606,7 @@
         "rank": 6,
         "value": 19.5,
         "displayValue": "19.5",
-        "leagueAvg": 22.9245,
+        "leagueAvg": 22.9184,
         "leagueAvgDisplay": "22.9",
         "leaderboard": [
           {
@@ -16676,13 +16676,13 @@
             "disp": "21.2"
           },
           {
-            "team": "NYG",
+            "team": "CLE",
             "rank": 12,
-            "val": 21.5,
-            "disp": "21.5"
+            "val": 21.7778,
+            "disp": "21.8"
           },
           {
-            "team": "CLE",
+            "team": "NYG",
             "rank": 13,
             "val": 21.7778,
             "disp": "21.8"
@@ -16736,22 +16736,22 @@
             "disp": "24.8"
           },
           {
-            "team": "TEN",
+            "team": "WAS",
             "rank": 22,
+            "val": 24.7778,
+            "disp": "24.8"
+          },
+          {
+            "team": "TEN",
+            "rank": 23,
             "val": 24.875,
             "disp": "24.9"
           },
           {
             "team": "MIA",
-            "rank": 23,
+            "rank": 24,
             "val": 25,
             "disp": "25.0"
-          },
-          {
-            "team": "WAS",
-            "rank": 24,
-            "val": 25.25,
-            "disp": "25.3"
           },
           {
             "team": "BAL",
@@ -22346,7 +22346,7 @@
         "rank": 2,
         "value": 80.3,
         "displayValue": "80.3%",
-        "leagueAvg": 47.6969,
+        "leagueAvg": 47.7094,
         "leagueAvgDisplay": "47.7%",
         "leaderboard": [
           {
@@ -22446,16 +22446,16 @@
             "disp": "49.0%"
           },
           {
-            "team": "NYG",
+            "team": "WAS",
             "rank": 17,
-            "val": 49,
-            "disp": "49.0%"
+            "val": 48.5,
+            "disp": "48.5%"
           },
           {
-            "team": "WAS",
+            "team": "NYG",
             "rank": 18,
-            "val": 47.4,
-            "disp": "47.4%"
+            "val": 48.3,
+            "disp": "48.3%"
           },
           {
             "team": "NYJ",
@@ -22756,7 +22756,7 @@
         "rank": 2,
         "value": 9.875,
         "displayValue": "+9.9",
-        "leagueAvg": 0.0859,
+        "leagueAvg": 0.0946,
         "leagueAvgDisplay": "+0.1",
         "leaderboard": [
           {
@@ -22850,16 +22850,16 @@
             "disp": "+1.3"
           },
           {
-            "team": "NYG",
-            "rank": 16,
-            "val": 1.25,
-            "disp": "+1.3"
-          },
-          {
             "team": "DAL",
-            "rank": 17,
+            "rank": 16,
             "val": 1.1111,
             "disp": "+1.1"
+          },
+          {
+            "team": "NYG",
+            "rank": 17,
+            "val": 0.7778,
+            "disp": "+0.8"
           },
           {
             "team": "NE",
@@ -22874,16 +22874,16 @@
             "disp": "-2.5"
           },
           {
-            "team": "LV",
+            "team": "WAS",
             "rank": 20,
-            "val": -3.3333,
-            "disp": "-3.3"
+            "val": -3,
+            "disp": "-3.0"
           },
           {
-            "team": "WAS",
+            "team": "LV",
             "rank": 21,
-            "val": -3.75,
-            "disp": "-3.8"
+            "val": -3.3333,
+            "disp": "-3.3"
           },
           {
             "team": "NO",
@@ -24405,23 +24405,23 @@
       "teamInjuriesUrl": "https://www.espn.com/nfl/team/injuries/_/name/dal",
       "byeWeek": 14,
       "summary": {
-        "overallAvailabilityScore": 70,
+        "overallAvailabilityScore": 71,
         "activeStartersHealthy": 15,
         "totalStarters": 22,
         "startersOutCount": 2,
         "startersDoubtfulOnlyCount": 0,
-        "startersLongShotCount": 3,
-        "startersDoubtfulCount": 3,
-        "startersQuestionableCount": 2,
-        "startersGtdCount": 2,
+        "startersLongShotCount": 2,
+        "startersDoubtfulCount": 2,
+        "startersQuestionableCount": 3,
+        "startersGtdCount": 3,
         "startersUnresolvedCount": 7,
         "ruledOutCount": 3,
         "doubtfulCount": 0,
-        "longShotCount": 4,
-        "doubtfulOrLongShotCount": 4,
-        "gtdCount": 3,
+        "longShotCount": 3,
+        "doubtfulOrLongShotCount": 3,
+        "gtdCount": 4,
         "questionableOrDoubtfulCount": 7,
-        "clearedCount": 4,
+        "clearedCount": 6,
         "irCount": 7,
         "irOpenWindowCount": 2,
         "irSeasonEndingCount": 3
@@ -25122,12 +25122,12 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4242355/jake-ferguson",
           "snapPct": 56,
           "wed": "DNP",
-          "thu": "-",
+          "thu": "DNP",
           "fri": "-",
           "injuryType": "Knee/Ankle",
           "gameStatus": "Out",
-          "shortComment": "out",
-          "longComment": "out",
+          "shortComment": "According to coach Brian Schottenheimer, Ferguson (knee) is in line to miss multiple weeks, Patrik Walker of the Cowboys' official site reports.",
+          "longComment": "At a minimum, Ferguson is on track to miss at least this coming weekend's game against the 49ers, but a 'multiple week' timetable hints at a possible IR stint for the tight end. Next up for the Cowboy's reps at the position are Brevyn Spann-Ford, Luke Schoonmaker (groin) -- when healthy -- and James Mitchell. With the NFL trade deadline arriving Tuesday, it's also not difficult to imagine Dallas looking into gaining additional help in Ferguson's looming absence.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 0,
@@ -25147,7 +25147,7 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4429676/tyler-goodson",
           "snapPct": 20,
           "wed": "DNP",
-          "thu": "-",
+          "thu": "DNP",
           "fri": "-",
           "injuryType": "Ankle/Knee",
           "gameStatus": "Out",
@@ -25172,12 +25172,12 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3929850/pj-locke",
           "snapPct": 53,
           "wed": "DNP",
-          "thu": "-",
+          "thu": "DNP",
           "fri": "-",
           "injuryType": "Concussion",
           "gameStatus": "Out",
-          "shortComment": "out",
-          "longComment": "out",
+          "shortComment": "Locke (concussion) won't play in Sunday's game against the 49ers, Patrik Walker of the team's official site reports.",
+          "longComment": "Locke suffered a concussion in Week 8 versus the Cardinals. While he was cleared to play in Week 9 against the Colts, he suffered another concussion. Now, Locke will miss at least one game, though the team will presumably be overly cautious before allowing him to get back on the field, meaning Markquese Bell may be in line for more snaps.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 0,
@@ -25197,71 +25197,21 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426485/jonathan-mingo",
           "snapPct": 37,
           "wed": "DNP",
-          "thu": "-",
+          "thu": "DNP",
           "fri": "-",
           "injuryType": "Ankle",
           "gameStatus": "Questionable",
-          "shortComment": "Mingo (ankle) is questionable to return to Sunday's matchup against the Colts, Patrik Walker of the Cowboys' official site reports.",
-          "longComment": "Mingo was hurt in the second half and may not be able to return to the game. Prior to his exit, he caught one of three targets for 23 yards. With George Pickens (hamstring) and KaVontae Turpin (ribs) inactive Sunday, the Cowboys will be down to CeeDee Lamb, Ryan Flournoy, Camden Brown and Jordan Hudson at wideout if Mingo can't return.",
+          "shortComment": "Mingo (ankle, foot) did not practice Thursday, Jon Machota of The Athletic reports.",
+          "longComment": "Mingo didn't practice for a second consecutive day due to foot and ankle issues. He logged a season-high 31 offensive snaps in the narrow win over the Colts in Week 9. Mingo could be busier than usual once again versus the 49ers if KaVontae Turpin (ribs) and George Pickens (hamstring) miss another game. However, Mingo will need to be cleared to suit up for that to happen.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 35,
+          "playProbabilityPct": 28,
           "playTier": "UNLIKELY",
-          "playBadgeLabel": "35% • Long Shot",
+          "playBadgeLabel": "28% • Long Shot",
           "factors": [
-            "Did Not Participate (DNP) on Wednesday"
+            "Consecutive Wed/Thu DNPs"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
-        },
-        {
-          "name": "Joey Porter Jr.",
-          "position": "CB",
-          "unit": "Defense",
-          "jersey": 25,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
-          "snapPct": 54,
-          "wed": "DNP",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Ankle",
-          "gameStatus": "Questionable",
-          "shortComment": "questionable",
-          "longComment": "questionable",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 35,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "35% • Long Shot",
-          "factors": [
-            "Did Not Participate (DNP) on Wednesday"
-          ],
-          "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
-        },
-        {
-          "name": "Malik Hooker",
-          "position": "S",
-          "unit": "Defense",
-          "jersey": 24,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121415.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3121415/malik-hooker",
-          "snapPct": 64,
-          "wed": "DNP",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "NIR-Personal",
-          "gameStatus": "Questionable",
-          "shortComment": "",
-          "longComment": "",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 36,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "36% • Long Shot",
-          "factors": [
-            "Did Not Participate (DNP) on Wednesday"
-          ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
         {
           "name": "Donovan Ezeiruaku",
@@ -25272,7 +25222,7 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4683848/donovan-ezeiruaku",
           "snapPct": 65,
           "wed": "DNP",
-          "thu": "-",
+          "thu": "DNP",
           "fri": "-",
           "injuryType": "Ankle",
           "gameStatus": "Questionable",
@@ -25280,13 +25230,38 @@
           "longComment": "Ezeiruaku suffered an ankle injury in Sunday's meeting with the Colts and didn't return. While he hasn't been ruled out for Week 10 versus the 49ers, Ezeiruaku may not be able to suit up for that one. If that's the case, Von Miller and Marist Liufau could see more snaps.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 37,
+          "playProbabilityPct": 28,
           "playTier": "UNLIKELY",
-          "playBadgeLabel": "37% • Long Shot",
+          "playBadgeLabel": "28% • Long Shot",
           "factors": [
-            "Did Not Participate (DNP) on Wednesday"
+            "Consecutive Wed/Thu DNPs"
           ],
           "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline)."
+        },
+        {
+          "name": "Joey Porter Jr.",
+          "position": "CB",
+          "unit": "Defense",
+          "jersey": 25,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426506.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4426506/joey-porter-jr",
+          "snapPct": 54,
+          "wed": "DNP",
+          "thu": "DNP",
+          "fri": "-",
+          "injuryType": "Ankle",
+          "gameStatus": "Questionable",
+          "shortComment": "Porter (ankle) did not practice Wednesday, Tommy Yarrish of the Cowboys' official site reports.",
+          "longComment": "The Cowboys' top cornerback has appeared in just four games with the team since being acquired from the Steelers ahead of Week 4. He missed last Sunday's win over the Colts, so Cobie Durant made the start opposite DaRon Bland and played all 64 defensive snaps.",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 28,
+          "playTier": "UNLIKELY",
+          "playBadgeLabel": "28% • Long Shot",
+          "factors": [
+            "Consecutive Wed/Thu DNPs"
+          ],
+          "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
         },
         {
           "name": "George Pickens",
@@ -25297,48 +25272,48 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4426354/george-pickens",
           "snapPct": 78,
           "wed": "LP",
-          "thu": "-",
+          "thu": "LP",
           "fri": "-",
           "injuryType": "Hamstring",
           "gameStatus": "Questionable",
-          "shortComment": "questionable",
-          "longComment": "questionable",
+          "shortComment": "Pickens (hamstring) practiced in a limited fashion Thursday, Jon Machota of The Athletic reports.",
+          "longComment": "As he was a week ago, Pickens continues to operate with practice restrictions, giving him just one more chance this week to get back to full Friday, at which point the Cowboys may tag him with a designation for Sunday's game against the 49ers. He's looking to limit his absence to only one contest due to a hamstring injury.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 77,
           "playTier": "FIFTY_FIFTY",
           "playBadgeLabel": "77% • GTD",
           "factors": [
-            "Wednesday Limited Participation (LP); player toughness prior = 82%",
+            "Thursday Limited Participation (LP); player toughness prior = 82%",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
           "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         },
         {
-          "name": "DeMarvion Overshown",
-          "position": "LB",
+          "name": "Juanyeh Thomas",
+          "position": "S",
           "unit": "Defense",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
-          "snapPct": 71,
-          "wed": "LP",
-          "thu": "-",
+          "jersey": 43,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360590.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4360590/juanyeh-thomas",
+          "snapPct": 83,
+          "wed": "-",
+          "thu": "LP",
           "fri": "-",
-          "injuryType": "Hamstring/Back",
+          "injuryType": "Hamstring",
           "gameStatus": "Questionable",
           "shortComment": "questionable",
           "longComment": "questionable",
-          "isStarter": true,
+          "isStarter": false,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 77,
           "playTier": "FIFTY_FIFTY",
           "playBadgeLabel": "77% • GTD",
           "factors": [
-            "Wednesday Limited Participation (LP); player toughness prior = 82%",
-            "Soft-tissue re-aggravation caution (Hamstring/Back)"
+            "Thursday Limited Participation (LP); player toughness prior = 82%",
+            "Soft-tissue re-aggravation caution (Hamstring)"
           ],
-          "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+          "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         },
         {
           "name": "KaVontae Turpin",
@@ -25349,22 +25324,47 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/3676833/kavontae-turpin",
           "snapPct": 27,
           "wed": "LP",
-          "thu": "-",
+          "thu": "LP",
           "fri": "-",
           "injuryType": "Ribs",
           "gameStatus": "Questionable",
-          "shortComment": "questionable",
-          "longComment": "questionable",
+          "shortComment": "Turpin (ribs) was limited in Thursday's practice, Jon Machota of The Athletic reports.",
+          "longComment": "Turpin was limited for a second consecutive practice. He has missed the last three games, and if that trend continues Sunday versus San Francisco, Jonathan Mingo (ankle) and Camden Brown could remain more involved than usual.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 80,
           "playTier": "FIFTY_FIFTY",
           "playBadgeLabel": "80% • GTD",
           "factors": [
-            "Wednesday Limited Participation (LP); player toughness prior = 76%",
+            "Thursday Limited Participation (LP); player toughness prior = 76%",
             "Manageable pain-tolerance injury profile (Ribs)"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
+        },
+        {
+          "name": "Alijah Clark",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595352.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4595352/alijah-clark",
+          "snapPct": 67,
+          "wed": "-",
+          "thu": "DNP",
+          "fri": "-",
+          "injuryType": "Illness",
+          "gameStatus": "Questionable",
+          "shortComment": "questionable",
+          "longComment": "questionable",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 82,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "82% • GTD",
+          "factors": [
+            "Manageable pain-tolerance injury profile (Illness)"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
         {
           "name": "Luke Schoonmaker",
@@ -25375,7 +25375,7 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4372096/luke-schoonmaker",
           "snapPct": 51,
           "wed": "FP",
-          "thu": "-",
+          "thu": "FP",
           "fri": "-",
           "injuryType": "Groin",
           "gameStatus": "Questionable",
@@ -25383,12 +25383,11 @@
           "longComment": "The tight end has missed the past two games for Dallas, but appears to be ready to return and could see significant snaps behind Brevyn Spann-Ford while Jake Ferguson (knee) is sidelined.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 86,
+          "playProbabilityPct": 92,
           "playTier": "LIKELY",
-          "playBadgeLabel": "86% • Cleared",
+          "playBadgeLabel": "92% • Cleared",
           "factors": [
-            "Full Participation (FP) logged on Wednesday",
-            "Soft-tissue re-aggravation caution (Groin)"
+            "Logged Full Participation (FP) on Thursday"
           ],
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
@@ -25401,7 +25400,7 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4427816/marist-liufau",
           "snapPct": 82,
           "wed": "FP",
-          "thu": "-",
+          "thu": "FP",
           "fri": "-",
           "injuryType": "Forearm",
           "gameStatus": "Questionable",
@@ -25409,13 +25408,63 @@
           "longComment": "Liufau broke his left forearm in the Cowboys' preseason finale against the Saints and has yet to play in the 2026 regular season. The linebacker is set to make his debut in Sunday's contest after being activated from IR on Saturday.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 91,
+          "playProbabilityPct": 92,
           "playTier": "LIKELY",
-          "playBadgeLabel": "91% • Cleared",
+          "playBadgeLabel": "92% • Cleared",
           "factors": [
-            "Full Participation (FP) logged on Wednesday"
+            "Logged Full Participation (FP) on Thursday"
           ],
           "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
+          "name": "Malik Hooker",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 24,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121415.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3121415/malik-hooker",
+          "snapPct": 64,
+          "wed": "Vet Rest",
+          "thu": "FP",
+          "fri": "-",
+          "injuryType": "NIR - Personal",
+          "gameStatus": "No Designation (Cleared)",
+          "shortComment": "",
+          "longComment": "",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 95,
+          "playTier": "LIKELY",
+          "playBadgeLabel": "95% • Cleared",
+          "factors": [
+            "Cleared without restrictive game-day designation"
+          ],
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+        },
+        {
+          "name": "DeMarvion Overshown",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362088.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4362088/demarvion-overshown",
+          "snapPct": 71,
+          "wed": "LP",
+          "thu": "FP",
+          "fri": "-",
+          "injuryType": "Hamstring/Back",
+          "gameStatus": "Questionable",
+          "shortComment": "Overshown (hamstring/back) was a full participant in Thursday's practice, Jon Machota of The Athletic reports.",
+          "longComment": "Overshown didn't play in the Week 9 win over the Colts. He was limited in Wednesday's practice, though after logging a full session Thursday, he is good to go for Sunday's meeting with the 49ers. The 26-year-old has appeared in only three games during the 2026 campaign, amassing 20 total tackles (eight solo) and one interception.",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 95,
+          "playTier": "LIKELY",
+          "playBadgeLabel": "95% • Cleared",
+          "factors": [
+            "Cleared without restrictive game-day designation"
+          ],
+          "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         },
         {
           "name": "Brevyn Spann-Ford",
@@ -25426,7 +25475,7 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/4360967/brevyn-spann-ford",
           "snapPct": 59,
           "wed": "FP",
-          "thu": "-",
+          "thu": "FP",
           "fri": "-",
           "injuryType": "Shoulder",
           "gameStatus": "Questionable",
@@ -25434,11 +25483,11 @@
           "longComment": "Spann-Ford opened Week 9 in his typical reserve role behind Jake Ferguson at tight end, but Ferguson suffered a knee injury in the third quarter. With Ferguson set to miss multiple weeks of action, Spann-Ford will have a chance to operate as the team's primary option at tight end beginning in Week 10 versus the 49ers. On the season thus far, Spann-Ford has reeled in 19 of 27 targets for 136 yards and four touchdowns over nine contests.",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 95,
+          "playProbabilityPct": 96,
           "playTier": "LIKELY",
-          "playBadgeLabel": "95% • Cleared",
+          "playBadgeLabel": "96% • Cleared",
           "factors": [
-            "Full Participation (FP) logged on Wednesday",
+            "Logged Full Participation (FP) on Thursday",
             "Manageable pain-tolerance injury profile (Shoulder)"
           ],
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
@@ -25452,9 +25501,9 @@
           "espnUrl": "https://www.espn.com/nfl/player/_/id/13976/von-miller",
           "snapPct": 23,
           "wed": "Vet Rest",
-          "thu": "-",
+          "thu": "FP",
           "fri": "-",
-          "injuryType": "NIR-Rest",
+          "injuryType": "NIR - Rest",
           "gameStatus": "No Designation (Cleared)",
           "shortComment": "",
           "longComment": "",

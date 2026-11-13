@@ -32,7 +32,7 @@ Automatically activates relevant dashboard modules in a strict 12-block priority
   - **Draft Live & UDFA Hub (`Draft Day 1 – Post-UDFA`)**: Pick-by-pick value steals vs. consensus big board, inline athletic spider charts, guaranteed UDFA contract tracker, and college highlight reels.
 - **Audio & AI Studio (`🎧 Audio & AI`)**:
   - **49ers Podcasts (7d)**: Aggregates all episodes from the last 7 days across the 6 flagship 49ers beat shows (*The Gold Standard*, *49ers Talk*, *49ers +/-*, *Dieter and Hutch*, *Locked On 49ers*, *Lombardi Lounge*) with `By Date` / `By Podcast` views and native mobile app deep links (`podcasts://` on iOS/iPadOS, `intent://` on Android).
-  - **Autopodcast Studio & Deep Analysis Runner**: Pre-generated studio two-host 44.1 kHz 96kbps AAC (`.m4a`) episodes + on-demand custom duration (`2–20 min`) podcast & deep analysis generator powered by **Gemini 3.8 High (`thinkingBudget: 24576`, 2-pass accuracy verification)**, spoken-NFL prosody (`humanizeNflTextForTts`), sticky cross-tab mini-player, synced interactive transcript seeking, `1x–2x` variable speed, iOS lock-screen `MediaSession` controls, and **iOS built-in speaker `AVAudioSessionCategoryPlayback` stereo carrier unlock** (so auto-generated podcasts play out loud on iPhone speakers even when the hardware Silent switch is ON).
+  - **Autopodcast Studio & Deep Analysis Runner**: Pre-generated studio two-host 44.1 kHz 96kbps AAC (`.m4a`) episodes + on-demand custom duration (`2–20 min`) podcast & deep analysis generator powered by **Gemini 4 Hydrogen (`thinkingLevel: "XHIGH"`, 2-pass accuracy verification)**, spoken-NFL prosody (`humanizeNflTextForTts`), sticky cross-tab mini-player, synced interactive transcript seeking, `1x–2x` variable speed, iOS lock-screen `MediaSession` controls, and **iOS built-in speaker `AVAudioSessionCategoryPlayback` stereo carrier unlock** (so auto-generated podcasts play out loud on iPhone speakers even when the hardware Silent switch is ON).
 
 ---
 
@@ -110,7 +110,7 @@ npm test
 
 ## Optional Zero-Cost Shared AI & Audio Edge Worker (`worker/`)
 
-Out of the box, the app works 100% standalone on GitHub Pages with pre-generated neural `.m4a` episodes, a local data-grounded synthesis engine, and natural multi-voice browser speech synthesis (with iOS built-in speaker unlock). To enable live Gemini `3.8-flash` High-Thinking (2-pass audit + Google Search Grounding), Studio Pro TTS cascade, automatic 6-hour `/v1beta/models` upgrades, and shared cloud KV/R2 audio caching across all ~25 friends (`\$0/month` on Cloudflare Free Tier + Google AI Studio Free Tier):
+Out of the box, the app works 100% standalone on GitHub Pages with pre-generated neural `.m4a` episodes, a local data-grounded synthesis engine, and natural multi-voice browser speech synthesis (with iOS built-in speaker unlock). To enable live Gemini 4 Hydrogen (`gemini-4-hydrogen` `XHIGH`-Thinking, 2-pass audit + Google Search Grounding), Studio Pro TTS cascade, automatic 6-hour `/v1beta/models` upgrades, and shared cloud KV/R2 audio caching across all ~25 friends (`\$0/month` on Cloudflare Free Tier + Google AI Studio Free Tier):
 
 ```bash
 cd worker

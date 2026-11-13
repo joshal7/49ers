@@ -5,6 +5,7 @@
  */
 
 import {
+  buildMockDraftBigBoardUrl,
   buildMockDraftProspectUrl,
   normalizePlayerKey,
   sanitizeExternalUrl,
@@ -1527,10 +1528,18 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
         shanahanLynchFitScore: raw.shanahanLynchFitScore ?? boardHit?.shanahanLynchFitScore ?? null,
         archetypeTraits: raw.archetypeTraits || boardHit?.archetypeNote || '',
         profileUrl:
-          sanitizeExternalUrl(raw.profileUrl || boardHit?.profileUrl || '', null) ||
-          buildMockDraftProspectUrl(draftYear, slug, draftYear),
-        mockDbUrl: buildMockDraftProspectUrl(draftYear, slug, draftYear),
+          sanitizeExternalUrl(
+            raw.profileUrl ||
+              boardHit?.espnUrl ||
+              boardHit?.profileUrl ||
+              boardHit?.tankathonUrl ||
+              boardHit?.cbsUrl ||
+              '',
+            null
+          ) || `https://www.sports-reference.com/cfb/search/search.fcgi?search=${encodeURIComponent(pName)}`,
+        mockDbUrl: buildMockDraftBigBoardUrl(draftYear),
         tankathonUrl: sanitizeExternalUrl(boardHit?.tankathonUrl || '', null),
+        espnUrl: sanitizeExternalUrl(boardHit?.espnUrl || '', null),
         latestPublishedMs: pubMs,
         sites: []
       });

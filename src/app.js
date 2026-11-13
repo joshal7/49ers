@@ -21,7 +21,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=48';
+} from './services/dataService.js?v=55';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -37,7 +37,7 @@ import {
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=53';
+} from './services/aiWorkerClient.js?v=55';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -48,7 +48,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=53';
+} from './services/shareService.js?v=55';
 
 import {
   esc,
@@ -60,25 +60,25 @@ import {
   registerRosterPlayersForInlineLinks
 } from './views/uiHelpers.js?v=50';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
-import { sanitizeExternalUrl } from './engine/linkIntegrity.js';
+import { sanitizeExternalUrl } from './engine/linkIntegrity.js?v=54';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
   buildBigBoardUrlSearch,
   normalizeBigBoardLens,
   normalizeBigBoardSort
-} from './engine/draftBigBoardEngine.js?v=51';
+} from './engine/draftBigBoardEngine.js?v=54';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
 import { renderHomeDashboardHtml } from './views/homeView.js?v=50';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=49';
+} from './views/newsView.js?v=55';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=51';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=53';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=54';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=55';
 import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=48';
 
 const state = {
@@ -2780,7 +2780,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
         });
       }
 
-      // Sequenced 1/day Gemini 3.8 High Matchup Intel + 5:00 PM PT Top News Brief refreshes (no split budget)
+      // Sequenced 1/day Gemini 4 Hydrogen (XHIGH) Matchup Intel + 5:00 PM PT Top News Brief refreshes (no split budget)
       triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
     }
     return true;

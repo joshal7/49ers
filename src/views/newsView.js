@@ -1,5 +1,5 @@
 /**
- * Unified High-Signal Team News, Daily Gemini 3.8 Flash High Top-News Brief,
+ * Unified High-Signal Team News, Daily Gemini 4 Hydrogen (XHIGH) Top-News Brief,
  * Live Beat Wire, Game Highlights & All-22 Film View
  *
  * Single Two-Row Filter Bar (0px mobile overflow):
@@ -229,7 +229,7 @@ function formatDailyBriefBulletHtml(bullet = '', seenJargon = null, urlUpgradeMa
 }
 
 /**
- * Renders the 1/day Gemini 3.8 Flash High Top-News Brief card (shared identically between
+ * Renders the 1/day Gemini 4 Hydrogen (XHIGH) Top-News Brief card (shared identically between
  * the top of `News & Film -> All` and the top of the `Home` screen).
  */
 export function renderDailyTopNewsBriefHtml(

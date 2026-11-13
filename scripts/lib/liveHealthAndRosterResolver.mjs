@@ -10,6 +10,11 @@
  *  5. CBS Sports Team Injury Table (`https://www.cbssports.com/nfl/teams/{ABBR}/{slug}/injuries/`)
  */
 
+import {
+  canonicalInjuryPlayerKey,
+  parseOfficial49ersInjuryReportHtml as parseOfficial49ersInjuryReportHtmlShared
+} from '../../src/engine/injuryProbabilityModel.js';
+
 function decodeHtmlEntities(str = '') {
   return String(str || '')
     .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
@@ -31,16 +36,7 @@ function stripTags(html = '') {
 /**
  * Canonical player lookup key stripping punctuation, accents, and generational suffixes (`Jr.`, `Sr.`, `II`, `III`, `IV`).
  */
-export function canonicalPlayerKey(rawName = '') {
-  const k = String(rawName || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/\b(jr|sr|ii|iii|iv|v)\b\.?/g, '')
-    .replace(/[^a-z0-9]/g, '');
-  if (k === 'ogbonniaokoronkwo') return 'ogbookoronkwo';
-  return k;
-}
+export const canonicalPlayerKey = canonicalInjuryPlayerKey;
 
 /**
  * Parses `https://www.49ers.com/team/players-roster/` into authoritative roster buckets:
@@ -102,121 +98,10 @@ export function parseOfficial49ersRosterHtml(html = '') {
   };
 }
 
-function normalizeOfficialPracticeCell(rawCell = '', injuryText = '') {
-  const c = String(rawCell || '').trim().toUpperCase();
-  if (!c || c === '(-)' || c === '-' || c === '—') return '-';
-  if (c === 'DNP' && /not injury related|resting player|\brest\b/i.test(injuryText)) {
-    return 'Vet Rest';
-  }
-  if (c === 'FP' || c === 'FULL') return 'FP';
-  if (c === 'LP' || c === 'LIMITED') return 'LP';
-  if (c === 'DNP') return 'DNP';
-  return rawCell.trim();
-}
-
-function normalizeOfficialGameStatus(rawStatus = '') {
-  const s = String(rawStatus || '').trim().toUpperCase();
-  if (!s || s === 'UNSPECIFIED' || s === '(-)' || s === '-' || s === '—') return '';
-  if (s.includes('QUESTIONABLE')) return 'Questionable';
-  if (s.includes('DOUBTFUL')) return 'Doubtful';
-  if (s.includes('OUT')) return 'Out';
-  return '';
-}
-
 /**
  * Parses `https://www.49ers.com/team/injury-report/` for BOTH San Francisco 49ers AND the weekly Opponent.
  */
-export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') {
-  const sfByKey = new Map();
-  const oppByKey = new Map();
-  if (!html || typeof html !== 'string') {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
-  }
-
-  const oppLower = String(oppTeamName || '').toLowerCase();
-  const oppMascot = oppLower.split(/\s+/).filter(Boolean).pop() || '';
-  const tableRegex = /<table[\s\S]*?<\/table>/gi;
-  const candidateTables = [];
-  let match;
-
-  while ((match = tableRegex.exec(html)) !== null) {
-    const tableHtml = match[0];
-    const precedingContext = stripTags(html.slice(Math.max(0, match.index - 650), match.index)).toLowerCase();
-    const headers = [
-      ...(tableHtml.match(/<thead[\s\S]*?<\/thead>/i)?.[0] || '').matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)
-    ].map(m => stripTags(m[1]).toLowerCase());
-
-    if (!headers.includes('player') || (!headers.includes('wed') && !headers.includes('thu') && !headers.includes('fri'))) {
-      continue;
-    }
-    candidateTables.push({ tableHtml, precedingContext, headers });
-  }
-
-  if (candidateTables.length === 0) {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
-  }
-
-  // Verify the opponent practice table heading itself matches the current week's opponent
-  // (never match schedule/footer chrome elsewhere in the HTML document!)
-  const reportMatchesCurrentOpponent =
-    !oppMascot || candidateTables.some(t => t.precedingContext.includes(oppMascot));
-  if (!reportMatchesCurrentOpponent) {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
-  }
-
-  let tableIdx = 0;
-  for (const { tableHtml, precedingContext, headers } of candidateTables) {
-    const isSf =
-      precedingContext.includes('san francisco 49ers') &&
-      (!oppMascot || precedingContext.lastIndexOf('49ers') > precedingContext.lastIndexOf(oppMascot));
-    const targetMap = isSf || (tableIdx === 0 && !oppMascot) ? sfByKey : oppByKey;
-    tableIdx += 1;
-
-    const pIdx = headers.indexOf('player');
-    const posIdx = headers.indexOf('position');
-    const injIdx = headers.indexOf('injury');
-    const d1Idx = headers.findIndex(h => h === 'wed' || h === 'tue' || h === 'thu');
-    const wedIdx = headers.indexOf('wed');
-    const thuIdx = headers.indexOf('thu');
-    const friIdx = headers.indexOf('fri');
-    const satIdx = headers.indexOf('sat');
-    const gsIdx = headers.findIndex(h => h.includes('status'));
-
-    const tbody = tableHtml.match(/<tbody[\s\S]*?<\/tbody>/i)?.[0] || '';
-    for (const rowMatch of tbody.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
-      const cells = [...rowMatch[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c => stripTags(c[1]));
-      const playerName = cells[pIdx] || '';
-      const key = canonicalPlayerKey(playerName);
-      if (!key) continue;
-
-      const rawInjury = injIdx >= 0 ? cells[injIdx] || '' : '';
-      const cleanInjury = /not injury related.*rest/i.test(rawInjury) ? 'NIR - Rest' : rawInjury;
-
-      // Support both standard Wed/Thu/Fri weeks and Mon/Thu shifted weeks (Tue/Wed/Thu or Thu/Fri/Sat)
-      const c1 = wedIdx >= 0 ? cells[wedIdx] : d1Idx >= 0 ? cells[d1Idx] : '-';
-      const c2 = thuIdx >= 0 ? cells[thuIdx] : '-';
-      const c3 = friIdx >= 0 ? cells[friIdx] : satIdx >= 0 ? cells[satIdx] : '-';
-
-      targetMap.set(key, {
-        name: playerName,
-        position: posIdx >= 0 ? cells[posIdx] || '' : '',
-        injuryType: cleanInjury,
-        wed: normalizeOfficialPracticeCell(c1, rawInjury),
-        thu: normalizeOfficialPracticeCell(c2, rawInjury),
-        fri: normalizeOfficialPracticeCell(c3, rawInjury),
-        gameStatus: gsIdx >= 0 ? normalizeOfficialGameStatus(cells[gsIdx]) : ''
-      });
-    }
-  }
-
-  return {
-    hasSfReport: sfByKey.size > 0,
-    hasOppReport: oppByKey.size > 0,
-    reportMatchesCurrentOpponent: true,
-    sfByKey,
-    oppByKey
-  };
-}
+export const parseOfficial49ersInjuryReportHtml = parseOfficial49ersInjuryReportHtmlShared;
 
 const CBS_TEAM_SLUGS = {
   ARI: 'arizona-cardinals',

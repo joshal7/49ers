@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T21:20:03.738Z",
+  "updatedAt": "2026-11-13T05:21:30.571Z",
   "week": 10,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -15,39 +15,20 @@
       "jersey": 5,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
       "wed": "DNP",
-      "thu": "-",
+      "thu": "DNP",
       "fri": "-",
       "injuryType": "Achilles",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 18,
-      "playBadgeLabel": "18% • Doubtful",
+      "playProbabilityPct": 14,
+      "playBadgeLabel": "14% • Doubtful",
       "archetypeNote": "Veteran X-receiver toughness prior; routinely manages Wednesday reps but requires soft-tissue/Achilles sprint clearance.",
       "factors": [
-        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice",
+        "Consecutive Wed/Thu DNPs",
         "Matches player's documented chronic history (Achilles)",
         "Soft-tissue re-aggravation caution (Achilles)",
-        "Coaching/beat consensus (5 corroborated reports): not expected to play this week"
+        "Coaching/beat consensus (4 corroborated reports): not expected to play this week"
       ],
-      "beatComment": "Evans (Achilles) was listed as a non-participant in Wednesday's practice."
-    },
-    {
-      "playerId": "4427325",
-      "name": "Renardo Green",
-      "position": "CB",
-      "jersey": 0,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
-      "wed": "DNP",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 37,
-      "playBadgeLabel": "37% • Long Shot",
-      "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Did Not Participate (DNP) on Wednesday"
-      ],
-      "beatComment": "Green injured his back in the second half of the 49ers' win over the Raiders in Week 9, and he finished that game with four tackles (two solo) and one interception. Per Barrows, head coach Kyle Shanahan indicated Monday that Green is considered day-to-day, so the third-year defensive back's practice participation over the next two days will determine whether he'll be available for Sunday's game against the Cowboys."
+      "beatComment": "Shanahan's comments signal the 49ers are taking an extra cautious approach with the veteran wideout in the hopes that he'll be available down the home stretch of the season. While Evans hasn't officially been ruled out for Sunday's game at Dallas, he isn't expected to suit up in Week 10, per Brooke Evans of the 49ers' official site. Until he's fully recovered and ready to go again, his absence should continue to open up additional opportunities outside for 2025 fourth-rounder Jordan Watkins."
     },
     {
       "playerId": "4242488",
@@ -56,17 +37,36 @@
       "jersey": 2,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png",
       "wed": "DNP",
-      "thu": "-",
+      "thu": "DNP",
       "fri": "-",
       "injuryType": "Foot",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 41,
-      "playBadgeLabel": "41% • Long Shot",
+      "playProbabilityPct": 28,
+      "playBadgeLabel": "28% • Long Shot",
       "archetypeNote": "High snap durability across boundary and slot corner alignments.",
       "factors": [
-        "Did Not Participate (DNP) on Wednesday"
+        "Consecutive Wed/Thu DNPs"
       ],
       "beatComment": "Lenoir is considered day-to-day due to a foot injury that he picked up in Week 9 against the Raiders. He was an observer for Wednesday's session, and he'll have two more opportunities to practice in at least a limited capacity ahead of Sunday's tilt against the Cowboys. Lenoir has accumulated 33 tackles (20 solo) and one pass defense through eight regular-season games."
+    },
+    {
+      "playerId": "4427325",
+      "name": "Renardo Green",
+      "position": "CB",
+      "jersey": 0,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "-",
+      "injuryType": "Back",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 28,
+      "playBadgeLabel": "28% • Long Shot",
+      "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Consecutive Wed/Thu DNPs"
+      ],
+      "beatComment": "Green injured his back in the second half of the 49ers' win over the Raiders in Week 9, and he finished that game with four tackles (two solo) and one interception. Per Barrows, head coach Kyle Shanahan indicated Monday that Green is considered day-to-day, so the third-year defensive back's practice participation over the next two days will determine whether he'll be available for Sunday's game against the Cowboys."
     },
     {
       "playerId": "3126486",
@@ -75,19 +75,19 @@
       "jersey": 19,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png",
       "wed": "LP",
-      "thu": "-",
+      "thu": "LP",
       "fri": "-",
       "injuryType": "Hamstring",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 66,
-      "playBadgeLabel": "66% • GTD",
+      "playProbabilityPct": 68,
+      "playBadgeLabel": "68% • GTD",
       "archetypeNote": "High-contact YAC style; plays through upper-body pain tags (~86%) with extra caution on lower-body soft tissue.",
       "factors": [
-        "Returned to Limited Participation (LP) on Wednesday following 3-game absence",
+        "Thursday Limited Participation (LP); player toughness prior = 79%",
         "Matches player's documented chronic history (Hamstring)",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal."
+      "beatComment": "Samuel has managed back-to-back capped sessions to kick off Week 10 prep as he vies for his first game action since Week 5 at Seattle, when he injured his right hamstring. Friday's injury report will reveal his odds to suit up Sunday in Dallas."
     },
     {
       "playerId": "3057524",
@@ -96,7 +96,7 @@
       "jersey": 33,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3057524.png",
       "wed": "LP",
-      "thu": "-",
+      "thu": "LP",
       "fri": "-",
       "injuryType": "Knee, Foot",
       "gameStatus": "Questionable",
@@ -104,9 +104,9 @@
       "playBadgeLabel": "78% • GTD",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Wednesday Limited Participation (LP); player toughness prior = 78%"
+        "Thursday Limited Participation (LP); player toughness prior = 78%"
       ],
-      "beatComment": "He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal."
+      "beatComment": "49ers participation report No practice WR Mike Evans (Achilles) CB Renardo Green (back) CB Deommodore Lenoir (foot) Limited LB Dre Greenlaw (knee) LT Trent Williams (shoulder) WR Deebo Samuel (hamstring) DT CJ West (knee) S Siran Neal (knee, foot) S Upton Stout (shoulder)"
     },
     {
       "playerId": "4565200",
@@ -115,7 +115,7 @@
       "jersey": 20,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565200.png",
       "wed": "LP",
-      "thu": "-",
+      "thu": "LP",
       "fri": "-",
       "injuryType": "Shoulder, Neck",
       "gameStatus": "Questionable",
@@ -123,10 +123,10 @@
       "playBadgeLabel": "80% • GTD",
       "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Wednesday Limited Participation (LP); player toughness prior = 76%",
+        "Thursday Limited Participation (LP); player toughness prior = 76%",
         "Manageable pain-tolerance injury profile (Shoulder, Neck)"
       ],
-      "beatComment": "He is limited today at practice, along with Deebo Samuel, Upton Stout and Siran Neal."
+      "beatComment": "49ers participation report No practice WR Mike Evans (Achilles) CB Renardo Green (back) CB Deommodore Lenoir (foot) Limited LB Dre Greenlaw (knee) LT Trent Williams (shoulder) WR Deebo Samuel (hamstring) DT CJ West (knee) S Siran Neal (knee, foot) S Upton Stout (shoulder)"
     },
     {
       "playerId": "3043116",
@@ -135,15 +135,15 @@
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
       "wed": "FP",
-      "thu": "-",
+      "thu": "FP",
       "fri": "-",
       "injuryType": "Ankle",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 91,
-      "playBadgeLabel": "91% • Cleared",
+      "playProbabilityPct": 92,
+      "playBadgeLabel": "92% • Cleared",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Full Participation (FP) logged on Wednesday"
+        "Logged Full Participation (FP) on Thursday"
       ],
       "beatComment": "Playing in his first game since Week 2 due to a high ankle sprain, Robinson played 51 percent of the Niners' offensive snaps against Las Vegas. San Francisco's wideout situation is a week-to-week thing moving forward, with the Tuesday addition of Keenan Allen and Deebo Samuel (hamstring), Mike Evans (Achilles) and rookie De'Zhaun Stribling (ankle) all likely to return at some point in the near future. Robinson isn't someone to roster in 12-team fantasy leagues."
     },
@@ -154,17 +154,17 @@
       "jersey": 71,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
       "wed": "Vet Rest",
-      "thu": "-",
+      "thu": "LP",
       "fri": "-",
-      "injuryType": "NIR - Rest",
-      "gameStatus": "Active",
+      "injuryType": "Shoulder",
+      "gameStatus": "Questionable",
       "playProbabilityPct": 98,
       "playBadgeLabel": "98% • Vet Rest (Full Go)",
       "archetypeNote": "Habitual Wed/Thu veteran rest; suits up at ~98% when NIR-Rest, but historically cautious with acute high/low ankle sprains.",
       "factors": [
         "Habitual Veteran Rest prior (Trent Williams maintenance schedule)"
       ],
-      "beatComment": ""
+      "beatComment": "Williams presumably sustained a shoulder injury in Week 9 versus the Raiders, and now his availability for Week 10 is in some doubt. If he can't log a full practice Friday, there's a chance he could end up carrying an injury designation into the weekend."
     },
     {
       "playerId": "3117251",
@@ -173,7 +173,7 @@
       "jersey": 23,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
       "wed": "Vet Rest",
-      "thu": "-",
+      "thu": "FP",
       "fri": "-",
       "injuryType": "NIR - Rest",
       "gameStatus": "Active",
@@ -192,17 +192,17 @@
       "jersey": 57,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916903.png",
       "wed": "Vet Rest",
-      "thu": "-",
+      "thu": "LP",
       "fri": "-",
-      "injuryType": "NIR - Rest",
-      "gameStatus": "Active",
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
       "playProbabilityPct": 98,
       "playBadgeLabel": "98% • Vet Rest (Full Go)",
       "archetypeNote": "Veteran starter profile (8th NFL season, 74% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
         "Habitual Veteran Rest prior (Dre Greenlaw maintenance schedule)"
       ],
-      "beatComment": "Greenlaw jumped on the loose ball that was forced out of Brock Bowers' hands by Fred Warner midway through the third quarter. It was the fifth time this season that Greenlow logged at least eight stops, and the 2019 fifth-rounder is up to 57 tackles (27 solo), one forced fumble and one fumble recovery across seven regular-season games."
+      "beatComment": "Greenlaw had eight tackles in Sunday's win over the Raiders. While he was limited Thursday, he has more time to get cleared to suit up versus the Cowboys in Week 10. If Greenlaw can't get on the field, Jaden Dugger and Garret Wallow are both in line for more snaps."
     }
   ],
   "irAndReserveTracker": [
@@ -217,6 +217,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
       "isPracticeWindowExpected": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "-",
       "placedBeforeWeek": 3,
       "earliestEligibleWeek": 7,
       "projectedReturnWeek": "Week 10 Activation Window (Nov 15)",
@@ -234,6 +237,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
       "isPracticeWindowExpected": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "-",
       "placedBeforeWeek": 4,
       "earliestEligibleWeek": 9,
       "projectedReturnWeek": "Week 10 Activation Window (Nov 15)",
@@ -251,6 +257,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 9,
       "earliestEligibleWeek": 13,
       "projectedReturnWeek": "Est. Week 13 (Dec 6)",
@@ -268,6 +277,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 2,
       "earliestEligibleWeek": 6,
       "projectedReturnWeek": "Est. Week 13 (Dec 6)",
@@ -285,6 +297,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "Est. Week 15 (Dec 17)",
@@ -302,6 +317,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
@@ -319,6 +337,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
@@ -336,6 +357,9 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
@@ -353,11 +377,14 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "2-Wk Roster Exemption",
       "byeWeekNote": "Two-week NFL roster exemption following reinstatement",
-      "beatNote": "In what amounted to a procedural transaction after Aiyuk met with team officials Friday upon filing his paperwork for reinstatement, the 49ers now have until Nov. 23 to either add him to the 53-man roster, release him or trade him. Given that Aiyuk owes the 49ers roughly $13 million in bonus forfeiture, securing a release from the team could prove difficult, though it's possible that the two sides work out a repayment plan that would allow him to become a free agent. In addition to the financial complications potentially delaying Aiyuk's return to the field, it's unclear if the 49ers or any other team have interest in rostering the 28-year-old wideout, who hasn't played an NFL snap since tearing the ACL and MCL in his right knee Oct. 20, 2024 and undergoing surgery."
+      "beatNote": "In what amounted to a procedural transaction after Aiyuk met with team officials Friday upon filing his paperwork for reinstatement, the 49ers now have until Nov. 23 to add him to the 53-man roster, release him or trade him. Given that Aiyuk owes the 49ers roughly $13 million in bonus forfeiture, securing a release from the team could prove difficult, though it's possible that the two sides work out a repayment plan that would allow him to become a free agent. In addition to the financial complications potentially delaying Aiyuk's return to the field, it's unclear if the 49ers or any other team have interest in rostering the 28-year-old wideout, who hasn't played an NFL snap since tearing the ACL and MCL in his right knee Oct. 20, 2024 and undergoing surgery."
     },
     {
       "playerId": "4430835",
@@ -370,6 +397,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -387,6 +417,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -404,6 +437,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -421,11 +457,14 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 10,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-      "beatNote": "ir"
+      "beatNote": "Halton suffered a broken left ankle in the fourth quarter of Sunday's win over Las Vegas and is out for the season. The fourth-round rookie finished his inaugural NFL campaign with 15 tackles, including 2.0 sacks, a defensed pass, a forced fumble and a fumble recovery (which he returned for a touchdown) over eight contests. San Francisco's recent acquisition of DeForest Buckner softens the blow of losing Halton a bit."
     },
     {
       "playerId": "4259147",
@@ -438,6 +477,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 2,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -455,6 +497,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -472,6 +517,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",
@@ -489,6 +537,9 @@
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": null,
       "projectedReturnWeek": "Out for Season",

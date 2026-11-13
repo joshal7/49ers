@@ -5,13 +5,15 @@
  * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts
  * - GET  /api/model-status       -> Returns active Free-Tier Gemini model & cascade (`?poll=1` forces live `/v1beta/models` poll)
  * - GET  /api/audio/:episodeId   -> Streams cached MP3/WAV from Cloudflare R2 (supports HTTP Range for iOS Safari)
- * - POST /api/analyze            -> Runs best available Free-Tier Gemini model (3.8 Flash HIGH Thinking + Google Search Grounding)
+ * - POST /api/analyze            -> Runs best available Free-Tier Gemini model (Gemini 4 Hydrogen XHIGH Thinking + Google Search Grounding)
  * - POST /api/podcast            -> Generates verified script + Gemini Multi-Speaker TTS audio, stores in R2 & indexes in KV
  * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
  */
 
 import {
+  PRIMARY_GEMINI_REASONING_MODEL,
   buildGeminiThinkingConfig,
+  resolveGeminiThinkingLevelLabel,
   DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
   buildStage1DeepResearchUserPrompt,
   DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT,
@@ -26,6 +28,7 @@ import {
 } from '../src/engine/geminiStudioPrompts.js';
 
 export const DEFAULT_FREE_MODEL_CASCADE = [
+  'gemini-4-hydrogen',
   'gemini-3.8-flash',
   'gemini-3.5-flash',
   'gemini-3-flash-preview',
@@ -88,14 +91,22 @@ export function scoreFreeTierGeminiModel(modelEntryOrId) {
   }
 
   const verMatch = id.match(/^gemini-(\d+(?:\.\d+)?)/);
-  const versionNum = verMatch ? parseFloat(verMatch[1]) : 2.0;
+  const versionNum = verMatch ? parseFloat(verMatch[1]) : /\bhydrogen\b/.test(id) ? 4.0 : 2.0;
   if (!Number.isFinite(versionNum) || versionNum < 2.5) return -1;
 
+  const isHydrogen = /\bhydrogen\b/.test(id);
   const isFlash = /\bflash\b/.test(id);
   const isPro = /\bpro\b/.test(id);
-  if (!isFlash && !isPro) return -1;
+  const isCarbonOrArgon = /\b(carbon|argon)\b/.test(id);
+  if (!isHydrogen && !isFlash && !isPro && !isCarbonOrArgon) return -1;
 
-  const freeTierBonus = isFlash ? 260 : versionNum >= 3.8 ? 275 : 80;
+  const freeTierBonus = isHydrogen
+    ? 360
+    : isFlash
+      ? 260
+      : isPro && versionNum >= 3.8
+        ? 275
+        : 80;
   const versionScore = Math.round(versionNum * 100);
   const stabilityAdj = id.includes('exp') ? -18 : id.includes('preview') ? -6 : 10;
   const latestAliasPenalty = id.endsWith('-latest') ? -4 : 0;
@@ -151,7 +162,7 @@ export async function pollAndCacheBestFreeModel(env) {
   const bestModel = rankedCascade[0] || DEFAULT_FREE_MODEL_CASCADE[0];
   const state = {
     bestModel,
-    thinkingLevel: 'HIGH',
+    thinkingLevel: resolveGeminiThinkingLevelLabel(bestModel),
     thinkingBudget: Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET),
     rankedCascade,
     source,
@@ -404,6 +415,22 @@ async function callGeminiTextWithFallback(env, payload) {
       });
     }
 
+    if (res.status === 400 && modelThinkingConfig?.thinkingLevel === 'XHIGH') {
+      const { tools: _omitTools2, ...baseFallback } = modelPayload;
+      const highFallbackPayload = {
+        ...baseFallback,
+        generationConfig: {
+          ...(modelPayload.generationConfig || {}),
+          thinkingConfig: { thinkingLevel: 'HIGH' }
+        }
+      };
+      res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(highFallbackPayload)
+      });
+    }
+
     lastRes = res;
 
     if (res.ok) {
@@ -412,7 +439,7 @@ async function callGeminiTextWithFallback(env, payload) {
           'meta:best_free_model',
           JSON.stringify({
             bestModel: model,
-            thinkingLevel: 'HIGH',
+            thinkingLevel: resolveGeminiThinkingLevelLabel(model),
             thinkingBudget: Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET),
             rankedCascade: [model, ...cascade.filter(m => m !== model)],
             source: 'auto-failover-promotion',
@@ -503,13 +530,14 @@ export default {
     }
 
     if (request.method === 'GET' && url.pathname === '/api/health') {
+      const defaultFreeModel = env.GEMINI_DEFAULT_FREE_MODEL || DEFAULT_FREE_MODEL_CASCADE[0];
       return jsonResponse(
         {
           ok: true,
           service: '49ers-worker',
-          defaultFreeModel: env.GEMINI_DEFAULT_FREE_MODEL || DEFAULT_FREE_MODEL_CASCADE[0],
+          defaultFreeModel,
           defaultAudioModel: DEFAULT_AUDIO_TTS_CASCADE[0],
-          thinkingLevel: 'HIGH',
+          thinkingLevel: resolveGeminiThinkingLevelLabel(defaultFreeModel),
           thinkingBudget: HIGH_THINKING_BUDGET,
           qualityPriority: 'accuracy_over_latency'
         },
@@ -615,7 +643,7 @@ export default {
       const week = Number(body.week || 1);
       const oppAbbr = String(body.oppAbbr || 'OPP').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
       const datePt = String(body.datePt || new Date().toISOString().slice(0, 10)).replace(/[^0-9-]/g, '');
-      const cacheKey = `matchup_intel:${seasonYear}:wk${week}:${oppAbbr}:${datePt}`;
+      const cacheKey = `matchup_intel_v2:${seasonYear}:wk${week}:${oppAbbr}:${datePt}`;
 
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
@@ -673,7 +701,7 @@ export default {
         return jsonResponse({ error: 'Invalid daily news brief request' }, 400, cors);
       }
       const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
-      const cacheKey = `daily_news_brief_v2:${cycleKey}`;
+      const cacheKey = `daily_news_brief_v3:${cycleKey}`;
 
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
@@ -694,7 +722,7 @@ export default {
       const scopedEnv = {
         ...env,
         GEMINI_API_KEY: newsKey,
-        GEMINI_DEFAULT_FREE_MODEL: 'gemini-3.8-flash'
+        GEMINI_DEFAULT_FREE_MODEL: PRIMARY_GEMINI_REASONING_MODEL
       };
       const { res: geminiRes, modelUsed } = await callGeminiTextWithFallback(scopedEnv, {
         systemInstruction: { parts: [{ text: effectiveSystem }] },
@@ -713,9 +741,11 @@ export default {
 
       const rawJson = await geminiRes.json();
       const rawText = scrubStaleWeightHallucinations(extractNonThoughtText(rawJson), String(body.prompt));
+      const resolvedNewsModel = modelUsed || PRIMARY_GEMINI_REASONING_MODEL;
       const payloadOut = {
         cycleKey,
-        modelUsed: modelUsed || 'gemini-3.8-flash',
+        modelUsed: resolvedNewsModel,
+        thinkingLevel: resolveGeminiThinkingLevelLabel(resolvedNewsModel),
         generatedAt: new Date().toISOString(),
         rawText
       };
@@ -949,7 +979,7 @@ export default {
         title: prompt.length > 88 ? `${prompt.slice(0, 85)}...` : prompt,
         category: body.category || 'On-Demand Deep Dive',
         modelUsed,
-        thinkingLevel: 'HIGH',
+        thinkingLevel: resolveGeminiThinkingLevelLabel(modelUsed),
         qualityPriority: 'accuracy_over_latency',
         verifiedPasses,
         createdAt: new Date().toISOString(),
@@ -1319,7 +1349,7 @@ export default {
         presetLabel: `${durationMinutes}m Custom Pod`,
         modelUsed,
         audioModelUsed,
-        thinkingLevel: 'HIGH',
+        thinkingLevel: resolveGeminiThinkingLevelLabel(modelUsed),
         qualityPriority: 'accuracy_over_latency',
         verifiedPasses,
         createdBy: String(body.author || 'Friend Group'),

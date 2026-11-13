@@ -1233,6 +1233,9 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
               ir.injuryType &&
               ir.injuryType.toLowerCase() !== String(ir.status || '').toLowerCase() &&
               ir.injuryType !== 'Undisclosed';
+            const hasIrPrac =
+              Boolean(ir.isPracticeWindowOpen) &&
+              ((ir.wed && ir.wed !== '-') || (ir.thu && ir.thu !== '-') || (ir.fri && ir.fri !== '-'));
             return `
           <div class="subcard-panel" style="cursor:pointer"
                data-action="open-player-sheet" data-player-id="${esc(ir.playerId)}" data-initial-tab="health">
@@ -1244,7 +1247,11 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
               <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
             </div>
             <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">
-              ${meta.subtitleHtml}
+              ${meta.subtitleHtml}${
+                hasIrPrac
+                  ? ` <span class="mono" style="color:var(--text-primary)">• W/T/F: ${esc(formatPracCell(ir.wed))} / ${esc(formatPracCell(ir.thu))} / ${esc(formatPracCell(ir.fri))}</span>`
+                  : ''
+              }
             </div>
             ${ir.beatNote ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${escJargon(ir.beatNote, { excludePlayerId: ir.playerId })}</div>` : ''}
           </div>
@@ -2356,7 +2363,10 @@ function renderBigBoardProspectItemHtml(
     br.drafttek ? { lbl: `DraftTek #${br.drafttek}`, url: null } : null
   ].filter(Boolean);
 
-  const safeProf = sanitizeExternalUrl(b.profileUrl, null);
+  const safeTk = sanitizeExternalUrl(b.tankathonUrl, null);
+  const safeEspn = sanitizeExternalUrl(b.espnUrl, null);
+  const safeCbs = sanitizeExternalUrl(b.cbsUrl, null);
+  const safeProf = safeEspn || sanitizeExternalUrl(b.profileUrl, null) || safeTk || safeCbs;
   const safeMockDb = sanitizeExternalUrl(b.mockDbUrl, null);
   const safeBuzzUrl = sanitizeExternalUrl(b.buzzUrl, 'https://grindingthemocks.com/');
   const safePffUrl = sanitizeExternalUrl(b.pffUrl, 'https://www.pff.com/draft/big-board');
@@ -2483,6 +2493,16 @@ function renderBigBoardProspectItemHtml(
           ${
             safeProf
               ? `<a href="${esc(safeProf)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Prospect Profile</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
+          ${
+            safeTk && safeTk !== safeProf
+              ? `<a href="${esc(safeTk)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Draft Scouting</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
+          ${
+            safeCbs && safeCbs !== safeProf
+              ? `<a href="${esc(safeCbs)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>CBS Profile</span>${iconSvg('externalLink', 9)}</a>`
               : ''
           }
           ${

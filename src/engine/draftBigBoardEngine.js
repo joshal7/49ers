@@ -225,8 +225,14 @@ export function normalizeBigBoardProspect(raw, index = 0, draftYear = 2027) {
 
   const defaultUpdated = String(rawBoards.consensus?.updated_at || raw.updatedAt || `${dy - 1}-11-12`);
   const mockDbUrl =
-    sanitizeExternalUrl(raw.mockDbUrl, null) || buildMockDraftProspectUrl(dy, slug, dy);
-  const profileUrl = sanitizeExternalUrl(raw.profileUrl, null) || mockDbUrl;
+    sanitizeExternalUrl(raw.mockDbUrl, null) || buildMockDraftBigBoardUrl(dy);
+  const fallbackSearchUrl = `https://www.sports-reference.com/cfb/search/search.fcgi?search=${encodeURIComponent(name)}`;
+  const profileUrl =
+    sanitizeExternalUrl(raw.espnUrl, null) ||
+    sanitizeExternalUrl(raw.profileUrl, null) ||
+    sanitizeExternalUrl(raw.tankathonUrl, null) ||
+    sanitizeExternalUrl(raw.cbsUrl, null) ||
+    fallbackSearchUrl;
 
   return {
     ...raw,

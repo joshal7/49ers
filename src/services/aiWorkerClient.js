@@ -4,15 +4,15 @@
  * Supports TWO live high-thinking execution transports:
  * 1. **Direct Browser Gemini Studio Mode (`prefs.geminiApiKey`)**:
  *    Calls `generativelanguage.googleapis.com/v1beta` directly from the browser (key stored privately
- *    in device `localStorage`, never committed to GitHub), dynamically discovering the strongest Pro
- *    reasoning model (`gemini-3.8-pro` / `gemini-3.1-pro-preview` / `gemini-2.5-pro`)
- *    with generation-accurate `thinkingConfig` (`thinkingLevel: "HIGH"` on Gemini 3+ / `thinkingBudget: 32768`
- *    on Gemini 2.5 Pro), live `google_search` grounding, 3-pass Deep Research -> Synthesis -> Audit, and
- *    **Gemini Native Multi-Speaker NotebookLM TTS** (`gemini-2.5-pro-preview-tts` -> `gemini-2.5-flash-preview-tts`,
- *    voices `Puck` + `Aoede` for two-host, `Charon` for solo).
+ *    in device `localStorage`, never committed to GitHub), dynamically discovering `gemini-4-hydrogen`
+ *    at its highest reasoning level (`thinkingConfig: { thinkingLevel: "XHIGH" }`, cascading to
+ *    `gemini-3.8-flash` on `"HIGH"` / `gemini-2.5` with `thinkingBudget`), live `google_search` grounding,
+ *    3-pass Deep Research -> Synthesis -> Audit, and **Gemini Native Multi-Speaker NotebookLM TTS**
+ *    (`gemini-2.5-pro-preview-tts` -> `gemini-2.5-flash-preview-tts`, voices `Puck` + `Aoede` for two-host,
+ *    `Charon` for solo).
  * 2. **Shared Cloudflare Edge Worker Mode (`prefs.workerBaseUrl`)**:
- *    Routes the same 3-stage High-Thinking + NotebookLM TTS pipeline through `worker/index.js` with
- *    shared Cloudflare KV/R2 group caching.
+ *    Routes the same 3-stage `gemini-4-hydrogen` `XHIGH` + NotebookLM TTS pipeline through `worker/index.js`
+ *    with shared Cloudflare KV/R2 group caching.
  *
  * For shared links opened by colleagues without an API key or R2 stream, `synthesizeMissingEpisodeAudio`
  * renders the verified NotebookLM script through StyleTTS2-based **Kokoro-82M** (`af_heart` + `am_fenrir`)
@@ -46,10 +46,12 @@ import {
   buildDeepScoutingAnalysisMarkdown
 } from '../engine/deepResearchEngine.js';
 import {
+  PRIMARY_GEMINI_REASONING_MODEL,
   DEFAULT_BEST_REASONING_CASCADE,
   DEFAULT_NOTEBOOKLM_TTS_CASCADE,
   NOTEBOOKLM_VOICE_PROFILES,
   rankBestGeminiReasoningModels,
+  resolveGeminiThinkingLevelLabel,
   buildGeminiThinkingConfig,
   DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
   buildStage1DeepResearchUserPrompt,
@@ -78,6 +80,8 @@ export const ANALYSIS_PIPELINE_STAGES = [
 
 const DEFAULT_GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const LIVE_PRODUCTION_FALLBACK_CASCADE = [
+  'gemini-4-hydrogen',
+  'gemini-4-hydrogen-preview',
   'gemini-3.8-flash',
   'gemini-3.8-flash-preview',
   'gemini-3.6-flash',
@@ -101,15 +105,15 @@ function isGeminiQuotaExhaustedError(err) {
 function sanitizeRetiredModelId(modelId = '') {
   const clean = String(modelId || '').replace(/^models\//i, '').trim();
   if (/^gemini-3-pro-preview\b/i.test(clean)) {
-    return 'gemini-3.8-flash';
+    return PRIMARY_GEMINI_REASONING_MODEL;
   }
   return clean;
 }
 
 function migrateZeroQuotaFreeTierModelId(modelId = '') {
   const clean = sanitizeRetiredModelId(modelId);
-  if (/^gemini-3\.1-pro(?:-preview)?\b|^gemini-2\.5-pro\b/i.test(clean)) {
-    return 'gemini-3.8-flash';
+  if (/^gemini-3\.1-pro(?:-preview)?\b|^gemini-2\.5-pro\b|^gemini-4-(?:carbon|argon)\b/i.test(clean)) {
+    return PRIMARY_GEMINI_REASONING_MODEL;
   }
   return clean;
 }
@@ -120,7 +124,7 @@ export function hasLiveAiConnection(prefs = {}) {
   );
 }
 
-export function formatActiveModelBadge(_modelId = 'gemini-3.8-flash', suffix = 'Accuracy-First') {
+export function formatActiveModelBadge(_modelId = PRIMARY_GEMINI_REASONING_MODEL, suffix = 'Accuracy-First') {
   return suffix || 'Accuracy-First';
 }
 
@@ -128,8 +132,12 @@ export function resolveActiveHighQualityModelLabel(appData = null, prefs = null)
   const verifiedModel = migrateZeroQuotaFreeTierModelId(prefs?.verifiedGeminiModel || '');
   const modelId =
     verifiedModel ||
-    migrateZeroQuotaFreeTierModelId(appData?.meta?.aiEngine?.activeModel || 'gemini-3.8-flash');
-  const thinkingLevel = String(appData?.meta?.aiEngine?.thinkingLevel || 'HIGH').toUpperCase();
+    migrateZeroQuotaFreeTierModelId(appData?.meta?.aiEngine?.activeModel || PRIMARY_GEMINI_REASONING_MODEL);
+  const thinkingLevel = String(
+    verifiedModel
+      ? resolveGeminiThinkingLevelLabel(verifiedModel)
+      : appData?.meta?.aiEngine?.thinkingLevel || resolveGeminiThinkingLevelLabel(modelId)
+  ).toUpperCase();
   return {
     modelId,
     thinkingLevel,
@@ -263,7 +271,7 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
 
   const state = {
     ok: true,
-    bestModel: fullCascade[0] || 'gemini-3.8-flash',
+    bestModel: fullCascade[0] || PRIMARY_GEMINI_REASONING_MODEL,
     cascade: fullCascade,
     ttsCascade: resolvedTtsCascade,
     modelCount: catalogIds.length,
@@ -495,50 +503,72 @@ async function callGeminiDirectWithCascade({
       continue;
     }
 
-    // Some preview models reject `google_search` tool binding with 400, or hit Free-Tier Google Search Grounding quota (429) while base model quota remains
-    if ((res.status === 400 || res.status === 429) && useGoogleSearch) {
-      let errPreview = '';
-      if (res.status === 429) {
+    // Read 400/429 error text once to distinguish `thinkingConfig` (e.g. XHIGH gate) from `google_search` tool binding/quota errors
+    let initialErrPreview = '';
+    if (res.status === 400 || res.status === 429) {
+      try {
+        initialErrPreview = await res.clone().text();
+      } catch {}
+    }
+
+    // Some preview models reject `google_search` tool binding with 400 (non-thinking error), or hit Free-Tier Google Search Grounding quota (429) while base model quota remains
+    if (
+      useGoogleSearch &&
+      ((res.status === 400 && !/thinking|xhigh/i.test(initialErrPreview)) ||
+        (res.status === 429 && !/limit:\s*0\b/i.test(initialErrPreview)))
+    ) {
+      const retryPayload = {
+        systemInstruction: { parts: [{ text: systemInstructionText }] },
+        generationConfig: {
+          temperature,
+          ...(res.status === 400 ? { thinkingConfig } : {})
+        },
+        contents: [{ role: 'user', parts: [{ text: userText }] }]
+      };
+      try {
+        res = await fetchPostJsonWithTimeout(url, retryPayload, perAttemptTimeoutMs);
+      } catch (retryErr) {
+        lastStatus = 504;
+        lastErrorText = retryErr?.message || 'Retry timed out';
+        continue;
+      }
+    }
+
+    // If a checkpoint rejects explicit `thinkingConfig` with 400 (e.g. a preview build not yet supporting XHIGH),
+    // first downgrade XHIGH -> HIGH on the same model (preserving google_search when supported) before falling back to native dynamic thinking
+    if (res.status === 400) {
+      let errPreview = initialErrPreview;
+      if (!errPreview) {
         try {
           errPreview = await res.clone().text();
         } catch {}
       }
-      // Only retry 429 without google_search if the error isn't a hard 0-limit on the model itself
-      if (res.status === 400 || !/limit:\s*0\b/i.test(errPreview)) {
-        const retryPayload = {
-          systemInstruction: { parts: [{ text: systemInstructionText }] },
-          generationConfig: {
-            temperature,
-            ...(res.status === 400 ? { thinkingConfig } : {})
-          },
-          contents: [{ role: 'user', parts: [{ text: userText }] }]
-        };
-        try {
-          res = await fetchPostJsonWithTimeout(url, retryPayload, perAttemptTimeoutMs);
-        } catch (retryErr) {
-          lastStatus = 504;
-          lastErrorText = retryErr?.message || 'Retry timed out';
-          continue;
+      if (/thinking|xhigh|invalid_argument/i.test(errPreview)) {
+        if (thinkingConfig?.thinkingLevel === 'XHIGH') {
+          const highFallbackPayload = {
+            systemInstruction: { parts: [{ text: systemInstructionText }] },
+            ...(useGoogleSearch ? { tools: [{ google_search: {} }] } : {}),
+            generationConfig: {
+              temperature,
+              thinkingConfig: { thinkingLevel: 'HIGH' }
+            },
+            contents: [{ role: 'user', parts: [{ text: userText }] }]
+          };
+          try {
+            res = await fetchPostJsonWithTimeout(url, highFallbackPayload, perAttemptTimeoutMs);
+          } catch {}
         }
-      }
-    }
-
-    // If a checkpoint rejects explicit `thinkingConfig` with 400, retry once with native dynamic thinking
-    if (res.status === 400) {
-      let errPreview = '';
-      try {
-        errPreview = await res.clone().text();
-      } catch {}
-      if (/thinking|invalid_argument/i.test(errPreview)) {
-        const dynamicPayload = {
-          systemInstruction: { parts: [{ text: systemInstructionText }] },
-          generationConfig: { temperature },
-          contents: [{ role: 'user', parts: [{ text: userText }] }]
-        };
-        try {
-          res = await fetchPostJsonWithTimeout(url, dynamicPayload, perAttemptTimeoutMs);
-        } catch {
-          continue;
+        if (res.status === 400) {
+          const dynamicPayload = {
+            systemInstruction: { parts: [{ text: systemInstructionText }] },
+            generationConfig: { temperature },
+            contents: [{ role: 'user', parts: [{ text: userText }] }]
+          };
+          try {
+            res = await fetchPostJsonWithTimeout(url, dynamicPayload, perAttemptTimeoutMs);
+          } catch {
+            continue;
+          }
         }
       }
     }
@@ -1625,7 +1655,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
           author: prefs?.authorName || 'Josh',
           deepResearchPass: false,
           verifyPass: false,
-          thinkingLevel: 'HIGH',
+          thinkingLevel: 'XHIGH',
           qualityPriority: 'accuracy_over_latency',
           systemPrompt: groundingRules,
           contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
@@ -1747,7 +1777,7 @@ export async function runOnDemandDeepAnalysis({ prompt, category, appData, prefs
         ? `${dossier.primaryGroup.label} Deep Dive`
         : category || 'Deep Scouting & Cap Synthesis',
       modelUsed: finalModel,
-      thinkingLevel: 'HIGH',
+      thinkingLevel: resolveGeminiThinkingLevelLabel(finalModel),
       qualityPriority: 'accuracy_over_latency',
       verifiedPasses: 3,
       createdAt: new Date().toISOString(),
@@ -1833,7 +1863,7 @@ export async function generateOnDemandAutopodcast({
           author: prefs?.authorName || 'Josh',
           deepResearchPass: false,
           verifyPass: false,
-          thinkingLevel: 'HIGH',
+          thinkingLevel: 'XHIGH',
           qualityPriority: 'accuracy_over_latency',
           systemPrompt: groundingRules,
           researchDossier: dossier.dossierSummaryText,
@@ -2052,7 +2082,7 @@ export async function generateOnDemandAutopodcast({
       presetLabel: `${mins}m On-Demand Pod`,
       modelUsed: scriptModelUsed,
       audioModelUsed: renderedAudio.audioModelUsed,
-      thinkingLevel: 'HIGH',
+      thinkingLevel: resolveGeminiThinkingLevelLabel(scriptModelUsed),
       qualityPriority: 'accuracy_over_latency',
       createdBy: prefs?.authorName || 'Josh',
       createdAt: new Date().toISOString(),
@@ -2068,10 +2098,10 @@ export async function generateOnDemandAutopodcast({
 }
 
 /* ==========================================================================
-   1/Day Live Gemini 3.8 High Matchup Intel (Strictly <= 1 Credit / PT Day)
+   1/Day Live Gemini 4 Hydrogen (XHIGH) Matchup Intel (Strictly <= 1 Credit / PT Day)
    ========================================================================== */
-const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v1';
-const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v1';
+const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v2';
+const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v2';
 let inFlightDailyMatchupPromise = null;
 
 export function getPacificDateKey(nowMs = Date.now()) {
@@ -2309,8 +2339,8 @@ export function hydrateCachedDailyMatchupIntel(appData) {
 }
 
 /**
- * Refreshes Coaching Matchup + 5 Key Matchups using 1 single-pass Gemini 3.8 High + Google Search
- * request at most ONCE per Pacific calendar day (`<= 1` of the user's 20 daily Free-Tier credits).
+ * Refreshes Coaching Matchup + 5 Key Matchups using 1 single-pass Gemini 4 Hydrogen (XHIGH) + Google Search
+ * request at most ONCE per Pacific calendar day (`<= 1` daily Free-Tier credit).
  */
 export async function refreshDailyMatchupIntelIfDue({
   appData,
@@ -2367,7 +2397,7 @@ export async function refreshDailyMatchupIntelIfDue({
 
     try {
       let normalized = null;
-      let modelUsed = 'gemini-3.8-flash';
+      let modelUsed = PRIMARY_GEMINI_REASONING_MODEL;
 
       const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
       const directKey = String(prefs?.geminiApiKey || '').trim();
@@ -2450,7 +2480,7 @@ export async function refreshDailyMatchupIntelIfDue({
 }
 
 /* ==========================================================================
-   1/Day Gemini 3.8 Flash High Top-News Brief (5:00 PM PT Peak-News Cycle)
+   1/Day Gemini 4 Hydrogen (XHIGH) Top-News Brief (5:00 PM PT Peak-News Cycle)
    ========================================================================== */
 /**
  * 5:00 PM PT (17:00 America/Los_Angeles) sits immediately after the daily NFL news peak:
@@ -2461,8 +2491,8 @@ export async function refreshDailyMatchupIntelIfDue({
  */
 export const DAILY_NEWS_BRIEF_PEAK_HOUR_PT = 17;
 
-const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v3';
-const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v3';
+const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v4';
+const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v4';
 let inFlightDailyNewsBriefPromise = null;
 
 export function getPacificHour24(nowMs = Date.now()) {
@@ -2947,13 +2977,14 @@ export function parseAndSanitizeDailyTopNewsBrief(
     countVisibleBriefWords(finalSummary) +
     bullets.reduce((acc, b) => acc + countVisibleBriefWords(b), 0);
 
+  const resolvedBriefModel = meta.modelUsed || PRIMARY_GEMINI_REASONING_MODEL;
   return {
     id: `daily_brief_${cycleKey.replace(/[^A-Za-z0-9_-]/g, '_')}`,
     cycleKey,
     scheduledHourPt: DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
     generatedAt: nowIso,
-    modelUsed: meta.modelUsed || 'gemini-3.8-flash',
-    thinkingLevel: 'HIGH',
+    modelUsed: resolvedBriefModel,
+    thinkingLevel: resolveGeminiThinkingLevelLabel(resolvedBriefModel),
     source: meta.source || 'live-gemini-daily',
     wordCount,
     headline,
@@ -3264,7 +3295,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     {
       generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
       cycleKey: meta.cycleKey || getDailyNewsBriefCycleKey(nowMs),
-      modelUsed: meta.modelUsed || 'gemini-3.8-flash',
+      modelUsed: meta.modelUsed || PRIMARY_GEMINI_REASONING_MODEL,
       source: meta.source || 'pipeline-grounded'
     }
   );
@@ -3275,8 +3306,8 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       cycleKey: getDailyNewsBriefCycleKey(nowMs),
       scheduledHourPt: DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
       generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
-      modelUsed: 'gemini-3.8-flash',
-      thinkingLevel: 'HIGH',
+      modelUsed: PRIMARY_GEMINI_REASONING_MODEL,
+      thinkingLevel: 'XHIGH',
       source: meta.source || 'pipeline-grounded',
       wordCount: 215,
       headline,
@@ -3319,7 +3350,7 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
 }
 
 /**
- * Generates or refreshes the Daily Gemini 3.8 Flash High Top-News Brief once per 24-hour
+ * Generates or refreshes the Daily Gemini 4 Hydrogen (XHIGH) Top-News Brief once per 24-hour
  * 5:00 PM PT (`17:00 America/Los_Angeles`) news cycle using the user's AI Studio token
  * (`prefs.geminiNewsApiKey || prefs.geminiApiKey`, strictly <= 1 RPD credit per cycle).
  */
@@ -3384,7 +3415,7 @@ export async function refreshDailyTopNewsBriefIfDue({
 
     try {
       let normalized = null;
-      let modelUsed = 'gemini-3.8-flash';
+      let modelUsed = PRIMARY_GEMINI_REASONING_MODEL;
       const generatedAt = new Date().toISOString();
 
       if (baseUrl && !effectiveKey) {
@@ -3422,14 +3453,14 @@ export async function refreshDailyTopNewsBriefIfDue({
             ? { ...prefs, geminiApiKey: effectiveKey }
             : prefs;
         const conn = await resolveDirectGeminiCascades(keyPrefs);
-        const flashHighCascade = [
-          'gemini-3.8-flash',
-          ...(conn.cascade || []).filter(m => m !== 'gemini-3.8-flash')
-        ];
+        const hydrogenFirstCascade =
+          Array.isArray(conn.cascade) && conn.cascade.length > 0
+            ? conn.cascade
+            : [...DEFAULT_BEST_REASONING_CASCADE];
         const gen = await callGeminiDirectWithCascade({
           apiBase: conn.apiBase,
           key: effectiveKey,
-          cascade: flashHighCascade,
+          cascade: hydrogenFirstCascade,
           systemInstructionText: systemPrompt,
           userText: promptText,
           useGoogleSearch: true,

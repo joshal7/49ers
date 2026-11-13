@@ -5,6 +5,7 @@
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
 import { normalizeScheduleGameItem } from '../engine/seasonStateMachine.js';
 import {
+  canonicalInjuryPlayerKey,
   collapseInitialDots,
   computePlayerPlayProbability,
   computeTeamHealthSummary,
@@ -12,6 +13,7 @@ import {
   extractPracticeDaysFromText,
   isBareStatusPlaceholderComment,
   isPlayerEligibleForInjuryNews,
+  parseOfficial49ersInjuryReportHtml,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
   select22OffDefStartersFromDepthChart
@@ -932,8 +934,8 @@ function propagateLiveItemsToPlayerMentions(newItems = [], rosterPlayers = []) {
       }
       const rp = byId.get(String(mp.id));
       if (!rp) continue;
-      const checkText = `${it.fullText || ''} ${it.title || ''} ${it.summary || ''}`.trim();
-      if (!doesClauseMentionPlayer(checkText, rp.name, { allowSurname: true })) continue;
+      const checkText = [it.fullText, it.title, it.summary].filter(Boolean).join('. ').trim();
+      if (!doesClauseMentionPlayer(checkText, rp.name, { allowSurname: true, isPrimaryOwner: isPlayerWireBlurb && String(mp.id) === primaryOwnerId })) continue;
       if (!Array.isArray(rp.recentNews)) rp.recentNews = [];
       if (rp.recentNews.some(existing => (it.id && existing.id === it.id) || existing.url === it.url)) continue;
 
@@ -2394,6 +2396,28 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
  * roster & depth chart additions, 49ers & opponent injury play probabilities, 10,000-run
  * Monte Carlo playoff odds, and ESPN beat articles.
  */
+let cachedOfficialInjuryHtml = '';
+let cachedOfficialInjuryFetchedAtMs = 0;
+
+async function fetchOfficial49ersInjuryReportHtmlClient(nowMs = Date.now()) {
+  if (cachedOfficialInjuryHtml && nowMs - cachedOfficialInjuryFetchedAtMs < 45_000) {
+    return cachedOfficialInjuryHtml;
+  }
+  try {
+    const res = await fetch('https://www.49ers.com/team/injury-report/', { cache: 'no-store' });
+    if (!res?.ok || typeof res.text !== 'function') return '';
+    const html = await res.text();
+    if (typeof html === 'string' && html.includes('<table')) {
+      cachedOfficialInjuryHtml = html;
+      cachedOfficialInjuryFetchedAtMs = nowMs;
+      return html;
+    }
+  } catch {
+    // Ignore offline / mock fetch environments cleanly
+  }
+  return '';
+}
+
 export async function hydrateLiveEspnOverlay(appData) {
   if (!appData?.meta || !appData?.scheduleMatchup) return false;
   let mutated = false;
@@ -2405,14 +2429,16 @@ export async function hydrateLiveEspnOverlay(appData) {
     return res.json();
   };
 
-  const [standingsRaw, scheduleRaw, injuriesRaw, espnNewsRaw, sfRosterRaw, sfDepthRaw] = await Promise.all([
-    fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts').catch(() => null)
-  ]);
+  const [standingsRaw, scheduleRaw, injuriesRaw, espnNewsRaw, sfRosterRaw, sfDepthRaw, official49ersInjHtml] =
+    await Promise.all([
+      fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
+      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule').catch(() => null),
+      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries').catch(() => null),
+      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null),
+      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster').catch(() => null),
+      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts').catch(() => null),
+      fetchOfficial49ersInjuryReportHtmlClient().catch(() => '')
+    ]);
   let combinedEspnArticles = Array.isArray(espnNewsRaw?.articles) ? [...espnNewsRaw.articles] : [];
 
   // Reconcile any newly traded/signed/claimed 49ers players on ESPN's live roster & depth chart immediately
@@ -3232,21 +3258,26 @@ export async function hydrateLiveEspnOverlay(appData) {
         const headshot = ath.headshot?.href || prevEntry?.headshotUrl || '';
         const espnIdM = headshot.match(/\/(\d+)\.png/);
         const espnId = String(ath.id || (espnIdM ? espnIdM[1] : '') || '');
-        const hasOfficialDays =
-          !earlyWeekBlankPractice &&
-          existingRep &&
-          (existingRep.wed !== '-' || existingRep.thu !== '-' || existingRep.fri !== '-');
-        const { wed, thu, fri } = earlyWeekBlankPractice
-          ? { wed: '-', thu: '-', fri: '-' }
-          : hasOfficialDays
-            ? { wed: existingRep.wed, thu: existingRep.thu, fri: existingRep.fri }
-            : extractPracticeDaysFromText({
+        const freshOppProse = `${!isBareStatusPlaceholderComment(rawOppShort) ? rawOppShort : ''} ${
+          !isBareStatusPlaceholderComment(rawOppLong) ? rawOppLong : ''
+        }`.trim();
+        const parsedOppDays =
+          !earlyWeekBlankPractice && (freshOppProse || !existingRep)
+            ? extractPracticeDaysFromText({
                 statusRaw: isIrRetQ ? 'Questionable' : rawSt,
                 injuryType: bodyPart,
-                shortComment: shortC,
-                longComment: longC,
+                shortComment: !isBareStatusPlaceholderComment(rawOppShort) ? rawOppShort : shortC,
+                longComment: !isBareStatusPlaceholderComment(rawOppLong) ? rawOppLong : longC,
                 kickoffIso: nextGameKickoffIso
-              });
+              })
+            : { wed: '-', thu: '-', fri: '-' };
+        const { wed, thu, fri } = earlyWeekBlankPractice
+          ? { wed: '-', thu: '-', fri: '-' }
+          : {
+              wed: existingRep?.wed && existingRep.wed !== '-' ? existingRep.wed : parsedOppDays.wed,
+              thu: existingRep?.thu && existingRep.thu !== '-' ? existingRep.thu : parsedOppDays.thu,
+              fri: existingRep?.fri && existingRep.fri !== '-' ? existingRep.fri : parsedOppDays.fri
+            };
         const effectiveOppGameSt = isIrRetQ
           ? 'Questionable'
           : oppEarlyRoll
@@ -3314,6 +3345,255 @@ export async function hydrateLiveEspnOverlay(appData) {
         });
         mutated = true;
       }
+    }
+  }
+
+  // 4b. Authoritative Live 49ers.com Weekly Practice & Injury Report Reconciliation (SF + Opponent)
+  if (!earlyWeekBlankPractice && official49ersInjHtml) {
+    const liveOfficial = parseOfficial49ersInjuryReportHtml(
+      official49ersInjHtml,
+      appData.scheduleMatchup?.upcomingMatchup?.oppName || ''
+    );
+
+    if (liveOfficial.hasSfReport && Array.isArray(appData.roster?.players)) {
+      const hasAnyLiveSfPractice = [...liveOfficial.sfByKey.values()].some(
+        r => (r.wed && r.wed !== '-') || (r.thu && r.thu !== '-') || (r.fri && r.fri !== '-')
+      );
+      for (const rp of appData.roster.players) {
+        if (!rp?.health || !rp.name) continue;
+        const offRec = liveOfficial.sfByKey.get(canonicalInjuryPlayerKey(rp.name)) || null;
+        if (offRec) {
+          rp.health.wed = offRec.wed;
+          rp.health.thu = offRec.thu;
+          rp.health.fri = offRec.fri;
+
+          if (rp.rosterBucket === 'active') {
+            const offIsRest = /not injury related|\bnir\b|\brest\b|personal/i.test(offRec.injuryType || '');
+            const existingIsRealMedical =
+              Boolean(rp.health.injuryType) &&
+              !/not injury related|\bnir\b|\brest\b|personal|cleared/i.test(rp.health.injuryType);
+            const hasSecondaryMidweekMedical =
+              offIsRest &&
+              (offRec.thu === 'LP' || offRec.thu === 'DNP' || offRec.fri === 'LP' || offRec.fri === 'DNP') &&
+              existingIsRealMedical;
+            const effectiveInj = hasSecondaryMidweekMedical
+              ? rp.health.injuryType
+              : offRec.injuryType || rp.health.injuryType || '';
+            rp.health.injuryType = effectiveInj;
+
+            const prevStLower = String(rp.health.status || '').trim().toLowerCase();
+            const effGameStatus = offRec.gameStatus
+              ? offRec.gameStatus
+              : (!hasSecondaryMidweekMedical &&
+                  (offRec.wed === 'Vet Rest' ||
+                    offRec.thu === 'Vet Rest' ||
+                    offRec.fri === 'Vet Rest' ||
+                    offIsRest)) ||
+                  (offRec.fri && offRec.fri !== '-')
+                ? 'Active'
+                : prevStLower === 'out' &&
+                    offRec.wed !== 'LP' &&
+                    offRec.wed !== 'FP' &&
+                    offRec.thu !== 'LP' &&
+                    offRec.thu !== 'FP'
+                  ? 'Out'
+                  : prevStLower === 'doubtful'
+                    ? 'Doubtful'
+                    : 'Questionable';
+
+            rp.health.status =
+              effGameStatus === 'Active'
+                ? offRec.wed === 'Vet Rest' && !hasSecondaryMidweekMedical
+                  ? 'Active'
+                  : 'No Designation (Cleared)'
+                : effGameStatus;
+            rp.health.isOnPracticeReport = true;
+
+            const combinedBeat = pickMeaningfulInjuryComment(rp.health.longComment, rp.health.shortComment);
+            const playProb = computePlayerPlayProbability({
+              name: rp.name,
+              position: rp.position,
+              experienceYears: rp.experienceYears ?? null,
+              snapPct: rp.primarySnapPct ?? null,
+              rosterBucket: rp.rosterBucket,
+              isSeasonEnding: false,
+              fantasyStatusAbbr: rp.health.fantasyStatusAbbr || '',
+              gameStatus: effGameStatus,
+              weeklyHistory: rp.health.weeklyHistory2026 || [],
+              currentWeek: appData.scheduleMatchup?.upcomingMatchup?.week,
+              byeWeek: appData.health?.byeWeek || 8,
+              isIrReturnQuestionable: false,
+              injuryType: effectiveInj,
+              wed: rp.health.wed,
+              thu: rp.health.thu,
+              fri: rp.health.fri,
+              beatNote: combinedBeat
+            });
+            rp.health.playProbabilityPct = playProb.probabilityPct;
+            rp.health.playTier = playProb.tier;
+            rp.health.playBadgeLabel = playProb.badgeLabel;
+            rp.health.factors = playProb.factors;
+          } else if (rp.rosterBucket === 'ir' && !rp.health.isSeasonEnding) {
+            if (offRec.wed !== '-' || offRec.thu !== '-' || offRec.fri !== '-') {
+              rp.health.isPracticeWindowOpen = true;
+              rp.health.isPracticeWindowExpected = false;
+              if (offRec.injuryType && (!rp.health.injuryType || rp.health.injuryType === 'Undisclosed')) {
+                rp.health.injuryType = offRec.injuryType;
+              }
+              if (offRec.gameStatus === 'Questionable') {
+                rp.health.isIrReturnQuestionable = true;
+                rp.health.isOnPracticeReport = true;
+                rp.health.status = 'Questionable (IR Return Window)';
+              } else if (!rp.health.isIrReturnQuestionable) {
+                rp.health.status = 'IR — 21-Day Window Open';
+              }
+            }
+          }
+        } else if (hasAnyLiveSfPractice && rp.rosterBucket === 'active' && rp.health.isOnPracticeReport) {
+          rp.health.isOnPracticeReport = false;
+          rp.health.wed = '-';
+          rp.health.thu = '-';
+          rp.health.fri = '-';
+          rp.health.status = 'Active';
+          rp.health.injuryType = '';
+          rp.health.playProbabilityPct = 95;
+          rp.health.playTier = 'ACTIVE';
+          rp.health.playBadgeLabel = '95% • Full Go';
+        }
+      }
+
+      if (appData.health) {
+        appData.health.practiceReport = appData.roster.players
+          .filter(p => p.health?.isOnPracticeReport)
+          .sort((a, b) => a.health.playProbabilityPct - b.health.playProbabilityPct || (b.capHit2026 || 0) - (a.capHit2026 || 0))
+          .map(p => ({
+            playerId: p.id,
+            name: p.name,
+            position: p.position,
+            jersey: p.jersey,
+            headshotUrl: p.headshotUrl || '',
+            wed: p.health.wed || '-',
+            thu: p.health.thu || '-',
+            fri: p.health.fri || '-',
+            injuryType: p.health.injuryType || 'Cleared — No Designation',
+            gameStatus: p.health.status,
+            playProbabilityPct: p.health.playProbabilityPct,
+            playBadgeLabel: p.health.playBadgeLabel,
+            archetypeNote: p.health.archetypeNote || '',
+            factors: p.health.factors || [],
+            beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment)
+          }));
+      }
+      mutated = true;
+    }
+
+    if (liveOfficial.hasOppReport && appData.scheduleMatchup.upcomingMatchup?.opponentHealth) {
+      const oh = appData.scheduleMatchup.upcomingMatchup.opponentHealth;
+      const irKeySet = new Set((oh.irReserve || []).map(ir => canonicalInjuryPlayerKey(ir.name)));
+      const rosterMetaByKey = new Map(
+        [
+          ...(oh.activeRoster || []),
+          ...(oh.keyStartersHealthy || []),
+          ...(oh.injuryReport || [])
+        ].map(p => [canonicalInjuryPlayerKey(p.name), p])
+      );
+      const oppReportByKey = new Map(
+        (oh.injuryReport || []).map(r => [canonicalInjuryPlayerKey(r.name), r])
+      );
+
+      for (const [oppKey, offOppRec] of liveOfficial.oppByKey.entries()) {
+        if (irKeySet.has(oppKey) && offOppRec.gameStatus !== 'Questionable') continue;
+        const existing = oppReportByKey.get(oppKey) || null;
+        const meta = rosterMetaByKey.get(oppKey) || existing || {};
+        const offIsRest = /not injury related|\bnir\b|\brest\b|personal/i.test(offOppRec.injuryType || '');
+        const existingRealMed =
+          Boolean(existing?.injuryType) &&
+          !/not injury related|\bnir\b|\brest\b|personal|cleared|undisclosed/i.test(existing.injuryType);
+        const hasSecondaryMed =
+          offIsRest &&
+          (offOppRec.thu === 'LP' || offOppRec.thu === 'DNP' || offOppRec.fri === 'LP' || offOppRec.fri === 'DNP') &&
+          existingRealMed;
+        const effInj = hasSecondaryMed
+          ? existing.injuryType
+          : offOppRec.injuryType || existing?.injuryType || 'Injury Report';
+
+        const prevStL = String(existing?.gameStatus || '').trim().toLowerCase();
+        const effSt = offOppRec.gameStatus
+          ? offOppRec.gameStatus
+          : (!hasSecondaryMed &&
+              (offOppRec.wed === 'Vet Rest' ||
+                offOppRec.thu === 'Vet Rest' ||
+                offOppRec.fri === 'Vet Rest' ||
+                offIsRest)) ||
+              (offOppRec.fri && offOppRec.fri !== '-')
+            ? 'Active'
+            : prevStL === 'out' &&
+                offOppRec.wed !== 'LP' &&
+                offOppRec.wed !== 'FP' &&
+                offOppRec.thu !== 'LP' &&
+                offOppRec.thu !== 'FP'
+              ? 'Out'
+              : prevStL === 'doubtful'
+                ? 'Doubtful'
+                : 'Questionable';
+
+        const isIrRetQ = irKeySet.has(oppKey) && offOppRec.gameStatus === 'Questionable';
+        const prob = computePlayerPlayProbability({
+          name: existing?.name || offOppRec.name,
+          position: existing?.position || meta.position || offOppRec.position || 'ATH',
+          snapPct: existing?.snapPct ?? meta.snapPct ?? null,
+          gameStatus: isIrRetQ ? 'Questionable' : effSt,
+          rosterBucket: isIrRetQ ? 'ir' : 'active',
+          isIrReturnQuestionable: isIrRetQ,
+          injuryType: effInj,
+          wed: offOppRec.wed,
+          thu: offOppRec.thu,
+          fri: offOppRec.fri,
+          beatNote: `${existing?.shortComment || ''} ${existing?.longComment || ''}`.trim()
+        });
+
+        oppReportByKey.set(oppKey, {
+          name: existing?.name || meta.name || offOppRec.name,
+          position: existing?.position || meta.position || offOppRec.position || 'ATH',
+          unit: existing?.unit || meta.unit || classifyRosterUnit(offOppRec.position || '', ''),
+          jersey: existing?.jersey ?? meta.jersey ?? null,
+          headshotUrl: existing?.headshotUrl || meta.headshotUrl || '',
+          espnUrl:
+            existing?.espnUrl ||
+            meta.espnUrl ||
+            buildEspnTeamInjuriesUrl(appData.scheduleMatchup.upcomingMatchup?.oppAbbr || ''),
+          snapPct: existing?.snapPct ?? meta.snapPct ?? null,
+          wed: offOppRec.wed,
+          thu: offOppRec.thu,
+          fri: offOppRec.fri,
+          injuryType: effInj,
+          gameStatus: isIrRetQ
+            ? 'IR Return Window (Q)'
+            : effSt === 'Active'
+              ? 'No Designation (Cleared)'
+              : effSt,
+          shortComment: existing?.shortComment || '',
+          longComment: existing?.longComment || '',
+          isStarter: Boolean(existing?.isStarter || meta.isStarter),
+          isIrReturnQuestionable: isIrRetQ,
+          playProbabilityPct: prob.probabilityPct,
+          playTier: prob.tier,
+          playBadgeLabel: prob.badgeLabel,
+          factors: prob.factors || [],
+          archetypeNote: prob.priorUsed?.archetypeNote || existing?.archetypeNote || ''
+        });
+      }
+
+      const reconciledOppReport = [...oppReportByKey.values()].sort(
+        (a, b) => a.playProbabilityPct - b.playProbabilityPct
+      );
+      oh.injuryReport = reconciledOppReport;
+      oh.summary = computeTeamHealthSummary({
+        injuryReport: reconciledOppReport,
+        irReserve: oh.irReserve || [],
+        totalStarters: oh.summary?.totalStarters || 22
+      });
+      mutated = true;
     }
   }
 

@@ -308,7 +308,7 @@ export function renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton = tru
         <span class="gemini-guide-step-num" aria-hidden="true">4</span>
         <div style="min-width:0">
           <strong style="color:var(--text-primary)">Paste right below &amp; tap &ldquo;Connect Gemini&rdquo;:</strong>
-          Switch back here, paste the key into the box directly below, and tap <strong>Connect Gemini</strong>. One 1-time paste saves privately in your device browser and unlocks <strong>both Auto Pod &amp; AI Analysis</strong> (20 <code>Gemini 3.8 High</code> queries/day + automatic rollover; check daily usage anytime on <a href="${AI_STUDIO_RATE_LIMIT_URL}" target="_blank" rel="noopener noreferrer" class="ext-link">AI Studio Rate Limits ${iconSvg('externalLink', 10)}</a>).
+          Switch back here, paste the key into the box directly below, and tap <strong>Connect Gemini</strong>. One 1-time paste saves privately in your device browser and unlocks <strong>both Auto Pod &amp; AI Analysis</strong> (<code>Gemini 4 Hydrogen</code> <code>XHIGH</code> Free-Tier queries/day + automatic rollover; check daily usage anytime on <a href="${AI_STUDIO_RATE_LIMIT_URL}" target="_blank" rel="noopener noreferrer" class="ext-link">AI Studio Rate Limits ${iconSvg('externalLink', 10)}</a>).
         </div>
       </div>
 
