@@ -21,6 +21,18 @@
 
 ---
 
+## Default End-to-End Change Execution Rule (`0–4`)
+
+Whenever the user asks for a change pertaining to `49ers.joshal.com`—**unless explicitly told otherwise** (e.g., *"don't implement"*, *"plan only"*, *"just discuss"*)—default to executing all steps below end-to-end (see `.agents/rules/default-execution-workflow.md`):
+
+0. **Adopt the Right Multi-Disciplinary Persona**: Operate simultaneously as an **NFL & 49ers Expert** (film mechanics, EPA/CPOE, CBA cap math, injury/IR rules, Draft evaluation), **49ers Fan**, **Mobile-First UX Designer**, **Principal Software Engineer**, and **QA Automation Expert**.
+1. **Thoughtful Full Implementation & Zero Regressions**: Fully implement the solution end-to-end while thinking carefully through all use cases and edge cases (NFL calendar/game-day/post-game rollovers, sparse/offline states, light/dark themes, mobile portrait & landscape viewports, shared links, and cross-module effects) and confirming zero regressions elsewhere.
+2. **Clean, Uncluttered, Non-Redundant UI**: Keep interfaces scannable and non-redundant; hide secondary or superfluous details behind **links** (player/source/tweet links, jargon popovers) and/or **expandable sections / sheets** (`<details>`, collapsible rows, `Sources (N)` / `+N related` toggles, bottom sheets).
+3. **Comprehensive QA Testing**: Build new QA assertions or additional QA test suites when needed to cover new behavior/edge cases, and run applicable existing suites (`npm test`: `unit-engines-qa.mjs`, `holistic-qa-regressions.mjs`, `e2e-mobile-qa.mjs`) to verify **0 failures, 0 horizontal overflow, and 0 console/page/network errors**.
+4. **Commit, Push to GitHub & Go Live**: Bump PWA cache-busters (`sw.js` `CACHE_NAME` and `index.html` `?v=` query params) when client assets change, commit cleanly, `git push origin main` to publish live to `https://49ers.joshal.com` (plus `npx wrangler deploy` in `worker/` if Worker code changed), and confirm live deployment.
+
+---
+
 ## Core Engineering Philosophy: Quality vs. Speed Decision Matrix
 
 When building or modifying features in this repository, adhere strictly to the two-tier performance philosophy (see `ARCHITECTURE.md` for full details):
