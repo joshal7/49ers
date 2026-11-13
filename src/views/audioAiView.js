@@ -408,11 +408,7 @@ export function renderAudioAiViewHtml({
   sharedAudioPrep = null,
   sharedAnalysisHighlightId = null,
   allEpisodes = [],
-  archivedEpisodes = [],
-  podLibraryFilter = 'active',
   allAnalyses = [],
-  archivedAnalyses = [],
-  analysisLibraryFilter = 'active',
   audioState = {},
   expandedTranscriptIds = new Set(),
   shareToastTargetId = null,
@@ -467,8 +463,6 @@ export function renderAudioAiViewHtml({
         jobStatus,
         sharedAudioPrep,
         allEpisodes,
-        archivedEpisodes,
-        podLibraryFilter,
         audioState,
         expandedTranscriptIds,
         shareToastTargetId,
@@ -487,8 +481,6 @@ export function renderAudioAiViewHtml({
       jobStatus,
       sharedAnalysisHighlightId,
       allAnalyses,
-      archivedAnalyses,
-      analysisLibraryFilter,
       shareToastTargetId,
       geminiKeyNotice,
       showGeminiKeyGuide
@@ -695,8 +687,6 @@ function renderPodcastStudio({
   jobStatus,
   sharedAudioPrep = null,
   allEpisodes = [],
-  archivedEpisodes = [],
-  podLibraryFilter = 'active',
   audioState,
   expandedTranscriptIds = new Set(),
   shareToastTargetId = null,
@@ -726,7 +716,6 @@ function renderPodcastStudio({
   const isActiveExpanded = Boolean(activeEp && expandedTranscriptIds.has(activeEp.id));
   const activeTurnCount = activeEp?.transcript?.length || 0;
   const isActiveSharedToast = Boolean(activeEp && shareToastTargetId === activeEp.id);
-  const isActiveEpArchived = Boolean(activeEp && archivedEpisodes.some(e => e.id === activeEp.id));
 
   const isPreparingActiveAudio = Boolean(
     activeEp &&
@@ -875,17 +864,6 @@ function renderPodcastStudio({
                    </button>`
                 : ''
             }
-            ${
-              isActiveEpArchived
-                ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Restore podcast" title="Restore to active library">
-                     ${iconSvg('restore', 13)}
-                     <span>Restore</span>
-                   </button>`
-                : `<button type="button" class="icon-btn share-action-btn" data-action="archive-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Archive podcast" title="Archive podcast">
-                     ${iconSvg('archive', 13)}
-                     <span>Archive</span>
-                   </button>`
-            }
             <button type="button" class="icon-btn share-action-btn danger-action-btn" data-action="delete-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Delete podcast" title="Delete podcast">
               ${iconSvg('trash', 13)}
               <span>Delete</span>
@@ -897,9 +875,6 @@ function renderPodcastStudio({
       </section>
     `
     : '';
-
-  const showingArchivedPods = podLibraryFilter === 'archived';
-  const visibleEpisodes = showingArchivedPods ? archivedEpisodes : allEpisodes;
 
   return `
     ${readyOrPlayingCardHtml}
@@ -968,33 +943,18 @@ function renderPodcastStudio({
     </section>
 
     <!-- Audio Briefing Library -->
-    <section class="card" data-podcast-library-section="${esc(podLibraryFilter)}">
+    <section class="card" data-podcast-library-section>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px">
-        <h3 class="card-title">Saved Episodes (${visibleEpisodes.length})</h3>
-        <div class="library-filter-toggle" role="group" aria-label="Filter Audio Briefing Library">
-          <button type="button" class="pill-btn ${!showingArchivedPods ? 'active' : ''}"
-                  data-action="set-pod-library-filter" data-filter="active">
-            <span>Active (${allEpisodes.length})</span>
-          </button>
-          <button type="button" class="pill-btn ${showingArchivedPods ? 'active' : ''}"
-                  data-action="set-pod-library-filter" data-filter="archived">
-            ${iconSvg('archive', 12)}
-            <span>Archived (${archivedEpisodes.length})</span>
-          </button>
-        </div>
+        <h3 class="card-title">Saved Episodes (${allEpisodes.length})</h3>
       </div>
 
       ${
-        visibleEpisodes.length === 0
+        allEpisodes.length === 0
           ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
-               ${
-                 showingArchivedPods
-                   ? 'No archived podcasts yet. Tap Archive on any episode when you are finished listening to keep your active queue clean.'
-                   : 'No active podcasts in your library. Generate a custom episode above or restore one from Archived.'
-               }
+               No saved podcasts in your library. Generate a custom episode above to listen anytime.
              </div>`
           : `<div style="display:flex;flex-direction:column;gap:8px">
-              ${visibleEpisodes
+              ${allEpisodes
                 .map(ep => {
                   const isCurrent = activeEp?.id === ep.id;
                   const isPlayingNow = isCurrent && audioState?.isPlaying;
@@ -1016,7 +976,7 @@ function renderPodcastStudio({
                         </div>
                         <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:4px">
                           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                            <span class="badge ${showingArchivedPods ? 'badge-neutral' : 'badge-positive'}">${esc(ep.presetLabel || ep.format)}</span>
+                            <span class="badge badge-positive">${esc(ep.presetLabel || ep.format)}</span>
                             <span class="mono" style="font-size:11px;color:var(--text-muted)">
                               ${formatTimeMmSs(ep.durationSec)} • ${esc(ep.createdBy)} • ${formatRelativeAge(ep.createdAt)}
                             </span>
@@ -1047,17 +1007,6 @@ function renderPodcastStudio({
                                    <span>${isCardTranscriptExpanded ? 'Hide Transcript' : 'Transcript'}</span>
                                  </button>`
                               : ''
-                          }
-                          ${
-                            showingArchivedPods
-                              ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-podcast" data-episode-id="${esc(ep.id)}" aria-label="Restore ${esc(ep.title)}" title="Restore to active library">
-                                   ${iconSvg('restore', 13)}
-                                   <span>Restore</span>
-                                 </button>`
-                              : `<button type="button" class="icon-btn share-action-btn" data-action="archive-podcast" data-episode-id="${esc(ep.id)}" aria-label="Archive ${esc(ep.title)}" title="Archive podcast">
-                                   ${iconSvg('archive', 13)}
-                                   <span>Archive</span>
-                                 </button>`
                           }
                           <button type="button" class="icon-btn share-action-btn danger-action-btn" data-action="delete-podcast" data-episode-id="${esc(ep.id)}" aria-label="Delete ${esc(ep.title)}" title="Delete podcast">
                             ${iconSvg('trash', 13)}
@@ -1091,8 +1040,6 @@ function renderDeepAnalysisRunner({
   jobStatus,
   sharedAnalysisHighlightId = null,
   allAnalyses = [],
-  archivedAnalyses = [],
-  analysisLibraryFilter = 'active',
   shareToastTargetId = null,
   geminiKeyNotice = '',
   showGeminiKeyGuide = false
@@ -1112,8 +1059,6 @@ function renderDeepAnalysisRunner({
     `How DC Raheem Morris pairs DeForest Buckner, Keion White & Nick Bosa in ${wkLabel} vs. ${oppLabel}`
   ];
 
-  const showingArchivedAnalyses = analysisLibraryFilter === 'archived';
-  const visibleAnalyses = showingArchivedAnalyses ? archivedAnalyses : allAnalyses;
   const sharedHeroReport = sharedAnalysisHighlightId
     ? allAnalyses.find(r => r.id === sharedAnalysisHighlightId) || null
     : null;
@@ -1198,56 +1143,30 @@ function renderDeepAnalysisRunner({
       </button>
     </section>
 
-    <section class="card" data-analysis-library-section="${esc(analysisLibraryFilter)}">
+    <section class="card" data-analysis-library-section>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-        <h3 class="card-title">Saved Reports (${visibleAnalyses.length})</h3>
-        <div class="library-filter-toggle" role="group" aria-label="Filter Saved Scouting Reports">
-          <button type="button" class="pill-btn ${!showingArchivedAnalyses ? 'active' : ''}"
-                  data-action="set-analysis-library-filter" data-filter="active">
-            <span>Active (${allAnalyses.length})</span>
-          </button>
-          <button type="button" class="pill-btn ${showingArchivedAnalyses ? 'active' : ''}"
-                  data-action="set-analysis-library-filter" data-filter="archived">
-            ${iconSvg('archive', 12)}
-            <span>Archived (${archivedAnalyses.length})</span>
-          </button>
-        </div>
+        <h3 class="card-title">Saved Reports (${allAnalyses.length})</h3>
       </div>
 
       ${
-        visibleAnalyses.length === 0
+        allAnalyses.length === 0
           ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
-               ${
-                 showingArchivedAnalyses
-                   ? 'No archived scouting or cap reports yet. Tap Archive on any report when finished.'
-                   : 'No active reports in your library. Run a Deep Analysis above or restore a report from Archived.'
-               }
+               No saved scouting or cap reports yet. Run a Deep Analysis above to save a report here.
              </div>`
           : `<div style="display:flex;flex-direction:column;gap:10px">
-              ${visibleAnalyses
+              ${allAnalyses
                 .map(rep => {
                   const isCopied = shareToastTargetId === rep.id;
                   return `
                     <article class="brief-card" data-analysis-card="${esc(rep.id)}">
                       <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
-                        <span class="badge ${showingArchivedAnalyses ? 'badge-neutral' : 'badge-gold'}">${esc(rep.category)}</span>
+                        <span class="badge badge-gold">${esc(rep.category)}</span>
                         <div class="podcast-secondary-actions">
                           <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
                           <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on 49ers.joshal.com">
                             ${iconSvg(isCopied ? 'check' : 'share', 13)}
                             <span>${isCopied ? 'Link Copied' : 'Share'}</span>
                           </button>
-                          ${
-                            showingArchivedAnalyses
-                              ? `<button type="button" class="icon-btn share-action-btn" data-action="unarchive-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Restore ${esc(rep.title)}" title="Restore to active reports">
-                                   ${iconSvg('restore', 13)}
-                                   <span>Restore</span>
-                                 </button>`
-                              : `<button type="button" class="icon-btn share-action-btn" data-action="archive-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Archive ${esc(rep.title)}" title="Archive report">
-                                   ${iconSvg('archive', 13)}
-                                   <span>Archive</span>
-                                 </button>`
-                          }
                           <button type="button" class="icon-btn share-action-btn danger-action-btn" data-action="delete-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Delete ${esc(rep.title)}" title="Delete report">
                             ${iconSvg('trash', 13)}
                             <span>Delete</span>

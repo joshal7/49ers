@@ -286,7 +286,9 @@ export const DEFAULT_USER_PREFS = {
   theme: 'light', // 'light' = '94 Throwback White & Gold (Default) | 'dark' = Levi's Night Game
   themeDefaultVersion: 2,
   dashboardOrder: [],
-  dashboardOrderVersion: 2,
+  hiddenHomeBlockIds: [],
+  pinnedHomeBlockIds: [],
+  dashboardOrderVersion: 3,
   disabledReporterIds: [],
   disabledOutlets: [],
   muteHotTakePersonalities: false,
@@ -306,9 +308,7 @@ export const DEFAULT_USER_PREFS = {
   playoffForcedWinners: {}, // gameId -> 'HOME' | 'AWAY'
   localCustomAnalyses: [],
   localCustomEpisodes: [],
-  archivedEpisodeIds: [],
   deletedEpisodeIds: [],
-  archivedAnalysisIds: [],
   deletedAnalysisIds: []
 };
 
@@ -320,15 +320,19 @@ export function loadUserPrefs() {
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
       return structuredCloneFallback(DEFAULT_USER_PREFS);
     }
-    const orderIsV2 = parsed.dashboardOrderVersion === 2;
+    const orderIsV3 = parsed.dashboardOrderVersion === 3;
     const themeIsV2 = parsed.themeDefaultVersion === 2;
     return {
       ...structuredCloneFallback(DEFAULT_USER_PREFS),
       ...parsed,
       theme: themeIsV2 && (parsed.theme === 'dark' || parsed.theme === 'light') ? parsed.theme : 'light',
       themeDefaultVersion: 2,
-      dashboardOrderVersion: 2,
-      dashboardOrder: orderIsV2 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
+      dashboardOrderVersion: 3,
+      dashboardOrder: orderIsV3 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
+      hiddenHomeBlockIds:
+        orderIsV3 && Array.isArray(parsed.hiddenHomeBlockIds) ? parsed.hiddenHomeBlockIds : [],
+      pinnedHomeBlockIds:
+        orderIsV3 && Array.isArray(parsed.pinnedHomeBlockIds) ? parsed.pinnedHomeBlockIds : [],
       disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
       disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
       geminiApiKey: typeof parsed.geminiApiKey === 'string' ? parsed.geminiApiKey.trim() : '',
@@ -354,9 +358,7 @@ export function loadUserPrefs() {
           : {},
       localCustomAnalyses: Array.isArray(parsed.localCustomAnalyses) ? parsed.localCustomAnalyses : [],
       localCustomEpisodes: Array.isArray(parsed.localCustomEpisodes) ? parsed.localCustomEpisodes : [],
-      archivedEpisodeIds: Array.isArray(parsed.archivedEpisodeIds) ? parsed.archivedEpisodeIds : [],
       deletedEpisodeIds: Array.isArray(parsed.deletedEpisodeIds) ? parsed.deletedEpisodeIds : [],
-      archivedAnalysisIds: Array.isArray(parsed.archivedAnalysisIds) ? parsed.archivedAnalysisIds : [],
       deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : []
     };
   } catch {

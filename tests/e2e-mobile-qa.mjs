@@ -688,11 +688,11 @@ async function main() {
 
     console.log('\n=== [2/9] Home Dashboard, Season State Machine & Persistent Drag/Tap Reordering ===');
 
-    await runStep('Home Dashboard renders exact requested default module order, top tweets & articles, opponent health, source links, and zero PRD callouts', async () => {
+    await runStep('Home Dashboard renders tighter 6-card default order, zero Archive button/banner, top tweets & articles, opponent health, and source links', async () => {
       await cdp.assertNoOverflow('Home Dashboard (iPhone 16 393x852)');
       const homeInfo = await cdp.eval(() => {
-        const bannerEl = document.getElementById('phaseBanner');
-        const bannerHiddenOnHome = Boolean(bannerEl?.hidden);
+        const archiveBtnPresent = Boolean(document.getElementById('openArchiveBtn'));
+        const bannerPresent = Boolean(document.getElementById('phaseBanner'));
         const recordText = document.getElementById('headerRecordPill')?.textContent?.trim();
         const customizeBtn = document.querySelector('[data-action="toggle-customize-layout"]');
         const reorderBarText = document.querySelector('.reorder-bar')?.textContent || '';
@@ -710,7 +710,8 @@ async function main() {
         const matchupText = matchupCard?.textContent || '';
         const matchupPlayerAvatars = matchupCard ? matchupCard.querySelectorAll('.player-avatar').length : 0;
         return {
-          bannerHiddenOnHome,
+          archiveBtnPresent,
+          bannerPresent,
           recordText,
           hasCustomize: Boolean(customizeBtn),
           reorderBarText,
@@ -723,7 +724,6 @@ async function main() {
           articleLinks,
           externalLinksCount,
           matchupPlayerAvatars,
-          isTradeWindowActive: Boolean(window.__49ersDiagnostics.getState().seasonState?.activePhases?.includes('TRADE_WINDOW')),
           expectedRecord: window.__49ersDiagnostics.getState().appData.meta.teamRecord,
           hasOpponentHealthPreview:
             matchupText.includes(window.__49ersDiagnostics.getState().appData.scheduleMatchup.upcomingMatchup.oppName) &&
@@ -735,34 +735,22 @@ async function main() {
         homeInfo.recordText === homeInfo.expectedRecord,
         `Expected header record ${homeInfo.expectedRecord}, got ${homeInfo.recordText}`
       );
-      assert(homeInfo.bannerHiddenOnHome === true, 'Phase banner ("Active NFL Trade Window") must be hidden on Home tab');
+      assert(homeInfo.archiveBtnPresent === false, 'Archive button must be removed from header');
+      assert(homeInfo.bannerPresent === false, 'Phase banner must be removed from DOM');
+      assert(!homeInfo.reorderBarText.includes('Archive'), 'Home reorder bar must not reference Archive');
       assert(homeInfo.matchupPlayerAvatars === 0, `Expected 0 player avatars in Home Upcoming Matchup box, got ${homeInfo.matchupPlayerAvatars}`);
       assert(homeInfo.hasCustomize, 'Missing Customize Order button');
       assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
       assert(homeInfo.navSvgCount === 5, `Expected 5 SVG icons in bottom nav, got ${homeInfo.navSvgCount}`);
-      assert(homeInfo.cardBadgeSvgCount >= 6, `Expected >=6 SVG card icon badges on Home Dashboard, got ${homeInfo.cardBadgeSvgCount}`);
-      const expectedDefaultHomeBlocks = homeInfo.isTradeWindowActive
-        ? [
-            'news_briefs',
-            'upcoming_matchup',
-            'team_health',
-            'schedule_overview',
-            'trade_deadline',
-            'team_stats',
-            'roster_depth',
-            'salary_cap',
-            'autopodcast_ai'
-          ]
-        : [
-            'news_briefs',
-            'upcoming_matchup',
-            'team_health',
-            'schedule_overview',
-            'team_stats',
-            'roster_depth',
-            'salary_cap',
-            'autopodcast_ai'
-          ];
+      assert(homeInfo.cardBadgeSvgCount === 6, `Expected tighter 6 SVG card icon badges on Home Dashboard, got ${homeInfo.cardBadgeSvgCount}`);
+      const expectedDefaultHomeBlocks = [
+        'news_briefs',
+        'upcoming_matchup',
+        'team_health',
+        'team_stats',
+        'salary_cap',
+        'autopodcast_ai'
+      ];
       assert(
         JSON.stringify(homeInfo.blockOrder) === JSON.stringify(expectedDefaultHomeBlocks),
         `Unexpected default Home block order: ${JSON.stringify(homeInfo.blockOrder)}`
@@ -775,26 +763,29 @@ async function main() {
       assert(homeInfo.hasOpponentHealthPreview, 'Missing Opposing Team Health preview on Home Upcoming Matchup card');
     });
 
-    await runStep('Customizing Dashboard card order via Up/Down + HTML5 Drag/Drop persists across reload & resets cleanly', async () => {
+    await runStep('Customizing Dashboard card order + Hide/Add modules via Up/Down + HTML5 Drag/Drop persists across reload & resets cleanly', async () => {
       const initialOrder = await cdp.eval(() => {
         document.querySelector('[data-action="toggle-customize-layout"]').click();
         return Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
           b.getAttribute('data-block-id')
         );
       });
-      assert(initialOrder.length >= 6, `Expected >=6 active blocks, got ${initialOrder.length}`);
+      assert(initialOrder.length === 6, `Expected 6 default blocks, got ${initialOrder.length}`);
 
       // Check boundary buttons disabled properly
       const boundaryState = await cdp.eval(() => {
         const ups = document.querySelectorAll('[data-action="move-block-up"]');
         const downs = document.querySelectorAll('[data-action="move-block-down"]');
+        const optionalCount = document.querySelectorAll('[data-optional-home-modules] [data-action="show-home-block"]').length;
         return {
           firstUpDisabled: ups[0]?.disabled,
-          lastDownDisabled: downs[downs.length - 1]?.disabled
+          lastDownDisabled: downs[downs.length - 1]?.disabled,
+          optionalCount
         };
       });
       assert(boundaryState.firstUpDisabled === true, 'First block Up button must be disabled');
       assert(boundaryState.lastDownDisabled === true, 'Last block Down button must be disabled');
+      assert(boundaryState.optionalCount === 6, `Expected 6 optional Home modules in Customize tray, got ${boundaryState.optionalCount}`);
 
       // Move 2nd block up to 1st position
       const secondBlockId = initialOrder[1];
@@ -809,7 +800,7 @@ async function main() {
       );
       assert(afterMoveUp[0] === secondBlockId, 'Moving 2nd block up did not place it at index 0');
 
-      // Also test HTML5 Drag-and-Drop reordering between cards while Customize Layout is active
+      // Also test HTML5 Drag-and-Drop reordering + hiding a card + pinning Playoff Odds onto Home
       const thirdBlockId = afterMoveUp[2];
       await cdp.eval(
         ({ dragId, dropId }) => {
@@ -821,6 +812,8 @@ async function main() {
             dstCard.dispatchEvent(new Event('drop', { bubbles: true, cancelable: true }));
             srcCard.dispatchEvent(new Event('dragend', { bubbles: true }));
           }
+          document.querySelector('[data-action="hide-home-block"][data-block-id="autopodcast_ai"]')?.click();
+          document.querySelector('[data-action="show-home-block"][data-block-id="playoff_picture"]')?.click();
         },
         { dragId: thirdBlockId, dropId: secondBlockId }
       );
@@ -830,17 +823,29 @@ async function main() {
           b.getAttribute('data-block-id')
         )
       );
-      assert(afterDragDrop[0] === thirdBlockId, 'HTML5 drag-and-drop did not move dragged card to target slot');
+      assert(
+        afterDragDrop[0] === thirdBlockId &&
+          !afterDragDrop.includes('autopodcast_ai') &&
+          afterDragDrop.includes('playoff_picture'),
+        `Customize Drag/Hide/Add failed: ${JSON.stringify(afterDragDrop)}`
+      );
 
-      // Reload page and confirm custom order persisted in localStorage
+      // Reload page and confirm custom order + pinned/hidden blocks persisted in localStorage
       await cdp.send('Page.reload');
       await cdp.waitFor(() => document.querySelector('[data-action="toggle-customize-layout"]'));
 
-      const persistedFirst = await cdp.eval(() => {
+      const persistedState = await cdp.eval(() => {
         document.querySelector('[data-action="toggle-customize-layout"]').click();
-        return document.querySelector('[data-action="move-block-up"]')?.getAttribute('data-block-id');
+        return Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
+          b.getAttribute('data-block-id')
+        );
       });
-      assert(persistedFirst === thirdBlockId, 'Custom dashboard order did not persist across reload');
+      assert(
+        persistedState[0] === thirdBlockId &&
+          !persistedState.includes('autopodcast_ai') &&
+          persistedState.includes('playoff_picture'),
+        `Custom dashboard state did not persist across reload: ${JSON.stringify(persistedState)}`
+      );
 
       // Test Reset to Default
       await cdp.eval(() => {
@@ -853,7 +858,10 @@ async function main() {
         document.querySelector('[data-action="toggle-customize-layout"]').click(); // Exit customize mode
         return list;
       });
-      assert(restoredOrder[0] === initialOrder[0], 'Reset Default did not restore original top card');
+      assert(
+        JSON.stringify(restoredOrder) === JSON.stringify(initialOrder),
+        `Reset Default did not restore original 6-card set: ${JSON.stringify(restoredOrder)}`
+      );
     });
 
     console.log('\n=== [3/9] Team News, Source Links, Verified Video Embeds & Deep Dive AI Jump ===');
@@ -2836,28 +2844,16 @@ async function main() {
       );
       await cdp.assertNoOverflow('Shared Podcast Hero Card Above Generator');
 
-      // 4. Test Podcast Archive -> Active/Archived Filter -> Archive Vault Sheet -> Restore -> Delete (+ IDB & Mini-Player cleanup!)
-      const podArchiveAndDeleteAudit = await cdp.eval(async customEpId => {
-        // Archive custom podcast from Ready-to-Play / Library
-        document.querySelector(`[data-episode-card="${customEpId}"] [data-action="archive-podcast"]`)?.click();
-        const absentFromActive = !document.querySelector(`[data-episode-card="${customEpId}"]`);
+      // 4. Test Podcast Delete-Only Lifecycle (zero Archive/Restore controls + IDB & Mini-Player cleanup!)
+      const podDeleteAudit = await cdp.eval(async customEpId => {
+        const hasAnyArchiveControls = Boolean(
+          document.querySelector(
+            '[data-action="archive-podcast"], [data-action="unarchive-podcast"], [data-action="set-pod-library-filter"]'
+          )
+        );
+        const visibleInLibrary = Boolean(document.querySelector(`[data-episode-card="${customEpId}"]`));
 
-        // Switch library filter to Archived (1)
-        document.querySelector('[data-action="set-pod-library-filter"][data-filter="archived"]')?.click();
-        const visibleInArchivedTab = Boolean(document.querySelector(`[data-episode-card="${customEpId}"]`));
-
-        // Open Top-Bar Archive Vault sheet and confirm it appears under #archivePodcastsSection
-        document.getElementById('openArchiveBtn')?.click();
-        const vaultPodText = document.getElementById('archivePodcastsSection')?.textContent || '';
-        // Restore directly from Archive Vault sheet!
-        document.querySelector(`#archivePodcastsSection [data-action="unarchive-podcast"][data-episode-id="${customEpId}"]`)?.click();
-        document.getElementById('closeSheetBtn')?.click();
-
-        // Switch back to Active filter and confirm restored episode is back
-        document.querySelector('[data-action="set-pod-library-filter"][data-filter="active"]')?.click();
-        const restoredToActive = Boolean(document.querySelector(`[data-episode-card="${customEpId}"]`));
-
-        // Now Delete the custom episode and confirm Mini-Player closes + IndexedDB WAV blob is purged!
+        // Delete the custom episode and confirm Mini-Player closes + IndexedDB WAV blob is purged!
         document.querySelector(`[data-episode-card="${customEpId}"] [data-action="delete-podcast"]`)?.click();
         await new Promise(r => setTimeout(r, 150));
         const goneAfterDelete = !document.querySelector(`[data-episode-card="${customEpId}"]`);
@@ -2866,10 +2862,8 @@ async function main() {
         const idbUrlAfterDelete = await getEpisodeAudioUrl(customEpId);
 
         return {
-          absentFromActive,
-          visibleInArchivedTab,
-          inVaultSheet: vaultPodText.includes('wide receivers'),
-          restoredToActive,
+          hasAnyArchiveControls,
+          visibleInLibrary,
           goneAfterDelete,
           miniPlayerHiddenAfterDelete,
           idbPurged: idbUrlAfterDelete === null
@@ -2877,14 +2871,12 @@ async function main() {
       }, readyAndPlaybackAudit.epId);
 
       assert(
-        podArchiveAndDeleteAudit.absentFromActive &&
-          podArchiveAndDeleteAudit.visibleInArchivedTab &&
-          podArchiveAndDeleteAudit.inVaultSheet &&
-          podArchiveAndDeleteAudit.restoredToActive &&
-          podArchiveAndDeleteAudit.goneAfterDelete &&
-          podArchiveAndDeleteAudit.miniPlayerHiddenAfterDelete &&
-          podArchiveAndDeleteAudit.idbPurged,
-        `Podcast Archive / Restore / Delete lifecycle failed: ${JSON.stringify(podArchiveAndDeleteAudit)}`
+        podDeleteAudit.hasAnyArchiveControls === false &&
+          podDeleteAudit.visibleInLibrary &&
+          podDeleteAudit.goneAfterDelete &&
+          podDeleteAudit.miniPlayerHiddenAfterDelete &&
+          podDeleteAudit.idbPurged,
+        `Podcast Delete-only lifecycle failed: ${JSON.stringify(podDeleteAudit)}`
       );
 
       // 5. Switch to AI Analysis Tab, verify parallel 3-step wait bar, Pro High estimate, grounding, Share, Archive & Delete
@@ -2943,10 +2935,15 @@ async function main() {
         20_000
       );
 
-      // Verify Share icon + Archive / Restore / Delete lifecycle on AI Analysis report card
+      // Verify Share icon + Delete-only lifecycle on AI Analysis report card (zero Archive controls)
       const analysisShareAndLifecycle = await cdp.eval(async () => {
         const firstCard = document.querySelector('#mainView article.brief-card[data-analysis-card]');
         const analysisId = firstCard?.getAttribute('data-analysis-card') || '';
+        const hasAnyArchiveControls = Boolean(
+          document.querySelector(
+            '[data-action="archive-analysis"], [data-action="unarchive-analysis"], [data-action="set-analysis-library-filter"]'
+          )
+        );
 
         let shared = null;
         const origShare = navigator.share;
@@ -2961,42 +2958,21 @@ async function main() {
         }
         const sharedUrl = shared?.url || window.__lastSharedUrl || '';
 
-        // Archive report -> check Archived filter & Vault -> Restore -> Delete
-        firstCard?.querySelector('[data-action="archive-analysis"]')?.click();
-        const hiddenFromActive = !document.querySelector(`[data-analysis-card="${analysisId}"]`);
-
-        document.querySelector('[data-action="set-analysis-library-filter"][data-filter="archived"]')?.click();
-        const shownInArchived = Boolean(document.querySelector(`[data-analysis-card="${analysisId}"]`));
-
-        document.getElementById('openArchiveBtn')?.click();
-        const vaultAnalysisText = document.getElementById('archiveAnalysesSection')?.textContent || '';
-        document.querySelector(`#archiveAnalysesSection [data-action="unarchive-analysis"][data-analysis-id="${analysisId}"]`)?.click();
-        document.getElementById('closeSheetBtn')?.click();
-
-        document.querySelector('[data-action="set-analysis-library-filter"][data-filter="active"]')?.click();
-        const restoredOk = Boolean(document.querySelector(`[data-analysis-card="${analysisId}"]`));
-
         document.querySelector(`[data-analysis-card="${analysisId}"] [data-action="delete-analysis"]`)?.click();
         const deletedOk = !document.querySelector(`[data-analysis-card="${analysisId}"]`);
 
         return {
+          hasAnyArchiveControls,
           sharedUrl,
-          hiddenFromActive,
-          shownInArchived,
-          inVault: vaultAnalysisText.includes('wide recievers'),
-          restoredOk,
           deletedOk
         };
       });
       assert(
-        analysisShareAndLifecycle.sharedUrl.includes('?analysis=') &&
+        analysisShareAndLifecycle.hasAnyArchiveControls === false &&
+          analysisShareAndLifecycle.sharedUrl.includes('?analysis=') &&
           analysisShareAndLifecycle.sharedUrl.includes('#shared-analysis=z.') &&
-          analysisShareAndLifecycle.hiddenFromActive &&
-          analysisShareAndLifecycle.shownInArchived &&
-          analysisShareAndLifecycle.inVault &&
-          analysisShareAndLifecycle.restoredOk &&
           analysisShareAndLifecycle.deletedOk,
-        `AI Analysis Share / Archive / Restore / Delete failed: ${JSON.stringify(analysisShareAndLifecycle)}`
+        `AI Analysis Share / Delete lifecycle failed: ${JSON.stringify(analysisShareAndLifecycle)}`
       );
 
       // 6. Ask about retired former 49er Bryce Huff and verify Live Roster Grounding Verification explicitly flags him as non-rostered
@@ -3066,27 +3042,22 @@ async function main() {
       });
       assert(filterState.keptFocus && filterState.mutedReporterFound, 'Reporter search/mute failed');
 
-      // Re-enable all reporters & switch back to Dark theme, save credentials, close sheet
-      await cdp.eval(() => {
+      // Re-enable all reporters & switch back to Light theme, save credentials, close sheet, and verify clean header
+      const headerCleanCheck = await cdp.eval(() => {
         document.querySelector('[data-action="enable-all-reporters"]').click();
         document.querySelector('[data-action="toggle-theme"]').click();
         document.querySelector('[data-action="save-group-config"]').click();
         document.getElementById('closeSheetBtn').click();
-      });
-
-      // Open Seasonal Archive Vault & jump into off-cycle module
-      const vaultJump = await cdp.eval(() => {
-        document.getElementById('openArchiveBtn').click();
-        const btn = document.querySelector('[data-action="open-vault-module"]');
-        const targetSub = btn?.getAttribute('data-season-sub');
-        btn?.click();
         return {
           sheetClosed: document.getElementById('bottomSheetBackdrop').hidden,
-          activeNav: document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab'),
-          targetSub
+          hasSettingsBtn: Boolean(document.getElementById('openSettingsBtn')),
+          hasArchiveBtn: Boolean(document.getElementById('openArchiveBtn'))
         };
       });
-      assert(vaultJump.sheetClosed && vaultJump.activeNav === 'season', 'Vault Inspect jump failed');
+      assert(
+        headerCleanCheck.sheetClosed && headerCleanCheck.hasSettingsBtn && !headerCleanCheck.hasArchiveBtn,
+        `Header / Settings sheet cleanup failed: ${JSON.stringify(headerCleanCheck)}`
+      );
     });
 
     await runStep('Corrupted localStorage payloads recover gracefully without crashing app boot', async () => {
@@ -3361,24 +3332,17 @@ async function main() {
       );
     });
 
-    await runStep('Verify 6 new functional upgrades: Trade Banner exclusivity, Jargon Popover bubbles, 5-Yr OTC Cap Summary & Simulator, Matchup Avatars/Opponent Parity & 30d Trade Archive', async () => {
+    await runStep('Verify year-round permanent seasonal tabs, inline Earlier Completed Trades collapsible, Jargon Popover bubbles, 5-Yr OTC Cap Simulator, and Matchup Opponent Parity', async () => {
       const upgradesAudit = await cdp.eval(() => {
-        // 1. Verify #phaseBanner ("Active NFL Trade Window") ONLY shows in Game & Season > Trade Window
-        const bannerStates = {};
-        for (const nav of ['home', 'news', 'roster', 'audio']) {
-          document.querySelector(`[data-nav-tab="${nav}"]`).click();
-          const b = document.getElementById('phaseBanner');
-          bannerStates[nav] = { hidden: b.hidden, display: window.getComputedStyle(b).display };
-        }
+        // 1. Verify zero #phaseBanner, zero .off-cycle tabs, and zero .season-live-dot across all 8 Game & Season views
+        const bannerExists = Boolean(document.getElementById('phaseBanner'));
         document.querySelector('[data-nav-tab="season"]').click();
+        const offCycleCount = document.querySelectorAll('.season-tab-btn.off-cycle').length;
+        const liveDotCount = document.querySelectorAll('.season-live-dot').length;
+        const seasonTabVisited = [];
         for (const sSub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
           document.querySelector(`[data-action="set-season-sub"][data-season-sub="${sSub}"]`)?.click();
-          const b = document.getElementById('phaseBanner');
-          bannerStates[`season:${sSub}`] = {
-            hidden: b.hidden,
-            display: window.getComputedStyle(b).display,
-            text: b.textContent.trim()
-          };
+          seasonTabVisited.push(sSub);
         }
 
         // 2. Verify Upcoming Matchup hero card has zero 49ers player avatars & Opponent Health has full parity
@@ -3422,16 +3386,17 @@ async function main() {
           oppSecText.includes('Practice Participation') &&
           oppSecText.includes('4-Game Return Window Tracker');
 
-        // 3. Verify Trade Window 30-day cutoff + Older Trades in Archive
+        // 3. Verify Trade Window shows recent Buckner trade + inline <details> Earlier Completed Trades for Osa Odighizuwa
         document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"]').click();
-        const recentTradesText = document.getElementById('recentCompletedTradesList')?.textContent || '';
-        const tradeHasBucknerOnly =
-          recentTradesText.includes('DeForest Buckner') && !recentTradesText.includes('Osa Odighizuwa');
-
-        document.querySelector('[data-action="open-archive"]')?.click();
-        const archiveTradesText = document.getElementById('archiveOlderTradesSection')?.textContent || '';
-        const archiveHasOsa = archiveTradesText.includes('Osa Odighizuwa');
-        document.getElementById('closeSheetBtn')?.click();
+        const tradesListEl = document.getElementById('recentCompletedTradesList');
+        const olderDetails = tradesListEl?.querySelector('details[data-older-trades-collapsible]');
+        const olderStartsCollapsed = olderDetails ? olderDetails.open === false : false;
+        if (olderDetails) olderDetails.open = true;
+        const tradesListText = tradesListEl?.textContent || '';
+        const tradeHasBucknerAndInlineOsa =
+          tradesListText.includes('DeForest Buckner') &&
+          tradesListText.includes('Osa Odighizuwa') &&
+          !document.querySelector('[data-action="open-archive"]');
 
         // 4. Verify Jargon Quick-Bubble Popover opens, stays inside viewport, and closes cleanly
         document.querySelector('[data-nav-tab="news"]').click();
@@ -3494,12 +3459,14 @@ async function main() {
         document.querySelector('#capSimulatorCard [data-action="set-cap-year"][data-cap-year="2026"]')?.click();
 
         return {
-          isTradeWindowActive: Boolean(window.__49ersDiagnostics.getState().seasonState?.activePhases?.includes('TRADE_WINDOW')),
-          bannerStates,
+          bannerExists,
+          offCycleCount,
+          liveDotCount,
+          seasonTabVisitedCount: seasonTabVisited.length,
           heroPlayerAvatars,
           oppHasParity,
-          tradeHasBucknerOnly,
-          archiveHasOsa,
+          olderStartsCollapsed,
+          tradeHasBucknerAndInlineOsa,
           jargonTermsFound,
           jargonPopInfo,
           yearTabButtons,
@@ -3513,28 +3480,21 @@ async function main() {
         };
       });
 
-      // Assert #1: Trade banner exclusivity (visible in season:trade when TRADE_WINDOW active; hidden everywhere once deadline passes)
-      for (const [k, v] of Object.entries(upgradesAudit.bannerStates)) {
-        if (k === 'season:trade' && upgradesAudit.isTradeWindowActive) {
-          assert(
-            v.hidden === false && v.display !== 'none' && v.text.includes('Active NFL Trade Window'),
-            `Expected Active NFL Trade Window banner visible in season:trade, got ${JSON.stringify(v)}`
-          );
-        } else {
-          assert(
-            v.hidden === true && v.display === 'none',
-            `Expected Active NFL Trade Window banner hidden in ${k}, got ${JSON.stringify(v)}`
-          );
-        }
-      }
+      assert(
+        upgradesAudit.bannerExists === false &&
+          upgradesAudit.offCycleCount === 0 &&
+          upgradesAudit.liveDotCount === 0 &&
+          upgradesAudit.seasonTabVisitedCount === 8,
+        `Expected all 8 seasonal sub-tabs permanently active without phaseBanner/off-cycle/live-dot: ${JSON.stringify(upgradesAudit)}`
+      );
 
       // Assert #5A & #5B
       assert(upgradesAudit.heroPlayerAvatars === 0, `Expected 0 player avatars in Upcoming Matchup hero box, got ${upgradesAudit.heroPlayerAvatars}`);
       assert(upgradesAudit.oppHasParity, 'Opponent Health section missing parity metrics (Availability Index, Starters Cleared, Maxx Crosby, 4-Game IR Tracker)');
 
-      // Assert #6
-      assert(upgradesAudit.tradeHasBucknerOnly, 'Trade Window Completed Impact Acquisitions failed 30-day filter');
-      assert(upgradesAudit.archiveHasOsa, 'Archive missing older (>30d) trade Osa Odighizuwa');
+      // Assert #6: Recent trade visible + older trade collapsible inline inside Trade tab
+      assert(upgradesAudit.olderStartsCollapsed, 'Earlier Completed Trades (<details>) should start collapsed when recent trades exist');
+      assert(upgradesAudit.tradeHasBucknerAndInlineOsa, 'Trade tab missing DeForest Buckner or inline Earlier Completed Trades (Osa Odighizuwa)');
 
       // Assert #2
       assert(upgradesAudit.jargonTermsFound >= 3, `Expected >=3 subtle jargon links on live News view, got ${upgradesAudit.jargonTermsFound}`);
@@ -3713,13 +3673,11 @@ async function main() {
             };
           });
 
-          // 3. Switch to Trade sub-tab & verify Active NFL Trade Window (#phaseBanner) is BELOW .season-subnav-card and ABOVE .card.temporal-highlight
+          // 3. Switch to Trade sub-tab & verify Trade Window card stacks cleanly below .season-subnav-card with zero phaseBanner / live-dot
           document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"]').click();
           window.scrollTo({ top: 0, behavior: 'instant' });
           const subnavRect = document.querySelector('.season-subnav-card')?.getBoundingClientRect();
           const bannerEl = document.getElementById('phaseBanner');
-          const tradeBannerHidden = Boolean(bannerEl?.hidden);
-          const bannerRect = bannerEl?.getBoundingClientRect();
           const tradeCardRect = document.querySelector('#mainView > section.card.temporal-highlight')?.getBoundingClientRect();
           const tradeLiveDot = Boolean(
             document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"] .season-live-dot')
@@ -3742,12 +3700,9 @@ async function main() {
             navTabs,
             navStrictlyLeftToRight: navX.every((x, idx) => idx === 0 || x > navX[idx - 1]),
             barDetails,
-            tradeBannerGeo: {
-              isTradeWindowActive: Boolean(window.__49ersDiagnostics.getState().seasonState?.activePhases?.includes('TRADE_WINDOW')),
-              hidden: tradeBannerHidden,
+            tradeCardGeo: {
+              bannerPresent: Boolean(bannerEl),
               subnavBottom: Math.round(subnavRect?.bottom || 0),
-              bannerTop: Math.round(bannerRect?.top || 0),
-              bannerBottom: Math.round(bannerRect?.bottom || 0),
               tradeCardTop: Math.round(tradeCardRect?.top || 0),
               tradeLiveDot
             },
@@ -3793,21 +3748,13 @@ async function main() {
           );
         }
 
-        // Assert #4: Active NFL Trade Window block positioned BELOW the Game & Season navigation bars and ABOVE Trade Window card when active, or cleanly hidden post-deadline
-        if (audit.tradeBannerGeo.isTradeWindowActive) {
-          assert(
-            audit.tradeBannerGeo.hidden === false &&
-              audit.tradeBannerGeo.bannerTop >= audit.tradeBannerGeo.subnavBottom &&
-              audit.tradeBannerGeo.bannerBottom <= audit.tradeBannerGeo.tradeCardTop &&
-              audit.tradeBannerGeo.tradeLiveDot,
-            `[${vp.name}] Active NFL Trade Window banner placement wrong: ${JSON.stringify(audit.tradeBannerGeo)}`
-          );
-        } else {
-          assert(
-            audit.tradeBannerGeo.hidden === true && !audit.tradeBannerGeo.tradeLiveDot,
-            `[${vp.name}] Post-deadline Trade Window banner should be hidden: ${JSON.stringify(audit.tradeBannerGeo)}`
-          );
-        }
+        // Assert #4: Trade Window card stacks directly below Game & Season subnav without phaseBanner or live-dot
+        assert(
+          audit.tradeCardGeo.bannerPresent === false &&
+            audit.tradeCardGeo.tradeCardTop >= audit.tradeCardGeo.subnavBottom &&
+            !audit.tradeCardGeo.tradeLiveDot,
+          `[${vp.name}] Trade Window card placement/cleanliness check failed: ${JSON.stringify(audit.tradeCardGeo)}`
+        );
 
         // Assert #3: 4 stacked unit cards (Offense -> Defense -> Special Teams -> Margin), Category column hidden, and zero horizontal overflow!
         assert(
@@ -4395,7 +4342,13 @@ async function main() {
         const homeDeadCapOpened = Boolean(pop && !pop.hidden && pop.textContent.includes('Dead Money'));
         document.querySelector('[data-action="close-jargon-popover"]')?.click();
         const homeScoreboardLinks = document.querySelectorAll('[data-dashboard-block="upcoming_matchup"] a.sb-team-col').length;
+        // Temporarily pin optional Schedule card via Customize Order to verify its 4-game KPI links & anchor cleanliness
+        document.querySelector('[data-action="toggle-customize-layout"]')?.click();
+        document.querySelector('[data-action="show-home-block"][data-block-id="schedule_overview"]')?.click();
+        scanCurrentDom('home:with_schedule');
         const homeSchedGameLinks = document.querySelectorAll('[data-dashboard-block="schedule_overview"] a.kpi-box').length;
+        document.querySelector('[data-action="reset-dashboard-order"]')?.click();
+        document.querySelector('[data-action="toggle-customize-layout"]')?.click();
 
         // 2. News: Inline prose player link opens Player Dossier & zero nested anchors across Daily Brief + Wire
         document.querySelector('[data-nav-tab="news"]')?.click();

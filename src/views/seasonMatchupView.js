@@ -33,6 +33,7 @@ import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 import {
   evaluateCombineLeaderboardWindow,
+  evaluateTradeDeadlineStatus,
   partitionCompletedTradesByWindow,
   resolveCompleteScheduleModel,
   resolveFirstPickMockDatabase
@@ -303,27 +304,26 @@ export const SEASON_NAV_CLUSTERS = [
     id: 'gameday_core',
     ariaLabel: 'Weekly Game and Team Views',
     tabs: [
-      { key: 'matchup', icon: 'swords', label: 'Matchup', fullTitle: 'Upcoming Matchup', phase: 'IN_SEASON', temporal: false },
-      { key: 'health', icon: 'heartPulse', label: 'Health', fullTitle: 'Team Health', phase: 'IN_SEASON', temporal: false },
-      { key: 'schedule', icon: 'calendar', label: 'Schedule', fullTitle: 'Schedule', phase: 'YEAR_ROUND', temporal: false },
-      { key: 'stats', icon: 'season', label: 'Stats', fullTitle: 'Team Stats', phase: 'IN_SEASON', temporal: false }
+      { key: 'matchup', icon: 'swords', label: 'Matchup', fullTitle: 'Upcoming Matchup' },
+      { key: 'health', icon: 'heartPulse', label: 'Health', fullTitle: 'Team Health' },
+      { key: 'schedule', icon: 'calendar', label: 'Schedule', fullTitle: 'Schedule' },
+      { key: 'stats', icon: 'season', label: 'Stats', fullTitle: 'Team Stats' }
     ]
   },
   {
     id: 'seasonal_horizon',
     ariaLabel: 'Trade, Playoffs and Draft Views',
     tabs: [
-      { key: 'trade', icon: 'trade', label: 'Trade', fullTitle: 'Trade Window', phase: 'TRADE_WINDOW', temporal: true },
-      { key: 'playoffs', icon: 'trophy', label: 'Playoffs', fullTitle: 'Playoff Odds', phase: 'PLAYOFF_PUSH', temporal: true },
-      { key: 'draft_prep', icon: 'compass', label: 'Draft', fullTitle: '2027 NFL Draft', phase: 'DRAFT_PREP', temporal: true },
-      { key: 'draft_class', icon: 'radar', label: 'Draft Recap', fullTitle: '2026 Draft Recap', phase: 'DRAFT_LIVE_UDFA', temporal: true }
+      { key: 'trade', icon: 'trade', label: 'Trade', fullTitle: 'Trade Window' },
+      { key: 'playoffs', icon: 'trophy', label: 'Playoffs', fullTitle: 'Playoff Odds' },
+      { key: 'draft_prep', icon: 'compass', label: 'Draft', fullTitle: '2027 NFL Draft' },
+      { key: 'draft_class', icon: 'radar', label: 'Draft Recap', fullTitle: '2026 Draft Recap' }
     ]
   }
 ];
 
 export function renderSeasonMatchupViewHtml({
   seasonSub = 'matchup',
-  activePhases = [],
   appData,
   mcSimResult,
   forcedWinners = {},
@@ -351,7 +351,6 @@ export function renderSeasonMatchupViewHtml({
   reportersById = null
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
-  const phaseSet = new Set(activePhases || []);
 
   const switcherCard = `
     <div class="card subnav-card season-subnav-card" role="navigation" aria-label="Game and Season Views">
@@ -361,15 +360,13 @@ export function renderSeasonMatchupViewHtml({
           ${cluster.tabs
             .map(t => {
               const isSelected = seasonSub === t.key;
-              const isLiveTemporal = Boolean(t.temporal && phaseSet.has(t.phase));
               return `
             <button type="button" role="tab" aria-selected="${isSelected ? 'true' : 'false'}"
-                    title="${esc(t.fullTitle)}${isLiveTemporal ? ' • Active NFL Window' : ''}"
-                    class="pill-btn seg-btn season-tab-btn ${isSelected ? 'active' : ''} ${t.temporal && !isLiveTemporal ? 'off-cycle' : ''}"
+                    title="${esc(t.fullTitle)}"
+                    class="pill-btn seg-btn season-tab-btn ${isSelected ? 'active' : ''}"
                     data-action="set-season-sub" data-season-sub="${t.key}">
               ${iconSvg(t.icon, 13)}
               <span>${esc(t.label)}</span>
-              ${isLiveTemporal ? `<span class="season-live-dot" aria-hidden="true"></span>` : ''}
             </button>
           `;
             })
@@ -1467,8 +1464,56 @@ function renderTeamStatsAndPower(appData) {
   `;
 }
 
+function renderCompletedTradeCardHtml(m, { isOlder = false } = {}) {
+  return `
+    <div class="subcard-panel" style="border-color:${isOlder ? 'var(--border-strong)' : 'var(--gold-border)'}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:9px;min-width:0">
+          <span style="cursor:${m.playerId ? 'pointer' : 'default'};display:inline-flex" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>
+            ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 36, { showJerseyBadge: m.jersey != null })}
+          </span>
+          <div style="min-width:0">
+            <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+              ${
+                m.playerId
+                  ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(m.playerId)}">${esc(m.player)} (${esc(m.position)})</span>`
+                  : `<strong>${esc(m.player)} (${esc(m.position)})</strong>`
+              }
+              <span style="color:var(--text-muted)">←</span>
+              ${
+                m.acquiredFrom
+                  ? `<a href="${esc(buildEspnNflTeamUrl(m.acquiredFrom))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:4px;color:inherit">${renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 18)}<strong>${esc(m.acquiredFrom)}</strong></a>`
+                  : ''
+              }
+              ${
+                m.sourceUrl
+                  ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px;margin-left:4px">Source ${iconSvg('externalLink', 10)}</a>`
+                  : ''
+              }
+            </div>
+            <div style="font-size:11.5px;color:var(--gold-bright)">${esc(m.timing)} • Cost: ${esc(m.costSummary)}</div>
+          </div>
+        </div>
+        <span class="badge ${isOlder ? 'badge-neutral' : 'badge-positive'} mono">Grade ${esc(m.schemeGrade)}</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis, { excludePlayerId: m.playerId })}</div>
+    </div>
+  `;
+}
+
 function renderTradeWindow(appData) {
   const tw = appData?.seasonal?.tradeWarRoom || {};
+  const tradeStatus = evaluateTradeDeadlineStatus({
+    now: appData?.meta?.now,
+    calendar: appData?.meta?.calendar,
+    seasonYear: appData?.meta?.seasonYear
+  });
+  const tradeEyebrow = tradeStatus.isPostDeadlinePause
+    ? `In-Season Deadline Passed • Offseason Trade Horizon`
+    : tradeStatus.countdownText
+      ? `${tw.deadlineDisplay || 'NFL Trade Deadline'} • ${tradeStatus.countdownText}`
+      : tw.deadlineDisplay || 'NFL Trade Market';
+
   const { recentTrades, archivedTrades } = partitionCompletedTradesByWindow(
     tw.completed2026Moves || [],
     appData?.meta?.updatedAt || Date.now(),
@@ -1481,7 +1526,7 @@ function renderTradeWindow(appData) {
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trade', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(tw.deadlineDisplay)}</div>
+            <div class="card-eyebrow">${esc(tradeEyebrow)}</div>
             <h2 class="card-title">Trade Window</h2>
           </div>
         </div>
@@ -1515,59 +1560,27 @@ function renderTradeWindow(appData) {
           : ''
       }
 
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
-        <div class="sub-label" style="margin:0">Completed Trades (Last 30 Days)</div>
-        ${
-          archivedTrades.length > 0
-            ? `<button type="button" class="btn-ghost" data-action="open-archive" style="font-size:11.5px;padding:4px 9px">
-                ${iconSvg('archive', 12)}
-                <span>${archivedTrades.length} Older Trade${archivedTrades.length > 1 ? 's' : ''} (&gt;30d) in Archive</span>
-              </button>`
-            : ''
-        }
-      </div>
+      <div class="sub-label" style="margin-bottom:6px">Completed Trades</div>
       <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px" id="recentCompletedTradesList">
         ${
-          recentTrades.length === 0
-            ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No completed 49ers trades within the past 30 days. Older acquisitions are stored in the Archive.</div>`
-            : recentTrades
-                .map(
-                  m => `
-          <div class="subcard-panel" style="border-color:var(--gold-border)">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-              <div style="display:flex;align-items:center;gap:9px;min-width:0">
-                <span style="cursor:${m.playerId ? 'pointer' : 'default'};display:inline-flex" ${m.playerId ? `data-action="open-player-sheet" data-player-id="${esc(m.playerId)}"` : ''}>
-                  ${renderPlayerAvatarHtml({ name: m.player, jersey: m.jersey, headshotUrl: m.headshotUrl }, 36, { showJerseyBadge: m.jersey != null })}
-                </span>
-                <div style="min-width:0">
-                  <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-                    ${
-                      m.playerId
-                        ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(m.playerId)}">${esc(m.player)} (${esc(m.position)})</span>`
-                        : `<strong>${esc(m.player)} (${esc(m.position)})</strong>`
-                    }
-                    <span style="color:var(--text-muted)">←</span>
-                    ${
-                      m.acquiredFrom
-                        ? `<a href="${esc(buildEspnNflTeamUrl(m.acquiredFrom))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:4px;color:inherit">${renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 18)}<strong>${esc(m.acquiredFrom)}</strong></a>`
-                        : ''
-                    }
-                    ${
-                      m.sourceUrl
-                        ? `<a href="${esc(m.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11.5px;margin-left:4px">Source ${iconSvg('externalLink', 10)}</a>`
-                        : ''
-                    }
-                  </div>
-                  <div style="font-size:11.5px;color:var(--gold-bright)">${esc(m.timing)} • Cost: ${esc(m.costSummary)}</div>
-                </div>
-              </div>
-              <span class="badge badge-positive mono">Grade ${esc(m.schemeGrade)}</span>
+          recentTrades.length === 0 && archivedTrades.length === 0
+            ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No completed 49ers trades recorded yet this cycle.</div>`
+            : recentTrades.map(m => renderCompletedTradeCardHtml(m, { isOlder: false })).join('')
+        }
+        ${
+          archivedTrades.length > 0
+            ? `
+          <details class="subcard-panel" data-older-trades-collapsible${recentTrades.length === 0 ? ' open' : ''}>
+            <summary style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:12.5px;color:var(--gold-bright)">
+              <span>Earlier Completed Trades (${archivedTrades.length})</span>
+              <span class="mono" style="font-size:11px;color:var(--text-muted)">Tap to expand ▾</span>
+            </summary>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+              ${archivedTrades.map(m => renderCompletedTradeCardHtml(m, { isOlder: true })).join('')}
             </div>
-            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:5px">${escJargon(m.analysis, { excludePlayerId: m.playerId })}</div>
-          </div>
+          </details>
         `
-                )
-                .join('')
+            : ''
         }
       </div>
 
@@ -2711,7 +2724,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <span class="badge ${mockDb.isEliminated ? 'badge-scarlet' : 'badge-gold'} mono"
+          <span class="badge ${mockDb.isPostSuperBowl ? 'badge-scarlet' : 'badge-gold'} mono"
                 data-mock-freshness-badge="${mockDb.freshnessDays}d">
             ${esc(mockDb.shortWindowBadge)} • ${mockDb.totalFreshSites} ${mockDb.totalFreshSites === 1 ? 'Site' : 'Sites'}
           </span>
@@ -2723,13 +2736,13 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
 
       <div class="mock-freshness-banner" data-mock-freshness-note>
         ${
-          mockDb.isEliminated
-            ? `Post-elimination filter active: showing <strong>last 7 days</strong> of 49ers 1st-pick projections (${mockDb.totalFreshSites} verified sites${
-                mockDb.staleExcludedCount > 0 ? ` • ${mockDb.staleExcludedCount} older >7d excluded` : ''
+          mockDb.isPostSuperBowl
+            ? `Post-Super Bowl draft buzz window: showing <strong>trailing 7 days</strong> of 49ers 1st-pick projections (${mockDb.totalFreshSites} verified sites${
+                mockDb.staleExcludedCount > 0 ? ` • ${mockDb.staleExcludedCount} older &gt;7d excluded` : ''
               }).`
-            : `In-season filter active: showing <strong>last 1 month (30 days)</strong> of 49ers 1st-pick projections (${mockDb.totalFreshSites} verified sites${
-                mockDb.staleExcludedCount > 0 ? ` • ${mockDb.staleExcludedCount} stale >30d excluded` : ''
-              }; tightens to 1 week post-elimination).`
+            : `Showing <strong>trailing 30 days</strong> of 49ers 1st-pick projections (${mockDb.totalFreshSites} verified sites${
+                mockDb.staleExcludedCount > 0 ? ` • ${mockDb.staleExcludedCount} stale &gt;30d excluded` : ''
+              }; tightens to trailing 7 days after the Super Bowl).`
         }
       </div>
 
@@ -3109,11 +3122,11 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
           ? `
         <div class="subcard-panel combine-blank-panel" data-combine-blank-note>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-            <strong style="font-size:12.5px;color:var(--gold-bright)">Blank Until ${combineWindow.targetCombineYear} NFL Scouting Combine Starts</strong>
-            <span class="badge badge-neutral mono">Opens ${esc(combineWindow.combineStartDisplay)}</span>
+            <strong style="font-size:12.5px;color:var(--gold-bright)">Awaiting ${combineWindow.targetCombineYear} NFL Scouting Combine Results</strong>
+            <span class="badge badge-neutral mono">Est. ${esc(combineWindow.combineStartDisplay)}</span>
           </div>
           <div style="font-size:12px;color:var(--text-secondary)">
-            Cleared after preseason kickoff so prior-year NFL Combine results never mix with the ${combineWindow.targetCombineYear} prospect class. Live 40-yard dash, 10-yard split, jumps, 3-cone, and ${jargonTerm('RAS', 'ras')} percentiles populate once drills begin in Indianapolis.
+            Prior-year Combine results are excluded so only ${combineWindow.targetCombineYear} draft prospects appear here. Live 40-yard dash, 10-yard split, jumps, 3-cone, and ${jargonTerm('RAS', 'ras')} percentiles populate automatically once ${combineWindow.targetCombineYear} drills are recorded in Indianapolis.
           </div>
         </div>
       `

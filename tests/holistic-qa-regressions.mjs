@@ -15,9 +15,10 @@ import {
   DEFAULT_NFL_CALENDAR_2026,
   buildNflCalendarForSeasonYear,
   evaluateCombineLeaderboardWindow,
+  evaluateMockDraftFreshnessWindow,
   evaluateSeasonState,
+  evaluateTradeDeadlineStatus,
   filterConsensusBigBoard,
-  is49ersEliminatedForDraftMocks,
   partitionCompletedTradesByWindow,
   resolveFirstPickMockDatabase
 } from '../src/engine/seasonStateMachine.js';
@@ -188,31 +189,25 @@ test('Hallucination sanitizer maps departed former 49ers to position-matched act
   assert.ok(activeDbs.some(db => scrubbedDb.includes(db)), `Expected active DB replacement, got: ${scrubbedDb}`);
 });
 
-test('Season state machine supports 2027+ automatic calendar rollover, post-Week-18 mathematicallyEliminated transition, and clean headline labels', () => {
+test('Year-round state machine supports 2027+ automatic calendar rollover, zero archived blocks, factual trade status, and timezone-safe trade partitioning', () => {
   assert.deepEqual(buildNflCalendarForSeasonYear(2026), DEFAULT_NFL_CALENDAR_2026);
 
-  // October 2027 without passing custom calendar must activate 2027 IN_SEASON + TRADE_WINDOW
+  // October 2027 without passing custom calendar must roll over to 2027 trade deadline with 0 archived blocks
   const oct2027 = evaluateSeasonState({
     now: '2027-10-19T18:00:00Z',
     teamStatus: { currentWeek: 7, mathematicallyEliminated: false }
   });
-  assert.ok(oct2027.activePhases.includes('IN_SEASON'), 'Oct 2027 must auto-activate IN_SEASON');
-  assert.ok(oct2027.activePhases.includes('TRADE_WINDOW'), 'Oct 2027 must auto-activate TRADE_WINDOW');
+  assert.equal(oct2027.archivedBlocks.length, 0, 'Zero archived blocks in year-round model');
+  assert.equal(oct2027.activeBlocks.length, 6, 'Tighter 6-card default Home count');
+  assert.equal(oct2027.tradeDeadlineStatus.seasonYear, 2027);
+  assert.equal(oct2027.tradeDeadlineStatus.isPreDeadline, true);
+  assert.ok(oct2027.tradeDeadlineStatus.countdownText?.includes('Deadline:'));
 
-  // Post-Week-18 mathematicallyEliminated=true without eliminatedAt must activate DRAFT_PREP immediately
-  const janEliminated = evaluateSeasonState({
-    now: '2027-01-15T18:00:00Z',
-    teamStatus: { mathematicallyEliminated: true }
+  const novPost2027 = evaluateTradeDeadlineStatus({
+    now: '2027-11-12T18:00:00Z'
   });
-  assert.equal(janEliminated.activePhases.includes('IN_SEASON'), false);
-  assert.equal(janEliminated.activePhases.includes('DRAFT_PREP'), true, 'Must enter DRAFT_PREP immediately after Week 18 elimination');
-
-  // Missing currentWeek in IN_SEASON must not leave dangling "In-Season • Week"
-  const inSeasonNoWk = evaluateSeasonState({
-    now: '2026-09-20T18:00:00Z',
-    teamStatus: {}
-  });
-  assert.equal(inSeasonNoWk.headlinePhase.label, 'In-Season');
+  assert.equal(novPost2027.seasonYear, 2027);
+  assert.equal(novPost2027.isPostDeadlinePause, true);
 
   // Timezone-safe bare YYYY-MM-DD trade partitioning
   const part = partitionCompletedTradesByWindow(
@@ -2258,47 +2253,38 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
   const sfWindowFiltered = filterConsensusBigBoard(dp.consensusBigBoard, { posGroup: 'SF_RANGE', sfPickOverall: 31 });
   assert.ok(sfWindowFiltered.length >= 5 && sfWindowFiltered.every(p => p.consensusRank >= 20 && p.consensusRank <= 45));
 
-  // 2. Combine Leaderboard Blank Window: blank from after preseason starts (Aug) until actual Combine starts (late Feb)
-  const sampleCombineRows = [
-    { name: 'Stale 2026 Draftee', pos: 'EDGE', school: 'Texas Tech', season: 2026, forty: 4.52, ras: 9.41 },
+  // 2. Combine Leaderboard: strictly data-year filtered (no calendar date gate; excludes prior-year rows)
+  const staleOnlyCombineRows = [
+    { name: 'Stale 2026 Draftee', pos: 'EDGE', school: 'Texas Tech', season: 2026, forty: 4.52, ras: 9.41 }
+  ];
+  const mixedCombineRows = [
+    ...staleOnlyCombineRows,
     { name: 'Fresh 2027 Prospect', pos: 'EDGE', school: 'Texas', season: 2027, forty: 4.46, ras: 9.82 }
   ];
-  const julyPreCamp = evaluateCombineLeaderboardWindow({
-    now: '2026-07-20T18:00:00Z',
-    seasonYear: 2026,
-    draftYear: 2027,
-    combineLeaderboard: sampleCombineRows
-  });
-  assert.equal(julyPreCamp.isBlankWindow, false, 'Before August preseason starts, prior spring Combine remains visible');
-  assert.equal(julyPreCamp.rows.length, 1);
-  assert.equal(julyPreCamp.rows[0].season, 2026);
 
-  for (const blankDate of ['2026-08-08T18:00:00Z', '2026-11-12T18:00:00Z', '2027-01-20T18:00:00Z', '2027-02-20T18:00:00Z']) {
-    const win = evaluateCombineLeaderboardWindow({
-      now: blankDate,
+  for (const checkDate of ['2026-07-20T18:00:00Z', '2026-11-12T18:00:00Z', '2027-02-20T18:00:00Z']) {
+    const emptyWhenNoTargetYr = evaluateCombineLeaderboardWindow({
+      now: checkDate,
       seasonYear: 2026,
       draftYear: 2027,
-      schedule: smJson.schedule,
-      combineLeaderboard: sampleCombineRows
+      combineLeaderboard: staleOnlyCombineRows
     });
-    assert.equal(win.isBlankWindow, true, `Combine Leaderboard must be blank at ${blankDate}`);
-    assert.equal(win.rows.length, 0, `Combine Leaderboard must emit 0 rows at ${blankDate}`);
+    assert.equal(emptyWhenNoTargetYr.isBlankWindow, true, `Prior-year 2026 Combine rows must never leak into 2027 Draft view at ${checkDate}`);
+    assert.equal(emptyWhenNoTargetYr.rows.length, 0);
   }
 
-  const marchCombineLive = evaluateCombineLeaderboardWindow({
-    now: '2027-03-02T18:00:00Z',
+  const populatedWhenDataExists = evaluateCombineLeaderboardWindow({
     seasonYear: 2026,
     draftYear: 2027,
-    schedule: smJson.schedule,
-    combineLeaderboard: sampleCombineRows
+    combineLeaderboard: mixedCombineRows
   });
-  assert.equal(marchCombineLive.isBlankWindow, false, 'Once 2027 NFL Combine starts in late February, Combine Leaderboard turns active');
-  assert.equal(marchCombineLive.rows.length, 1);
-  assert.equal(marchCombineLive.rows[0].name, 'Fresh 2027 Prospect', 'Only 2027 Combine class rows may appear in 2027 Combine window');
+  assert.equal(populatedWhenDataExists.isBlankWindow, false, 'Combine Leaderboard activates immediately once target-year Combine rows exist');
+  assert.equal(populatedWhenDataExists.rows.length, 1);
+  assert.equal(populatedWhenDataExists.rows[0].name, 'Fresh 2027 Prospect', 'Only 2027 Combine class rows may appear');
 
-  assert.equal(dp.combineLeaderboard.length, 0, 'Live Nov 2026 seasonal.json must store 0 stale Combine rows during in-season blank window');
+  assert.equal(dp.combineLeaderboard.length, 0, 'Live Nov 2026 seasonal.json must store 0 stale prior-year Combine rows');
 
-  // 3. 49ers First-Pick Mock Draft Database: 1-Month (30d) In-Season vs 1-Week (7d) Post-Elimination Freshness
+  // 3. 49ers First-Pick Mock Draft Database: Trailing 30 Days Initially -> Trailing 7 Days After the Super Bowl
   const syntheticMocks = [
     { siteId: 'cbs', siteName: 'CBS Sports', url: 'https://www.cbssports.com/nfl/draft/mock-draft/', publishedAt: '2026-11-10T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
     { siteId: 'fox', siteName: 'FOX Sports', url: 'https://www.foxsports.com/nfl/draft', publishedAt: '2026-11-08T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
@@ -2308,13 +2294,17 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
     { siteId: 'old_sept', siteName: 'NFL Draft Countdown', url: 'https://draftcountdown.com/2027-nfl-draft/2027-nfl-mock-draft/', publishedAt: '2026-09-16T12:00:00Z', projectedPick: 28, playerName: 'Kade Pieper', pos: 'IOL', school: 'Iowa' }
   ];
 
-  // 3a. In-Season (49ers alive on Nov 12, 2026 -> 30-day freshness window)
+  // 3a. Initial / In-Season before Super Bowl (Nov 12, 2026 -> trailing 30-day window, even if eliminated!)
   const inSeasonDb = resolveFirstPickMockDatabase(syntheticMocks, {
     now: '2026-11-12T18:00:00Z',
-    appData: { meta: { seasonYear: 2026, teamStatus: { mathematicallyEliminated: false } }, scheduleMatchup: { schedule: [] } }
+    appData: {
+      meta: { seasonYear: 2026, teamStatus: { mathematicallyEliminated: true } },
+      scheduleMatchup: { schedule: [] }
+    }
   });
-  assert.equal(inSeasonDb.isEliminated, false);
+  assert.equal(inSeasonDb.isPostSuperBowl, false);
   assert.equal(inSeasonDb.freshnessDays, 30);
+  assert.equal(inSeasonDb.shortWindowBadge, '30D Window');
   assert.equal(inSeasonDb.totalFreshSites, 5, '5 sites within 30d kept; 1 stale Sept mock (>30d) excluded');
   assert.equal(inSeasonDb.staleExcludedCount, 1);
   assert.equal(inSeasonDb.players[0].playerName, 'Trevor Goosby');
@@ -2322,41 +2312,47 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
   assert.equal(inSeasonDb.players[1].playerName, 'Nick Marsh');
   assert.equal(inSeasonDb.players[1].siteCount, 2);
 
-  // 3b. Post-Elimination (49ers eliminated -> tightens immediately to 7-day freshness window!)
-  const postElimDb = resolveFirstPickMockDatabase(syntheticMocks, {
-    now: '2026-11-12T18:00:00Z',
-    appData: {
-      meta: {
-        seasonYear: 2026,
-        teamStatus: { mathematicallyEliminated: true, eliminatedAt: '2026-11-11T23:59:00Z' }
-      },
-      scheduleMatchup: { schedule: [] }
-    }
-  });
-  assert.equal(postElimDb.isEliminated, true);
-  assert.equal(postElimDb.freshnessDays, 7);
-  assert.equal(postElimDb.totalFreshSites, 3, 'Under 7-day post-elimination window, Oct 22 & Oct 25 mocks (18d–21d old) must be excluded');
-  assert.equal(postElimDb.players[0].playerName, 'Trevor Goosby');
-  assert.equal(postElimDb.players[0].siteCount, 2);
-  assert.equal(postElimDb.players[1].playerName, 'Nick Marsh');
-  assert.equal(postElimDb.players[1].siteCount, 1);
+  // 3b. January Playoffs before Super Bowl still uses trailing 30-day window
+  const janPreSbWin = evaluateMockDraftFreshnessWindow(
+    { meta: { seasonYear: 2026 } },
+    { now: '2027-01-25T18:00:00Z', draftYear: 2027 }
+  );
+  assert.equal(janPreSbWin.isPostSuperBowl, false);
+  assert.equal(janPreSbWin.freshnessDays, 30);
 
-  // 3c. Postseason playoff loss in schedule also triggers 7-day post-elimination window automatically
-  const elimFromPlayoffLoss = is49ersEliminatedForDraftMocks({
-    meta: { seasonYear: 2026, teamStatus: { mathematicallyEliminated: false } },
-    scheduleMatchup: {
-      schedule: [
-        { seasonType: 'POST', postseasonRound: 'DIV', week: 20, completed: true, result: 'L', sfScore: 20, oppScore: 24, opponent: { abbr: 'DET', name: 'Detroit Lions' } }
-      ]
-    }
-  }, { now: '2027-01-25T18:00:00Z' });
-  assert.equal(elimFromPlayoffLoss.isEliminated, true);
-  assert.equal(elimFromPlayoffLoss.reason, 'postseason_loss');
+  // 3c. Post-Super Bowl (Feb 20, 2027 -> tightens automatically to trailing 7-day freshness window!)
+  const postSbMocks = [
+    { siteId: 'cbs', siteName: 'CBS Sports', url: 'https://www.cbssports.com/nfl/draft/mock-draft/', publishedAt: '2027-02-18T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
+    { siteId: 'fox', siteName: 'FOX Sports', url: 'https://www.foxsports.com/nfl/draft', publishedAt: '2027-02-16T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
+    { siteId: 'si', siteName: 'Sports Illustrated', url: 'https://www.si.com/nfl/2027-nfl-mock-draft-gilberto-manzano-pick-predictions-rounds-1-2', publishedAt: '2027-02-02T12:00:00Z', projectedPick: 31, playerName: 'Trevor Goosby', pos: 'OT', school: 'Texas' },
+    { siteId: 'tk', siteName: 'Tankathon', url: 'https://www.tankathon.com/nfl/mock_draft', publishedAt: '2027-02-19T12:00:00Z', projectedPick: 31, playerName: 'Nick Marsh', pos: 'WR', school: 'Indiana' },
+    { siteId: 'dt', siteName: 'DraftTek', url: 'https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp', publishedAt: '2027-02-05T12:00:00Z', projectedPick: 32, playerName: 'Nick Marsh', pos: 'WR', school: 'Indiana' }
+  ];
+  const postSbDb = resolveFirstPickMockDatabase(postSbMocks, {
+    now: '2027-02-20T18:00:00Z',
+    draftYear: 2027,
+    appData: { meta: { seasonYear: 2026 } }
+  });
+  assert.equal(postSbDb.isPostSuperBowl, true);
+  assert.equal(postSbDb.freshnessDays, 7);
+  assert.equal(postSbDb.shortWindowBadge, '7D Window');
+  assert.equal(postSbDb.totalFreshSites, 3, 'Under post-Super Bowl 7-day window, early-Feb mocks (>7d old) must be excluded');
+  assert.equal(postSbDb.players[0].playerName, 'Trevor Goosby');
+  assert.equal(postSbDb.players[0].siteCount, 2);
+  assert.equal(postSbDb.players[1].playerName, 'Nick Marsh');
+  assert.equal(postSbDb.players[1].siteCount, 1);
+
+  // 3d. Next cycle June offseason (2028 Draft) resets cleanly to trailing 30-day window until next Super Bowl
+  const nextCycleJuneWin = evaluateMockDraftFreshnessWindow(
+    { meta: { seasonYear: 2027 } },
+    { now: '2027-06-20T18:00:00Z', draftYear: 2028 }
+  );
+  assert.equal(nextCycleJuneWin.isPostSuperBowl, false);
+  assert.equal(nextCycleJuneWin.freshnessDays, 30);
 
   // 4. Rendered Draft view card ordering: Consensus Mock Draft -> Consensus Big Board -> Combine Leaderboard (blank)
   const draftHtml = renderSeasonMatchupViewHtml({
     seasonSub: 'draft_prep',
-    activePhases: ['YEAR_ROUND', 'IN_SEASON'],
     appData: {
       meta: { ...metaJson, now: '2026-11-12T18:00:00Z' },
       roster: { players: [] },

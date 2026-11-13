@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon" sizes="512x512" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png?v=6" />
-  <link rel="stylesheet" href="./src/styles.css?v=38" />
+  <link rel="stylesheet" href="./src/styles.css?v=39" />
 </head>
 <body>
   <!-- Full-Bleed Sticky Glass Header -->
@@ -42,15 +42,6 @@
       </div>
 
       <div class="header-actions">
-        <button type="button" id="openArchiveBtn" class="icon-btn" aria-label="Open Off-Cycle Archive">
-          <svg class="ui-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="5" rx="1.5" fill="currentColor" fill-opacity="0.18"/>
-            <rect x="3" y="4" width="18" height="5" rx="1.5"/>
-            <path d="M4.5 9V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V9"/>
-            <line x1="10" y1="13.5" x2="14" y2="13.5"/>
-          </svg>
-          <span>Archive</span>
-        </button>
         <button type="button" id="openSettingsBtn" class="icon-btn" aria-label="Settings & Source Filters" title="Settings & Reporter Filters">
           <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="4" y1="6" x2="10" y2="6"/>
@@ -73,9 +64,6 @@
   </header>
 
   <div class="app-shell">
-    <!-- Dynamic Season Phase Banner (Shown only in Game & Season -> Trade Window) -->
-    <section id="phaseBanner" class="phase-banner" hidden aria-label="Active NFL Season Phase"></section>
-
     <!-- Primary Dynamic View Container -->
     <main id="mainView" class="main-view" role="main" aria-live="polite">
       <div class="card">
@@ -190,7 +178,7 @@
     </div>
   </nav>
 
-  <!-- Universal Slide-Up Bottom Sheet (Player Dossier / Settings / Archive Vault / Podcast Transcript) -->
+  <!-- Universal Slide-Up Bottom Sheet (Player Dossier / Settings / Podcast Transcript) -->
   <div id="bottomSheetBackdrop" class="sheet-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
     <div class="bottom-sheet" id="bottomSheetContainer">
       <div class="sheet-drag-handle" aria-hidden="true"></div>

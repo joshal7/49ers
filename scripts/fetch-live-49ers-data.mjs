@@ -82,7 +82,6 @@ import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiF
 import {
   DEFAULT_NFL_CALENDAR_2026,
   buildNflCalendarForSeasonYear,
-  evaluateCombineLeaderboardWindow,
   normalizeScheduleGameItem
 } from '../src/engine/seasonStateMachine.js';
 import {
@@ -4838,63 +4837,55 @@ async function main() {
     seasonYear
   );
 
-  const combineWindowCheck = evaluateCombineLeaderboardWindow({
-    now: Date.now(),
-    seasonYear,
-    draftYear: seasonYear + 1,
-    schedule: scheduleItems
-  });
+  const targetCombineYear = seasonYear + 1;
+  const recentCombineLeaderboard = combineRows
+    .filter(r => Number(r.season) === targetCombineYear && r.forty)
+    .slice(0, 60)
+    .map(r => {
+      const sp = buildPlayerSpiderProfile({
+        name: r.player_name,
+        pfrId: r.pfr_id,
+        position: r.pos,
+        heightIn: null,
+        weightLb: r.wt ? Number(r.wt) : null
+      });
+      const athleteMeta = lookupAnyPlayerMeta(r.player_name);
+      const sfRosterMatch = rosterPlayers.find(rp => normName(rp.name) === normName(r.player_name));
+      const profileUrl =
+        sfRosterMatch?.pfrUrl ||
+        buildPfrPlayerUrl(r.pfr_id) ||
+        athleteMeta?.espnUrl ||
+        athleteMeta?.pfrUrl ||
+        `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(r.player_name)}`;
+      return {
+        name: r.player_name,
+        playerId: sfRosterMatch?.id || null,
+        profileUrl,
+        headshotUrl: sfRosterMatch?.headshotUrl || athleteMeta?.headshotUrl || '',
+        pos: r.pos,
+        school: r.school,
+        season: Number(r.season),
+        ht: r.ht,
+        wt: r.wt ? Number(r.wt) : null,
+        forty: r.forty ? Number(r.forty) : null,
+        vertical: r.vertical ? Number(r.vertical) : null,
+        broad: r.broad_jump ? Number(r.broad_jump) : null,
+        threeCone: r.cone ? Number(r.cone) : null,
+        shuttle: r.shuttle ? Number(r.shuttle) : null,
+        bench: r.bench ? Number(r.bench) : null,
+        ras: sp.compositeRas,
+        spiderProfile: sp
+      };
+    })
+    .sort((a, b) => b.ras - a.ras);
 
-  const recentCombineLeaderboard = combineWindowCheck.isBlankWindow
-    ? []
-    : combineRows
-        .filter(r => Number(r.season) === combineWindowCheck.targetCombineYear && r.forty)
-        .slice(0, 60)
-        .map(r => {
-          const sp = buildPlayerSpiderProfile({
-            name: r.player_name,
-            pfrId: r.pfr_id,
-            position: r.pos,
-            heightIn: null,
-            weightLb: r.wt ? Number(r.wt) : null
-          });
-          const athleteMeta = lookupAnyPlayerMeta(r.player_name);
-          const sfRosterMatch = rosterPlayers.find(rp => normName(rp.name) === normName(r.player_name));
-          const profileUrl =
-            sfRosterMatch?.pfrUrl ||
-            buildPfrPlayerUrl(r.pfr_id) ||
-            athleteMeta?.espnUrl ||
-            athleteMeta?.pfrUrl ||
-            `https://www.pro-football-reference.com/search/search.fcgi?search=${encodeURIComponent(r.player_name)}`;
-          return {
-            name: r.player_name,
-            playerId: sfRosterMatch?.id || null,
-            profileUrl,
-            headshotUrl: sfRosterMatch?.headshotUrl || athleteMeta?.headshotUrl || '',
-            pos: r.pos,
-            school: r.school,
-            season: Number(r.season),
-            ht: r.ht,
-            wt: r.wt ? Number(r.wt) : null,
-            forty: r.forty ? Number(r.forty) : null,
-            vertical: r.vertical ? Number(r.vertical) : null,
-            broad: r.broad_jump ? Number(r.broad_jump) : null,
-            threeCone: r.cone ? Number(r.cone) : null,
-            shuttle: r.shuttle ? Number(r.shuttle) : null,
-            bench: r.bench ? Number(r.bench) : null,
-            ras: sp.compositeRas,
-            spiderProfile: sp
-          };
-        })
-        .sort((a, b) => b.ras - a.ras);
-
-  if (!combineWindowCheck.isBlankWindow && recentCombineLeaderboard.length === 0) {
+  if (recentCombineLeaderboard.length === 0) {
     try {
       const prevSeasonal = JSON.parse(fs.readFileSync(path.join(dataDir, 'seasonal.json'), 'utf8'));
       if (Array.isArray(prevSeasonal?.draftPrep2027?.combineLeaderboard)) {
         recentCombineLeaderboard.push(
           ...prevSeasonal.draftPrep2027.combineLeaderboard.filter(
-            r => Number(r?.season) === combineWindowCheck.targetCombineYear
+            r => Number(r?.season) === targetCombineYear
           )
         );
       }

@@ -61,7 +61,7 @@ import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
-  archivedBlocks,
+  optionalBlocks = [],
   appData,
   simCapResult,
   mcSimResult,
@@ -78,10 +78,8 @@ export function renderHomeDashboardHtml({
         <span>
           ${
             isCustomizingLayout
-              ? '<strong>Layout Mode Active:</strong> Drag cards or tap arrows to reorder modules.'
-              : `Showing <strong>${orderedBlocks.length} active modules</strong>${
-                  archivedBlocks.length ? ` <span class="text-muted-inline" style="white-space:nowrap">(${archivedBlocks.length} in Archive)</span>` : ''
-                }`
+              ? '<strong>Layout Mode Active:</strong> Drag cards, tap arrows, or add/hide modules.'
+              : `Showing <strong>${orderedBlocks.length} active modules</strong>`
           }
         </span>
       </div>
@@ -116,7 +114,28 @@ export function renderHomeDashboardHtml({
     )
     .join('');
 
-  return `${customizeBar}<div class="dashboard-grid">${cardsHtml}</div>`;
+  const optionalTrayHtml =
+    isCustomizingLayout && Array.isArray(optionalBlocks) && optionalBlocks.length > 0
+      ? `
+        <div class="subcard-panel" data-optional-home-modules style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+          <div class="sub-label" style="margin:0">Add Modules to Home (${optionalBlocks.length})</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            ${optionalBlocks
+              .map(
+                b => `
+                  <button type="button" class="pill-btn" data-action="show-home-block" data-block-id="${esc(b.id)}" aria-label="Add ${esc(b.title)} to Home">
+                    ${iconSvg('plus', 12)}
+                    <span>${esc(b.shortTitle)}</span>
+                  </button>
+                `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  return `${customizeBar}<div class="dashboard-grid">${cardsHtml}</div>${optionalTrayHtml}`;
 }
 
 function renderSingleDashboardCard({
@@ -131,7 +150,6 @@ function renderSingleDashboardCard({
   userPrefs = null,
   isCustomizingLayout
 }) {
-  const isTemporal = block.phase !== 'YEAR_ROUND' && block.phase !== 'IN_SEASON';
   const reorderControlsHtml = isCustomizingLayout
     ? `
       <div class="reorder-controls" aria-label="Reorder ${esc(block.title)}">
@@ -141,9 +159,12 @@ function renderSingleDashboardCard({
         <button type="button" class="reorder-btn" data-action="move-block-down" data-block-id="${esc(block.id)}" ${
         idx === total - 1 ? 'disabled' : ''
       } aria-label="Move ${esc(block.shortTitle)} down">${iconSvg('arrowDown', 14)}</button>
+        <button type="button" class="reorder-btn" data-action="hide-home-block" data-block-id="${esc(block.id)}" ${
+        total <= 1 ? 'disabled' : ''
+      } title="Hide ${esc(block.shortTitle)} from Home" aria-label="Hide ${esc(block.shortTitle)} from Home">${iconSvg('close', 13)}</button>
       </div>
     `
-    : `<span class="badge ${isTemporal ? 'badge-gold' : 'badge-neutral'}">${esc(block.badgeLabel)}</span>`;
+    : `<span class="badge badge-neutral">${esc(block.badgeLabel)}</span>`;
 
   let bodyHtml = '';
   let deepDiveAttr = '';
@@ -832,12 +853,12 @@ function renderSingleDashboardCard({
   const iconName = blockIconName(block.id);
 
   return `
-    <article class="card ${isTemporal ? 'temporal-highlight' : ''}"
+    <article class="card"
              data-dashboard-block="${esc(block.id)}"
              ${isCustomizingLayout ? 'draggable="true"' : ''}>
       <div class="card-header">
         <div class="card-header-left" style="cursor:pointer" ${deepDiveAttr}>
-          <div class="card-icon-badge ${isTemporal ? 'temporal' : ''}" aria-hidden="true">
+          <div class="card-icon-badge" aria-hidden="true">
             ${iconSvg(iconName, 18)}
           </div>
           <div class="card-title-group">

@@ -3616,32 +3616,6 @@ button.featured-player-chip:active {
   white-space: nowrap;
 }
 
-.pill-btn.seg-btn.season-tab-btn.off-cycle:not(.active) {
-  color: var(--text-muted);
-}
-
-.pill-btn.seg-btn.season-tab-btn.off-cycle:not(.active):hover {
-  color: var(--text-secondary);
-}
-
-.season-live-dot {
-  width: 5.5px;
-  height: 5.5px;
-  border-radius: 50%;
-  background: var(--emerald);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.24);
-  flex-shrink: 0;
-}
-
-.season-tab-btn.active .season-live-dot {
-  background: #FFFFFF;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-}
-
-.main-view > .phase-banner {
-  margin: 0;
-}
-
 /* Team Stats & NFL Rankings Single-Screen Portrait Optimization */
 .team-stats-card .team-stats-header {
   margin-bottom: 7px;

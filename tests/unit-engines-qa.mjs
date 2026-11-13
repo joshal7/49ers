@@ -12,7 +12,10 @@ import { fileURLToPath } from 'node:url';
 
 import {
   ALL_DASHBOARD_BLOCKS,
+  DEFAULT_HOME_BLOCK_IDS,
   evaluateSeasonState,
+  evaluateTradeDeadlineStatus,
+  resolveHomeDashboardState,
   resolveOrderedDashboardBlocks,
   partitionCompletedTradesByWindow,
   normalizeScheduleGameItem,
@@ -215,62 +218,79 @@ function test(name, fn) {
   }
 }
 
-console.log('\n=== [1/6] Seasonal & Temporal State Machine QA ===');
+console.log('\n=== [1/6] Year-Round Dashboard & League-Cycle Engine QA ===');
 
-test('June offseason activates ONLY YEAR_ROUND and archives in-season/temporal modules', () => {
-  const s = evaluateSeasonState({ now: '2026-06-15T12:00:00-07:00' });
-  assert.deepEqual(s.activePhases, ['YEAR_ROUND']);
-  assert.ok(s.archivedBlocks.some(b => b.id === 'trade_deadline'));
-  assert.ok(s.archivedBlocks.some(b => b.id === 'draft_live_udfa'));
+test('All calendar dates emit tighter 6-card Home default with 0 archived blocks and zero calendar content gates', () => {
+  const expectedTightHome = [
+    'news_briefs',
+    'upcoming_matchup',
+    'team_health',
+    'team_stats',
+    'salary_cap',
+    'autopodcast_ai'
+  ];
+  assert.deepEqual(DEFAULT_HOME_BLOCK_IDS, expectedTightHome);
+
+  for (const ts of [
+    '2026-06-15T12:00:00-07:00',
+    '2026-09-18T12:00:00-07:00',
+    '2026-11-06T21:30:00-08:00',
+    '2026-11-10T13:01:00-08:00',
+    '2026-12-15T12:00:00-08:00',
+    '2027-01-25T10:00:00-08:00',
+    '2027-04-23T12:00:00-07:00'
+  ]) {
+    const s = evaluateSeasonState({
+      now: ts,
+      teamStatus: { currentWeek: 10, mathematicallyEliminated: true }
+    });
+    assert.deepEqual(s.activePhases, ['YEAR_ROUND']);
+    assert.deepEqual(s.activeBlocks.map(b => b.id), expectedTightHome);
+    assert.equal(s.optionalBlocks.length, 6);
+    assert.deepEqual(s.archivedBlocks, [], `Expected 0 archived blocks at ${ts}`);
+  }
 });
 
-test('Sept Week 2 activates YEAR_ROUND + IN_SEASON without TRADE_WINDOW', () => {
-  const s = evaluateSeasonState({ now: '2026-09-18T12:00:00-07:00', teamStatus: { currentWeek: 2 } });
-  assert.ok(s.activePhases.includes('IN_SEASON'));
-  assert.ok(!s.activePhases.includes('TRADE_WINDOW'));
+test('evaluateTradeDeadlineStatus provides factual pre-deadline countdown vs post-deadline horizon without gating views', () => {
+  const preDeadline = evaluateTradeDeadlineStatus({ now: '2026-11-06T21:30:00-08:00' });
+  assert.equal(preDeadline.isPreDeadline, true);
+  assert.equal(preDeadline.isPostDeadlinePause, false);
+  assert.ok(preDeadline.countdownText?.includes('Deadline:'));
+
+  const postDeadline = evaluateTradeDeadlineStatus({ now: '2026-11-10T13:01:00-08:00' });
+  assert.equal(postDeadline.isPreDeadline, false);
+  assert.equal(postDeadline.isPostDeadlinePause, true);
+  assert.equal(postDeadline.countdownText, null);
+
+  const springOffseason = evaluateTradeDeadlineStatus({ now: '2027-03-15T12:00:00-07:00' });
+  assert.equal(springOffseason.isPostDeadlinePause, false);
 });
 
-test('Nov 6, 2026 (Active Trade Window) activates YEAR_ROUND + IN_SEASON + TRADE_WINDOW with countdown', () => {
-  const s = evaluateSeasonState({ now: '2026-11-06T21:30:00-08:00', teamStatus: { currentWeek: 9 } });
-  assert.ok(s.activePhases.includes('IN_SEASON'));
-  assert.ok(s.activePhases.includes('TRADE_WINDOW'));
-  assert.ok(s.headlinePhase.countdownText?.includes('Trade Deadline'));
-  assert.ok(s.activeBlocks.some(b => b.id === 'trade_deadline'));
-});
+test('resolveHomeDashboardState supports pinning optional modules, hiding default modules, and enforcing >=1 visible floor', () => {
+  const base = resolveHomeDashboardState();
+  assert.equal(base.orderedBlocks.length, 6);
+  assert.equal(base.optionalBlocks.length, 6);
 
-test('1 minute after Nov 10 Trade Deadline immediately retires TRADE_WINDOW to Vault', () => {
-  const s = evaluateSeasonState({ now: '2026-11-10T13:01:00-08:00', teamStatus: { currentWeek: 10 } });
-  assert.ok(!s.activePhases.includes('TRADE_WINDOW'));
-  assert.ok(s.archivedBlocks.some(b => b.id === 'trade_deadline'));
-});
-
-test('Final 5 weeks (Dec 15, Week 15) activates PLAYOFF_PUSH unless mathematically eliminated', () => {
-  const alive = evaluateSeasonState({
-    now: '2026-12-15T12:00:00-08:00',
-    teamStatus: { currentWeek: 15, mathematicallyEliminated: false }
+  const customized = resolveHomeDashboardState({
+    savedOrderIds: ['playoff_picture', 'news_briefs', 'upcoming_matchup', 'salary_cap', 'autopodcast_ai'],
+    hiddenBlockIds: ['team_health', 'team_stats'],
+    pinnedBlockIds: ['playoff_picture', 'draft_prep']
   });
-  assert.ok(alive.activePhases.includes('PLAYOFF_PUSH'));
+  assert.deepEqual(customized.orderedBlocks.map(b => b.id), [
+    'playoff_picture',
+    'news_briefs',
+    'upcoming_matchup',
+    'draft_prep',
+    'salary_cap',
+    'autopodcast_ai'
+  ]);
 
-  const elim = evaluateSeasonState({
-    now: '2026-12-15T12:00:00-08:00',
-    teamStatus: { currentWeek: 15, mathematicallyEliminated: true }
+  // Hiding every block falls back safely to keeping at least 1 block visible
+  const hideAll = resolveHomeDashboardState({
+    hiddenBlockIds: ALL_DASHBOARD_BLOCKS.map(b => b.id)
   });
-  assert.ok(!elim.activePhases.includes('PLAYOFF_PUSH'));
-});
-
-test('Postseason elimination immediately transitions from IN_SEASON to DRAFT_PREP', () => {
-  const s = evaluateSeasonState({
-    now: '2027-01-25T10:00:00-08:00',
-    teamStatus: { eliminatedAt: '2027-01-24T19:00:00-08:00' }
-  });
-  assert.ok(!s.activePhases.includes('IN_SEASON'));
-  assert.ok(s.activePhases.includes('DRAFT_PREP'));
-});
-
-test('Draft Day 1 transitions from DRAFT_PREP to DRAFT_LIVE_UDFA', () => {
-  const s = evaluateSeasonState({ now: '2027-04-23T12:00:00-07:00' });
-  assert.ok(!s.activePhases.includes('DRAFT_PREP'));
-  assert.ok(s.activePhases.includes('DRAFT_LIVE_UDFA'));
+  assert.equal(hideAll.orderedBlocks.length, 1);
+  assert.equal(hideAll.orderedBlocks[0].id, 'news_briefs');
 });
 
 test('Default ALL_DASHBOARD_BLOCKS priority order matches exact user specification and excludes "War Room"', () => {
@@ -6239,13 +6259,14 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 4 Hydrogen (XHIGH) To
   });
   const homeWithBrkHtml = renderHomeDashboardHtml({
     orderedBlocks: resolveOrderedDashboardBlocks(seasonStateNow.activeBlocks, []),
-    archivedBlocks: seasonStateNow.archivedBlocks,
+    optionalBlocks: seasonStateNow.optionalBlocks,
     appData: mockDataWithUncovered,
     simCapResult: simulateCapScenario(fullAppData.cap, {}),
     mcSimResult: fullAppData.seasonal.playoffPicture.baselineSimulation,
     filteredRawItems: mockDataWithUncovered.news.rawStream,
     isCustomizingLayout: false
   });
+  assert.ok(!homeWithBrkHtml.includes('in Archive'), 'Home reorder bar must never render Archive count');
   const homeBrkPos = homeWithBrkHtml.indexOf('data-breaking-above-brief');
   const homeBriefPos = homeWithBrkHtml.indexOf('data-daily-news-brief');
   assert.ok(homeBrkPos > -1 && homeBriefPos > -1 && homeBrkPos < homeBriefPos, 'Uncovered breaking news must render ABOVE Daily Brief on Home screen');

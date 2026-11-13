@@ -2,7 +2,11 @@
  * Main Application Controller for 49ers Faithful (https://49ers.joshal.com)
  */
 
-import { evaluateSeasonState, resolveOrderedDashboardBlocks } from './engine/seasonStateMachine.js';
+import {
+  ALL_DASHBOARD_BLOCKS,
+  evaluateSeasonState,
+  resolveHomeDashboardState
+} from './engine/seasonStateMachine.js?v=60';
 import { simulateCapScenario } from './engine/capSimulator.js';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
@@ -21,7 +25,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=55';
+} from './services/dataService.js?v=60';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -70,16 +74,16 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=50';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=60';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=55';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=56';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=56';
-import { renderSettingsSheetHtml, renderArchiveVaultSheetHtml } from './views/settingsArchiveView.js?v=48';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=60';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=60';
+import { renderSettingsSheetHtml } from './views/settingsArchiveView.js?v=60';
 
 const state = {
   appData: null,
@@ -136,8 +140,6 @@ const state = {
   podFormat: 'two_host',
   podTopicDraft: '',
   analysisPromptDraft: '',
-  podLibraryFilter: 'active',
-  analysisLibraryFilter: 'active',
   geminiKeyNotice: '',
   showGeminiKeyGuide: false,
   jobStatus: null,
@@ -149,7 +151,7 @@ const state = {
   shareToastTargetId: null,
 
   // Bottom Sheet & Rank Modal state
-  sheetMode: null, // 'player' | 'settings' | 'vault' | null
+  sheetMode: null, // 'player' | 'settings' | null
   sheetPlayerId: null,
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
@@ -360,16 +362,6 @@ function getAllEpisodes() {
   });
 }
 
-function getActiveEpisodes() {
-  const archivedSet = new Set(state.prefs.archivedEpisodeIds || []);
-  return getAllEpisodes().filter(ep => !archivedSet.has(ep.id));
-}
-
-function getArchivedEpisodes() {
-  const archivedSet = new Set(state.prefs.archivedEpisodeIds || []);
-  return getAllEpisodes().filter(ep => archivedSet.has(ep.id));
-}
-
 function getAllAnalyses() {
   const base = state.appData?.podcastIndex?.sharedAnalyses || [];
   const workerItems = state.workerSharedFeed?.analyses || [];
@@ -384,10 +376,9 @@ function getAllAnalyses() {
   });
 }
 
-function getActiveAnalyses() {
-  const archivedSet = new Set(state.prefs.archivedAnalysisIds || []);
+function getSavedAnalyses() {
   const activeList = getAllAnalyses().filter(
-    item => !archivedSet.has(item.id) && !isCompletedGameAvailabilityCluster(item, state.appData)
+    item => !isCompletedGameAvailabilityCluster(item, state.appData)
   );
   if (activeList.length > 1) {
     const normal = [];
@@ -402,11 +393,6 @@ function getActiveAnalyses() {
     return [...normal, ...demoted];
   }
   return activeList;
-}
-
-function getArchivedAnalyses() {
-  const archivedSet = new Set(state.prefs.archivedAnalysisIds || []);
-  return getAllAnalyses().filter(item => archivedSet.has(item.id));
 }
 
 function preserveFocusAroundRender(renderFn) {
@@ -441,7 +427,7 @@ function preserveFocusAroundRender(renderFn) {
   }
 }
 
-function renderHeaderAndPhaseBanner() {
+function renderHeader() {
   if (!state.appData) return;
   const m = state.appData.meta || {};
   const recPill = document.getElementById('headerRecordPill');
@@ -449,38 +435,6 @@ function renderHeaderAndPhaseBanner() {
   if (recPill) recPill.textContent = m.teamRecord || '—';
   if (subStatus) {
     subStatus.textContent = `${m.standingSummary || 'NFC West'} • Synced ${formatRelativeAge(m.updatedAt)}`;
-  }
-
-  const bannerEl = document.getElementById('phaseBanner');
-  if (bannerEl && state.seasonState) {
-    const isTradeActive = Boolean(state.seasonState.activePhases?.includes('TRADE_WINDOW'));
-    const isInTradeSection = state.activeNavTab === 'season' && state.seasonSubTab === 'trade';
-    if (!isTradeActive || !isInTradeSection) {
-      bannerEl.hidden = true;
-      bannerEl.innerHTML = '';
-    } else {
-      const hp = state.seasonState.headlinePhase;
-      bannerEl.hidden = false;
-      bannerEl.innerHTML = `
-        <div class="phase-banner-left" style="cursor:pointer" data-action="jump-season-sub" data-season-sub="trade">
-          <div class="phase-icon-badge" aria-hidden="true">
-            ${iconSvg('trade', 16)}
-          </div>
-          <div class="phase-banner-main">
-            <div class="phase-eyebrow">${esc(hp.label)}</div>
-            <div class="phase-detail">${esc(hp.detail)}</div>
-          </div>
-        </div>
-        ${
-          hp.countdownText
-            ? `<button type="button" class="phase-countdown mono" data-action="jump-season-sub" data-season-sub="trade">
-                 ${iconSvg('clock', 12)}
-                 <span>${esc(hp.countdownText)}</span>
-               </button>`
-            : ''
-        }
-      `;
-    }
   }
 }
 
@@ -495,11 +449,6 @@ function renderMain() {
   if (!state.appData) return;
   const mainEl = document.getElementById('mainView');
   if (!mainEl) return;
-
-  const bannerEl = document.getElementById('phaseBanner');
-  if (bannerEl && mainEl.contains(bannerEl)) {
-    mainEl.parentNode?.insertBefore(bannerEl, mainEl);
-  }
 
   closeJargonPopover();
   registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
@@ -531,13 +480,14 @@ function renderMain() {
         { baseYear: primaryCapYear }
       );
       const mcSimResult = getMonteCarloResult();
-      const orderedBlocks = resolveOrderedDashboardBlocks(
-        state.seasonState.activeBlocks,
-        state.prefs.dashboardOrder
-      );
+      const { orderedBlocks, optionalBlocks } = resolveHomeDashboardState({
+        savedOrderIds: state.prefs.dashboardOrder,
+        hiddenBlockIds: state.prefs.hiddenHomeBlockIds,
+        pinnedBlockIds: state.prefs.pinnedHomeBlockIds
+      });
       mainEl.innerHTML = renderHomeDashboardHtml({
         orderedBlocks,
-        archivedBlocks: state.seasonState.archivedBlocks,
+        optionalBlocks,
         appData: state.appData,
         simCapResult: homeSimCapResult,
         mcSimResult,
@@ -584,7 +534,6 @@ function renderMain() {
           : null;
       mainEl.innerHTML = renderSeasonMatchupViewHtml({
         seasonSub: state.seasonSubTab,
-        activePhases: state.seasonState.activePhases,
         appData: state.appData,
         mcSimResult,
         forcedWinners: state.prefs.playoffForcedWinners,
@@ -625,12 +574,8 @@ function renderMain() {
         jobStatus: state.jobStatus,
         sharedAudioPrep: state.sharedAudioPrep,
         sharedAnalysisHighlightId: state.sharedAnalysisHighlightId,
-        allEpisodes: getActiveEpisodes(),
-        archivedEpisodes: getArchivedEpisodes(),
-        podLibraryFilter: state.podLibraryFilter,
-        allAnalyses: getActiveAnalyses(),
-        archivedAnalyses: getArchivedAnalyses(),
-        analysisLibraryFilter: state.analysisLibraryFilter,
+        allEpisodes: getAllEpisodes(),
+        allAnalyses: getSavedAnalyses(),
         audioState: state.audioState,
         expandedTranscriptIds: state.expandedTranscriptIds,
         shareToastTargetId: state.shareToastTargetId,
@@ -640,14 +585,7 @@ function renderMain() {
     }
   });
 
-  if (bannerEl && state.activeNavTab === 'season') {
-    const subnavEl = mainEl.querySelector('.subnav-card');
-    if (subnavEl) {
-      subnavEl.insertAdjacentElement('afterend', bannerEl);
-    }
-  }
-
-  renderHeaderAndPhaseBanner();
+  renderHeader();
   renderNavTabs();
 }
 
@@ -782,15 +720,6 @@ function renderSheet() {
         reportersData: state.appData?.reporters,
         reporterSearch: state.reporterSearch
       });
-    } else if (state.sheetMode === 'vault') {
-      if (eyebrow) eyebrow.textContent = 'Off-Cycle & Saved Items';
-      if (title) title.textContent = 'Archive';
-      body.innerHTML = renderArchiveVaultSheetHtml({
-        seasonState: state.seasonState,
-        appData: state.appData,
-        archivedEpisodes: getArchivedEpisodes(),
-        archivedAnalyses: getArchivedAnalyses()
-      });
     }
   });
 }
@@ -860,11 +789,16 @@ function renderMiniPlayer(audioSnapshot) {
   }
 }
 
+function getCurrentHomeOrderedIds() {
+  return resolveHomeDashboardState({
+    savedOrderIds: state.prefs.dashboardOrder,
+    hiddenBlockIds: state.prefs.hiddenHomeBlockIds,
+    pinnedBlockIds: state.prefs.pinnedHomeBlockIds
+  }).orderedBlocks.map(b => b.id);
+}
+
 function moveDashboardBlock(blockId, direction) {
-  const currentOrdered = resolveOrderedDashboardBlocks(
-    state.seasonState.activeBlocks,
-    state.prefs.dashboardOrder
-  ).map(b => b.id);
+  const currentOrdered = getCurrentHomeOrderedIds();
 
   const idx = currentOrdered.indexOf(blockId);
   if (idx === -1) return;
@@ -882,10 +816,7 @@ function moveDashboardBlock(blockId, direction) {
 
 function reorderBlockBeforeTarget(draggedId, targetId) {
   if (!draggedId || !targetId || draggedId === targetId) return;
-  const currentOrdered = resolveOrderedDashboardBlocks(
-    state.seasonState.activeBlocks,
-    state.prefs.dashboardOrder
-  ).map(b => b.id);
+  const currentOrdered = getCurrentHomeOrderedIds();
 
   const fromIdx = currentOrdered.indexOf(draggedId);
   const toIdx = currentOrdered.indexOf(targetId);
@@ -970,11 +901,6 @@ function bindEvents() {
 
   document.getElementById('openSettingsBtn')?.addEventListener('click', () => {
     state.sheetMode = 'settings';
-    renderSheet();
-  });
-
-  document.getElementById('openArchiveBtn')?.addEventListener('click', () => {
-    state.sheetMode = 'vault';
     renderSheet();
   });
 
@@ -1112,9 +1038,50 @@ function bindEvents() {
 
       case 'reset-dashboard-order':
         state.prefs.dashboardOrder = [];
+        state.prefs.hiddenHomeBlockIds = [];
+        state.prefs.pinnedHomeBlockIds = [];
         saveUserPrefs(state.prefs);
         renderMain();
         break;
+
+      case 'hide-home-block': {
+        const bid = btn.getAttribute('data-block-id') || '';
+        const currentOrdered = getCurrentHomeOrderedIds();
+        if (bid && currentOrdered.length > 1 && ALL_DASHBOARD_BLOCKS.some(b => b.id === bid)) {
+          const hidden = new Set(state.prefs.hiddenHomeBlockIds || []);
+          hidden.add(bid);
+          state.prefs.hiddenHomeBlockIds = Array.from(hidden);
+          state.prefs.pinnedHomeBlockIds = (state.prefs.pinnedHomeBlockIds || []).filter(
+            id => id !== bid
+          );
+          state.prefs.dashboardOrder = currentOrdered.filter(id => id !== bid);
+          saveUserPrefs(state.prefs);
+          renderMain();
+        }
+        break;
+      }
+
+      case 'show-home-block': {
+        const bid = btn.getAttribute('data-block-id') || '';
+        const blockSpec = ALL_DASHBOARD_BLOCKS.find(b => b.id === bid);
+        if (blockSpec) {
+          const currentOrdered = getCurrentHomeOrderedIds();
+          state.prefs.hiddenHomeBlockIds = (state.prefs.hiddenHomeBlockIds || []).filter(
+            id => id !== bid
+          );
+          if (!blockSpec.defaultOnHome) {
+            const pinned = new Set(state.prefs.pinnedHomeBlockIds || []);
+            pinned.add(bid);
+            state.prefs.pinnedHomeBlockIds = Array.from(pinned);
+          }
+          if (!currentOrdered.includes(bid)) {
+            state.prefs.dashboardOrder = [...currentOrdered, bid];
+          }
+          saveUserPrefs(state.prefs);
+          renderMain();
+        }
+        break;
+      }
 
       case 'move-block-up':
         moveDashboardBlock(btn.getAttribute('data-block-id'), -1);
@@ -1163,58 +1130,8 @@ function bindEvents() {
         break;
       }
 
-      case 'open-vault-module':
-        state.sheetMode = null;
-        renderSheet();
-        state.activeNavTab = 'season';
-        state.seasonSubTab = btn.getAttribute('data-season-sub') || 'draft_class';
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        renderMain();
-        break;
-
-      case 'open-dashboard-block': {
-        const bid = btn.getAttribute('data-block-id') || '';
-        state.sheetMode = null;
-        renderSheet();
-        const seasonMap = {
-          upcoming_matchup: 'matchup',
-          team_health: 'health',
-          schedule_overview: 'schedule',
-          team_stats: 'stats',
-          trade_deadline: 'trade',
-          playoff_picture: 'playoffs',
-          draft_prep: 'draft_prep',
-          draft_live_udfa: 'draft_class'
-        };
-        if (bid === 'news_briefs') {
-          state.activeNavTab = 'news';
-        } else if (bid === 'roster_depth') {
-          state.activeNavTab = 'roster';
-          state.rosterSubTab = 'roster';
-        } else if (bid === 'salary_cap') {
-          state.activeNavTab = 'roster';
-          state.rosterSubTab = 'cap';
-        } else if (bid === 'autopodcast_ai') {
-          state.activeNavTab = 'audio';
-        } else if (seasonMap[bid]) {
-          if (seasonMap[bid] === 'schedule') state.schedulePrevExpanded = false;
-          state.activeNavTab = 'season';
-          state.seasonSubTab = seasonMap[bid];
-        } else {
-          state.activeNavTab = 'home';
-        }
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        renderMain();
-        break;
-      }
-
       case 'open-settings':
         state.sheetMode = 'settings';
-        renderSheet();
-        break;
-
-      case 'open-archive':
-        state.sheetMode = 'vault';
         renderSheet();
         break;
 
@@ -1835,48 +1752,12 @@ function bindEvents() {
         break;
       }
 
-      case 'set-pod-library-filter': {
-        state.podLibraryFilter =
-          btn.getAttribute('data-filter') === 'archived' ? 'archived' : 'active';
-        renderMain();
-        break;
-      }
-
-      case 'archive-podcast': {
-        const epId = btn.getAttribute('data-episode-id');
-        if (epId) {
-          const set = new Set(state.prefs.archivedEpisodeIds || []);
-          set.add(epId);
-          state.prefs.archivedEpisodeIds = Array.from(set);
-          saveUserPrefs(state.prefs);
-          renderMain();
-          if (state.sheetMode === 'vault') renderSheet();
-        }
-        break;
-      }
-
-      case 'unarchive-podcast': {
-        const epId = btn.getAttribute('data-episode-id');
-        if (epId) {
-          state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
-            id => id !== epId
-          );
-          saveUserPrefs(state.prefs);
-          renderMain();
-          if (state.sheetMode === 'vault') renderSheet();
-        }
-        break;
-      }
-
       case 'delete-podcast': {
         const epId = btn.getAttribute('data-episode-id');
         if (epId) {
           const delSet = new Set(state.prefs.deletedEpisodeIds || []);
           delSet.add(epId);
           state.prefs.deletedEpisodeIds = Array.from(delSet);
-          state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
-            id => id !== epId
-          );
           state.prefs.localCustomEpisodes = (state.prefs.localCustomEpisodes || []).filter(
             ep => ep.id !== epId
           );
@@ -1891,40 +1772,6 @@ function bindEvents() {
           saveUserPrefs(state.prefs);
           await deleteEpisodeAudioBlob(epId);
           renderMain();
-          if (state.sheetMode === 'vault') renderSheet();
-        }
-        break;
-      }
-
-      case 'set-analysis-library-filter': {
-        state.analysisLibraryFilter =
-          btn.getAttribute('data-filter') === 'archived' ? 'archived' : 'active';
-        renderMain();
-        break;
-      }
-
-      case 'archive-analysis': {
-        const analysisId = btn.getAttribute('data-analysis-id');
-        if (analysisId) {
-          const set = new Set(state.prefs.archivedAnalysisIds || []);
-          set.add(analysisId);
-          state.prefs.archivedAnalysisIds = Array.from(set);
-          saveUserPrefs(state.prefs);
-          renderMain();
-          if (state.sheetMode === 'vault') renderSheet();
-        }
-        break;
-      }
-
-      case 'unarchive-analysis': {
-        const analysisId = btn.getAttribute('data-analysis-id');
-        if (analysisId) {
-          state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
-            id => id !== analysisId
-          );
-          saveUserPrefs(state.prefs);
-          renderMain();
-          if (state.sheetMode === 'vault') renderSheet();
         }
         break;
       }
@@ -1935,15 +1782,14 @@ function bindEvents() {
           const delSet = new Set(state.prefs.deletedAnalysisIds || []);
           delSet.add(analysisId);
           state.prefs.deletedAnalysisIds = Array.from(delSet);
-          state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
-            id => id !== analysisId
-          );
           state.prefs.localCustomAnalyses = (state.prefs.localCustomAnalyses || []).filter(
             a => a.id !== analysisId
           );
+          if (state.sharedAnalysisHighlightId === analysisId) {
+            state.sharedAnalysisHighlightId = null;
+          }
           saveUserPrefs(state.prefs);
           renderMain();
-          if (state.sheetMode === 'vault') renderSheet();
         }
         break;
       }
@@ -2038,15 +1884,11 @@ function bindEvents() {
           state.prefs.deletedEpisodeIds = (state.prefs.deletedEpisodeIds || []).filter(
             id => id !== episode.id
           );
-          state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
-            id => id !== episode.id
-          );
           state.prefs.localCustomEpisodes = [
             persistableEpisode,
             ...(state.prefs.localCustomEpisodes || []).filter(e => e.id !== episode.id)
           ].slice(0, 20);
           saveUserPrefs(state.prefs);
-          state.podLibraryFilter = 'active';
           // Collapse transcript by default on newly generated episodes
           state.expandedTranscriptIds.delete(episode.id);
           state.jobStatus = null;
@@ -2144,15 +1986,11 @@ function bindEvents() {
           state.prefs.deletedAnalysisIds = (state.prefs.deletedAnalysisIds || []).filter(
             id => id !== report.id
           );
-          state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
-            id => id !== report.id
-          );
           state.prefs.localCustomAnalyses = [
             report,
             ...(state.prefs.localCustomAnalyses || []).filter(a => a.id !== report.id)
           ].slice(0, 25);
           saveUserPrefs(state.prefs);
-          state.analysisLibraryFilter = 'active';
           state.jobStatus = null;
           state.analysisPromptDraft = '';
           renderMain();
@@ -2491,21 +2329,19 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
       hasNewUpstreamData = true;
     }
 
-    const prevPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
     state.seasonState = evaluateSeasonState({
       now: new Date(),
       calendar: state.appData.meta?.calendar,
       teamStatus: state.appData.meta?.teamStatus
     });
-    const nextPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
 
-    renderHeaderAndPhaseBanner();
+    renderHeader();
 
     const activeTag = document.activeElement?.tagName;
     const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
     const hasPlayingIframe = state.activeVideosSet.size > 0;
 
-    if ((hasNewUpstreamData || prevPhaseKey !== nextPhaseKey) && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
+    if (hasNewUpstreamData && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
       renderMain();
       if (state.sheetMode) renderSheet();
     }
@@ -2543,14 +2379,10 @@ async function handleIncomingSharedLink(locationLike = window.location) {
   if (sharedRoute.type === 'podcast') {
     state.activeNavTab = 'audio';
     state.studioSubTab = 'podcast';
-    state.podLibraryFilter = 'active';
     window.scrollTo({ top: 0, behavior: 'instant' });
 
     if (sharedRoute.id) {
       state.prefs.deletedEpisodeIds = (state.prefs.deletedEpisodeIds || []).filter(
-        id => id !== sharedRoute.id
-      );
-      state.prefs.archivedEpisodeIds = (state.prefs.archivedEpisodeIds || []).filter(
         id => id !== sharedRoute.id
       );
     }
@@ -2598,14 +2430,10 @@ async function handleIncomingSharedLink(locationLike = window.location) {
   if (sharedRoute.type === 'analysis') {
     state.activeNavTab = 'audio';
     state.studioSubTab = 'analysis';
-    state.analysisLibraryFilter = 'active';
     window.scrollTo({ top: 0, behavior: 'instant' });
 
     if (sharedRoute.id) {
       state.prefs.deletedAnalysisIds = (state.prefs.deletedAnalysisIds || []).filter(
-        id => id !== sharedRoute.id
-      );
-      state.prefs.archivedAnalysisIds = (state.prefs.archivedAnalysisIds || []).filter(
         id => id !== sharedRoute.id
       );
     }
@@ -2767,7 +2595,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       }
     };
 
-    renderHeaderAndPhaseBanner();
+    renderHeader();
     renderMain();
 
     if (!hasCompletedBootLifecycle) {
@@ -2929,19 +2757,15 @@ async function init() {
     }
   });
 
-  // Live countdown & relative timestamp ticker (every 60s while tab is visible)
+  // Live relative timestamp ticker (every 60s while tab is visible)
   setInterval(() => {
     if (document.visibilityState === 'hidden' || !state.appData) return;
-    const prevPhaseKey = JSON.stringify(state.seasonState?.activePhases || []);
     state.seasonState = evaluateSeasonState({
       now: new Date(),
       calendar: state.appData.meta?.calendar,
       teamStatus: state.appData.meta?.teamStatus
     });
-    renderHeaderAndPhaseBanner();
-    if (JSON.stringify(state.seasonState?.activePhases || []) !== prevPhaseKey && state.activeVideosSet.size === 0) {
-      renderMain();
-    }
+    renderHeader();
   }, 60_000);
 
   // Periodic background check for full upstream JSON bundles & podcasts every 5 minutes
@@ -2977,7 +2801,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=71', { updateViaCache: 'none' })
+        .register('./sw.js?v=72', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

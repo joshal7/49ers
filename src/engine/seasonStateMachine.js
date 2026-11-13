@@ -1,12 +1,11 @@
 /**
- * Seasonal & Temporal State Machine for 49ers Faithful
- * Governs which Year-Round, In-Season, and Temporal modules appear on the main dashboard
- * vs. move to the Off-Cycle / Archive Vault.
+ * Year-Round Dashboard & League-Cycle Engine for 49ers Faithful
+ * All views (Matchup, Health, Schedule, Stats, Trade, Playoffs, Draft, Draft Recap)
+ * are permanently live year-round without Archive exile or calendar-phase content gates.
  */
 
 import {
   buildMockDraftBigBoardUrl,
-  buildMockDraftProspectUrl,
   normalizePlayerKey,
   sanitizeExternalUrl,
   slugifyPlayerName
@@ -18,6 +17,7 @@ export const ALL_DASHBOARD_BLOCKS = [
     title: 'News',
     shortTitle: 'News',
     phase: 'YEAR_ROUND',
+    defaultOnHome: true,
     navTab: 'news',
     defaultPriority: 10,
     badgeLabel: 'Live Wire'
@@ -26,25 +26,28 @@ export const ALL_DASHBOARD_BLOCKS = [
     id: 'upcoming_matchup',
     title: 'Upcoming Matchup',
     shortTitle: 'Matchup',
-    phase: 'IN_SEASON',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: true,
     navTab: 'season',
     defaultPriority: 20,
-    badgeLabel: 'In-Season'
+    badgeLabel: 'Matchup'
   },
   {
     id: 'team_health',
     title: 'Team Health',
     shortTitle: 'Team Health',
-    phase: 'IN_SEASON',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: true,
     navTab: 'season',
     defaultPriority: 30,
-    badgeLabel: 'In-Season'
+    badgeLabel: 'Availability'
   },
   {
     id: 'schedule_overview',
     title: 'Schedule',
     shortTitle: 'Schedule',
     phase: 'YEAR_ROUND',
+    defaultOnHome: false,
     navTab: 'season',
     defaultPriority: 40,
     badgeLabel: 'Season'
@@ -53,75 +56,88 @@ export const ALL_DASHBOARD_BLOCKS = [
     id: 'trade_deadline',
     title: 'Trade Window',
     shortTitle: 'Trade Window',
-    phase: 'TRADE_WINDOW',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: false,
     navTab: 'season',
     defaultPriority: 50,
-    badgeLabel: 'Oct 1 – Deadline'
+    badgeLabel: 'Trades'
   },
   {
     id: 'playoff_picture',
     title: 'Playoff Odds',
     shortTitle: 'Playoff Odds',
-    phase: 'PLAYOFF_PUSH',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: false,
     navTab: 'season',
     defaultPriority: 52,
-    badgeLabel: 'Final 5 Weeks'
+    badgeLabel: 'Monte Carlo'
   },
   {
     id: 'draft_prep',
     title: 'Draft',
     shortTitle: 'Draft',
-    phase: 'DRAFT_PREP',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: false,
     navTab: 'season',
     defaultPriority: 54,
-    badgeLabel: 'Pre-Draft'
+    badgeLabel: 'Prospects'
   },
   {
     id: 'draft_live_udfa',
     title: 'Draft Recap',
     shortTitle: 'Draft Recap',
-    phase: 'DRAFT_LIVE_UDFA',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: false,
     navTab: 'season',
     defaultPriority: 56,
-    badgeLabel: 'Draft & UDFAs'
+    badgeLabel: 'Rookie Class'
   },
   {
     id: 'team_stats',
     title: 'Team Stats',
     shortTitle: 'Team Stats',
-    phase: 'IN_SEASON',
+    phase: 'YEAR_ROUND',
+    defaultOnHome: true,
     navTab: 'season',
     defaultPriority: 60,
-    badgeLabel: 'In-Season'
+    badgeLabel: 'NFL Ranks'
   },
   {
     id: 'roster_depth',
     title: 'Roster',
     shortTitle: 'Roster',
     phase: 'YEAR_ROUND',
+    defaultOnHome: false,
     navTab: 'roster',
     defaultPriority: 70,
-    badgeLabel: 'Year-Round'
+    badgeLabel: '53-Man & PS'
   },
   {
     id: 'salary_cap',
     title: 'Salary Cap',
     shortTitle: 'Salary Cap',
     phase: 'YEAR_ROUND',
+    defaultOnHome: true,
     navTab: 'roster',
     defaultPriority: 80,
-    badgeLabel: 'Year-Round'
+    badgeLabel: '5-Yr OTC'
   },
   {
     id: 'autopodcast_ai',
     title: 'Auto Podcast',
     shortTitle: 'Auto Podcast',
     phase: 'YEAR_ROUND',
+    defaultOnHome: true,
     navTab: 'audio',
     defaultPriority: 90,
     badgeLabel: 'Audio & AI'
   }
 ];
+
+export const DEFAULT_HOME_BLOCK_IDS = ALL_DASHBOARD_BLOCKS
+  .filter(b => b.defaultOnHome)
+  .sort((a, b) => a.defaultPriority - b.defaultPriority)
+  .map(b => b.id);
 
 /**
  * Default NFL League Year calendar anchors for 2026-2027 season cycle
@@ -208,17 +224,14 @@ export function buildNflCalendarForSeasonYear(seasonYear = 2026) {
 }
 
 /**
- * Evaluate active phases and dashboard blocks for any timestamp and 49ers team status.
- * @param {object} options
- * @param {string|Date} [options.now] - Current timestamp
- * @param {object} [options.calendar] - NFL calendar anchor timestamps
- * @param {object} [options.teamStatus] - { eliminatedAt?: string|null, mathematicallyEliminated?: boolean, currentWeek?: number }
+ * Evaluates factual NFL CBA trade deadline status for informational display inside the Trade tab
+ * (never hides, dims, or archives any view).
  */
-export function evaluateSeasonState(options = {}) {
+export function evaluateTradeDeadlineStatus(options = {}) {
   const nowDate = options.now ? new Date(options.now) : new Date();
   const nowMs = nowDate.getTime();
   if (Number.isNaN(nowMs)) {
-    throw new Error(`Invalid date passed to evaluateSeasonState: ${options.now}`);
+    throw new Error(`Invalid date passed to evaluateTradeDeadlineStatus: ${options.now}`);
   }
 
   let baseCal = DEFAULT_NFL_CALENDAR_2026;
@@ -227,134 +240,68 @@ export function evaluateSeasonState(options = {}) {
     const inferredSeasonYr =
       nowDate.getUTCMonth() >= 5 ? nowDate.getUTCFullYear() : nowDate.getUTCFullYear() - 1;
     baseCal = buildNflCalendarForSeasonYear(inferredSeasonYr);
+  } else if (options.seasonYear && Number(options.seasonYear) !== 2026 && !options.calendar) {
+    baseCal = buildNflCalendarForSeasonYear(Number(options.seasonYear));
   }
   const cal = { ...baseCal, ...(options.calendar || {}) };
-  const status = options.teamStatus || {};
 
   const tKickoff = new Date(cal.kickoffStart).getTime();
-  const tTradeStart = new Date(cal.tradeWindowStart).getTime();
   const tTradeDeadline = new Date(cal.tradeDeadline).getTime();
-  const tPlayoffPushStart = new Date(cal.playoffPushStart).getTime();
-  const tRegEnd = new Date(cal.regularSeasonEnd).getTime();
   const tSbEnd = new Date(cal.superBowlEnd).getTime();
-  const tDraftStart = new Date(cal.draftDay1Start).getTime();
-  const tPostUdfaEnd = new Date(cal.postUdfaEnd).getTime();
-  const tPrevDraftStart = new Date(cal.prevDraftStart).getTime();
-  const tPrevPostUdfaEnd = new Date(cal.prevPostUdfaEnd).getTime();
 
-  const eliminatedMs = status.eliminatedAt ? new Date(status.eliminatedAt).getTime() : null;
-  const isEliminatedNow = Boolean(
-    (eliminatedMs && nowMs >= eliminatedMs) || status.mathematicallyEliminated
-  );
-
-  const activePhases = new Set(['YEAR_ROUND']);
-
-  // 1. IN_SEASON: From kickoff until 49ers season ends (either eliminated after regular season/playoffs or Super Bowl ends)
-  const seasonEndBoundary = eliminatedMs && eliminatedMs >= tRegEnd ? eliminatedMs : tSbEnd;
-  const isInSeason = nowMs >= tKickoff && nowMs < seasonEndBoundary && !(isEliminatedNow && nowMs >= tRegEnd);
-  if (isInSeason) {
-    activePhases.add('IN_SEASON');
-  }
-
-  // 2. TRADE_WINDOW: Oct 1 through NFL Trade Deadline
-  if (nowMs >= tTradeStart && nowMs <= tTradeDeadline) {
-    activePhases.add('TRADE_WINDOW');
-  }
-
-  // 3. PLAYOFF_PUSH: 5 weeks before end of regular season until last game of regular season (or postseason if alive)
-  const weekNum = Number(status.currentWeek || 0);
-  const inFinal5WeeksByDate = nowMs >= tPlayoffPushStart && nowMs <= tRegEnd;
-  const inFinal5WeeksByWeek = weekNum >= 14 && weekNum <= 18 && isInSeason;
-  if ((inFinal5WeeksByDate || inFinal5WeeksByWeek) && !status.mathematicallyEliminated) {
-    activePhases.add('PLAYOFF_PUSH');
-  }
-
-  // 4. DRAFT_PREP: From the moment 49ers are eliminated from post-season (or post-Super Bowl) until Draft starts
-  const draftPrepStart = eliminatedMs
-    ? Math.max(eliminatedMs, tRegEnd)
-    : status.mathematicallyEliminated
-      ? tRegEnd
-      : tSbEnd;
-  const inPre2026Draft = nowMs < tPrevDraftStart;
-  if ((nowMs >= draftPrepStart && nowMs < tDraftStart) || inPre2026Draft) {
-    activePhases.add('DRAFT_PREP');
-  }
-
-  // 5. DRAFT_LIVE_UDFA: 1st Day of Draft until after UDFA period
-  const inCurrentDraftUdfa = nowMs >= tDraftStart && nowMs <= tPostUdfaEnd;
-  const inPrevDraftUdfa = nowMs >= tPrevDraftStart && nowMs <= tPrevPostUdfaEnd;
-  if (inCurrentDraftUdfa || inPrevDraftUdfa) {
-    activePhases.add('DRAFT_LIVE_UDFA');
-  }
-
-  const activePhaseList = Array.from(activePhases);
-
-  const activeBlocks = ALL_DASHBOARD_BLOCKS
-    .filter(b => activePhases.has(b.phase))
-    .sort((a, b) => a.defaultPriority - b.defaultPriority);
-
-  const archivedBlocks = ALL_DASHBOARD_BLOCKS
-    .filter(b => !activePhases.has(b.phase))
-    .sort((a, b) => a.defaultPriority - b.defaultPriority);
-
-  // Build primary seasonal headline banner
-  let headlinePhase = {
-    code: 'OFFSEASON',
-    label: 'Offseason & Roster Building',
-    detail: '90-man roster evaluation, OTAs/Training Camp & cap management',
-    countdownText: null
-  };
-
-  if (activePhases.has('DRAFT_LIVE_UDFA')) {
-    headlinePhase = {
-      code: 'DRAFT_LIVE_UDFA',
-      label: 'NFL Draft & Priority UDFA Window',
-      detail: 'Pick-by-pick value grades, athletic spider charts & college tape reels',
-      countdownText: formatRemainingTime(nowMs, nowMs <= tPrevPostUdfaEnd ? tPrevPostUdfaEnd : tPostUdfaEnd, 'UDFA Window Closes')
-    };
-  } else if (activePhases.has('DRAFT_PREP')) {
-    headlinePhase = {
-      code: 'DRAFT_PREP',
-      label: 'NFL Draft & Combine Preview',
-      detail: 'Consensus mocks, Shanahan/Lynch archetype fit scores & Combine results',
-      countdownText: formatRemainingTime(nowMs, inPre2026Draft ? tPrevDraftStart : tDraftStart, 'Round 1 Kickoff')
-    };
-  } else if (activePhases.has('TRADE_WINDOW')) {
-    headlinePhase = {
-      code: 'TRADE_WINDOW',
-      label: 'Active NFL Trade Window',
-      detail: `${weekNum > 0 ? `Week ${weekNum} matchup + ` : ''}Trade Deadline targets, cap math & beat reports`,
-      countdownText: formatRemainingTime(nowMs, tTradeDeadline, 'Trade Deadline')
-    };
-  } else if (activePhases.has('PLAYOFF_PUSH')) {
-    headlinePhase = {
-      code: 'PLAYOFF_PUSH',
-      label: 'NFC Playoff & Seeding Stretch',
-      detail: '10,000-run Monte Carlo tiebreakers, #1 seed path & weekly rooting leverage',
-      countdownText: formatRemainingTime(nowMs, tRegEnd, 'Regular Season Finale')
-    };
-  } else if (activePhases.has('IN_SEASON')) {
-    headlinePhase = {
-      code: 'IN_SEASON',
-      label: nowMs >= tRegEnd ? 'NFL Postseason' : weekNum > 0 ? `In-Season • Week ${weekNum}` : 'In-Season',
-      detail: 'Matchup trench mismatches, coaching H2H tendencies & player availability',
-      countdownText: null
-    };
-  }
+  const isPreDeadline = nowMs < tTradeDeadline;
+  const isPostDeadlinePause = nowMs >= tTradeDeadline && nowMs < tSbEnd;
+  const countdownText =
+    nowMs >= tKickoff && nowMs < tTradeDeadline
+      ? formatRemainingTime(nowMs, tTradeDeadline, 'Deadline')
+      : null;
 
   return {
-    evaluatedAt: nowDate.toISOString(),
-    activePhases: activePhaseList,
-    headlinePhase,
-    activeBlocks,
-    archivedBlocks
+    seasonYear: cal.seasonYear,
+    tradeDeadlineIso: cal.tradeDeadline,
+    isPreDeadline,
+    isPostDeadlinePause,
+    countdownText
   };
 }
 
 /**
- * Reconciles user's saved drag-and-drop block order with the currently active blocks.
- * Newly activated seasonal blocks that aren't in the user's saved order yet are inserted
- * near the top according to their defaultPriority so temporal events aren't buried!
+ * Evaluates year-round Home dashboard state without calendar-phase content gates or Archive exile.
+ * Keeps a tighter default Home card count (`DEFAULT_HOME_BLOCK_IDS`) while all 8 seasonal sub-tabs
+ * remain permanently live under Game & Season.
+ * @param {object} options
+ * @param {string|Date} [options.now] - Current timestamp (validated for callers)
+ * @param {object} [options.calendar] - Optional NFL calendar overrides
+ */
+export function evaluateSeasonState(options = {}) {
+  const nowDate = options.now ? new Date(options.now) : new Date();
+  const nowMs = nowDate.getTime();
+  if (Number.isNaN(nowMs)) {
+    throw new Error(`Invalid date passed to evaluateSeasonState: ${options.now}`);
+  }
+
+  const tradeDeadlineStatus = evaluateTradeDeadlineStatus(options);
+
+  const activeBlocks = ALL_DASHBOARD_BLOCKS
+    .filter(b => b.defaultOnHome)
+    .sort((a, b) => a.defaultPriority - b.defaultPriority);
+
+  const optionalBlocks = ALL_DASHBOARD_BLOCKS
+    .filter(b => !b.defaultOnHome)
+    .sort((a, b) => a.defaultPriority - b.defaultPriority);
+
+  return {
+    evaluatedAt: nowDate.toISOString(),
+    activePhases: ['YEAR_ROUND'],
+    tradeDeadlineStatus,
+    activeBlocks,
+    optionalBlocks,
+    archivedBlocks: []
+  };
+}
+
+/**
+ * Reconciles user's saved drag-and-drop block order with the currently visible blocks.
  */
 export function resolveOrderedDashboardBlocks(activeBlocks, savedOrderIds = []) {
   if (!Array.isArray(savedOrderIds) || savedOrderIds.length === 0) {
@@ -372,20 +319,49 @@ export function resolveOrderedDashboardBlocks(activeBlocks, savedOrderIds = []) 
     }
   }
 
-  // Newly activated seasonal/temporal blocks not yet seen by user
-  const newlyActivated = activeBlocks.filter(b => !seen.has(b.id));
-  if (newlyActivated.length === 0) {
+  const newlyIncluded = activeBlocks.filter(b => !seen.has(b.id));
+  if (newlyIncluded.length === 0) {
     return knownOrdered;
   }
 
   const merged = [...knownOrdered];
-  for (const newBlock of newlyActivated) {
-    // Insert newly activated blocks according to their natural defaultPriority neighbor
+  for (const newBlock of newlyIncluded) {
     const nextHigherIdx = merged.findIndex(b => b.defaultPriority > newBlock.defaultPriority);
     const insertIdx = nextHigherIdx >= 0 ? nextHigherIdx : merged.length;
     merged.splice(insertIdx, 0, newBlock);
   }
   return merged;
+}
+
+/**
+ * Resolves the Home Dashboard visible & optional module lists given user customization preferences.
+ */
+export function resolveHomeDashboardState({
+  savedOrderIds = [],
+  hiddenBlockIds = [],
+  pinnedBlockIds = []
+} = {}) {
+  const hiddenSet = new Set(Array.isArray(hiddenBlockIds) ? hiddenBlockIds : []);
+  const pinnedSet = new Set(Array.isArray(pinnedBlockIds) ? pinnedBlockIds : []);
+
+  let visibleBlocks = ALL_DASHBOARD_BLOCKS
+    .filter(b => (b.defaultOnHome || pinnedSet.has(b.id)) && !hiddenSet.has(b.id))
+    .sort((a, b) => a.defaultPriority - b.defaultPriority);
+
+  if (visibleBlocks.length === 0) {
+    visibleBlocks = [ALL_DASHBOARD_BLOCKS[0]];
+  }
+
+  const orderedBlocks = resolveOrderedDashboardBlocks(visibleBlocks, savedOrderIds);
+  const visibleIdSet = new Set(orderedBlocks.map(b => b.id));
+  const optionalBlocks = ALL_DASHBOARD_BLOCKS
+    .filter(b => !visibleIdSet.has(b.id))
+    .sort((a, b) => a.defaultPriority - b.defaultPriority);
+
+  return {
+    orderedBlocks,
+    optionalBlocks
+  };
 }
 
 export function formatRemainingTime(nowMs, targetMs, label) {
@@ -1217,90 +1193,20 @@ function resolveLastThursdayOfFebruaryUtcMs(year) {
   return febEndMs - daysBackToThu * 86_400_000;
 }
 
-function resolveFirstThursdayOfAugustUtcMs(year) {
-  const aug1Ms = Date.UTC(year, 7, 1, 12, 0, 0);
-  const dow = new Date(aug1Ms).getUTCDay();
-  const daysToThu = (4 - dow + 7) % 7;
-  return aug1Ms + daysToThu * 86_400_000;
-}
-
 /**
- * Evaluates whether the NFL Scouting Combine Leaderboard should be blank vs. populated.
- * Rule: Blank from after the NFL Preseason starts (early August of `seasonYear`) until the
- * actual NFL Scouting Combine drills begin in Indianapolis (last Thursday of February of `draftYear`),
- * preventing stale prior-year Combine testing from appearing during the NFL season.
+ * Evaluates NFL Scouting Combine Leaderboard rows strictly by target `draftYear` data availability
+ * (no artificial calendar blank-window trigger). Prior-year Combine rows never mix into the upcoming
+ * prospect class, and new Combine drill testing appears immediately once recorded.
  */
 export function evaluateCombineLeaderboardWindow({
-  now = undefined,
   seasonYear = 2026,
   draftYear = null,
-  schedule = [],
   combineLeaderboard = []
 } = {}) {
-  const nowDate =
-    now instanceof Date
-      ? now
-      : now !== undefined && now !== null
-        ? new Date(now)
-        : new Date();
-  const nowMs = Number.isFinite(nowDate.getTime()) ? nowDate.getTime() : Date.now();
   const seasonYr = Number(seasonYear) || 2026;
-  const draftYr = Number(draftYear) || seasonYr + 1;
-
-  // Preseason start: earliest PRE game in schedule for `seasonYr`, capped at Aug 1 / HoF Week kickoff
-  const aug1AnchorIso = `${seasonYr}-08-01T00:00:00-07:00`;
-  const firstAugThuIso = `${formatUtcYmd(resolveFirstThursdayOfAugustUtcMs(seasonYr))}T00:00:00-07:00`;
-  let preseasonStartMs = Math.min(Date.parse(aug1AnchorIso), Date.parse(firstAugThuIso));
-
-  for (const g of Array.isArray(schedule) ? schedule : []) {
-    const st = String(g?.seasonType || g?.phase || '').toUpperCase();
-    const isPre = st === 'PRE' || st === 'PRESEASON' || Number(g?.week) < 0;
-    if (!isPre) continue;
-    const gMs = Date.parse(g?.dateIso || g?.date || g?.kickoffIso || '');
-    if (
-      Number.isFinite(gMs) &&
-      gMs >= Date.parse(`${seasonYr}-07-20T00:00:00Z`) &&
-      gMs < Date.parse(`${seasonYr}-09-05T00:00:00Z`)
-    ) {
-      if (gMs < preseasonStartMs) preseasonStartMs = gMs;
-    }
-  }
-
-  const prevCombineStartIso = `${formatUtcYmd(resolveLastThursdayOfFebruaryUtcMs(seasonYr))}T06:00:00-08:00`;
-  const combineStartIso = `${formatUtcYmd(resolveLastThursdayOfFebruaryUtcMs(draftYr))}T06:00:00-08:00`;
-  const nextPreseasonStartIso = `${draftYr}-08-01T00:00:00-07:00`;
-
-  const prevCombineStartMs = Date.parse(prevCombineStartIso);
-  const combineStartMs = Date.parse(combineStartIso);
-  const nextPreseasonStartMs = Date.parse(nextPreseasonStartIso);
-
-  let isBlankWindow = false;
-  let targetCombineYear = draftYr;
-  let reason = 'active_combine_window';
-
-  if (nowMs >= preseasonStartMs && nowMs < combineStartMs) {
-    isBlankWindow = true;
-    targetCombineYear = draftYr;
-    reason = 'between_preseason_and_combine';
-  } else if (nowMs < prevCombineStartMs) {
-    isBlankWindow = true;
-    targetCombineYear = seasonYr;
-    reason = 'before_combine_start';
-  } else if (nowMs >= nextPreseasonStartMs) {
-    isBlankWindow = true;
-    targetCombineYear = draftYr + 1;
-    reason = 'between_preseason_and_combine';
-  } else if (nowMs >= combineStartMs) {
-    isBlankWindow = false;
-    targetCombineYear = draftYr;
-    reason = 'combine_active';
-  } else {
-    isBlankWindow = false;
-    targetCombineYear = seasonYr;
-    reason = 'prior_spring_combine_active';
-  }
-
-  const combineStartDate = new Date(combineStartMs);
+  const targetCombineYear = Number(draftYear) || seasonYr + 1;
+  const combineStartIso = `${formatUtcYmd(resolveLastThursdayOfFebruaryUtcMs(targetCombineYear))}T06:00:00-08:00`;
+  const combineStartDate = new Date(Date.parse(combineStartIso));
   const combineStartDisplay = combineStartDate.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -1308,21 +1214,20 @@ export function evaluateCombineLeaderboardWindow({
     timeZone: 'America/Los_Angeles'
   });
 
-  const validRows = isBlankWindow
-    ? []
-    : (Array.isArray(combineLeaderboard) ? combineLeaderboard : []).filter(row => {
-        if (!row || !row.name) return false;
-        if (row.season != null && Number.isFinite(Number(row.season))) {
-          return Number(row.season) === targetCombineYear;
-        }
-        return true;
-      });
+  const validRows = (Array.isArray(combineLeaderboard) ? combineLeaderboard : []).filter(row => {
+    if (!row || !row.name) return false;
+    if (row.season != null && Number.isFinite(Number(row.season))) {
+      return Number(row.season) === targetCombineYear;
+    }
+    return true;
+  });
+
+  const isBlankWindow = validRows.length === 0;
 
   return {
     isBlankWindow,
-    reason,
+    reason: isBlankWindow ? 'awaiting_combine_data' : 'combine_data_available',
     targetCombineYear,
-    preseasonStartIso: new Date(preseasonStartMs).toISOString(),
     combineStartIso,
     combineStartDisplay,
     rows: validRows
@@ -1330,14 +1235,17 @@ export function evaluateCombineLeaderboardWindow({
 }
 
 /**
- * Determines whether the 49ers have been eliminated from the current NFL season
- * (switching the First-Pick Mock Draft Database from 1-month in-season freshness to 1-week post-elimination freshness).
+ * Evaluates the 49ers First-Pick Mock Draft Database freshness window:
+ * - Trailing 30 days initially (offseason, regular season, and playoffs through Super Bowl Sunday).
+ * - Trailing 7 days after the Super Bowl (`nowMs >= superBowlEnd`) when pre-draft buzz heats up.
  */
-export function is49ersEliminatedForDraftMocks(appData = {}, options = {}) {
-  if (typeof options.isEliminated === 'boolean') {
+export function evaluateMockDraftFreshnessWindow(appData = {}, options = {}) {
+  if (typeof options.isPostSuperBowl === 'boolean') {
     return {
-      isEliminated: options.isEliminated,
-      reason: options.isEliminated ? 'explicit_eliminated' : 'explicit_in_season'
+      isPostSuperBowl: options.isPostSuperBowl,
+      freshnessDays: options.isPostSuperBowl ? 7 : 30,
+      superBowlEndIso: null,
+      reason: options.isPostSuperBowl ? 'explicit_post_super_bowl' : 'explicit_initial_30d'
     };
   }
 
@@ -1350,55 +1258,37 @@ export function is49ersEliminatedForDraftMocks(appData = {}, options = {}) {
           ? new Date(appData.meta.now)
           : new Date();
   const nowMs = Number.isFinite(nowDate.getTime()) ? nowDate.getTime() : Date.now();
-  const seasonYr = Number(options.seasonYear || appData?.meta?.seasonYear) || 2026;
+  const dp = appData?.seasonal?.draftPrep2027 || {};
+  const seasonYrFromMeta = Number(options.seasonYear || appData?.meta?.seasonYear) || 2026;
+  const explicitDraftYr = Number(options.draftYear || dp.draftYear) || 0;
+  const draftYr = explicitDraftYr || seasonYrFromMeta + 1;
+  const mockSeasonYr = draftYr - 1;
+
+  const baseCal = buildNflCalendarForSeasonYear(mockSeasonYr);
+  const metaCal = appData?.meta?.calendar || {};
+  const optCal = options.calendar || {};
   const cal = {
-    ...buildNflCalendarForSeasonYear(seasonYr),
-    ...(appData?.meta?.calendar || {}),
-    ...(options.calendar || {})
+    ...baseCal,
+    ...(!metaCal.seasonYear || Number(metaCal.seasonYear) === mockSeasonYr ? metaCal : {}),
+    ...(!optCal.seasonYear || Number(optCal.seasonYear) === mockSeasonYr ? optCal : {})
   };
-  const teamStatus = {
-    ...(appData?.meta?.teamStatus || {}),
-    ...(options.teamStatus || {})
-  };
-
-  const elimAtMs = teamStatus.eliminatedAt ? Date.parse(teamStatus.eliminatedAt) : NaN;
-  if (
-    teamStatus.mathematicallyEliminated === true ||
-    (Number.isFinite(elimAtMs) && nowMs >= elimAtMs) ||
-    String(teamStatus.clinchCode || appData?.meta?.clinchCode || '').toLowerCase() === 'e'
-  ) {
-    return { isEliminated: true, reason: 'team_status_eliminated' };
-  }
-
-  const schedModel = resolveCompleteScheduleModel(
-    {
-      ...appData,
-      meta: {
-        ...(appData?.meta || {}),
-        seasonYear: seasonYr,
-        now: nowDate.toISOString(),
-        teamStatus
-      }
-    },
-    options.mcSimResult || null
-  );
-  if (schedModel.postseasonStatus?.isEliminated) {
-    return {
-      isEliminated: true,
-      reason:
-        schedModel.postseasonStatus.state === 'POSTSEASON_ELIMINATED'
-          ? 'postseason_loss'
-          : 'missed_playoffs'
-    };
-  }
 
   const sbEndMs = Date.parse(cal.superBowlEnd);
-  const draftStartMs = Date.parse(cal.draftDay1Start);
-  if (Number.isFinite(sbEndMs) && Number.isFinite(draftStartMs) && nowMs >= sbEndMs && nowMs < draftStartMs) {
-    return { isEliminated: true, reason: 'post_season_pre_draft' };
-  }
+  const postDraftResetMs = Date.parse(cal.postUdfaEnd);
+  const upperBoundMs = explicitDraftYr
+    ? Date.parse(`${draftYr}-08-01T00:00:00Z`)
+    : postDraftResetMs;
+  const isPostSuperBowl =
+    Number.isFinite(sbEndMs) &&
+    nowMs >= sbEndMs &&
+    (!Number.isFinite(upperBoundMs) || nowMs <= upperBoundMs);
 
-  return { isEliminated: false, reason: 'in_season_alive' };
+  return {
+    isPostSuperBowl,
+    freshnessDays: isPostSuperBowl ? 7 : 30,
+    superBowlEndIso: cal.superBowlEnd || null,
+    reason: isPostSuperBowl ? 'post_super_bowl_7d' : 'initial_trailing_30d'
+  };
 }
 
 function formatMockAgeLabel(ageMs, pubMs) {
@@ -1418,8 +1308,8 @@ function formatMockAgeLabel(ageMs, pubMs) {
 
 /**
  * Resolves the 49ers First-Pick Mock Draft Database view:
- * - Filters strictly to 1-month (30-day) freshness while the 49ers are alive in the NFL season,
- *   and 1-week (7-day) freshness once the 49ers are eliminated.
+ * - Filters to trailing 30-day freshness initially, tightening to trailing 7-day freshness
+ *   after the Super Bowl when pre-draft buzz heats up.
  * - Deduplicates to at most 1 projection per independent mock draft site (most recent inside window).
  * - Ranks projected players by number of sites projecting them to SF's first pick (`siteCount` DESC),
  *   with clickable site names/links and prospect scouting drill-down metadata.
@@ -1433,8 +1323,8 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
         : new Date();
   const refMs = Number.isFinite(nowDate.getTime()) ? nowDate.getTime() : Date.now();
 
-  const elim = is49ersEliminatedForDraftMocks(options.appData || {}, options);
-  const freshnessDays = elim.isEliminated ? 7 : 30;
+  const win = evaluateMockDraftFreshnessWindow(options.appData || {}, options);
+  const freshnessDays = win.freshnessDays;
   const maxAgeMs = freshnessDays * 86_400_000;
 
   const dp = options.appData?.seasonal?.draftPrep2027 || {};
@@ -1595,13 +1485,13 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
 
   return {
     draftYear,
-    isEliminated: elim.isEliminated,
-    eliminationReason: elim.reason,
+    isPostSuperBowl: win.isPostSuperBowl,
+    windowReason: win.reason,
     freshnessDays,
-    freshnessLabel: elim.isEliminated
-      ? '1-Week Freshness (Post-Elimination)'
-      : '1-Month Freshness (In-Season)',
-    shortWindowBadge: elim.isEliminated ? '1W Window' : '1M Window',
+    freshnessLabel: win.isPostSuperBowl
+      ? 'Trailing 7-Day Freshness (Post-Super Bowl)'
+      : 'Trailing 30-Day Freshness',
+    shortWindowBadge: win.isPostSuperBowl ? '7D Window' : '30D Window',
     totalFreshSites,
     staleExcludedCount,
     projectedFirstPickRound,
