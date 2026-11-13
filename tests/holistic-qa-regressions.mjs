@@ -63,6 +63,9 @@ import { hydrateLiveEspnOverlay, matchPlayersClient } from '../src/services/data
 import { buildClusteredNewsBriefs } from '../scripts/lib/seasonalContentBuilder.mjs';
 import {
   buildEspnPlayerNewsAnchorUrl,
+  encodeMarkdownLinkUrl,
+  normalizeMarkdownInlineLinksInText,
+  stripMarkdownInlineLinks,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledOrBlockedUrl,
@@ -80,8 +83,15 @@ import {
   resolveReporterFromNameOrHandle,
   corroborateAndAnnotateWireStream
 } from '../src/engine/beatAttributionEngine.js';
-import { selectTopNewsBriefSourceCandidates } from '../src/services/aiWorkerClient.js';
-import { renderDailyTopNewsBriefHtml } from '../src/views/newsView.js';
+import {
+  selectTopNewsBriefSourceCandidates,
+  parseAndSanitizeDailyTopNewsBrief,
+  repairDailyTopNewsBriefLinks
+} from '../src/services/aiWorkerClient.js';
+import {
+  renderDailyTopNewsBriefHtml,
+  renderBriefProseWithInlineLinksHtml
+} from '../src/views/newsView.js';
 import { renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
 import {
   registerRosterPlayersForInlineLinks,
@@ -2070,6 +2080,154 @@ test('X-first social link priority: upgrades Bluesky mirrors to analogous X stat
   assert.ok(
     renderedBriefHtml.includes('https://bsky.app/profile/mattbarrows.bsky.social/post/3n24qhsd6c22u'),
     'Undiscoverable X status fallback must cleanly keep verified Bluesky URL'
+  );
+});
+
+test('Daily Top News Brief inline citations: handles parenthesized URLs (#:~:text=Greenlaw%20(knee)..., X boolean queries) with zero leaked %20 fragments and self-heals cached briefs', () => {
+  const greenlawUrl =
+    "https://www.espn.com/nfl/player/_/id/3916903/dre-greenlaw#:~:text=Greenlaw%20(knee)%20was%20limited%20during%20Thursday's%20practice";
+  const williamsUrl =
+    'https://www.espn.com/nfl/player/_/id/13241/trent-williams#:~:text=Williams%20(shoulder)%20was%20a%20limited%20participant%20at';
+  const evansUrl =
+    'https://www.espn.com/nfl/player/_/id/16737/mike-evans#:~:text=Coach%20Kyle%20Shanahan%20said%20Thursday%20that%20Evans';
+  const xBooleanSearchUrl =
+    'https://x.com/search?q=(from%3Anwagoner%20OR%20from%3AMaioccoNBCS)%20(injury%20OR%20DNP)&src=typed_query&f=live';
+
+  // 1. Exact reproduction of user-reported Dre Greenlaw (knee) Top News Brief synthesis & rendering
+  const mockCandidates = [
+    {
+      refId: 'S1',
+      type: 'article',
+      author: 'Matt Maiocco',
+      outlet: 'NBC Sports Bay Area',
+      citeLabel: 'Matt Maiocco',
+      title: 'Williams (shoulder) was a limited participant at practice Thursday.',
+      url: williamsUrl,
+      publishedAt: '2026-11-13T01:49:40.000Z'
+    },
+    {
+      refId: 'S2',
+      type: 'tweet',
+      author: '49ers Beat',
+      outlet: 'X Beat Wire',
+      citeLabel: '49ers Beat',
+      title: 'Thursday practice participation updates ahead of Cowboys matchup.',
+      url: xBooleanSearchUrl,
+      publishedAt: '2026-11-13T00:50:00.000Z'
+    },
+    {
+      refId: 'S3',
+      type: 'article',
+      author: 'Matt Maiocco',
+      outlet: 'NBC Sports Bay Area',
+      citeLabel: 'Matt Maiocco',
+      title: "Greenlaw (knee) was limited during Thursday's practice.",
+      url: greenlawUrl,
+      publishedAt: '2026-11-13T00:44:02.000Z'
+    },
+    {
+      refId: 'S4',
+      type: 'article',
+      author: 'David Lombardi',
+      outlet: 'The SF Standard',
+      citeLabel: 'David Lombardi',
+      title: 'Coach Kyle Shanahan said Thursday that Evans is real close to returning.',
+      url: evansUrl,
+      publishedAt: '2026-11-13T00:28:11.000Z'
+    }
+  ];
+
+  const synthesized = parseAndSanitizeDailyTopNewsBrief(
+    {
+      headline: '49ers Monitor Cornerback and Williams Injuries Alongside Post-Deadline Receiver Pivot Before Cowboys',
+      summary:
+        "San Francisco prepares for Sunday's Week 10 trip to Dallas with starting cornerbacks missing consecutive practices alongside key front-seven monitoring [S2]. Meanwhile, post-deadline reporting highlighted veteran receiver depth.",
+      bullets: [
+        'Deadline Strategy and Cap Balance: San Francisco preserved $39.18 million in 2026 rollover space against a -$36.74 million 2027 projection while onboarding veteran pass-catching help [S2].',
+        "Practice Report and Availability: Trent Williams (shoulder) shifted from Wednesday rest to limited Thursday work, leaving Sunday uncertainty without a full Friday practice [S1]. Dre Greenlaw (knee) was also limited, keeping Jaden Dugger and Garret Wallow ready [S3], while Mike Evans (Achilles) stayed out Thursday and is not expected to play despite nearing a return [S4]."
+      ],
+      citedSourceIds: ['S1', 'S2', 'S3', 'S4']
+    },
+    mockCandidates,
+    { roster: { players: [] } },
+    { cycleKey: '2026-11-12@17PT', source: 'live-gemini-daily' }
+  );
+
+  assert.ok(synthesized, 'Expected synthesized brief to validate cleanly');
+  assert.ok(
+    synthesized.bullets[1].includes(encodeMarkdownLinkUrl(greenlawUrl)),
+    `Expected Greenlaw URL parens to be RFC-3986 encoded inside Markdown link: ${synthesized.bullets[1]}`
+  );
+
+  const renderedHtml = renderDailyTopNewsBriefHtml(synthesized);
+  const visibleProseOnly = renderedHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  assert.ok(
+    !visibleProseOnly.includes('%20') && !visibleProseOnly.includes("Thursday's%20practice"),
+    `Rendered brief must never leak %20 URL fragments into visible prose: ${visibleProseOnly}`
+  );
+  assert.ok(
+    renderedHtml.includes("Greenlaw%20%28knee%29%20was%20limited%20during%20Thursday&#39;s%20practice") ||
+      renderedHtml.includes("Greenlaw%20%28knee%29%20was%20limited%20during%20Thursday's%20practice"),
+    'Inline source link href must preserve full W3C text fragment past (knee)'
+  );
+
+  // 2. Self-healing of legacy unencoded AND split-tail cached briefs from localStorage
+  const legacyCorruptedBrief = {
+    id: 'daily_brief_legacy',
+    cycleKey: '2026-11-12@17PT',
+    headline: 'Legacy Cached Brief With Unencoded & Split Parenthesized URLs',
+    summary: `Trent Williams was limited Thursday, per ([Matt Maiocco](${williamsUrl})).`,
+    bullets: [
+      `Practice Report: Dre Greenlaw (knee) was limited, keeping Jaden Dugger ready [Matt Maiocco](${greenlawUrl}), while Mike Evans stayed out.`,
+      "Split Cache Artifact: Dre Greenlaw was limited [Matt Maiocco](https://www.espn.com/nfl/player/_/id/3916903/dre-greenlaw#:~:text=Greenlaw%20(knee) %20was%20limited%20during%20Thursday's%20practice), while Mike Evans rested."
+    ],
+    sources: []
+  };
+  const { brief: repaired, mutated } = repairDailyTopNewsBriefLinks(legacyCorruptedBrief);
+  assert.equal(mutated, true, 'repairDailyTopNewsBriefLinks must detect and heal unencoded/split parenthesized URLs');
+  const repairedHtml = renderDailyTopNewsBriefHtml(repaired);
+  const repairedVisible = repairedHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  assert.ok(
+    !/%[0-9A-Fa-f]{2}/.test(repairedVisible) && !repairedVisible.includes('per ('),
+    `Repaired legacy brief must render zero %XX fragments and strip outer 'per (...)': ${repairedVisible}`
+  );
+
+  // 3. Direct renderBriefProseWithInlineLinksHtml & stripMarkdownInlineLinks balanced-paren resilience
+  const wikiProse =
+    'Left tackle ([Wikipedia](https://en.wikipedia.org/wiki/Trent_Williams_(American_football))) anchored pass protection.';
+  const wikiHtml = renderBriefProseWithInlineLinksHtml(wikiProse);
+  assert.ok(
+    wikiHtml.includes('Trent_Williams_%28American_football%29') &&
+      !/American_football\)/.test(wikiHtml.replace(/<[^>]+>/g, '')),
+    `Expected balanced Wikipedia URL rendering without trailing ')' leak: ${wikiHtml}`
+  );
+  assert.equal(
+    stripMarkdownInlineLinks(`Update [Maiocco](${greenlawUrl}) complete.`, { keepLabel: false }).replace(/\s+/g, ' ').trim(),
+    'Update complete.'
+  );
+
+  // 4. buildEspnPlayerNewsAnchorUrl trims mid-parenthetical 7-word cuts so URLs never carry unbalanced '('
+  const midParenCutAnchor = buildEspnPlayerNewsAnchorUrl(
+    '3916903',
+    'Dre Greenlaw',
+    'Coach Kyle Shanahan noted on Thursday (during open media availability) that Greenlaw looked sharp.'
+  );
+  const fragPart = midParenCutAnchor.split('#:~:text=')[1] || '';
+  assert.equal(
+    (fragPart.match(/\(/g) || []).length,
+    (fragPart.match(/\)/g) || []).length,
+    `Anchor fragment must never contain unbalanced parentheses: ${midParenCutAnchor}`
+  );
+
+  // 5. Verify live data/news.json dailyTopNewsBrief renders with zero leaked %XX or URL fragments
+  const liveNewsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const liveBriefHtml = renderDailyTopNewsBriefHtml(liveNewsJson.dailyTopNewsBrief, {
+    rawStream: liveNewsJson.rawStream
+  });
+  const liveBriefVisible = liveBriefHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  assert.ok(
+    !/%[0-9A-Fa-f]{2}|#:~:text=|https?:\/\//i.test(liveBriefVisible),
+    `Live data/news.json dailyTopNewsBrief leaked raw URL/encoding into prose: ${liveBriefVisible}`
   );
 });
 

@@ -31,13 +31,23 @@ import {
   scoreHighlightAndTeamVideoSalience,
   partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
-import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import {
+  isPaywalledPublisher,
+  sanitizeExternalUrl,
+  MARKDOWN_HTTPS_INLINE_LINK_SOURCE,
+  encodeMarkdownLinkUrl,
+  decodeMarkdownLinkUrlParens,
+  normalizeMarkdownInlineLinksInText
+} from '../engine/linkIntegrity.js';
 import {
   buildXBeatListSearchUrl,
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
-import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
+import {
+  buildDeterministicDailyTopNewsBrief,
+  repairDailyTopNewsBriefLinks
+} from '../services/aiWorkerClient.js';
 
 export const NEWS_NAV_CLUSTERS = [
   {
@@ -178,18 +188,28 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
  * (guaranteeing zero nested `<a>` tags!).
  */
 export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null, urlUpgradeMap = null) {
-  const rawInput = String(text || '').trim();
+  const rawInput = normalizeMarkdownInlineLinksInText(String(text || '').trim());
   if (!rawInput) return '';
+
+  const perParenRe = new RegExp(
+    `,?\\s*\\b(?:per|via|according to)\\s+\\(\\s*(${MARKDOWN_HTTPS_INLINE_LINK_SOURCE})\\s*\\)`,
+    'gi'
+  );
+  const perBareRe = new RegExp(
+    `,?\\s*\\b(?:per|via|according to)\\s+(${MARKDOWN_HTTPS_INLINE_LINK_SOURCE})`,
+    'gi'
+  );
+  const wrapParenRe = new RegExp(`\\(\\s*(${MARKDOWN_HTTPS_INLINE_LINK_SOURCE})\\s*\\)`, 'g');
 
   // Clean up any wrapping parentheses or "per / via / according to" prefixes around inline links
   const raw = rawInput
-    .replace(/,?\s*\b(?:per|via|according to)\s+\(\s*(\[[^\]]{1,80}\]\(https:\/\/[^)\s]+\))\s*\)/gi, ' $1')
-    .replace(/,?\s*\b(?:per|via|according to)\s+(\[[^\]]{1,80}\]\(https:\/\/[^)\s]+\))/gi, ' $1')
-    .replace(/\(\s*(\[[^\]]{1,80}\]\(https:\/\/[^)\s]+\))\s*\)/g, '$1')
+    .replace(perParenRe, ' $1')
+    .replace(perBareRe, ' $1')
+    .replace(wrapParenRe, '$1')
     .replace(/\s+([,.;:!?])/g, '$1');
 
   const opts = { maxTerms: 14, maxPlayers: 5, seenKeys: seenJargon };
-  const linkRe = /\[([^\]]{1,80})\]\((https:\/\/[^)\s]+)\)/g;
+  const linkRe = new RegExp(MARKDOWN_HTTPS_INLINE_LINK_SOURCE, 'g');
 
   let outHtml = '';
   let lastIdx = 0;
@@ -199,7 +219,11 @@ export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null
       outHtml += escJargon(raw.slice(lastIdx, match.index), opts);
     }
     const label = decodeInlineEntities(match[1]).trim();
-    const mappedTarget = urlUpgradeMap?.get(match[2]) || match[2];
+    const rawHref = match[2];
+    const mappedTarget =
+      urlUpgradeMap?.get(rawHref) ||
+      urlUpgradeMap?.get(decodeMarkdownLinkUrlParens(rawHref)) ||
+      rawHref;
     const safeUrl = sanitizeExternalUrl(mappedTarget, null);
     if (safeUrl && !isPaywalledPublisher('', safeUrl)) {
       const cleanTip = label && !/^s\d+$/i.test(label) ? `Source: ${label}` : 'Open source';
@@ -236,19 +260,23 @@ export function renderDailyTopNewsBriefHtml(
   dailyBrief,
   { rawStream = [], appData = null, asSubcard = false } = {}
 ) {
-  const brief =
+  const rawBrief =
     dailyBrief && typeof dailyBrief === 'object' && Array.isArray(dailyBrief.bullets) && dailyBrief.bullets.length > 0
       ? dailyBrief
       : buildDeterministicDailyTopNewsBrief(appData);
+  const { brief } = repairDailyTopNewsBriefLinks(rawBrief);
   if (!brief) return '';
 
   const seenJargon = new Set();
   const safeSources = resolveDailyBriefSafeSources(brief, rawStream, appData);
-  const urlUpgradeMap = new Map(
-    safeSources
-      .filter(s => s.originalUrl && s.url && s.originalUrl !== s.url)
-      .map(s => [s.originalUrl, s.url])
-  );
+  const urlUpgradeMap = new Map();
+  for (const s of safeSources) {
+    if (s.originalUrl && s.url && s.originalUrl !== s.url) {
+      urlUpgradeMap.set(s.originalUrl, s.url);
+      urlUpgradeMap.set(encodeMarkdownLinkUrl(s.originalUrl), s.url);
+      urlUpgradeMap.set(decodeMarkdownLinkUrlParens(s.originalUrl), s.url);
+    }
+  }
   const ageTiny = brief.generatedAt ? formatRelativeAge(brief.generatedAt) : 'now';
   const tagName = asSubcard ? 'div' : 'section';
   const outerCls = asSubcard

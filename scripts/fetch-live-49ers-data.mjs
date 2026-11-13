@@ -43,6 +43,7 @@ import {
   buildDailyTopNewsBriefPrompt,
   parseAndSanitizeDailyTopNewsBrief,
   buildDeterministicDailyTopNewsBrief,
+  repairDailyTopNewsBriefLinks,
   buildDailyMatchupIntelPrompt,
   parseAndSanitizeDailyMatchupIntel
 } from '../src/services/aiWorkerClient.js';
@@ -5062,7 +5063,7 @@ async function main() {
         !JSON.stringify(prevBrief).includes('bsky.app') &&
         (prevBrief.source === 'pipeline-gemini-daily' || prevBrief.source === 'live-gemini-daily')
       ) {
-        prevNewsBriefCached = prevBrief;
+        prevNewsBriefCached = repairDailyTopNewsBriefLinks(prevBrief).brief;
       }
     }
   } catch {

@@ -387,6 +387,65 @@ export function sanitizeExternalUrl(rawUrl, fallbackUrl = null) {
 }
 
 /**
+ * Balanced-parenthesis URL body pattern for CommonMark / Markdown inline links `[Label](URL)`.
+ * Safely captures URLs containing balanced parentheses—such as ESPN W3C Scroll-To-Text fragments
+ * (`#:~:text=Greenlaw%20(knee)%20was%20limited...`), X boolean searches (`x.com/search?q=(from:...)`),
+ * and Wikipedia disambiguators (`_(American_football)`)—without prematurely terminating at the
+ * inner `)` or consuming outer prose parentheses wrapping `([Label](URL))`.
+ */
+export const MARKDOWN_BALANCED_URL_BODY = '(?:[^\\s()]|\\((?:[^\\s()]|\\([^\\s()]*\\))*\\))+';
+export const MARKDOWN_HTTPS_INLINE_LINK_SOURCE = `\\[([^\\]]{1,80})\\]\\((https:\\/\\/${MARKDOWN_BALANCED_URL_BODY})\\)`;
+export const MARKDOWN_ANY_INLINE_LINK_SOURCE = `\\[([^\\]]{1,80})\\]\\((${MARKDOWN_BALANCED_URL_BODY})\\)`;
+
+/**
+ * RFC-3986 percent-encodes literal `(` (`%28`) and `)` (`%29`) inside a URL before serializing it
+ * into a Markdown link destination `[Label](URL)`, eliminating delimiter collisions while remaining
+ * 100% semantically identical across HTTP paths, query strings, and `#:~:text=` fragments.
+ */
+export function encodeMarkdownLinkUrl(rawUrl = '') {
+  if (typeof rawUrl !== 'string' || !rawUrl) return '';
+  return rawUrl.trim().replace(/\(/g, '%28').replace(/\)/g, '%29');
+}
+
+/**
+ * Decodes `%28` / `%29` back to literal parentheses for canonical URL map lookups against raw stream URLs.
+ */
+export function decodeMarkdownLinkUrlParens(rawUrl = '') {
+  if (typeof rawUrl !== 'string' || !rawUrl) return '';
+  return rawUrl.trim().replace(/%28/gi, '(').replace(/%29/gi, ')');
+}
+
+/**
+ * Repairs any string where a legacy non-balanced Markdown link regex split an inline link at an
+ * inner `)` and left a trailing percent-encoded URL fragment tail (`%20was%20limited...practice)`),
+ * and normalizes all inline `[Label](https://...)` destinations with `encodeMarkdownLinkUrl`.
+ */
+export function normalizeMarkdownInlineLinksInText(rawText = '') {
+  if (typeof rawText !== 'string' || !rawText) return '';
+  // 1. Re-join any split `[Label](https://...%20(word)` + optional space + `%20...tail)` artifact
+  const healedSplit = rawText.replace(
+    /\[([^\]]{1,80})\]\((https:\/\/[^\s)]+\([^)\s]+)\)\s*(%[0-9A-Fa-f]{2}[^\s()]*)\)/g,
+    (_, label, headUrl, tailFragment) => `[${label}](${encodeMarkdownLinkUrl(`${headUrl})${tailFragment}`)})`
+  );
+  // 2. Encode any literal parentheses inside balanced `[Label](https://...)` destinations
+  const httpsLinkRe = new RegExp(MARKDOWN_HTTPS_INLINE_LINK_SOURCE, 'g');
+  return healedSplit.replace(
+    httpsLinkRe,
+    (_, label, targetUrl) => `[${label}](${encodeMarkdownLinkUrl(targetUrl)})`
+  );
+}
+
+/**
+ * Strips Markdown inline links `[Label](Target)` (including targets with balanced parentheses),
+ * optionally preserving the visible link label text.
+ */
+export function stripMarkdownInlineLinks(rawText = '', { keepLabel = false } = {}) {
+  if (typeof rawText !== 'string' || !rawText) return '';
+  const anyLinkRe = new RegExp(`\\[([^\\]]*)\\]\\((${MARKDOWN_BALANCED_URL_BODY})\\)`, 'g');
+  return rawText.replace(anyLinkRe, keepLabel ? '$1' : ' ');
+}
+
+/**
  * Validates a Pro-Football-Reference player ID (`PurdBr00`, `ThomJa06`, `JiAyBr00`).
  */
 export function isValidPfrPlayerId(pfrId) {
@@ -409,7 +468,7 @@ export function buildEspnPlayerUrl(espnId, playerName = '') {
 export function buildEspnPlayerNewsAnchorUrl(espnId, playerName = '', leadSentence = '') {
   const baseUrl = buildEspnPlayerUrl(espnId, playerName);
   if (!baseUrl) return null;
-  const words = String(leadSentence || '')
+  let words = String(leadSentence || '')
     .replace(/\s+/g, ' ')
     .trim()
     .split(' ')
@@ -417,6 +476,16 @@ export function buildEspnPlayerNewsAnchorUrl(espnId, playerName = '', leadSenten
     .slice(0, 7)
     .join(' ')
     .replace(/[.,;:!?]+$/, '');
+  // If slicing to 7 words cut inside an opening parenthetical `(e.g. ...` before its closing `)`,
+  // trim the unclosed clause so the text fragment never contains unbalanced parentheses.
+  if (words.includes('(') || words.includes(')')) {
+    words = words.replace(/\s*\([^)]*$/, '').trim();
+    const openCount = (words.match(/\(/g) || []).length;
+    const closeCount = (words.match(/\)/g) || []).length;
+    if (openCount !== closeCount) {
+      words = words.replace(/[()]/g, '').replace(/\s+/g, ' ').trim();
+    }
+  }
   if (!words || words.length < 10) return baseUrl;
   return `${baseUrl}#:~:text=${encodeURIComponent(words)}`;
 }

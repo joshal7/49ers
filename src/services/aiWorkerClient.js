@@ -33,7 +33,16 @@ import {
   isRedundantProfileSelfLink,
   buildStorySignatureKey
 } from '../engine/breakingClassifier.js';
-import { isPaywalledPublisher, sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import {
+  isPaywalledPublisher,
+  sanitizeExternalUrl,
+  MARKDOWN_ANY_INLINE_LINK_SOURCE,
+  MARKDOWN_HTTPS_INLINE_LINK_SOURCE,
+  encodeMarkdownLinkUrl,
+  decodeMarkdownLinkUrlParens,
+  normalizeMarkdownInlineLinksInText,
+  stripMarkdownInlineLinks
+} from '../engine/linkIntegrity.js';
 import {
   isBlueskyPostUrl,
   isDirectXStatusUrl,
@@ -2800,18 +2809,27 @@ function sanitizeBriefInlineLinksAndRoster(
     .trim();
   if (!text) return '';
 
-  // 1. Convert bare `[S1]` markers (not followed by `(`) into `[CiteLabel](url)`
+  // Pre-heal any split inline link tail (`[Label](https://...%20(word)%20...tail)`) before parsing
+  text = normalizeMarkdownInlineLinksInText(text);
+
+  const linkPlaceholders = [];
+
+  // 1. Convert bare `[S1]` markers (not followed by `(`) directly into placeholders so URL parentheses
+  //    (e.g. `#:~:text=Greenlaw%20(knee)...`) are never re-parsed or truncated by Step 2.
   text = text.replace(/\[(S\d{1,2})\](?!\()/gi, (_, refRaw) => {
     const key = String(refRaw || '').toUpperCase();
     const src = byRefId.get(key);
-    if (!src) return '';
+    if (!src?.url) return '';
     citedRefCollector.add(key);
-    return `[${src.citeLabel || src.author || src.outlet || 'Source'}](${src.url})`;
+    const label = src.citeLabel || src.author || src.outlet || 'Source';
+    const token = `__BRIEF_SRC_LINK_${linkPlaceholders.length}__`;
+    linkPlaceholders.push(`[${label}](${encodeMarkdownLinkUrl(src.url)})`);
+    return token;
   });
 
-  // 2. Resolve `[Label](S1)` or `[Label](https://...)` into verified non-paywalled HTTPS links
-  const linkPlaceholders = [];
-  text = text.replace(/\[([^\]]{1,80})\]\(([^)\s]+)\)/g, (_, rawLabel, rawTarget) => {
+  // 2. Resolve `[Label](S1)` or `[Label](https://...)` (with balanced-parenthesis URL support)
+  const mdLinkRe = new RegExp(MARKDOWN_ANY_INLINE_LINK_SOURCE, 'g');
+  text = text.replace(mdLinkRe, (_, rawLabel, rawTarget) => {
     const cleanLabel = String(rawLabel || '')
       .replace(/[\[\]]/g, '')
       .trim();
@@ -2828,7 +2846,10 @@ function sanitizeBriefInlineLinksAndRoster(
     } else {
       const candidateSafe = sanitizeExternalUrl(targetTrim, null);
       if (candidateSafe && !isPaywalledPublisher('', candidateSafe)) {
-        const matchingSrc = sourceCandidates.find(s => s.url === candidateSafe);
+        const canonicalCandidate = decodeMarkdownLinkUrlParens(candidateSafe);
+        const matchingSrc = sourceCandidates.find(
+          s => s.url === candidateSafe || decodeMarkdownLinkUrlParens(s.url) === canonicalCandidate
+        );
         if (matchingSrc) {
           citedRefCollector.add(matchingSrc.refId);
           tipLabel = matchingSrc.citeLabel || matchingSrc.author || matchingSrc.outlet || cleanLabel;
@@ -2852,7 +2873,7 @@ function sanitizeBriefInlineLinksAndRoster(
 
     if (!resolvedUrl) return '';
     const token = `__BRIEF_SRC_LINK_${linkPlaceholders.length}__`;
-    linkPlaceholders.push(`[${tipLabel || 'Source'}](${resolvedUrl})`);
+    linkPlaceholders.push(`[${tipLabel || 'Source'}](${encodeMarkdownLinkUrl(resolvedUrl)})`);
     return token;
   });
 
@@ -2865,7 +2886,7 @@ function sanitizeBriefInlineLinksAndRoster(
   // 3. Sanitize prose against hallucinated departed/retired players while keeping link tokens intact
   text = sanitizeHallucinatedRosterText(text, rosterPlayers);
 
-  // 4. Restore verified `[Label](https://...)` markdown tokens
+  // 4. Restore verified `[Label](https://...)` markdown tokens (with `%28`/`%29` encoded parens)
   for (let i = 0; i < linkPlaceholders.length; i++) {
     text = text.replace(`__BRIEF_SRC_LINK_${i}__`, linkPlaceholders[i]);
   }
@@ -2877,7 +2898,7 @@ function sanitizeBriefInlineLinksAndRoster(
 
 function countVisibleBriefWords(text = '') {
   // Inline `[Label](https://...)` renders as an icon-only link pill (0 visible words)
-  const plain = String(text || '').replace(/\[[^\]]*\]\([^)]+\)/g, ' ').trim();
+  const plain = stripMarkdownInlineLinks(String(text || ''), { keepLabel: false }).trim();
   if (!plain) return 0;
   return plain.split(/\s+/).filter(Boolean).length;
 }
@@ -2921,8 +2942,10 @@ export function parseAndSanitizeDailyTopNewsBrief(
       : []
   );
 
-  const rawHeadline = stripEmojisAndUrls(String(parsed.headline || ''))
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+  const rawHeadline = stripMarkdownInlineLinks(
+    stripEmojisAndUrls(String(parsed.headline || '')),
+    { keepLabel: true }
+  )
     .replace(/\*\*/g, '')
     .replace(/\.{3,}|…+/g, '')
     .trim();
@@ -2952,18 +2975,21 @@ export function parseAndSanitizeDailyTopNewsBrief(
   if (bullets.length < 2) return null;
 
   // Reject lazy headline-teaser output if an LLM ever produced "latest on..." or "click here"
-  const combinedPlain = `${headline} ${summary} ${bullets.join(' ')}`.replace(/\[[^\]]*\]\([^)]+\)/g, '');
+  const combinedPlain = stripMarkdownInlineLinks(
+    `${headline} ${summary} ${bullets.join(' ')}`,
+    { keepLabel: false }
+  );
   if (LAZY_TEASER_OR_TRUNCATED_BRIEF_REGEX.test(combinedPlain)) {
     return null;
   }
 
   // Ensure every bullet & summary carries at least one inline source link icon if candidates exist
-  const hasInlineLinkRe = /\[[^\]]+\]\(https:\/\/[^)]+\)/i;
+  const hasInlineLinkRe = new RegExp(MARKDOWN_HTTPS_INLINE_LINK_SOURCE, 'i');
   if (sourceCandidates.length > 0 && !hasInlineLinkRe.test(summary)) {
     const s0 = sourceCandidates[0];
     citedRefIds.add(s0.refId);
     const trimmedSum = summary.replace(/([.!?])\s*$/, '');
-    parsed._patchedSummary = `${trimmedSum} [${s0.citeLabel}](${s0.url}).`;
+    parsed._patchedSummary = `${trimmedSum} [${s0.citeLabel}](${encodeMarkdownLinkUrl(s0.url)}).`;
   }
   const finalSummary = parsed._patchedSummary || summary;
 
@@ -2972,7 +2998,7 @@ export function parseAndSanitizeDailyTopNewsBrief(
     const fallbackSrc = sourceCandidates[Math.min(idx + 1, sourceCandidates.length - 1)] || sourceCandidates[0];
     citedRefIds.add(fallbackSrc.refId);
     const cleanNoPeriod = b.replace(/([.!?])\s*$/, '');
-    return `${cleanNoPeriod} [${fallbackSrc.citeLabel}](${fallbackSrc.url}).`;
+    return `${cleanNoPeriod} [${fallbackSrc.citeLabel}](${encodeMarkdownLinkUrl(fallbackSrc.url)}).`;
   });
 
   // Order expandable bottom `sources`: inline-cited sources first, then remaining top StoryRank candidates (up to 12)
@@ -3364,10 +3390,49 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
   );
 }
 
+export function repairDailyTopNewsBriefLinks(brief) {
+  if (!brief || typeof brief !== 'object') return { brief, mutated: false };
+  let mutated = false;
+  let nextSummary = brief.summary;
+  if (typeof brief.summary === 'string') {
+    const norm = normalizeMarkdownInlineLinksInText(brief.summary);
+    if (norm !== brief.summary) {
+      nextSummary = norm;
+      mutated = true;
+    }
+  }
+  let nextBullets = brief.bullets;
+  if (Array.isArray(brief.bullets)) {
+    const mapped = brief.bullets.map(b =>
+      typeof b === 'string' ? normalizeMarkdownInlineLinksInText(b) : b
+    );
+    if (mapped.some((b, idx) => b !== brief.bullets[idx])) {
+      nextBullets = mapped;
+      mutated = true;
+    }
+  }
+  if (!mutated) return { brief, mutated: false };
+  return {
+    brief: {
+      ...brief,
+      summary: nextSummary,
+      bullets: nextBullets
+    },
+    mutated: true
+  };
+}
+
 export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
   if (!appData?.news) return false;
+  if (appData.news.dailyTopNewsBrief) {
+    appData.news.dailyTopNewsBrief = repairDailyTopNewsBriefLinks(appData.news.dailyTopNewsBrief).brief;
+  }
   const activeCycle = getDailyNewsBriefCycleKey(nowMs);
-  const cached = safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY);
+  const rawCached = safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY);
+  const { brief: cached, mutated: cacheMutated } = repairDailyTopNewsBriefLinks(rawCached);
+  if (cacheMutated && cached) {
+    safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, cached);
+  }
 
   if (cached && cached.cycleKey === activeCycle && cached.headline && Array.isArray(cached.bullets)) {
     const upstream = appData.news.dailyTopNewsBrief;
@@ -3422,7 +3487,7 @@ export async function refreshDailyTopNewsBriefIfDue({
     ) {
       return { updated: false, fromCache: true, cycleKey: activeCycle };
     }
-    const cached = safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY);
+    const { brief: cached } = repairDailyTopNewsBriefLinks(safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY));
     if (cached && cached.cycleKey === activeCycle && cached.source === 'live-gemini-daily') {
       appData.news.dailyTopNewsBrief = cached;
       return { updated: false, fromCache: true, cycleKey: activeCycle };

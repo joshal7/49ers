@@ -926,10 +926,15 @@ async function main() {
           ageInUpperRight: Boolean(hRect && aRect && aRect.right >= hRect.right - 20 && aRect.top <= hRect.top + 26),
           inlineLinkCount: inlineLinks.length,
           allInlineHttps: inlineLinks.every(a => (a.getAttribute('href') || '').startsWith('https://')),
+          allInlineBalancedParens: inlineLinks.every(a => {
+            const h = a.getAttribute('href') || '';
+            return (h.match(/\(/g) || []).length === (h.match(/\)/g) || []).length;
+          }),
           allInlineIconOnly: inlineLinks.every(
             a => a.textContent.trim() === '' && Boolean(a.querySelector('svg')) && (a.getAttribute('aria-label') || '').length >= 4
           ),
           hasEllipsisOrTeaser: /\.{3}|…|\blatest on\b|\bclick here\b|\bpro football rumors\b|\badam schefter\b/i.test(proseText),
+          hasLeakedUrlOrEncoding: /%[0-9A-Fa-f]{2}|https?:\/\/|#:~:text=|\[[^\]]+\]\(/i.test(proseText),
           startedCollapsed,
           expandedOpen,
           sourceRowCount: sourceRows.length,
@@ -938,10 +943,14 @@ async function main() {
       });
       assert(briefAudit.exists && briefAudit.ageText.length >= 2 && briefAudit.ageInUpperRight, `Daily Brief upper-right age timestamp failed: ${JSON.stringify(briefAudit)}`);
       assert(
-        briefAudit.inlineLinkCount >= 4 && briefAudit.allInlineHttps && briefAudit.allInlineIconOnly,
-        `Expected >=4 icon-only HTTPS inline source links in Daily Brief, got: ${JSON.stringify(briefAudit)}`
+        briefAudit.inlineLinkCount >= 4 &&
+          briefAudit.allInlineHttps &&
+          briefAudit.allInlineBalancedParens &&
+          briefAudit.allInlineIconOnly,
+        `Expected >=4 icon-only HTTPS inline source links with balanced hrefs in Daily Brief, got: ${JSON.stringify(briefAudit)}`
       );
       assert(!briefAudit.hasEllipsisOrTeaser, `Daily Brief prose contained truncated ellipsis, teaser phrase, or distracting inline source name: ${JSON.stringify(briefAudit)}`);
+      assert(!briefAudit.hasLeakedUrlOrEncoding, `Daily Brief prose leaked raw URL or %XX fragment tail: ${JSON.stringify(briefAudit)}`);
       assert(
         briefAudit.startedCollapsed && briefAudit.expandedOpen && briefAudit.sourceRowCount >= 5 && briefAudit.allSourcesHttps,
         `Expandable Daily Brief Sources list failed: ${JSON.stringify(briefAudit)}`
