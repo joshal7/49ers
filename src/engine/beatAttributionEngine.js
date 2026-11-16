@@ -306,7 +306,7 @@ export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
   if (/^https?:\/\/bsky\.app\//i.test(rawProfileUrl)) {
     const mappedHandle = extractXHandleFromBskyUrl(rawProfileUrl).replace(/^@/, '');
     if (mappedHandle) return `https://x.com/${mappedHandle}`;
-  } else if (rawProfileUrl) {
+  } else if (rawProfileUrl && !/\/search\?/i.test(rawProfileUrl)) {
     const xHandleMatch = rawProfileUrl.match(/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/?$/i);
     if (xHandleMatch) {
       const handleOwner = resolveReporterFromNameOrHandle(xHandleMatch[1]);
@@ -372,11 +372,7 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
     const finalName = customName || fallback.reporterName || fallback.author || '49ers Beat Wire';
     const isCustomExternalWriter = Boolean(customName);
     const cleanFallbackHandle = isCustomExternalWriter ? '' : String(fallback.authorHandle || '').replace(/^@/, '');
-    const fallbackXUrl = cleanFallbackHandle
-      ? `https://x.com/${cleanFallbackHandle}`
-      : isCustomExternalWriter
-        ? `https://x.com/search?q=${encodeURIComponent(`"${customName}" 49ers`)}&src=typed_query&f=live`
-        : null;
+    const fallbackXUrl = cleanFallbackHandle ? `https://x.com/${cleanFallbackHandle}` : null;
     const customSlug = isCustomExternalWriter
       ? `ext_${String(customName).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}`
       : null;

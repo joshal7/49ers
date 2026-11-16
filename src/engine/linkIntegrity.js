@@ -345,7 +345,7 @@ export function isStaleSeasonHeadline(headline = '', currentWeek = null) {
 }
 
 const DIRECT_FREE_PUBLIC_HOST_REGEX =
-  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com|tankathon\.com|drafttek\.com|walterfootball\.com|bleacherreport\.com|si\.com|yahoo\.com|thegamehaus\.com|wideleft\.football|nflmockdraftdatabase\.com)$/i;
+  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|azcardinals\.com|atlantafalcons\.com|baltimoreravens\.com|buffalobills\.com|panthers\.com|chicagobears\.com|bengals\.com|clevelandbrowns\.com|dallascowboys\.com|denverbroncos\.com|detroitlions\.com|packers\.com|houstontexans\.com|colts\.com|jaguars\.com|chiefs\.com|chargers\.com|therams\.com|raiders\.com|miamidolphins\.com|vikings\.com|patriots\.com|neworleanssaints\.com|giants\.com|newyorkjets\.com|philadelphiaeagles\.com|steelers\.com|seahawks\.com|buccaneers\.com|tennesseetitans\.com|commanders\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com|tankathon\.com|drafttek\.com|walterfootball\.com|bleacherreport\.com|si\.com|yahoo\.com|thegamehaus\.com|wideleft\.football|nflmockdraftdatabase\.com)$/i;
 
 /**
  * Detects whether an RSS or syndication publisher is paywalled (even when wrapped in a redirect URL).

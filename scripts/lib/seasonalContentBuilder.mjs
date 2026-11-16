@@ -1012,7 +1012,10 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     fallbackAuthorName,
     fallbackAuthorUrl,
     expandedExtUrl,
-    mediaImageUrl
+    mediaImageUrl,
+    videoStreamUrl = '',
+    videoDurationFmt = '',
+    isHighlightClip = false
   }) => {
     const bodyText = decodeBasicEntitiesForOembed(rawBodyText);
     if (!bodyText || bodyText.length < 16) return null;
@@ -1089,6 +1092,10 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
       externalUrl: safeExt && !isPaywalledPublisher('', safeExt) ? safeExt : null,
       externalTitle: null,
       imageUrl: mediaImageUrl && mediaImageUrl.startsWith('https://') ? mediaImageUrl : '',
+      videoStreamUrl: videoStreamUrl && videoStreamUrl.startsWith('https://') ? videoStreamUrl : undefined,
+      isHighlightClip: Boolean(isHighlightClip && videoStreamUrl && videoStreamUrl.startsWith('https://')),
+      duration: videoDurationFmt || undefined,
+      embeddable: videoStreamUrl && videoStreamUrl.startsWith('https://') ? true : undefined,
       publishedAt: pubIso,
       isBreaking: brk.isBreaking,
       isInGameInjury: brk.isInGameInjury,
@@ -1118,6 +1125,15 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   syn.mediaDetails?.[0]?.media_url_https ||
                   syn.video?.poster ||
                   '';
+                const mp4Variants = (syn.video?.variants || [])
+                  .filter(v => v?.type === 'video/mp4' && typeof v.src === 'string' && v.src.startsWith('https://'))
+                  .sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
+                const bestMp4 = mp4Variants[0]?.src || '';
+                const vidDurMs = Number(syn.video?.durationMs || 0);
+                const vidDurFmt =
+                  vidDurMs >= 5000
+                    ? `${Math.floor(vidDurMs / 60000)}:${String(Math.round((vidDurMs % 60000) / 1000)).padStart(2, '0')}`
+                    : '';
                 const screenName = syn.user?.screen_name || cand.handle;
                 hydratedItem = buildHydratedTweetItem({
                   statusId: cand.statusId,
@@ -1128,7 +1144,10 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   fallbackAuthorName: syn.user?.name || screenName,
                   fallbackAuthorUrl: `https://x.com/${screenName}`,
                   expandedExtUrl: rawExpUrl,
-                  mediaImageUrl: mediaThumb
+                  mediaImageUrl: mediaThumb,
+                  videoStreamUrl: bestMp4,
+                  videoDurationFmt: vidDurFmt,
+                  isHighlightClip: Boolean(bestMp4 && vidDurMs >= 8000)
                 });
 
                 // Also harvest quoted beat-reporter X status if present within 7-day window!

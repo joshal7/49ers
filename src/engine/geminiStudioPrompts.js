@@ -223,14 +223,64 @@ export function rankBestGeminiReasoningModels(catalogModels = []) {
 }
 
 /**
+ * Extracts a canonical version+tier family key (e.g. `4.0:hydrogen`, `3.8:flash`, `4.2:flash`)
+ * so preview/latest/stable checkpoints of the same model family group together when stepping
+ * down one tier (`top-tier minus 1`).
+ */
+export function extractGeminiModelFamilyKey(modelId = '') {
+  const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
+  if (!clean) return '';
+  const verMatch = clean.match(/^gemini-(\d+(?:\.\d+)?)/);
+  const ver = verMatch ? parseFloat(verMatch[1]).toFixed(1) : /\bhydrogen\b/.test(clean) ? '4.0' : '2.0';
+  const tier = /\bhydrogen\b/.test(clean)
+    ? 'hydrogen'
+    : /\bflash\b/.test(clean)
+      ? 'flash'
+      : /\bpro\b/.test(clean)
+        ? 'pro'
+        : 'other';
+  return `${ver}:${tier}`;
+}
+
+/**
+ * Ranks free-tier Flash/reasoning models starting at **Top-Tier Minus 1** (`N - 1`) for lightweight
+ * structured extraction tasks (such as 90-minute NFL game-day inactives lookup) that do not require
+ * flagship reasoning quota:
+ * - Today: `#1` is `gemini-4-hydrogen` -> returns `['gemini-3.8-flash', 'gemini-3.6-flash', ...]`
+ * - Auto-increments automatically as new models ship in `/v1beta/models`: e.g. when `gemini-5-hydrogen`
+ *   or `gemini-4.5-flash` becomes `#1`, `gemini-4-hydrogen` / `gemini-4.x-flash` automatically promotes
+ *   to `#1` in this `N - 1` cascade!
+ * Appends the flagship `#1` family only at the very tail as a last-resort fallback.
+ */
+export function rankSecondTierGeminiFlashModels(catalogModels = []) {
+  const fullRanked = rankBestGeminiReasoningModels(catalogModels);
+  if (fullRanked.length <= 1) return fullRanked;
+
+  const topFamily = extractGeminiModelFamilyKey(fullRanked[0]);
+  const minusOne = fullRanked.filter(id => extractGeminiModelFamilyKey(id) !== topFamily);
+  if (minusOne.length === 0) return fullRanked;
+
+  // Prefer free Flash/Hydrogen tiers ahead of any 0-quota Pro checkpoints in the N-1 list
+  const flashFirst = minusOne.filter(id => /\b(flash|hydrogen)\b/i.test(id));
+  const nonFlashRest = minusOne.filter(id => !/\b(flash|hydrogen)\b/i.test(id));
+  const topFamilyTail = fullRanked.filter(id => extractGeminiModelFamilyKey(id) === topFamily);
+
+  return [...flashFirst, ...nonFlashRest, ...topFamilyTail];
+}
+
+/**
  * Resolves the effective thinking level label for a given Gemini model and optional preferred tier:
  * - Gemini 4 Hydrogen / Gemini 4+ (`gemini-4*`, `*hydrogen*`): `'XHIGH'` by default (non-time-sensitive
- *   daily briefs/matchups/scheduled jobs), or `'HIGH'` when `preferredLevel === 'HIGH'` (live processing)
- * - Gemini 3.x / 2.5 (`gemini-3*`, `gemini-2.5*`): `'HIGH'` (capped so `'XHIGH'` is never attributed to 3.x)
+ *   daily briefs/matchups/scheduled jobs), or `'HIGH'`/`'MEDIUM'`/`'LOW'` when explicitly requested
+ * - Gemini 3.x / 2.5 (`gemini-3*`, `gemini-2.5*`): `'HIGH'` by default (or `'MEDIUM'`/`'LOW'` when requested;
+ *   never `'XHIGH'`)
  */
 export function resolveGeminiThinkingLevelLabel(modelId = '', preferredLevel = null) {
   const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
   const requested = String(preferredLevel || '').trim().toUpperCase();
+  if (requested === 'LOW' || requested === 'MEDIUM') {
+    return requested;
+  }
   if (!clean) {
     return requested === 'HIGH' ? 'HIGH' : PRIMARY_GEMINI_THINKING_LEVEL;
   }
@@ -250,12 +300,12 @@ export function resolveGeminiThinkingLevelLabel(modelId = '', preferredLevel = n
 /**
  * Builds the exact generation-compatible `thinkingConfig` object for `generativelanguage.googleapis.com/v1beta`.
  * - Gemini 4 Hydrogen & Gemini 4+ (`gemini-4-hydrogen`, `gemini-4*`):
- *   `{ thinkingLevel: 'XHIGH' }` by default (scheduled/non-time-sensitive) or `{ thinkingLevel: 'HIGH' }`
- *   when `options.preferredThinkingLevel === 'HIGH'` (live interactive Auto Pod / AI Analysis / quota probes).
+ *   `{ thinkingLevel: 'XHIGH' }` by default (scheduled/non-time-sensitive), `{ thinkingLevel: 'HIGH' }`
+ *   for live interactive tasks, or `{ thinkingLevel: 'LOW' | 'MEDIUM' }` for lightweight extraction.
  *   Strictly mutually exclusive with `thinkingBudget`!
- * - Gemini 3.x (`gemini-3*`): `{ thinkingLevel: 'HIGH' }` (mutually exclusive with `thinkingBudget`!)
+ * - Gemini 3.x (`gemini-3*`): `{ thinkingLevel: 'HIGH' }` (or `'LOW'` / `'MEDIUM'` when requested; mutually exclusive with `thinkingBudget`!)
  * - Gemini 2.5 Pro: `{ thinkingBudget: 32768 }`
- * - Gemini 2.5 Flash: `{ thinkingBudget: 24576 }`
+ * - Gemini 2.5 Flash: `{ thinkingBudget: 24576 }` (or `1024` when `'LOW'` is requested)
  */
 export function buildGeminiThinkingConfig(modelId = '', customBudget = null, options = {}) {
   const opts =
@@ -266,7 +316,12 @@ export function buildGeminiThinkingConfig(modelId = '', customBudget = null, opt
         : {};
   const numericBudget = customBudget && typeof customBudget === 'object' ? null : customBudget;
   const preferredLevel = String(opts.preferredThinkingLevel || '').trim().toUpperCase();
-  const gen4Level = preferredLevel === 'HIGH' ? 'HIGH' : 'XHIGH';
+  const gen4Level =
+    preferredLevel === 'LOW' || preferredLevel === 'MEDIUM' || preferredLevel === 'HIGH'
+      ? preferredLevel
+      : 'XHIGH';
+  const gen3Level =
+    preferredLevel === 'LOW' || preferredLevel === 'MEDIUM' ? preferredLevel : 'HIGH';
 
   const clean = String(modelId || '').replace(/^models\//i, '').trim().toLowerCase();
   if (/\bhydrogen\b/.test(clean)) {
@@ -279,11 +334,18 @@ export function buildGeminiThinkingConfig(modelId = '', customBudget = null, opt
     return { thinkingLevel: gen4Level };
   }
   if (ver >= 3.0) {
-    return { thinkingLevel: 'HIGH' };
+    return { thinkingLevel: gen3Level };
   }
 
   const isPro = /\bpro\b/.test(clean);
-  const defaultBudget = isPro ? PRO_MAX_THINKING_BUDGET : FLASH_HIGH_THINKING_BUDGET;
+  const defaultBudget =
+    preferredLevel === 'LOW'
+      ? 1024
+      : preferredLevel === 'MEDIUM'
+        ? 4096
+        : isPro
+          ? PRO_MAX_THINKING_BUDGET
+          : FLASH_HIGH_THINKING_BUDGET;
   const budget = Number(numericBudget);
   const safeBudget =
     Number.isFinite(budget) && budget >= 1024

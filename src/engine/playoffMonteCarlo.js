@@ -910,15 +910,16 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
   } else {
     maxOut = Math.max(1, Number(targetOrMaxCount) || 12);
     const rem = Array.isArray(baseConfig?.remainingGames) ? baseConfig.remainingGames : [];
-    const sortedWeeks = [...new Set(rem.map(g => Number(g.week || 0)).filter(Boolean))].sort(
+    const nfcRelevantRem = rem.filter(g => {
+      const h = normalizeTeamAbbr(g.home);
+      const a = normalizeTeamAbbr(g.away);
+      return nfcSet.has(h) || nfcSet.has(a);
+    });
+    const sortedWeeks = [...new Set(nfcRelevantRem.map(g => Number(g.week || 0)).filter(Boolean))].sort(
       (a, b) => a - b
     );
     const nextTwoWeeks = new Set(sortedWeeks.slice(0, 2));
-    candidateGames = rem.filter(g => {
-      const h = normalizeTeamAbbr(g.home);
-      const a = normalizeTeamAbbr(g.away);
-      return nextTwoWeeks.has(Number(g.week)) && (nfcSet.has(h) || nfcSet.has(a));
-    });
+    candidateGames = nfcRelevantRem.filter(g => nextTwoWeeks.has(Number(g.week)));
   }
 
   const teamEloMap = new Map();
@@ -1051,12 +1052,29 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     });
   }
 
-  return results
-    .sort(
-      (a, b) =>
-        b.maxSwingPct - a.maxSwingPct ||
-        b.expectedImpactScore - a.expectedImpactScore ||
-        b.totalLeverageScore - a.totalLeverageScore
-    )
-    .slice(0, maxOut);
+  const sorted = results.sort(
+    (a, b) =>
+      b.maxSwingPct - a.maxSwingPct ||
+      b.expectedImpactScore - a.expectedImpactScore ||
+      b.totalLeverageScore - a.totalLeverageScore
+  );
+
+  if (!Array.isArray(targetOrMaxCount) && maxOut >= 6) {
+    const distinctWeeks = [...new Set(sorted.map(r => Number(r.week || 0)).filter(Boolean))].sort(
+      (a, b) => a - b
+    );
+    if (distinctWeeks.length >= 2) {
+      const wk1 = distinctWeeks[0];
+      const wk2 = distinctWeeks[1];
+      const wk2Reserve = Math.min(3, Math.floor(maxOut / 4));
+      const wk1Picks = sorted.filter(r => Number(r.week) === wk1).slice(0, maxOut - wk2Reserve);
+      const wk2Need = Math.max(wk2Reserve, maxOut - wk1Picks.length);
+      const wk2Picks = sorted.filter(r => Number(r.week) === wk2).slice(0, wk2Need);
+      if (wk1Picks.length > 0 && wk2Picks.length > 0) {
+        return [...wk1Picks, ...wk2Picks];
+      }
+    }
+  }
+
+  return sorted.slice(0, maxOut);
 }

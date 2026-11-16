@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T05:21:30.571Z",
+  "updatedAt": "2026-11-16T18:44:13.947Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -8092,7 +8092,7 @@
       "pfrUrl": "https://www.pro-football-reference.com/players/A/AlleKe00.htm",
       "name": "Keenan Allen",
       "position": "WR",
-      "jersey": null,
+      "jersey": 3,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
       "unit": "Offense",
       "rosterBucket": "active",

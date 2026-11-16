@@ -1063,6 +1063,122 @@ async function main() {
       });
       assert(jumpedPrompt.activeTab === 'audio', 'Ask AI jump should navigate to audio/AI tab');
       assert(jumpedPrompt.promptValue.length > 10, 'Ask AI jump should pre-fill analysis prompt');
+
+      // 5. Verify Game-Day [T-90m, Post-Game AI Summary) live feed promotion in News -> All (0px overflow) & instant post-game snap-back
+      const gdBeforeSnap = await cdp.eval(() => {
+        const diag = window.__49ersDiagnostics;
+        const st = diag.getState();
+        const savedBrief = st.appData.news.dailyTopNewsBrief;
+        const savedSched0 = JSON.parse(JSON.stringify(st.appData.scheduleMatchup.schedule));
+        const savedStream = st.appData.news.rawStream.slice();
+
+        const nowMs = Date.now();
+        const simKickoffIso = new Date(nowMs - 30 * 60_000).toISOString(); // Kickoff started 30m ago (inside T-90m..Final)
+        st.appData.scheduleMatchup.schedule = [
+          ...savedSched0.filter(g => Number(g.week) !== 99),
+          {
+            id: 'e2e_gd_sim_99',
+            seasonType: 'REG',
+            week: 99,
+            dateIso: simKickoffIso,
+            completed: false,
+            statusState: 'in',
+            statusDetail: '2nd Quarter',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ];
+        st.appData.news.dailyTopNewsBrief = {
+          ...savedBrief,
+          cycleKey: '2026-01-01@17PT',
+          isPostGame: false,
+          gameWeek: 98,
+          generatedAt: new Date(nowMs - 18 * 3_600_000).toISOString()
+        };
+        st.appData.news.rawStream = [
+          {
+            id: 'e2e_gd_item_1',
+            type: 'tweet',
+            title: 'Live game-day update: Brock Purdy hits George Kittle down the seam for 28 yards.',
+            fullText: 'Live game-day update: Brock Purdy hits George Kittle down the seam for 28 yards.',
+            url: 'https://x.com/MaioccoNBCS/status/2199999999999999901',
+            author: 'Matt Maiocco',
+            outletName: 'NBC Sports Bay Area',
+            trustTier: 1,
+            isBreaking: false,
+            publishedAt: new Date(nowMs - 5 * 60_000).toISOString()
+          },
+          ...savedStream
+        ];
+
+        st.activeNavTab = 'news';
+        st.newsCategoryFilter = 'all';
+        diag.forceRender();
+
+        const mainHtml = document.getElementById('mainView')?.innerHTML || '';
+        const bannerIdx = mainHtml.indexOf('data-gameday-above-brief-banner');
+        const itemIdx = mainHtml.indexOf('Brock Purdy hits George Kittle down the seam');
+        const briefIdx = mainHtml.indexOf('data-daily-news-brief');
+
+        window.__e2eGdRestore = { savedBrief, savedSched0, savedStream };
+        return { bannerIdx, itemIdx, briefIdx };
+      });
+      assert(
+        gdBeforeSnap.bannerIdx > -1 &&
+          gdBeforeSnap.itemIdx > -1 &&
+          gdBeforeSnap.briefIdx > -1 &&
+          gdBeforeSnap.bannerIdx < gdBeforeSnap.briefIdx &&
+          gdBeforeSnap.itemIdx < gdBeforeSnap.briefIdx,
+        `Expected Game-Day Live Feed banner & non-breaking update above Top News Brief in All, got ${JSON.stringify(gdBeforeSnap)}`
+      );
+      await cdp.assertNoOverflow('News -> All Game-Day T-90m Live Promotion Banner');
+
+      const gdAfterSnap = await cdp.eval(() => {
+        const diag = window.__49ersDiagnostics;
+        const st = diag.getState();
+        const nowMs = Date.now();
+        const simGame = st.appData.scheduleMatchup.schedule.find(g => g.id === 'e2e_gd_sim_99');
+        simGame.dateIso = new Date(nowMs - 4 * 3_600_000).toISOString();
+        simGame.completed = true;
+        simGame.statusState = 'post';
+        simGame.statusDetail = 'Final';
+        st.appData.news.dailyTopNewsBrief = {
+          ...st.appData.news.dailyTopNewsBrief,
+          isPostGame: true,
+          gameWeek: 99,
+          source: 'live-gemini-daily',
+          generatedAt: new Date(nowMs).toISOString(),
+          sources: [
+            {
+              type: 'tweet',
+              author: 'Matt Maiocco',
+              outlet: 'NBC Sports Bay Area',
+              title: 'Postgame wrap',
+              url: 'https://x.com/MaioccoNBCS/status/2199999999999999902',
+              publishedAt: new Date(nowMs - 10 * 60_000).toISOString()
+            }
+          ]
+        };
+        diag.forceRender();
+
+        const mainHtml = document.getElementById('mainView')?.innerHTML || '';
+        const hasBannerAfter = mainHtml.includes('data-gameday-above-brief-banner');
+        const itemIdxAfter = mainHtml.indexOf('Brock Purdy hits George Kittle down the seam');
+        const briefIdxAfter = mainHtml.indexOf('data-daily-news-brief');
+
+        // Restore original state cleanly
+        const r = window.__e2eGdRestore;
+        st.appData.news.dailyTopNewsBrief = r.savedBrief;
+        st.appData.scheduleMatchup.schedule = r.savedSched0;
+        st.appData.news.rawStream = r.savedStream;
+        delete window.__e2eGdRestore;
+        diag.forceRender();
+
+        return { hasBannerAfter, itemIdxAfter, briefIdxAfter };
+      });
+      assert(
+        !gdAfterSnap.hasBannerAfter && gdAfterSnap.itemIdxAfter > gdAfterSnap.briefIdxAfter,
+        `Expected non-breaking update to move below brief once post-game AI summary formed, got ${JSON.stringify(gdAfterSnap)}`
+      );
     });
 
     console.log('\n=== [4/9] Roster Explorer (Simplified Dropdown + Up/Down Arrow Toggle), Dual Depth Chart & GM Cap Sim ===');
@@ -1652,10 +1768,10 @@ async function main() {
         `Alfred Collins IR card still shows bogus Week 10–11 return window: ${irDomAudit.collinsCardText}`
       );
       assert(
-        /Week 10/i.test(irDomAudit.hobbsBadgeText) &&
+        /Week \d+/i.test(irDomAudit.hobbsBadgeText) &&
           irDomAudit.hobbsBadgeIsPositive &&
           irDomAudit.hobbsCardText.includes('21-Day Window Open'),
-        `Nate Hobbs IR card should highlight open 21-day window + Week 10 badge, got "${irDomAudit.hobbsBadgeText}" / "${irDomAudit.hobbsCardText}"`
+        `Nate Hobbs IR card should highlight open 21-day window + activation week badge, got "${irDomAudit.hobbsBadgeText}" / "${irDomAudit.hobbsCardText}"`
       );
       assert(
         irDomAudit.sheetHealthText.includes('Season-Ending IR') &&
@@ -2322,6 +2438,13 @@ async function main() {
       // 1. Empty podcast topic validation & Unconnected Gemini API Key Gate (never a silent 1-second template!)
       const gateAndConnectAudit = await cdp.eval(async portNum => {
         const inp = document.getElementById('podTopicInput');
+        const podTopicIsTextarea = inp?.tagName === 'TEXTAREA' && inp.classList.contains('textarea-input');
+        const podTopicRows = Number(inp?.getAttribute('rows') || 0);
+        const podTopicStyle = inp ? window.getComputedStyle(inp) : null;
+        const podTopicFontSize = podTopicStyle ? parseFloat(podTopicStyle.fontSize) : 0;
+        const podTopicWraps = podTopicStyle
+          ? podTopicStyle.whiteSpace !== 'nowrap' && inp.scrollWidth <= inp.clientWidth + 1
+          : false;
         inp.value = '   ';
         inp.dispatchEvent(new Event('input', { bubbles: true }));
         document.querySelector('[data-action="generate-autopodcast"]').click();
@@ -2391,6 +2514,10 @@ async function main() {
         const guideHiddenOnceConnected = !document.querySelector('[data-gemini-guide-banner]');
 
         return {
+          podTopicIsTextarea,
+          podTopicRows,
+          podTopicFontSize,
+          podTopicWraps,
           emptyErrText,
           hasUnconnectedCard: Boolean(unconnectedCard),
           guidePositionedAboveCard,
@@ -2410,6 +2537,13 @@ async function main() {
         };
       }, PORT);
 
+      assert(
+        gateAndConnectAudit.podTopicIsTextarea &&
+          gateAndConnectAudit.podTopicRows === 3 &&
+          gateAndConnectAudit.podTopicFontSize >= 16 &&
+          gateAndConnectAudit.podTopicWraps,
+        `Auto Podcast topic input should be a line-wrapping textarea matching AI Analysis: ${JSON.stringify(gateAndConnectAudit)}`
+      );
       assert(gateAndConnectAudit.emptyErrText.includes('Please enter or select a podcast topic'), 'Missing empty podcast topic validation');
       assert(gateAndConnectAudit.hasUnconnectedCard && gateAndConnectAudit.inlineKeyFontSize >= 16, 'Unconnected Gemini setup card missing or <16px input');
       assert(gateAndConnectAudit.presetBtnsCount === 0, 'Preset duration buttons should be removed in favor of slider');
@@ -4039,6 +4173,7 @@ async function main() {
           );
           const sfActiveChips = sfBlock?.querySelectorAll('.gameday-active-chip').length || 0;
           const sfInactiveChips = sfBlock?.querySelectorAll('.gameday-inactive-chip').length || 0;
+          const sfHasCoachDecisionNote = (sfBlock?.textContent || '').includes("Healthy Scratch (Coach's Decision)");
           if (sfDetails) sfDetails.open = true;
           const sfExpandedOk = Boolean(sfDetails?.open);
           const sfBadges = Array.from(
@@ -4051,6 +4186,7 @@ async function main() {
           // Check Matchup Opponent Block at T-45m (directly above Opponent Practice Participation table!)
           document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
           const oppBlock = document.querySelector('[data-gameday-roster-block="opp"]');
+          const oppHasCoachDecisionNote = (oppBlock?.textContent || '').includes("Healthy Scratch (Coach's Decision)");
           const oppTableWrap = document.querySelector('[data-health-table="opp"]');
           const oppAboveTable =
             Boolean(oppBlock && oppTableWrap) &&
@@ -4068,12 +4204,39 @@ async function main() {
             b => b.includes('In (Active)') || b.includes('Out (Inactive)') || b === 'Active • GTD'
           );
 
-          // Now mark game Final (completed = true) -> both blocks must immediately disappear!
+          // Simulate Mid-Game Q2 Opponent Injury -> live Opponent Injury Update card pops up below Opponent Health table!
+          const koAgo30m = new Date(Date.now() - 30 * 60_000).toISOString();
+          nextGame.dateIso = koAgo30m;
+          sm.upcomingMatchup.kickoffIso = koAgo30m;
+          sm.upcomingMatchup.dateIso = koAgo30m;
+          const sampleOppStarter = (sm.upcomingMatchup.opponentHealth?.activeRoster || []).find(p => p.name) ||
+            (sm.upcomingMatchup.opponentHealth?.keyStartersHealthy || [])[0];
+          if (sampleOppStarter) {
+            st.appData.liveGameDay.oppWireItems = [
+              {
+                id: 'e2e_opp_qtr',
+                type: 'tweet',
+                title: `${sampleOppStarter.name} (ankle) headed to the medical tent and is questionable to return.`,
+                fullText: `${sampleOppStarter.name} (ankle) headed to the medical tent and is questionable to return.`,
+                author: 'ESPN NFL',
+                outletName: 'ESPN',
+                publishedAt: new Date(Date.now() - 60_000).toISOString(),
+                url: 'https://www.espn.com/nfl/injuries'
+              }
+            ];
+          }
+          window.__49ersDiagnostics.forceRender();
+          const oppLiveInGameCard = document.querySelector('[data-opp-live-injury-news]');
+          const oppLiveCardShown = !sampleOppStarter || Boolean(oppLiveInGameCard && oppLiveInGameCard.textContent.includes('QTR'));
+
+          // Now mark game Final (completed = true) -> both blocks & live card must immediately disappear!
           nextGame.completed = true;
           document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
           const sfGoneAfterFinal = !document.querySelector('[data-gameday-roster-block="sf"]');
           document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
-          const oppGoneAfterFinal = !document.querySelector('[data-gameday-roster-block="opp"]');
+          const oppGoneAfterFinal =
+            !document.querySelector('[data-gameday-roster-block="opp"]') &&
+            !document.querySelector('[data-opp-live-injury-news]');
 
           return {
             sfBlockExists: Boolean(sfBlock),
@@ -4082,13 +4245,16 @@ async function main() {
             sfUnits,
             sfActiveChips,
             sfInactiveChips,
+            sfHasCoachDecisionNote,
             sfZeroStaleQuestionable,
             oppBlockExists: Boolean(oppBlock),
+            oppHasCoachDecisionNote,
             oppAboveTable,
             oppStartedCollapsed,
             oppUnits,
             oppActiveChips,
             oppZeroStaleQuestionable,
+            oppLiveCardShown,
             sfGoneAfterFinal,
             oppGoneAfterFinal
           };
@@ -4096,6 +4262,7 @@ async function main() {
           nextGame.completed = false;
           nextGame.dateIso = savedDateIso;
           sm.upcomingMatchup.kickoffIso = savedUmKickoff;
+          sm.upcomingMatchup.dateIso = savedUmKickoff;
           st.appData.liveGameDay = savedLiveGameDay;
           window.__49ersDiagnostics.forceRender();
         }
@@ -4105,6 +4272,7 @@ async function main() {
         gameDayLifecycleAudit.sfBlockExists &&
           gameDayLifecycleAudit.sfStartedCollapsed &&
           gameDayLifecycleAudit.sfExpandedOk &&
+          gameDayLifecycleAudit.sfHasCoachDecisionNote &&
           JSON.stringify(gameDayLifecycleAudit.sfUnits) === JSON.stringify(['Offense', 'Defense', 'Special Teams']) &&
           gameDayLifecycleAudit.sfActiveChips >= 40 &&
           gameDayLifecycleAudit.sfInactiveChips >= 5 &&
@@ -4113,11 +4281,13 @@ async function main() {
       );
       assert(
         gameDayLifecycleAudit.oppBlockExists &&
+          gameDayLifecycleAudit.oppHasCoachDecisionNote &&
           gameDayLifecycleAudit.oppAboveTable &&
           gameDayLifecycleAudit.oppStartedCollapsed &&
           JSON.stringify(gameDayLifecycleAudit.oppUnits) === JSON.stringify(['Offense', 'Defense', 'Special Teams']) &&
           gameDayLifecycleAudit.oppActiveChips >= 40 &&
-          gameDayLifecycleAudit.oppZeroStaleQuestionable,
+          gameDayLifecycleAudit.oppZeroStaleQuestionable &&
+          gameDayLifecycleAudit.oppLiveCardShown,
         `Opponent Game-Day Roster lifecycle failed: ${JSON.stringify(gameDayLifecycleAudit)}`
       );
       assert(

@@ -222,8 +222,15 @@ function renderGameDayRosterCard(
       }
 
       <div class="gameday-inactives-section" data-gameday-inactives>
-        <div class="sub-label" style="margin-bottom:5px">
-          ${gameDayModel.officialPosted ? `Declared Inactives (${inactives.length})` : `Pre-Declared Out / Inactives (${inactives.length})`}
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px">
+          <div class="sub-label" style="margin-bottom:0">
+            ${gameDayModel.officialPosted ? `Declared Inactives (${inactives.length})` : `Pre-Declared Out / Inactives (${inactives.length})`}
+          </div>
+          ${
+            gameDayModel.sourceUrl && sanitizeExternalUrl(gameDayModel.sourceUrl, null)
+              ? `<a href="${esc(sanitizeExternalUrl(gameDayModel.sourceUrl, ''))}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="font-size:10.5px;padding:2px 7px"><span>${esc(gameDayModel.sourceLabel || 'Official List')}</span>${iconSvg('externalLink', 9)}</a>`
+              : ''
+          }
         </div>
         ${
           inactives.length > 0
@@ -238,12 +245,19 @@ function renderGameDayRosterCard(
                       !is49ers && p.espnUrl
                         ? `<a href="${esc(p.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(p.name)}</strong></a>`
                         : `<strong>${esc(p.name)}</strong>`;
+                    const rawReason = String(p.injuryType || p.reason || '').trim();
+                    const displayReason =
+                      p.isHealthyScratch || /^healthy scratch$/i.test(rawReason)
+                        ? rawReason.includes('(')
+                          ? rawReason
+                          : "Healthy Scratch (Coach's Decision)"
+                        : rawReason || 'Inactive';
                     return `
                       <div class="gameday-inactive-chip" ${clickAttrs}>
                         ${renderPlayerAvatarHtml(p, 24)}
                         <div class="gameday-inactive-meta">
                           <div class="gameday-inactive-name">${nameHtml} <span class="gameday-pos">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</span></div>
-                          <div class="gameday-inactive-reason">${esc(p.injuryType || p.reason || 'Inactive')}</div>
+                          <div class="gameday-inactive-reason">${esc(displayReason)}</div>
                         </div>
                       </div>
                     `;
@@ -567,11 +581,25 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
   const oppHealth = um.opponentHealth || {};
   const sharedWin = evaluateGameDayWindow(appData?.scheduleMatchup?.schedule || [], um, Date.now());
   const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false, windowState: sharedWin });
-  const rawOppInjReport = oppHealth.injuryReport || [];
+  const rawOppInjReport = oppGameDay?.isActive
+    ? oppHealth._preGameInjuryReport || oppHealth.injuryReport || []
+    : oppHealth.injuryReport || [];
+  const oppActivePool = [
+    ...(oppHealth.activeRoster || []),
+    ...(oppHealth._preGameKeyStartersHealthy || oppHealth.keyStartersHealthy || []),
+    ...rawOppInjReport
+  ];
   const oppInjReport = oppGameDay?.isActive
-    ? resolveGameDayInjuryRows(rawOppInjReport, oppGameDay)
+    ? resolveGameDayInjuryRows(rawOppInjReport, oppGameDay, { activeRosterPlayers: oppActivePool })
     : rawOppInjReport;
+  const oppLiveInGameRows =
+    oppGameDay?.isActive && sharedWin.hasKickoffStarted
+      ? oppInjReport.filter(r => Boolean(r?.isInGameInjury || r?.isInGameReturned) && Boolean(r?.inGameLatestItem || r?.beatComment))
+      : [];
   const oppIrList = oppHealth.irReserve || [];
+  const oppInactiveNameSet = new Set(
+    (oppGameDay?.inactives || []).map(p => String(p?.name || '').toLowerCase().replace(/\b(?:jr|sr|ii|iii|iv|v)\b\.?/g, '').replace(/[^a-z0-9]/g, ''))
+  );
   const unresolvedOppNames = new Set(
     oppInjReport
       .filter(r => {
@@ -579,15 +607,29 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         const pr = Number(r?.playProbabilityPct ?? 50);
         return !(/^(?:active|in\b|no designation|cleared)/i.test(st) || pr >= 88);
       })
-      .map(r => String(r?.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
+      .map(r => String(r?.name || '').toLowerCase().replace(/\b(?:jr|sr|ii|iii|iv|v)\b\.?/g, '').replace(/[^a-z0-9]/g, ''))
       .filter(Boolean)
   );
-  const oppHealthyStarters = (oppHealth.keyStartersHealthy || []).filter(
-    st => !unresolvedOppNames.has(String(st?.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
-  );
+  const oppHealthyStarters = (oppHealth._preGameKeyStartersHealthy || oppHealth.keyStartersHealthy || [])
+    .filter(st => {
+      const nk = String(st?.name || '').toLowerCase().replace(/\b(?:jr|sr|ii|iii|iv|v)\b\.?/g, '').replace(/[^a-z0-9]/g, '');
+      return !unresolvedOppNames.has(nk) && !oppInactiveNameSet.has(nk);
+    })
+    .map(st =>
+      oppGameDay?.isActive && (oppGameDay.officialPosted || sharedWin.hasKickoffStarted)
+        ? { ...st, playProbabilityPct: 99, playBadgeLabel: '99% • In (Active)' }
+        : st
+    );
   const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true, windowState: sharedWin });
-  const rawSfPr = appData?.health?.practiceReport || [];
-  const sfPr = (sfGameDay?.isActive ? resolveGameDayInjuryRows(rawSfPr, sfGameDay) : rawSfPr).slice(0, 5);
+  const rawSfPr = sfGameDay?.isActive
+    ? appData?.health?._preGamePracticeReport || appData?.health?.practiceReport || []
+    : appData?.health?.practiceReport || [];
+  const sfActive53 = (appData?.roster?.players || []).filter(p => !p.rosterBucket || p.rosterBucket === 'active');
+  const sfPr = (
+    sfGameDay?.isActive
+      ? resolveGameDayInjuryRows(rawSfPr, sfGameDay, { activeRosterPlayers: sfActive53 })
+      : rawSfPr
+  ).slice(0, 5);
 
   const resolvedOppSummary = computeTeamHealthSummary({
     injuryReport: oppInjReport,
@@ -810,6 +852,53 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
               </table>
             </div>
 
+            ${
+              oppLiveInGameRows.length > 0
+                ? `<div class="subcard-panel temporal-highlight" data-opp-live-injury-news style="margin-bottom:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px">
+                      <strong style="font-size:12.5px;color:var(--text-primary)">${esc(um.oppAbbr || 'OPP')} Live In-Game Injury Updates (${oppLiveInGameRows.length})</strong>
+                      <span class="badge badge-warning mono" style="font-size:10px">LIVE</span>
+                    </div>
+                    <div class="health-injury-news-list">
+                      ${oppLiveInGameRows
+                        .map(entry => {
+                          const topIt = entry.inGameLatestItem || {
+                            type: 'tweet',
+                            title: entry.beatComment || `${entry.name} (${entry.injuryType}): ${entry.gameStatus}`,
+                            fullText: entry.beatComment || `${entry.name} (${entry.injuryType}): ${entry.gameStatus}`,
+                            author: `${um.oppAbbr || 'NFL'} Beat Wire`,
+                            outletName: 'Live Injury Wire',
+                            publishedAt: new Date().toISOString(),
+                            url: entry.espnUrl || oppHealth.teamInjuriesUrl || 'https://www.espn.com/nfl/injuries'
+                          };
+                          const nameInner = entry.espnUrl
+                            ? `<a href="${esc(entry.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(entry.name)}</strong></a>`
+                            : `<strong>${esc(entry.name)}</strong>`;
+                          return `
+                            <div class="health-injury-news-entry" data-opp-injury-news-player="${esc(entry.name)}" data-play-prob="${entry.playProbabilityPct}">
+                              <div class="health-injury-player-head" style="cursor:default">
+                                <span class="health-injury-player-ident">
+                                  ${renderPlayerAvatarHtml(entry, 32, { showJerseyBadge: entry.jersey != null })}
+                                  <span class="health-injury-player-label">
+                                    ${nameInner} <strong style="color:var(--gold-bright)">(${esc(entry.position)}${entry.injuryType ? ` • ${esc(entry.injuryType)}` : ''})</strong>
+                                  </span>
+                                </span>
+                                <span class="badge ${playProbBadgeClass(entry.playProbabilityPct)} mono">${esc(entry.playBadgeLabel)}</span>
+                              </div>
+                              ${renderInjuryNewsItemCardHtml(topIt, {
+                                playerName: entry.name,
+                                directPosts: [],
+                                outerClassName: 'health-injury-news-card'
+                              })}
+                            </div>
+                          `;
+                        })
+                        .join('')}
+                    </div>
+                  </div>`
+                : ''
+            }
+
             <details class="compact-details" style="margin-bottom:10px">
               <summary class="compact-details-summary">
                 <span>${esc(um.oppAbbr || 'OPP')} Beat Notes (${oppInjReport.length})</span>
@@ -890,7 +979,14 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
                           <span style="color:var(--gold-bright)"> (${esc(ir.position)}${ir.injuryType ? ` • ${esc(ir.injuryType)}` : ''})</span>
                         </div>
                       </div>
-                      <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
+                      <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                        <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
+                        ${
+                          !oppGameDay?.isActive && Number(ir.playProbabilityPct) > 0 && ir.playBadgeLabel
+                            ? `<span class="badge ${playProbBadgeClass(ir.playProbabilityPct)} mono" data-ir-play-badge>${esc(formatCompactPlayBadge(ir.playBadgeLabel))}</span>`
+                            : ''
+                        }
+                      </div>
                     </div>
                     <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
                       ${meta.subtitleHtml}
@@ -1097,9 +1193,14 @@ function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026, { isOpponent = fals
 function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) {
   const h = appData?.health || {};
   const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
-  const rawSfReport = h.practiceReport || [];
+  const rawSfReport = sfGameDay?.isActive
+    ? h._preGamePracticeReport || h.practiceReport || []
+    : h.practiceReport || [];
+  const sfActive53 = (appData?.roster?.players || []).filter(p => !p.rosterBucket || p.rosterBucket === 'active');
   const sfReport = sfGameDay?.isActive
-    ? resolveGameDayInjuryRows(rawSfReport, sfGameDay)
+    ? resolveGameDayInjuryRows(rawSfReport, sfGameDay, { activeRosterPlayers: sfActive53 }).filter(
+        r => !(r?.rosterBucket === 'ir' && Number(r?.playProbabilityPct ?? 0) === 0)
+      )
     : rawSfReport;
 
   const injuryNewsEntries = buildTeamInjuryNewsFeed(appData, {
@@ -1158,7 +1259,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
                     ${renderPlayerAvatarHtml(p, 26)}
                     <div class="sticky-player-meta">
                       <div class="sticky-player-name"><strong>${esc(p.name)}</strong></div>
-                      <div class="sticky-player-sub">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</div>
+                      <div class="sticky-player-sub">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}${p.isIrReturnWindow || p.rosterBucket === 'ir' ? ' • IR 21d' : ''}</div>
                     </div>
                   </div>
                 </td>
@@ -1241,7 +1342,14 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
                 ${renderPlayerAvatarHtml(ir, 34, { showJerseyBadge: ir.jersey != null })}
                 <strong>${esc(ir.name)} <span style="color:var(--gold-bright)">(${esc(ir.position)}${showInj ? ` • ${esc(ir.injuryType)}` : ''})</span></strong>
               </div>
-              <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
+              <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                <span class="badge ${meta.badgeClass} mono">${esc(meta.badgeText)}</span>
+                ${
+                  !sfGameDay?.isActive && Number(ir.playProbabilityPct) > 0 && ir.playBadgeLabel
+                    ? `<span class="badge ${playProbBadgeClass(ir.playProbabilityPct)} mono" data-ir-play-badge>${esc(formatCompactPlayBadge(ir.playBadgeLabel))}</span>`
+                    : ''
+                }
+              </div>
             </div>
             <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">
               ${meta.subtitleHtml}${

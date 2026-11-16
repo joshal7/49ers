@@ -32,6 +32,7 @@ import {
 } from './lib/seasonalContentBuilder.mjs';
 import {
   parseTankathonTeamPicksHtml,
+  parseGroundedJsonSafe,
   discoverBestFreeGeminiModel,
   runVerifiedDeepGeminiSynthesis,
   runSinglePassDailyGeminiSynthesis
@@ -90,12 +91,21 @@ import {
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
   resolveGameNewsContext,
+  resolveNewsBriefCycleState,
   filterOutCompletedGameAvailabilityItems,
   isStalePriorGameVideo,
+  isDailyBriefStaleForLiveState,
   stripRedundantAuthorBoilerplate
 } from '../src/engine/breakingClassifier.js';
 import {
+  NFL_TEAM_OFFICIAL_RSS_URLS,
+  evaluateGameDayWindow,
   isBeforeWeeklyPracticeWindow,
+  discoverOfficialClubInactivesRssItem,
+  parseOfficialClubInactivesArticle,
+  parseRotoWireInactivesHtml,
+  buildTeamGameDayRosterModel,
+  resolveGameDayInjuryRows,
   classifyRosterUnit,
   resolveEarlyWeekRolloverInput
 } from '../src/engine/gameDayRosterEngine.js';
@@ -796,11 +806,19 @@ async function main() {
       break;
     }
   }
+  const normalizeEspnEventWeekNum = ev => {
+    const evStType = Number(ev?.seasonType?.type ?? ev?.seasonType?.id ?? 2);
+    const rawWk = Number(ev?.week?.number || 0);
+    if (evStType === 3) {
+      return rawWk === 1 ? 19 : rawWk === 2 ? 20 : rawWk === 3 ? 21 : 22;
+    }
+    return rawWk;
+  };
   const nextEspnEvent =
     (espnSchedule.events || []).find(ev => !ev.competitions?.[0]?.status?.type?.completed) ||
     (espnSchedule.events || [])[espnSchedule.events.length - 1] ||
     null;
-  const detectedCurrentWeek = Number(nextEspnEvent?.week?.number || 9);
+  const detectedCurrentWeek = normalizeEspnEventWeekNum(nextEspnEvent) || 9;
   const sfBeforePracticeWindow = isBeforeWeeklyPracticeWindow(nextEspnEvent?.date || '');
   const nextEspnOppCompetitor = (nextEspnEvent?.competitions?.[0]?.competitors || []).find(
     c => String(c.team?.id) !== '25' && c.team?.abbreviation !== 'SF'
@@ -811,7 +829,7 @@ async function main() {
       c => String(c.team?.id) !== '25' && c.team?.abbreviation !== 'SF'
     );
     return {
-      week: Number(ev.week?.number || 0),
+      week: normalizeEspnEventWeekNum(ev),
       dateIso: ev.date,
       completed: Boolean(ev.competitions?.[0]?.status?.type?.completed),
       statusState: String(ev.competitions?.[0]?.status?.type?.state || '').toLowerCase(),
@@ -834,6 +852,63 @@ async function main() {
     }
   };
   const pipelineGameContext = resolveGameNewsContext(pipelineAppDataStub);
+
+  // Authoritative Completed-Game Participation (`didNotPlay`) + Instant Post-Game Summary/Videos
+  const completedEspnEvents = (espnSchedule.events || [])
+    .filter(ev => Boolean(ev.competitions?.[0]?.status?.type?.completed) && ev.date)
+    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+  const latestCompletedEspnEvent = completedEspnEvents[0] || null;
+  const latestCompletedEventKoMs = latestCompletedEspnEvent?.date ? Date.parse(latestCompletedEspnEvent.date) : null;
+  const playedInLatestCompletedGameIds = new Set();
+  const dnpInLatestCompletedGameIds = new Set();
+  let latestCompletedSummaryJson = null;
+  if (
+    latestCompletedEspnEvent?.id &&
+    Number.isFinite(latestCompletedEventKoMs) &&
+    Date.now() - latestCompletedEventKoMs <= 7 * 86_400_000
+  ) {
+    const compEvId = encodeURIComponent(String(latestCompletedEspnEvent.id));
+    const [compSumRes, compCoreRosRes] = await Promise.all([
+      fetchJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${compEvId}`).catch(() => null),
+      fetchJson(
+        `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${compEvId}/competitions/${compEvId}/competitors/25/roster`
+      ).catch(() => null)
+    ]);
+    latestCompletedSummaryJson = compSumRes;
+    for (const entry of compCoreRosRes?.entries || []) {
+      const pid = entry?.playerId != null ? String(entry.playerId) : '';
+      if (!pid) continue;
+      if (entry.didNotPlay === false) playedInLatestCompletedGameIds.add(pid);
+      else if (entry.didNotPlay === true) dnpInLatestCompletedGameIds.add(pid);
+    }
+    const sfBoxTeam = (compSumRes?.boxscore?.players || []).find(
+      b => normalizeTeamAbbr(b?.team?.abbreviation || '') === 'SF'
+    );
+    for (const statGrp of sfBoxTeam?.statistics || []) {
+      for (const athEntry of statGrp?.athletes || []) {
+        const pid = athEntry?.athlete?.id != null ? String(athEntry.athlete.id) : '';
+        if (pid) {
+          playedInLatestCompletedGameIds.add(pid);
+          dnpInLatestCompletedGameIds.delete(pid);
+        }
+      }
+    }
+    if (compSumRes?.article?.headline) {
+      const ra = compSumRes.article;
+      espnNews.articles = [
+        {
+          id: ra.id || `recap_${compEvId}`,
+          headline: ra.headline,
+          description: ra.description || '',
+          published: ra.published || new Date().toISOString(),
+          byline: ra.byline || 'ESPN / AP',
+          images: ra.images || [],
+          links: ra.links || { web: { href: `https://www.espn.com/nfl/recap/_/gameId/${compEvId}` } }
+        },
+        ...(espnNews.articles || [])
+      ];
+    }
+  }
 
   // Parse authoritative 49ers.com Roster & Injury Report, CBS Injuries, ESPN Transactions & Athlete Web v3
   const officialSfRoster = parseOfficial49ersRosterHtml(official49ersRosterHtml);
@@ -1103,6 +1178,26 @@ async function main() {
         Boolean(txRec?.activatedFromIrDate) &&
         Date.now() - Date.parse(txRec.activatedFromIrDate) <= 5 * 86_400_000;
 
+      const playedInLastGameForRoll = playedInLatestCompletedGameIds.has(espnId)
+        ? true
+        : dnpInLatestCompletedGameIds.has(espnId) &&
+            ['out', 'doubtful', 'questionable'].includes(rawStatus.toLowerCase())
+          ? false
+          : null;
+      const hasPostKoAcuteSignal =
+        Number.isFinite(latestCompletedEventKoMs) &&
+        (espnNews.articles || []).some(a => {
+          const pMs = a?.published ? Date.parse(a.published) : NaN;
+          if (!Number.isFinite(pMs) || pMs < latestCompletedEventKoMs) return false;
+          const body = `${a.headline || ''} ${a.description || ''}`;
+          return (
+            doesClauseMentionPlayer(body, fullName, { allowSurname: true }) &&
+            /\b(exited|left (?:sunday|monday|thursday|saturday|the )['’]?s? game|did not return|will not return|suffered a|sustained a|injured his|underwent an mri|scheduled for an mri|\bmri\b|placed on (?:ir|injured reserve)|week-to-week)\b/i.test(
+              body
+            )
+          );
+        });
+
       const sfEarlyRoll =
         !officialInjReport.hasSfReport && sfBeforePracticeWindow && bucket === 'active'
           ? resolveEarlyWeekRolloverInput({
@@ -1110,7 +1205,10 @@ async function main() {
               injuryType: explicitInjType || leadParenBodyPart,
               shortComment: rawShortComment,
               longComment: rawLongComment,
-              upcomingWeek: detectedCurrentWeek
+              upcomingWeek: detectedCurrentWeek,
+              lastCompletedWeek: pipelineGameContext.latestCompletedWeek || null,
+              playedInCompletedGame: playedInLastGameForRoll,
+              hasPostKickoffInjurySignal: hasPostKoAcuteSignal
             })
           : null;
 
@@ -1131,8 +1229,7 @@ async function main() {
 
       const injuryType =
         irClassification?.injuryType ||
-        explicitInjType ||
-        (isGenuineInjuryReportEntry ? leadParenBodyPart : '');
+        (isGenuineInjuryReportEntry ? explicitInjType || leadParenBodyPart : '');
       const shortComment = isGenuineInjuryReportEntry ? rawShortComment : '';
       const longComment = isGenuineInjuryReportEntry ? rawLongComment : '';
 
@@ -1232,6 +1329,14 @@ async function main() {
         byeWeek: detectedByeWeek,
         fantasyStatusAbbr: webInj?.fantasyStatusAbbr || espnInj?.details?.fantasyStatus?.abbreviation || '',
         rosterBucket: bucket,
+        isPracticeWindowOpen: Boolean(irClassification?.isPracticeWindowOpen),
+        designatedDateIso: txRec?.designatedToReturnDate || null,
+        kickoffIso: nextEspnEvent?.date || '',
+        schedule: pipelineScheduleStub,
+        upcomingOppName: nextOppDisplayNamePre || '',
+        upcomingOppAbbr: normalizeTeamAbbr(nextEspnOppCompetitor?.team?.abbreviation || ''),
+        blurbDateIso: webInj?.date || inlineInj?.date || null,
+        lastCompletedGameKickoffMs: latestCompletedEventKoMs,
         isIrReturnQuestionable,
         isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
         injuryType,
@@ -1241,7 +1346,7 @@ async function main() {
         beatNote: isGenuineInjuryReportEntry
           ? sfEarlyRoll
             ? sfEarlyRoll.beatNoteForModel
-            : `${shortComment} ${longComment}`
+            : `${shortComment} ${longComment} ${irClassification?.beatNote || ''}`.trim()
           : ''
       });
 
@@ -1344,6 +1449,8 @@ async function main() {
           returnDate: returnDateStr,
           isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
           isPracticeWindowOpen: Boolean(irClassification?.isPracticeWindowOpen),
+          designatedDateIso: txRec?.designatedToReturnDate || null,
+          blurbDateIso: webInj?.date || inlineInj?.date || null,
           placedBeforeWeek: irClassification?.placedBeforeWeek ?? null,
           earliestEligibleWeek: irClassification?.earliestEligibleWeek ?? null,
           projectedReturnWeek: irClassification?.projectedReturnWeek || null,
@@ -1353,7 +1460,8 @@ async function main() {
           isIrReturnQuestionable,
           isOnPracticeReport:
             (bucket === 'active' && (isGenuineInjuryReportEntry || wed !== '-' || thu !== '-' || fri !== '-')) ||
-            isIrReturnQuestionable,
+            isIrReturnQuestionable ||
+            Boolean(bucket === 'ir' && irClassification?.isPracticeWindowOpen && playProb.probabilityPct > 0),
           wed,
           thu,
           fri,
@@ -1631,7 +1739,10 @@ async function main() {
         .map(({ ath, matched }, idx) => {
           const prob = matched.health?.playProbabilityPct ?? 95;
           const isAvailable =
-            prob >= 40 && (matched.rosterBucket === 'active' || Boolean(matched.health?.isIrReturnQuestionable));
+            prob >= 40 &&
+            (matched.rosterBucket === 'active' ||
+              Boolean(matched.health?.isIrReturnQuestionable) ||
+              Boolean(matched.health?.isPracticeWindowOpen));
           return {
             playerId: matched.id,
             name: matched.name || ath.displayName,
@@ -1691,6 +1802,8 @@ async function main() {
       position: p.position,
       jersey: p.jersey,
       headshotUrl: p.headshotUrl || '',
+      rosterBucket: p.rosterBucket || 'active',
+      isIrReturnWindow: p.rosterBucket === 'ir' && Boolean(p.health.isPracticeWindowOpen),
       wed: p.health.wed,
       thu: p.health.thu,
       fri: p.health.fri,
@@ -1702,7 +1815,7 @@ async function main() {
       playBadgeLabel: p.health.playBadgeLabel,
       archetypeNote: p.health.archetypeNote,
       factors: p.health.factors,
-      beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment)
+      beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment, p.health.irBeatNote)
     }));
 
   let irTrackerPlayers = rosterPlayers
@@ -1727,6 +1840,14 @@ async function main() {
       earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
       projectedReturnWeek: p.health.projectedReturnWeek || 'TBD',
       byeWeekNote: p.health.byeWeekNote || '4-game NFL minimum requirement',
+      playProbabilityPct: p.health.playProbabilityPct ?? 0,
+      playBadgeLabel:
+        p.health.playBadgeLabel ||
+        (p.health.isSeasonEnding
+          ? '0% • Out for Season'
+          : p.rosterBucket === 'suspended'
+            ? '0% • Suspended'
+            : '0% • IR'),
       beatNote: pickMeaningfulInjuryComment(p.health.irBeatNote, p.health.longComment, p.health.shortComment)
     }))
     .sort((a, b) => sortIrTrackerPriority(a) - sortIrTrackerPriority(b) || a.name.localeCompare(b.name));
@@ -1977,14 +2098,21 @@ async function main() {
     );
 
   const scoreYtIngestPriority = c => {
-    const t = `${c.channel || ''} ${c.title || ''}`;
     let s = 0;
     if (isPureFilmClip(c) && !/\bpodcast\b/i.test(c.title || '')) s += 50;
     if (/\b(game highlights|\bhighlights\b|best plays|every completed pass|every touchdown|pick[- ]?6|interceptions?)\b/i.test(c.title || '')) s += 48;
     if (/\b(forty niner way|49hours|mic['’]?d up|from the trenches|locker room|sights and sounds)\b/i.test(c.title || '')) s += 42;
     if (/^(?:nfl|san francisco 49ers)$/i.test(String(c.channel || '').trim())) s += 14;
     if (latestCompOppForYt && new RegExp(`\\b${latestCompOppForYt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(c.title || '')) {
-      s += 8;
+      s += 12;
+    }
+    const pubMs = c.publishedAt ? Date.parse(c.publishedAt) : NaN;
+    if (Number.isFinite(pubMs)) {
+      const ageHrs = Math.max(0, (Date.now() - pubMs) / 3_600_000);
+      s += Math.round(24 * Math.pow(0.5, ageHrs / 18));
+      if (Number.isFinite(latestCompletedEventKoMs) && pubMs < latestCompletedEventKoMs - 45 * 60_000) {
+        s -= 40;
+      }
     }
     return s;
   };
@@ -2253,6 +2381,10 @@ async function main() {
       summary: tw.summary ? cleanSensationalistText(tw.summary) : '',
       imageUrl: tw.imageUrl || '',
       imageAlt: `${tw.reporterName} social post`,
+      videoStreamUrl: tw.videoStreamUrl || undefined,
+      isHighlightClip: Boolean(tw.isHighlightClip && tw.videoStreamUrl),
+      duration: tw.duration || undefined,
+      embeddable: typeof tw.embeddable === 'boolean' ? tw.embeddable : undefined,
       mentionedPlayers: mentioned,
       publishedAt: pubIso,
       url: safeTwUrl,
@@ -2994,6 +3126,78 @@ async function main() {
     vidDraft.fluffScore = sig.fluffScore;
     vidDraft.isClickbait = false;
     rawNewsStream.push(vidDraft);
+  }
+
+  // Add instant ESPN HD 16x9 MP4 49ers game & player highlight clips from the latest completed game summary!
+  if (Array.isArray(latestCompletedSummaryJson?.videos) && latestCompletedSummaryJson.videos.length > 0) {
+    const compOppNick = String(pipelineGameContext?.latestCompletedOppNickname || '').trim();
+    const seenVideoStreams = new Set(rawNewsStream.map(it => it.videoStreamUrl).filter(Boolean));
+    for (const evVid of latestCompletedSummaryJson.videos) {
+      const headline = cleanSensationalistText(evVid?.headline || '');
+      if (!headline) continue;
+      const mp4Raw =
+        evVid?.links?.source?.HD?.href ||
+        evVid?.links?.source?.full?.href ||
+        evVid?.links?.source?.href ||
+        '';
+      const mp4Https = mp4Raw.startsWith('http://') ? `https://${mp4Raw.slice(7)}` : mp4Raw;
+      const webRaw = evVid?.links?.web?.href || '';
+      const safeWeb = sanitizeExternalUrl(webRaw, mp4Https.startsWith('https://') ? mp4Https : null);
+      if (!mp4Https.startsWith('https://') || !safeWeb) continue;
+      if (seenStreamUrls.has(safeWeb) || seenVideoStreams.has(mp4Https)) continue;
+
+      const mentioned = matchMentionedPlayers(`${headline} ${evVid.description || ''}`, 12);
+      const mentions49ersExplicitly = /\b(49ers|niners|san francisco)\b/i.test(headline);
+      const isOpponentScoringClip =
+        compOppNick &&
+        new RegExp(`\\bfor\\s+(?:a\\s+|their\\s+|an\\s+)?${compOppNick.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(headline) &&
+        !mentions49ersExplicitly &&
+        mentioned.length === 0;
+      if (isOpponentScoringClip || (!mentions49ersExplicitly && mentioned.length === 0)) continue;
+
+      const durNum = Number(evVid.duration || 0);
+      const durStr =
+        durNum > 0
+          ? `${Math.floor(durNum / 60)}:${String(Math.round(durNum % 60)).padStart(2, '0')}`
+          : '';
+      let thumbHttps = String(evVid.thumbnail || '');
+      if (thumbHttps.startsWith('http://')) thumbHttps = `https://${thumbHttps.slice(7)}`;
+      const pubIso = evVid.lastModified || evVid.originalPublishDate || new Date().toISOString();
+
+      seenStreamUrls.add(safeWeb);
+      seenVideoStreams.add(mp4Https);
+      rawNewsStream.push({
+        id: `espn_hl_vid_${evVid.id || rawNewsStream.length}`,
+        type: 'video',
+        title: sanitizeHallucinatedRosterText(headline, rosterPlayers),
+        summary: sanitizeHallucinatedRosterText(cleanSensationalistText(evVid.description || ''), rosterPlayers),
+        videoStreamUrl: mp4Https,
+        isHighlightClip: true,
+        duration: durStr,
+        embeddable: true,
+        imageUrl: thumbHttps.startsWith('https://') ? thumbHttps : '',
+        imageAlt: headline,
+        mentionedPlayers: mentioned,
+        publishedAt: pubIso,
+        url: safeWeb,
+        outletId: 'espn',
+        outletName: 'ESPN',
+        reporterId: null,
+        reporterName: 'ESPN Game Highlights',
+        author: 'ESPN',
+        authorHandle: '@ESPNNFL',
+        authorProfileUrl: 'https://x.com/ESPNNFL',
+        trustTier: 1,
+        isBreaking: false,
+        isInGameInjury: false,
+        breakingBadge: null,
+        breakingPriority: 0,
+        category: 'beat',
+        signalScore: 90,
+        fluffScore: 0,
+        isClickbait: false
+      });
+    }
   }
 
   // Prune stale pre-game player availability items from completed games & sort breaking/post-game injury updates to #1!
@@ -3795,12 +3999,40 @@ async function main() {
           txNote: oppTxRec?.placedOnIrNote || '',
           cbsStatusText: oppCbsRec?.statusText || '',
           isDesignatedToReturnOpen:
-            Boolean(oppTxRec?.designatedToReturnOpen) ||
-            /21-day|designated to return|returned to practice|practice window/i.test(combinedBeatLower),
+            (Boolean(oppTxRec?.designatedToReturnOpen) ||
+              /21-day\s+practice\s+window|designated\s+[\s\S]{0,40}\s+to\s+return|returned\s+to\s+practice|opened\s+[\s\S]{0,40}\s+practice\s+window/i.test(
+                combinedBeatLower
+              )) &&
+            !/\bnot\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+practice\b/i.test(combinedBeatLower),
           currentWeek,
           byeWeek: oppByeWeek,
           seasonYear,
           scheduleEvents: espnSchedule.events || []
+        });
+
+        const oppIrPlayProb = computePlayerPlayProbability({
+          name: nm,
+          position: pos,
+          experienceYears: expYears,
+          snapPct,
+          gameStatus: isSuspended ? 'Suspended' : oppIrClass.status,
+          rosterBucket: isSuspended ? 'suspended' : 'ir',
+          isSeasonEnding: oppIrClass.isSeasonEnding,
+          isPracticeWindowOpen: oppIrClass.isPracticeWindowOpen,
+          designatedDateIso: oppTxRec?.designatedToReturnDate || null,
+          kickoffIso: nextEspnEvent?.date || '',
+          schedule: pipelineScheduleStub,
+          currentWeek,
+          byeWeek: oppByeWeek,
+          upcomingOppName: 'San Francisco 49ers',
+          upcomingOppAbbr: 'SF',
+          blurbDateIso: oppWebInj?.date || inlineInj?.date || null,
+          lastCompletedGameKickoffMs: latestCompletedEventKoMs,
+          injuryType: oppIrClass.injuryType,
+          wed: offOppInjRec?.wed || '-',
+          thu: offOppInjRec?.thu || '-',
+          fri: offOppInjRec?.fri || '-',
+          beatNote: oppIrClass.beatNote
         });
 
         oppIrPlayers.push({
@@ -3814,6 +4046,10 @@ async function main() {
           injuryType: oppIrClass.injuryType,
           isSeasonEnding: oppIrClass.isSeasonEnding,
           isPracticeWindowOpen: oppIrClass.isPracticeWindowOpen,
+          designatedDateIso: oppTxRec?.designatedToReturnDate || null,
+          wed: offOppInjRec?.wed || '-',
+          thu: offOppInjRec?.thu || '-',
+          fri: offOppInjRec?.fri || '-',
           placedWeek: oppIrClass.placedBeforeWeek,
           earliestEligibleWeek: oppIrClass.earliestEligibleWeek,
           projectedReturnWeek: oppIrClass.projectedReturnWeek,
@@ -3821,12 +4057,8 @@ async function main() {
             ? oppIrClass.byeWeekNote
             : '4-game NFL minimum',
           beatNote: oppIrClass.beatNote,
-          playProbabilityPct: 0,
-          playBadgeLabel: oppIrClass.isSeasonEnding
-            ? '0% • Out for Season'
-            : isSuspended
-              ? '0% • Suspended'
-              : '0% • IR'
+          playProbabilityPct: oppIrPlayProb.probabilityPct,
+          playBadgeLabel: oppIrPlayProb.badgeLabel
         });
         continue;
       }
@@ -4268,16 +4500,37 @@ async function main() {
     `${oppShortName} Playmakers`;
 
   const OPPONENT_COORDINATOR_MAP = {
-    DAL: { hc: 'Brian Schottenheimer', oc: 'Klayton Adams', dc: 'Matt Eberflus' },
-    SEA: { hc: 'Mike Macdonald', oc: 'Ryan Grubb', dc: 'Aden Durde' },
-    GB: { hc: 'Matt LaFleur', oc: 'Adam Stenavich', dc: 'Jeff Hafley' },
-    BUF: { hc: 'Sean McDermott', oc: 'Joe Brady', dc: 'Bobby Babich' },
-    CHI: { hc: 'Ben Johnson', oc: 'Declan Doyle', dc: 'Dennis Allen' },
-    LAR: { hc: 'Sean McVay', oc: 'Mike LaFleur', dc: 'Chris Shula' },
-    MIA: { hc: 'Mike McDaniel', oc: 'Frank Smith', dc: 'Anthony Weaver' },
-    DET: { hc: 'Dan Campbell', oc: 'John Morton', dc: 'Kelvin Sheppard' },
     ARI: { hc: 'Jonathan Gannon', oc: 'Drew Petzing', dc: 'Nick Rallis' },
-    LV: { hc: 'Klint Kubiak', oc: 'Klint Kubiak', dc: 'Patrick Graham' }
+    ATL: { hc: 'Kevin Stefanski', oc: 'Tommy Rees', dc: 'Jeff Ulbrich' },
+    BAL: { hc: 'John Harbaugh', oc: 'Todd Monken', dc: 'Zach Orr' },
+    BUF: { hc: 'Sean McDermott', oc: 'Joe Brady', dc: 'Bobby Babich' },
+    CAR: { hc: 'Dave Canales', oc: 'Brad Idzik', dc: 'Ejiro Evero' },
+    CHI: { hc: 'Ben Johnson', oc: 'Declan Doyle', dc: 'Dennis Allen' },
+    CIN: { hc: 'Zac Taylor', oc: 'Dan Pitcher', dc: 'Al Golden' },
+    CLE: { hc: 'Todd Monken', oc: 'Ken Dorsey', dc: 'Jim Schwartz' },
+    DAL: { hc: 'Brian Schottenheimer', oc: 'Klayton Adams', dc: 'Matt Eberflus' },
+    DEN: { hc: 'Sean Payton', oc: 'Joe Lombardi', dc: 'Vance Joseph' },
+    DET: { hc: 'Dan Campbell', oc: 'John Morton', dc: 'Kelvin Sheppard' },
+    GB: { hc: 'Matt LaFleur', oc: 'Adam Stenavich', dc: 'Jeff Hafley' },
+    HOU: { hc: 'DeMeco Ryans', oc: 'Nick Caley', dc: 'Matt Burke' },
+    IND: { hc: 'Shane Steichen', oc: 'Jim Bob Cooter', dc: 'Lou Anarumo' },
+    JAX: { hc: 'Liam Coen', oc: 'Grant Udinski', dc: 'Anthony Campanile' },
+    KC: { hc: 'Andy Reid', oc: 'Matt Nagy', dc: 'Steve Spagnuolo' },
+    LAC: { hc: 'Jim Harbaugh', oc: 'Greg Roman', dc: 'Jesse Minter' },
+    LAR: { hc: 'Sean McVay', oc: 'Mike LaFleur', dc: 'Chris Shula' },
+    LV: { hc: 'Klint Kubiak', oc: 'Andrew Janocko', dc: 'Patrick Graham' },
+    MIA: { hc: 'Mike McDaniel', oc: 'Frank Smith', dc: 'Anthony Weaver' },
+    MIN: { hc: "Kevin O'Connell", oc: 'Wes Phillips', dc: 'Brian Flores' },
+    NE: { hc: 'Mike Vrabel', oc: 'Josh McDaniels', dc: 'Terrell Williams' },
+    NO: { hc: 'Kellen Moore', oc: 'Doug Nussmeier', dc: 'Brandon Staley' },
+    NYG: { hc: 'Brian Daboll', oc: 'Mike Kafka', dc: 'Shane Bowen' },
+    NYJ: { hc: 'Aaron Glenn', oc: 'Tanner Engstrand', dc: 'Steve Wilks' },
+    PHI: { hc: 'Nick Sirianni', oc: 'Kevin Patullo', dc: 'Vic Fangio' },
+    PIT: { hc: 'Mike Tomlin', oc: 'Arthur Smith', dc: 'Teryl Austin' },
+    SEA: { hc: 'Mike Macdonald', oc: 'Klint Kubiak', dc: 'Aden Durde' },
+    TB: { hc: 'Todd Bowles', oc: 'Josh Grizzard', dc: 'Larry Foote' },
+    TEN: { hc: 'Brian Callahan', oc: 'Nick Holz', dc: 'Dennard Wilson' },
+    WAS: { hc: 'Dan Quinn', oc: 'Kliff Kingsbury', dc: 'Joe Whitt Jr.' }
   };
   const oppStaff = OPPONENT_COORDINATOR_MAP[oppAbbrTarget] || {
     hc: oppCoachName || `${oppShortName} HC`,
@@ -4336,7 +4589,7 @@ async function main() {
           summary: `San Francisco (${sfStandingsDetail.record}) brings the NFL's #${sfOffEpaStat.rank} Offensive EPA unit (${sfOffEpaStat.disp}/gm) and #${sfDefRushEpaStat.rank} Rush EPA defense (${sfDefRushEpaStat.disp}/gm) into a contrasting coordinator duel against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}) and ${oppStaffTitle}. Shanahan's play-calling script centers on 21 personnel and pre-snap motion to dictate box counts, while Raheem Morris's split-safety rotations cap explosive plays (${sfDefExpAllowed.disp}/gm, #${sfDefExpAllowed.rank} NFL).`,
           bullets: [
             `Pass-Game Efficiency & Coverage Shell Delta: Entering #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%), Shanahan uses condensed splits, jet motion, and orbit motion to force ${oppStaff.dc ? `DC ${oppStaff.dc}` : `${oppShortName}'s defense`} to tip single-high vs. two-high rotations pre-snap before attacking the intermediate honey-hole between hook/curl and curl/flat defenders on play-action choice/dagger and boot flood concepts.`,
-            `Trench Run-Fit & Box-Count Chess: Against ${oppStaff.oc ? `OC ${oppStaff.oc}'s` : `${oppShortName}'s`} early-down run script (#${oppRushEpaRank.rank} Rushing EPA), Morris anchors the A- and B-gaps out of light boxes (#${sfDefYpcStat.rank} at ${sfDefYpcStat.disp}/carry allowed) while disguising Quarters, Cover 6, and Robber shells behind a Wide-9 four-man rush.`,
+            `Trench Run-Fit & Box-Count Chess: Against ${oppStaff.oc ? `OC ${oppStaff.oc}'s` : `${oppShortName}'s`} early-down run script (#${oppRushEpaRank.rank} Rushing EPA)—mixing pin-and-pull, counter, and duo targeting the A- and B-gaps—Morris anchors light boxes (#${sfDefYpcStat.rank} at ${sfDefYpcStat.disp}/carry allowed) while disguising Quarters, Cover 6, and cloud-trap shells behind a Wide-9 four-man rush.`,
             `Money-Down & Red-Zone Execution: SF converts ${sf3rdStat.disp} of 3rd downs (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips (#${sfRzStat.rank}) versus ${oppAbbrTarget}'s #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}) and #${oppDefRzStat.rank} red-zone TD rate allowed (${oppDefRzStat.disp}), giving Shanahan clear 4th-and-short go-for-it leverage inside plus territory.`,
             `Tempo, Penalty & Rest Leverage: ${venueDisplayDynamic} • ${restAdvDisplay} (SF ${sfPenYdsStat.disp} penalty yds/gm, #${sfPenYdsStat.rank} vs. ${oppAbbrTarget} ${oppPenYdsStat.disp}, #${oppPenYdsStat.rank}).`
           ]
@@ -4950,9 +5203,9 @@ async function main() {
     // ignore
   }
 
-  // Poll Google AI Studio /v1beta/models only when key is absent or daily AI refresh is due
+  // Poll Google AI Studio /v1beta/models (0 generation credits spent; preserve Gemini 4 Hydrogen tokens for Auto Podcasts & Key Summary Analyses)
   const aiModelDiscovery = await discoverBestFreeGeminiModel(process.env.GEMINI_API_KEY, {
-    probeQuota: Boolean(process.env.GEMINI_API_KEY && !prevUmAiCached)
+    probeQuota: false
   });
   console.log(
     `[AI Model Discovery] Active free model: ${aiModelDiscovery.activeModel} (${aiModelDiscovery.thinkingLevel} thinking, budget ${aiModelDiscovery.thinkingBudget}, source: ${aiModelDiscovery.source})`
@@ -5001,43 +5254,55 @@ async function main() {
     }
   }
 
-  // 1/Day Deep Gemini Cap Note Synthesis (gated by PT date so scheduled crons never burn extra RPD credits)
+  // 1/Day Cap Note Synthesis: route simpler 2-sentence cap note to `gemini-3.8-flash` (single-pass)
+  // so `gemini-4-hydrogen` RPD tokens stay preserved for Auto Podcasts and Key Summary Analyses!
   if (prevCapNoteCached) {
     tradeWarRoom.capPurchasingPowerNote = prevCapNoteCached;
     tradeWarRoom.aiCapNoteDatePt = todayPt;
   } else if (process.env.GEMINI_API_KEY && !process.env.SKIP_TRADE_AI) {
     try {
-      const aiTradeAudit = await runVerifiedDeepGeminiSynthesis({
-        apiKey: process.env.GEMINI_API_KEY,
-        preferredModel: aiModelDiscovery.activeModel,
-        taskName: 'Trade Window Cap & Roster Verification',
-        groundingFacts: {
-          seasonYear,
-          currentWeek,
-          sfRecord: sfStandingsDetail.record,
-          cap2026: otcParsed.years[capPrimaryYrKey]?.teamCapSpace,
-          cap2027: otcParsed.years[nextCapYrKey]?.teamCapSpace,
-          picks2027Count: draftPrep2027.pickInventory?.length || 6,
-          playoffOdds: baselineMonteCarlo.sfOdds
-        },
-        rosterPlayers,
-        userPrompt:
-          'Return JSON {"capNote": "..."} with a concise 2-sentence CBA cap-rollover & trade-window synthesis grounded strictly in the provided 2026/2027 cap space, 2027 draft pick count, and 9/18ths proration mechanics.'
+      const capPromptFacts = JSON.stringify({
+        seasonYear,
+        currentWeek,
+        sfRecord: sfStandingsDetail.record,
+        cap2026: otcParsed.years[capPrimaryYrKey]?.teamCapSpace,
+        cap2027: otcParsed.years[nextCapYrKey]?.teamCapSpace,
+        picks2027Count: draftPrep2027.pickInventory?.length || 6,
+        playoffOdds: baselineMonteCarlo.sfOdds
       });
-      if (aiTradeAudit.ok && aiTradeAudit.data?.capNote && typeof aiTradeAudit.data.capNote === 'string') {
+      const aiTradeRes = await runSinglePassDailyGeminiSynthesis({
+        apiKey: process.env.GEMINI_API_KEY,
+        preferredModel: 'gemini-3.8-flash',
+        promptText: `Facts: ${capPromptFacts}\nReturn strict JSON {"capNote": "..."} with a concise 2-sentence CBA cap-rollover & trade-window synthesis grounded strictly in the provided 2026/2027 cap space, 2027 draft pick count, and 9/18ths proration mechanics.`,
+        appData: { meta: { seasonYear, currentWeek, teamRecord: sfStandingsDetail.record } },
+        rosterPlayers,
+        thinkingBudget: 8192
+      });
+      const parsedCapJson = aiTradeRes.ok ? parseGroundedJsonSafe(aiTradeRes.rawText, null) : null;
+      if (parsedCapJson?.capNote && typeof parsedCapJson.capNote === 'string') {
         tradeWarRoom.capPurchasingPowerNote = sanitizeHallucinatedRosterText(
-          aiTradeAudit.data.capNote,
+          parsedCapJson.capNote,
           rosterPlayers
         );
         tradeWarRoom.aiCapNoteDatePt = todayPt;
       }
     } catch (aiErr) {
-      console.warn('Optional deep Gemini synthesis skipped:', aiErr.message);
+      console.warn('Optional Gemini 3.8 Flash cap note synthesis skipped:', aiErr.message);
     }
   }
 
-  // 1/Day Gemini 4 Hydrogen (XHIGH) Top-News Brief Synthesis (gated by 5:00 PM PT daily news-peak cycle)
-  const activeNewsBriefCycle = getDailyNewsBriefCycleKey(Date.now());
+  // Schedule- & Post-Game-Aware Gemini 4 Hydrogen (XHIGH) Top-News Brief Synthesis
+  const liveNewsBriefAppData = {
+    meta: { seasonYear, currentWeek, teamRecord: sfStandingsDetail.record },
+    roster: { players: rosterPlayers },
+    cap: { years: otcParsed.years },
+    health: { practiceReport: practiceReportPlayers, irAndReserveTracker: irTrackerPlayers },
+    news: { rawStream: rawNewsStream },
+    scheduleMatchup: { schedule: scheduleItems, upcomingMatchup, teamStats }
+  };
+
+  const pipelineBriefCycleState = resolveNewsBriefCycleState(Date.now(), liveNewsBriefAppData);
+  const activeNewsBriefCycle = pipelineBriefCycleState.activeCycleKey;
   const newsBriefApiKey = process.env.GEMINI_NEWS_API_KEY || process.env.GEMINI_API_KEY || '';
   let prevNewsBriefCached = null;
   try {
@@ -5049,6 +5314,7 @@ async function main() {
         !process.env.FORCE_NEWS_BRIEF_AI &&
         prevBrief &&
         prevBrief.cycleKey === activeNewsBriefCycle &&
+        !isDailyBriefStaleForLiveState(prevBrief, liveNewsBriefAppData, Date.now()) &&
         Array.isArray(prevBrief.bullets) &&
         prevBrief.bullets.length >= 2 &&
         !JSON.stringify(prevBrief).includes('bsky.app') &&
@@ -5061,22 +5327,13 @@ async function main() {
     // ignore
   }
 
-  const liveNewsBriefAppData = {
-    meta: { seasonYear, currentWeek, teamRecord: sfStandingsDetail.record },
-    roster: { players: rosterPlayers },
-    cap: { years: otcParsed.years },
-    health: { practiceReport: practiceReportPlayers, irAndReserveTracker: irTrackerPlayers },
-    news: { rawStream: rawNewsStream },
-    scheduleMatchup: { schedule: scheduleItems, upcomingMatchup, teamStats }
-  };
-
   let dailyTopNewsBrief = null;
   if (prevNewsBriefCached) {
     dailyTopNewsBrief = prevNewsBriefCached;
     console.log(
       `[1/Day News Brief AI] Reusing cached ${activeNewsBriefCycle} Top News Brief (${dailyTopNewsBrief.source}, 0 credits spent).`
     );
-  } else if (newsBriefApiKey) {
+  } else if (newsBriefApiKey && !pipelineBriefCycleState.isGameDayHold) {
     try {
       const sourceCandidates = selectTopNewsBriefSourceCandidates(liveNewsBriefAppData, 14, Date.now());
       if (sourceCandidates.length > 0) {
@@ -5260,6 +5517,110 @@ async function main() {
     }
   }
 
+  // Pre-hydrate static Game-Day Inactives & Active Roster if pipeline runs inside [T-90m, Final) window
+  let pipelineSfGameDayRoster = null;
+  const pipelineGameDayWin = evaluateGameDayWindow(scheduleItems, upcomingMatchup, Date.now());
+  if (pipelineGameDayWin.isActive) {
+    try {
+      const oppCode = String(upcomingMatchup?.oppAbbr || '').toUpperCase();
+      const [rwHtml, sfRssXml, oppRssXml] = await Promise.all([
+        fetchText('https://www.rotowire.com/football/inactives.php').catch(() => ''),
+        fetchText(NFL_TEAM_OFFICIAL_RSS_URLS.SF).catch(() => ''),
+        oppCode && NFL_TEAM_OFFICIAL_RSS_URLS[oppCode]
+          ? fetchText(NFL_TEAM_OFFICIAL_RSS_URLS[oppCode]).catch(() => '')
+          : Promise.resolve('')
+      ]);
+
+      const rwByTeam = parseRotoWireInactivesHtml(rwHtml, ['SF', oppCode].filter(Boolean));
+      const sfActive53 = rosterPlayers.filter(p => p.rosterBucket === 'active');
+      const sfDisc = discoverOfficialClubInactivesRssItem(sfRssXml, {
+        kickoffMs: pipelineGameDayWin.kickoffMs,
+        week: pipelineGameDayWin.week
+      });
+      let sfLiveFeed = null;
+      if (sfDisc?.url) {
+        const sfArt = await fetchText(sfDisc.url).catch(() => '');
+        const parsedSf = parseOfficialClubInactivesArticle(sfArt, [...sfActive53, ...practiceReportPlayers], {
+          week: pipelineGameDayWin.week
+        });
+        if (parsedSf.officialPosted) {
+          sfLiveFeed = {
+            officialPosted: true,
+            inactives: parsedSf.inactives,
+            sourceUrl: sfDisc.url,
+            sourceLabel: '49ers.com Official'
+          };
+        }
+      }
+      if (!sfLiveFeed && rwByTeam.SF?.length >= 3) {
+        sfLiveFeed = {
+          officialPosted: true,
+          inactives: rwByTeam.SF,
+          sourceUrl: sfDisc?.url || 'https://www.49ers.com/team/injury-report/',
+          sourceLabel: sfDisc?.url ? '49ers.com Official' : 'NFL Game-Day Wire'
+        };
+      }
+
+      pipelineSfGameDayRoster = buildTeamGameDayRosterModel({
+        teamAbbr: 'SF',
+        teamName: 'San Francisco 49ers',
+        activeRosterPlayers: sfActive53,
+        injuryReport: practiceReportPlayers,
+        newsItems: rawNewsStream,
+        liveFeedData: sfLiveFeed,
+        windowState: pipelineGameDayWin
+      });
+
+      if (upcomingMatchup?.opponentHealth && oppCode) {
+        const oh = upcomingMatchup.opponentHealth;
+        const oppPool = [
+          ...(oh.activeRoster || []),
+          ...(oh.keyStartersHealthy || []),
+          ...(oh.injuryReport || [])
+        ];
+        const oppDisc = discoverOfficialClubInactivesRssItem(oppRssXml, {
+          kickoffMs: pipelineGameDayWin.kickoffMs,
+          week: pipelineGameDayWin.week
+        });
+        let oppLiveFeed = null;
+        if (oppDisc?.url) {
+          const oppArt = await fetchText(oppDisc.url).catch(() => '');
+          const parsedOpp = parseOfficialClubInactivesArticle(oppArt, oppPool, {
+            week: pipelineGameDayWin.week
+          });
+          if (parsedOpp.officialPosted) {
+            oppLiveFeed = {
+              officialPosted: true,
+              inactives: parsedOpp.inactives,
+              sourceUrl: oppDisc.url,
+              sourceLabel: `${oppCode} Official`
+            };
+          }
+        }
+        if (!oppLiveFeed && rwByTeam[oppCode]?.length >= 3) {
+          oppLiveFeed = {
+            officialPosted: true,
+            inactives: rwByTeam[oppCode],
+            sourceUrl: oppDisc?.url || oh.teamInjuriesUrl || 'https://www.espn.com/nfl/injuries',
+            sourceLabel: oppDisc?.url ? `${oppCode} Official` : 'NFL Game-Day Wire'
+          };
+        }
+
+        oh.gameDayRoster = buildTeamGameDayRosterModel({
+          teamAbbr: oppCode,
+          teamName: upcomingMatchup.oppName || oppCode,
+          activeRosterPlayers: oppPool,
+          injuryReport: oh.injuryReport || [],
+          newsItems: rawNewsStream,
+          liveFeedData: oppLiveFeed,
+          windowState: pipelineGameDayWin
+        });
+      }
+    } catch (gdErr) {
+      console.warn('Optional game-day static pre-hydration skipped:', gdErr.message);
+    }
+  }
+
   writeCleanJson(path.join(dataDir, 'meta.json'), metaJson);
   writeCleanJson(path.join(dataDir, 'roster.json'), {
     updatedAt: nowIso,
@@ -5292,6 +5653,7 @@ async function main() {
     usedIrDesignations,
     remainingIrDesignations,
     maxRegularSeasonIrDesignations: 8,
+    gameDayRoster: pipelineSfGameDayRoster,
     practiceReport: practiceReportPlayers,
     irAndReserveTracker: irTrackerPlayers
   });

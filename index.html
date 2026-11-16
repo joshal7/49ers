@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon" sizes="512x512" href="./apple-touch-icon.png?v=6" />
   <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png?v=6" />
-  <link rel="stylesheet" href="./src/styles.css?v=40" />
+  <link rel="stylesheet" href="./src/styles.css?v=41" />
 </head>
 <body>
   <!-- Full-Bleed Sticky Glass Header -->
@@ -183,17 +183,23 @@
     <div class="bottom-sheet" id="bottomSheetContainer">
       <div class="sheet-drag-handle" aria-hidden="true"></div>
       <div class="sheet-header">
-        <div style="min-width:0">
+        <div style="min-width:0;flex:1">
           <div class="card-eyebrow" id="sheetEyebrow">49ers Dossier</div>
           <h2 class="card-title" id="sheetTitle" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Details</h2>
         </div>
-        <button type="button" id="closeSheetBtn" data-action="close-sheet" class="icon-btn" aria-label="Close Sheet">
-          <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-          <span>Close</span>
-        </button>
+        <div class="sheet-header-actions">
+          <button type="button" id="sheetSyncWireBtn" data-action="sync-live-wire-now" data-player-wire-sync="true" class="btn-ghost btn-compact" hidden aria-label="Refresh player news wire" title="Check live X beat tweets, injury wire and articles for this player immediately">
+            <svg class="ui-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span id="sheetSyncWireLabel">1m ago</span>
+          </button>
+          <button type="button" id="closeSheetBtn" data-action="close-sheet" class="icon-btn" aria-label="Close Sheet">
+            <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            <span>Close</span>
+          </button>
+        </div>
       </div>
       <div class="sheet-body" id="sheetBody"></div>
     </div>
@@ -222,6 +228,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=61"></script>
+  <script type="module" src="./src/app.js?v=64"></script>
 </body>
 </html>

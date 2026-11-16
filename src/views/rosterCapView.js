@@ -310,11 +310,13 @@ function renderRosterExplorer({
                           : p.rosterBucket === 'ir'
                             ? p.health?.isSeasonEnding
                               ? 'Season-Ending IR'
-                              : p.health?.status === 'Reserve / PUP'
-                                ? 'Reserve/PUP'
-                                : p.health?.status === 'Reserve / Left Squad'
-                                  ? 'Reserve/Left Sq.'
-                                  : 'IR/Reserve'
+                              : p.health?.isPracticeWindowOpen
+                                ? 'IR (21d Window)'
+                                : p.health?.status === 'Reserve / PUP'
+                                  ? 'Reserve/PUP'
+                                  : p.health?.status === 'Reserve / Left Squad'
+                                    ? 'Reserve/Left Sq.'
+                                    : 'IR/Reserve'
                             : 'Prac. Squad'
                       )} ·
                       Snaps <span class="mono">${p.primarySnapPct}%</span> ·

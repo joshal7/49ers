@@ -140,7 +140,7 @@ export function rankFreeTierModelsFromCatalog(catalogModels = []) {
  * capability, and optionally probes the top candidates to verify live Free-Tier quota (>0 RPM).
  */
 export async function discoverBestFreeGeminiModel(apiKey = process.env.GEMINI_API_KEY, options = {}) {
-  const { probeQuota = true, timeoutMs = 10000 } = options;
+  const { probeQuota = false, timeoutMs = 10000 } = options;
   const nowIso = new Date().toISOString();
 
   if (!apiKey) {

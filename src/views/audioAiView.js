@@ -919,9 +919,9 @@ function renderPodcastStudio({
           .join('')}
       </div>
 
-      <input type="text" id="podTopicInput" class="text-input" style="margin-bottom:10px"
-             placeholder="e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure"
-             value="${esc(podTopicDraft)}" aria-label="Podcast Topic" />
+      <textarea id="podTopicInput" class="textarea-input" rows="3" style="margin-bottom:10px"
+                placeholder="e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure"
+                aria-label="Podcast Topic">${esc(podTopicDraft)}</textarea>
 
       ${
         isPodBusy

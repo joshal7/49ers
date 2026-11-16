@@ -24,6 +24,12 @@ import {
   resolveOriginalTweetUrl,
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
+import {
+  classifyBreakingItem,
+  computeWireStoryRank,
+  isStaleCompletedGameAvailabilityItem,
+  resolveGameNewsContext
+} from './breakingClassifier.js';
 
 export const CURATED_49ERS_PLAYER_PRIORS = {
   'Trent Williams': {
@@ -604,6 +610,12 @@ function hasAffirmativeRuledOutSignal(beatNote = '') {
     return true;
   }
   if (
+    /\b(?:will not|won't)\s+play\b/i.test(beatNote) &&
+    !/\b(?:if he|whether he)\s+(?:will not|won't)\s+play\b/i.test(beatNote)
+  ) {
+    return true;
+  }
+  if (
     /\bwill miss\s+/i.test(beatNote) &&
     !/\b(?:neither\b[^.;]{0,50}\bwill miss|(?:unlikely|doubtful|not|never)\b[^.;]{0,28}\bwill miss|won't miss|will not miss)\b/i.test(
       beatNote
@@ -612,6 +624,304 @@ function hasAffirmativeRuledOutSignal(beatNote = '') {
     return true;
   }
   return false;
+}
+
+export function hasWindowDefinitelyNotOpeningSignal(beatNote = '') {
+  if (!beatNote) return false;
+  return (
+    /\b(?:(?:will not|won't|is not going to|isn't going to|are not going to|aren't going to|not going to|aren't|isn't|do not plan to|don't plan to|does not plan to|doesn't plan to|not expected to|isn't expected to|no plans to|decided against|opted against)\s+open(?:ing)?\b[^.;]{0,58}\b(?:21-day|practice|return|ir|injured reserve)?\s*window|(?:21-day|practice|return)\s+window\s+(?:will not|won't|is not going to|isn't going to|is not expected to|isn't expected to)\s+(?:be\s+)?open(?:ed)?|not\s+(?:yet\s+)?ready\s+to\s+(?:open\b[^.;]{0,36}\bwindow|return\s+to\s+practice))\b/i.test(
+      beatNote
+    )
+  );
+}
+
+export function hasDefiniteIrNonActivationOrWindowClosedSignal(beatNote = '') {
+  if (!beatNote) return false;
+  if (hasWindowDefinitelyNotOpeningSignal(beatNote)) return true;
+  if (hasAffirmativeRuledOutSignal(beatNote)) return true;
+  // Guard against conditional "if he isn't activated" / "would need to be activated"
+  if (
+    /\b(?:(?:will not|won't|is not going to|isn't going to|are not going to|aren't going to|not going to|aren't|isn't|do not plan to|don't plan to|does not plan to|doesn't plan to|no plans to|decided not to|opted not to)\s+(?:be\s+)?activat(?:e|ed|ing)\b|(?:was not|wasn't|were not|weren't|did not|didn't)\s+activat(?:e|ed)\b|(?:aren't|isn't|not)\s+yet\s+ready\s+to\s+activate\b|not\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+(?:game\s+action|practice)|(?:remains?|remaining|staying|will stay|will remain)\s+on\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b)|(?:will\s+have\s+to\s+wait|needs?|giving\s+him)\s+(?:at\s+least\s+)?another\s+week\b|holding\s+him\s+out\s+(?:this\s+week|for\s+week|on\s+(?:sunday|monday|thursday|saturday))|(?:not|n't|isn't|no\s+longer)\s+(?:expected\s+to\s+(?:be\s+activated|play|suit\s+up)\s*(?:this\s+week|in\s+week\s*\d+|sunday|monday|thursday|saturday|against|versus|vs\.?)?|expecting\b[^.;]{0,40}\bthis\s+week))\b/i.test(
+      beatNote
+    ) &&
+    !/\b(?:if|unless|whether)\s+(?:he|they|the\s+team|the\s+49ers)\s+(?:is\s+not|isn't|wasn't|aren't|don't|won't)\s+(?:be\s+)?activat/i.test(
+      beatNote
+    )
+  ) {
+    return true;
+  }
+  if (
+    /\bnot\s+activated\b/i.test(beatNote) &&
+    !/\b(?:if|unless|whether)\b[^.;]{0,28}\bnot\s+activated\b/i.test(beatNote)
+  ) {
+    return true;
+  }
+  return false;
+}
+
+const ET_CALENDAR_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  weekday: 'short',
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23'
+});
+
+function extractEtDayMeta(epochMs) {
+  const parts = ET_CALENDAR_FORMATTER.formatToParts(new Date(epochMs));
+  let year = 1970;
+  let month = 1;
+  let day = 1;
+  let weekday = 'Sun';
+  let hour = 0;
+  let minute = 0;
+  for (const p of parts) {
+    if (p.type === 'year') year = Number(p.value);
+    else if (p.type === 'month') month = Number(p.value);
+    else if (p.type === 'day') day = Number(p.value);
+    else if (p.type === 'weekday') weekday = p.value;
+    else if (p.type === 'hour') hour = Number(p.value) % 24;
+    else if (p.type === 'minute') minute = Number(p.value);
+  }
+  return {
+    year,
+    month,
+    day,
+    weekday,
+    hour,
+    minute,
+    dayIndex: Math.floor(Date.UTC(year, month - 1, day) / 86_400_000),
+    minutesOfDay: hour * 60 + minute
+  };
+}
+
+function etWallClockToEpochMs(year, month, day, hour = 16, minute = 0) {
+  const targetDayIndex = Math.floor(Date.UTC(year, month - 1, day) / 86_400_000);
+  const targetMinutes = hour * 60 + minute;
+  const guessUtc = Date.UTC(year, month - 1, day, hour + 5, minute, 0);
+  const obs = extractEtDayMeta(guessUtc);
+  const deltaMinutes = (targetDayIndex - obs.dayIndex) * 1440 + (targetMinutes - obs.minutesOfDay);
+  return guessUtc + deltaMinutes * 60_000;
+}
+
+/**
+ * Evaluates whether a club's weekly NFL CBA 53-man IR/PUP activation deadline (4:00 PM ET on
+ * Saturday for Sunday games, Friday for Saturday games, game-day 4:00 PM ET for prime-time
+ * Thursday/Monday/Friday games, or day-before 4:00 PM ET for daytime weekday games, always
+ * capped at `kickoff - 90m`) has passed for the active upcoming game, as well as the 21-day
+ * window stage (`1..3`) and expiration.
+ */
+export function evaluateWeeklyIrActivationWindow({
+  kickoffIso = '',
+  designatedDateIso = '',
+  nowMs = Date.now(),
+  schedule = []
+} = {}) {
+  const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const desigMs = parseFlexibleIsoMs(designatedDateIso);
+  const windowDaysElapsed =
+    desigMs !== null && ts >= desigMs ? (ts - desigMs) / 86_400_000 : null;
+  const is21DayWindowExpired = windowDaysElapsed !== null && windowDaysElapsed >= 21.5;
+
+  let koMs = kickoffIso ? Date.parse(kickoffIso) : NaN;
+  const maxPostKickoffGameMs = 5.25 * 3_600_000;
+
+  // If the supplied `kickoffIso` has already concluded (>5.25h post-kickoff), automatically advance
+  // to the next unplayed non-bye game in `schedule` when available (or treat the prior game's lock as completed).
+  if ((!Number.isFinite(koMs) || ts > koMs + maxPostKickoffGameMs) && Array.isArray(schedule) && schedule.length > 0) {
+    const nextGame = schedule
+      .filter(g => g && !g.completed && !g.isByeWeek && !g.opponent?.isTbd)
+      .map(g => ({ g, ms: Date.parse(g.dateIso || g.kickoffIso || '') }))
+      .filter(x => Number.isFinite(x.ms) && ts <= x.ms + maxPostKickoffGameMs)
+      .sort((a, b) => a.ms - b.ms)[0];
+    if (nextGame) {
+      koMs = nextGame.ms;
+    }
+  }
+
+  const stageRefMs = Number.isFinite(koMs) && koMs > ts ? koMs : ts;
+  const stageDays =
+    desigMs !== null && stageRefMs >= desigMs ? (stageRefMs - desigMs) / 86_400_000 : null;
+  const stageThreshold2 = Number.isFinite(koMs) ? 7.5 : 6.5;
+  const stageThreshold3 = Number.isFinite(koMs) ? 14.5 : 13.5;
+  const windowWeekStage =
+    stageDays === null
+      ? null
+      : stageDays >= stageThreshold3
+        ? 3
+        : stageDays >= stageThreshold2
+          ? 2
+          : 1;
+
+  if (!Number.isFinite(koMs)) {
+    return {
+      hasMissedWeeklyDeadline: false,
+      deadlineMs: null,
+      deadlineIso: null,
+      kickoffMs: null,
+      windowDaysElapsed,
+      windowWeekStage,
+      is21DayWindowExpired
+    };
+  }
+
+  const koEt = extractEtDayMeta(koMs);
+  // Sunday & Saturday games lock the day before at 4:00 PM ET; prime-time weekday games (kickoff >= 6:00 PM ET)
+  // lock on game day at 4:00 PM ET; daytime weekday games (e.g. Thanksgiving / Black Friday afternoon) lock day before at 4:00 PM ET.
+  const offsetDaysEt =
+    koEt.weekday === 'Sun' || koEt.weekday === 'Sat' || koEt.hour < 18 ? -1 : 0;
+  const targetDayUtc = new Date(Date.UTC(koEt.year, koEt.month - 1, koEt.day + offsetDaysEt));
+  const rawDeadlineMs = etWallClockToEpochMs(
+    targetDayUtc.getUTCFullYear(),
+    targetDayUtc.getUTCMonth() + 1,
+    targetDayUtc.getUTCDate(),
+    16,
+    0
+  );
+  const deadlineMs = Math.min(rawDeadlineMs, koMs - 90 * 60_000);
+
+  // Missed weekly activation window holds from 4:00 PM ET deadline through the end of that week's game (`koMs + 5.25h`).
+  // Once the game finishes (`ts > koMs + 5.25h`), the league week rolls over to `Week N+1`!
+  const hasMissedWeeklyDeadline = ts >= deadlineMs && ts <= koMs + maxPostKickoffGameMs;
+
+  return {
+    hasMissedWeeklyDeadline,
+    deadlineMs,
+    deadlineIso: new Date(deadlineMs).toISOString(),
+    kickoffMs: koMs,
+    windowDaysElapsed,
+    windowWeekStage,
+    is21DayWindowExpired
+  };
+}
+
+const NFL_MASCOT_OR_CITY_TOKENS_RE =
+  /\b(cardinals|arizona|falcons|atlanta|ravens|baltimore|bills|buffalo|panthers|carolina|bears|chicago|bengals|cincinnati|browns|cleveland|cowboys|dallas|broncos|denver|lions|detroit|packers|green bay|texans|houston|colts|indianapolis|jaguars|jacksonville|chiefs|kansas city|raiders|las vegas|chargers|rams|dolphins|miami|vikings|minnesota|patriots|new england|saints|new orleans|giants|jets|eagles|philadelphia|steelers|pittsburgh|49ers|niners|san francisco|seahawks|seattle|buccaneers|tampa bay|titans|tennessee|commanders|washington)\b/i;
+
+/**
+ * Strips prior-week Saturday non-activation carryover clauses (e.g., Week 10 `"won't be activated ahead of Sunday's
+ * Week 10 clash against the Cowboys"` once Week 10 is completed and Week 11 vs. Vikings has begun, or `"Since he wasn't
+ * activated Saturday... next chance to do so is Sunday against Dallas"` during Dallas week) while preserving prior-week
+ * practice ramp-up facts (`"upgraded to a full practice session Friday"`, `"trio of full practices"`).
+ */
+export function sanitizeIrBeatNoteForCurrentWeek(
+  rawNote = '',
+  {
+    currentWeek = null,
+    upcomingOppName = '',
+    upcomingOppAbbr = '',
+    blurbDateIso = null,
+    lastCompletedGameKickoffMs = null,
+    hasCurrentWeekPractice = false
+  } = {}
+) {
+  const text = String(rawNote || '').trim();
+  if (!text) return '';
+
+  const curWk = Number.isFinite(Number(currentWeek)) && Number(currentWeek) > 0 ? Number(currentWeek) : null;
+  const oppLower = `${upcomingOppName || ''} ${upcomingOppAbbr || ''}`.toLowerCase().trim();
+  const oppTokens = oppLower
+    .split(/[^a-z0-9]+/)
+    .filter(tok => tok.length >= 4 && tok !== 'football' && tok !== 'team');
+
+  const blurbMs = parseFlexibleIsoMs(blurbDateIso);
+  const allWkMentions = [...text.toLowerCase().matchAll(/\bweek\s*(\d{1,2})\b/gi)].map(m => Number(m[1]));
+  const leadOpponentMatch = text
+    .toLowerCase()
+    .match(/\b(?:against|versus|vs\.?|to\s+face|tilt\s+against|clash\s+against|at)\s+(?:the\s+)?([a-z]+(?:\s+[a-z]+)?)\b/i);
+  const leadOpponentChunk = leadOpponentMatch ? leadOpponentMatch[1] : '';
+  const wholeNoteNamesPriorWeek =
+    curWk !== null && allWkMentions.length > 0 && allWkMentions.every(w => w < curWk);
+  const wholeNoteNamesDifferentTeam =
+    Boolean(leadOpponentChunk && NFL_MASCOT_OR_CITY_TOKENS_RE.test(leadOpponentChunk)) &&
+    oppTokens.length > 0 &&
+    !oppTokens.some(tok => leadOpponentChunk.includes(tok) || text.toLowerCase().includes(tok));
+
+  const blurbPredatesCurrentWeek =
+    wholeNoteNamesPriorWeek ||
+    wholeNoteNamesDifferentTeam ||
+    (blurbMs !== null &&
+      Number.isFinite(lastCompletedGameKickoffMs) &&
+      lastCompletedGameKickoffMs > 0 &&
+      blurbMs < lastCompletedGameKickoffMs);
+
+  // Check if the full note explicitly points to the CURRENT week/opponent as the "next chance"
+  const nextChanceMatch = text.match(/\bnext\s+(?:chance|opportunity)\s+[^.!?]{0,80}/i);
+  const nextChanceLower = nextChanceMatch ? nextChanceMatch[0].toLowerCase() : '';
+  const nextChanceTargetsCurrentOpp =
+    Boolean(nextChanceLower) &&
+    (oppTokens.some(tok => nextChanceLower.includes(tok)) ||
+      (curWk !== null && new RegExp(`\\bweek\\s*${curWk}\\b`, 'i').test(nextChanceLower)));
+
+  const sentences = text
+    .split(/(?<=[.!?])\s+/)
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const kept = [];
+  for (const sent of sentences) {
+    if (!hasDefiniteIrNonActivationOrWindowClosedSignal(sent)) {
+      kept.push(sent);
+      continue;
+    }
+
+    const sentLower = sent.toLowerCase();
+    const wkMentions = [...sentLower.matchAll(/\bweek\s*(\d{1,2})\b/gi)].map(m => Number(m[1]));
+    const citesStrictlyPriorWeek =
+      curWk !== null && wkMentions.length > 0 && wkMentions.every(w => w < curWk);
+    const citesCurrentOrFutureWeek =
+      curWk !== null && wkMentions.some(w => w >= curWk);
+
+    // Check if the sentence names a specific opponent that does NOT match the current upcoming opponent
+    const oppPhraseMatch = sentLower.match(
+      /\b(?:against|versus|vs\.?|to\s+face|tilt\s+against|clash\s+against|matchup\s+with)\s+(?:the\s+)?([a-z]+(?:\s+[a-z]+)?)\b/i
+    );
+    const namedTeamChunk = oppPhraseMatch ? oppPhraseMatch[1] : '';
+    const namesSpecificTeam = Boolean(namedTeamChunk && NFL_MASCOT_OR_CITY_TOKENS_RE.test(namedTeamChunk));
+    const namesDifferentTeam =
+      namesSpecificTeam &&
+      oppTokens.length > 0 &&
+      !oppTokens.some(tok => namedTeamChunk.includes(tok) || sentLower.includes(tok));
+
+    const isPastSaturdayNonActivation =
+      /\b(?:wasn't|was\s+not|weren't|were\s+not|didn't|did\s+not)\s+activat(?:e|ed)\b/i.test(sentLower);
+    const citesPriorFridayOrSaturdayWhileUnpracticed =
+      !hasCurrentWeekPractice &&
+      /\b(?:upgraded\s+to\s+a\s+full\s+practice\s+session\s+friday|full\s+practices\s+this\s+week|wasn't\s+activated\s+saturday)\b/i.test(
+        sentLower
+      );
+
+    const isStalePriorWeekNonActivation =
+      citesStrictlyPriorWeek ||
+      namesDifferentTeam ||
+      nextChanceTargetsCurrentOpp ||
+      citesPriorFridayOrSaturdayWhileUnpracticed ||
+      (blurbPredatesCurrentWeek && !citesCurrentOrFutureWeek && !/\b(?:next\s+several\s+weeks|multiple\s+weeks|december)\b/i.test(sentLower)) ||
+      (hasCurrentWeekPractice && isPastSaturdayNonActivation && !citesCurrentOrFutureWeek);
+
+    if (isStalePriorWeekNonActivation) {
+      // Preserve any practice progression half of a compound sentence (e.g., "He upgraded to a full practice session Friday after being limited Wednesday and Thursday, but the 49ers aren't yet ready to activate him.")
+      const strippedRuling = sent
+        .replace(/,?\s*\b(?:but|though|although|however)\s+[^.!?]*\b(?:activat\w*|return\s+to\s+game\s+action|wait\s+[^.!?]*week)[^.!?]*/gi, '.')
+        .trim();
+      if (
+        strippedRuling &&
+        strippedRuling !== sent &&
+        !hasDefiniteIrNonActivationOrWindowClosedSignal(strippedRuling) &&
+        /\b(?:full\s+practice|limited|practice\s+window)\b/i.test(strippedRuling)
+      ) {
+        kept.push(strippedRuling);
+      }
+      continue;
+    }
+
+    kept.push(sent);
+  }
+
+  return kept.join(' ').trim();
 }
 
 function hasNegativePlayConsensusSignal(beatNote = '') {
@@ -629,7 +939,7 @@ function hasNegativePracticeExpectationSignal(beatNote = '') {
 }
 
 function hasExpectedPracticeReturnSignal(beatNote = '') {
-  if (!beatNote || hasNegativePlayConsensusSignal(beatNote) || hasNegativePracticeExpectationSignal(beatNote)) {
+  if (!beatNote || hasNegativePlayConsensusSignal(beatNote) || hasNegativePracticeExpectationSignal(beatNote) || hasWindowDefinitelyNotOpeningSignal(beatNote)) {
     return false;
   }
   // Reject vague/speculative phrasing ("getting close", "could return", "might practice")
@@ -642,8 +952,8 @@ function hasExpectedPracticeReturnSignal(beatNote = '') {
 }
 
 function hasAffirmativePlayOrActivationSignal(beatNote = '') {
-  if (!beatNote || hasNegativePlayConsensusSignal(beatNote)) return false;
-  return /\b(?:expected to play|on track to play|expected to suit up|likely will be activated|expected to be activated)\b/i.test(
+  if (!beatNote || hasNegativePlayConsensusSignal(beatNote) || hasDefiniteIrNonActivationOrWindowClosedSignal(beatNote)) return false;
+  return /\b(?:expected to play|on track to play|expected to suit up|likely will be activated|expected to be activated|on track to be activated|good chance to be activated|plan(?:s|ning)? to activate)\b/i.test(
     beatNote
   );
 }
@@ -696,6 +1006,8 @@ export function evaluateCorroboratedNewsInjurySignal({
     corroboratingCount: 0,
     hasCoachOrGmQuote: false,
     hasOfficialTxDesignation: false,
+    hasOfficialActivationFromIr: false,
+    hasWindowNotOpeningSignal: false,
     leadClause: '',
     reporters: []
   };
@@ -706,6 +1018,8 @@ export function evaluateCorroboratedNewsInjurySignal({
 
   const observationsByReporter = new Map();
   let hasOfficialTxDesignation = false;
+  let hasOfficialActivationFromIr = false;
+  let hasWindowNotOpeningSignal = false;
 
   for (const item of newsItems) {
     if (!item || item.isClickbait || item.type === 'video') continue;
@@ -746,26 +1060,30 @@ export function evaluateCorroboratedNewsInjurySignal({
       continue;
     }
 
-    // Check official @49ers transaction wire or verified Tier-1 beat report for immediate 21-day return designation
+    // Check official @49ers transaction wire or verified Tier-1 beat report for immediate 21-day return designation or 53-man IR activation
     const trustTierProbe = Number(item.trustTier || 2);
     const hasInlineTier1Probe = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
     const isOfficialSourceProbe = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
-    if (
-      (isOfficialSourceProbe || trustTierProbe <= 1 || hasInlineTier1Probe) &&
-      /\b(?:designated\b[^.]{0,80}\bto return from (?:injured reserve|the pup list)|opened (?:the )?(?:[a-z']+s? )?(?:21-day |injured reserve |ir |pup )?practice window)\b/i.test(
-        fullBody
-      ) &&
-      doesClauseMentionPlayer(fullBody, playerName)
-    ) {
+    if ((isOfficialSourceProbe || trustTierProbe <= 1 || hasInlineTier1Probe) && doesClauseMentionPlayer(fullBody, playerName)) {
       const scopedForWindow = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
-      if (
-        scopedForWindow &&
-        /\b(?:designated\b[^.]{0,80}\bto return|opened (?:the )?(?:[a-z']+s? )?(?:21-day |injured reserve |ir |pup )?practice window)\b/i.test(
-          scopedForWindow
-        ) &&
-        !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to)\s+open\b/i.test(scopedForWindow)
-      ) {
-        hasOfficialTxDesignation = true;
+      if (scopedForWindow) {
+        if (
+          /\b(?:designated\b[^.]{0,80}\bto return|opened (?:the )?(?:[a-z']+s? )?(?:21-day |injured reserve |ir |pup )?practice window)\b/i.test(
+            scopedForWindow
+          ) &&
+          !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't)\s+open\b/i.test(scopedForWindow) &&
+          !hasWindowDefinitelyNotOpeningSignal(scopedForWindow)
+        ) {
+          hasOfficialTxDesignation = true;
+        }
+        if (
+          /\bactivated\b[^.;]{0,65}\bfrom\s+(?:injured\s+reserve|ir\b|the\s+pup\s+list)\b/i.test(scopedForWindow) &&
+          !/\b(?:not|n't|wasn't|didn't|won't|if|whether|could|might|may|expected\s+to\s+be|likely\s+to\s+be)\b[^.;]{0,25}\bactivated\b/i.test(
+            scopedForWindow
+          )
+        ) {
+          hasOfficialActivationFromIr = true;
+        }
       }
     }
 
@@ -803,7 +1121,14 @@ export function evaluateCorroboratedNewsInjurySignal({
         scoped
       );
 
-    if (hasAffirmativeRuledOutSignal(scoped)) {
+    if (rosterBucket === 'ir' && hasWindowDefinitelyNotOpeningSignal(scoped)) {
+      signalType = 'WINDOW_NOT_OPENING_THIS_WEEK';
+      direction = -1.0;
+      hasWindowNotOpeningSignal = true;
+    } else if (rosterBucket === 'ir' && hasDefiniteIrNonActivationOrWindowClosedSignal(scoped)) {
+      signalType = 'IR_NOT_ACTIVATING_THIS_WEEK';
+      direction = -1.0;
+    } else if (hasAffirmativeRuledOutSignal(scoped)) {
       signalType = 'RULED_OUT_WEEK';
       direction = -1.0;
     } else if (hasNegativePlayConsensusSignal(scoped)) {
@@ -864,6 +1189,16 @@ export function evaluateCorroboratedNewsInjurySignal({
 
   const obsList = [...observationsByReporter.values()].sort((a, b) => b.pubMs - a.pubMs);
   if (obsList.length === 0) {
+    if (hasOfficialActivationFromIr) {
+      return {
+        ...empty,
+        hasSignal: true,
+        signalType: 'OFFICIAL_IR_ACTIVATED',
+        direction: 0.95,
+        confidence: 0.96,
+        hasOfficialActivationFromIr: true
+      };
+    }
     return hasOfficialTxDesignation
       ? { ...empty, hasSignal: true, signalType: 'OFFICIAL_IR_WINDOW_OPEN', direction: 0.65, confidence: 0.95, hasOfficialTxDesignation: true }
       : empty;
@@ -905,13 +1240,17 @@ export function evaluateCorroboratedNewsInjurySignal({
     obsList[0];
 
   return {
-    hasSignal: confidence >= 0.12 || hasOfficialTxDesignation,
+    hasSignal: confidence >= 0.12 || hasOfficialTxDesignation || hasOfficialActivationFromIr,
     signalType: primaryObs.signalType,
     direction: Number(netDirection.toFixed(3)),
     confidence: Number(confidence.toFixed(3)),
     corroboratingCount: matchingObs.length,
     hasCoachOrGmQuote: matchingObs.some(o => o.hasCoachQuote),
     hasOfficialTxDesignation,
+    hasOfficialActivationFromIr,
+    hasWindowNotOpeningSignal:
+      hasWindowNotOpeningSignal &&
+      (primaryObs.signalType === 'WINDOW_NOT_OPENING_THIS_WEEK' || dominantSign < 0),
     leadClause: primaryObs.scopedClause,
     reporters: matchingObs.map(o => o.reporterLabel)
   };
@@ -1582,6 +1921,7 @@ export function extractLivePracticeParticipationFromWire({
         wed: null,
         thu: null,
         fri: null,
+        slotPubMs: { wed: 0, thu: 0, fri: 0 },
         injuryType: '',
         openedPracticeWindow: false,
         hasSideFieldRehab: false,
@@ -1614,12 +1954,20 @@ export function extractLivePracticeParticipationFromWire({
     if (!p || !slot || !code) return;
     if (!isSlotCausallyValid(slot, pubMs)) return;
     const rec = ensureEntry(p);
+    const effPub = Number.isFinite(pubMs) ? pubMs : 0;
+    const prevSlotPub = rec.slotPubMs?.[slot] || 0;
+    if (rec[slot] && effPub > 0 && prevSlotPub > 0 && effPub < prevSlotPub) {
+      return;
+    }
     const hasNonRestMedicalHint = Boolean(injHint && !isRestOrPersonalInjuryLabel(injHint));
     const isRest =
       !hasNonRestMedicalHint &&
       (isRestOrPersonalInjuryLabel(injHint) || isRestOrPersonalInjuryLabel(p.health?.injuryType));
     const finalCode = code === 'DNP' && isRest ? 'Vet Rest' : code;
     rec[slot] = finalCode;
+    if (rec.slotPubMs && effPub >= prevSlotPub) {
+      rec.slotPubMs[slot] = effPub;
+    }
     if (injHint && (!rec.injuryType || (isRestOrPersonalInjuryLabel(rec.injuryType) && hasNonRestMedicalHint))) {
       rec.injuryType = injHint;
     }
@@ -1923,15 +2271,14 @@ export function computePlayerPlayProbability(input = {}) {
   const isIrBucketOrStatus =
     rosterBucket === 'ir' ||
     rosterBucket === 'injuredreserveorout' ||
+    rosterBucket === 'pup' ||
     statusRaw === 'ir' ||
-    statusRaw === 'injured reserve';
-
-  const beatNoteSignalsQuestionableActivation =
-    !hasNegativePlayConsensusSignal(beatNote) &&
-    (beatNote.includes('listed as questionable') ||
-      beatNote.includes('questionable for sunday') ||
-      beatNote.includes('questionable ahead of') ||
-      hasAffirmativePlayOrActivationSignal(beatNote));
+    statusRaw === 'injured reserve' ||
+    statusRaw.includes('injured reserve') ||
+    statusRaw.includes('21-day window') ||
+    statusRaw.includes('ir return window') ||
+    statusRaw.includes('reserve / pup') ||
+    statusRaw === 'pup';
 
   const wed = normalizePracticeCode(input.wed, injuryType);
   const thu = normalizePracticeCode(input.thu, injuryType);
@@ -1939,37 +2286,99 @@ export function computePlayerPlayProbability(input = {}) {
   const hasObservedPracticeThisWeek = wed !== 'NONE' || thu !== 'NONE' || fri !== 'NONE';
   const hasMidWeekActivePractice =
     fri === 'NONE' && (wed === 'LP' || wed === 'FP' || thu === 'LP' || thu === 'FP');
+  const hasAnyActiveIrPracticeThisWeek =
+    wed === 'LP' || wed === 'FP' || thu === 'LP' || thu === 'FP' || fri === 'LP' || fri === 'FP';
+
+  // Sanitize prior-week Saturday non-activation carryover clauses for IR returners before checking current-week rulings
+  const currentWeekIrNote = isIrBucketOrStatus
+    ? sanitizeIrBeatNoteForCurrentWeek(scopedBeat, {
+        currentWeek: input.currentWeek,
+        upcomingOppName: input.upcomingOppName || '',
+        upcomingOppAbbr: input.upcomingOppAbbr || '',
+        blurbDateIso: input.blurbDateIso || null,
+        lastCompletedGameKickoffMs: input.lastCompletedGameKickoffMs ?? null,
+        hasCurrentWeekPractice: hasAnyActiveIrPracticeThisWeek
+      }).toLowerCase()
+    : beatNote;
+
+  const beatNoteSignalsQuestionableActivation =
+    !hasNegativePlayConsensusSignal(currentWeekIrNote) &&
+    (currentWeekIrNote.includes('listed as questionable') ||
+      currentWeekIrNote.includes('questionable for sunday') ||
+      currentWeekIrNote.includes('questionable ahead of') ||
+      hasAffirmativePlayOrActivationSignal(currentWeekIrNote));
 
   const affirmativeRuledOut =
     !hasMidWeekActivePractice &&
-    (hasAffirmativeRuledOutSignal(beatNote) ||
+    (hasAffirmativeRuledOutSignal(isIrBucketOrStatus ? currentWeekIrNote : beatNote) ||
       Boolean(newsSig && newsSig.signalType === 'RULED_OUT_WEEK' && newsSig.confidence >= 0.6));
 
-  // 21-day practice window opened + officially Questionable (via explicit caller flag, official Questionable tag, or beat note)
+  const irWindowEval = isIrBucketOrStatus
+    ? evaluateWeeklyIrActivationWindow({
+        kickoffIso: input.kickoffIso || '',
+        designatedDateIso: input.designatedDateIso || '',
+        nowMs: input.nowMs ?? Date.now(),
+        schedule: input.schedule || []
+      })
+    : {
+        hasMissedWeeklyDeadline: false,
+        windowWeekStage: null,
+        is21DayWindowExpired: false
+      };
+
+  const hasOpenIr21DayWindow =
+    Boolean(input.isPracticeWindowOpen) ||
+    Boolean(input.isIrReturnQuestionable) ||
+    statusRaw.includes('21-day window open') ||
+    statusRaw.includes('ir return window') ||
+    (isIrBucketOrStatus &&
+      !hasWindowDefinitelyNotOpeningSignal(currentWeekIrNote) &&
+      (statusRaw === 'questionable' ||
+        beatNoteSignalsQuestionableActivation ||
+        hasAnyActiveIrPracticeThisWeek ||
+        /\b(?:opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|designated\b[^.;]{0,65}\bto\s+return\s+from)\b/i.test(
+          currentWeekIrNote
+        )));
+
+  const newsRulesOutIrThisWeek =
+    isIrBucketOrStatus &&
+    (hasDefiniteIrNonActivationOrWindowClosedSignal(currentWeekIrNote) ||
+      Boolean(
+        newsSig &&
+          (newsSig.signalType === 'IR_NOT_ACTIVATING_THIS_WEEK' ||
+            newsSig.signalType === 'WINDOW_NOT_OPENING_THIS_WEEK' ||
+            newsSig.signalType === 'RULED_OUT_WEEK') &&
+          newsSig.confidence >= 0.35
+      ));
+
+  const missedWeeklyIrWindow =
+    isIrBucketOrStatus &&
+    !input.activatedToActiveRoster &&
+    (Boolean(input.missedActivationWindow) ||
+      irWindowEval.hasMissedWeeklyDeadline ||
+      irWindowEval.is21DayWindowExpired);
+
+  // Active 21-day IR/PUP return candidate who MAY get activated and play this week (`% GTD > 0`)
   const isIrReturnQuestionable =
     !isSeasonEndingFlag &&
     !isRosterExemptionFlag &&
     !isReinstatementFlag &&
-    !affirmativeRuledOut &&
+    rosterBucket !== 'suspended' &&
+    statusRaw !== 'suspended' &&
     statusRaw !== 'out' &&
-    statusRaw !== 'doubtful' &&
-    (Boolean(input.isIrReturnQuestionable) ||
-      (isIrBucketOrStatus && (statusRaw === 'questionable' || beatNoteSignalsQuestionableActivation)));
+    !affirmativeRuledOut &&
+    !newsRulesOutIrThisWeek &&
+    !missedWeeklyIrWindow &&
+    (Boolean(input.isIrReturnQuestionable) || (isIrBucketOrStatus && hasOpenIr21DayWindow));
 
   if (
     !isIrReturnQuestionable &&
     (isSeasonEndingFlag ||
       isRosterExemptionFlag ||
       isReinstatementFlag ||
-      rosterBucket === 'ir' ||
-      rosterBucket === 'injuredreserveorout' ||
-      rosterBucket === 'pup' ||
+      isIrBucketOrStatus ||
       rosterBucket === 'suspended' ||
       statusRaw === 'out' ||
-      statusRaw === 'ir' ||
-      statusRaw === 'injured reserve' ||
-      statusRaw.includes('reserve / pup') ||
-      statusRaw === 'pup' ||
       statusRaw === 'suspended' ||
       affirmativeRuledOut)
   ) {
@@ -1986,17 +2395,27 @@ export function computePlayerPlayProbability(input = {}) {
     } else if (rosterBucket === 'suspended' || statusRaw === 'suspended') {
       badgeLabel = '0% • Suspended';
       factors.push('Reserve / Suspended — ineligible until suspension concludes');
-    } else if (rosterBucket === 'pup' || statusRaw === 'pup' || statusRaw.includes('physically unable')) {
-      badgeLabel = '0% • Reserve/PUP';
-      factors.push('Reserve / Physically Unable to Perform — 21-day window required before activation');
-    } else if (
-      rosterBucket === 'ir' ||
-      rosterBucket === 'injuredreserveorout' ||
-      statusRaw === 'ir' ||
-      statusRaw.includes('injured reserve')
-    ) {
-      badgeLabel = '0% • IR';
-      factors.push('On Injured Reserve — requires 21-day window & 53-man activation');
+    } else if (isIrBucketOrStatus) {
+      const isPupReserve =
+        rosterBucket === 'pup' || statusRaw === 'pup' || statusRaw.includes('physically unable') || statusRaw.includes('reserve / pup');
+      badgeLabel = isPupReserve ? '0% • Reserve/PUP' : '0% • IR';
+      if (irWindowEval.is21DayWindowExpired) {
+        factors.push('21-day IR practice window expired without 53-man roster activation');
+      } else if (missedWeeklyIrWindow) {
+        factors.push('Missed weekly NFL 53-man IR activation deadline — remains on Injured Reserve for this game');
+      } else if (
+        hasWindowDefinitelyNotOpeningSignal(currentWeekIrNote) ||
+        newsSig?.signalType === 'WINDOW_NOT_OPENING_THIS_WEEK' ||
+        newsSig?.hasWindowNotOpeningSignal
+      ) {
+        factors.push('Coaching/beat report indicates 21-day practice window will not be opened this week');
+      } else if (newsRulesOutIrThisWeek || statusRaw === 'out' || affirmativeRuledOut) {
+        factors.push('Coaching/beat report confirms player will not be activated from IR this week');
+      } else if (isPupReserve) {
+        factors.push('Reserve / Physically Unable to Perform — 21-day window required before activation');
+      } else {
+        factors.push('On Injured Reserve — 21-day practice window not yet opened');
+      }
     } else {
       factors.push('Officially ruled Out on weekly game status report');
     }
@@ -2005,6 +2424,156 @@ export function computePlayerPlayProbability(input = {}) {
       probabilityPct: 0,
       tier: 'OUT',
       badgeLabel,
+      priorUsed: prior,
+      factors
+    };
+  }
+
+  // Dedicated Joint Probability Model for Open 21-Day IR/PUP Window Candidates: P(Activated to 53-Man Roster ∩ Plays)
+  if (isIrBucketOrStatus && isIrReturnQuestionable) {
+    const inferredStage =
+      irWindowEval.windowWeekStage ||
+      (/\b(?:third\s+week|final\s+week|ample\s+time\s+to\s+activate)\b/i.test(fullBeatLower)
+        ? 3
+        : /\b(?:second\s+week|trio\s+of\s+(?:full|limited)\s+practices|three\s+(?:full|limited)\s+practices|wasn't\s+activated\s+saturday|upgraded\s+to\s+a\s+full\s+practice\s+session\s+friday)\b/i.test(
+              fullBeatLower
+            )
+          ? 2
+          : 1);
+
+    const hasOfficialQTag =
+      statusRaw === 'questionable' ||
+      Boolean(input.isIrReturnQuestionable && statusRaw === 'questionable') ||
+      /\b(?:listed\s+as\s+questionable|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|questionable\s+ahead\s+of)\b/i.test(
+        currentWeekIrNote
+      );
+
+    let irProb = 0.52;
+    if (statusRaw === 'doubtful') {
+      irProb = 0.14;
+      factors.push('21-day IR window open, but tagged Doubtful on weekly status report (~14% activation odds)');
+    } else if (fri === 'FP') {
+      irProb = (inferredStage >= 3 ? 0.80 : inferredStage === 2 ? 0.76 : 0.68) + (hasOfficialQTag ? 0.04 : 0);
+      factors.push(`21-day IR window open (Week ${inferredStage} ramp); logged Full Participation (FP) on Friday`);
+    } else if (fri === 'LP') {
+      if (wed === 'DNP' && thu === 'DNP') {
+        irProb = 0.36;
+        factors.push('21-day IR window open; first Limited session on Friday after Wed/Thu DNP');
+      } else {
+        irProb =
+          (inferredStage >= 3 ? 0.68 : inferredStage === 2 ? 0.62 : 0.56) +
+          (hasOfficialQTag ? 0.08 : 0) +
+          (prior.questionablePlayRate - 0.78) * 0.35;
+        factors.push(
+          `21-day IR window open (Week ${inferredStage} ramp); Friday Limited (LP)${hasOfficialQTag ? ' + official Questionable tag' : ''}`
+        );
+      }
+    } else if (fri === 'DNP') {
+      irProb = 0.12;
+      factors.push('21-day IR window open, but Friday DNP sharply lowers weekly 53-man activation likelihood');
+    } else if (thu === 'FP') {
+      irProb = inferredStage >= 3 ? 0.80 : inferredStage === 2 ? 0.76 : 0.68;
+      factors.push(`21-day IR window open (Week ${inferredStage} ramp); logged Full Participation (FP) on Thursday`);
+    } else if (thu === 'DNP' && (wed === 'LP' || wed === 'FP')) {
+      irProb = 0.26;
+      factors.push('21-day IR window setback alert: downgraded to Thursday DNP after practicing Wednesday');
+    } else if (thu === 'LP') {
+      irProb =
+        wed === 'DNP'
+          ? inferredStage >= 2
+            ? 0.56
+            : 0.48
+          : inferredStage >= 3
+            ? 0.68
+            : inferredStage === 2
+              ? 0.62
+              : 0.54;
+      factors.push(`21-day IR window open (Week ${inferredStage} ramp); logging Limited Participation (LP)`);
+    } else if (wed === 'DNP' && thu === 'DNP') {
+      irProb = 0.18;
+      factors.push('21-day IR window open, but consecutive Wed/Thu DNPs');
+    } else if (wed === 'FP') {
+      irProb = inferredStage >= 3 ? 0.78 : inferredStage === 2 ? 0.74 : 0.65;
+      factors.push(`21-day IR window open (Week ${inferredStage} ramp); Full Participation (FP) on Wednesday`);
+    } else if (wed === 'LP') {
+      irProb = inferredStage >= 3 ? 0.66 : inferredStage === 2 ? 0.60 : 0.52;
+      factors.push(`21-day IR window open (Week ${inferredStage} ramp); returned to Limited Participation (LP) Wednesday`);
+    } else if (wed === 'DNP') {
+      irProb = 0.24;
+      factors.push('21-day IR window open; Did Not Participate (DNP) on Wednesday');
+    } else {
+      // Early-week pre-practice rollover (Mon/Tue/Wed AM) with open 21-day practice window
+      irProb = inferredStage >= 3 ? 0.62 : inferredStage === 2 ? 0.54 : 0.44;
+      if (/\b(?:trio\s+of\s+full\s+practices|three\s+full\s+practices)\b/i.test(fullBeatLower)) {
+        irProb += 0.12;
+        factors.push(`21-day IR window open (Week ${inferredStage}); completed three Full Practices last week`);
+      } else if (/\bupgraded\s+to\s+a\s+full\s+practice\s+session\s+friday\b/i.test(fullBeatLower)) {
+        irProb += 0.08;
+        factors.push(`21-day IR window open (Week ${inferredStage}); upgraded to Friday Full Practice last week`);
+      } else if (/\b(?:three\s+limited\s+practices|trio\s+of\s+limited\s+practices)\b/i.test(fullBeatLower)) {
+        irProb += 0.05;
+        factors.push(`21-day IR window open (Week ${inferredStage}); logged three Limited sessions last week`);
+      } else {
+        factors.push(`21-day IR practice window open (Week ${inferredStage}); awaiting current-week practice ramp`);
+      }
+    }
+
+    if ((Number(input.snapPct) >= 55 || Boolean(input.isStarter)) && irProb >= 0.30) {
+      irProb += 0.03;
+      factors.push('Starter / core rotational role increases 53-man roster activation priority (+3%)');
+    }
+
+    const matchesIrChronic = prior.chronicParts.some(part => injuryLower.includes(part.toLowerCase()));
+    if (HIGH_CAUTION_STRUCTURAL_KEYWORDS.some(k => injuryLower.includes(k)) && fri !== 'FP' && thu !== 'FP') {
+      irProb -= 0.05;
+      factors.push(`Structural joint/surgery ramp-up caution (${injuryType})`);
+    } else if ((SOFT_TISSUE_KEYWORDS.some(k => injuryLower.includes(k)) || matchesIrChronic) && fri !== 'FP') {
+      irProb -= 0.04;
+      factors.push(`Soft-tissue / recurrence ramp-up caution (${injuryType})`);
+    } else if (MINOR_PAIN_TOLERANCE_KEYWORDS.some(k => injuryLower.includes(k)) && irProb >= 0.45) {
+      irProb += 0.03;
+    }
+
+    if (newsSig) {
+      const conf = newsSig.confidence;
+      const srcLabel =
+        newsSig.corroboratingCount >= 2
+          ? `${newsSig.corroboratingCount} corroborated reports`
+          : newsSig.hasCoachOrGmQuote
+            ? 'coaching staff report'
+            : 'beat report';
+      if (newsSig.signalType === 'UNLIKELY_THIS_WEEK') {
+        const blend = Math.min(0.86, conf * 0.94);
+        irProb = Math.min(irProb, irProb * (1 - blend) + 0.20 * blend);
+        factors.push(`Coaching/beat consensus (${srcLabel}): unlikely to be activated this week`);
+      } else if (newsSig.signalType === 'EXPECTED_TO_PLAY') {
+        const blend = Math.min(0.88, conf * 0.92);
+        irProb = Math.max(irProb, irProb * (1 - blend) + 0.82 * blend);
+        factors.push(`Coaching/beat consensus (${srcLabel}): expected to be activated from IR`);
+      } else if (newsSig.signalType === 'OBSERVED_DNP_PRACTICE' && !hasObservedPracticeThisWeek) {
+        irProb = Math.min(irProb, 0.24);
+        factors.push(`Beat practice observation (${srcLabel}): did not practice today`);
+      } else if (newsSig.signalType === 'OBSERVED_PRACTICE_RETURN' && !hasObservedPracticeThisWeek) {
+        irProb = Math.max(irProb, 0.54);
+        factors.push(`Beat practice observation (${srcLabel}): practicing in 21-day window`);
+      }
+    } else if (hasNegativePlayConsensusSignal(currentWeekIrNote)) {
+      irProb = Math.min(irProb, 0.22);
+      factors.push('Beat consensus: long shot to be activated this week');
+    } else if (hasAffirmativePlayOrActivationSignal(currentWeekIrNote)) {
+      irProb = Math.max(irProb, 0.80);
+      factors.push('Coaching/beat consensus: expected to be activated ahead of game');
+    }
+
+    factors.push('Requires formal 53-man roster activation prior to weekly NFL transaction deadline');
+
+    // Cap unactivated IR candidates at 84% (`GTD`) until formally activated onto the 53-man active roster
+    const irPct = Math.max(1, Math.min(84, Math.round(irProb * 100)));
+    const irTier = irPct >= 50 ? 'FIFTY_FIFTY' : irPct >= 20 ? 'UNLIKELY' : 'DOUBTFUL';
+    return {
+      probabilityPct: irPct,
+      tier: irTier,
+      badgeLabel: `${irPct}% • ${formatPlayTierLabel(irTier)}`,
       priorUsed: prior,
       factors
     };
@@ -2808,21 +3377,36 @@ export function classifyIrAndReserveTimeline({
   let isPracticeWindowExpected = false;
   const curWk = Number(currentWeek) || 1;
   const rawEstWeek = Math.max(cbsWeek || 0, espnWeek || 0);
+  const explicitWindowNotOpening =
+    hasWindowDefinitelyNotOpeningSignal(combinedNote) ||
+    Boolean(corroboratedNewsSignal?.hasWindowNotOpeningSignal) ||
+    corroboratedNewsSignal?.signalType === 'WINDOW_NOT_OPENING_THIS_WEEK';
+  const effectiveOpenWindow = Boolean(isDesignatedToReturnOpen) && !/\bnot\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+practice\b/i.test(combinedNote);
   const hasCrediblePracticeReturnNews =
+    !explicitWindowNotOpening &&
     Boolean(corroboratedNewsSignal?.hasSignal) &&
     (corroboratedNewsSignal.signalType === 'EXPECTED_PRACTICE_RETURN' ||
       corroboratedNewsSignal.signalType === 'EXPECTED_TO_PLAY') &&
     corroboratedNewsSignal.confidence >= 0.55 &&
     earliestWk <= curWk + 1;
 
-  if (isDesignatedToReturnOpen) {
+  const finalStatusLabel =
+    isPup
+      ? 'Reserve / PUP'
+      : effectiveOpenWindow && !isActivated
+        ? 'IR — 21-Day Window Open'
+        : abbrUpper === 'IR-R'
+          ? 'Injured Reserve (Designated)'
+          : 'Injured Reserve';
+
+  if (effectiveOpenWindow) {
     // 21-day practice window IS open; ignore "wasn't activated Saturday" notes written before the completed prior week's game
     const lastPlayedEv = [...timeline].reverse().find(item => item.week < curWk);
     const blurbMs = parseFlexibleIsoMs(placedDateIso);
     const blurbPredatesCurrentWeek = Boolean(lastPlayedEv && blurbMs !== null && blurbMs < lastPlayedEv.ms);
     const ruledOutCurrentWeek =
       (!blurbPredatesCurrentWeek &&
-        /not activated|didn't activate|did not activate|remains on injured reserve|ruled out|will not play|wait at least another week/i.test(
+        /not activated|didn't activate|did not activate|won't be activated|aren't activating|remains on injured reserve|ruled out|will not play|wait at least another week/i.test(
           combinedNote
         )) ||
       (cbsWeek !== null && cbsWeek > curWk);
@@ -2866,13 +3450,13 @@ export function classifyIrAndReserveTimeline({
     ? `Week ${byeWeek} Bye excluded from NFL 4-game minimum count`
     : '4-game NFL minimum requirement';
 
-  const factualFallback = isDesignatedToReturnOpen
+  const factualFallback = effectiveOpenWindow
     ? `21-day practice window opened; eligible for 53-man roster activation (${fullInjuryType}).`
     : isPracticeWindowExpected
-      ? `4-game minimum satisfied on ${statusLabel} (${fullInjuryType}); coaching staff expects 21-day practice window to open in Week ${curWk}.`
+      ? `4-game minimum satisfied on ${finalStatusLabel} (${fullInjuryType}); coaching staff expects 21-day practice window to open in Week ${curWk}.`
       : earliestWk <= curWk
-        ? `4-game minimum satisfied on ${statusLabel} (${fullInjuryType}); awaiting 21-day practice window designation.`
-        : `Placed on ${statusLabel} (${fullInjuryType}) ahead of Week ${placedBeforeWeek}; must miss at least 4 games (earliest eligible Week ${earliestWk}).`;
+        ? `4-game minimum satisfied on ${finalStatusLabel} (${fullInjuryType}); awaiting 21-day practice window designation.`
+        : `Placed on ${finalStatusLabel} (${fullInjuryType}) ahead of Week ${placedBeforeWeek}; must miss at least 4 games (earliest eligible Week ${earliestWk}).`;
 
   let resolvedBeatNote = combinedNote || factualFallback;
   if (isPracticeWindowExpected && corroboratedNewsSignal?.leadClause) {
@@ -2883,10 +3467,10 @@ export function classifyIrAndReserveTimeline({
   }
 
   return {
-    status: statusLabel,
+    status: finalStatusLabel,
     injuryType: fullInjuryType,
     isSeasonEnding: false,
-    isPracticeWindowOpen: Boolean(isDesignatedToReturnOpen),
+    isPracticeWindowOpen: effectiveOpenWindow,
     isPracticeWindowExpected,
     placedBeforeWeek,
     earliestEligibleWeek: earliestWk,
@@ -2918,7 +3502,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
   const rosterPlayers = appData?.roster?.players;
   if (!Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return false;
 
-  const currentWeek = Number(
+  const baseCurrentWeek = Number(
     appData?.health?.week ||
       appData?.scheduleMatchup?.upcomingMatchup?.week ||
       appData?.meta?.currentWeek ||
@@ -2927,22 +3511,47 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
   const byeWeek = Number(appData?.health?.byeWeek || 8);
   const schedule = appData?.scheduleMatchup?.schedule || [];
 
-  // Post-prior-game cutoff: only news published AFTER the most recently completed game can adjust upcoming-week health
-  const completedGames = schedule
-    .filter(g => g?.completed && (g.dateIso || g.kickoffIso))
-    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
-    .filter(ms => ms !== null)
-    .sort((a, b) => b - a);
-  const lastCompletedGameEndMs =
-    completedGames.length > 0 ? completedGames[0] + 3 * 3_600_000 : nowMs - 4.5 * 86_400_000;
-
-  const seasonYear = Number(appData?.meta?.seasonYear || 2026);
-  const upcomingKickoffIso =
+  const rawUpcomingKickoffIso =
     appData?.scheduleMatchup?.upcomingMatchup?.kickoffIso ||
     appData?.scheduleMatchup?.upcomingMatchup?.dateIso ||
     schedule.find(g => g && !g.completed && !g.isByeWeek)?.dateIso ||
     '';
+  const rawUpcomingMs = parseFlexibleIsoMs(rawUpcomingKickoffIso);
+  const upcomingHasConcludedByClock =
+    rawUpcomingMs !== null && nowMs > rawUpcomingMs + 5.25 * 3_600_000;
 
+  // If the static upcomingMatchup has already concluded by wall-clock time (e.g. Monday morning before static refresh),
+  // resolve the next unplayed schedule game for weekly IR activation deadlines and opponent scoping!
+  const nextScheduleGame = upcomingHasConcludedByClock
+    ? schedule
+        .filter(g => g && !g.completed && !g.isByeWeek && !g.opponent?.isTbd)
+        .map(g => ({ g, ms: parseFlexibleIsoMs(g.dateIso || g.kickoffIso) }))
+        .filter(x => x.ms !== null && nowMs <= x.ms + 5.25 * 3_600_000)
+        .sort((a, b) => a.ms - b.ms)[0]?.g || null
+    : null;
+
+  const currentWeek = nextScheduleGame?.week ? Number(nextScheduleGame.week) : baseCurrentWeek;
+  const upcomingKickoffIso = nextScheduleGame
+    ? nextScheduleGame.dateIso || nextScheduleGame.kickoffIso || rawUpcomingKickoffIso
+    : rawUpcomingKickoffIso;
+  const upcomingOppName = nextScheduleGame
+    ? nextScheduleGame.opponent?.name || nextScheduleGame.oppName || ''
+    : appData?.scheduleMatchup?.upcomingMatchup?.oppName || '';
+  const upcomingOppAbbr = nextScheduleGame
+    ? nextScheduleGame.opponent?.abbr || nextScheduleGame.oppAbbr || ''
+    : appData?.scheduleMatchup?.upcomingMatchup?.oppAbbr || '';
+
+  // Post-prior-game cutoff: only news published AFTER the most recently completed game can adjust upcoming-week health
+  const completedGames = schedule
+    .filter(g => (g?.completed || (upcomingHasConcludedByClock && Number(g?.week) === baseCurrentWeek)) && (g.dateIso || g.kickoffIso))
+    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
+    .filter(ms => ms !== null)
+    .sort((a, b) => b - a);
+  const lastCompletedGameKickoffMs = completedGames.length > 0 ? completedGames[0] : null;
+  const lastCompletedGameEndMs =
+    lastCompletedGameKickoffMs !== null ? lastCompletedGameKickoffMs + 3 * 3_600_000 : nowMs - 4.5 * 86_400_000;
+
+  const seasonYear = Number(appData?.meta?.seasonYear || 2026);
   const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
   const rosterPlayerNames = rosterPlayers.map(p => p?.name).filter(Boolean);
 
@@ -2993,9 +3602,21 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
     const wirePrac = liveWirePracticeMap.get(p.id) || null;
     let practiceChanged = false;
     if (wirePrac) {
+      if (!p.health._slotPubMs || typeof p.health._slotPubMs !== 'object') {
+        p.health._slotPubMs = { wed: 0, thu: 0, fri: 0 };
+      }
       for (const slot of ['wed', 'thu', 'fri']) {
-        if (wirePrac[slot] && (!p.health[slot] || p.health[slot] === '-')) {
-          p.health[slot] = wirePrac[slot];
+        const candSlotVal = wirePrac[slot];
+        const candSlotMs = wirePrac.slotPubMs?.[slot] || 0;
+        const prevSlotMs = p.health._slotPubMs[slot] || 0;
+        if (
+          candSlotVal &&
+          (!p.health[slot] ||
+            p.health[slot] === '-' ||
+            (candSlotMs > 0 && candSlotMs > prevSlotMs && p.health[slot] !== candSlotVal))
+        ) {
+          p.health[slot] = candSlotVal;
+          if (candSlotMs > 0) p.health._slotPubMs[slot] = candSlotMs;
           practiceChanged = true;
           mutated = true;
         }
@@ -3084,11 +3705,27 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
     if (p.rosterBucket === 'ir' || p.rosterBucket === 'suspended') {
       if (p.health.isSeasonEnding) continue;
 
+      // Live 53-man IR activation on transaction wire ("activated <Player> from injured reserve")
+      if (newsSig.hasOfficialActivationFromIr && p.rosterBucket === 'ir') {
+        p.rosterBucket = 'active';
+        p.health.isPracticeWindowOpen = false;
+        p.health.isPracticeWindowExpected = false;
+        p.health.isIrReturnQuestionable = false;
+        p.health.isOnPracticeReport = false;
+        p.health.status = 'Active';
+        p.health.playProbabilityPct = 95;
+        p.health.playTier = 'ACTIVE';
+        p.health.playBadgeLabel = '95% • Full Go';
+        p.health.factors = ['Officially activated from Injured Reserve onto 53-man active roster'];
+        mutated = true;
+        continue;
+      }
+
       if ((newsSig.hasOfficialTxDesignation || wirePrac?.openedPracticeWindow) && !p.health.isPracticeWindowOpen) {
         p.health.isPracticeWindowOpen = true;
         p.health.isPracticeWindowExpected = false;
         p.health.status = 'IR — 21-Day Window Open';
-        p.health.projectedReturnWeek = `Week ${currentWeek} Activation Window`;
+        p.health.projectedReturnWeek = `Week ${baseCurrentWeek} Activation Window`;
         if (wirePrac?.latestNote) {
           const lead = String(wirePrac.latestNote).trim();
           const existingIrNote = String(p.health.irBeatNote || p.health.longComment || '').trim();
@@ -3097,6 +3734,19 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           }
         }
         mutated = true;
+      } else if (
+        !p.health.isPracticeWindowOpen &&
+        (newsSig.hasWindowNotOpeningSignal ||
+          newsSig.signalType === 'WINDOW_NOT_OPENING_THIS_WEEK' ||
+          hasWindowDefinitelyNotOpeningSignal(p.health.irBeatNote || p.health.longComment || ''))
+      ) {
+        if (p.health.isPracticeWindowExpected || /Window Expected/i.test(String(p.health.projectedReturnWeek || ''))) {
+          p.health.isPracticeWindowExpected = false;
+          const earliestWk = Number(p.health.earliestEligibleWeek || 1);
+          p.health.projectedReturnWeek =
+            earliestWk > currentWeek ? `Est. Week ${earliestWk}` : 'TBD (21d Window Not Open)';
+          mutated = true;
+        }
       } else if (
         !p.health.isPracticeWindowOpen &&
         newsSig.hasSignal &&
@@ -3108,10 +3758,10 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         const hasLaterConcreteTarget =
           /^Est\.\s+Week\s+(\d+)/i.test(curProj) &&
           !/Window Expected/i.test(curProj) &&
-          Number(curProj.match(/Week\s+(\d+)/i)?.[1] || 0) > currentWeek + 1;
+          Number(curProj.match(/Week\s+(\d+)/i)?.[1] || 0) > baseCurrentWeek + 1;
 
-        if (earliestWk <= currentWeek + 1 && !hasLaterConcreteTarget) {
-          let winWk1 = Math.max(currentWeek, earliestWk);
+        if (earliestWk <= baseCurrentWeek + 1 && !hasLaterConcreteTarget) {
+          let winWk1 = Math.max(baseCurrentWeek, earliestWk);
           if (winWk1 === byeWeek) winWk1 += 1;
           let winWk2 = winWk1 + 1;
           if (winWk2 === byeWeek) winWk2 += 1;
@@ -3132,6 +3782,74 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
               p.health.irBeatNote = existingIrNote ? `${lead} ${existingIrNote}` : lead;
               mutated = true;
             }
+          }
+        }
+      }
+
+      // Compute activation + play probability for return-eligible IR/PUP players (especially open 21-day windows!)
+      if (
+        p.rosterBucket === 'ir' &&
+        (p.health.isPracticeWindowOpen ||
+          p.health.isIrReturnQuestionable ||
+          (p.health.playProbabilityPct || 0) > 0 ||
+          practiceChanged ||
+          newsSig.hasSignal)
+      ) {
+        const irCombinedBeat = pickMeaningfulInjuryComment(
+          wirePrac?.latestNote,
+          newsSig.leadClause,
+          p.health.irBeatNote,
+          p.health.longComment,
+          p.health.shortComment
+        );
+        const irPlayProb = computePlayerPlayProbability({
+          name: p.name,
+          position: p.position,
+          experienceYears: p.experienceYears ?? null,
+          snapPct: p.primarySnapPct ?? null,
+          gameStatus: p.health.status,
+          rosterBucket: p.rosterBucket,
+          isPracticeWindowOpen: Boolean(p.health.isPracticeWindowOpen),
+          isIrReturnQuestionable: Boolean(p.health.isIrReturnQuestionable),
+          isSeasonEnding: false,
+          fantasyStatusAbbr: p.health.fantasyStatusAbbr || '',
+          injuryType: p.health.injuryType || '',
+          wed: p.health.wed,
+          thu: p.health.thu,
+          fri: p.health.fri,
+          hasSideFieldRehab: Boolean(p.health.hasSideFieldRehab),
+          beatNote: irCombinedBeat,
+          designatedDateIso: p.health.designatedDateIso || '',
+          kickoffIso: upcomingKickoffIso,
+          nowMs,
+          schedule,
+          currentWeek,
+          byeWeek,
+          upcomingOppName,
+          upcomingOppAbbr,
+          blurbDateIso: p.health.blurbDateIso || null,
+          lastCompletedGameKickoffMs,
+          rosterPlayerNames,
+          corroboratedNewsSignal: newsSig
+        });
+
+        const nextOnPracticeReport = Boolean(p.health.isPracticeWindowOpen && irPlayProb.probabilityPct > 0);
+        if (
+          p.health.playProbabilityPct !== irPlayProb.probabilityPct ||
+          p.health.playBadgeLabel !== irPlayProb.badgeLabel ||
+          Boolean(p.health.isOnPracticeReport) !== nextOnPracticeReport
+        ) {
+          mutated = true;
+        }
+        p.health.playProbabilityPct = irPlayProb.probabilityPct;
+        p.health.playTier = irPlayProb.tier;
+        p.health.playBadgeLabel = irPlayProb.badgeLabel;
+        p.health.factors = irPlayProb.factors;
+        p.health.isOnPracticeReport = nextOnPracticeReport;
+        if (!nextOnPracticeReport && p.health.isIrReturnQuestionable) {
+          p.health.isIrReturnQuestionable = false;
+          if (/Questionable/i.test(String(p.health.status || '')) && p.health.isPracticeWindowOpen) {
+            p.health.status = 'IR — 21-Day Window Open';
           }
         }
       }
@@ -3189,16 +3907,18 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           corroboratedNewsSignal: newsSig
         });
 
-        if (
-          p.health.playProbabilityPct !== playProb.probabilityPct ||
-          p.health.playBadgeLabel !== playProb.badgeLabel
-        ) {
-          mutated = true;
+        if (!appData.health?.gameDayRoster?.isActive) {
+          if (
+            p.health.playProbabilityPct !== playProb.probabilityPct ||
+            p.health.playBadgeLabel !== playProb.badgeLabel
+          ) {
+            mutated = true;
+          }
+          p.health.playProbabilityPct = playProb.probabilityPct;
+          p.health.playTier = playProb.tier;
+          p.health.playBadgeLabel = playProb.badgeLabel;
+          p.health.factors = playProb.factors;
         }
-        p.health.playProbabilityPct = playProb.probabilityPct;
-        p.health.playTier = playProb.tier;
-        p.health.playBadgeLabel = playProb.badgeLabel;
-        p.health.factors = playProb.factors;
       }
     }
   }
@@ -3241,6 +3961,8 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         position: p.position,
         jersey: p.jersey,
         headshotUrl: p.headshotUrl || '',
+        rosterBucket: p.rosterBucket || 'active',
+        isIrReturnWindow: p.rosterBucket === 'ir' && Boolean(p.health.isPracticeWindowOpen),
         wed: shouldBlankEarlyWeek ? '-' : p.health.wed || '-',
         thu: shouldBlankEarlyWeek ? '-' : p.health.thu || '-',
         fri: shouldBlankEarlyWeek ? '-' : p.health.fri || '-',
@@ -3252,7 +3974,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         playBadgeLabel: p.health.playBadgeLabel,
         archetypeNote: p.health.archetypeNote || '',
         factors: p.health.factors || [],
-        beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment)
+        beatComment: pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment, p.health.irBeatNote)
       }));
 
     if (Array.isArray(appData.health.irAndReserveTracker)) {
@@ -3278,9 +4000,74 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
           projectedReturnWeek: p.health.projectedReturnWeek || 'TBD',
           byeWeekNote: p.health.byeWeekNote || '4-game NFL minimum requirement',
+          playProbabilityPct: p.health.playProbabilityPct ?? 0,
+          playBadgeLabel:
+            p.health.playBadgeLabel ||
+            (p.health.isSeasonEnding
+              ? '0% • Out for Season'
+              : p.rosterBucket === 'suspended'
+                ? '0% • Suspended'
+                : '0% • IR'),
           beatNote: pickMeaningfulInjuryComment(p.health.irBeatNote, p.health.longComment, p.health.shortComment)
         }))
         .sort((a, b) => sortIrTrackerPriority(a) - sortIrTrackerPriority(b) || a.name.localeCompare(b.name));
+    }
+  }
+
+  // Synchronize Upcoming Opponent IR 21-Day Window activation probabilities & weekly deadline reversion
+  const oppHealth = appData?.scheduleMatchup?.upcomingMatchup?.opponentHealth;
+  if (oppHealth && Array.isArray(oppHealth.irReserve) && !oppHealth.gameDayRoster?.isActive) {
+    for (const oppIr of oppHealth.irReserve) {
+      if (!oppIr || oppIr.isSeasonEnding) continue;
+      if (/\bnot\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+practice\b/i.test(String(oppIr.beatNote || ''))) {
+        if (oppIr.isPracticeWindowOpen) {
+          oppIr.isPracticeWindowOpen = false;
+          oppIr.status = 'Injured Reserve';
+          if (/Activation Window/i.test(String(oppIr.projectedReturnWeek || ''))) {
+            oppIr.projectedReturnWeek = 'TBD (21d Window Not Open)';
+          }
+          mutated = true;
+        }
+      }
+      if (oppIr.isPracticeWindowOpen || (oppIr.playProbabilityPct || 0) > 0) {
+        const oppIrProb = computePlayerPlayProbability({
+          name: oppIr.name,
+          position: oppIr.position || 'ATH',
+          snapPct: oppIr.snapPct ?? null,
+          gameStatus: oppIr.status || 'Injured Reserve',
+          rosterBucket: 'ir',
+          isPracticeWindowOpen: Boolean(oppIr.isPracticeWindowOpen),
+          isSeasonEnding: false,
+          injuryType: oppIr.injuryType || '',
+          wed: oppIr.wed || '-',
+          thu: oppIr.thu || '-',
+          fri: oppIr.fri || '-',
+          beatNote: oppIr.beatNote || '',
+          designatedDateIso: oppIr.designatedDateIso || '',
+          kickoffIso: upcomingKickoffIso,
+          nowMs,
+          schedule,
+          currentWeek,
+          upcomingOppName: 'San Francisco 49ers',
+          upcomingOppAbbr: 'SF',
+          lastCompletedGameKickoffMs
+        });
+        if (
+          oppIr.playProbabilityPct !== oppIrProb.probabilityPct ||
+          oppIr.playBadgeLabel !== oppIrProb.badgeLabel
+        ) {
+          oppIr.playProbabilityPct = oppIrProb.probabilityPct;
+          oppIr.playBadgeLabel = oppIrProb.badgeLabel;
+          mutated = true;
+        }
+      }
+    }
+    if (oppHealth.summary) {
+      oppHealth.summary = computeTeamHealthSummary({
+        injuryReport: oppHealth.injuryReport || [],
+        irReserve: oppHealth.irReserve || [],
+        totalStarters: oppHealth.summary.totalStarters || 22
+      });
     }
   }
 
@@ -3295,7 +4082,10 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           if (!rp?.health) return entry;
           const prob = rp.health.playProbabilityPct ?? entry.playProbabilityPct ?? 95;
           const isAvailable =
-            prob >= 40 && (rp.rosterBucket === 'active' || Boolean(rp.health.isIrReturnQuestionable));
+            prob >= 40 &&
+            (rp.rosterBucket === 'active' ||
+              Boolean(rp.health.isIrReturnQuestionable) ||
+              Boolean(rp.health.isPracticeWindowOpen));
           return {
             ...entry,
             playProbabilityPct: prob,
@@ -3464,7 +4254,12 @@ export function computeTeamHealthSummary({
 
     const prob = Number.isFinite(Number(row?.playProbabilityPct)) ? Number(row.playProbabilityPct) : 50;
     const statusStr = String(row?.gameStatus || '').trim();
-    const isStarter = isEffectiveOffDefStarter(row);
+    const isIrWindowRow =
+      row?.rosterBucket === 'ir' ||
+      Boolean(row?.isIrReturnWindow) ||
+      Boolean(row?.isIrReturnQuestionable) ||
+      /\b(?:ir\b|injured\s+reserve|21-day\s+window|ir\s+return\s+window)\b/i.test(statusStr);
+    const isStarter = !isIrWindowRow && isEffectiveOffDefStarter(row);
 
     const isCleared =
       /^(?:active|in\b|no designation|cleared)/i.test(statusStr) ||
@@ -3522,6 +4317,10 @@ export function computeTeamHealthSummary({
 
   let rawIrPenalty = 0;
   for (const ir of irList) {
+    const irKey = String(ir?.name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+    if (irKey && seenNames.has(irKey)) continue;
     const snap = Number(ir?.snapPct || 0);
     if (snap >= 50) rawIrPenalty += 3.2;
     else if (snap >= 25) rawIrPenalty += 1.7;
@@ -3633,11 +4432,29 @@ export function isPlayerEligibleForInjuryNews(player = null, { currentWeek = 1, 
     return false;
   }
 
+  if (/healthy scratch|coach'?s decision/i.test(injClean)) {
+    return false;
+  }
+
+  if (Boolean(h.isInGameInjury || h.isInGameReturned)) {
+    return true;
+  }
+
   // Active / Practice Squad player: eligible when genuinely injured or listed on weekly injury report
   if (Boolean(h.isOnPracticeReport)) {
-    return Boolean(injClean && !/^cleared\s*[—-]\s*no designation$/i.test(injClean)) || ['out', 'doubtful', 'questionable'].includes(stLower);
+    return (
+      Boolean(injClean && !/^cleared\s*[—-]\s*no designation$/i.test(injClean)) ||
+      stLower.startsWith('out') ||
+      stLower.startsWith('doubtful') ||
+      stLower.startsWith('questionable')
+    );
   }
-  if (['out', 'doubtful', 'questionable', 'doubtful', 'inactive'].includes(stLower)) {
+  if (
+    stLower.startsWith('out') ||
+    stLower.startsWith('doubtful') ||
+    stLower.startsWith('questionable') ||
+    stLower === 'inactive'
+  ) {
     return true;
   }
   if (injClean && !/^(?:none|healthy|active|cleared\s*[—-]\s*no designation)$/i.test(injClean)) {
@@ -3647,7 +4464,7 @@ export function isPlayerEligibleForInjuryNews(player = null, { currentWeek = 1, 
 }
 
 const INJURY_NEWS_TOPIC_RELEVANCE_RE =
-  /\b(injur(?:y|ed|ies)|practice[d]?|practicing|participat(?:e|ed|ing|ion|ant)|limited|dnp|did not practice|didn't practice|not practicing|no practice|full go|full participant|side\s*lines?|side\s+field|rehab(?:bing)?|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|sprinting|running\s+routes|working\s+with\s+trainers|individual\s+drills|team\s+drills|non-contact|walking\s+boot|brace|helmet\s+off|observer|locker\s+room|medical\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|concussion|protocol|hamstring|achilles|ankle|high-ankle|knee|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|(?:lower\s+|upper\s+)?back\s+(?:injury|spasms|tightness|issue|pain)|\(back\)|\(\s*foot\s*\)|foot\s+(?:injury|sprain|fracture|issue)|shoulder|groin|adductor|calf|quad|hip\s+(?:injury|pointer|flexor|issue)|\(hip\)|oblique|pectoral|rib|wrist|hand\s+(?:injury|fracture|surgery)|thumb|neck\s+(?:injury|stinger|spasms|issue)|\(neck\)|elbow|illness|sprain|strain|tear|torn|fracture|day-to-day|week-to-week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|practice\s+window|designated\s+to\s+return|activated|setback|aggravat(?:e|ed)|clearance|cleared|healthy|recovery|recuperat|return(?:ed|ing)?\s+to\s+(?:practice|action|the\s+field)|sidelined|capped\s+session)\b/i;
+  /(?:\(\s*(?:back|foot|hip|neck|hand|knee|ankle|shoulder|rib|calf|quad|groin|wrist|thumb|elbow|toe|illness)\s*\)|\b(?:injur(?:y|ed|ies)|practice[d]?|practicing|participat(?:e|ed|ing|ion|ant)|limited|dnp|did not practice|didn't practice|not practicing|no practice|full go|full participant|side\s*lines?|side\s+field|rehab(?:bing)?|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|sprinting|running\s+routes|working\s+with\s+trainers|individual\s+drills|team\s+drills|non-contact|walking\s+boot|brace|helmet\s+off|observer|locker\s+room|medical\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|concussion|protocol|hamstring|achilles|ankle|high-ankle|knee|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|(?:lower\s+|upper\s+)?back\s+(?:injury|spasms|tightness|issue|pain)|foot\s+(?:injury|sprain|fracture|issue)|shoulder|groin|adductor|calf|quad|hip\s+(?:injury|pointer|flexor|issue)|oblique|pectoral|rib|wrist|hand\s+(?:injury|fracture|surgery)|thumb|neck\s+(?:injury|stinger|spasms|issue)|elbow|illness|sprain|strain|tear|torn|fracture|day-to-day|week-to-week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|practice\s+window|designated\s+to\s+return|activated|setback|aggravat(?:e|ed)|clearance|cleared|healthy|recovery|recuperat|trending\s+up|return(?:ed|ing)?\s+to\s+(?:practice|action|the\s+field|(?:the\s+|sunday['’]?s\s+|monday['’]?s\s+|thursday['’]?s\s+|saturday['’]?s\s+)?(?:game|contest|matchup))|back\s+in\s+the\s+(?:game|huddle|lineup)|back\s+on\s+the\s+field|will\s+not\s+return|won['’]?t\s+return|shaken\s+up|limped\s+off|helped\s+off|carted\s+off|sidelined|capped\s+session)\b)/i;
 
 const INJURY_REHAB_COLOR_DETAIL_RE =
   /\b(spotted\s+(?:running|sprinting|jogging|working|cutting|throwing|catching)|on\s+the\s+(?:side\s*lines?|side\s+field|rehab\s+field)|working\s+(?:on\s+(?:a|the)\s+(?:side|rehab)\s+field|with\s+trainers)|running\s+(?:on\s+the\s+side|routes|sprints)|cutting|individual\s+drills|indy\s+drills|team\s+drills|7-on-7|11-on-11|in\s+cleats|in\s+pads|with\s+a\s+helmet|without\s+a\s+(?:brace|boot|limp)|walking\s+boot|blue\s+non-contact|non-contact\s+jersey|was\s+an\s+observer|moving\s+well|full\s+speed|capped\s+session|for\s+the\s+first\s+time\s+since|making\s+solid\s+progress)\b/i;
@@ -3674,7 +4491,8 @@ export function computeInjuryNewsRankScore(
     nowMs = Date.now(),
     maxAgeDays = 8,
     lastCompletedKickoffMs = null,
-    hasObservedPracticeThisWeek = false
+    hasObservedPracticeThisWeek = false,
+    appData = null
   } = {}
 ) {
   if (!item || !player?.name || item.isClickbait || item.type === 'video') return null;
@@ -3702,8 +4520,14 @@ export function computeInjuryNewsRankScore(
   const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
   if (ageHours > maxAgeDays * 24 || pubMs > nowMs + 3_600_000) return null;
 
+  const playerSpecificSnippet = String(
+    item.playerSnippet || item.playerSnippets?.[String(player.id || '')] || ''
+  ).trim();
   const primaryText = String(item.fullText || item.title || item.headline || '').trim();
-  const secondaryText = String(item.summary || item.externalTitle || '').trim();
+  const secondaryText = [item.summary, item.externalTitle, item.externalDescription, playerSpecificSnippet]
+    .map(s => String(s || '').trim())
+    .filter(Boolean)
+    .join(' ');
   const fullBody =
     secondaryText && !primaryText.toLowerCase().includes(secondaryText.toLowerCase().slice(0, 32))
       ? `${primaryText} ${secondaryText}`.trim()
@@ -3715,15 +4539,28 @@ export function computeInjuryNewsRankScore(
     return null;
   }
 
-  // Filter out bare prior-completed-game active/inactive list noise while preserving diagnostic/rehab updates
-  if (
-    Number.isFinite(lastCompletedKickoffMs) &&
-    pubMs < lastCompletedKickoffMs + 20 * 60_000 &&
-    /\b(?:inactives?\s*:|is\s+officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives)\b/i.test(fullBody) &&
-    !INJURY_REHAB_COLOR_DETAIL_RE.test(fullBody) &&
-    !INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE.test(fullBody)
-  ) {
+  // Adopt shared app-wide completed-game availability filter + prune prior-week sideline blue-tent/return tweets
+  const hasLongTermOrIrTimeline =
+    /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i.test(
+      fullBody
+    );
+  if (!hasLongTermOrIrTimeline && appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs)) {
     return null;
+  }
+
+  if (Number.isFinite(lastCompletedKickoffMs) && pubMs < lastCompletedKickoffMs + 20 * 60_000) {
+    const isCompletedGamePracticeOrAvailBlurb =
+      /\b(inactives?\s*:|is\s+officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|did\s+not\s+practice|didn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|game-time\s+decision|(?:good|ready)\s+to\s+(?:go|play))\b/i.test(
+        fullBody
+      );
+    const isPriorWeekSidelineTentTweet =
+      pubMs < lastCompletedKickoffMs - 2 * 3_600_000 &&
+      /\b(questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|no\s+announced\s+injury\s+yet|into\s+the\s+blue\s+tent|blue\s+medical\s+tent|medical\s+tent|limping\s+towards\s+the\s+bench|sitting\s+on\s+the\s+bench)\b/i.test(
+        fullBody
+      );
+    if (!hasLongTermOrIrTimeline && (isCompletedGamePracticeOrAvailBlurb || isPriorWeekSidelineTentTweet)) {
+      return null;
+    }
   }
 
   const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
@@ -3737,8 +4574,9 @@ export function computeInjuryNewsRankScore(
     return null;
   }
 
-  // 1. Smooth Recency Curve (0..52 pts, 20-hour half-life) so recent updates lead while rich same-day color beats dry lists
-  const recencyScore = 52 * Math.pow(0.5, ageHours / 20);
+  // 1. Steep Recency Curve (0..64 pts, 5.5-hour half-life) so fresh post-game/MRI/practice updates always beat day-old blurbs
+  //    while rich same-afternoon side-field rehab color still beats bare multi-player DNP lists
+  const recencyScore = 64 * Math.pow(0.5, ageHours / 5.5);
 
   // 2. Observational Side-Field & Rehab Progression Color (0..28 pts)
   let colorScore = 0;
@@ -3908,7 +4746,8 @@ export function rankPlayerInjuryNews(
       nowMs,
       maxAgeDays,
       lastCompletedKickoffMs,
-      hasObservedPracticeThisWeek
+      hasObservedPracticeThisWeek,
+      appData
     });
     if (!rankMeta) continue;
 
@@ -3918,12 +4757,22 @@ export function rankPlayerInjuryNews(
       resolveItemAuthorProfileUrl(cand, safeUrl),
       safeUrl
     );
+    const playerSnippetText = String(
+      cand.playerSnippet || cand.playerSnippets?.[String(player.id || '')] || ''
+    ).trim();
+    const resolvedSummary =
+      !isTw &&
+      playerSnippetText &&
+      (!cand.summary || !doesClauseMentionPlayer(cand.summary, player.name, { allowSurname: true }))
+        ? playerSnippetText
+        : cand.summary;
 
     scored.push({
       ...cand,
       type: isTw ? 'tweet' : 'article',
       headline: cand.headline || cand.title || '',
       title: cand.title || cand.headline || '',
+      summary: resolvedSummary,
       fullText: isTw ? cand.fullText || cand.title || cand.headline || '' : cand.fullText || null,
       author: authorName,
       authorProfileUrl,
@@ -4039,10 +4888,11 @@ const OVERVIEW_MOCK_DRAFT_RE =
   /\b(mock draft|3-round|7-round|way-too-early|draft simulator)\b/i;
 
 /**
- * Computes a deterministic player-centric Joint Recency + Primary-Focus Salience score for a candidate
- * tweet or article on a player's `Overview -> Recent Mentions (7d)` card.
- * Ensures updates *primarily about this player* (injuries, milestones, film, transactions, quotes)
- * outrank passing secondary mentions in another player's trade/IR headline or mock-draft filler.
+ * Computes a deterministic player-centric score for `Overview -> Recent Mentions (7d)` by directly adopting
+ * the app-wide timeliness engine (`breakingClassifier.js`: `isStaleCompletedGameAvailabilityItem`,
+ * `resolveGameNewsContext`, `classifyBreakingItem`, `computeWireStoryRank`, and Kickoff Epoch Wall)
+ * combined with primary-player focus so fresh X tweets, in-game injuries, and post-game updates always
+ * lead while stale prior-game practice/tent blurbs and secondary ripple mentions never crowd out real news.
  */
 export function computeOverviewMentionRankScore(
   item = {},
@@ -4051,7 +4901,9 @@ export function computeOverviewMentionRankScore(
     rosterPlayerNames = [],
     nowMs = Date.now(),
     maxAgeDays = 8,
-    lastCompletedKickoffMs = null
+    lastCompletedKickoffMs = null,
+    appData = null,
+    gameContext = null
   } = {}
 ) {
   if (!item || !player?.name || item.isClickbait || item.type === 'video') return null;
@@ -4079,8 +4931,14 @@ export function computeOverviewMentionRankScore(
   const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
   if (ageHours > maxAgeDays * 24 || pubMs > nowMs + 3_600_000) return null;
 
+  const playerSpecificSnippet = String(
+    item.playerSnippet || item.playerSnippets?.[String(player.id || '')] || ''
+  ).trim();
   const primaryText = String(item.fullText || item.title || item.headline || '').trim();
-  const secondaryText = String(item.summary || item.externalTitle || '').trim();
+  const secondaryText = [item.summary, item.externalTitle, item.externalDescription, playerSpecificSnippet]
+    .map(s => String(s || '').trim())
+    .filter(Boolean)
+    .join(' ');
   const fullBody =
     secondaryText && !primaryText.toLowerCase().includes(secondaryText.toLowerCase().slice(0, 32))
       ? `${primaryText} ${secondaryText}`.trim()
@@ -4092,17 +4950,34 @@ export function computeOverviewMentionRankScore(
     return null;
   }
 
-  // Filter out stale prior-completed-game availability / inactives noise
-  if (
-    Number.isFinite(lastCompletedKickoffMs) &&
-    pubMs < lastCompletedKickoffMs + 20 * 60_000 &&
-    /\b(?:won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|before\s+[a-z]+\s+game)\b/i.test(
+  // Delegate completed-game pre-game availability pruning directly to shared `breakingClassifier.js`
+  const hasLongTermOrIrTimeline =
+    /\b(placed\s+on\s+(?:injured\s+reserve|ir\b)|activated\s+from|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture)\b/i.test(
       fullBody
-    ) &&
-    !INJURY_REHAB_COLOR_DETAIL_RE.test(fullBody) &&
-    !/\b(placed\s+on\s+(?:injured\s+reserve|ir\b)|activated\s+from)\b/i.test(fullBody)
-  ) {
+    );
+  if (!hasLongTermOrIrTimeline && appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs)) {
     return null;
+  }
+
+  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
+  const effectiveCompletedKoMs = Number.isFinite(lastCompletedKickoffMs)
+    ? lastCompletedKickoffMs
+    : ctx?.latestCompletedKickoffMs ?? null;
+
+  // Prune pre-completed-game practice/status blurbs and prior-week sideline blue-tent/return tweets
+  if (Number.isFinite(effectiveCompletedKoMs) && pubMs < effectiveCompletedKoMs + 20 * 60_000 && !hasLongTermOrIrTimeline) {
+    const isCompletedGamePracticeOrAvailBlurb =
+      /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|before\s+[a-z]+\s+game|did\s+not\s+practice|didn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i.test(
+        fullBody
+      );
+    const isPriorWeekSidelineTentTweet =
+      pubMs < effectiveCompletedKoMs - 2 * 3_600_000 &&
+      /\b(questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|no\s+announced\s+injury\s+yet|into\s+the\s+blue\s+tent|blue\s+medical\s+tent|medical\s+tent|limping\s+towards\s+the\s+bench|sitting\s+on\s+the\s+bench)\b/i.test(
+        fullBody
+      );
+    if (isCompletedGamePracticeOrAvailBlurb || isPriorWeekSidelineTentTweet) {
+      return null;
+    }
   }
 
   // Reject fantasy start/sit / betting props fluff
@@ -4111,39 +4986,25 @@ export function computeOverviewMentionRankScore(
   }
 
   const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
-  const checkScope = scoped || fullBody;
+  const checkScope = scoped || playerSpecificSnippet || fullBody;
 
-  // 1. Urgent Live In-Game Injury / Breaking Override
-  let urgentBoost = 0;
-  if (item.isInGameInjury && ageHours <= 6) {
-    urgentBoost = 95;
-  } else if (
-    (item.breakingBadge === 'BREAKING' || item.breakingBadge === 'LIVE INJURY UPDATE') &&
-    ageHours <= 8 &&
-    doesClauseMentionPlayer(primaryText.split(/[.;!?]/)[0] || primaryText, player.name, { allowSurname: true })
-  ) {
-    urgentBoost = 46;
-  }
-
-  // 2. Smooth Recency Curve (0..46 pts, 26h half-life across 7d window)
-  const recencyScore = 46 * Math.pow(0.5, ageHours / 26);
-
-  // 3. Primary Subject vs. Secondary Ripple Mention (-12..+24 pts)
+  // 1. Primary Subject vs. Secondary Ripple Mention (-12..+24 pts)
   const leadClause = (primaryText.split(/[.;!?\n]/)[0] || primaryText).trim();
   const inLeadClause = doesClauseMentionPlayer(leadClause, player.name, { allowSurname: true });
+  const isOtherPlayerTransactionLead =
+    !inLeadClause &&
+    /\b(trade[sd]?\s+for|completing\s+a\s+trade|acquir(?:e|ed|ing)|designate[sd]?|opened\s+the\s+practice\s+window\s+for|signed|waived)\b/i.test(
+      leadClause
+    );
   const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
   const focusRatio = scoped ? scoped.length / Math.max(1, fullBody.length) : 0.45;
 
   let focusScore = 0;
   if (inLeadClause) {
     focusScore += 16;
-  } else if (
-    /\b(trade[sd]?\s+for|completing\s+a\s+trade|acquir(?:e|ed|ing)|designate[sd]?|opened\s+the\s+practice\s+window\s+for|signed|waived)\b/i.test(
-      leadClause
-    )
-  ) {
+  } else if (isOtherPlayerTransactionLead) {
     // Lead announces another player's transaction while `player` is only a secondary ripple/tail mention
-    focusScore -= 10;
+    focusScore -= 12;
   }
   if (focusRatio >= 0.55 && mentionedCnt <= 2) {
     focusScore += 8;
@@ -4151,26 +5012,92 @@ export function computeOverviewMentionRankScore(
     focusScore -= 4;
   }
 
-  // 4. Football, Injury, Film & Milestone Substance (-18..+24 pts)
+  // 2. Shared App-Wide `classifyBreakingItem` + `computeWireStoryRank` + Kickoff Epoch Wall
+  const cls = classifyBreakingItem(
+    {
+      ...item,
+      title: item.title || item.headline || primaryText,
+      summary: secondaryText
+    },
+    nowMs,
+    ctx
+  );
+  if (cls.isStalePreGameAvailability || (cls.breakingPriority || 0) < 0) {
+    return null;
+  }
+
+  const enrichedForWireRank = isOtherPlayerTransactionLead
+    ? {
+        ...item,
+        storyTier: 'standard',
+        isBreaking: false,
+        isUrgentBreaking: false,
+        isInGameInjury: false,
+        breakingPriority: 0,
+        breakingBadge: null
+      }
+    : {
+        ...item,
+        storyTier: item.storyTier || cls.storyTier || 'standard',
+        isBreaking: item.isBreaking ?? cls.isBreaking,
+        isUrgentBreaking: item.isUrgentBreaking ?? cls.isUrgentBreaking,
+        isInGameInjury: item.isInGameInjury ?? cls.isInGameInjury,
+        breakingPriority: item.breakingPriority ?? cls.breakingPriority,
+        breakingBadge: item.breakingBadge ?? cls.breakingBadge
+      };
+
+  const wireRankRaw = computeWireStoryRank(enrichedForWireRank, nowMs, ctx);
+  const effectiveStoryRank =
+    Math.min(220, Math.max(0, Number.isFinite(wireRankRaw) ? wireRankRaw : 0)) *
+    (inLeadClause || enrichedForWireRank.isInGameInjury ? 0.75 : 0.45);
+
+  let urgentBoost = 0;
+  if (enrichedForWireRank.isInGameInjury && ageHours <= 6) {
+    urgentBoost = 95;
+  } else if (
+    (enrichedForWireRank.breakingBadge === 'BREAKING' ||
+      enrichedForWireRank.breakingBadge === 'LIVE INJURY UPDATE') &&
+    ageHours <= 8 &&
+    inLeadClause
+  ) {
+    urgentBoost = 46;
+  }
+
+  // 3. App-Aligned Steep Recency Curve (0..56 pts, 8h half-life + Kickoff Epoch Wall alignment)
+  const refKoMs = ctx?.inGame ? ctx.activeKickoffMs : effectiveCompletedKoMs;
+  const isPreRecentKickoff =
+    Number.isFinite(refKoMs) &&
+    nowMs - refKoMs <= 72 * 3_600_000 &&
+    pubMs < refKoMs - 10 * 60_000 &&
+    enrichedForWireRank.storyTier !== 'tier1_major';
+  const epochMult = isPreRecentKickoff ? (ctx?.inGame || ctx?.postGameImmediate ? 0.25 : 0.42) : 1.0;
+  const recencyScore = 56 * Math.pow(0.5, ageHours / 8.0) * epochMult;
+
+  // 4. Football, Injury, Film & Milestone Substance (-22..+24 pts)
   let substanceScore = 0;
   if (INJURY_REHAB_COLOR_DETAIL_RE.test(checkScope)) {
     substanceScore += 16;
   } else if (
     INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE.test(checkScope) ||
     INJURY_STATUS_MILESTONE_RE.test(checkScope) ||
-    /\b(limited\s+(?:practice\s+)?participant|limited\s+in\s+his\s+return|did\s+not\s+practice|not\s+practicing|non-participant)\b/i.test(
+    /\b(left\s+with\s+a|exited\s+with|suffered\s+a|sustained\s+a|injury\s+update|limited\s+(?:practice\s+)?participant|limited\s+in\s+his\s+return|did\s+not\s+practice|not\s+practicing|non-participant)\b/i.test(
       checkScope
     )
   ) {
-    substanceScore += 13;
+    substanceScore += 14;
   }
-  if (OVERVIEW_ON_FIELD_SUBSTANCE_RE.test(checkScope)) {
+  if (
+    OVERVIEW_ON_FIELD_SUBSTANCE_RE.test(checkScope) ||
+    /\b(\d+\s+snaps|starting\s+(?:defense|offense)|matched\s+up\s+against|targets|tackles|yards|pass\s+breakups?)\b/i.test(
+      checkScope
+    )
+  ) {
     substanceScore += 12;
   }
   substanceScore = Math.min(24, substanceScore);
 
   if (OVERVIEW_MOCK_DRAFT_RE.test(fullBody)) {
-    substanceScore -= 18;
+    substanceScore -= 22;
   } else if (OVERVIEW_TRIVIA_OR_BEEF_RE.test(fullBody)) {
     substanceScore -= 9;
   }
@@ -4190,15 +5117,18 @@ export function computeOverviewMentionRankScore(
   const xBonus = isDirectXStatusUrl(item.url) ? 2.5 : isBlueskyPostUrl(item.url) ? -1.0 : 0;
 
   const totalScore = Number(
-    (urgentBoost + recencyScore + focusScore + substanceScore + authorityScore + xBonus).toFixed(2)
+    (urgentBoost + effectiveStoryRank + recencyScore + focusScore + substanceScore + authorityScore + xBonus).toFixed(2)
   );
 
   return {
     totalScore,
+    storyRankBoost: Number(effectiveStoryRank.toFixed(2)),
     recencyScore: Number(recencyScore.toFixed(2)),
     focusScore,
     substanceScore,
-    ageHours: Number(ageHours.toFixed(2))
+    ageHours: Number(ageHours.toFixed(2)),
+    isOtherPlayerTransactionLead,
+    classifiedMeta: enrichedForWireRank
   };
 }
 
@@ -4222,6 +5152,7 @@ export function rankPlayerOverviewMentions(
   if (!player?.name) return [];
   const rosterPlayers = appData?.roster?.players || [];
   const rosterPlayerNames = rosterPlayers.map(rp => rp?.name).filter(Boolean);
+  const gameCtx = appData ? resolveGameNewsContext(appData, nowMs) : null;
 
   const schedule = appData?.scheduleMatchup?.schedule || [];
   const completedKickoffs = schedule
@@ -4229,7 +5160,8 @@ export function rankPlayerOverviewMentions(
     .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
     .filter(ms => ms !== null)
     .sort((a, b) => b - a);
-  const lastCompletedKickoffMs = completedKickoffs.length > 0 ? completedKickoffs[0] : null;
+  const lastCompletedKickoffMs =
+    completedKickoffs.length > 0 ? completedKickoffs[0] : gameCtx?.latestCompletedKickoffMs ?? null;
 
   const combinedCandidates = [
     ...(Array.isArray(rawStream) ? rawStream : []),
@@ -4286,7 +5218,9 @@ export function rankPlayerOverviewMentions(
       rosterPlayerNames,
       nowMs,
       maxAgeDays,
-      lastCompletedKickoffMs
+      lastCompletedKickoffMs,
+      appData,
+      gameContext: gameCtx
     });
     if (!rankMeta) continue;
 
@@ -4298,16 +5232,31 @@ export function rankPlayerOverviewMentions(
       resolveItemAuthorProfileUrl(cand, safeUrl),
       safeUrl
     );
+    const playerSnippetText = String(
+      cand.playerSnippet || cand.playerSnippets?.[String(player.id || '')] || ''
+    ).trim();
+    const resolvedSummary =
+      !isTw &&
+      playerSnippetText &&
+      (!cand.summary || !doesClauseMentionPlayer(cand.summary, player.name, { allowSurname: true }))
+        ? playerSnippetText
+        : cand.summary;
+    const clsMeta = rankMeta.classifiedMeta || {};
 
     scored.push({
       ...cand,
       type: isTw ? 'tweet' : 'article',
       headline: cand.headline || cand.title || '',
       title: cand.title || cand.headline || '',
+      summary: resolvedSummary,
       fullText: isTw ? cand.fullText || cand.title || cand.headline || '' : cand.fullText || null,
       author: authorName,
       authorProfileUrl,
       url: safeUrl,
+      isBreaking: Boolean(clsMeta.isBreaking),
+      isInGameInjury: Boolean(clsMeta.isInGameInjury),
+      breakingBadge: clsMeta.breakingBadge || null,
+      storyTier: clsMeta.storyTier || cand.storyTier || 'standard',
       overviewRankScore: rankMeta.totalScore
     });
   }
@@ -4400,6 +5349,7 @@ export function buildTeamInjuryNewsFeed(
   for (const row of reportRows) {
     if (!row || isPureVeteranRestEntry(row)) continue;
     const injClean = String(row.injuryType || '').trim();
+    if (/healthy scratch|coach'?s decision/i.test(injClean)) continue;
     if (/^cleared\s*[—-]\s*no designation$/i.test(injClean) && Number(row.playProbabilityPct ?? 99) >= 90) {
       continue;
     }
@@ -4419,6 +5369,8 @@ export function buildTeamInjuryNewsFeed(
           beatComment: row.beatComment || '',
           health: {
             ...(rp.health || {}),
+            isInGameInjury: Boolean(row.isInGameInjury),
+            isInGameReturned: Boolean(row.isInGameReturned),
             wed: row.wed ?? rp.health?.wed ?? '-',
             thu: row.thu ?? rp.health?.thu ?? '-',
             fri: row.fri ?? rp.health?.fri ?? '-',
@@ -4437,6 +5389,8 @@ export function buildTeamInjuryNewsFeed(
           rosterBucket: 'active',
           beatComment: row.beatComment || '',
           health: {
+            isInGameInjury: Boolean(row.isInGameInjury),
+            isInGameReturned: Boolean(row.isInGameReturned),
             injuryType: row.injuryType || '',
             status: row.gameStatus || 'Questionable',
             wed: row.wed || '-',
@@ -4459,7 +5413,16 @@ export function buildTeamInjuryNewsFeed(
       maxItems: 1
     });
 
-    if (rankedNews.length > 0) {
+    let topItem = rankedNews[0] || null;
+    if ((row.isInGameInjury || row.isInGameReturned) && row.inGameLatestItem) {
+      const inGamePubMs = Date.parse(row.inGameLatestItem.publishedAt || '') || 0;
+      const topPubMs = topItem ? Date.parse(topItem.publishedAt || '') || 0 : 0;
+      if (!topItem || inGamePubMs >= topPubMs) {
+        topItem = row.inGameLatestItem;
+      }
+    }
+
+    if (topItem) {
       entries.push({
         playerId: rp?.id || row.playerId || '',
         name: effectivePlayer.name,
@@ -4470,7 +5433,9 @@ export function buildTeamInjuryNewsFeed(
         playProbabilityPct: Number(row.playProbabilityPct ?? effectivePlayer.health?.playProbabilityPct ?? 50),
         playBadgeLabel: row.playBadgeLabel || effectivePlayer.health?.playBadgeLabel || '',
         capHit2026: Number(rp?.capHit2026 || 0),
-        topItem: rankedNews[0]
+        isInGameInjury: Boolean(row.isInGameInjury),
+        isInGameReturned: Boolean(row.isInGameReturned),
+        topItem
       });
     }
   }

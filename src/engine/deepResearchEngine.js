@@ -9,6 +9,7 @@
 
 import { formatCompactDollars } from './capSimulator.js';
 import { getDisallowedFormer49ers } from './groundingValidator.js';
+import { isStaleCompletedGameAvailabilityItem, resolveGameNewsContext } from './breakingClassifier.js';
 
 export const POSITION_GROUP_DEFINITIONS = [
   {
@@ -372,6 +373,8 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
     if (last && last.length >= 4) keywords.push(last);
   }
 
+  const nowDossierMs = Date.now();
+  const dossierGameCtx = resolveGameNewsContext(appData, nowDossierMs);
   const staticFeedItems = [
     ...(appData?.news?.clusteredBriefs || []),
     ...(appData?.news?.rawStream || []),
@@ -380,17 +383,42 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
   ];
   const seenNewsKeys = new Set();
   const matchedNews = [...liveSearchItems, ...staticFeedItems]
+    .filter(item => item && !isStaleCompletedGameAvailabilityItem(item, appData, nowDossierMs))
     .map(item => {
-      const hay = `${item.headline || ''} ${item.title || ''} ${item.summary || ''} ${item.text || ''}`.toLowerCase();
+      const hay = `${item.headline || ''} ${item.title || ''} ${item.fullText || ''} ${item.summary || ''} ${item.text || ''}`.toLowerCase();
       const kwHits =
         keywords.length === 0
           ? 1
           : keywords.reduce((cnt, kw) => (hay.includes(kw) ? cnt + 1 : cnt), 0);
+      const rawPubMs = item.publishedAt ? Date.parse(item.publishedAt) : NaN;
+      const ageHours = Number.isFinite(rawPubMs) ? Math.max(0, (nowDossierMs - rawPubMs) / 3_600_000) : 48;
+      // 10-hour half-life recency boost so fresh game-day/post-game X & beat updates always lead AI dossiers over multi-day-old articles
+      const recencyBoost = 56 * Math.pow(0.5, ageHours / 10);
+      const preCompletedGamePenalty =
+        Number.isFinite(dossierGameCtx.latestCompletedKickoffMs) &&
+        Number.isFinite(rawPubMs) &&
+        nowDossierMs - dossierGameCtx.latestCompletedKickoffMs <= 72 * 3_600_000 &&
+        rawPubMs < dossierGameCtx.latestCompletedKickoffMs - 10 * 60_000
+          ? -32
+          : 0;
+      const xOrTier1Bonus =
+        /^https?:\/\/(?:www\.)?x\.com\/[^/]+\/status\//i.test(String(item.url || '')) || Number(item.trustTier) === 1
+          ? 8
+          : 0;
       const salience =
-        kwHits * 18 +
-        Number(item.signalScore || 68) +
-        (item.isInGameInjury ? 24 : item.isBreaking ? 14 : 0);
-      return { item, kwHits, salience, dedupeKey: (item.headline || item.title || item.text || '').toLowerCase().slice(0, 72) };
+        Math.min(3, kwHits) * 16 +
+        Number(item.signalScore || 68) * 0.55 +
+        recencyBoost +
+        preCompletedGamePenalty +
+        xOrTier1Bonus +
+        (item.isInGameInjury ? 28 : item.isBreaking ? 16 : 0);
+      return {
+        item,
+        kwHits,
+        ageHours,
+        salience,
+        dedupeKey: (item.headline || item.title || item.fullText || item.text || '').toLowerCase().slice(0, 72)
+      };
     })
     .filter(row => {
       if (row.kwHits <= 0 || !row.dedupeKey || seenNewsKeys.has(row.dedupeKey)) return false;
@@ -456,10 +484,14 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
 
   if (matchedNews.length > 0) {
     summaryLines.push(
-      `Recent Beat Wire & Reporting Signals (${matchedNews.length}):`,
-      ...matchedNews.map(
-        n => `  - [${n.author || n.outlet || 'Beat Wire'}]: ${(n.title || n.text || n.summary || '').slice(0, 220)}`
-      )
+      `Recent Beat Wire & Reporting Signals (${matchedNews.length}, newest-prioritized):`,
+      ...matchedNews.map(n => {
+        const pubMs = n.publishedAt ? Date.parse(n.publishedAt) : NaN;
+        const hrs = Number.isFinite(pubMs) ? Math.max(0, (nowDossierMs - pubMs) / 3_600_000) : null;
+        const ageTag =
+          hrs === null ? '' : hrs < 1 ? ` (${Math.max(1, Math.round(hrs * 60))}m ago)` : hrs < 48 ? ` (${Math.round(hrs)}h ago)` : ` (${Math.round(hrs / 24)}d ago)`;
+        return `  - [${n.author || n.outletName || n.outlet || 'Beat Wire'}${ageTag}]: ${(n.fullText || n.title || n.headline || n.text || n.summary || '').slice(0, 240)}`;
+      })
     );
   }
 

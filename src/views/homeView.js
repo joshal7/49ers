@@ -68,6 +68,7 @@ export function renderHomeDashboardHtml({
   filteredClusters,
   filteredRawItems,
   userPrefs = null,
+  activeVideosSet = new Set(),
   isCustomizingLayout
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
@@ -109,6 +110,7 @@ export function renderHomeDashboardHtml({
         filteredClusters,
         filteredRawItems,
         userPrefs,
+        activeVideosSet,
         isCustomizingLayout
       })
     )
@@ -148,6 +150,7 @@ function renderSingleDashboardCard({
   filteredClusters,
   filteredRawItems,
   userPrefs = null,
+  activeVideosSet = new Set(),
   isCustomizingLayout
 }) {
   const reorderControlsHtml = isCustomizingLayout
@@ -187,7 +190,7 @@ function renderSingleDashboardCard({
         { appData }
       );
       const rawList = balanceFeedTopSalience(
-        deduplicateAndGroupWireItems(prioritizedHomeStream, { nowMs: nowHomeMs }),
+        deduplicateAndGroupWireItems(prioritizedHomeStream, { nowMs: nowHomeMs, appData }),
         { nowMs: nowHomeMs, appData }
       );
       const dailyBrief =
@@ -216,7 +219,7 @@ function renderSingleDashboardCard({
               !promotedIds.has(it.id) &&
               !promotedUrls.has(it.url)
           ),
-          { nowMs: nowHomeMs, preserveFormat: 'tweets' }
+          { nowMs: nowHomeMs, preserveFormat: 'tweets', appData }
         ).sort(rankHomeSalience),
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
@@ -230,7 +233,7 @@ function renderSingleDashboardCard({
               !promotedIds.has(it.id) &&
               !promotedUrls.has(it.url)
           ),
-          { nowMs: nowHomeMs, preserveFormat: 'articles' }
+          { nowMs: nowHomeMs, preserveFormat: 'articles', appData }
         ).sort(rankHomeSalience),
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
@@ -239,7 +242,12 @@ function renderSingleDashboardCard({
         breakingAboveBrief.length > 0
           ? `<div style="display:flex;flex-direction:column;gap:8px" data-breaking-above-brief>
               ${breakingAboveBrief
-                .map(item => renderWireItemCardHtml(item, { prioritizedRaw: prioritizedHomeStream }))
+                .map(item =>
+                  renderWireItemCardHtml(item, {
+                    prioritizedRaw: prioritizedHomeStream,
+                    activeVideosSet
+                  })
+                )
                 .join('')}
             </div>`
           : '';
@@ -380,10 +388,17 @@ function renderSingleDashboardCard({
       const sfIsAway = um.homeAway === 'away';
       const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
       const oppHealth = um.opponentHealth || {};
-      const rawOppInj = oppHealth.injuryReport || [];
       const oppGameDay = resolveTeamGameDayModel(appData, { is49ers: false });
+      const rawOppInj = oppGameDay?.isActive
+        ? oppHealth._preGameInjuryReport || oppHealth.injuryReport || []
+        : oppHealth.injuryReport || [];
+      const oppActivePool = [
+        ...(oppHealth.activeRoster || []),
+        ...(oppHealth._preGameKeyStartersHealthy || oppHealth.keyStartersHealthy || []),
+        ...rawOppInj
+      ];
       const resolvedOppInjAll = oppGameDay?.isActive
-        ? resolveGameDayInjuryRows(rawOppInj, oppGameDay)
+        ? resolveGameDayInjuryRows(rawOppInj, oppGameDay, { activeRosterPlayers: oppActivePool })
         : rawOppInj;
       const oppInj = resolvedOppInjAll.slice(0, 3);
       const homeOppSummary = computeTeamHealthSummary({
@@ -476,11 +491,14 @@ function renderSingleDashboardCard({
     }
 
     case 'team_health': {
-      const rawPr = appData?.health?.practiceReport || [];
       const sfGameDay = resolveTeamGameDayModel(appData, { is49ers: true });
+      const rawPr = sfGameDay?.isActive
+        ? appData?.health?._preGamePracticeReport || appData?.health?.practiceReport || []
+        : appData?.health?.practiceReport || [];
+      const sfActive53 = (appData?.roster?.players || []).filter(p => !p.rosterBucket || p.rosterBucket === 'active');
       const pr = (
         sfGameDay?.isActive
-          ? resolveGameDayInjuryRows(rawPr, sfGameDay)
+          ? resolveGameDayInjuryRows(rawPr, sfGameDay, { activeRosterPlayers: sfActive53 })
           : rawPr
       ).slice(0, 4);
       const sfInjUrl = appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/';

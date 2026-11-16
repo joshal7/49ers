@@ -7,25 +7,30 @@ import {
   evaluateSeasonState,
   resolveHomeDashboardState
 } from './engine/seasonStateMachine.js?v=60';
-import { simulateCapScenario } from './engine/capSimulator.js';
-import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js';
+import { simulateCapScenario } from './engine/capSimulator.js?v=63';
+import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=63';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
-  isActiveInGameAvailabilityCluster
-} from './engine/breakingClassifier.js?v=49';
+  isActiveInGameAvailabilityCluster,
+  isDailyBriefStaleForLiveState,
+  resolveGameNewsContext,
+  sortNewsWithBreakingPriority,
+  filterOutCompletedGameAvailabilityItems
+} from './engine/breakingClassifier.js?v=63';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=60';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
+  dedupeRawStreamAtomically,
   hydrateLiveMultiSourceBeatWire,
   LIVE_WIRE_SOURCE_LABELS,
   hydrateLiveEspnOverlay,
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=60';
+} from './services/dataService.js?v=63';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -40,8 +45,9 @@ import {
   hydrateCachedDailyMatchupIntel,
   refreshDailyMatchupIntelIfDue,
   hydrateCachedDailyTopNewsBrief,
+  shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=60';
+} from './services/aiWorkerClient.js?v=63';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -64,7 +70,7 @@ import {
   registerRosterPlayersForInlineLinks
 } from './views/uiHelpers.js?v=50';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
-import { sanitizeExternalUrl } from './engine/linkIntegrity.js?v=56';
+import { sanitizeExternalUrl } from './engine/linkIntegrity.js?v=63';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
@@ -74,15 +80,15 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=60';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=63';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=55';
+} from './views/newsView.js?v=63';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=60';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=60';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=63';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=63';
 import { renderSettingsSheetHtml } from './views/settingsArchiveView.js?v=60';
 
 const state = {
@@ -427,6 +433,34 @@ function preserveFocusAroundRender(renderFn) {
   }
 }
 
+function syncLiveWireButtonsDom() {
+  const syncAnchorIso = state.lastWireSyncAt || state.appData?.meta?.updatedAt || '';
+  const syncAge = syncAnchorIso ? formatRelativeAge(syncAnchorIso) : '1m ago';
+  const syncing = Boolean(state.isSyncingWire);
+
+  const sheetSyncBtn = document.getElementById('sheetSyncWireBtn');
+  if (sheetSyncBtn) {
+    if (state.sheetMode === 'player' && state.appData) {
+      sheetSyncBtn.hidden = false;
+      sheetSyncBtn.classList.toggle('is-syncing', syncing);
+      sheetSyncBtn.setAttribute('aria-busy', syncing ? 'true' : 'false');
+      sheetSyncBtn.innerHTML = `${iconSvg(syncing ? 'loader' : 'bolt', 12, syncing ? 'wire-sync-spin' : '')}<span id="sheetSyncWireLabel">${syncing ? 'Sync…' : esc(syncAge)}</span>`;
+    } else {
+      sheetSyncBtn.hidden = true;
+      sheetSyncBtn.classList.remove('is-syncing');
+      sheetSyncBtn.setAttribute('aria-busy', 'false');
+    }
+  }
+
+  document
+    .querySelectorAll('#mainView [data-action="sync-live-wire-now"]')
+    .forEach(btn => {
+      btn.classList.toggle('is-syncing', syncing);
+      btn.setAttribute('aria-busy', syncing ? 'true' : 'false');
+      btn.innerHTML = `${iconSvg(syncing ? 'loader' : 'bolt', 12, syncing ? 'wire-sync-spin' : '')}<span>${syncing ? 'Sync…' : esc(syncAge)}</span>`;
+    });
+}
+
 function renderHeader() {
   if (!state.appData) return;
   const m = state.appData.meta || {};
@@ -434,8 +468,9 @@ function renderHeader() {
   const subStatus = document.getElementById('headerSubStatus');
   if (recPill) recPill.textContent = m.teamRecord || '—';
   if (subStatus) {
-    subStatus.textContent = `${m.standingSummary || 'NFC West'} • Synced ${formatRelativeAge(m.updatedAt)}`;
+    subStatus.textContent = `${m.standingSummary || 'NFC West'} • Synced ${formatRelativeAge(state.lastWireSyncAt || m.updatedAt)}`;
   }
+  syncLiveWireButtonsDom();
 }
 
 function renderNavTabs() {
@@ -493,6 +528,7 @@ function renderMain() {
         mcSimResult,
         filteredRawItems,
         userPrefs: state.prefs,
+        activeVideosSet: state.activeVideosSet,
         isCustomizingLayout: state.isCustomizingLayout
       });
     } else if (tab === 'news') {
@@ -682,7 +718,7 @@ function renderStatRankModal() {
   });
 }
 
-function renderSheet() {
+function renderSheet({ preserveScroll = false } = {}) {
   const backdrop = document.getElementById('bottomSheetBackdrop');
   const eyebrow = document.getElementById('sheetEyebrow');
   const title = document.getElementById('sheetTitle');
@@ -691,10 +727,21 @@ function renderSheet() {
 
   if (!state.sheetMode) {
     backdrop.hidden = true;
+    syncLiveWireButtonsDom();
     return;
   }
 
+  const prevScrollTop = preserveScroll ? body.scrollTop : 0;
+  const openStatExpanders = preserveScroll
+    ? new Set(
+        Array.from(body.querySelectorAll('details[data-player-stats-expander][open]'))
+          .map(el => el.getAttribute('data-player-stats-expander'))
+          .filter(Boolean)
+      )
+    : null;
+
   backdrop.hidden = false;
+  syncLiveWireButtonsDom();
 
   preserveFocusAroundRender(() => {
     registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
@@ -712,6 +759,17 @@ function renderSheet() {
         userPrefs: state.prefs,
         reportersById: getReportersMap()
       });
+      if (openStatExpanders && openStatExpanders.size > 0) {
+        body.querySelectorAll('details[data-player-stats-expander]').forEach(el => {
+          const secId = el.getAttribute('data-player-stats-expander');
+          if (secId && openStatExpanders.has(secId)) el.open = true;
+        });
+      }
+      if (preserveScroll) {
+        body.scrollTop = prevScrollTop;
+      } else {
+        body.scrollTop = 0;
+      }
     } else if (state.sheetMode === 'settings') {
       if (eyebrow) eyebrow.textContent = 'Preferences';
       if (title) title.textContent = 'Settings';
@@ -720,6 +778,7 @@ function renderSheet() {
         reportersData: state.appData?.reporters,
         reporterSearch: state.reporterSearch
       });
+      if (!preserveScroll) body.scrollTop = 0;
     }
   });
 }
@@ -831,13 +890,28 @@ function reorderBlockBeforeTarget(draggedId, targetId) {
   renderMain();
 }
 
-function triggerDailyMatchupIntelSync() {
-  if (!state.appData) return Promise.resolve(null);
+let initialLiveHydrationPromise = null;
+
+function awaitInitialLiveHydrationBounded(maxWaitMs = 7500) {
+  if (!initialLiveHydrationPromise) return Promise.resolve();
+  return Promise.race([
+    initialLiveHydrationPromise.catch(() => {}),
+    new Promise(resolve => setTimeout(resolve, maxWaitMs))
+  ]);
+}
+
+async function triggerDailyMatchupIntelSync() {
+  if (!state.appData) return null;
+  await awaitInitialLiveHydrationBounded(7500);
+  if (!state.appData) return null;
   return refreshDailyMatchupIntelIfDue({
     appData: state.appData,
     prefs: state.prefs
   })
     .then(res => {
+      if (state.appData) {
+        hydrateCachedDailyMatchupIntel(state.appData);
+      }
       if (
         res?.updated &&
         (state.activeNavTab === 'home' ||
@@ -850,13 +924,18 @@ function triggerDailyMatchupIntelSync() {
     .catch(() => null);
 }
 
-function triggerDailyTopNewsBriefSync() {
-  if (!state.appData) return Promise.resolve(null);
+async function triggerDailyTopNewsBriefSync() {
+  if (!state.appData) return null;
+  await awaitInitialLiveHydrationBounded(7500);
+  if (!state.appData) return null;
   return refreshDailyTopNewsBriefIfDue({
     appData: state.appData,
     prefs: state.prefs
   })
     .then(res => {
+      if (state.appData) {
+        hydrateCachedDailyTopNewsBrief(state.appData);
+      }
       if (res?.updated && (state.activeNavTab === 'home' || state.activeNavTab === 'news')) {
         renderMain();
       }
@@ -1143,6 +1222,7 @@ function bindEvents() {
       case 'set-news-category': {
         const reqCat = btn.getAttribute('data-category') || 'all';
         state.newsCategoryFilter = VALID_NEWS_CATEGORIES.has(reqCat) ? reqCat : 'all';
+        state.activeVideosSet.clear();
         renderMain();
         break;
       }
@@ -2226,57 +2306,219 @@ let wirePollCount = 0;
 let isBackgroundSyncing = false;
 let isWirePolling = false;
 let wirePollTimerId = null;
+let activeWirePollPromise = null;
+let activeWirePollMeta = { manual: false, focusPlayerId: null, startedAtMs: 0 };
+let queuedManualSync = null; // { focusPlayerId: string | null }
+
+function hasActivelyPlayingInlineMedia() {
+  if (typeof document === 'undefined') return false;
+  if (document.querySelector('.video-iframe-wrap iframe')) return true;
+  const videos = document.querySelectorAll('.video-iframe-wrap video');
+  for (const v of videos) {
+    if (!v.paused && !v.ended) return true;
+    if (v.ended) {
+      const k = v.getAttribute('data-vid-key');
+      if (k) state.activeVideosSet.delete(k);
+    }
+  }
+  if (videos.length === 0 && state.activeVideosSet.size > 0) {
+    state.activeVideosSet.clear();
+  }
+  return false;
+}
+
+function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
+  if (!prevData || !nextData) return nextData;
+  // Preserve live runtime tweets/highlights discovered in-browser that aren't yet in upstream JSON
+  if (Array.isArray(prevData.news?.rawStream) && Array.isArray(nextData.news?.rawStream)) {
+    const runtimeOnly = prevData.news.rawStream.filter(it => it && it.wireSource);
+    if (runtimeOnly.length > 0) {
+      nextData.news.rawStream = sortNewsWithBreakingPriority(
+        filterOutCompletedGameAvailabilityItems(
+          dedupeRawStreamAtomically([...runtimeOnly, ...nextData.news.rawStream]),
+          nextData
+        ),
+        Date.now(),
+        { appData: nextData }
+      );
+    }
+  }
+  // Preserve fresher live-generated AI Daily Brief ONLY when same cycle, non-stale, and upstream isn't canonical pipeline AI
+  const prevBrief = prevData.news?.dailyTopNewsBrief;
+  const nextBrief = nextData.news?.dailyTopNewsBrief;
+  if (prevBrief?.generatedAt && nextData.news) {
+    const prevMs = Date.parse(prevBrief.generatedAt) || 0;
+    const nextMs = Date.parse(nextBrief?.generatedAt || '') || 0;
+    const prevNonStale = !isDailyBriefStaleForLiveState(prevBrief, nextData, Date.now());
+    const upstreamIsCanonicalSameCycle =
+      nextBrief &&
+      nextBrief.cycleKey === prevBrief.cycleKey &&
+      nextBrief.source === 'pipeline-gemini-daily' &&
+      !isDailyBriefStaleForLiveState(nextBrief, nextData, Date.now());
+    if (
+      prevNonStale &&
+      !upstreamIsCanonicalSameCycle &&
+      prevBrief.source === 'live-gemini-daily' &&
+      (!nextBrief || (prevBrief.cycleKey === nextBrief.cycleKey && prevMs > nextMs))
+    ) {
+      nextData.news.dailyTopNewsBrief = prevBrief;
+    }
+  }
+  if (Array.isArray(prevData._livePlayedPlayerIds) && !nextData._livePlayedPlayerIds) {
+    nextData._livePlayedPlayerIds = prevData._livePlayedPlayerIds;
+  }
+  if (
+    prevData.liveGameDay &&
+    !nextData.liveGameDay &&
+    Number(prevData.liveGameDay.week) === Number(nextData.scheduleMatchup?.upcomingMatchup?.week)
+  ) {
+    nextData.liveGameDay = prevData.liveGameDay;
+  }
+  return nextData;
+}
+
+async function executeSingleWirePollPass({ manual = false, focusPlayerId = null } = {}) {
+  if (!state.appData) return;
+  const gameLive = is49ersGameLiveWindow(state.appData);
+  const gameCtx = resolveGameNewsContext(state.appData, Date.now());
+  wirePollCount += 1;
+  const viewingHealthSurface =
+    (state.activeNavTab === 'season' && (state.seasonSubTab === 'health' || state.seasonSubTab === 'matchup')) ||
+    state.sheetMode === 'player';
+  const hasPendingPracticeSlots = (state.appData?.health?.practiceReport || []).some(
+    r => r.wed === '-' || r.thu === '-' || r.fri === '-'
+  );
+  const shouldCheckEspn =
+    manual ||
+    gameLive ||
+    Boolean(gameCtx.postGameImmediate) ||
+    viewingHealthSurface ||
+    hasPendingPracticeSlots ||
+    wirePollCount % 2 === 0;
+
+  // Serialize `hydrateLiveEspnOverlay` BEFORE `hydrateLiveMultiSourceBeatWire` so `_livePlayedPlayerIds`,
+  // `completed = true`, and `upcomingMatchup.week` advance atomically with zero concurrent mutation!
+  const espnChanged = shouldCheckEspn ? await hydrateLiveEspnOverlay(state.appData) : false;
+  const wireResult = await hydrateLiveMultiSourceBeatWire(state.appData, {
+    isGameLive: gameLive || Boolean(gameCtx.postGameImmediate),
+    workerBaseUrl: state.prefs?.workerBaseUrl || '',
+    focusPlayerId,
+    manual
+  });
+  const addedTweets = Number(wireResult?.totalAdded || 0);
+  state.lastWireSourceCounts = wireResult?.bySource || null;
+
+  state.lastWireSyncAt = new Date().toISOString();
+  lastWirePollMs = Date.now();
+
+  const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
+
+  if (addedTweets > 0 || espnChanged || briefChanged) {
+    cachedMonteCarloKey = '';
+    cachedMonteCarloResult = null;
+  }
+  renderHeader();
+
+  const activeTag = document.activeElement?.tagName;
+  const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+  const hasPlayingIframe = hasActivelyPlayingInlineMedia();
+
+  if (
+    (manual || addedTweets > 0 || espnChanged || briefChanged) &&
+    !isTyping &&
+    !hasPlayingIframe &&
+    !state.jobStatus?.active
+  ) {
+    renderMain();
+    if (state.sheetMode === 'player') {
+      renderSheet({ preserveScroll: true });
+    }
+  } else if (state.sheetMode === 'player') {
+    syncLiveWireButtonsDom();
+  }
+
+  if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
+    triggerDailyTopNewsBriefSync();
+  }
+}
 
 async function pollLowLatencyTweetAndInjuryWire(manual = false) {
-  if (isWirePolling || !state.appData) return;
+  if (!state.appData) return;
+  if (isBackgroundSyncing) {
+    if (manual) {
+      state.isSyncingWire = true;
+      syncLiveWireButtonsDom();
+    }
+    return;
+  }
+
+  const requestedFocusPlayerId =
+    state.sheetMode === 'player' && state.sheetPlayerId ? String(state.sheetPlayerId) : null;
+
+  // Coalesce furious manual clicks & background-poll overlaps safely with zero race conditions
+  if (isWirePolling && activeWirePollPromise) {
+    if (!manual) return activeWirePollPromise;
+    state.isSyncingWire = true;
+    syncLiveWireButtonsDom();
+    const sameManualPassJustStarted =
+      activeWirePollMeta.manual &&
+      activeWirePollMeta.focusPlayerId === requestedFocusPlayerId &&
+      Date.now() - activeWirePollMeta.startedAtMs < 650;
+    if (!sameManualPassJustStarted) {
+      queuedManualSync = {
+        focusPlayerId: requestedFocusPlayerId || queuedManualSync?.focusPlayerId || null
+      };
+    }
+    return activeWirePollPromise;
+  }
+
   isWirePolling = true;
   if (manual) {
     state.isSyncingWire = true;
-    if (state.activeNavTab === 'news') renderMain();
+    syncLiveWireButtonsDom();
   }
-  try {
-    const gameLive = is49ersGameLiveWindow(state.appData);
-    wirePollCount += 1;
-    const viewingHealthSurface =
-      (state.activeNavTab === 'season' && (state.seasonSubTab === 'health' || state.seasonSubTab === 'matchup')) ||
-      (state.sheetMode === 'player' && state.sheetPlayerTab === 'health');
-    const hasPendingPracticeSlots = (state.appData?.health?.practiceReport || []).some(
-      r => r.wed === '-' || r.thu === '-' || r.fri === '-'
-    );
-    const shouldCheckEspn =
-      manual || gameLive || viewingHealthSurface || hasPendingPracticeSlots || wirePollCount % 2 === 0;
 
-    const [wireResult, espnChanged] = await Promise.all([
-      hydrateLiveMultiSourceBeatWire(state.appData, { isGameLive: gameLive }),
-      shouldCheckEspn ? hydrateLiveEspnOverlay(state.appData) : Promise.resolve(false)
-    ]);
-    const addedTweets = Number(wireResult?.totalAdded || 0);
-    state.lastWireSourceCounts = wireResult?.bySource || null;
+  activeWirePollMeta = {
+    manual,
+    focusPlayerId: requestedFocusPlayerId,
+    startedAtMs: Date.now()
+  };
 
-    state.lastWireSyncAt = new Date().toISOString();
-    lastWirePollMs = Date.now();
+  activeWirePollPromise = (async () => {
+    try {
+      await executeSingleWirePollPass({
+        manual,
+        focusPlayerId: requestedFocusPlayerId
+      });
 
-    if (addedTweets > 0 || espnChanged) {
-      cachedMonteCarloKey = '';
-      cachedMonteCarloResult = null;
-      renderHeaderAndPhaseBanner();
+      while (queuedManualSync && state.appData) {
+        const nextReq = queuedManualSync;
+        queuedManualSync = null;
+        const effectiveFocus =
+          nextReq.focusPlayerId ||
+          (state.sheetMode === 'player' && state.sheetPlayerId ? String(state.sheetPlayerId) : null);
+        activeWirePollMeta = {
+          manual: true,
+          focusPlayerId: effectiveFocus,
+          startedAtMs: Date.now()
+        };
+        await executeSingleWirePollPass({
+          manual: true,
+          focusPlayerId: effectiveFocus
+        });
+      }
+    } catch {
+      // Offline or transient network blip; keep serving existing cached state cleanly
+    } finally {
+      queuedManualSync = null;
+      state.isSyncingWire = false;
+      isWirePolling = false;
+      activeWirePollPromise = null;
+      syncLiveWireButtonsDom();
     }
+  })();
 
-    const activeTag = document.activeElement?.tagName;
-    const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
-    const hasPlayingIframe = state.activeVideosSet.size > 0;
-
-    if ((manual || addedTweets > 0 || espnChanged) && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
-      renderMain();
-      if (state.sheetMode === 'player') renderSheet();
-    }
-  } catch {
-    // Offline or transient network blip; keep serving existing cached state cleanly
-  } finally {
-    state.isSyncingWire = false;
-    isWirePolling = false;
-    if (manual && state.activeNavTab === 'news') renderMain();
-  }
+  return activeWirePollPromise;
 }
 
 function scheduleAdaptiveSubMinuteWireLoop() {
@@ -2294,16 +2536,18 @@ function scheduleAdaptiveSubMinuteWireLoop() {
 }
 
 async function refreshLiveFeedsInBackground(forceFull = false) {
-  if (isBackgroundSyncing || !state.appData) return;
+  if (isBackgroundSyncing || isWirePolling || !state.appData) return;
   isBackgroundSyncing = true;
   try {
     let hasNewUpstreamData = false;
+    const upstreamAnchorIso =
+      state.appData.meta?._upstreamUpdatedAt || state.appData.meta?.updatedAt || '';
     const fresherBundle = forceFull
       ? await loadAll49ersData()
-      : await fetchFresherUpstreamData(state.appData.meta?.updatedAt);
+      : await fetchFresherUpstreamData(upstreamAnchorIso);
 
     if (fresherBundle) {
-      state.appData = fresherBundle;
+      state.appData = mergeRuntimeStateIntoUpstreamBundle(state.appData, fresherBundle);
       hydrateCachedDailyMatchupIntel(state.appData);
       hydrateCachedDailyTopNewsBrief(state.appData);
       cachedMonteCarloKey = '';
@@ -2311,19 +2555,23 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
       hasNewUpstreamData = true;
     }
 
-    const [wireResult, espnMutated, podsMutated] = await Promise.all([
-      hydrateLiveMultiSourceBeatWire(state.appData, {
-        isGameLive: is49ersGameLiveWindow(state.appData)
-      }),
+    const bgGameCtx = resolveGameNewsContext(state.appData, Date.now());
+    const [espnMutated, podsMutated] = await Promise.all([
       hydrateLiveEspnOverlay(state.appData),
       hydrateLive49ersPodcasts(state.appData)
     ]);
+    const wireResult = await hydrateLiveMultiSourceBeatWire(state.appData, {
+      isGameLive: is49ersGameLiveWindow(state.appData) || Boolean(bgGameCtx.postGameImmediate),
+      workerBaseUrl: state.prefs?.workerBaseUrl || ''
+    });
     const addedLivePosts = Number(wireResult?.totalAdded || 0);
     state.lastWireSourceCounts = wireResult?.bySource || null;
     state.lastWireSyncAt = new Date().toISOString();
     lastWirePollMs = Date.now();
 
-    if (addedLivePosts > 0 || espnMutated || podsMutated) {
+    const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
+
+    if (addedLivePosts > 0 || espnMutated || podsMutated || briefHydratedChanged) {
       cachedMonteCarloKey = '';
       cachedMonteCarloResult = null;
       hasNewUpstreamData = true;
@@ -2339,18 +2587,24 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 
     const activeTag = document.activeElement?.tagName;
     const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
-    const hasPlayingIframe = state.activeVideosSet.size > 0;
+    const hasPlayingIframe = hasActivelyPlayingInlineMedia();
 
     if (hasNewUpstreamData && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
       renderMain();
-      if (state.sheetMode) renderSheet();
+      if (state.sheetMode) renderSheet({ preserveScroll: true });
+    }
+
+    if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
+      triggerDailyTopNewsBriefSync();
     }
 
     lastLiveCheckMs = Date.now();
   } catch {
     // Offline or transient network blip; keep serving existing cached state cleanly
   } finally {
+    state.isSyncingWire = false;
     isBackgroundSyncing = false;
+    syncLiveWireButtonsDom();
   }
 }
 
@@ -2595,6 +2849,10 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       }
     };
 
+    if (!state.lastWireSyncAt && state.appData?.meta?.updatedAt) {
+      state.lastWireSyncAt = state.appData.meta.updatedAt;
+    }
+
     renderHeader();
     renderMain();
 
@@ -2607,8 +2865,13 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
         handleIncomingSharedLink(window.location).catch(() => {});
       });
 
-      // Non-blocking real-time delta hydration (fresher GitHub Raw commits + live Bluesky beat wire + 6 podcasts)
-      refreshLiveFeedsInBackground(Boolean(state.appData._restoredFromOfflineSnapshot));
+      // Real-time delta hydration (fresher GitHub Raw commits + live ESPN/Bluesky beat wire + 6 podcasts)
+      // Tracked in `initialLiveHydrationPromise` so Daily Brief & Matchup Intel never synthesize on stale pre-game snapshots
+      initialLiveHydrationPromise = refreshLiveFeedsInBackground(
+        Boolean(state.appData._restoredFromOfflineSnapshot)
+      ).finally(() => {
+        initialLiveHydrationPromise = null;
+      });
 
       // Start <1 min adaptive live tweet & in-game injury wire polling (20s in-game, 45s standard)
       scheduleAdaptiveSubMinuteWireLoop();
@@ -2739,6 +3002,8 @@ async function init() {
         refreshLiveFeedsInBackground(false);
       } else if (Date.now() - lastWirePollMs >= 15_000) {
         pollLowLatencyTweetAndInjuryWire(false);
+      } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
+        triggerDailyTopNewsBriefSync();
       }
     }
   });
@@ -2747,6 +3012,8 @@ async function init() {
       bootOrRecoverAppData({ manual: false });
     } else if (Date.now() - lastWirePollMs >= 15_000) {
       pollLowLatencyTweetAndInjuryWire(false);
+    } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
+      triggerDailyTopNewsBriefSync();
     }
   });
   window.addEventListener('online', () => {
@@ -2801,7 +3068,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=72', { updateViaCache: 'none' })
+        .register('./sw.js?v=75', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

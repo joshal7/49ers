@@ -29,6 +29,7 @@ import {
   filterOutCompletedGameAvailabilityItems,
   filterFreshVideosForCurrentSlate,
   scoreHighlightAndTeamVideoSalience,
+  evaluateGameDayAboveBriefWindow,
   partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
 import {
@@ -46,6 +47,7 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import {
   buildDeterministicDailyTopNewsBrief,
+  hasPendingPostGameAiBriefAttempt,
   repairDailyTopNewsBriefLinks
 } from '../services/aiWorkerClient.js';
 
@@ -367,8 +369,8 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
   if (badge === 'INJURY SCOOP' || badge === 'INJURY UPDATE') {
     return `<span class="badge badge-neutral"><span>${esc(badge)}</span></span>`;
   }
-  if (isVideo) {
-    const title = String(item?.title || '');
+  if (isVideo || Boolean(item?.videoStreamUrl)) {
+    const title = String(item?.title || item?.fullText || '');
     const isInterviewClip = /\b(press conference|reflects on|chats about|previews week|shares final updates|speak ahead|talk new additions|on first career touchdown|you['’]?ve got mail|inside the oval)\b/i.test(
       title
     );
@@ -378,13 +380,13 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
     if (
       !isInterviewClip &&
       hasPlayerFocus &&
-      /\b(highlights|best plays|every completed pass|every throw|every catch|rushing|pick[- ]?6|interceptions?|touchdown|big catch|sacks?)\b/i.test(
+      /\b(highlights|best plays|every completed pass|every throw|every catch|rushing|pick[- ]?6|interceptions?|touchdowns?|\btd\b|end zone|big catch|sacks?)\b/i.test(
         title
       )
     ) {
       return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Player Highlights</span></span>`;
     }
-    if (!isInterviewClip && /\b(highlights|best plays|top plays|every touchdown|condensed game)\b/i.test(title)) {
+    if (!isInterviewClip && /\b(highlights|best plays|top plays|every touchdown|condensed game|outlast|thriller)\b/i.test(title)) {
       return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Highlights</span></span>`;
     }
     if (/\b(forty niner way|49hours|mic['’]?d up|locker room|from the trenches|recap)\b/i.test(title)) {
@@ -403,7 +405,12 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
 }
 
 export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideosSet = new Set() } = {}) {
-  const vidKey = item.videoId ? `raw_${item.id}` : null;
+  const safeStreamCandidate =
+    item.videoStreamUrl && /^https:\/\//i.test(String(item.videoStreamUrl).trim())
+      ? String(item.videoStreamUrl).trim()
+      : '';
+  const hasPlayableVideo = Boolean(item.videoId || safeStreamCandidate);
+  const vidKey = hasPlayableVideo ? `raw_${item.id}` : null;
   const isVidOpen = vidKey && activeVideosSet.has(vidKey);
   const isTweet = item.type === 'tweet' || item.type === 'social';
   const isVideo = item.type === 'video';
@@ -433,7 +440,7 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
       ? stripRedundantAuthorBoilerplate(item.summary, authorName)
       : '';
 
-  const hasThumb = !isVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl);
+  const hasThumb = !isVideo && !hasPlayableVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl);
   const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
   const normCmpUrl = u => String(u || '').replace(/\/+$/, '').toLowerCase();
   const showLinkedStory =
@@ -475,7 +482,7 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
               : `<strong style="font-size:12.5px;color:var(--gold-bright)">${esc(authorName)}</strong>`
           }
         </div>
-        <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${isVideo && item.duration ? `${esc(item.duration)} • ` : ''}${esc(formatRelativeAge(item.publishedAt))}</span>
+        <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${hasPlayableVideo && item.duration ? `${esc(item.duration)} • ` : ''}${esc(formatRelativeAge(item.publishedAt))}</span>
       </div>
       <div class="${hasThumb ? 'media-split-row' : ''}">
         <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
@@ -550,16 +557,21 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
       }
       ${item.mentionedPlayers?.length ? renderPlayerChipsStripHtml(item.mentionedPlayers, 4) : ''}
       ${
-        item.videoId
+        hasPlayableVideo
           ? renderVideoEmbedOrFacade(
               vidKey,
-              item.videoId,
+              item.videoId || '',
               0,
               item.title || `Watch Clip (${item.duration || 'Video'})`,
               item.outletName,
               isVidOpen,
               item.embeddable !== false,
-              { compactFooter: true }
+              {
+                compactFooter: true,
+                videoStreamUrl: item.videoStreamUrl || '',
+                posterUrl: item.imageUrl || '',
+                externalWatchUrl: resolvedItemUrl || sanitizeExternalUrl(item.url, '') || ''
+              }
             )
           : ''
       }
@@ -574,7 +586,8 @@ export function renderNewsViewHtml({
   activeVideosSet = new Set(),
   userPrefs,
   lastWireSyncAt = null,
-  isSyncingWire = false
+  isSyncingWire = false,
+  nowMs = Date.now()
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const activeFilter = ['all', 'tweets', 'articles', 'videos', 'film', 'roster'].includes(newsCategoryFilter)
@@ -583,7 +596,6 @@ export function renderNewsViewHtml({
   const mutedCount =
     (userPrefs?.disabledReporterIds?.length || 0) + (userPrefs?.disabledOutlets?.length || 0);
 
-  const nowMs = Date.now();
   const rawAfterAvailabilityHide = filterFreshVideosForCurrentSlate(
     filterOutCompletedGameAvailabilityItems(filteredRawItems || [], appData, nowMs),
     appData,
@@ -591,45 +603,59 @@ export function renderNewsViewHtml({
   );
   const prioritizedRaw = sortNewsWithBreakingPriority(
     rawAfterAvailabilityHide.filter(i => {
-      if (i.type === 'video' && i.videoId) return true;
+      if (i.type === 'video' && (i.videoId || i.videoStreamUrl)) return true;
       return Boolean(sanitizeExternalUrl(i.url, null)) && !isPaywalledPublisher(i.outletName, i.url);
     }),
     nowMs,
     { appData }
   );
 
-  const dedupedRaw = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritizedRaw, { nowMs }), {
-    nowMs,
-    appData
-  });
+  const dedupedRaw = balanceFeedTopSalience(
+    deduplicateAndGroupWireItems(prioritizedRaw, { nowMs, appData }),
+    {
+      nowMs,
+      appData
+    }
+  );
   const dedupedTweets = deduplicateAndGroupWireItems(
     prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social'),
-    { nowMs, preserveFormat: 'tweets' }
+    { nowMs, preserveFormat: 'tweets', appData }
   );
   const dedupedArticles = deduplicateAndGroupWireItems(
     prioritizedRaw.filter(i => i.type === 'article' || i.type === 'post'),
-    { nowMs, preserveFormat: 'articles' }
+    { nowMs, preserveFormat: 'articles', appData }
   );
-  // Highlights & Videos: strictly non-film videos (0% overlap with Film & Trench), ranked by Highlight & Team-Video salience!
+  // Highlights & Videos: strictly non-film videos + native X/ESPN highlight clips (0% overlap with Film & Trench), ranked by Highlight & Team-Video salience!
   const dedupedHighlightsAndVideos = deduplicateAndGroupWireItems(
-    prioritizedRaw.filter(i => i.type === 'video' && i.category !== 'film'),
-    { nowMs, preserveFormat: 'videos' }
+    prioritizedRaw.filter(
+      i => (i.type === 'video' || Boolean(i.isHighlightClip && i.videoStreamUrl)) && i.category !== 'film'
+    ),
+    { nowMs, preserveFormat: 'videos', appData }
   ).sort(
     (a, b) =>
       scoreHighlightAndTeamVideoSalience(b, appData, nowMs) -
       scoreHighlightAndTeamVideoSalience(a, appData, nowMs)
   );
   // Film & Trench: All-22 film videos (incl. JT O'Sullivan's The QB School & Jonnydel) + written film/trench breakdowns
-  const dedupedFilmAndTrench = deduplicateAndGroupWireItems(
-    prioritizedRaw.filter(i => i.category === 'film'),
-    { nowMs }
+  const dedupedFilmVideos = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.category === 'film' && i.type === 'video'),
+    { nowMs, preserveFormat: 'videos', appData }
+  );
+  const dedupedFilmArticlesAndTweets = deduplicateAndGroupWireItems(
+    prioritizedRaw.filter(i => i.category === 'film' && i.type !== 'video'),
+    { nowMs, appData }
+  );
+  const dedupedFilmAndTrench = sortNewsWithBreakingPriority(
+    [...dedupedFilmVideos, ...dedupedFilmArticlesAndTweets],
+    nowMs,
+    { appData }
   );
   // Trades & Roster: Trades, official roster moves, AND salient salary cap / contract news (excluding videos to avoid redundancy)
   const dedupedTradesAndRoster = deduplicateAndGroupWireItems(
     prioritizedRaw.filter(
       i => i.type !== 'video' && (i.category === 'roster' || i.category === 'cap' || isSalientCapOrContractItem(i))
     ),
-    { nowMs }
+    { nowMs, appData }
   );
 
   const syncAge = lastWireSyncAt ? formatRelativeAge(lastWireSyncAt) : 'now';
@@ -703,22 +729,48 @@ export function renderNewsViewHtml({
   if (activeFilter === 'all') {
     const dailyBrief =
       appData?.news?.dailyTopNewsBrief || buildDeterministicDailyTopNewsBrief(appData, nowMs);
-    const { breakingAboveBrief, remainingBelowBrief } = partitionBreakingNewsAboveBrief(
-      dedupedRaw,
-      dailyBrief,
-      nowMs
-    );
+    const requireAiPostGameBrief = hasPendingPostGameAiBriefAttempt(appData, userPrefs, nowMs);
+    const gdWindow = evaluateGameDayAboveBriefWindow(appData, dailyBrief, nowMs, {
+      requireAiSource: requireAiPostGameBrief
+    });
+    const {
+      breakingAboveBrief,
+      remainingBelowBrief,
+      gameDayLiveMode,
+      gameDayPhaseLabel
+    } = partitionBreakingNewsAboveBrief(dedupedRaw, dailyBrief, nowMs, {
+      appData,
+      promoteAllGameDayNews: true,
+      requireAiPostGameBrief
+    });
+
+    const gameDayBannerHtml =
+      gdWindow.active || gameDayLiveMode
+        ? `
+          <div class="gameday-above-brief-banner" data-gameday-above-brief-banner>
+            <span class="gameday-live-label">
+              <span class="gameday-live-dot" aria-hidden="true"></span>
+              <span>${esc(gameDayPhaseLabel || gdWindow.phaseLabel || 'Game-Day Live Wire')}</span>
+            </span>
+            <span class="gameday-live-note mono">New updates above brief until postgame summary</span>
+          </div>
+        `
+        : '';
 
     const breakingTopHtml =
       breakingAboveBrief.length > 0
         ? `
-          <div class="card breaking-above-brief-card" data-breaking-above-brief style="display:flex;flex-direction:column;gap:9px">
+          <div class="card breaking-above-brief-card${gameDayLiveMode ? ' gameday-live-above-card' : ''}" data-breaking-above-brief${gameDayLiveMode ? ' data-gameday-live-above-brief="true"' : ''} style="display:flex;flex-direction:column;gap:9px">
+            ${gameDayBannerHtml}
             ${breakingAboveBrief
+              .slice(0, 45)
               .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
               .join('')}
           </div>
         `
-        : '';
+        : gameDayBannerHtml
+          ? `<div class="card breaking-above-brief-card gameday-live-above-card" data-gameday-live-above-brief="true" style="padding:8px 11px">${gameDayBannerHtml}</div>`
+          : '';
 
     const briefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
       rawStream: prioritizedRaw,
@@ -775,8 +827,77 @@ export function renderVideoEmbedOrFacade(
   channel = 'YouTube',
   isPlaying = false,
   embeddable = true,
-  { compactFooter = false } = {}
+  { compactFooter = false, videoStreamUrl = '', posterUrl = '', externalWatchUrl = '' } = {}
 ) {
+  const safeStreamUrl =
+    videoStreamUrl && /^https:\/\//i.test(String(videoStreamUrl)) ? String(videoStreamUrl).trim() : '';
+
+  if (!videoId && safeStreamUrl) {
+    const safePoster = posterUrl && /^https:\/\//i.test(String(posterUrl)) ? String(posterUrl).trim() : '';
+    const safeOutUrl = sanitizeExternalUrl(externalWatchUrl, safeStreamUrl) || safeStreamUrl;
+    const providerLabel = /x\.com|twimg\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
+      ? 'X'
+      : /espn/i.test(`${safeOutUrl} ${channel}`)
+        ? 'ESPN'
+        : channel || 'Source';
+
+    if (embeddable === false) {
+      return `
+        <div class="video-embed-box">
+          <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="video-external-card" aria-label="Watch ${esc(label)} on ${esc(providerLabel)}">
+            <div class="video-thumb-stage">
+              ${
+                safePoster
+                  ? `<img src="${esc(safePoster)}" alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
+                  : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
+              }
+              <div class="video-thumb-overlay">
+                <span class="video-play-pill">${iconSvg('externalLink', 13)}<span>Watch on ${esc(providerLabel)}</span></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      `;
+    }
+
+    if (isPlaying) {
+      return `
+        <div class="video-embed-box">
+          <div class="video-iframe-wrap">
+            <video src="${esc(safeStreamUrl)}" ${safePoster ? `poster="${esc(safePoster)}"` : ''} data-vid-key="${esc(vidKey)}" controls autoplay playsinline preload="metadata"></video>
+          </div>
+          <div class="video-launch-bar">
+            <span class="inline-icon-meta" style="min-width:0">${iconSvg('video', 14)}<span>Playing Inline</span></span>
+            <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on ${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="video-embed-box">
+        <div class="video-thumb-stage" style="cursor:pointer" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
+          ${
+            safePoster
+              ? `<img src="${esc(safePoster)}" alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
+              : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
+          }
+          <div class="video-thumb-overlay">
+            <button type="button" class="video-play-pill" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
+              ${iconSvg('play', 14)}
+              <span>Play Clip Inline</span>
+            </button>
+          </div>
+        </div>
+        <div class="video-launch-bar" style="justify-content:flex-end">
+          <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on ${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
+        </div>
+      </div>
+    `;
+  }
+
+  if (!videoId) return '';
+
   const safeId = encodeURIComponent(videoId);
   const startNum = Number(startSec || 0);
   const watchUrl = `https://www.youtube.com/watch?v=${safeId}${startNum > 0 ? `&t=${startNum}s` : ''}`;

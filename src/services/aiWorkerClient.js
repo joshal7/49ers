@@ -26,13 +26,19 @@ import {
   sanitizeHallucinatedRosterText
 } from '../engine/groundingValidator.js';
 import {
+  resolveGameNewsContext,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
   filterOutCompletedGameAvailabilityItems,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
-  buildStorySignatureKey
+  buildStorySignatureKey,
+  resolveNewsBriefCycleState,
+  isAppDataAwaitingLivePostGameHydration,
+  isDailyBriefStaleForLiveState,
+  isPostGameBriefFormedForGame,
+  evaluateGameDayAboveBriefWindow
 } from '../engine/breakingClassifier.js';
 import {
   isPaywalledPublisher,
@@ -63,6 +69,7 @@ import {
   DEFAULT_NOTEBOOKLM_TTS_CASCADE,
   NOTEBOOKLM_VOICE_PROFILES,
   rankBestGeminiReasoningModels,
+  rankSecondTierGeminiFlashModels,
   rankGeminiTtsModels,
   resolveGeminiThinkingLevelLabel,
   buildGeminiThinkingConfig,
@@ -107,9 +114,19 @@ const LIVE_PRODUCTION_FALLBACK_CASCADE = [
   'gemini-2.5-flash-lite',
   'gemini-2.0-flash'
 ];
-const discoveredCascadeByKey = new Map();
-const unavailableModelsByKey = new Map();
-const unavailableTtsModelsByKey = new Map();
+const SHARED_AI_SINGLETON =
+  globalThis.__FAITHFUL_AI_STATE__ ||
+  (globalThis.__FAITHFUL_AI_STATE__ = {
+    discoveredCascadeByKey: new Map(),
+    unavailableModelsByKey: new Map(),
+    unavailableTtsModelsByKey: new Map(),
+    inFlightDailyMatchupPromise: null,
+    inFlightDailyNewsBriefPromise: null,
+    inFlightGameDayInactivesAiPromise: null
+  });
+const discoveredCascadeByKey = SHARED_AI_SINGLETON.discoveredCascadeByKey;
+const unavailableModelsByKey = SHARED_AI_SINGLETON.unavailableModelsByKey;
+const unavailableTtsModelsByKey = SHARED_AI_SINGLETON.unavailableTtsModelsByKey;
 
 function getDailyDeadModelSet(storeMap, cacheKey) {
   const todayPt = getPacificDateKey();
@@ -2849,7 +2866,6 @@ export const DAILY_NEWS_BRIEF_PEAK_HOUR_PT = 17;
 
 const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v4';
 const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v4';
-let inFlightDailyNewsBriefPromise = null;
 
 export function getPacificHour24(nowMs = Date.now()) {
   try {
@@ -2866,20 +2882,23 @@ export function getPacificHour24(nowMs = Date.now()) {
 }
 
 /**
- * Computes the active daily 5:00 PM PT news-cycle identifier (`YYYY-MM-DD@17PT`).
- * Before 5:00 PM PT on Day D, the active cycle is `Day(D-1)@17PT`; once 5:00 PM PT arrives,
- * it advances to `Day(D)@17PT` so the brief regenerates once/day right after peak news lands.
+ * Computes the active schedule-aware daily news-cycle identifier:
+ * - Non-game days: `YYYY-MM-DD@17PT` (rolls at 5:00 PM PT).
+ * - Game days: holds on the prior cycle throughout `[T-90m, Final + podium buffer)` regardless of kickoff time,
+ *   then advances to `YYYY-MM-DD@postgame-wk{N}` once the game finishes (holding through 5:00 PM PT the next day).
  */
 export function getDailyNewsBriefCycleKey(
   nowMs = Date.now(),
-  peakHourPt = DAILY_NEWS_BRIEF_PEAK_HOUR_PT
+  appDataOrPeakHour = null,
+  maybePeakHourPt = DAILY_NEWS_BRIEF_PEAK_HOUR_PT
 ) {
-  const hourPt = getPacificHour24(nowMs);
-  if (hourPt >= peakHourPt) {
-    return `${getPacificDateKey(nowMs)}@${peakHourPt}PT`;
-  }
-  const prevDayAnchorMs = nowMs - (hourPt + 2) * 3_600_000;
-  return `${getPacificDateKey(prevDayAnchorMs)}@${peakHourPt}PT`;
+  const isHourNum = typeof appDataOrPeakHour === 'number';
+  const peakHourPt = isHourNum ? appDataOrPeakHour : maybePeakHourPt;
+  const appData =
+    !isHourNum && appDataOrPeakHour && typeof appDataOrPeakHour === 'object'
+      ? appDataOrPeakHour
+      : null;
+  return resolveNewsBriefCycleState(nowMs, appData, peakHourPt).activeCycleKey;
 }
 
 function stripEmojisAndUrls(str = '') {
@@ -2910,22 +2929,35 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
   const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
   if (rawStream.length === 0) return [];
 
+  const briefCtx = resolveGameNewsContext(appData, nowMs);
   const afterAvail = filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs);
-  const prioritized = sortNewsWithBreakingPriority(
-    afterAvail.filter(it => {
-      if (!it || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
-      const ttl = String(it.title || '');
-      const sum = String(it.summary || '');
-      // Skip generic sponsor-shell link roundups with zero standalone reporting
-      if (/^morning report:/i.test(ttl) && /catch up on the latest|powered by cisco/i.test(sum)) {
-        return false;
-      }
-      return Boolean(sanitizeExternalUrl(it.url, null)) && !isPaywalledPublisher(it.outletName, it.url);
-    }),
-    nowMs,
-    { appData }
-  );
-  const deduped = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritized, { nowMs }), {
+  const filteredBase = afterAvail.filter(it => {
+    if (!it || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
+    const ttl = String(it.title || '');
+    const sum = String(it.summary || '');
+    // Skip generic sponsor-shell link roundups with zero standalone reporting
+    if (/^morning report:/i.test(ttl) && /catch up on the latest|powered by cisco/i.test(sum)) {
+      return false;
+    }
+    return Boolean(sanitizeExternalUrl(it.url, null)) && !isPaywalledPublisher(it.outletName, it.url);
+  });
+
+  // During the 24h post-game window, if >=5 post-kickoff reports exist, exclude stale pre-kickoff previews
+  // so the post-game & 5 PM Game-Day Recap briefs anchor strictly on actual game outcome, X pressers & post-game injuries!
+  const postKickoffPool =
+    briefCtx.postGameImmediate && Number.isFinite(briefCtx.completedKickoffMs)
+      ? filteredBase.filter(it => {
+          const pMs = it.publishedAt ? Date.parse(it.publishedAt) : NaN;
+          return (
+            (Number.isFinite(pMs) && pMs >= briefCtx.completedKickoffMs - 10 * 60_000) ||
+            it.storyTier === 'tier1_major'
+          );
+        })
+      : [];
+  const effectivePool = postKickoffPool.length >= 5 ? postKickoffPool : filteredBase;
+
+  const prioritized = sortNewsWithBreakingPriority(effectivePool, nowMs, { appData });
+  const deduped = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritized, { nowMs, appData }), {
     nowMs,
     appData
   });
@@ -3052,9 +3084,11 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
   return candidates;
 }
 
-export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = []) {
+export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = [], nowMs = Date.now()) {
   const meta = appData?.meta || {};
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const tg = cycleState.isPostGameCycle ? cycleState.targetGame : null;
   const capYr = String(meta.seasonYear || 2026);
   const nextYr = String(Number(capYr) + 1);
   const capGrossM = ((Number(appData?.cap?.years?.[capYr]?.teamCapSpace || 35_164_858)) / 1e6).toFixed(2);
@@ -3074,6 +3108,22 @@ export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = []) {
     .map(m => `${m.player} (${m.position}, from ${m.acquiredFrom} for ${m.costSummary} — ${m.timing})`)
     .join('; ');
 
+  let postGameContextLine = '';
+  if (tg && (tg.completed || /\bfinal\b/i.test(String(tg.statusDetail || '')))) {
+    const tgOpp = tg.opponent?.name || tg.opponent?.abbr || 'Opponent';
+    const hasScore = tg.sfScore != null && tg.oppScore != null;
+    const resStr =
+      tg.result ||
+      (hasScore
+        ? Number(tg.sfScore) > Number(tg.oppScore)
+          ? 'W'
+          : Number(tg.sfScore) < Number(tg.oppScore)
+            ? 'L'
+            : 'T'
+        : '');
+    postGameContextLine = `COMPLETED GAME RESULT (PRIMARY LEAD STORY — GAME IS FINAL): Week ${tg.week} Final — San Francisco 49ers ${hasScore ? `${tg.sfScore}, ${tgOpp} ${tg.oppScore}` : `vs. ${tgOpp}`}${resStr ? ` (${resStr})` : ''}, moving SF to ${meta.teamRecord || ''}. Upcoming next week: Week ${um.week || meta.currentWeek || ''} vs. ${um.oppName || um.oppAbbr || 'Opponent'}. Lead the headline, summary, and first bullet with the completed ${tgOpp} game result, key plays, and post-game takeaways—NEVER write about the completed ${tgOpp} game in the future tense or as "ahead of"!`;
+  }
+
   const sourceBlock = sourceCandidates
     .map(
       s =>
@@ -3085,6 +3135,7 @@ export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = []) {
 
   return [
     `DAILY_TOP_NEWS_BRIEF_JSON — Synthesize today's post-wire San Francisco 49ers (${meta.teamRecord || ''}, Week ${meta.currentWeek || ''}, next vs. ${um.oppName || um.oppAbbr || 'Opponent'}) Top News Brief using Gemini High Thinking.`,
+    postGameContextLine,
     `Live Cap Context: $${capGrossM}M in ${capYr} gross cap space vs. ${capNextLabel} projected ${nextYr} balance (CBA Article 13 1-for-1 rollover).`,
     recentMoves ? `Recent Completed Acquisitions: ${recentMoves}` : '',
     `Active Week ${meta.currentWeek || ''} Practice Report: ${sfPr || 'See verified wire sources below.'}`,
@@ -3094,16 +3145,32 @@ export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = []) {
     '',
     'STRICT EDITORIAL, COHERENCE & CITATION REQUIREMENTS (MANDATORY):',
     '1. TARGET WORD COUNT: ~205–240 words total across `headline` + `summary` + `bullets` (~2/3 the length of our 355-word Coaching Matchup card).',
-    '2. EXPLAIN THE ACTUAL NEWS IN COHERENT, COMPLETE SENTENCES: Write natural, informative journalistic prose that directly states what happened (exact trade pick compensation, exact contract restructure dollars, exact player practice participation DNP/LP/FP & injuries, and roster/matchup implications). NEVER copy raw article titles verbatim, NEVER write teaser phrases ("latest on...", "updates on...", "click here", "read more"), NEVER use rhetorical questions, NEVER use emojis, and NEVER use ellipses ("..." or "…") or incomplete sentences!',
-    '3. MINIMAL-DISTRACTION INLINE CITATIONS (`[S#]` ONLY — NO REPORTER/OUTLET NAMES IN PROSE): Place bare `[S1]`, `[S2]` markers directly before the comma or period at the end of the factual clause (e.g., "...acquired WR Keenan Allen from Indianapolis for a 2027 sixth-round pick [S1]."). DO NOT write reporter or outlet names like "Adam Schefter" or "Pro Football Rumors" or "per [S1]"—our UI renders `[S#]` as a small clickable link icon to minimize reading distraction.',
+    '2. EXPLAIN THE ACTUAL NEWS IN COHERENT, COMPLETE SENTENCES: Write natural, informative journalistic prose that directly states what happened (exact game scores/turning points when post-game, exact trade pick compensation, exact contract restructure dollars, exact player practice participation DNP/LP/FP & injuries, and roster/matchup implications). NEVER copy raw article titles verbatim, NEVER write teaser phrases ("latest on...", "updates on...", "click here", "read more"), NEVER use rhetorical questions, NEVER use emojis, and NEVER use ellipses ("..." or "…") or incomplete sentences!',
+    '3. MINIMAL-DISTRACTION INLINE CITATIONS (`[S#]` ONLY — NO REPORTER/OUTLET NAMES IN PROSE): Place separate bare `[S1]`, `[S2]` markers directly before the comma or period at the end of the factual clause (e.g., "...acquired WR Keenan Allen from Indianapolis for a 2027 sixth-round pick [S1]."). Always write separate brackets like `[S1] [S2]`—NEVER group citations inside one bracket like `[S1, S2]`. DO NOT write reporter or outlet names like "Adam Schefter" or "Pro Football Rumors" or "per [S1]"—our UI renders `[S#]` as a small clickable link icon to minimize reading distraction.',
     '4. `headline`: Crisp 10–15 word factual headline summarizing today\'s top 49ers news (no `[S#]` markers in `headline`).',
-    '5. `summary`: 2 complete, coherent sentences (~45–55 words) explaining the overarching front-office and on-field headline news with 1–2 `[S#]` inline markers.',
-    '6. `bullets`: Exactly 3 coherent bullets (~50–60 words each), each starting with `"Bold Subtopic: "` and weaving 5–8 distinct `[S#]` markers across roster/cap moves, concrete player-by-player practice/IR statuses, and team/matchup storylines.',
+    '5. `summary`: 2 complete, coherent sentences (~45–55 words) explaining the overarching on-field and front-office headline news with 1–2 `[S#]` inline markers.',
+    '6. `bullets`: Exactly 3 coherent bullets (~50–60 words each), each starting with a concrete 2–4 word topic title and colon (e.g., `"Offensive Execution & Run Game: ..."` or `"Secondary Health & Depth: ..."` — NEVER write the literal placeholder words `"Bold Subtopic"`) and weaving 5–8 distinct `[S#]` markers across game/team storylines, concrete player-by-player health/practice/IR statuses, and roster/cap context.',
     '7. `citedSourceIds`: Array of all `"S#"` IDs cited across `summary` and `bullets`.',
-    '8. Output ONLY valid raw JSON matching: {"headline":"...","summary":"...","bullets":["Subtopic: ...","Subtopic: ...","Subtopic: ..."],"citedSourceIds":["S1","S2"]}.'
+    '8. Output ONLY valid raw JSON matching: {"headline":"...","summary":"...","bullets":["Topic Title: ...","Topic Title: ...","Topic Title: ..."],"citedSourceIds":["S1","S2"]}.'
   ]
     .filter(Boolean)
     .join('\n');
+}
+
+function stripLiteralBoldSubtopicPrefix(str = '') {
+  return String(str || '')
+    .replace(/^(?:[-•*]\s*)?(?:\*\*)?bold\s+subtopic(?:\*\*)?\s*:\s*/i, '')
+    .trim();
+}
+
+function expandGroupedSourceBracketRefs(str = '') {
+  return String(str || '').replace(
+    /\[((?:S\d{1,2})(?:\s*(?:[,;/]|&|\band\b)\s*S\d{1,2})+)\](?!\()/gi,
+    (_, inner) => {
+      const refs = inner.match(/S\d{1,2}/gi) || [];
+      return refs.map(r => `[${r.toUpperCase()}]`).join(' ');
+    }
+  );
 }
 
 function sanitizeBriefInlineLinksAndRoster(
@@ -3113,14 +3180,15 @@ function sanitizeBriefInlineLinksAndRoster(
   rosterPlayers = [],
   citedRefCollector = new Set()
 ) {
-  let text = String(rawText || '')
-    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')
-    .replace(/\.{3,}|…+/g, '')
-    .trim();
+  let text = stripLiteralBoldSubtopicPrefix(
+    String(rawText || '')
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')
+      .replace(/\.{3,}|…+/g, '')
+  );
   if (!text) return '';
 
-  // Pre-heal any split inline link tail (`[Label](https://...%20(word)%20...tail)`) before parsing
-  text = normalizeMarkdownInlineLinksInText(text);
+  // Pre-heal any split inline link tail and expand grouped `[S10, S12]` markers into `[S10] [S12]`
+  text = expandGroupedSourceBracketRefs(normalizeMarkdownInlineLinksInText(text));
 
   const linkPlaceholders = [];
 
@@ -3344,7 +3412,23 @@ export function parseAndSanitizeDailyTopNewsBrief(
   ).filter(Boolean);
 
   const nowIso = meta.generatedAt || new Date().toISOString();
-  const cycleKey = meta.cycleKey || getDailyNewsBriefCycleKey(Date.parse(nowIso) || Date.now());
+  const effectiveGenMs = Date.parse(nowIso) || Date.now();
+  const cycleState = resolveNewsBriefCycleState(
+    effectiveGenMs,
+    appData,
+    DAILY_NEWS_BRIEF_PEAK_HOUR_PT
+  );
+  const cycleKey = meta.cycleKey || cycleState.activeCycleKey;
+  const isPostGame =
+    meta.isPostGame !== undefined
+      ? Boolean(meta.isPostGame)
+      : Boolean(cycleState.isPostGameCycle || /@postgame-/i.test(cycleKey));
+  const gameWeek =
+    meta.gameWeek !== undefined
+      ? meta.gameWeek
+      : cycleState.targetGame
+        ? Number(cycleState.targetGame.week)
+        : Number(appData?.meta?.currentWeek) || null;
   const wordCount =
     countVisibleBriefWords(headline) +
     countVisibleBriefWords(finalSummary) +
@@ -3355,6 +3439,9 @@ export function parseAndSanitizeDailyTopNewsBrief(
     id: `daily_brief_${cycleKey.replace(/[^A-Za-z0-9_-]/g, '_')}`,
     cycleKey,
     scheduledHourPt: DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
+    isPostGame,
+    gameWeek,
+    teamRecord: String(appData?.meta?.teamRecord || ''),
     generatedAt: nowIso,
     modelUsed: resolvedBriefModel,
     thinkingLevel: resolveGeminiThinkingLevelLabel(resolvedBriefModel),
@@ -3371,12 +3458,13 @@ export function parseAndSanitizeDailyTopNewsBrief(
 
 /**
  * Coherent, Fact-Synthesizing Newsroom Recap Builder (~200–240 visible words).
- * Synthesizes actual front-office transactions, contract restructures, player-by-player practice/IR
- * participation statuses, and matchup storylines in complete sentences (zero pasted teaser headlines,
- * zero ellipses, and minimal-distraction inline link icons).
+ * Synthesizes post-game final results (when in a post-game cycle) or front-office transactions,
+ * contract restructures, player-by-player practice/IR participation statuses, and matchup storylines
+ * in complete sentences (zero pasted teaser headlines, zero ellipses, and minimal-distraction inline link icons).
  */
 export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(), meta = {}) {
   const candidates = selectTopNewsBriefSourceCandidates(appData, 14, nowMs);
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
   const m = appData?.meta || {};
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const oppName = um.oppName || um.oppAbbr || 'Opponent';
@@ -3424,7 +3512,6 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
   });
   const topTrade = completedMoves[0] || null;
 
-  // Detect any contract restructure reported in wire candidates (e.g. "Restructured DT DeForest Buckner For $5.2M" or Spotrac salary conversion)
   let restructureFact = null;
   for (const c of candidates) {
     const txt = `${c.title || ''} ${c.fullBody || ''}`;
@@ -3454,7 +3541,6 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     }
   }
 
-  // Detect secondary practice-squad or active-roster signing in wire tweets
   let signingFact = null;
   for (const c of candidates) {
     const txt = c.fullBody || c.title || '';
@@ -3514,160 +3600,229 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     ? prList.filter(p => /rest/i.test(`${p[latestDayInfo.key] || ''} ${p.injuryType || ''}`))
     : [];
 
-  // 3. Headline
-  const headlineTopics = [];
-  if (topTrade?.player) headlineTopics.push(`${topTrade.player} Addition`);
-  if (restructureFact?.player) headlineTopics.push(`${restructureFact.player.split(' ').pop()} Cap Restructure`);
-  headlineTopics.push(
-    latestDayInfo.key ? `${latestDayInfo.label} Injury Report` : `Week ${wk} ${oppName} Availability`
-  );
-  const headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics.slice(0, 3).join(', ')}`;
+  const tg = cycleState.isPostGameCycle ? cycleState.targetGame : null;
+  const isCompletedPostGame =
+    Boolean(tg) && (Boolean(tg.completed) || /\bfinal\b/i.test(String(tg.statusDetail || '')));
 
-  // 4. Concise 2-Sentence Executive Thesis (~38–46 words, zero verbatim duplication of bullets)
-  const leadMoveCite = pickCite(
-    topTrade?.player ? new RegExp(topTrade.player.split(' ').pop(), 'i') : /restructur|roster|cap/i,
-    0
-  );
-  const practiceLeadCite = pickCite(/practice window|injury report|limited today|miss practice/i, 1);
-  const summarySent1 =
-    topTrade?.player && restructureFact
-      ? `San Francisco (${rec}) enters Week ${wk} against the ${oppName} (${um.betting?.spread || 'NFL'}) after adding veteran ${topTrade.position} ${topTrade.player} at the trade deadline and clearing $${restructureFact.millions}M in immediate cap room via a ${restructureFact.player} restructure${leadMoveCite}.`
-      : topTrade?.player
-        ? `San Francisco (${rec}) enters Week ${wk} against the ${oppName} (${um.betting?.spread || 'NFL'}) after acquiring ${topTrade.position} ${topTrade.player} while preserving $${capGrossM}M in ${capYr} salary cap space${leadMoveCite}.`
-        : `San Francisco (${rec}) turns to Week ${wk} preparations against the ${oppName} (${um.betting?.spread || 'NFL'}) while managing $${capGrossM}M in ${capYr} salary cap flexibility${leadMoveCite}.`;
+  let headline = '';
+  let summary = '';
+  let bullet1 = '';
+  let bullet2 = '';
+  let bullet3 = '';
 
-  const summarySent2 =
-    irOpenList.length > 0 || dnpPlayers.length > 0
-      ? `On the practice field, ${latestDayInfo.label}'s report balanced an IR return window activation and key skill-position return against early-week absences in the starting secondary${practiceLeadCite}.`
-      : `Active-roster depth and coordinator game-planning headline preparations at SAP Performance Facility ahead of kickoff${practiceLeadCite}.`;
-  const summary = `${summarySent1} ${summarySent2}`;
+  if (isCompletedPostGame) {
+    const tgOpp = tg.opponent?.name || tg.opponent?.abbr || 'Opponent';
+    const tgOppLast = tgOpp.split(' ').pop();
+    const tgWk = tg.week || wk;
+    const hasScore = tg.sfScore != null && tg.oppScore != null;
+    const scoreStr = hasScore ? `${tg.sfScore}-${tg.oppScore}` : '';
+    const isWin =
+      tg.result === 'W' || (hasScore && Number(tg.sfScore) > Number(tg.oppScore));
+    const isLoss =
+      tg.result === 'L' || (hasScore && Number(tg.sfScore) < Number(tg.oppScore));
 
-  // 5. Bullet 1 — Trades, Roster & Cap Moves (~55 words)
-  const rosterSentences = [];
-  if (topTrade?.player) {
-    const cleanCost = String(topTrade.costSummary || 'Day 3 draft capital')
-      .replace(/\s*\(via [^)]+\)/i, '')
-      .toLowerCase();
-    const officialTradeCite = pickCite(
-      c => /acquire|trade/i.test(c.title) && new RegExp(topTrade.player.split(' ').pop(), 'i').test(c.title)
-    );
-    const psClause = signingFact ? ` and signed ${signingFact.who} to the ${signingFact.bucket}` : '';
-    rosterSentences.push(
-      `John Lynch finalized the trade for ${topTrade.position} ${topTrade.player} from ${fmtFromTeam(topTrade.acquiredFrom)} for a ${cleanCost}${psClause}${officialTradeCite}.`
-    );
-  } else if (signingFact) {
-    rosterSentences.push(
-      `San Francisco signed ${signingFact.who} to the ${signingFact.bucket} ahead of Week ${wk}${pickCite(/signed|roster|practice squad/i)}.`
-    );
-  }
-  if (restructureFact) {
-    const rCite = pickCite(/restructur|cap space/i);
-    rosterSentences.push(
-      `Paraag Marathe converted base salary on ${restructureFact.pos ? `${restructureFact.pos} ` : ''}${restructureFact.player} to open $${restructureFact.millions}M${rCite}, lifting ${capYr} room to $${capGrossM}M for CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection.`
-    );
-  } else {
-    rosterSentences.push(
-      `Paraag Marathe holds $${capGrossM}M in ${capYr} room for 1-for-1 CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection${pickCite(/cap|contract|roster/i)}.`
-    );
-  }
-  const bulletRoster = `Trades, Roster & Cap Moves: ${rosterSentences.join(' ')}`;
+    headline = isWin
+      ? `49ers (${rec}) Week ${tgWk} Postgame Briefing: ${scoreStr ? `${scoreStr} ` : ''}Win Over ${tgOpp}`
+      : isLoss
+        ? `49ers (${rec}) Week ${tgWk} Postgame Briefing: ${tgOpp} Recap & Week ${wk} Reset`
+        : `49ers (${rec}) Week ${tgWk} Postgame Briefing: ${tgOpp} Final & Week ${wk} Outlook`;
 
-  // 6. Bullet 2 — Concrete Player-by-Player Injury & Practice Availability (~58 words)
-  const healthSentences = [];
-  if (irOpenList.length > 0) {
-    const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'));
-    const lpPart =
-      lpPlayers.length > 0
-        ? ` alongside limited sessions for ${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))}`
+    const gameLeadCite = pickCite(new RegExp(tgOppLast, 'i'), 0);
+    const postReactionCite = pickCite(/purdy|shanahan|sack|touchdown|defense|win|loss/i, 1);
+
+    const sum1 = isWin
+      ? `San Francisco (${rec}) closed out Week ${tgWk} with a ${scoreStr ? `${scoreStr} ` : ''}victory over the ${tgOpp}${gameLeadCite}, strengthening ${m.standingSummary || 'NFC positioning'} entering Week ${wk} against the ${oppName}.`
+      : isLoss
+        ? `San Francisco (${rec}) dropped its Week ${tgWk} matchup ${scoreStr ? `${scoreStr} ` : ''}against the ${tgOpp}${gameLeadCite}, turning immediate focus to Week ${wk} preparations for the ${oppName}.`
+        : `San Francisco (${rec}) completed Week ${tgWk} action against the ${tgOpp}${gameLeadCite} and now pivots to Week ${wk} preparations against the ${oppName}.`;
+    const sum2 = `Postgame evaluations centered on Brock Purdy's pocket execution, Raheem Morris's defensive adjustments, and roster recovery while maintaining $${capGrossM}M in ${capYr} salary cap flexibility${postReactionCite}.`;
+    summary = `${sum1} ${sum2}`;
+
+    const offCite = pickCite(/purdy|mccaffrey|yards|sack|touchdown|offense|pff/i, 2);
+    const defCite = pickCite(/lenoir|warner|buckner|pass rush|defense|fumble|interception/i, 3);
+    bullet1 = `Postgame Execution & Film Takeaways: Kyle Shanahan's offense balanced situational run efficiency and intermediate passing against the ${tgOpp}${offCite}, while Raheem Morris leaned on disciplined secondary coverage and interior disruption to close out critical second-half possessions${defCite}.`;
+
+    const healthPostCite = pickCite(/injury|achilles|shoulder|knee|ankle|return|active/i, 4);
+    const irClause =
+      irOpenList.length > 0
+        ? ` while ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window remains active`
         : '';
-    healthSentences.push(
-      `The 49ers opened ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window${lpPart}${irCite}.`
+    const recoveryNames = joinNamesNatural(
+      [...dnpPlayers.slice(0, 2), ...lpPlayers.slice(0, 2)].map(fmtPlayerInj)
     );
-  } else if (lpPlayers.length > 0) {
-    healthSentences.push(
-      `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} practiced on a limited basis ${latestDayInfo.label}${pickCite(/injury|practice|limited/i)}.`
-    );
-  }
-  if (dnpPlayers.length > 0) {
-    const injRepCite = pickCite(/injury report|miss practice|no practice/i);
-    const fpTail =
-      fpPlayers.length > 0
-        ? `, whereas ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
-        : vetRestPlayers.length > 0
-          ? `, while ${joinNamesNatural(vetRestPlayers.slice(0, 3).map(p => p.name))} received veteran rest`
-          : '';
-    healthSentences.push(
-      `${joinNamesNatural(dnpPlayers.slice(0, 4).map(fmtPlayerInj))} did not practice ${latestDayInfo.label}${fpTail}${injRepCite}.`
-    );
-  }
-  if (healthSentences.length === 0) {
-    healthSentences.push(
-      `Active starters enter Week ${wk} cleared as medical staff manage routine recovery ahead of the ${oppName}${pickCite(/health|injury|practice/i, 1)}.`
-    );
-  }
-  const bulletHealth = `Injury & Practice Availability: ${healthSentences.join(' ')}`;
+    bullet2 = recoveryNames
+      ? `Postgame Health & Week ${wk} Recovery: Medical staff monitor ${recoveryNames} coming out of Week ${tgWk}${irClause} ahead of early-week evaluations for the ${oppName}${healthPostCite}.`
+      : `Postgame Health & Week ${wk} Recovery: San Francisco exits Week ${tgWk} evaluating postgame soreness across the active 53-man rotation${irClause} before Wednesday's initial Week ${wk} practice report for the ${oppName}${healthPostCite}.`;
 
-  // 7. Bullet 3 — Coherent Matchup, Depth & Team Storylines (~60 words)
-  const teamSentences = [];
-  const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
-  const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
-  const groundOrOffCite = pickCite(/ground game|everybody|offense|cowboys|matchup/i);
-
-  if (dnpCbPlayers.length >= 2 && (cbStoryCite || groundOrOffCite)) {
-    teamSentences.push(
-      `With starting cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan can insulate the secondary against the ${oppName} through San Francisco's top-ranked EPA offense, play-action passing, and ball-control run game${groundOrOffCite}.`
-    );
+    const capPostCite = pickCite(/cap|trade|allen|buckner|contract|roster/i, 5);
+    const moveNote = topTrade?.player
+      ? `Following the midseason addition of ${topTrade.position} ${topTrade.player}, `
+      : '';
+    bullet3 = `Cap Rollover & Week ${wk} Outlook: ${moveNote}Paraag Marathe preserves $${capGrossM}M in ${capYr} gross cap space for 1-for-1 CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection as San Francisco prepares for the ${oppName}${capPostCite}.`;
   } else {
-    const schemeCite = groundOrOffCite || pickCite(() => true, 2);
-    teamSentences.push(
-      `Kyle Shanahan and Raheem Morris enter Week ${wk} against the ${oppName} leaning on top-tier offensive EPA efficiency, play-action sequencing, and disciplined run fits${schemeCite}.`
+    // 3. Standard Mid-Week / Off-Day Headline
+    const headlineTopics = [];
+    if (topTrade?.player) headlineTopics.push(`${topTrade.player} Addition`);
+    if (restructureFact?.player) headlineTopics.push(`${restructureFact.player.split(' ').pop()} Cap Restructure`);
+    headlineTopics.push(
+      latestDayInfo.key ? `${latestDayInfo.label} Injury Report` : `Week ${wk} ${oppName} Availability`
     );
-  }
+    headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics.slice(0, 3).join(', ')}`;
 
-  const allenOffenseCite = topTrade?.player
-    ? pickCite(c => /everybody['’]?s open|make the 49ers.*offense|energized/i.test(`${c.title} ${c.fullBody}`))
-    : '';
-  const purdyMvpCite = pickCite(/purdy.*mvp|midseason honors/i);
-  const macJonesCite = pickCite(/mac jones/i);
+    const leadMoveCite = pickCite(
+      topTrade?.player ? new RegExp(topTrade.player.split(' ').pop(), 'i') : /restructur|roster|cap/i,
+      0
+    );
+    const practiceLeadCite = pickCite(/practice window|injury report|limited today|miss practice/i, 1);
+    const summarySent1 =
+      topTrade?.player && restructureFact
+        ? `San Francisco (${rec}) enters Week ${wk} against the ${oppName} (${um.betting?.spread || 'NFL'}) after adding veteran ${topTrade.position} ${topTrade.player} at the trade deadline and clearing $${restructureFact.millions}M in immediate cap room via a ${restructureFact.player} restructure${leadMoveCite}.`
+        : topTrade?.player
+          ? `San Francisco (${rec}) enters Week ${wk} against the ${oppName} (${um.betting?.spread || 'NFL'}) after acquiring ${topTrade.position} ${topTrade.player} while preserving $${capGrossM}M in ${capYr} salary cap space${leadMoveCite}.`
+          : `San Francisco (${rec}) turns to Week ${wk} preparations against the ${oppName} (${um.betting?.spread || 'NFL'}) while managing $${capGrossM}M in ${capYr} salary cap flexibility${leadMoveCite}.`;
 
-  if (topTrade?.player && allenOffenseCite) {
-    const injuredWr = dnpPlayers.find(p => p.position === 'WR');
-    teamSentences.push(
-      `Working ${topTrade.player} into intermediate routes gives QB Brock Purdy another veteran separator${injuredWr ? ` without rushing ${injuredWr.name} back` : ''}${allenOffenseCite}${purdyMvpCite ? `, while Purdy earns midseason MVP buzz${purdyMvpCite}` : ''}.`
-    );
-  } else if (purdyMvpCite) {
-    teamSentences.push(
-      `QB Brock Purdy continues to draw midseason MVP recognition${purdyMvpCite}${macJonesCite ? `, while backup Mac Jones remains in place past the deadline${macJonesCite}` : ''}.`
-    );
-  } else {
-    const extraBeat = candidates.find(
-      c =>
-        !usedRefSet.has(c.refId) &&
-        c.summary &&
-        c.summary.length >= 45 &&
-        !/\?|latest on|click here|morning report/i.test(`${c.title} ${c.summary}`)
-    );
-    if (extraBeat) {
-      const firstSent = (extraBeat.summary.match(/^[^.!?]+[.!?]/) || [extraBeat.summary])[0].trim().replace(/[.!?]+$/, '');
-      usedRefSet.add(extraBeat.refId);
-      citedIds.push(extraBeat.refId);
-      teamSentences.push(`${firstSent} [${extraBeat.refId}].`);
+    const summarySent2 =
+      irOpenList.length > 0 || dnpPlayers.length > 0
+        ? `On the practice field, ${latestDayInfo.label}'s report balanced an IR return window activation and key skill-position return against early-week absences in the starting secondary${practiceLeadCite}.`
+        : `Active-roster depth and coordinator game-planning headline preparations at SAP Performance Facility ahead of kickoff${practiceLeadCite}.`;
+    summary = `${summarySent1} ${summarySent2}`;
+
+    const rosterSentences = [];
+    if (topTrade?.player) {
+      const cleanCost = String(topTrade.costSummary || 'Day 3 draft capital')
+        .replace(/\s*\(via [^)]+\)/i, '')
+        .toLowerCase();
+      const officialTradeCite = pickCite(
+        c => /acquire|trade/i.test(c.title) && new RegExp(topTrade.player.split(' ').pop(), 'i').test(c.title)
+      );
+      const psClause = signingFact ? ` and signed ${signingFact.who} to the ${signingFact.bucket}` : '';
+      rosterSentences.push(
+        `John Lynch finalized the trade for ${topTrade.position} ${topTrade.player} from ${fmtFromTeam(topTrade.acquiredFrom)} for a ${cleanCost}${psClause}${officialTradeCite}.`
+      );
+    } else if (signingFact) {
+      rosterSentences.push(
+        `San Francisco signed ${signingFact.who} to the ${signingFact.bucket} ahead of Week ${wk}${pickCite(/signed|roster|practice squad/i)}.`
+      );
     }
+    if (restructureFact) {
+      const rCite = pickCite(/restructur|cap space/i);
+      rosterSentences.push(
+        `Paraag Marathe converted base salary on ${restructureFact.pos ? `${restructureFact.pos} ` : ''}${restructureFact.player} to open $${restructureFact.millions}M${rCite}, lifting ${capYr} room to $${capGrossM}M for CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection.`
+      );
+    } else {
+      rosterSentences.push(
+        `Paraag Marathe holds $${capGrossM}M in ${capYr} room for 1-for-1 CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection${pickCite(/cap|contract|roster/i)}.`
+      );
+    }
+    bullet1 = `Trades, Roster & Cap Moves: ${rosterSentences.join(' ')}`;
+
+    const healthSentences = [];
+    if (irOpenList.length > 0) {
+      const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'));
+      const lpPart =
+        lpPlayers.length > 0
+          ? ` alongside limited sessions for ${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))}`
+          : '';
+      healthSentences.push(
+        `The 49ers opened ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window${lpPart}${irCite}.`
+      );
+    } else if (lpPlayers.length > 0) {
+      healthSentences.push(
+        `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} practiced on a limited basis ${latestDayInfo.label}${pickCite(/injury|practice|limited/i)}.`
+      );
+    }
+    if (dnpPlayers.length > 0) {
+      const injRepCite = pickCite(/injury report|miss practice|no practice/i);
+      const fpTail =
+        fpPlayers.length > 0
+          ? `, whereas ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
+          : vetRestPlayers.length > 0
+            ? `, while ${joinNamesNatural(vetRestPlayers.slice(0, 3).map(p => p.name))} received veteran rest`
+            : '';
+      healthSentences.push(
+        `${joinNamesNatural(dnpPlayers.slice(0, 4).map(fmtPlayerInj))} did not practice ${latestDayInfo.label}${fpTail}${injRepCite}.`
+      );
+    }
+    if (healthSentences.length === 0) {
+      healthSentences.push(
+        `Active starters enter Week ${wk} cleared as medical staff manage routine recovery ahead of the ${oppName}${pickCite(/health|injury|practice/i, 1)}.`
+      );
+    }
+    bullet2 = `Injury & Practice Availability: ${healthSentences.join(' ')}`;
+
+    const teamSentences = [];
+    const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
+    const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
+    const groundOrOffCite = pickCite(/ground game|everybody|offense|cowboys|matchup/i);
+
+    if (dnpCbPlayers.length >= 2 && (cbStoryCite || groundOrOffCite)) {
+      teamSentences.push(
+        `With starting cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan can insulate the secondary against the ${oppName} through San Francisco's top-ranked EPA offense, play-action passing, and ball-control run game${groundOrOffCite}.`
+      );
+    } else {
+      const schemeCite = groundOrOffCite || pickCite(() => true, 2);
+      teamSentences.push(
+        `Kyle Shanahan and Raheem Morris enter Week ${wk} against the ${oppName} leaning on top-tier offensive EPA efficiency, play-action sequencing, and disciplined run fits${schemeCite}.`
+      );
+    }
+
+    const allenOffenseCite = topTrade?.player
+      ? pickCite(c => /everybody['’]?s open|make the 49ers.*offense|energized/i.test(`${c.title} ${c.fullBody}`))
+      : '';
+    const purdyMvpCite = pickCite(/purdy.*mvp|midseason honors/i);
+    const macJonesCite = pickCite(/mac jones/i);
+
+    if (topTrade?.player && allenOffenseCite) {
+      const injuredWr = dnpPlayers.find(p => p.position === 'WR');
+      teamSentences.push(
+        `Working ${topTrade.player} into intermediate routes gives QB Brock Purdy another veteran separator${injuredWr ? ` without rushing ${injuredWr.name} back` : ''}${allenOffenseCite}${purdyMvpCite ? `, while Purdy earns midseason MVP buzz${purdyMvpCite}` : ''}.`
+      );
+    } else if (purdyMvpCite) {
+      teamSentences.push(
+        `QB Brock Purdy continues to draw midseason MVP recognition${purdyMvpCite}${macJonesCite ? `, while backup Mac Jones remains in place past the deadline${macJonesCite}` : ''}.`
+      );
+    } else {
+      const extraBeat = candidates.find(
+        c =>
+          !usedRefSet.has(c.refId) &&
+          c.summary &&
+          c.summary.length >= 45 &&
+          !/\?|latest on|click here|morning report/i.test(`${c.title} ${c.summary}`)
+      );
+      if (extraBeat) {
+        const firstSent = (extraBeat.summary.match(/^[^.!?]+[.!?]/) || [extraBeat.summary])[0].trim().replace(/[.!?]+$/, '');
+        usedRefSet.add(extraBeat.refId);
+        citedIds.push(extraBeat.refId);
+        teamSentences.push(`${firstSent} [${extraBeat.refId}].`);
+      }
+    }
+    bullet3 = `Matchup & Team Storylines: ${teamSentences.join(' ')}`;
   }
-  const bulletMatchupBeat = `Matchup & Team Storylines: ${teamSentences.join(' ')}`;
+
+  const effectiveCycleKey = meta.cycleKey || cycleState.activeCycleKey;
+  const effectiveIsPostGame =
+    meta.isPostGame !== undefined ? Boolean(meta.isPostGame) : Boolean(cycleState.isPostGameCycle);
+  const effectiveGameWeek =
+    meta.gameWeek !== undefined
+      ? meta.gameWeek
+      : cycleState.targetGame
+        ? Number(cycleState.targetGame.week)
+        : Number(wk) || null;
 
   const built = parseAndSanitizeDailyTopNewsBrief(
     {
       headline,
       summary,
-      bullets: [bulletRoster, bulletHealth, bulletMatchupBeat],
+      bullets: [bullet1, bullet2, bullet3],
       citedSourceIds: citedIds
     },
     candidates,
     appData,
     {
       generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
-      cycleKey: meta.cycleKey || getDailyNewsBriefCycleKey(nowMs),
+      cycleKey: effectiveCycleKey,
+      isPostGame: effectiveIsPostGame,
+      gameWeek: effectiveGameWeek,
       modelUsed: meta.modelUsed || PRIMARY_GEMINI_REASONING_MODEL,
       source: meta.source || 'pipeline-grounded'
     }
@@ -3675,9 +3830,12 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
 
   return (
     built || {
-      id: `daily_brief_${getDailyNewsBriefCycleKey(nowMs).replace(/[^A-Za-z0-9_-]/g, '_')}`,
-      cycleKey: getDailyNewsBriefCycleKey(nowMs),
+      id: `daily_brief_${effectiveCycleKey.replace(/[^A-Za-z0-9_-]/g, '_')}`,
+      cycleKey: effectiveCycleKey,
       scheduledHourPt: DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
+      isPostGame: effectiveIsPostGame,
+      gameWeek: effectiveGameWeek,
+      teamRecord: rec,
       generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
       modelUsed: PRIMARY_GEMINI_REASONING_MODEL,
       thinkingLevel: 'XHIGH',
@@ -3685,7 +3843,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       wordCount: 215,
       headline,
       summary,
-      bullets: [bulletRoster, bulletHealth, bulletMatchupBeat],
+      bullets: [bullet1, bullet2, bullet3],
       coveredStoryKeys: [],
       coveredUrls: candidates.map(c => c.url),
       sources: candidates.slice(0, 10).map(c => ({
@@ -3703,9 +3861,30 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
 export function repairDailyTopNewsBriefLinks(brief) {
   if (!brief || typeof brief !== 'object') return { brief, mutated: false };
   let mutated = false;
+  const sourcesArr = Array.isArray(brief.sources) ? brief.sources : [];
+
+  const repairProseLine = (str, isBullet = false) => {
+    let cur = String(str || '');
+    if (isBullet) {
+      cur = stripLiteralBoldSubtopicPrefix(cur);
+    }
+    cur = expandGroupedSourceBracketRefs(normalizeMarkdownInlineLinksInText(cur));
+    cur = cur.replace(/\[(S(\d{1,2}))\](?!\()/gi, (_, _full, numStr) => {
+      const idx = parseInt(numStr, 10) - 1;
+      const src = idx >= 0 && idx < sourcesArr.length ? sourcesArr[idx] : null;
+      if (!src?.url) return '';
+      const label = src.author || src.outlet || 'Source';
+      return `[${label}](${encodeMarkdownLinkUrl(src.url)})`;
+    });
+    return cur
+      .replace(/\s+([,.;:!?])/g, '$1')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+  };
+
   let nextSummary = brief.summary;
   if (typeof brief.summary === 'string') {
-    const norm = normalizeMarkdownInlineLinksInText(brief.summary);
+    const norm = repairProseLine(brief.summary, false);
     if (norm !== brief.summary) {
       nextSummary = norm;
       mutated = true;
@@ -3713,9 +3892,7 @@ export function repairDailyTopNewsBriefLinks(brief) {
   }
   let nextBullets = brief.bullets;
   if (Array.isArray(brief.bullets)) {
-    const mapped = brief.bullets.map(b =>
-      typeof b === 'string' ? normalizeMarkdownInlineLinksInText(b) : b
-    );
+    const mapped = brief.bullets.map(b => (typeof b === 'string' ? repairProseLine(b, true) : b));
     if (mapped.some((b, idx) => b !== brief.bullets[idx])) {
       nextBullets = mapped;
       mutated = true;
@@ -3732,39 +3909,211 @@ export function repairDailyTopNewsBriefLinks(brief) {
   };
 }
 
+function safeDeleteLocalKey(key) {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.removeItem(key);
+    }
+  } catch {
+    // ignore storage restrictions
+  }
+}
+
 export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
   if (!appData?.news) return false;
   if (appData.news.dailyTopNewsBrief) {
     appData.news.dailyTopNewsBrief = repairDailyTopNewsBriefLinks(appData.news.dailyTopNewsBrief).brief;
   }
-  const activeCycle = getDailyNewsBriefCycleKey(nowMs);
+
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const activeCycle = cycleState.activeCycleKey;
+  const upstream = appData.news.dailyTopNewsBrief || null;
+
   const rawCached = safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY);
-  const { brief: cached, mutated: cacheMutated } = repairDailyTopNewsBriefLinks(rawCached);
+  let { brief: cached, mutated: cacheMutated } = repairDailyTopNewsBriefLinks(rawCached);
   if (cacheMutated && cached) {
     safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, cached);
   }
 
-  if (cached && cached.cycleKey === activeCycle && cached.headline && Array.isArray(cached.bullets)) {
-    const upstream = appData.news.dailyTopNewsBrief;
-    const upstreamGenMs = upstream?.generatedAt ? Date.parse(upstream.generatedAt) : 0;
-    const cachedGenMs = cached.generatedAt ? Date.parse(cached.generatedAt) : 0;
-    if (!upstream || upstream.cycleKey !== activeCycle || cachedGenMs >= upstreamGenMs) {
+  const cachedStale = cached ? isDailyBriefStaleForLiveState(cached, appData, nowMs) : true;
+  if (cached && cachedStale && !cycleState.isGameDayHold) {
+    safeDeleteLocalKey(DAILY_NEWS_BRIEF_CACHE_KEY);
+    const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+    if (attempt && (attempt.cycleKey === cached.cycleKey || attempt.cycleKey === activeCycle)) {
+      safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+    }
+    cached = null;
+  }
+
+  // Seamlessly migrate a valid legacy post-game AI brief (e.g. `YYYY-MM-DD@17PT` generated post-game) onto `@postgame-wk{N}`
+  if (
+    cycleState.isPostGameCycle &&
+    cycleState.targetGame &&
+    cached &&
+    !cachedStale &&
+    cached.cycleKey !== activeCycle &&
+    isPostGameBriefFormedForGame(cached, cycleState.targetGame, appData, nowMs)
+  ) {
+    cached = {
+      ...cached,
+      id: `daily_brief_${activeCycle.replace(/[^A-Za-z0-9_-]/g, '_')}`,
+      cycleKey: activeCycle,
+      isPostGame: true,
+      gameWeek: Number(cycleState.targetGame.week)
+    };
+    safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, cached);
+  }
+
+  // During Game-Day Hold ([T-90m, Final + buffer)), preserve the active pre-game brief so new game-day news stacks cleanly above it
+  if (cycleState.isGameDayHold) {
+    if (
+      cached &&
+      cached.cycleKey === activeCycle &&
+      Array.isArray(cached.bullets) &&
+      cached.bullets.length >= 2 &&
+      (!upstream || upstream.cycleKey !== activeCycle || upstream.source !== 'pipeline-gemini-daily')
+    ) {
       appData.news.dailyTopNewsBrief = cached;
       return true;
     }
+    if (!appData.news.dailyTopNewsBrief) {
+      appData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(appData, nowMs, {
+        cycleKey: activeCycle,
+        isPostGame: false,
+        source: 'live-deterministic-fallback'
+      });
+      return true;
+    }
+    return false;
   }
 
-  if (!appData.news.dailyTopNewsBrief) {
-    appData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(appData, nowMs);
+  const upstreamStale = upstream ? isDailyBriefStaleForLiveState(upstream, appData, nowMs) : true;
+  const upstreamValid = Boolean(
+    upstream &&
+      !upstreamStale &&
+      upstream.cycleKey === activeCycle &&
+      upstream.headline &&
+      Array.isArray(upstream.bullets) &&
+      upstream.bullets.length >= 2
+  );
+  const cachedValid = Boolean(
+    cached &&
+      !cachedStale &&
+      cached.cycleKey === activeCycle &&
+      cached.headline &&
+      Array.isArray(cached.bullets) &&
+      cached.bullets.length >= 2
+  );
+
+  // 1. Canonical repo `pipeline-gemini-daily` brief for `activeCycle` guarantees 100% Phone & Web parity
+  if (upstreamValid && upstream.source === 'pipeline-gemini-daily') {
+    appData.news.dailyTopNewsBrief = upstream;
     return true;
   }
+
+  // 2. Valid cached AI brief (`live-gemini-daily` or `pipeline-gemini-daily`)
+  if (
+    cachedValid &&
+    (cached.source === 'live-gemini-daily' || cached.source === 'pipeline-gemini-daily')
+  ) {
+    appData.news.dailyTopNewsBrief = cached;
+    return true;
+  }
+
+  // 3. Valid non-stale upstream brief (e.g. `pipeline-grounded` for `activeCycle`)
+  if (upstreamValid) {
+    appData.news.dailyTopNewsBrief = upstream;
+    return false;
+  }
+
+  // 4. Valid non-stale cached brief
+  if (cachedValid) {
+    appData.news.dailyTopNewsBrief = cached;
+    return true;
+  }
+
+  // 5. Upstream & cache are missing or stale for `activeCycle`: rebuild immediately from live hydrated `appData`
+  //    (unless `appData` is still a cold unhydrated pre-game snapshot, in which case keep non-null fallback until hydration settles)
+  if (!upstream || !isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
+    const prevId = appData.news.dailyTopNewsBrief?.id || '';
+    const freshFallback = buildDeterministicDailyTopNewsBrief(appData, nowMs, {
+      generatedAt: new Date(nowMs).toISOString(),
+      cycleKey: activeCycle,
+      isPostGame: cycleState.isPostGameCycle,
+      gameWeek: cycleState.targetGame ? Number(cycleState.targetGame.week) : null,
+      source: 'live-deterministic-fallback'
+    });
+    appData.news.dailyTopNewsBrief = freshFallback;
+    return freshFallback?.id !== prevId;
+  }
+
   return false;
 }
 
 /**
- * Generates or refreshes the Daily Gemini 4 Hydrogen (XHIGH) Top-News Brief once per 24-hour
- * 5:00 PM PT (`17:00 America/Los_Angeles`) news cycle using the user's AI Studio token
- * (`prefs.geminiNewsApiKey || prefs.geminiApiKey`, strictly <= 1 RPD credit per cycle).
+ * Checks whether `News & Film -> All` should wait for a pending post-game AI brief before exiting
+ * Game-Day `T-90m` -> post-game all-news-above-brief mode.
+ */
+export function hasPendingPostGameAiBriefAttempt(appData, prefs = {}, nowMs = Date.now()) {
+  const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
+  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  if (!effectiveKey && !baseUrl) return false;
+
+  const gdWin = evaluateGameDayAboveBriefWindow(
+    appData,
+    appData?.news?.dailyTopNewsBrief,
+    nowMs,
+    { requireAiSource: true }
+  );
+  if (!gdWin.active) return false;
+  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) return true;
+
+  const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+  if (
+    attempt &&
+    attempt.cycleKey === gdWin.expectedPostGameCycleKey &&
+    attempt.completedWithoutAi === true
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Lightweight synchronous check used by background wire polling & visibility resume to detect when
+ * a new daily or post-game AI Top-News Brief cycle has just become ready to synthesize.
+ */
+export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs = Date.now()) {
+  if (!appData?.news || SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) return false;
+  const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
+  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  if (!effectiveKey && !baseUrl) return false;
+  if (isAppDataAwaitingLivePostGameHydration(appData, nowMs)) return false;
+
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  if (cycleState.isGameDayHold) return false;
+
+  const activeCycle = cycleState.activeCycleKey;
+  const existing = appData.news.dailyTopNewsBrief;
+  if (
+    existing &&
+    existing.cycleKey === activeCycle &&
+    (existing.source === 'live-gemini-daily' || existing.source === 'pipeline-gemini-daily') &&
+    !isDailyBriefStaleForLiveState(existing, appData, nowMs)
+  ) {
+    return false;
+  }
+
+  const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+  if (attempt && attempt.cycleKey === activeCycle) return false;
+
+  return true;
+}
+
+/**
+ * Generates or refreshes the Daily Gemini 4 Hydrogen (XHIGH) Top-News Brief once per schedule-aware
+ * cycle (5:00 PM PT on non-game days; after Final + podium buffer on game days) using shared Worker KV
+ * or the user's AI Studio token (`<= 1` RPD credit per cycle).
  */
 export async function refreshDailyTopNewsBriefIfDue({
   appData,
@@ -3784,21 +4133,42 @@ export async function refreshDailyTopNewsBriefIfDue({
     return { updated: false, reason: 'no_ai_connection' };
   }
 
-  const activeCycle = getDailyNewsBriefCycleKey(nowMs);
+  if (!force && isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
+    return { updated: false, reason: 'awaiting_live_postgame_hydration' };
+  }
+
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const activeCycle = cycleState.activeCycleKey;
   const existing = appData.news.dailyTopNewsBrief;
 
   if (!force) {
+    // Hold the daily AI credit during live games (`[T-90m, Final + buffer)`) so the post-game brief gets it
+    if (
+      cycleState.isGameDayHold &&
+      existing &&
+      Array.isArray(existing.bullets) &&
+      existing.bullets.length >= 2
+    ) {
+      return { updated: false, reason: 'holding_for_postgame_completion', cycleKey: activeCycle };
+    }
+
     if (
       existing &&
       existing.cycleKey === activeCycle &&
       (existing.source === 'live-gemini-daily' || existing.source === 'pipeline-gemini-daily') &&
       Array.isArray(existing.bullets) &&
-      existing.bullets.length >= 2
+      existing.bullets.length >= 2 &&
+      !isDailyBriefStaleForLiveState(existing, appData, nowMs)
     ) {
       return { updated: false, fromCache: true, cycleKey: activeCycle };
     }
     const { brief: cached } = repairDailyTopNewsBriefLinks(safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY));
-    if (cached && cached.cycleKey === activeCycle && cached.source === 'live-gemini-daily') {
+    if (
+      cached &&
+      cached.cycleKey === activeCycle &&
+      cached.source === 'live-gemini-daily' &&
+      !isDailyBriefStaleForLiveState(cached, appData, nowMs)
+    ) {
       appData.news.dailyTopNewsBrief = cached;
       return { updated: false, fromCache: true, cycleKey: activeCycle };
     }
@@ -3808,58 +4178,116 @@ export async function refreshDailyTopNewsBriefIfDue({
     }
   }
 
-  if (inFlightDailyNewsBriefPromise) {
-    return inFlightDailyNewsBriefPromise;
+  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) {
+    return SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise;
   }
 
-  inFlightDailyNewsBriefPromise = (async () => {
-    safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
-      cycleKey: activeCycle,
-      attemptedAt: new Date(nowMs).toISOString()
-    });
-
+  SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = (async () => {
     const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 14, nowMs);
     if (sourceCandidates.length === 0) {
       return { updated: false, reason: 'no_source_candidates' };
     }
-    const promptText = buildDailyTopNewsBriefPrompt(appData, sourceCandidates);
+
+    // 1. Check Shared Worker KV first whenever `workerBaseUrl` is configured (even if a local `geminiApiKey` is also set!)
+    //    so Phone and Web converge on the exact same brief with 0 duplicate AI calls.
+    if (baseUrl && !force) {
+      try {
+        const kvGetRes = await fetch(
+          `${baseUrl}/api/daily-news-brief?cycleKey=${encodeURIComponent(activeCycle)}`,
+          {
+            method: 'GET',
+            headers: {
+              'X-Group-Passcode': prefs?.groupPasscode || ''
+            }
+          }
+        );
+        if (kvGetRes.ok) {
+          const kvJson = await kvGetRes.json();
+          if (kvJson?.cached && (kvJson.data || kvJson.rawText)) {
+            const fromKv = parseAndSanitizeDailyTopNewsBrief(
+              kvJson.data || kvJson.rawText,
+              sourceCandidates,
+              appData,
+              {
+                cycleKey: activeCycle,
+                isPostGame: cycleState.isPostGameCycle,
+                gameWeek: cycleState.targetGame ? Number(cycleState.targetGame.week) : undefined,
+                generatedAt: kvJson.generatedAt || new Date(nowMs).toISOString(),
+                modelUsed: kvJson.modelUsed || PRIMARY_GEMINI_REASONING_MODEL,
+                source: 'live-gemini-daily'
+              }
+            );
+            if (fromKv && !isDailyBriefStaleForLiveState(fromKv, appData, nowMs)) {
+              safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, fromKv);
+              appData.news.dailyTopNewsBrief = fromKv;
+              return {
+                updated: true,
+                fromSharedWorkerCache: true,
+                modelUsed: fromKv.modelUsed,
+                cycleKey: activeCycle
+              };
+            }
+          }
+        }
+      } catch {
+        // Proceed cleanly to synthesis if shared Worker check is unreachable
+      }
+    }
+
+    safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+      cycleKey: activeCycle,
+      attemptedAt: new Date(nowMs).toISOString(),
+      completedWithoutAi: false
+    });
+
+    const promptText = buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs);
     const systemPrompt = buildLiveGroundingSystemPrompt(appData);
 
     try {
       let normalized = null;
+      let rawSynthesizedText = '';
       let modelUsed = PRIMARY_GEMINI_REASONING_MODEL;
-      const generatedAt = new Date().toISOString();
+      const generatedAt = new Date(nowMs).toISOString();
 
-      if (baseUrl && !effectiveKey) {
-        const res = await fetch(`${baseUrl}/api/daily-news-brief`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Group-Passcode': prefs?.groupPasscode || ''
-          },
-          body: JSON.stringify({
-            cycleKey: activeCycle,
-            forceRefresh: Boolean(force),
-            prompt: promptText,
-            systemPrompt
-          })
-        });
-        if (res.ok) {
-          const json = await res.json();
-          modelUsed = json?.modelUsed || modelUsed;
-          normalized = parseAndSanitizeDailyTopNewsBrief(
-            json?.data || json?.rawText,
-            sourceCandidates,
-            appData,
-            {
+      if (baseUrl) {
+        try {
+          const res = await fetch(`${baseUrl}/api/daily-news-brief`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Group-Passcode': prefs?.groupPasscode || ''
+            },
+            body: JSON.stringify({
               cycleKey: activeCycle,
-              generatedAt: json?.generatedAt || generatedAt,
-              modelUsed,
-              source: 'live-gemini-daily'
-            }
-          );
+              forceRefresh: Boolean(force),
+              prompt: promptText,
+              systemPrompt
+            })
+          });
+          if (res.ok) {
+            const json = await res.json();
+            modelUsed = json?.modelUsed || modelUsed;
+            rawSynthesizedText = String(json?.rawText || '');
+            normalized = parseAndSanitizeDailyTopNewsBrief(
+              json?.data || json?.rawText,
+              sourceCandidates,
+              appData,
+              {
+                cycleKey: activeCycle,
+                isPostGame: cycleState.isPostGameCycle,
+                gameWeek: cycleState.targetGame ? Number(cycleState.targetGame.week) : undefined,
+                generatedAt: json?.generatedAt || generatedAt,
+                modelUsed,
+                source: 'live-gemini-daily'
+              }
+            );
+          }
+        } catch {
+          // Fall through to direct browser key if Worker is unreachable and `effectiveKey` is configured
         }
-      } else if (effectiveKey) {
+      }
+
+      if (!normalized && effectiveKey) {
         const keyPrefs =
           prefs?.geminiNewsApiKey && prefs.geminiNewsApiKey !== prefs.geminiApiKey
             ? { ...prefs, geminiApiKey: effectiveKey }
@@ -3869,7 +4297,7 @@ export async function refreshDailyTopNewsBriefIfDue({
           Array.isArray(conn.cascade) && conn.cascade.length > 0
             ? conn.cascade
             : [...DEFAULT_BEST_REASONING_CASCADE];
-        // Non-time-sensitive 1/day 5:00 PM PT Top-News Brief keeps Gemini 4 Hydrogen `XHIGH`
+        // Non-time-sensitive 1/day Top-News Brief keeps Gemini 4 Hydrogen `XHIGH`
         const gen = await callGeminiDirectWithCascade({
           apiBase: conn.apiBase,
           key: effectiveKey,
@@ -3882,15 +4310,43 @@ export async function refreshDailyTopNewsBriefIfDue({
           preferredThinkingLevel: 'XHIGH'
         });
         modelUsed = gen.modelUsed || modelUsed;
+        rawSynthesizedText = String(gen.text || '');
         normalized = parseAndSanitizeDailyTopNewsBrief(gen.text, sourceCandidates, appData, {
           cycleKey: activeCycle,
+          isPostGame: cycleState.isPostGameCycle,
+          gameWeek: cycleState.targetGame ? Number(cycleState.targetGame.week) : undefined,
           generatedAt,
           modelUsed,
           source: 'live-gemini-daily'
         });
+
+        // Seed Shared Worker KV if `baseUrl` is set so other devices immediately adopt the identical brief
+        if (normalized && baseUrl && rawSynthesizedText) {
+          await Promise.race([
+            fetch(`${baseUrl}/api/daily-news-brief`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Group-Passcode': prefs?.groupPasscode || ''
+              },
+              body: JSON.stringify({
+                cycleKey: activeCycle,
+                seedRawText: rawSynthesizedText,
+                modelUsed,
+                generatedAt
+              })
+            }).catch(() => {}),
+            new Promise(resolve => setTimeout(resolve, 2500))
+          ]);
+        }
       }
 
       if (!normalized) {
+        safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+          cycleKey: activeCycle,
+          attemptedAt: new Date(nowMs).toISOString(),
+          completedWithoutAi: true
+        });
         return { updated: false, reason: 'invalid_or_empty_payload' };
       }
 
@@ -3898,11 +4354,209 @@ export async function refreshDailyTopNewsBriefIfDue({
       appData.news.dailyTopNewsBrief = normalized;
       return { updated: true, modelUsed, cycleKey: activeCycle };
     } catch {
+      safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+        cycleKey: activeCycle,
+        attemptedAt: new Date(nowMs).toISOString(),
+        completedWithoutAi: true
+      });
       return { updated: false, reason: 'request_failed_graceful_fallback' };
     } finally {
-      inFlightDailyNewsBriefPromise = null;
+      SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = null;
     }
   })();
 
-  return inFlightDailyNewsBriefPromise;
+  return SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise;
+}
+
+const GAMEDAY_INACTIVES_AI_CACHE_KEY = 'faithful_gameday_inactives_ai_v1';
+const GAMEDAY_INACTIVES_AI_ATTEMPT_KEY = 'faithful_gameday_inactives_ai_attempt_v1';
+let inFlightGameDayInactivesAiPromise = null;
+
+function normInactivesKey(s = '') {
+  return String(s || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/\b(jr|sr|ii|iii|iv|v)\b\.?/g, '')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+/**
+ * Lightweight Google Search Grounding fallback for official 90-minute NFL game-day inactives
+ * when structured feeds (`rotowire.com`, club `/rss/news`, ESPN, Sleeper) have not yet resolved.
+ *
+ * Uses **Top-Tier Free Model Minus 1** (`rankSecondTierGeminiFlashModels`, e.g. `gemini-3.8-flash`
+ * instead of `gemini-4-hydrogen`, auto-incrementing as new models release in `/v1beta/models`)
+ * at `thinkingLevel: "LOW"`, strictly cached per week/matchup with a 6-minute retry cooldown.
+ */
+export async function fetchGeminiFallbackGameDayInactives({
+  prefs = {},
+  seasonYear = 2026,
+  week = 1,
+  oppAbbr = 'OPP',
+  oppName = 'Opponent',
+  kickoffIso = '',
+  needSf = true,
+  needOpp = true,
+  sfCandidatePlayers = [],
+  oppCandidatePlayers = [],
+  nowMs = Date.now()
+} = {}) {
+  const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
+  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  if (!effectiveKey && !baseUrl) return null;
+
+  const gameCacheId = `${seasonYear}:wk${week}:SF-${String(oppAbbr || 'OPP').toUpperCase()}`;
+  const cached = safeReadLocalJson(GAMEDAY_INACTIVES_AI_CACHE_KEY);
+  if (
+    cached &&
+    cached.gameCacheId === gameCacheId &&
+    (!needSf || (Array.isArray(cached.sfInactives) && cached.sfInactives.length >= 3)) &&
+    (!needOpp || (Array.isArray(cached.oppInactives) && cached.oppInactives.length >= 3))
+  ) {
+    return cached;
+  }
+
+  const lastAttempt = safeReadLocalJson(GAMEDAY_INACTIVES_AI_ATTEMPT_KEY);
+  if (
+    lastAttempt &&
+    lastAttempt.gameCacheId === gameCacheId &&
+    Number.isFinite(lastAttempt.attemptedAtMs) &&
+    nowMs - lastAttempt.attemptedAtMs < 6 * 60_000
+  ) {
+    return cached?.gameCacheId === gameCacheId ? cached : null;
+  }
+
+  if (inFlightGameDayInactivesAiPromise) {
+    return inFlightGameDayInactivesAiPromise;
+  }
+
+  inFlightGameDayInactivesAiPromise = (async () => {
+    try {
+      safeWriteLocalJson(GAMEDAY_INACTIVES_AI_ATTEMPT_KEY, {
+        gameCacheId,
+        attemptedAtMs: nowMs
+      });
+
+      if (baseUrl) {
+        const q = new URLSearchParams({
+          teams: `SF,${String(oppAbbr || '').toUpperCase()}`,
+          seasonYear: String(seasonYear),
+          week: String(week),
+          oppName: String(oppName || oppAbbr || ''),
+          aiFallback: '1'
+        });
+        const res = await fetch(`${baseUrl}/api/gameday-inactives?${q.toString()}`, {
+          cache: 'no-store'
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.sf || json?.opp) {
+            const out = {
+              gameCacheId,
+              sfInactives: Array.isArray(json.sf?.inactives) ? json.sf.inactives : [],
+              oppInactives: Array.isArray(json.opp?.inactives) ? json.opp.inactives : [],
+              sfActives: Array.isArray(json.sf?.activeNames) ? json.sf.activeNames : [],
+              oppActives: Array.isArray(json.opp?.activeNames) ? json.opp.activeNames : [],
+              modelUsed: json.modelUsed || 'worker-gameday',
+              fetchedAt: new Date(nowMs).toISOString()
+            };
+            safeWriteLocalJson(GAMEDAY_INACTIVES_AI_CACHE_KEY, out);
+            return out;
+          }
+        }
+      }
+
+      if (!effectiveKey) return null;
+
+      const keyPrefs =
+        prefs?.geminiNewsApiKey && prefs.geminiNewsApiKey !== prefs.geminiApiKey
+          ? { ...prefs, geminiApiKey: effectiveKey }
+          : prefs;
+      const conn = await resolveDirectGeminiCascades(keyPrefs);
+      const baseCascade =
+        Array.isArray(conn.cascade) && conn.cascade.length > 0
+          ? conn.cascade
+          : [...DEFAULT_BEST_REASONING_CASCADE];
+      const minusOneCascade = rankSecondTierGeminiFlashModels(baseCascade);
+
+      const sfRosterNames = sfCandidatePlayers.map(p => `${p.name} (${p.position})`).slice(0, 62).join(', ');
+      const oppRosterNames = oppCandidatePlayers.map(p => `${p.name} (${p.position})`).slice(0, 62).join(', ');
+      const dateStr = kickoffIso ? kickoffIso.slice(0, 10) : new Date(nowMs).toISOString().slice(0, 10);
+
+      const sysPrompt =
+        'You extract verified official 90-minute pre-kickoff NFL game-day inactive lists using live Google Search. Return STRICT JSON only with zero markdown fences or commentary. Never guess: only list players explicitly announced as game-day INACTIVE for this exact game (exclude Injured Reserve players).';
+      const userPrompt = `Find the official Week ${week} (${seasonYear} NFL season, game date ${dateStr}) game-day INACTIVES for San Francisco 49ers vs. ${oppName} (${oppAbbr}).
+Valid 49ers active-roster candidates: ${sfRosterNames}
+Valid ${oppName} active-roster candidates: ${oppRosterNames}
+
+Return ONLY valid JSON matching this schema:
+{"sfInactives":[{"name":"Full Name","position":"POS","reason":"Injury or Healthy Scratch"}],"oppInactives":[{"name":"Full Name","position":"POS","reason":"Injury or Healthy Scratch"}],"sfConfirmedActives":["Full Name"],"oppConfirmedActives":["Full Name"]}`;
+
+      const gen = await callGeminiDirectWithCascade({
+        apiBase: conn.apiBase,
+        key: effectiveKey,
+        cascade: minusOneCascade,
+        systemInstructionText: sysPrompt,
+        userText: userPrompt,
+        useGoogleSearch: true,
+        temperature: 0.05,
+        perAttemptTimeoutMs: 22000,
+        preferredThinkingLevel: 'LOW'
+      });
+
+      const rawText = String(gen?.text || '').trim();
+      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) return null;
+      const parsed = JSON.parse(jsonMatch[0]);
+
+      const sfValidMap = new Map(sfCandidatePlayers.map(p => [normInactivesKey(p.name), p]));
+      const oppValidMap = new Map(oppCandidatePlayers.map(p => [normInactivesKey(p.name), p]));
+
+      const filterVerified = (arr, validMap) => {
+        const list = [];
+        for (const entry of Array.isArray(arr) ? arr : []) {
+          const nm = typeof entry === 'string' ? entry : entry?.name || '';
+          const match = validMap.get(normInactivesKey(nm));
+          if (!match) continue;
+          list.push({
+            name: match.name,
+            position: match.position || entry?.position || 'ATH',
+            jersey: match.jersey ?? null,
+            reason: typeof entry === 'object' ? String(entry?.reason || '') : ''
+          });
+        }
+        return list;
+      };
+
+      const sfInactives = filterVerified(parsed.sfInactives, sfValidMap);
+      const oppInactives = filterVerified(parsed.oppInactives, oppValidMap);
+      const sfActives = (Array.isArray(parsed.sfConfirmedActives) ? parsed.sfConfirmedActives : [])
+        .map(nm => sfValidMap.get(normInactivesKey(nm))?.name)
+        .filter(Boolean);
+      const oppActives = (Array.isArray(parsed.oppConfirmedActives) ? parsed.oppConfirmedActives : [])
+        .map(nm => oppValidMap.get(normInactivesKey(nm))?.name)
+        .filter(Boolean);
+
+      const out = {
+        gameCacheId,
+        sfInactives: sfInactives.length >= 3 ? sfInactives : cached?.sfInactives || [],
+        oppInactives: oppInactives.length >= 3 ? oppInactives : cached?.oppInactives || [],
+        sfActives,
+        oppActives,
+        modelUsed: gen.modelUsed || minusOneCascade[0],
+        fetchedAt: new Date(nowMs).toISOString()
+      };
+      if (out.sfInactives.length >= 3 || out.oppInactives.length >= 3) {
+        safeWriteLocalJson(GAMEDAY_INACTIVES_AI_CACHE_KEY, out);
+      }
+      return out;
+    } catch {
+      return null;
+    } finally {
+      inFlightGameDayInactivesAiPromise = null;
+    }
+  })();
+
+  return inFlightGameDayInactivesAiPromise;
 }

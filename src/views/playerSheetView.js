@@ -73,6 +73,17 @@ export function renderInjuryNewsItemCardHtml(
       )
     : null;
 
+  const tweetLinkContext =
+    isTweet &&
+    n.externalDescription &&
+    n.externalDescription.length >= 20 &&
+    !String(tweetFormatted?.text || '')
+      .toLowerCase()
+      .includes(String(n.externalDescription).toLowerCase().slice(0, 28)) &&
+    String(n.externalDescription).trim().toLowerCase() !== String(n.externalTitle || '').trim().toLowerCase()
+      ? stripRedundantAuthorBoilerplate(n.externalDescription, authorName)
+      : '';
+
   const cleanSummary =
     !isTweet &&
     n.summary &&
@@ -140,6 +151,7 @@ export function renderInjuryNewsItemCardHtml(
           ${
             isTweet
               ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
+                 ${tweetLinkContext ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(tweetLinkContext, { excludePlayerId })}</div>` : ''}
                  ${
                    showMentionExt
                      ? `<div style="margin-top:5px">
@@ -254,11 +266,17 @@ export function renderPlayerDossierSheetHtml({
 
 function renderOverviewTab(p, rawStream = [], appData = null, userPrefs = null, reportersById = null) {
   const nowMs = Date.now();
-  const classifiedRaw = Array.isArray(rawStream) && rawStream.length > 0
-    ? sortNewsWithBreakingPriority(rawStream, nowMs, { appData })
+  const prunedRaw = Array.isArray(rawStream) && rawStream.length > 0
+    ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
     : [];
-  const classifiedRecent = Array.isArray(p.recentNews) && p.recentNews.length > 0
-    ? sortNewsWithBreakingPriority(p.recentNews, nowMs, { appData })
+  const prunedRecent = Array.isArray(p.recentNews) && p.recentNews.length > 0
+    ? filterOutCompletedGameAvailabilityItems(p.recentNews, appData, nowMs)
+    : [];
+  const classifiedRaw = prunedRaw.length > 0
+    ? sortNewsWithBreakingPriority(prunedRaw, nowMs, { appData })
+    : [];
+  const classifiedRecent = prunedRecent.length > 0
+    ? sortNewsWithBreakingPriority(prunedRecent, nowMs, { appData })
     : [];
   const sortedMentions = rankPlayerOverviewMentions(
     { ...p, recentNews: classifiedRecent },
@@ -721,14 +739,22 @@ function renderHealthTab(
     : practiceBoxesHtml;
 
   const nowMs = Date.now();
-  const classifiedHealthRaw =
+  const prunedHealthRaw =
     showInjuryNewsCard && Array.isArray(rawStream) && rawStream.length > 0
-      ? sortNewsWithBreakingPriority(rawStream, nowMs, { appData })
+      ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
       : rawStream;
-  const classifiedHealthRecent =
+  const prunedHealthRecent =
     showInjuryNewsCard && Array.isArray(p.recentNews) && p.recentNews.length > 0
-      ? sortNewsWithBreakingPriority(p.recentNews, nowMs, { appData })
+      ? filterOutCompletedGameAvailabilityItems(p.recentNews, appData, nowMs)
       : p.recentNews;
+  const classifiedHealthRaw =
+    showInjuryNewsCard && Array.isArray(prunedHealthRaw) && prunedHealthRaw.length > 0
+      ? sortNewsWithBreakingPriority(prunedHealthRaw, nowMs, { appData })
+      : prunedHealthRaw;
+  const classifiedHealthRecent =
+    showInjuryNewsCard && Array.isArray(prunedHealthRecent) && prunedHealthRecent.length > 0
+      ? sortNewsWithBreakingPriority(prunedHealthRecent, nowMs, { appData })
+      : prunedHealthRecent;
   const injuryItems = showInjuryNewsCard
     ? rankPlayerInjuryNews(
         { ...p, recentNews: classifiedHealthRecent },

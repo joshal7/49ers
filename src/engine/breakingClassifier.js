@@ -117,7 +117,10 @@ const TRUE_FILM_VIDEO_TITLE_REGEX =
   /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|49ers playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush breakdown|coverage breakdown|coaching tape)\b/i;
 
 const HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX =
-  /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|every completed pass|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|top plays|condensed game|end of game|final drive|game-winning|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes|tim ryan|knbr)\b/i;
+  /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|every completed pass|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|top plays|condensed game|end of game|final drive|game-winning|\btd\b|end zone|outlast|thriller|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes|tim ryan|knbr)\b/i;
+
+const POST_GAME_RECAP_OR_PRESSER_SIGNAL_REGEX =
+  /\b(\d+-\d+\s+(?:win|loss|victory|thriller|shootout|comeback)|outlast(?:s|ed)?|beat(?:s)?\s+(?:the\s+)?[a-z]+|defeat(?:s|ed)?\s+(?:the\s+)?[a-z]+|postgame|post-game|locker room|victory speech|shanahan\s+(?:on|after|said|explains|addresses|recaps)|purdy\s+(?:on|after)|mccaffrey\s+(?:on|after)|final score|instant analysis|takeaways\s+from|grades\s+from|snap counts?\s+from|touchdowns?|pick[- ]?6|\btd\b|end zone)\b/i;
 
 const WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX =
   /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|snap count|snap share|pass[- ]block|run[- ]block|\bpbwr\b|\brswr\b|pressure rate|pass rush|pass-rush|qb sack|pff\s+grad|pff\s+gard|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards)\b/i;
@@ -188,23 +191,27 @@ export function classifyNewsItemCategory(item = {}) {
   const title = String(item.title || item.headline || '').trim();
   const body = String(item.fullText || item.summary || '').trim();
   const lead = extractPrimaryClaimText(item);
-  const channelOrAuthor = `${item.outletName || ''} ${item.author || ''} ${item.reporterName || ''}`.trim();
+  const channelOrAuthor = `${item.outletName || ''} ${item.author || ''} ${item.reporterName || ''} ${item.authorHandle || ''}`.trim();
   const combined = `${title} ${body}`.trim();
 
-  if (item.type === 'video' || Boolean(item.videoId)) {
+  if (item.type === 'video' || Boolean(item.videoId) || Boolean(item.videoStreamUrl)) {
+    const isTweetStreamClip = Boolean(item.videoStreamUrl) && (item.type === 'tweet' || item.type === 'social');
     const isDedicatedPureFilmChannel =
-      DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) &&
+      (DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) ||
+        /\b(theqbschool|jonnydelsfa|jonnydel|baldynfl)\b/i.test(channelOrAuthor)) &&
       !/\b(mailbag|q\s*&\s*a|live\s*stream\s*q&a|podcast)\b/i.test(title);
     const isTapeChannel = TRUE_FILM_VIDEO_CHANNEL_REGEX.test(channelOrAuthor);
     const isTapeTitle = TRUE_FILM_VIDEO_TITLE_REGEX.test(title);
     const isPodiumOrVlog = NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX.test(title) && !isTapeTitle;
-    if (isDedicatedPureFilmChannel || ((isTapeChannel || isTapeTitle) && !isPodiumOrVlog)) {
+    if (isDedicatedPureFilmChannel || ((!isTweetStreamClip && isTapeChannel || isTapeTitle) && !isPodiumOrVlog)) {
       return 'film';
     }
-    if (/\b(trade|traded|acquir|sign|waiv|roster|cap|contract|restructur)\b/i.test(title)) {
-      return 'roster';
+    if (!isTweetStreamClip) {
+      if (/\b(trade|traded|acquir|sign|waiv|roster|cap|contract|restructur)\b/i.test(title)) {
+        return 'roster';
+      }
+      return 'beat';
     }
-    return 'beat';
   }
 
   // Primary roster / trade / salient salary-cap & contract items -> 'roster' (Trades & Roster)
@@ -302,6 +309,8 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     return {
       inGame: false,
       postGame48h: false,
+      postGameImmediate: false,
+      midWeekFilmWindow: false,
       activeKickoffMs: null,
       activeWeek: null,
       activeOppAbbr: '',
@@ -315,6 +324,7 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
       latestCompletedOppNickname: '',
       completedWeeks: [],
       upcomingWeek: null,
+      upcomingKickoffMs: null,
       upcomingOppAbbr: '',
       upcomingOppNickname: '',
       tradeDeadlineMs: null
@@ -360,6 +370,10 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     null;
   const upcomingOppAbbr = String(upcoming.oppAbbr || nextSchedGame?.opponent?.abbr || '').toUpperCase();
   const upcomingOppNickname = extractTeamNickname(upcoming.oppName || nextSchedGame?.opponent?.name || '');
+  const rawUpcomingKoMs = Date.parse(
+    nextSchedGame?.dateIso || upcoming.dateIso || upcoming.kickoffIso || ''
+  );
+  const upcomingKickoffMs = Number.isFinite(rawUpcomingKoMs) ? rawUpcomingKoMs : null;
 
   const latestCompletedWeek = latestCompleted ? Number(latestCompleted.week) || null : null;
   const latestCompletedKickoffMs = Number.isFinite(latestKoMs) ? latestKoMs : null;
@@ -376,6 +390,7 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     latestCompletedOppNickname,
     completedWeeks,
     upcomingWeek,
+    upcomingKickoffMs,
     upcomingOppAbbr,
     upcomingOppNickname,
     tradeDeadlineMs
@@ -394,6 +409,8 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
       return {
         inGame: true,
         postGame48h: false,
+        postGameImmediate: false,
+        midWeekFilmWindow: false,
         activeKickoffMs: Number.isFinite(koMs) ? koMs : ts - 30 * 60_000,
         activeWeek: Number(g.week) || upcomingWeek,
         activeOppAbbr: String(g.opponent?.abbr || upcomingOppAbbr).toUpperCase(),
@@ -410,6 +427,8 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     return {
       inGame: true,
       postGame48h: false,
+      postGameImmediate: false,
+      midWeekFilmWindow: false,
       activeKickoffMs: Number.isFinite(upKoMs) ? upKoMs : ts - 30 * 60_000,
       activeWeek: upcomingWeek,
       activeOppAbbr: upcomingOppAbbr,
@@ -420,14 +439,17 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     };
   }
 
-  // 2. Check if a 49ers game completed within the last 48 hours
+  // 2. Check if a 49ers game completed within the last 48 hours (with <=24h immediate post-game high-urgency sub-window)
   if (latestCompleted && Number.isFinite(latestKoMs)) {
     const estEndMs = latestKoMs + 3.25 * 3600_000;
     const sinceEndMs = ts - estEndMs;
     if (ts >= latestKoMs + 2 * 3600_000 && sinceEndMs <= 48 * 3600_000) {
+      const isImmediatePostGame = sinceEndMs <= 24 * 3600_000;
       return {
         inGame: false,
         postGame48h: true,
+        postGameImmediate: isImmediatePostGame,
+        midWeekFilmWindow: !isImmediatePostGame,
         activeKickoffMs: null,
         activeWeek: null,
         activeOppAbbr: '',
@@ -439,9 +461,16 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     }
   }
 
+  const hoursToUpcomingKo =
+    upcomingKickoffMs !== null ? (upcomingKickoffMs - ts) / 3600_000 : null;
+  const midWeekFilmWindow =
+    hoursToUpcomingKo !== null ? hoursToUpcomingKo > 26 && hoursToUpcomingKo <= 138 : true;
+
   return {
     inGame: false,
     postGame48h: false,
+    postGameImmediate: false,
+    midWeekFilmWindow,
     activeKickoffMs: null,
     activeWeek: null,
     activeOppAbbr: '',
@@ -464,6 +493,57 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
  * - Tier-2 official roster moves ("49ers Designate DT CJ West For Return", IR placements) wear `BREAKING`
  *   strictly when <= 4.5h old, then transition to `ROSTER MOVE`.
  */
+const NON_49ERS_NFL_TEAM_NAMES_PATTERN =
+  'Cardinals|Falcons|Ravens|Bills|Panthers|Bears|Bengals|Browns|Cowboys|Broncos|Lions|Packers|Texans|Colts|Jaguars|Chiefs|Raiders|Chargers|Rams|Dolphins|Vikings|Patriots|Saints|Giants|Jets|Eagles|Steelers|Seahawks|Buccaneers|Bucs|Titans|Commanders';
+
+const NON_49ERS_NFL_CITIES_OR_TEAMS_REGEX = new RegExp(
+  `\\b#?(?:${NON_49ERS_NFL_TEAM_NAMES_PATTERN}|Arizona|Atlanta|Baltimore|Buffalo|Carolina|Chicago|Cincinnati|Cleveland|Dallas|Denver|Detroit|Green Bay|Houston|Indianapolis|Jacksonville|Kansas City|Las Vegas|Miami|Minnesota|New England|New Orleans|Philadelphia|Pittsburgh|Seattle|Tampa Bay|Tennessee)\\b`,
+  'i'
+);
+
+const NON_49ERS_SUBJECT_LEAD_REGEX = new RegExp(
+  `^(?:(?:breaking|just in|update|injury update|roster move|source|sources|per source|per sources|nfl)[:\\s-]+)*(?:the\\s+)?#?(?:${NON_49ERS_NFL_TEAM_NAMES_PATTERN})\\b`,
+  'i'
+);
+
+const NON_49ERS_POS_SUBJECT_REGEX = new RegExp(
+  `\\b#?(?:${NON_49ERS_NFL_TEAM_NAMES_PATTERN})\\s+(?:QB|RB|FB|WR|TE|OL|OT|OG|LT|LG|RT|RG|DL|DE|DT|NT|EDGE|LB|ILB|OLB|MLB|CB|DB|FS|SS|K|P|LS|G|C|T|S|HC|OC|DC|head coach|coach|rookie|star|starter|veteran)\\b`,
+  'i'
+);
+
+const SF_TRANSACTION_PARTNER_REGEX =
+  /\b(?:(?:to|with|from)\s+(?:the\s+)?#?(?:49ers|Niners|San Francisco)\b[\s\S]{0,40}\b(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|send(?:s|ing)|deal)|(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|send(?:s|ing)|deal[\s\S]{0,20})[\s\S]{0,55}\b(?:to|with|from)\s+(?:the\s+)?#?(?:49ers|Niners|San Francisco)|#?(?:49ers|Niners|San Francisco)\s+(?:are\s+|have\s+)?(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|sign(?:s|ed|ing)?|claim(?:s|ed|ing)?|waiv(?:e|ed|ing)|releas(?:e|ed|ing)|designat(?:e|ed|ing)|activat(?:e|ed|ing)|plac(?:e|ed|ing)))\b/i;
+
+const SF_INCIDENTAL_GAME_CLAUSE_REGEX =
+  /\b(?:loss to|lost to|win over|victory over|beat|defeat(?:ed)?|against|vs\.?|versus|facing|play(?:ed|ing)?)\s+(?:the\s+)?#?(?:49ers|Niners|San Francisco)\b/gi;
+
+/**
+ * Returns true when the lead sentence's primary subject is a non-49ers NFL team or opposing player/coach
+ * (e.g., "#Cowboys G Tyler Booker suffered a high-ankle sprain in his team's loss to the #49ers" or
+ * "Coach Mike Macdonald noted ahead of Seattle's Week 11 bye..."), rather than an active 49ers player,
+ * coach, or bilateral 49ers trade/transaction.
+ */
+export function isNon49ersTeamSubjectLead(leadClaim = '', item = {}) {
+  const lead = String(leadClaim || '').trim();
+  if (!lead) return false;
+  if (SF_TRANSACTION_PARTNER_REGEX.test(lead)) return false;
+
+  const hasSfRosterMention = Array.isArray(item?.mentionedPlayers) && item.mentionedPlayers.length > 0;
+  if (hasSfRosterMention) return false;
+
+  // Strip incidental game-context mentions ("in his team's loss to the #49ers", "against the 49ers")
+  const strippedSfIncidental = lead.replace(SF_INCIDENTAL_GAME_CLAUSE_REGEX, '');
+  if (/\b#?(?:49ers|Niners|San Francisco|Santa Clara|Shanahan|Lynch|Raheem Morris|Purdy|McCaffrey|Bosa|Kittle|Warner)\b/i.test(strippedSfIncidental)) {
+    return false;
+  }
+
+  const hasOppLeadSubject =
+    NON_49ERS_SUBJECT_LEAD_REGEX.test(lead) ||
+    NON_49ERS_POS_SUBJECT_REGEX.test(lead.slice(0, 95)) ||
+    NON_49ERS_NFL_CITIES_OR_TEAMS_REGEX.test(strippedSfIncidental);
+  return hasOppLeadSubject;
+}
+
 export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext = null) {
   const ctx =
     gameContext && typeof gameContext === 'object' && gameContext.appData
@@ -491,18 +571,25 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const isSideNote =
     RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(leadClaim) ||
     HUMAN_INTEREST_SIDE_NOTE_REGEX.test(leadClaim);
+  const isOpposingTeamOnlySubject = isNon49ersTeamSubjectLead(leadClaim, item);
 
-  // Evaluate primary event patterns strictly against `leadClaim` (never trailing recap paragraphs!)
-  const matchesInGame = !isSpeculative && !isSecondaryOrCommentary && IN_GAME_INJURY_RETURN_REGEX.test(leadClaim);
+  // Evaluate primary event patterns strictly against `leadClaim` (never trailing recap paragraphs or opposing-team player injuries!)
+  const matchesInGame =
+    !isSpeculative &&
+    !isSecondaryOrCommentary &&
+    !isOpposingTeamOnlySubject &&
+    IN_GAME_INJURY_RETURN_REGEX.test(leadClaim);
   const matchesPostGameInjury =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
     !isExpectedRoutineAbsence &&
+    !isOpposingTeamOnlySubject &&
     POST_GAME_INJURY_FOLLOWUP_REGEX.test(leadClaim);
   const matchesPracticeInjuryScoop =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
     !isExpectedRoutineAbsence &&
+    !isOpposingTeamOnlySubject &&
     PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(leadClaim);
   const matchesPreGameAvailabilityNoise =
     PRE_GAME_AVAILABILITY_NOISE_REGEX.test(leadClaim) || isPreGamePlayAvailabilityItem(item);
@@ -510,12 +597,14 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const matchesTier1Major =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
+    !isOpposingTeamOnlySubject &&
     !NON_TRANSACTION_RELEASE_REGEX.test(leadClaim) &&
     TIER1_MAJOR_BREAKING_EVENT_REGEX.test(leadClaim);
 
   const matchesTier2RosterMove =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
+    !isOpposingTeamOnlySubject &&
     !NON_TRANSACTION_RELEASE_REGEX.test(leadClaim) &&
     TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(leadClaim);
 
@@ -765,8 +854,11 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     };
   }
 
-  const resolvedCat = item.category === 'film' ? classifyNewsItemCategory(item) : item.category || classifyNewsItemCategory(item);
-  if (resolvedCat === 'film' && !isSideNote && ageHours <= 24) {
+  const resolvedCat =
+    !item.category || item.category === 'beat' || item.category === 'film'
+      ? classifyNewsItemCategory(item)
+      : item.category;
+  if (resolvedCat === 'film' && !isSideNote && !isOpposingTeamOnlySubject && ageHours <= 36) {
     return {
       isBreaking: false,
       isUrgentBreaking: false,
@@ -774,6 +866,29 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       storyTier: 'film_trench',
       breakingPriority: decayPriority(0.88, ageHours, 11.0),
       breakingBadge: 'FILM & TRENCH',
+      ageHours
+    };
+  }
+
+  // 10. IMMEDIATE POST-GAME RECAPS, LOCKER ROOM QUOTES & PLAY CLIPS (0–24h post-game)
+  if (
+    ctx?.postGameImmediate &&
+    Number.isFinite(ctx.completedKickoffMs) &&
+    Number.isFinite(pubMs) &&
+    pubMs >= ctx.completedKickoffMs + 90 * 60_000 &&
+    ageHours <= 20 &&
+    !isSpeculative &&
+    !isSideNote &&
+    !isOpposingTeamOnlySubject &&
+    (POST_GAME_RECAP_OR_PRESSER_SIGNAL_REGEX.test(combined) || Boolean(item.videoStreamUrl || item.hasHighlightVideo))
+  ) {
+    return {
+      isBreaking: false,
+      isUrgentBreaking: false,
+      isInGameInjury: false,
+      storyTier: 'post_game_recap',
+      breakingPriority: decayPriority(1.58, ageHours, 6.0),
+      breakingBadge: null,
       ageHours
     };
   }
@@ -792,11 +907,12 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
 /**
  * Computes a calibrated Google News / Techmeme / Hacker News hybrid `StoryRank` score for stack-ranking
  * news stories and clusters by combining:
- * - Event Magnitude (Tier-1 Transaction > Tier-2 Roster/IR/MRI > Insider Intel > Core Team/Film/Podium > Side Note)
+ * - Event Magnitude (Tier-1 Transaction > Tier-2 Roster/IR/MRI > Insider Intel > Post-Game Recap > Core Team/Film/Podium > Side Note)
  * - Source Trust-Tier Authority (Tier 1 Primary Beat & Insiders > Tier 2 Film/Beat > Tier 3 Opinion)
- * - Multi-Source Corroboration & Burst Velocity (`log2(1 + corroborationCount)`)
- * - Analytical Signal vs. Fluff
- * - Power-Law Time Decay `1 / (ageHours + tau)^Gravity` (steeper gravity on side notes/trivia)
+ * - Multi-Source Corroboration & Burst Velocity (`log2(1 + corroborationCount)`, decaying with newest report age)
+ * - Weekly-Rhythm Format Weighting (X/Wire Injury, Presser & Highlight Clips boosted on Game Day / +24h; All-22 Film & Trench boosted Tue–Fri)
+ * - Kickoff Epoch Wall (demoting pre-kickoff non-Tier-1 chatter once kickoff/completion occurs)
+ * - Phase-Aware Power-Law Time Decay `1 / (ageHours + tau)^Gravity`
  */
 export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) {
   if (!item || typeof item !== 'object') return -999;
@@ -806,76 +922,84 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
 
   const pubMs = resolveEffectivePublishTimestampMs(item, nowMs);
   const rawAgeHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 72;
-  // Blend cluster lead age with newest report when clustered, preventing >12h follow-ups from resetting day-old news to 0h
+  // Blend cluster lead age with newest report when clustered, preventing >14h follow-ups from resetting day-old news to 0h
   const clusterAnchorAge =
     typeof item._clusterAnchorAgeHours === 'number' && Number.isFinite(item._clusterAnchorAgeHours)
       ? item._clusterAnchorAgeHours
       : rawAgeHours;
+  const newestClusterAge =
+    typeof item._clusterNewestAgeHours === 'number' && Number.isFinite(item._clusterNewestAgeHours)
+      ? item._clusterNewestAgeHours
+      : rawAgeHours;
 
   // Live In-Game Override: keep live sideline injuries & in-game beat updates strictly at the very top
   if (ctx?.inGame) {
-    if (item.isInGameInjury) return 500 - Math.min(40, clusterAnchorAge * 8);
-    if (item.breakingBadge === 'LIVE IN-GAME') return 360 - Math.min(40, clusterAnchorAge * 8);
-    if (item.storyTier === 'tier1_major' && clusterAnchorAge <= 6) return 420 - clusterAnchorAge * 10;
+    if (item.isInGameInjury) return 500 - Math.min(45, clusterAnchorAge * 12);
+    if (item.breakingBadge === 'LIVE IN-GAME') return 360 - Math.min(50, clusterAnchorAge * 14);
+    if (item.storyTier === 'tier1_major' && clusterAnchorAge <= 6) return 420 - clusterAnchorAge * 12;
   }
 
   const storyTier = item.storyTier || 'standard';
   let eventMagnitude = 46;
-  let gravity = 1.28;
-  const tau = 1.85;
+  let gravity = 1.38;
+  const tau = ctx?.inGame ? 0.45 : ctx?.postGameImmediate ? 1.02 : 1.08;
 
   switch (storyTier) {
     case 'in_game_injury':
+      eventMagnitude = 152;
+      gravity = 1.26;
+      break;
+    case 'tier1_major':
       eventMagnitude = 148;
       gravity = 1.22;
       break;
-    case 'tier1_major':
-      eventMagnitude = 144;
-      gravity = 1.15;
-      break;
     case 'tier2_roster':
-      eventMagnitude = 114;
-      gravity = 1.22;
+      eventMagnitude = 116;
+      gravity = 1.28;
       break;
     case 'post_game_injury':
-      eventMagnitude = 104;
+      eventMagnitude = 126;
       gravity = 1.24;
       break;
     case 'trade_intel':
       eventMagnitude = 102;
-      gravity = 1.26;
+      gravity = 1.32;
       break;
     case 'practice_injury':
-      eventMagnitude = 90;
-      gravity = 1.28;
+      eventMagnitude = 92;
+      gravity = 1.34;
+      break;
+    case 'post_game_recap':
+      eventMagnitude = 76;
+      gravity = 1.34;
       break;
     case 'minor_roster':
       eventMagnitude = 68;
-      gravity = 1.32;
+      gravity = 1.40;
       break;
     case 'salient_feature':
       eventMagnitude = 64;
-      gravity = 1.24;
+      gravity = 1.32;
       break;
     case 'film_trench':
-      eventMagnitude = item.type === 'video' ? 54 : 62;
-      gravity = 1.24;
+      eventMagnitude = item.type === 'video' ? 58 : 64;
+      gravity = 1.30;
       break;
     case 'side_note':
-      eventMagnitude = 27;
-      gravity = 1.56;
+      eventMagnitude = 26;
+      gravity = 1.64;
       break;
     default: {
       const lead = extractPrimaryClaimText(item);
       if (HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead) || RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead)) {
-        eventMagnitude = 27;
-        gravity = 1.56;
+        eventMagnitude = 26;
+        gravity = 1.64;
       } else if (/\b(injury report|practice report|returns? to practice|miss practice)\b/i.test(lead)) {
-        eventMagnitude = 76;
-        gravity = 1.24;
+        eventMagnitude = 78;
+        gravity = 1.30;
       } else {
         eventMagnitude = 48;
-        gravity = 1.32;
+        gravity = 1.42;
       }
       break;
     }
@@ -901,28 +1025,94 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       1
   );
   const recentBurstCount = Number(item.recentBurstCount) || (clusterAnchorAge <= 3 ? totalSources : 1);
+  const velocityDecay = Math.pow(0.5, newestClusterAge / 7.5);
   const velocityBonus =
-    Math.min(22, Math.log2(totalSources) * 8.5) +
-    (recentBurstCount >= 3 && clusterAnchorAge <= 6 ? Math.min(10, (recentBurstCount - 1) * 2.5) : 0) +
-    (item.isFirstMoverInjuryScoop && totalSources === 1 && clusterAnchorAge <= 4 ? 7 : 0);
+    (Math.min(22, Math.log2(totalSources) * 8.5) +
+      (recentBurstCount >= 3 && clusterAnchorAge <= 6 ? Math.min(10, (recentBurstCount - 1) * 2.5) : 0)) *
+      velocityDecay +
+    (item.isFirstMoverInjuryScoop && totalSources === 1 && clusterAnchorAge <= 4 ? 8 : 0);
 
   const signal = Math.max(30, Math.min(100, Number(item.signalScore) || 65));
   const fluff = Math.max(0, Math.min(100, Number(item.fluffScore) || 0));
   const substanceBonus = (signal - 55) * 0.22 - fluff * 0.35;
+  const isTweetFormat = item.type === 'tweet' || item.type === 'social';
   const socialPlatformBonus = isDirectXStatusUrl(item.url)
-    ? 5
+    ? 6
     : isBlueskyPostUrl(item.url)
       ? -2
       : 0;
 
-  // Active Urgent Breaking boost ensures genuine <4.5h/<8h breaking transactions & acute injuries
-  // always hold Top Stories placement ahead of brand-new routine beat/aggregator posts
-  const activeBreakingFloorBoost =
-    item.isUrgentBreaking && isUrgentBreakingBadge(item.breakingBadge) ? 16 : 0;
+  // Weekly-Rhythm Phase Weighting:
+  // - Game-Day & <=24h Post-Game: elevate verified X/beat tweets with injury, presser, recap, or native highlight clips
+  // - Mid-Week (Tue–Fri): elevate All-22 Film & Trench (`Jonnydel`, `The QB School`, tactical tape breakdowns)
+  let phaseFormatBonus = 0;
+  if (ctx?.postGameImmediate && isTweetFormat && trustTier <= 2 && rawAgeHours <= 18) {
+    const combinedSignalText = `${item.title || ''} ${item.fullText || ''} ${item.summary || ''}`;
+    if (
+      storyTier === 'post_game_injury' ||
+      storyTier === 'in_game_injury' ||
+      storyTier === 'post_game_recap' ||
+      Boolean(item.videoStreamUrl || item.hasHighlightVideo) ||
+      POST_GAME_RECAP_OR_PRESSER_SIGNAL_REGEX.test(combinedSignalText)
+    ) {
+      phaseFormatBonus += isDirectXStatusUrl(item.url) ? 16 : 11;
+    }
+  } else if (ctx?.midWeekFilmWindow && !ctx?.inGame && rawAgeHours <= 36) {
+    if (storyTier === 'film_trench' || item.category === 'film') {
+      phaseFormatBonus += 14;
+    } else if (storyTier === 'salient_feature' && !isTweetFormat) {
+      phaseFormatBonus += 7;
+    }
+  }
 
-  const numerator = Math.max(8, eventMagnitude + authorityBonus + velocityBonus + substanceBonus + socialPlatformBonus);
+  // Decaying Urgent Breaking boost: commands #1 immediately at T+0m (+16), decaying smoothly (2.25h half-life)
+  // so 4h–8h-old moves yield #1 to brand-new breaking/post-game developments
+  const activeBreakingFloorBoost =
+    item.isUrgentBreaking && isUrgentBreakingBadge(item.breakingBadge)
+      ? 16 * Math.pow(0.5, rawAgeHours / 2.25)
+      : 0;
+
+  const numerator = Math.max(
+    8,
+    eventMagnitude + authorityBonus + velocityBonus + substanceBonus + socialPlatformBonus + phaseFormatBonus
+  );
   const denom = Math.pow(clusterAnchorAge + tau, gravity);
-  return Number((numerator / denom + activeBreakingFloorBoost).toFixed(4));
+  let baseRank = numerator / denom + activeBreakingFloorBoost;
+
+  // Kickoff Epoch Wall: once a game kicks off or completes (within 72h), demote non-Tier-1 chatter published
+  // BEFORE that game's kickoff unless it explicitly targets the upcoming week/opponent
+  const refKoMs = ctx?.inGame ? ctx.activeKickoffMs : ctx?.latestCompletedKickoffMs;
+  if (
+    Number.isFinite(refKoMs) &&
+    Number.isFinite(pubMs) &&
+    nowMs - refKoMs <= 72 * 3_600_000 &&
+    pubMs < refKoMs - 10 * 60_000 &&
+    storyTier !== 'tier1_major'
+  ) {
+    const checkTxt = `${item.title || ''} ${item.headline || ''} ${item.fullText || ''}`;
+    const refWks = extractReferencedWeekNumbers(checkTxt);
+    const targetsUpcoming =
+      (ctx?.upcomingWeek && refWks.includes(ctx.upcomingWeek)) ||
+      (ctx?.upcomingOppNickname &&
+        ctx.upcomingOppAbbr !== ctx?.latestCompletedOppAbbr &&
+        new RegExp(`\\b${escapeRegexToken(ctx.upcomingOppNickname)}\\b`, 'i').test(checkTxt));
+    if (!targetsUpcoming) {
+      const epochMult = ctx?.inGame || ctx?.postGameImmediate ? 0.25 : 0.42;
+      baseRank *= epochMult;
+    }
+  }
+
+  // Demote non-49ers opposing-player items unless they pertain to the upcoming opponent's matchup context
+  const primaryLeadText = extractPrimaryClaimText(item);
+  if (isNon49ersTeamSubjectLead(primaryLeadText, item)) {
+    const mentionsUpcomingOpp =
+      ctx?.upcomingOppNickname &&
+      ctx.upcomingOppAbbr !== ctx?.latestCompletedOppAbbr &&
+      new RegExp(`\\b${escapeRegexToken(ctx.upcomingOppNickname)}\\b`, 'i').test(primaryLeadText);
+    baseRank *= mentionsUpcomingOpp ? 0.72 : 0.25;
+  }
+
+  return Number(baseRank.toFixed(4));
 }
 
 function resolveEffectivePublishTimestampMs(item = {}, nowMs = Date.now()) {
@@ -1378,7 +1568,17 @@ export function balanceFeedTopSalience(
         if (cand?.storyTier === 'side_note') return false;
         const pubMs = resolveEffectivePublishTimestampMs(cand, nowMs);
         const ageHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 999;
-        if (ageHours > 36) return false;
+        const maxNonInjAgeHours = ctx?.postGameImmediate ? 10 : 18;
+        if (ageHours > maxNonInjAgeHours) return false;
+        if (
+          ctx?.postGameImmediate &&
+          Number.isFinite(ctx.completedKickoffMs) &&
+          Number.isFinite(pubMs) &&
+          pubMs < ctx.completedKickoffMs - 10 * 60_000 &&
+          cand.storyTier !== 'tier1_major'
+        ) {
+          return false;
+        }
         const text = `${cand.fullText || ''} ${cand.title || ''} ${cand.headline || ''} ${cand.summary || ''}`;
         return (
           (cand.breakingPriority || 0) > 0 ||
@@ -1725,7 +1925,18 @@ function scoreClusterLeadQuality(item = {}) {
     item.storyTier === 'tier1_major' || item.storyTier === 'tier2_roster' ? 16 : 0;
   const urgencyBonus = isUrgentBreakingBadge(item.breakingBadge) ? 20 : item.breakingBadge ? 6 : 0;
   const xPlatformBonus = isDirectXStatusUrl(item.url) ? 12 : isBlueskyPostUrl(item.url) ? -4 : 0;
-  return tierScore + formatScore + conversationalPenalty + thumbBonus + sigBonus + primaryMoveBonus + urgencyBonus + xPlatformBonus;
+  const nativeStreamBonus = item.videoStreamUrl && /^https:\/\//i.test(String(item.videoStreamUrl)) ? 8 : 0;
+  return (
+    tierScore +
+    formatScore +
+    conversationalPenalty +
+    thumbBonus +
+    sigBonus +
+    primaryMoveBonus +
+    urgencyBonus +
+    xPlatformBonus +
+    nativeStreamBonus
+  );
 }
 
 /**
@@ -1738,8 +1949,12 @@ function scoreClusterLeadQuality(item = {}) {
  * - `preserveFormat`: `'tweets' | 'articles' | 'videos' | null` — when filtering by a specific format tab,
  *   ensures items of that format are never swallowed inside a lead card of a different format!
  */
-export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), preserveFormat = null } = {}) {
+export function deduplicateAndGroupWireItems(
+  items = [],
+  { nowMs = Date.now(), preserveFormat = null, appData = null, gameContext = null } = {}
+) {
   if (!Array.isArray(items) || items.length <= 1) return items;
+  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
 
   const clusters = [];
 
@@ -1747,7 +1962,9 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
     if (!preserveFormat || preserveFormat === 'all') return false;
     if (preserveFormat === 'tweets') return it?.type === 'tweet' || it?.type === 'social';
     if (preserveFormat === 'articles') return it?.type === 'article' || it?.type === 'post';
-    if (preserveFormat === 'videos') return it?.type === 'video' || Boolean(it?.videoId);
+    if (preserveFormat === 'videos') {
+      return it?.type === 'video' || Boolean(it?.videoId) || Boolean(it?.videoStreamUrl);
+    }
     return false;
   };
 
@@ -1769,6 +1986,15 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
     for (const cl of clusters) {
       // Never cross-swallow a format-filtered item into a lead of a different media type
       if (preserveFormat && matchesPreservedFormat(item) !== matchesPreservedFormat(cl.lead)) {
+        continue;
+      }
+
+      // Never swallow an authoritative/film/highlight standalone video card into a text article/tweet cluster (while still allowing Tier-3 vlog echoes to fold under higher-tier reports)
+      const isProtectedStandaloneVideo = it =>
+        (it.type === 'video' || Boolean(it.videoId)) &&
+        Number(it.trustTier || 1) < 3 &&
+        !/grant cohn/i.test(`${it.author || ''} ${it.outletName || ''}`);
+      if (isProtectedStandaloneVideo(item) !== isProtectedStandaloneVideo(cl.lead)) {
         continue;
       }
 
@@ -1854,10 +2080,15 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
       //     vs 1:10 Jordan Watkins / 0:58 Jaden Dugger / 2:59 Brock Purdy player highlight cutups) MUST remain
       //     separate video cards rather than getting swallowed into text `confirmingReports`! Only merge two
       //     videos when they are syndicated twin uploads of the exact same clip (matching entities, ~same runtime, Jaccard >= 0.80).
-      const itemIsVideo = item.type === 'video' || Boolean(item.videoId);
-      const leadIsVideo = cl.lead.type === 'video' || Boolean(cl.lead.videoId);
+      const itemIsVideo = item.type === 'video' || Boolean(item.videoId) || Boolean(item.videoStreamUrl);
+      const leadIsVideo = cl.lead.type === 'video' || Boolean(cl.lead.videoId) || Boolean(cl.lead.videoStreamUrl);
       if (itemIsVideo && leadIsVideo) {
         if (item.videoId && cl.lead.videoId && item.videoId === cl.lead.videoId) {
+          matchedCluster = cl;
+          bestSim = 1.0;
+          break;
+        }
+        if (item.videoStreamUrl && cl.lead.videoStreamUrl && item.videoStreamUrl === cl.lead.videoStreamUrl) {
           matchedCluster = cl;
           bestSim = 1.0;
           break;
@@ -1964,6 +2195,9 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
       matchedCluster.lead = {
         ...item,
         imageUrl: item.imageUrl || demotedPrev.imageUrl || '',
+        videoStreamUrl: item.videoStreamUrl || demotedPrev.videoStreamUrl || undefined,
+        duration: item.duration || demotedPrev.duration || undefined,
+        isHighlightClip: Boolean(item.isHighlightClip || demotedPrev.isHighlightClip) || undefined,
         externalUrl: item.externalUrl || demotedPrev.externalUrl || null,
         externalTitle: item.externalTitle || demotedPrev.externalTitle || null,
         // Inherit urgent breaking badge if an earlier primary report in the same fresh cluster triggered it
@@ -2023,11 +2257,13 @@ export function deduplicateAndGroupWireItems(items = [], { nowMs = Date.now(), p
       const leadAge = Number.isFinite(leadMs) ? Math.max(0, (nowMs - leadMs) / 3_600_000) : 24;
       const oldestAge = cl.oldestMs ? Math.max(0, (nowMs - cl.oldestMs) / 3_600_000) : leadAge;
       const newestAge = cl.newestMs ? Math.max(0, (nowMs - cl.newestMs) / 3_600_000) : leadAge;
-      // Anchor age prevents late reaction pieces >12h after an event from resetting a yesterday story to 0h
+      // Anchor age rewards fresh multi-source developments (<12h) while preventing >14h late reactions from resetting yesterday's story
+      lead._clusterNewestAgeHours = newestAge;
       lead._clusterAnchorAgeHours =
-        oldestAge > 14 ? Math.max(leadAge, oldestAge * 0.55) : 0.65 * leadAge + 0.35 * newestAge;
+        oldestAge > 14 ? Math.max(leadAge, oldestAge * 0.6) : 0.4 * leadAge + 0.6 * newestAge;
       const priorStoryRank = Number.isFinite(Number(lead.storyRank)) ? Number(lead.storyRank) : 0;
-      lead.storyRank = Math.max(priorStoryRank, computeWireStoryRank(lead, nowMs, null));
+      const recomputedRank = computeWireStoryRank(lead, nowMs, ctx);
+      lead.storyRank = ctx ? recomputedRank : Math.max(priorStoryRank, recomputedRank);
     }
     return lead;
   });
@@ -2186,7 +2422,7 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
  * and `Film & Trench` refresh cleanly after every completed game.
  */
 export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.now()) {
-  if (!item || (item.type !== 'video' && !item.videoId)) return false;
+  if (!item || (item.type !== 'video' && !item.videoId && !item.videoStreamUrl)) return false;
 
   const pubMs = resolveEffectivePublishTimestampMs(item, nowMs);
   const ageDays = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 86_400_000) : 99;
@@ -2208,9 +2444,9 @@ export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.no
 
   if (Number.isFinite(latestCompKoMs)) {
     const daysSinceCompletedGame = (nowMs - latestCompKoMs) / 86_400_000;
-    // If a game completed within the last 10 days, any video published before that game kicked off is from an older week/game
+    // If a game completed within the last 10 days, any video published before that game kicked off is from an older week/pre-game slate
     if (daysSinceCompletedGame >= 0 && daysSinceCompletedGame <= 10.5) {
-      if (Number.isFinite(pubMs) && pubMs < latestCompKoMs - 3 * 3_600_000) {
+      if (Number.isFinite(pubMs) && pubMs < latestCompKoMs - 45 * 60_000) {
         return true;
       }
     }
@@ -2288,12 +2524,12 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
 
   const isPlayerHighlightOrBigPlayClip =
     !isInterviewOrPodium &&
-    ((item.mentionedPlayers?.length || 0) > 0 || /\b(best plays|every completed pass|every throw|pick[- ]?6|interceptions?)\b/i.test(title)) &&
-    /\b(highlights|best plays|every completed pass|every throw|every catch|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|touchdown|big catch|sacks?)\b/i.test(
+    ((item.mentionedPlayers?.length || 0) > 0 || /\b(best plays|every completed pass|every throw|pick[- ]?6|interceptions?|\btd\b|end zone)\b/i.test(title)) &&
+    /\b(highlights|best plays|every completed pass|every throw|every catch|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|touchdowns?|\btd\b|end zone|big catch|sacks?)\b/i.test(
       title
     );
 
-  if (!isInterviewOrPodium && /\b(game highlights|full game highlights|condensed game|end of game|final drive)\b/i.test(title)) {
+  if (!isInterviewOrPodium && /\b(game highlights|full game highlights|condensed game|end of game|final drive|outlast|back-and-forth thriller)\b/i.test(title)) {
     score += 58;
   } else if (isPlayerHighlightOrBigPlayClip) {
     score += 53;
@@ -2320,8 +2556,18 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
     score += 6;
   }
 
-  // Gentle age tiebreaker so game highlights & player cutups from Sunday stay above midweek podium pressers all week
-  score -= Math.min(14, ageHours * 0.09);
+  // Freshness boost (<24h) + real decay so brand-new post-game TD clips, recaps, and mid-week 49Hours episodes
+  // immediately lead while Sunday game highlights still stay ahead of routine midweek podium pressers
+  score += 24 * Math.pow(0.5, ageHours / 16) - Math.min(26, ageHours * 0.28);
+
+  if (
+    ctx?.latestCompletedKickoffMs &&
+    Number.isFinite(pubMs) &&
+    pubMs < ctx.latestCompletedKickoffMs - 45 * 60_000
+  ) {
+    score -= 55;
+  }
+
   return Number(score.toFixed(2));
 }
 
@@ -2387,18 +2633,555 @@ export function isBreakingItemCoveredInBrief(item = {}, dailyBrief = null, nowMs
   return false;
 }
 
+export const GAME_DAY_ABOVE_BRIEF_LEAD_MS = 90 * 60_000; // 90 minutes prior to kickoff
+
+export function getPacificClockParts(nowMs = Date.now()) {
+  const safeMs = Number.isFinite(nowMs) ? nowMs : Date.now();
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23'
+    }).formatToParts(new Date(safeMs));
+    const map = {};
+    for (const p of parts) {
+      if (p.type !== 'literal') map[p.type] = p.value;
+    }
+    const hourRaw = parseInt(map.hour || '0', 10);
+    const hour = Number.isFinite(hourRaw) ? hourRaw % 24 : 0;
+    const minRaw = parseInt(map.minute || '0', 10);
+    return {
+      dateKey: `${map.year}-${map.month}-${map.day}`,
+      hour24: hour,
+      minute: Number.isFinite(minRaw) ? minRaw : 0
+    };
+  } catch {
+    const d = new Date(safeMs);
+    return {
+      dateKey: d.toISOString().slice(0, 10),
+      hour24: d.getUTCHours(),
+      minute: d.getUTCMinutes()
+    };
+  }
+}
+
+export function formatGameBriefCycleSlug(game = {}) {
+  const st = String(game?.seasonType || 'REG').toUpperCase();
+  const wk = Number(game?.week || 0);
+  if (st === 'PRE' || wk < 0) {
+    const preNum = Number(game?.preseasonWeek) || Math.max(1, Math.abs(wk));
+    return `pre${preNum}`;
+  }
+  if (st === 'POST' || wk >= 19) {
+    return `post${wk || 19}`;
+  }
+  return `wk${Math.max(1, wk || 1)}`;
+}
+
+function collectScheduleGamesForBrief(appData = null) {
+  if (!appData || typeof appData !== 'object') return [];
+  const rawSched = Array.isArray(appData?.scheduleMatchup?.schedule)
+    ? appData.scheduleMatchup.schedule
+    : [];
+  const out = [];
+  const seenKeys = new Set();
+
+  for (const g of rawSched) {
+    if (!g || g.isByeWeek) continue;
+    const koIso = g.dateIso || g.kickoffIso || '';
+    const koMs = koIso ? Date.parse(koIso) : NaN;
+    if (!Number.isFinite(koMs)) continue;
+    const key = `${String(g.seasonType || 'REG').toUpperCase()}:${Number(g.week || 0)}`;
+    if (seenKeys.has(key)) continue;
+    seenKeys.add(key);
+    out.push({ game: g, koMs, key });
+  }
+
+  const um = appData?.scheduleMatchup?.upcomingMatchup;
+  if (um && um.oppAbbr && String(um.oppAbbr).toUpperCase() !== 'BYE') {
+    const umIso = um.dateIso || um.kickoffIso || '';
+    const umKoMs = umIso ? Date.parse(umIso) : NaN;
+    const umKey = `REG:${Number(um.week || 0)}`;
+    if (Number.isFinite(umKoMs) && !seenKeys.has(umKey)) {
+      out.push({
+        game: {
+          week: Number(um.week || appData?.meta?.currentWeek || 1),
+          seasonType: 'REG',
+          dateIso: umIso,
+          completed: Boolean(um.completed),
+          statusState: um.liveState || (um.isGameInProgress ? 'in' : 'pre'),
+          statusDetail: um.isGameInProgress ? 'In Progress' : '',
+          opponent: { abbr: um.oppAbbr, name: um.oppName || um.oppAbbr }
+        },
+        koMs: umKoMs,
+        key: umKey
+      });
+    }
+  }
+
+  out.sort((a, b) => a.koMs - b.koMs);
+  return out;
+}
+
+/**
+ * Resolves the schedule-aware Daily News Brief cycle key and game-day hold/post-game state.
+ * - Non-game days: advances at `peakHourPt` (`17:00 PT` = 5:00 PM PT) to `YYYY-MM-DD@17PT`.
+ * - Game days (variable kickoff times — morning international, 10:00 AM PT, 1:05/1:25 PM PT, 5:15/5:20 PM PT TNF/SNF/MNF):
+ *   Holds on the prior cycle throughout `[T-90m, Final + podium buffer)`—never firing prematurely before or during a game—
+ *   and advances to `YYYY-MM-DD@postgame-wk{N}` once the game has completed, holding that post-game cycle through `17:00 PT` the next day.
+ */
+export function resolveNewsBriefCycleState(
+  nowMs = Date.now(),
+  appData = null,
+  peakHourPt = 17
+) {
+  const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const { dateKey: todayPt, hour24: hourPt } = getPacificClockParts(ts);
+  const prevDayAnchorMs = ts - (hourPt + 3) * 3_600_000;
+  const { dateKey: prevDatePt } = getPacificClockParts(prevDayAnchorMs);
+
+  const fallbackCycleKey =
+    hourPt >= peakHourPt ? `${todayPt}@${peakHourPt}PT` : `${prevDatePt}@${peakHourPt}PT`;
+
+  const games = collectScheduleGamesForBrief(appData);
+  if (games.length === 0) {
+    return {
+      activeCycleKey: fallbackCycleKey,
+      isGameDayHold: false,
+      isPostGameCycle: false,
+      targetGame: null,
+      targetKickoffMs: null,
+      postGameCycleKey: ''
+    };
+  }
+
+  const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
+
+  const evalGameState = entry => {
+    const { game, koMs } = entry;
+    const gameDatePt = getPacificClockParts(koMs).dateKey;
+    const slug = formatGameBriefCycleSlug(game);
+    const postGameCycleKey = `${gameDatePt}@postgame-${slug}`;
+    const statusStr = String(game.statusDetail || '');
+    const completedFlag = Boolean(game.completed) || /\bfinal\b/i.test(statusStr);
+    const completedAtMs = game.completedAt ? Date.parse(game.completedAt) : NaN;
+    const isLiveStatus =
+      game.statusState === 'in' ||
+      (!completedFlag && /\b(q[1-4]|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/i.test(statusStr));
+
+    let postGameStreamCount = 0;
+    for (const it of rawStream) {
+      const pMs = resolveEffectivePublishTimestampMs(it, ts);
+      if (Number.isFinite(pMs) && pMs >= koMs + 2.4 * 3600_000) {
+        postGameStreamCount += 1;
+        if (postGameStreamCount >= 4) break;
+      }
+    }
+
+    const isPostGameReady = Number.isFinite(completedAtMs)
+      ? completedFlag &&
+        (ts >= completedAtMs + 18 * 60_000 ||
+          (postGameStreamCount >= 3 && ts >= completedAtMs + 5 * 60_000))
+      : (completedFlag &&
+          (ts >= koMs + 3.55 * 3600_000 ||
+            (postGameStreamCount >= 3 && ts >= koMs + 3.15 * 3600_000))) ||
+        (ts >= koMs + 4.75 * 3600_000 && !isLiveStatus && postGameStreamCount >= 2) ||
+        (ts >= koMs + 5.5 * 3600_000 && !isLiveStatus);
+
+    return {
+      game,
+      koMs,
+      gameDatePt,
+      postGameCycleKey,
+      completedFlag,
+      isLiveStatus,
+      postGameStreamCount,
+      isPostGameReady
+    };
+  };
+
+  const evaluated = games.map(evalGameState);
+
+  const resolvePriorCycleBeforeDate = gameKoMs => {
+    const { hour24: gHour } = getPacificClockParts(gameKoMs);
+    const priorAnchorMs = gameKoMs - (gHour + 3) * 3_600_000;
+    const priorDatePt = getPacificClockParts(priorAnchorMs).dateKey;
+    const priorGame = evaluated.find(e => e.gameDatePt === priorDatePt && e.koMs < gameKoMs);
+    if (priorGame) return priorGame.postGameCycleKey;
+    return `${priorDatePt}@${peakHourPt}PT`;
+  };
+
+  // 1. Check if a game is scheduled today (or currently in its live/post-whistle window across midnight PT)
+  const activeOrTodayGame = evaluated.find(
+    e =>
+      e.gameDatePt === todayPt ||
+      (ts >= e.koMs - GAME_DAY_ABOVE_BRIEF_LEAD_MS && ts <= e.koMs + 8.5 * 3600_000 && !e.isPostGameReady)
+  );
+
+  if (activeOrTodayGame) {
+    // Before T-90m on game day morning/early afternoon (when hourPt < peakHourPt), still on yesterday's cycle cleanly
+    if (ts < activeOrTodayGame.koMs - GAME_DAY_ABOVE_BRIEF_LEAD_MS && !activeOrTodayGame.isPostGameReady) {
+      return {
+        activeCycleKey: resolvePriorCycleBeforeDate(activeOrTodayGame.koMs),
+        isGameDayHold: false,
+        isPostGameCycle: false,
+        targetGame: activeOrTodayGame.game,
+        targetKickoffMs: activeOrTodayGame.koMs,
+        postGameCycleKey: activeOrTodayGame.postGameCycleKey
+      };
+    }
+
+    // Inside [T-90m, Post-Game Ready): hold on prior cycle even past 5:00 PM PT until the game completes!
+    if (!activeOrTodayGame.isPostGameReady) {
+      return {
+        activeCycleKey: resolvePriorCycleBeforeDate(activeOrTodayGame.koMs),
+        isGameDayHold: true,
+        isPostGameCycle: false,
+        targetGame: activeOrTodayGame.game,
+        targetKickoffMs: activeOrTodayGame.koMs,
+        postGameCycleKey: activeOrTodayGame.postGameCycleKey
+      };
+    }
+
+    // Game has completed & post-game brief window is open!
+    return {
+      activeCycleKey: activeOrTodayGame.postGameCycleKey,
+      isGameDayHold: false,
+      isPostGameCycle: true,
+      targetGame: activeOrTodayGame.game,
+      targetKickoffMs: activeOrTodayGame.koMs,
+      postGameCycleKey: activeOrTodayGame.postGameCycleKey
+    };
+  }
+
+  // 2. Morning/afternoon after a completed game day (before 5:00 PM PT on Day D+1): serve Day D's post-game cycle
+  if (hourPt < peakHourPt) {
+    const yesterdayGame = evaluated.find(e => e.gameDatePt === prevDatePt && ts >= e.koMs);
+    if (yesterdayGame && yesterdayGame.isPostGameReady) {
+      return {
+        activeCycleKey: yesterdayGame.postGameCycleKey,
+        isGameDayHold: false,
+        isPostGameCycle: true,
+        targetGame: yesterdayGame.game,
+        targetKickoffMs: yesterdayGame.koMs,
+        postGameCycleKey: yesterdayGame.postGameCycleKey
+      };
+    }
+  }
+
+  return {
+    activeCycleKey: fallbackCycleKey,
+    isGameDayHold: false,
+    isPostGameCycle: false,
+    targetGame: null,
+    targetKickoffMs: null,
+    postGameCycleKey: ''
+  };
+}
+
+/**
+ * Detects when `appData` is still holding a cold pre-game static snapshot even though a scheduled
+ * 49ers game kicked off >= 3.25 hours ago (preventing premature post-game synthesis before ESPN/wire hydration).
+ */
+export function isAppDataAwaitingLivePostGameHydration(appData = null, nowMs = Date.now()) {
+  const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const games = collectScheduleGamesForBrief(appData);
+  if (games.length === 0) return false;
+  const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
+
+  for (const { game, koMs } of games) {
+    const completedFlag = Boolean(game.completed) || /\bfinal\b/i.test(String(game.statusDetail || ''));
+    if (completedFlag) continue;
+    if (ts >= koMs + 3.25 * 3600_000 && ts <= koMs + 96 * 3600_000) {
+      let postGameItems = 0;
+      for (const it of rawStream) {
+        const pMs = resolveEffectivePublishTimestampMs(it, ts);
+        if (Number.isFinite(pMs) && pMs >= koMs + 2.4 * 3600_000) {
+          postGameItems += 1;
+          if (postGameItems >= 2) break;
+        }
+      }
+      if (postGameItems < 2) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Validates whether a cached or upstream `dailyTopNewsBrief` is stale relative to a completed 49ers game
+ * (for example, a brief generated on Sunday evening from unhydrated Thursday injury-report sources).
+ */
+export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowMs = Date.now()) {
+  if (!brief || typeof brief !== 'object') return true;
+  if (!brief.headline || !Array.isArray(brief.bullets) || brief.bullets.length < 2) return true;
+  if (!appData || typeof appData !== 'object') return false;
+
+  const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const games = collectScheduleGamesForBrief(appData);
+  if (games.length === 0) return false;
+
+  // Find the most recent game that has already completed (or passed kickoff + 5.5h) within the last 42h
+  let recentFinished = null;
+  for (const entry of games) {
+    const completedFlag =
+      Boolean(entry.game.completed) ||
+      /\bfinal\b/i.test(String(entry.game.statusDetail || '')) ||
+      ts >= entry.koMs + 5.5 * 3600_000;
+    if (completedFlag && ts >= entry.koMs + 3.25 * 3600_000 && ts - entry.koMs <= 42 * 3600_000) {
+      recentFinished = entry;
+    }
+  }
+  if (!recentFinished) return false;
+
+  const { game: compGame, koMs: compKoMs } = recentFinished;
+  const genMs = brief.generatedAt ? Date.parse(brief.generatedAt) : NaN;
+  if (Number.isFinite(genMs) && genMs < compKoMs + 2.5 * 3600_000) {
+    return true;
+  }
+
+  const srcTimes = (Array.isArray(brief.sources) ? brief.sources : [])
+    .map(s => (s?.publishedAt ? Date.parse(s.publishedAt) : NaN))
+    .filter(Number.isFinite);
+  if (srcTimes.length > 0 && Math.max(...srcTimes) < compKoMs) {
+    return true;
+  }
+
+  const compOppNick = extractTeamNickname(compGame.opponent?.name || '');
+  const nextUnfinished = games.find(e => !e.game.completed && e.koMs > compKoMs);
+  const nextOppNick = nextUnfinished ? extractTeamNickname(nextUnfinished.game.opponent?.name || '') : '';
+  if (
+    compOppNick &&
+    compOppNick.toLowerCase() !== nextOppNick.toLowerCase() &&
+    new RegExp(`\\b(ahead of|before)\\s+(?:week\\s+\\d+\\s+(?:vs\\.?|against)\\s+)?(?:the\\s+)?${escapeRegexToken(compOppNick)}\\b`, 'i').test(
+      `${brief.headline || ''} ${brief.summary || ''}`
+    )
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Checks whether `dailyBrief` is a valid, non-stale post-game summary formed for `game`.
+ */
+export function isPostGameBriefFormedForGame(
+  dailyBrief,
+  game,
+  appData = null,
+  nowMs = Date.now(),
+  { requireAiSource = false } = {}
+) {
+  if (!dailyBrief || typeof dailyBrief !== 'object' || !game) return false;
+  if (!dailyBrief.headline || !Array.isArray(dailyBrief.bullets) || dailyBrief.bullets.length < 2) {
+    return false;
+  }
+  const koMs = Date.parse(game.dateIso || game.kickoffIso || '');
+  if (!Number.isFinite(koMs)) return false;
+
+  if (requireAiSource) {
+    const isAi =
+      dailyBrief.source === 'live-gemini-daily' || dailyBrief.source === 'pipeline-gemini-daily';
+    if (!isAi) return false;
+  }
+
+  if (isDailyBriefStaleForLiveState(dailyBrief, appData, nowMs)) {
+    return false;
+  }
+
+  const gameDatePt = getPacificClockParts(koMs).dateKey;
+  const expectedPostGameKey = `${gameDatePt}@postgame-${formatGameBriefCycleSlug(game)}`;
+
+  if (dailyBrief.cycleKey === expectedPostGameKey) {
+    return true;
+  }
+  if (dailyBrief.isPostGame === true && Number(dailyBrief.gameWeek) === Number(game.week)) {
+    return true;
+  }
+
+  const genMs = dailyBrief.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
+  const srcTimes = (Array.isArray(dailyBrief.sources) ? dailyBrief.sources : [])
+    .map(s => (s?.publishedAt ? Date.parse(s.publishedAt) : NaN))
+    .filter(Number.isFinite);
+  if (
+    Number.isFinite(genMs) &&
+    genMs >= koMs + 2.75 * 3600_000 &&
+    srcTimes.length > 0 &&
+    Math.max(...srcTimes) >= koMs + 2.25 * 3600_000
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Evaluates whether the `News & Film -> All` feed is inside the `[T-90m, Post-Game Brief Formed)` window,
+ * during which ALL new news items (`publishedAt >= kickoff - 90m`) are promoted above the summary card.
+ */
+export function evaluateGameDayAboveBriefWindow(
+  appData = null,
+  dailyBrief = null,
+  nowMs = Date.now(),
+  { requireAiSource = false } = {}
+) {
+  const inactive = {
+    active: false,
+    game: null,
+    kickoffMs: null,
+    windowStartMs: null,
+    phaseLabel: '',
+    expectedPostGameCycleKey: ''
+  };
+  if (!appData || typeof appData !== 'object') return inactive;
+
+  const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const games = collectScheduleGamesForBrief(appData);
+  if (games.length === 0) return inactive;
+
+  // Pick the most recent game whose [kickoff - 90m, kickoff + 24h] window contains `ts`
+  let candidate = null;
+  for (const entry of games) {
+    if (ts >= entry.koMs - GAME_DAY_ABOVE_BRIEF_LEAD_MS && ts <= entry.koMs + 24 * 3600_000) {
+      candidate = entry;
+    }
+  }
+  if (!candidate) return inactive;
+
+  const { game, koMs } = candidate;
+  const formed = isPostGameBriefFormedForGame(dailyBrief, game, appData, ts, { requireAiSource });
+  if (formed) return inactive;
+
+  const gameDatePt = getPacificClockParts(koMs).dateKey;
+  const expectedPostGameCycleKey = `${gameDatePt}@postgame-${formatGameBriefCycleSlug(game)}`;
+  const completedFlag = Boolean(game.completed) || /\bfinal\b/i.test(String(game.statusDetail || ''));
+  const phaseLabel =
+    ts < koMs
+      ? 'Pre-Game Inactives & Warmups'
+      : completedFlag || ts >= koMs + 3.4 * 3600_000
+        ? 'Post-Game Live Wire'
+        : 'Live In-Game Wire';
+
+  return {
+    active: true,
+    game,
+    kickoffMs: koMs,
+    windowStartMs: koMs - GAME_DAY_ABOVE_BRIEF_LEAD_MS,
+    phaseLabel,
+    expectedPostGameCycleKey
+  };
+}
+
+function resolveClusterLatestTimestampMs(item = {}, nowMs = Date.now()) {
+  let latest = resolveEffectivePublishTimestampMs(item, nowMs);
+  if (Array.isArray(item?.confirmingReports)) {
+    for (const cr of item.confirmingReports) {
+      const crMs = resolveEffectivePublishTimestampMs(cr, nowMs);
+      if (Number.isFinite(crMs) && (!Number.isFinite(latest) || crMs > latest)) {
+        latest = crMs;
+      }
+    }
+  }
+  return latest;
+}
+
 /**
  * Partitions a prioritized, deduplicated news stream relative to `dailyBrief`:
- * - `breakingAboveBrief`: Active urgent breaking news (`BREAKING`, `LIVE INJURY UPDATE`, `LIVE IN-GAME`)
- *   that is NOT already covered in `dailyBrief` (rises to #1 ABOVE the summary block!).
- * - `remainingBelowBrief`: All other stories in StoryRank/salience order rendered below the summary block.
+ * - Standard Mode: Active urgent breaking news (`BREAKING`, `LIVE INJURY UPDATE`, `LIVE IN-GAME`)
+ *   that is NOT already covered in `dailyBrief` (up to 3 items) rises ABOVE the summary block.
+ * - Game-Day Mode (`options.promoteAllGameDayNews === true` inside `[T-90m, Post-Game Brief Formed)`):
+ *   ALL new news arriving from `T-90m` onward stacks ABOVE the summary card until the post-game AI
+ *   summary is generated, immediately reverting to standard breaking-only logic once formed.
  */
-export function partitionBreakingNewsAboveBrief(items = [], dailyBrief = null, nowMs = Date.now()) {
+export function partitionBreakingNewsAboveBrief(
+  items = [],
+  dailyBrief = null,
+  nowMs = Date.now(),
+  options = {}
+) {
   if (!Array.isArray(items) || items.length === 0) {
-    return { breakingAboveBrief: [], remainingBelowBrief: [] };
+    return {
+      breakingAboveBrief: [],
+      remainingBelowBrief: [],
+      gameDayLiveMode: false,
+      gameDayPhaseLabel: ''
+    };
   }
   if (!dailyBrief || typeof dailyBrief !== 'object') {
-    return { breakingAboveBrief: [], remainingBelowBrief: items };
+    return {
+      breakingAboveBrief: [],
+      remainingBelowBrief: items,
+      gameDayLiveMode: false,
+      gameDayPhaseLabel: ''
+    };
+  }
+
+  const {
+    appData = null,
+    promoteAllGameDayNews = false,
+    requireAiPostGameBrief = false
+  } = options || {};
+
+  const gdWindow =
+    promoteAllGameDayNews && appData
+      ? evaluateGameDayAboveBriefWindow(appData, dailyBrief, nowMs, {
+          requireAiSource: requireAiPostGameBrief
+        })
+      : { active: false, phaseLabel: '' };
+
+  if (gdWindow.active) {
+    const breakingAboveBrief = [];
+    const remainingBelowBrief = [];
+    const briefGenMs = dailyBrief.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
+    // Allow 3 minutes of reporter clock-skew tolerance around the exact T-90m inactives release
+    const cutoffMs = gdWindow.windowStartMs - 3 * 60_000;
+
+    for (const item of items) {
+      const latestMs = resolveClusterLatestTimestampMs(item, nowMs);
+      const isActiveUrgent =
+        isUrgentBreakingBadge(item?.breakingBadge) ||
+        Boolean(
+          item?.isUrgentBreaking &&
+            (item?.storyTier === 'tier1_major' ||
+              item?.storyTier === 'tier2_roster' ||
+              item?.storyTier === 'in_game_injury')
+        );
+      const isNewSinceWindowOpen = Number.isFinite(latestMs) && latestMs >= cutoffMs;
+      const alreadyInOldBrief =
+        isBreakingItemCoveredInBrief(item, dailyBrief, nowMs) &&
+        (!Number.isFinite(briefGenMs) || !Number.isFinite(latestMs) || latestMs <= briefGenMs + 60_000);
+
+      if ((isNewSinceWindowOpen || isActiveUrgent) && !alreadyInOldBrief) {
+        breakingAboveBrief.push(item);
+      } else {
+        remainingBelowBrief.push(item);
+      }
+    }
+
+    breakingAboveBrief.sort((a, b) => {
+      const aInj = a?.isInGameInjury ? 1 : 0;
+      const bInj = b?.isInGameInjury ? 1 : 0;
+      if (aInj !== bInj) return bInj - aInj;
+      const aUrg = isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
+      const bUrg = isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
+      if (aUrg !== bUrg) return bUrg - aUrg;
+      const aMs = resolveClusterLatestTimestampMs(a, nowMs) || 0;
+      const bMs = resolveClusterLatestTimestampMs(b, nowMs) || 0;
+      return bMs - aMs;
+    });
+
+    return {
+      breakingAboveBrief,
+      remainingBelowBrief,
+      gameDayLiveMode: true,
+      gameDayPhaseLabel: gdWindow.phaseLabel
+    };
   }
 
   const breakingAboveBrief = [];
@@ -2425,7 +3208,12 @@ export function partitionBreakingNewsAboveBrief(items = [], dailyBrief = null, n
     }
   }
 
-  return { breakingAboveBrief, remainingBelowBrief };
+  return {
+    breakingAboveBrief,
+    remainingBelowBrief,
+    gameDayLiveMode: false,
+    gameDayPhaseLabel: ''
+  };
 }
 
 export { buildStorySignatureKey };

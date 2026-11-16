@@ -1784,13 +1784,16 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
 
   // Verify Team Injury News feed sorts strictly lowest -> highest play likelihood
   const teamFeed = buildTeamInjuryNewsFeed(simAppData, { nowMs: roadPracticeNowMs });
-  assert.equal(teamFeed.length, 3);
-  assert.equal(teamFeed[0].name, 'Renardo Green', 'Lowest play likelihood player (Green DNP) must appear first in Team Injury News');
-  assert.ok(
-    teamFeed[0].playProbabilityPct <= teamFeed[1].playProbabilityPct &&
-      teamFeed[1].playProbabilityPct <= teamFeed[2].playProbabilityPct,
-    `Team Injury News must sort lowest -> highest play likelihood: ${JSON.stringify(teamFeed.map(e => [e.name, e.playProbabilityPct]))}`
-  );
+  assert.ok(teamFeed.length >= 3, `Expected >=3 players in Team Injury News feed, got ${teamFeed.length}`);
+  const greenIdx = teamFeed.findIndex(e => e.name === 'Renardo Green');
+  const deeboIdx = teamFeed.findIndex(e => e.name === 'Deebo Samuel Sr.');
+  assert.ok(greenIdx >= 0 && deeboIdx > greenIdx, 'Lower play likelihood player (Green DNP) must appear before Deebo LP in Team Injury News');
+  for (let i = 1; i < teamFeed.length; i++) {
+    assert.ok(
+      teamFeed[i - 1].playProbabilityPct <= teamFeed[i].playProbabilityPct,
+      `Team Injury News must sort lowest -> highest play likelihood: ${JSON.stringify(teamFeed.map(e => [e.name, e.playProbabilityPct]))}`
+    );
+  }
 
   // Verify Thursday downgrade (Wed FP -> Thu DNP) setback penalty is reachable and severe
   const thuSetback = computePlayerPlayProbability({

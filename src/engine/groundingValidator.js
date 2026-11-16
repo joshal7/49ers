@@ -284,7 +284,7 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}, { compactFor
   const irNames = irList
     .map(
       p =>
-        `${p.name} (${p.position} - ${p.injuryType}, ${p.status}${p.projectedReturnWeek ? ` • ${p.projectedReturnWeek}` : ''})`
+        `${p.name} (${p.position} - ${p.injuryType}, ${p.status}${p.projectedReturnWeek ? ` • ${p.projectedReturnWeek}` : ''}${Number(p.playProbabilityPct) > 0 && p.playBadgeLabel ? ` • Activation/Play Odds: ${p.playBadgeLabel}` : ''})`
     )
     .join('; ');
 
