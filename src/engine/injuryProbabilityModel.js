@@ -924,6 +924,157 @@ export function sanitizeIrBeatNoteForCurrentWeek(
   return kept.join(' ').trim();
 }
 
+/**
+ * Deterministically detects whether an Injured Reserve / Reserve-PUP player remains inside an active
+ * 21-day practice window across multi-week rollovers (even when ESPN's team transactions endpoint
+ * resets to `[]` at the start of a new league week), anchored strictly to:
+ *   1) Official / Tier-1 beat reports within the trailing 21 days announcing the 21-day practice window opening, OR
+ *   2) `IR-R` / `PUP-R` status combined with post-4-game-minimum `weeklyHistory` practice (`LP`/`FP` at
+ *      `week >= earliestEligibleWeek` within trailing 3 weeks) or explicit multi-session 21-day window practice prose.
+ * Never opens a window from `IR-R` alone (which NFL clubs also assign to preseason cutdown IR-DTR players).
+ */
+export function detectOpen21DayIrWindowFromHistory({
+  playerName = '',
+  rosterBucket = 'ir',
+  isSeasonEnding = false,
+  fantasyStatusAbbr = '',
+  earliestEligibleWeek = null,
+  weeklyHistory = [],
+  beatNote = '',
+  newsItems = [],
+  rosterPlayerNames = [],
+  currentWeek = 1,
+  nowMs = Date.now()
+} = {}) {
+  const bucket = String(rosterBucket || '').toLowerCase();
+  if ((bucket !== 'ir' && bucket !== 'pup') || isSeasonEnding) {
+    return { isOpen: false, designatedDateIso: null, leadNote: '' };
+  }
+
+  const noteStr = String(beatNote || '').trim();
+  if (
+    /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|21-day (?:practice )?window expired|reverted to season-ending)\b/i.test(
+      noteStr
+    )
+  ) {
+    return { isOpen: false, designatedDateIso: null, leadNote: '' };
+  }
+
+  const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const minWindowMs = ts - 21 * 86_400_000;
+  let openedAtMs = null;
+  let leadNote = '';
+
+  if (playerName && Array.isArray(newsItems) && newsItems.length > 0) {
+    const sharedSet = computeSharedRosterSurnames(rosterPlayerNames.map(nm => ({ name: nm })));
+    const chronItems = [];
+    for (const item of newsItems) {
+      if (!item || item.isClickbait || item.type === 'video') continue;
+      const pubMs = parseFlexibleIsoMs(item.publishedAt);
+      if (pubMs === null || pubMs < minWindowMs || pubMs > ts + 3_600_000) continue;
+      const fullBody = [item.fullText || item.title || item.headline || '', item.summary || '']
+        .filter(Boolean)
+        .join(' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (!fullBody) continue;
+      const trustTier = Number(item.trustTier || 2);
+      const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
+      const isOfficial =
+        item.outletId === '49ers_official' ||
+        item.wireSource === 'official_transactions' ||
+        item.wireSource === 'espn_player_wire' ||
+        item.wireSource === 'rotowire_rss';
+      if (trustTier > 1 && !hasInlineTier1 && !isOfficial) continue;
+      if (!doesClauseMentionPlayer(fullBody, playerName, { allowSurname: true, sharedSurnames: sharedSet })) {
+        continue;
+      }
+      chronItems.push({ pubMs, fullBody });
+    }
+    chronItems.sort((a, b) => a.pubMs - b.pubMs);
+
+    for (const { pubMs, fullBody } of chronItems) {
+      const scoped = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
+      if (!scoped) continue;
+      if (
+        /\b(?:placed\b[^.;]{0,45}\bon\s+injured\s+reserve|season-ending|out\s+for\s+the\s+season|activated\b[^.;]{0,55}\bfrom\s+(?:injured\s+reserve|ir\b|the\s+pup\s+list))\b/i.test(
+          scoped
+        ) &&
+        !/\b(?:not|n't|wasn't|didn't|won't|if|whether|since)\b[^.;]{0,28}\bactivated\b/i.test(scoped) &&
+        !/\bhas\s+been\s+on\s+(?:ir|injured\s+reserve)\s+since\b/i.test(scoped)
+      ) {
+        openedAtMs = null;
+        leadNote = '';
+        continue;
+      }
+      if (
+        /\b(?:designated\b[^.;]{0,80}\b(?:to|for)\s+return\s+from|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9'. -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
+          scoped
+        ) &&
+        !/\b(?:not|n't|could|might|may|hopeful\s+to|plan\s+to|expect\s+to|won't|will\s+not|aren't|isn't)\s+(?:be\s+)?open/i.test(
+          scoped
+        ) &&
+        !hasWindowDefinitelyNotOpeningSignal(scoped)
+      ) {
+        if (openedAtMs === null) {
+          openedAtMs = pubMs;
+          leadNote = scoped;
+        }
+      }
+    }
+  }
+
+  if (openedAtMs !== null) {
+    return {
+      isOpen: true,
+      designatedDateIso: new Date(openedAtMs).toISOString(),
+      leadNote
+    };
+  }
+
+  const abbrUpper = String(fantasyStatusAbbr || '').toUpperCase();
+  const curWk = Number(currentWeek || 1);
+  const minEligWk = Number.isFinite(Number(earliestEligibleWeek)) && Number(earliestEligibleWeek) > 0
+    ? Number(earliestEligibleWeek)
+    : 1;
+
+  const hasRecentPostMinimumPractice =
+    (abbrUpper === 'IR-R' || abbrUpper === 'PUP-R') &&
+    curWk >= minEligWk &&
+    Array.isArray(weeklyHistory) &&
+    weeklyHistory.some(h => {
+      const wk = Number(h?.week || 0);
+      return (
+        wk >= minEligWk &&
+        curWk - wk >= 0 &&
+        curWk - wk <= 3 &&
+        /\b(?:limited|full|^lp$|^fp$)\b/i.test(String(h?.practiceStatus || '').trim())
+      );
+    });
+
+  const hasExplicitOpenWindowProse =
+    curWk >= minEligWk &&
+    !hasWindowDefinitelyNotOpeningSignal(noteStr) &&
+    !/\bnot\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+practice\b/i.test(noteStr) &&
+    (/\b(?:had\s+his\s+21-day\s+practice\s+window\s+opened|21-day\s+practice\s+window\s+(?:was\s+|is\s+|has\s+been\s+)?opened)\b/i.test(
+      noteStr
+    ) ||
+      ((abbrUpper === 'IR-R' || abbrUpper === 'PUP-R') &&
+        /\b(?:upgraded\s+to\s+a\s+full\s+practice\s+session\s+friday|trio\s+of\s+(?:full|limited)\s+practices|three\s+(?:full|limited)\s+practices)\b/i.test(
+          noteStr
+        )));
+
+  if (hasRecentPostMinimumPractice || hasExplicitOpenWindowProse) {
+    return {
+      isOpen: true,
+      designatedDateIso: null,
+      leadNote: ''
+    };
+  }
+
+  return { isOpen: false, designatedDateIso: null, leadNote: '' };
+}
+
 function hasNegativePlayConsensusSignal(beatNote = '') {
   if (!beatNote) return false;
   return /\b(?:long shot|unlikely to (?:play|suit up|be activated)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be ready|be activated)|expecting\b[^.;]{0,42}\b(?:this week|to play|to be ready|to suit up)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
@@ -1068,10 +1219,10 @@ export function evaluateCorroboratedNewsInjurySignal({
       const scopedForWindow = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
       if (scopedForWindow) {
         if (
-          /\b(?:designated\b[^.]{0,80}\bto return|opened (?:the )?(?:[a-z']+s? )?(?:21-day |injured reserve |ir |pup )?practice window)\b/i.test(
+          /\b(?:designated\b[^.]{0,80}\b(?:to|for)\s+return|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9'. -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
             scopedForWindow
           ) &&
-          !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't)\s+open\b/i.test(scopedForWindow) &&
+          !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't|will not|aren't|isn't)\s+(?:be\s+)?open/i.test(scopedForWindow) &&
           !hasWindowDefinitelyNotOpeningSignal(scopedForWindow)
         ) {
           hasOfficialTxDesignation = true;
@@ -2431,8 +2582,32 @@ export function computePlayerPlayProbability(input = {}) {
 
   // Dedicated Joint Probability Model for Open 21-Day IR/PUP Window Candidates: P(Activated to 53-Man Roster ∩ Plays)
   if (isIrBucketOrStatus && isIrReturnQuestionable) {
+    const curWkNum = Number.isFinite(Number(input.currentWeek)) ? Number(input.currentWeek) : null;
+    const minEligWkNum =
+      Number.isFinite(Number(input.earliestEligibleWeek)) && Number(input.earliestEligibleWeek) > 0
+        ? Number(input.earliestEligibleWeek)
+        : 1;
+    const priorWindowPracticeEntries =
+      curWkNum !== null && Array.isArray(input.weeklyHistory)
+        ? input.weeklyHistory.filter(h => {
+            const wk = Number(h?.week || 0);
+            return (
+              wk >= minEligWkNum &&
+              wk < curWkNum &&
+              curWkNum - wk <= 3 &&
+              /\b(?:limited|full|^lp$|^fp$)\b/i.test(String(h?.practiceStatus || '').trim())
+            );
+          })
+        : [];
+    const distinctPriorWindowWeeks = new Set(priorWindowPracticeEntries.map(h => Number(h.week))).size;
+    const historyStage =
+      distinctPriorWindowWeeks >= 2 ? 3 : distinctPriorWindowWeeks === 1 ? 2 : null;
+    const lastWindowHistEntry =
+      priorWindowPracticeEntries.sort((a, b) => Number(b.week) - Number(a.week))[0] || null;
+
     const inferredStage =
       irWindowEval.windowWeekStage ||
+      historyStage ||
       (/\b(?:third\s+week|final\s+week|ample\s+time\s+to\s+activate)\b/i.test(fullBeatLower)
         ? 3
         : /\b(?:second\s+week|trio\s+of\s+(?:full|limited)\s+practices|three\s+(?:full|limited)\s+practices|wasn't\s+activated\s+saturday|upgraded\s+to\s+a\s+full\s+practice\s+session\s+friday)\b/i.test(
@@ -2513,6 +2688,12 @@ export function computePlayerPlayProbability(input = {}) {
       } else if (/\b(?:three\s+limited\s+practices|trio\s+of\s+limited\s+practices)\b/i.test(fullBeatLower)) {
         irProb += 0.05;
         factors.push(`21-day IR window open (Week ${inferredStage}); logged three Limited sessions last week`);
+      } else if (lastWindowHistEntry && /\bfull|^fp$/i.test(String(lastWindowHistEntry.practiceStatus || '').trim())) {
+        irProb += 0.08;
+        factors.push(`21-day IR window open (Week ${inferredStage}); logged Full Participation in prior week's ramp`);
+      } else if (lastWindowHistEntry && /\blimited|^lp$/i.test(String(lastWindowHistEntry.practiceStatus || '').trim())) {
+        irProb += 0.04;
+        factors.push(`21-day IR window open (Week ${inferredStage}); logged Limited Participation in prior week's ramp`);
       } else {
         factors.push(`21-day IR practice window open (Week ${inferredStage}); awaiting current-week practice ramp`);
       }
@@ -3721,18 +3902,53 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         continue;
       }
 
-      if ((newsSig.hasOfficialTxDesignation || wirePrac?.openedPracticeWindow) && !p.health.isPracticeWindowOpen) {
+      const persisted21dWindow =
+        !p.health.isPracticeWindowOpen && p.rosterBucket === 'ir'
+          ? detectOpen21DayIrWindowFromHistory({
+              playerName: p.name,
+              rosterBucket: p.rosterBucket,
+              isSeasonEnding: Boolean(p.health.isSeasonEnding),
+              fantasyStatusAbbr: p.health.fantasyStatusAbbr || '',
+              earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
+              weeklyHistory: p.health.weeklyHistory2026 || [],
+              beatNote: pickMeaningfulInjuryComment(
+                p.health.irBeatNote,
+                p.health.longComment,
+                p.health.shortComment
+              ),
+              newsItems: combinedNews,
+              rosterPlayerNames,
+              currentWeek,
+              nowMs
+            })
+          : { isOpen: false, designatedDateIso: null, leadNote: '' };
+
+      if (
+        (newsSig.hasOfficialTxDesignation || wirePrac?.openedPracticeWindow || persisted21dWindow.isOpen) &&
+        !p.health.isPracticeWindowOpen
+      ) {
         p.health.isPracticeWindowOpen = true;
         p.health.isPracticeWindowExpected = false;
         p.health.status = 'IR — 21-Day Window Open';
-        p.health.projectedReturnWeek = `Week ${baseCurrentWeek} Activation Window`;
-        if (wirePrac?.latestNote) {
-          const lead = String(wirePrac.latestNote).trim();
+        p.health.projectedReturnWeek = `Week ${currentWeek} Activation Window`;
+        if (!p.health.designatedDateIso && persisted21dWindow.designatedDateIso) {
+          p.health.designatedDateIso = persisted21dWindow.designatedDateIso;
+        }
+        const leadNoteToPrepend = wirePrac?.latestNote || persisted21dWindow.leadNote || '';
+        if (leadNoteToPrepend) {
+          const lead = String(leadNoteToPrepend).trim();
           const existingIrNote = String(p.health.irBeatNote || p.health.longComment || '').trim();
           if (lead && !existingIrNote.toLowerCase().includes(lead.toLowerCase().slice(0, 28))) {
             p.health.irBeatNote = existingIrNote ? `${lead} ${existingIrNote}` : lead;
           }
         }
+        mutated = true;
+      } else if (
+        p.health.isPracticeWindowOpen &&
+        /^Week\s+(\d+)\s+Activation Window/i.test(String(p.health.projectedReturnWeek || '')) &&
+        Number(String(p.health.projectedReturnWeek).match(/^Week\s+(\d+)/i)?.[1] || 0) < currentWeek
+      ) {
+        p.health.projectedReturnWeek = `Week ${currentWeek} Activation Window`;
         mutated = true;
       } else if (
         !p.health.isPracticeWindowOpen &&

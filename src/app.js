@@ -7,8 +7,8 @@ import {
   evaluateSeasonState,
   resolveHomeDashboardState
 } from './engine/seasonStateMachine.js?v=60';
-import { simulateCapScenario } from './engine/capSimulator.js?v=63';
-import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=63';
+import { simulateCapScenario } from './engine/capSimulator.js?v=65';
+import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
   is49ersGameLiveWindow,
@@ -18,7 +18,7 @@ import {
   resolveGameNewsContext,
   sortNewsWithBreakingPriority,
   filterOutCompletedGameAvailabilityItems
-} from './engine/breakingClassifier.js?v=63';
+} from './engine/breakingClassifier.js?v=65';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=60';
 import {
   loadAll49ersData,
@@ -30,7 +30,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=63';
+} from './services/dataService.js?v=65';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -47,7 +47,7 @@ import {
   hydrateCachedDailyTopNewsBrief,
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=63';
+} from './services/aiWorkerClient.js?v=65';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -80,15 +80,15 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=63';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=65';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=63';
+} from './views/newsView.js?v=65';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=48';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=63';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=63';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=65';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import { renderSettingsSheetHtml } from './views/settingsArchiveView.js?v=60';
 
 const state = {
