@@ -27,6 +27,7 @@ import {
 } from '../engine/groundingValidator.js';
 import {
   resolveGameNewsContext,
+  isSalientCapOrContractItem,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
@@ -40,6 +41,7 @@ import {
   isPostGameBriefFormedForGame,
   evaluateGameDayAboveBriefWindow
 } from '../engine/breakingClassifier.js';
+import { formatCompletedGameRecapForPrompt } from '../engine/gameDayRosterEngine.js';
 import {
   isPaywalledPublisher,
   sanitizeExternalUrl,
@@ -2621,7 +2623,7 @@ export function buildDailyMatchupIntelPrompt(appData) {
     'STRICT NON-OVERLAP EDITORIAL ARCHITECTURE (MANDATORY):',
     '1. `coachingMatchup` = PURE COORDINATOR CHESS, SCHEME TENDENCIES & SITUATIONAL LEVERS ONLY:',
     '   - ZERO active player names inside `coachingMatchup.summary` or `coachingMatchup.bullets`! Talk strictly about coaches/coordinators (Kyle Shanahan, Raheem Morris, and opponent HC/OC/DC), personnel groupings (21 personnel, 12/21, condensed splits), motion & coverage tendencies (jet motion, orbit motion, spot-drop Cover 3, Tampa-2, two-high, Quarters, Cover 6, cloud-trap, honey-hole, hook/curl, curl/flat, between the numbers, between the hashes), run-scheme vs box math (gap-scheme, pin-and-pull, counter, duo, A- and B-gaps, light boxes), and 3rd-down / red-zone / penalty / game-script triggers backed by exact rankings.',
-    '   - `bullets` must have 4 items, each formatted `"Bold Subtopic: Crisp 2-sentence coordinator analysis"`.Bullet 1 MUST begin with `"Pass-Game Efficiency & Coverage Shell Delta:"`.',
+    '   - `bullets` must have 4 items, each starting with a concrete 3-to-6-word tactical heading and colon (e.g., `"Pass-Game Efficiency & Coverage Shell Delta: Crisp 2-sentence coordinator analysis"` — NEVER write generic placeholder words like `"Subtopic"` or `"Heading"`). Bullet 1 MUST begin with `"Pass-Game Efficiency & Coverage Shell Delta:"`.',
     '2. `keyMatchupsMatrix` = 5 SPECIFIC PLAYER-VS-PLAYER / TRENCH SCOUTING BATTLES:',
     '   - Zero repetition of generic coordinator summaries! Put ALL specific 49ers & opponent player names, 2026 player stats, injury/GTD leverage, and physical technique clashes here.',
     '   - Each of the 5 objects MUST include: `phaseTag` (short 2-3 word label), `unitMatchup` ("SF Player(s) vs. Opp Player(s)"), `advantage` (e.g. "SF Heavy Edge", "SF Trench Edge", "Even Star Clash"), `sfPlayers` (array of 1-3 exact 49ers player full names), `statComparison` ("SF: <exact metric> | OPP: <exact metric>"), `tacticalDetail` (2 vivid sentences on 1-on-1 leverage, technique & health), and `filmTell` (1 concrete TV viewing tell starting without a prefix).',
@@ -2651,7 +2653,7 @@ export function parseAndSanitizeDailyMatchupIntel(rawTextOrObj, um = {}, rosterP
   if (!headline || summary.length < 50) return null;
 
   const bullets = cm.bullets
-    .map(b => cleanStr(b))
+    .map(b => stripLiteralBoldSubtopicPrefix(cleanStr(b)))
     .filter(b => b.length >= 35)
     .slice(0, 5);
   if (bullets.length < 3) return null;
@@ -2864,8 +2866,8 @@ export async function refreshDailyMatchupIntelIfDue({
  */
 export const DAILY_NEWS_BRIEF_PEAK_HOUR_PT = 17;
 
-const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v4';
-const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v4';
+const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v5';
+const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v5';
 
 export function getPacificHour24(nowMs = Date.now()) {
   try {
@@ -2905,6 +2907,7 @@ function stripEmojisAndUrls(str = '') {
   return String(str || '')
     .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')
     .replace(/\s*(?:https?:\/\/|www\.)\S+/gi, '')
+    .replace(/\s+(?:[a-z0-9-]+\.)+(?:com|org|net|co|app)\/\S+/gi, '')
     .replace(/\s*(?:To\s+read|Read\s+more|Read|More|Watch|Story|Link):\s*$/i, '')
     .replace(/^#49ers\b/i, '49ers')
     .replace(/\s+#[A-Za-z0-9_]+/g, '')
@@ -2921,40 +2924,118 @@ function extractCompleteRssSentences(rawSummary = '') {
   return sentences && sentences.length > 0 ? sentences.join(' ').trim() : '';
 }
 
+function formatBriefSourceRelativeAge(publishedAt, nowMs = Date.now()) {
+  if (!publishedAt) return 'Recent';
+  const pubMs = Date.parse(publishedAt);
+  if (!Number.isFinite(pubMs)) return 'Recent';
+  const diffMin = Math.max(1, Math.round((nowMs - pubMs) / 60_000));
+  if (diffMin < 60) return `${diffMin}m ago`;
+  const diffHr = Math.round(diffMin / 60);
+  if (diffHr < 48) return `${diffHr}h ago`;
+  return `${Math.round(diffHr / 24)}d ago`;
+}
+
+function isRawSnapCountThreadFragment(text = '') {
+  const s = String(text || '').trim();
+  if (!s) return { isSnapList: false, isContinuation: false };
+  const isContinuation =
+    /^[2-9]\/[2-9]\s+(?:LB-|DB-|TE-|OL-|DL-|QB-|RB-|WR-|[A-Z][A-Za-z'’-]+\s+[A-Z][A-Za-z'’-]+\s+\d+)/.test(s);
+  const isSnapList =
+    isContinuation ||
+    /\bsnap counts?\s+\d+\/\d+\b/i.test(s) ||
+    /\b(?:Offense|Defense|Special teams)\s*\(\d+\s+plays\)\s*(?:QB-|DL-|LB-|RB-|Luke\s+)/i.test(s);
+  return { isSnapList, isContinuation };
+}
+
 /**
  * Selects up to `maxSources` verified, non-paywalled, StoryRank-prioritized tweets & articles
- * (`S1..S14`) from `appData.news.rawStream` to ground and inline-link the Daily Top News Brief.
+ * (`S1..S18`) from `appData.news.rawStream` to ground and inline-link the Daily Top News Brief.
  */
-export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, nowMs = Date.now()) {
+export function selectTopNewsBriefSourceCandidates(appData, maxSources = 18, nowMs = Date.now()) {
   const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
   if (rawStream.length === 0) return [];
 
   const briefCtx = resolveGameNewsContext(appData, nowMs);
   const afterAvail = filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs);
+  const articleHeadlineKeys = new Set(
+    afterAvail
+      .filter(it => it && (it.type === 'article' || it.type === 'post') && it.title)
+      .map(it =>
+        String(it.title)
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, ' ')
+          .trim()
+          .slice(0, 44)
+      )
+      .filter(k => k.length >= 16)
+  );
+
   const filteredBase = afterAvail.filter(it => {
     if (!it || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
     const ttl = String(it.title || '');
     const sum = String(it.summary || '');
+    const full = String(it.fullText || ttl);
     // Skip generic sponsor-shell link roundups with zero standalone reporting
     if (/^morning report:/i.test(ttl) && /catch up on the latest|powered by cisco/i.test(sum)) {
       return false;
     }
+    // Skip continuation tweets (2/2, 2/3, 3/3) of raw snap-count lists that carry no standalone context
+    if (isRawSnapCountThreadFragment(full).isContinuation) {
+      return false;
+    }
+    // Skip bare social link-echo teasers ("#49ers ... Read:") when the canonical article is already in the stream
+    if (
+      (it.type === 'tweet' || it.type === 'social') &&
+      /\b(?:Read|More|Story|Link):\s*$/i.test(full.replace(/\s*https?:\/\/\S+/gi, '').trim())
+    ) {
+      const echoKey = stripEmojisAndUrls(full)
+        .toLowerCase()
+        .replace(/^49ers['’]?\s*/, '49ers ')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim()
+        .slice(0, 44);
+      if (echoKey.length >= 16 && articleHeadlineKeys.has(echoKey)) {
+        return false;
+      }
+    }
     return Boolean(sanitizeExternalUrl(it.url, null)) && !isPaywalledPublisher(it.outletName, it.url);
   });
 
-  // During the 24h post-game window, if >=5 post-kickoff reports exist, exclude stale pre-kickoff previews
-  // so the post-game & 5 PM Game-Day Recap briefs anchor strictly on actual game outcome, X pressers & post-game injuries!
-  const postKickoffPool =
-    briefCtx.postGameImmediate && Number.isFinite(briefCtx.completedKickoffMs)
-      ? filteredBase.filter(it => {
-          const pMs = it.publishedAt ? Date.parse(it.publishedAt) : NaN;
-          return (
-            (Number.isFinite(pMs) && pMs >= briefCtx.completedKickoffMs - 10 * 60_000) ||
-            it.storyTier === 'tier1_major'
-          );
-        })
-      : [];
-  const effectivePool = postKickoffPool.length >= 5 ? postKickoffPool : filteredBase;
+  // During the 24h post-game window, if >=2 post-kickoff reports exist, exclude stale pre-kickoff previews
+  // so the post-game & Monday morning briefs anchor strictly on actual game outcome, X pressers & post-game injuries!
+  const cycleStateForPool = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const effectiveCompKoMs = Number.isFinite(briefCtx.completedKickoffMs)
+    ? briefCtx.completedKickoffMs
+    : cycleStateForPool.isPostGameCycle && Number.isFinite(cycleStateForPool.targetKickoffMs)
+      ? cycleStateForPool.targetKickoffMs
+      : NaN;
+  const inPostGameBriefWindow =
+    (briefCtx.postGameImmediate || cycleStateForPool.isPostGameCycle) && Number.isFinite(effectiveCompKoMs);
+  const postKickoffPool = inPostGameBriefWindow
+    ? filteredBase.filter(it => {
+        const pMs = it.publishedAt ? Date.parse(it.publishedAt) : NaN;
+        return (
+          (Number.isFinite(pMs) && pMs >= effectiveCompKoMs - 10 * 60_000) ||
+          it.storyTier === 'tier1_major'
+        );
+      })
+    : [];
+  const nonPreviewFallbackPool = inPostGameBriefWindow
+    ? filteredBase.filter(it => {
+        const body = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''}`;
+        return !/\b(ahead of|before|keys to beat|matchup preview|practice report|thursday practice|wednesday practice)\b/i.test(
+          body
+        );
+      })
+    : filteredBase;
+  const effectivePool =
+    postKickoffPool.length >= 2
+      ? postKickoffPool
+      : postKickoffPool.length === 1
+        ? [...postKickoffPool, ...nonPreviewFallbackPool.filter(x => x !== postKickoffPool[0])]
+        : nonPreviewFallbackPool.length >= 2
+          ? nonPreviewFallbackPool
+          : filteredBase;
 
   const prioritized = sortNewsWithBreakingPriority(effectivePool, nowMs, { appData });
   const deduped = balanceFeedTopSalience(deduplicateAndGroupWireItems(prioritized, { nowMs, appData }), {
@@ -2963,7 +3044,9 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
   });
 
   const seenUrls = new Set();
+  const seenNormTitles = new Set();
   const candidates = [];
+  let snapListCount = 0;
 
   const pushCandidate = (it, parentStoryKey = '') => {
     if (!it || candidates.length >= maxSources) return;
@@ -3010,7 +3093,6 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
       ? `${safeUrl}::${String(it.title || it.fullText || '').toLowerCase().slice(0, 48)}`
       : safeUrl;
     if (seenUrls.has(dedupKey)) return;
-    seenUrls.add(dedupKey);
 
     const author = effectiveAuthor;
     const outlet = effectiveOutlet;
@@ -3022,6 +3104,18 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
       : '';
     const rawBody = isTw ? fullTweetClean : cleanHeadline;
     if (!rawBody || rawBody.length < 14) return;
+    const normTitleKey = rawBody.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 72);
+    if (normTitleKey.length >= 24 && seenNormTitles.has(normTitleKey)) return;
+
+    // Limit raw play-count / snap-count list tweets to at most 1 slot so substantive stories aren't crowded out
+    const snapCheck = isRawSnapCountThreadFragment(rawBody);
+    if (snapCheck.isSnapList) {
+      if (snapCheck.isContinuation || snapListCount >= 1) return;
+      snapListCount += 1;
+    }
+
+    seenUrls.add(dedupKey);
+    if (normTitleKey.length >= 24) seenNormTitles.add(normTitleKey);
 
     const cleanSummary = !isTw && it.summary ? extractCompleteRssSentences(it.summary) : '';
     const displayTitle = rawBody.length > 180 ? `${rawBody.slice(0, 177).replace(/\s+\S*$/, '').trim()}` : rawBody;
@@ -3057,6 +3151,7 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
       fullBody,
       url: safeUrl,
       publishedAt: it.publishedAt || null,
+      ageLabel: formatBriefSourceRelativeAge(it.publishedAt, nowMs),
       category: it.category || 'beat',
       storyKey,
       confirmingUrls
@@ -3081,34 +3176,140 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 14, now
     }
   }
 
+  // When not in a post-game cycle and `appData.health.practiceReport` has live current-week practice slots
+  // (e.g. Friday LP for Lenoir/Green or Friday DNP Questionable for Trent Williams), ensure an authoritative
+  // grounded Official 49ers Practice & Status Report source is available so the brief never cites older Thursday articles!
+  if (!inPostGameBriefWindow && Array.isArray(appData?.health?.practiceReport) && appData.health.practiceReport.length > 0) {
+    const prRows = appData.health.practiceReport;
+    const hasFri = prRows.some(r => r?.fri && r.fri !== '-');
+    const hasThu = prRows.some(r => r?.thu && r.thu !== '-');
+    const hasWed = prRows.some(r => r?.wed && r.wed !== '-');
+    const latestDayLabel = hasFri ? 'Friday' : hasThu ? 'Thursday' : hasWed ? 'Wednesday' : '';
+    const officialInjUrl = 'https://www.49ers.com/team/injury-report/';
+    if (latestDayLabel && !seenUrls.has(officialInjUrl)) {
+      const hasFreshSameDayPracSource = candidates.slice(0, 4).some(c => {
+        const pMs = c.publishedAt ? Date.parse(c.publishedAt) : NaN;
+        return (
+          Number.isFinite(pMs) &&
+          nowMs - pMs <= 12 * 3_600_000 &&
+          new RegExp(`\\b${latestDayLabel}\\b`, 'i').test(`${c.title || ''} ${c.fullBody || ''}`)
+        );
+      });
+      if (!hasFreshSameDayPracSource && candidates.length < maxSources) {
+        const wkNum = appData?.health?.week || appData?.meta?.currentWeek || '';
+        const rowSummaries = prRows
+          .slice(0, 9)
+          .map(r => {
+            const latestVal = hasFri ? r.fri : hasThu ? r.thu : r.wed;
+            const desig = r.gameStatus ? ` [${r.gameStatus}]` : '';
+            return `${r.name} (${r.position}, ${r.injuryType}: ${latestDayLabel}=${latestVal}, W/T/F=${r.wed}/${r.thu}/${r.fri}${desig})`;
+          })
+          .join('; ');
+        const officialEntry = {
+          refId: 'S_OFF_PRAC',
+          type: 'article',
+          author: '49ers Communications',
+          outlet: '49ers.com',
+          citeLabel: '49ers.com',
+          title: `Official ${latestDayLabel} Week ${wkNum} 49ers Injury & Practice Participation Report`,
+          summary: rowSummaries,
+          fullBody: `Official ${latestDayLabel} Week ${wkNum} 49ers Practice & Status Report: ${rowSummaries}.`,
+          url: officialInjUrl,
+          publishedAt: new Date(nowMs).toISOString(),
+          ageLabel: 'Latest',
+          category: 'injury',
+          storyKey: `official_sf_prac_wk_${wkNum}_${latestDayLabel.toLowerCase()}`,
+          confirmingUrls: []
+        };
+        seenUrls.add(officialInjUrl);
+        candidates.unshift(officialEntry);
+        if (candidates.length > maxSources) candidates.pop();
+        candidates.forEach((c, idx) => {
+          c.refId = `S${idx + 1}`;
+        });
+      }
+    }
+  }
+
   return candidates;
 }
 
-export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = [], nowMs = Date.now()) {
+/**
+ * Evaluates whether salary-cap / contract / front-office transaction news is genuinely active
+ * in the current briefing window (vs. routine post-game or mid-week on-field cycles where
+ * unprompted cap-rollover boilerplate would be off-focus).
+ */
+export function hasActiveCapOrTransactionStoryline(appData, sourceCandidates = [], nowMs = Date.now()) {
+  const cal = appData?.meta?.calendar || {};
+  const sbEndMs = cal.superBowlEnd ? Date.parse(cal.superBowlEnd) : NaN;
+  const koStartMs = cal.kickoffStart ? Date.parse(cal.kickoffStart) : NaN;
+  const curMonth = new Date(nowMs).getUTCMonth() + 1; // 1..12
+  // Offseason (post-Super Bowl Feb through August roster cutdowns): cap, FA & draft naturally lead
+  const isOffseason =
+    (Number.isFinite(sbEndMs) && nowMs >= sbEndMs) ||
+    (Number.isFinite(koStartMs) && nowMs < koStartMs) ||
+    (curMonth >= 3 && curMonth <= 8);
+  if (isOffseason) return { active: true, isOffseason: true, freshMoves: [] };
+
+  // Check if a 49ers trade was completed within the last 4 days (96h)
+  const freshMoves = (appData?.seasonal?.tradeWarRoom?.completed2026Moves || []).filter(mv => {
+    const rawDate = String(mv?.timing || '');
+    const mDate = rawDate.match(/\(([A-Za-z]+\s+\d+,\s+\d{4})\)/);
+    if (!mDate) return false;
+    const ts = Date.parse(mDate[1]);
+    return Number.isFinite(ts) && nowMs - ts >= -86_400_000 && nowMs - ts <= 4 * 86_400_000;
+  });
+  if (freshMoves.length > 0) return { active: true, isOffseason: false, freshMoves };
+
+  // Check if any top wire candidate is a genuine fresh cap, contract, signing, or trade story
+  const hasFreshCapWire = (sourceCandidates || []).slice(0, 10).some(c => {
+    const txt = `${c?.title || ''} ${c?.fullBody || ''}`;
+    if (isSalientCapOrContractItem({ title: c?.title || '', summary: c?.fullBody || '', category: c?.category })) {
+      return true;
+    }
+    return /\b(restructur|cap\s+space|contract\s+extension|re-sign|signed\s+[A-Z]|waived|released|placed\s+on\s+ir|trade\s+deadline|acquired\s+.*\s+from)\b/i.test(
+      txt
+    );
+  });
+  return { active: hasFreshCapWire, isOffseason: false, freshMoves: [] };
+}
+
+export function buildDailyTopNewsBriefPrompt(
+  appData,
+  sourceCandidates = [],
+  nowMs = Date.now(),
+  options = {}
+) {
   const meta = appData?.meta || {};
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
   const tg = cycleState.isPostGameCycle ? cycleState.targetGame : null;
   const capYr = String(meta.seasonYear || 2026);
   const nextYr = String(Number(capYr) + 1);
-  const capGrossM = ((Number(appData?.cap?.years?.[capYr]?.teamCapSpace || 35_164_858)) / 1e6).toFixed(2);
-  const capNextRaw = Number(appData?.cap?.years?.[nextYr]?.teamCapSpace ?? -31_540_066);
-  const capNextLabel = `${capNextRaw < 0 ? '-' : '+'}$${(Math.abs(capNextRaw) / 1e6).toFixed(2)}M`;
+  const capStatus = hasActiveCapOrTransactionStoryline(appData, sourceCandidates, nowMs);
 
   const sfPr = (appData?.health?.practiceReport || [])
     .slice(0, 10)
-    .map(p => `${p.name} (${p.position}, ${p.injuryType}: W=${p.wed}/T=${p.thu}/F=${p.fri} -> ${p.playBadgeLabel || `${p.playProbabilityPct}%`})`)
+    .map(
+      p =>
+        `${p.name} (${p.position}, ${p.injuryType}: W=${p.wed}/T=${p.thu}/F=${p.fri} -> ${
+          p.playBadgeLabel || `${p.playProbabilityPct}%`
+        })`
+    )
     .join('; ');
   const openIrWindows = (appData?.health?.irAndReserveTracker || [])
     .filter(p => p.isPracticeWindowOpen)
     .map(p => `${p.name} (${p.position}: 21-day IR practice window open)`)
     .join('; ');
-  const recentMoves = (appData?.seasonal?.tradeWarRoom?.completed2026Moves || [])
-    .slice(0, 2)
-    .map(m => `${m.player} (${m.position}, from ${m.acquiredFrom} for ${m.costSummary} — ${m.timing})`)
-    .join('; ');
 
-  let postGameContextLine = '';
+  const nfcContenders = (appData?.seasonal?.playoffPicture?.baselineSimulation?.allTeamOdds || [])
+    .slice(0, 5)
+    .map(t => `${t.abbr} (${t.currentRecord || t.record || ''}, #1 Seed ${t.seed1ByePct}%, Div ${t.winDivisionPct}%)`)
+    .join(' | ');
+
+  // Authoritative Post-Game Box Score & Recap Dossier when summarizing a completed game
+  const completedRecap = appData?.scheduleMatchup?.lastCompletedGameRecap || null;
+  let postGameDossierBlock = '';
   if (tg && (tg.completed || /\bfinal\b/i.test(String(tg.statusDetail || '')))) {
     const tgOpp = tg.opponent?.name || tg.opponent?.abbr || 'Opponent';
     const hasScore = tg.sfScore != null && tg.oppScore != null;
@@ -3121,46 +3322,106 @@ export function buildDailyTopNewsBriefPrompt(appData, sourceCandidates = [], now
             ? 'L'
             : 'T'
         : '');
-    postGameContextLine = `COMPLETED GAME RESULT (PRIMARY LEAD STORY — GAME IS FINAL): Week ${tg.week} Final — San Francisco 49ers ${hasScore ? `${tg.sfScore}, ${tgOpp} ${tg.oppScore}` : `vs. ${tgOpp}`}${resStr ? ` (${resStr})` : ''}, moving SF to ${meta.teamRecord || ''}. Upcoming next week: Week ${um.week || meta.currentWeek || ''} vs. ${um.oppName || um.oppAbbr || 'Opponent'}. Lead the headline, summary, and first bullet with the completed ${tgOpp} game result, key plays, and post-game takeaways—NEVER write about the completed ${tgOpp} game in the future tense or as "ahead of"!`;
+    const recapMatchesTarget =
+      completedRecap &&
+      (Number(completedRecap.week) === Number(tg.week) ||
+        (tg.id && String(completedRecap.gameId) === String(tg.id)));
+    const boxscoreText = recapMatchesTarget ? formatCompletedGameRecapForPrompt(completedRecap) : '';
+
+    postGameDossierBlock = [
+      `COMPLETED GAME PRIMARY LEAD (GAME IS FINAL — DO NOT WRITE ABOUT ${tgOpp.toUpperCase()} IN FUTURE TENSE):`,
+      `Week ${tg.week} Final — San Francisco 49ers ${hasScore ? `${tg.sfScore}, ${tgOpp} ${tg.oppScore}` : `vs. ${tgOpp}`}${resStr ? ` (${resStr})` : ''}, moving San Francisco to ${meta.teamRecord || ''}${meta.standingSummary ? ` (${meta.standingSummary})` : ''}. Next game: Week ${um.week || meta.currentWeek || ''} ${um.homeAway === 'away' ? 'at' : 'vs.'} ${um.oppName || um.oppAbbr || 'Opponent'}${um.venue ? ` (${um.venue})` : ''}.`,
+      boxscoreText
+        ? `AUTHORITATIVE COMPLETED GAME BOX SCORE & RECAP DOSSIER:\n${boxscoreText}`
+        : `Verify full-game team & player stats (total yards, QB passing, top scrimmage/TD stars, debuts, defensive yards/takeaways/sacks, penalties, and in-game injuries) via Google Search Grounding so single mid-game tweets never distort the macro game story.`
+    ]
+      .filter(Boolean)
+      .join('\n');
   }
+
+  let capAndTransactionsBlock = '';
+  if (capStatus.active) {
+    const capGrossM = ((Number(appData?.cap?.years?.[capYr]?.teamCapSpace || 35_164_858)) / 1e6).toFixed(2);
+    const capNextRaw = Number(appData?.cap?.years?.[nextYr]?.teamCapSpace ?? -31_540_066);
+    const capNextLabel = `${capNextRaw < 0 ? '-' : '+'}$${(Math.abs(capNextRaw) / 1e6).toFixed(2)}M`;
+    const moveSummary = capStatus.freshMoves
+      .map(m => `${m.player} (${m.position}, from ${m.acquiredFrom} for ${m.costSummary} — ${m.timing})`)
+      .join('; ');
+    capAndTransactionsBlock = [
+      `Cap & Transaction Reference (use ONLY if relevant to today's top stories): $${capGrossM}M in ${capYr} gross cap space vs. ${capNextLabel} projected ${nextYr} balance (CBA Article 13 rollover).`,
+      moveSummary ? `Freshly Completed Trade(s): ${moveSummary}` : ''
+    ]
+      .filter(Boolean)
+      .join('\n');
+  } else {
+    capAndTransactionsBlock =
+      'SALARY CAP RESTRAINT: No salary-cap restructure, contract extension, or front-office cap move broke in this news window—do NOT pad any bullet with unprompted salary-cap space or CBA rollover figures.';
+  }
+
+  const prevBrief =
+    options?.previousBrief &&
+    options.previousBrief.headline &&
+    options.previousBrief.cycleKey !== cycleState.activeCycleKey
+      ? options.previousBrief
+      : appData?.news?.dailyTopNewsBrief &&
+          appData.news.dailyTopNewsBrief.cycleKey !== cycleState.activeCycleKey
+        ? appData.news.dailyTopNewsBrief
+        : null;
+  const previousBriefLine = prevBrief
+    ? `PREVIOUS UPDATE (${formatBriefSourceRelativeAge(prevBrief.generatedAt, nowMs)} — Headline: "${prevBrief.headline}"): Bias decisively toward the FRESHEST news and new developments since this update. Carry forward an earlier story ONLY if there is meaningful new fallout, debut production, or an updated status—never rehash stale background.`
+    : '';
 
   const sourceBlock = sourceCandidates
     .map(
       s =>
-        `[${s.refId}] (${s.type === 'tweet' ? 'Tweet' : 'Article'} | ${s.author} • ${s.outlet} | ${s.publishedAt || 'Recent'}): ${
+        `[${s.refId}] (${s.type === 'tweet' ? 'Tweet' : 'Article'} | ${s.author} • ${s.outlet} | ${s.ageLabel || s.publishedAt || 'Recent'}): ${
           s.fullBody || s.title
         }`
     )
     .join('\n');
 
   return [
-    `DAILY_TOP_NEWS_BRIEF_JSON — Synthesize today's post-wire San Francisco 49ers (${meta.teamRecord || ''}, Week ${meta.currentWeek || ''}, next vs. ${um.oppName || um.oppAbbr || 'Opponent'}) Top News Brief using Gemini High Thinking.`,
-    postGameContextLine,
-    `Live Cap Context: $${capGrossM}M in ${capYr} gross cap space vs. ${capNextLabel} projected ${nextYr} balance (CBA Article 13 1-for-1 rollover).`,
-    recentMoves ? `Recent Completed Acquisitions: ${recentMoves}` : '',
-    `Active Week ${meta.currentWeek || ''} Practice Report: ${sfPr || 'See verified wire sources below.'}`,
+    `DAILY_TOP_NEWS_BRIEF_JSON — Act as Editor-in-Chief of "49ers Faithful" and synthesize today's San Francisco 49ers (${meta.teamRecord || ''}${meta.standingSummary ? `, ${meta.standingSummary}` : ''}, Week ${meta.currentWeek || ''}, next vs. ${um.oppName || um.oppAbbr || 'Opponent'}) Top News Brief.`,
+    postGameDossierBlock,
+    previousBriefLine,
+    nfcContenders ? `NFC Standings & Seed Context: ${nfcContenders}` : '',
+    !cycleState.isPostGameCycle
+      ? `Active Week ${meta.currentWeek || ''} Practice Report (LATEST OFFICIAL W/T/F STATUS SUPERSEDES OLDER MIDWEEK ARTICLES): ${sfPr || 'See verified wire sources below.'}`
+      : sfPr
+        ? `Current Injury Watchlist: ${sfPr}`
+        : '',
     openIrWindows ? `Open 21-Day IR Return Windows: ${openIrWindows}` : '',
-    `VERIFIED TODAY'S BEAT TWEETS & ARTICLES (CITE INLINE USING BARE [S#] MARKERS):`,
+    capAndTransactionsBlock,
+    `VERIFIED BEAT TWEETS & ARTICLES (ORDERED BY SALIENCE & RECENCY — CITE INLINE USING BARE [S#] MARKERS):`,
     sourceBlock || 'No external sources attached.',
     '',
-    'STRICT EDITORIAL, COHERENCE & CITATION REQUIREMENTS (MANDATORY):',
-    '1. TARGET WORD COUNT: ~205–240 words total across `headline` + `summary` + `bullets` (~2/3 the length of our 355-word Coaching Matchup card).',
-    '2. EXPLAIN THE ACTUAL NEWS IN COHERENT, COMPLETE SENTENCES: Write natural, informative journalistic prose that directly states what happened (exact game scores/turning points when post-game, exact trade pick compensation, exact contract restructure dollars, exact player practice participation DNP/LP/FP & injuries, and roster/matchup implications). NEVER copy raw article titles verbatim, NEVER write teaser phrases ("latest on...", "updates on...", "click here", "read more"), NEVER use rhetorical questions, NEVER use emojis, and NEVER use ellipses ("..." or "…") or incomplete sentences!',
-    '3. MINIMAL-DISTRACTION INLINE CITATIONS (`[S#]` ONLY — NO REPORTER/OUTLET NAMES IN PROSE): Place separate bare `[S1]`, `[S2]` markers directly before the comma or period at the end of the factual clause (e.g., "...acquired WR Keenan Allen from Indianapolis for a 2027 sixth-round pick [S1]."). Always write separate brackets like `[S1] [S2]`—NEVER group citations inside one bracket like `[S1, S2]`. DO NOT write reporter or outlet names like "Adam Schefter" or "Pro Football Rumors" or "per [S1]"—our UI renders `[S#]` as a small clickable link icon to minimize reading distraction.',
-    '4. `headline`: Crisp 10–15 word factual headline summarizing today\'s top 49ers news (no `[S#]` markers in `headline`).',
-    '5. `summary`: 2 complete, coherent sentences (~45–55 words) explaining the overarching on-field and front-office headline news with 1–2 `[S#]` inline markers.',
-    '6. `bullets`: Exactly 3 coherent bullets (~50–60 words each), each starting with a concrete 2–4 word topic title and colon (e.g., `"Offensive Execution & Run Game: ..."` or `"Secondary Health & Depth: ..."` — NEVER write the literal placeholder words `"Bold Subtopic"`) and weaving 5–8 distinct `[S#]` markers across game/team storylines, concrete player-by-player health/practice/IR statuses, and roster/cap context.',
-    '7. `citedSourceIds`: Array of all `"S#"` IDs cited across `summary` and `bullets`.',
-    '8. Output ONLY valid raw JSON matching: {"headline":"...","summary":"...","bullets":["Topic Title: ...","Topic Title: ...","Topic Title: ..."],"citedSourceIds":["S1","S2"]}.'
+    'FLUID EDITORIAL JUDGMENT & QUALITY PRINCIPLES (READ CAREFULLY — DO NOT BE FORMULAIC):',
+    '1. DYNAMIC FOCUS BASED ON REAL-WORLD IMPORTANCE & FRESHNESS: There is NO fixed template of topics. Determine what a sharp, well-informed 49ers fan needs to know most right now based on the calendar moment and what actually broke since the last update:',
+    '   - Post-Game: Lead with the game result, record/NFC West/seed impact, and defining macro team performance (e.g., historic yardage, explosive plays). Spotlight the primary stars who drove the outcome (Purdy, McCaffrey, Deebo, Kittle, Warner, Bosa) plus notable debuts (e.g., a newly acquired starter\'s stat line) and key role-player scores in proper proportion. Pair offensive/defensive bright spots (run stops, takeaways) with candid tape/box-score concerns (pass-rush drought, passing yards/TDs/4th-downs/4Q points yielded, sacks absorbed, penalty yards, in-game injuries) and immediate next-week travel/altitude/matchup or division-rival stakes.',
+    '   - Mid-Week In-Season: Center on fresh 49ers & opponent injury/practice shifts (always reporting the latest Friday/Thursday status over older mid-week notes, and distinguishing veteran rest from real injuries), key tactical matchup angles, and high-impact NFC contender news affecting San Francisco\'s standings or playoff seed.',
+    '   - Offseason (Feb–Aug): Let salary cap maneuvers, free agency, trades, coaching changes, Combine testing, and Draft buzz lead naturally.',
+    '   - Breaking / Non-Standard News Anytime: Whenever a major trade, injury, league ruling, or off-field/ownership story (e.g., a front-office or ownership controversy) breaks, give it immediate prominence proportional to its magnitude—never bury big news behind routine filler.',
+    '2. MACRO BEFORE MICRO (PROPORTIONATE CALLOUTS): Never fixate on minor backups, isolated mid-game tweets, or practice trivia at the expense of the big picture, team-wide performance, star players, or glaring unit flaws.',
+    '3. TARGET LENGTH & STRUCTURE (NO REDUNDANT TOP SUMMARY PARAGRAPH): Write ~185–240 visible words total across `headline` + 3 to 5 dynamic `bullets` (choose 3, 4, or 5 bullets organically to fit today\'s distinct high-value angles—e.g., 4–5 tight bullets for a packed game recap, 3–4 bullets on a focused news day). Do NOT include a separate summary paragraph; every bullet must add non-redundant information.',
+    '4. COMPLETE JOURNALISTIC PROSE & MINIMAL-DISTRACTION CITATIONS (`[S#]`): Write crisp, complete sentences with exact numbers. Place separate bare `[S1]` `[S2]` markers right before punctuation (NEVER group inside one bracket like `[S1, S2]`, NEVER write reporter/outlet names or "per [S1]" in prose, NEVER use teaser phrases like "latest on..."/"click here", rhetorical questions, emojis, or ellipses "...").',
+    '5. SUBTOPIC NAMING: Each bullet object in `bullets` MUST have a specific, descriptive 2–4 word `"subtopic"` naming that exact angle (e.g., `"Cowboys Shootout Win"`, `"McCaffrey & Purdy Shine"`, `"Weaponry & Debuts"`, `"Defense (Run Stop vs. Air Raid)"`, `"Looking Ahead"`, `"Secondary Injury Watch"`) and `"body"` containing the 1–3 sentence analysis with `[S#]` citations. NEVER write generic placeholder labels such as `"Bold Subtopic"`, `"Subtopic"`, or `"Topic Title"`.',
+    '6. Output ONLY valid raw JSON matching: {"headline":"Crisp 9-15 word headline","bullets":[{"subtopic":"Specific 2-4 Word Subtopic","body":"Factual sentences with inline [S1] markers."}],"citedSourceIds":["S1","S2"]}.'
   ]
     .filter(Boolean)
     .join('\n');
 }
 
+const BRIEF_PLACEHOLDER_SUBTOPIC_RE =
+  /^(?:[-•*]\s*|\d+[.)]\s*)?(?:\*\*|\[)?\s*(?:bold\s+subtopic|bold\s+heading|bold\s+title|subtopic(?:\s+title|\s+name)?|topic\s+title|section\s+title|bullet\s*\d+)\s*(?:\*\*|\])?\s*[:—–-]\s*/i;
+
 function stripLiteralBoldSubtopicPrefix(str = '') {
-  return String(str || '')
-    .replace(/^(?:[-•*]\s*)?(?:\*\*)?bold\s+subtopic(?:\*\*)?\s*:\s*/i, '')
-    .trim();
+  let out = String(str || '').replace(/^(?:[-•*]\s+|\d+[.)]\s+)/, '').trim();
+  let guard = 0;
+  while (guard < 4 && BRIEF_PLACEHOLDER_SUBTOPIC_RE.test(out)) {
+    out = out.replace(BRIEF_PLACEHOLDER_SUBTOPIC_RE, '').trim();
+    guard += 1;
+  }
+  return out;
 }
 
 function expandGroupedSourceBracketRefs(str = '') {
@@ -3300,6 +3561,36 @@ function trimBulletToMaxWordsPreservingLinks(bullet = '', maxWords = 84) {
 const LAZY_TEASER_OR_TRUNCATED_BRIEF_REGEX =
   /\b(click here|read more|latest on [a-z]+|catch up on the latest|powered by cisco)\b|\.{3}|…/i;
 
+function coerceBriefBulletEntryToString(entry) {
+  if (typeof entry === 'string') {
+    return stripLiteralBoldSubtopicPrefix(entry);
+  }
+  if (entry && typeof entry === 'object') {
+    const rawSub = stripLiteralBoldSubtopicPrefix(
+      String(entry.subtopic || entry.title || entry.heading || entry.label || '')
+        .replace(/\*\*/g, '')
+        .replace(/\s*:\s*$/, '')
+        .trim()
+    );
+    const cleanSub = /^(?:bold\s+subtopic|subtopic|topic\s+title|section\s+title|bullet\s*\d+|topic|heading)$/i.test(
+      rawSub
+    )
+      ? ''
+      : rawSub;
+    const rawBody = stripLiteralBoldSubtopicPrefix(
+      String(entry.body || entry.text || entry.content || entry.summary || '').trim()
+    );
+    if (!rawBody) return cleanSub;
+    if (!cleanSub) return rawBody;
+    // Avoid duplicating subtopic if the model also repeated it at the start of `body`
+    if (rawBody.toLowerCase().startsWith(`${cleanSub.toLowerCase()}:`)) {
+      return rawBody;
+    }
+    return `${cleanSub}: ${rawBody}`;
+  }
+  return '';
+}
+
 export function parseAndSanitizeDailyTopNewsBrief(
   rawTextOrObj,
   sourceCandidates = [],
@@ -3328,27 +3619,36 @@ export function parseAndSanitizeDailyTopNewsBrief(
     .replace(/\.{3,}|…+/g, '')
     .trim();
   const headline = sanitizeHallucinatedRosterText(rawHeadline, rosterPlayers);
-  const summary = sanitizeBriefInlineLinksAndRoster(
-    parsed.summary || '',
-    byRefId,
-    sourceCandidates,
-    rosterPlayers,
-    citedRefIds
-  );
+  const hasExplicitSummary = typeof parsed.summary === 'string' && parsed.summary.trim().length > 0;
+  const summary = hasExplicitSummary
+    ? sanitizeBriefInlineLinksAndRoster(
+        parsed.summary,
+        byRefId,
+        sourceCandidates,
+        rosterPlayers,
+        citedRefIds
+      )
+    : '';
 
-  if (!headline || summary.length < 40 || !Array.isArray(parsed.bullets)) {
+  if (!headline || headline.length < 8 || !Array.isArray(parsed.bullets)) {
     return null;
   }
 
   let bullets = parsed.bullets
     .map(b =>
       trimBulletToMaxWordsPreservingLinks(
-        sanitizeBriefInlineLinksAndRoster(b, byRefId, sourceCandidates, rosterPlayers, citedRefIds),
-        84
+        sanitizeBriefInlineLinksAndRoster(
+          coerceBriefBulletEntryToString(b),
+          byRefId,
+          sourceCandidates,
+          rosterPlayers,
+          citedRefIds
+        ),
+        86
       )
     )
-    .filter(b => b.length >= 30)
-    .slice(0, 3);
+    .filter(b => b.length >= 26)
+    .slice(0, 5);
 
   if (bullets.length < 2) return null;
 
@@ -3361,19 +3661,19 @@ export function parseAndSanitizeDailyTopNewsBrief(
     return null;
   }
 
-  // Ensure every bullet & summary carries at least one inline source link icon if candidates exist
+  // Ensure every bullet (and legacy explicit summary if provided) carries at least one inline source link icon if candidates exist
   const hasInlineLinkRe = new RegExp(MARKDOWN_HTTPS_INLINE_LINK_SOURCE, 'i');
-  if (sourceCandidates.length > 0 && !hasInlineLinkRe.test(summary)) {
+  if (summary && sourceCandidates.length > 0 && !hasInlineLinkRe.test(summary)) {
     const s0 = sourceCandidates[0];
     citedRefIds.add(s0.refId);
     const trimmedSum = summary.replace(/([.!?])\s*$/, '');
     parsed._patchedSummary = `${trimmedSum} [${s0.citeLabel}](${encodeMarkdownLinkUrl(s0.url)}).`;
   }
-  const finalSummary = parsed._patchedSummary || summary;
+  const finalSummary = summary ? parsed._patchedSummary || summary : '';
 
   bullets = bullets.map((b, idx) => {
     if (hasInlineLinkRe.test(b) || sourceCandidates.length === 0) return b;
-    const fallbackSrc = sourceCandidates[Math.min(idx + 1, sourceCandidates.length - 1)] || sourceCandidates[0];
+    const fallbackSrc = sourceCandidates[Math.min(idx, sourceCandidates.length - 1)] || sourceCandidates[0];
     citedRefIds.add(fallbackSrc.refId);
     const cleanNoPeriod = b.replace(/([.!?])\s*$/, '');
     return `${cleanNoPeriod} [${fallbackSrc.citeLabel}](${encodeMarkdownLinkUrl(fallbackSrc.url)}).`;
@@ -3402,12 +3702,12 @@ export function parseAndSanitizeDailyTopNewsBrief(
   }
 
   const coveredStoryKeys = Array.from(
-    new Set(sourceCandidates.slice(0, 12).map(s => s.storyKey).filter(Boolean))
+    new Set(sourceCandidates.slice(0, 14).map(s => s.storyKey).filter(Boolean))
   );
   const coveredUrls = Array.from(
     new Set([
       ...orderedSources.map(s => s.url),
-      ...sourceCandidates.slice(0, 12).flatMap(s => [s.url, ...(s.confirmingUrls || [])])
+      ...sourceCandidates.slice(0, 14).flatMap(s => [s.url, ...(s.confirmingUrls || [])])
     ])
   ).filter(Boolean);
 
@@ -3429,10 +3729,9 @@ export function parseAndSanitizeDailyTopNewsBrief(
       : cycleState.targetGame
         ? Number(cycleState.targetGame.week)
         : Number(appData?.meta?.currentWeek) || null;
-  const wordCount =
-    countVisibleBriefWords(headline) +
-    countVisibleBriefWords(finalSummary) +
-    bullets.reduce((acc, b) => acc + countVisibleBriefWords(b), 0);
+  const bulletsWords = bullets.reduce((acc, b) => acc + countVisibleBriefWords(b), 0);
+  // Rendered UI displays `headline` + `bullets` (no redundant summary box)
+  const wordCount = countVisibleBriefWords(headline) + bulletsWords;
 
   const resolvedBriefModel = meta.modelUsed || PRIMARY_GEMINI_REASONING_MODEL;
   return {
@@ -3457,13 +3756,15 @@ export function parseAndSanitizeDailyTopNewsBrief(
 }
 
 /**
- * Coherent, Fact-Synthesizing Newsroom Recap Builder (~200–240 visible words).
- * Synthesizes post-game final results (when in a post-game cycle) or front-office transactions,
- * contract restructures, player-by-player practice/IR participation statuses, and matchup storylines
- * in complete sentences (zero pasted teaser headlines, zero ellipses, and minimal-distraction inline link icons).
+ * Fluid, Dynamic Newsroom Recap Builder (~185–240 visible words across 3–5 bullets, zero redundant summary box).
+ * Adapts focus to what actually matters most in the active news window:
+ * - Post-Game: Full box-score & macro game takeaways (total yards, star QB/scrimmage lines, debuts,
+ *   honest two-sided defense & penalty discipline, in-game injuries, and upcoming travel/matchup horizon) — zero cap filler.
+ * - Mid-Week: Fresh injury/practice shifts, opponent & scheme keys, NFC contender impacts, and breaking stories.
+ * - Offseason / Active Transaction Days: Cap restructures, trades, signings, and draft developments when genuinely newsworthy.
  */
 export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(), meta = {}) {
-  const candidates = selectTopNewsBriefSourceCandidates(appData, 14, nowMs);
+  const candidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
   const m = appData?.meta || {};
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
@@ -3472,6 +3773,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
   const rec = m.teamRecord || '—';
   const capYr = String(m.seasonYear || 2026);
   const nextYr = String(Number(capYr) + 1);
+  const capStatus = hasActiveCapOrTransactionStoryline(appData, candidates, nowMs);
   const capGrossM = ((Number(appData?.cap?.years?.[capYr]?.teamCapSpace || 35_164_858)) / 1e6).toFixed(2);
   const capNextRaw = Number(appData?.cap?.years?.[nextYr]?.teamCapSpace ?? -31_540_066);
   const capNextLabel = `${capNextRaw < 0 ? '-' : '+'}$${(Math.abs(capNextRaw) / 1e6).toFixed(2)}M`;
@@ -3502,15 +3804,16 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     return `${arr.slice(0, -1).join(', ')}, and ${arr[arr.length - 1]}`;
   };
 
-  // 1. Extract concrete Roster, Trade & Cap facts
-  const completedMoves = (appData?.seasonal?.tradeWarRoom?.completed2026Moves || []).filter(mv => {
+  // 1. Fresh Roster, Trade & Cap facts (strictly gated by recency!)
+  const freshMoves = capStatus.freshMoves || [];
+  const topFreshTrade = freshMoves[0] || null;
+  const recentDebutTrades = (appData?.seasonal?.tradeWarRoom?.completed2026Moves || []).filter(mv => {
     const rawDate = String(mv?.timing || '');
     const mDate = rawDate.match(/\(([A-Za-z]+\s+\d+,\s+\d{4})\)/);
-    if (!mDate) return true;
+    if (!mDate) return false;
     const ts = Date.parse(mDate[1]);
-    return !Number.isFinite(ts) || nowMs - ts <= 14 * 86_400_000;
+    return Number.isFinite(ts) && nowMs - ts <= 10 * 86_400_000;
   });
-  const topTrade = completedMoves[0] || null;
 
   let restructureFact = null;
   for (const c of candidates) {
@@ -3553,7 +3856,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     }
   }
 
-  // 2. Extract concrete Practice Participation & IR Return Window facts from structured Health ledger
+  // 2. Practice Participation & IR Return Window facts
   const prList = Array.isArray(appData?.health?.practiceReport) ? appData.health.practiceReport : [];
   const irOpenList = (appData?.health?.irAndReserveTracker || []).filter(p => p.isPracticeWindowOpen);
   const latestDayInfo = prList.some(p => p.fri && p.fri !== '-')
@@ -3588,13 +3891,19 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
   };
 
   const dnpPlayers = latestDayInfo.key
-    ? prList.filter(p => String(p[latestDayInfo.key] || '').toUpperCase() === 'DNP')
-    : prList.filter(p => (p.playProbabilityPct ?? 100) <= 45);
+    ? prList.filter(
+        p =>
+          String(p[latestDayInfo.key] || '').toUpperCase() === 'DNP' &&
+          !/rest/i.test(p.injuryType || '')
+      )
+    : prList.filter(p => (p.playProbabilityPct ?? 100) <= 45 && !/rest/i.test(p.injuryType || ''));
   const lpPlayers = latestDayInfo.key
     ? prList.filter(p => String(p[latestDayInfo.key] || '').toUpperCase() === 'LP')
     : prList.filter(p => (p.playProbabilityPct ?? 100) > 45 && (p.playProbabilityPct ?? 100) <= 82);
   const fpPlayers = latestDayInfo.key
-    ? prList.filter(p => String(p[latestDayInfo.key] || '').toUpperCase() === 'FP' && !/rest/i.test(p.injuryType || ''))
+    ? prList.filter(
+        p => String(p[latestDayInfo.key] || '').toUpperCase() === 'FP' && !/rest/i.test(p.injuryType || '')
+      )
     : [];
   const vetRestPlayers = latestDayInfo.key
     ? prList.filter(p => /rest/i.test(`${p[latestDayInfo.key] || ''} ${p.injuryType || ''}`))
@@ -3605,139 +3914,287 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     Boolean(tg) && (Boolean(tg.completed) || /\bfinal\b/i.test(String(tg.statusDetail || '')));
 
   let headline = '';
-  let summary = '';
-  let bullet1 = '';
-  let bullet2 = '';
-  let bullet3 = '';
+  const dynamicBullets = [];
 
   if (isCompletedPostGame) {
     const tgOpp = tg.opponent?.name || tg.opponent?.abbr || 'Opponent';
     const tgOppLast = tgOpp.split(' ').pop();
+    const tgCity = TEAM_CITY_BY_ABBR[String(tg.opponent?.abbr || '').toUpperCase()] || tgOppLast;
     const tgWk = tg.week || wk;
     const hasScore = tg.sfScore != null && tg.oppScore != null;
-    const scoreStr = hasScore ? `${tg.sfScore}-${tg.oppScore}` : '';
-    const isWin =
-      tg.result === 'W' || (hasScore && Number(tg.sfScore) > Number(tg.oppScore));
-    const isLoss =
-      tg.result === 'L' || (hasScore && Number(tg.sfScore) < Number(tg.oppScore));
+    const scoreStr = hasScore ? `${tg.sfScore}–${tg.oppScore}` : '';
+    const isWin = tg.result === 'W' || (hasScore && Number(tg.sfScore) > Number(tg.oppScore));
+    const isLoss = tg.result === 'L' || (hasScore && Number(tg.sfScore) < Number(tg.oppScore));
+    const recap = appData?.scheduleMatchup?.lastCompletedGameRecap || null;
+    const hasMatchingBox =
+      recap &&
+      (Number(recap.week) === Number(tg.week) || (tg.id && String(recap.gameId) === String(tg.id))) &&
+      recap.sfTeamStats?.totalYards > 0;
 
-    headline = isWin
-      ? `49ers (${rec}) Week ${tgWk} Postgame Briefing: ${scoreStr ? `${scoreStr} ` : ''}Win Over ${tgOpp}`
-      : isLoss
-        ? `49ers (${rec}) Week ${tgWk} Postgame Briefing: ${tgOpp} Recap & Week ${wk} Reset`
-        : `49ers (${rec}) Week ${tgWk} Postgame Briefing: ${tgOpp} Final & Week ${wk} Outlook`;
+    if (hasMatchingBox) {
+      const sTeam = recap.sfTeamStats;
+      const oTeam = recap.oppTeamStats || {};
+      const qb = recap.sfPassing?.[0] || null;
+      const scrim = recap.sfScrimmageLeaders || [];
+      const star1 = scrim[0] || null;
+      const standingShort = (m.standingSummary || 'NFC West').split('•')[0].trim();
+      const locWord = (recap.homeAway || tg.homeAway) === 'away' ? 'road ' : 'home ';
 
-    const gameLeadCite = pickCite(new RegExp(tgOppLast, 'i'), 0);
-    const postReactionCite = pickCite(/purdy|shanahan|sack|touchdown|defense|win|loss/i, 1);
+      headline = isWin
+        ? `Offense Erupts for ${sTeam.totalYards} Yards as 49ers Outlast ${tgOppLast} ${scoreStr} to Reach ${rec}`
+        : `49ers (${rec}) Fall ${scoreStr} to ${tgOppLast} Despite ${sTeam.totalYards}-Yard Offensive Outing`;
 
-    const sum1 = isWin
-      ? `San Francisco (${rec}) closed out Week ${tgWk} with a ${scoreStr ? `${scoreStr} ` : ''}victory over the ${tgOpp}${gameLeadCite}, strengthening ${m.standingSummary || 'NFC positioning'} entering Week ${wk} against the ${oppName}.`
-      : isLoss
-        ? `San Francisco (${rec}) dropped its Week ${tgWk} matchup ${scoreStr ? `${scoreStr} ` : ''}against the ${tgOpp}${gameLeadCite}, turning immediate focus to Week ${wk} preparations for the ${oppName}.`
-        : `San Francisco (${rec}) completed Week ${tgWk} action against the ${tgOpp}${gameLeadCite} and now pivots to Week ${wk} preparations against the ${oppName}.`;
-    const sum2 = `Postgame evaluations centered on Brock Purdy's pocket execution, Raheem Morris's defensive adjustments, and roster recovery while maintaining $${capGrossM}M in ${capYr} salary cap flexibility${postReactionCite}.`;
-    summary = `${sum1} ${sum2}`;
-
-    const offCite = pickCite(/purdy|mccaffrey|yards|sack|touchdown|offense|pff/i, 2);
-    const defCite = pickCite(/lenoir|warner|buckner|pass rush|defense|fumble|interception/i, 3);
-    bullet1 = `Postgame Execution & Film Takeaways: Kyle Shanahan's offense balanced situational run efficiency and intermediate passing against the ${tgOpp}${offCite}, while Raheem Morris leaned on disciplined secondary coverage and interior disruption to close out critical second-half possessions${defCite}.`;
-
-    const healthPostCite = pickCite(/injury|achilles|shoulder|knee|ankle|return|active/i, 4);
-    const irClause =
-      irOpenList.length > 0
-        ? ` while ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window remains active`
-        : '';
-    const recoveryNames = joinNamesNatural(
-      [...dnpPlayers.slice(0, 2), ...lpPlayers.slice(0, 2)].map(fmtPlayerInj)
-    );
-    bullet2 = recoveryNames
-      ? `Postgame Health & Week ${wk} Recovery: Medical staff monitor ${recoveryNames} coming out of Week ${tgWk}${irClause} ahead of early-week evaluations for the ${oppName}${healthPostCite}.`
-      : `Postgame Health & Week ${wk} Recovery: San Francisco exits Week ${tgWk} evaluating postgame soreness across the active 53-man rotation${irClause} before Wednesday's initial Week ${wk} practice report for the ${oppName}${healthPostCite}.`;
-
-    const capPostCite = pickCite(/cap|trade|allen|buckner|contract|roster/i, 5);
-    const moveNote = topTrade?.player
-      ? `Following the midseason addition of ${topTrade.position} ${topTrade.player}, `
-      : '';
-    bullet3 = `Cap Rollover & Week ${wk} Outlook: ${moveNote}Paraag Marathe preserves $${capGrossM}M in ${capYr} gross cap space for 1-for-1 CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection as San Francisco prepares for the ${oppName}${capPostCite}.`;
-  } else {
-    // 3. Standard Mid-Week / Off-Day Headline
-    const headlineTopics = [];
-    if (topTrade?.player) headlineTopics.push(`${topTrade.player} Addition`);
-    if (restructureFact?.player) headlineTopics.push(`${restructureFact.player.split(' ').pop()} Cap Restructure`);
-    headlineTopics.push(
-      latestDayInfo.key ? `${latestDayInfo.label} Injury Report` : `Week ${wk} ${oppName} Availability`
-    );
-    headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics.slice(0, 3).join(', ')}`;
-
-    const leadMoveCite = pickCite(
-      topTrade?.player ? new RegExp(topTrade.player.split(' ').pop(), 'i') : /restructur|roster|cap/i,
-      0
-    );
-    const practiceLeadCite = pickCite(/practice window|injury report|limited today|miss practice/i, 1);
-    const summarySent1 =
-      topTrade?.player && restructureFact
-        ? `San Francisco (${rec}) enters Week ${wk} against the ${oppName} (${um.betting?.spread || 'NFL'}) after adding veteran ${topTrade.position} ${topTrade.player} at the trade deadline and clearing $${restructureFact.millions}M in immediate cap room via a ${restructureFact.player} restructure${leadMoveCite}.`
-        : topTrade?.player
-          ? `San Francisco (${rec}) enters Week ${wk} against the ${oppName} (${um.betting?.spread || 'NFL'}) after acquiring ${topTrade.position} ${topTrade.player} while preserving $${capGrossM}M in ${capYr} salary cap space${leadMoveCite}.`
-          : `San Francisco (${rec}) turns to Week ${wk} preparations against the ${oppName} (${um.betting?.spread || 'NFL'}) while managing $${capGrossM}M in ${capYr} salary cap flexibility${leadMoveCite}.`;
-
-    const summarySent2 =
-      irOpenList.length > 0 || dnpPlayers.length > 0
-        ? `On the practice field, ${latestDayInfo.label}'s report balanced an IR return window activation and key skill-position return against early-week absences in the starting secondary${practiceLeadCite}.`
-        : `Active-roster depth and coordinator game-planning headline preparations at SAP Performance Facility ahead of kickoff${practiceLeadCite}.`;
-    summary = `${summarySent1} ${summarySent2}`;
-
-    const rosterSentences = [];
-    if (topTrade?.player) {
-      const cleanCost = String(topTrade.costSummary || 'Day 3 draft capital')
-        .replace(/\s*\(via [^)]+\)/i, '')
-        .toLowerCase();
-      const officialTradeCite = pickCite(
-        c => /acquire|trade/i.test(c.title) && new RegExp(topTrade.player.split(' ').pop(), 'i').test(c.title)
+      // Bullet 1: Macro Game Outcome & Historic/Team Offense
+      const gameCite = pickCite(new RegExp(`584|total yards|records falling|${tgOppLast}`, 'i'), 0);
+      const histCite = pickCite(/franchise|history|greatest show/i);
+      const histNote =
+        sTeam.totalYards >= 550
+          ? `—one of the most prolific yardage totals in franchise history${histCite || ''}`
+          : ` (${sTeam.yardsPerPlay} yards per play)`;
+      dynamicBullets.push(
+        `${tgOppLast} ${Number(tg.sfScore) + Number(tg.oppScore) >= 70 ? 'Shootout ' : ''}${isWin ? 'Win' : 'Final'}: San Francisco moved to ${rec} (${standingShort}) with a ${scoreStr} ${locWord}${isWin ? 'victory over' : 'finish against'} ${tgCity}${gameCite}. The offense erupted for ${sTeam.totalYards} total yards${histNote}.`
       );
-      const psClause = signingFact ? ` and signed ${signingFact.who} to the ${signingFact.bucket}` : '';
-      rosterSentences.push(
-        `John Lynch finalized the trade for ${topTrade.position} ${topTrade.player} from ${fmtFromTeam(topTrade.acquiredFrom)} for a ${cleanCost}${psClause}${officialTradeCite}.`
+
+      // Bullet 2: Primary Offensive Engines (Top Scrimmage Star + QB)
+      if (star1 && qb) {
+        const star1Last = star1.name.replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV)$/i, '').split(' ').pop();
+        const qbLast = qb.name.split(' ').pop();
+        const starCite = pickCite(new RegExp(`${star1Last}|${qbLast}|mvp`, 'i'), 1);
+        const recHighlight =
+          star1.recYards >= 100
+            ? `, including ${star1.recYards} receiving yards${star1.recTds ? ` and ${star1.recTds} receiving scores` : ''}${star1.recLong >= 50 ? ` (long of ${star1.recLong})` : ''}`
+            : star1.rushYards >= 100
+              ? `, highlighted by ${star1.rushYards} rushing yards`
+              : '';
+        const sackClause = qb.sacksTaken >= 3 ? ` despite absorbing ${qb.sacksTaken} sacks` : '';
+        dynamicBullets.push(
+          `${star1Last} & ${qbLast} Shine: ${star1.name} totaled ${star1.scrimmageYards} scrimmage yards and ${star1.totalTds} touchdown${star1.totalTds === 1 ? '' : 's'}${recHighlight}. ${qb.name} threw for ${qb.yards} yards, ${qb.tds} TD${qb.tds === 1 ? '' : 's'}, and ${qb.ints} interceptions (${qb.rating} rating)${sackClause}${starCite}.`
+        );
+      }
+
+      // Bullet 3: Secondary Weapons, Returning Stars & Debuts
+      const debutByName = new Map(
+        recentDebutTrades.map(mv => [String(mv.player || '').toLowerCase(), mv])
       );
-    } else if (signingFact) {
-      rosterSentences.push(
-        `San Francisco signed ${signingFact.who} to the ${signingFact.bucket} ahead of Week ${wk}${pickCite(/signed|roster|practice squad/i)}.`
+      const supporting = scrim
+        .slice(1, 6)
+        .slice()
+        .sort((a, b) => {
+          const aScore =
+            a.totalTds * 55 +
+            a.scrimmageYards +
+            (debutByName.has(a.name.toLowerCase()) ? 48 : 0);
+          const bScore =
+            b.totalTds * 55 +
+            b.scrimmageYards +
+            (debutByName.has(b.name.toLowerCase()) ? 48 : 0);
+          return bScore - aScore;
+        });
+      if (supporting.length > 0) {
+        const suppClauses = [];
+        for (const sp of supporting) {
+          const debutMv = debutByName.get(sp.name.toLowerCase()) || null;
+          if (debutMv && sp.receptions > 0) {
+            suppClauses.push(
+              `debuting ${debutMv.position || 'WR'} ${sp.name} caught ${sp.receptions} passes for ${sp.recYards} yards`
+            );
+          } else if (sp.totalTds >= 2) {
+            suppClauses.push(
+              `${sp.name} posted ${sp.scrimmageYards} scrimmage yards and ${sp.totalTds} TDs${sp.rushLong >= 40 ? ` (highlighted by a ${sp.rushLong}-yard run)` : ''}`
+            );
+          } else if (sp.totalTds === 1) {
+            suppClauses.push(
+              `${sp.name} added ${sp.rushTds ? `a ${sp.rushLong || sp.rushYards}-yard rushing score` : `a ${sp.recLong || sp.recYards}-yard TD catch`}`
+            );
+          } else if (sp.receptions >= 5 && sp.recYards >= 60 && suppClauses.length < 3) {
+            suppClauses.push(`${sp.name} hauled in ${sp.receptions} catches for ${sp.recYards} yards`);
+          }
+          if (suppClauses.length >= 3) break;
+        }
+        if (suppClauses.length > 0) {
+          const weapCite = pickCite(/deebo|samuel|keenan allen|kittle|black/i, 2);
+          const capFirst = `${suppClauses[0].charAt(0).toUpperCase()}${suppClauses[0].slice(1)}`;
+          const rest = suppClauses.slice(1);
+          const sentence =
+            rest.length === 0
+              ? `${capFirst}${weapCite}.`
+              : rest.length === 1
+                ? `${capFirst}, while ${rest[0]}${weapCite}.`
+                : `${capFirst}; ${rest[0]}, and ${rest[1]}${weapCite}.`;
+          dynamicBullets.push(`Weaponry & Debuts: ${sentence}`);
+        }
+      }
+
+      // Bullet 4: Honest Two-Sided Defense & Penalty Discipline
+      const def = recap.sfDefense || {};
+      const defCite = pickCite(/pass rush|pff|defense|mustapha|lenoir|green/i, 3);
+      const takeawayMakers = [
+        ...(def.interceptions || []).map(i => `${i.name}'s interception`),
+        ...(def.fumbleRecoveries || []).map(f => `${f.name}'s fumble recovery`)
+      ];
+      const brightSpots = [];
+      if ((oTeam.rushingYards || 0) <= 105) {
+        brightSpots.push(
+          `bottled up ${tgCity}'s ground game (${oTeam.rushingYards} yards, ${oTeam.rushingTds ?? 0} TDs)`
+        );
+      }
+      if ((def.takeawaysForced || 0) > 0) {
+        brightSpots.push(
+          `forced ${def.takeawaysForced} takeaway${def.takeawaysForced === 1 ? '' : 's'}${takeawayMakers.length ? ` (${takeawayMakers.slice(0, 2).join(' and ')})` : ''}`
+        );
+      }
+      const yieldedBits = [];
+      if ((oTeam.netPassingYards || 0) >= 280) {
+        yieldedBits.push(
+          `${oTeam.netPassingYards} passing yards${oTeam.passingTds ? `, ${oTeam.passingTds} TDs` : ''}`
+        );
+      }
+      if (/^[3-9]-[3-9]/.test(oTeam.fourthDownEff || '')) {
+        yieldedBits.push(`${oTeam.fourthDownEff.replace('-', '-of-')} fourth-down conversions`);
+      }
+      if ((recap.oppFourthQuarterPts || 0) >= 14) {
+        yieldedBits.push(`${recap.oppFourthQuarterPts} fourth-quarter points`);
+      }
+      const lowPassRushPrefix =
+        (def.sacksRecorded ?? 9) <= 1
+          ? `generated just ${def.sacksRecorded ?? 0} sack${def.sacksRecorded === 1 ? '' : 's'} while yielding `
+          : 'yielded ';
+      const penTail =
+        (sTeam.penaltyYards || 0) >= 80
+          ? ` alongside ${sTeam.penaltyYards} team penalty yards`
+          : '';
+      const inGameExitM = String(recap.inGameInjuryNotes || '').match(
+        /49ers:\s*([A-Z]{1,3}\s+[A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+)*)[^.]*?\b(back|ankle|knee|hamstring|shoulder|concussion|groin)[^.]*?exited/i
       );
-    }
-    if (restructureFact) {
-      const rCite = pickCite(/restructur|cap space/i);
-      rosterSentences.push(
-        `Paraag Marathe converted base salary on ${restructureFact.pos ? `${restructureFact.pos} ` : ''}${restructureFact.player} to open $${restructureFact.millions}M${rCite}, lifting ${capYr} room to $${capGrossM}M for CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection.`
+      const injLeadIn = inGameExitM
+        ? `Hampered after ${inGameExitM[1]} (${inGameExitM[2].toLowerCase()}) exited, the unit ${lowPassRushPrefix}`
+        : `However, the unit ${lowPassRushPrefix}`;
+      const defSentence1 =
+        brightSpots.length > 0
+          ? `The defense ${brightSpots.join(' and ')}. `
+          : '';
+      const defSentence2 =
+        yieldedBits.length > 0
+          ? `${injLeadIn}${joinNamesNatural(yieldedBits)}${penTail}${defCite}.`
+          : `Raheem Morris's unit closed out the final possessions${defCite}.`;
+      dynamicBullets.push(`Defense & Trench Tape: ${defSentence1}${defSentence2}`);
+
+      // Bullet 5: Post-Game Health & Next-Week Horizon
+      const nextCite = pickCite(
+        new RegExp(`sea level|altitude|mexico|${oppName.split(' ').pop()}`, 'i'),
+        4
       );
+      const hasAltitudeStory = candidates.some(c =>
+        /7,350|sea level|altitude|mexico city/i.test(`${c.title} ${c.fullBody}`)
+      );
+      const nextVenueStr = hasAltitudeStory
+        ? `high-altitude preparations ahead of Sunday's Week ${wk} matchup with the ${oppName} in Mexico City`
+        : `Week ${wk} preparations against the ${oppName}`;
+      const watchAreas = [];
+      if ((qb?.sacksTaken || 0) >= 4) watchAreas.push('interior pass protection');
+      if ((def.sacksRecorded ?? 9) <= 1) watchAreas.push('four-man pass rush');
+      if (inGameExitM || dnpPlayers.length > 0) watchAreas.push('secondary health');
+      const watchLead =
+        watchAreas.length > 0
+          ? `${joinNamesNatural(watchAreas).replace(/^./, ch => ch.toUpperCase())} headline early-week focus`
+          : 'Recovery and game-plan install headline the week';
+      dynamicBullets.push(`Looking Ahead: ${watchLead} as San Francisco turns to ${nextVenueStr}${nextCite}.`);
     } else {
-      rosterSentences.push(
-        `Paraag Marathe holds $${capGrossM}M in ${capYr} room for 1-for-1 CBA Article 13 rollover against ${nextYr}'s ${capNextLabel} void years projection${pickCite(/cap|contract|roster/i)}.`
+      // Fallback Post-Game when ESPN boxscore JSON is unavailable
+      headline = isWin
+        ? `49ers (${rec}) Outlast ${tgOpp} ${scoreStr ? `${scoreStr} ` : ''}Heading Into Week ${wk}`
+        : isLoss
+          ? `49ers (${rec}) Drop Week ${tgWk} Matchup Against ${tgOpp}, Reset for ${oppName}`
+          : `49ers (${rec}) Complete Week ${tgWk} vs. ${tgOpp}, Turn to Week ${wk}`;
+
+      const gameLeadCite = pickCite(new RegExp(tgOppLast, 'i'), 0);
+      const offCite = pickCite(/purdy|mccaffrey|yards|touchdown|offense/i, 1);
+      const defCite = pickCite(/pass rush|lenoir|warner|mustapha|defense|fumble|interception/i, 2);
+      const healthPostCite = pickCite(/injury|achilles|back|knee|ankle|return|sea level|vikings/i, 3);
+
+      dynamicBullets.push(
+        `Week ${tgWk} Result & Standings: San Francisco (${rec}) ${isWin ? `closed out a ${scoreStr ? `${scoreStr} ` : ''}win over` : isLoss ? `fell ${scoreStr ? `${scoreStr} ` : ''}to` : 'wrapped up action against'} the ${tgOpp}${gameLeadCite}, ${isWin ? `holding ${m.standingSummary || 'its NFC West pace'}` : 'shifting immediate focus'} entering Week ${wk} against the ${oppName}.`
+      );
+      dynamicBullets.push(
+        `Offensive & Defensive Takeaways: Explosive plays from Brock Purdy and Christian McCaffrey paced the scoring output${offCite}, while the coaching staff evaluates pass-rush pressure and coverage discipline on tape${defCite}.`
+      );
+      const recoveryNames = joinNamesNatural(
+        [...dnpPlayers.slice(0, 2), ...lpPlayers.slice(0, 2)].map(fmtPlayerInj)
+      );
+      dynamicBullets.push(
+        recoveryNames
+          ? `Postgame Health & Week ${wk} Horizon: Medical staff evaluate ${recoveryNames} coming out of Week ${tgWk} ahead of Wednesday's initial Week ${wk} practice report for the ${oppName}${healthPostCite}.`
+          : `Postgame Health & Week ${wk} Horizon: San Francisco monitors postgame recovery across the active 53-man roster before opening Week ${wk} install for the ${oppName}${healthPostCite}.`
       );
     }
-    bullet1 = `Trades, Roster & Cap Moves: ${rosterSentences.join(' ')}`;
+  } else {
+    // Mid-Week / Breaking News / Offseason Dynamic Selection (Zero Forced Cap Filler!)
+    const headlineTopics = [];
+    if (topFreshTrade?.player) headlineTopics.push(`${topFreshTrade.player} Trade`);
+    if (restructureFact?.player) headlineTopics.push(`${restructureFact.player.split(' ').pop()} Restructure`);
+    headlineTopics.push(
+      latestDayInfo.key ? `${latestDayInfo.label} Injury Status` : `Week ${wk} ${oppName} Prep`
+    );
+    headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics.slice(0, 3).join(' & ')}`;
 
+    // Optional Bullet A: Fresh Trade, Signing, or Cap Restructure (ONLY if genuinely active!)
+    if (topFreshTrade || signingFact || restructureFact || capStatus.isOffseason) {
+      const rosterSentences = [];
+      if (topFreshTrade?.player) {
+        const cleanCost = String(topFreshTrade.costSummary || 'Day 3 draft capital')
+          .replace(/\s*\(via [^)]+\)/i, '')
+          .toLowerCase();
+        const officialTradeCite = pickCite(
+          c => /acquire|trade/i.test(c.title) && new RegExp(topFreshTrade.player.split(' ').pop(), 'i').test(c.title),
+          0
+        );
+        const psClause = signingFact ? ` and signed ${signingFact.who} to the ${signingFact.bucket}` : '';
+        rosterSentences.push(
+          `John Lynch acquired ${topFreshTrade.position} ${topFreshTrade.player} from ${fmtFromTeam(topFreshTrade.acquiredFrom)} for a ${cleanCost}${psClause}${officialTradeCite}.`
+        );
+      } else if (signingFact) {
+        rosterSentences.push(
+          `San Francisco signed ${signingFact.who} to the ${signingFact.bucket}${pickCite(/signed|roster|practice squad/i, 0)}.`
+        );
+      }
+      if (restructureFact) {
+        const rCite = pickCite(/restructur|cap space/i);
+        rosterSentences.push(
+          `Paraag Marathe converted base salary on ${restructureFact.pos ? `${restructureFact.pos} ` : ''}${restructureFact.player} to clear $${restructureFact.millions}M${rCite}, setting ${capYr} room at $${capGrossM}M toward ${nextYr}'s ${capNextLabel} cap horizon.`
+        );
+      } else if (capStatus.isOffseason) {
+        rosterSentences.push(
+          `San Francisco manages $${capGrossM}M in ${capYr} cap space alongside ${nextYr}'s ${capNextLabel} projection${pickCite(/cap|contract|draft|free agen/i, 0)}.`
+        );
+      }
+      if (rosterSentences.length > 0) {
+        dynamicBullets.push(`Roster & Front Office: ${rosterSentences.join(' ')}`);
+      }
+    }
+
+    // Bullet B: Fresh 49ers & Opponent Injury / Practice Updates
     const healthSentences = [];
     if (irOpenList.length > 0) {
-      const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'));
+      const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'), 0);
       const lpPart =
         lpPlayers.length > 0
-          ? ` alongside limited sessions for ${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))}`
+          ? ` alongside limited work for ${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))}`
           : '';
       healthSentences.push(
-        `The 49ers opened ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window${lpPart}${irCite}.`
+        `San Francisco opened ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window${lpPart}${irCite}.`
       );
     } else if (lpPlayers.length > 0) {
       healthSentences.push(
-        `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} practiced on a limited basis ${latestDayInfo.label}${pickCite(/injury|practice|limited/i)}.`
+        `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} logged limited practice reps ${latestDayInfo.label}${pickCite(/injury|practice|limited/i, 0)}.`
       );
     }
     if (dnpPlayers.length > 0) {
-      const injRepCite = pickCite(/injury report|miss practice|no practice/i);
+      const injRepCite = pickCite(/injury report|miss practice|no practice|did not practice/i, 1);
       const fpTail =
         fpPlayers.length > 0
-          ? `, whereas ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
+          ? `, while ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
           : vetRestPlayers.length > 0
-            ? `, while ${joinNamesNatural(vetRestPlayers.slice(0, 3).map(p => p.name))} received veteran rest`
+            ? `, with ${joinNamesNatural(vetRestPlayers.slice(0, 2).map(p => p.name))} taking veteran rest`
             : '';
       healthSentences.push(
         `${joinNamesNatural(dnpPlayers.slice(0, 4).map(fmtPlayerInj))} did not practice ${latestDayInfo.label}${fpTail}${injRepCite}.`
@@ -3745,58 +4202,53 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     }
     if (healthSentences.length === 0) {
       healthSentences.push(
-        `Active starters enter Week ${wk} cleared as medical staff manage routine recovery ahead of the ${oppName}${pickCite(/health|injury|practice/i, 1)}.`
+        `Core starters enter ${latestDayInfo.label} on track as medical staff monitor routine recovery ahead of the ${oppName}${pickCite(/health|injury|practice/i, 0)}.`
       );
     }
-    bullet2 = `Injury & Practice Availability: ${healthSentences.join(' ')}`;
+    dynamicBullets.push(`Injury & Practice Status: ${healthSentences.join(' ')}`);
 
-    const teamSentences = [];
+    // Bullet C: Key Matchup & Tactical Storyline
     const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
     const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
-    const groundOrOffCite = pickCite(/ground game|everybody|offense|cowboys|matchup/i);
-
-    if (dnpCbPlayers.length >= 2 && (cbStoryCite || groundOrOffCite)) {
-      teamSentences.push(
-        `With starting cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan can insulate the secondary against the ${oppName} through San Francisco's top-ranked EPA offense, play-action passing, and ball-control run game${groundOrOffCite}.`
+    const matchupCite = pickCite(
+      new RegExp(`${oppName.split(' ').pop()}|altitude|pass rush|protection|ground game|offense`, 'i'),
+      1
+    );
+    if (dnpCbPlayers.length >= 2 && cbStoryCite) {
+      dynamicBullets.push(
+        `Week ${wk} Matchup Keys: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, San Francisco (${um.betting?.spread || rec}) leans on play-action efficiency and ball-control offense against the ${oppName}${matchupCite}.`
       );
     } else {
-      const schemeCite = groundOrOffCite || pickCite(() => true, 2);
-      teamSentences.push(
-        `Kyle Shanahan and Raheem Morris enter Week ${wk} against the ${oppName} leaning on top-tier offensive EPA efficiency, play-action sequencing, and disciplined run fits${schemeCite}.`
+      dynamicBullets.push(
+        `Week ${wk} Matchup Keys: Kyle Shanahan and Raheem Morris prepare for the ${oppName} (${um.oppRecord || 'NFL'}, ${um.betting?.spread || 'Pick'}) with pass protection, four-man rush pressure, and red-zone execution in focus${matchupCite}.`
       );
     }
 
-    const allenOffenseCite = topTrade?.player
-      ? pickCite(c => /everybody['’]?s open|make the 49ers.*offense|energized/i.test(`${c.title} ${c.fullBody}`))
-      : '';
-    const purdyMvpCite = pickCite(/purdy.*mvp|midseason honors/i);
-    const macJonesCite = pickCite(/mac jones/i);
-
-    if (topTrade?.player && allenOffenseCite) {
-      const injuredWr = dnpPlayers.find(p => p.position === 'WR');
-      teamSentences.push(
-        `Working ${topTrade.player} into intermediate routes gives QB Brock Purdy another veteran separator${injuredWr ? ` without rushing ${injuredWr.name} back` : ''}${allenOffenseCite}${purdyMvpCite ? `, while Purdy earns midseason MVP buzz${purdyMvpCite}` : ''}.`
+    // Bullet D: Fresh Lead Wire / NFC Contender / Team Development (ensuring >=3 non-redundant bullets even with 0 cap filler!)
+    const unusedLead = candidates.find(
+      c =>
+        !usedRefSet.has(c.refId) &&
+        (c.summary?.length >= 40 || (c.type === 'tweet' && (c.fullBody || '').length >= 55)) &&
+        !/\?|latest on|click here|morning report/i.test(`${c.title} ${c.summary || ''} ${c.fullBody || ''}`)
+    );
+    if (unusedLead) {
+      const rawLeadTxt = unusedLead.summary || unusedLead.fullBody || unusedLead.title;
+      const firstSent = (rawLeadTxt.match(/^[^.!?]+[.!?]/) || [rawLeadTxt])[0]
+        .trim()
+        .replace(/[.!?]+$/, '');
+      usedRefSet.add(unusedLead.refId);
+      citedIds.push(unusedLead.refId);
+      const subLabel = /nfc|rams|seahawks|cardinals|vikings|lions|eagles|playoff|seed/i.test(rawLeadTxt)
+        ? 'NFC & Matchup Watch'
+        : 'Around the Beat';
+      dynamicBullets.push(`${subLabel}: ${firstSent} [${unusedLead.refId}].`);
+    } else if (dynamicBullets.length < 3) {
+      const sfOdds = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
+      const standCite = pickCite(() => true, 2);
+      dynamicBullets.push(
+        `NFC Standings Outlook: Sitting at ${rec} (${m.standingSummary || 'NFC West'}), San Francisco holds a ${sfOdds.makePlayoffsPct ?? 93}% playoff projection and ${sfOdds.winDivisionPct ?? 82}% division mark entering Week ${wk}${standCite}.`
       );
-    } else if (purdyMvpCite) {
-      teamSentences.push(
-        `QB Brock Purdy continues to draw midseason MVP recognition${purdyMvpCite}${macJonesCite ? `, while backup Mac Jones remains in place past the deadline${macJonesCite}` : ''}.`
-      );
-    } else {
-      const extraBeat = candidates.find(
-        c =>
-          !usedRefSet.has(c.refId) &&
-          c.summary &&
-          c.summary.length >= 45 &&
-          !/\?|latest on|click here|morning report/i.test(`${c.title} ${c.summary}`)
-      );
-      if (extraBeat) {
-        const firstSent = (extraBeat.summary.match(/^[^.!?]+[.!?]/) || [extraBeat.summary])[0].trim().replace(/[.!?]+$/, '');
-        usedRefSet.add(extraBeat.refId);
-        citedIds.push(extraBeat.refId);
-        teamSentences.push(`${firstSent} [${extraBeat.refId}].`);
-      }
     }
-    bullet3 = `Matchup & Team Storylines: ${teamSentences.join(' ')}`;
   }
 
   const effectiveCycleKey = meta.cycleKey || cycleState.activeCycleKey;
@@ -3812,8 +4264,8 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
   const built = parseAndSanitizeDailyTopNewsBrief(
     {
       headline,
-      summary,
-      bullets: [bullet1, bullet2, bullet3],
+      summary: '',
+      bullets: dynamicBullets,
       citedSourceIds: citedIds
     },
     candidates,
@@ -3840,10 +4292,10 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       modelUsed: PRIMARY_GEMINI_REASONING_MODEL,
       thinkingLevel: 'XHIGH',
       source: meta.source || 'pipeline-grounded',
-      wordCount: 215,
+      wordCount: 205,
       headline,
-      summary,
-      bullets: [bullet1, bullet2, bullet3],
+      summary: '',
+      bullets: dynamicBullets,
       coveredStoryKeys: [],
       coveredUrls: candidates.map(c => c.url),
       sources: candidates.slice(0, 10).map(c => ({
@@ -4088,6 +4540,12 @@ export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
   if (!effectiveKey && !baseUrl) return false;
+  if (
+    appData?._awaitingInitialLiveWireSync === true &&
+    (typeof navigator === 'undefined' || navigator.onLine !== false)
+  ) {
+    return false;
+  }
   if (isAppDataAwaitingLivePostGameHydration(appData, nowMs)) return false;
 
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
@@ -4125,12 +4583,21 @@ export async function refreshDailyTopNewsBriefIfDue({
     return { updated: false, reason: 'no_news_state' };
   }
 
+  const preHydrateBrief = appData.news.dailyTopNewsBrief || null;
   hydrateCachedDailyTopNewsBrief(appData, nowMs);
 
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
   if (!effectiveKey && !baseUrl) {
     return { updated: false, reason: 'no_ai_connection' };
+  }
+
+  if (
+    !force &&
+    appData?._awaitingInitialLiveWireSync === true &&
+    (typeof navigator === 'undefined' || navigator.onLine !== false)
+  ) {
+    return { updated: false, reason: 'awaiting_initial_live_wire_sync' };
   }
 
   if (!force && isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
@@ -4183,7 +4650,7 @@ export async function refreshDailyTopNewsBriefIfDue({
   }
 
   SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = (async () => {
-    const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 14, nowMs);
+    const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
     if (sourceCandidates.length === 0) {
       return { updated: false, reason: 'no_source_candidates' };
     }
@@ -4240,7 +4707,11 @@ export async function refreshDailyTopNewsBriefIfDue({
       completedWithoutAi: false
     });
 
-    const promptText = buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs);
+    const priorBriefCandidate =
+      preHydrateBrief && preHydrateBrief.cycleKey !== activeCycle ? preHydrateBrief : null;
+    const promptText = buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs, {
+      previousBrief: priorBriefCandidate
+    });
     const systemPrompt = buildLiveGroundingSystemPrompt(appData);
 
     try {

@@ -5,7 +5,8 @@
 
 import {
   collapseInitialDots,
-  computePlayerPlayProbability
+  computePlayerPlayProbability,
+  scopeBeatTextToPlayer
 } from './injuryProbabilityModel.js';
 
 export const GAME_DAY_INACTIVES_LEAD_MS = 90 * 60_000; // 90 minutes before kickoff
@@ -856,7 +857,7 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
         );
       const isActiveProse =
         !isInactiveProse &&
-        /\b(officially active|is active (?:today|for|against|vs)|are active (?:today|for|against|vs)|active for (?:today|sunday|monday|thursday|saturday)|will play today|cleared to play)\b/i.test(
+        /\b(officially active|is active(?:\s+(?:today|for|against|vs\.?))?|are active(?:\s+(?:today|for|against|vs\.?))?|active (?:for|vs\.?|against)\s+(?:today|sunday|monday|thursday|saturday|[a-z]{3,})|will play today|cleared to play|good to go (?:today|for (?:today|sunday|monday|thursday|saturday)))/i.test(
           clause
         );
 
@@ -1036,11 +1037,13 @@ export function buildTeamGameDayRosterModel({
   const allCandidates = Array.from(mergedRosterMap.values());
   const wireSignals = extractWireGameDaySignals(effectiveNews, allCandidates, effectiveWindow.kickoffMs);
 
+  // Only assert `isOfficialListPosted = true` when we actually have a verified official scratch list
+  // (never fabricate a 52-player active game-day dress list just because the kickoff clock started while offline!).
   const isOfficialListPosted =
     Boolean(liveFeedData?.officialPosted) ||
     compExplicitInactiveCount >= 3 ||
     wireSignals.hasOfficialListSignal ||
-    Boolean(effectiveWindow.hasKickoffStarted);
+    wireSignals.inactiveKeys.size >= 3;
 
   const inactives = [];
   const actives = [];
@@ -1515,6 +1518,7 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
  *    `computePlayerPlayProbability` computes genuine upcoming-week play likelihood instead of `0% • Out`
  */
 export function resolveEarlyWeekRolloverInput({
+  playerName = '',
   rawStatus = '',
   injuryType = '',
   shortComment = '',
@@ -1522,14 +1526,25 @@ export function resolveEarlyWeekRolloverInput({
   upcomingWeek = null,
   lastCompletedWeek = null,
   playedInCompletedGame = null,
-  hasPostKickoffInjurySignal = false
+  hasPostKickoffInjurySignal = false,
+  postKickoffInjuryNote = ''
 } = {}) {
   const injClean = String(injuryType || '').trim();
   const injLower = injClean.toLowerCase();
   const statusClean = String(rawStatus || '').trim();
   const statusLower = statusClean.toLowerCase();
   const shortTrim = String(shortComment || '').trim();
-  const combined = `${shortTrim} ${String(longComment || '').trim()}`.trim();
+  const rawCombined = `${shortTrim} ${String(longComment || '').trim()}`.trim();
+
+  // Scope multi-player ESPN/RotoWire blurbs to the target player so teammate clauses
+  // (e.g., "Van Ginkel sustained his injury in the fourth quarter. Blake Cashman (concussion) is inactive...")
+  // never bleed another teammate's `is inactive` / `surgery` tag onto this player!
+  const inferredTargetName =
+    String(playerName || '').trim() ||
+    (shortTrim.match(/^([A-Z][A-Za-z'. -]{1,26})\s+\([a-zA-Z /,-]{3,24}\)/)?.[1] || '').trim();
+  const combined = inferredTargetName
+    ? scopeBeatTextToPlayer(rawCombined, inferredTargetName) || rawCombined
+    : rawCombined;
 
   const isNonInjuryScratch =
     /not injury related|nir\s*-?\s*rest|\brest\b|coach'?s decision|personal/i.test(injLower) ||
@@ -1567,7 +1582,7 @@ export function resolveEarlyWeekRolloverInput({
     });
 
   const hasAcuteCompletedGameInjuryInProse =
-    /\b(sustained|suffered|injured (?:in|during|his|her)|aggravated|re-aggravated|concussion protocol|evaluated for a concussion|left (?:sunday|monday|thursday|saturday|the)[a-z ']* (?:game|win|loss|contest)|exited (?:sunday|monday|thursday|saturday|the)|questionable to return|doubtful to return|did not return|will not return|didn'?t leave unscathed|after the game|following the (?:game|win|loss)|underwent an mri|scheduled for an mri|x-rays?|ct scan|surgery|high-ankle|sprained|strained|week-to-week|out (?:multiple|several) weeks|broken|fracture|torn|placed on injured reserve|ruled out for week)\b/i.test(
+    /\b(sustained|suffered|injured (?:in|during|his|her)|aggravat(?:ed|ion)|re-aggravat(?:ed|ion)|concussion protocol|evaluated for a concussion|left (?:sunday|monday|thursday|saturday|the)[a-z ']* (?:game|win|loss|contest)|(?:left|exited)\s+(?:[\w' -]{0,32}\s+)?with\s+(?:a|an|the(?:\s+same)?)\s+[a-z -]{3,28}|exited (?:sunday|monday|thursday|saturday|the)|questionable to return|doubtful to return|ruled out for the (?:rest|remainder)|did(?:n['’]?t|\s+not)\s+return|will not return|won['’]?t return|didn'?t leave unscathed|after the game|following the (?:game|win|loss)|underwent an mri|scheduled for an mri|x-rays?|ct scan|surgery|high-ankle|sprained|strained|week-to-week|out (?:multiple|several) weeks|broken|fracture|torn|placed on injured reserve|ruled out for week)\b/i.test(
       sanitizedCombinedForAcuteCheck
     );
 
@@ -1609,7 +1624,7 @@ export function resolveEarlyWeekRolloverInput({
       /\b(does not (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|doesn'?t (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|has no (?:official )?(?:injury )?designation|no official injury designation|off the injury report)\b/i.test(
         shortTrim
       );
-    if (wasExplicitlyClearedInHeadline) {
+    if (wasExplicitlyClearedInHeadline && !hasPostKickoffInjurySignal) {
       return {
         skip: true,
         effectiveStatus: 'Active',
@@ -1658,8 +1673,14 @@ export function resolveEarlyWeekRolloverInput({
       sanitizedCombinedForAcuteCheck
     );
 
+  const requiresSurgeryOrIrCandidate =
+    /\b(requires?\s+surgery|undergo(?:ing)?\s+surgery|scheduled\s+for\s+surgery|candidate\s+for\s+(?:injured\s+reserve|ir\b)|likely\s+headed\s+to\s+(?:injured\s+reserve|ir\b)|expected\s+to\s+land\s+on\s+(?:injured\s+reserve|ir\b))\b/i.test(
+      combined
+    ) && !/\b(?:doesn['’]?t|does\s+not|will\s+not|won['’]?t|avoided)\s+(?:require\s+|need\s+)?surgery\b/i.test(combined);
+
   const isMultiWeekAbsence =
     isSevereInGameMechanism ||
+    requiresSurgeryOrIrCandidate ||
     /\b(out (?:multiple|several|[2-9]|two|three|four) weeks|miss (?:multiple|several|[2-9]|two|three|four) weeks|expected to miss (?:at least )?(?:[2-9]|two|three|four|several|multiple) weeks|high-ankle sprain.*miss)\b/i.test(
       combined
     );
@@ -1681,12 +1702,28 @@ export function resolveEarlyWeekRolloverInput({
     effectiveStatus = 'Questionable';
   }
 
+  const playedAndHurtInGameProse =
+    /\b(questionable to return|doubtful to return|ruled out for the (?:rest|remainder)|out for the (?:rest|remainder) of (?:the |sunday'?s |monday'?s |thursday'?s |saturday'?s )?(?:game|contest|matchup)|sustained his injury during|injured his [a-z -]+ in the (?:first|second|third|fourth|1st|2nd|3rd|4th) (?:quarter|half))\b/i.test(
+      sanitizedCombinedForAcuteCheck
+    );
+
   const missedPriorGame =
-    playedInCompletedGame === false ||
-    statusLower === 'out' ||
-    statusLower === 'inactive' ||
-    /\b(is inactive|was inactive|officially inactive|ruled out for (?:sunday|monday|thursday|saturday|today)|will not play|won't play|missing a (?:second|third|fourth) straight|will miss his (?:second|third|fourth) straight)\b/i.test(
-      combined
+    playedInCompletedGame === true || playedAndHurtInGameProse
+      ? false
+      : playedInCompletedGame === false ||
+        statusLower === 'out' ||
+        statusLower === 'inactive' ||
+        /\b(is inactive|was inactive|officially inactive|ruled out for (?:sunday|monday|thursday|saturday|today)|will not play|won't play|missing a (?:second|third|fourth) straight|will miss his (?:second|third|fourth) straight)\b/i.test(
+          combined
+        );
+
+  const sustainedInLastGame =
+    !missedPriorGame && (Boolean(hasPostKickoffInjurySignal) || playedAndHurtInGameProse || hasAcuteCompletedGameInjuryInProse);
+
+  const exitedWithoutReturn =
+    !missedPriorGame &&
+    /\b(ruled out for the (?:rest|remainder)|out for the (?:rest|remainder) of|did(?:n['’]?t|\s+not)\s+return|will not return|won['’]?t return|(?:left|exited)\s+(?:[\w' -]{0,32}\s+)?with\s+(?:a|an|the(?:\s+same)?)\s+[a-z -]{3,28})\b/i.test(
+      `${sanitizedCombinedForAcuteCheck} ${postKickoffInjuryNote || ''}`
     );
 
   let priorWeekPracticed = null;
@@ -1702,7 +1739,14 @@ export function resolveEarlyWeekRolloverInput({
     }
   }
 
-  let beatNoteForModel = combined;
+  const hasStalePregameClearance =
+    /\b(is active for (?:sunday|monday|thursday|saturday)|given the green light to play|cleared by medical staff to play)\b/i.test(
+      combined
+    );
+  let beatNoteForModel =
+    hasPostKickoffInjurySignal && postKickoffInjuryNote && (hasStalePregameClearance || !combined)
+      ? String(postKickoffInjuryNote).trim()
+      : combined;
   if (effectiveStatus !== 'Out') {
     // Strip prior-game availability & in-game remainder rulings so computePlayerPlayProbability models Week N+1 severity rather than clamping to 0%
     beatNoteForModel = beatNoteForModel
@@ -1718,7 +1762,9 @@ export function resolveEarlyWeekRolloverInput({
     effectiveStatus,
     beatNoteForModel,
     missedPriorGame,
-    priorWeekPracticed
+    priorWeekPracticed,
+    sustainedInLastGame,
+    exitedWithoutReturn
   };
 }
 
@@ -1741,6 +1787,7 @@ export function rolloverPracticeReportForUpcomingWeek(
 
     const sustainedInGame = Boolean(r?.sustainedInLastGame || r?.isInGameInjury || r?.isInGameReturned);
     const earlyRoll = resolveEarlyWeekRolloverInput({
+      playerName: r?.name || '',
       rawStatus: r?.gameStatus || '',
       injuryType: r?.injuryType || '',
       shortComment: r?.shortComment || '',
@@ -1789,7 +1836,8 @@ export function rolloverPracticeReportForUpcomingWeek(
       priorWeekStatus: r.gameStatus || '',
       missedPriorGame: clearPracticeDays ? earlyRoll.missedPriorGame : false,
       priorWeekPracticed: clearPracticeDays ? resolvedPriorPracticed : null,
-      sustainedInLastGame: sustainedInGame,
+      sustainedInLastGame: sustainedInGame || Boolean(earlyRoll.sustainedInLastGame),
+      exitedPriorGameWithoutReturn: Boolean(earlyRoll.exitedWithoutReturn || r?.exitedPriorGameWithoutReturn),
       rosterBucket: r.isIrReturnQuestionable ? 'ir' : 'active',
       isIrReturnQuestionable: Boolean(r.isIrReturnQuestionable),
       injuryType: r.injuryType || '',
@@ -1824,4 +1872,437 @@ export function rolloverPracticeReportForUpcomingWeek(
   }
 
   return nextRows.sort((a, b) => a.playProbabilityPct - b.playProbabilityPct || (b.snapPct || 0) - (a.snapPct || 0));
+}
+
+function stripBasicHtml(html = '') {
+  return String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Extracts a structured, high-signal Completed Game Box Score & Recap Dossier directly from
+ * ESPN's `site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=<id>` payload.
+ * Ensures post-game AI & deterministic Top News Briefs always have macro team yardage,
+ * scrimmage leaders (combining rushing + receiving), QB passing precision/sacks, defensive
+ * takeaways vs. yards/4th-downs/4Q points allowed, penalties, and in-game injury exits.
+ */
+export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
+  if (!summaryJson || typeof summaryJson !== 'object') return null;
+
+  const comp = summaryJson.header?.competitions?.[0] || {};
+  const competitors = Array.isArray(comp.competitors) ? comp.competitors : [];
+  const sfComp = competitors.find(
+    c => normalizeCanonicalTeamAbbr(c?.team?.abbreviation || '') === 'SF'
+  );
+  const oppComp = competitors.find(
+    c => normalizeCanonicalTeamAbbr(c?.team?.abbreviation || '') !== 'SF'
+  );
+
+  const gameId = String(gameMeta?.id || comp?.id || summaryJson.header?.id || '').trim();
+  const week = Number(gameMeta?.week || summaryJson.header?.week || 0) || null;
+  const dateIso = gameMeta?.dateIso || comp?.date || null;
+  const homeAway = sfComp?.homeAway || gameMeta?.homeAway || 'away';
+  const sfScore =
+    sfComp?.score != null
+      ? Number(sfComp.score)
+      : gameMeta?.sfScore != null
+        ? Number(gameMeta.sfScore)
+        : null;
+  const oppScore =
+    oppComp?.score != null
+      ? Number(oppComp.score)
+      : gameMeta?.oppScore != null
+        ? Number(gameMeta.oppScore)
+        : null;
+  const result =
+    gameMeta?.result ||
+    (sfScore != null && oppScore != null
+      ? sfScore > oppScore
+        ? 'W'
+        : sfScore < oppScore
+          ? 'L'
+          : 'T'
+      : '');
+  const oppAbbr = normalizeCanonicalTeamAbbr(
+    oppComp?.team?.abbreviation || gameMeta?.opponent?.abbr || ''
+  );
+  const oppName =
+    oppComp?.team?.displayName ||
+    gameMeta?.opponent?.name ||
+    oppComp?.team?.name ||
+    oppAbbr ||
+    'Opponent';
+
+  const sfLinescores = (sfComp?.linescores || []).map(l => Number(l?.displayValue ?? l?.value ?? 0));
+  const oppLinescores = (oppComp?.linescores || []).map(l => Number(l?.displayValue ?? l?.value ?? 0));
+  const sfFourthQuarterPts = sfLinescores.length >= 4 ? sfLinescores[3] : null;
+  const oppFourthQuarterPts = oppLinescores.length >= 4 ? oppLinescores[3] : null;
+
+  const parseTeamBoxStats = teamAbbrTarget => {
+    const teamEntry = (summaryJson.boxscore?.teams || []).find(t => {
+      const ab = normalizeCanonicalTeamAbbr(t?.team?.abbreviation || '');
+      return teamAbbrTarget === 'SF' ? ab === 'SF' : ab !== 'SF';
+    });
+    if (!teamEntry || !Array.isArray(teamEntry.statistics)) return null;
+    const map = {};
+    for (const s of teamEntry.statistics) {
+      if (s?.name) map[s.name] = String(s.displayValue ?? '');
+    }
+    const sacksParts = String(map.sacksYardsLost || '').split('-');
+    const penParts = String(map.totalPenaltiesYards || '').split('-');
+    return {
+      totalYards: Number(map.totalYards) || 0,
+      yardsPerPlay: map.yardsPerPlay || '',
+      netPassingYards: Number(map.netPassingYards) || 0,
+      completionAttempts: map.completionAttempts || '',
+      rushingYards: Number(map.rushingYards) || 0,
+      rushingAttempts: Number(map.rushingAttempts) || 0,
+      yardsPerRush: map.yardsPerRushAttempt || '',
+      firstDowns: Number(map.firstDowns) || 0,
+      thirdDownEff: map.thirdDownEff || '',
+      fourthDownEff: map.fourthDownEff || '',
+      redZoneAttempts: map.redZoneAttempts || '',
+      sacksYardsLost: map.sacksYardsLost || '0-0',
+      sacksTakenCount: Number(sacksParts[0]) || 0,
+      penaltiesYards: map.totalPenaltiesYards || '0-0',
+      penaltyCount: Number(penParts[0]) || 0,
+      penaltyYards: Number(penParts[1]) || 0,
+      turnovers: Number(map.turnovers) || 0,
+      interceptions: Number(map.interceptions) || 0,
+      fumblesLost: Number(map.fumblesLost) || 0,
+      possessionTime: map.possessionTime || ''
+    };
+  };
+
+  const sfTeamStats = parseTeamBoxStats('SF');
+  const oppTeamStats = parseTeamBoxStats('OPP');
+
+  const getPlayerGroup = (isSf, groupName) => {
+    const teamBox = (summaryJson.boxscore?.players || []).find(p => {
+      const ab = normalizeCanonicalTeamAbbr(p?.team?.abbreviation || '');
+      return isSf ? ab === 'SF' : ab !== 'SF';
+    });
+    return (teamBox?.statistics || []).find(g => g?.name === groupName) || null;
+  };
+
+  // 1. SF Passing Leaders
+  const sfPassGrp = getPlayerGroup(true, 'passing');
+  const sfPassing = (sfPassGrp?.athletes || []).slice(0, 2).map(a => {
+    const st = a?.stats || [];
+    const sacksRaw = String(st[5] || '0-0');
+    return {
+      id: String(a?.athlete?.id || ''),
+      name: a?.athlete?.displayName || '',
+      compAtt: st[0] || '',
+      yards: Number(st[1]) || 0,
+      avg: st[2] || '',
+      tds: Number(st[3]) || 0,
+      ints: Number(st[4]) || 0,
+      sacksRaw,
+      sacksTaken: Number(sacksRaw.split('-')[0]) || 0,
+      qbr: st[6] || '',
+      rating: st[7] || ''
+    };
+  });
+
+  // 2. SF Scrimmage Leaders (merging Rushing + Receiving so dual-threat games like CMC 62 rush + 161 rec = 223 yds, 3 TDs shine)
+  const scrimMap = new Map();
+  const ensureScrim = ath => {
+    const key = String(ath?.id || ath?.displayName || '').trim();
+    if (!key) return null;
+    if (!scrimMap.has(key)) {
+      scrimMap.set(key, {
+        id: String(ath?.id || ''),
+        name: ath?.displayName || '',
+        rushCarries: 0,
+        rushYards: 0,
+        rushTds: 0,
+        rushLong: 0,
+        receptions: 0,
+        recYards: 0,
+        recTds: 0,
+        recLong: 0,
+        targets: 0
+      });
+    }
+    return scrimMap.get(key);
+  };
+
+  for (const a of getPlayerGroup(true, 'rushing')?.athletes || []) {
+    const rec = ensureScrim(a?.athlete);
+    if (!rec) continue;
+    const st = a?.stats || [];
+    rec.rushCarries = Number(st[0]) || 0;
+    rec.rushYards = Number(st[1]) || 0;
+    rec.rushTds = Number(st[3]) || 0;
+    rec.rushLong = Number(st[4]) || 0;
+  }
+  for (const a of getPlayerGroup(true, 'receiving')?.athletes || []) {
+    const rec = ensureScrim(a?.athlete);
+    if (!rec) continue;
+    const st = a?.stats || [];
+    rec.receptions = Number(st[0]) || 0;
+    rec.recYards = Number(st[1]) || 0;
+    rec.recTds = Number(st[3]) || 0;
+    rec.recLong = Number(st[4]) || 0;
+    rec.targets = Number(st[5]) || 0;
+  }
+
+  const sfPasserIds = new Set(sfPassing.map(p => p.id).filter(Boolean));
+  const sfScrimmageLeaders = [...scrimMap.values()]
+    .filter(p => !sfPasserIds.has(p.id) && (p.rushYards + p.recYards >= 20 || p.rushTds + p.recTds > 0))
+    .map(p => ({
+      ...p,
+      scrimmageYards: p.rushYards + p.recYards,
+      totalTds: p.rushTds + p.recTds
+    }))
+    .sort((a, b) => b.totalTds * 45 + b.scrimmageYards - (a.totalTds * 45 + a.scrimmageYards))
+    .slice(0, 7);
+
+  // 3. SF Defense & Takeaway Highlights
+  const sfDefAthletes = (getPlayerGroup(true, 'defensive')?.athletes || []).map(a => {
+    const st = a?.stats || [];
+    return {
+      id: String(a?.athlete?.id || ''),
+      name: a?.athlete?.displayName || '',
+      tackles: Number(st[0]) || 0,
+      solo: Number(st[1]) || 0,
+      sacks: Number(st[2]) || 0,
+      tfl: Number(st[3]) || 0,
+      passDefended: Number(st[4]) || 0,
+      qbHits: Number(st[5]) || 0,
+      tds: Number(st[6]) || 0
+    };
+  });
+  const sfInterceptions = (getPlayerGroup(true, 'interceptions')?.athletes || [])
+    .map(a => {
+      const st = a?.stats || [];
+      return {
+        name: a?.athlete?.displayName || '',
+        ints: Number(st[0]) || 0,
+        yards: Number(st[1]) || 0,
+        tds: Number(st[2]) || 0
+      };
+    })
+    .filter(x => x.ints > 0);
+  const sfDefensiveFumbleRecoveries = (getPlayerGroup(true, 'fumbles')?.athletes || [])
+    .map(a => {
+      const st = a?.stats || [];
+      return {
+        name: a?.athlete?.displayName || '',
+        fumbles: Number(st[0]) || 0,
+        lost: Number(st[1]) || 0,
+        recovered: Number(st[2]) || 0
+      };
+    })
+    .filter(x => x.recovered > 0 && x.fumbles === 0);
+
+  // 4. Opponent Key Stats (to verify rush TDs, pass TDs, top WR/QB)
+  const oppPassTop = (getPlayerGroup(false, 'passing')?.athletes || [])[0];
+  const oppRushAthletes = getPlayerGroup(false, 'rushing')?.athletes || [];
+  const oppRushTdsAllowed = oppRushAthletes.reduce((sum, a) => sum + (Number(a?.stats?.[3]) || 0), 0);
+  const oppPassAthletes = getPlayerGroup(false, 'passing')?.athletes || [];
+  const oppPassTdsAllowed = oppPassAthletes.reduce((sum, a) => sum + (Number(a?.stats?.[3]) || 0), 0);
+  const oppTopReceivers = (getPlayerGroup(false, 'receiving')?.athletes || []).slice(0, 2).map(a => {
+    const st = a?.stats || [];
+    return {
+      name: a?.athlete?.displayName || '',
+      receptions: Number(st[0]) || 0,
+      yards: Number(st[1]) || 0,
+      tds: Number(st[3]) || 0
+    };
+  });
+
+  // 5. Key SF Touchdown Plays (for exact distances like 74-yd, 66-yd, 70-yd, 25-yd)
+  const sfScoringPlays = (summaryJson.scoringPlays || [])
+    .filter(sp => normalizeCanonicalTeamAbbr(sp?.team?.abbreviation || '') === 'SF')
+    .map(sp => ({
+      quarter: Number(sp?.period?.number) || null,
+      clock: sp?.clock?.displayValue || '',
+      text: String(sp?.text || '').trim(),
+      awayScore: sp?.awayScore ?? null,
+      homeScore: sp?.homeScore ?? null
+    }));
+
+  // 6. Official AP/ESPN Recap Story, Milestones & In-Game Injury Notes
+  const recapHeadline = String(summaryJson.article?.headline || '').trim();
+  const rawStoryClean = stripBasicHtml(summaryJson.article?.story || '');
+  const recapUrl =
+    summaryJson.article?.links?.web?.href ||
+    (gameId ? `https://www.espn.com/nfl/recap/_/gameId/${encodeURIComponent(gameId)}` : gameMeta?.gameUrl || '');
+
+  let inGameInjuryNotes = '';
+  const injIdx = rawStoryClean.search(/\bInjuries\s+49ers\s*:/i);
+  if (injIdx >= 0) {
+    const tail = rawStoryClean.slice(injIdx, injIdx + 520);
+    const upNextIdx = tail.search(/\bUp next\b/i);
+    inGameInjuryNotes = (upNextIdx > 0 ? tail.slice(0, upNextIdx) : tail).trim();
+  }
+
+  let upNextNotes = '';
+  const upIdx = rawStoryClean.search(/\bUp next\s+49ers\s*:/i);
+  if (upIdx >= 0) {
+    upNextNotes = rawStoryClean.slice(upIdx, upIdx + 240).replace(/\s*-{3,}[\s\S]*$/, '').trim();
+  }
+
+  const storySentences = rawStoryClean.match(/[^.!?]+[.!?]+(?:\s+|$)/g) || [];
+  const leadExcerpt = storySentences.slice(0, 4).join(' ').trim();
+  const milestoneSentences = storySentences
+    .slice(4)
+    .filter(s =>
+      /\b(franchise history|ever allowed|career[- ](?:high|best)|returned after missing|deadline|debut|traded)\b/i.test(
+        s
+      )
+    )
+    .slice(0, 4)
+    .join(' ')
+    .trim();
+
+  return {
+    gameId,
+    week,
+    dateIso,
+    homeAway,
+    sfScore,
+    oppScore,
+    result,
+    oppAbbr,
+    oppName,
+    recapUrl,
+    recapHeadline,
+    recapLeadExcerpt: [leadExcerpt, milestoneSentences].filter(Boolean).join(' ').slice(0, 1200),
+    inGameInjuryNotes,
+    upNextNotes,
+    sfLinescores,
+    oppLinescores,
+    sfFourthQuarterPts,
+    oppFourthQuarterPts,
+    sfTeamStats,
+    oppTeamStats: oppTeamStats
+      ? {
+          ...oppTeamStats,
+          rushingTds: oppRushTdsAllowed,
+          passingTds: oppPassTdsAllowed
+        }
+      : null,
+    sfPassing,
+    sfScrimmageLeaders,
+    sfDefense: {
+      sacksRecorded: oppTeamStats?.sacksTakenCount ?? sfDefAthletes.reduce((s, d) => s + d.sacks, 0),
+      takeawaysForced: oppTeamStats?.turnovers ?? sfInterceptions.length + sfDefensiveFumbleRecoveries.length,
+      interceptions: sfInterceptions,
+      fumbleRecoveries: sfDefensiveFumbleRecoveries,
+      passBreakupLeaders: sfDefAthletes.filter(d => d.passDefended >= 2).slice(0, 3),
+      tackleLeaders: sfDefAthletes.slice(0, 4)
+    },
+    oppLeaders: {
+      passer: oppPassTop
+        ? {
+            name: oppPassTop.athlete?.displayName || '',
+            compAtt: oppPassTop.stats?.[0] || '',
+            yards: Number(oppPassTop.stats?.[1]) || 0,
+            tds: Number(oppPassTop.stats?.[3]) || 0,
+            ints: Number(oppPassTop.stats?.[4]) || 0
+          }
+        : null,
+      receivers: oppTopReceivers
+    },
+    sfScoringPlays
+  };
+}
+
+/**
+ * Formats `lastCompletedGameRecap` into a concise, LLM-ready ground-truth block so Gemini
+ * sees the complete macro team & player picture alongside beat tweets/articles.
+ */
+export function formatCompletedGameRecapForPrompt(recap) {
+  if (!recap || typeof recap !== 'object') return '';
+  const lines = [];
+  const loc = recap.homeAway === 'away' ? 'at' : 'vs.';
+  lines.push(
+    `FINAL SCORE: Week ${recap.week || ''} — San Francisco 49ers ${recap.sfScore}, ${recap.oppName} ${recap.oppScore} (${recap.result || 'Final'}, ${loc} ${recap.oppName})`
+  );
+  if (recap.sfLinescores?.length && recap.oppLinescores?.length) {
+    lines.push(
+      `QUARTER SCORING: SF [${recap.sfLinescores.join('-')}] vs. ${recap.oppAbbr || 'OPP'} [${recap.oppLinescores.join('-')}]${
+        recap.oppFourthQuarterPts != null ? ` (${recap.oppAbbr || 'OPP'} scored ${recap.oppFourthQuarterPts} pts in 4Q)` : ''
+      }`
+    );
+  }
+  if (recap.sfTeamStats) {
+    const s = recap.sfTeamStats;
+    lines.push(
+      `49ERS TEAM OFFENSE & DISCIPLINE: ${s.totalYards} total yards (${s.yardsPerPlay} yds/play) | ${s.netPassingYards} net pass yds (${s.completionAttempts}) | ${s.rushingYards} rush yds on ${s.rushingAttempts} carries (${s.yardsPerRush} YPC) | 3rd Down ${s.thirdDownEff} | Sacks Allowed: ${s.sacksTakenCount} (${s.sacksYardsLost}) | Turnovers Committed: ${s.turnovers} | Penalties: ${s.penaltyCount} for ${s.penaltyYards} yds | TOP: ${s.possessionTime}`
+    );
+  }
+  if (recap.oppTeamStats) {
+    const o = recap.oppTeamStats;
+    lines.push(
+      `49ERS DEFENSE (ALLOWED TO ${recap.oppAbbr || 'OPP'}): ${o.totalYards} total yds (${o.yardsPerPlay} yds/play) | Pass Defense Yielded: ${o.netPassingYards} net pass yds (${o.completionAttempts}) & ${o.passingTds ?? '?'} pass TDs | Run Defense Allowed: ${o.rushingYards} rush yds on ${o.rushingAttempts} carries (${o.yardsPerRush} YPC) & ${o.rushingTds ?? 0} rush TDs | 3rd Down ${o.thirdDownEff} | 4th Down Conversions Allowed: ${o.fourthDownEff} | 49ers Sacks Recorded: ${recap.sfDefense?.sacksRecorded ?? o.sacksTakenCount} | Takeaways Forced: ${o.turnovers} (${o.interceptions} INT, ${o.fumblesLost} FR)`
+    );
+  }
+  if (recap.sfPassing?.length) {
+    const p = recap.sfPassing[0];
+    lines.push(
+      `49ERS PASSING: ${p.name} — ${p.compAtt}, ${p.yards} pass yds, ${p.tds} TD, ${p.ints} INT, ${p.rating} passer rating (${p.qbr} QBR), sacked ${p.sacksTaken} times`
+    );
+  }
+  if (recap.sfScrimmageLeaders?.length) {
+    const scrimTxt = recap.sfScrimmageLeaders
+      .map(p => {
+        const parts = [];
+        if (p.rushCarries > 0) {
+          parts.push(
+            `${p.rushCarries} car, ${p.rushYards} rush yds${p.rushTds ? `, ${p.rushTds} rush TD` : ''}${p.rushLong >= 20 ? ` (long ${p.rushLong})` : ''}`
+          );
+        }
+        if (p.receptions > 0 || p.targets > 0) {
+          parts.push(
+            `${p.receptions} rec, ${p.recYards} rec yds${p.recTds ? `, ${p.recTds} rec TD` : ''}${p.recLong >= 20 ? ` (long ${p.recLong})` : ''} on ${p.targets} tgts`
+          );
+        }
+        return `${p.name}: ${p.scrimmageYards} scrimmage yds, ${p.totalTds} total TD (${parts.join('; ')})`;
+      })
+      .join(' | ');
+    lines.push(`49ERS SCRIMMAGE & RECEIVING LEADERS: ${scrimTxt}`);
+  }
+  if (recap.sfDefense) {
+    const d = recap.sfDefense;
+    const defBits = [];
+    if (d.interceptions?.length) {
+      defBits.push(`INTs: ${d.interceptions.map(i => `${i.name} (${i.ints})`).join(', ')}`);
+    }
+    if (d.fumbleRecoveries?.length) {
+      defBits.push(`Fumble Recoveries: ${d.fumbleRecoveries.map(f => `${f.name} (${f.recovered})`).join(', ')}`);
+    }
+    if (d.passBreakupLeaders?.length) {
+      defBits.push(`Pass Breakups: ${d.passBreakupLeaders.map(b => `${b.name} (${b.passDefended} PD, ${b.tackles} tkl)`).join(', ')}`);
+    }
+    if (d.tackleLeaders?.length) {
+      defBits.push(
+        `Top Tacklers: ${d.tackleLeaders.map(t => `${t.name} (${t.tackles} tkl${t.sacks ? `, ${t.sacks} sk` : ''}${t.qbHits ? `, ${t.qbHits} QBH` : ''})`).join(', ')}`
+      );
+    }
+    if (defBits.length) lines.push(`49ERS DEFENSIVE STANDOUTS: ${defBits.join(' | ')}`);
+  }
+  if (recap.sfScoringPlays?.length) {
+    lines.push(
+      `49ERS SCORING PLAYS: ${recap.sfScoringPlays.map(sp => `Q${sp.quarter} ${sp.text}`).join(' | ')}`
+    );
+  }
+  if (recap.inGameInjuryNotes) {
+    lines.push(`IN-GAME INJURY LOG: ${recap.inGameInjuryNotes}`);
+  }
+  if (recap.recapLeadExcerpt) {
+    lines.push(`AP/ESPN GAME RECAP CONTEXT: ${recap.recapLeadExcerpt}`);
+  }
+  return lines.join('\n');
 }

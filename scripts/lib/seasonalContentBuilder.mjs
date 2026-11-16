@@ -26,6 +26,7 @@ import {
   isPaywalledPublisher,
   normalizePlayerKey,
   sanitizeExternalUrl,
+  selectBestXSyndicationMp4,
   slugifyPlayerName
 } from '../../src/engine/linkIntegrity.js';
 import {
@@ -1135,11 +1136,8 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   syn.mediaDetails?.[0]?.media_url_https ||
                   syn.video?.poster ||
                   '';
-                const mp4Variants = (syn.video?.variants || [])
-                  .filter(v => v?.type === 'video/mp4' && typeof v.src === 'string' && v.src.startsWith('https://'))
-                  .sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
-                const bestMp4 = mp4Variants[0]?.src || '';
-                const vidDurMs = Number(syn.video?.durationMs || 0);
+                const bestMp4 = selectBestXSyndicationMp4(syn);
+                const vidDurMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
                 const vidDurFmt =
                   vidDurMs >= 5000
                     ? `${Math.floor(vidDurMs / 60000)}:${String(Math.round((vidDurMs % 60000) / 1000)).padStart(2, '0')}`
@@ -1172,6 +1170,12 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                     qtSnow >= sevenDaysAgoMs &&
                     (qtDir || TRUSTED_MEDIA_X_HANDLES.has(qtHandle.toLowerCase()))
                   ) {
+                    const qtMp4 = selectBestXSyndicationMp4(qt);
+                    const qtDurMs = Number(qt.video?.durationMs || qt.mediaDetails?.[0]?.video_info?.duration_millis || 0);
+                    const qtDurFmt =
+                      qtDurMs >= 5000
+                        ? `${Math.floor(qtDurMs / 60000)}:${String(Math.round((qtDurMs % 60000) / 1000)).padStart(2, '0')}`
+                        : '';
                     const qtBuilt = buildHydratedTweetItem({
                       statusId: qtId,
                       handle: qtHandle,
@@ -1181,7 +1185,10 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                       fallbackAuthorName: qt.user?.name || qtHandle,
                       fallbackAuthorUrl: `https://x.com/${qtHandle}`,
                       expandedExtUrl: qt.entities?.urls?.[0]?.expanded_url || '',
-                      mediaImageUrl: qt.photos?.[0]?.url || qt.mediaDetails?.[0]?.media_url_https || ''
+                      mediaImageUrl: qt.photos?.[0]?.url || qt.mediaDetails?.[0]?.media_url_https || qt.video?.poster || '',
+                      videoStreamUrl: qtMp4,
+                      videoDurationFmt: qtDurFmt,
+                      isHighlightClip: Boolean(qtMp4 && qtDurMs >= 8000)
                     });
                     if (qtBuilt) hydratedMap.set(qtId, qtBuilt);
                   }

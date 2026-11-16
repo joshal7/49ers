@@ -70,7 +70,10 @@ import {
   registerRosterPlayersForInlineLinks
 } from './views/uiHelpers.js?v=50';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
-import { sanitizeExternalUrl } from './engine/linkIntegrity.js?v=63';
+import {
+  isAllowedInlineVideoStreamUrl,
+  sanitizeExternalUrl
+} from './engine/linkIntegrity.js?v=69';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
@@ -80,14 +83,14 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=65';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=69';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=65';
+} from './views/newsView.js?v=69';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=67';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=65';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=69';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import { renderSettingsSheetHtml } from './views/settingsArchiveView.js?v=60';
 
@@ -621,8 +624,112 @@ function renderMain() {
     }
   });
 
+  bindAllMountedInlineVideos();
   renderHeader();
   renderNavTabs();
+}
+
+function safePlayInlineVideo(videoEl) {
+  if (!videoEl || typeof videoEl.play !== 'function') return;
+  try {
+    const playPromise = videoEl.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(err => {
+        const errName = String(err?.name || '');
+        if (!videoEl.muted && (errName === 'NotAllowedError' || /notallowed|interact|gesture/i.test(String(err)))) {
+          videoEl.muted = true;
+          try {
+            const mutedRetry = videoEl.play();
+            if (mutedRetry && typeof mutedRetry.catch === 'function') mutedRetry.catch(() => {});
+          } catch {}
+        }
+      });
+    }
+  } catch {}
+}
+
+function renderInlineVideoErrorFallback(videoEl) {
+  if (!videoEl || videoEl.dataset.inlineFailed === '1') return;
+  videoEl.dataset.inlineFailed = '1';
+  const vidKey = videoEl.getAttribute('data-vid-key') || '';
+  if (vidKey) {
+    state.activeVideosSet.delete(vidKey);
+  }
+  const watchUrl = sanitizeExternalUrl(videoEl.getAttribute('data-watch-url') || '', null);
+  const provider = videoEl.getAttribute('data-provider') || 'Source';
+  const poster = videoEl.getAttribute('poster') || '';
+  const wrap = videoEl.closest('.video-iframe-wrap');
+  const box = videoEl.closest('.video-embed-box');
+  if (box && vidKey) {
+    const statusEl = box.querySelector('[data-vid-status-label] span');
+    if (statusEl) statusEl.textContent = `Watch directly on ${provider}`;
+  }
+  if (wrap && watchUrl) {
+    wrap.outerHTML = `
+      <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="video-external-card" aria-label="Watch clip on ${esc(provider)}">
+        <div class="video-thumb-stage">
+          ${
+            poster
+              ? `<img src="${esc(poster)}" alt="Video thumbnail" class="video-thumb-img" decoding="async" />`
+              : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
+          }
+          <div class="video-thumb-overlay">
+            <span class="video-play-pill">${iconSvg('externalLink', 13)}<span>Watch Clip on ${esc(provider)}</span></span>
+          </div>
+        </div>
+      </a>
+    `;
+  }
+}
+
+function bindInlineVideoFallbacks(videoEl) {
+  if (!videoEl || videoEl.dataset.fallbackBound === '1') return;
+  videoEl.dataset.fallbackBound = '1';
+  const originalSrc = videoEl.getAttribute('src') || '';
+
+  videoEl.addEventListener('ended', () => {
+    const key = videoEl.getAttribute('data-vid-key');
+    if (key) state.activeVideosSet.delete(key);
+  });
+
+  videoEl.addEventListener('error', () => {
+    const workerBase = String(state.prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+    if (
+      !videoEl.dataset.retriedRelay &&
+      workerBase &&
+      /^https:\/\//i.test(workerBase) &&
+      isAllowedInlineVideoStreamUrl(originalSrc)
+    ) {
+      videoEl.dataset.retriedRelay = '1';
+      videoEl.src = `${workerBase}/api/video-stream?url=${encodeURIComponent(originalSrc)}`;
+      try {
+        videoEl.load();
+      } catch {}
+      safePlayInlineVideo(videoEl);
+      return;
+    }
+    renderInlineVideoErrorFallback(videoEl);
+  });
+}
+
+function bindAllMountedInlineVideos() {
+  if (typeof document === 'undefined') return;
+  const videos = document.querySelectorAll('.video-iframe-wrap video');
+  for (const v of videos) {
+    bindInlineVideoFallbacks(v);
+  }
+}
+
+function activateInlineVideoElement(vidKey) {
+  if (!vidKey || typeof document === 'undefined') return;
+  const videos = document.querySelectorAll('.video-iframe-wrap video');
+  for (const v of videos) {
+    if (v.getAttribute('data-vid-key') === vidKey) {
+      bindInlineVideoFallbacks(v);
+      safePlayInlineVideo(v);
+      return;
+    }
+  }
 }
 
 function closeStatRankModal() {
@@ -892,7 +999,7 @@ function reorderBlockBeforeTarget(draggedId, targetId) {
 
 let initialLiveHydrationPromise = null;
 
-function awaitInitialLiveHydrationBounded(maxWaitMs = 7500) {
+function awaitInitialLiveHydrationBounded(maxWaitMs = 15000) {
   if (!initialLiveHydrationPromise) return Promise.resolve();
   return Promise.race([
     initialLiveHydrationPromise.catch(() => {}),
@@ -902,7 +1009,7 @@ function awaitInitialLiveHydrationBounded(maxWaitMs = 7500) {
 
 async function triggerDailyMatchupIntelSync() {
   if (!state.appData) return null;
-  await awaitInitialLiveHydrationBounded(7500);
+  await awaitInitialLiveHydrationBounded(15000);
   if (!state.appData) return null;
   return refreshDailyMatchupIntelIfDue({
     appData: state.appData,
@@ -914,6 +1021,7 @@ async function triggerDailyMatchupIntelSync() {
       }
       if (
         res?.updated &&
+        !hasActivelyPlayingInlineMedia() &&
         (state.activeNavTab === 'home' ||
           (state.activeNavTab === 'season' && state.seasonSubTab === 'matchup'))
       ) {
@@ -926,7 +1034,7 @@ async function triggerDailyMatchupIntelSync() {
 
 async function triggerDailyTopNewsBriefSync() {
   if (!state.appData) return null;
-  await awaitInitialLiveHydrationBounded(7500);
+  await awaitInitialLiveHydrationBounded(15000);
   if (!state.appData) return null;
   return refreshDailyTopNewsBriefIfDue({
     appData: state.appData,
@@ -936,7 +1044,11 @@ async function triggerDailyTopNewsBriefSync() {
       if (state.appData) {
         hydrateCachedDailyTopNewsBrief(state.appData);
       }
-      if (res?.updated && (state.activeNavTab === 'home' || state.activeNavTab === 'news')) {
+      if (
+        res?.updated &&
+        !hasActivelyPlayingInlineMedia() &&
+        (state.activeNavTab === 'home' || state.activeNavTab === 'news')
+      ) {
         renderMain();
       }
       return res;
@@ -1230,8 +1342,10 @@ function bindEvents() {
       case 'play-inline-video': {
         const key = btn.getAttribute('data-vid-key');
         if (key) {
+          state.activeVideosSet.clear();
           state.activeVideosSet.add(key);
           renderMain();
+          activateInlineVideoElement(key);
         }
         break;
       }
@@ -2315,14 +2429,14 @@ function hasActivelyPlayingInlineMedia() {
   if (document.querySelector('.video-iframe-wrap iframe')) return true;
   const videos = document.querySelectorAll('.video-iframe-wrap video');
   for (const v of videos) {
-    if (!v.paused && !v.ended) return true;
     if (v.ended) {
       const k = v.getAttribute('data-vid-key');
       if (k) state.activeVideosSet.delete(k);
+      continue;
     }
-  }
-  if (videos.length === 0 && state.activeVideosSet.size > 0) {
-    state.activeVideosSet.clear();
+    if (!v.dataset.inlineFailed && !v.error) {
+      return true;
+    }
   }
   return false;
 }
@@ -2368,6 +2482,13 @@ function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
     nextData._livePlayedPlayerIds = prevData._livePlayedPlayerIds;
   }
   if (
+    prevData.scheduleMatchup?.lastCompletedGameRecap &&
+    nextData.scheduleMatchup &&
+    !nextData.scheduleMatchup.lastCompletedGameRecap
+  ) {
+    nextData.scheduleMatchup.lastCompletedGameRecap = prevData.scheduleMatchup.lastCompletedGameRecap;
+  }
+  if (
     prevData.liveGameDay &&
     !nextData.liveGameDay &&
     Number(prevData.liveGameDay.week) === Number(nextData.scheduleMatchup?.upcomingMatchup?.week)
@@ -2410,6 +2531,9 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
 
   state.lastWireSyncAt = new Date().toISOString();
   lastWirePollMs = Date.now();
+  if (state.appData) {
+    state.appData._awaitingInitialLiveWireSync = false;
+  }
 
   const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
@@ -2444,16 +2568,19 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
 
 async function pollLowLatencyTweetAndInjuryWire(manual = false) {
   if (!state.appData) return;
+  const requestedFocusPlayerId =
+    state.sheetMode === 'player' && state.sheetPlayerId ? String(state.sheetPlayerId) : null;
+
   if (isBackgroundSyncing) {
     if (manual) {
       state.isSyncingWire = true;
+      queuedManualSync = {
+        focusPlayerId: requestedFocusPlayerId || queuedManualSync?.focusPlayerId || null
+      };
       syncLiveWireButtonsDom();
     }
     return;
   }
-
-  const requestedFocusPlayerId =
-    state.sheetMode === 'player' && state.sheetPlayerId ? String(state.sheetPlayerId) : null;
 
   // Coalesce furious manual clicks & background-poll overlaps safely with zero race conditions
   if (isWirePolling && activeWirePollPromise) {
@@ -2568,6 +2695,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
     state.lastWireSourceCounts = wireResult?.bySource || null;
     state.lastWireSyncAt = new Date().toISOString();
     lastWirePollMs = Date.now();
+    state.appData._awaitingInitialLiveWireSync = false;
 
     const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
@@ -2602,9 +2730,21 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
   } catch {
     // Offline or transient network blip; keep serving existing cached state cleanly
   } finally {
-    state.isSyncingWire = false;
+    if (state.appData) {
+      state.appData._awaitingInitialLiveWireSync = false;
+    }
     isBackgroundSyncing = false;
-    syncLiveWireButtonsDom();
+    if (queuedManualSync && state.appData) {
+      const pendingFocus = queuedManualSync.focusPlayerId;
+      queuedManualSync = null;
+      if (pendingFocus && state.sheetMode === 'player') {
+        state.sheetPlayerId = pendingFocus;
+      }
+      pollLowLatencyTweetAndInjuryWire(true);
+    } else {
+      state.isSyncingWire = false;
+      syncLiveWireButtonsDom();
+    }
   }
 }
 
@@ -2819,6 +2959,16 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
 
   try {
     state.appData = await loadAll49ersData();
+    const upstreamAgeMs = state.appData?.meta?.updatedAt
+      ? Date.now() - Date.parse(state.appData.meta.updatedAt)
+      : Infinity;
+    if (
+      !Number.isFinite(upstreamAgeMs) ||
+      upstreamAgeMs > 90 * 60_000 ||
+      Boolean(state.appData?._restoredFromOfflineSnapshot)
+    ) {
+      state.appData._awaitingInitialLiveWireSync = true;
+    }
     hydrateCachedDailyMatchupIntel(state.appData);
     hydrateCachedDailyTopNewsBrief(state.appData);
     bootFailureCount = 0;
@@ -3059,7 +3209,8 @@ async function init() {
         !state.appData ||
         state.jobStatus?.active ||
         state.sharedAudioPrep?.active ||
-        state.audioState?.isPlaying
+        state.audioState?.isPlaying ||
+        hasActivelyPlayingInlineMedia()
       ) {
         return;
       }
@@ -3068,7 +3219,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=81', { updateViaCache: 'none' })
+        .register('./sw.js?v=83', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

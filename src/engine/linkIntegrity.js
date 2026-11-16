@@ -813,3 +813,89 @@ export function createPlayerIdentityResolver({ nflPlayers = [], otcPlayers = [],
     otcCandidatesByName
   };
 }
+
+export const ALLOWED_INLINE_VIDEO_STREAM_HOST_RE =
+  /^(?:video\.twimg\.com|espnmedia-cdn\.akamaized\.net|media\.video-cdn\.espn\.com)$/i;
+
+export function isAllowedInlineVideoStreamUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') return false;
+  try {
+    const parsed = new URL(rawUrl.trim());
+    return parsed.protocol === 'https:' && ALLOWED_INLINE_VIDEO_STREAM_HOST_RE.test(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Selects the crispest mobile-friendly HD MP4 variant from an X `tweet-result` syndication object.
+ * Handles both `mediaDetails[].video_info.variants` (which carries explicit `bitrate`) and
+ * `video.variants` (which often omits `bitrate` and lists `src` URLs in ascending `WxH` order).
+ */
+export function selectBestXSyndicationMp4(syn) {
+  if (!syn || typeof syn !== 'object') return '';
+  const candidatesByUrl = new Map();
+  let seq = 0;
+
+  const addCandidate = (rawUrl, rawBitrate) => {
+    if (typeof rawUrl !== 'string' || !rawUrl.startsWith('https://')) return;
+    const cleanUrl = rawUrl.trim();
+    const bitrate = Number(rawBitrate) > 0 ? Number(rawBitrate) : 0;
+    const dimMatch = cleanUrl.match(/\/(\d{2,4})x(\d{2,4})\//);
+    const pMatch = !dimMatch ? cleanUrl.match(/\/(\d{3,4})p(?:\.mp4|\/|\b)/i) : null;
+    let width = 0;
+    let height = 0;
+    if (dimMatch) {
+      width = Number(dimMatch[1]) || 0;
+      height = Number(dimMatch[2]) || 0;
+    } else if (pMatch) {
+      const p = Number(pMatch[1]) || 0;
+      height = p;
+      width = Math.round((p * 16) / 9);
+    }
+    const pixels = width * height;
+    const minDim = width > 0 && height > 0 ? Math.min(width, height) : 0;
+    const score = bitrate > 0 ? bitrate : pixels > 0 ? pixels * 3 : seq + 1;
+    const existing = candidatesByUrl.get(cleanUrl);
+    if (!existing || score > existing.score || (bitrate > 0 && existing.bitrate === 0)) {
+      candidatesByUrl.set(cleanUrl, {
+        url: cleanUrl,
+        bitrate,
+        minDim,
+        pixels,
+        score,
+        order: existing ? existing.order : seq++
+      });
+    }
+  };
+
+  if (Array.isArray(syn.mediaDetails)) {
+    for (const md of syn.mediaDetails) {
+      const variants = md?.video_info?.variants;
+      if (!Array.isArray(variants)) continue;
+      for (const v of variants) {
+        if (v?.content_type === 'video/mp4') {
+          addCandidate(v.url, v.bitrate);
+        }
+      }
+    }
+  }
+
+  if (Array.isArray(syn.video?.variants)) {
+    for (const v of syn.video.variants) {
+      if (v?.type === 'video/mp4') {
+        addCandidate(v.src || v.url, v.bitrate);
+      }
+    }
+  }
+
+  const all = [...candidatesByUrl.values()];
+  if (all.length === 0) return '';
+
+  all.sort((a, b) => b.score - a.score || b.pixels - a.pixels || b.order - a.order);
+
+  const mobileHdSweetSpot = all.find(
+    c => c.score <= 5_000_000 && (c.minDim >= 720 || c.score >= 1_500_000)
+  );
+  return (mobileHdSweetSpot || all[0]).url;
+}

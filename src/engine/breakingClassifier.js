@@ -37,7 +37,7 @@ const IN_GAME_INJURY_RETURN_REGEX =
   /\b(questionable to return|probable to return|doubtful to return|ruled out for the rest|out for the rest of the game|will not return|did not return|cleared to return|back in the game|returning to the game|returned to the game|headed to the locker room|going to the locker room|went to the locker room|blue medical tent|medical tent|evaluated for a concussion|concussion evaluation|carted off|limped off|limping off|helped off the field|helped off|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|left the game|exited the game|left sunday'?s game|exited sunday'?s game|in-game injury|injury update:\s*[a-z])\b/i;
 
 const POST_GAME_INJURY_FOLLOWUP_REGEX =
-  /\b(suffered a|sustained a|exited (?:sunday|monday|thursday|saturday|the game)|left (?:sunday|monday|thursday|saturday|the game)|did not return|underwent an mri|scheduled for an mri|\bmri\b|\bx-rays?\b|ct scan|tests showed|initial tests|believed to have avoided|feared to have|day-to-day|week-to-week|high-ankle|sprain|strain|concussion protocol|torn acl|torn achilles|torn pectoral|meniscus|fracture|out multiple weeks|out several weeks|shanahan (?:said|noted|confirmed|announced)[\s\S]{0,65}\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\b/i;
+  /\b(suffered a|sustained a|exited (?:sunday|monday|thursday|saturday|the game)|left (?:sunday|monday|thursday|saturday|the game)|left with (?:a|an|the(?:\s+same)?)\s+[a-z-]+\s+injury|did(?:n['’]?t|\s+not)\s+return|underwent an mri|scheduled for an mri|\bmri\b|\bx-rays?\b|ct scan|tests showed|initial tests|believed to have avoided|feared to have|day-to-day|week-to-week|high-ankle|sprain|strain|concussion protocol|torn acl|torn achilles|torn pectoral|meniscus|fracture|out multiple weeks|out several weeks|(?:49ers\s+)?injury\s+update:\s*(?:kyle\s+)?shanahan|shanahan (?:said|noted|confirmed|announced|provided|reveals?)[\s\S]{0,65}\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\b/i;
 
 const PRACTICE_WARMUP_INJURY_SCOOP_REGEX =
   /\b(not practicing|not seen at practice|working on a side field|rehab field|blue non-contact|non-contact jersey|walking boot|suffered a setback|aggravated his|underwent an mri|scheduled for an mri|high-ankle sprain|torn acl|torn achilles|torn pectoral|meniscus|21-day practice window|designated (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{0,28}(?:for|to) return|open(?:ed|s|ing)? [a-z .'-]{0,28}practice window|didn['’]?t activate|did not activate|returns? to practice)\b/i;
@@ -2500,7 +2500,25 @@ export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.no
  */
 export function filterFreshVideosForCurrentSlate(items = [], appData = null, nowMs = Date.now()) {
   if (!Array.isArray(items) || items.length === 0) return items;
-  return items.filter(it => !isStalePriorGameVideo(it, appData, nowMs));
+  const fresh = items.filter(it => !isStalePriorGameVideo(it, appData, nowMs));
+  // Safety floor right after final whistle (while ESPN/49ers.com clips are transcoding or on stadium Wi-Fi):
+  // never drop `Highlights & Videos` to 0 items if non-film videos within the last 10 days exist in `items`.
+  const isHighlightVid = it =>
+    (it?.type === 'video' || Boolean(it?.videoId) || Boolean(it?.videoStreamUrl)) && it?.category !== 'film';
+  if (!fresh.some(isHighlightVid) && items.some(isHighlightVid)) {
+    const recentHighlights = items
+      .filter(it => {
+        if (!isHighlightVid(it)) return false;
+        const pMs = resolveEffectivePublishTimestampMs(it, nowMs);
+        return Number.isFinite(pMs) && nowMs - pMs <= 10 * 86_400_000;
+      })
+      .sort((a, b) => (resolveEffectivePublishTimestampMs(b, nowMs) || 0) - (resolveEffectivePublishTimestampMs(a, nowMs) || 0))
+      .slice(0, 6);
+    if (recentHighlights.length > 0) {
+      return [...fresh, ...recentHighlights];
+    }
+  }
+  return fresh;
 }
 
 /**
@@ -2895,12 +2913,31 @@ export function isAppDataAwaitingLivePostGameHydration(appData = null, nowMs = D
 
   for (const { game, koMs } of games) {
     const completedFlag = Boolean(game.completed) || /\bfinal\b/i.test(String(game.statusDetail || ''));
-    if (completedFlag) continue;
-    if (ts >= koMs + 3.25 * 3600_000 && ts <= koMs + 96 * 3600_000) {
+    // 1. Game kicked off >= 3.25h ago, but `appData` still shows `completed: false` with <2 post-game items
+    if (!completedFlag && ts >= koMs + 3.25 * 3600_000 && ts <= koMs + 96 * 3600_000) {
       let postGameItems = 0;
       for (const it of rawStream) {
         const pMs = resolveEffectivePublishTimestampMs(it, ts);
         if (Number.isFinite(pMs) && pMs >= koMs + 2.4 * 3600_000) {
+          postGameItems += 1;
+          if (postGameItems >= 2) break;
+        }
+      }
+      if (postGameItems < 2) {
+        return true;
+      }
+    }
+    // 2. Game IS marked completed within last 36h, initial live wire sync is still in flight, and <2 post-game items exist yet
+    if (
+      completedFlag &&
+      appData?._awaitingInitialLiveWireSync === true &&
+      ts >= koMs + 2.5 * 3600_000 &&
+      ts <= koMs + 36 * 3600_000
+    ) {
+      let postGameItems = 0;
+      for (const it of rawStream) {
+        const pMs = resolveEffectivePublishTimestampMs(it, ts);
+        if (Number.isFinite(pMs) && pMs >= koMs + 2.0 * 3600_000) {
           postGameItems += 1;
           if (postGameItems >= 2) break;
         }
@@ -2914,8 +2951,9 @@ export function isAppDataAwaitingLivePostGameHydration(appData = null, nowMs = D
 }
 
 /**
- * Validates whether a cached or upstream `dailyTopNewsBrief` is stale relative to a completed 49ers game
- * (for example, a brief generated on Sunday evening from unhydrated Thursday injury-report sources).
+ * Validates whether a cached or upstream `dailyTopNewsBrief` is stale relative to:
+ *  1) A completed 49ers game (e.g., Sunday evening / Monday morning brief citing pre-game Thursday practice), OR
+ *  2) A newer official weekly practice report (e.g., Friday 5 PM brief citing "missed Thursday practice" when Friday LP/FP/DNP is logged!).
  */
 export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowMs = Date.now()) {
   if (!brief || typeof brief !== 'object') return true;
@@ -2923,6 +2961,40 @@ export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowM
   if (!appData || typeof appData !== 'object') return false;
 
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const fullBriefProse = [
+    brief.headline || '',
+    brief.summary || '',
+    ...(Array.isArray(brief.bullets) ? brief.bullets : [])
+  ].join(' ');
+
+  // Check midweek / Friday practice-report supersession (Issue A: prevent Thursday practice brief sticking after Friday report posts)
+  const prRows = Array.isArray(appData?.health?.practiceReport) ? appData.health.practiceReport : [];
+  const hasRealFridayPractice = prRows.some(
+    r => r && r.fri && r.fri !== '-' && !/^vet\s*rest$/i.test(String(r.fri).trim())
+  );
+  const hasRealThursdayPractice = prRows.some(
+    r => r && r.thu && r.thu !== '-' && !/^vet\s*rest$/i.test(String(r.thu).trim())
+  );
+  if (hasRealFridayPractice && !brief.isPostGame) {
+    const citesWedOrThuPractice =
+      /\b(?:wednesday|thursday)(?:['’]s)?\s+practice(?:\s+(?:report|participation|session))?|\b(?:missed|limited\s+(?:in|at|on|by)|sat\s+out)\s+(?:wednesday|thursday)\b/i.test(
+        fullBriefProse
+      );
+    const mentionsFriday = /\bfriday\b/i.test(fullBriefProse);
+    if (citesWedOrThuPractice && !mentionsFriday) {
+      return true;
+    }
+  } else if (hasRealThursdayPractice && !hasRealFridayPractice && !brief.isPostGame) {
+    const citesWedPracticeOnly =
+      /\bwednesday(?:['’]s)?\s+practice(?:\s+(?:report|participation|session))?|\b(?:missed|limited\s+(?:in|at|on|by)|sat\s+out)\s+wednesday\b/i.test(
+        fullBriefProse
+      );
+    const mentionsThursday = /\bthursday\b/i.test(fullBriefProse);
+    if (citesWedPracticeOnly && !mentionsThursday) {
+      return true;
+    }
+  }
+
   const games = collectScheduleGamesForBrief(appData);
   if (games.length === 0) return false;
 
@@ -2959,7 +3031,7 @@ export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowM
     compOppNick &&
     compOppNick.toLowerCase() !== nextOppNick.toLowerCase() &&
     new RegExp(`\\b(ahead of|before)\\s+(?:week\\s+\\d+\\s+(?:vs\\.?|against)\\s+)?(?:the\\s+)?${escapeRegexToken(compOppNick)}\\b`, 'i').test(
-      `${brief.headline || ''} ${brief.summary || ''}`
+      `${brief.headline || ''} ${brief.summary || ''} ${(brief.bullets || []).slice(0, 2).join(' ')}`
     )
   ) {
     return true;

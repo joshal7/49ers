@@ -81,13 +81,26 @@ function formatCompactPlayBadge(label) {
 }
 
 function formatCoachingBulletHtml(bullet = '', seenJargon = null) {
-  const raw = String(bullet || '').trim();
+  let raw = String(bullet || '').replace(/^(?:[-•*]\s+|\d+[.)]\s+)/, '').trim();
+  const placeholderPrefixRe =
+    /^(?:\*\*|\[)?\s*(?:bold\s+subtopic|bold\s+heading|bold\s+title|subtopic(?:\s+title|\s+name)?|topic\s+title|section\s+title|bullet\s*\d+)\s*(?:\*\*|\])?\s*[:—–-]\s*/i;
+  let guard = 0;
+  while (guard < 4 && placeholderPrefixRe.test(raw)) {
+    raw = raw.replace(placeholderPrefixRe, '').trim();
+    guard += 1;
+  }
   const colonIdx = raw.indexOf(':');
   const opts = { maxTerms: 20, maxPlayers: 6, seenKeys: seenJargon };
   if (colonIdx > 0 && colonIdx <= 95) {
     const headClean = raw.slice(0, colonIdx).replace(/\*\*/g, '').trim();
     const bodyClean = raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim();
-    return `<li><strong>${escJargon(headClean, opts)}:</strong> ${escJargon(bodyClean, opts)}</li>`;
+    if (
+      headClean &&
+      !/^(?:bold\s+subtopic|subtopic|topic\s+title|section\s+title|bullet\s*\d+|topic)$/i.test(headClean)
+    ) {
+      return `<li><strong>${escJargon(headClean, opts)}:</strong> ${escJargon(bodyClean, opts)}</li>`;
+    }
+    return `<li>${escJargon(bodyClean, opts)}</li>`;
   }
   return `<li>${escJargon(raw, opts)}</li>`;
 }
@@ -268,47 +281,53 @@ function renderGameDayRosterCard(
         }
       </div>
 
-      <details class="gameday-active-collapsible" data-gameday-active-roster>
-        <summary class="gameday-active-summary">
-          <span>Active Game-Day Roster (${totalActives} Players)</span>
-          <span class="gameday-summary-sub mono">Offense • Defense • ST</span>
-        </summary>
-        <div class="gameday-units-wrap">
-          ${unitOrder
-            .map(unitName => {
-              const list = activesByUnit[unitName] || [];
-              return `
-                <div class="gameday-unit-group" data-gameday-unit="${esc(unitName)}">
-                  <div class="gameday-unit-title">${esc(unitName)} (${list.length})</div>
-                  ${
-                    list.length > 0
-                      ? `<div class="gameday-active-chips">
-                          ${list
-                            .map(ap => {
-                              const inner = `${
-                                ap.jersey != null ? `<span class="mono gameday-pill-num">#${ap.jersey}</span>` : ''
-                              }<span>${esc(ap.name)}</span><span class="gameday-pos">${esc(ap.position)}</span>${
-                                ap.isExplicitActiveGtd ? `<span class="badge badge-warning mono" style="font-size:9px;padding:1px 4px">GTD</span>` : ''
-                              }`;
-                              if (is49ers && ap.playerId) {
-                                return `<button type="button" class="gameday-active-pill gameday-active-chip" data-action="open-player-sheet" data-player-id="${esc(ap.playerId)}">${inner}</button>`;
-                              }
-                              const safeOppUrl = !is49ers ? sanitizeExternalUrl(ap.espnUrl, null) : null;
-                              if (safeOppUrl) {
-                                return `<a href="${esc(safeOppUrl)}" target="_blank" rel="noopener noreferrer" class="gameday-active-pill gameday-active-chip" style="text-decoration:none;color:inherit">${inner}</a>`;
-                              }
-                              return `<span class="gameday-active-pill gameday-active-chip">${inner}</span>`;
-                            })
-                            .join('')}
-                        </div>`
-                      : `<div style="font-size:11.5px;color:var(--text-muted)">Roster unit populating…</div>`
-                  }
-                </div>
-              `;
-            })
-            .join('')}
-        </div>
-      </details>
+      ${
+        gameDayModel.officialPosted
+          ? `<details class="gameday-active-collapsible" data-gameday-active-roster>
+              <summary class="gameday-active-summary">
+                <span>Active Game-Day Roster (${totalActives} Players)</span>
+                <span class="gameday-summary-sub mono">Offense • Defense • ST</span>
+              </summary>
+              <div class="gameday-units-wrap">
+                ${unitOrder
+                  .map(unitName => {
+                    const list = activesByUnit[unitName] || [];
+                    return `
+                      <div class="gameday-unit-group" data-gameday-unit="${esc(unitName)}">
+                        <div class="gameday-unit-title">${esc(unitName)} (${list.length})</div>
+                        ${
+                          list.length > 0
+                            ? `<div class="gameday-active-chips">
+                                ${list
+                                  .map(ap => {
+                                    const inner = `${
+                                      ap.jersey != null ? `<span class="mono gameday-pill-num">#${ap.jersey}</span>` : ''
+                                    }<span>${esc(ap.name)}</span><span class="gameday-pos">${esc(ap.position)}</span>${
+                                      ap.isExplicitActiveGtd ? `<span class="badge badge-warning mono" style="font-size:9px;padding:1px 4px">GTD</span>` : ''
+                                    }`;
+                                    if (is49ers && ap.playerId) {
+                                      return `<button type="button" class="gameday-active-pill gameday-active-chip" data-action="open-player-sheet" data-player-id="${esc(ap.playerId)}">${inner}</button>`;
+                                    }
+                                    const safeOppUrl = !is49ers ? sanitizeExternalUrl(ap.espnUrl, null) : null;
+                                    if (safeOppUrl) {
+                                      return `<a href="${esc(safeOppUrl)}" target="_blank" rel="noopener noreferrer" class="gameday-active-pill gameday-active-chip" style="text-decoration:none;color:inherit">${inner}</a>`;
+                                    }
+                                    return `<span class="gameday-active-pill gameday-active-chip">${inner}</span>`;
+                                  })
+                                  .join('')}
+                              </div>`
+                            : `<div style="font-size:11.5px;color:var(--text-muted)">Roster unit populating…</div>`
+                        }
+                      </div>
+                    `;
+                  })
+                  .join('')}
+              </div>
+            </details>`
+          : `<div class="gameday-active-pending mono" data-gameday-active-pending style="font-size:11.5px;color:var(--text-muted);padding:6px 10px;border-radius:8px;background:var(--bg-card-alt);border:1px dashed var(--border-subtle)">
+              48-man Active Game-Day Roster unlocks once official scratches are confirmed
+            </div>`
+      }
     </${tagName}>
   `;
 }

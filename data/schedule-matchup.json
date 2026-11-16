@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T18:57:02.755Z",
+  "updatedAt": "2026-11-16T23:21:07.153Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -746,6 +746,353 @@
       "broadcast": "NFL"
     }
   ],
+  "lastCompletedGameRecap": {
+    "gameId": "401873063",
+    "week": 10,
+    "dateIso": "2026-11-15T21:25Z",
+    "homeAway": "away",
+    "sfScore": 46,
+    "oppScore": 40,
+    "result": "W",
+    "oppAbbr": "DAL",
+    "oppName": "Dallas Cowboys",
+    "recapUrl": "https://www.espn.com/nfl/recap?gameId=401873063",
+    "recapHeadline": "McCaffrey's TDs of 74 and 66 yards and Samuel's 70-yard score help 49ers beat Cowboys 46-40",
+    "recapLeadExcerpt": "ARLINGTON, Texas -- — Christian McCaffrey 's first long touchdown catch was straight out of the schoolyard, the second a Kyle Shanahan special for the San Francisco 49ers .  Throw in a reverse to Deebo Samuel that completely fooled the Dallas defense, and you have close to the most yards gained and allowed in the history of two proud franchises.  Brock Purdy threw TD passes of 74 and 66 yards to McCaffrey, Samuel ran 70 yards for a score in front of his own sideline and the 49ers beat the Cowboys 46-40 on Sunday.  The Cowboys had cut a 19-point deficit in the second half to six in the final four minutes when McCaffrey ran away from edge rusher Von Miller on third down, caught a pass over the middle and sprinted untouched to the end zone for the second time. “It really is backyard football at that point,” said McCaffrey, whose 223 scrimmage yards included a career-best 161 receiving and a 16-yard score among his 62 rushing yards.  Dak Prescott tied his career high with five TD passes, and George Pickens caught a career-high three for the Cowboys (4-6), who fell short again in trying to win consecutive games under second-year coach Brian Schottenheimer.  The 49ers had 584 yards of of",
+    "inGameInjuryNotes": "Injuries 49ers: CB Renardo Green , who was active after being listed as questionable with a back injury, exited in the second half. Cowboys: CB DaRon Bland injured an ankle in the first half and didn't return. ... DT Otito Ogbonnia exited in the second quarter after injuring a finger on the play when he recorded the second half-sack of his career. ... RG Tyler Booker had an ankle injury and was replaced by T.J. Bass .",
+    "upNextNotes": "Up next 49ers: Play Minnesota in Mexico City in primetime next Sunday. Cowboys: Host Tennessee next Sunday.",
+    "sfLinescores": [
+      7,
+      10,
+      14,
+      15
+    ],
+    "oppLinescores": [
+      10,
+      6,
+      3,
+      21
+    ],
+    "sfFourthQuarterPts": 15,
+    "oppFourthQuarterPts": 21,
+    "sfTeamStats": {
+      "totalYards": 584,
+      "yardsPerPlay": "9.4",
+      "netPassingYards": 370,
+      "completionAttempts": "22/28",
+      "rushingYards": 214,
+      "rushingAttempts": 29,
+      "yardsPerRush": "7.4",
+      "firstDowns": 26,
+      "thirdDownEff": "6-11",
+      "fourthDownEff": "0-0",
+      "redZoneAttempts": "2-3",
+      "sacksYardsLost": "5-19",
+      "sacksTakenCount": 5,
+      "penaltiesYards": "11-100",
+      "penaltyCount": 11,
+      "penaltyYards": 100,
+      "turnovers": 0,
+      "interceptions": 0,
+      "fumblesLost": 0,
+      "possessionTime": "31:47"
+    },
+    "oppTeamStats": {
+      "totalYards": 439,
+      "yardsPerPlay": "5.8",
+      "netPassingYards": 343,
+      "completionAttempts": "30/51",
+      "rushingYards": 96,
+      "rushingAttempts": 24,
+      "yardsPerRush": "4.0",
+      "firstDowns": 27,
+      "thirdDownEff": "7-16",
+      "fourthDownEff": "4-5",
+      "redZoneAttempts": "3-3",
+      "sacksYardsLost": "1-0",
+      "sacksTakenCount": 1,
+      "penaltiesYards": "5-35",
+      "penaltyCount": 5,
+      "penaltyYards": 35,
+      "turnovers": 2,
+      "interceptions": 1,
+      "fumblesLost": 1,
+      "possessionTime": "28:13",
+      "rushingTds": 0,
+      "passingTds": 5
+    },
+    "sfPassing": [
+      {
+        "id": "4361741",
+        "name": "Brock Purdy",
+        "compAtt": "22/28",
+        "yards": 389,
+        "avg": "13.9",
+        "tds": 3,
+        "ints": 0,
+        "sacksRaw": "5-19",
+        "sacksTaken": 5,
+        "qbr": "80.9",
+        "rating": "154.5"
+      }
+    ],
+    "sfScrimmageLeaders": [
+      {
+        "id": "3117251",
+        "name": "Christian McCaffrey",
+        "rushCarries": 13,
+        "rushYards": 62,
+        "rushTds": 1,
+        "rushLong": 17,
+        "receptions": 4,
+        "recYards": 161,
+        "recTds": 2,
+        "recLong": 74,
+        "targets": 4,
+        "scrimmageYards": 223,
+        "totalTds": 3
+      },
+      {
+        "id": "3126486",
+        "name": "Deebo Samuel Sr.",
+        "rushCarries": 3,
+        "rushYards": 78,
+        "rushTds": 1,
+        "rushLong": 70,
+        "receptions": 3,
+        "recYards": 31,
+        "recTds": 1,
+        "recLong": 11,
+        "targets": 3,
+        "scrimmageYards": 109,
+        "totalTds": 2
+      },
+      {
+        "id": "4696044",
+        "name": "Kaelon Black",
+        "rushCarries": 11,
+        "rushYards": 53,
+        "rushTds": 1,
+        "rushLong": 25,
+        "receptions": 2,
+        "recYards": 13,
+        "recTds": 0,
+        "recLong": 11,
+        "targets": 2,
+        "scrimmageYards": 66,
+        "totalTds": 1
+      },
+      {
+        "id": "3040151",
+        "name": "George Kittle",
+        "rushCarries": 0,
+        "rushYards": 0,
+        "rushTds": 0,
+        "rushLong": 0,
+        "receptions": 6,
+        "recYards": 74,
+        "recTds": 0,
+        "recLong": 20,
+        "targets": 9,
+        "scrimmageYards": 74,
+        "totalTds": 0
+      },
+      {
+        "id": "15818",
+        "name": "Keenan Allen",
+        "rushCarries": 0,
+        "rushYards": 0,
+        "rushTds": 0,
+        "rushLong": 0,
+        "receptions": 5,
+        "recYards": 61,
+        "recTds": 0,
+        "recLong": 23,
+        "targets": 7,
+        "scrimmageYards": 61,
+        "totalTds": 0
+      },
+      {
+        "id": "4431466",
+        "name": "Jordan Watkins",
+        "rushCarries": 0,
+        "rushYards": 0,
+        "rushTds": 0,
+        "rushLong": 0,
+        "receptions": 2,
+        "recYards": 49,
+        "recTds": 0,
+        "recLong": 27,
+        "targets": 3,
+        "scrimmageYards": 49,
+        "totalTds": 0
+      }
+    ],
+    "sfDefense": {
+      "sacksRecorded": 1,
+      "takeawaysForced": 2,
+      "interceptions": [
+        {
+          "name": "Malik Mustapha",
+          "ints": 1,
+          "yards": 0,
+          "tds": 0
+        }
+      ],
+      "fumbleRecoveries": [
+        {
+          "name": "Marques Sigle",
+          "fumbles": 0,
+          "lost": 0,
+          "recovered": 1
+        }
+      ],
+      "passBreakupLeaders": [
+        {
+          "id": "4242488",
+          "name": "Deommodore Lenoir",
+          "tackles": 5,
+          "solo": 4,
+          "sacks": 0,
+          "tfl": 0,
+          "passDefended": 4,
+          "qbHits": 0,
+          "tds": 0
+        },
+        {
+          "id": "4696211",
+          "name": "Malik Mustapha",
+          "tackles": 4,
+          "solo": 3,
+          "sacks": 0,
+          "tfl": 0,
+          "passDefended": 2,
+          "qbHits": 0,
+          "tds": 0
+        }
+      ],
+      "tackleLeaders": [
+        {
+          "id": "3138826",
+          "name": "Fred Warner",
+          "tackles": 11,
+          "solo": 2,
+          "sacks": 0,
+          "tfl": 0,
+          "passDefended": 0,
+          "qbHits": 1,
+          "tds": 0
+        },
+        {
+          "id": "3916903",
+          "name": "Dre Greenlaw",
+          "tackles": 8,
+          "solo": 4,
+          "sacks": 0.5,
+          "tfl": 0,
+          "passDefended": 0,
+          "qbHits": 0,
+          "tds": 0
+        },
+        {
+          "id": "4427325",
+          "name": "Renardo Green",
+          "tackles": 7,
+          "solo": 6,
+          "sacks": 0,
+          "tfl": 0,
+          "passDefended": 1,
+          "qbHits": 0,
+          "tds": 0
+        },
+        {
+          "id": "4242488",
+          "name": "Deommodore Lenoir",
+          "tackles": 5,
+          "solo": 4,
+          "sacks": 0,
+          "tfl": 0,
+          "passDefended": 4,
+          "qbHits": 0,
+          "tds": 0
+        }
+      ]
+    },
+    "oppLeaders": {
+      "passer": {
+        "name": "Dak Prescott",
+        "compAtt": "30/51",
+        "yards": 343,
+        "tds": 5,
+        "ints": 1
+      },
+      "receivers": [
+        {
+          "name": "George Pickens",
+          "receptions": 11,
+          "yards": 145,
+          "tds": 3
+        },
+        {
+          "name": "CeeDee Lamb",
+          "receptions": 7,
+          "yards": 72,
+          "tds": 1
+        }
+      ]
+    },
+    "sfScoringPlays": [
+      {
+        "quarter": 1,
+        "clock": "6:56",
+        "text": "Deebo Samuel Sr. 11 Yd pass from Brock Purdy (Eddy Pineiro Kick)",
+        "awayScore": 7,
+        "homeScore": 3
+      },
+      {
+        "quarter": 2,
+        "clock": "6:54",
+        "text": "Eddy Pineiro 28 Yd Field Goal",
+        "awayScore": 10,
+        "homeScore": 10
+      },
+      {
+        "quarter": 2,
+        "clock": "2:26",
+        "text": "Christian McCaffrey 74 Yd pass from Brock Purdy (Eddy Pineiro Kick)",
+        "awayScore": 17,
+        "homeScore": 16
+      },
+      {
+        "quarter": 3,
+        "clock": "12:10",
+        "text": "Kaelon Black 25 Yd Rush (Eddy Pineiro Kick)",
+        "awayScore": 24,
+        "homeScore": 16
+      },
+      {
+        "quarter": 3,
+        "clock": "6:59",
+        "text": "Deebo Samuel Sr. 70 Yd Rush (Eddy Pineiro Kick)",
+        "awayScore": 31,
+        "homeScore": 19
+      },
+      {
+        "quarter": 4,
+        "clock": "11:26",
+        "text": "Christian McCaffrey 16 Yd Rush (Eddy Pineiro Kick)",
+        "awayScore": 38,
+        "homeScore": 19
+      },
+      {
+        "quarter": 4,
+        "clock": "3:23",
+        "text": "Christian McCaffrey 66 Yd pass from Brock Purdy (Brock Purdy Pass to Christian McCaffrey for Two-Point Conversion)",
+        "awayScore": 46,
+        "homeScore": 32
+      }
+    ]
+  },
   "teamStats": {
     "seasonYear": 2026,
     "teams": {
@@ -24408,19 +24755,19 @@
         "overallAvailabilityScore": 70,
         "activeStartersHealthy": 14,
         "totalStarters": 22,
-        "startersOutCount": 0,
+        "startersOutCount": 1,
         "startersDoubtfulOnlyCount": 1,
-        "startersLongShotCount": 6,
-        "startersDoubtfulCount": 7,
-        "startersQuestionableCount": 1,
-        "startersGtdCount": 1,
+        "startersLongShotCount": 4,
+        "startersDoubtfulCount": 5,
+        "startersQuestionableCount": 2,
+        "startersGtdCount": 2,
         "startersUnresolvedCount": 8,
-        "ruledOutCount": 0,
+        "ruledOutCount": 1,
         "doubtfulCount": 1,
-        "longShotCount": 6,
-        "doubtfulOrLongShotCount": 7,
-        "gtdCount": 2,
-        "questionableOrDoubtfulCount": 9,
+        "longShotCount": 4,
+        "doubtfulOrLongShotCount": 5,
+        "gtdCount": 3,
+        "questionableOrDoubtfulCount": 8,
         "clearedCount": 0,
         "irCount": 7,
         "irOpenWindowCount": 0,
@@ -25102,6 +25449,31 @@
       ],
       "injuryReport": [
         {
+          "name": "Jordan Addison",
+          "position": "WR",
+          "unit": "Offense",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429205.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4429205/jordan-addison",
+          "snapPct": 92,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Thumb",
+          "gameStatus": "Questionable",
+          "shortComment": "Vikings head coach Kevin O'Connell said Monday that Addison will require surgery on his thumb and will miss a few weeks, Alec Lewis of The Athletic reports.",
+          "longComment": "O'Connell indicated that Addison will be a candidate for injured reserve, though if he does end up being deactivated, the Vikings anticipate that the wideout would be able to return after sitting out the minimum four games. Addison injured his thumb at Friday's practice and subsequently was inactive for Sunday's 30-10 win over Green Bay. For as long as Addison is sidelined, Jauan Jennings (calf), Myles Price and Tai Felton will be the options to see added reps behind No. 1 receiver Justin Jefferson.",
+          "isStarter": true,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 0,
+          "playTier": "OUT",
+          "playBadgeLabel": "0% • Out",
+          "factors": [
+            "Officially ruled Out on weekly game status report"
+          ],
+          "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
           "name": "Blake Cashman",
           "position": "LB",
           "unit": "Defense",
@@ -25180,32 +25552,6 @@
           "archetypeNote": "Physical blocker/slot receiver who frequently plays through mid-week Limited tags."
         },
         {
-          "name": "Andrew Van Ginkel",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 43,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3133487.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3133487/andrew-van-ginkel",
-          "snapPct": 81,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Quadriceps",
-          "gameStatus": "Questionable",
-          "shortComment": "Van Ginkel (quadriceps) is questionable to return to Sunday's game against the Packers.",
-          "longComment": "It appeared that Van Ginkel sustained his injury during the fourth quarter of Sunday's contest. Blake Cashman (concussion) is inactive, so Jake Golday is in line for more defensive snaps at linebacker for as long as Van Ginkel is being evaluated by medical staff.",
-          "isStarter": true,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 41,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "41% • Long Shot",
-          "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report",
-            "Soft-tissue re-aggravation caution (Quadriceps)"
-          ],
-          "archetypeNote": "Veteran starter profile (8th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance."
-        },
-        {
           "name": "T.J. Hockenson",
           "position": "TE",
           "unit": "Offense",
@@ -25218,8 +25564,8 @@
           "fri": "-",
           "injuryType": "Wrist",
           "gameStatus": "Questionable",
-          "shortComment": "out",
-          "longComment": "out",
+          "shortComment": "Coach Kevin O'Connell said Monday that the Vikings expect Hockenson (wrist/chest) to make progress ahead of Sunday's game against the 49ers, Alec Lewis of The Athletic reports.",
+          "longComment": "Hockenson was inactive for Sunday's 30-10 win over the Packers, but it sounds like the tight end has a chance to return to practice after logging 'DNPs' last week. In his absence versus Green Bay in Week 10, fellow TE Gavin Bartholomew caught three of his four targets for 36 yards and a TD.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
           "playProbabilityPct": 44,
@@ -25256,29 +25602,55 @@
           "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
         },
         {
-          "name": "Jordan Addison",
-          "position": "WR",
-          "unit": "Offense",
-          "jersey": 3,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429205.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4429205/jordan-addison",
-          "snapPct": 92,
+          "name": "Bo Richter",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 98,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875564.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4875564/bo-richter",
+          "snapPct": 74,
           "wed": "-",
           "thu": "-",
           "fri": "-",
-          "injuryType": "Thumb",
+          "injuryType": "Foot",
           "gameStatus": "Questionable",
-          "shortComment": "Head coach Kevin O'Connell said Monday that Addison requires surgery on his thumb and is a candidate for injured reserve, Alec Lewis of The Athletic reports.",
-          "longComment": "Short-term IR doesn't exist anymore, but if the Vikings end up placing Addison on the list, he'll be required to miss at least four games. O'Connell didn't commit to that Monday after the wide receiver injured his thumb at Friday's practice and subsequently was inactive for Sunday's win at Green Bay. For as long as Addison is sidelined, Jauan Jennings (calf), Myles Price and Tai Felton will be the options to fill in behind No. 1 WR Justin Jefferson.",
+          "shortComment": "Richter (foot) has been ruled out for the rest of Sunday's game against the Packers.",
+          "longComment": "Richter injured his foot in the first quarter, and medical staff have determined that the injury is severe enough for the third-year linebacker to be sidelined for the rest of Sunday's contest. Richter's playing time this season has primarily come on special teams, and his availability for Week 11 against the 49ers on Nov. 22, is up in the air.",
+          "isStarter": false,
+          "isIrReturnQuestionable": false,
+          "playProbabilityPct": 74,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "74% • GTD",
+          "factors": [
+            "Exited prior game with injury and did not return — awaiting Wednesday practice evaluation"
+          ],
+          "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+        },
+        {
+          "name": "Andrew Van Ginkel",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 43,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3133487.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3133487/andrew-van-ginkel",
+          "snapPct": 81,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "injuryType": "Quadriceps",
+          "gameStatus": "Questionable",
+          "shortComment": "Van Ginkel (quadriceps) is expected to practice in preparation for Week 11, Kevin Seifert of ESPN.com reported Monday.",
+          "longComment": "Van Ginkel sustained a quad injury late in Sunday's game against Green Bay. The 31-year-old has yet to miss a regular-season game in 2026, recording 28 tackles (16 solo), including 8.5 sacks, one pass deflection and one interception in nine contests.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 45,
-          "playTier": "UNLIKELY",
-          "playBadgeLabel": "45% • Long Shot",
+          "playProbabilityPct": 79,
+          "playTier": "FIFTY_FIFTY",
+          "playBadgeLabel": "79% • GTD",
           "factors": [
-            "Missed prior game without practice participation — awaiting Wednesday report"
+            "Questionable tag adjusted by player career prior (84%)",
+            "Soft-tissue re-aggravation caution (Quadriceps)"
           ],
-          "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+          "archetypeNote": "Veteran starter profile (8th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance."
         },
         {
           "name": "Jeshaun Jones",
@@ -25305,31 +25677,6 @@
             "Manageable pain-tolerance injury profile (Shoulder)"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
-        },
-        {
-          "name": "Bo Richter",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 98,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875564.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4875564/bo-richter",
-          "snapPct": 74,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "injuryType": "Foot",
-          "gameStatus": "Questionable",
-          "shortComment": "Richter (foot) has been ruled out for the rest of Sunday's game against the Packers.",
-          "longComment": "Richter injured his foot in the first quarter, and medical staff have determined that the injury is severe enough for the third-year linebacker to be sidelined for the rest of Sunday's contest. Richter's playing time this season has primarily come on special teams, and his availability for Week 11 against the 49ers on Nov. 22, is up in the air.",
-          "isStarter": false,
-          "isIrReturnQuestionable": false,
-          "playProbabilityPct": 82,
-          "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "82% • GTD",
-          "factors": [
-            "Questionable tag adjusted by player career prior (82%)"
-          ],
-          "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps."
         }
       ],
       "keyStartersHealthy": [
@@ -25669,9 +26016,9 @@
     "betting": {
       "favorite": "San Francisco 49ers",
       "spread": "SF -3.0",
-      "openingSpread": "Opened SF -3.5 (DraftKings)",
+      "openingSpread": "Opened SF -3.5 (Draft Kings)",
       "overUnder": 46.5,
-      "moneyline": "SF -162 | MIN +136",
+      "moneyline": "SF -166 | MIN +140",
       "impliedScore": "SF 24.8 – MIN 21.8",
       "restAdvantage": "Even Rest (Standard Prep Week)"
     },

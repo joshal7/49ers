@@ -36,6 +36,10 @@ import {
   discoverOfficialClubInactivesRssItem,
   parseRotoWireInactivesHtml
 } from '../src/engine/gameDayRosterEngine.js';
+import {
+  isAllowedInlineVideoStreamUrl,
+  selectBestXSyndicationMp4
+} from '../src/engine/linkIntegrity.js';
 
 export const DEFAULT_FREE_MODEL_CASCADE = [
   'gemini-4-hydrogen',
@@ -60,7 +64,7 @@ UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVE
 2. Treat the provided AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
 3. MANDATORY COACHING, CAP & DRAFT GROUNDING:
    - Head Coach: Kyle Shanahan | Defensive Coordinator: Raheem Morris (Wide-9 4-man rush married to disguised split-safety / Cover-3 Buzz / Quarters rotations).
-   - Multi-Year CBA Cap Reality: San Francisco's 2026 Top-51 cap space (~$35.16M) MUST roll over under CBA Article 13 to offset a projected -$31.54M 2027 cap deficit. Never treat 2026 cap space as "free money" detached from 2027 obligations.
+   - Multi-Year CBA Cap Reality (When Cap/Contracts Are Relevant): Unused 2026 Top-51 cap space rolls over 1-for-1 under CBA Article 13 to offset San Francisco's projected 2027 cap deficit (never treat 2026 cap space as "free money" detached from 2027 obligations). Cite cap math ONLY when salary cap, contracts, or transactions are genuinely relevant—never shoehorn unprompted cap rollover boilerplate into game recaps, injury updates, or non-cap news summaries.
    - Midseason Trade Proration Math: Acquiring clubs absorb only the remaining weekly proration (e.g., 9/18ths at Week 9) of a player's 2026 base salary while signing/option bonus proration stays with the seller—meaning $35.16M in 2026 space carries ~$65M+ of annualized base-salary purchasing power WITHOUT requiring sellers to eat salary, though every $1 spent in 2026 directly deepens the 2027 deficit.
    - 2027 Draft Capital: Check the exact pick count in the snapshot (SF owns 6 picks in 2027 after trading its own 2027 4th-rounder to Indianapolis for DT DeForest Buckner; Rd 6 is via BAL and Rd 7 is via KC). Do not recommend reckless Day-2 pick overpays for expiring rentals.
    - Trade Target Rigor: Only recommend real NFL players verified on genuine seller/surplus rosters who upgrade true 49ers weak links (perimeter WR / 12-personnel move TE, LG pass protection, rotational speed EDGE, veteran Dime CB/S). Reject declining age-cliff veterans with zero pass-rush juice (e.g., age-37 Cameron Jordan) or recently extended untouchables (e.g., Michael Mayer).
@@ -194,7 +198,7 @@ function corsHeaders(origin, allowedOrigin) {
       : allowedOrigin || '*';
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Group-Passcode, Range',
     'Access-Control-Expose-Headers': 'Content-Length, Content-Range, Accept-Ranges'
   };
@@ -553,6 +557,41 @@ export default {
       });
     }
 
+    // Referer-free Edge Range relay for inline X (`video.twimg.com`) & ESPN MP4 highlight clips
+    if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname === '/api/video-stream') {
+      const targetRaw = String(url.searchParams.get('url') || '').trim();
+      if (!isAllowedInlineVideoStreamUrl(targetRaw)) {
+        return jsonResponse({ error: 'Disallowed or invalid video stream URL' }, 400, cors);
+      }
+      const upstreamHeaders = { Accept: 'video/mp4,video/*;q=0.9,*/*;q=0.5' };
+      const reqRange = request.headers.get('Range');
+      if (reqRange) {
+        upstreamHeaders.Range = reqRange;
+      }
+      try {
+        const upstreamRes = await fetch(targetRaw, {
+          method: request.method,
+          headers: upstreamHeaders,
+          redirect: 'follow'
+        });
+        const respHeaders = new Headers(cors);
+        respHeaders.set('Content-Type', upstreamRes.headers.get('Content-Type') || 'video/mp4');
+        respHeaders.set('Accept-Ranges', upstreamRes.headers.get('Accept-Ranges') || 'bytes');
+        respHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
+        respHeaders.set('Cache-Control', 'public, max-age=86400');
+        const cLen = upstreamRes.headers.get('Content-Length');
+        if (cLen) respHeaders.set('Content-Length', cLen);
+        const cRange = upstreamRes.headers.get('Content-Range');
+        if (cRange) respHeaders.set('Content-Range', cRange);
+        return new Response(request.method === 'HEAD' ? null : upstreamRes.body, {
+          status: upstreamRes.status,
+          headers: respHeaders
+        });
+      } catch {
+        return jsonResponse({ error: 'Upstream video stream unreachable' }, 502, cors);
+      }
+    }
+
     if (request.method === 'GET' && url.pathname === '/api/health') {
       const defaultFreeModel = env.GEMINI_DEFAULT_FREE_MODEL || DEFAULT_FREE_MODEL_CASCADE[0];
       return jsonResponse(
@@ -758,11 +797,8 @@ export default {
             if (!txt || txt.length < 16) return;
             const handle = syn.user?.screen_name || fallbackHandle;
             if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(txt)) return;
-            const mp4Variants = (syn.video?.variants || [])
-              .filter(v => v?.type === 'video/mp4' && typeof v.src === 'string' && v.src.startsWith('https://'))
-              .sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
-            const bestMp4 = mp4Variants[0]?.src || '';
-            const durMs = Number(syn.video?.durationMs || 0);
+            const bestMp4 = selectBestXSyndicationMp4(syn);
+            const durMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
             const durFmt =
               durMs >= 5000
                 ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}`
@@ -1034,7 +1070,7 @@ export default {
       const cycleKey = String(
         url.searchParams.get('cycleKey') || new Date().toISOString().slice(0, 10)
       ).replace(/[^A-Za-z0-9@_-]/g, '');
-      const cacheKey = `daily_news_brief_v3:${cycleKey}`;
+      const cacheKey = `daily_news_brief_v5:${cycleKey}`;
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing) {
         return jsonResponse({ cached: true, ...existing }, 200, cors);
@@ -1048,7 +1084,7 @@ export default {
         return jsonResponse({ error: 'Invalid daily news brief request' }, 400, cors);
       }
       const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
-      const cacheKey = `daily_news_brief_v3:${cycleKey}`;
+      const cacheKey = `daily_news_brief_v5:${cycleKey}`;
 
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {

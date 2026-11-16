@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T18:57:02.755Z",
+  "updatedAt": "2026-11-16T23:21:07.153Z",
   "week": 11,
   "units": [
     {
@@ -1367,6 +1367,16 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
               "baselineRank": 1,
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685523",
+              "name": "Ephesians Prysock",
+              "jersey": 28,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685523.png",
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1379,6 +1389,16 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
               "baselineRank": 1,
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685523",
+              "name": "Ephesians Prysock",
+              "jersey": 28,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685523.png",
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1540,21 +1560,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4685523",
-              "name": "Ephesians Prysock",
-              "jersey": 28,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685523.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4240542",
               "name": "Nate Hobbs",
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 70,
               "statusBadge": "70% • GTD",
               "isAvailable": true
@@ -1572,21 +1582,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4685523",
-              "name": "Ephesians Prysock",
-              "jersey": 28,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685523.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4240542",
               "name": "Nate Hobbs",
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 70,
               "statusBadge": "70% • GTD",
               "isAvailable": true

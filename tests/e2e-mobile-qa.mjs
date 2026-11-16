@@ -950,6 +950,9 @@ async function main() {
           allInlineIconOnly: inlineLinks.every(
             a => a.textContent.trim() === '' && Boolean(a.querySelector('svg')) && (a.getAttribute('aria-label') || '').length >= 4
           ),
+          hasRedundantSummaryBox: Boolean(briefEl?.querySelector('.daily-brief-summary')),
+          hasBoldSubtopicError: /\bbold\s+subtopic\b/i.test(proseText),
+          boldSubtopicCount: briefEl?.querySelectorAll('.daily-brief-bullets li > strong')?.length || 0,
           hasEllipsisOrTeaser: /\.{3}|…|\blatest on\b|\bclick here\b|\bpro football rumors\b|\badam schefter\b/i.test(proseText),
           hasLeakedUrlOrEncoding: /%[0-9A-Fa-f]{2}|https?:\/\/|#:~:text=|\[[^\]]+\]\(/i.test(proseText),
           startedCollapsed,
@@ -965,6 +968,12 @@ async function main() {
           briefAudit.allInlineBalancedParens &&
           briefAudit.allInlineIconOnly,
         `Expected >=4 icon-only HTTPS inline source links with balanced hrefs in Daily Brief, got: ${JSON.stringify(briefAudit)}`
+      );
+      assert(
+        !briefAudit.hasRedundantSummaryBox &&
+          !briefAudit.hasBoldSubtopicError &&
+          briefAudit.boldSubtopicCount >= 3,
+        `Daily Brief must omit redundant summary box and render >=3 actual bold subtopics without 'Bold Subtopic': ${JSON.stringify(briefAudit)}`
       );
       assert(!briefAudit.hasEllipsisOrTeaser, `Daily Brief prose contained truncated ellipsis, teaser phrase, or distracting inline source name: ${JSON.stringify(briefAudit)}`);
       assert(!briefAudit.hasLeakedUrlOrEncoding, `Daily Brief prose leaked raw URL or %XX fragment tail: ${JSON.stringify(briefAudit)}`);
@@ -1051,6 +1060,71 @@ async function main() {
       }
       assert(categoriesAudit.rosterCards >= 3 && categoriesAudit.hasCapInRoster && !categoriesAudit.hasRosterBrief, `Trades & Roster cap folding check failed: ${JSON.stringify(categoriesAudit)}`);
       await cdp.assertNoOverflow('News View After Category & Video Checks');
+
+      // 3b. Native Inline MP4 Clip Playback Check (X video.twimg.com / ESPN HD MP4): must return HTTP 206 (zero 403) & decode metadata/frames
+      const inlineMp4Audit = await cdp.eval(async () => {
+        const metaReferrer = document.querySelector('meta[name="referrer"]')?.getAttribute('content') || '';
+        document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
+        const cards = Array.from(document.querySelectorAll('.brief-card'));
+        const nativeClipCard = cards.find(
+          c =>
+            c.querySelector('button[data-action="play-inline-video"]') &&
+            c.querySelector('.video-launch-bar a[href*="x.com/"], .video-launch-bar a[href*="espn.com/"]')
+        );
+        const playBtn = nativeClipCard?.querySelector('button[data-action="play-inline-video"]');
+        if (!playBtn) {
+          document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+          return { found: false, metaReferrer };
+        }
+        playBtn.click();
+        const videoEl = document.querySelector('.video-iframe-wrap video');
+        if (!videoEl) {
+          document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+          return { found: true, mounted: false, metaReferrer };
+        }
+
+        const startMs = Date.now();
+        while (Date.now() - startMs < 6000) {
+          if (videoEl.error || (videoEl.readyState >= 1 && Number.isFinite(videoEl.duration) && videoEl.duration > 0)) {
+            break;
+          }
+          await new Promise(r => setTimeout(r, 120));
+        }
+
+        const snapshot = {
+          found: true,
+          mounted: true,
+          metaReferrer,
+          src: videoEl.getAttribute('src') || '',
+          preload: videoEl.getAttribute('preload') || '',
+          readyState: videoEl.readyState,
+          duration: videoEl.duration,
+          videoWidth: videoEl.videoWidth,
+          videoHeight: videoEl.videoHeight,
+          errorCode: videoEl.error ? videoEl.error.code : null
+        };
+        try {
+          videoEl.pause();
+        } catch {}
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        return snapshot;
+      });
+
+      assert(
+        inlineMp4Audit.metaReferrer === 'no-referrer',
+        `Expected <meta name="referrer" content="no-referrer">, got "${inlineMp4Audit.metaReferrer}"`
+      );
+      assert(
+        inlineMp4Audit.found &&
+          inlineMp4Audit.mounted &&
+          inlineMp4Audit.errorCode === null &&
+          inlineMp4Audit.readyState >= 1 &&
+          Number.isFinite(inlineMp4Audit.duration) &&
+          inlineMp4Audit.duration > 0 &&
+          inlineMp4Audit.videoWidth >= 480 &&
+          inlineMp4Audit.preload === 'auto',
+        `Inline MP4 clip failed to load or play: ${JSON.stringify(inlineMp4Audit)}`
+      );
 
       // 4. Test Ask AI jump button on Daily Top News Brief
       const jumpedPrompt = await cdp.eval(() => {
@@ -3703,7 +3777,14 @@ async function main() {
         // 4. Verify Jargon Quick-Bubble Popover opens, stays inside viewport, and closes cleanly
         document.querySelector('[data-nav-tab="news"]').click();
         document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
-        const jargonTermsFound = document.querySelectorAll('#mainView .jargon-term[data-jargon]').length;
+        let jargonTermsFound = document.querySelectorAll('#mainView .jargon-term[data-jargon]').length;
+        if (jargonTermsFound < 3) {
+          // On post-game recap days when top wire items are X video clips & box-score recaps without cap jargon,
+          // verify Jargon Popovers on Game & Season -> Matchup where scheme/analytics glossary terms are always rendered
+          document.querySelector('[data-nav-tab="season"]').click();
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]')?.click();
+          jargonTermsFound += document.querySelectorAll('#mainView .jargon-term[data-jargon]').length;
+        }
         const firstJargon = document.querySelector('#mainView .jargon-term[data-jargon]');
         let jargonPopInfo = { opened: false };
         if (firstJargon) {

@@ -240,16 +240,35 @@ export function renderBriefProseWithInlineLinksHtml(text = '', seenJargon = null
   return outHtml;
 }
 
+const PLACEHOLDER_SUBTOPIC_PREFIX_RE =
+  /^(?:[-•*]\s*|\d+[.)]\s*)?(?:\*\*|\[)?\s*(?:bold\s+subtopic|bold\s+heading|bold\s+title|subtopic(?:\s+title|\s+name)?|topic\s+title|section\s+title|bullet\s*\d+)\s*(?:\*\*|\])?\s*[:—–-]\s*/i;
+
+function stripBulletPlaceholderPrefixes(str = '') {
+  let out = String(str || '').replace(/^(?:[-•*]\s+|\d+[.)]\s+)/, '').trim();
+  let guard = 0;
+  while (guard < 4 && PLACEHOLDER_SUBTOPIC_PREFIX_RE.test(out)) {
+    out = out.replace(PLACEHOLDER_SUBTOPIC_PREFIX_RE, '').trim();
+    guard += 1;
+  }
+  return out;
+}
+
 function formatDailyBriefBulletHtml(bullet = '', seenJargon = null, urlUpgradeMap = null) {
-  const raw = String(bullet || '').trim();
+  const raw = stripBulletPlaceholderPrefixes(bullet);
   if (!raw) return '';
   const colonIdx = raw.indexOf(':');
   // Avoid splitting inside a markdown URL `https://` by checking `[` before colon
   const bracketBeforeColon = colonIdx > 0 ? raw.slice(0, colonIdx).includes('[') : false;
   if (colonIdx > 0 && colonIdx <= 78 && !bracketBeforeColon) {
     const headClean = raw.slice(0, colonIdx).replace(/\*\*/g, '').trim();
-    const bodyClean = raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim();
-    return `<li><strong>${escJargon(headClean, { maxTerms: 6, maxPlayers: 2, seenKeys: seenJargon })}:</strong> ${renderBriefProseWithInlineLinksHtml(bodyClean, seenJargon, urlUpgradeMap)}</li>`;
+    const bodyClean = stripBulletPlaceholderPrefixes(raw.slice(colonIdx + 1).replace(/^\*\*\s*/, '').trim());
+    if (
+      headClean &&
+      !/^(?:bold\s+subtopic|subtopic|topic\s+title|section\s+title|bullet\s*\d+|topic)$/i.test(headClean)
+    ) {
+      return `<li><strong>${escJargon(headClean, { maxTerms: 6, maxPlayers: 2, seenKeys: seenJargon })}:</strong> ${renderBriefProseWithInlineLinksHtml(bodyClean, seenJargon, urlUpgradeMap)}</li>`;
+    }
+    return `<li>${renderBriefProseWithInlineLinksHtml(bodyClean, seenJargon, urlUpgradeMap)}</li>`;
   }
   return `<li>${renderBriefProseWithInlineLinksHtml(raw, seenJargon, urlUpgradeMap)}</li>`;
 }
@@ -342,7 +361,6 @@ export function renderDailyTopNewsBriefHtml(
         </div>
         <span class="mono daily-brief-age" data-daily-brief-age title="Generated ${esc(brief.generatedAt || '')}">${esc(ageTiny)}</span>
       </div>
-      <p class="coaching-thesis-copy daily-brief-summary">${renderBriefProseWithInlineLinksHtml(brief.summary || '', seenJargon, urlUpgradeMap)}</p>
       <ul class="brief-bullets coaching-bullets daily-brief-bullets">
         ${(brief.bullets || []).map(b => formatDailyBriefBulletHtml(b, seenJargon, urlUpgradeMap)).join('')}
       </ul>
@@ -409,9 +427,6 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
     item.videoStreamUrl && /^https:\/\//i.test(String(item.videoStreamUrl).trim())
       ? String(item.videoStreamUrl).trim()
       : '';
-  const hasPlayableVideo = Boolean(item.videoId || safeStreamCandidate);
-  const vidKey = hasPlayableVideo ? `raw_${item.id}` : null;
-  const isVidOpen = vidKey && activeVideosSet.has(vidKey);
   const isTweet = item.type === 'tweet' || item.type === 'social';
   const isVideo = item.type === 'video';
   const isUrgent = isUrgentBreakingBadge(item.breakingBadge);
@@ -420,6 +435,18 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
   const resolvedItemUrl = isTweet
     ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
     : sanitizeExternalUrl(item.url, null);
+  const externalVideoCardUrl =
+    !item.videoId &&
+    !safeStreamCandidate &&
+    (isVideo || Boolean(item.isHighlightClip && item.externalVideoUrl)) &&
+    (item.externalVideoUrl || resolvedItemUrl)
+      ? sanitizeExternalUrl(item.externalVideoUrl || resolvedItemUrl, null)
+      : '';
+  const effectiveStreamOrCardUrl = safeStreamCandidate || externalVideoCardUrl;
+  const effectiveEmbeddable = safeStreamCandidate || item.videoId ? item.embeddable !== false : false;
+  const hasPlayableVideo = Boolean(item.videoId || effectiveStreamOrCardUrl);
+  const vidKey = hasPlayableVideo ? `raw_${item.id}` : null;
+  const isVidOpen = vidKey && activeVideosSet.has(vidKey);
   const authorHref = sanitizeExternalUrl(
     resolveItemAuthorProfileUrl(item, resolvedItemUrl),
     resolvedItemUrl
@@ -565,12 +592,16 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
               item.title || `Watch Clip (${item.duration || 'Video'})`,
               item.outletName,
               isVidOpen,
-              item.embeddable !== false,
+              effectiveEmbeddable,
               {
                 compactFooter: true,
-                videoStreamUrl: item.videoStreamUrl || '',
+                videoStreamUrl: effectiveStreamOrCardUrl || '',
                 posterUrl: item.imageUrl || '',
-                externalWatchUrl: resolvedItemUrl || sanitizeExternalUrl(item.url, '') || ''
+                externalWatchUrl:
+                  sanitizeExternalUrl(item.externalVideoUrl, null) ||
+                  resolvedItemUrl ||
+                  sanitizeExternalUrl(item.url, '') ||
+                  ''
               }
             )
           : ''
@@ -625,10 +656,12 @@ export function renderNewsViewHtml({
     prioritizedRaw.filter(i => i.type === 'article' || i.type === 'post'),
     { nowMs, preserveFormat: 'articles', appData }
   );
-  // Highlights & Videos: strictly non-film videos + native X/ESPN highlight clips (0% overlap with Film & Trench), ranked by Highlight & Team-Video salience!
+  // Highlights & Videos: strictly non-film videos + native X/ESPN/49ers.com highlight clips (0% overlap with Film & Trench), ranked by Highlight & Team-Video salience!
   const dedupedHighlightsAndVideos = deduplicateAndGroupWireItems(
     prioritizedRaw.filter(
-      i => (i.type === 'video' || Boolean(i.isHighlightClip && i.videoStreamUrl)) && i.category !== 'film'
+      i =>
+        (i.type === 'video' || Boolean(i.isHighlightClip && (i.videoStreamUrl || i.externalVideoUrl))) &&
+        i.category !== 'film'
     ),
     { nowMs, preserveFormat: 'videos', appData }
   ).sort(
@@ -837,9 +870,13 @@ export function renderVideoEmbedOrFacade(
     const safeOutUrl = sanitizeExternalUrl(externalWatchUrl, safeStreamUrl) || safeStreamUrl;
     const providerLabel = /x\.com|twimg\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
       ? 'X'
-      : /espn/i.test(`${safeOutUrl} ${channel}`)
-        ? 'ESPN'
-        : channel || 'Source';
+      : /49ers\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
+        ? '49ers.com'
+        : /bsky\.app|bsky\.network/i.test(`${safeOutUrl} ${safeStreamUrl}`)
+          ? 'Bluesky'
+          : /espn/i.test(`${safeOutUrl} ${channel}`)
+            ? 'ESPN'
+            : channel || 'Source';
 
     if (embeddable === false) {
       return `
@@ -864,10 +901,10 @@ export function renderVideoEmbedOrFacade(
       return `
         <div class="video-embed-box">
           <div class="video-iframe-wrap">
-            <video src="${esc(safeStreamUrl)}" ${safePoster ? `poster="${esc(safePoster)}"` : ''} data-vid-key="${esc(vidKey)}" controls autoplay playsinline preload="metadata"></video>
+            <video src="${esc(safeStreamUrl)}" ${safePoster ? `poster="${esc(safePoster)}"` : ''} data-vid-key="${esc(vidKey)}" data-watch-url="${esc(safeOutUrl)}" data-provider="${esc(providerLabel)}" controls autoplay playsinline preload="auto"></video>
           </div>
           <div class="video-launch-bar">
-            <span class="inline-icon-meta" style="min-width:0">${iconSvg('video', 14)}<span>Playing Inline</span></span>
+            <span class="inline-icon-meta" style="min-width:0" data-vid-status-label="${esc(vidKey)}">${iconSvg('video', 14)}<span>Playing Inline</span></span>
             <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on ${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
           </div>
         </div>

@@ -4110,7 +4110,9 @@ button.featured-player-chip:active {
 .narrow-health-table td:nth-child(2) {
   max-width: 112px;
   white-space: normal;
-  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.22;
 }
 
 @media (max-width: 480px) {
@@ -5262,7 +5264,7 @@ tr.unit-overall-banner.overall-stat-row td {
 }
 
 .daily-brief-bullets {
-  margin: 0;
+  margin: 2px 0 0;
 }
 
 .brief-inline-source-link {

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T18:57:02.755Z",
+  "updatedAt": "2026-11-16T23:21:07.153Z",
   "source": "OverTheCap & NFLPA Public Ledger",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -10,21 +10,21 @@
       "capCeiling": 340563099,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 301382113,
+      "totalCapLiabilities": 301258363,
       "top51": 234190880,
-      "teamCapSpace": 39180986,
-      "otcRawTeamCapSpace": 39180986,
-      "effectiveCapSpace": 39180986,
-      "activeCapSpending": 255361414,
-      "offenseSpend": 145376783,
+      "teamCapSpace": 39304736,
+      "otcRawTeamCapSpace": 39304736,
+      "effectiveCapSpace": 39304736,
+      "activeCapSpending": 255168914,
+      "offenseSpend": 145184283,
       "defenseSpend": 105883631,
       "specialSpend": 4101000,
-      "deadMoneyTotal": 46020699,
+      "deadMoneyTotal": 46089449,
       "injuredReserveTotal": 25478109,
-      "practiceSquadTotal": 4082316,
+      "practiceSquadTotal": 3889816,
       "pupTotal": 1251132,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 30811557,
+      "reserveAndPsTotal": 30619057,
       "topDeadMoneyEntries": [
         {
           "name": "Javon Hargrave",
@@ -103,7 +103,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 87
+      "totalSignedCount": 86
     },
     "2027": {
       "year": 2027,
@@ -204,7 +204,7 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-    "executiveSummary": "Paraag Marathe & John Lynch hold $39.18M in gross 2026 cap space ($39.18M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$36.74M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $31M–$36M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
+    "executiveSummary": "Paraag Marathe & John Lynch hold $39.30M in gross 2026 cap space ($39.30M effective after absorbing DeForest Buckner's $7.90M cap charge from ~$41.26M pre-trade space), while 2027 currently projects at -$36.74M over an estimated $327M cap ceiling. Rather than taking on multi-year veteran guarantees in-season, SF's model relies on rolling $31M–$36M of unused 2026 cap space 1-for-1 into 2027 under CBA Article 13 to neutralize that 2027 deficit and absorb scheduled option proration jumps on Brock Purdy, Nick Bosa, Fred Warner, and Trent Williams.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($31M–$36M Target vs. -$36.74M 2027 Projection)",
@@ -212,7 +212,7 @@
       },
       {
         "title": "2. Expiring Rental Purchasing Power & Option-Bonus Architecture",
-        "detail": "Leading the NFC with $39.18M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
+        "detail": "Leading the NFC with $39.30M in 2026 cap space lets SF absorb 9/18ths prorated base salaries on expiring 1-year trade rentals ($0 2027 liability) to keep pick costs to Day 3, while Purdy ($7.55M option proration) and Bosa ($8.85M option proration) trigger April 1 spring exercises."
       },
       {
         "title": "3. Rookie-Scale Trench Pipeline & Protecting 2027 Day 1–2 Picks",

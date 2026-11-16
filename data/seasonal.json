@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-16T18:57:02.755Z",
+  "updatedAt": "2026-11-16T23:21:07.153Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
-    "availableGrossCap": 39180986,
+    "availableGrossCap": 39304736,
     "projected2027CapSpace": -36740066,
     "capSourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
     "transactionsUrl": "https://www.espn.com/nfl/transactions",
     "purchasingPower": [
       {
         "metric": "2026 Salary Cap Space",
-        "figure": "$39.18M Gross (~$41.26M Pre-Buckner)",
+        "figure": "$39.30M Gross (~$41.26M Pre-Buckner)",
         "strategicImpact": "#1 in NFC. Lets SF absorb 9/18ths prorated 2026 base salaries directly on 1-year rentals—keeping draft compensation down to Day 3 instead of paying sellers to eat cash."
       },
       {
@@ -307,7 +307,7 @@
         "tier": "Tier 1 • Verified Beat & National",
         "sources": "Adam Schefter, Ian Rapoport, Matt Barrows",
         "sourceUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-        "summary": "With six WRs sidelined and $39.18M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.",
+        "summary": "With six WRs sidelined and $39.30M in 2026 cap space, SF is canvassing sellers for both vertical/slot WRs (Downs, Mitchell, Bateman) and pass-catching 12-personnel TEs (Dulcich) while absorbing 2026 salary to keep pick costs to Day 3.",
         "credibilityPct": 96
       },
       {
@@ -3752,7 +3752,7 @@
         "siteName": "Tankathon",
         "analyst": "Tankathon Live Mock",
         "url": "https://www.tankathon.com/nfl/mock_draft",
-        "publishedAt": "2026-11-16T18:57:01.258Z",
+        "publishedAt": "2026-11-16T23:21:03.257Z",
         "projectedPick": 31,
         "round": 1,
         "playerName": "Lance Heard",
@@ -17333,13 +17333,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "BNMI2jqhOas",
-          "url": "https://www.youtube.com/watch?v=BNMI2jqhOas",
-          "title": "Kaelon Black NFL Debut Highlights | Every Play",
-          "channel": "Curtain Call Replays",
-          "publishedAgo": "2mo ago",
-          "duration": "1:53",
-          "thumbnailUrl": "https://i.ytimg.com/vi/BNMI2jqhOas/hqdefault.jpg",
+          "videoId": "BqPoRb11ni0",
+          "url": "https://www.youtube.com/watch?v=BqPoRb11ni0",
+          "title": "Kaelon Black 🔥 Physical Indiana RB Prospect 2025 Highlights ",
+          "channel": "Ball Game Productions ",
+          "publishedAgo": "8mo ago",
+          "duration": "3:07",
+          "thumbnailUrl": "https://i.ytimg.com/vi/BqPoRb11ni0/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }

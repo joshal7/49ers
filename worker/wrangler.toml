@@ -13,9 +13,9 @@ id = "REPLACE_WITH_YOUR_FREE_KV_NAMESPACE_ID"
 binding = "PODCAST_BUCKET"
 bucket_name = "49ers-autopodcasts"
 
-# 3. Periodic Free-Model Auto-Discovery Cron (every 6 hours, polls /v1beta/models for newer free Gemini Flash/Pro tiers)
+# 3. Periodic Free-Model Auto-Discovery & 5:00 PM PT Cron Triggers
 [triggers]
-crons = ["15 */6 * * *"]
+crons = ["15 */6 * * *", "2 0,1 * * *"]
 
 [vars]
 ALLOWED_ORIGIN = "https://49ers.joshal.com"
