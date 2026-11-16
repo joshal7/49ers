@@ -592,7 +592,7 @@ export async function fetchLiveBeatSocialPosts() {
     accounts.map(async acc => {
       try {
         const res = await fetch(
-          `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acc.actor)}&limit=14&filter=posts_no_replies`,
+          `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acc.actor)}&limit=28&filter=posts_and_author_threads`,
           { signal: AbortSignal.timeout(6500) }
         );
         if (!res.ok) return;
@@ -601,6 +601,14 @@ export async function fetchLiveBeatSocialPosts() {
           if (entry.reason) continue;
           const post = entry.post;
           const rec = post?.record;
+          if (
+            rec?.reply &&
+            entry.reply?.parent?.author?.did &&
+            post?.author?.did &&
+            entry.reply.parent.author.did !== post.author.did
+          ) {
+            continue;
+          }
           const rawText = String(rec?.text || '')
             .replace(/\s*Original post\s*$/i, '')
             .trim();
@@ -610,9 +618,10 @@ export async function fetchLiveBeatSocialPosts() {
           if (Number.isFinite(pubMs) && pubMs < sevenDaysAgoMs) continue;
 
           const extTitle = post?.embed?.external?.title || '';
+          const extDesc = post?.embed?.external?.description || '';
           const extUri = post?.embed?.external?.uri || '';
           const extThumb = post?.embed?.external?.thumb || post?.embed?.images?.[0]?.thumb || '';
-          if (acc.requireKeyword && !sfKeywords.test(`${rawText} ${extTitle}`)) continue;
+          if (acc.requireKeyword && !sfKeywords.test(`${rawText} ${extTitle} ${extDesc}`)) continue;
 
           const rkey = (post.uri || '').split('/').pop();
           const attr = extractBeatAttributionFromText(rawText, acc);
@@ -631,7 +640,7 @@ export async function fetchLiveBeatSocialPosts() {
           const brk = classifyBreakingItem({
             title: formatted.text,
             fullText: cleanedBody,
-            summary: extTitle,
+            summary: `${extTitle} ${extDesc}`.trim(),
             publishedAt: pubIso
           });
 
@@ -659,6 +668,7 @@ export async function fetchLiveBeatSocialPosts() {
             url: postUrl,
             externalUrl: safeExternalUrl,
             externalTitle: safeExternalUrl ? extTitle || null : null,
+            externalDescription: safeExternalUrl && extDesc ? extDesc.slice(0, 320) : null,
             imageUrl: extThumb || '',
             publishedAt: pubIso,
             isBreaking: brk.isBreaking,

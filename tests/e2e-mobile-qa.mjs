@@ -1681,6 +1681,141 @@ async function main() {
         `Nick Bosa 7d mentions incomplete: ${JSON.stringify(mentionsAudit.nickBosa)}`
       );
       await cdp.assertNoOverflow('Player Mentions Verification');
+
+      // Verify Player Card top-right `1m ago` (`#sheetSyncWireBtn`) live refresh button, furious-click safety,
+      // Settings visibility isolation, scroll preservation, and instant live player wire population
+      const playerWireSyncAudit = await cdp.eval(async () => {
+        const inp = document.getElementById('rosterSearchInput');
+        inp.value = 'Renardo Green';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        const row = Array.from(document.querySelectorAll('.player-row')).find(el =>
+          el.textContent.includes('Renardo Green')
+        );
+        if (!row) return { found: false };
+        row.click();
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="overview"]').click();
+
+        const syncBtn = document.getElementById('sheetSyncWireBtn');
+        const closeBtn = document.getElementById('closeSheetBtn');
+        const sheetHeader = document.querySelector('#bottomSheetContainer .sheet-header');
+        const syncRect = syncBtn?.getBoundingClientRect();
+        const closeRect = closeBtn?.getBoundingClientRect();
+        const visibleOnPlayer = Boolean(syncBtn && !syncBtn.hidden && syncRect.width > 40);
+        const positionedLeftOfClose = Boolean(syncRect && closeRect && syncRect.right <= closeRect.left + 2);
+        const headerNoOverflow = Boolean(sheetHeader && sheetHeader.scrollWidth <= sheetHeader.clientWidth + 1);
+        const initialLabel = syncBtn?.textContent?.trim() || '';
+
+        // Mock a brand-new live X/ESPN Player Wire in-game update arriving when the user furiously clicks `1m ago`
+        const origFetch = window.fetch.bind(window);
+        let greenPolls = 0;
+        window.fetch = async (input, init) => {
+          const url = typeof input === 'string' ? input : input?.url || '';
+          if (url.includes('apis/fantasy/v2/games/ffl/news/players') && url.includes('playerId=4427325')) {
+            greenPolls += 1;
+            await new Promise(r => setTimeout(r, 45));
+            return new Response(
+              JSON.stringify({
+                feed: [
+                  {
+                    id: 99887766,
+                    published: new Date().toISOString(),
+                    headline: 'Renardo Green evaluated on sideline, cleared to return',
+                    description:
+                      'Renardo Green (back) was evaluated on the sideline and has been cleared to return to action, Matt Maiocco of NBC Sports Bay Area reports.',
+                    type: 'Rotowire'
+                  }
+                ]
+              }),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            );
+          }
+          if (url.startsWith('https://')) {
+            return new Response(JSON.stringify({ feed: [], articles: [], transactions: [] }), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' }
+            });
+          }
+          return origFetch(input, init);
+        };
+
+        let afterSyncLabel = '';
+        let topMentionText = '';
+        let scrollPreserved = false;
+        let hiddenOnSettings = false;
+        try {
+          const sheetBody = document.getElementById('sheetBody');
+          sheetBody.scrollTop = 90;
+
+          // Simulate furious rapid clicking (5 rapid clicks in a row while player is injured in-game!)
+          syncBtn.click();
+          syncBtn.click();
+          syncBtn.click();
+          syncBtn.click();
+          syncBtn.click();
+
+          // Wait for coalesced sync pass(es) to settle
+          const deadline = Date.now() + 4500;
+          while (Date.now() < deadline) {
+            await new Promise(r => setTimeout(r, 60));
+            if (!window.__49ersDiagnostics.getState().isSyncingWire && greenPolls >= 1) break;
+          }
+          await new Promise(r => setTimeout(r, 60));
+
+          afterSyncLabel = document.getElementById('sheetSyncWireBtn')?.textContent?.trim() || '';
+          const cardsAfter = Array.from(document.querySelectorAll('#sheetBody .player-mention-card'));
+          topMentionText = cardsAfter[0]?.textContent?.replace(/\s+/g, ' ').trim() || '';
+          scrollPreserved = Math.abs(document.getElementById('sheetBody').scrollTop - 90) <= 15;
+
+          // Verify `#sheetSyncWireBtn` hides automatically when switching Bottom Sheet to `Settings`
+          document.getElementById('openSettingsBtn').click();
+          hiddenOnSettings = Boolean(document.getElementById('sheetSyncWireBtn')?.hidden);
+
+          document.getElementById('closeSheetBtn').click();
+          inp.value = '';
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+        } finally {
+          window.fetch = origFetch;
+        }
+
+        return {
+          found: true,
+          visibleOnPlayer,
+          positionedLeftOfClose,
+          headerNoOverflow,
+          initialLabel,
+          afterSyncLabel,
+          greenPolls,
+          topMentionText,
+          scrollPreserved,
+          hiddenOnSettings
+        };
+      });
+
+      assert(playerWireSyncAudit.found, 'Renardo Green not found on Roster');
+      assert(
+        playerWireSyncAudit.visibleOnPlayer &&
+          playerWireSyncAudit.positionedLeftOfClose &&
+          playerWireSyncAudit.headerNoOverflow,
+        `Player Card #sheetSyncWireBtn layout/visibility invalid: ${JSON.stringify(playerWireSyncAudit)}`
+      );
+      assert(
+        /^\d+[mhd]\s+ago$/i.test(playerWireSyncAudit.initialLabel),
+        `Expected relative age label on #sheetSyncWireBtn, got "${playerWireSyncAudit.initialLabel}"`
+      );
+      assert(
+        playerWireSyncAudit.afterSyncLabel === '1m ago',
+        `Expected #sheetSyncWireBtn to update to "1m ago" after click refresh, got "${playerWireSyncAudit.afterSyncLabel}"`
+      );
+      assert(
+        playerWireSyncAudit.greenPolls >= 1 && playerWireSyncAudit.greenPolls <= 2,
+        `Furious 5x click must poll focused player immediately while coalescing duplicates (1..2 passes), got ${playerWireSyncAudit.greenPolls}`
+      );
+      assert(
+        playerWireSyncAudit.topMentionText.includes('evaluated on the sideline and has been cleared to return'),
+        `Newly synced Renardo Green wire item must populate #1 on Player Card immediately, got: "${playerWireSyncAudit.topMentionText}"`
+      );
+      assert(playerWireSyncAudit.scrollPreserved, 'Player Card scroll position must be preserved across live refresh');
+      assert(playerWireSyncAudit.hiddenOnSettings, '#sheetSyncWireBtn must hide when Settings sheet opens');
     });
 
     console.log('\n=== [6/9] Game & Season Views (Opponent Health & Play Odds + All 8 Sub-Modules + Monte Carlo) ===');

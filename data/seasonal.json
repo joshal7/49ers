@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T18:44:13.947Z",
+  "updatedAt": "2026-11-16T18:57:02.755Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -3752,7 +3752,7 @@
         "siteName": "Tankathon",
         "analyst": "Tankathon Live Mock",
         "url": "https://www.tankathon.com/nfl/mock_draft",
-        "publishedAt": "2026-11-16T18:44:12.437Z",
+        "publishedAt": "2026-11-16T18:57:01.258Z",
         "projectedPick": 31,
         "round": 1,
         "playerName": "Lance Heard",
@@ -17488,13 +17488,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "vwyKFf_WQX8",
-          "url": "https://www.youtube.com/watch?v=vwyKFf_WQX8",
-          "title": "Gracen Halton Full College Football Highlights💥| Oklahoma Defensive Tackle | NFL Draft Film",
-          "channel": "The NFL Film Room",
-          "publishedAgo": "7mo ago",
-          "duration": "8:14",
-          "thumbnailUrl": "https://i.ytimg.com/vi/vwyKFf_WQX8/hqdefault.jpg",
+          "videoId": "1Zfw4pl5YHo",
+          "url": "https://www.youtube.com/watch?v=1Zfw4pl5YHo",
+          "title": "Gracen Halton Highlights | San Francisco 49ers Defensive Lineman | Oklahoma | 2026 NFL Draft",
+          "channel": "Under The Radar Prospects",
+          "publishedAgo": "10mo ago",
+          "duration": "4:23",
+          "thumbnailUrl": "https://i.ytimg.com/vi/1Zfw4pl5YHo/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }
@@ -17798,13 +17798,15 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "cPvdiBVxl-0",
-          "title": "Ephesians Prysock (Washington) — 2026 49ers Draft Fit & Breakdown",
-          "channel": "NBC Sports Bay Area & California",
-          "duration": "3:42",
-          "url": "https://www.youtube.com/watch?v=cPvdiBVxl-0",
-          "embeddable": true,
-          "thumbnailUrl": "https://i.ytimg.com/vi/cPvdiBVxl-0/hqdefault.jpg"
+          "videoId": "bbQQy92iVrw",
+          "url": "https://www.youtube.com/watch?v=bbQQy92iVrw",
+          "title": "Ephesians Prysock Highlights | San Francisco 49ers Cornerback | Washington | 2026 NFL Draft",
+          "channel": "Under The Radar Prospects",
+          "publishedAgo": "8mo ago",
+          "duration": "2:17",
+          "thumbnailUrl": "https://i.ytimg.com/vi/bbQQy92iVrw/hqdefault.jpg",
+          "exists": true,
+          "embeddable": true
         }
       },
       {

@@ -604,9 +604,11 @@ export default {
           .replace(/\s+/g, ' ')
           .trim();
 
-      const sfRe = /\b(49ers|niners|san francisco|shanahan|lynch|purdy|bosa|mccaffrey|kittle|warner|deebo|aiyuk|pearsall|lenoir|greenlaw)\b/i;
+      const sfRe = /\b(49ers|niners|san francisco|shanahan|lynch|saleh|purdy|bosa|mccaffrey|kittle|warner|deebo|aiyuk|pearsall|lenoir|greenlaw|renardo green|mustapha|ji['’]?ayir brown|upton stout|trent williams|mykel williams|buckner|odighizuwa|keion white|keenan allen|mike evans|juszczyk|jennings|guerendo|watkins|dugger|prysock)\b/i;
+      const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|49erswebzone|nbcs49ers|ninersnation|davidbonilla49)$/i;
       const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
       const discoveredStatusMap = new Map();
+      const seenEdgeUrls = new Set();
       const items = [];
       const nowEdgeMs = Date.now();
 
@@ -626,14 +628,23 @@ export default {
                 discoveredStatusMap.set(sid, h);
               }
             }
-            const blocks = xml.match(/<item\b[\s\S]*?<\/item>/gi) || [];
-            for (const block of blocks.slice(0, 8)) {
-              const title = decodeBasic((block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
-              const summary = decodeBasic((block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 240);
-              const link = decodeBasic((block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
-              const pubRaw = decodeBasic((block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
-              if (!title || !/^https:\/\//i.test(link)) continue;
+            const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
+            for (const block of blocks.slice(0, 10)) {
+              const title = decodeBasic((block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
+              const summary = decodeBasic(
+                ((block.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || '')
+              ).slice(0, 260);
+              const link = decodeBasic(
+                (block.match(/<link[^>]*href="([^"]+)"/i) || [])[1] ||
+                  (block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] ||
+                  ''
+              );
+              const pubRaw = decodeBasic(
+                (block.match(/<(?:pubDate|published|updated)>([\s\S]*?)<\/(?:pubDate|published|updated)>/i) || [])[1] || ''
+              );
+              if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
               if (src.sfOnly && !sfRe.test(`${title} ${summary}`)) continue;
+              seenEdgeUrls.add(link);
               const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
               items.push({
                 type: 'article',
@@ -647,6 +658,54 @@ export default {
             }
           } catch {}
         }),
+        (async () => {
+          try {
+            const wzRes = await fetch('https://www.49erswebzone.com/articles/', {
+              headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
+              signal: AbortSignal.timeout(4500)
+            });
+            if (!wzRes.ok) return;
+            const wzHtml = await wzRes.text();
+            for (const liMatch of wzHtml.matchAll(/<li\s+id="item-\d+"[^>]*>([\s\S]*?)<\/li>/gi)) {
+              const li = liMatch[1];
+              const tm = li.match(
+                /<div[^>]*class="[^"]*content-news-title[^"]*"[^>]*>\s*<a[^>]*href="(https:\/\/www\.49erswebzone\.com\/articles\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/i
+              );
+              if (!tm) continue;
+              const link = tm[1].trim();
+              const title = decodeBasic(tm[2]);
+              if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
+              const summary = decodeBasic((li.match(/<span\s+class="description"[^>]*>([\s\S]*?)<\/span>/i) || [])[1] || '').slice(0, 260);
+              const writer = decodeBasic((li.match(/<a\s+href="https:\/\/www\.49erswebzone\.com\/articles\/writer\/[^"]+"[^>]*>([\s\S]*?)<\/a>/i) || [])[1] || '');
+              const relM = li.match(/&bull;\s*(\d+)\s*(mins?|minutes?|hrs?|hours?|days?)\b/i);
+              const absM = li.match(
+                /&bull;\s*([A-Z][a-z]{2,8}\s+\d{1,2},\s*\d{4})(?:\s+at\s+(\d{1,2}:\d{2}\s*[AP]M))?/i
+              );
+              let pubMs = nowEdgeMs - 3_600_000;
+              if (relM) {
+                const n = Number(relM[1]);
+                const u = relM[2].toLowerCase();
+                if (u.startsWith('m')) pubMs = nowEdgeMs - n * 60_000;
+                else if (u.startsWith('h')) pubMs = nowEdgeMs - n * 3_600_000;
+                else if (u.startsWith('d')) pubMs = nowEdgeMs - n * 86_400_000;
+              } else if (absM) {
+                const parsedAbs = Date.parse(`${absM[1]} ${absM[2] || '12:00 PM'} PST`);
+                if (Number.isFinite(parsedAbs)) pubMs = Math.min(nowEdgeMs, parsedAbs);
+              }
+              seenEdgeUrls.add(link);
+              items.push({
+                type: 'article',
+                title,
+                summary,
+                url: link,
+                author: writer || '49ers Webzone',
+                outletId: '49ers_webzone',
+                outletName: '49ers Webzone',
+                publishedAt: new Date(Math.min(nowEdgeMs, pubMs)).toISOString()
+              });
+            }
+          } catch {}
+        })(),
         ...ytChannels.map(async ch => {
           try {
             const r = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`, {
@@ -698,7 +757,7 @@ export default {
             const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
             if (!txt || txt.length < 16) return;
             const handle = syn.user?.screen_name || fallbackHandle;
-            if (handle.toLowerCase() !== '49ers' && !sfRe.test(txt)) return;
+            if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(txt)) return;
             const mp4Variants = (syn.video?.variants || [])
               .filter(v => v?.type === 'video/mp4' && typeof v.src === 'string' && v.src.startsWith('https://'))
               .sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));

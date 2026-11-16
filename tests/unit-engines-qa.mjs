@@ -8641,6 +8641,296 @@ test(
   }
 );
 
+await testAsync(
+  'Player Card rolling news adopts shared breakingClassifier timeliness (Kickoff Epoch Wall, completed-game & prior-tent pruning, playerSnippets) and focused 1m-ago refresh polls focusPlayerId first',
+  async () => {
+    const { rankPlayerOverviewMentions, rankPlayerInjuryNews } = await import(
+      '../src/engine/injuryProbabilityModel.js'
+    );
+    const { hydrateLiveEspnPlayerBeatWire, hydrateLiveBlueskyBeatWire } = await import(
+      '../src/services/dataService.js'
+    );
+
+    const wk10KoIso = '2026-11-15T21:25:00Z';
+    const wk10KoMs = Date.parse(wk10KoIso);
+    const monMorningMs = Date.parse('2026-11-16T18:00:00Z'); // ~17h after Week 10 SF @ DAL completed
+
+    const mockAppData = {
+      meta: { currentWeek: 11, updatedAt: new Date(monMorningMs).toISOString() },
+      roster: {
+        players: [
+          {
+            id: '4427325',
+            name: 'Renardo Green',
+            position: 'CB',
+            jersey: 0,
+            rosterBucket: 'active',
+            capHit2026: 1_740_000,
+            health: { status: 'Active', injuryType: 'Back', playProbabilityPct: 82, playBadgeLabel: '82% • GTD' },
+            recentNews: []
+          },
+          {
+            id: '4361741',
+            name: 'Brock Purdy',
+            position: 'QB',
+            jersey: 13,
+            rosterBucket: 'active',
+            capHit2026: 53_000_000,
+            health: { status: 'Active', injuryType: '', playProbabilityPct: 99, playBadgeLabel: '99% • Active' },
+            recentNews: []
+          }
+        ]
+      },
+      scheduleMatchup: {
+        schedule: [
+          { week: 9, opponent: 'LV', oppName: 'Las Vegas Raiders', completed: true, dateIso: '2026-11-08T21:05:00Z' },
+          { week: 10, opponent: 'DAL', oppName: 'Dallas Cowboys', completed: true, dateIso: wk10KoIso },
+          { week: 11, opponent: 'SEA', oppName: 'Seattle Seahawks', completed: false, dateIso: '2026-11-22T21:05:00Z' }
+        ],
+        upcomingMatchup: { week: 11, opponent: 'SEA', oppName: 'Seattle Seahawks', dateIso: '2026-11-22T21:05:00Z' }
+      },
+      news: { rawStream: [] }
+    };
+
+    const syntheticCandidates = [
+      // Stale Week 9 blue-tent tweet (7d old, prior completed game) -> MUST BE PRUNED
+      {
+        id: 'stale_wk9_tent',
+        type: 'tweet',
+        author: 'Jennifer Lee Chan',
+        title: 'Renardo Green is limping towards the bench area and into the blue tent, questionable to return',
+        fullText: 'Renardo Green is limping towards the bench area and into the blue tent, questionable to return',
+        publishedAt: '2026-11-08T23:42:15Z',
+        url: 'https://x.com/jenniferleechan/status/1987000000000000001'
+      },
+      // Stale pre-Week-10 Wednesday DNP blurb -> MUST BE PRUNED
+      {
+        id: 'stale_wk10_dnp',
+        type: 'article',
+        wireSource: 'espn_player_wire',
+        author: 'Matt Barrows',
+        title: 'Green (back) did not practice Wednesday ahead of Sunday\'s game against the Cowboys.',
+        publishedAt: '2026-11-12T00:43:00Z',
+        url: 'https://www.espn.com/nfl/player/_/id/4427325/renardo-green#:~:text=Wednesday'
+      },
+      // Stale pre-Week-10 Friday status tweet -> MUST BE PRUNED
+      {
+        id: 'stale_wk10_status',
+        type: 'tweet',
+        author: 'Jennifer Lee Chan',
+        title: '#49ers game status vs DAL: Questionable CB Renardo Green (back)',
+        fullText: '#49ers game status vs DAL: Questionable CB Renardo Green (back)',
+        publishedAt: '2026-11-13T21:59:23Z',
+        url: 'https://x.com/jenniferleechan/status/1988800000000000002'
+      },
+      // Pre-kickoff Saturday feature (non-availability) -> KEPT, but demoted below post-game items by Kickoff Epoch Wall
+      {
+        id: 'pregame_feature',
+        type: 'article',
+        author: 'Casey Lima',
+        title: 'Renardo Green Emerging as a Key Defensive Playmaker for 49ers',
+        summary: 'With four interceptions and six pass breakups, Renardo Green has excelled in coverage.',
+        publishedAt: '2026-11-14T16:54:00Z',
+        url: 'https://www.49erswebzone.com/articles/205141-renardo-green-emerging-defensive-playmaker/'
+      },
+      // Post-game Shanahan injury update (sole player in summary) -> MUST OUTRANK pregame feature
+      {
+        id: 'postgame_shanahan_inj',
+        type: 'article',
+        author: 'David Bonilla',
+        title: '49ers injury update: Kyle Shanahan reveals latest after win over Cowboys',
+        summary: 'The 49ers emerged relatively healthy from their 46-40 win over the Cowboys. Kyle Shanahan provided an injury update on cornerback Renardo Green.',
+        mentionedPlayers: [{ id: '4427325', name: 'Renardo Green' }],
+        publishedAt: '2026-11-16T02:10:00Z',
+        url: 'https://www.49erswebzone.com/articles/205186-injury-update-shanahan-reveals-cowboys/'
+      },
+      // Monday post-game multi-player film/takeaways article with playerSnippets -> MUST USE playerSnippet & rank above pregame
+      {
+        id: 'monday_takeaways_snip',
+        type: 'article',
+        author: 'Kyle Posey',
+        title: '9 Winners, 7 losers, and 1 IDK from the 49ers win over the Cowboys',
+        summary: 'Brock Purdy and Christian McCaffrey carried the offense in Dallas.',
+        playerSnippets: {
+          '4427325': 'Prysock went in for Renardo Green after Green left with a back injury. Prysock played 28 snaps.'
+        },
+        mentionedPlayers: [
+          { id: '4361741', name: 'Brock Purdy' },
+          { id: '4427325', name: 'Renardo Green' }
+        ],
+        publishedAt: '2026-11-16T17:15:00Z',
+        url: 'https://www.ninersnation.com/2026/11/16/49ers-cowboys-winners-losers/'
+      }
+    ];
+
+    const rankedGreen = rankPlayerOverviewMentions(mockAppData.roster.players[0], {
+      rawStream: syntheticCandidates,
+      appData: mockAppData,
+      nowMs: monMorningMs
+    });
+    const rankedIds = rankedGreen.map(x => x.id);
+    assert.equal(rankedIds.includes('stale_wk9_tent'), false, '7d-old prior-game blue-tent tweet must be pruned');
+    assert.equal(rankedIds.includes('stale_wk10_dnp'), false, 'Completed-game Wednesday DNP blurb must be pruned');
+    assert.equal(rankedIds.includes('stale_wk10_status'), false, 'Completed-game Friday status list must be pruned');
+    assert.ok(
+      rankedIds.indexOf('monday_takeaways_snip') < rankedIds.indexOf('pregame_feature') &&
+        rankedIds.indexOf('postgame_shanahan_inj') < rankedIds.indexOf('pregame_feature'),
+      `Post-game injury/takeaway updates must rank above pre-kickoff Saturday feature via Kickoff Epoch Wall: ${JSON.stringify(rankedIds)}`
+    );
+    assert.equal(
+      rankedGreen.find(x => x.id === 'monday_takeaways_snip')?.summary,
+      'Prysock went in for Renardo Green after Green left with a back injury. Prysock played 28 snaps.',
+      'Multi-player beat article must surface player-scoped snippet on Player Card'
+    );
+
+    // Live data verification on Renardo Green in refreshed data/roster.json + data/news.json
+    const liveBundle = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'))
+    };
+    const liveGreen = liveBundle.roster.players.find(p => p.name === 'Renardo Green');
+    assert.ok(liveGreen, 'Renardo Green must exist on live 49ers roster');
+    const liveGreenOv = rankPlayerOverviewMentions(liveGreen, {
+      rawStream: liveBundle.news.rawStream,
+      appData: liveBundle
+    });
+    assert.ok(liveGreenOv.length >= 4, `Expected >=4 fresh Overview mentions for Renardo Green, got ${liveGreenOv.length}`);
+    assert.equal(
+      liveGreenOv.some(it => /into the blue tent|did not practice Wednesday/i.test(`${it.fullText || ''} ${it.headline || ''}`)),
+      false,
+      'Live Renardo Green Overview must not contain stale Week 9 blue-tent or pre-Week-10 Wednesday DNP blurbs'
+    );
+    const liveGreenInj = rankPlayerInjuryNews(liveGreen, {
+      rawStream: liveBundle.news.rawStream,
+      appData: liveBundle
+    });
+    assert.ok(liveGreenInj.length >= 1, 'Renardo Green Injury News must contain fresh injury coverage');
+
+    // Verify focused player sync (`focusPlayerId`) polls focused player FIRST with limit=10 & Bluesky self-threads/link-descriptions work
+    const origFetch = globalThis.fetch;
+    const polledEspnUrls = [];
+    const polledBskyUrls = [];
+    try {
+      globalThis.fetch = async url => {
+        const u = String(url);
+        if (u.includes('apis/fantasy/v2/games/ffl/news/players')) {
+          polledEspnUrls.push(u);
+          if (u.includes('playerId=9991234')) {
+            return {
+              ok: true,
+              json: async () => ({
+                feed: [
+                  {
+                    id: 777001,
+                    published: new Date().toISOString(),
+                    headline: 'Healthy Starter exited Sunday\'s game',
+                    description: 'Healthy Starter (ankle) exited Sunday\'s game and is questionable to return, Matt Maiocco of NBC Sports Bay Area reports.',
+                    type: 'Rotowire'
+                  }
+                ]
+              })
+            };
+          }
+          return { ok: true, json: async () => ({ feed: [] }) };
+        }
+        if (u.includes('public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed')) {
+          polledBskyUrls.push(u);
+          if (u.includes('49erswebzone.bsky.social')) {
+            return {
+              ok: true,
+              json: async () => ({
+                feed: [
+                  {
+                    post: {
+                      uri: 'at://did:plc:wz/app.bsky.feed.post/3testwzgreen99',
+                      author: { did: 'did:plc:wz', handle: '49erswebzone.bsky.social' },
+                      record: {
+                        text: '#49ers postgame injury update after win\n\nRead:',
+                        createdAt: new Date().toISOString()
+                      },
+                      embed: {
+                        external: {
+                          uri: 'https://www.49erswebzone.com/articles/999999-test-green-update/',
+                          title: '49ers postgame injury update after win',
+                          description: 'Kyle Shanahan provided a fresh postgame injury update on cornerback Renardo Green.'
+                        }
+                      }
+                    }
+                  }
+                ]
+              })
+            };
+          }
+          return { ok: true, json: async () => ({ feed: [] }) };
+        }
+        return { ok: false, status: 404, json: async () => ({}), text: async () => '' };
+      };
+
+      const focusTestData = {
+        meta: { currentWeek: 11 },
+        health: { week: 11, byeWeek: 8 },
+        scheduleMatchup: mockAppData.scheduleMatchup,
+        roster: {
+          players: [
+            ...Array.from({ length: 25 }, (_, idx) => ({
+              id: String(5000000 + idx),
+              name: `Starter Player${idx}`,
+              position: 'LB',
+              jersey: idx + 1,
+              rosterBucket: 'active',
+              capHit2026: 20_000_000 - idx * 100_000,
+              health: { status: 'Questionable', isOnPracticeReport: true, injuryType: 'Knee' },
+              recentNews: []
+            })),
+            // Low-cap previously healthy player #26 (would NOT be in top-18 priority cohort without focusPlayerId!)
+            {
+              id: '9991234',
+              name: 'Healthy Starter',
+              position: 'CB',
+              jersey: 29,
+              rosterBucket: 'active',
+              capHit2026: 985_000,
+              health: { status: 'Active', isOnPracticeReport: false, injuryType: '' },
+              recentNews: []
+            },
+            mockAppData.roster.players[0]
+          ]
+        },
+        news: { rawStream: [] }
+      };
+
+      const addedFocus = await hydrateLiveEspnPlayerBeatWire(focusTestData, {
+        maxPriority: 5,
+        sweepBatchSize: 0,
+        focusPlayerId: '9991234',
+        manual: true
+      });
+      assert.equal(addedFocus, 1, 'Focused player wire poll must immediately ingest newly injured player update');
+      assert.ok(
+        polledEspnUrls[0]?.includes('playerId=9991234&limit=10'),
+        `Focused player must be polled #1 with limit=10, got: ${polledEspnUrls[0]}`
+      );
+
+      const addedBsky = await hydrateLiveBlueskyBeatWire(focusTestData, { isGameLive: true, manual: true });
+      assert.ok(addedBsky >= 1, 'Bluesky wire must ingest link-card post matching player via externalDescription');
+      assert.ok(
+        polledBskyUrls.some(u => u.includes('filter=posts_and_author_threads') && u.includes('limit=30')),
+        'Bluesky wire must query posts_and_author_threads with limit=30 on manual/live sync'
+      );
+      const greenRecent = focusTestData.roster.players.find(p => p.id === '4427325')?.recentNews || [];
+      assert.ok(
+        greenRecent.some(n => String(n.externalDescription || '').includes('Renardo Green')),
+        'Link-card externalDescription player match must propagate directly onto player.recentNews'
+      );
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

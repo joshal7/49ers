@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-16T18:43:51.194Z",
+  "updatedAt": "2026-11-16T18:56:38.686Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-11-30T18:43:51.194Z",
+  "nextAutoReviewAt": "2026-11-30T18:56:38.686Z",
   "totalTrackedReporters": 49,
   "outlets": [
     {
@@ -166,7 +166,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/nwagoner",
       "outletUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-      "liveWeeklyMentions": 58,
+      "liveWeeklyMentions": 52,
       "popularityScore": 96,
       "defaultEnabled": true
     },
@@ -466,7 +466,7 @@
       "bskyUrl": null,
       "profileUrl": "https://x.com/KP_Show",
       "outletUrl": "https://www.ninersnation.com/",
-      "liveWeeklyMentions": 15,
+      "liveWeeklyMentions": 18,
       "popularityScore": 90,
       "defaultEnabled": true
     },

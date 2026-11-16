@@ -4748,7 +4748,7 @@ const INJURY_CONTRASTIVE_COLOR_RE =
   /\b(?:(?:didn't|did\s+not|not)\s+practic(?:e|ing)[^.;]{0,35}\b(?:but|though|although|however)\b|\b(?:but|though|although)\s+(?:was\s+)?(?:spotted|seen|working|running|sprinting)|that\s+explains\s+why|considering\s+he\s+logged)\b/i;
 
 const INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE =
-  /\b(\bmri\b|x-rays?|ct\s+scan|surgery|meniscus|high-ankle|concussion\s+protocol|shanahan\s+(?:said|noted|revealed|relayed|confirmed|indicated|announced)|lynch\s+(?:said|noted|confirmed)|said\s+(?:monday|wednesday|thursday|friday|after)|day-to-day|week-to-week|21-day\s+practice\s+window|opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|not\s+expecting\b[^.;]{0,45}\bthis\s+week)\b/i;
+  /\b(\bmri\b|x-rays?|ct\s+scan|surgery|meniscus|high-ankle|concussion\s+protocol|shanahan\s+(?:said|noted|revealed|relayed|confirmed|indicated|announced|provided)|shanahan[\s\S]{0,35}(?:injury\s+update|reveals\s+latest)|left\s+with\s+(?:a|an|the\s+same)\s+[a-z-]+\s+injury|lynch\s+(?:said|noted|confirmed)|said\s+(?:monday|wednesday|thursday|friday|after)|day-to-day|week-to-week|21-day\s+practice\s+window|opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|not\s+expecting\b[^.;]{0,45}\bthis\s+week)\b/i;
 
 const INJURY_STATUS_MILESTONE_RE =
   /\b(opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|activated\s+from|placed\s+on\s+(?:injured\s+reserve|ir\b)|back\s+on\s+the\s+practice\s+field|returned\s+to\s+(?:on-field\s+)?practice|cleared\s+(?:the\s+)?concussion\s+protocol|suffered\s+a\s+setback|aggravated|ruled\s+out)\b/i;
@@ -4814,10 +4814,14 @@ export function computeInjuryNewsRankScore(
     return null;
   }
 
+  const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
+  const checkScope = scoped || playerSpecificSnippet || fullBody;
+
   // Adopt shared app-wide completed-game availability filter + prune prior-week sideline blue-tent/return tweets
+  // Scope long-term/IR exemption strictly to THIS player's clause so another player's IR window doesn't leak pre-game DNP notes!
   const hasLongTermOrIrTimeline =
     /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i.test(
-      fullBody
+      checkScope
     );
   if (!hasLongTermOrIrTimeline && appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs)) {
     return null;
@@ -4825,7 +4829,7 @@ export function computeInjuryNewsRankScore(
 
   if (Number.isFinite(lastCompletedKickoffMs) && pubMs < lastCompletedKickoffMs + 20 * 60_000) {
     const isCompletedGamePracticeOrAvailBlurb =
-      /\b(inactives?\s*:|is\s+officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|did\s+not\s+practice|didn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|game-time\s+decision|(?:good|ready)\s+to\s+(?:go|play))\b/i.test(
+      /\b(inactives?\s*:|is\s+officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|game-time\s+decision|in\s+order\s+to\s+play|(?:good|ready)\s+to\s+(?:go|play))\b/i.test(
         fullBody
       );
     const isPriorWeekSidelineTentTweet =
@@ -4838,9 +4842,6 @@ export function computeInjuryNewsRankScore(
     }
   }
 
-  const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
-  const checkScope = scoped || fullBody;
-
   if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(checkScope)) {
     return null;
   }
@@ -4849,8 +4850,13 @@ export function computeInjuryNewsRankScore(
     return null;
   }
 
-  // 1. Steep Recency Curve (0..64 pts, 5.5-hour half-life) so fresh post-game/MRI/practice updates always beat day-old blurbs
-  //    while rich same-afternoon side-field rehab color still beats bare multi-player DNP lists
+  // 1. Steep Recency Curve (0..64 pts, 5.5-hour half-life) + Kickoff Epoch Wall alignment so post-game injury updates
+  //    always outrank pre-kickoff practice observations from the already-completed game
+  const injPreKickoffDemote =
+    Number.isFinite(lastCompletedKickoffMs) &&
+    nowMs - lastCompletedKickoffMs <= 72 * 3_600_000 &&
+    pubMs < lastCompletedKickoffMs - 10 * 60_000 &&
+    !hasLongTermOrIrTimeline;
   const recencyScore = 64 * Math.pow(0.5, ageHours / 5.5);
 
   // 2. Observational Side-Field & Rehab Progression Color (0..28 pts)
@@ -4861,7 +4867,7 @@ export function computeInjuryNewsRankScore(
   if (INJURY_CONTRASTIVE_COLOR_RE.test(checkScope) || INJURY_CONTRASTIVE_COLOR_RE.test(fullBody)) {
     colorScore += 6;
   }
-  colorScore = Math.min(28, colorScore);
+  colorScore = Math.min(28, colorScore) * (injPreKickoffDemote ? 0.35 : 1);
 
   // 3. Medical Diagnostic / Coaching Quote / Timeline Detail (0..20 pts)
   let medicalScore = 0;
@@ -5225,10 +5231,13 @@ export function computeOverviewMentionRankScore(
     return null;
   }
 
+  const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
+  const checkScope = scoped || playerSpecificSnippet || fullBody;
+
   // Delegate completed-game pre-game availability pruning directly to shared `breakingClassifier.js`
   const hasLongTermOrIrTimeline =
     /\b(placed\s+on\s+(?:injured\s+reserve|ir\b)|activated\s+from|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture)\b/i.test(
-      fullBody
+      checkScope
     );
   if (!hasLongTermOrIrTimeline && appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs)) {
     return null;
@@ -5242,7 +5251,7 @@ export function computeOverviewMentionRankScore(
   // Prune pre-completed-game practice/status blurbs and prior-week sideline blue-tent/return tweets
   if (Number.isFinite(effectiveCompletedKoMs) && pubMs < effectiveCompletedKoMs + 20 * 60_000 && !hasLongTermOrIrTimeline) {
     const isCompletedGamePracticeOrAvailBlurb =
-      /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|before\s+[a-z]+\s+game|did\s+not\s+practice|didn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i.test(
+      /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|before\s+[a-z]+\s+game|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|in\s+order\s+to\s+play|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i.test(
         fullBody
       );
     const isPriorWeekSidelineTentTweet =
@@ -5260,28 +5269,31 @@ export function computeOverviewMentionRankScore(
     return null;
   }
 
-  const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
-  const checkScope = scoped || playerSpecificSnippet || fullBody;
-
   // 1. Primary Subject vs. Secondary Ripple Mention (-12..+24 pts)
   const leadClause = (primaryText.split(/[.;!?\n]/)[0] || primaryText).trim();
   const inLeadClause = doesClauseMentionPlayer(leadClause, player.name, { allowSurname: true });
-  const isOtherPlayerTransactionLead =
+  const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
+  const isSoleSubjectInSummary =
     !inLeadClause &&
+    mentionedCnt === 1 &&
+    Boolean(secondaryText) &&
+    doesClauseMentionPlayer(secondaryText, player.name, { allowSurname: true });
+  const isPrimaryPlayerFocus = inLeadClause || isSoleSubjectInSummary;
+  const isOtherPlayerTransactionLead =
+    !isPrimaryPlayerFocus &&
     /\b(trade[sd]?\s+for|completing\s+a\s+trade|acquir(?:e|ed|ing)|designate[sd]?|opened\s+the\s+practice\s+window\s+for|signed|waived)\b/i.test(
       leadClause
     );
-  const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
   const focusRatio = scoped ? scoped.length / Math.max(1, fullBody.length) : 0.45;
 
   let focusScore = 0;
-  if (inLeadClause) {
+  if (isPrimaryPlayerFocus) {
     focusScore += 16;
   } else if (isOtherPlayerTransactionLead) {
     // Lead announces another player's transaction while `player` is only a secondary ripple/tail mention
     focusScore -= 12;
   }
-  if (focusRatio >= 0.55 && mentionedCnt <= 2) {
+  if ((focusRatio >= 0.55 || isSoleSubjectInSummary) && mentionedCnt <= 2) {
     focusScore += 8;
   } else if (mentionedCnt >= 5) {
     focusScore -= 4;
@@ -5324,7 +5336,7 @@ export function computeOverviewMentionRankScore(
   const wireRankRaw = computeWireStoryRank(enrichedForWireRank, nowMs, ctx);
   const effectiveStoryRank =
     Math.min(220, Math.max(0, Number.isFinite(wireRankRaw) ? wireRankRaw : 0)) *
-    (inLeadClause || enrichedForWireRank.isInGameInjury ? 0.75 : 0.45);
+    (isPrimaryPlayerFocus || enrichedForWireRank.isInGameInjury ? 0.75 : 0.45);
 
   let urgentBoost = 0;
   if (enrichedForWireRank.isInGameInjury && ageHours <= 6) {
@@ -5333,7 +5345,7 @@ export function computeOverviewMentionRankScore(
     (enrichedForWireRank.breakingBadge === 'BREAKING' ||
       enrichedForWireRank.breakingBadge === 'LIVE INJURY UPDATE') &&
     ageHours <= 8 &&
-    inLeadClause
+    isPrimaryPlayerFocus
   ) {
     urgentBoost = 46;
   }
@@ -5485,8 +5497,13 @@ export function rankPlayerOverviewMentions(
       .slice(0, 68);
     if (!leadKey || seenLeadKeys.has(leadKey)) continue;
     const normUrlKey = safeUrl.toLowerCase().replace(/\/+$/, '');
-    // Allow shared practice-list tweet URL across different players, but never twice on the SAME player!
+    const normExtUrlKey = cand.externalUrl
+      ? String(cand.externalUrl).toLowerCase().replace(/\/+$/, '')
+      : '';
+    // Allow shared practice-list tweet URL across different players, but never twice on the SAME player
+    // (nor both a standalone article and its own outlet promo link-tweet pointing to the exact same URL)
     if (!safeUrl.includes('#:~:text=') && seenUrlKeys.has(normUrlKey)) continue;
+    if (normExtUrlKey && seenUrlKeys.has(normExtUrlKey)) continue;
 
     const rankMeta = computeOverviewMentionRankScore(cand, {
       player,
@@ -5501,6 +5518,7 @@ export function rankPlayerOverviewMentions(
 
     seenLeadKeys.add(leadKey);
     seenUrlKeys.add(normUrlKey);
+    if (normExtUrlKey) seenUrlKeys.add(normExtUrlKey);
 
     const authorName = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
     const authorProfileUrl = sanitizeExternalUrl(
