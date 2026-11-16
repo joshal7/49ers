@@ -4039,6 +4039,8 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           kickoffIso: upcomingKickoffIso,
           nowMs,
           schedule,
+          weeklyHistory: p.health.weeklyHistory2026 || [],
+          earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
           currentWeek,
           byeWeek,
           upcomingOppName,
@@ -4276,7 +4278,56 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           oppIr.playBadgeLabel = oppIrProb.badgeLabel;
           mutated = true;
         }
+        if (Array.isArray(oppHealth.injuryReport)) {
+          const oppIrKey = canonicalInjuryPlayerKey(oppIr.name);
+          const existingIdx = oppHealth.injuryReport.findIndex(
+            r => canonicalInjuryPlayerKey(r?.name) === oppIrKey
+          );
+          if (oppIr.isPracticeWindowOpen && oppIrProb.probabilityPct > 0) {
+            const irInjRow = {
+              ...(existingIdx >= 0 ? oppHealth.injuryReport[existingIdx] : {}),
+              name: oppIr.name,
+              position: oppIr.position || 'ATH',
+              jersey: oppIr.jersey ?? null,
+              headshotUrl: oppIr.headshotUrl || '',
+              espnUrl: oppIr.espnUrl || '',
+              snapPct: oppIr.snapPct ?? null,
+              rosterBucket: 'ir',
+              isPracticeWindowOpen: true,
+              isIrReturnWindow: true,
+              isIrReturnQuestionable: true,
+              wed: oppIr.wed || '-',
+              thu: oppIr.thu || '-',
+              fri: oppIr.fri || '-',
+              injuryType: oppIr.injuryType || 'Injured Reserve',
+              gameStatus: oppIr.status || 'IR — 21-Day Window Open',
+              shortComment: oppIr.beatNote || '',
+              longComment: oppIr.beatNote || '',
+              playProbabilityPct: oppIrProb.probabilityPct,
+              playTier: oppIrProb.tier,
+              playBadgeLabel: oppIrProb.badgeLabel,
+              factors: oppIrProb.factors || []
+            };
+            if (existingIdx >= 0) {
+              oppHealth.injuryReport[existingIdx] = irInjRow;
+            } else {
+              oppHealth.injuryReport.push(irInjRow);
+              mutated = true;
+            }
+          } else if (
+            existingIdx >= 0 &&
+            (oppHealth.injuryReport[existingIdx]?.rosterBucket === 'ir' ||
+              oppHealth.injuryReport[existingIdx]?.isIrReturnWindow ||
+              oppHealth.injuryReport[existingIdx]?.isPracticeWindowOpen)
+          ) {
+            oppHealth.injuryReport.splice(existingIdx, 1);
+            mutated = true;
+          }
+        }
       }
+    }
+    if (Array.isArray(oppHealth.injuryReport)) {
+      oppHealth.injuryReport.sort((a, b) => (a.playProbabilityPct ?? 99) - (b.playProbabilityPct ?? 99));
     }
     if (oppHealth.summary) {
       oppHealth.summary = computeTeamHealthSummary({
