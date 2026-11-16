@@ -32,6 +32,7 @@ import {
   collapseInitialDots,
   computeInjuryNewsRankScore,
   computePlayerPlayProbability,
+  computeTeamHealthSummary,
   doesClauseMentionPlayer,
   evaluateCorroboratedNewsInjurySignal,
   extractLivePracticeParticipationFromWire,
@@ -2437,6 +2438,269 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
     '2026 Draft Recap must link directly to official NFL.com Zierlein Scouting Profiles'
   );
 });
+
+test(
+  'IR 21-Day Window Full Lifecycle: Open (>0% GTD) -> Missed Weekly 4PM ET Deadline (0%) -> Week N+1 Rollover (>0%) -> Definite Non-Activation News (0%) -> 53-Man Activation (95%)',
+  () => {
+    const wk10Kickoff = '2026-11-15T21:25:00Z'; // Sunday Nov 15 (Week 10 vs DAL)
+    const wk11Kickoff = '2026-11-23T01:20:00Z'; // Sunday Nov 22 SNF (Week 11 vs MIN)
+
+    const buildMockIrAppData = () => ({
+      meta: { seasonYear: 2026, currentWeek: 10 },
+      roster: {
+        players: [
+          {
+            id: '4686308',
+            name: 'C.J. West',
+            position: 'DT',
+            jersey: 99,
+            rosterBucket: 'ir',
+            primarySnapPct: 58,
+            capHit2026: 1_350_000,
+            health: {
+              status: 'Injured Reserve',
+              injuryType: 'Knee',
+              fantasyStatusAbbr: 'IR-R',
+              isSeasonEnding: false,
+              isPracticeWindowOpen: false,
+              isPracticeWindowExpected: false,
+              isOnPracticeReport: false,
+              placedBeforeWeek: 3,
+              earliestEligibleWeek: 7,
+              projectedReturnWeek: 'TBD (21d Window Not Open)',
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              playProbabilityPct: 0,
+              playTier: 'OUT',
+              playBadgeLabel: '0% • IR',
+              weeklyHistory2026: []
+            }
+          },
+          {
+            id: '3895856',
+            name: 'Christian Kirk',
+            position: 'WR',
+            jersey: 3,
+            rosterBucket: 'ir',
+            primarySnapPct: 62,
+            capHit2026: 6_500_000,
+            health: {
+              status: 'Injured Reserve',
+              injuryType: 'Knee - Meniscus',
+              fantasyStatusAbbr: 'IR',
+              isSeasonEnding: false,
+              isPracticeWindowOpen: false,
+              isPracticeWindowExpected: true,
+              isOnPracticeReport: false,
+              placedBeforeWeek: 6,
+              earliestEligibleWeek: 10,
+              projectedReturnWeek: 'Est. Week 10–11 (Window Expected)',
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              playProbabilityPct: 0,
+              playTier: 'OUT',
+              playBadgeLabel: '0% • IR',
+              weeklyHistory2026: []
+            }
+          }
+        ]
+      },
+      health: {
+        week: 10,
+        byeWeek: 8,
+        practiceReport: [],
+        irAndReserveTracker: []
+      },
+      depthChart: {
+        units: [
+          {
+            unit: 'Defense',
+            rows: [
+              {
+                position: 'DT',
+                baselineChain: [
+                  { playerId: '4686308', name: 'C.J. West', playProbabilityPct: 0, statusBadge: '0% • IR', isAvailable: false },
+                  { playerId: '9999991', name: 'Osa Odighizuwa', playProbabilityPct: 99, statusBadge: '99% • Full Go', isAvailable: true }
+                ],
+                projectedActiveChain: []
+              }
+            ]
+          }
+        ]
+      },
+      news: {
+        rawStream: [
+          {
+            id: 'tw_west_open_wk10',
+            type: 'tweet',
+            author: 'Matt Maiocco',
+            reporterId: 'matt_maiocco',
+            outletName: 'NBC Sports Bay Area',
+            trustTier: 1,
+            publishedAt: '2026-11-11T20:15:00Z',
+            url: 'https://x.com/MaioccoNBCS/status/1988330001',
+            fullText: 'The 49ers opened the practice window for DT CJ West (knee) off injured reserve. He was limited at Wednesday practice.'
+          },
+          {
+            id: 'tw_kirk_no_window_wk10',
+            type: 'tweet',
+            author: 'Nick Wagoner',
+            reporterId: 'nick_wagoner',
+            outletName: 'ESPN',
+            trustTier: 1,
+            publishedAt: '2026-11-11T20:20:00Z',
+            url: 'https://x.com/nwagoner/status/1988330002',
+            fullText: 'Kyle Shanahan said the 49ers will not open WR Christian Kirk’s 21-day practice window this week.'
+          }
+        ]
+      },
+      scheduleMatchup: {
+        schedule: [
+          { week: 9, dateIso: '2026-11-08T21:25:00Z', completed: true, opponent: { abbr: 'LV', name: 'Las Vegas Raiders' } },
+          { week: 10, dateIso: wk10Kickoff, completed: false, opponent: { abbr: 'DAL', name: 'Dallas Cowboys' } },
+          { week: 11, dateIso: wk11Kickoff, completed: false, opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }
+        ],
+        upcomingMatchup: {
+          week: 10,
+          oppAbbr: 'DAL',
+          oppName: 'Dallas Cowboys',
+          kickoffIso: wk10Kickoff,
+          opponentHealth: {
+            injuryReport: [],
+            irReserve: [
+              {
+                name: 'Sam Williams',
+                position: 'DE',
+                snapPct: 54,
+                status: 'IR — 21-Day Window Open',
+                injuryType: 'Knee',
+                isSeasonEnding: false,
+                isPracticeWindowOpen: true,
+                designatedDateIso: '2026-11-11T18:00:00Z',
+                wed: 'LP',
+                thu: 'LP',
+                fri: '-',
+                projectedReturnWeek: 'Week 10 Activation Window',
+                beatNote: 'Williams had his 21-day practice window opened Wednesday and logged limited practices.',
+                playProbabilityPct: 0,
+                playBadgeLabel: '0% • IR'
+              }
+            ],
+            summary: { totalStarters: 22 }
+          }
+        }
+      }
+    });
+
+    const appData = buildMockIrAppData();
+    const west = appData.roster.players[0];
+    const kirk = appData.roster.players[1];
+    const oppIr = appData.scheduleMatchup.upcomingMatchup.opponentHealth.irReserve[0];
+
+    // Phase 1: Wednesday Week 10 (window opened) -> West > 0% GTD, Kirk window-expected cleared & stays 0%, Opponent IR > 0%
+    reconcileRosterAndHealthWithNews(appData, { nowMs: Date.parse('2026-11-11T21:30:00Z') });
+    assert.equal(west.health.isPracticeWindowOpen, true);
+    assert.ok(west.health.playProbabilityPct > 0, `West open 21d window must be >0%, got ${west.health.playProbabilityPct}%`);
+    assert.equal(west.health.isOnPracticeReport, true);
+    assert.ok(appData.health.practiceReport.some(r => r.name === 'C.J. West' && r.isIrReturnWindow === true));
+    assert.equal(kirk.health.isPracticeWindowOpen, false);
+    assert.equal(kirk.health.isPracticeWindowExpected, false, 'Definite window-not-opening news must clear isPracticeWindowExpected');
+    assert.equal(kirk.health.playProbabilityPct, 0);
+    assert.ok(oppIr.playProbabilityPct > 0, 'Opponent open-window IR player must also compute >0% play probability');
+    assert.ok(
+      appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport.some(r => r.name === 'Sam Williams'),
+      'Opponent open-window IR player (>0%) must appear in opponentHealth.injuryReport'
+    );
+
+    // Scorecard invariant: unactivated IR returner in practiceReport must NOT subtract from 22 active healthy starters!
+    const summaryPhase1 = computeTeamHealthSummary({
+      injuryReport: appData.health.practiceReport,
+      irReserve: appData.health.irAndReserveTracker,
+      totalStarters: 22
+    });
+    assert.equal(summaryPhase1.activeStartersHealthy, 22, 'Unactivated IR returner must not reduce X/22 active starters cleared');
+
+    // Grounding snapshot surfaces Activation/Play Odds for open-window IR returners
+    const groundingTxt = buildAuthoritativeLiveContextSnapshot(appData);
+    assert.match(groundingTxt, /C\.J\. West[\s\S]{0,140}Activation\/Play Odds:/, 'AI grounding must include IR Activation/Play Odds');
+
+    // Phase 2: Saturday Nov 14, 4:05 PM EST (missed Week 10 4:00 PM ET NFL activation deadline) -> both SF & Opp revert to 0% • IR!
+    reconcileRosterAndHealthWithNews(appData, { nowMs: Date.parse('2026-11-14T21:05:00Z') });
+    assert.equal(west.health.playProbabilityPct, 0, 'Missed weekly activation window must revert West to 0%');
+    assert.equal(west.health.playBadgeLabel, '0% • IR');
+    assert.equal(west.health.isOnPracticeReport, false);
+    assert.equal(appData.health.practiceReport.some(r => r.name === 'C.J. West'), false);
+    assert.equal(oppIr.playProbabilityPct, 0, 'Missed weekly activation window must revert Opponent IR returner to 0%');
+    assert.equal(
+      appData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport.some(r => r.name === 'Sam Williams'),
+      false,
+      'Opponent IR returner must leave opponentHealth.injuryReport once deadline passes'
+    );
+
+    // Phase 3: Post-Game Rollover to Week 11 (Monday Nov 16 morning, even with prior-week Saturday non-activation blurb!)
+    appData.scheduleMatchup.schedule[1].completed = true;
+    west.health.wed = '-';
+    west.health.thu = '-';
+    west.health.fri = '-';
+    west.health.weeklyHistory2026 = [
+      { week: 10, injury: 'Knee', gameStatus: 'Questionable', practiceStatus: 'Full Participation in Practice' }
+    ];
+    west.health.longComment =
+      "West upgraded to a full practice session Friday after being limited Wednesday and Thursday, but the 49ers aren't yet ready to activate him ahead of Sunday's Week 10 clash against the Cowboys.";
+    west.health.blurbDateIso = '2026-11-14T21:30:00Z';
+
+    reconcileRosterAndHealthWithNews(appData, { nowMs: Date.parse('2026-11-16T17:00:00Z') });
+    assert.equal(west.health.isPracticeWindowOpen, true, '21-day window stays open in Week 11');
+    assert.ok(
+      west.health.playProbabilityPct >= 55,
+      `Post-game rollover to Week 11 must restore West >0% GTD (ignoring stale Week 10 Cowboys non-activation blurb), got ${west.health.playProbabilityPct}%`
+    );
+    assert.equal(west.health.isOnPracticeReport, true);
+
+    // Phase 4: Current-week Week 11 news rules out activation this week -> immediately drops back to 0% • IR
+    appData.news.rawStream.unshift({
+      id: 'tw_west_not_activating_wk11',
+      type: 'tweet',
+      author: 'Matt Barrows',
+      reporterId: 'matt_barrows',
+      outletName: 'The Athletic',
+      trustTier: 1,
+      publishedAt: '2026-11-20T21:15:00Z',
+      url: 'https://x.com/mattbarrows/status/1989550001',
+      fullText: 'Kyle Shanahan said the 49ers will not activate DT CJ West from injured reserve ahead of Sunday night against Minnesota.'
+    });
+    reconcileRosterAndHealthWithNews(appData, { nowMs: Date.parse('2026-11-20T21:30:00Z') });
+    assert.equal(west.health.playProbabilityPct, 0, 'Current-week non-activation news must immediately drop West back to 0%');
+    assert.equal(west.health.playBadgeLabel, '0% • IR');
+    assert.equal(west.health.isOnPracticeReport, false);
+
+    // Phase 5: Official 53-man IR activation wire transaction -> promotes West to active roster at 95% • Full Go
+    appData.news.rawStream.unshift({
+      id: 'tx_west_activated',
+      type: 'tweet',
+      author: 'San Francisco 49ers',
+      outletId: '49ers_official',
+      wireSource: 'official_transactions',
+      trustTier: 1,
+      publishedAt: '2026-11-28T20:10:00Z',
+      url: 'https://www.49ers.com/team/transactions/',
+      fullText: 'The San Francisco 49ers have activated DL C.J. West from the Injured Reserve list.'
+    });
+    appData.scheduleMatchup.schedule[2].completed = true;
+    appData.scheduleMatchup.schedule.push({
+      week: 12,
+      dateIso: '2026-11-29T21:05:00Z',
+      completed: false,
+      opponent: { abbr: 'GB', name: 'Green Bay Packers' }
+    });
+    reconcileRosterAndHealthWithNews(appData, { nowMs: Date.parse('2026-11-28T20:20:00Z') });
+    assert.equal(west.rosterBucket, 'active', 'Official IR activation must promote player to active 53-man bucket');
+    assert.equal(west.health.playProbabilityPct, 95);
+    assert.equal(west.health.playBadgeLabel, '95% • Full Go');
+  }
+);
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {

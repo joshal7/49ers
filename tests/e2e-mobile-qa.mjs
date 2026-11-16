@@ -5414,6 +5414,109 @@ async function main() {
       assert(check.weekCards >= 2 && check.nextWeekStartsCollapsed && check.nextWeekOpensOnClick, 'Rooting Guide must group by week and collapse week-after-next by default');
     });
 
+    await runStep('Open 21-Day IR Window renders >0% GTD across Health, IR Tracker, Roster & Dossier and reverts to 0% • IR after deadline', async () => {
+      const irWindowE2e = await cdp.eval(async () => {
+        const state = window.__49ersDiagnostics.getState();
+        const mod = await import('/src/engine/injuryProbabilityModel.js');
+
+        // Snapshot mutable fields on open-window IR candidate so we leave app state pristine afterward
+        const target =
+          state.appData.roster.players.find(p => p.rosterBucket === 'ir' && p.health?.isPracticeWindowOpen) ||
+          state.appData.roster.players.find(p => p.name === 'Nate Hobbs');
+        if (!target) return { skipped: true };
+
+        const savedKickoff = state.appData.scheduleMatchup.upcomingMatchup.kickoffIso;
+        const testKickoffIso = '2026-11-23T01:20:00Z';
+        state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = testKickoffIso;
+
+        // 1. Pre-deadline Wednesday open 21-day window (`> 0% • GTD`)
+        mod.reconcileRosterAndHealthWithNews(state.appData, { nowMs: Date.parse('2026-11-18T20:00:00Z') });
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]')?.click();
+        window.__49ersDiagnostics.forceRender();
+
+        const weeklyRowsPre = Array.from(document.querySelectorAll('#weeklyInjuryReportCard tbody tr'));
+        const targetWeeklyRowPre = weeklyRowsPre.find(tr => tr.textContent.includes(target.name));
+        const weeklyRowHasIr21dTag = Boolean(targetWeeklyRowPre && /IR 21d/i.test(targetWeeklyRowPre.textContent || ''));
+        const weeklyRowHasPctPre = Boolean(
+          targetWeeklyRowPre && /[1-9]\d*%\s*•\s*(?:GTD|Long Shot|Doubtful)/.test(targetWeeklyRowPre.textContent || '')
+        );
+
+        const irCardsPre = Array.from(document.querySelectorAll('#injuredReserveCard .subcard-panel'));
+        const targetIrCardPre = irCardsPre.find(el => el.textContent.includes(target.name));
+        const irPlayBadgePre = targetIrCardPre?.querySelector('[data-ir-play-badge]')?.textContent?.trim() || '';
+        const closedIrCard = irCardsPre.find(el => el.textContent.includes('Alfred Collins'));
+        const closedIrHasPlayBadge = Boolean(closedIrCard?.querySelector('[data-ir-play-badge]'));
+
+        // Check Roster row & Player Dossier via real UI controls
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        state.rosterSubTab = 'roster';
+        state.rosterUnitFilter = 'All';
+        state.rosterPosFilter = 'ALL';
+        state.rosterSearch = target.name;
+        window.__49ersDiagnostics.forceRender();
+        const rosterTextPre = document.getElementById('mainView')?.textContent || '';
+        const hasRoster21dLabel = rosterTextPre.includes('IR (21d Window)') && /[1-9]\d*%\s*•/.test(rosterTextPre);
+        state.rosterSearch = '';
+
+        state.sheetMode = 'player';
+        state.sheetPlayerId = target.id;
+        state.sheetPlayerTab = 'health';
+        window.__49ersDiagnostics.forceRender();
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="health"]')?.click();
+        const dossierHealthPre = document.getElementById('sheetBody')?.textContent || '';
+        document.getElementById('closeSheetBtn')?.click();
+
+        // 2. Post-Saturday 4:00 PM ET activation deadline -> reverts to `0% • IR` and leaves `#weeklyInjuryReportCard`!
+        mod.reconcileRosterAndHealthWithNews(state.appData, { nowMs: Date.parse('2026-11-21T21:10:00Z') });
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]')?.click();
+        window.__49ersDiagnostics.forceRender();
+
+        const weeklyRowsPost = Array.from(document.querySelectorAll('#weeklyInjuryReportCard tbody tr'));
+        const stillInWeeklyAfterDeadline = weeklyRowsPost.some(tr => tr.textContent.includes(target.name));
+        const irCardsPost = Array.from(document.querySelectorAll('#injuredReserveCard .subcard-panel'));
+        const targetIrCardPost = irCardsPost.find(el => el.textContent.includes(target.name));
+        const irPlayBadgePost = targetIrCardPost?.querySelector('[data-ir-play-badge]')?.textContent?.trim() || '';
+
+        // Restore live state
+        state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = savedKickoff;
+        mod.reconcileRosterAndHealthWithNews(state.appData);
+        window.__49ersDiagnostics.forceRender();
+
+        return {
+          skipped: false,
+          targetName: target.name,
+          weeklyRowHasIr21dTag,
+          weeklyRowHasPctPre,
+          irPlayBadgePre,
+          closedIrHasPlayBadge,
+          hasRoster21dLabel,
+          dossierHasPctPre: /[1-9]\d*%/.test(dossierHealthPre) && !dossierHealthPre.includes('NaN'),
+          stillInWeeklyAfterDeadline,
+          irPlayBadgePost
+        };
+      });
+
+      assert(!irWindowE2e.skipped, 'Expected at least one open 21-day window IR candidate in roster');
+      assert(
+        irWindowE2e.weeklyRowHasIr21dTag && irWindowE2e.weeklyRowHasPctPre,
+        `Open 21d window player (${irWindowE2e.targetName}) must render in #weeklyInjuryReportCard with • IR 21d tag and >0% odds: ${JSON.stringify(irWindowE2e)}`
+      );
+      assert(
+        /[1-9]\d*%\s*•\s*(?:GTD|Long Shot|Doubtful)/.test(irWindowE2e.irPlayBadgePre),
+        `#injuredReserveCard must render [data-ir-play-badge] >0% while window is open, got "${irWindowE2e.irPlayBadgePre}"`
+      );
+      assert(!irWindowE2e.closedIrHasPlayBadge, 'Season-ending / closed-window IR cards must never render [data-ir-play-badge]');
+      assert(irWindowE2e.hasRoster21dLabel, 'Roster view must show IR (21d Window) and >0% play badge');
+      assert(irWindowE2e.dossierHasPctPre, 'Player Dossier Health tab must render >0% play probability cleanly');
+      assert(
+        !irWindowE2e.stillInWeeklyAfterDeadline && irWindowE2e.irPlayBadgePost === '',
+        `Once weekly 4:00 PM ET activation window is missed, player must revert to 0% and leave #weeklyInjuryReportCard: ${JSON.stringify(irWindowE2e)}`
+      );
+      await cdp.assertNoOverflow('Open 21-Day IR Window Health & Reversion');
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,

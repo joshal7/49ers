@@ -54,6 +54,7 @@ import {
   computePlayerPlayProbability,
   computeTeamHealthSummary,
   calculateIrReturnTimeline,
+  detectOpen21DayIrWindowFromHistory,
   doesClauseMentionPlayer,
   extractPracticeDaysFromText,
   classifyIrAndReserveTimeline,
@@ -1148,22 +1149,38 @@ async function main() {
           (offInjRec.thu && offInjRec.thu !== '-') ||
           (offInjRec.fri && offInjRec.fri !== '-'));
 
+      const irFantasyAbbr = webInj?.fantasyStatusAbbr || espnInj?.details?.fantasyStatus?.abbreviation || '';
+      const persistedIrWin =
+        bucket === 'ir'
+          ? detectOpen21DayIrWindowFromHistory({
+              playerName: fullName,
+              rosterBucket: bucket,
+              isSeasonEnding: false,
+              fantasyStatusAbbr: irFantasyAbbr,
+              weeklyHistory: weeklyInjByName.get(nk) || [],
+              beatNote: rawLongComment || rawShortComment,
+              currentWeek: detectedCurrentWeek
+            })
+          : { isOpen: false, designatedDateIso: null };
+
       // Pre-classify IR/Reserve timeline when player is in the IR/Reserve bucket
       const irClassification =
         bucket === 'ir' || bucket === 'suspended'
           ? classifyIrAndReserveTimeline({
               statusRaw: rawStatus,
-              fantasyStatusAbbr: webInj?.fantasyStatusAbbr || espnInj?.details?.fantasyStatus?.abbreviation || '',
+              fantasyStatusAbbr: irFantasyAbbr,
               injuryType: explicitInjType || leadParenBodyPart || 'Undisclosed',
               injuryDetail: webInj?.injuryDetail || espnInj?.details?.detail || '',
               returnDateIso: returnDateStr,
               placedDateIso: webInj?.date || inlineInj?.date || null,
               txPlacedDateIso: txRec?.placedOnIrDate || null,
-              designatedDateIso: txRec?.designatedToReturnDate || null,
+              designatedDateIso: txRec?.designatedToReturnDate || persistedIrWin.designatedDateIso || null,
               beatNote: rawLongComment || rawShortComment,
               txNote: txRec?.placedOnIrNote || '',
               cbsStatusText: cbsInjRec?.statusText || '',
-              isDesignatedToReturnOpen: Boolean(txRec?.designatedToReturnOpen || hasOfficialIrPractice),
+              isDesignatedToReturnOpen: Boolean(
+                txRec?.designatedToReturnOpen || hasOfficialIrPractice || persistedIrWin.isOpen
+              ),
               isActivated: false,
               currentWeek: detectedCurrentWeek,
               byeWeek: detectedByeWeek,
@@ -1238,7 +1255,14 @@ async function main() {
       let wed = '-';
       let thu = '-';
       let fri = '-';
-      if (offInjRec && (bucket === 'active' || isIrReturnQuestionable || txRec?.designatedToReturnOpen || hasOfficialIrPractice)) {
+      if (
+        offInjRec &&
+        (bucket === 'active' ||
+          isIrReturnQuestionable ||
+          txRec?.designatedToReturnOpen ||
+          hasOfficialIrPractice ||
+          irClassification?.isPracticeWindowOpen)
+      ) {
         wed = offInjRec.wed;
         thu = offInjRec.thu;
         fri = offInjRec.fri;
@@ -1325,12 +1349,13 @@ async function main() {
         missedPriorGame: sfEarlyRoll ? sfEarlyRoll.missedPriorGame : undefined,
         priorWeekPracticed: sfEarlyRoll ? sfEarlyRoll.priorWeekPracticed : undefined,
         weeklyHistory: weeklyInjByName.get(nk) || [],
+        earliestEligibleWeek: irClassification?.earliestEligibleWeek ?? null,
         currentWeek: detectedCurrentWeek,
         byeWeek: detectedByeWeek,
         fantasyStatusAbbr: webInj?.fantasyStatusAbbr || espnInj?.details?.fantasyStatus?.abbreviation || '',
         rosterBucket: bucket,
         isPracticeWindowOpen: Boolean(irClassification?.isPracticeWindowOpen),
-        designatedDateIso: txRec?.designatedToReturnDate || null,
+        designatedDateIso: txRec?.designatedToReturnDate || persistedIrWin.designatedDateIso || null,
         kickoffIso: nextEspnEvent?.date || '',
         schedule: pipelineScheduleStub,
         upcomingOppName: nextOppDisplayNamePre || '',
@@ -1449,7 +1474,7 @@ async function main() {
           returnDate: returnDateStr,
           isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
           isPracticeWindowOpen: Boolean(irClassification?.isPracticeWindowOpen),
-          designatedDateIso: txRec?.designatedToReturnDate || null,
+          designatedDateIso: txRec?.designatedToReturnDate || persistedIrWin.designatedDateIso || null,
           blurbDateIso: webInj?.date || inlineInj?.date || null,
           placedBeforeWeek: irClassification?.placedBeforeWeek ?? null,
           earliestEligibleWeek: irClassification?.earliestEligibleWeek ?? null,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T18:44:13.947Z",
+  "updatedAt": "2026-11-16T18:57:02.755Z",
   "week": 11,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -33,6 +33,28 @@
       "beatComment": "Evans is missing his third consecutive game this Sunday in Dallas due to right Achilles tendinitis that he suffered during a Week 6 win versus the Commanders. He hasn't practiced in the meantime, and while he's a rare player who doesn't need on-field reps during the week to be available on game days, he would provide confidence in his ability to play again with an appearance in drills at some point this Wednesday through Friday."
     },
     {
+      "playerId": "4686308",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+      "rosterBucket": "ir",
+      "isIrReturnWindow": true,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "IR — 21-Day Window Open",
+      "playProbabilityPct": 62,
+      "playBadgeLabel": "62% • GTD",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "21-day IR window open (Week 2); upgraded to Friday Full Practice last week",
+        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
+      ],
+      "beatComment": "West has been on IR since Sept. 23 due to a knee injury. He upgraded to a full practice session Friday after being limited Wednesday and Thursday, but the 49ers aren't yet ready to activate him. Prior to getting hurt, West logged action in two games, recording five tackles (one solo) over 49 defensive snaps and five special-teams snaps."
+    },
+    {
       "playerId": "4240542",
       "name": "Nate Hobbs",
       "position": "CB",
@@ -45,11 +67,11 @@
       "fri": "-",
       "injuryType": "Groin",
       "gameStatus": "IR — 21-Day Window Open",
-      "playProbabilityPct": 62,
-      "playBadgeLabel": "62% • GTD",
+      "playProbabilityPct": 70,
+      "playBadgeLabel": "70% • GTD",
       "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "21-day IR window open (Week 2); completed three Full Practices last week",
+        "21-day IR window open (Week 3); completed three Full Practices last week",
         "Soft-tissue / recurrence ramp-up caution (Groin)",
         "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
       ],
@@ -57,6 +79,28 @@
     }
   ],
   "irAndReserveTracker": [
+    {
+      "playerId": "4686308",
+      "name": "C.J. West",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
+      "injuryType": "Knee",
+      "status": "IR — 21-Day Window Open",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 3,
+      "earliestEligibleWeek": 7,
+      "projectedReturnWeek": "Week 11 Activation Window (Nov 22)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "playProbabilityPct": 62,
+      "playBadgeLabel": "62% • GTD",
+      "beatNote": "West has been on IR since Sept. 23 due to a knee injury. He upgraded to a full practice session Friday after being limited Wednesday and Thursday, but the 49ers aren't yet ready to activate him. Prior to getting hurt, West logged action in two games, recording five tackles (one solo) over 49 defensive snaps and five special-teams snaps."
+    },
     {
       "playerId": "4240542",
       "name": "Nate Hobbs",
@@ -75,8 +119,8 @@
       "earliestEligibleWeek": 9,
       "projectedReturnWeek": "Week 11 Activation Window (Nov 22)",
       "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 62,
-      "playBadgeLabel": "62% • GTD",
+      "playProbabilityPct": 70,
+      "playBadgeLabel": "70% • GTD",
       "beatNote": "Hobbs had his 21-day practice window opened Nov. 4, so the 49ers still have ample time to activate him before he'd need to miss the rest of the season. The veteran cornerback hasn't yet made his regular-season San Francisco debut after signing with the team on a one-year contract last March. Hobbs did manage to log a trio of full practices this week, so he seems to be progressing well toward a return to action."
     },
     {
@@ -166,28 +210,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "Pleasants sustained a knee injury during the 49ers' preseason game against the Chargers on Aug. 20. The injury is severe enough for 29-year-old offensive tackle to open the year on IR, meaning he'll be forced to miss at least the first four games of the regular season."
-    },
-    {
-      "playerId": "4686308",
-      "name": "C.J. West",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve (Designated)",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 3,
-      "earliestEligibleWeek": 7,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "West has been on IR since Sept. 23 due to a knee injury. He upgraded to a full practice session Friday after being limited Wednesday and Thursday, but the 49ers aren't yet ready to activate him. Prior to getting hurt, West logged action in two games, recording five tackles (one solo) over 49 defensive snaps and five special-teams snaps."
     },
     {
       "playerId": "4372561",

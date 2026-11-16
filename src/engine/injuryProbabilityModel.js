@@ -626,33 +626,39 @@ function hasAffirmativeRuledOutSignal(beatNote = '') {
   return false;
 }
 
+function stripInitialAndHonorificDots(str = '') {
+  return collapseInitialDots(String(str || '')).replace(/\b(jr|sr|st|vs)\./gi, '$1');
+}
+
 export function hasWindowDefinitelyNotOpeningSignal(beatNote = '') {
   if (!beatNote) return false;
+  const norm = stripInitialAndHonorificDots(beatNote);
   return (
     /\b(?:(?:will not|won't|is not going to|isn't going to|are not going to|aren't going to|not going to|aren't|isn't|do not plan to|don't plan to|does not plan to|doesn't plan to|not expected to|isn't expected to|no plans to|decided against|opted against)\s+open(?:ing)?\b[^.;]{0,58}\b(?:21-day|practice|return|ir|injured reserve)?\s*window|(?:21-day|practice|return)\s+window\s+(?:will not|won't|is not going to|isn't going to|is not expected to|isn't expected to)\s+(?:be\s+)?open(?:ed)?|not\s+(?:yet\s+)?ready\s+to\s+(?:open\b[^.;]{0,36}\bwindow|return\s+to\s+practice))\b/i.test(
-      beatNote
+      norm
     )
   );
 }
 
 export function hasDefiniteIrNonActivationOrWindowClosedSignal(beatNote = '') {
   if (!beatNote) return false;
-  if (hasWindowDefinitelyNotOpeningSignal(beatNote)) return true;
-  if (hasAffirmativeRuledOutSignal(beatNote)) return true;
+  const norm = stripInitialAndHonorificDots(beatNote);
+  if (hasWindowDefinitelyNotOpeningSignal(norm)) return true;
+  if (hasAffirmativeRuledOutSignal(norm)) return true;
   // Guard against conditional "if he isn't activated" / "would need to be activated"
   if (
-    /\b(?:(?:will not|won't|is not going to|isn't going to|are not going to|aren't going to|not going to|aren't|isn't|do not plan to|don't plan to|does not plan to|doesn't plan to|no plans to|decided not to|opted not to)\s+(?:be\s+)?activat(?:e|ed|ing)\b|(?:was not|wasn't|were not|weren't|did not|didn't)\s+activat(?:e|ed)\b|(?:aren't|isn't|not)\s+yet\s+ready\s+to\s+activate\b|not\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+(?:game\s+action|practice)|(?:remains?|remaining|staying|will stay|will remain)\s+on\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b)|(?:will\s+have\s+to\s+wait|needs?|giving\s+him)\s+(?:at\s+least\s+)?another\s+week\b|holding\s+him\s+out\s+(?:this\s+week|for\s+week|on\s+(?:sunday|monday|thursday|saturday))|(?:not|n't|isn't|no\s+longer)\s+(?:expected\s+to\s+(?:be\s+activated|play|suit\s+up)\s*(?:this\s+week|in\s+week\s*\d+|sunday|monday|thursday|saturday|against|versus|vs\.?)?|expecting\b[^.;]{0,40}\bthis\s+week))\b/i.test(
-      beatNote
+    /\b(?:(?:will not|won't|is not going to|isn't going to|are not going to|aren't going to|not going to|aren't|isn't|do not plan to|don't plan to|does not plan to|doesn't plan to|no plans to|decided not to|opted not to)\s+(?:be\s+)?activat(?:e|ed|ing)\b|(?:was not|wasn't|were not|weren't|did not|didn't)\s+activat(?:e|ed)\b|(?:aren't|isn't|not)\s+yet\s+ready\s+to\s+activate\b|not\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+(?:game\s+action|practice)|(?:remains?|remaining|staying|will stay|will remain)\s+on\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b)|(?:will\s+have\s+to\s+wait|needs?|giving\s+him)\s+(?:at\s+least\s+)?another\s+week\b|holding\s+him\s+out\s+(?:this\s+week|for\s+week|on\s+(?:sunday|monday|thursday|saturday))|(?:not|n't|isn't|no\s+longer)\s+(?:expected\s+to\s+(?:be\s+activated|play|suit\s+up)\s*(?:this\s+week|in\s+week\s*\d+|sunday|monday|thursday|saturday|against|versus|vs)?|expecting\b[^.;]{0,40}\bthis\s+week))\b/i.test(
+      norm
     ) &&
     !/\b(?:if|unless|whether)\s+(?:he|they|the\s+team|the\s+49ers)\s+(?:is\s+not|isn't|wasn't|aren't|don't|won't)\s+(?:be\s+)?activat/i.test(
-      beatNote
+      norm
     )
   ) {
     return true;
   }
   if (
-    /\bnot\s+activated\b/i.test(beatNote) &&
-    !/\b(?:if|unless|whether)\b[^.;]{0,28}\bnot\s+activated\b/i.test(beatNote)
+    /\bnot\s+activated\b/i.test(norm) &&
+    !/\b(?:if|unless|whether)\b[^.;]{0,28}\bnot\s+activated\b/i.test(norm)
   ) {
     return true;
   }
@@ -996,25 +1002,26 @@ export function detectOpen21DayIrWindowFromHistory({
     for (const { pubMs, fullBody } of chronItems) {
       const scoped = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
       if (!scoped) continue;
+      const normScoped = stripInitialAndHonorificDots(scoped);
       if (
-        /\b(?:placed\b[^.;]{0,45}\bon\s+injured\s+reserve|season-ending|out\s+for\s+the\s+season|activated\b[^.;]{0,55}\bfrom\s+(?:injured\s+reserve|ir\b|the\s+pup\s+list))\b/i.test(
-          scoped
+        /\b(?:placed\b[^.;]{0,55}\bon\s+(?:the\s+)?injured\s+reserve|season-ending|out\s+for\s+the\s+season|activated\b[^.;]{0,70}\bfrom\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b))\b/i.test(
+          normScoped
         ) &&
-        !/\b(?:not|n't|wasn't|didn't|won't|if|whether|since)\b[^.;]{0,28}\bactivated\b/i.test(scoped) &&
-        !/\bhas\s+been\s+on\s+(?:ir|injured\s+reserve)\s+since\b/i.test(scoped)
+        !/\b(?:not|n't|wasn't|didn't|won't|if|whether|since)\b[^.;]{0,28}\bactivated\b/i.test(normScoped) &&
+        !/\bhas\s+been\s+on\s+(?:ir|injured\s+reserve)\s+since\b/i.test(normScoped)
       ) {
         openedAtMs = null;
         leadNote = '';
         continue;
       }
       if (
-        /\b(?:designated\b[^.;]{0,80}\b(?:to|for)\s+return\s+from|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9'. -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
-          scoped
+        /\b(?:designated\b[^.;]{0,80}\b(?:to|for)\s+return\s+from|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9' -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
+          normScoped
         ) &&
         !/\b(?:not|n't|could|might|may|hopeful\s+to|plan\s+to|expect\s+to|won't|will\s+not|aren't|isn't)\s+(?:be\s+)?open/i.test(
-          scoped
+          normScoped
         ) &&
-        !hasWindowDefinitelyNotOpeningSignal(scoped)
+        !hasWindowDefinitelyNotOpeningSignal(normScoped)
       ) {
         if (openedAtMs === null) {
           openedAtMs = pubMs;
@@ -1218,19 +1225,20 @@ export function evaluateCorroboratedNewsInjurySignal({
     if ((isOfficialSourceProbe || trustTierProbe <= 1 || hasInlineTier1Probe) && doesClauseMentionPlayer(fullBody, playerName)) {
       const scopedForWindow = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
       if (scopedForWindow) {
+        const normScopedWin = stripInitialAndHonorificDots(scopedForWindow);
         if (
-          /\b(?:designated\b[^.]{0,80}\b(?:to|for)\s+return|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9'. -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
-            scopedForWindow
+          /\b(?:designated\b[^.;]{0,80}\b(?:to|for)\s+return|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9' -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
+            normScopedWin
           ) &&
-          !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't|will not|aren't|isn't)\s+(?:be\s+)?open/i.test(scopedForWindow) &&
-          !hasWindowDefinitelyNotOpeningSignal(scopedForWindow)
+          !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't|will not|aren't|isn't)\s+(?:be\s+)?open/i.test(normScopedWin) &&
+          !hasWindowDefinitelyNotOpeningSignal(normScopedWin)
         ) {
           hasOfficialTxDesignation = true;
         }
         if (
-          /\bactivated\b[^.;]{0,65}\bfrom\s+(?:injured\s+reserve|ir\b|the\s+pup\s+list)\b/i.test(scopedForWindow) &&
+          /\bactivated\b[^.;]{0,70}\bfrom\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b)\b/i.test(normScopedWin) &&
           !/\b(?:not|n't|wasn't|didn't|won't|if|whether|could|might|may|expected\s+to\s+be|likely\s+to\s+be)\b[^.;]{0,25}\bactivated\b/i.test(
-            scopedForWindow
+            normScopedWin
           )
         ) {
           hasOfficialActivationFromIr = true;

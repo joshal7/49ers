@@ -52,7 +52,12 @@ import {
   parseFlexibleIsoMs,
   resolvePlacedBeforeWeekFromDate,
   isSeasonEndingIrRecord,
-  classifyIrAndReserveTimeline
+  classifyIrAndReserveTimeline,
+  evaluateWeeklyIrActivationWindow,
+  hasWindowDefinitelyNotOpeningSignal,
+  hasDefiniteIrNonActivationOrWindowClosedSignal,
+  sanitizeIrBeatNoteForCurrentWeek,
+  detectOpen21DayIrWindowFromHistory
 } from '../src/engine/injuryProbabilityModel.js';
 import {
   canonicalPlayerKey,
@@ -8415,6 +8420,223 @@ await testAsync(
       assert.equal(purdyRoster.health.playProbabilityPct, purdyPostGame.playProbabilityPct);
     } finally {
       globalThis.fetch = origFetch;
+    }
+  }
+);
+
+test(
+  'IR 21-Day Practice Window Play Probability (>0% GTD), Weekly 4:00 PM ET Activation Deadline & Non-Activation Reversion to 0% • IR',
+  () => {
+    const sundaySnfKickoffIso = '2026-11-23T01:20:00Z'; // Sunday Nov 22, 8:20 PM EST (Week 11 vs MIN)
+    const wedOpenWindowMs = Date.parse('2026-11-18T21:00:00Z'); // Wednesday 4:00 PM EST
+    const satBeforeDeadlineMs = Date.parse('2026-11-21T20:59:00Z'); // Saturday 3:59 PM EST (1m before deadline)
+    const satAfterDeadlineMs = Date.parse('2026-11-21T21:01:00Z'); // Saturday 4:01 PM EST (1m past deadline)
+
+    // 1. Weekly NFL CBA 4:00 PM ET deadline math across Sunday, TNF, MNF, and Daytime Thanksgiving slates
+    const preLock = evaluateWeeklyIrActivationWindow({
+      kickoffIso: sundaySnfKickoffIso,
+      designatedDateIso: '2026-11-11T19:00:00Z',
+      nowMs: satBeforeDeadlineMs
+    });
+    assert.equal(preLock.hasMissedWeeklyDeadline, false, 'Saturday 3:59 PM EST must remain inside Sunday activation window');
+    assert.equal(preLock.windowWeekStage, 2, '11 days post-designation ahead of Week 11 kickoff is Window Week 2');
+
+    const postLock = evaluateWeeklyIrActivationWindow({
+      kickoffIso: sundaySnfKickoffIso,
+      designatedDateIso: '2026-11-11T19:00:00Z',
+      nowMs: satAfterDeadlineMs
+    });
+    assert.equal(postLock.hasMissedWeeklyDeadline, true, 'Saturday 4:01 PM EST must mark Sunday activation deadline missed');
+
+    // Prime-time TNF (Thursday 8:15 PM EST = 2026-11-20T01:15:00Z) locks Thursday 4:00 PM EST (2026-11-19T21:00:00Z)
+    const tnfPre = evaluateWeeklyIrActivationWindow({
+      kickoffIso: '2026-11-20T01:15:00Z',
+      nowMs: Date.parse('2026-11-19T20:55:00Z')
+    });
+    const tnfPost = evaluateWeeklyIrActivationWindow({
+      kickoffIso: '2026-11-20T01:15:00Z',
+      nowMs: Date.parse('2026-11-19T21:05:00Z')
+    });
+    assert.equal(tnfPre.hasMissedWeeklyDeadline, false);
+    assert.equal(tnfPost.hasMissedWeeklyDeadline, true, 'Prime-time TNF locks Thursday at 4:00 PM ET');
+
+    // Prime-time MNF (Monday 8:15 PM EST = 2026-11-24T01:15:00Z) locks Monday 4:00 PM EST (2026-11-23T21:00:00Z)
+    const mnfPre = evaluateWeeklyIrActivationWindow({
+      kickoffIso: '2026-11-24T01:15:00Z',
+      nowMs: Date.parse('2026-11-23T20:55:00Z')
+    });
+    const mnfPost = evaluateWeeklyIrActivationWindow({
+      kickoffIso: '2026-11-24T01:15:00Z',
+      nowMs: Date.parse('2026-11-23T21:05:00Z')
+    });
+    assert.equal(mnfPre.hasMissedWeeklyDeadline, false);
+    assert.equal(mnfPost.hasMissedWeeklyDeadline, true, 'Prime-time MNF locks Monday at 4:00 PM ET');
+
+    // Daytime Thanksgiving Thursday (12:30 PM EST = 2026-11-26T17:30:00Z) locks Wednesday 4:00 PM EST (2026-11-25T21:00:00Z)
+    const tgDaytimePostWed = evaluateWeeklyIrActivationWindow({
+      kickoffIso: '2026-11-26T17:30:00Z',
+      nowMs: Date.parse('2026-11-25T21:05:00Z')
+    });
+    assert.equal(tgDaytimePostWed.hasMissedWeeklyDeadline, true, 'Daytime weekday game locks day prior at 4:00 PM ET');
+
+    // 2. Open 21-day window computes calibrated >0% play probability across ramp weeks & practice progressions (capped <=84% GTD)
+    const wk1Lp = computePlayerPlayProbability({
+      name: 'C.J. West',
+      position: 'DT',
+      rosterBucket: 'ir',
+      gameStatus: 'IR — 21-Day Window Open',
+      isPracticeWindowOpen: true,
+      injuryType: 'Knee',
+      wed: 'LP',
+      thu: '-',
+      fri: '-',
+      designatedDateIso: '2026-11-18T18:00:00Z',
+      kickoffIso: sundaySnfKickoffIso,
+      nowMs: wedOpenWindowMs
+    });
+    const wk3Fp = computePlayerPlayProbability({
+      name: 'Nate Hobbs',
+      position: 'CB',
+      rosterBucket: 'ir',
+      gameStatus: 'Questionable',
+      isPracticeWindowOpen: true,
+      isIrReturnQuestionable: true,
+      injuryType: 'Groin',
+      wed: 'FP',
+      thu: 'FP',
+      fri: 'FP',
+      beatNote: 'Hobbs logged three full practices and is expected to be activated ahead of Sunday.',
+      designatedDateIso: '2026-11-04T18:00:00Z',
+      kickoffIso: sundaySnfKickoffIso,
+      nowMs: satBeforeDeadlineMs
+    });
+    assert.ok(wk1Lp.probabilityPct >= 45 && wk1Lp.probabilityPct <= 60, `Expected Week 1 LP IR window ~45-60%, got ${wk1Lp.probabilityPct}%`);
+    assert.match(wk1Lp.badgeLabel, /% • GTD|% • Long Shot/);
+    assert.ok(wk3Fp.probabilityPct > wk1Lp.probabilityPct, 'Week 3 FP/FP/FP + positive beat note must exceed Week 1 LP');
+    assert.ok(wk3Fp.probabilityPct >= 75 && wk3Fp.probabilityPct <= 84, `Unactivated IR returner must cap at <=84% GTD, got ${wk3Fp.probabilityPct}%`);
+    assert.equal(wk3Fp.badgeLabel, `${wk3Fp.probabilityPct}% • GTD`);
+
+    // 3. Missing the weekly activation window immediately reverts play probability to 0% • IR
+    const missedDeadline = computePlayerPlayProbability({
+      name: 'Nate Hobbs',
+      position: 'CB',
+      rosterBucket: 'ir',
+      gameStatus: 'IR — 21-Day Window Open',
+      isPracticeWindowOpen: true,
+      injuryType: 'Groin',
+      wed: 'FP',
+      thu: 'FP',
+      fri: 'FP',
+      designatedDateIso: '2026-11-04T18:00:00Z',
+      kickoffIso: sundaySnfKickoffIso,
+      nowMs: satAfterDeadlineMs
+    });
+    assert.equal(missedDeadline.probabilityPct, 0, 'Missing Saturday 4:00 PM ET activation window must revert IR returner to 0%');
+    assert.equal(missedDeadline.badgeLabel, '0% • IR');
+    assert.ok(missedDeadline.factors.some(f => /activation deadline/i.test(f)));
+
+    // 21-day window expiration (>21.5 days without activation) also reverts to 0% • IR
+    const expired21d = computePlayerPlayProbability({
+      name: 'Nate Hobbs',
+      position: 'CB',
+      rosterBucket: 'ir',
+      gameStatus: 'IR — 21-Day Window Open',
+      isPracticeWindowOpen: true,
+      injuryType: 'Groin',
+      designatedDateIso: '2026-10-25T18:00:00Z',
+      kickoffIso: sundaySnfKickoffIso,
+      nowMs: wedOpenWindowMs
+    });
+    assert.equal(expired21d.probabilityPct, 0);
+    assert.equal(expired21d.badgeLabel, '0% • IR');
+
+    // 4. News indicating non-activation OR that 21-day window will definitely not open this week reverts to 0% • IR
+    for (const ruling of [
+      "Kyle Shanahan said the 49ers won't activate CJ West from injured reserve this week.",
+      'West (knee) was not activated Saturday and remains on injured reserve for Week 11.',
+      "Shanahan noted the team isn't yet ready to activate West ahead of Sunday's game.",
+      'The 49ers will not open Christian Kirk’s 21-day practice window this week, per Matt Maiocco.'
+    ]) {
+      assert.equal(hasDefiniteIrNonActivationOrWindowClosedSignal(ruling), true, `Must detect ruling: ${ruling}`);
+      const res = computePlayerPlayProbability({
+        name: ruling.includes('Kirk') ? 'Christian Kirk' : 'C.J. West',
+        position: 'DT',
+        rosterBucket: 'ir',
+        gameStatus: 'IR — 21-Day Window Open',
+        isPracticeWindowOpen: !ruling.includes('Kirk'),
+        injuryType: 'Knee',
+        wed: 'LP',
+        thu: 'LP',
+        fri: 'FP',
+        beatNote: ruling,
+        kickoffIso: sundaySnfKickoffIso,
+        nowMs: wedOpenWindowMs,
+        currentWeek: 11,
+        upcomingOppName: 'Minnesota Vikings',
+        upcomingOppAbbr: 'MIN'
+      });
+      assert.equal(res.probabilityPct, 0, `Definite non-activation/window-closed news must revert to 0%: ${ruling}`);
+      assert.equal(res.badgeLabel, '0% • IR');
+    }
+
+    // Conditional "if he isn't activated" must NOT falsely zero out open-window probability
+    assert.equal(
+      hasDefiniteIrNonActivationOrWindowClosedSignal('If Hobbs is not activated Saturday, he will still have one week left in his window.'),
+      false
+    );
+    assert.equal(
+      hasWindowDefinitelyNotOpeningSignal('Shanahan said the 49ers do not plan to open Nick Martin’s practice window this week.'),
+      true
+    );
+
+    // 5. Game-day [T-90m, Final) resolver never promotes unactivated IR-window rows to 99% • In (Active)
+    const gdRows = resolveGameDayInjuryRows(
+      [
+        {
+          playerId: '4240542',
+          name: 'Nate Hobbs',
+          position: 'CB',
+          rosterBucket: 'ir',
+          isIrReturnWindow: true,
+          isPracticeWindowOpen: true,
+          gameStatus: 'IR — 21-Day Window Open',
+          playProbabilityPct: 70,
+          playBadgeLabel: '70% • GTD'
+        }
+      ],
+      {
+        isActive: true,
+        hasConfirmedInactives: true,
+        inactives: [{ name: 'Jordan Watkins', position: 'WR' }],
+        activeGroups: [{ unit: 'Defense', players: [{ name: 'Renardo Green', position: 'CB' }] }]
+      }
+    );
+    assert.equal(gdRows[0].playProbabilityPct, 0, 'Unactivated IR player on game day must resolve to 0%');
+    assert.equal(gdRows[0].playBadgeLabel, '0% • IR');
+
+    // 6. Multi-week persistence & preseason IR-R safeguard on live Week 11 data/health.json & data/roster.json
+    const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+    const liveRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+    for (const openName of ['Nate Hobbs', 'C.J. West']) {
+      const rp = liveRoster.players.find(p => p.name === openName);
+      if (rp && rp.rosterBucket === 'ir' && rp.health?.isPracticeWindowOpen) {
+        assert.ok(
+          rp.health.playProbabilityPct > 0,
+          `Live open-window IR player ${openName} must have playProbabilityPct > 0 (got ${rp.health.playProbabilityPct})`
+        );
+        assert.ok(
+          liveHealth.practiceReport.some(r => r.name === openName && r.playProbabilityPct > 0),
+          `${openName} must appear in health.practiceReport while 21d window is open and >0%`
+        );
+        const irTrk = liveHealth.irAndReserveTracker.find(r => r.name === openName);
+        assert.ok(irTrk && irTrk.playProbabilityPct > 0, `${openName} irAndReserveTracker must expose >0% activation odds`);
+      }
+    }
+    // Preseason cutdown IR-R (`Austen Pleasants`) with 0 post-minimum practices must stay closed at 0% • IR
+    const pleasants = liveRoster.players.find(p => p.name === 'Austen Pleasants');
+    if (pleasants && pleasants.rosterBucket === 'ir') {
+      assert.equal(pleasants.health.isPracticeWindowOpen, false, 'Preseason IR-R without practice must not open 21d window');
+      assert.equal(pleasants.health.playProbabilityPct, 0);
     }
   }
 );
