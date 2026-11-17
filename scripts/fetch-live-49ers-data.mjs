@@ -4108,11 +4108,74 @@ async function main() {
     return Math.round((rec.maxPctSum / rec.games) * 100);
   };
 
-  // Extract opponent's 22 true Offense + Defense starters from ESPN's live depth chart (excluding ST specialists/returners)
+  // Extract opponent's 22 true Offense + Defense starters AND depth-chart slot labels (`WR1`, `WR2`, `QB1`, `RB1`, `LDE`, etc.)
   const {
     allStarterNames: dynamicOppStarterNames,
     defStarterNames: oppDefStarterNames
   } = select22OffDefStartersFromDepthChart(oppDepthRaw.depthchart || [], getOppSnapPct, normName);
+
+  const oppDepthSlotByName = new Map();
+  for (const dc of oppDepthRaw.depthchart || []) {
+    if (String(dc?.name || '').toLowerCase().includes('special')) continue;
+    for (const [slotRaw, posObj] of Object.entries(dc?.positions || {})) {
+      const slotUpper = String(slotRaw || '').trim().toUpperCase();
+      if (/^(?:PK|K|P|LS|H|PR|KR)\b/.test(slotUpper)) continue;
+      (posObj?.athletes || []).slice(0, 3).forEach((ath, idx) => {
+        const nk = normName(ath?.displayName || ath?.fullName || '');
+        if (!nk || oppDepthSlotByName.has(nk)) return;
+        const numberedLabel = /\d$/.test(slotUpper)
+          ? idx === 0
+            ? slotUpper
+            : `${slotUpper} (${idx + 1}nd)`
+          : idx === 0
+            ? /^(?:QB|RB|WR|TE)$/.test(slotUpper)
+              ? `${slotUpper}1`
+              : slotUpper
+            : `${slotUpper}${idx + 1}`;
+        oppDepthSlotByName.set(nk, numberedLabel);
+      });
+    }
+  }
+
+  // Index 2026 nflverse season stats for opponent players (already fetched in memory, zero extra requests)
+  const oppStat2026ByName = new Map();
+  for (const row of statsPlayerCurrent) {
+    const rTeam = normalizeTeamAbbr(row.recent_team || '');
+    if (rTeam !== oppAbbrTarget && !oppHistoricalCodes.has(rTeam)) continue;
+    const nk = normName(row.player_display_name || row.player_name || '');
+    if (!nk) continue;
+    const passAtt = num(row.attempts);
+    const passYds = num(row.passing_yards);
+    const rushAtt = num(row.carries);
+    const rushYds = num(row.rushing_yards);
+    const recCnt = num(row.receptions);
+    const recYds = num(row.receiving_yards);
+    const totTkl = num(row.def_tackles_solo) + num(row.def_tackle_assists) + num(row.def_tackles_with_assist);
+    const sacks = num(row.def_sacks, 1);
+    const ints = num(row.def_interceptions);
+    const pds = num(row.def_pass_defended);
+    const bits = [];
+    if (passAtt >= 15) {
+      const epa = num(row.passing_epa, 1);
+      bits.push(`${passYds} pass yds, ${num(row.passing_tds)} TD, ${num(row.passing_interceptions)} INT, ${epa >= 0 ? '+' : ''}${epa} EPA`);
+    }
+    if (rushAtt >= 12 || rushYds >= 60) {
+      bits.push(`${rushYds} rush yds, ${num(row.rushing_tds)} TD`);
+    }
+    if (recCnt >= 5 || recYds >= 50) {
+      bits.push(`${recCnt} rec, ${recYds} yds, ${num(row.receiving_tds)} TD`);
+    }
+    if (totTkl >= 15 || sacks >= 1 || ints >= 1) {
+      bits.push(`${totTkl} tkl, ${sacks} sk, ${ints} INT, ${pds} PD`);
+    }
+    oppStat2026ByName.set(nk, {
+      statLine2026: bits.join('; '),
+      scrimmageYards: rushYds + recYds,
+      recYards: recYds,
+      passYards: passYds,
+      sacks
+    });
+  }
 
   const oppNflInjByName = new Map();
   for (const row of injuries2026) {
@@ -4213,6 +4276,8 @@ async function main() {
           id: espnId,
           name: nm,
           position: pos,
+          depthSlot: oppDepthSlotByName.get(nk) || null,
+          statLine2026: oppStat2026ByName.get(nk)?.statLine2026 || '',
           unit: classifyRosterUnit(pos, unitLabel),
           rosterBucket: 'active',
           jersey,
@@ -4696,12 +4761,33 @@ async function main() {
     }
   }
 
-  // Balance key healthy starters across BOTH Offense & Defense (sorted by snap share!)
-  oppHealthyOffCandidates.sort((a, b) => (b.snapPct ?? 50) - (a.snapPct ?? 50));
-  oppHealthyDefCandidates.sort((a, b) => (b.snapPct ?? 50) - (a.snapPct ?? 50));
+  // Retain ALL healthy Offensive & Defensive starters (never truncating at 6 where 5 OL + 1 QB would drop WR1/RB1!),
+  // sorted with impact skill/pass-rush/coverage starters leading cleanly ahead of OL!
+  const offPosPriority = pos => (['QB', 'WR', 'RB', 'TE', 'FB'].includes(pos) ? 0 : 1);
+  const defPosPriority = pos => (['DE', 'OLB', 'EDGE', 'CB', 'DT', 'NT', 'S', 'FS', 'SS', 'DB'].includes(pos) ? 0 : 1);
+  const enrichOppEntry = entry => {
+    const nk = normName(entry.name || '');
+    return {
+      ...entry,
+      depthSlot: entry.depthSlot || oppDepthSlotByName.get(nk) || null,
+      statLine2026: entry.statLine2026 || oppStat2026ByName.get(nk)?.statLine2026 || ''
+    };
+  };
+  for (let i = 0; i < oppInjuryReportPlayers.length; i++) {
+    oppInjuryReportPlayers[i] = enrichOppEntry(oppInjuryReportPlayers[i]);
+  }
+  for (let i = 0; i < oppIrPlayers.length; i++) {
+    oppIrPlayers[i] = enrichOppEntry(oppIrPlayers[i]);
+  }
+  oppHealthyOffCandidates.sort(
+    (a, b) => offPosPriority(a.position) - offPosPriority(b.position) || (b.snapPct ?? 50) - (a.snapPct ?? 50)
+  );
+  oppHealthyDefCandidates.sort(
+    (a, b) => defPosPriority(a.position) - defPosPriority(b.position) || (b.snapPct ?? 50) - (a.snapPct ?? 50)
+  );
   const oppKeyHealthyStarters = [
-    ...oppHealthyOffCandidates.slice(0, 6),
-    ...oppHealthyDefCandidates.slice(0, 6)
+    ...oppHealthyOffCandidates.map(enrichOppEntry),
+    ...oppHealthyDefCandidates.map(enrichOppEntry)
   ];
 
   oppIrPlayers.sort(
@@ -4798,13 +4884,29 @@ async function main() {
   const oppDefSacksRank = computeTeamRankFor(oppAbbrTarget, t => num(t.def_sacks) / Math.max(1, num(t.games)), true);
 
   const oppAllCandidates = [...oppHealthyOffCandidates, ...oppHealthyDefCandidates, ...oppInjuryReportPlayers];
-  const oppQbStarter = oppAllCandidates.find(p => p.position === 'QB')?.name || `${oppShortName} QB1`;
+  const oppQbStarter =
+    oppHealthyOffCandidates.find(p => p.position === 'QB')?.name ||
+    oppAllCandidates.find(p => p.position === 'QB' && (p.playProbabilityPct ?? 95) >= 50)?.name ||
+    `${oppShortName} QB1`;
   const oppEdgeOrStar =
-    oppHealthyDefCandidates.find(p => ['DE', 'OLB', 'LB', 'DT'].includes(p.position))?.name || `${oppShortName} Front`;
+    [...oppHealthyDefCandidates, ...oppInjuryReportPlayers.filter(p => (p.playProbabilityPct ?? 0) >= 60)]
+      .sort(
+        (a, b) =>
+          (oppStat2026ByName.get(normName(b.name))?.sacks || 0) -
+            (oppStat2026ByName.get(normName(a.name))?.sacks || 0) ||
+          (['DE', 'OLB', 'EDGE', 'DT'].includes(b.position) ? 1 : 0) -
+            (['DE', 'OLB', 'EDGE', 'DT'].includes(a.position) ? 1 : 0) ||
+          (b.snapPct ?? 0) - (a.snapPct ?? 0)
+      )[0]?.name || `${oppShortName} Front`;
   const oppSkillStar =
-    oppAllCandidates.find(p => ['WR', 'TE', 'RB'].includes(p.position) && (p.isStarter || (p.snapPct ?? 0) >= 55))?.name ||
-    oppHealthyOffCandidates.find(p => ['WR', 'TE', 'RB'].includes(p.position))?.name ||
-    `${oppShortName} Playmakers`;
+    [...oppHealthyOffCandidates, ...oppInjuryReportPlayers.filter(p => (p.playProbabilityPct ?? 0) >= 60)]
+      .filter(p => ['WR', 'TE', 'RB'].includes(p.position))
+      .sort(
+        (a, b) =>
+          (oppStat2026ByName.get(normName(b.name))?.scrimmageYards || 0) -
+            (oppStat2026ByName.get(normName(a.name))?.scrimmageYards || 0) ||
+          (b.snapPct ?? 0) - (a.snapPct ?? 0)
+      )[0]?.name || `${oppShortName} Playmakers`;
 
   const OPPONENT_COORDINATOR_MAP = {
     ARI: { hc: 'Jonathan Gannon', oc: 'Drew Petzing', dc: 'Nick Rallis' },

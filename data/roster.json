@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T06:51:35.892Z",
+  "updatedAt": "2026-11-17T07:08:18.577Z",
   "count": 87,
   "positionalLeaderboards": {
     "S:pfr_rat_allowed": {
@@ -10947,8 +10947,8 @@
       "totalQualified": 31,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 91.4238,
-      "posAvgDisplay": "91.4",
+      "posAvg": 91.4585,
+      "posAvgDisplay": "91.5",
       "rows": [
         [
           "00-0036442",
@@ -11095,16 +11095,16 @@
           80.6838
         ],
         [
-          "00-0033119",
-          25,
-          "79.7",
-          79.6653
-        ],
-        [
           "00-0031503",
-          26,
+          25,
           "79.6",
           79.5934
+        ],
+        [
+          "00-0033119",
+          26,
+          "79.5",
+          79.5198
         ],
         [
           "00-0034869",
@@ -11127,8 +11127,8 @@
         [
           "00-0036355",
           30,
-          "70.4",
-          70.3635
+          "71.6",
+          71.5827
         ],
         [
           "00-0035710",
@@ -12450,7 +12450,7 @@
       "totalQualified": 31,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 2.8472,
+      "posAvg": 2.8519,
       "posAvgDisplay": "2.85s",
       "rows": [
         [
@@ -12472,40 +12472,40 @@
           2.6492
         ],
         [
-          "00-0033119",
-          4,
-          "2.66s",
-          2.6644
-        ],
-        [
           "00-0036442",
-          5,
+          4,
           "2.70s",
           2.7009
         ],
         [
           "00-0026498",
-          6,
+          5,
           "2.70s",
           2.7041
         ],
         [
           "00-0033873",
-          7,
+          6,
           "2.73s",
           2.7295
         ],
         [
           "00-0040743",
-          8,
+          7,
           "2.74s",
           2.7398
         ],
         [
           "00-0023459",
-          9,
+          8,
           "2.75s",
           2.749
+        ],
+        [
+          "00-0033119",
+          9,
+          "2.76s",
+          2.7625
         ],
         [
           "00-0036971",
@@ -12520,46 +12520,46 @@
           2.7764
         ],
         [
-          "00-0036355",
-          12,
-          "2.80s",
-          2.7982
-        ],
-        [
           "00-0040676",
-          13,
+          12,
           "2.80s",
           2.7998
         ],
         [
           "00-0033077",
-          14,
+          13,
           "2.81s",
           2.8129
         ],
         [
           "00-0033537",
-          15,
+          14,
           "2.81s",
           2.8135
         ],
         [
           "00-0035710",
-          16,
+          15,
           "2.82s",
           2.8205
         ],
         [
           "00-0033106",
-          17,
+          16,
           "2.82s",
           2.8241
         ],
         [
           "00-0039150",
-          18,
+          17,
           "2.84s",
           2.8378
+        ],
+        [
+          "00-0036355",
+          18,
+          "2.85s",
+          2.8454
         ],
         [
           "00-0029604",
@@ -12651,7 +12651,7 @@
       "totalQualified": 31,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 8.062,
+      "posAvg": 8.0612,
       "posAvgDisplay": "8.06 yds",
       "rows": [
         [
@@ -12733,40 +12733,40 @@
           8.0558
         ],
         [
-          "00-0036355",
-          14,
-          "8.02 yds",
-          8.0229
-        ],
-        [
           "00-0030565",
-          15,
+          14,
           "8.02 yds",
           8.0161
         ],
         [
           "00-0035228",
-          16,
+          15,
           "7.99 yds",
           7.9884
         ],
         [
           "00-0033106",
-          17,
+          16,
           "7.94 yds",
           7.9372
         ],
         [
           "00-0036389",
-          18,
+          17,
           "7.93 yds",
           7.9337
         ],
         [
           "00-0033119",
+          18,
+          "7.87 yds",
+          7.869
+        ],
+        [
+          "00-0036355",
           19,
-          "7.73 yds",
-          7.7336
+          "7.86 yds",
+          7.8647
         ],
         [
           "00-0039918",
@@ -12852,8 +12852,8 @@
       "totalQualified": 31,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 14.9798,
-      "posAvgDisplay": "15.0%",
+      "posAvg": 14.9298,
+      "posAvgDisplay": "14.9%",
       "rows": [
         [
           "00-0033873",
@@ -12904,16 +12904,16 @@
           12.6471
         ],
         [
-          "00-0039910",
+          "00-0036355",
           9,
-          "13.1%",
-          13.1455
+          "12.6%",
+          12.6482
         ],
         [
-          "00-0036355",
+          "00-0039910",
           10,
-          "13.2%",
-          13.1915
+          "13.1%",
+          13.1455
         ],
         [
           "00-0039150",
@@ -13038,8 +13038,8 @@
         [
           "00-0033119",
           31,
-          "23.6%",
-          23.6066
+          "22.6%",
+          22.5989
         ]
       ]
     },
@@ -20538,8 +20538,8 @@
       "totalQualified": 41,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.1589,
-      "posAvgDisplay": "+0.16 yds",
+      "posAvg": 0.1654,
+      "posAvgDisplay": "+0.17 yds",
       "rows": [
         [
           "00-0037228",
@@ -20656,16 +20656,16 @@
           0.1445
         ],
         [
-          "00-0032764",
-          20,
-          "+0.12 yds",
-          0.1182
-        ],
-        [
           "00-0040715",
-          21,
+          20,
           "+0.09 yds",
           0.0894
+        ],
+        [
+          "00-0032764",
+          21,
+          "+0.08 yds",
+          0.085
         ],
         [
           "00-0036223",
@@ -20692,52 +20692,52 @@
           -0.1351
         ],
         [
-          "00-0038597",
+          "00-0040666",
           26,
+          "-0.15 yds",
+          -0.1501
+        ],
+        [
+          "00-0038597",
+          27,
           "-0.20 yds",
           -0.2026
         ],
         [
           "sf_4696044",
-          27,
+          28,
           "-0.21 yds",
           -0.2084
         ],
         [
           "00-0040719",
-          28,
+          29,
           "-0.23 yds",
           -0.2347
         ],
         [
           "00-0037525",
-          29,
+          30,
           "-0.25 yds",
           -0.2504
         ],
         [
           "00-0040784",
-          30,
+          31,
           "-0.28 yds",
           -0.2781
         ],
         [
           "00-0038120",
-          31,
+          32,
           "-0.41 yds",
           -0.4137
         ],
         [
           "00-0040122",
-          32,
+          33,
           "-0.43 yds",
           -0.4295
-        ],
-        [
-          "00-0040666",
-          33,
-          "-0.45 yds",
-          -0.4486
         ],
         [
           "00-0040242",
@@ -22878,8 +22878,8 @@
       "totalQualified": 41,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 26.9517,
-      "posAvgDisplay": "+27.0 yds",
+      "posAvg": 27.5038,
+      "posAvgDisplay": "+27.5 yds",
       "rows": [
         [
           "00-0038134",
@@ -22990,16 +22990,16 @@
           23.495
         ],
         [
-          "00-0032764",
-          19,
-          "+19.6 yds",
-          19.6178
-        ],
-        [
           "00-0036875",
-          20,
+          19,
           "+15.3 yds",
           15.3128
+        ],
+        [
+          "00-0032764",
+          20,
+          "+15.0 yds",
+          14.9537
         ],
         [
           "00-0040715",
@@ -23044,40 +23044,40 @@
           -16.0462
         ],
         [
-          "00-0038597",
+          "00-0040666",
           28,
+          "-18.5 yds",
+          -18.4626
+        ],
+        [
+          "00-0038597",
+          29,
           "-22.7 yds",
           -22.6883
         ],
         [
           "00-0040242",
-          29,
+          30,
           "-29.7 yds",
           -29.7291
         ],
         [
           "00-0038120",
-          30,
+          31,
           "-31.0 yds",
           -31.0269
         ],
         [
           "00-0040719",
-          31,
+          32,
           "-33.6 yds",
           -33.5574
         ],
         [
           "00-0040784",
-          32,
+          33,
           "-34.5 yds",
           -34.4823
-        ],
-        [
-          "00-0040666",
-          33,
-          "-45.8 yds",
-          -45.76
         ],
         [
           "00-0040583",
@@ -23139,7 +23139,7 @@
       "totalQualified": 41,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 22.4547,
+      "posAvg": 22.5006,
       "posAvgDisplay": "22.5%",
       "rows": [
         [
@@ -23157,8 +23157,8 @@
         [
           "00-0032764",
           3,
-          "30.9%",
-          30.8571
+          "30.8%",
+          30.8108
         ],
         [
           "00-0039738",
@@ -23179,34 +23179,34 @@
           28.3422
         ],
         [
-          "00-0038120",
+          "00-0040666",
           7,
+          "27.4%",
+          27.4194
+        ],
+        [
+          "00-0038120",
+          8,
           "27.3%",
           27.2727
         ],
         [
           "00-0036275",
-          8,
+          9,
           "26.5%",
           26.4516
         ],
         [
           "00-0040784",
-          9,
+          10,
           "26.2%",
           26.1905
         ],
         [
           "00-0040122",
-          10,
+          11,
           "26.0%",
           26.0163
-        ],
-        [
-          "00-0040666",
-          11,
-          "25.5%",
-          25.4902
         ],
         [
           "00-0036919",
@@ -27951,7 +27951,7 @@
       "totalQualified": 76,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 2.8732,
+      "posAvg": 2.8744,
       "posAvgDisplay": "2.87 yds",
       "rows": [
         [
@@ -28075,70 +28075,70 @@
           3.1234
         ],
         [
-          "00-0037238",
+          "00-0040727",
           21,
+          "3.06 yds",
+          3.0619
+        ],
+        [
+          "00-0039064",
+          22,
+          "3.05 yds",
+          3.0465
+        ],
+        [
+          "00-0037238",
+          23,
           "3.02 yds",
           3.0203
         ],
         [
           "00-0038117",
-          22,
+          24,
           "3.02 yds",
           3.0198
         ],
         [
           "00-0038994",
-          23,
+          25,
           "3.02 yds",
           3.0167
         ],
         [
           "00-0038393",
-          24,
+          26,
           "3.00 yds",
           3.0018
         ],
         [
           "00-0040129",
-          25,
+          27,
           "2.99 yds",
           2.9881
         ],
         [
           "00-0039337",
-          26,
+          28,
           "2.97 yds",
           2.97
         ],
         [
           "00-0040170",
-          27,
+          29,
           "2.97 yds",
           2.9677
         ],
         [
-          "00-0040727",
-          28,
-          "2.96 yds",
-          2.9591
-        ],
-        [
           "00-0039410",
-          29,
+          30,
           "2.96 yds",
           2.958
         ],
         [
           "00-0036963",
-          30,
+          31,
           "2.95 yds",
           2.9476
-        ],
-        [
-          "00-0039064",
-          31,
-          "2.94 yds",
-          2.9381
         ],
         [
           "00-0038997",
@@ -28165,16 +28165,16 @@
           2.88
         ],
         [
-          "00-0037240",
+          "00-0038544",
           36,
           "2.87 yds",
-          2.8686
+          2.8724
         ],
         [
-          "00-0038544",
+          "00-0037240",
           37,
-          "2.84 yds",
-          2.8417
+          "2.87 yds",
+          2.8686
         ],
         [
           "00-0034348",
@@ -28231,20 +28231,20 @@
           2.6818
         ],
         [
-          "00-0036550",
-          47,
-          "2.67 yds",
-          2.6715
-        ],
-        [
           "00-0039901",
-          48,
+          47,
           "2.67 yds",
           2.6666
         ],
         [
+          "00-0033555",
+          48,
+          "2.67 yds",
+          2.6655
+        ],
+        [
           "sf_15818",
-          59,
+          58,
           "2.52 yds",
           2.5179
         ],
@@ -28266,8 +28266,8 @@
       "totalQualified": 76,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.6638,
-      "posAvgDisplay": "+0.66 yds",
+      "posAvg": 0.6723,
+      "posAvgDisplay": "+0.67 yds",
       "rows": [
         [
           "00-0037741",
@@ -28284,14 +28284,14 @@
         [
           "00-0039064",
           3,
-          "+2.85 yds",
-          2.855
+          "+2.69 yds",
+          2.689
         ],
         [
           "00-0038544",
           4,
-          "+2.83 yds",
-          2.8281
+          "+2.67 yds",
+          2.6691
         ],
         [
           "00-0040735",
@@ -28306,34 +28306,34 @@
           2.1845
         ],
         [
-          "00-0041042",
+          "00-0037238",
           7,
+          "+2.11 yds",
+          2.1133
+        ],
+        [
+          "00-0041042",
+          8,
           "+2.09 yds",
           2.09
         ],
         [
           "00-0038606",
-          8,
+          9,
           "+1.99 yds",
           1.9941
         ],
         [
           "00-0041037",
-          9,
+          10,
           "+1.96 yds",
           1.9648
         ],
         [
           "00-0037261",
-          10,
+          11,
           "+1.96 yds",
           1.9591
-        ],
-        [
-          "00-0037238",
-          11,
-          "+1.93 yds",
-          1.9276
         ],
         [
           "00-0036900",
@@ -28342,52 +28342,52 @@
           1.7856
         ],
         [
-          "00-0041547",
+          "00-0033307",
           13,
+          "+1.65 yds",
+          1.6492
+        ],
+        [
+          "00-0041547",
+          14,
           "+1.46 yds",
           1.4624
         ],
         [
           "00-0038124",
-          14,
+          15,
           "+1.38 yds",
           1.3764
         ],
         [
           "00-0039410",
-          15,
+          16,
           "+1.34 yds",
           1.3397
         ],
         [
           "00-0038543",
-          16,
+          17,
           "+1.32 yds",
           1.3247
         ],
         [
           "00-0036410",
-          17,
+          18,
           "+1.32 yds",
           1.3242
         ],
         [
           "00-0040170",
-          18,
+          19,
           "+1.32 yds",
           1.3232
         ],
         [
           "00-0031381",
-          19,
+          20,
           "+1.30 yds",
           1.2996
-        ],
-        [
-          "00-0033307",
-          20,
-          "+1.15 yds",
-          1.1496
         ],
         [
           "00-0038994",
@@ -28414,52 +28414,52 @@
           0.9627
         ],
         [
-          "00-0039919",
+          "00-0036963",
           25,
+          "+0.93 yds",
+          0.9278
+        ],
+        [
+          "00-0039919",
+          26,
           "+0.88 yds",
           0.8834
         ],
         [
           "00-0039880",
-          26,
+          27,
           "+0.88 yds",
           0.8821
         ],
         [
           "00-0039067",
-          27,
+          28,
           "+0.86 yds",
           0.8633
         ],
         [
           "00-0038608",
-          28,
+          29,
           "+0.85 yds",
           0.8472
         ],
         [
           "00-0040785",
-          29,
+          30,
           "+0.84 yds",
           0.8396
         ],
         [
           "00-0032951",
-          30,
+          31,
           "+0.81 yds",
           0.8073
         ],
         [
           "00-0038563",
-          31,
+          32,
           "+0.75 yds",
           0.7507
-        ],
-        [
-          "00-0036963",
-          32,
-          "+0.73 yds",
-          0.7268
         ],
         [
           "00-0036358",
@@ -28480,16 +28480,16 @@
           0.6199
         ],
         [
-          "00-0037240",
+          "00-0040667",
           36,
-          "+0.54 yds",
-          0.5448
+          "+0.55 yds",
+          0.5513
         ],
         [
-          "00-0040667",
+          "00-0037240",
           37,
-          "+0.53 yds",
-          0.5335
+          "+0.54 yds",
+          0.5448
         ],
         [
           "00-0036322",
@@ -28565,9 +28565,9 @@
         ],
         [
           "sf_16737",
-          52,
-          "+0.11 yds",
-          0.1137
+          51,
+          "+0.13 yds",
+          0.1262
         ]
       ]
     },
@@ -39582,8 +39582,8 @@
       "totalQualified": 42,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 3.3388,
-      "posAvgDisplay": "3.34 yds",
+      "posAvg": 3.3467,
+      "posAvgDisplay": "3.35 yds",
       "rows": [
         [
           "00-0040663",
@@ -39646,28 +39646,28 @@
           3.7258
         ],
         [
-          "00-0033881",
+          "00-0040189",
           11,
+          "3.65 yds",
+          3.649
+        ],
+        [
+          "00-0033881",
+          12,
           "3.62 yds",
           3.6242
         ],
         [
           "00-0040584",
-          12,
+          13,
           "3.56 yds",
           3.5623
         ],
         [
           "00-0039066",
-          13,
+          14,
           "3.49 yds",
           3.4919
-        ],
-        [
-          "00-0040189",
-          14,
-          "3.47 yds",
-          3.4706
         ],
         [
           "00-0038041",
@@ -39718,28 +39718,28 @@
           3.3086
         ],
         [
-          "00-0034829",
+          "00-0034753",
           23,
+          "3.29 yds",
+          3.2904
+        ],
+        [
+          "00-0034829",
+          24,
           "3.27 yds",
           3.2681
         ],
         [
           "00-0038933",
-          24,
+          25,
           "3.25 yds",
           3.2526
         ],
         [
           "00-0040126",
-          25,
-          "3.14 yds",
-          3.1446
-        ],
-        [
-          "00-0034753",
           26,
           "3.14 yds",
-          3.1395
+          3.1446
         ],
         [
           "00-0034351",
@@ -39849,7 +39849,7 @@
       "totalQualified": 42,
       "isPfrCharted": false,
       "maxChartedWeek": null,
-      "posAvg": 0.3204,
+      "posAvg": 0.3236,
       "posAvgDisplay": "+0.32 yds",
       "rows": [
         [
@@ -40017,8 +40017,8 @@
         [
           "00-0034753",
           28,
-          "-0.15 yds",
-          -0.1478
+          "-0.13 yds",
+          -0.1278
         ],
         [
           "00-0033110",
@@ -40059,8 +40059,8 @@
         [
           "00-0034383",
           35,
-          "-0.44 yds",
-          -0.4376
+          "-0.42 yds",
+          -0.4249
         ],
         [
           "00-0040128",
@@ -40077,8 +40077,8 @@
         [
           "00-0040189",
           38,
-          "-0.73 yds",
-          -0.7337
+          "-0.63 yds",
+          -0.6315
         ],
         [
           "00-0037809",
@@ -57602,14 +57602,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         }
       ],
       "statProfile2026": {
@@ -58091,7 +58091,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0123
+          "storyRank": 0.0122
         }
       ],
       "statProfile2026": {
@@ -58689,7 +58689,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0391
+          "storyRank": 0.0389
         }
       ],
       "statProfile2026": {
@@ -59417,7 +59417,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0295
+          "storyRank": 0.0294
         },
         {
           "id": "x_status_2120915790295974341",
@@ -59457,7 +59457,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0323
+          "storyRank": 0.0322
         },
         {
           "id": "x_status_2120201789014221264",
@@ -59497,7 +59497,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0196
+          "storyRank": 0.0195
         },
         {
           "id": "pfrumors_243",
@@ -60462,7 +60462,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_mattmaiocco_3n2gzwplnwc2o",
@@ -60495,14 +60495,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -60542,7 +60542,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         }
       ],
       "statProfile2026": {
@@ -61437,7 +61437,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.3663
+          "storyRank": 4.0873
         },
         {
           "id": "sf49_261",
@@ -61478,7 +61478,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "yt_qvztmeBT8R8",
@@ -61512,14 +61512,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.44,
+          "breakingPriority": 0.435,
           "credibilityScore": 92,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.144
+          "storyRank": 3.0793
         },
         {
           "id": "sf49_262",
@@ -61559,7 +61559,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7562
+          "storyRank": 2.6299
         },
         {
           "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -61592,14 +61592,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "tweet_timkawakami_3n2hl6hd6lc2g",
@@ -61639,7 +61639,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2252
+          "storyRank": 2.1348
         },
         {
           "id": "nn_289",
@@ -61680,7 +61680,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.1623
+          "storyRank": 2.0783
         },
         {
           "id": "sfstd_281",
@@ -61720,7 +61720,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.16
+          "storyRank": 2.0761
         },
         {
           "id": "nn_290",
@@ -61761,7 +61761,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "nn_291",
@@ -61802,7 +61802,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "tweet_timkawakami_3n2h5hkzzx22m",
@@ -61842,7 +61842,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3366
+          "storyRank": 1.2983
         },
         {
           "id": "tweet_49erswebzone_3n2h533finj2o",
@@ -61882,7 +61882,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3203
+          "storyRank": 1.2828
         },
         {
           "id": "nn_292",
@@ -61923,7 +61923,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gytnahs22o",
@@ -61963,7 +61963,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3369
+          "storyRank": 1.302
         }
       ],
       "statProfile2026": {
@@ -62057,7 +62057,7 @@
                 "totalPeers": 31,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "91.4",
+                "posAvgDisplay": "91.5",
                 "scope": "player",
                 "leaderboardKey": "QB:passer_rating"
               },
@@ -62185,7 +62185,7 @@
                 "totalPeers": 31,
                 "qualified": true,
                 "higherIsBetter": false,
-                "posAvgDisplay": "15.0%",
+                "posAvgDisplay": "14.9%",
                 "scope": "player",
                 "leaderboardKey": "QB:ngs_aggr"
               },
@@ -62811,7 +62811,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2643
+          "storyRank": 2.1735
         },
         {
           "id": "espn_pwire_4686308_64776128",
@@ -62851,7 +62851,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0223
+          "storyRank": 0.0221
         },
         {
           "id": "tweet_mattbarrows_3n2cfibsnmk2x",
@@ -62891,7 +62891,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.02
+          "storyRank": 0.0199
         },
         {
           "id": "tweet_jenniferleechan_3n2cfi6pvhk2o",
@@ -62931,7 +62931,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0795
         },
         {
           "id": "pfrumors_239",
@@ -62971,7 +62971,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0453
+          "storyRank": 0.0451
         },
         {
           "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
@@ -63051,7 +63051,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0277
+          "storyRank": 0.0276
         },
         {
           "id": "wz_hub_347",
@@ -63131,7 +63131,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.029
+          "storyRank": 0.0289
         }
       ],
       "statProfile2026": {
@@ -63725,7 +63725,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         }
       ],
       "statProfile2026": {
@@ -64304,7 +64304,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.7004
+          "storyRank": 0.6879
         }
       ],
       "statProfile2026": {
@@ -65212,7 +65212,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 6.1523
+          "storyRank": 5.6591
         },
         {
           "id": "sf49_263",
@@ -65245,14 +65245,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.483,
+          "breakingPriority": 0.474,
           "credibilityScore": 86,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 4.0026
+          "storyRank": 3.869
         },
         {
           "id": "sf49_261",
@@ -65293,7 +65293,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "wz_298",
@@ -65334,7 +65334,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5791
+          "storyRank": 3.3836
         },
         {
           "id": "sf49_262",
@@ -65374,7 +65374,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7562
+          "storyRank": 2.6299
         },
         {
           "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -65407,14 +65407,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "nn_290",
@@ -65455,7 +65455,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "tweet_nbcs49ers_3n2ha2dxyos2q",
@@ -65495,7 +65495,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4525
+          "storyRank": 1.4085
         },
         {
           "id": "nn_291",
@@ -65536,7 +65536,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "sf49_264",
@@ -65576,7 +65576,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3542
+          "storyRank": 1.316
         },
         {
           "id": "nn_292",
@@ -65617,7 +65617,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -65657,7 +65657,47 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
+        },
+        {
+          "id": "wz_hub_307",
+          "type": "article",
+          "wireSource": null,
+          "headline": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "The 49ers piled up historic numbers in a 46-40 win over the Cowboys. Brock Purdy, Christian McCaffrey and Deebo Samuel led a record-setting offensive show.",
+          "author": "Site Staff",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-16T16:08:00.216Z",
+          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-b7a73d917305e9dc60dee0491302608d.jpg",
+          "videoId": null,
+          "videoStreamUrl": null,
+          "externalVideoUrl": null,
+          "duration": null,
+          "isHighlightClip": false,
+          "url": "https://www.49erswebzone.com/articles/205209-nfl-history-cowboys-mccaffrey-deliver/",
+          "externalUrl": null,
+          "externalTitle": null,
+          "externalDescription": null,
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 1.0884
         },
         {
           "id": "nn_293",
@@ -65697,47 +65737,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
-        },
-        {
-          "id": "wz_hub_307",
-          "type": "article",
-          "wireSource": null,
-          "headline": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The 49ers piled up historic numbers in a 46-40 win over the Cowboys. Brock Purdy, Christian McCaffrey and Deebo Samuel led a record-setting offensive show.",
-          "author": "Site Staff",
-          "authorHandle": "@49erswebzone",
-          "authorProfileUrl": "https://x.com/49erswebzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-16T15:51:10.250Z",
-          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-b7a73d917305e9dc60dee0491302608d.jpg",
-          "videoId": null,
-          "videoStreamUrl": null,
-          "externalVideoUrl": null,
-          "duration": null,
-          "isHighlightClip": false,
-          "url": "https://www.49erswebzone.com/articles/205209-nfl-history-cowboys-mccaffrey-deliver/",
-          "externalUrl": null,
-          "externalTitle": null,
-          "externalDescription": null,
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "beat",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 1.0884
+          "storyRank": 1.0773
         }
       ],
       "statProfile2026": {
@@ -65817,7 +65817,7 @@
                 "totalPeers": 41,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.16 yds",
+                "posAvgDisplay": "+0.17 yds",
                 "scope": "player",
                 "leaderboardKey": "RB:ngs_ryoe_att"
               },
@@ -65931,7 +65931,7 @@
                 "totalPeers": 41,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+27.0 yds",
+                "posAvgDisplay": "+27.5 yds",
                 "scope": "player",
                 "leaderboardKey": "RB:ngs_ryoe_total"
               },
@@ -66809,7 +66809,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -66849,7 +66849,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -66889,7 +66889,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         },
         {
           "id": "nn_293",
@@ -66930,7 +66930,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -66970,7 +66970,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         },
         {
           "id": "sf49_272",
@@ -67010,7 +67010,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0404
+          "storyRank": 0.0402
         }
       ],
       "statProfile2026": {
@@ -67686,7 +67686,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -67726,7 +67726,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -67766,7 +67766,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         },
         {
           "id": "tweet_mattmaiocco_3n2gytnahs22o",
@@ -67806,7 +67806,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3369
+          "storyRank": 1.302
         },
         {
           "id": "tweet_mattmaiocco_3n2f2dgekok2b",
@@ -67846,7 +67846,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4233
+          "storyRank": 0.4183
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -67886,7 +67886,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         }
       ],
       "statProfile2026": {
@@ -68533,14 +68533,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         }
       ],
       "statProfile2026": {
@@ -70007,7 +70007,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "wz_298",
@@ -70048,7 +70048,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5791
+          "storyRank": 3.3836
         },
         {
           "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -70081,14 +70081,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "nn_290",
@@ -70128,7 +70128,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "nn_291",
@@ -70169,7 +70169,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -70210,7 +70210,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -70250,7 +70250,47 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
+        },
+        {
+          "id": "wz_hub_307",
+          "type": "article",
+          "wireSource": null,
+          "headline": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
+          "fullText": null,
+          "isFullTweet": false,
+          "summary": "The 49ers piled up historic numbers in a 46-40 win over the Cowboys. Brock Purdy, Christian McCaffrey and Deebo Samuel led a record-setting offensive show.",
+          "author": "Site Staff",
+          "authorHandle": "@49erswebzone",
+          "authorProfileUrl": "https://x.com/49erswebzone",
+          "outletName": "49ers Webzone",
+          "publishedAt": "2026-11-16T16:08:00.216Z",
+          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-b7a73d917305e9dc60dee0491302608d.jpg",
+          "videoId": null,
+          "videoStreamUrl": null,
+          "externalVideoUrl": null,
+          "duration": null,
+          "isHighlightClip": false,
+          "url": "https://www.49erswebzone.com/articles/205209-nfl-history-cowboys-mccaffrey-deliver/",
+          "externalUrl": null,
+          "externalTitle": null,
+          "externalDescription": null,
+          "trustTier": 2,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": null,
+          "breakingPriority": 0,
+          "credibilityScore": 86,
+          "category": "beat",
+          "storyTier": "standard",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 1.0884
         },
         {
           "id": "nn_293",
@@ -70290,7 +70330,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "x_status_2122351630251155804",
@@ -70330,47 +70370,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3194
-        },
-        {
-          "id": "wz_hub_307",
-          "type": "article",
-          "wireSource": null,
-          "headline": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
-          "fullText": null,
-          "isFullTweet": false,
-          "summary": "The 49ers piled up historic numbers in a 46-40 win over the Cowboys. Brock Purdy, Christian McCaffrey and Deebo Samuel led a record-setting offensive show.",
-          "author": "Site Staff",
-          "authorHandle": "@49erswebzone",
-          "authorProfileUrl": "https://x.com/49erswebzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-16T15:51:10.250Z",
-          "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-b7a73d917305e9dc60dee0491302608d.jpg",
-          "videoId": null,
-          "videoStreamUrl": null,
-          "externalVideoUrl": null,
-          "duration": null,
-          "isHighlightClip": false,
-          "url": "https://www.49erswebzone.com/articles/205209-nfl-history-cowboys-mccaffrey-deliver/",
-          "externalUrl": null,
-          "externalTitle": null,
-          "externalDescription": null,
-          "trustTier": 2,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": null,
-          "breakingPriority": 0,
-          "credibilityScore": 86,
-          "category": "beat",
-          "storyTier": "standard",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 1.0884
+          "storyRank": 1.2881
         },
         {
           "id": "sf49_265",
@@ -70410,7 +70410,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.023
+          "storyRank": 0.9992
         },
         {
           "id": "tweet_jenniferleechan_3n2gkvkrnyc2b",
@@ -70450,7 +70450,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9434
+          "storyRank": 0.9241
         },
         {
           "id": "espn_50498373",
@@ -70490,7 +70490,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6139
+          "storyRank": 0.6047
         },
         {
           "id": "sfstd_283",
@@ -70530,7 +70530,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6062
+          "storyRank": 0.5972
         }
       ],
       "statProfile2026": {
@@ -70752,7 +70752,7 @@
                 "totalPeers": 76,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.66 yds",
+                "posAvgDisplay": "+0.67 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -71566,7 +71566,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.8766
+          "storyRank": 3.668
         },
         {
           "id": "tweet_mattmaiocco_3n2gzerhbvs2o",
@@ -71599,14 +71599,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -71639,14 +71639,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "nn_291",
@@ -71687,7 +71687,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -71728,7 +71728,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -71768,7 +71768,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "nn_296",
@@ -71809,7 +71809,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4478
+          "storyRank": 0.4419
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -71849,7 +71849,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "tweet_mattbarrows_3n2cflpcfqc2x",
@@ -71889,7 +71889,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0796
         },
         {
           "id": "tweet_victafur_3n2bpf5qjxs2b",
@@ -71929,7 +71929,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.06
+          "storyRank": 0.0597
         },
         {
           "id": "wz_hub_327",
@@ -71969,7 +71969,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0603
+          "storyRank": 0.06
         },
         {
           "id": "wz_hub_338",
@@ -72009,7 +72009,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0311
+          "storyRank": 0.031
         },
         {
           "id": "x_status_2120847664052834680",
@@ -72049,7 +72049,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0306
+          "storyRank": 0.0305
         },
         {
           "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
@@ -73045,14 +73045,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "tweet_jenniferleechan_3n2gkvkrnyc2b",
@@ -73092,7 +73092,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9434
+          "storyRank": 0.9241
         }
       ],
       "statProfile2026": {
@@ -74072,7 +74072,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5791
+          "storyRank": 3.3836
         },
         {
           "id": "tweet_nbcs49ers_3n2hp2phqvc2z",
@@ -74112,7 +74112,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.6778
+          "storyRank": 2.5546
         },
         {
           "id": "tweet_jenniferleechan_3n2hjxjz2i22b",
@@ -74152,7 +74152,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4209
+          "storyRank": 2.3262
         },
         {
           "id": "wz_302",
@@ -74193,7 +74193,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2643
+          "storyRank": 2.1735
         },
         {
           "id": "nn_291",
@@ -74234,7 +74234,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -74275,7 +74275,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -74315,7 +74315,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -74355,7 +74355,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "nn_294",
@@ -74396,7 +74396,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9705
+          "storyRank": 0.9487
         },
         {
           "id": "nn_295",
@@ -74437,7 +74437,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.7004
+          "storyRank": 0.6879
         },
         {
           "id": "tweet_49erswebzone_3n2fukmwjlp2h",
@@ -74477,7 +74477,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5374
+          "storyRank": 0.5292
         },
         {
           "id": "nn_296",
@@ -74518,7 +74518,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4478
+          "storyRank": 0.4419
         },
         {
           "id": "x_status_2122137876498416100",
@@ -74559,7 +74559,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4836
+          "storyRank": 0.4774
         },
         {
           "id": "tweet_mattmaiocco_3n2f5trmjtk2b",
@@ -74599,7 +74599,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4428
+          "storyRank": 0.4374
         }
       ],
       "statProfile2026": {
@@ -75354,7 +75354,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -75394,7 +75394,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -75434,7 +75434,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         },
         {
           "id": "tweet_mattmaiocco_3n2gytnahs22o",
@@ -75474,7 +75474,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3369
+          "storyRank": 1.302
         },
         {
           "id": "nn_293",
@@ -75515,7 +75515,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -75555,7 +75555,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         }
       ],
       "statProfile2026": {
@@ -76691,7 +76691,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "nn_292",
@@ -76732,7 +76732,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -76772,7 +76772,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -76812,7 +76812,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -76852,7 +76852,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "sf49_270",
@@ -76892,7 +76892,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0305
+          "storyRank": 0.0304
         },
         {
           "id": "espn_pwire_3916903_64745128",
@@ -76932,7 +76932,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0373
+          "storyRank": 0.0371
         },
         {
           "id": "x_status_2121021340950081594",
@@ -76972,7 +76972,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0998
+          "storyRank": 0.0995
         }
       ],
       "statProfile2026": {
@@ -78413,7 +78413,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0123
+          "storyRank": 0.0122
         }
       ],
       "statProfile2026": {
@@ -78955,14 +78955,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "nn_292",
@@ -79003,7 +79003,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -79043,7 +79043,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "tweet_mattbarrows_3n235ed3xrs27",
@@ -79083,7 +79083,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0266
+          "storyRank": 0.0265
         }
       ],
       "statProfile2026": {
@@ -80240,7 +80240,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3203
+          "storyRank": 1.2828
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -80280,7 +80280,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -80320,7 +80320,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "tweet_nbcs49ers_3n2fp4uonlk2v",
@@ -80360,7 +80360,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4929
+          "storyRank": 0.4858
         },
         {
           "id": "yt_OVmXe4Trg6k",
@@ -80401,7 +80401,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5675
+          "storyRank": 0.5595
         },
         {
           "id": "tweet_49erswebzone_3n2fkir7yvi2p",
@@ -80441,7 +80441,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4596
+          "storyRank": 0.4533
         },
         {
           "id": "x_status_2122145546131411293",
@@ -80482,7 +80482,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4952
+          "storyRank": 0.4887
         },
         {
           "id": "tweet_jenniferleechan_3n2f6v3gw522b",
@@ -80522,7 +80522,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4488
+          "storyRank": 0.4433
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -80562,7 +80562,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "tweet_mattbarrows_3n25pmwvo3c27",
@@ -80602,7 +80602,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0359
+          "storyRank": 0.0358
         },
         {
           "id": "wz_hub_342",
@@ -80642,7 +80642,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.03
+          "storyRank": 0.0299
         },
         {
           "id": "espn_50434129",
@@ -81475,14 +81475,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -81522,7 +81522,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         }
       ],
       "statProfile2026": {
@@ -82504,7 +82504,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "sf49_262",
@@ -82544,7 +82544,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7562
+          "storyRank": 2.6299
         },
         {
           "id": "nn_290",
@@ -82585,7 +82585,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "tweet_49erswebzone_3n2hbt2jyx22p",
@@ -82625,7 +82625,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.5419
+          "storyRank": 1.4932
         },
         {
           "id": "nn_291",
@@ -82666,7 +82666,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -82707,7 +82707,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -82747,7 +82747,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         },
         {
           "id": "nn_293",
@@ -82788,7 +82788,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "x_status_2122171415054983674",
@@ -82829,7 +82829,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.6075
+          "storyRank": 0.599
         },
         {
           "id": "yt_OVmXe4Trg6k",
@@ -82870,7 +82870,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5675
+          "storyRank": 0.5595
         },
         {
           "id": "yt_CV3mNsrnNJw",
@@ -82911,7 +82911,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.5307
+          "storyRank": 0.5235
         },
         {
           "id": "x_status_2122154844400325009",
@@ -82952,7 +82952,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.51
+          "storyRank": 0.5032
         },
         {
           "id": "nn_296",
@@ -82993,7 +82993,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4478
+          "storyRank": 0.4419
         },
         {
           "id": "tweet_jenniferleechan_3n2f7cv543c2b",
@@ -83033,7 +83033,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4514
+          "storyRank": 0.4458
         }
       ],
       "statProfile2026": {
@@ -83227,7 +83227,7 @@
                 "totalPeers": 42,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "3.34 yds",
+                "posAvgDisplay": "3.35 yds",
                 "scope": "player",
                 "leaderboardKey": "TE:ngs_sep"
               },
@@ -83759,7 +83759,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0687
+          "storyRank": 0.0683
         },
         {
           "id": "x_status_2121677897551503644",
@@ -83799,7 +83799,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0859
+          "storyRank": 0.0853
         },
         {
           "id": "espn_pwire_4685369_64772428",
@@ -83839,7 +83839,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0794
+          "storyRank": 0.0789
         },
         {
           "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -83879,7 +83879,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0206
+          "storyRank": 0.0205
         },
         {
           "id": "sf49_279",
@@ -84039,7 +84039,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0187
+          "storyRank": 0.0186
         }
       ],
       "statProfile2026": {
@@ -85354,7 +85354,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0266
+          "storyRank": 0.0265
         },
         {
           "id": "tweet_mattbarrows_3n22svbobls27",
@@ -85394,7 +85394,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0257
+          "storyRank": 0.0256
         },
         {
           "id": "tweet_mattbarrows_3n22jonltyc27",
@@ -85434,7 +85434,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0249
+          "storyRank": 0.0248
         },
         {
           "id": "wz_hub_356",
@@ -85474,7 +85474,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0225
+          "storyRank": 0.0224
         },
         {
           "id": "sf49_274",
@@ -85514,7 +85514,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0225
+          "storyRank": 0.0224
         },
         {
           "id": "sf_tx_MjAyNi0xMS0xMV",
@@ -86739,14 +86739,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -86786,7 +86786,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_jenniferleechan_3n2gkvkrnyc2b",
@@ -86826,7 +86826,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9434
+          "storyRank": 0.9241
         },
         {
           "id": "tweet_jenniferleechan_3n2f3zvb5dk2b",
@@ -86866,7 +86866,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4325
+          "storyRank": 0.4274
         }
       ],
       "statProfile2026": {
@@ -87056,7 +87056,7 @@
                 "group": "Route Depth, Opportunity & Separation",
                 "value": 3.01,
                 "displayValue": "3.01 yds",
-                "rank": 24,
+                "rank": 26,
                 "totalPeers": 76,
                 "qualified": false,
                 "higherIsBetter": true,
@@ -87088,7 +87088,7 @@
                 "totalPeers": 76,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.66 yds",
+                "posAvgDisplay": "+0.67 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -87647,14 +87647,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -87694,7 +87694,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "nn_294",
@@ -87735,7 +87735,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9705
+          "storyRank": 0.9487
         },
         {
           "id": "sf49_277",
@@ -88691,7 +88691,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         },
         {
           "id": "tweet_mattmaiocco_3n2gytnahs22o",
@@ -88731,7 +88731,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3369
+          "storyRank": 1.302
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -88771,7 +88771,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         }
       ],
       "statProfile2026": {
@@ -90932,7 +90932,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0796
         }
       ],
       "statProfile2026": {
@@ -91527,7 +91527,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         }
       ],
       "statProfile2026": {
@@ -92258,7 +92258,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -92298,7 +92298,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -92338,7 +92338,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         }
       ],
       "statProfile2026": {
@@ -92941,7 +92941,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "wz_298",
@@ -92982,7 +92982,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5791
+          "storyRank": 3.3836
         },
         {
           "id": "nn_288",
@@ -93022,7 +93022,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8888
+          "storyRank": 2.7523
         },
         {
           "id": "wz_302",
@@ -93063,7 +93063,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2643
+          "storyRank": 2.1735
         },
         {
           "id": "wz_305",
@@ -93103,7 +93103,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3622
+          "storyRank": 1.3236
         },
         {
           "id": "nn_292",
@@ -93144,7 +93144,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -93184,7 +93184,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "nn_293",
@@ -93225,7 +93225,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "nn_294",
@@ -93266,7 +93266,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9705
+          "storyRank": 0.9487
         },
         {
           "id": "x_status_2120915197582094569",
@@ -93306,7 +93306,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0323
+          "storyRank": 0.0322
         }
       ],
       "statProfile2026": {
@@ -93890,7 +93890,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         }
       ],
       "statProfile2026": {
@@ -94627,14 +94627,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "nn_292",
@@ -94675,7 +94675,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -94715,7 +94715,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "nn_293",
@@ -94756,7 +94756,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "tweet_jenniferleechan_3n2gkvkrnyc2b",
@@ -94796,7 +94796,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9434
+          "storyRank": 0.9241
         },
         {
           "id": "tweet_mattmaiocco_3n2f6csgr7k2b",
@@ -94836,7 +94836,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4455
+          "storyRank": 0.4401
         },
         {
           "id": "tweet_jenniferleechan_3n2f3cqmzzc2b",
@@ -94876,7 +94876,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4286
+          "storyRank": 0.4235
         },
         {
           "id": "tweet_jenniferleechan_3n2eydd7fz22b",
@@ -94916,7 +94916,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4128
+          "storyRank": 0.4081
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -94956,7 +94956,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         },
         {
           "id": "tweet_49erswebzone_3n2bxf4vrvk2k",
@@ -94996,7 +94996,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0633
+          "storyRank": 0.0629
         },
         {
           "id": "wz_hub_343",
@@ -95036,7 +95036,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0298
+          "storyRank": 0.0297
         }
       ],
       "statProfile2026": {
@@ -95258,7 +95258,7 @@
                 "totalPeers": 76,
                 "qualified": false,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.66 yds",
+                "posAvgDisplay": "+0.67 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -95820,7 +95820,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "wz_298",
@@ -95861,7 +95861,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5791
+          "storyRank": 3.3836
         },
         {
           "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -95894,14 +95894,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "nn_291",
@@ -95942,7 +95942,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -95982,7 +95982,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "nn_293",
@@ -96023,7 +96023,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "nn_296",
@@ -96064,7 +96064,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4478
+          "storyRank": 0.4419
         },
         {
           "id": "espn_pwire_4696044_50495784",
@@ -96104,7 +96104,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.426
+          "storyRank": 0.4206
         },
         {
           "id": "x_status_2122106633870561333",
@@ -96145,7 +96145,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4407
+          "storyRank": 0.4353
         },
         {
           "id": "x_status_2122106168776782203",
@@ -96186,7 +96186,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4401
+          "storyRank": 0.4348
         },
         {
           "id": "tweet_mattmaiocco_3n2f6csgr7k2b",
@@ -96226,7 +96226,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4455
+          "storyRank": 0.4401
         },
         {
           "id": "tweet_jenniferleechan_3n2f5gdwfwk2b",
@@ -96266,7 +96266,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4404
+          "storyRank": 0.435
         },
         {
           "id": "tweet_mattmaiocco_3n2f5fnlgzk2b",
@@ -96306,7 +96306,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4402
+          "storyRank": 0.4349
         },
         {
           "id": "tweet_victafur_3n275bn2f2s2j",
@@ -96346,7 +96346,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0382
+          "storyRank": 0.0381
         }
       ],
       "statProfile2026": {
@@ -96422,11 +96422,11 @@
                 "group": null,
                 "value": -0.2084,
                 "displayValue": "-0.21 yds",
-                "rank": 27,
+                "rank": 28,
                 "totalPeers": 41,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.16 yds",
+                "posAvgDisplay": "+0.17 yds",
                 "scope": "player",
                 "leaderboardKey": "RB:ngs_ryoe_att"
               },
@@ -96540,7 +96540,7 @@
                 "totalPeers": 41,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+27.0 yds",
+                "posAvgDisplay": "+27.5 yds",
                 "scope": "player",
                 "leaderboardKey": "RB:ngs_ryoe_total"
               },
@@ -97161,7 +97161,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.5501
+          "storyRank": 2.4366
         },
         {
           "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -97194,14 +97194,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "nn_290",
@@ -97242,7 +97242,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "nn_291",
@@ -97283,7 +97283,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -97323,7 +97323,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_timkawakami_3n2gtcyaqpc2a",
@@ -97363,7 +97363,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.0042
+          "storyRank": 0.9806
         },
         {
           "id": "tweet_jenniferleechan_3n2gkvkrnyc2b",
@@ -97403,7 +97403,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9434
+          "storyRank": 0.9241
         },
         {
           "id": "tweet_49erswebzone_3n2fm6hbjby2d",
@@ -97443,7 +97443,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4712
+          "storyRank": 0.4647
         },
         {
           "id": "tweet_49erswebzone_3n2fm6fsnge2i",
@@ -97483,7 +97483,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4712
+          "storyRank": 0.4646
         },
         {
           "id": "wz_hub_310",
@@ -97523,7 +97523,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4869
+          "storyRank": 0.4802
         },
         {
           "id": "tweet_mattmaiocco_3n2f225y3qs2b",
@@ -97563,7 +97563,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4218
+          "storyRank": 0.4168
         },
         {
           "id": "tweet_mattbarrows_3n2eyflo3bk2x",
@@ -97603,7 +97603,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4132
+          "storyRank": 0.4084
         },
         {
           "id": "tweet_jenniferleechan_3n2eydd7fz22b",
@@ -97643,7 +97643,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4128
+          "storyRank": 0.4081
         },
         {
           "id": "tweet_nbcsportsbayarea_3n2en7pzul22o",
@@ -97683,7 +97683,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1325
+          "storyRank": 0.1311
         }
       ],
       "statProfile2026": {
@@ -97873,7 +97873,7 @@
                 "group": "Route Depth, Opportunity & Separation",
                 "value": 2.5179,
                 "displayValue": "2.52 yds",
-                "rank": 59,
+                "rank": 58,
                 "totalPeers": 76,
                 "qualified": true,
                 "higherIsBetter": true,
@@ -97905,7 +97905,7 @@
                 "totalPeers": 76,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.66 yds",
+                "posAvgDisplay": "+0.67 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -98521,14 +98521,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -98561,14 +98561,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "nn_292",
@@ -98609,7 +98609,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -98649,7 +98649,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -98689,7 +98689,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "tweet_mattbarrows_3n2cflpcfqc2x",
@@ -98729,7 +98729,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0796
         }
       ],
       "statProfile2026": {
@@ -100233,14 +100233,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "tweet_mattmaiocco_3n2gzerhbvs2o",
@@ -100273,14 +100273,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         }
       ],
       "statProfile2026": {
@@ -101775,7 +101775,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -101808,14 +101808,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.369,
+          "breakingPriority": 0.362,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7566
+          "storyRank": 2.6905
         },
         {
           "id": "nn_291",
@@ -101856,7 +101856,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -101896,7 +101896,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -101936,7 +101936,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         }
       ],
       "statProfile2026": {
@@ -102959,7 +102959,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_mattmaiocco_3n2gzwplnwc2o",
@@ -102992,14 +102992,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -103039,7 +103039,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         }
       ],
       "statProfile2026": {
@@ -104017,7 +104017,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_mattmaiocco_3n2gzwplnwc2o",
@@ -104050,14 +104050,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         }
       ],
       "statProfile2026": {
@@ -105036,7 +105036,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.09
+          "storyRank": 0.0893
         },
         {
           "id": "tweet_nbcs49ers_3n2c2wm55sk2d",
@@ -105076,7 +105076,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.037
+          "storyRank": 0.0367
         },
         {
           "id": "wz_hub_326",
@@ -105116,7 +105116,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1523
+          "storyRank": 0.1513
         },
         {
           "id": "x_status_2121618937066795360",
@@ -105156,7 +105156,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1659
+          "storyRank": 0.1649
         },
         {
           "id": "wz_hub_349",
@@ -105236,7 +105236,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0234
+          "storyRank": 0.0233
         },
         {
           "id": "espn_pwire_4241464_64699628",
@@ -105276,7 +105276,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0429
+          "storyRank": 0.0428
         }
       ],
       "statProfile2026": {
@@ -105934,7 +105934,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -105974,7 +105974,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "nn_295",
@@ -106015,7 +106015,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.7004
+          "storyRank": 0.6879
         },
         {
           "id": "tweet_mattmaiocco_3n2f6psm2js2b",
@@ -106055,7 +106055,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4479
+          "storyRank": 0.4424
         },
         {
           "id": "x_status_2122112017112891497",
@@ -106096,7 +106096,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4476
+          "storyRank": 0.4421
         },
         {
           "id": "tweet_jenniferleechan_3n2f7ulq7fc2b",
@@ -106136,7 +106136,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4547
+          "storyRank": 0.4491
         },
         {
           "id": "tweet_timkawakami_3n2f7xabxes22",
@@ -106176,7 +106176,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.3967
+          "storyRank": 0.3918
         },
         {
           "id": "tweet_jenniferleechan_3n2f6ow6wqc2b",
@@ -106216,7 +106216,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4477
+          "storyRank": 0.4422
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -106256,7 +106256,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         }
       ],
       "statProfile2026": {
@@ -107022,14 +107022,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -107069,7 +107069,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         }
       ],
       "statProfile2026": {
@@ -108452,7 +108452,7 @@
         "avgIntendedAirYards": 14.4082051282051,
         "airYardsSharePct": 27.0170731824585,
         "avgYac": 3.16074074074074,
-        "avgYacAboveExpectation": 0.113682231853232,
+        "avgYacAboveExpectation": 0.126245137736969,
         "catchPct": 69.2307692307692
       },
       "pfrAdvStats": null,
@@ -108686,14 +108686,14 @@
           "isBreaking": true,
           "isInGameInjury": false,
           "breakingBadge": "INJURY UPDATE",
-          "breakingPriority": 1.15,
+          "breakingPriority": 1.127,
           "credibilityScore": 98,
           "category": "injury",
           "storyTier": "post_game_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": true,
           "isStalePreGameAvailability": false,
-          "storyRank": 8.3419
+          "storyRank": 8.0563
         },
         {
           "id": "espn_50502440",
@@ -108733,7 +108733,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 7.2773
+          "storyRank": 5.9912
         },
         {
           "id": "tweet_49erswebzone_3n2htpbvnx32d",
@@ -108773,7 +108773,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.467
+          "storyRank": 3.2771
         },
         {
           "id": "tweet_jenniferleechan_3n2hk7dncis2b",
@@ -108813,7 +108813,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4466
+          "storyRank": 2.3501
         },
         {
           "id": "tweet_49erswebzone_3n2hl23breg2h",
@@ -108853,7 +108853,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2111
+          "storyRank": 2.1217
         },
         {
           "id": "tweet_mattbarrows_3n2hj744wwc2x",
@@ -108893,7 +108893,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.3435
+          "storyRank": 2.2538
         },
         {
           "id": "x_status_2122447687304073705",
@@ -108933,7 +108933,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.3442
+          "storyRank": 2.2544
         },
         {
           "id": "nn_290",
@@ -108974,7 +108974,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "nn_291",
@@ -109015,7 +109015,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -109056,7 +109056,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "nn_293",
@@ -109097,7 +109097,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "espn_pwire_16737_64787728",
@@ -109137,7 +109137,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.2649
+          "storyRank": 0.2621
         },
         {
           "id": "x_status_2121369234244825523",
@@ -109178,7 +109178,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0505
+          "storyRank": 0.0503
         },
         {
           "id": "x_status_2121365845654094202",
@@ -109219,7 +109219,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0503
+          "storyRank": 0.0501
         }
       ],
       "statProfile2026": {
@@ -109435,13 +109435,13 @@
                 "key": "ngs_yac_oe",
                 "label": "YAC Above Expectation (NGS)",
                 "group": "After-the-Catch Creation",
-                "value": 0.1137,
-                "displayValue": "+0.11 yds",
-                "rank": 52,
+                "value": 0.1262,
+                "displayValue": "+0.13 yds",
+                "rank": 51,
                 "totalPeers": 76,
                 "qualified": true,
                 "higherIsBetter": true,
-                "posAvgDisplay": "+0.66 yds",
+                "posAvgDisplay": "+0.67 yds",
                 "scope": "player",
                 "leaderboardKey": "WR:ngs_yac_oe"
               }
@@ -110034,14 +110034,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.383,
+          "breakingPriority": 0.377,
           "credibilityScore": 89,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7228
+          "storyRank": 2.6547
         },
         {
           "id": "tweet_mattmaiocco_3n2gzerhbvs2o",
@@ -110074,14 +110074,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -110114,14 +110114,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "nn_291",
@@ -110162,7 +110162,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -110202,7 +110202,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "nn_296",
@@ -110243,7 +110243,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4478
+          "storyRank": 0.4419
         },
         {
           "id": "tweet_mattbarrows_3n2cflpcfqc2x",
@@ -110283,7 +110283,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0796
         }
       ],
       "statProfile2026": {
@@ -110921,7 +110921,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "wz_298",
@@ -110962,7 +110962,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.5791
+          "storyRank": 3.3836
         },
         {
           "id": "tweet_49erswebzone_3n2hl23breg2h",
@@ -111002,7 +111002,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2111
+          "storyRank": 2.1217
         },
         {
           "id": "tweet_jenniferleechan_3n2hjxjz2i22b",
@@ -111042,7 +111042,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4209
+          "storyRank": 2.3262
         },
         {
           "id": "espn_pwire_4240542_64776028",
@@ -111082,7 +111082,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.089
+          "storyRank": 0.0884
         },
         {
           "id": "tweet_mattbarrows_3n2cfibsnmk2x",
@@ -111122,7 +111122,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.02
+          "storyRank": 0.0199
         },
         {
           "id": "tweet_jenniferleechan_3n2cfi6pvhk2o",
@@ -111162,7 +111162,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0795
         },
         {
           "id": "tweet_mattbarrows_3n235ed3xrs27",
@@ -111202,7 +111202,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0266
+          "storyRank": 0.0265
         },
         {
           "id": "tweet_mattbarrows_3mzyiqvlgfk2q",
@@ -111242,7 +111242,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0206
+          "storyRank": 0.0205
         }
       ],
       "statProfile2026": {
@@ -112071,7 +112071,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.8766
+          "storyRank": 3.668
         },
         {
           "id": "sf49_261",
@@ -112112,7 +112112,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_49erswebzone_3n2htpbvnx32d",
@@ -112152,7 +112152,47 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.467
+          "storyRank": 3.2771
+        },
+        {
+          "id": "tweet_mattmaiocco_3n2gzerhbvs2o",
+          "type": "tweet",
+          "wireSource": null,
+          "headline": "49ers snap count 1/2 Defense (83 plays) DL-DeForest Buckner 58, Nick Bosa 57, Osa Odighizuwa 54, Romello Height 45, Keion White 43, Mykel Williams 31, Sebastian Valdez 25, James Thompson 19, Khalid Kareem 3",
+          "fullText": "49ers snap count 1/2 Defense (83 plays) DL-DeForest Buckner 58, Nick Bosa 57, Osa Odighizuwa 54, Romello Height 45, Keion White 43, Mykel Williams 31, Sebastian Valdez 25, James Thompson 19, Khalid Kareem 3",
+          "isFullTweet": true,
+          "summary": "",
+          "author": "Matt Maiocco",
+          "authorHandle": "@MaioccoNBCS",
+          "authorProfileUrl": "https://x.com/MaioccoNBCS",
+          "outletName": "NBC Sports Bay Area",
+          "publishedAt": "2026-11-16T17:08:59.484Z",
+          "imageUrl": "",
+          "videoId": null,
+          "videoStreamUrl": null,
+          "externalVideoUrl": null,
+          "duration": null,
+          "isHighlightClip": false,
+          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n2gzerhbvs2o",
+          "externalUrl": null,
+          "externalTitle": null,
+          "externalDescription": null,
+          "trustTier": 1,
+          "isFirstMoverInjuryScoop": false,
+          "corroborationCount": 1,
+          "corroboratedBy": null,
+          "firstReportedBy": null,
+          "isBreaking": false,
+          "isInGameInjury": false,
+          "breakingBadge": "FILM & TRENCH",
+          "breakingPriority": 0.365,
+          "credibilityScore": 98,
+          "category": "film",
+          "storyTier": "film_trench",
+          "isUrgentBreaking": false,
+          "isPostGameInjuryUpdate": false,
+          "isStalePreGameAvailability": false,
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_49erswebzone_3n2hnbmjylh2h",
@@ -112192,7 +112232,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4513
+          "storyRank": 2.345
         },
         {
           "id": "tweet_nbcs49ers_3n2hn4rl3xc22",
@@ -112232,47 +112272,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4344
-        },
-        {
-          "id": "tweet_mattmaiocco_3n2gzerhbvs2o",
-          "type": "tweet",
-          "wireSource": null,
-          "headline": "49ers snap count 1/2 Defense (83 plays) DL-DeForest Buckner 58, Nick Bosa 57, Osa Odighizuwa 54, Romello Height 45, Keion White 43, Mykel Williams 31, Sebastian Valdez 25, James Thompson 19, Khalid Kareem 3",
-          "fullText": "49ers snap count 1/2 Defense (83 plays) DL-DeForest Buckner 58, Nick Bosa 57, Osa Odighizuwa 54, Romello Height 45, Keion White 43, Mykel Williams 31, Sebastian Valdez 25, James Thompson 19, Khalid Kareem 3",
-          "isFullTweet": true,
-          "summary": "",
-          "author": "Matt Maiocco",
-          "authorHandle": "@MaioccoNBCS",
-          "authorProfileUrl": "https://x.com/MaioccoNBCS",
-          "outletName": "NBC Sports Bay Area",
-          "publishedAt": "2026-11-16T17:08:59.484Z",
-          "imageUrl": "",
-          "videoId": null,
-          "videoStreamUrl": null,
-          "externalVideoUrl": null,
-          "duration": null,
-          "isHighlightClip": false,
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n2gzerhbvs2o",
-          "externalUrl": null,
-          "externalTitle": null,
-          "externalDescription": null,
-          "trustTier": 1,
-          "isFirstMoverInjuryScoop": false,
-          "corroborationCount": 1,
-          "corroboratedBy": null,
-          "firstReportedBy": null,
-          "isBreaking": false,
-          "isInGameInjury": false,
-          "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
-          "credibilityScore": 98,
-          "category": "film",
-          "storyTier": "film_trench",
-          "isUrgentBreaking": false,
-          "isPostGameInjuryUpdate": false,
-          "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.3293
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -112305,14 +112305,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "nn_291",
@@ -112353,7 +112353,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -112394,7 +112394,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -112434,7 +112434,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "nn_296",
@@ -112475,7 +112475,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4478
+          "storyRank": 0.4419
         },
         {
           "id": "tweet_jenniferleechan_3n2f6v3gw522b",
@@ -112515,7 +112515,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4488
+          "storyRank": 0.4433
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -112555,7 +112555,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "wz_hub_327",
@@ -112595,7 +112595,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0603
+          "storyRank": 0.06
         }
       ],
       "statProfile2026": {
@@ -114828,14 +114828,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -114868,14 +114868,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "nn_292",
@@ -114916,7 +114916,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -114956,7 +114956,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -114996,7 +114996,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "tweet_nbcs49ers_3n2ermljen22e",
@@ -115036,7 +115036,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.1394
+          "storyRank": 0.1378
         },
         {
           "id": "tweet_mattbarrows_3n2cflpcfqc2x",
@@ -115076,7 +115076,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0796
         },
         {
           "id": "tweet_49erswebzone_3n2c6eo2uxv2o",
@@ -115116,7 +115116,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0664
+          "storyRank": 0.0659
         },
         {
           "id": "wz_hub_321",
@@ -115156,7 +115156,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0687
+          "storyRank": 0.0683
         },
         {
           "id": "wz_hub_327",
@@ -115196,7 +115196,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0603
+          "storyRank": 0.06
         }
       ],
       "statProfile2026": {
@@ -115982,7 +115982,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.6449
+          "storyRank": 3.4434
         },
         {
           "id": "tweet_49erswebzone_3n2htpbvnx32d",
@@ -116022,7 +116022,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 3.467
+          "storyRank": 3.2771
         },
         {
           "id": "tweet_nbcs49ers_3n2hp2phqvc2z",
@@ -116062,7 +116062,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.6778
+          "storyRank": 2.5545
         },
         {
           "id": "x_status_2122447135551770963",
@@ -116102,7 +116102,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.6321
+          "storyRank": 2.5316
         },
         {
           "id": "tweet_49erswebzone_3n2hl23breg2h",
@@ -116142,7 +116142,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.2111
+          "storyRank": 2.1217
         },
         {
           "id": "tweet_jenniferleechan_3n2hjxjz2i22b",
@@ -116182,7 +116182,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.4209
+          "storyRank": 2.3262
         },
         {
           "id": "tweet_49erswebzone_3n2fh5hzbqc2y",
@@ -116215,14 +116215,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": null,
-          "breakingPriority": 0.269,
+          "breakingPriority": 0.263,
           "credibilityScore": 86,
           "category": "injury",
           "storyTier": "post_game_injury",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": true,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9671
+          "storyRank": 1.9443
         },
         {
           "id": "nn_291",
@@ -116263,7 +116263,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "nn_292",
@@ -116304,7 +116304,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -116344,7 +116344,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -116384,7 +116384,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "espn_pwire_4427325_64820228",
@@ -116424,7 +116424,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.8919
+          "storyRank": 0.8474
         },
         {
           "id": "nn_294",
@@ -116465,7 +116465,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.9705
+          "storyRank": 0.9487
         },
         {
           "id": "nn_295",
@@ -116506,7 +116506,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.7004
+          "storyRank": 0.6879
         }
       ],
       "statProfile2026": {
@@ -118306,14 +118306,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -118346,14 +118346,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -118393,7 +118393,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         }
       ],
       "statProfile2026": {
@@ -119327,14 +119327,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.371,
+          "breakingPriority": 0.365,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.7799
+          "storyRank": 2.7128
         },
         {
           "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -119367,14 +119367,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.284,
+          "breakingPriority": 0.279,
           "credibilityScore": 95,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.9992
+          "storyRank": 1.9615
         },
         {
           "id": "nn_292",
@@ -119415,7 +119415,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.2904
+          "storyRank": 1.2552
         },
         {
           "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -119455,7 +119455,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattbarrows_3n2cflpcfqc2x",
@@ -119495,7 +119495,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0801
+          "storyRank": 0.0796
         }
       ],
       "statProfile2026": {
@@ -120692,14 +120692,14 @@
           "isBreaking": false,
           "isInGameInjury": false,
           "breakingBadge": "FILM & TRENCH",
-          "breakingPriority": 0.375,
+          "breakingPriority": 0.368,
           "credibilityScore": 98,
           "category": "film",
           "storyTier": "film_trench",
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 2.8213
+          "storyRank": 2.7525
         },
         {
           "id": "x_status_2120617948138401832",
@@ -120739,7 +120739,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.029
+          "storyRank": 0.0289
         }
       ],
       "statProfile2026": {
@@ -122280,7 +122280,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.7666
+          "storyRank": 1.7069
         },
         {
           "id": "nn_291",
@@ -122321,7 +122321,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.4856
+          "storyRank": 1.441
         },
         {
           "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -122361,7 +122361,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3461
+          "storyRank": 1.3109
         },
         {
           "id": "tweet_mattmaiocco_3n2gytnahs22o",
@@ -122401,7 +122401,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3369
+          "storyRank": 1.302
         },
         {
           "id": "nn_293",
@@ -122442,7 +122442,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.1044
+          "storyRank": 1.0773
         },
         {
           "id": "tweet_jenniferleechan_3n2f6cvoscs2b",
@@ -122482,7 +122482,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4455
+          "storyRank": 0.4401
         },
         {
           "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -122522,7 +122522,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.4106
+          "storyRank": 0.4059
         },
         {
           "id": "tweet_victafur_3n2aakdfubs22",
@@ -122562,7 +122562,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0456
+          "storyRank": 0.0454
         },
         {
           "id": "tweet_mattbarrows_3n27upygy2k2x",
@@ -122602,7 +122602,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0492
+          "storyRank": 0.049
         },
         {
           "id": "wz_hub_331",
@@ -122642,7 +122642,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0445
+          "storyRank": 0.0443
         },
         {
           "id": "wz_hub_333",
@@ -122682,7 +122682,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.042
+          "storyRank": 0.0419
         },
         {
           "id": "sfstd_287",
@@ -122722,7 +122722,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0415
+          "storyRank": 0.0413
         },
         {
           "id": "espn_pwire_13241_64747028",
@@ -122762,7 +122762,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0378
+          "storyRank": 0.0377
         },
         {
           "id": "x_status_2121021340950081594",
@@ -122802,7 +122802,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0998
+          "storyRank": 0.0995
         }
       ],
       "statProfile2026": {
@@ -123534,7 +123534,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3815
+          "storyRank": 1.3447
         },
         {
           "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -123574,7 +123574,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3585
+          "storyRank": 1.3227
         },
         {
           "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -123614,7 +123614,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.408
+          "storyRank": 0.4033
         },
         {
           "id": "wz_hub_318",
@@ -123654,7 +123654,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0737
+          "storyRank": 0.0732
         },
         {
           "id": "x_status_2121016733909799009",
@@ -123694,7 +123694,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0353
+          "storyRank": 0.0352
         },
         {
           "id": "tweet_mattbarrows_3n25f44jy6k2x",
@@ -123734,7 +123734,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0344
+          "storyRank": 0.0343
         },
         {
           "id": "x_status_2120617948138401832",
@@ -123774,7 +123774,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.029
+          "storyRank": 0.0289
         }
       ],
       "statProfile2026": {
@@ -124718,7 +124718,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 1.3803
+          "storyRank": 1.3435
         },
         {
           "id": "tweet_mattbarrows_3n27usae3sc2x",
@@ -124758,7 +124758,7 @@
           "isUrgentBreaking": false,
           "isPostGameInjuryUpdate": false,
           "isStalePreGameAvailability": false,
-          "storyRank": 0.0123
+          "storyRank": 0.0122
         }
       ],
       "statProfile2026": {

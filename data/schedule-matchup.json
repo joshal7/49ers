@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T06:51:35.892Z",
+  "updatedAt": "2026-11-17T07:08:18.577Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -24778,6 +24778,8 @@
           "id": "4708049",
           "name": "Gavin Bartholomew",
           "position": "TE",
+          "depthSlot": "TE2",
+          "statLine2026": "10 rec, 90 yds, 1 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 86,
@@ -24790,6 +24792,8 @@
           "id": "4712579",
           "name": "Dillon Bell",
           "position": "WR",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 89,
@@ -24802,6 +24806,8 @@
           "id": "3930270",
           "name": "Blake Brandel",
           "position": "C",
+          "depthSlot": "C",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 64,
@@ -24814,6 +24820,8 @@
           "id": "4878695",
           "name": "Max Bredeson",
           "position": "FB",
+          "depthSlot": "FB",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 45,
@@ -24826,6 +24834,8 @@
           "id": "4573398",
           "name": "Max Brosmer",
           "position": "QB",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 12,
@@ -24838,6 +24848,8 @@
           "id": "14880",
           "name": "Kirk Cousins",
           "position": "QB",
+          "depthSlot": "QB1",
+          "statLine2026": "2547 pass yds, 22 TD, 9 INT, +54 EPA; 18 rush yds, 2 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 8,
@@ -24850,6 +24862,8 @@
           "id": "4361112",
           "name": "Devin Culp",
           "position": "TE",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 48,
@@ -24862,6 +24876,8 @@
           "id": "4240631",
           "name": "DeeJay Dallas",
           "position": "RB",
+          "depthSlot": "RB3",
+          "statLine2026": "5 rec, 36 yds, 0 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 31,
@@ -24874,6 +24890,8 @@
           "id": "4361985",
           "name": "Christian Darrisaw",
           "position": "OT",
+          "depthSlot": "LT",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 71,
@@ -24886,6 +24904,8 @@
           "id": "4565185",
           "name": "Tai Felton",
           "position": "WR",
+          "depthSlot": "WR2 (2nd)",
+          "statLine2026": "6 rec, 74 yds, 0 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 13,
@@ -24898,6 +24918,8 @@
           "id": "4045176",
           "name": "Will Fries",
           "position": "G",
+          "depthSlot": "RG",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 76,
@@ -24910,6 +24932,8 @@
           "id": "4036133",
           "name": "T.J. Hockenson",
           "position": "TE",
+          "depthSlot": "TE1",
+          "statLine2026": "35 rec, 328 yds, 3 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 87,
@@ -24922,6 +24946,8 @@
           "id": "4690210",
           "name": "Joe Huber",
           "position": "G",
+          "depthSlot": "LG",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 60,
@@ -24934,6 +24960,8 @@
           "id": "4262921",
           "name": "Justin Jefferson",
           "position": "WR",
+          "depthSlot": "WR1",
+          "statLine2026": "40 rec, 467 yds, 4 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 18,
@@ -24946,6 +24974,8 @@
           "id": "3886598",
           "name": "Jauan Jennings",
           "position": "WR",
+          "depthSlot": "WR3",
+          "statLine2026": "6 rec, 54 yds, 0 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 14,
@@ -24958,6 +24988,8 @@
           "id": "4360637",
           "name": "Jeshaun Jones",
           "position": "WR",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 82,
@@ -24970,6 +25002,8 @@
           "id": "3042519",
           "name": "Aaron Jones Sr.",
           "position": "RB",
+          "depthSlot": "RB2",
+          "statLine2026": "521 rush yds, 3 TD; 17 rec, 103 yds, 0 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 33,
@@ -24982,6 +25016,8 @@
           "id": "4362010",
           "name": "Michael Jurgens",
           "position": "C",
+          "depthSlot": "C3",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 65,
@@ -24994,6 +25030,8 @@
           "id": "4360569",
           "name": "Jordan Mason",
           "position": "RB",
+          "depthSlot": "RB1",
+          "statLine2026": "241 rush yds, 1 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 27,
@@ -25006,6 +25044,8 @@
           "id": "3917315",
           "name": "Kyler Murray",
           "position": "QB",
+          "depthSlot": "QB2",
+          "statLine2026": "1022 pass yds, 5 TD, 3 INT, -7.4 EPA; 167 rush yds, 0 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 1,
@@ -25018,6 +25058,8 @@
           "id": "3123954",
           "name": "Brian O'Neill",
           "position": "OT",
+          "depthSlot": "RT",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 75,
@@ -25030,6 +25072,8 @@
           "id": "4430656",
           "name": "Myles Price",
           "position": "WR",
+          "depthSlot": "WR1 (2nd)",
+          "statLine2026": "10 rec, 81 yds, 1 TD",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 4,
@@ -25042,6 +25086,8 @@
           "id": "4592836",
           "name": "Caleb Tiernan",
           "position": "OT",
+          "depthSlot": "LG2",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 78,
@@ -25054,6 +25100,8 @@
           "id": "4239140",
           "name": "Ryan Van Demark",
           "position": "OT",
+          "depthSlot": "LT2",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 72,
@@ -25066,6 +25114,8 @@
           "id": "2573079",
           "name": "Carson Wentz",
           "position": "QB",
+          "depthSlot": "QB3",
+          "statLine2026": "357 pass yds, 3 TD, 2 INT, -13.2 EPA",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 11,
@@ -25078,6 +25128,8 @@
           "id": "4433959",
           "name": "Ben Yurosek",
           "position": "TE",
+          "depthSlot": "TE3",
+          "statLine2026": "",
           "unit": "Offense",
           "rosterBucket": "active",
           "jersey": 85,
@@ -25090,6 +25142,8 @@
           "id": "4602019",
           "name": "Caleb Banks",
           "position": "DT",
+          "depthSlot": "NT",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 95,
@@ -25102,6 +25156,8 @@
           "id": "3728281",
           "name": "Blake Cashman",
           "position": "LB",
+          "depthSlot": "RILB",
+          "statLine2026": "76 tkl, 4.5 sk, 0 INT, 7 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 51,
@@ -25114,6 +25170,8 @@
           "id": "4431520",
           "name": "Chaz Chambliss",
           "position": "LB",
+          "depthSlot": "SLB2",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 32,
@@ -25126,6 +25184,8 @@
           "id": "5091793",
           "name": "Charles Demmings",
           "position": "CB",
+          "depthSlot": "LCB2",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 20,
@@ -25138,6 +25198,8 @@
           "id": "4877652",
           "name": "Jake Golday",
           "position": "LB",
+          "depthSlot": "LILB2",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 41,
@@ -25150,6 +25212,8 @@
           "id": "4629149",
           "name": "Tyrion Ingram-Dawkins",
           "position": "DE",
+          "depthSlot": "RDE2",
+          "statLine2026": "14 tkl, 1 sk, 0 INT, 2 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 90,
@@ -25162,6 +25226,8 @@
           "id": "4242436",
           "name": "Theo Jackson",
           "position": "S",
+          "depthSlot": "FS2",
+          "statLine2026": "25 tkl, 0 sk, 0 INT, 1 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 26,
@@ -25174,6 +25240,8 @@
           "id": "4046537",
           "name": "Joshua Metellus",
           "position": "S",
+          "depthSlot": "SS",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 44,
@@ -25186,6 +25254,8 @@
           "id": "4038999",
           "name": "Byron Murphy Jr.",
           "position": "CB",
+          "depthSlot": "NB",
+          "statLine2026": "41 tkl, 0 sk, 4 INT, 7 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 7,
@@ -25198,6 +25268,8 @@
           "id": "4698728",
           "name": "Domonique Orange",
           "position": "DT",
+          "depthSlot": "NT2",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 97,
@@ -25210,6 +25282,8 @@
           "id": "4430280",
           "name": "Ivan Pace Jr.",
           "position": "LB",
+          "depthSlot": "RILB2",
+          "statLine2026": "20 tkl, 1.5 sk, 0 INT, 1 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 0,
@@ -25222,6 +25296,8 @@
           "id": "4259252",
           "name": "James Pierre",
           "position": "CB",
+          "depthSlot": "RCB",
+          "statLine2026": "31 tkl, 0 sk, 2 INT, 5 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 23,
@@ -25234,6 +25310,8 @@
           "id": "4360277",
           "name": "Jalen Redmond",
           "position": "DT",
+          "depthSlot": "RDE",
+          "statLine2026": "28 tkl, 2 sk, 0 INT, 4 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 61,
@@ -25246,6 +25324,8 @@
           "id": "4875564",
           "name": "Bo Richter",
           "position": "LB",
+          "depthSlot": "WLB3",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 98,
@@ -25258,6 +25338,8 @@
           "id": "4044540",
           "name": "Isaiah Rodgers",
           "position": "CB",
+          "depthSlot": "LCB",
+          "statLine2026": "29 tkl, 0 sk, 1 INT, 5 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 2,
@@ -25270,6 +25352,8 @@
           "id": "5093973",
           "name": "Levi Drake Rodriguez",
           "position": "DT",
+          "depthSlot": "LDE",
+          "statLine2026": "21 tkl, 3 sk, 0 INT, 0 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 50,
@@ -25282,6 +25366,8 @@
           "id": "14945",
           "name": "Harrison Smith",
           "position": "S",
+          "depthSlot": "FS",
+          "statLine2026": "19 tkl, 0.5 sk, 2 INT, 5 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 22,
@@ -25294,6 +25380,8 @@
           "id": "5082397",
           "name": "Jacob Thomas",
           "position": "S",
+          "depthSlot": "FS3",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 29,
@@ -25306,6 +25394,8 @@
           "id": "4710865",
           "name": "Jakobe Thomas",
           "position": "S",
+          "depthSlot": "SS3",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 8,
@@ -25318,6 +25408,8 @@
           "id": "4565190",
           "name": "Dallas Turner",
           "position": "LB",
+          "depthSlot": "SLB",
+          "statLine2026": "27 tkl, 8 sk, 0 INT, 3 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 15,
@@ -25330,6 +25422,8 @@
           "id": "3133487",
           "name": "Andrew Van Ginkel",
           "position": "LB",
+          "depthSlot": "WLB",
+          "statLine2026": "28 tkl, 8.5 sk, 1 INT, 1 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 43,
@@ -25342,6 +25436,8 @@
           "id": "16772",
           "name": "Kyle Van Noy",
           "position": "LB",
+          "depthSlot": "WLB2",
+          "statLine2026": "16 tkl, 2.5 sk, 0 INT, 0 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 17,
@@ -25354,6 +25450,8 @@
           "id": "4695609",
           "name": "Zemaiah Vaughn",
           "position": "CB",
+          "depthSlot": "RCB2",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 5,
@@ -25366,6 +25464,8 @@
           "id": "4568007",
           "name": "Jay Ward",
           "position": "S",
+          "depthSlot": "SS2",
+          "statLine2026": "",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 24,
@@ -25378,6 +25478,8 @@
           "id": "4696782",
           "name": "Elijah Williams",
           "position": "DE",
+          "depthSlot": "LDE2",
+          "statLine2026": "10 tkl, 1 sk, 0 INT, 0 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 99,
@@ -25390,6 +25492,8 @@
           "id": "3056916",
           "name": "Eric Wilson",
           "position": "LB",
+          "depthSlot": "LILB",
+          "statLine2026": "57 tkl, 4 sk, 0 INT, 1 PD",
           "unit": "Defense",
           "rosterBucket": "active",
           "jersey": 55,
@@ -25402,6 +25506,8 @@
           "id": "15726",
           "name": "Andrew DePaola",
           "position": "LS",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Special Teams",
           "rosterBucket": "active",
           "jersey": 42,
@@ -25414,6 +25520,8 @@
           "id": "4567104",
           "name": "Will Reichard",
           "position": "PK",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Special Teams",
           "rosterBucket": "active",
           "jersey": 16,
@@ -25426,6 +25534,8 @@
           "id": "4799994",
           "name": "Brett Thorson",
           "position": "P",
+          "depthSlot": null,
+          "statLine2026": "",
           "unit": "Special Teams",
           "rosterBucket": "active",
           "jersey": 19,
@@ -25459,7 +25569,9 @@
           "factors": [
             "Remains in early stages of NFL 5-Step Concussion Protocol"
           ],
-          "archetypeNote": "Veteran starter profile (8th NFL season, 95% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance."
+          "archetypeNote": "Veteran starter profile (8th NFL season, 95% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+          "depthSlot": "RILB",
+          "statLine2026": "76 tkl, 4.5 sk, 0 INT, 7 PD"
         },
         {
           "name": "Kyler Murray",
@@ -25486,7 +25598,9 @@
             "Matches player's documented chronic history (Hamstring)",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
-          "archetypeNote": "Dual-threat QB; rushing workload can be scaled when managing lower-extremity tags."
+          "archetypeNote": "Dual-threat QB; rushing workload can be scaled when managing lower-extremity tags.",
+          "depthSlot": "QB2",
+          "statLine2026": "1022 pass yds, 5 TD, 3 INT, -7.4 EPA; 167 rush yds, 0 TD"
         },
         {
           "name": "Jauan Jennings",
@@ -25512,7 +25626,9 @@
             "Missed prior game without practice participation — awaiting Wednesday report",
             "Soft-tissue re-aggravation caution (Calf)"
           ],
-          "archetypeNote": "Physical blocker/slot receiver who frequently plays through mid-week Limited tags."
+          "archetypeNote": "Physical blocker/slot receiver who frequently plays through mid-week Limited tags.",
+          "depthSlot": "WR3",
+          "statLine2026": "6 rec, 54 yds, 0 TD"
         },
         {
           "name": "T.J. Hockenson",
@@ -25537,7 +25653,9 @@
           "factors": [
             "Missed prior game without practice participation — awaiting Wednesday report"
           ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+          "depthSlot": "TE1",
+          "statLine2026": "35 rec, 328 yds, 3 TD"
         },
         {
           "name": "Tyrion Ingram-Dawkins",
@@ -25562,7 +25680,9 @@
           "factors": [
             "Missed prior game without practice participation — awaiting Wednesday report"
           ],
-          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion)."
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+          "depthSlot": "RDE2",
+          "statLine2026": "14 tkl, 1 sk, 0 INT, 2 PD"
         },
         {
           "name": "Bo Richter",
@@ -25587,7 +25707,9 @@
           "factors": [
             "Exited prior game with injury and did not return — awaiting Wednesday practice evaluation"
           ],
-          "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps."
+          "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "depthSlot": "WLB3",
+          "statLine2026": ""
         },
         {
           "name": "Andrew Van Ginkel",
@@ -25613,7 +25735,9 @@
             "Active in prior game; day-to-day evaluation ahead of Wednesday practice (base prior 84%)",
             "Soft-tissue re-aggravation caution (Quadriceps)"
           ],
-          "archetypeNote": "Veteran starter profile (8th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance."
+          "archetypeNote": "Veteran starter profile (8th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+          "depthSlot": "WLB",
+          "statLine2026": "28 tkl, 8.5 sk, 1 INT, 1 PD"
         },
         {
           "name": "Jeshaun Jones",
@@ -25639,24 +25763,12 @@
             "Questionable tag adjusted by player career prior (76%)",
             "Manageable pain-tolerance injury profile (Shoulder)"
           ],
-          "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
+          "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+          "depthSlot": null,
+          "statLine2026": ""
         }
       ],
       "keyStartersHealthy": [
-        {
-          "name": "Blake Brandel",
-          "position": "C",
-          "unit": "Offense",
-          "jersey": 64,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3930270.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3930270/blake-brandel",
-          "snapPct": 100,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
-        },
         {
           "name": "Kirk Cousins",
           "position": "QB",
@@ -25669,49 +25781,9 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "High career pocket durability prior; rarely misses starts outside major structural injury.",
-          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
-        },
-        {
-          "name": "Will Fries",
-          "position": "G",
-          "unit": "Offense",
-          "jersey": 76,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4045176.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4045176/will-fries",
-          "snapPct": 100,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
-        },
-        {
-          "name": "Brian O'Neill",
-          "position": "OT",
-          "unit": "Offense",
-          "jersey": 75,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123954.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3123954/brian-oneill",
-          "snapPct": 100,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Veteran starter profile (9th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-          "shortComment": "1st-string Offense (100% snaps) • Off injury report."
-        },
-        {
-          "name": "Christian Darrisaw",
-          "position": "OT",
-          "unit": "Offense",
-          "jersey": 71,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361985.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4361985/christian-darrisaw",
-          "snapPct": 94,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Offense (94% snaps) • Off injury report."
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report.",
+          "depthSlot": "QB1",
+          "statLine2026": "2547 pass yds, 22 TD, 9 INT, +54 EPA; 18 rush yds, 2 TD"
         },
         {
           "name": "Justin Jefferson",
@@ -25725,21 +25797,105 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Veteran starter profile (7th NFL season, 84% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-          "shortComment": "1st-string Offense (84% snaps) • Off injury report."
+          "shortComment": "1st-string Offense (84% snaps) • Off injury report.",
+          "depthSlot": "WR1",
+          "statLine2026": "40 rec, 467 yds, 4 TD"
         },
         {
-          "name": "Eric Wilson",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 55,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3056916.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/3056916/eric-wilson",
-          "snapPct": 95,
+          "name": "Jordan Mason",
+          "position": "RB",
+          "unit": "Offense",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360569.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4360569/jordan-mason",
+          "snapPct": 48,
           "gameStatus": "Active • Off Injury Report",
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Veteran starter profile (10th NFL season, 95% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-          "shortComment": "1st-string Defense (95% snaps) • Off injury report."
+          "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+          "shortComment": "1st-string Offense (48% snaps) • Off injury report.",
+          "depthSlot": "RB1",
+          "statLine2026": "241 rush yds, 1 TD"
+        },
+        {
+          "name": "Blake Brandel",
+          "position": "C",
+          "unit": "Offense",
+          "jersey": 64,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3930270.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3930270/blake-brandel",
+          "snapPct": 100,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report.",
+          "depthSlot": "C",
+          "statLine2026": ""
+        },
+        {
+          "name": "Will Fries",
+          "position": "G",
+          "unit": "Offense",
+          "jersey": 76,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4045176.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4045176/will-fries",
+          "snapPct": 100,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report.",
+          "depthSlot": "RG",
+          "statLine2026": ""
+        },
+        {
+          "name": "Brian O'Neill",
+          "position": "OT",
+          "unit": "Offense",
+          "jersey": 75,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123954.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3123954/brian-oneill",
+          "snapPct": 100,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Veteran starter profile (9th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+          "shortComment": "1st-string Offense (100% snaps) • Off injury report.",
+          "depthSlot": "RT",
+          "statLine2026": ""
+        },
+        {
+          "name": "Christian Darrisaw",
+          "position": "OT",
+          "unit": "Offense",
+          "jersey": 71,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361985.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4361985/christian-darrisaw",
+          "snapPct": 94,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (94% snaps) • Off injury report.",
+          "depthSlot": "LT",
+          "statLine2026": ""
+        },
+        {
+          "name": "Joe Huber",
+          "position": "G",
+          "unit": "Offense",
+          "jersey": 60,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4690210.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4690210/joe-huber",
+          "snapPct": 70,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (70% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Offense (70% snaps) • Off injury report.",
+          "depthSlot": "LG",
+          "statLine2026": ""
         },
         {
           "name": "Byron Murphy Jr.",
@@ -25753,7 +25909,9 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Veteran starter profile (8th NFL season, 88% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-          "shortComment": "1st-string Defense (88% snaps) • Off injury report."
+          "shortComment": "1st-string Defense (88% snaps) • Off injury report.",
+          "depthSlot": "NB",
+          "statLine2026": "41 tkl, 0 sk, 4 INT, 7 PD"
         },
         {
           "name": "Isaiah Rodgers",
@@ -25767,7 +25925,9 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Defense (83% snaps) • Off injury report."
+          "shortComment": "1st-string Defense (83% snaps) • Off injury report.",
+          "depthSlot": "LCB",
+          "statLine2026": "29 tkl, 0 sk, 1 INT, 5 PD"
         },
         {
           "name": "Jalen Redmond",
@@ -25781,21 +25941,9 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Defense (82% snaps) • Off injury report."
-        },
-        {
-          "name": "Dallas Turner",
-          "position": "LB",
-          "unit": "Defense",
-          "jersey": 15,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565190.png",
-          "espnUrl": "https://www.espn.com/nfl/player/_/id/4565190/dallas-turner",
-          "snapPct": 82,
-          "gameStatus": "Active • Off Injury Report",
-          "playProbabilityPct": 99,
-          "playBadgeLabel": "99% • Full Go",
-          "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-          "shortComment": "1st-string Defense (82% snaps) • Off injury report."
+          "shortComment": "1st-string Defense (82% snaps) • Off injury report.",
+          "depthSlot": "RDE",
+          "statLine2026": "28 tkl, 2 sk, 0 INT, 4 PD"
         },
         {
           "name": "Levi Drake Rodriguez",
@@ -25809,7 +25957,89 @@
           "playProbabilityPct": 99,
           "playBadgeLabel": "99% • Full Go",
           "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-          "shortComment": "1st-string Defense (59% snaps) • Off injury report."
+          "shortComment": "1st-string Defense (59% snaps) • Off injury report.",
+          "depthSlot": "LDE",
+          "statLine2026": "21 tkl, 3 sk, 0 INT, 0 PD"
+        },
+        {
+          "name": "Harrison Smith",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14945.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/14945/harrison-smith",
+          "snapPct": 55,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+          "shortComment": "1st-string Defense (55% snaps) • Off injury report.",
+          "depthSlot": "FS",
+          "statLine2026": "19 tkl, 0.5 sk, 2 INT, 5 PD"
+        },
+        {
+          "name": "Joshua Metellus",
+          "position": "S",
+          "unit": "Defense",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046537.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4046537/joshua-metellus",
+          "snapPct": null,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+          "shortComment": "Listed 1st-string on depth chart; active without game designation.",
+          "depthSlot": "SS",
+          "statLine2026": ""
+        },
+        {
+          "name": "James Pierre",
+          "position": "CB",
+          "unit": "Defense",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259252.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4259252/james-pierre",
+          "snapPct": 44,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+          "shortComment": "1st-string Defense (44% snaps) • Off injury report.",
+          "depthSlot": "RCB",
+          "statLine2026": "31 tkl, 0 sk, 2 INT, 5 PD"
+        },
+        {
+          "name": "Eric Wilson",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3056916.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/3056916/eric-wilson",
+          "snapPct": 95,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Veteran starter profile (10th NFL season, 95% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+          "shortComment": "1st-string Defense (95% snaps) • Off injury report.",
+          "depthSlot": "LILB",
+          "statLine2026": "57 tkl, 4 sk, 0 INT, 1 PD"
+        },
+        {
+          "name": "Dallas Turner",
+          "position": "LB",
+          "unit": "Defense",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565190.png",
+          "espnUrl": "https://www.espn.com/nfl/player/_/id/4565190/dallas-turner",
+          "snapPct": 82,
+          "gameStatus": "Active • Off Injury Report",
+          "playProbabilityPct": 99,
+          "playBadgeLabel": "99% • Full Go",
+          "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+          "shortComment": "1st-string Defense (82% snaps) • Off injury report.",
+          "depthSlot": "SLB",
+          "statLine2026": "27 tkl, 8 sk, 0 INT, 3 PD"
         }
       ],
       "irReserve": [
@@ -25834,7 +26064,9 @@
           "byeWeekNote": "4-game NFL minimum",
           "beatNote": "Claiborne suffered a knee injury during a recent practice. While head coach Kevin O'Connell stated he doesn't believe Claiborne will require surgery, the injury is severe enough to keep him off the field for at least four games. The 23-year-old hasn't done much from a statistical standpoint throughout the 2026 campaign, amassing just 13 yards off six carries while garnering two catches for eight yards.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR"
+          "playBadgeLabel": "0% • IR",
+          "depthSlot": null,
+          "statLine2026": ""
         },
         {
           "name": "Jordan Addison",
@@ -25857,7 +26089,9 @@
           "byeWeekNote": "4-game NFL minimum",
           "beatNote": "O'Connell indicated that Addison will be a candidate for injured reserve, though if he does end up being deactivated, the Vikings anticipate that the wideout would be able to return after sitting out the minimum four games. Addison injured his thumb at Friday's practice and subsequently was inactive for Sunday's 30-10 win over Green Bay. For as long as Addison is sidelined, Jauan Jennings (calf), Myles Price and Tai Felton will be the options to see added reps behind No. 1 receiver Justin Jefferson.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR"
+          "playBadgeLabel": "0% • IR",
+          "depthSlot": "WR2",
+          "statLine2026": "18 rec, 277 yds, 1 TD"
         },
         {
           "name": "Donovan Jackson",
@@ -25880,7 +26114,9 @@
           "byeWeekNote": "4-game NFL minimum",
           "beatNote": "Jackson suffered a torn meniscus during Sunday's 15-10 win over Miami, and he was already set to miss the rest of the regular season, so Tuesday's move to the IR comes as no surprise. Joe Huber is the top candidate to take over as Minnesota's starting left guard in Jackson's absence.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR"
+          "playBadgeLabel": "0% • IR",
+          "depthSlot": "LG3",
+          "statLine2026": ""
         },
         {
           "name": "Josh Oliver",
@@ -25903,7 +26139,9 @@
           "byeWeekNote": "4-game NFL minimum",
           "beatNote": "Oliver's move to IR was expected after the tight end was diagnosed with a torn bicep Monday. The tight end will likely miss most, if not all, of the 2026 season as he recovers from surgery. T.J. Hockenson and Gavin Bartholomew are now the only tight ends on the Vikings' roster, meaning practice-squad elevations ahead of Week 4 will likely include at least one more option at the position. The Vikings signed linebacker Kyle Van Noy to the 53-man roster in a corresponding move.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR"
+          "playBadgeLabel": "0% • IR",
+          "depthSlot": null,
+          "statLine2026": ""
         },
         {
           "name": "Dwight McGlothern Jr.",
@@ -25926,7 +26164,9 @@
           "byeWeekNote": "4-game NFL minimum",
           "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR"
+          "playBadgeLabel": "0% • IR",
+          "depthSlot": null,
+          "statLine2026": ""
         },
         {
           "name": "Nick Samac",
@@ -25949,7 +26189,9 @@
           "byeWeekNote": "4-game NFL minimum",
           "beatNote": "Samac appeared on the Vikings' injury report during Week 3 prep with a new knee injury. The backup center's issue must be significant, as he was promptly moved to IR. Samac will need to miss at least four games on IR before becoming eligible to return to the Vikings' active roster.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR"
+          "playBadgeLabel": "0% • IR",
+          "depthSlot": null,
+          "statLine2026": ""
         },
         {
           "name": "Jamal Adams",
@@ -25972,7 +26214,9 @@
           "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
           "beatNote": "ir",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out for Season"
+          "playBadgeLabel": "0% • Out for Season",
+          "depthSlot": "RILB3",
+          "statLine2026": ""
         },
         {
           "name": "Tyler Batty",
@@ -25995,7 +26239,9 @@
           "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
           "beatNote": "Batty suffered a torn ACL during Friday's preseason loss to the Broncos and will now be forced to miss the upcoming season. He logged 12 tackles (nine solo) across 12 games with Minnesota last season and will now shift his focus to getting healthy for the 2027 campaign.",
           "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out for Season"
+          "playBadgeLabel": "0% • Out for Season",
+          "depthSlot": "SLB3",
+          "statLine2026": ""
         }
       ]
     },
@@ -26151,7 +26397,7 @@
       },
       {
         "phaseTag": "Blindside & Pocket Anchor",
-        "unitMatchup": "Trent Williams, Dominick Puni & Jake Brendel vs. Eric Wilson & Vikings Pass Rush",
+        "unitMatchup": "Trent Williams, Dominick Puni & Jake Brendel vs. Andrew Van Ginkel & Vikings Pass Rush",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Trent Williams",
@@ -26159,7 +26405,7 @@
           "Jake Brendel"
         ],
         "statComparison": "SF: 4.7% Sack Rate Allowed (#8) | MIN: 4.11 Sacks/Gm (#1)",
-        "tacticalDetail": "LT Trent Williams locking down the blindside solo allows C Jake Brendel and RG Dominick Puni to sustain interior combo-blocks and slide protection against Eric Wilson.",
+        "tacticalDetail": "LT Trent Williams locking down the blindside solo allows C Jake Brendel and RG Dominick Puni to sustain interior combo-blocks and slide protection against Andrew Van Ginkel.",
         "filmTell": "Watch whether SF leaves Trent Williams (#71) on a true island without TE chip help so George Kittle (#85) can release cleanly into intermediate routes."
       }
     ]

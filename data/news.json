@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T06:51:35.892Z",
+  "updatedAt": "2026-11-17T07:08:18.577Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-16_17PT",
     "cycleKey": "2026-11-16@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 11,
     "teamRecord": "8-1",
-    "generatedAt": "2026-11-17T06:51:35.787Z",
+    "generatedAt": "2026-11-17T07:08:18.488Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "pipeline-grounded",
@@ -34,11 +34,11 @@
       "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/von-miller-blames-himself-not-the-play-call-for-christian-mccaffreys-late-td",
       "https://www.espn.com/nfl/story/_/id/50502440/san-francisco-49ers-mike-evans-achilles-tendinitis-injury-recovery",
       "https://bsky.app/profile/mattbarrows.bsky.social/post/3n2hjnmuvbc2x",
+      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n2htbdnj2s2x",
+      "https://www.49ers.com/news/offense-racks-up-584-yards-mccaffrey-breaks-receiving-records-stats-and-facts-from-sfvsdal",
       "https://www.49ers.com/news/after-further-review-kyle-shanahan-shares-injury-updates-takeaways-from-cowboys-win",
       "https://www.49erswebzone.com/articles/205235-transcript-shanahan-shares-updates-conference/",
-      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n2htbdnj2s2x",
       "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2htpbvnx32d",
-      "https://www.49ers.com/news/offense-racks-up-584-yards-mccaffrey-breaks-receiving-records-stats-and-facts-from-sfvsdal",
       "https://www.49erswebzone.com/articles/205234-shanahan-shares-thoughts-facing-cousins/"
     ],
     "sources": [
@@ -115,28 +115,28 @@
         "publishedAt": "2026-11-16T22:00:16.545Z"
       },
       {
-        "type": "article",
-        "author": "49ers.com Staff",
-        "outlet": "49ers.com Official",
-        "title": "After Further Review: Kyle Shanahan Shares Injury Updates, Takeaways from Cowboys Win",
-        "url": "https://www.49ers.com/news/after-further-review-kyle-shanahan-shares-injury-updates-takeaways-from-cowboys-win",
-        "publishedAt": "2026-11-17T01:04:04.000Z"
-      },
-      {
-        "type": "article",
-        "author": "49ers Webzone",
-        "outlet": "49ers Webzone",
-        "title": "Transcript: Kyle Shanahan shares 49ers updates during Monday conference call",
-        "url": "https://www.49erswebzone.com/articles/205235-transcript-shanahan-shares-updates-conference/",
-        "publishedAt": "2026-11-17T00:58:45.000Z"
-      },
-      {
         "type": "tweet",
         "author": "Matt Barrows",
         "outlet": "The Athletic",
         "title": "49ers have Bosa and Buckner ... but they're still not getting many/any sacks ...",
         "url": "https://bsky.app/profile/mattbarrows.bsky.social/post/3n2htbdnj2s2x",
         "publishedAt": "2026-11-17T00:52:21.630Z"
+      },
+      {
+        "type": "article",
+        "author": "49ers.com Staff",
+        "outlet": "49ers.com Official",
+        "title": "Offense Racks Up 584 Yards, McCaffrey Breaks Receiving Records; Stats and Facts from",
+        "url": "https://www.49ers.com/news/offense-racks-up-584-yards-mccaffrey-breaks-receiving-records-stats-and-facts-from-sfvsdal",
+        "publishedAt": "2026-11-16T21:19:41.000Z"
+      },
+      {
+        "type": "article",
+        "author": "49ers.com Staff",
+        "outlet": "49ers.com Official",
+        "title": "After Further Review: Kyle Shanahan Shares Injury Updates, Takeaways from Cowboys Win",
+        "url": "https://www.49ers.com/news/after-further-review-kyle-shanahan-shares-injury-updates-takeaways-from-cowboys-win",
+        "publishedAt": "2026-11-17T01:04:04.000Z"
       }
     ]
   },
@@ -353,15 +353,15 @@
       ],
       "consensusVsDissent": "Beat reporting emphasizes trench health, red-zone efficiency, and clean turnover margin as the decisive Week-to-Week swing variables.",
       "videoClip": {
-        "videoId": "I7rGSrYQuOI",
-        "url": "https://www.youtube.com/watch?v=I7rGSrYQuOI",
+        "videoId": "qvztmeBT8R8",
+        "url": "https://www.youtube.com/watch?v=qvztmeBT8R8",
         "embeddable": true,
-        "title": "San Francisco 49ers vs Dallas Cowboys Game Highlights | 2026 NFL Season Week 10",
-        "channel": "MBC",
-        "duration": "15:25",
-        "thumbnailUrl": "https://i.ytimg.com/vi/I7rGSrYQuOI/hqdefault.jpg",
+        "title": "Brock Purdy vs the Cowboys Week 10, 2026 Analysis",
+        "channel": "The QB School",
+        "duration": "38:48",
+        "thumbnailUrl": "https://i.ytimg.com/vi/qvztmeBT8R8/hqdefault.jpg",
         "startSeconds": 0,
-        "timestampLabel": "San Francisco 49ers vs Dallas Cowboys Game Highlights | 2026 NFL Season Week 10"
+        "timestampLabel": "Brock Purdy vs the Cowboys Week 10, 2026 Analysis"
       }
     },
     {
@@ -575,15 +575,15 @@
       ],
       "consensusVsDissent": "Official Week 11 practice participation opens Wednesday afternoon at SAP Performance Facility.",
       "videoClip": {
-        "videoId": "qvztmeBT8R8",
-        "url": "https://www.youtube.com/watch?v=qvztmeBT8R8",
+        "videoId": "cQb4Z-KuTyw",
+        "url": "https://www.youtube.com/watch?v=cQb4Z-KuTyw",
         "embeddable": true,
-        "title": "Brock Purdy vs the Cowboys Week 10, 2026 Analysis",
-        "channel": "The QB School",
-        "duration": "38:48",
-        "thumbnailUrl": "https://i.ytimg.com/vi/qvztmeBT8R8/hqdefault.jpg",
+        "title": "JFA Podcast 352: Preview Friday - 49ers at Cowboys Matchup",
+        "channel": "Jonnydel's Football Academy",
+        "duration": "Video",
+        "thumbnailUrl": "https://i.ytimg.com/vi/cQb4Z-KuTyw/hqdefault.jpg",
         "startSeconds": 0,
-        "timestampLabel": "Brock Purdy vs the Cowboys Week 10, 2026 Analysis"
+        "timestampLabel": "JFA Podcast 352: Preview Friday - 49ers at Cowboys Matchup"
       }
     },
     {
@@ -838,7 +838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.4236
+      "storyRank": 8.4599
     },
     {
       "id": "espn_pwire_16737_64817928",
@@ -873,7 +873,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.15,
+      "breakingPriority": 1.127,
       "category": "injury",
       "signalScore": 82,
       "fluffScore": 0,
@@ -885,7 +885,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": true,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.5614
+      "storyRank": 8.2683
     },
     {
       "id": "tweet_profootballtalk_3n2i3g7uib22t",
@@ -933,7 +933,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.4771
+      "storyRank": 5.9579
     },
     {
       "id": "espn_50502440",
@@ -976,7 +976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8059
+      "storyRank": 5.3754
     },
     {
       "id": "tweet_nbcs49ers_3n2hxg5735k2v",
@@ -1015,7 +1015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.676
+      "storyRank": 4.3738
     },
     {
       "id": "tweet_nfltraderumors_3n2hx6lrkyh2c",
@@ -1063,7 +1063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5968
+      "storyRank": 4.3031
     },
     {
       "id": "nflrums_244",
@@ -1107,7 +1107,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.7298
+      "storyRank": 4.4287
     },
     {
       "id": "tweet_mattbarrows_3n2hjnmuvbc2x",
@@ -1135,7 +1135,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.504,
+      "breakingPriority": 0.495,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -1146,7 +1146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.809
+      "storyRank": 4.6379
     },
     {
       "id": "tweet_mattbarrows_3n2htbdnj2s2x",
@@ -1202,7 +1202,49 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.055
+      "storyRank": 3.8367
+    },
+    {
+      "id": "sf49_263",
+      "type": "article",
+      "title": "Offense Racks Up 584 Yards, McCaffrey Breaks Receiving Records; Stats and Facts from #SFvsDAL",
+      "summary": "Take a look at key stats from the San Francisco 49ers Week 10 matchup vs. the Dallas Cowboys.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/k9mjyceeg70bibwndz1r.jpg",
+      "imageAlt": "Offense Racks Up 584 Yards, McCaffrey Breaks Receiving Records; Stats and Facts from #SFvsDAL",
+      "mentionedPlayers": [
+        {
+          "id": "3117251",
+          "name": "Christian McCaffrey",
+          "shortName": "C. McCaffrey",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T21:19:41.000Z",
+      "url": "https://www.49ers.com/news/offense-racks-up-584-yards-mccaffrey-breaks-receiving-records-stats-and-facts-from-sfvsdal",
+      "outletId": "49ers_official",
+      "outletName": "49ers.com Official",
+      "reporterId": "49ers_news",
+      "reporterName": "49ers.com Staff",
+      "author": "49ers.com Staff",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.474,
+      "category": "film",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.9382
     },
     {
       "id": "sf49_261",
@@ -1373,94 +1415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7448
-    },
-    {
-      "id": "espn_pwire_4427325_64820228",
-      "type": "article",
-      "title": "Green (back) was unable to finish Sunday's 46-40 win over the Cowboys.",
-      "summary": "Green suffered a back injury in Week 9 against the Raiders, and although he was active for Week 10, he ultimately played a season-low 66 percent of the team's defensive snaps against Dallas. The cornerback's status at practice will be worth monitoring this week ahead of the team's Week 11 matchup with the Vikings at home.",
-      "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
-      "imageAlt": "Renardo Green beat update",
-      "mentionedPlayers": [
-        {
-          "id": "4427325",
-          "name": "Renardo Green",
-          "shortName": "R. Green",
-          "position": "CB",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png"
-        }
-      ],
-      "publishedAt": "2026-11-17T00:16:42.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4427325/renardo-green#:~:text=Green%20(back)%20was%20unable%20to%20finish%20Sunday's",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "nbcsba",
-      "outletName": "NBC Sports Bay Area",
-      "reporterId": "jennifer_lee_chan",
-      "reporterName": "Jennifer Lee Chan",
-      "author": "Jennifer Lee Chan",
-      "authorHandle": "@jenniferleechan",
-      "authorProfileUrl": "https://x.com/jenniferleechan",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 82,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.7753
-    },
-    {
-      "id": "sf49_263",
-      "type": "article",
-      "title": "Offense Racks Up 584 Yards, McCaffrey Breaks Receiving Records; Stats and Facts from #SFvsDAL",
-      "summary": "Take a look at key stats from the San Francisco 49ers Week 10 matchup vs. the Dallas Cowboys.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/k9mjyceeg70bibwndz1r.jpg",
-      "imageAlt": "Offense Racks Up 584 Yards, McCaffrey Breaks Receiving Records; Stats and Facts from #SFvsDAL",
-      "mentionedPlayers": [
-        {
-          "id": "3117251",
-          "name": "Christian McCaffrey",
-          "shortName": "C. McCaffrey",
-          "position": "RB",
-          "jersey": 23,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T21:19:41.000Z",
-      "url": "https://www.49ers.com/news/offense-racks-up-584-yards-mccaffrey-breaks-receiving-records-stats-and-facts-from-sfvsdal",
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "49ers.com Staff",
-      "author": "49ers.com Staff",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.483,
-      "category": "film",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.0742
+      "storyRank": 3.5378
     },
     {
       "id": "tweet_49erswebzone_3n2htpbvnx32d",
@@ -1524,7 +1479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6501
+      "storyRank": 3.4501
     },
     {
       "id": "wz_298",
@@ -1632,7 +1587,52 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6772
+      "storyRank": 3.4764
+    },
+    {
+      "id": "espn_pwire_4427325_64820228",
+      "type": "article",
+      "title": "Green (back) was unable to finish Sunday's 46-40 win over the Cowboys.",
+      "summary": "Green suffered a back injury in Week 9 against the Raiders, and although he was active for Week 10, he ultimately played a season-low 66 percent of the team's defensive snaps against Dallas. The cornerback's status at practice will be worth monitoring this week ahead of the team's Week 11 matchup with the Vikings at home.",
+      "imageUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
+      "imageAlt": "Renardo Green beat update",
+      "mentionedPlayers": [
+        {
+          "id": "4427325",
+          "name": "Renardo Green",
+          "shortName": "R. Green",
+          "position": "CB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png"
+        }
+      ],
+      "publishedAt": "2026-11-17T00:16:42.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4427325/renardo-green#:~:text=Green%20(back)%20was%20unable%20to%20finish%20Sunday's",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "jennifer_lee_chan",
+      "reporterName": "Jennifer Lee Chan",
+      "author": "Jennifer Lee Chan",
+      "authorHandle": "@jenniferleechan",
+      "authorProfileUrl": "https://x.com/jenniferleechan",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 82,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.5872
     },
     {
       "id": "tweet_49erswebzone_3n2hsckbsbg2l",
@@ -1671,7 +1671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3596
+      "storyRank": 3.1855
     },
     {
       "id": "wz_299",
@@ -1704,7 +1704,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3611
+      "storyRank": 3.1883
     },
     {
       "id": "tweet_49erswebzone_3n2hqmvev322d",
@@ -1743,40 +1743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0598
-    },
-    {
-      "id": "wz_300",
-      "type": "article",
-      "title": "49ers win over Cowboys exposes strengths, weaknesses, and Super Bowl potential",
-      "summary": "Sunday's win over the Dallas Cowboys was satisfying because A) it was a win over the Dallas Cowboys, and B) it put the San Francisco 49ers at 8-1, maintaining their 2.5-game lead over their division rivals, the Seattle Seahawks and Los Ange",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33120-1794873651.jpg",
-      "imageAlt": "49ers win over Cowboys exposes strengths, weaknesses, and Super Bowl potential",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-17T00:00:00.000Z",
-      "url": "https://www.49erswebzone.com/articles/205233-cowboys-exposes-strengths-weaknesses-potential/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.0499
+      "storyRank": 2.9109
     },
     {
       "id": "yt_qvztmeBT8R8",
@@ -1818,9 +1785,42 @@
       "isInGameInjury": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "breakingPriority": 0.44,
+      "breakingPriority": 0.435,
       "breakingBadge": "FILM & TRENCH",
-      "storyRank": 3.3252
+      "storyRank": 3.2567
+    },
+    {
+      "id": "wz_300",
+      "type": "article",
+      "title": "49ers win over Cowboys exposes strengths, weaknesses, and Super Bowl potential",
+      "summary": "Sunday's win over the Dallas Cowboys was satisfying because A) it was a win over the Dallas Cowboys, and B) it put the San Francisco 49ers at 8-1, maintaining their 2.5-game lead over their division rivals, the Seattle Seahawks and Los Ange",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33120-1794873651.jpg",
+      "imageAlt": "49ers win over Cowboys exposes strengths, weaknesses, and Super Bowl potential",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-17T00:00:00.000Z",
+      "url": "https://www.49erswebzone.com/articles/205233-cowboys-exposes-strengths-weaknesses-potential/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.903
     },
     {
       "id": "nn_288",
@@ -1862,7 +1862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6062
+      "storyRank": 2.483
     },
     {
       "id": "tweet_nbcs49ers_3n2hp2phqvc2z",
@@ -1918,7 +1918,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8192
+      "storyRank": 2.6894
     },
     {
       "id": "sf49_262",
@@ -1976,7 +1976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8317
+      "storyRank": 2.7021
     },
     {
       "id": "tweet_nbcs49ers_3n2ho3i4ylc2f",
@@ -2024,280 +2024,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6847
-    },
-    {
-      "id": "tweet_49erswebzone_3n2hnbmjylh2h",
-      "type": "tweet",
-      "title": "#49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start Read:",
-      "fullText": "#49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreifik53fx42lthpogxkudnazhckdq6qy7ujhvw7qabcmevap742xpu",
-      "imageAlt": "49ers Webzone social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [
-        {
-          "id": "4040605",
-          "name": "Nick Bosa",
-          "shortName": "N. Bosa",
-          "position": "DE",
-          "jersey": 97,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T15:05:02-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2hnbmjylh2h",
-      "externalUrl": "https://www.49erswebzone.com/articles/205229-49ers-shanahan-sends-clear-message/",
-      "externalTitle": "49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start",
-      "externalDescription": "49ers coach Kyle Shanahan isn't concerned about Nick Bosa's lack of sacks, explaining why the star pass rusher should improve as he gets back into form.",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5807
-    },
-    {
-      "id": "tweet_nbcs49ers_3n2hn4rl3xc22",
-      "type": "tweet",
-      "title": "\"I'm not worried about Nick.\" Kyle Shanahan is confident Nick Bosa, who remains without a sack, will return to form this season (via @mattmaiocco.bsky.social)",
-      "fullText": "\"I'm not worried about Nick.\" Kyle Shanahan is confident Nick Bosa, who remains without a sack, will return to form this season (via @mattmaiocco.bsky.social)",
-      "isFullTweet": true,
-      "summary": "Why Nick Bosa’s sack-less season, uneventful injury return doesn’t worry 49ers coach Kyle Shanahan",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:oovjmbx2gv3o4tolrzuegtl2/bafkreid26lqsxfhmr2cxnwqmkoprt2g65ptntj66vfpstsquocd2yyxtei",
-      "imageAlt": "49ers on NBCSBA social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [
-        {
-          "id": "4040605",
-          "name": "Nick Bosa",
-          "shortName": "N. Bosa",
-          "position": "DE",
-          "jersey": 97,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T23:02:26.008Z",
-      "url": "https://bsky.app/profile/nbcs49ers.bsky.social/post/3n2hn4rl3xc22",
-      "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-sack-injury-kyle-shanahan/1980800/",
-      "externalTitle": "Why Nick Bosa’s sack-less season, uneventful injury return doesn’t worry 49ers coach Kyle Shanahan",
-      "externalDescription": "San Francisco 49ers coach Kyle Shanahan is confident that it's only a matter of time before star defensive end Nick Bosa returns to form.",
-      "outletId": "nbcsba",
-      "outletName": "NBC Sports Bay Area",
-      "reporterId": null,
-      "reporterName": "49ers on NBCSBA",
-      "author": "49ers on NBCSBA",
-      "authorHandle": "@NBCS49ers",
-      "authorProfileUrl": "https://x.com/NBCS49ers",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5629
-    },
-    {
-      "id": "wz_301",
-      "type": "article",
-      "title": "49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start",
-      "summary": "San Francisco 49ers defensive end Nick Bosa didn't record a sack or even a tackle in Sunday's 46-40 win over the Dallas Cowboys. In fact, Bosa has yet to record a sack this season, prompting concern among fans...",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33119-1794870180.jpg",
-      "imageAlt": "49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start",
-      "mentionedPlayers": [
-        {
-          "id": "4040605",
-          "name": "Nick Bosa",
-          "shortName": "N. Bosa",
-          "position": "DE",
-          "jersey": 97,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T23:02:00.000Z",
-      "url": "https://www.49erswebzone.com/articles/205229-49ers-shanahan-sends-clear-message/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5904
-    },
-    {
-      "id": "x_status_2122449638322045195",
-      "type": "tweet",
-      "title": "Moving on up 📈 @SAP | #FTTB",
-      "fullText": "Moving on up 📈 @SAP | #FTTB",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HXRndonaQAAfqqC.jpg",
-      "imageAlt": "San Francisco 49ers Official social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-16T22:00:01.640Z",
-      "url": "https://x.com/49ers/status/2122449638322045195",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 1,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.8045
-    },
-    {
-      "id": "x_status_2122447135551770963",
-      "type": "tweet",
-      "title": "#49ers CB Renardo Green’s back injury is still the only one on the report today out of Sunday’s game, per Kyle Shanahan. Green is again day to day this week.",
-      "fullText": "#49ers CB Renardo Green’s back injury is still the only one on the report today out of Sunday’s game, per Kyle Shanahan. Green is again day to day this week.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Nick Wagoner social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [
-        {
-          "id": "4427325",
-          "name": "Renardo Green",
-          "shortName": "R. Green",
-          "position": "CB",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T21:50:04.933Z",
-      "url": "https://x.com/nwagoner/status/2122447135551770963",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "espn",
-      "outletName": "ESPN 49ers Beat",
-      "reporterId": "nick_wagoner",
-      "reporterName": "Nick Wagoner",
-      "author": "Nick Wagoner",
-      "authorHandle": "@nwagoner",
-      "authorProfileUrl": "https://x.com/nwagoner",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 1,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.7394
-    },
-    {
-      "id": "tweet_jenniferleechan_3n2hk7dncis2b",
-      "type": "tweet",
-      "title": "#49ers WR Mike Evans is flying to Colorado Springs tonight to be with the team - Shanahan hopes to get him back in practice this week.",
-      "fullText": "#49ers WR Mike Evans is flying to Colorado Springs tonight to be with the team - Shanahan hopes to get him back in practice this week.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jennifer Lee Chan social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [
-        {
-          "id": "16737",
-          "name": "Mike Evans",
-          "shortName": "M. Evans",
-          "position": "WR",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T22:10:10.839Z",
-      "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2hk7dncis2b",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "nbcsba",
-      "outletName": "NBC Sports Bay Area",
-      "reporterId": "jennifer_lee_chan",
-      "reporterName": "Jennifer Lee Chan",
-      "author": "Jennifer Lee Chan",
-      "authorHandle": "@jenniferleechan",
-      "authorProfileUrl": "https://x.com/jenniferleechan",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 1,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5591
+      "storyRank": 2.5652
     },
     {
       "id": "tweet_mattmaiocco_3n2gzwplnwc2o",
@@ -2414,7 +2141,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.375,
+      "breakingPriority": 0.368,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -2425,35 +2152,196 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9089
+      "storyRank": 2.8379
     },
     {
-      "id": "tweet_jenniferleechan_3n2hjxjz2i22b",
+      "id": "tweet_49erswebzone_3n2hnbmjylh2h",
       "type": "tweet",
-      "title": "#49ers CB Renardo Green, who was unable to finish the game w/his back injury, was the only reported injury from Kyle Shanahan. Shanahan believed that Green and Deommodore Lenoir (foot) gave the team the best chance to win. Activating Nate Hobbs would mean a roster move",
-      "fullText": "#49ers CB Renardo Green, who was unable to finish the game w/his back injury, was the only reported injury from Kyle Shanahan. Shanahan believed that Green and Deommodore Lenoir (foot) gave the team the best chance to win. Activating Nate Hobbs would mean a roster move",
+      "title": "#49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start Read:",
+      "fullText": "#49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start Read:",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jennifer Lee Chan social post",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreifik53fx42lthpogxkudnazhckdq6qy7ujhvw7qabcmevap742xpu",
+      "imageAlt": "49ers Webzone social post",
       "isHighlightClip": false,
       "mentionedPlayers": [
         {
-          "id": "4242488",
-          "name": "Deommodore Lenoir",
-          "shortName": "D. Lenoir",
-          "position": "CB",
-          "jersey": 2,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png"
-        },
+          "id": "4040605",
+          "name": "Nick Bosa",
+          "shortName": "N. Bosa",
+          "position": "DE",
+          "jersey": 97,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T15:05:02-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2hnbmjylh2h",
+      "externalUrl": "https://www.49erswebzone.com/articles/205229-49ers-shanahan-sends-clear-message/",
+      "externalTitle": "49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start",
+      "externalDescription": "49ers coach Kyle Shanahan isn't concerned about Nick Bosa's lack of sacks, explaining why the star pass rusher should improve as he gets back into form.",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.4688
+    },
+    {
+      "id": "tweet_nbcs49ers_3n2hn4rl3xc22",
+      "type": "tweet",
+      "title": "\"I'm not worried about Nick.\" Kyle Shanahan is confident Nick Bosa, who remains without a sack, will return to form this season (via @mattmaiocco.bsky.social)",
+      "fullText": "\"I'm not worried about Nick.\" Kyle Shanahan is confident Nick Bosa, who remains without a sack, will return to form this season (via @mattmaiocco.bsky.social)",
+      "isFullTweet": true,
+      "summary": "Why Nick Bosa’s sack-less season, uneventful injury return doesn’t worry 49ers coach Kyle Shanahan",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:oovjmbx2gv3o4tolrzuegtl2/bafkreid26lqsxfhmr2cxnwqmkoprt2g65ptntj66vfpstsquocd2yyxtei",
+      "imageAlt": "49ers on NBCSBA social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [
         {
-          "id": "4240542",
-          "name": "Nate Hobbs",
-          "shortName": "N. Hobbs",
-          "position": "CB",
-          "jersey": 22,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png"
-        },
+          "id": "4040605",
+          "name": "Nick Bosa",
+          "shortName": "N. Bosa",
+          "position": "DE",
+          "jersey": 97,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T23:02:26.008Z",
+      "url": "https://bsky.app/profile/nbcs49ers.bsky.social/post/3n2hn4rl3xc22",
+      "externalUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-sack-injury-kyle-shanahan/1980800/",
+      "externalTitle": "Why Nick Bosa’s sack-less season, uneventful injury return doesn’t worry 49ers coach Kyle Shanahan",
+      "externalDescription": "San Francisco 49ers coach Kyle Shanahan is confident that it's only a matter of time before star defensive end Nick Bosa returns to form.",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": null,
+      "reporterName": "49ers on NBCSBA",
+      "author": "49ers on NBCSBA",
+      "authorHandle": "@NBCS49ers",
+      "authorProfileUrl": "https://x.com/NBCS49ers",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.4523
+    },
+    {
+      "id": "wz_301",
+      "type": "article",
+      "title": "49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start",
+      "summary": "San Francisco 49ers defensive end Nick Bosa didn't record a sack or even a tackle in Sunday's 46-40 win over the Dallas Cowboys. In fact, Bosa has yet to record a sack this season, prompting concern among fans...",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/leadstory-560x0-33119-1794870180.jpg",
+      "imageAlt": "49ers' Kyle Shanahan sends clear message about Nick Bosa amid slow start",
+      "mentionedPlayers": [
+        {
+          "id": "4040605",
+          "name": "Nick Bosa",
+          "shortName": "N. Bosa",
+          "position": "DE",
+          "jersey": 97,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T23:02:00.000Z",
+      "url": "https://www.49erswebzone.com/articles/205229-49ers-shanahan-sends-clear-message/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.4787
+    },
+    {
+      "id": "x_status_2122449638322045195",
+      "type": "tweet",
+      "title": "Moving on up 📈 @SAP | #FTTB",
+      "fullText": "Moving on up 📈 @SAP | #FTTB",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HXRndonaQAAfqqC.jpg",
+      "imageAlt": "San Francisco 49ers Official social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-16T22:00:01.640Z",
+      "url": "https://x.com/49ers/status/2122449638322045195",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "49ers_official",
+      "outletName": "49ers.com Official",
+      "reporterId": "49ers_news",
+      "reporterName": "San Francisco 49ers Official",
+      "author": "San Francisco 49ers Official",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://x.com/49ers",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.6957
+    },
+    {
+      "id": "x_status_2122447135551770963",
+      "type": "tweet",
+      "title": "#49ers CB Renardo Green’s back injury is still the only one on the report today out of Sunday’s game, per Kyle Shanahan. Green is again day to day this week.",
+      "fullText": "#49ers CB Renardo Green’s back injury is still the only one on the report today out of Sunday’s game, per Kyle Shanahan. Green is again day to day this week.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Nick Wagoner social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [
         {
           "id": "4427325",
           "name": "Renardo Green",
@@ -2463,8 +2351,56 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png"
         }
       ],
-      "publishedAt": "2026-11-16T22:05:49.081Z",
-      "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2hjxjz2i22b",
+      "publishedAt": "2026-11-16T21:50:04.933Z",
+      "url": "https://x.com/nwagoner/status/2122447135551770963",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "espn",
+      "outletName": "ESPN 49ers Beat",
+      "reporterId": "nick_wagoner",
+      "reporterName": "Nick Wagoner",
+      "author": "Nick Wagoner",
+      "authorHandle": "@nwagoner",
+      "authorProfileUrl": "https://x.com/nwagoner",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.6348
+    },
+    {
+      "id": "tweet_jenniferleechan_3n2hk7dncis2b",
+      "type": "tweet",
+      "title": "#49ers WR Mike Evans is flying to Colorado Springs tonight to be with the team - Shanahan hopes to get him back in practice this week.",
+      "fullText": "#49ers WR Mike Evans is flying to Colorado Springs tonight to be with the team - Shanahan hopes to get him back in practice this week.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jennifer Lee Chan social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [
+        {
+          "id": "16737",
+          "name": "Mike Evans",
+          "shortName": "M. Evans",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T22:10:10.839Z",
+      "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2hk7dncis2b",
       "externalUrl": null,
       "externalTitle": null,
       "externalDescription": null,
@@ -2479,7 +2415,7 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "injury",
       "signalScore": 78,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2489,7 +2425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5323
+      "storyRank": 2.4582
     },
     {
       "id": "tweet_mattmaiocco_3n2gzerhbvs2o",
@@ -2582,7 +2518,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.371,
+      "breakingPriority": 0.365,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -2593,7 +2529,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8662
+      "storyRank": 2.797
+    },
+    {
+      "id": "tweet_jenniferleechan_3n2hjxjz2i22b",
+      "type": "tweet",
+      "title": "#49ers CB Renardo Green, who was unable to finish the game w/his back injury, was the only reported injury from Kyle Shanahan. Shanahan believed that Green and Deommodore Lenoir (foot) gave the team the best chance to win. Activating Nate Hobbs would mean a roster move",
+      "fullText": "#49ers CB Renardo Green, who was unable to finish the game w/his back injury, was the only reported injury from Kyle Shanahan. Shanahan believed that Green and Deommodore Lenoir (foot) gave the team the best chance to win. Activating Nate Hobbs would mean a roster move",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jennifer Lee Chan social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [
+        {
+          "id": "4242488",
+          "name": "Deommodore Lenoir",
+          "shortName": "D. Lenoir",
+          "position": "CB",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242488.png"
+        },
+        {
+          "id": "4240542",
+          "name": "Nate Hobbs",
+          "shortName": "N. Hobbs",
+          "position": "CB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png"
+        },
+        {
+          "id": "4427325",
+          "name": "Renardo Green",
+          "shortName": "R. Green",
+          "position": "CB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T22:05:49.081Z",
+      "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2hjxjz2i22b",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "jennifer_lee_chan",
+      "reporterName": "Jennifer Lee Chan",
+      "author": "Jennifer Lee Chan",
+      "authorHandle": "@jenniferleechan",
+      "authorProfileUrl": "https://x.com/jenniferleechan",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.4332
     },
     {
       "id": "tweet_mattmaiocco_3n2gz2i7yys2o",
@@ -2694,7 +2694,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.369,
+      "breakingPriority": 0.362,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -2705,7 +2705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8422
+      "storyRank": 2.774
     },
     {
       "id": "tweet_timkawakami_3n2hli35glk2g",
@@ -2744,7 +2744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3745
+      "storyRank": 2.2772
     },
     {
       "id": "tweet_timkawakami_3n2hl6hd6lc2g",
@@ -2792,7 +2792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3426
+      "storyRank": 2.2475
     },
     {
       "id": "tweet_49erswebzone_3n2hl23breg2h",
@@ -2856,7 +2856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3278
+      "storyRank": 2.2337
     },
     {
       "id": "tweet_mattbarrows_3n2hj744wwc2x",
@@ -2904,7 +2904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4513
+      "storyRank": 2.3574
     },
     {
       "id": "x_status_2122447687304073705",
@@ -2952,7 +2952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.452
+      "storyRank": 2.3581
     },
     {
       "id": "wz_302",
@@ -3041,7 +3041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3264
+      "storyRank": 2.2331
     },
     {
       "id": "yt_dsgfOdzDXxU",
@@ -3074,9 +3074,9 @@
       "isInGameInjury": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "breakingPriority": 0.36,
+      "breakingPriority": 0.354,
       "breakingBadge": "FILM & TRENCH",
-      "storyRank": 2.4573
+      "storyRank": 2.3997
     },
     {
       "id": "nn_289",
@@ -3121,7 +3121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9084
+      "storyRank": 1.8343
     },
     {
       "id": "sfstd_281",
@@ -3163,7 +3163,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2446
+      "storyRank": 2.1574
     },
     {
       "id": "tweet_mattbarrows_3n2guhenanc25",
@@ -3191,7 +3191,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.338,
+      "breakingPriority": 0.332,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -3202,7 +3202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5344
+      "storyRank": 2.4787
     },
     {
       "id": "tweet_49erswebzone_3n2hijn2qzl26",
@@ -3241,7 +3241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0901
+      "storyRank": 2.0116
     },
     {
       "id": "wz_303",
@@ -3274,7 +3274,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1051
+      "storyRank": 2.0263
     },
     {
       "id": "tweet_nbcs49ers_3n2hhn2bpys2f",
@@ -3313,7 +3313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0159
+      "storyRank": 1.942
     },
     {
       "id": "tweet_nbcsportsbayarea_3n2hez4qvic2f",
@@ -3352,7 +3352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8209
+      "storyRank": 1.7586
     },
     {
       "id": "tweet_nbcs49ers_3n2hed3b6n22f",
@@ -3391,7 +3391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7749
+      "storyRank": 1.7153
     },
     {
       "id": "tweet_jenniferleechan_3n2gl2wowys2b",
@@ -3476,7 +3476,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.284,
+      "breakingPriority": 0.279,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -3487,7 +3487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0612
+      "storyRank": 2.0224
     },
     {
       "id": "tweet_49erswebzone_3n2fh5hzbqc2y",
@@ -3524,7 +3524,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.269,
+      "breakingPriority": 0.263,
       "category": "injury",
       "signalScore": 78,
       "fluffScore": 0,
@@ -3535,7 +3535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": true,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0097
+      "storyRank": 1.9864
     },
     {
       "id": "wz_hub_313",
@@ -3566,7 +3566,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.268,
+      "breakingPriority": 0.263,
       "category": "injury",
       "signalScore": 75,
       "fluffScore": 0,
@@ -3580,7 +3580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": true,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0281
+      "storyRank": 2.0047
     },
     {
       "id": "nn_290",
@@ -3686,7 +3686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5592
+      "storyRank": 1.5064
     },
     {
       "id": "tweet_49erswebzone_3n2hbt2jyx22p",
@@ -3734,7 +3734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6233
+      "storyRank": 1.572
     },
     {
       "id": "wz_304",
@@ -3776,7 +3776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6293
+      "storyRank": 1.5781
     },
     {
       "id": "x_status_2122399232313426222",
@@ -3815,7 +3815,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1916
+      "storyRank": 1.1567
     },
     {
       "id": "tweet_nbcs49ers_3n2ha2dxyos2q",
@@ -3863,7 +3863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5292
+      "storyRank": 1.4828
     },
     {
       "id": "nn_291",
@@ -4025,7 +4025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3112
+      "storyRank": 1.2718
     },
     {
       "id": "tweet_timkawakami_3n2h5hkzzx22m",
@@ -4073,7 +4073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4072
+      "storyRank": 1.3668
     },
     {
       "id": "tweet_49erswebzone_3n2h533finj2o",
@@ -4129,7 +4129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.39
+      "storyRank": 1.3505
     },
     {
       "id": "wz_305",
@@ -4187,7 +4187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3995
+      "storyRank": 1.3599
     },
     {
       "id": "sf49_264",
@@ -4229,7 +4229,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3914
+      "storyRank": 1.3521
+    },
+    {
+      "id": "wz_hub_306",
+      "type": "article",
+      "title": "49ers vs. Cowboys PFF grades: Best and worst from the game, plus snap counts",
+      "summary": "The 49ers beat the Cowboys 46-40. See the top and lowest PFF grades, standout performances, biggest struggles, and complete Week 10 snap counts.",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-bacadbeacfd499cbafb3ef68fe156530.jpg",
+      "imageAlt": "49ers vs. Cowboys PFF grades: Best and worst from the game, plus snap counts",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-16T18:08:00.216Z",
+      "url": "https://www.49erswebzone.com/articles/205211-49ers-cowboys-grades-worst-counts/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "David Bonilla",
+      "author": "David Bonilla",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 75,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.3658
     },
     {
       "id": "sfstd_282",
@@ -4262,7 +4295,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3863
+      "storyRank": 1.3477
     },
     {
       "id": "tweet_nbcs49ers_3n2h3yboefk2f",
@@ -4301,40 +4334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3447
-    },
-    {
-      "id": "wz_hub_306",
-      "type": "article",
-      "title": "49ers vs. Cowboys PFF grades: Best and worst from the game, plus snap counts",
-      "summary": "The 49ers beat the Cowboys 46-40. See the top and lowest PFF grades, standout performances, biggest struggles, and complete Week 10 snap counts.",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-bacadbeacfd499cbafb3ef68fe156530.jpg",
-      "imageAlt": "49ers vs. Cowboys PFF grades: Best and worst from the game, plus snap counts",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-16T17:51:10.250Z",
-      "url": "https://www.49erswebzone.com/articles/205211-49ers-cowboys-grades-worst-counts/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "David Bonilla",
-      "author": "David Bonilla",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 75,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.3658
+      "storyRank": 1.3073
     },
     {
       "id": "tweet_49erswebzone_3n2h34jcyku27",
@@ -4373,7 +4373,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.31
+      "storyRank": 1.2742
     },
     {
       "id": "tweet_mattmaiocco_3n2gzycugsk2o",
@@ -4525,7 +4525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4451
+      "storyRank": 1.4066
     },
     {
       "id": "tweet_mattmaiocco_3n2gzxckfws2o",
@@ -4661,7 +4661,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4438
+      "storyRank": 1.4053
     },
     {
       "id": "tweet_mattmaiocco_3n2gzfnk5lc2o",
@@ -4789,7 +4789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.421
+      "storyRank": 1.3835
     },
     {
       "id": "tweet_mattmaiocco_3n2gz3fopyk2o",
@@ -4893,7 +4893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.408
+      "storyRank": 1.3712
     },
     {
       "id": "tweet_mattmaiocco_3n2gytnahs22o",
@@ -4973,7 +4973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3984
+      "storyRank": 1.3619
     },
     {
       "id": "x_status_2122351630251155804",
@@ -5021,7 +5021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3732
+      "storyRank": 1.3405
     },
     {
       "id": "tweet_adamscheftermirror_3n2hrs3pww32t",
@@ -5060,7 +5060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9303
+      "storyRank": 0.883
     },
     {
       "id": "nn_292",
@@ -5283,7 +5283,65 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1389
+      "storyRank": 1.1078
+    },
+    {
+      "id": "wz_hub_307",
+      "type": "article",
+      "title": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
+      "summary": "The 49ers piled up historic numbers in a 46-40 win over the Cowboys. Brock Purdy, Christian McCaffrey and Deebo Samuel led a record-setting offensive show.",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-b7a73d917305e9dc60dee0491302608d.jpg",
+      "imageAlt": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        },
+        {
+          "id": "3117251",
+          "name": "Christian McCaffrey",
+          "shortName": "C. McCaffrey",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png"
+        },
+        {
+          "id": "3126486",
+          "name": "Deebo Samuel Sr.",
+          "shortName": "D. Samuel Sr.",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T16:08:00.216Z",
+      "url": "https://www.49erswebzone.com/articles/205209-nfl-history-cowboys-mccaffrey-deliver/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "Site Staff",
+      "author": "Site Staff",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 75,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1311
     },
     {
       "id": "nn_293",
@@ -5416,65 +5474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9747
-    },
-    {
-      "id": "wz_hub_307",
-      "type": "article",
-      "title": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
-      "summary": "The 49ers piled up historic numbers in a 46-40 win over the Cowboys. Brock Purdy, Christian McCaffrey and Deebo Samuel led a record-setting offensive show.",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-b7a73d917305e9dc60dee0491302608d.jpg",
-      "imageAlt": "49ers make NFL history in wild win over Cowboys as Purdy and McCaffrey deliver",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        },
-        {
-          "id": "3117251",
-          "name": "Christian McCaffrey",
-          "shortName": "C. McCaffrey",
-          "position": "RB",
-          "jersey": 23,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png"
-        },
-        {
-          "id": "3126486",
-          "name": "Deebo Samuel Sr.",
-          "shortName": "D. Samuel Sr.",
-          "position": "WR",
-          "jersey": 19,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126486.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T15:51:10.250Z",
-      "url": "https://www.49erswebzone.com/articles/205209-nfl-history-cowboys-mccaffrey-deliver/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "Site Staff",
-      "author": "Site Staff",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 75,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1311
+      "storyRank": 0.9508
     },
     {
       "id": "tweet_49erswebzone_3n2guxrbrox2t",
@@ -5538,7 +5538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1033
+      "storyRank": 1.0765
     },
     {
       "id": "tweet_timkawakami_3n2gtcyaqpc2a",
@@ -5586,7 +5586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0572
+      "storyRank": 1.0324
     },
     {
       "id": "sf49_265",
@@ -5628,7 +5628,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.051
+      "storyRank": 1.0266
     },
     {
       "id": "tweet_jenniferleechan_3n2griordrk2b",
@@ -5667,7 +5667,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9285
+      "storyRank": 0.9074
     },
     {
       "id": "tweet_victafur_3n2grppgsbk2b",
@@ -5706,7 +5706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0155
+      "storyRank": 0.9922
     },
     {
       "id": "nn_294",
@@ -5796,7 +5796,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8945
+      "storyRank": 0.8745
     },
     {
       "id": "tweet_jenniferleechan_3n2gkvkrnyc2b",
@@ -5876,7 +5876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9868
+      "storyRank": 0.9666
     },
     {
       "id": "tweet_timkawakami_3n2fpv762ms24",
@@ -5913,7 +5913,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.17,
+      "breakingPriority": 0.167,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -5924,46 +5924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1906
-    },
-    {
-      "id": "tweet_jenniferleechan_3n2f73fr6vc2b",
-      "type": "tweet",
-      "title": "#49ers are averaging 9.3 yards per play They have 436 total yards while Dallas has 240 yards",
-      "fullText": "#49ers are averaging 9.3 yards per play They have 436 total yards while Dallas has 240 yards",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jennifer Lee Chan social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-15T23:45:48.209Z",
-      "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2f73fr6vc2b",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "nbcsba",
-      "outletName": "NBC Sports Bay Area",
-      "reporterId": "jennifer_lee_chan",
-      "reporterName": "Jennifer Lee Chan",
-      "author": "Jennifer Lee Chan",
-      "authorHandle": "@jenniferleechan",
-      "authorProfileUrl": "https://x.com/jenniferleechan",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.124,
-      "category": "film",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 1,
-      "credibilityScore": 95,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0431
+      "storyRank": 1.1748
     },
     {
       "id": "espn_50491464",
@@ -5996,7 +5957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5832
+      "storyRank": 0.5706
     },
     {
       "id": "nn_295",
@@ -6085,7 +6046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6182
+      "storyRank": 0.6071
     },
     {
       "id": "yt_bqEz0JMZhOA",
@@ -6094,7 +6055,7 @@
       "summary": "Video (18:01) • NFL • 1d ago",
       "imageUrl": "https://i.ytimg.com/vi/bqEz0JMZhOA/hqdefault.jpg",
       "mentionedPlayers": [],
-      "publishedAt": "2026-11-16T06:51:10.597Z",
+      "publishedAt": "2026-11-16T07:08:00.587Z",
       "url": "https://www.youtube.com/watch?v=bqEz0JMZhOA",
       "videoId": "bqEz0JMZhOA",
       "embeddable": false,
@@ -6121,6 +6082,45 @@
       "breakingPriority": 0,
       "breakingBadge": null,
       "storyRank": 0.6818
+    },
+    {
+      "id": "tweet_jenniferleechan_3n2f73fr6vc2b",
+      "type": "tweet",
+      "title": "#49ers are averaging 9.3 yards per play They have 436 total yards while Dallas has 240 yards",
+      "fullText": "#49ers are averaging 9.3 yards per play They have 436 total yards while Dallas has 240 yards",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jennifer Lee Chan social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-15T23:45:48.209Z",
+      "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2f73fr6vc2b",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "jennifer_lee_chan",
+      "reporterName": "Jennifer Lee Chan",
+      "author": "Jennifer Lee Chan",
+      "authorHandle": "@jenniferleechan",
+      "authorProfileUrl": "https://x.com/jenniferleechan",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.122,
+      "category": "film",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 1,
+      "credibilityScore": 95,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0314
     },
     {
       "id": "tweet_49erswebzone_3n2fukmwjlp2h",
@@ -6176,7 +6176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5658
+      "storyRank": 0.5572
     },
     {
       "id": "wz_hub_308",
@@ -6234,7 +6234,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5764
+      "storyRank": 0.5676
     },
     {
       "id": "espn_50498373",
@@ -6292,7 +6292,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5508
+      "storyRank": 0.5426
     },
     {
       "id": "sfstd_283",
@@ -6342,7 +6342,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.627
+      "storyRank": 0.6177
     },
     {
       "id": "tweet_victafur_3n2freunt4k2q",
@@ -6390,7 +6390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5375
+      "storyRank": 0.5296
     },
     {
       "id": "tweet_nbcs49ers_3n2fp4uonlk2v",
@@ -6438,7 +6438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5189
+      "storyRank": 0.5115
     },
     {
       "id": "tweet_nbcs49ers_3n2fosv7wn22t",
@@ -6477,7 +6477,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5164
+      "storyRank": 0.509
     },
     {
       "id": "yt_OVmXe4Trg6k",
@@ -6553,7 +6553,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.585
+      "storyRank": 0.5767
     },
     {
       "id": "sfstd_284",
@@ -6586,7 +6586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5222
+      "storyRank": 0.5148
     },
     {
       "id": "tweet_49erswebzone_3n2fnu2rkc42y",
@@ -6634,7 +6634,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5088
+      "storyRank": 0.5016
     },
     {
       "id": "tweet_nbcs49ers_3n2fntsem622b",
@@ -6682,7 +6682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5088
+      "storyRank": 0.5016
     },
     {
       "id": "wz_hub_309",
@@ -6724,7 +6724,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5194
+      "storyRank": 0.5121
     },
     {
       "id": "x_status_2122171415054983674",
@@ -6775,40 +6775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6322
-    },
-    {
-      "id": "espn_50498212",
-      "type": "article",
-      "title": "49ers defense left frustrated after win over Cowboys",
-      "summary": "Nick Wagoner discusses the poor play from the 49ers defense in their 46-40 win over the Cowboys.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1115/dm_261115_Niners_beat_Cowboys_IA/dm_261115_Niners_beat_Cowboys_IA.jpg",
-      "imageAlt": "Nick Wagoner discusses the poor play from the 49ers defense in their 46-40 win over the Cowboys.",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-16T03:56:45Z",
-      "url": "https://www.espn.com/video/clip/_/id/50498212/49ers-defense-left-frustrated-win-cowboys",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": null,
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 40,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.447
+      "storyRank": 0.6234
     },
     {
       "id": "tweet_nbcs49ers_3n2fmucalu22y",
@@ -6847,203 +6814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5012
-    },
-    {
-      "id": "tweet_49erswebzone_3n2fm6hbjby2d",
-      "type": "tweet",
-      "title": "WR Keenan Allen shines in San Francisco #49ers debut, adding to exciting potential of team's offense Read:",
-      "fullText": "WR Keenan Allen shines in San Francisco #49ers debut, adding to exciting potential of team's offense Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigkbavmfedpyrdspzgzkzka2iglgztptkoxx54dbvk4r25tv7p24q",
-      "imageAlt": "49ers Webzone social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        },
-        {
-          "id": "15818",
-          "name": "Keenan Allen",
-          "shortName": "K. Allen",
-          "position": "WR",
-          "jersey": 3,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
-        }
-      ],
-      "publishedAt": "2026-11-15T19:40:04-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2fm6hbjby2d",
-      "externalUrl": "https://www.49erswebzone.com/articles/205192-san-francisco-exciting-potential-offense/",
-      "externalTitle": "WR Keenan Allen shines in San Francisco 49ers debut, adding to exciting potential of team's offense",
-      "externalDescription": "Keenan Allen made an immediate impact in his 49ers debut, giving Brock Purdy another weapon and adding to the excitement surrounding San Francisco's offense.",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.4961
-    },
-    {
-      "id": "tweet_49erswebzone_3n2fm6fsnge2i",
-      "type": "tweet",
-      "title": "#49ers, Dak Prescott react to Niner takeover of Cowboys' stadium Read:",
-      "fullText": "#49ers, Dak Prescott react to Niner takeover of Cowboys' stadium Read:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigiaxvx6veclrsjlzpj7xcf2y3ec327g4fs6tr7oivil4lyzc72lq",
-      "imageAlt": "49ers Webzone social post",
-      "isHighlightClip": false,
-      "mentionedPlayers": [
-        {
-          "id": "15818",
-          "name": "Keenan Allen",
-          "shortName": "K. Allen",
-          "position": "WR",
-          "jersey": 3,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
-        }
-      ],
-      "publishedAt": "2026-11-15T19:40:02-08:00",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2fm6fsnge2i",
-      "externalUrl": "https://www.49erswebzone.com/articles/205191-49ers-prescott-takeover-cowboys-stadium/",
-      "externalTitle": "49ers, Dak Prescott react to Niner takeover of Cowboys' stadium",
-      "externalDescription": "49ers fans turned AT&T Stadium into a home game in Dallas. Kyle Shanahan, Dak Prescott, and Keenan Allen reacted to the impressive showing.",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 78,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.4961
-    },
-    {
-      "id": "wz_hub_310",
-      "type": "article",
-      "title": "Keenan Allen shines in 49ers debut, adding to exciting potential of team's offense",
-      "summary": "Keenan Allen made an immediate impact in his 49ers debut, giving Brock Purdy another weapon and adding to the excitement surrounding San Francisco's offense.",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-3f3fa1e7a86916666b77463bc74204fc.jpg",
-      "imageAlt": "Keenan Allen shines in 49ers debut, adding to exciting potential of team's offense",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        },
-        {
-          "id": "15818",
-          "name": "Keenan Allen",
-          "shortName": "K. Allen",
-          "position": "WR",
-          "jersey": 3,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T03:36:00.000Z",
-      "url": "https://www.49erswebzone.com/articles/205192-san-francisco-exciting-potential-offense/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "Kirk Larrabee",
-      "author": "Kirk Larrabee",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 75,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.506
-    },
-    {
-      "id": "wz_hub_311",
-      "type": "article",
-      "title": "49ers, Dak Prescott react to Niner takeover of Cowboys' stadium",
-      "summary": "49ers fans turned AT&T Stadium into a home game in Dallas. Kyle Shanahan, Dak Prescott, and Keenan Allen reacted to the impressive showing.",
-      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-d7a20984dc186965c7654e988beddcb0.jpg",
-      "imageAlt": "49ers, Dak Prescott react to Niner takeover of Cowboys' stadium",
-      "mentionedPlayers": [
-        {
-          "id": "15818",
-          "name": "Keenan Allen",
-          "shortName": "K. Allen",
-          "position": "WR",
-          "jersey": 3,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
-        }
-      ],
-      "publishedAt": "2026-11-16T03:36:00.000Z",
-      "url": "https://www.49erswebzone.com/articles/205191-49ers-prescott-takeover-cowboys-stadium/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": null,
-      "reporterName": "David Bonilla",
-      "author": "David Bonilla",
-      "authorHandle": "@49erswebzone",
-      "authorProfileUrl": "https://x.com/49erswebzone",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 75,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "trustTier": 2,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.506
+      "storyRank": 0.4942
     },
     {
       "id": "x_status_2122154844400325009",
@@ -7094,7 +6865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5334
+      "storyRank": 0.5263
     },
     {
       "id": "x_status_2122145546131411293",
@@ -7145,7 +6916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.518
+      "storyRank": 0.5112
     },
     {
       "id": "x_status_2122145387008213315",
@@ -7204,7 +6975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5177
+      "storyRank": 0.511
     },
     {
       "id": "x_status_2122141448703512709",
@@ -7243,7 +7014,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5114
+      "storyRank": 0.5048
     },
     {
       "id": "x_status_2122138806040285415",
@@ -7294,7 +7065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5073
+      "storyRank": 0.5007
     },
     {
       "id": "x_status_2122137876498416100",
@@ -7353,7 +7124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5058
+      "storyRank": 0.4993
     },
     {
       "id": "x_status_2122132777265185138",
@@ -7395,7 +7166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.498
+      "storyRank": 0.4916
     },
     {
       "id": "tweet_nbcsportsbayarea_3n2fvex4kec23",
@@ -7434,7 +7205,236 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1434
+      "storyRank": 0.1412
+    },
+    {
+      "id": "espn_50498212",
+      "type": "article",
+      "title": "49ers defense left frustrated after win over Cowboys",
+      "summary": "Nick Wagoner discusses the poor play from the 49ers defense in their 46-40 win over the Cowboys.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1115/dm_261115_Niners_beat_Cowboys_IA/dm_261115_Niners_beat_Cowboys_IA.jpg",
+      "imageAlt": "Nick Wagoner discusses the poor play from the 49ers defense in their 46-40 win over the Cowboys.",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-16T03:56:45Z",
+      "url": "https://www.espn.com/video/clip/_/id/50498212/49ers-defense-left-frustrated-win-cowboys",
+      "outletId": "espn",
+      "outletName": "ESPN",
+      "reporterId": null,
+      "reporterName": "ESPN",
+      "author": "ESPN",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 40,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4407
+    },
+    {
+      "id": "tweet_49erswebzone_3n2fm6hbjby2d",
+      "type": "tweet",
+      "title": "WR Keenan Allen shines in San Francisco #49ers debut, adding to exciting potential of team's offense Read:",
+      "fullText": "WR Keenan Allen shines in San Francisco #49ers debut, adding to exciting potential of team's offense Read:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigkbavmfedpyrdspzgzkzka2iglgztptkoxx54dbvk4r25tv7p24q",
+      "imageAlt": "49ers Webzone social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        },
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-15T19:40:04-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2fm6hbjby2d",
+      "externalUrl": "https://www.49erswebzone.com/articles/205192-san-francisco-exciting-potential-offense/",
+      "externalTitle": "WR Keenan Allen shines in San Francisco 49ers debut, adding to exciting potential of team's offense",
+      "externalDescription": "Keenan Allen made an immediate impact in his 49ers debut, giving Brock Purdy another weapon and adding to the excitement surrounding San Francisco's offense.",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4892
+    },
+    {
+      "id": "tweet_49erswebzone_3n2fm6fsnge2i",
+      "type": "tweet",
+      "title": "#49ers, Dak Prescott react to Niner takeover of Cowboys' stadium Read:",
+      "fullText": "#49ers, Dak Prescott react to Niner takeover of Cowboys' stadium Read:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreigiaxvx6veclrsjlzpj7xcf2y3ec327g4fs6tr7oivil4lyzc72lq",
+      "imageAlt": "49ers Webzone social post",
+      "isHighlightClip": false,
+      "mentionedPlayers": [
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-15T19:40:02-08:00",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n2fm6fsnge2i",
+      "externalUrl": "https://www.49erswebzone.com/articles/205191-49ers-prescott-takeover-cowboys-stadium/",
+      "externalTitle": "49ers, Dak Prescott react to Niner takeover of Cowboys' stadium",
+      "externalDescription": "49ers fans turned AT&T Stadium into a home game in Dallas. Kyle Shanahan, Dak Prescott, and Keenan Allen reacted to the impressive showing.",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 78,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4892
+    },
+    {
+      "id": "wz_hub_310",
+      "type": "article",
+      "title": "Keenan Allen shines in 49ers debut, adding to exciting potential of team's offense",
+      "summary": "Keenan Allen made an immediate impact in his 49ers debut, giving Brock Purdy another weapon and adding to the excitement surrounding San Francisco's offense.",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-3f3fa1e7a86916666b77463bc74204fc.jpg",
+      "imageAlt": "Keenan Allen shines in 49ers debut, adding to exciting potential of team's offense",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        },
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T03:36:00.000Z",
+      "url": "https://www.49erswebzone.com/articles/205192-san-francisco-exciting-potential-offense/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "Kirk Larrabee",
+      "author": "Kirk Larrabee",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 75,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.499
+    },
+    {
+      "id": "wz_hub_311",
+      "type": "article",
+      "title": "49ers, Dak Prescott react to Niner takeover of Cowboys' stadium",
+      "summary": "49ers fans turned AT&T Stadium into a home game in Dallas. Kyle Shanahan, Dak Prescott, and Keenan Allen reacted to the impressive showing.",
+      "imageUrl": "https://cdn.49erswebzone.com/v/gKHboG/content/media/cache/article-135x135-d7a20984dc186965c7654e988beddcb0.jpg",
+      "imageAlt": "49ers, Dak Prescott react to Niner takeover of Cowboys' stadium",
+      "mentionedPlayers": [
+        {
+          "id": "15818",
+          "name": "Keenan Allen",
+          "shortName": "K. Allen",
+          "position": "WR",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png"
+        }
+      ],
+      "publishedAt": "2026-11-16T03:36:00.000Z",
+      "url": "https://www.49erswebzone.com/articles/205191-49ers-prescott-takeover-cowboys-stadium/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": null,
+      "reporterName": "David Bonilla",
+      "author": "David Bonilla",
+      "authorHandle": "@49erswebzone",
+      "authorProfileUrl": "https://x.com/49erswebzone",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 75,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "trustTier": 2,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.499
     },
     {
       "id": "tweet_nbcs49ers_3n2fklszwpk2s",
@@ -7473,7 +7473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4846
+      "storyRank": 0.4779
     },
     {
       "id": "tweet_49erswebzone_3n2fkir7yvi2p",
@@ -7521,7 +7521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4839
+      "storyRank": 0.4772
     },
     {
       "id": "wz_hub_312",
@@ -7563,7 +7563,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4944
+      "storyRank": 0.4876
     },
     {
       "id": "sf49_266",
@@ -7596,7 +7596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4856
+      "storyRank": 0.479
     },
     {
       "id": "yt_CV3mNsrnNJw",
@@ -7656,7 +7656,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.547
+      "storyRank": 0.5397
     },
     {
       "id": "yt_xqvWe1LSRkw",
@@ -7691,7 +7691,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.5319
+      "storyRank": 0.5249
     },
     {
       "id": "yt_q4QVrSpTiao",
@@ -7735,7 +7735,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.5264
+      "storyRank": 0.5195
     },
     {
       "id": "yt_lrTBKQUnOzQ",
@@ -7770,7 +7770,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.5253
+      "storyRank": 0.5185
     },
     {
       "id": "yt_qKWqnM186I0",
@@ -7814,7 +7814,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.5248
+      "storyRank": 0.5179
     },
     {
       "id": "yt_kT4fPjJHRZs",
@@ -7858,7 +7858,7 @@
       "isStalePreGameAvailability": false,
       "breakingPriority": 0,
       "breakingBadge": null,
-      "storyRank": 0.5245
+      "storyRank": 0.5177
     },
     {
       "id": "nn_296",
@@ -7974,7 +7974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3952
+      "storyRank": 0.39
     },
     {
       "id": "espn_50496925",
@@ -8007,7 +8007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3861
+      "storyRank": 0.3811
     },
     {
       "id": "tweet_nbcs49ers_3n2fdrbst5c2e",
@@ -8063,7 +8063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4397
+      "storyRank": 0.4341
     },
     {
       "id": "espn_hl_vid_50496695",
@@ -8109,7 +8109,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5307
+      "storyRank": 0.524
     },
     {
       "id": "espn_hl_vid_50495213",
@@ -8163,7 +8163,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5288
+      "storyRank": 0.5221
     },
     {
       "id": "espn_hl_vid_50496045",
@@ -8209,7 +8209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5273
+      "storyRank": 0.5206
     },
     {
       "id": "espn_hl_vid_50496336",
@@ -8255,7 +8255,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5272
+      "storyRank": 0.5206
     },
     {
       "id": "tweet_49erswebzone_3n2fdacth232y",
@@ -8294,7 +8294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4365
+      "storyRank": 0.4309
     },
     {
       "id": "wz_hub_314",
@@ -8344,7 +8344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4464
+      "storyRank": 0.4407
     },
     {
       "id": "espn_50496876",
@@ -8386,7 +8386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3865
+      "storyRank": 0.3816
     },
     {
       "id": "nn_297",
@@ -8419,7 +8419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3766
+      "storyRank": 0.3718
     },
     {
       "id": "espn_pwire_3126486_50494414",
@@ -8472,7 +8472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4545
+      "storyRank": 0.4488
     },
     {
       "id": "espn_pwire_4696044_50495784",
@@ -8517,7 +8517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4544
+      "storyRank": 0.4486
     },
     {
       "id": "sfstd_285",
@@ -8567,7 +8567,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.442
+      "storyRank": 0.4364
     },
     {
       "id": "tweet_mattbarrows_3n2fb6i6eoc2x",
@@ -8615,7 +8615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.484
+      "storyRank": 0.478
     },
     {
       "id": "tweet_mattmaiocco_3n2fb6hbwjc2b",
@@ -8654,7 +8654,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.484
+      "storyRank": 0.4779
     },
     {
       "id": "tweet_mattmaiocco_3n2fb3pgwek2b",
@@ -8710,7 +8710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4834
+      "storyRank": 0.4774
     },
     {
       "id": "x_status_2122123586119106603",
@@ -8758,7 +8758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4375
+      "storyRank": 0.432
     },
     {
       "id": "x_status_2122114590406275397",
@@ -8817,7 +8817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5297
+      "storyRank": 0.5232
     },
     {
       "id": "tweet_mattmaiocco_3n2fccjxee22b",
@@ -8856,7 +8856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1229
+      "storyRank": 0.1213
     },
     {
       "id": "tweet_timkawakami_3n2fbz6wja222",
@@ -8895,7 +8895,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4293
+      "storyRank": 0.4239
     },
     {
       "id": "tweet_timkawakami_3n2fb4yqzyc22",
@@ -8943,7 +8943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4242
+      "storyRank": 0.4189
     },
     {
       "id": "tweet_timkawakami_3n2faubwcnc22",
@@ -8982,7 +8982,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4227
+      "storyRank": 0.4174
     },
     {
       "id": "x_status_2122112017112891497",
@@ -9033,7 +9033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4682
+      "storyRank": 0.4624
     },
     {
       "id": "x_status_2122110162433605897",
@@ -9084,7 +9084,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4656
+      "storyRank": 0.46
     },
     {
       "id": "tweet_jenniferleechan_3n2f7ulq7fc2b",
@@ -9132,7 +9132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4756
+      "storyRank": 0.4697
     },
     {
       "id": "tweet_timkawakami_3n2faizlais22",
@@ -9171,7 +9171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4207
+      "storyRank": 0.4155
     },
     {
       "id": "tweet_jenniferleechan_3n2f7l6e5zc2b",
@@ -9219,7 +9219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4738
+      "storyRank": 0.4679
     },
     {
       "id": "tweet_jenniferleechan_3n2f7cv543c2b",
@@ -9267,7 +9267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4722
+      "storyRank": 0.4664
     },
     {
       "id": "tweet_timkawakami_3n2f7xabxes22",
@@ -9315,7 +9315,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4176
+      "storyRank": 0.4124
     },
     {
       "id": "tweet_timkawakami_3n2f7tvvnus22",
@@ -9354,7 +9354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.417
+      "storyRank": 0.4119
     },
     {
       "id": "x_status_2122106633870561333",
@@ -9405,7 +9405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4609
+      "storyRank": 0.4554
     },
     {
       "id": "x_status_2122106168776782203",
@@ -9456,7 +9456,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2374
+      "storyRank": 0.2346
     },
     {
       "id": "tweet_jenniferleechan_3n2f6v3gw522b",
@@ -9512,7 +9512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4695
+      "storyRank": 0.4637
     },
     {
       "id": "tweet_mattmaiocco_3n2f6psm2js2b",
@@ -9560,7 +9560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4685
+      "storyRank": 0.4627
     },
     {
       "id": "tweet_jenniferleechan_3n2f6ow6wqc2b",
@@ -9608,7 +9608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4683
+      "storyRank": 0.4626
     },
     {
       "id": "tweet_jenniferleechan_3n2f6cvoscs2b",
@@ -9672,7 +9672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.466
+      "storyRank": 0.4603
     },
     {
       "id": "tweet_mattmaiocco_3n2f6csgr7k2b",
@@ -9744,7 +9744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.466
+      "storyRank": 0.4603
     },
     {
       "id": "tweet_jenniferleechan_3n2f67ea6ms2b",
@@ -9792,7 +9792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3752
+      "storyRank": 0.3706
     },
     {
       "id": "tweet_timkawakami_3n2f6ugujrk24",
@@ -9840,7 +9840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4116
+      "storyRank": 0.4066
     },
     {
       "id": "tweet_jenniferleechan_3n2f5wupvac2b",
@@ -9879,7 +9879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4637
+      "storyRank": 0.4581
     },
     {
       "id": "tweet_mattmaiocco_3n2f5trmjtk2b",
@@ -9927,7 +9927,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4631
+      "storyRank": 0.4575
     },
     {
       "id": "tweet_mattmaiocco_3n2f5pyn5322b",
@@ -9966,7 +9966,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4624
+      "storyRank": 0.4568
     },
     {
       "id": "tweet_jenniferleechan_3n2f5gdwfwk2b",
@@ -10022,7 +10022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4606
+      "storyRank": 0.4551
     },
     {
       "id": "tweet_mattmaiocco_3n2f5fnlgzk2b",
@@ -10070,7 +10070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4605
+      "storyRank": 0.4549
     },
     {
       "id": "tweet_timkawakami_3n2f6agvpj224",
@@ -10118,7 +10118,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3632
+      "storyRank": 0.3588
     },
     {
       "id": "tweet_timkawakami_3n2f64njtdc24",
@@ -10157,7 +10157,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4077
+      "storyRank": 0.4027
     },
     {
       "id": "tweet_jenniferleechan_3n2f53tede226",
@@ -10196,7 +10196,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1147
+      "storyRank": 0.1133
     },
     {
       "id": "tweet_timkawakami_3n2f5kvtf5s24",
@@ -10235,7 +10235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4047
+      "storyRank": 0.3998
     },
     {
       "id": "x_status_2122096439996420310",
@@ -10294,7 +10294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3177
+      "storyRank": 0.3139
     },
     {
       "id": "tweet_mattmaiocco_3n2f4pxgkjk2b",
@@ -10342,7 +10342,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4565
+      "storyRank": 0.451
     },
     {
       "id": "tweet_jenniferleechan_3n2f4jz4nl22b",
@@ -10381,7 +10381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4554
+      "storyRank": 0.4499
     },
     {
       "id": "tweet_mattmaiocco_3n2f46b4dfc2b",
@@ -10420,7 +10420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4532
+      "storyRank": 0.4478
     },
     {
       "id": "tweet_jenniferleechan_3n2f3zvb5dk2b",
@@ -10468,7 +10468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4524
+      "storyRank": 0.447
     },
     {
       "id": "tweet_mattmaiocco_3n2f3zgj4ts2b",
@@ -10516,7 +10516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4524
+      "storyRank": 0.447
     },
     {
       "id": "tweet_mattmaiocco_3n2f3spbcos2b",
@@ -10555,7 +10555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4511
+      "storyRank": 0.4458
     },
     {
       "id": "x_status_2122091301881692520",
@@ -10606,7 +10606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4413
+      "storyRank": 0.4361
     },
     {
       "id": "tweet_mattmaiocco_3n2f37ak2ss2b",
@@ -10651,7 +10651,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.115,
+      "breakingPriority": 0.113,
       "category": "film",
       "signalScore": 78,
       "fluffScore": 0,
@@ -10662,7 +10662,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9962
+      "storyRank": 0.9854
     },
     {
       "id": "tweet_jenniferleechan_3n2f3cqmzzc2b",
@@ -10734,7 +10734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4483
+      "storyRank": 0.443
     },
     {
       "id": "tweet_mattmaiocco_3n2f32i27k22b",
@@ -10773,7 +10773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4468
+      "storyRank": 0.4415
     },
     {
       "id": "tweet_jenniferleechan_3n2f2w4hxmk2b",
@@ -10821,7 +10821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.446
+      "storyRank": 0.4408
     },
     {
       "id": "tweet_jenniferleechan_3n2f2edjl4s2b",
@@ -10860,7 +10860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4429
+      "storyRank": 0.4377
     },
     {
       "id": "tweet_mattmaiocco_3n2f2dgekok2b",
@@ -10908,7 +10908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4428
+      "storyRank": 0.4376
     },
     {
       "id": "tweet_mattmaiocco_3n2f225y3qs2b",
@@ -10964,7 +10964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4411
+      "storyRank": 0.436
     },
     {
       "id": "x_status_2122083277712523336",
@@ -11015,7 +11015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4316
+      "storyRank": 0.4266
     },
     {
       "id": "tweet_mattbarrows_3n2ez7ph5322x",
@@ -11054,7 +11054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4366
+      "storyRank": 0.4315
     },
     {
       "id": "tweet_jenniferleechan_3n2eyza2c622b",
@@ -11093,7 +11093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4355
+      "storyRank": 0.4304
     },
     {
       "id": "tweet_jenniferleechan_3n2eymtnmyc2b",
@@ -11132,7 +11132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4334
+      "storyRank": 0.4284
     },
     {
       "id": "x_status_2122076811504808195",
@@ -11174,7 +11174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.424
+      "storyRank": 0.4192
     },
     {
       "id": "tweet_mattbarrows_3n2eyflo3bk2x",
@@ -11222,7 +11222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4322
+      "storyRank": 0.4272
     },
     {
       "id": "tweet_jenniferleechan_3n2eydd7fz22b",
@@ -11302,7 +11302,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4318
+      "storyRank": 0.4268
     },
     {
       "id": "tweet_mattmaiocco_3n2exvlez5k2b",
@@ -11430,7 +11430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4295
+      "storyRank": 0.4246
     },
     {
       "id": "tweet_jenniferleechan_3n2exp7z3ak2b",
@@ -11469,7 +11469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4285
+      "storyRank": 0.4236
     },
     {
       "id": "tweet_jenniferleechan_3n2exhr7ixs2b",
@@ -11508,7 +11508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4272
+      "storyRank": 0.4224
     },
     {
       "id": "tweet_mattmaiocco_3n2exemqlzc2b",
@@ -11636,7 +11636,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4267
+      "storyRank": 0.4218
     },
     {
       "id": "tweet_nbcs49ers_3n2ermljen22e",
@@ -11684,7 +11684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1467
+      "storyRank": 0.1451
     },
     {
       "id": "tweet_nbcs49ers_3n2epgk2wk22e",
@@ -11723,7 +11723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.143
+      "storyRank": 0.1415
     },
     {
       "id": "tweet_nbcsportsbayarea_3n2en7pzul22o",
@@ -11771,7 +11771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1395
+      "storyRank": 0.138
     },
     {
       "id": "espn_pwire_16737_64787728",
@@ -11816,7 +11816,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3894
+      "storyRank": 0.3853
     },
     {
       "id": "x_status_2122001734361022563",
@@ -11864,7 +11864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1653
+      "storyRank": 0.1636
     },
     {
       "id": "tweet_49erswebzone_3n2e2ysxdxp2y",
@@ -11903,7 +11903,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1151
+      "storyRank": 0.114
     },
     {
       "id": "wz_hub_317",
@@ -11936,7 +11936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1178
+      "storyRank": 0.1167
     },
     {
       "id": "tweet_nbcsportsbayarea_3n2dgpp77bk2n",
@@ -11984,7 +11984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0954
+      "storyRank": 0.0947
     },
     {
       "id": "pfrumors_238",
@@ -12036,7 +12036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0945
+      "storyRank": 0.0938
     },
     {
       "id": "espn_pwire_4686308_64776128",
@@ -12081,7 +12081,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0943
+      "storyRank": 0.0937
     },
     {
       "id": "espn_pwire_4240542_64776028",
@@ -12126,7 +12126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0942
+      "storyRank": 0.0936
     },
     {
       "id": "tweet_49erswebzone_3n2ci5lirq32d",
@@ -12165,7 +12165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0749
+      "storyRank": 0.0744
     },
     {
       "id": "wz_hub_318",
@@ -12223,7 +12223,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0766
+      "storyRank": 0.076
     },
     {
       "id": "tweet_nbcs49ers_3n2cgywhr5k24",
@@ -12262,7 +12262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0743
+      "storyRank": 0.0738
     },
     {
       "id": "tweet_mattbarrows_3n2cflpcfqc2x",
@@ -12350,7 +12350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0838
+      "storyRank": 0.0833
     },
     {
       "id": "tweet_mattbarrows_3n2cfibsnmk2x",
@@ -12406,7 +12406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0838
+      "storyRank": 0.0832
     },
     {
       "id": "tweet_jenniferleechan_3n2cfi6pvhk2o",
@@ -12462,7 +12462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0838
+      "storyRank": 0.0832
     },
     {
       "id": "tweet_nbcs49ers_3n2cedi7vxk2w",
@@ -12501,7 +12501,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0729
+      "storyRank": 0.0724
     },
     {
       "id": "tweet_49erswebzone_3n2cdflu2pv26",
@@ -12549,7 +12549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0724
+      "storyRank": 0.0719
     },
     {
       "id": "wz_hub_319",
@@ -12591,7 +12591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.074
+      "storyRank": 0.0735
     },
     {
       "id": "x_status_2121677897551503644",
@@ -12639,7 +12639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0894
+      "storyRank": 0.0888
     },
     {
       "id": "espn_pwire_4685369_64772428",
@@ -12684,7 +12684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.084
+      "storyRank": 0.0835
     },
     {
       "id": "tweet_49erswebzone_3n2c6nmmhua27",
@@ -12723,7 +12723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.07
+      "storyRank": 0.0695
     },
     {
       "id": "wz_hub_320",
@@ -12756,7 +12756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0716
+      "storyRank": 0.0712
     },
     {
       "id": "tweet_49erswebzone_3n2c6eo2uxv2o",
@@ -12820,7 +12820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0699
+      "storyRank": 0.0694
     },
     {
       "id": "wz_hub_321",
@@ -12878,7 +12878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0714
+      "storyRank": 0.071
     },
     {
       "id": "tweet_nbcs49ers_3n2c5tyo2qc26",
@@ -12926,7 +12926,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0696
+      "storyRank": 0.0692
     },
     {
       "id": "tweet_nbcs49ers_3n2c2wm55sk2d",
@@ -12974,7 +12974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0403
+      "storyRank": 0.04
     },
     {
       "id": "sf49_268",
@@ -13007,7 +13007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0677
+      "storyRank": 0.0672
     },
     {
       "id": "tweet_49erswebzone_3n2bxo2zbpf27",
@@ -13055,7 +13055,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0667
+      "storyRank": 0.0663
     },
     {
       "id": "wz_hub_322",
@@ -13097,7 +13097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0683
+      "storyRank": 0.0678
     },
     {
       "id": "tweet_49erswebzone_3n2bxf4vrvk2k",
@@ -13145,7 +13145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0666
+      "storyRank": 0.0662
     },
     {
       "id": "wz_hub_323",
@@ -13187,7 +13187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0682
+      "storyRank": 0.0677
     },
     {
       "id": "tweet_49erswebzone_3n2bwtbmyn32w",
@@ -13235,7 +13235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0664
+      "storyRank": 0.0659
     },
     {
       "id": "wz_hub_324",
@@ -13277,7 +13277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0678
+      "storyRank": 0.0674
     },
     {
       "id": "tweet_mattbarrows_3n2btzslwi22x",
@@ -13316,7 +13316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0743
+      "storyRank": 0.0738
     },
     {
       "id": "tweet_49erswebzone_3n2btzuc7qp2w",
@@ -13364,7 +13364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0651
+      "storyRank": 0.0647
     },
     {
       "id": "wz_hub_325",
@@ -13418,7 +13418,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0667
+      "storyRank": 0.0663
     },
     {
       "id": "wz_hub_326",
@@ -13460,7 +13460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1582
+      "storyRank": 0.1572
     },
     {
       "id": "x_status_2121618937066795360",
@@ -13508,7 +13508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1736
+      "storyRank": 0.1725
     },
     {
       "id": "tweet_victafur_3n2bpf5qjxs2b",
@@ -13556,7 +13556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0632
+      "storyRank": 0.0628
     },
     {
       "id": "wz_hub_327",
@@ -13614,7 +13614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0627
+      "storyRank": 0.0623
     },
     {
       "id": "tweet_nbcs49ers_3n2ac75lgks2g",
@@ -13653,7 +13653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0484
+      "storyRank": 0.0482
     },
     {
       "id": "tweet_victafur_3n2aakdfubs22",
@@ -13701,7 +13701,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.048
+      "storyRank": 0.0478
     },
     {
       "id": "tweet_nbcs49ers_3n2aaddidfs27",
@@ -13749,7 +13749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.048
+      "storyRank": 0.0477
     },
     {
       "id": "sf49_269",
@@ -13782,7 +13782,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0484
+      "storyRank": 0.0481
     },
     {
       "id": "sf49_270",
@@ -13832,7 +13832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1242
+      "storyRank": 0.1237
     },
     {
       "id": "wz_hub_328",
@@ -13865,7 +13865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0479
+      "storyRank": 0.0476
     },
     {
       "id": "x_status_2121369234244825523",
@@ -13916,7 +13916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0528
+      "storyRank": 0.0526
     },
     {
       "id": "x_status_2121367782163992928",
@@ -13958,7 +13958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0527
+      "storyRank": 0.0525
     },
     {
       "id": "espn_pwire_15818_64755528",
@@ -14035,7 +14035,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0548
+      "storyRank": 0.0546
     },
     {
       "id": "x_status_2121365845654094202",
@@ -14094,7 +14094,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0526
+      "storyRank": 0.0524
     },
     {
       "id": "pfrumors_239",
@@ -14162,7 +14162,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0476
+      "storyRank": 0.0474
     },
     {
       "id": "sf49_271",
@@ -14204,7 +14204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
+      "storyRank": 0.0461
     },
     {
       "id": "tweet_mattbarrows_3n27usae3sc2x",
@@ -14268,7 +14268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0515
+      "storyRank": 0.0512
     },
     {
       "id": "tweet_mattbarrows_3n27upygy2k2x",
@@ -14332,7 +14332,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0515
+      "storyRank": 0.0512
     },
     {
       "id": "wz_hub_331",
@@ -14390,7 +14390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0462
+      "storyRank": 0.046
     },
     {
       "id": "x_status_2121331099150532766",
@@ -14438,7 +14438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0506
+      "storyRank": 0.0503
     },
     {
       "id": "wz_hub_332",
@@ -14480,7 +14480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0454
+      "storyRank": 0.0452
     },
     {
       "id": "sfstd_286",
@@ -14513,7 +14513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.044
+      "storyRank": 0.0438
     },
     {
       "id": "wz_hub_333",
@@ -14563,7 +14563,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0437
+      "storyRank": 0.0435
     },
     {
       "id": "x_status_2121278183102435465",
@@ -14602,7 +14602,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0477
+      "storyRank": 0.0475
     },
     {
       "id": "sfstd_287",
@@ -14644,7 +14644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0432
+      "storyRank": 0.043
     },
     {
       "id": "wz_hub_334",
@@ -14677,7 +14677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0425
     },
     {
       "id": "tweet_nbcsportsbayarea_3n27dmrlqq22p",
@@ -14716,7 +14716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "sf49_272",
@@ -14766,7 +14766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0415
+      "storyRank": 0.0413
     },
     {
       "id": "tweet_victafur_3n275bn2f2s2j",
@@ -14822,7 +14822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.0401
     },
     {
       "id": "pfrumors_240",
@@ -14857,7 +14857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0364
+      "storyRank": 0.0363
     },
     {
       "id": "x_status_2121063182471225750",
@@ -14916,7 +14916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0385
+      "storyRank": 0.0384
     },
     {
       "id": "espn_pwire_13241_64747028",
@@ -14961,7 +14961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0399
     },
     {
       "id": "wz_hub_335",
@@ -15011,7 +15011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0342
+      "storyRank": 0.034
     },
     {
       "id": "pfrumors_241",
@@ -15055,7 +15055,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0343
     },
     {
       "id": "espn_pwire_3916903_64745128",
@@ -15116,7 +15116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0394
+      "storyRank": 0.0393
     },
     {
       "id": "x_status_2121030452127633413",
@@ -15172,7 +15172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0418
     },
     {
       "id": "espn_pwire_16737_64744528",
@@ -15225,7 +15225,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0393
+      "storyRank": 0.0391
     },
     {
       "id": "tweet_mattbarrows_3n25pmwvo3c27",
@@ -15281,7 +15281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0376
+      "storyRank": 0.0374
     },
     {
       "id": "x_status_2121021340950081594",
@@ -15337,7 +15337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1026
+      "storyRank": 0.1023
     },
     {
       "id": "wz_hub_336",
@@ -15387,7 +15387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0885
+      "storyRank": 0.0882
     },
     {
       "id": "x_status_2121016851488756068",
@@ -15446,7 +15446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0369
+      "storyRank": 0.0368
     },
     {
       "id": "x_status_2121016733909799009",
@@ -15502,7 +15502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0369
+      "storyRank": 0.0368
     },
     {
       "id": "wz_hub_337",
@@ -15544,7 +15544,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0334
+      "storyRank": 0.0332
     },
     {
       "id": "x_status_2120994223419961689",
@@ -15608,7 +15608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0407
+      "storyRank": 0.0405
     },
     {
       "id": "x_status_2120992959873323314",
@@ -15656,7 +15656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0406
+      "storyRank": 0.0405
     },
     {
       "id": "tweet_mattbarrows_3n25f44jy6k2x",
@@ -15720,7 +15720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.036
+      "storyRank": 0.0359
     },
     {
       "id": "wz_hub_338",
@@ -15762,7 +15762,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0322
     },
     {
       "id": "wz_hub_339",
@@ -15804,7 +15804,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.032
     },
     {
       "id": "wz_hub_340",
@@ -15854,7 +15854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0317
+      "storyRank": 0.0316
     },
     {
       "id": "wz_hub_341",
@@ -15887,7 +15887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0312
     },
     {
       "id": "wz_hub_342",
@@ -15953,7 +15953,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.031
     },
     {
       "id": "x_status_2120937236464373949",
@@ -15992,7 +15992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0345
+      "storyRank": 0.0343
     },
     {
       "id": "wz_hub_343",
@@ -16034,7 +16034,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0308
     },
     {
       "id": "wz_hub_344",
@@ -16076,7 +16076,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0305
     },
     {
       "id": "x_status_2120915790295974341",
@@ -16124,7 +16124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0338
+      "storyRank": 0.0337
     },
     {
       "id": "x_status_2120915197582094569",
@@ -16180,7 +16180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0338
+      "storyRank": 0.0337
     },
     {
       "id": "espn_50462761",
@@ -16255,7 +16255,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0305
+      "storyRank": 0.0304
     },
     {
       "id": "x_status_2120911034584338510",
@@ -16303,7 +16303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0378
+      "storyRank": 0.0377
     },
     {
       "id": "tweet_mattbarrows_3n24qhsd6c22u",
@@ -16351,7 +16351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0333
+      "storyRank": 0.0331
     },
     {
       "id": "sf49_273",
@@ -16393,7 +16393,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0294
     },
     {
       "id": "wz_hub_346",
@@ -16435,7 +16435,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0291
+      "storyRank": 0.029
     },
     {
       "id": "x_status_2120847664052834680",
@@ -16483,7 +16483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0319
     },
     {
       "id": "tweet_nbcsportsbayarea_3n23xpmqpik2z",
@@ -16578,7 +16578,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0285
+      "storyRank": 0.0284
     },
     {
       "id": "espn_50456881",
@@ -16620,7 +16620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0251
+      "storyRank": 0.025
     },
     {
       "id": "espn_pwire_4686308_64726328",
@@ -16665,7 +16665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0292
     },
     {
       "id": "espn_pwire_4242488_64726228",
@@ -16710,7 +16710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0292
     },
     {
       "id": "espn_pwire_4427325_64726128",
@@ -16755,7 +16755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0292
     },
     {
       "id": "tweet_mattbarrows_3n235ed3xrs27",
@@ -16819,7 +16819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278
+      "storyRank": 0.0277
     },
     {
       "id": "wz_hub_347",
@@ -16911,7 +16911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0673
+      "storyRank": 0.0671
     },
     {
       "id": "wz_hub_349",
@@ -16969,7 +16969,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0246
     },
     {
       "id": "wz_hub_350",
@@ -17002,7 +17002,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0245
     },
     {
       "id": "wz_hub_351",
@@ -17060,7 +17060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0245
+      "storyRank": 0.0244
     },
     {
       "id": "wz_hub_352",
@@ -17290,7 +17290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0658
+      "storyRank": 0.0656
     },
     {
       "id": "tweet_mattbarrows_3n22svbobls27",
@@ -17387,7 +17387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0239
+      "storyRank": 0.0238
     },
     {
       "id": "tweet_mattbarrows_3n22jonltyc27",
@@ -17443,7 +17443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0261
+      "storyRank": 0.026
     },
     {
       "id": "wz_hub_356",
@@ -17493,7 +17493,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0233
     },
     {
       "id": "sf49_274",
@@ -17543,7 +17543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.023
     },
     {
       "id": "wz_hub_357",
@@ -17593,7 +17593,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0233
     },
     {
       "id": "sf49_275",
@@ -17668,7 +17668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.0226
     },
     {
       "id": "sf49_277",
@@ -17849,7 +17849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0236
+      "storyRank": 0.0235
     },
     {
       "id": "tweet_mattbarrows_3mzyunub4ck2q",
@@ -17930,7 +17930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0195
     },
     {
       "id": "espn_50444457",
@@ -18168,7 +18168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0161
     },
     {
       "id": "tweet_victafur_3mzy7kpu4722x",
@@ -18258,7 +18258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0159
     },
     {
       "id": "x_status_2120224371361116598",
@@ -18362,7 +18362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0207
     },
     {
       "id": "espn_pwire_4241464_64699628",
@@ -18415,7 +18415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0458
+      "storyRank": 0.0456
     },
     {
       "id": "x_status_2120224434841944378",
@@ -18463,7 +18463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0207
     },
     {
       "id": "x_status_2120212022298321242",
@@ -18615,7 +18615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0204
     },
     {
       "id": "pfrumors_243",
@@ -18659,7 +18659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0186
     },
     {
       "id": "tweet_nbcsportsbayarea_3mzxufphuss2p",
@@ -18698,7 +18698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0501
+      "storyRank": 0.05
     },
     {
       "id": "sf49_280",
@@ -18803,7 +18803,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0205
     },
     {
       "id": "espn_50435848",
@@ -18845,7 +18845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0155
     },
     {
       "id": "espn_50433470",
@@ -18903,7 +18903,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0156
     },
     {
       "id": "espn_50427438",

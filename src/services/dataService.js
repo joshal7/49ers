@@ -4303,13 +4303,39 @@ export async function hydrateLiveEspnOverlay(appData) {
             null,
             normPlayerNameKey
           );
+          const oppDepthSlotMap = new Map();
+          for (const dc of oppDepthRaw?.depthchart || []) {
+            if (String(dc?.name || '').toLowerCase().includes('special')) continue;
+            for (const [slotRaw, posObj] of Object.entries(dc?.positions || {})) {
+              const slotUpper = String(slotRaw || '').trim().toUpperCase();
+              if (/^(?:PK|K|P|LS|H|PR|KR)\b/.test(slotUpper)) continue;
+              (posObj?.athletes || []).slice(0, 3).forEach((ath, idx) => {
+                const nk = normPlayerNameKey(ath?.displayName || ath?.fullName || '');
+                if (!nk || oppDepthSlotMap.has(nk)) return;
+                const lbl = /\d$/.test(slotUpper)
+                  ? idx === 0
+                    ? slotUpper
+                    : `${slotUpper} (${idx + 1}nd)`
+                  : idx === 0
+                    ? /^(?:QB|RB|WR|TE)$/.test(slotUpper)
+                      ? `${slotUpper}1`
+                      : slotUpper
+                    : `${slotUpper}${idx + 1}`;
+                oppDepthSlotMap.set(nk, lbl);
+              });
+            }
+          }
 
           if (oppRosterRaw?.athletes?.length) {
-            const activeOppList = extractActiveRosterFromEspnTeamRoster(oppRosterRaw, oppStarterSet);
+            const activeOppList = extractActiveRosterFromEspnTeamRoster(oppRosterRaw, oppStarterSet).map(p => ({
+              ...p,
+              depthSlot: oppDepthSlotMap.get(normPlayerNameKey(p.name)) || null
+            }));
             um.opponentHealth.activeRoster = activeOppList;
+            const starterRolePrio = pos => (['QB', 'WR', 'RB', 'TE', 'DE', 'OLB', 'CB', 'DT', 'S'].includes(pos) ? 0 : 1);
             um.opponentHealth.keyStartersHealthy = activeOppList
               .filter(p => p.isStarter && p.unit !== 'Special Teams')
-              .slice(0, 12)
+              .sort((a, b) => starterRolePrio(a.position) - starterRolePrio(b.position))
               .map(p => ({
                 ...p,
                 gameStatus: 'Active • Off Injury Report',

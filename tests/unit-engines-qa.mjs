@@ -9632,6 +9632,47 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'AI Matchup Intel prompt grounds full opponent depth-chart hierarchy & 2026 stats (preventing 5 OL + 1 QB from hiding WR1 Justin Jefferson behind injured depth WRs)',
+  async () => {
+    const { buildDailyMatchupIntelPrompt } = await import('../src/services/aiWorkerClient.js');
+    const liveBundle = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'))
+    };
+
+    const oh = liveBundle.scheduleMatchup.upcomingMatchup.opponentHealth;
+    // Healthy starters must NOT be truncated to 12 (where 5 OL + 1 QB could squeeze out WR1/RB1)
+    assert.ok(
+      Array.isArray(oh.keyStartersHealthy) && oh.keyStartersHealthy.length >= 13,
+      `Expected full healthy starter set (>=13) on opponentHealth.keyStartersHealthy, got ${oh.keyStartersHealthy?.length}`
+    );
+
+    const prompt = buildDailyMatchupIntelPrompt(liveBundle);
+    assert.ok(
+      prompt.includes('Depth-Chart Hierarchy & 2026 Production'),
+      'Matchup prompt must inject explicit Opponent Depth-Chart Hierarchy & 2026 Production section'
+    );
+    assert.ok(
+      prompt.includes('OPPONENT DEPTH-CHART ACCURACY'),
+      'Matchup prompt must enforce WR1/RB1/QB1 hierarchy accuracy guardrail'
+    );
+    if (liveBundle.scheduleMatchup.upcomingMatchup.oppAbbr === 'MIN') {
+      const wrLine = prompt.split('\n').find(l => l.includes('WRs (ordered WR1 -> depth):')) || '';
+      assert.ok(
+        wrLine.includes('WR1 Justin Jefferson') && wrLine.includes('Active'),
+        `MIN WR hierarchy line must lead with Active WR1 Justin Jefferson + stats: ${wrLine}`
+      );
+      assert.ok(
+        wrLine.indexOf('Justin Jefferson') < wrLine.indexOf('Jauan Jennings'),
+        `Justin Jefferson must rank ahead of Jauan Jennings in MIN WR hierarchy: ${wrLine}`
+      );
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

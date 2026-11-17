@@ -2474,7 +2474,7 @@ export async function generateOnDemandAutopodcast({
 /* ==========================================================================
    1/Day Live Gemini 4 Hydrogen (XHIGH) Matchup Intel (Strictly <= 1 Credit / PT Day)
    ========================================================================== */
-const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v2';
+const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v3';
 const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v2';
 let inFlightDailyMatchupPromise = null;
 
@@ -2557,17 +2557,94 @@ export function buildDailyMatchupIntelPrompt(appData) {
   const oppAbbr = String(um.oppAbbr || 'OPP').toUpperCase();
   const oppName = um.oppName || oppAbbr;
   const sfPr = (appData?.health?.practiceReport || [])
-    .slice(0, 8)
+    .slice(0, 10)
     .map(p => `${p.name} (${p.position}, ${p.injuryType}: ${p.playBadgeLabel})`)
     .join('; ');
-  const oppInj = (um.opponentHealth?.injuryReport || [])
-    .slice(0, 10)
-    .map(p => `${p.name} (${p.position}, ${p.injuryType}: ${p.playBadgeLabel}, ${p.snapPct || 0}% snaps)`)
-    .join('; ');
-  const oppHealthy = (um.opponentHealth?.keyStartersHealthy || [])
+  const oppInjList = um.opponentHealth?.injuryReport || [];
+  const oppIrList = um.opponentHealth?.irReserve || [];
+  const oppHealthyList = um.opponentHealth?.keyStartersHealthy || [];
+  const oppActiveRoster = um.opponentHealth?.activeRoster || [];
+
+  const oppInj = oppInjList
     .slice(0, 12)
-    .map(p => `${p.name} (${p.position}${p.jersey != null ? ` #${p.jersey}` : ''})`)
-    .join(', ');
+    .map(
+      p =>
+        `${p.name} (${p.depthSlot || p.position}, ${p.injuryType}: ${p.playBadgeLabel}${p.snapPct != null ? `, ${p.snapPct}% snaps` : ''}${p.statLine2026 ? ` — ${p.statLine2026}` : ''})`
+    )
+    .join('; ');
+  const oppHealthy = oppHealthyList
+    .map(
+      p =>
+        `${p.name} (${p.depthSlot || p.position}${p.jersey != null ? ` #${p.jersey}` : ''}${p.snapPct != null ? `, ${p.snapPct}% snaps` : ''}${p.statLine2026 ? ` — ${p.statLine2026}` : ''})`
+    )
+    .join('; ');
+
+  // Build explicit Opponent Position-by-Position Depth Hierarchy (merging healthy starters, active rotation, injury report & IR)
+  // so the model ALWAYS sees WR1 / RB1 / QB1 / TE1 / Pass-Rush #1 alongside injured depth players!
+  const normKey = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const oppMergedByKey = new Map();
+  for (const p of oppActiveRoster) {
+    const k = normKey(p.name);
+    if (k) oppMergedByKey.set(k, { ...p, availTag: 'Active' });
+  }
+  for (const p of oppHealthyList) {
+    const k = normKey(p.name);
+    if (k) oppMergedByKey.set(k, { ...(oppMergedByKey.get(k) || {}), ...p, isStarter: true, availTag: 'Active' });
+  }
+  for (const p of oppInjList) {
+    const k = normKey(p.name);
+    if (k) {
+      oppMergedByKey.set(k, {
+        ...(oppMergedByKey.get(k) || {}),
+        ...p,
+        availTag: `${p.injuryType || 'Injured'}: ${p.playBadgeLabel || p.gameStatus || 'Questionable'}`
+      });
+    }
+  }
+  for (const p of oppIrList) {
+    const k = normKey(p.name);
+    if (k && !oppMergedByKey.has(k) && ((p.snapPct || 0) >= 35 || p.statLine2026 || p.depthSlot)) {
+      oppMergedByKey.set(k, {
+        ...p,
+        availTag: `IR (${p.injuryType || 'Injured'}): ${p.playBadgeLabel || '0% • IR'}`
+      });
+    }
+  }
+
+  const slotRankOrder = p => {
+    const ds = String(p.depthSlot || '');
+    if (/^(?:QB1|RB1|WR1|WR2|WR3|TE1|LT|LG|C|RG|RT|LDE|RDE|LDT|RDT|WLB|MLB|SLB|LCB|RCB|FS|SS|NB)$/.test(ds)) {
+      const n = ds.match(/(\d)$/)?.[1];
+      return n ? Number(n) : 1;
+    }
+    return p.isStarter ? 1.5 : 4;
+  };
+  const formatOppGroupLine = (label, posSet, limit = 5) => {
+    const matches = [...oppMergedByKey.values()]
+      .filter(p => posSet.has(String(p.position || '').toUpperCase()))
+      .filter(p => p.isStarter || p.depthSlot || (p.snapPct || 0) >= 25 || p.statLine2026 || p.availTag !== 'Active')
+      .sort((a, b) => slotRankOrder(a) - slotRankOrder(b) || (b.snapPct ?? 0) - (a.snapPct ?? 0))
+      .slice(0, limit);
+    if (matches.length === 0) return null;
+    const formatted = matches
+      .map(
+        p =>
+          `${p.depthSlot || p.position} ${p.name}${p.jersey != null ? ` #${p.jersey}` : ''} [${p.availTag}${p.snapPct != null ? `, ${p.snapPct}% snaps` : ''}${p.statLine2026 ? ` — ${p.statLine2026}` : ''}]`
+      )
+      .join('; ');
+    return `  • ${label}: ${formatted}`;
+  };
+  const oppDepthSummary = [
+    formatOppGroupLine('QBs', new Set(['QB']), 3),
+    formatOppGroupLine('RBs', new Set(['RB', 'FB']), 3),
+    formatOppGroupLine('WRs (ordered WR1 -> depth)', new Set(['WR']), 6),
+    formatOppGroupLine('TEs', new Set(['TE']), 3),
+    formatOppGroupLine('Starting OL', new Set(['OT', 'T', 'G', 'OG', 'C', 'OL']), 6),
+    formatOppGroupLine('DL & Edge Rush', new Set(['DE', 'DT', 'NT', 'DL', 'OLB', 'EDGE']), 6),
+    formatOppGroupLine('Linebackers & Secondary', new Set(['LB', 'ILB', 'MLB', 'CB', 'S', 'FS', 'SS', 'DB']), 7)
+  ]
+    .filter(Boolean)
+    .join('\n');
 
   const unitBenchmarks = tsUnits
     .map(u => {
@@ -2617,10 +2694,12 @@ export function buildDailyMatchupIntelPrompt(appData) {
     `49ers Injury Designations: ${sfPr || 'None'}`,
     `${oppAbbr} Injury Designations: ${oppInj || 'None'}`,
     `${oppAbbr} Healthy Starters: ${oppHealthy || 'See live roster'}`,
+    `${oppAbbr} Depth-Chart Hierarchy & 2026 Production (GROUND TRUTH — respect WR1/RB1/QB1 order!):\n${oppDepthSummary || '  • See Healthy Starters & Injury Designations above'}`,
     `2026 Unit Rank Benchmarks:\n${unitBenchmarks}`,
     `Active 2026 49ers Starters & Verified Stats:\n${activeSfStars}`,
     '',
     'STRICT NON-OVERLAP EDITORIAL ARCHITECTURE (MANDATORY):',
+    `0. OPPONENT DEPTH-CHART ACCURACY: Ground every opponent player ranking/role claim strictly in "${oppAbbr} Depth-Chart Hierarchy & 2026 Production" above—NEVER call injured WR2–WR4/depth players an opponent's "top wideouts" or "#1 option" when a healthy WR1/RB1 star starter with higher snap share/production is Active!`,
     '1. `coachingMatchup` = PURE COORDINATOR CHESS, SCHEME TENDENCIES & SITUATIONAL LEVERS ONLY:',
     '   - ZERO active player names inside `coachingMatchup.summary` or `coachingMatchup.bullets`! Talk strictly about coaches/coordinators (Kyle Shanahan, Raheem Morris, and opponent HC/OC/DC), personnel groupings (21 personnel, 12/21, condensed splits), motion & coverage tendencies (jet motion, orbit motion, spot-drop Cover 3, Tampa-2, two-high, Quarters, Cover 6, cloud-trap, honey-hole, hook/curl, curl/flat, between the numbers, between the hashes), run-scheme vs box math (gap-scheme, pin-and-pull, counter, duo, A- and B-gaps, light boxes), and 3rd-down / red-zone / penalty / game-script triggers backed by exact rankings.',
     '   - `bullets` must have 4 items, each starting with a concrete 3-to-6-word tactical heading and colon (e.g., `"Pass-Game Efficiency & Coverage Shell Delta: Crisp 2-sentence coordinator analysis"` — NEVER write generic placeholder words like `"Subtopic"` or `"Heading"`). Bullet 1 MUST begin with `"Pass-Game Efficiency & Coverage Shell Delta:"`.',
