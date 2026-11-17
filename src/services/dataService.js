@@ -3,7 +3,7 @@
  */
 
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
-import { normalizeScheduleGameItem } from '../engine/seasonStateMachine.js';
+import { normalizeScheduleGameItem, resolveCompleteScheduleModel } from '../engine/seasonStateMachine.js';
 import {
   canonicalInjuryPlayerKey,
   collapseInitialDots,
@@ -388,6 +388,11 @@ export function saveUserPrefs(prefs) {
 }
 
 function structuredCloneFallback(obj) {
+  if (typeof structuredClone === 'function') {
+    try {
+      return structuredClone(obj);
+    } catch {}
+  }
   return JSON.parse(JSON.stringify(obj));
 }
 
@@ -1031,9 +1036,15 @@ export async function loadAll49ersData(basePrefix = './data') {
       podcastIndex,
       beatPodcasts
     };
-    // Persist last-known-good snapshot asynchronously in IndexedDB so future offline/flaky cold boots never brick
-    saveLastKnownGoodRawBundle(structuredCloneFallback(rawFiles)).catch(() => {});
-    return hydrateBundlePostLoad(rawFiles);
+    // Persist last-known-good snapshot off the synchronous critical boot path when IndexedDB is available
+    const hydrated = hydrateBundlePostLoad(rawFiles);
+    if (typeof indexedDB !== 'undefined' && indexedDB) {
+      const idbTimer = setTimeout(() => {
+        saveLastKnownGoodRawBundle(structuredCloneFallback(rawFiles)).catch(() => {});
+      }, 1200);
+      if (typeof idbTimer?.unref === 'function') idbTimer.unref();
+    }
+    return hydrated;
   } catch (primaryErr) {
     const fallbackRaw = await loadLastKnownGoodRawBundle();
     if (fallbackRaw?.meta && fallbackRaw?.roster && fallbackRaw?.scheduleMatchup) {
@@ -1069,7 +1080,7 @@ export async function fetchFresherUpstreamData(currentUpdatedAt = '') {
   await Promise.all(
     candidates.map(async prefix => {
       try {
-        const res = await fetch(`${prefix}/meta.json?t=${Date.now()}`, { cache: 'no-store' });
+        const res = await fetchSingleWithTimeout(`${prefix}/meta.json?t=${Date.now()}`, { cache: 'no-store' }, 6500);
         if (!res.ok) return;
         const meta = await res.json();
         const ts = Date.parse(meta?.updatedAt || '') || 0;
@@ -1166,6 +1177,75 @@ function escapeClientRegex(s = '') {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const ROSTER_MATCH_INDEX_CACHE = new WeakMap();
+
+function getCompiledRosterMatchIndex(rosterPlayers) {
+  const len = rosterPlayers.length;
+  const firstId = String(rosterPlayers[0]?.id || rosterPlayers[0]?.name || '');
+  const lastId = String(rosterPlayers[len - 1]?.id || rosterPlayers[len - 1]?.name || '');
+  const cached = ROSTER_MATCH_INDEX_CACHE.get(rosterPlayers);
+  if (cached && cached.len === len && cached.firstId === firstId && cached.lastId === lastId) {
+    return cached;
+  }
+
+  const surnameCounts = new Map();
+  for (const p of rosterPlayers) {
+    const cleanParts = String(p?.name || '')
+      .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
+      .trim()
+      .split(/\s+/);
+    const sLower = (cleanParts[cleanParts.length - 1] || '').toLowerCase();
+    if (sLower) surnameCounts.set(sLower, (surnameCounts.get(sLower) || 0) + 1);
+  }
+
+  const entries = [];
+  for (const p of rosterPlayers) {
+    const fullLower = String(p?.name || '').replace(/[’‘]/g, "'").toLowerCase().trim();
+    if (!fullLower) continue;
+    const strippedLower = fullLower.replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '').trim();
+    const collapsedStripped = collapseInitialDots(strippedLower);
+    const cleanParts = String(p.name || '')
+      .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
+      .trim()
+      .split(/\s+/);
+    const surname = cleanParts[cleanParts.length - 1] || p.name;
+    const surnameLower = surname.toLowerCase();
+    const isUniqueSurname = surnameLower.length >= 4 && surnameCounts.get(surnameLower) === 1;
+    const escSurname = escapeClientRegex(surnameLower);
+
+    entries.push({
+      player: p,
+      surname,
+      surnameLower,
+      isDeebo: p.name === 'Deebo Samuel Sr.',
+      isCmc: p.name === 'Christian McCaffrey',
+      fullRe: new RegExp(`(?<![a-z0-9])${escapeClientRegex(fullLower)}(?![a-z0-9])`, 'i'),
+      strippedRe:
+        strippedLower.length >= 5 && strippedLower.includes(' ')
+          ? new RegExp(`(?<![a-z0-9])${escapeClientRegex(strippedLower)}(?![a-z0-9])`, 'i')
+          : null,
+      collapsedRe:
+        collapsedStripped.length >= 5 && collapsedStripped.includes(' ')
+          ? new RegExp(`(?<![a-z0-9])${escapeClientRegex(collapsedStripped)}(?![a-z0-9])`, 'i')
+          : null,
+      contextSurnameRe: isUniqueSurname
+        ? new RegExp(
+            `(?:\\b(?:qb|rb|fb|wr|te|ot|og|ol|dt|de|dl|nt|lb|cb|db|saf)s?\\s+${escSurname}\\b|\\b${escSurname}\\s*\\([a-z /,-]{3,28}\\))`,
+            'i'
+          )
+        : null,
+      uniqueSurnameRe:
+        isUniqueSurname && !AMBIGUOUS_BEAT_SURNAMES.has(surnameLower)
+          ? new RegExp(`\\b${escSurname}\\b`, 'i')
+          : null
+    });
+  }
+
+  const built = { len, firstId, lastId, entries };
+  ROSTER_MATCH_INDEX_CACHE.set(rosterPlayers, built);
+  return built;
+}
+
 export function matchPlayersClient(
   text = '',
   rosterPlayers = [],
@@ -1177,67 +1257,44 @@ export function matchPlayersClient(
     .toLowerCase();
   if (!hay || !Array.isArray(rosterPlayers) || rosterPlayers.length === 0) return [];
   const hayCollapsed = collapseInitialDots(hay);
-
-  const surnameCounts = new Map();
-  if (allowUniqueSurnames) {
-    for (const p of rosterPlayers) {
-      const cleanParts = String(p.name || '')
-        .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
-        .trim()
-        .split(/\s+/);
-      const sLower = (cleanParts[cleanParts.length - 1] || '').toLowerCase();
-      if (sLower) surnameCounts.set(sLower, (surnameCounts.get(sLower) || 0) + 1);
-    }
-  }
+  const { entries } = getCompiledRosterMatchIndex(rosterPlayers);
 
   const hits = [];
-  for (const p of rosterPlayers) {
+  for (const e of entries) {
     if (hits.length >= max) break;
-    const fullLower = String(p.name || '').replace(/[’‘]/g, "'").toLowerCase().trim();
-    if (!fullLower) continue;
-    const strippedLower = fullLower.replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '').trim();
-    const collapsedStripped = collapseInitialDots(strippedLower);
-    const cleanParts = String(p.name || '')
-      .replace(/\s+(?:sr\.?|jr\.?|ii|iii|iv|v)$/i, '')
-      .trim()
-      .split(/\s+/);
-    const surname = cleanParts[cleanParts.length - 1] || p.name;
-    const surnameLower = surname.toLowerCase();
+    if (
+      e.surnameLower.length >= 3 &&
+      !hay.includes(e.surnameLower) &&
+      !hayCollapsed.includes(e.surnameLower) &&
+      !(e.isDeebo && hay.includes('deebo')) &&
+      !(e.isCmc && hay.includes('cmc'))
+    ) {
+      continue;
+    }
 
     const matchedFull =
-      new RegExp(`(?<![a-z0-9])${escapeClientRegex(fullLower)}(?![a-z0-9])`, 'i').test(hay) ||
-      (strippedLower.length >= 5 &&
-        strippedLower.includes(' ') &&
-        new RegExp(`(?<![a-z0-9])${escapeClientRegex(strippedLower)}(?![a-z0-9])`, 'i').test(hay)) ||
-      (collapsedStripped.length >= 5 &&
-        collapsedStripped.includes(' ') &&
-        new RegExp(`(?<![a-z0-9])${escapeClientRegex(collapsedStripped)}(?![a-z0-9])`, 'i').test(hayCollapsed)) ||
-      (p.name === 'Deebo Samuel Sr.' && /\bdeebo\b/i.test(hay)) ||
-      (p.name === 'Christian McCaffrey' && /\bcmc\b/i.test(hay));
+      e.fullRe.test(hay) ||
+      (e.strippedRe !== null && e.strippedRe.test(hay)) ||
+      (e.collapsedRe !== null && e.collapsedRe.test(hayCollapsed)) ||
+      (e.isDeebo && /\bdeebo\b/i.test(hay)) ||
+      (e.isCmc && /\bcmc\b/i.test(hay));
 
     const matchedContextualSurname =
-      !matchedFull &&
-      surnameLower.length >= 4 &&
-      surnameCounts.get(surnameLower) === 1 &&
-      new RegExp(
-        `(?:\\b(?:qb|rb|fb|wr|te|ot|og|ol|dt|de|dl|nt|lb|cb|db|saf)s?\\s+${escapeClientRegex(surnameLower)}\\b|\\b${escapeClientRegex(surnameLower)}\\s*\\([a-z /,-]{3,28}\\))`,
-        'i'
-      ).test(hayCollapsed);
+      !matchedFull && allowUniqueSurnames && e.contextSurnameRe !== null && e.contextSurnameRe.test(hayCollapsed);
 
     const matchedUniqueSurname =
       !matchedFull &&
       !matchedContextualSurname &&
       allowUniqueSurnames &&
-      surnameLower.length >= 4 &&
-      surnameCounts.get(surnameLower) === 1 &&
-      !AMBIGUOUS_BEAT_SURNAMES.has(surnameLower) &&
-      new RegExp(`\\b${escapeClientRegex(surnameLower)}\\b`, 'i').test(hay);
+      e.uniqueSurnameRe !== null &&
+      e.uniqueSurnameRe.test(hay);
 
     if (matchedFull || matchedContextualSurname || matchedUniqueSurname) {
+      const p = e.player;
       hits.push({
         id: p.id,
         name: p.name,
-        shortName: p.shortName || `${p.name[0]}. ${surname}`,
+        shortName: p.shortName || `${p.name[0]}. ${e.surname}`,
         position: p.position,
         jersey: p.jersey,
         headshotUrl: p.headshotUrl || ''
@@ -1340,7 +1397,7 @@ export async function hydrateLiveBlueskyBeatWire(appData, { isGameLive = false, 
       try {
         const limit = acct.isNationalInsider ? 25 : isGameLive || manual ? 30 : 22;
         const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acct.actor)}&limit=${limit}&filter=posts_and_author_threads`;
-        const res = await fetch(apiUrl, { cache: 'no-store' });
+        const res = await fetchSingleWithTimeout(apiUrl, { cache: 'no-store' }, 6500);
         if (!res.ok) return;
         const payload = await res.json();
         for (const row of payload.feed || []) {
@@ -1486,12 +1543,7 @@ export async function hydrateLiveBlueskyBeatWire(appData, { isGameLive = false, 
             isInGameInjury: brk.isInGameInjury,
             breakingBadge: brk.breakingBadge,
             breakingPriority: brk.breakingPriority,
-            category: classifyNewsItemCategory({
-              type: 'tweet',
-              title: tweetDisplay.text,
-              fullText: cleanFull,
-              summary: `${cleanExtTitle} ${cleanExtDesc}`.trim()
-            }),
+            category: resolvedCategory,
             signalScore: Math.max(brk.isBreaking ? 92 : 76, sig.signalScore),
             fluffScore: sig.fluffScore,
             isClickbait: false
@@ -1618,7 +1670,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
       try {
         const perPlayerLimit = focusIdStr && String(player.id) === focusIdStr ? 10 : manual ? 6 : 4;
         const apiUrl = `https://site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(player.id)}&limit=${perPlayerLimit}`;
-        const res = await fetch(apiUrl, { cache: 'no-store' });
+        const res = await fetchSingleWithTimeout(apiUrl, { cache: 'no-store' }, 6000);
         if (!res.ok) return;
         const payload = await res.json();
         const feedItems = Array.isArray(payload?.feed) ? payload.feed : [];
@@ -1823,7 +1875,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
 export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   try {
-    const res = await fetch('https://www.rotowire.com/rss/news.php?sport=NFL', { cache: 'no-store' });
+    const res = await fetchSingleWithTimeout('https://www.rotowire.com/rss/news.php?sport=NFL', { cache: 'no-store' }, 6500);
     if (!res.ok) return 0;
     const xml = await res.text();
     if (!xml || !xml.includes('<item')) return 0;
@@ -2000,7 +2052,7 @@ export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false }
 
     if (discovered.length > 0) {
       appData.news.rawStream = sortNewsWithBreakingPriority([...discovered, ...appData.news.rawStream], Date.now(), { appData });
-      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers);
+      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
     }
     return discovered.length;
   } catch {
@@ -2016,9 +2068,10 @@ export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false }
 export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   try {
-    const res = await fetch(
+    const res = await fetchSingleWithTimeout(
       'https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=25&limit=20',
-      { cache: 'no-store' }
+      { cache: 'no-store' },
+      6500
     );
     if (!res.ok) return 0;
     const payload = await res.json();
@@ -2050,12 +2103,16 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
       const mentioned = matchPlayersClient(desc, rosterPlayers, 8);
       const pubIso = new Date(pubMs).toISOString();
       const tweetDisplay = formatTweetBodyForDisplay(fullLine, SHORT_TWEET_FULL_TEXT_LIMIT);
-      const brk = classifyBreakingItem({
-        title: tweetDisplay.text,
-        fullText: fullLine,
-        summary: 'Official San Francisco 49ers NFL transaction wire.',
-        publishedAt: pubIso
-      });
+      const brk = classifyBreakingItem(
+        {
+          title: tweetDisplay.text,
+          fullText: fullLine,
+          summary: 'Official San Francisco 49ers NFL transaction wire.',
+          publishedAt: pubIso
+        },
+        nowMs,
+        { appData }
+      );
 
       existingUrls.add(txUrl);
       existingTextKeys.add(textKey);
@@ -2095,7 +2152,7 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
 
     if (discovered.length > 0) {
       appData.news.rawStream = sortNewsWithBreakingPriority([...discovered, ...appData.news.rawStream], Date.now(), { appData });
-      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers);
+      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
     }
     return discovered.length;
   } catch {
@@ -2113,15 +2170,21 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   try {
     const [nflNewsRes, sfNewsRes, nflTxRes] = await Promise.all([
-      fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=35', { cache: 'no-store' }).catch(
-        () => null
-      ),
-      fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=18', {
-        cache: 'no-store'
-      }).catch(() => null),
-      fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?limit=35', {
-        cache: 'no-store'
-      }).catch(() => null)
+      fetchSingleWithTimeout(
+        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=35',
+        { cache: 'no-store' },
+        6500
+      ).catch(() => null),
+      fetchSingleWithTimeout(
+        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=18',
+        { cache: 'no-store' },
+        6500
+      ).catch(() => null),
+      fetchSingleWithTimeout(
+        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?limit=35',
+        { cache: 'no-store' },
+        6500
+      ).catch(() => null)
     ]);
 
     const [nflNewsJson, sfNewsJson, nflTxJson] = await Promise.all([
@@ -2276,7 +2339,7 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
 
     if (discovered.length > 0) {
       appData.news.rawStream = sortNewsWithBreakingPriority([...discovered, ...appData.news.rawStream], nowMs, { appData });
-      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers);
+      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
     }
     return discovered.length;
   } catch {
@@ -2334,7 +2397,7 @@ export function dedupeRawStreamAtomically(items = []) {
 export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   try {
-    const res = await fetch('https://www.49ers.com/rss/news', { cache: 'no-store' });
+    const res = await fetchSingleWithTimeout('https://www.49ers.com/rss/news', { cache: 'no-store' }, 6500);
     if (!res.ok) return 0;
     const xml = await res.text();
     if (!xml || !xml.includes('<item')) return 0;
@@ -2412,7 +2475,7 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
 
     if (discovered.length > 0) {
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
-      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers);
+      propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
     }
     return discovered.length;
   } catch {
@@ -2428,7 +2491,7 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
 export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 7 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   try {
-    const res = await fetch('https://www.49ers.com/rss/videos', { cache: 'no-store' });
+    const res = await fetchSingleWithTimeout('https://www.49ers.com/rss/videos', { cache: 'no-store' }, 6500);
     if (!res.ok) return 0;
     const xml = await res.text();
     if (!xml || !xml.includes('<item')) return 0;
@@ -2631,7 +2694,7 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
 
     if (discovered.length > 0) {
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
-      propagateLiveItemsToPlayerMentions(discovered.filter(d => d.type !== 'video'), rosterPlayers);
+      propagateLiveItemsToPlayerMentions(discovered.filter(d => d.type !== 'video'), rosterPlayers, appData);
     }
     return discovered.length;
   } catch {
@@ -3910,7 +3973,7 @@ async function fetchOfficial49ersInjuryReportHtmlClient(nowMs = Date.now()) {
     return cachedOfficialInjuryHtml;
   }
   try {
-    const res = await fetch('https://www.49ers.com/team/injury-report/', { cache: 'no-store' });
+    const res = await fetchSingleWithTimeout('https://www.49ers.com/team/injury-report/', { cache: 'no-store' }, 6500);
     if (!res?.ok || typeof res.text !== 'function') return '';
     const html = await res.text();
     if (typeof html === 'string' && html.includes('<table')) {
@@ -3924,27 +3987,87 @@ async function fetchOfficial49ersInjuryReportHtmlClient(nowMs = Date.now()) {
   return '';
 }
 
+function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '', oppName = '' } = {}) {
+  if (!payload || !Array.isArray(payload.injuries)) return null;
+  // Shape 1: Live per-team `?team=<slug|id>` response (`{ team: {...}, injuries: [athleteItem, ...] }`)
+  const firstEntry = payload.injuries[0];
+  const isPerTeamShape =
+    Boolean(payload.team) ||
+    payload.injuries.length === 0 ||
+    (firstEntry && !Array.isArray(firstEntry.injuries) && Boolean(firstEntry.athlete || firstEntry.status || firstEntry.shortComment));
+  if (isPerTeamShape) {
+    if (payload.team) {
+      const teamAbbr = normalizeTeamAbbrClient(payload.team.abbreviation || '');
+      const teamIdStr = String(payload.team.id || '');
+      const teamDisp = String(payload.team.displayName || '');
+      if (isSf) {
+        if (teamIdStr && teamIdStr !== '25' && teamAbbr && teamAbbr !== 'SF' && !/49ers/i.test(teamDisp)) {
+          return null;
+        }
+      } else if (oppAbbr) {
+        if (teamAbbr && teamAbbr !== oppAbbr && (!oppName || teamDisp !== oppName)) {
+          return null;
+        }
+      }
+    }
+    return { injuries: payload.injuries };
+  }
+  // Shape 2: Legacy / test-mock 32-team response (`{ injuries: [{ id: '25', displayName: 'San Francisco 49ers', injuries: [...] }] }`)
+  if (isSf) {
+    return (
+      payload.injuries.find(t => String(t?.id) === '25' || /49ers/i.test(t?.displayName || '')) || null
+    );
+  }
+  if (!oppAbbr) return null;
+  return (
+    payload.injuries.find(t => {
+      const sampleAbbr = normalizeTeamAbbrClient(t?.injuries?.[0]?.athlete?.team?.abbreviation || '');
+      return sampleAbbr === oppAbbr || Boolean(oppName && t?.displayName === oppName);
+    }) || null
+  );
+}
+
 export async function hydrateLiveEspnOverlay(appData) {
   if (!appData?.meta || !appData?.scheduleMatchup) return false;
   let mutated = false;
   let standingsOrScoresChanged = false;
 
-  const fetchCorsJson = async url => {
-    const res = await fetch(url, { cache: 'no-store' });
+  const fetchCorsJson = async (url, timeoutMs = 7500) => {
+    const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, timeoutMs);
     if (!res.ok) return null;
     return res.json();
   };
 
-  const [standingsRaw, scheduleRaw, injuriesRaw, espnNewsRaw, sfRosterRaw, sfDepthRaw, official49ersInjHtml] =
-    await Promise.all([
-      fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
-      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule').catch(() => null),
-      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries').catch(() => null),
-      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null),
-      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster').catch(() => null),
-      fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts').catch(() => null),
-      fetchOfficial49ersInjuryReportHtmlClient().catch(() => '')
-    ]);
+  const initialOppAbbr = normalizeTeamAbbrClient(appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '');
+  const initialOppSlug =
+    initialOppAbbr && initialOppAbbr !== 'SF' && initialOppAbbr !== 'TBD' && initialOppAbbr !== 'BYE'
+      ? toEspnTeamSlugClient(initialOppAbbr)
+      : '';
+
+  const [
+    standingsRaw,
+    scheduleRaw,
+    sfInjuriesRaw,
+    initialOppInjuriesRaw,
+    espnNewsRaw,
+    sfRosterRaw,
+    sfDepthRaw,
+    official49ersInjHtml
+  ] = await Promise.all([
+    fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule').catch(() => null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=25').catch(() => null),
+    initialOppSlug
+      ? fetchCorsJson(
+          `https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(initialOppSlug)}`
+        ).catch(() => null)
+      : Promise.resolve(null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster').catch(() => null),
+    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts').catch(() => null),
+    fetchOfficial49ersInjuryReportHtmlClient().catch(() => '')
+  ]);
+  let oppInjuriesRaw = initialOppInjuriesRaw;
   let combinedEspnArticles = Array.isArray(espnNewsRaw?.articles) ? [...espnNewsRaw.articles] : [];
 
   // Reconcile any newly traded/signed/claimed 49ers players on ESPN's live roster & depth chart immediately
@@ -4222,8 +4345,17 @@ export async function hydrateLiveEspnOverlay(appData) {
       mutated = true;
     }
 
+    const allRegCompletedAfterSync = appData.scheduleMatchup.schedule
+      .filter(g => (g.seasonType || 'REG') === 'REG')
+      .every(g => Boolean(g.completed));
+    const schedModelAfterSync = allRegCompletedAfterSync ? resolveCompleteScheduleModel(appData) : null;
+    const projectedNextPostGame = schedModelAfterSync
+      ? schedModelAfterSync.upcomingGames.find(g => !g.isByeWeek) || null
+      : null;
+
     const nextGame =
       appData.scheduleMatchup.schedule.find(g => !g.completed && !g.isByeWeek) ||
+      projectedNextPostGame ||
       appData.scheduleMatchup.schedule[appData.scheduleMatchup.schedule.length - 1];
 
     if (nextGame) {
@@ -4233,13 +4365,32 @@ export async function hydrateLiveEspnOverlay(appData) {
       if (weekAdvanced) weekAdvancedFlag = true;
       nextGameKickoffIso = nextGame.dateIso || um.kickoffIso || nextGameKickoffIso;
 
+      const sbWonAfterSync = Boolean(
+        schedModelAfterSync?.postseasonGames?.some(
+          g => g.postseasonRound === 'SB' && g.completed && g.result === 'W'
+        )
+      );
+      const isSeasonConcluded = Boolean(
+        allRegCompletedAfterSync &&
+          schedModelAfterSync &&
+          (schedModelAfterSync.postseasonStatus.isEliminated ||
+            sbWonAfterSync ||
+            (!schedModelAfterSync.postseasonStatus.hasClinchedPlayoffs &&
+              schedModelAfterSync.upcomingGames.filter(g => !g.isByeWeek).length === 0))
+      );
+
       appData.meta.currentWeek = nextWk;
-      if (appData.meta.teamStatus) appData.meta.teamStatus.currentWeek = nextWk;
+      if (appData.meta.teamStatus) {
+        appData.meta.teamStatus.currentWeek = nextWk;
+        appData.meta.teamStatus.seasonConcluded = isSeasonConcluded;
+      }
       if (appData.health) appData.health.week = nextWk;
-      um.liveState = nextGame.statusState || um.liveState || 'pre';
 
       const oppAbbr = normalizeTeamAbbrClient(nextGame.opponent?.abbr || um.oppAbbr || 'LV');
-      const oppLiveRec = teamRecords.get(oppAbbr)?.record || nextGame.opponent?.record || um.oppRecord;
+      const isTbdOpponent = Boolean(nextGame.opponent?.isTbd || oppAbbr === 'TBD' || oppAbbr === 'BYE');
+      const oppLiveRec = !isTbdOpponent
+        ? teamRecords.get(oppAbbr)?.record || nextGame.opponent?.record || um.oppRecord
+        : nextGame.opponent?.record || 'Matchup TBD';
       if (oppLiveRec) um.oppRecord = oppLiveRec;
       if (appData.meta.teamRecord) {
         const divOrdPart = (appData.meta.standingSummary || '').split('•')[0]?.trim() || 'NFC West';
@@ -4257,13 +4408,10 @@ export async function hydrateLiveEspnOverlay(appData) {
         um.gameUrl = nextGame.gameUrl || um.gameUrl;
         um.oppAbbr = oppAbbr;
         um.oppName = nextGame.opponent?.name || oppAbbr;
-        um.oppLogoUrl = nextGame.opponent?.logoUrl || buildEspnTeamLogoUrl(oppAbbr);
+        um.oppLogoUrl = isTbdOpponent ? '' : nextGame.opponent?.logoUrl || buildEspnTeamLogoUrl(oppAbbr);
         um.homeAway = nextGame.homeAway || 'home';
         um.dateIso = nextGame.dateIso || um.dateIso || um.kickoffIso;
         um.kickoffIso = nextGame.dateIso || um.kickoffIso;
-        um.liveState = 'pre';
-        um.isGameInProgress = false;
-        um.completed = false;
         um.kickoffDisplay = kickoffFmt;
         um.venue = `${nextGame.venue?.name || ''}${nextGame.venue?.city ? ` (${nextGame.venue.city})` : ''} • ${nextGame.venue?.surface || 'Grass'}`;
         um.aiMatchupMeta = null;
@@ -4275,13 +4423,13 @@ export async function hydrateLiveEspnOverlay(appData) {
             `Trench Run-Fit & Split-Safety Box Math: Raheem Morris anchors the A- and B-gaps out of light boxes while holding disguised two-high shells until the snap before spinning into Quarters, Cover 6, or Robber.`
           ]
         };
-        if (um.franchiseHistory) {
+        if (um.franchiseHistory && !isTbdOpponent) {
           um.franchiseHistory.pfrQueryUrl = buildPfrHeadToHeadUrl('SF', oppAbbr);
         }
         if (um.opponentHealth) {
           um.opponentHealth.teamAbbr = oppAbbr;
           um.opponentHealth.teamName = um.oppName;
-          um.opponentHealth.teamInjuriesUrl = buildEspnTeamInjuriesUrl(oppAbbr);
+          um.opponentHealth.teamInjuriesUrl = isTbdOpponent ? 'https://www.espn.com/nfl/injuries' : buildEspnTeamInjuriesUrl(oppAbbr);
           um.opponentHealth.gameDayRoster = null;
           um.opponentHealth.liveInGameInjuries = [];
           delete um.opponentHealth._preGameInjuryReport;
@@ -4292,92 +4440,120 @@ export async function hydrateLiveEspnOverlay(appData) {
           um.opponentHealth.irReserve = [];
           um.opponentHealth.activeRoster = [];
 
-          const oppSlug = toEspnTeamSlugClient(oppAbbr);
-          const [oppRosterRaw, oppDepthRaw] = await Promise.all([
-            fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/roster`).catch(() => null),
-            fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/depthcharts`).catch(() => null)
-          ]);
+          if (!isTbdOpponent) {
+            const oppSlug = toEspnTeamSlugClient(oppAbbr);
+            const [oppRosterRaw, oppDepthRaw, nextOppInjRaw] = await Promise.all([
+              fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/roster`).catch(() => null),
+              fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/depthcharts`).catch(() => null),
+              oppAbbr !== initialOppAbbr
+                ? fetchCorsJson(
+                    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(oppSlug)}`
+                  ).catch(() => null)
+                : Promise.resolve(oppInjuriesRaw)
+            ]);
+            if (nextOppInjRaw) oppInjuriesRaw = nextOppInjRaw;
 
-          const { allStarterNames: oppStarterSet } = select22OffDefStartersFromDepthChart(
-            oppDepthRaw?.depthchart || [],
-            null,
-            normPlayerNameKey
-          );
-          const oppDepthSlotMap = new Map();
-          for (const dc of oppDepthRaw?.depthchart || []) {
-            if (String(dc?.name || '').toLowerCase().includes('special')) continue;
-            for (const [slotRaw, posObj] of Object.entries(dc?.positions || {})) {
-              const slotUpper = String(slotRaw || '').trim().toUpperCase();
-              if (/^(?:PK|K|P|LS|H|PR|KR)\b/.test(slotUpper)) continue;
-              (posObj?.athletes || []).slice(0, 3).forEach((ath, idx) => {
-                const nk = normPlayerNameKey(ath?.displayName || ath?.fullName || '');
-                if (!nk || oppDepthSlotMap.has(nk)) return;
-                const lbl = /\d$/.test(slotUpper)
-                  ? idx === 0
-                    ? slotUpper
-                    : `${slotUpper} (${idx + 1}nd)`
-                  : idx === 0
-                    ? /^(?:QB|RB|WR|TE)$/.test(slotUpper)
-                      ? `${slotUpper}1`
-                      : slotUpper
-                    : `${slotUpper}${idx + 1}`;
-                oppDepthSlotMap.set(nk, lbl);
-              });
-            }
-          }
-
-          if (oppRosterRaw?.athletes?.length) {
-            const activeOppList = extractActiveRosterFromEspnTeamRoster(oppRosterRaw, oppStarterSet).map(p => ({
-              ...p,
-              depthSlot: oppDepthSlotMap.get(normPlayerNameKey(p.name)) || null
-            }));
-            um.opponentHealth.activeRoster = activeOppList;
-            const starterRolePrio = pos => (['QB', 'WR', 'RB', 'TE', 'DE', 'OLB', 'CB', 'DT', 'S'].includes(pos) ? 0 : 1);
-            um.opponentHealth.keyStartersHealthy = activeOppList
-              .filter(p => p.isStarter && p.unit !== 'Special Teams')
-              .sort((a, b) => starterRolePrio(a.position) - starterRolePrio(b.position))
-              .map(p => ({
-                ...p,
-                gameStatus: 'Active • Off Injury Report',
-                playProbabilityPct: 95,
-                playBadgeLabel: '95% • Full Go',
-                shortComment: 'Listed 1st-string on depth chart; active without game designation.'
-              }));
-
-            const irList = [];
-            for (const grp of oppRosterRaw.athletes) {
-              const gKey = String(grp.position || '');
-              if (gKey !== 'injuredReserveOrOut' && gKey !== 'suspended') continue;
-              for (const ath of grp.items || []) {
-                const nm = ath.fullName || ath.displayName || '';
-                if (!nm) continue;
-                const id = String(ath.id || '');
-                const hs = ath.headshot?.href || (/^\d+$/.test(id) ? `https://a.espncdn.com/i/headshots/nfl/players/full/${id}.png` : '');
-                irList.push({
-                  name: nm,
-                  position: ath.position?.abbreviation || 'ATH',
-                  jersey: ath.jersey != null && ath.jersey !== '' ? Number(ath.jersey) : null,
-                  headshotUrl: hs.startsWith('http://') ? `https://${hs.slice(7)}` : hs,
-                  espnUrl: buildEspnPlayerUrl(id, nm),
-                  status: gKey === 'suspended' ? 'Reserve / Suspended' : 'Injured Reserve',
-                  injuryType: ath.injuries?.[0]?.details?.type || (gKey === 'suspended' ? 'League Suspension' : 'Injured Reserve'),
-                  projectedReturnWeek: 'TBD',
-                  playProbabilityPct: 0,
-                  playBadgeLabel: gKey === 'suspended' ? '0% • Suspended' : '0% • IR'
+            const { allStarterNames: oppStarterSet } = select22OffDefStartersFromDepthChart(
+              oppDepthRaw?.depthchart || [],
+              null,
+              normPlayerNameKey
+            );
+            const oppDepthSlotMap = new Map();
+            for (const dc of oppDepthRaw?.depthchart || []) {
+              if (String(dc?.name || '').toLowerCase().includes('special')) continue;
+              for (const [slotRaw, posObj] of Object.entries(dc?.positions || {})) {
+                const slotUpper = String(slotRaw || '').trim().toUpperCase();
+                if (/^(?:PK|K|P|LS|H|PR|KR)\b/.test(slotUpper)) continue;
+                (posObj?.athletes || []).slice(0, 3).forEach((ath, idx) => {
+                  const nk = normPlayerNameKey(ath?.displayName || ath?.fullName || '');
+                  if (!nk || oppDepthSlotMap.has(nk)) return;
+                  const lbl = /\d$/.test(slotUpper)
+                    ? idx === 0
+                      ? slotUpper
+                      : `${slotUpper} (${idx + 1}nd)`
+                    : idx === 0
+                      ? /^(?:QB|RB|WR|TE)$/.test(slotUpper)
+                        ? `${slotUpper}1`
+                        : slotUpper
+                      : `${slotUpper}${idx + 1}`;
+                  oppDepthSlotMap.set(nk, lbl);
                 });
               }
             }
-            um.opponentHealth.irReserve = irList;
-            um.opponentHealth.summary = computeTeamHealthSummary({
-              injuryReport: um.opponentHealth.injuryReport || [],
-              irReserve: irList,
-              totalStarters: 22
-            });
+
+            if (oppRosterRaw?.athletes?.length) {
+              const activeOppList = extractActiveRosterFromEspnTeamRoster(oppRosterRaw, oppStarterSet).map(p => ({
+                ...p,
+                depthSlot: oppDepthSlotMap.get(normPlayerNameKey(p.name)) || null
+              }));
+              um.opponentHealth.activeRoster = activeOppList;
+              const starterRolePrio = pos => (['QB', 'WR', 'RB', 'TE', 'DE', 'OLB', 'CB', 'DT', 'S'].includes(pos) ? 0 : 1);
+              um.opponentHealth.keyStartersHealthy = activeOppList
+                .filter(p => p.isStarter && p.unit !== 'Special Teams')
+                .sort((a, b) => starterRolePrio(a.position) - starterRolePrio(b.position))
+                .map(p => ({
+                  ...p,
+                  gameStatus: 'Active • Off Injury Report',
+                  playProbabilityPct: 95,
+                  playBadgeLabel: '95% • Full Go',
+                  shortComment: 'Listed 1st-string on depth chart; active without game designation.'
+                }));
+
+              const irList = [];
+              for (const grp of oppRosterRaw.athletes) {
+                const gKey = String(grp.position || '');
+                if (gKey !== 'injuredReserveOrOut' && gKey !== 'suspended') continue;
+                for (const ath of grp.items || []) {
+                  const nm = ath.fullName || ath.displayName || '';
+                  if (!nm) continue;
+                  const id = String(ath.id || '');
+                  const hs = ath.headshot?.href || (/^\d+$/.test(id) ? `https://a.espncdn.com/i/headshots/nfl/players/full/${id}.png` : '');
+                  irList.push({
+                    name: nm,
+                    position: ath.position?.abbreviation || 'ATH',
+                    jersey: ath.jersey != null && ath.jersey !== '' ? Number(ath.jersey) : null,
+                    headshotUrl: hs.startsWith('http://') ? `https://${hs.slice(7)}` : hs,
+                    espnUrl: buildEspnPlayerUrl(id, nm),
+                    status: gKey === 'suspended' ? 'Reserve / Suspended' : 'Injured Reserve',
+                    injuryType: ath.injuries?.[0]?.details?.type || (gKey === 'suspended' ? 'League Suspension' : 'Injured Reserve'),
+                    projectedReturnWeek: 'TBD',
+                    playProbabilityPct: 0,
+                    playBadgeLabel: gKey === 'suspended' ? '0% • Suspended' : '0% • IR'
+                  });
+                }
+              }
+              um.opponentHealth.irReserve = irList;
+              um.opponentHealth.summary = computeTeamHealthSummary({
+                injuryReport: um.opponentHealth.injuryReport || [],
+                irReserve: irList,
+                totalStarters: 22
+              });
+            }
           }
         }
       }
 
-      if (nextGame.id) {
+      // Always synchronize live in-game, final-score, TBD, and season-concluded telemetry onto `upcomingMatchup`
+      const resolvedState = String(nextGame.statusState || (nextGame.completed ? 'post' : 'pre')).toLowerCase();
+      um.liveState = resolvedState;
+      um.isGameInProgress = resolvedState === 'in';
+      um.completed = Boolean(nextGame.completed);
+      um.isTbd = isTbdOpponent;
+      um.seasonConcluded = isSeasonConcluded;
+      if (nextGame.statusDetail) {
+        um.statusDetail = nextGame.statusDetail;
+      }
+      if (um.isGameInProgress || um.completed) {
+        if (nextGame.sfScore != null) um.sfScore = Number(nextGame.sfScore);
+        if (nextGame.oppScore != null) um.oppScore = Number(nextGame.oppScore);
+        if (nextGame.result) um.result = nextGame.result;
+      } else {
+        um.sfScore = null;
+        um.oppScore = null;
+        um.result = null;
+      }
+
+      if (nextGame.id && !String(nextGame.id).startsWith('post_')) {
         const summaryRaw = await fetchCorsJson(
           `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(nextGame.id)}`
         ).catch(() => null);
@@ -4703,17 +4879,21 @@ export async function hydrateLiveEspnOverlay(appData) {
     }
   }
 
-  // 4. Live ESPN Injury Designations (49ers + Upcoming Opponent)
+  // 4. Live ESPN Injury Designations (49ers + Upcoming Opponent — ~277 KB per team instead of 8.76 MB league-wide)
   const earlyWeekBlankPractice = isBeforeWeeklyPracticeWindow(nextGameKickoffIso);
-  if (Array.isArray(injuriesRaw?.injuries)) {
-    const sfTeamInj = injuriesRaw.injuries.find(
-      t => String(t.id) === '25' || /49ers/i.test(t.displayName || '')
-    );
-    const activeOppAbbr = normalizeTeamAbbrClient(appData.scheduleMatchup.upcomingMatchup?.oppAbbr || '');
-    const oppTeamInj = injuriesRaw.injuries.find(t => {
-      const sampleAbbr = normalizeTeamAbbrClient(t.injuries?.[0]?.athlete?.team?.abbreviation || '');
-      return sampleAbbr === activeOppAbbr || (appData.scheduleMatchup.upcomingMatchup?.oppName && t.displayName === appData.scheduleMatchup.upcomingMatchup.oppName);
-    });
+  const activeOppAbbr = normalizeTeamAbbrClient(appData.scheduleMatchup.upcomingMatchup?.oppAbbr || '');
+  const activeOppName = appData.scheduleMatchup.upcomingMatchup?.oppName || '';
+  const sfTeamInj = extractTeamInjuriesFromEspnPayload(sfInjuriesRaw, { isSf: true });
+  const oppTeamInj =
+    activeOppAbbr && activeOppAbbr !== 'TBD' && activeOppAbbr !== 'BYE'
+      ? extractTeamInjuriesFromEspnPayload(oppInjuriesRaw || sfInjuriesRaw, {
+          isSf: false,
+          oppAbbr: activeOppAbbr,
+          oppName: activeOppName
+        })
+      : null;
+
+  if (sfTeamInj?.injuries || oppTeamInj?.injuries) {
 
     if (sfTeamInj?.injuries && Array.isArray(appData.roster?.players)) {
       const rosterByNorm = new Map(appData.roster.players.map(p => [normPlayerNameKey(p.name), p]));
@@ -5632,7 +5812,7 @@ export async function hydrateLiveEspnOverlay(appData) {
         Date.now(),
         { appData }
       );
-      propagateLiveItemsToPlayerMentions(newArts, rosterPlayers);
+      propagateLiveItemsToPlayerMentions(newArts, rosterPlayers, appData);
       mutated = true;
     }
   }
@@ -5812,9 +5992,10 @@ export async function hydrateLive49ersPodcasts(appData) {
   if (!appData) return false;
   try {
     const ids = FLAGSHIP_PODCAST_SHOWS_CLIENT.map(s => s.collectionId).join(',');
-    const res = await fetch(
+    const res = await fetchSingleWithTimeout(
       `https://itunes.apple.com/lookup?id=${ids}&entity=podcastEpisode&limit=12`,
-      { cache: 'no-cache' }
+      { cache: 'no-cache' },
+      8500
     );
     if (!res.ok) return false;
     const payload = await res.json();

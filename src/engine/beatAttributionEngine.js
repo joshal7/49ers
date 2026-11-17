@@ -728,14 +728,6 @@ export const SETTINGS_DIRECT_X_REPORTER_SEEDS = [
   { id: 'brett_kollmann', handle: '@BrettKollmann', outletId: 'youtube_film', category: 'film', styleTag: 'film-breakdown', trustTier: 2 }
 ];
 
-export const TOP_TRUSTED_49ERS_X_HANDLES = Array.from(
-  new Set(
-    SETTINGS_DIRECT_X_REPORTER_SEEDS
-      .filter(r => !NATIONAL_NFL_SETTINGS_REPORTER_IDS.has(r.id) && (r.category === 'beat' || r.category === 'official'))
-      .map(r => r.handle.replace(/^@/, ''))
-  )
-);
-
 export const ALL_VIABLE_49ERS_INJURY_X_HANDLES = [
   'MaioccoNBCS',
   'nwagoner',

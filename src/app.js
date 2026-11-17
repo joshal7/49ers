@@ -1370,20 +1370,6 @@ function bindEvents() {
         renderMain();
         break;
 
-      case 'set-roster-sort': {
-        const nextField = btn.getAttribute('data-sort-field') || 'name';
-        const cur = normalizeRosterSort(state.rosterSort, state.rosterSortDir);
-        if (cur.field === nextField) {
-          state.rosterSortDir = cur.dir === 'asc' ? 'desc' : 'asc';
-        } else {
-          const def = ROSTER_SORT_FIELDS.find(f => f.key === nextField);
-          state.rosterSort = nextField;
-          state.rosterSortDir = def?.defaultDir || 'asc';
-        }
-        renderMain();
-        break;
-      }
-
       case 'toggle-roster-sort-dir': {
         const cur = normalizeRosterSort(state.rosterSort, state.rosterSortDir);
         state.rosterSort = cur.field;
@@ -1408,7 +1394,6 @@ function bindEvents() {
         break;
       }
 
-      case 'open-player':
       case 'open-player-sheet': {
         const pid = btn.getAttribute('data-player-id');
         const player = getPlayerById(pid);
@@ -1701,11 +1686,6 @@ function bindEvents() {
 
       case 'sync-live-wire-now':
         await pollLowLatencyTweetAndInjuryWire(true);
-        break;
-
-      case 'set-pod-duration':
-        state.podDurationMin = Number(btn.getAttribute('data-mins') || 3);
-        renderMain();
         break;
 
       case 'set-pod-format': {
@@ -3224,7 +3204,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=83', { updateViaCache: 'none' })
+        .register('./sw.js?v=89', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

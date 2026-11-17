@@ -439,16 +439,34 @@ function renderSingleDashboardCard({
             </div>
             ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
           </a>`;
+      const homeHasScore = um.sfScore != null && um.oppScore != null;
+      const homeAwayScore = sfIsAway ? um.sfScore : um.oppScore;
+      const homeHomeScore = sfIsAway ? um.oppScore : um.sfScore;
+      const homeSbPill =
+        um.isGameInProgress && homeHasScore
+          ? `LIVE • ${homeAwayScore}–${homeHomeScore}`
+          : um.isGameInProgress
+            ? 'LIVE'
+            : um.completed && homeHasScore
+              ? `FINAL • ${homeAwayScore}–${homeHomeScore}`
+              : um.completed
+                ? 'FINAL'
+                : '@';
+      const homeKickoffSub = um.isGameInProgress
+        ? `${um.statusDetail || 'LIVE'} • ${um.kickoffDisplay || ''}`.replace(/\s*•\s*$/, '')
+        : um.completed
+          ? `${um.statusDetail || 'Final'}${um.seasonConcluded ? ' • Season Complete' : ''}`
+          : um.kickoffDisplay;
       bodyHtml = `
         <div class="matchup-scoreboard">
           ${awayTeamCol}
-          <span class="sb-vs-pill mono">@</span>
+          <span class="sb-vs-pill mono">${esc(homeSbPill)}</span>
           ${homeTeamCol}
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px">
           <div class="inline-icon-meta">
             ${iconSvg('stadium', 14)}
-            <span>${esc(um.kickoffDisplay)} • <strong>${esc(um.betting?.restAdvantage || '')}</strong></span>
+            <span>${esc(homeKickoffSub)}${!um.completed && um.betting?.restAdvantage ? ` • <strong>${esc(um.betting.restAdvantage)}</strong>` : ''}</span>
           </div>
           <span class="badge badge-positive mono">${esc(um.betting?.spread || 'Pick')} • O/U ${esc(um.betting?.overUnder || '—')}</span>
         </div>

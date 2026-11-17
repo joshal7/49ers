@@ -277,79 +277,6 @@ a:hover {
   padding-bottom: calc(var(--bottom-nav-h) + var(--mini-player-h) + env(safe-area-inset-bottom, 0px) + 28px);
 }
 
-/* Phase Status Strip */
-.phase-banner {
-  margin: 12px 12px 0;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, rgba(170, 0, 0, 0.22), rgba(179, 153, 93, 0.12));
-  border: 1px solid var(--gold-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.phase-banner[hidden] {
-  display: none !important;
-}
-
-.phase-banner-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  flex: 1 1 210px;
-}
-
-.phase-icon-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: rgba(179, 153, 93, 0.2);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-bright);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.phase-banner-main {
-  min-width: 0;
-  flex: 1;
-}
-
-.phase-eyebrow {
-  font-size: 10.5px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--gold-bright);
-}
-
-.phase-detail {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.phase-countdown {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-bright);
-  white-space: nowrap;
-  cursor: pointer;
-}
-
 /* Main Content Area */
 .main-view {
   padding: 12px;
@@ -983,6 +910,7 @@ a:hover {
 
 .sort-dir-btn {
   flex-shrink: 0;
+  min-width: 38px;
   min-height: 38px;
   padding: 0 11px;
   white-space: nowrap;
@@ -3033,21 +2961,6 @@ button.featured-player-chip:active {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
 }
 
-.roster-sort-controls {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.sort-dir-btn {
-  min-width: 38px;
-  min-height: 38px;
-  padding: 0 11px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -3836,13 +3749,6 @@ button.featured-player-chip:active {
     padding: 0 9px;
     font-size: 11.5px;
   }
-  .phase-banner {
-    margin: 9px 10px 0;
-    padding: 8px 10px;
-  }
-  .main-view > .phase-banner {
-    margin: 0;
-  }
   .card.subnav-card.season-subnav-card {
     padding: 5px 6px;
     gap: 4px;
@@ -3987,7 +3893,7 @@ button.featured-player-chip:active {
   flex-wrap: wrap;
   padding: 7px 10px;
   border-radius: 11px;
-  background: var(--bg-card);
+  background: var(--bg-card-alt);
   border: 1px solid var(--border-subtle);
   max-width: 100%;
   box-sizing: border-box;
@@ -5241,7 +5147,7 @@ tr.unit-overall-banner.overall-stat-row td {
 
 .subcard-panel.daily-news-brief-card .daily-brief-lead,
 .subcard-panel.daily-news-brief-card .daily-brief-summary {
-  background: var(--bg-card);
+  background: var(--bg-elevated);
 }
 
 .daily-brief-footer {
@@ -5341,7 +5247,7 @@ tr.unit-overall-banner.overall-stat-row td {
 }
 
 .subcard-panel.daily-news-brief-card .daily-brief-source-row {
-  background: var(--bg-card);
+  background: var(--bg-elevated);
 }
 
 .daily-brief-source-row:hover {

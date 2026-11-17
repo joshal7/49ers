@@ -2,13 +2,17 @@
  * 49ers Faithful — Zero-Cost Serverless Edge Worker (Cloudflare Free Tier)
  *
  * Endpoints & Scheduled Tasks:
- * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts
+ * - GET  /api/health             -> Health probe & active Gemini reasoning/audio model metadata
+ * - GET  /api/live-wire          -> 60s KV-cached CORS-proxied beat RSS, harvested X status posts (incl. MP4 clips) & YouTube Atom feeds
+ * - GET  /api/gameday-inactives  -> 90-minute pre-kickoff official club RSS + RotoWire inactives + Top-Tier-Minus-1 Gemini Flash fallback
+ * - GET  /api/video-stream       -> Referer-free HTTP Range relay for allowlisted `video.twimg.com` & ESPN MP4 highlight clips (`GET` + `HEAD`)
+ * - GET  /api/audio/:episodeId   -> Streams cached Stereo WAV/MP3 from Cloudflare R2 with RFC 7233 HTTP `Range` (`206 Partial Content` + `HEAD`)
+ * - GET  /api/shared-feed        -> Returns shared group cache of Deep Analyses & Autopodcasts (`X-Group-Passcode` gated when set)
  * - GET  /api/model-status       -> Returns active Free-Tier Gemini model & cascade (`?poll=1` forces live `/v1beta/models` poll)
- * - GET  /api/audio/:episodeId   -> Streams cached MP3/WAV from Cloudflare R2 (supports HTTP Range for iOS Safari)
- * - POST /api/analyze            -> Runs live On-Demand Deep Analysis (Gemini 4 Hydrogen HIGH Thinking + Google Search Grounding)
- * - POST /api/podcast            -> Generates live Auto Pod script (Gemini 4 Hydrogen HIGH) + Multi-Speaker TTS audio, stores in R2 & indexes in KV
- * - POST /api/daily-news-brief   -> Generates non-time-sensitive 1/day 5:00 PM PT Top-News Brief (Gemini 4 Hydrogen XHIGH)
- * - POST /api/matchup-intel      -> Generates non-time-sensitive 1/day Matchup Intel Briefing (Gemini 4 Hydrogen XHIGH)
+ * - GET|POST /api/daily-news-brief -> Reads or generates non-time-sensitive 1/day 5:00 PM PT Top-News Brief (Gemini 4 Hydrogen `XHIGH`)
+ * - POST /api/matchup-intel      -> Generates non-time-sensitive 1/day Matchup Intel Briefing (Gemini 4 Hydrogen `XHIGH`)
+ * - POST /api/analyze            -> Runs live On-Demand Deep Analysis (Gemini 4 Hydrogen `HIGH` Thinking + Google Search Grounding)
+ * - POST /api/podcast            -> Generates live Auto Pod script (Gemini 4 Hydrogen `HIGH`) + Multi-Speaker TTS audio, stores in R2 & indexes in KV
  * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
  */
 
@@ -161,7 +165,7 @@ export async function pollAndCacheBestFreeModel(env) {
   if (env.GEMINI_API_KEY) {
     try {
       const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}&pageSize=1000`;
-      const res = await fetch(listUrl);
+      const res = await fetch(listUrl, { signal: AbortSignal.timeout(6000) });
       if (res.ok) {
         const json = await res.json();
         if (Array.isArray(json?.models)) {
@@ -536,24 +540,108 @@ export default {
 
     const url = new URL(request.url);
 
-    // Public audio stream route (supports iOS Safari byte-range requests)
-    if (request.method === 'GET' && url.pathname.startsWith('/api/audio/')) {
+    // Public audio stream route (supports iOS Safari HTTP Range 206 Partial Content + HEAD)
+    if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname.startsWith('/api/audio/')) {
       const episodeId = url.pathname.replace('/api/audio/', '').replace(/[^a-zA-Z0-9_-]/g, '');
       if (!env.PODCAST_BUCKET) {
         return jsonResponse({ error: 'R2 bucket not bound' }, 501, cors);
       }
-      const obj = await env.PODCAST_BUCKET.get(`episodes/${episodeId}.wav`);
+      const r2Key = `episodes/${episodeId}.wav`;
+      const rangeHeader = request.method === 'GET' ? request.headers.get('Range') || '' : '';
+      const rangeMatch = rangeHeader.match(/^bytes=(\d*)-(\d*)$/i);
+
+      if (request.method === 'HEAD') {
+        const metaObj =
+          typeof env.PODCAST_BUCKET.head === 'function'
+            ? await env.PODCAST_BUCKET.head(r2Key)
+            : await env.PODCAST_BUCKET.get(r2Key);
+        if (!metaObj) {
+          return jsonResponse({ error: 'Episode audio not found' }, 404, cors);
+        }
+        const totalSize = Number(metaObj.size ?? metaObj.body?.byteLength ?? 0);
+        const headHeaders = {
+          ...cors,
+          'Content-Type': metaObj.httpMetadata?.contentType || 'audio/wav',
+          'Accept-Ranges': 'bytes',
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        };
+        if (totalSize > 0) headHeaders['Content-Length'] = String(totalSize);
+        return new Response(null, { status: 200, headers: headHeaders });
+      }
+
+      if (rangeMatch) {
+        const metaForRange =
+          typeof env.PODCAST_BUCKET.head === 'function' ? await env.PODCAST_BUCKET.head(r2Key) : null;
+        if (typeof env.PODCAST_BUCKET.head === 'function' && !metaForRange) {
+          return jsonResponse({ error: 'Episode audio not found' }, 404, cors);
+        }
+        const rawStart = rangeMatch[1] !== '' ? Number(rangeMatch[1]) : null;
+        const rawEnd = rangeMatch[2] !== '' ? Number(rangeMatch[2]) : null;
+
+        let r2RangeOpt = undefined;
+        if (rawStart !== null && rawEnd !== null && rawEnd >= rawStart) {
+          r2RangeOpt = { offset: rawStart, length: rawEnd - rawStart + 1 };
+        } else if (rawStart !== null && rawEnd === null) {
+          r2RangeOpt = { offset: rawStart };
+        } else if (rawStart === null && rawEnd !== null && rawEnd > 0) {
+          r2RangeOpt = { suffix: rawEnd };
+        }
+
+        const obj = await env.PODCAST_BUCKET.get(r2Key, r2RangeOpt ? { range: r2RangeOpt } : undefined);
+        if (!obj) {
+          return jsonResponse({ error: 'Episode audio not found' }, 404, cors);
+        }
+        const totalSize = Number(obj.size ?? metaForRange?.size ?? obj.body?.byteLength ?? 0);
+        if (totalSize > 0) {
+          let start = rawStart !== null ? rawStart : Math.max(0, totalSize - (rawEnd || totalSize));
+          let end = rawStart !== null && rawEnd !== null ? Math.min(rawEnd, totalSize - 1) : totalSize - 1;
+          if (start < 0 || start >= totalSize || end < start) {
+            return new Response(null, {
+              status: 416,
+              headers: {
+                ...cors,
+                'Content-Range': `bytes */${totalSize}`
+              }
+            });
+          }
+          const expectedLen = end - start + 1;
+          let responseBody = obj.body;
+          // If in-memory mock returned full un-sliced buffer without `obj.range`, slice cleanly to `[start, end + 1)`
+          if (!obj.range && (obj.body instanceof Uint8Array || obj.body instanceof ArrayBuffer)) {
+            const fullView = obj.body instanceof Uint8Array ? obj.body : new Uint8Array(obj.body);
+            if (fullView.byteLength === totalSize && expectedLen < totalSize) {
+              responseBody = fullView.subarray(start, end + 1);
+            }
+          }
+          return new Response(responseBody, {
+            status: 206,
+            headers: {
+              ...cors,
+              'Content-Type': obj.httpMetadata?.contentType || 'audio/wav',
+              'Accept-Ranges': 'bytes',
+              'Content-Range': `bytes ${start}-${end}/${totalSize}`,
+              'Content-Length': String(expectedLen),
+              'Cache-Control': 'public, max-age=31536000, immutable'
+            }
+          });
+        }
+      }
+
+      const obj = await env.PODCAST_BUCKET.get(r2Key);
       if (!obj) {
         return jsonResponse({ error: 'Episode audio not found' }, 404, cors);
       }
+      const fullSize = Number(obj.size ?? obj.body?.byteLength ?? 0);
+      const fullHeaders = {
+        ...cors,
+        'Content-Type': obj.httpMetadata?.contentType || 'audio/wav',
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': 'public, max-age=31536000, immutable'
+      };
+      if (fullSize > 0) fullHeaders['Content-Length'] = String(fullSize);
       return new Response(obj.body, {
         status: 200,
-        headers: {
-          ...cors,
-          'Content-Type': obj.httpMetadata?.contentType || 'audio/wav',
-          'Accept-Ranges': 'bytes',
-          'Cache-Control': 'public, max-age=31536000, immutable'
-        }
+        headers: fullHeaders
       });
     }
 
@@ -572,8 +660,12 @@ export default {
         const upstreamRes = await fetch(targetRaw, {
           method: request.method,
           headers: upstreamHeaders,
-          redirect: 'follow'
+          redirect: 'follow',
+          signal: AbortSignal.timeout(10000)
         });
+        if (upstreamRes.url && !isAllowedInlineVideoStreamUrl(upstreamRes.url)) {
+          return jsonResponse({ error: 'Disallowed redirect target on video stream' }, 403, cors);
+        }
         const respHeaders = new Headers(cors);
         respHeaders.set('Content-Type', upstreamRes.headers.get('Content-Type') || 'video/mp4');
         respHeaders.set('Accept-Ranges', upstreamRes.headers.get('Accept-Ranges') || 'bytes');
@@ -855,14 +947,18 @@ export default {
 
       const [rwHtml, ...clubRssXmls] = await Promise.all([
         fetch('https://www.rotowire.com/football/inactives.php', {
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; 49ersFaithfulEdge/1.0)' }
+          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; 49ersFaithfulEdge/1.0)' },
+          signal: AbortSignal.timeout(5000)
         })
           .then(r => (r.ok ? r.text() : ''))
           .catch(() => ''),
         ...teams.map(abbr => {
           const rssUrl = NFL_TEAM_OFFICIAL_RSS_URLS[abbr];
           if (!rssUrl) return Promise.resolve('');
-          return fetch(rssUrl, { headers: { 'User-Agent': '49ersFaithfulEdge/1.0' } })
+          return fetch(rssUrl, {
+            headers: { 'User-Agent': '49ersFaithfulEdge/1.0' },
+            signal: AbortSignal.timeout(5000)
+          })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => '');
         })
@@ -904,6 +1000,7 @@ export default {
             const gRes = await fetch(geminiUrl, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
+              signal: AbortSignal.timeout(12000),
               body: JSON.stringify({
                 systemInstruction: {
                   parts: [
@@ -1461,7 +1558,6 @@ export default {
       const effectiveSystemPrompt = clientSystemPrompt
         ? `${EDITORIAL_SYSTEM_PROMPT}\n\n${clientSystemPrompt}`
         : EDITORIAL_SYSTEM_PROMPT;
-      const targetWords = Math.round(durationMinutes * 145);
 
       if (!topic) {
         return jsonResponse({ error: 'Topic is required' }, 400, cors);

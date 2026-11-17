@@ -369,7 +369,7 @@ Under Defensive Coordinator **Raheem Morris**, pairing **DeForest Buckner** (6'7
 function findEdgeTtsPython() {
   const candidates = [
     process.env.EDGE_TTS_PYTHON,
-    '/Users/joshal/.gemini/antigravity/brain/c0f17fdc-d6dd-435f-beaf-ea2a3251feec/scratch/tts-env/bin/python3',
+    path.join(rootDir, '.venv', 'bin', 'python3'),
     'python3'
   ].filter(Boolean);
 

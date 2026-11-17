@@ -21,7 +21,7 @@ For **all conversations in the `49ers` workspace** where the user asks for a cha
 
 3. **Comprehensive QA Testing (Build New Coverage + Run Existing Suites)**:
    - Add targeted unit, holistic regression, and/or headless Chrome mobile E2E assertions—or build new dedicated QA test suites when warranted—to verify the new behavior and its edge cases.
-   - Run applicable existing QA suites, including the full mandatory `npm test` (`tests/unit-engines-qa.mjs`, `tests/holistic-qa-regressions.mjs`, and `tests/e2e-mobile-qa.mjs`), ensuring **0 failures, 0 horizontal overflow across all viewports, and 0 console/page/network errors**.
+   - Run applicable existing QA suites, including the full mandatory `npm test` (`tests/unit-engines-qa.mjs`, `tests/holistic-qa-regressions.mjs`, `tests/timeliness-simulation-qa.mjs`, and `tests/e2e-mobile-qa.mjs`), ensuring **0 failures, 0 horizontal overflow across all viewports, and 0 console/page/network errors**.
 
 4. **Commit, Push to GitHub & Go Live**:
    - When client assets (`index.html`, `src/**`, `manifest.json`, `assets/**`) change, bump cache-busters (`sw.js` `CACHE_NAME` and `index.html` `?v=` asset query strings) so PWA clients pick up the update immediately.

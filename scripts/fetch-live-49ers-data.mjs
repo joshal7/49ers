@@ -3966,8 +3966,9 @@ async function main() {
   });
   const { teamStats, teamStatRankings } = teamStatsPayload;
 
-  // Build Live Upcoming Matchup (auto-advances every week as games complete!)
-  const nextScheduledGame = scheduleItems.find(g => !g.completed) || scheduleItems[scheduleItems.length - 1];
+  // Build Live Upcoming Matchup (auto-advances every week as games complete, skipping Bye weeks!)
+  const nextScheduledGame =
+    scheduleItems.find(g => !g.completed && !g.isByeWeek) || scheduleItems[scheduleItems.length - 1];
   const currentWeek = Number(nextScheduledGame?.week || detectedCurrentWeek || 9);
   const oppAbbrTarget = nextScheduledGame?.opponent?.abbr || 'LV';
   const oppNameTarget = nextScheduledGame?.opponent?.name || 'Las Vegas Raiders';
@@ -4741,7 +4742,7 @@ async function main() {
         unit: classifyRosterUnit(offOppRec.position || '', ''),
         jersey: meta?.jersey ?? null,
         headshotUrl: meta?.headshotUrl || '',
-        espnUrl: meta?.espnUrl || buildEspnTeamInjuriesUrl(nextOppAbbr),
+        espnUrl: meta?.espnUrl || buildEspnTeamInjuriesUrl(oppAbbrTarget),
         snapPct: getOppSnapPct(nk),
         wed: offOppRec.wed,
         thu: offOppRec.thu,
@@ -5106,6 +5107,14 @@ async function main() {
     week: currentWeek,
     gameId: nextScheduledGame?.id || null,
     homeAway: sfIsHome ? 'home' : 'away',
+    liveState: String(nextScheduledGame?.statusState || (nextScheduledGame?.completed ? 'post' : 'pre')).toLowerCase(),
+    isGameInProgress: String(nextScheduledGame?.statusState || '').toLowerCase() === 'in',
+    completed: Boolean(nextScheduledGame?.completed),
+    isTbd: Boolean(nextScheduledGame?.opponent?.isTbd || oppAbbrTarget === 'TBD' || oppAbbrTarget === 'BYE'),
+    sfScore: nextScheduledGame?.sfScore ?? null,
+    oppScore: nextScheduledGame?.oppScore ?? null,
+    result: nextScheduledGame?.result || null,
+    statusDetail: nextScheduledGame?.statusDetail || '',
     gameUrl: nextScheduledGame?.gameUrl || 'https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers',
     injurySourceUrl: 'https://www.espn.com/nfl/injuries',
     sfInjuryReportUrl: 'https://www.49ers.com/team/injury-report/',
@@ -5625,7 +5634,12 @@ async function main() {
     upcomingMatchup.keyMatchupsMatrix = prevUmAiCached.keyMatchupsMatrix;
     upcomingMatchup.aiMatchupMeta = prevUmAiCached.aiMatchupMeta;
     console.log(`[1/Day Matchup AI] Reusing cached ${todayPt} PT Gemini 4 Hydrogen (XHIGH) matchup briefing (0 credits spent).`);
-  } else if (process.env.GEMINI_API_KEY) {
+  } else if (
+    process.env.GEMINI_API_KEY &&
+    !nextScheduledGame?.completed &&
+    oppAbbrTarget !== 'TBD' &&
+    oppAbbrTarget !== 'BYE'
+  ) {
     try {
       const livePromptAppData = {
         meta: { seasonYear, currentWeek, teamRecord: sfStandingsDetail.record },

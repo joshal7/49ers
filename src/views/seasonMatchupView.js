@@ -731,14 +731,34 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
         ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
       </a>`;
 
+  const hasLiveOrFinalScore = um.sfScore != null && um.oppScore != null;
+  const sbAwayScore = sfIsAway ? um.sfScore : um.oppScore;
+  const sbHomeScore = sfIsAway ? um.oppScore : um.sfScore;
+  const sbCenterPill =
+    um.isGameInProgress && hasLiveOrFinalScore
+      ? `LIVE • ${sbAwayScore}–${sbHomeScore}`
+      : um.isGameInProgress
+        ? 'LIVE'
+        : um.completed && hasLiveOrFinalScore
+          ? `FINAL • ${sbAwayScore}–${sbHomeScore}`
+          : um.completed
+            ? 'FINAL'
+            : '@';
+  const matchupEyebrow = um.isGameInProgress
+    ? `${um.statusDetail || 'LIVE'} • ${um.kickoffDisplay || ''}`.replace(/\s*•\s*$/, '')
+    : um.completed
+      ? `${um.statusDetail || 'Final'}${um.seasonConcluded ? ' • Season Complete' : ''}`
+      : um.kickoffDisplay;
+  const matchupHeading = um.completed ? `Week ${um.week} Final` : `Week ${um.week} Matchup`;
+
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('swords', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">${esc(um.kickoffDisplay)}</div>
-            <h2 class="card-title">Week ${um.week} Matchup</h2>
+            <div class="card-eyebrow">${esc(matchupEyebrow)}</div>
+            <h2 class="card-title">${esc(matchupHeading)}</h2>
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
@@ -750,7 +770,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
 
       <div class="matchup-scoreboard">
         ${awayColHtml}
-        <span class="sb-vs-pill mono">@</span>
+        <span class="sb-vs-pill mono">${esc(sbCenterPill)}</span>
         ${homeColHtml}
       </div>
 

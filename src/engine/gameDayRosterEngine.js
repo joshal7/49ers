@@ -6,8 +6,11 @@
 import {
   collapseInitialDots,
   computePlayerPlayProbability,
+  getPracticeReportLeadDays,
   scopeBeatTextToPlayer
 } from './injuryProbabilityModel.js';
+
+export { getPracticeReportLeadDays };
 
 export const GAME_DAY_INACTIVES_LEAD_MS = 90 * 60_000; // 90 minutes before kickoff
 const MAX_LIVE_GAME_DURATION_MS = 5.25 * 3600_000;
@@ -214,7 +217,7 @@ function getCachedPlayerRegex(cleanEscapedName) {
 /**
  * Determines whether the upcoming game's weekly practice report window has started yet.
  * NFL teams release their first weekly practice report on Wednesday afternoon (~12:30-1:30 PM PT)
- * for Sunday/Saturday/Monday games (or Monday afternoon for Thursday games).
+ * for Sunday games (Monday for Thursday/Wednesday games, Tuesday for Friday/Saturday games, Thursday for Monday games).
  * Before that window, W / T / F columns must remain blank (`'-'`).
  */
 export function isBeforeWeeklyPracticeWindow(upcomingGameDateIso = '', nowMs = Date.now()) {
@@ -224,11 +227,10 @@ export function isBeforeWeeklyPracticeWindow(upcomingGameDateIso = '', nowMs = D
   if (ts >= kickoffMs) return false;
 
   // DST-accurate Pacific calendar day & time-of-day check:
-  // First weekly practice report drops ~12:15 PM PT on Wednesday for Sunday games
-  // (Monday for Thursday games, Tuesday for Saturday games, Thursday for Monday games).
+  // First weekly practice report drops ~12:15 PM PT on Practice Day 1 (`getPracticeReportLeadDays`).
   const koPt = extractPacificParts(kickoffMs);
   const nowPt = extractPacificParts(ts);
-  const leadDays = koPt.weekday === 'Thu' ? 3 : 4;
+  const leadDays = getPracticeReportLeadDays(koPt.weekday);
   const firstReportOpenMinutesPt = 12 * 60 + 15; // 12:15 PM PT
   const daysUntilGamePt = koPt.dayIndex - nowPt.dayIndex;
 

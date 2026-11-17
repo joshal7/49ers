@@ -412,6 +412,73 @@ const NON_FIRST_NAME_STOPWORDS = new Set([
   'today', 'yesterday', 'tomorrow', 'practice', 'status', 'update', 'report', 'niners', 'francisco'
 ]);
 
+const PLAYER_CLAUSE_MATCHER_CACHE = new Map();
+
+function getCompiledPlayerClauseMatcher(rawPlayer) {
+  let cached = PLAYER_CLAUSE_MATCHER_CACHE.get(rawPlayer);
+  if (cached) return cached;
+  if (PLAYER_CLAUSE_MATCHER_CACHE.size >= 512) {
+    PLAYER_CLAUSE_MATCHER_CACHE.clear();
+  }
+  const fullStripped = stripGenerationalSuffix(rawPlayer);
+  const fullCollapsed = collapseInitialDots(fullStripped).toLowerCase();
+  const fullRawLower = fullStripped.toLowerCase();
+  const isDeebo = /^deebo samuel\b/i.test(fullStripped);
+  const isCmc = /^christian mccaffrey$/i.test(fullStripped);
+  const parts = fullCollapsed.split(/\s+/).filter(Boolean);
+  const rawParts = fullStripped.split(/\s+/).filter(Boolean);
+  const surname = parts[parts.length - 1] || '';
+  const rawSurname = rawParts[rawParts.length - 1] || surname;
+  const targetFirst = (parts[0] || '').replace(/\./g, '');
+
+  const fullRawRe =
+    fullRawLower.length >= 4
+      ? new RegExp(`(?<![a-z0-9])${escapeRegexLiteral(fullRawLower)}(?![a-z0-9])`, 'i')
+      : null;
+  const fullCollapsedRe =
+    fullCollapsed.length >= 4
+      ? new RegExp(`(?<![a-z0-9])${escapeRegexLiteral(fullCollapsed)}(?![a-z0-9])`, 'i')
+      : null;
+  const capBeforePattern =
+    surname.length >= 4
+      ? `\\b((?:[A-Z]\\.){1,3}|[A-Z][A-Za-z'-]*[A-Za-z])\\s+${escapeRegexLiteral(rawSurname)}\\b`
+      : '';
+  const posPrefixRe =
+    surname.length >= 4
+      ? new RegExp(
+          `\\b(qb|rb|fb|wr|te|lt|lg|c|rg|rt|ot|og|ol|dt|de|dl|edge|nt|lb|ilb|olb|mlb|cb|nb|db|s|fs|ss|saf)s?\\s+${escapeRegexLiteral(surname)}\\b`,
+          'i'
+        )
+      : null;
+  const injParenRe =
+    surname.length >= 4
+      ? new RegExp(`\\b${escapeRegexLiteral(surname)}\\s*\\([a-z /,-]{3,28}\\)`, 'i')
+      : null;
+  const surnameStandaloneRe =
+    surname.length >= 4 && !AMBIGUOUS_CLAUSE_SURNAMES.has(surname)
+      ? new RegExp(`\\b${escapeRegexLiteral(surname)}\\b`, 'i')
+      : null;
+
+  cached = {
+    fullStripped,
+    fullCollapsed,
+    fullRawLower,
+    isDeebo,
+    isCmc,
+    surname,
+    rawSurname,
+    targetFirst,
+    fullRawRe,
+    fullCollapsedRe,
+    capBeforePattern,
+    posPrefixRe,
+    injParenRe,
+    surnameStandaloneRe
+  };
+  PLAYER_CLAUSE_MATCHER_CACHE.set(rawPlayer, cached);
+  return cached;
+}
+
 /**
  * Checks whether a single clause/sentence mentions `playerName` (handling dotted/dotless initials like
  * `C.J. West` <-> `CJ West`, suffixes like `Deebo Samuel Sr.` <-> `Deebo Samuel`, nicknames like `Deebo` / `CMC`,
@@ -426,93 +493,142 @@ export function doesClauseMentionPlayer(
   const rawPlayer = String(playerName || '').replace(/[’‘]/g, "'").trim();
   if (!rawClause || !rawPlayer) return false;
 
+  const matcher = getCompiledPlayerClauseMatcher(rawPlayer);
+  const rawClauseLower = rawClause.toLowerCase();
+
+  // Fast substring bailout: if neither the surname nor nickname token appears anywhere in the clause, skip regexes
+  if (
+    matcher.surname.length >= 3 &&
+    !rawClauseLower.includes(matcher.surname) &&
+    !(matcher.isDeebo && rawClauseLower.includes('deebo')) &&
+    !(matcher.isCmc && rawClauseLower.includes('cmc'))
+  ) {
+    return false;
+  }
+
   const clauseNorm = collapseInitialDots(rawClause).toLowerCase();
-  const fullStripped = stripGenerationalSuffix(rawPlayer);
-  const fullCollapsed = collapseInitialDots(fullStripped).toLowerCase();
-  const fullRawLower = fullStripped.toLowerCase();
 
-  if (fullRawLower.length >= 4 && new RegExp(`(?<![a-z0-9])${escapeRegexLiteral(fullRawLower)}(?![a-z0-9])`, 'i').test(rawClause.toLowerCase())) {
+  if (matcher.fullRawRe && matcher.fullRawRe.test(rawClauseLower)) {
     return true;
   }
-  if (fullCollapsed.length >= 4 && new RegExp(`(?<![a-z0-9])${escapeRegexLiteral(fullCollapsed)}(?![a-z0-9])`, 'i').test(clauseNorm)) {
+  if (matcher.fullCollapsedRe && matcher.fullCollapsedRe.test(clauseNorm)) {
     return true;
   }
-  if (/^deebo samuel\b/i.test(fullStripped) && /\bdeebo\b/i.test(clauseNorm)) {
+  if (matcher.isDeebo && /\bdeebo\b/i.test(clauseNorm)) {
     return true;
   }
-  if (/^christian mccaffrey$/i.test(fullStripped) && /\bcmc\b/i.test(clauseNorm)) {
+  if (matcher.isCmc && /\bcmc\b/i.test(clauseNorm)) {
     return true;
   }
 
-  if (allowSurname) {
-    const parts = fullCollapsed.split(/\s+/).filter(Boolean);
-    const rawParts = fullStripped.split(/\s+/).filter(Boolean);
-    const surname = parts[parts.length - 1] || '';
-    const rawSurname = rawParts[rawParts.length - 1] || surname;
-    if (surname.length >= 4) {
-      const targetFirst = (parts[0] || '').replace(/\./g, '');
+  if (allowSurname && matcher.surname.length >= 4) {
+    const { surname, targetFirst } = matcher;
 
-      // Guard 1: Reject immediately if every occurrence of `<CapitalizedWord> <Surname>` in `rawClause`
-      // is a DIFFERENT person's first name (e.g., "LT Trent Williams (shoulder)" must NEVER match "Mykel Williams"!)
-      const capBeforeMatches = [
-        ...rawClause.matchAll(
-          new RegExp(`\\b((?:[A-Z]\\.){1,3}|[A-Z][A-Za-z'-]*[A-Za-z])\\s+${escapeRegexLiteral(rawSurname)}\\b`, 'g')
-        )
-      ];
-      if (capBeforeMatches.length > 0) {
-        let sawConflictingFirstName = false;
-        let sawMatchingOrNeutral = false;
-        for (const cm of capBeforeMatches) {
-          const foundFirst = collapseInitialDots(cm[1]).toLowerCase().replace(/\./g, '');
-          if (NON_FIRST_NAME_STOPWORDS.has(foundFirst)) {
-            sawMatchingOrNeutral = true;
-          } else if (foundFirst === targetFirst) {
-            sawMatchingOrNeutral = true;
-          } else {
-            sawConflictingFirstName = true;
-          }
-        }
-        if (sawConflictingFirstName && !sawMatchingOrNeutral) {
-          return false;
+    // Guard 1: Reject immediately if every occurrence of `<CapitalizedWord> <Surname>` in `rawClause`
+    // is a DIFFERENT person's first name (e.g., "LT Trent Williams (shoulder)" must NEVER match "Mykel Williams"!)
+    const capBeforeMatches = [...rawClause.matchAll(new RegExp(matcher.capBeforePattern, 'g'))];
+    if (capBeforeMatches.length > 0) {
+      let sawConflictingFirstName = false;
+      let sawMatchingOrNeutral = false;
+      for (const cm of capBeforeMatches) {
+        const foundFirst = collapseInitialDots(cm[1]).toLowerCase().replace(/\./g, '');
+        if (NON_FIRST_NAME_STOPWORDS.has(foundFirst) || foundFirst === targetFirst) {
+          sawMatchingOrNeutral = true;
+        } else {
+          sawConflictingFirstName = true;
         }
       }
-
-      const isSharedRosterSurname = Boolean(sharedSurnames instanceof Set && sharedSurnames.has(surname));
-
-      // Check explicit position-prefixed mention (e.g., "LT Williams", "CBs Green", "DT West")
-      const posPrefixMatch = clauseNorm.match(
-        new RegExp(
-          `\\b(qb|rb|fb|wr|te|lt|lg|c|rg|rt|ot|og|ol|dt|de|dl|edge|nt|lb|ilb|olb|mlb|cb|nb|db|s|fs|ss|saf)s?\\s+${escapeRegexLiteral(surname)}\\b`,
-          'i'
-        )
-      );
-      if (posPrefixMatch) {
-        if (!playerPosition || arePositionTokensCompatible(posPrefixMatch[1], playerPosition)) {
-          return true;
-        }
+      if (sawConflictingFirstName && !sawMatchingOrNeutral) {
         return false;
       }
+    }
 
-      // Check injury-parenthetical mention (e.g., "Green (back)", "West (knee)", or owner-scoped "Williams (shoulder)")
-      const injParenRe = new RegExp(`\\b${escapeRegexLiteral(surname)}\\s*\\([a-z /,-]{3,28}\\)`, 'i');
-      if (injParenRe.test(clauseNorm)) {
-        // If 2+ teammates share this surname (e.g., Trent Williams + Mykel Williams), require `isPrimaryOwner` or position/first-name disambiguation!
-        if (!isSharedRosterSurname || isPrimaryOwner) {
-          return true;
-        }
-        return false;
+    const isSharedRosterSurname = Boolean(sharedSurnames instanceof Set && sharedSurnames.has(surname));
+
+    // Check explicit position-prefixed mention (e.g., "LT Williams", "CBs Green", "DT West")
+    const posPrefixMatch = matcher.posPrefixRe ? clauseNorm.match(matcher.posPrefixRe) : null;
+    if (posPrefixMatch) {
+      if (!playerPosition || arePositionTokensCompatible(posPrefixMatch[1], playerPosition)) {
+        return true;
       }
+      return false;
+    }
 
-      if (!AMBIGUOUS_CLAUSE_SURNAMES.has(surname) && (!isSharedRosterSurname || isPrimaryOwner)) {
-        const surnameStandaloneRe = new RegExp(`\\b${escapeRegexLiteral(surname)}\\b`, 'i');
-        if (surnameStandaloneRe.test(clauseNorm)) {
-          return true;
-        }
+    // Check injury-parenthetical mention (e.g., "Green (back)", "West (knee)", or owner-scoped "Williams (shoulder)")
+    if (matcher.injParenRe && matcher.injParenRe.test(clauseNorm)) {
+      if (!isSharedRosterSurname || isPrimaryOwner) {
+        return true;
+      }
+      return false;
+    }
+
+    if (matcher.surnameStandaloneRe && (!isSharedRosterSurname || isPrimaryOwner)) {
+      if (matcher.surnameStandaloneRe.test(clauseNorm)) {
+        return true;
       }
     }
   }
   return false;
 }
+
+const CURATED_PRIOR_PLAYER_NAMES = Object.keys(CURATED_NFL_PLAYER_PRIORS);
+const CANDIDATE_ROSTER_ENTRIES_CACHE = new WeakMap();
+let EMPTY_ROSTER_CANDIDATE_ENTRIES = null;
+
+function buildCandidatePlayerEntries(rosterPlayerNames) {
+  const seen = new Set();
+  const entries = [];
+  const pushName = raw => {
+    if (!raw) return;
+    const stripped = stripGenerationalSuffix(raw);
+    const strippedLower = stripped.toLowerCase();
+    if (!strippedLower || seen.has(strippedLower)) return;
+    seen.add(strippedLower);
+    const surname =
+      collapseInitialDots(stripped)
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean)
+        .pop() || '';
+    entries.push({ name: raw, strippedLower, surname });
+  };
+  for (const n of CURATED_PRIOR_PLAYER_NAMES) pushName(n);
+  if (Array.isArray(rosterPlayerNames)) {
+    for (const n of rosterPlayerNames) pushName(n);
+  }
+  return entries;
+}
+
+function getCachedCandidatePlayerEntries(rosterPlayerNames) {
+  if (!Array.isArray(rosterPlayerNames) || rosterPlayerNames.length === 0) {
+    if (!EMPTY_ROSTER_CANDIDATE_ENTRIES) {
+      EMPTY_ROSTER_CANDIDATE_ENTRIES = buildCandidatePlayerEntries([]);
+    }
+    return EMPTY_ROSTER_CANDIDATE_ENTRIES;
+  }
+  let cached = CANDIDATE_ROSTER_ENTRIES_CACHE.get(rosterPlayerNames);
+  if (!cached) {
+    cached = buildCandidatePlayerEntries(rosterPlayerNames);
+    CANDIDATE_ROSTER_ENTRIES_CACHE.set(rosterPlayerNames, cached);
+  }
+  return cached;
+}
+
+const SCOPE_NON_PLAYER_PAIRS = new Set([
+  'san francisco', 'las vegas', 'vegas raiders', 'dallas cowboys', 'los angeles', 'angeles rams', 'angeles chargers',
+  'green bay', 'bay packers', 'tampa bay', 'bay buccaneers', 'new orleans', 'orleans saints', 'new england',
+  'england patriots', 'new york', 'york giants', 'york jets', 'kansas city', 'city chiefs', 'minnesota vikings',
+  'seattle seahawks', 'arizona cardinals', 'atlanta falcons', 'detroit lions', 'chicago bears', 'philadelphia eagles',
+  'washington commanders', 'carolina panthers', 'buffalo bills', 'miami dolphins', 'baltimore ravens',
+  'cincinnati bengals', 'cleveland browns', 'pittsburgh steelers', 'houston texans', 'indianapolis colts',
+  'jacksonville jaguars', 'tennessee titans', 'denver broncos', 'mexico city', 'super bowl', 'pro bowl', 'all pro',
+  'kyle shanahan', 'john lynch', 'robert saleh', 'kevin oconnell', "kevin o'connell", 'sean mcvay', 'mike macdonald',
+  'dan campbell', 'matt lafleur', 'matt barrows', 'matt maiocco', 'nick wagoner', 'david lombardi', 'cam inman',
+  'eric branch', 'vic tafur', 'sam warren', 'noah furtado', 'jennifer lee', 'lee chan', 'adam schefter',
+  'ian rapoport', 'tom pelissero', 'mike garafolo', 'jeremy fowler', 'david bonilla', 'kyle posey', 'patrick holloway',
+  'injured reserve', 'practice squad', 'head coach', 'medical staff', 'athletic trainers', 'blue tent', 'medical tent',
+  'bay area', 'nfl network', 'the athletic', 'niners nation', 'niners wire', 'sports illustrated'
+]);
 
 /**
  * Scopes multi-sentence / multi-player beat notes or tweets to ONLY the clauses pertaining to `targetPlayerName`,
@@ -532,22 +648,26 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
     .filter(Boolean);
 
   const targetStripped = stripGenerationalSuffix(target);
-  const targetParts = collapseInitialDots(targetStripped).toLowerCase().split(/\s+/).filter(Boolean);
+  const targetStrippedLower = targetStripped.toLowerCase();
+  const targetCollapsed = collapseInitialDots(targetStripped).toLowerCase();
+  const targetParts = targetCollapsed.split(/\s+/).filter(Boolean);
   const targetSurname = targetParts[targetParts.length - 1] || '';
   const targetRawSurname = (targetStripped.split(/\s+/).filter(Boolean).pop() || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const capSurnameRe =
+    targetRawSurname && targetSurname.length >= 4
+      ? new RegExp(`(?<![A-Za-z0-9])${targetRawSurname}(?:['’]s)?(?![A-Za-z0-9])`)
+      : null;
+  const diffFirstSurnameRe =
+    targetRawSurname && targetSurname.length >= 4
+      ? new RegExp(`\\b((?:[A-Z]\\.){1,3}|[A-Z][A-Za-z'-]*[A-Za-z])\\s+${targetRawSurname}\\b`, 'g')
+      : null;
 
-  const candidateOthers = [
-    ...new Set([
-      ...Object.keys(CURATED_NFL_PLAYER_PRIORS),
-      ...(rosterPlayerNames || [])
-    ])
-  ].filter(n => n && stripGenerationalSuffix(n).toLowerCase() !== targetStripped.toLowerCase());
+  const candidateOthers = getCachedCandidatePlayerEntries(rosterPlayerNames);
 
   const doesClauseMentionContextualTargetSurname = clause => {
-    if (!targetRawSurname || targetSurname.length < 4) return false;
+    if (!capSurnameRe) return false;
     // Match capitalized surname ("Green left...", "Green's back...") once target full name has already been introduced,
     // while strictly rejecting team/place/idiom phrases ("Green Bay", "Green Wave", "Green Room", "NFC West", "AFC West")
-    const capSurnameRe = new RegExp(`(?<![A-Za-z0-9])${targetRawSurname}(?:['’]s)?(?![A-Za-z0-9])`);
     if (!capSurnameRe.test(clause)) return false;
     if (
       /\b(?:Green\s+(?:Bay|Wave|Room|Light|Zone|Berets?)|(?:NFC|AFC)\s+(?:West|North|South|East)|West\s+(?:Coast|Virginia)|White\s+House|New\s+York|Long\s+(?:Island|Beach|Snapper))\b/.test(
@@ -561,9 +681,7 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
       if (!capSurnameRe.test(strippedPlaces)) return false;
     }
     // Reject if preceded by a different capitalized first name (e.g. "A.J. Green" or "Quinnen Williams")
-    const diffFirstMatch = [
-      ...clause.matchAll(new RegExp(`\\b((?:[A-Z]\\.){1,3}|[A-Z][A-Za-z'-]*[A-Za-z])\\s+${targetRawSurname}\\b`, 'g'))
-    ];
+    const diffFirstMatch = [...clause.matchAll(diffFirstSurnameRe)];
     if (diffFirstMatch.length > 0) {
       const targetFirst = (targetParts[0] || '').replace(/\./g, '');
       const hasValidOrNeutral = diffFirstMatch.some(m => {
@@ -581,37 +699,17 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
       return true;
     }
     for (const other of candidateOthers) {
-      const otherSurname = collapseInitialDots(stripGenerationalSuffix(other))
-        .toLowerCase()
-        .split(/\s+/)
-        .filter(Boolean)
-        .pop();
-      const allowOtherSurname = Boolean(otherSurname && otherSurname !== targetSurname);
-      if (doesClauseMentionPlayer(clause, other, { allowSurname: allowOtherSurname })) return true;
+      if (other.strippedLower === targetStrippedLower) continue;
+      const allowOtherSurname = Boolean(other.surname && other.surname !== targetSurname);
+      if (doesClauseMentionPlayer(clause, other.name, { allowSurname: allowOtherSurname })) return true;
     }
     // Also detect capitalized "First Last (injury)" or "WR First Last" for non-target players
     const explicitOtherMatches = [
       ...clause.matchAll(/\b([A-Z][a-z'.-]+\s+[A-Z][a-z'.-]+)\s*(?:\([a-zA-Z /,-]{3,24}\))?/g)
     ];
-    const targetCollapsed = collapseInitialDots(targetStripped).toLowerCase();
-    const nonPlayerPairs = new Set([
-      'san francisco', 'las vegas', 'vegas raiders', 'dallas cowboys', 'los angeles', 'angeles rams', 'angeles chargers',
-      'green bay', 'bay packers', 'tampa bay', 'bay buccaneers', 'new orleans', 'orleans saints', 'new england',
-      'england patriots', 'new york', 'york giants', 'york jets', 'kansas city', 'city chiefs', 'minnesota vikings',
-      'seattle seahawks', 'arizona cardinals', 'atlanta falcons', 'detroit lions', 'chicago bears', 'philadelphia eagles',
-      'washington commanders', 'carolina panthers', 'buffalo bills', 'miami dolphins', 'baltimore ravens',
-      'cincinnati bengals', 'cleveland browns', 'pittsburgh steelers', 'houston texans', 'indianapolis colts',
-      'jacksonville jaguars', 'tennessee titans', 'denver broncos', 'mexico city', 'super bowl', 'pro bowl', 'all pro',
-      'kyle shanahan', 'john lynch', 'robert saleh', 'kevin oconnell', "kevin o'connell", 'sean mcvay', 'mike macdonald',
-      'dan campbell', 'matt lafleur', 'matt barrows', 'matt maiocco', 'nick wagoner', 'david lombardi', 'cam inman',
-      'eric branch', 'vic tafur', 'sam warren', 'noah furtado', 'jennifer lee', 'lee chan', 'adam schefter',
-      'ian rapoport', 'tom pelissero', 'mike garafolo', 'jeremy fowler', 'david bonilla', 'kyle posey', 'patrick holloway',
-      'injured reserve', 'practice squad', 'head coach', 'medical staff', 'athletic trainers', 'blue tent', 'medical tent',
-      'bay area', 'nfl network', 'the athletic', 'niners nation', 'niners wire', 'sports illustrated'
-    ]);
     for (const m of explicitOtherMatches) {
       const pair = collapseInitialDots(m[1]).toLowerCase();
-      if (nonPlayerPairs.has(pair)) continue;
+      if (SCOPE_NON_PLAYER_PAIRS.has(pair)) continue;
       if (pair !== targetCollapsed && !targetCollapsed.includes(pair) && !pair.includes(targetCollapsed)) {
         if (/\([a-z /,-]{3,24}\)|\b(?:wr|rb|te|cb|dt|de|lb|qb|ot|saf)\b/i.test(m[0]) || /\b(?:expecting|ruled out|is inactive|was inactive|sidelined|placed on|need surgery|requires surgery|miss)\b/i.test(clause)) {
           return true;
@@ -636,16 +734,17 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
       const hasTarget =
         doesClauseMentionPlayer(clause, target) ||
         (anyTargetMentioned && doesClauseMentionContextualTargetSurname(clause));
-      const hasOther = mentionsOtherNamedPlayer(clause);
 
       if (hasTarget) {
         kept.push(clause);
         activeSubjectIsTarget = true;
         anyTargetMentioned = true;
-      } else if (hasOther) {
-        activeSubjectIsTarget = false;
       } else if (activeSubjectIsTarget) {
-        kept.push(clause);
+        if (mentionsOtherNamedPlayer(clause)) {
+          activeSubjectIsTarget = false;
+        } else {
+          kept.push(clause);
+        }
       }
     }
   }
@@ -777,6 +876,18 @@ function etWallClockToEpochMs(year, month, day, hour = 16, minute = 0) {
 }
 
 /**
+ * Returns the number of calendar days before kickoff when Practice Day 1 opens in the NFL:
+ *  - Wednesday special games (e.g. Christmas Day) -> 2 days prior (Monday)
+ *  - Thursday Night / Thanksgiving & Black Friday / International Friday games -> 3 days prior (Monday / Tuesday)
+ *  - Saturday, Sunday & Monday Night games -> 4 days prior (Tuesday / Wednesday / Thursday)
+ */
+export function getPracticeReportLeadDays(kickoffWeekday = 'Sun') {
+  if (kickoffWeekday === 'Wed') return 2;
+  if (kickoffWeekday === 'Thu' || kickoffWeekday === 'Fri') return 3;
+  return 4;
+}
+
+/**
  * Evaluates whether a club's weekly NFL CBA 53-man IR/PUP activation deadline (4:00 PM ET on
  * Saturday for Sunday games, Friday for Saturday games, game-day 4:00 PM ET for prime-time
  * Thursday/Monday/Friday games, or day-before 4:00 PM ET for daytime weekday games, always
@@ -787,7 +898,8 @@ export function evaluateWeeklyIrActivationWindow({
   kickoffIso = '',
   designatedDateIso = '',
   nowMs = Date.now(),
-  schedule = []
+  schedule = [],
+  seasonConcluded = false
 } = {}) {
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
   const desigMs = parseFlexibleIsoMs(designatedDateIso);
@@ -797,10 +909,23 @@ export function evaluateWeeklyIrActivationWindow({
 
   let koMs = kickoffIso ? Date.parse(kickoffIso) : NaN;
   const maxPostKickoffGameMs = 5.25 * 3_600_000;
+  const matchedKoGame =
+    Number.isFinite(koMs) && Array.isArray(schedule) && schedule.length > 0
+      ? schedule.find(g => {
+          if (!g) return false;
+          const gMs = Date.parse(g.dateIso || g.kickoffIso || '');
+          return Number.isFinite(gMs) && Math.abs(gMs - koMs) < 18 * 3_600_000;
+        }) || null
+      : null;
+  const koGameAlreadyCompleted = Boolean(matchedKoGame?.completed);
 
-  // If the supplied `kickoffIso` has already concluded (>5.25h post-kickoff), automatically advance
-  // to the next unplayed non-bye game in `schedule` when available (or treat the prior game's lock as completed).
-  if ((!Number.isFinite(koMs) || ts > koMs + maxPostKickoffGameMs) && Array.isArray(schedule) && schedule.length > 0) {
+  // If the supplied `kickoffIso` has already concluded (`completed === true` at 0m post-whistle or >5.25h post-kickoff),
+  // immediately advance to the next unplayed non-bye game in `schedule` when available (or clear the finished game's lock).
+  if (
+    (!Number.isFinite(koMs) || koGameAlreadyCompleted || ts > koMs + maxPostKickoffGameMs) &&
+    Array.isArray(schedule) &&
+    schedule.length > 0
+  ) {
     const nextGame = schedule
       .filter(g => g && !g.completed && !g.isByeWeek && !g.opponent?.isTbd)
       .map(g => ({ g, ms: Date.parse(g.dateIso || g.kickoffIso || '') }))
@@ -808,6 +933,8 @@ export function evaluateWeeklyIrActivationWindow({
       .sort((a, b) => a.ms - b.ms)[0];
     if (nextGame) {
       koMs = nextGame.ms;
+    } else if (koGameAlreadyCompleted || (Number.isFinite(koMs) && ts > koMs + maxPostKickoffGameMs)) {
+      koMs = NaN;
     }
   }
 
@@ -828,6 +955,7 @@ export function evaluateWeeklyIrActivationWindow({
   if (!Number.isFinite(koMs)) {
     return {
       hasMissedWeeklyDeadline: false,
+      isSeasonConcluded: Boolean(seasonConcluded),
       deadlineMs: null,
       deadlineIso: null,
       kickoffMs: null,
@@ -852,12 +980,12 @@ export function evaluateWeeklyIrActivationWindow({
   );
   const deadlineMs = Math.min(rawDeadlineMs, koMs - 90 * 60_000);
 
-  // Missed weekly activation window holds from 4:00 PM ET deadline through the end of that week's game (`koMs + 5.25h`).
-  // Once the game finishes (`ts > koMs + 5.25h`), the league week rolls over to `Week N+1`!
+  // Missed weekly activation window holds from 4:00 PM ET deadline through final whistle (`completed` or `koMs + 5.25h`).
   const hasMissedWeeklyDeadline = ts >= deadlineMs && ts <= koMs + maxPostKickoffGameMs;
 
   return {
     hasMissedWeeklyDeadline,
+    isSeasonConcluded: Boolean(seasonConcluded),
     deadlineMs,
     deadlineIso: new Date(deadlineMs).toISOString(),
     kickoffMs: koMs,
@@ -1374,12 +1502,45 @@ export function extractInjuryBodyPartFromProse(rawText = '', fallbackInjury = ''
  *  5. Return-to-game chronological cancellation (so brief Q1 blue-tent visits followed by returning to play never false-positive)
  *  6. Diminishing-returns Bayesian confidence `1 - Π(1 - w_i)` so one speculative note never overcorrects
  */
+const NEWS_ITEM_SIGNAL_CACHE = new WeakMap();
+
+function getNewsItemSignalFastMeta(item) {
+  const pubKey = String(item.publishedAt || '');
+  const leadStr = String(item.fullText || item.title || item.headline || '');
+  const snipCount = item.playerSnippets && typeof item.playerSnippets === 'object' ? Object.keys(item.playerSnippets).length : 0;
+  const mpCount = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 0;
+  const cached = NEWS_ITEM_SIGNAL_CACHE.get(item);
+  if (
+    cached &&
+    cached.pubKey === pubKey &&
+    cached.leadLen === leadStr.length &&
+    cached.snipCount === snipCount &&
+    cached.mpCount === mpCount
+  ) {
+    return cached;
+  }
+  const pubMs = parseFlexibleIsoMs(pubKey);
+  const snipVals =
+    snipCount > 0 ? Object.values(item.playerSnippets).filter(Boolean).join(' ') : '';
+  const rawHaystackLower = `${leadStr} ${item.summary || ''} ${item.externalTitle || ''} ${item.externalDescription || ''} ${item.playerSnippet || ''} ${snipVals}`
+    .replace(/[’‘]/g, "'")
+    .toLowerCase();
+  const mentionedSet =
+    mpCount > 0
+      ? new Set(item.mentionedPlayers.map(mp => stripGenerationalSuffix(mp?.name || '').toLowerCase()).filter(Boolean))
+      : null;
+  const meta = { pubKey, leadLen: leadStr.length, snipCount, mpCount, pubMs, rawHaystackLower, mentionedSet };
+  NEWS_ITEM_SIGNAL_CACHE.set(item, meta);
+  return meta;
+}
+
 export function evaluateCorroboratedNewsInjurySignal({
   playerName = '',
   playerId = '',
   rosterBucket = 'active',
   newsItems = [],
   rosterPlayerNames = [],
+  sharedSurnames = null,
   nowMs = Date.now(),
   windowStartMs = null,
   lastCompletedGameKickoffMs = null,
@@ -1423,12 +1584,29 @@ export function evaluateCorroboratedNewsInjurySignal({
   let hasWindowNotOpeningSignal = false;
   let latestReturnToGameMs = 0;
 
-  const sharedSet = computeSharedRosterSurnames(rosterPlayerNames.map(nm => ({ name: nm })));
+  const sharedSet =
+    sharedSurnames instanceof Set
+      ? sharedSurnames
+      : computeSharedRosterSurnames(rosterPlayerNames.map(nm => ({ name: nm })));
+  const targetStrippedLower = stripGenerationalSuffix(playerName).toLowerCase();
+  const targetMatcher = getCompiledPlayerClauseMatcher(String(playerName || '').replace(/[’‘]/g, "'").trim());
 
   for (const item of newsItems) {
     if (!item || item.isClickbait || item.type === 'video') continue;
-    const pubMs = parseFlexibleIsoMs(item.publishedAt);
+    const itemMeta = getNewsItemSignalFastMeta(item);
+    const pubMs = itemMeta.pubMs;
     if (pubMs === null || pubMs < scanFloorMs || pubMs > nowMs + 3_600_000) continue;
+
+    const inMentionedList = Boolean(itemMeta.mentionedSet && itemMeta.mentionedSet.has(targetStrippedLower));
+    if (
+      !inMentionedList &&
+      targetMatcher.surname.length >= 3 &&
+      !itemMeta.rawHaystackLower.includes(targetMatcher.surname) &&
+      !(targetMatcher.isDeebo && itemMeta.rawHaystackLower.includes('deebo')) &&
+      !(targetMatcher.isCmc && itemMeta.rawHaystackLower.includes('cmc'))
+    ) {
+      continue;
+    }
 
     const { fullBody } = assemblePlayerNewsItemText(item, playerName, playerId);
     if (!fullBody) continue;
@@ -1441,11 +1619,6 @@ export function evaluateCorroboratedNewsInjurySignal({
       : item.wireSource === 'espn_player_wire' && item.primaryPlayer?.id
         ? String(item.primaryPlayer.id)
         : '';
-    const inMentionedList =
-      Array.isArray(item.mentionedPlayers) &&
-      item.mentionedPlayers.some(
-        mp => stripGenerationalSuffix(mp?.name || '').toLowerCase() === stripGenerationalSuffix(playerName).toLowerCase()
-      );
     const allowSurnameForSignal = !pwireOwnerId || (playerId && pwireOwnerId === String(playerId)) || inMentionedList;
     if (
       !inMentionedList &&
@@ -1457,41 +1630,39 @@ export function evaluateCorroboratedNewsInjurySignal({
       continue;
     }
 
-    // Check official @49ers transaction wire or verified Tier-1 beat report for immediate 21-day return designation or 53-man IR activation
     const trustTierProbe = Number(item.trustTier || 2);
     const hasInlineTier1Probe = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
     const isOfficialSourceProbe = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
     const isTrustedWireProbe = item.wireSource === 'espn_player_wire' || item.wireSource === 'rotowire_rss';
+
+    const scoped = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
+    if (!scoped) continue;
+
+    // Check official @49ers transaction wire or verified Tier-1 beat report for immediate 21-day return designation or 53-man IR activation
     if (
       pubMs >= postGameMinMs &&
       (isOfficialSourceProbe || trustTierProbe <= 1 || hasInlineTier1Probe) &&
       doesClauseMentionPlayer(fullBody, playerName)
     ) {
-      const scopedForWindow = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
-      if (scopedForWindow) {
-        const normScopedWin = stripInitialAndHonorificDots(scopedForWindow);
-        if (
-          /\b(?:designated\b[^.;]{0,80}\b(?:to|for)\s+return|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9' -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
-            normScopedWin
-          ) &&
-          !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't|will not|aren't|isn't)\s+(?:be\s+)?open/i.test(normScopedWin) &&
-          !hasWindowDefinitelyNotOpeningSignal(normScopedWin)
-        ) {
-          hasOfficialTxDesignation = true;
-        }
-        if (
-          /\bactivated\b[^.;]{0,70}\bfrom\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b)\b/i.test(normScopedWin) &&
-          !/\b(?:not|n't|wasn't|didn't|won't|if|whether|could|might|may|expected\s+to\s+be|likely\s+to\s+be)\b[^.;]{0,25}\bactivated\b/i.test(
-            normScopedWin
-          )
-        ) {
-          hasOfficialActivationFromIr = true;
-        }
+      const normScopedWin = stripInitialAndHonorificDots(scoped);
+      if (
+        /\b(?:designated\b[^.;]{0,80}\b(?:to|for)\s+return|opened\s+(?:the\s+|his\s+)?(?:[a-z0-9' -]{0,36}\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+|pup\s+)?practice\s+window|21-day\s+(?:practice\s+)?window\s+(?:has\s+been\s+|was\s+|is\s+)?opened)\b/i.test(
+          normScopedWin
+        ) &&
+        !/\b(?:not|n't|could|might|may|hopeful to|plan to|expect to|won't|will not|aren't|isn't)\s+(?:be\s+)?open/i.test(normScopedWin) &&
+        !hasWindowDefinitelyNotOpeningSignal(normScopedWin)
+      ) {
+        hasOfficialTxDesignation = true;
+      }
+      if (
+        /\bactivated\b[^.;]{0,70}\bfrom\s+(?:the\s+)?(?:injured\s+reserve|ir\b|pup\b)\b/i.test(normScopedWin) &&
+        !/\b(?:not|n't|wasn't|didn't|won't|if|whether|could|might|may|expected\s+to\s+be|likely\s+to\s+be)\b[^.;]{0,25}\bactivated\b/i.test(
+          normScopedWin
+        )
+      ) {
+        hasOfficialActivationFromIr = true;
       }
     }
-
-    const scoped = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
-    if (!scoped) continue;
 
     // Speculation & low-credibility guard: reject blogs/opinion/rumors unless directly citing a verified Tier-1 beat reporter
     const trustTier = trustTierProbe;
@@ -2042,7 +2213,7 @@ export function extractPracticeDaysFromText({
   if (Number.isFinite(koMs) && ts < koMs) {
     const koPt = extractPtDayMeta(koMs);
     const nowPt = extractPtDayMeta(ts);
-    const leadDays = koPt.weekday === 'Thu' ? 3 : 4; // Practice Day 1 = leadDays before game
+    const leadDays = getPracticeReportLeadDays(koPt.weekday); // Practice Day 1 = leadDays before game
     const daysUntilGame = koPt.dayIndex - nowPt.dayIndex;
 
     // Practice Day 1 (e.g. Wednesday for Sun game): Thu & Fri have not happened yet!
@@ -2145,11 +2316,14 @@ export function resolvePracticeSlotFromReportTiming({
 
   // Map explicit weekday mention in text to canonical slot (wed / thu / fri)
   const mapWeekdayNameToSlot = wd => {
-    if (koWeekday === 'Thu') {
+    if (koWeekday === 'Wed') {
+      if (wd === 'mon') return 'wed';
+      if (wd === 'tue') return 'thu';
+    } else if (koWeekday === 'Thu') {
       if (wd === 'mon') return 'wed';
       if (wd === 'tue') return 'thu';
       if (wd === 'wed') return 'fri';
-    } else if (koWeekday === 'Sat') {
+    } else if (koWeekday === 'Fri' || koWeekday === 'Sat') {
       if (wd === 'tue') return 'wed';
       if (wd === 'wed') return 'thu';
       if (wd === 'thu') return 'fri';
@@ -2167,7 +2341,7 @@ export function resolvePracticeSlotFromReportTiming({
 
   // Ignore game-day references like "Sunday's game" / "Monday's presser" when looking for practice weekday
   const practiceDayMatch = lower.match(
-    /\b(?:practice[d]?|participat(?:e|ed|ing|ion)|limited|session|report|dnp|non-participant|observer|sidelined|sat out)\b[^.;]{0,36}\b(wednesday|thursday|friday|monday|tuesday|saturday)\b|\b(wednesday|thursday|friday|monday|tuesday|saturday)(?:'s)?\s+(?:practice|session|walkthrough|injury report|pre[- ]practice)/i
+    /\b(?:practice[d]?|particip(?:at(?:e|ed|ing|ion)|ants?)|limited|session|report|dnp|non-participants?|observer|sidelined|sat out)\b[^.;]{0,36}?\b(wednesday|thursday|friday|monday|tuesday|saturday)\b|\b(wednesday|thursday|friday|monday|tuesday|saturday)(?:'s)?\s+(?:practice|session|walkthrough|injury report|pre[- ]practice)/i
   );
   const matchedDayWord = (practiceDayMatch?.[1] || practiceDayMatch?.[2] || '').slice(0, 3).toLowerCase();
   if (matchedDayWord) {
@@ -2183,7 +2357,7 @@ export function resolvePracticeSlotFromReportTiming({
     const koPt = extractPtDayMeta(koMs);
     const yr = mNum >= 8 ? Number(seasonYear) || koPt.year : (Number(seasonYear) || koPt.year) + (koPt.month <= 2 ? 0 : 1);
     const stampDayIdx = Math.floor(Date.UTC(yr, mNum - 1, dNum) / 86_400_000);
-    const leadDays = koPt.weekday === 'Thu' ? 3 : 4;
+    const leadDays = getPracticeReportLeadDays(koPt.weekday);
     const diff = koPt.dayIndex - stampDayIdx;
     if (diff === leadDays) return 'wed';
     if (diff === leadDays - 1) return 'thu';
@@ -2194,7 +2368,7 @@ export function resolvePracticeSlotFromReportTiming({
   if (Number.isFinite(publishedAtMs) && Number.isFinite(koMs) && publishedAtMs < koMs) {
     const koPt = extractPtDayMeta(koMs);
     const pubPt = extractPtDayMeta(publishedAtMs);
-    const leadDays = koPt.weekday === 'Thu' ? 3 : 4;
+    const leadDays = getPracticeReportLeadDays(koPt.weekday);
     const dayDiffPt = koPt.dayIndex - pubPt.dayIndex;
     if (dayDiffPt === leadDays) return 'wed';
     if (dayDiffPt === leadDays - 1) return 'thu';
@@ -2512,8 +2686,9 @@ export function extractLivePracticeParticipationFromWire({
   };
 
   const koMsForGuard = kickoffIso ? Date.parse(kickoffIso) : NaN;
-  const koLeadDays =
-    Number.isFinite(koMsForGuard) && extractPtDayMeta(koMsForGuard).weekday === 'Thu' ? 3 : 4;
+  const koLeadDays = Number.isFinite(koMsForGuard)
+    ? getPracticeReportLeadDays(extractPtDayMeta(koMsForGuard).weekday)
+    : 4;
 
   const isSlotCausallyValid = (slot, pubMs) => {
     if (!slot) return false;
@@ -2901,10 +3076,12 @@ export function computePlayerPlayProbability(input = {}) {
         kickoffIso: input.kickoffIso || '',
         designatedDateIso: input.designatedDateIso || '',
         nowMs: input.nowMs ?? Date.now(),
-        schedule: input.schedule || []
+        schedule: input.schedule || [],
+        seasonConcluded: Boolean(input.seasonConcluded)
       })
     : {
         hasMissedWeeklyDeadline: false,
+        isSeasonConcluded: false,
         windowWeekStage: null,
         is21DayWindowExpired: false
       };
@@ -2938,6 +3115,7 @@ export function computePlayerPlayProbability(input = {}) {
     isIrBucketOrStatus &&
     !input.activatedToActiveRoster &&
     (Boolean(input.missedActivationWindow) ||
+      irWindowEval.isSeasonConcluded ||
       irWindowEval.hasMissedWeeklyDeadline ||
       irWindowEval.is21DayWindowExpired);
 
@@ -2982,7 +3160,9 @@ export function computePlayerPlayProbability(input = {}) {
       const isPupReserve =
         rosterBucket === 'pup' || statusRaw === 'pup' || statusRaw.includes('physically unable') || statusRaw.includes('reserve / pup');
       badgeLabel = isPupReserve ? '0% • Reserve/PUP' : '0% • IR';
-      if (irWindowEval.is21DayWindowExpired) {
+      if (irWindowEval.isSeasonConcluded) {
+        factors.push('49ers season concluded — remains on Injured Reserve entering offseason');
+      } else if (irWindowEval.is21DayWindowExpired) {
         factors.push('21-day IR practice window expired without 53-man roster activation');
       } else if (missedWeeklyIrWindow) {
         factors.push('Missed weekly NFL 53-man IR activation deadline — remains on Injured Reserve for this game');
@@ -4220,8 +4400,19 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
     schedule.find(g => g && !g.completed && !g.isByeWeek)?.dateIso ||
     '';
   const rawUpcomingMs = parseFlexibleIsoMs(rawUpcomingKickoffIso);
+  const matchedUpcomingGame =
+    rawUpcomingMs !== null
+      ? schedule.find(g => {
+          if (!g) return false;
+          const gMs = parseFlexibleIsoMs(g.dateIso || g.kickoffIso);
+          return gMs !== null && Math.abs(gMs - rawUpcomingMs) < 18 * 3_600_000;
+        }) || null
+      : null;
   const upcomingHasConcludedByClock =
-    rawUpcomingMs !== null && nowMs > rawUpcomingMs + 5.25 * 3_600_000;
+    Boolean(appData?.scheduleMatchup?.upcomingMatchup?.completed) ||
+    Boolean(matchedUpcomingGame?.completed) ||
+    (rawUpcomingMs !== null && nowMs > rawUpcomingMs + 5.25 * 3_600_000);
+  const seasonConcluded = Boolean(appData?.scheduleMatchup?.upcomingMatchup?.seasonConcluded);
 
   // If the static upcomingMatchup has already concluded by wall-clock time (e.g. Monday morning before static refresh),
   // resolve the next unplayed schedule game for weekly IR activation deadlines and opponent scoping!
@@ -4257,6 +4448,26 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
   const seasonYear = Number(appData?.meta?.seasonYear || 2026);
   const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
   const rosterPlayerNames = rosterPlayers.map(p => p?.name).filter(Boolean);
+  const sharedRosterSurnames = computeSharedRosterSurnames(rosterPlayers);
+
+  // Pre-filter `rawStream` once for the 5-day / post-prior-game injury signal window instead of re-scanning all 350+ items 87 times
+  const preScanFiveDaysAgoMs = nowMs - 5 * 86_400_000;
+  const preScanPostGameMinMs =
+    Number.isFinite(lastCompletedGameEndMs) && lastCompletedGameEndMs > 0
+      ? Math.max(preScanFiveDaysAgoMs, lastCompletedGameEndMs)
+      : preScanFiveDaysAgoMs;
+  const preScanInGameMinMs =
+    Number.isFinite(lastCompletedGameKickoffMs) && lastCompletedGameKickoffMs > 0
+      ? Math.max(preScanFiveDaysAgoMs, lastCompletedGameKickoffMs + 5 * 60_000)
+      : preScanPostGameMinMs;
+  const preScanFloorMs = Math.min(preScanPostGameMinMs, preScanInGameMinMs);
+  const eligibleSignalRawStream = [];
+  for (const srcItem of rawStream) {
+    if (!srcItem || srcItem.isClickbait || srcItem.type === 'video') continue;
+    const pubMs = parseFlexibleIsoMs(srcItem.publishedAt);
+    if (pubMs === null || pubMs < preScanFloorMs || pubMs > nowMs + 3_600_000) continue;
+    eligibleSignalRawStream.push(srcItem);
+  }
 
   // Gather deduplicated current-week wire + player-mention pool once for live practice report extraction
   const globalWirePool = [];
@@ -4289,10 +4500,10 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
   for (const p of rosterPlayers) {
     if (!p?.health || !p.name) continue;
 
-    // Combine rawStream + player's own recentNews, deduplicated by URL/headline prefix
+    // Combine pre-filtered recent rawStream + player's own recentNews, deduplicated by URL/headline prefix
     const combinedNews = [];
     const seenKeys = new Set();
-    for (const srcItem of [...rawStream, ...(Array.isArray(p.recentNews) ? p.recentNews : [])]) {
+    for (const srcItem of [...eligibleSignalRawStream, ...(Array.isArray(p.recentNews) ? p.recentNews : [])]) {
       if (!srcItem) continue;
       const k = String(srcItem.url || srcItem.id || srcItem.fullText || srcItem.title || srcItem.headline || '')
         .toLowerCase()
@@ -4408,6 +4619,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
       rosterBucket: p.rosterBucket,
       newsItems: combinedNews,
       rosterPlayerNames,
+      sharedSurnames: sharedRosterSurnames,
       nowMs,
       windowStartMs: lastCompletedGameEndMs,
       lastCompletedGameKickoffMs,
@@ -4571,6 +4783,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           kickoffIso: upcomingKickoffIso,
           nowMs,
           schedule,
+          seasonConcluded,
           weeklyHistory: p.health.weeklyHistory2026 || [],
           earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
           currentWeek,
@@ -4767,7 +4980,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
       if (!Number.isFinite(koMs) || nowMs >= koMs) return false;
       const koPt = extractPtDayMeta(koMs);
       const nowPt = extractPtDayMeta(nowMs);
-      const leadDays = koPt.weekday === 'Thu' ? 3 : 4;
+      const leadDays = getPracticeReportLeadDays(koPt.weekday);
       const diff = koPt.dayIndex - nowPt.dayIndex;
       if (diff > leadDays) return true;
       if (diff === leadDays) return nowPt.minutesOfDay < 12 * 60 + 15;

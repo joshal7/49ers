@@ -350,40 +350,6 @@ export async function fetchCuratedYouTubeChannelVideos({
   return checked.filter(c => c.exists);
 }
 
-const INSIDER_MIRROR_PREFIXES = [
-  { re: /^(?:adam\s+)?schefter\s*:\s*/i, reporterId: 'adam_schefter', reporterName: 'Adam Schefter', authorHandle: '@AdamSchefter', outletId: 'espn', outletName: 'ESPN NFL Insider' },
-  { re: /^(?:ian\s+)?rapoport\s*:\s*/i, reporterId: 'ian_rapoport', reporterName: 'Ian Rapoport', authorHandle: '@RapSheet', outletId: 'nfl_network', outletName: 'NFL Network' },
-  { re: /^(?:tom\s+)?pelissero\s*:\s*/i, reporterId: 'tom_pelissero', reporterName: 'Tom Pelissero', authorHandle: '@TomPelissero', outletId: 'nfl_network', outletName: 'NFL Network' },
-  { re: /^(?:mike\s+)?garafolo\s*:\s*/i, reporterId: 'mike_garafolo', reporterName: 'Mike Garafolo', authorHandle: '@MikeGarafolo', outletId: 'nfl_network', outletName: 'NFL Network' },
-  { re: /^(?:dianna\s+)?russini\s*:\s*/i, reporterId: 'dianna_russini', reporterName: 'Dianna Russini', authorHandle: '@DMRussini', outletId: 'athletic', outletName: 'The Athletic' },
-  { re: /^(?:albert\s+)?breer\s*:\s*/i, reporterId: 'albert_breer', reporterName: 'Albert Breer', authorHandle: '@AlbertBreer', outletId: 'nfl_network', outletName: 'Sports Illustrated / MMQB' },
-  { re: /^(?:matt\s+)?maiocco\s*:\s*/i, reporterId: 'matt_maiocco', reporterName: 'Matt Maiocco', authorHandle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area' },
-  { re: /^(?:nick\s+)?wagoner\s*:\s*/i, reporterId: 'nick_wagoner', reporterName: 'Nick Wagoner', authorHandle: '@nwagoner', outletId: 'espn', outletName: 'ESPN 49ers Beat' }
-];
-
-function resolveMirroredInsiderAttribution(rawText = '', defaultAcc = {}) {
-  for (const rule of INSIDER_MIRROR_PREFIXES) {
-    if (rule.re.test(rawText)) {
-      return {
-        reporterId: rule.reporterId,
-        reporterName: rule.reporterName,
-        authorHandle: rule.authorHandle,
-        outletId: rule.outletId,
-        outletName: rule.outletName,
-        cleanedBody: rawText.replace(rule.re, '').trim()
-      };
-    }
-  }
-  return {
-    reporterId: defaultAcc.reporterId,
-    reporterName: defaultAcc.reporterName,
-    authorHandle: defaultAcc.authorHandle,
-    outletId: defaultAcc.outletId,
-    outletName: defaultAcc.outletName,
-    cleanedBody: rawText
-  };
-}
-
 const shortenerExpandCache = new Map();
 
 export async function expandShortenerUrl(rawUrl = '') {

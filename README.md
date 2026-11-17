@@ -1,87 +1,45 @@
 # 49ers Faithful (`49ers.joshal.com`)
 
-A zero-cost, mobile-first Progressive Web App (PWA) engineered for iPhone 16 / 16 Pro Safari Home Screen mode (`49ers HQ`) and mobile Chrome. Built for ~25 analytically minded San Francisco 49ers fans who want verified facts, All-22 film & scheme mechanics, EPA/NextGen metrics, and CBA salary cap math—with zero clickbait or sensationalism.
+A zero-cost, mobile-first Progressive Web App (PWA) engineered for iPhone 16 / 16 Pro Safari Home Screen mode (`49ers HQ`) and mobile/desktop Chrome. Built for ~25 analytically minded San Francisco 49ers fans who want verified facts, All-22 film & scheme mechanics, EPA/NextGen metrics, and NFL CBA salary cap math—with zero clickbait or sensationalism.
 
 - **Live Custom Domain**: `https://49ers.joshal.com`
 - **GitHub Repository**: `https://github.com/Joshal7/49ers`
 - **Internal Documentation**:
-  - [`ARCHITECTURE.md`](./ARCHITECTURE.md) — Holistic Technical Architecture, Quality vs. Speed Philosophy, Engine Specs & QA Playbook
+  - [`ARCHITECTURE.md`](./ARCHITECTURE.md) — Holistic Technical Architecture, Quality vs. Speed Philosophy, Time-Based Lifecycle Rules, 15-Engine Map & 4-Suite QA Playbook
   - [`PRD.md`](./PRD.md) — Product Requirements & Functional Specifications
-  - [`AGENTS.md`](./AGENTS.md) & [`GEMINI.md`](./GEMINI.md) — Agent Rules, Invariants & Quick-Reference Map
+  - [`AGENTS.md`](./AGENTS.md) & [`GEMINI.md`](./GEMINI.md) — Agent Rules, Layout Invariants & Quick-Reference Map
 
 ---
 
 ## Core Architecture & Features
 
-### 1. Dynamic NFL Calendar State Machine (`src/engine/seasonStateMachine.js`)
-Automatically activates relevant dashboard modules in a strict 12-block priority order and retires off-cycle modules to the **Seasonal Vault** without losing user-customized card ordering (via Up/Down controls or HTML5 Drag-and-Drop):
-- **Year-Round**:
-  - **Roster Explorer & 5-Tab Player Dossiers**: Searchable/sortable 86-player roster (53 Active, IR/Reserve, Practice Squad) with a streamlined **Sort Dropdown + Up/Down Arrow Direction Toggle** (`Roster Number` default asc, `First Name`, `Last Name`, `2026 Cap Hit`, `Snap Share %`, `Play Likelihood`, `Athletic RAS`, `Age`), Unit & Position group filter bars, `#0` & smart-quote apostrophe search, 2026 & Career stats, `nflverse` EPA/CPOE/WOPR, NFL NextGen Stats, Pro-Football-Reference Advanced metrics, **MockDraftable-style 10-Axis 0–100th Positional Percentile SVG Spider Charts** + historical NFL comps, 6-scenario OverTheCap contract tables, injury play-likelihood priors, and **7-day player news & beat tweet mentions** with 100% author attribution.
-  - **Dual-Mode Depth Chart**: 1-tap toggle between **Projected Active Game-Day Alignment** (auto-promoting healthy backups when starters are Out/IR) and **Baseline Full-Roster Hierarchy**, ordered `Offense`, `Defense`, `Special Teams`.
-  - **Team News, Sub-Minute Breaking Wire, Clickable Synthesis Sources & Jargon Popovers**: Auto-ranked registry of 48 49ers beat writers, X/Bluesky film analysts, national insiders, and official team voices (`data/reporters.json`) defaulting to **`Wire & Video`** (`raw`, left tab) with **`Synthesis Briefs`** (`clustered`, right tab), clickable **`XX reports`** bottom sheets listing every underlying beat report, single-author clickable tweet attribution resolved directly to `x.com` / `bsky.app` posts, **45+ interactive football/cap Jargon Quick-Bubble Popovers** (`src/engine/jargonGlossary.js`), verified YouTube oEmbed inline clips, and a **<1-minute 5-channel live wire** (`20s` poll during active 49ers game windows; `45s` standard) prioritizing live in-game injuries and 48h post-game injury updates while balancing top salience for credible trade rumors, legal news, and player interviews.
-  - **5-Year Salary Cap Horizon & Armchair GM Simulator (`2026–2030`)**: Live 5-year OverTheCap summary (with collapsible Front Office Blueprint) & 53-player simulator table supporting Restructures, Extensions, Pre/Post-June 1 Cuts, and Pre/Post-June 1 Trades (including combined Prorated & Current-Yr Bonuses, nominal `$0/$0` baseline Dead Money & Cap Savings, Top-53 minimum replacement rules, NFL CBA 2-player Post-June 1 designation warnings, CBA Article 13 rollover modeling, and full 9-column fit in iPhone 16 Pro landscape).
-  - **Matchups & International Venue Tracker**: Full 18-week schedule tracking stadium surfaces, rest differentials, and International Series venues (Melbourne Cricket Ground & Estadio Banorte in Mexico City at 7,200 ft altitude).
-- **In-Season (`Sept – Postseason Elimination`)**:
-  - **Team Health, `[T-90m, Final)` Game-Day Inactives & Season-Ending IR Resolver**: Reconciles official `49ers.com` Roster & Injury Reports (with opponent-match guard against stale prior-week reports), CBS Injuries, and ESPN transactions. Features a top-of-page **`[T-90m, Final)` Game-Day Inactives & starting-collapsed Active Roster (`Offense → Defense → Special Teams`)**, frozen sticky **Column 1 (`Player`)** horizontal scrolling, `Questionable → In (Active) / Out (Inactive)` game-day resolution, immediate post-game `Week N+1` rollover with blank `— / — / —` `W/T/F`, a **Player-Specific Play-Probability Model (%)**, an NFL 4-game IR return calculator that excludes the Bye Week, and explicit classification of **Season-Ending IR** (`Out for Season`), **IR — 21-Day Window Open**, `TBD (21d Window Not Open)`, `Reserve / PUP`, and `Reserve / Left Squad`.
-  - **Single-Screen Portrait Team Stats & Power Rankings**: 1st–32nd NFL standard & advanced EPA rankings formatted in a compact 4-column table (`Metric`, `49ers`, `Rank`, `NFL Avg`) that fits in a single mobile portrait screen above the bottom nav, plus aggregated multi-outlet consensus power rankings.
-  - **Upcoming Matchup & Opponent Health Parity**: Spread/O-U line movement, rest differential, franchise H2H history, coaching staff H2H tendencies (Kyle Shanahan & Raheem Morris vs. opposing play-callers), trench/coverage mismatch matrix, and full **Opposing Team Health, `[T-90m, Final)` Inactives/Active Roster & Narrow Sticky-Column Play Likelihood** parity (with player position & team importance tags, plus automatic `Week N+1` rollover upon game completion).
-- **Temporal Modules (`Game & Season` Two-Cluster Navigation)**:
-  - **Trade Window (`Oct 1 – NFL Trade Deadline`)**: 30-day recency filter for completed acquisitions (moving older trades `>30d` to the Archive Vault), 3-tier CBA base-salary purchasing power, remaining EPA-weighted needs, verified seller-team targets with `2027` cap impact, pitfalls/traps to avoid, and credibility-tiered rumors.
-  - **Near-Playoffs Monte Carlo (`Final 5 Weeks`)**: **Calibrated Empirical-Bayes 10,000-iteration Monte Carlo Playoff & Seeding Simulator** (`src/engine/playoffMonteCarlo.js`) with official NFL 2-club/3+-club divisional & Wild Card tiebreakers (including 3-club complete H2H sweep & Step-1 restart rules), `#1–#7` seed probability bars, explicit seed paths, and an interactive **Rooting Guide** that re-runs 10,000 simulations in `<150ms` on tap.
-  - **Post-Season to Draft (`Elimination – Draft Eve`)**: Multi-year draft needs, live 6-pick 2027 Tankathon draft capital inventory (accounting for the Rd 4 DeForest Buckner trade), consensus mock aggregation, Shanahan/Lynch archetype fit scores, and a searchable NFL Scouting Combine RAS leaderboard.
-  - **Draft Live & UDFA Hub (`Draft Day 1 – Post-UDFA`)**: Pick-by-pick value steals vs. consensus big board, inline athletic spider charts, guaranteed UDFA contract tracker, and college highlight reels.
-- **Audio & AI Studio (`🎧 Audio & AI`)**:
-  - **49ers Podcasts (7d)**: Aggregates all episodes from the last 7 days across the 6 flagship 49ers beat shows (*The Gold Standard*, *49ers Talk*, *49ers +/-*, *Dieter and Hutch*, *Locked On 49ers*, *Lombardi Lounge*) with `By Date` / `By Podcast` views and native mobile app deep links (`podcasts://` on iOS/iPadOS, `intent://` on Android).
-  - **Autopodcast Studio & Deep Analysis Runner**: Pre-generated studio two-host 44.1 kHz 96kbps AAC (`.m4a`) episodes + on-demand custom duration (`2–20 min`) podcast & deep analysis generator powered by **Gemini 4 Hydrogen (`thinkingLevel: "XHIGH"`, 2-pass accuracy verification)**, spoken-NFL prosody (`humanizeNflTextForTts`), sticky cross-tab mini-player, synced interactive transcript seeking, `1x–2x` variable speed, iOS lock-screen `MediaSession` controls, and **iOS built-in speaker `AVAudioSessionCategoryPlayback` stereo carrier unlock** (so auto-generated podcasts play out loud on iPhone speakers even when the hardware Silent switch is ON).
+### 1. Permanent Year-Round Architecture & Customizable 6-Card `Home` Dashboard (`src/engine/seasonStateMachine.js`)
+Every module across the app is permanently live year-round (zero Seasonal Archive Vault, zero `#phaseBanner` locks, zero `.off-cycle` dimming) while `Home` defaults to a scannable 6-card layout (`news_briefs`, `upcoming_matchup`, `team_health`, `team_stats`, `salary_cap`, `autopodcast_ai`) with 6 optional pinnable cards and drag/tap reordering in `Customize Order`:
+- **Unified `News & Film` Hub (`src/views/newsView.js`, `src/engine/breakingClassifier.js`)**:
+  - Single two-row 6-filter bar (`All`, `Tweets`, `Articles` / `Highlights & Videos`, `Film & Trench`, `Trades & Roster`) with `0px` mobile horizontal scroll.
+  - **Schedule-Aware 1/Day `gemini-4-hydrogen` (`XHIGH`) Top-News Brief** (`5:00 PM PT` on non-game days; post-whistle + podium buffer on game days) with inline source links, expandable `Sources (N)` citations, and automatic promotion of uncovered breaking news above the brief.
+  - **7-Channel Sub-Minute Live Wire (`20s` live game / `45s` standard)**: Polls ESPN 24/7 X-Beat Player Wire, RotoWire Live NFL RSS, Official 49ers/ESPN Transactions, ESPN Rapid NFL Breaking Desk, Official `49ers.com` News & Video RSS, Bluesky Beat Mirrors, and optional Edge Worker `/api/live-wire`, prioritizing direct `https://x.com/<handle>/status/<id>` permalinks, inline X/ESPN MP4 & YouTube clips, and **50+ interactive Jargon Quick-Bubble Popovers**.
+- **Two-Cluster 8-Tab `Game & Season` Hub (`src/views/seasonMatchupView.js`)**:
+  - **Bar 1 (`Matchup`, `Health`, `Schedule`, `Stats`)**: Live `LIVE • X–Y` / `FINAL • X–Y` scoreboards, **`[T-90m, Final)` 49ers & Opponent Game-Day Inactives + starting-collapsed Active Roster (`Offense → Defense → Special Teams`)**, frozen sticky **Column 1 (`Player`)** health tables, **`0m` post-whistle `Week N+1` rollover** (`W/T/F = —` until Practice Day 1 across `Wed`/`Thu`/`Fri`/`Sat`/`Sun`/`Mon` schedules), **21-day IR activation modeling** (`4:00 PM ET` weekly deadline + Bye-week-aware 4-game floor), collapsible `Previous Games` + dynamic `PRE`/`REG`/`POST` schedule progression, and single-screen portrait **Team Stats** + 4-unit 32-team modal leaderboards.
+  - **Bar 2 (`Trade`, `Playoffs`, `Draft`, `Draft Recap`)**: Inline completed trades (`<= 30d` visible + `> 30d` `<details>`), 3-tier CBA base-salary purchasing power, **10,000-iteration Empirical-Bayes NFC Playoff Monte Carlo** (`<150 ms`) with interactive Rooting Guide toggles, **3-Lens 250+ Prospect NFL Draft Big Board** (`Consensus`, `Likely`, `PFF` with `NR`-at-bottom sort & shareable URL sync), `draftYear`-gated Combine RAS Leaderboard, `30d`/`7d` First-Pick Mock Draft Database, and 2026 Draft/UDFA class recap.
+- **`Roster & Cap` & 5-Tab `Player Dossier` (`src/views/rosterCapView.js`, `src/views/playerSheetView.js`)**:
+  - 88-player Roster Explorer (`#rosterSortSelect` defaulting to `Roster Number` asc + `#rosterSortDirBtn`, Unit & Position filter bars), Dual-Mode Depth Chart, **5-Year (`2026–2030`) OverTheCap Armchair GM Simulator** (`0.03 ms`, full 9-column fit in iPhone 16 Pro landscape), and slide-up **5-Tab Player Dossier** (`Overview`, `Health`, `Stats & EPA`, `Spider Chart`, `Contract`).
+- **`Audio & AI` Studio (`src/views/audioAiView.js`, `src/services/aiWorkerClient.js`)**:
+  - **49ers Podcasts (7d)** across 6 flagship beat shows (`podcasts://` iOS & `intent://` Android deep links), **Autopodcast Studio** (`2–20 min` custom pods via `gemini-4-hydrogen` `HIGH` + Studio Pro/Flash TTS or WebWorker Kokoro ONNX + iOS 2-channel Stereo `-84 dBFS` speaker unlock), **On-Demand AI Deep Analysis** (`gemini-4-hydrogen` `HIGH` + Google Search Grounding), self-contained `?pod=` / `?analysis=` gzip share URLs, and native MP3 export.
 
 ---
 
 ## Engineering Philosophy: Quality vs. Speed
 
-- **Accuracy & Studio Realism Over Generation Time (`accuracy_over_latency`)**: On-demand AI Deep Analysis and Autopodcast generation deliberately prioritize analytical depth, multi-pass fact/cap verification, and natural multi-speaker TTS over latency. The UI surfaces rough estimated wait times (`~20–40s` for deep analysis; `~30–130s` for cloud podcasts) and a live processing banner with spinner, audio wave bars, and elapsed clock—while Cloudflare KV/R2 shared caching ensures that once one friend generates an item, the other ~24 friends load it in `<50ms`.
-- **Sub-Second UI & Sub-Minute Live Wire**: App startup (`<300ms` via Service Worker `CacheStorage`), 5-year cap moves (`<5ms`), 10,000-run Monte Carlo re-simulations (`<150ms`), and live Bluesky/ESPN injury wire polling (`20s` in-game / `45s` standard) execute with sub-second / sub-minute responsiveness.
-- **Strict Anti-Hallucination & Link Hygiene**: `groundingValidator.js` blocks retired/departed former 49ers from being hallucinated onto the active 2026 roster, and `linkIntegrity.js` enforces 100% `https://`, blocks paywalls (`The Athletic`, `SF Chronicle`, `Mercury News`, `PFF` grades, `ESPN+`), and defeats `nflverse` retired homonym collisions.
-
----
-
-## Linking `49ers.joshal.com` via GoDaddy DNS
-
-### Step 1 — Add the `CNAME` Record in GoDaddy
-1. Sign in to [GoDaddy Domain Portfolio](https://dcc.godaddy.com/domains) and select **`joshal.com`**.
-2. Open the **DNS** tab -> **DNS Records** and click **Add New Record**.
-3. Enter the following values:
-   - **Type**: `CNAME`
-   - **Name** (Host): `49ers` *(enter only `49ers`, not the full domain)*
-   - **Value** (Points to): `joshal7.github.io`
-   - **TTL**: `1 Hour` (or `Default` / `600 seconds`)
-4. Click **Save**.
-
-### Step 2 — Verify GitHub Pages & Enforce HTTPS
-1. Open `https://github.com/Joshal7/49ers/settings/pages`.
-2. Under **Build and deployment**:
-   - **Source**: `Deploy from a branch`
-   - **Branch**: `main` / `/ (root)` -> **Save**.
-3. Under **Custom domain**:
-   - Confirm **`49ers.joshal.com`** is entered and wait 1–5 minutes for **DNS check successful** (this repository includes the root `CNAME` file set to `49ers.joshal.com`).
-   - Check **Enforce HTTPS** once GitHub finishes provisioning the Let's Encrypt TLS certificate.
-
-### Step 3 — Verify DNS Propagation from Terminal (Optional)
-```bash
-dig 49ers.joshal.com +nostats +nocomments +nocmd
-```
-You should see `49ers.joshal.com. IN CNAME joshal7.github.io.` resolving to GitHub Pages' IPv4/IPv6 addresses.
-
-### Step 4 — Install as an App on iPhone 16 (Safari)
-1. Open **`https://49ers.joshal.com`** in **Safari** on your iPhone 16.
-2. Tap the **Share** icon (`↑` square at the bottom center).
-3. Scroll down and tap **Add to Home Screen**.
-4. Confirm the title **`49ers HQ`** and tap **Add**. Launching from your Home Screen opens the standalone full-screen experience (`apple-mobile-web-app-capable`) with the custom 49ers medallion icon and lock-screen audio controls.
+- **Two-Tier Gemini 4 Hydrogen Reasoning (`XHIGH` Scheduled vs. `HIGH` Live)**: Non-time-sensitive daily syntheses (`5:00 PM PT Top-News Brief`, `1/day Matchup Intel`, `aiSynthesisEngine.mjs`) run `gemini-4-hydrogen` at `thinkingLevel: "XHIGH"`, while live user-waiting jobs (`On-Demand Analysis`, `Auto Pod`) run `thinkingLevel: "HIGH"` over pre-compiled Stage-1 OverTheCap/EPA dossiers + Google Search Grounding for ~35–50% faster turnaround with Cloudflare KV/R2 caching (`<50 ms` shared reads).
+- **Consistent Sub-Second UI & Low-Bandwidth Polling**: Service Worker (`49ers-faithful-v89`) warm-cache `2.2s` fast fallback (`<300 ms` boot), `<35 ms` `reconcileRosterAndHealthWithNews` (`87 players × 352 items`), `<5 ms` Cap Simulator, `<150 ms` 10,000-trial Playoff Monte Carlo, and per-team `~275 KB` ESPN injury polling (`94%` smaller than the `8.76 MB` league payload).
+- **Strict Anti-Hallucination & Link Hygiene**: `groundingValidator.js` blocks departed former 49ers from active-roster claims, and `linkIntegrity.js` enforces 100% `https://` (`5,400+` verified links), blocks paywalls/shorteners/wrappers, and resolves `nflverse` homonyms.
 
 ---
 
 ## Local Development, Pipelines & QA Testing
 
-Zero external runtime dependencies are required (`Node.js >= 20`, `Python 3` for static serving, `ffmpeg` + `edge-tts` for offline studio `.m4a` builds, and Google Chrome for headless mobile CDP E2E tests).
+Zero external runtime dependencies are required (`Node.js >= 20`, `Python 3` for local static serving, `ffmpeg` + `edge-tts` for offline studio `.m4a` builds, and Google Chrome for headless mobile CDP E2E tests).
 
 ```bash
 # Start local server at http://localhost:8080
@@ -93,16 +51,16 @@ npm run refresh-data
 # Rebuild the 3 studio-mastered 44.1kHz neural AAC (.m4a) podcast episodes
 npm run build-podcasts
 
-# Auto-review & re-rank the 48-reporter popularity registry
+# Auto-review & re-rank the 49-voice reporter registry
 npm run update-reporters
 
-# Run Unit, Holistic Regressions, Quantitative Math, Link Policy, Anti-Hallucination & Edge Worker QA Suites
-npm run test:unit
+# Run Unit + Holistic Regressions + Timeliness/Race-Condition Simulation Suites
+npm run test:unit && node tests/timeliness-simulation-qa.mjs
 
 # Run Headless Chrome Mobile & 8-Viewport Responsive E2E QA Suite
 npm run test:e2e
 
-# Run the complete Unit + Holistic Regressions + Mobile E2E QA Suite (must pass 100% before every commit)
+# Run ALL 4 Mandatory QA Suites (unit + holistic + timeliness + mobile E2E — must pass 100% before every commit)
 npm test
 ```
 
@@ -110,16 +68,13 @@ npm test
 
 ## Optional Zero-Cost Shared AI & Audio Edge Worker (`worker/`)
 
-Out of the box, the app works 100% standalone on GitHub Pages with pre-generated neural `.m4a` episodes, a local data-grounded synthesis engine, and natural multi-voice browser speech synthesis (with iOS built-in speaker unlock). To enable live Gemini 4 Hydrogen (`gemini-4-hydrogen` `XHIGH`-Thinking, 2-pass audit + Google Search Grounding), Studio Pro TTS cascade, automatic 6-hour `/v1beta/models` upgrades, and shared cloud KV/R2 audio caching across all ~25 friends (`\$0/month` on Cloudflare Free Tier + Google AI Studio Free Tier):
+Out of the box, the app runs 100% standalone on GitHub Pages (or with a personal free Google AI Studio key pasted into Settings). To enable shared Cloudflare KV caching, R2 stereo WAV HTTP `Range` (`206 Partial Content`) audio streaming, `/api/live-wire` edge RSS/video aggregation, and 6-hour `/v1beta/models` auto-upgrades across all ~25 friends (`\$0/month` on Cloudflare Free Tier):
 
 ```bash
 cd worker
 npx wrangler kv namespace create SHARED_CACHE
 npx wrangler r2 bucket create 49ers-podcasts
-# Update the KV id in worker/wrangler.toml, then set secrets:
 npx wrangler secret put GEMINI_API_KEY
 npx wrangler secret put GROUP_PASSCODE
 npx wrangler deploy
 ```
-
-Then open **Settings** inside `49ers.joshal.com`, paste your Worker URL and shared **Group Passcode**, and tap **Save Group Credentials**.

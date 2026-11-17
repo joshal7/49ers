@@ -9673,6 +9673,375 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'QA Scrub — Bye/TBD game-window guards, offseason 90d video retention, short-week Wed/Fri practice slots & 0m post-whistle / seasonConcluded IR rules',
+  async () => {
+    const {
+      resolveGameNewsContext,
+      is49ersGameLiveWindow,
+      resolveNewsBriefCycleState,
+      isStalePriorGameVideo,
+      filterFreshVideosForCurrentSlate
+    } = await import('../src/engine/breakingClassifier.js');
+    const {
+      getPracticeReportLeadDays,
+      resolvePracticeSlotFromReportTiming,
+      evaluateWeeklyIrActivationWindow,
+      computePlayerPlayProbability
+    } = await import('../src/engine/injuryProbabilityModel.js');
+    const { isBeforeWeeklyPracticeWindow } = await import('../src/engine/gameDayRosterEngine.js');
+
+    // 1. Bye week & TBD postseason placeholder games never trigger false `inGame` or `isGameDayHold`
+    const byeKoMs = Date.parse('2026-11-01T20:05:00Z');
+    const byeAppData = {
+      scheduleMatchup: {
+        schedule: [
+          { week: 7, dateIso: '2026-10-25T20:25:00Z', completed: true, opponent: { abbr: 'KC', name: 'Kansas City Chiefs' } },
+          { week: 8, dateIso: '2026-11-01T20:05:00Z', completed: false, isByeWeek: true, opponent: { abbr: 'BYE', name: 'Bye Week' } },
+          { week: 20, seasonType: 'POST', dateIso: '2027-01-24T20:00:00Z', completed: false, opponent: { abbr: 'TBD', name: 'Opponent TBD', isTbd: true } }
+        ],
+        upcomingMatchup: {
+          week: 20,
+          dateIso: '2027-01-24T20:00:00Z',
+          oppAbbr: 'TBD',
+          isTbd: true,
+          completed: false
+        }
+      }
+    };
+    assert.equal(resolveGameNewsContext(byeAppData, byeKoMs + 30 * 60_000).inGame, false, 'Bye week must never trigger inGame');
+    assert.equal(is49ersGameLiveWindow(byeAppData, byeKoMs + 30 * 60_000), false, 'Bye week must never trigger 20s game window');
+    const tbdMs = Date.parse('2027-01-24T20:30:00Z');
+    assert.equal(resolveGameNewsContext(byeAppData, tbdMs).inGame, false, 'TBD playoff slot must never trigger inGame');
+    assert.equal(is49ersGameLiveWindow(byeAppData, tbdMs), false, 'TBD playoff slot must never trigger 20s game window');
+    assert.equal(resolveNewsBriefCycleState(tbdMs, byeAppData, 17).isGameDayHold, false, 'TBD playoff slot must not hold daily brief');
+
+    // 2. Offseason (`seasonConcluded` / >21d post-game) retains videos up to 90d & rescues Film & Trench clips
+    const offseasonNowMs = Date.parse('2027-03-15T18:00:00Z');
+    const offseasonAppData = {
+      scheduleMatchup: {
+        schedule: [{ week: 18, dateIso: '2027-01-03T21:25:00Z', completed: true, opponent: { abbr: 'SEA', name: 'Seattle Seahawks' } }],
+        upcomingMatchup: { week: 18, dateIso: '2027-01-03T21:25:00Z', oppAbbr: 'SEA', completed: true, seasonConcluded: true }
+      }
+    };
+    const fortyDayDraftVid = {
+      id: 'offseason_vid_1',
+      type: 'video',
+      videoId: 'abc12345678',
+      category: 'film',
+      title: '49ers 2027 Combine & All-22 Trench Film Breakdown',
+      publishedAt: new Date(offseasonNowMs - 40 * 86_400_000).toISOString()
+    };
+    assert.equal(
+      isStalePriorGameVideo(fortyDayDraftVid, offseasonAppData, offseasonNowMs),
+      false,
+      'Offseason must retain 40-day-old film/Combine video instead of wiping at >16d'
+    );
+    const inSeasonAppData = {
+      scheduleMatchup: {
+        schedule: [
+          { week: 10, dateIso: '2026-11-15T21:05:00Z', completed: true, opponent: { abbr: 'DAL', name: 'Dallas Cowboys' } },
+          { week: 11, dateIso: '2026-11-22T18:00:00Z', completed: false, opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }
+        ],
+        upcomingMatchup: { week: 11, dateIso: '2026-11-22T18:00:00Z', oppAbbr: 'MIN', completed: false }
+      }
+    };
+    const inSeasonNow = Date.parse('2026-11-18T18:00:00Z');
+    const rescuePool = [
+      {
+        id: 'older_film_1',
+        type: 'video',
+        videoId: 'qbSchool111',
+        category: 'film',
+        title: 'Brock Purdy All-22 Anticipation Throws',
+        publishedAt: new Date(inSeasonNow - 12 * 86_400_000).toISOString()
+      }
+    ];
+    const rescued = filterFreshVideosForCurrentSlate(rescuePool, inSeasonAppData, inSeasonNow);
+    assert.equal(rescued.length, 1, 'Film & Trench safety floor must rescue recent <=45d film clip when 0 film videos survived');
+
+    // 3. Short-week Wednesday (Christmas, lead=2) & Friday (Black Friday, lead=3) practice windows
+    assert.equal(getPracticeReportLeadDays('Wed'), 2);
+    assert.equal(getPracticeReportLeadDays('Thu'), 3);
+    assert.equal(getPracticeReportLeadDays('Fri'), 3);
+    assert.equal(getPracticeReportLeadDays('Sat'), 4);
+    assert.equal(getPracticeReportLeadDays('Sun'), 4);
+    assert.equal(getPracticeReportLeadDays('Mon'), 4);
+
+    const blackFridayKo = '2026-11-27T20:00:00Z'; // Friday
+    assert.equal(
+      isBeforeWeeklyPracticeWindow(blackFridayKo, Date.parse('2026-11-24T18:00:00Z')), // Tue 10:00 AM PT (< 12:15 PM PT)
+      true
+    );
+    assert.equal(
+      isBeforeWeeklyPracticeWindow(blackFridayKo, Date.parse('2026-11-24T21:00:00Z')), // Tue 1:00 PM PT (>= 12:15 PM PT)
+      false
+    );
+    assert.equal(
+      resolvePracticeSlotFromReportTiming({
+        text: 'Trent Williams practiced in full Tuesday ahead of Friday.',
+        kickoffIso: blackFridayKo,
+        seasonYear: 2026
+      }),
+      'wed'
+    );
+    assert.equal(
+      resolvePracticeSlotFromReportTiming({
+        text: 'Fred Warner was a full participant Thursday.',
+        kickoffIso: blackFridayKo,
+        seasonYear: 2026
+      }),
+      'fri'
+    );
+    const christmasWedKo = '2026-12-23T21:30:00Z'; // Wednesday
+    assert.equal(
+      resolvePracticeSlotFromReportTiming({
+        text: 'Brock Purdy was a full participant Monday.',
+        kickoffIso: christmasWedKo,
+        seasonYear: 2026
+      }),
+      'wed'
+    );
+
+    // 4. Instant 0m post-whistle (`completed === true`) IR 21-day rollover & `seasonConcluded` 0% • IR hold
+    const sunKoIso = '2026-11-15T21:25:00Z';
+    const nextSunKoIso = '2026-11-22T18:00:00Z';
+    const zeroMinPostWhistleMs = Date.parse('2026-11-16T00:35:00Z'); // Only 3h10m post-kickoff (< 5.25h), but game is Final!
+    const irWinPostWhistle = evaluateWeeklyIrActivationWindow({
+      kickoffIso: sunKoIso,
+      designatedDateIso: '2026-11-04T19:00:00Z',
+      nowMs: zeroMinPostWhistleMs,
+      schedule: [
+        { week: 10, dateIso: sunKoIso, completed: true, opponent: { abbr: 'DAL' } },
+        { week: 11, dateIso: nextSunKoIso, completed: false, opponent: { abbr: 'MIN' } }
+      ]
+    });
+    assert.equal(
+      irWinPostWhistle.hasMissedWeeklyDeadline,
+      false,
+      'Completed game at 0m post-whistle must immediately advance IR window to Week N+1 without waiting 5.25h'
+    );
+    assert.equal(irWinPostWhistle.kickoffMs, Date.parse(nextSunKoIso));
+
+    const irProbSeasonOver = computePlayerPlayProbability({
+      name: 'Jacob Cowing',
+      position: 'WR',
+      rosterBucket: 'ir',
+      gameStatus: 'IR — 21-Day Window Open',
+      isPracticeWindowOpen: true,
+      designatedDateIso: '2026-12-28T19:00:00Z',
+      kickoffIso: '2027-01-03T21:25:00Z',
+      nowMs: Date.parse('2027-01-05T18:00:00Z'),
+      schedule: [{ week: 18, dateIso: '2027-01-03T21:25:00Z', completed: true, opponent: { abbr: 'SEA' } }],
+      seasonConcluded: true
+    });
+    assert.equal(irProbSeasonOver.probabilityPct, 0, 'Unactivated IR player must revert to 0% • IR once seasonConcluded is true');
+    assert.equal(irProbSeasonOver.badgeLabel, '0% • IR');
+  }
+);
+
+await testAsync(
+  'QA Scrub — Per-team 277KB ESPN injury hydration, LIVE/FINAL Matchup scoreboards, season-concluded Matchup AI guard, Worker HTTP Range 206 + HEAD & <75ms reconcile latency',
+  async () => {
+    const { hydrateLiveEspnOverlay } = await import('../src/services/dataService.js');
+    const { refreshDailyMatchupIntelIfDue } = await import('../src/services/aiWorkerClient.js');
+    const { renderSeasonMatchupViewHtml } = await import('../src/views/seasonMatchupView.js');
+    const { renderHomeDashboardHtml } = await import('../src/views/homeView.js');
+    const { resolveHomeDashboardState } = await import('../src/engine/seasonStateMachine.js');
+    const { reconcileRosterAndHealthWithNews } = await import('../src/engine/injuryProbabilityModel.js');
+    const edgeWorker = (await import('../worker/index.js')).default;
+
+    // 1. Latency gate on full production bundle (`reconcileRosterAndHealthWithNews` < 75ms)
+    const prodBundle = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      depthChart: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+      seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+    };
+    reconcileRosterAndHealthWithNews(prodBundle); // warm cache
+    const t0 = performance.now();
+    reconcileRosterAndHealthWithNews(prodBundle);
+    const elapsedMs = performance.now() - t0;
+    assert.ok(
+      elapsedMs < 75,
+      `reconcileRosterAndHealthWithNews must execute in <75ms on full 88-player bundle, took ${elapsedMs.toFixed(2)}ms`
+    );
+
+    // 2. Per-team ESPN `injuries?team=25` + `?team=min` query & live/seasonConcluded scoreboard sync
+    const requestedUrls = [];
+    const origFetch = globalThis.fetch;
+    try {
+      globalThis.fetch = async url => {
+        const u = String(url);
+        requestedUrls.push(u);
+        if (u.includes('/teams/sf/schedule')) {
+          return new Response(
+            JSON.stringify({
+              events: [
+                {
+                  id: '401800018',
+                  date: '2027-01-03T21:25:00Z',
+                  seasonType: { id: 2, type: 2 },
+                  week: { number: 18 },
+                  competitions: [
+                    {
+                      competitors: [
+                        { team: { abbreviation: 'SF', displayName: 'San Francisco 49ers' }, homeAway: 'home', score: { value: 27 } },
+                        { team: { abbreviation: 'SEA', displayName: 'Seattle Seahawks' }, homeAway: 'away', score: { value: 20 } }
+                      ],
+                      status: { type: { completed: true, state: 'post', shortDetail: 'Final' } }
+                    }
+                  ]
+                }
+              ]
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        if (u.includes('injuries?team=25')) {
+          return new Response(
+            JSON.stringify({
+              team: { id: '25', abbreviation: 'SF', displayName: 'San Francisco 49ers' },
+              injuries: []
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        return new Response(JSON.stringify({}), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      };
+
+      const eliminatedApp = {
+        meta: { seasonYear: 2026, currentWeek: 18, teamRecord: '7-10', teamStatus: { mathematicallyEliminated: true } },
+        roster: { players: [] },
+        health: { week: 18, practiceReport: [], irAndReserveTracker: [] },
+        news: { rawStream: [], clusteredBriefs: [] },
+        seasonal: { playoffPicture: { baselineSimulation: { sfOdds: { makePlayoffsPct: 0, winDivisionPct: 0, seed1ByePct: 0 } } } },
+        scheduleMatchup: {
+          schedule: Array.from({ length: 17 }, (_, idx) => ({
+            id: idx === 16 ? '401800018' : `g_${idx + 1}`,
+            seasonType: 'REG',
+            week: idx >= 7 ? idx + 2 : idx + 1,
+            dateIso: idx === 16 ? '2027-01-03T21:25:00Z' : '2026-10-01T20:00:00Z',
+            completed: idx < 16,
+            result: idx < 7 ? 'W' : idx < 16 ? 'L' : null,
+            homeAway: 'home',
+            opponent: { abbr: idx === 16 ? 'SEA' : 'ARI', name: idx === 16 ? 'Seattle Seahawks' : 'Arizona Cardinals' }
+          })),
+          upcomingMatchup: {
+            week: 18,
+            gameId: '401800018',
+            homeAway: 'home',
+            oppAbbr: 'SEA',
+            oppName: 'Seattle Seahawks',
+            kickoffDisplay: 'Sun, Jan 3',
+            opponentHealth: { injuryReport: [], irReserve: [], keyStartersHealthy: [] },
+            betting: { spread: 'SF -3.5', overUnder: 45.5, impliedScore: 'SF 24.5 – SEA 21.0' }
+          }
+        }
+      };
+
+      await hydrateLiveEspnOverlay(eliminatedApp);
+      assert.ok(
+        requestedUrls.some(u => u.includes('/nfl/injuries?team=25')) &&
+          !requestedUrls.some(u => /\/nfl\/injuries$/.test(u)),
+        'hydrateLiveEspnOverlay must query per-team injuries?team=25 instead of the 8.76MB league-wide /nfl/injuries endpoint'
+      );
+      const umAfter = eliminatedApp.scheduleMatchup.upcomingMatchup;
+      assert.equal(umAfter.completed, true);
+      assert.equal(umAfter.seasonConcluded, true);
+      assert.equal(umAfter.sfScore, 27);
+      assert.equal(umAfter.oppScore, 20);
+
+      const matchupHtml = renderSeasonMatchupViewHtml({
+        subTab: 'matchup',
+        appData: eliminatedApp,
+        userPrefs: {}
+      });
+      assert.ok(matchupHtml.includes('FINAL • 20–27'), 'Matchup scoreboard must render FINAL • Away–Home score pill');
+      assert.ok(matchupHtml.includes('Season Complete'), 'Matchup eyebrow must indicate Season Complete');
+
+      const { orderedBlocks } = resolveHomeDashboardState({});
+      const homeHtml = renderHomeDashboardHtml({
+        orderedBlocks,
+        appData: eliminatedApp,
+        userPrefs: {}
+      });
+      assert.ok(homeHtml.includes('FINAL • 20–27'), 'Home scoreboard must render FINAL • Away–Home score pill');
+
+      // refreshDailyMatchupIntelIfDue must refuse to burn Gemini credits when seasonConcluded or TBD
+      const skippedSeasonOver = await refreshDailyMatchupIntelIfDue({
+        appData: eliminatedApp,
+        prefs: { geminiApiKey: 'AIzaTestKey123' }
+      });
+      assert.equal(skippedSeasonOver.updated, false);
+      assert.equal(skippedSeasonOver.reason, 'no_active_matchup');
+
+      // 3. Edge Worker `/api/audio/:episodeId` HTTP Range `206` + `416` + `HEAD` & `/api/video-stream` redirect guard
+      const sampleWav = new Uint8Array(256);
+      sampleWav.set([0x52, 0x49, 0x46, 0x46], 0); // "RIFF"
+      for (let i = 4; i < 256; i++) sampleWav[i] = i & 0xff;
+      const workerEnv = {
+        ALLOWED_ORIGIN: '*',
+        PODCAST_BUCKET: {
+          async get(key) {
+            if (key !== 'episodes/ep_range_test.wav') return null;
+            return { body: sampleWav, size: sampleWav.byteLength, httpMetadata: { contentType: 'audio/wav' } };
+          }
+        }
+      };
+
+      const headRes = await edgeWorker.fetch(
+        new Request('https://worker.example/api/audio/ep_range_test', { method: 'HEAD' }),
+        workerEnv
+      );
+      assert.equal(headRes.status, 200);
+      assert.equal(headRes.headers.get('Content-Length'), '256');
+      assert.equal((await headRes.arrayBuffer()).byteLength, 0);
+
+      const rangeRes = await edgeWorker.fetch(
+        new Request('https://worker.example/api/audio/ep_range_test', {
+          headers: { Range: 'bytes=0-43' }
+        }),
+        workerEnv
+      );
+      assert.equal(rangeRes.status, 206, 'Byte-range GET must return 206 Partial Content for iOS Safari scrubbing');
+      assert.equal(rangeRes.headers.get('Content-Range'), 'bytes 0-43/256');
+      assert.equal(rangeRes.headers.get('Content-Length'), '44');
+      const rangeBuf = new Uint8Array(await rangeRes.arrayBuffer());
+      assert.equal(rangeBuf.byteLength, 44);
+      assert.equal(Buffer.from(rangeBuf.subarray(0, 4)).toString('ascii'), 'RIFF');
+
+      const badRangeRes = await edgeWorker.fetch(
+        new Request('https://worker.example/api/audio/ep_range_test', {
+          headers: { Range: 'bytes=500-600' }
+        }),
+        workerEnv
+      );
+      assert.equal(badRangeRes.status, 416);
+      assert.equal(badRangeRes.headers.get('Content-Range'), 'bytes */256');
+
+      globalThis.fetch = async () => {
+        const redirected = new Response(new Uint8Array([1, 2, 3]), { status: 200 });
+        Object.defineProperty(redirected, 'url', { value: 'https://evil.example.com/payload.mp4' });
+        return redirected;
+      };
+      const redirectBlockedRes = await edgeWorker.fetch(
+        new Request(
+          'https://worker.example/api/video-stream?url=' +
+            encodeURIComponent('https://video.twimg.com/ext_tw_video/123/pu/vid/avc1/1280x720/clip.mp4')
+        ),
+        workerEnv
+      );
+      assert.equal(redirectBlockedRes.status, 403, '/api/video-stream must reject off-allowlist upstream redirects');
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

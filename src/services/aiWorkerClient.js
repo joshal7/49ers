@@ -258,18 +258,28 @@ export function estimateGenerationWait({
   };
 }
 
-export function buildCompactContextSummary(appData) {
-  if (!appData) return '';
-  return buildAuthoritativeLiveContextSnapshot(appData);
+async function fetchWithTimeout(url, fetchInit = {}, timeoutMs = 8000) {
+  const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
+  try {
+    return await fetch(url, {
+      ...fetchInit,
+      ...(ctrl ? { signal: ctrl.signal } : {})
+    });
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }
 
 export async function fetchSharedWorkerFeed(prefs) {
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
   if (!baseUrl) return null;
   try {
-    const res = await fetch(`${baseUrl}/api/shared-feed`, {
-      headers: { 'X-Group-Passcode': prefs?.groupPasscode || '' }
-    });
+    const res = await fetchWithTimeout(
+      `${baseUrl}/api/shared-feed`,
+      { headers: { 'X-Group-Passcode': prefs?.groupPasscode || '' } },
+      6500
+    );
     if (!res.ok) return null;
     return await res.json();
   } catch {
@@ -290,7 +300,7 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
     .trim()
     .replace(/\/+$/, '');
 
-  const res = await fetch(`${apiBase}/models?key=${encodeURIComponent(key)}&pageSize=1000`);
+  const res = await fetchWithTimeout(`${apiBase}/models?key=${encodeURIComponent(key)}&pageSize=1000`, {}, 8000);
   if (!res.ok) {
     let detail = '';
     try {
@@ -2014,24 +2024,28 @@ export async function runOnDemandDeepAnalysis({
         liveSearchItems
       });
 
-      const res = await fetch(`${baseUrl}/api/analyze`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Group-Passcode': prefs?.groupPasscode || ''
+      const res = await fetchWithTimeout(
+        `${baseUrl}/api/analyze`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Group-Passcode': prefs?.groupPasscode || ''
+          },
+          body: JSON.stringify({
+            prompt: rawPrompt,
+            category: category || 'Deep Scouting & Cap Dive',
+            author: prefs?.authorName || 'Josh',
+            deepResearchPass: false,
+            verifyPass: false,
+            thinkingLevel: effectiveThinkingLevel,
+            qualityPriority: 'accuracy_over_latency',
+            systemPrompt: groundingRules,
+            contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
+          })
         },
-        body: JSON.stringify({
-          prompt: rawPrompt,
-          category: category || 'Deep Scouting & Cap Dive',
-          author: prefs?.authorName || 'Josh',
-          deepResearchPass: false,
-          verifyPass: false,
-          thinkingLevel: effectiveThinkingLevel,
-          qualityPriority: 'accuracy_over_latency',
-          systemPrompt: groundingRules,
-          contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
-        })
-      });
+        95000
+      );
       const json = await res.json();
       if (!res.ok) {
         throw new Error(json.error || `Worker HTTP ${res.status}`);
@@ -2233,26 +2247,30 @@ export async function generateOnDemandAutopodcast({
         liveSearchItems
       });
 
-      const res = await fetch(`${baseUrl}/api/podcast`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Group-Passcode': prefs?.groupPasscode || ''
+      const res = await fetchWithTimeout(
+        `${baseUrl}/api/podcast`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Group-Passcode': prefs?.groupPasscode || ''
+          },
+          body: JSON.stringify({
+            topic: cleanTopic,
+            durationMinutes: mins,
+            format,
+            author: prefs?.authorName || 'Josh',
+            deepResearchPass: false,
+            verifyPass: false,
+            thinkingLevel: effectiveThinkingLevel,
+            qualityPriority: 'accuracy_over_latency',
+            systemPrompt: groundingRules,
+            researchDossier: dossier.dossierSummaryText,
+            contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
+          })
         },
-        body: JSON.stringify({
-          topic: cleanTopic,
-          durationMinutes: mins,
-          format,
-          author: prefs?.authorName || 'Josh',
-          deepResearchPass: false,
-          verifyPass: false,
-          thinkingLevel: effectiveThinkingLevel,
-          qualityPriority: 'accuracy_over_latency',
-          systemPrompt: groundingRules,
-          researchDossier: dossier.dossierSummaryText,
-          contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
-        })
-      });
+        150000
+      );
       const json = await res.json();
       if (!res.ok) {
         throw new Error(json.error || `Worker HTTP ${res.status}`);
@@ -2476,7 +2494,6 @@ export async function generateOnDemandAutopodcast({
    ========================================================================== */
 const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v3';
 const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v2';
-let inFlightDailyMatchupPromise = null;
 
 export function getPacificDateKey(nowMs = Date.now()) {
   try {
@@ -2806,7 +2823,16 @@ export async function refreshDailyMatchupIntelIfDue({
   }
   const um = appData?.scheduleMatchup?.upcomingMatchup;
   const oppAbbr = String(um?.oppAbbr || '').toUpperCase().trim();
-  if (!um || !um.week || !oppAbbr || oppAbbr === 'BYE') {
+  if (
+    !um ||
+    !um.week ||
+    !oppAbbr ||
+    oppAbbr === 'BYE' ||
+    oppAbbr === 'TBD' ||
+    Boolean(um.isTbd) ||
+    Boolean(um.completed) ||
+    Boolean(um.seasonConcluded)
+  ) {
     return { updated: false, reason: 'no_active_matchup' };
   }
 
@@ -2834,11 +2860,11 @@ export async function refreshDailyMatchupIntelIfDue({
     }
   }
 
-  if (inFlightDailyMatchupPromise) {
-    return inFlightDailyMatchupPromise;
+  if (SHARED_AI_SINGLETON.inFlightDailyMatchupPromise) {
+    return SHARED_AI_SINGLETON.inFlightDailyMatchupPromise;
   }
 
-  inFlightDailyMatchupPromise = (async () => {
+  SHARED_AI_SINGLETON.inFlightDailyMatchupPromise = (async () => {
     safeWriteLocalJson(DAILY_MATCHUP_ATTEMPT_KEY, {
       attemptId: `${todayPt}:${scopeId}`,
       attemptedAt: new Date(nowMs).toISOString()
@@ -2856,22 +2882,26 @@ export async function refreshDailyMatchupIntelIfDue({
       const directKey = String(prefs?.geminiApiKey || '').trim();
 
       if (baseUrl && !directKey) {
-        const res = await fetch(`${baseUrl}/api/matchup-intel`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Group-Passcode': prefs?.groupPasscode || ''
+        const res = await fetchWithTimeout(
+          `${baseUrl}/api/matchup-intel`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Group-Passcode': prefs?.groupPasscode || ''
+            },
+            body: JSON.stringify({
+              seasonYear,
+              week: um.week,
+              oppAbbr,
+              datePt: todayPt,
+              forceRefresh: Boolean(force),
+              prompt: promptText,
+              systemPrompt
+            })
           },
-          body: JSON.stringify({
-            seasonYear,
-            week: um.week,
-            oppAbbr,
-            datePt: todayPt,
-            forceRefresh: Boolean(force),
-            prompt: promptText,
-            systemPrompt
-          })
-        });
+          55000
+        );
         if (res.ok) {
           const json = await res.json();
           modelUsed = json?.modelUsed || modelUsed;
@@ -2926,11 +2956,11 @@ export async function refreshDailyMatchupIntelIfDue({
     } catch {
       return { updated: false, reason: 'request_failed_graceful_fallback' };
     } finally {
-      inFlightDailyMatchupPromise = null;
+      SHARED_AI_SINGLETON.inFlightDailyMatchupPromise = null;
     }
   })();
 
-  return inFlightDailyMatchupPromise;
+  return SHARED_AI_SINGLETON.inFlightDailyMatchupPromise;
 }
 
 /* ==========================================================================
@@ -2947,20 +2977,6 @@ export const DAILY_NEWS_BRIEF_PEAK_HOUR_PT = 17;
 
 const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v5';
 const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v5';
-
-export function getPacificHour24(nowMs = Date.now()) {
-  try {
-    const hStr = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Los_Angeles',
-      hour: '2-digit',
-      hourCycle: 'h23'
-    }).format(new Date(nowMs));
-    const parsed = parseInt(hStr, 10);
-    return Number.isFinite(parsed) ? parsed : new Date(nowMs).getUTCHours();
-  } catch {
-    return new Date(nowMs).getUTCHours();
-  }
-}
 
 /**
  * Computes the active schedule-aware daily news-cycle identifier:
@@ -4773,14 +4789,15 @@ export async function refreshDailyTopNewsBriefIfDue({
     //    so Phone and Web converge on the exact same brief with 0 duplicate AI calls.
     if (baseUrl && !force) {
       try {
-        const kvGetRes = await fetch(
+        const kvGetRes = await fetchWithTimeout(
           `${baseUrl}/api/daily-news-brief?cycleKey=${encodeURIComponent(workerCycleKey)}`,
           {
             method: 'GET',
             headers: {
               'X-Group-Passcode': prefs?.groupPasscode || ''
             }
-          }
+          },
+          6500
         );
         if (kvGetRes.ok) {
           const kvJson = await kvGetRes.json();
@@ -4836,19 +4853,23 @@ export async function refreshDailyTopNewsBriefIfDue({
 
       if (baseUrl) {
         try {
-          const res = await fetch(`${baseUrl}/api/daily-news-brief`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Group-Passcode': prefs?.groupPasscode || ''
+          const res = await fetchWithTimeout(
+            `${baseUrl}/api/daily-news-brief`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Group-Passcode': prefs?.groupPasscode || ''
+              },
+              body: JSON.stringify({
+                cycleKey: workerCycleKey,
+                forceRefresh: Boolean(force),
+                prompt: promptText,
+                systemPrompt
+              })
             },
-            body: JSON.stringify({
-              cycleKey: workerCycleKey,
-              forceRefresh: Boolean(force),
-              prompt: promptText,
-              systemPrompt
-            })
-          });
+            55000
+          );
           if (res.ok) {
             const json = await res.json();
             modelUsed = json?.modelUsed || modelUsed;
@@ -4955,7 +4976,6 @@ export async function refreshDailyTopNewsBriefIfDue({
 
 const GAMEDAY_INACTIVES_AI_CACHE_KEY = 'faithful_gameday_inactives_ai_v1';
 const GAMEDAY_INACTIVES_AI_ATTEMPT_KEY = 'faithful_gameday_inactives_ai_attempt_v1';
-let inFlightGameDayInactivesAiPromise = null;
 
 function normInactivesKey(s = '') {
   return String(s || '')
@@ -5012,11 +5032,11 @@ export async function fetchGeminiFallbackGameDayInactives({
     return cached?.gameCacheId === gameCacheId ? cached : null;
   }
 
-  if (inFlightGameDayInactivesAiPromise) {
-    return inFlightGameDayInactivesAiPromise;
+  if (SHARED_AI_SINGLETON.inFlightGameDayInactivesAiPromise) {
+    return SHARED_AI_SINGLETON.inFlightGameDayInactivesAiPromise;
   }
 
-  inFlightGameDayInactivesAiPromise = (async () => {
+  SHARED_AI_SINGLETON.inFlightGameDayInactivesAiPromise = (async () => {
     try {
       safeWriteLocalJson(GAMEDAY_INACTIVES_AI_ATTEMPT_KEY, {
         gameCacheId,
@@ -5031,9 +5051,11 @@ export async function fetchGeminiFallbackGameDayInactives({
           oppName: String(oppName || oppAbbr || ''),
           aiFallback: '1'
         });
-        const res = await fetch(`${baseUrl}/api/gameday-inactives?${q.toString()}`, {
-          cache: 'no-store'
-        });
+        const res = await fetchWithTimeout(
+          `${baseUrl}/api/gameday-inactives?${q.toString()}`,
+          { cache: 'no-store' },
+          18000
+        );
         if (res.ok) {
           const json = await res.json();
           if (json?.sf || json?.opp) {
@@ -5139,9 +5161,9 @@ Return ONLY valid JSON matching this schema:
     } catch {
       return null;
     } finally {
-      inFlightGameDayInactivesAiPromise = null;
+      SHARED_AI_SINGLETON.inFlightGameDayInactivesAiPromise = null;
     }
   })();
 
-  return inFlightGameDayInactivesAiPromise;
+  return SHARED_AI_SINGLETON.inFlightGameDayInactivesAiPromise;
 }

@@ -1,6 +1,7 @@
-const CACHE_NAME = '49ers-faithful-v88';
+const CACHE_NAME = '49ers-faithful-v89';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
+const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -146,20 +147,22 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network-first with fast timeout & instant offline cache fallback for HTML, JS, CSS & live JSON feeds
+  // Network-first with fast 2.2s timeout when warm-cached (7.5s cold) & instant offline fallback
   // Pass event.request.url string so { cache: 'no-cache' } never throws TypeError on mode === 'navigate'
   event.respondWith(
-    fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, NETWORK_TIMEOUT_MS)
-      .then(res => {
+    (async () => {
+      const cached = await caches.match(event.request, { ignoreSearch: true });
+      const timeoutMs = cached ? FAST_CACHED_NETWORK_TIMEOUT_MS : NETWORK_TIMEOUT_MS;
+      try {
+        const res = await fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, timeoutMs);
         if (res && res.status === 200) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
         return res;
-      })
-      .catch(async () => {
-        const cached = await caches.match(event.request, { ignoreSearch: true });
+      } catch {
         return cached || Response.error();
-      })
+      }
+    })()
   );
 });

@@ -51,12 +51,6 @@ const SVG_PATHS = {
   `,
 
   // Header & System Controls
-  vault: `
-    <rect x="3" y="4" width="18" height="5" rx="1.5" fill="currentColor" fill-opacity="0.18"/>
-    <rect x="3" y="4" width="18" height="5" rx="1.5"/>
-    <path d="M4.5 9V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V9"/>
-    <line x1="10" y1="13.5" x2="14" y2="13.5"/>
-  `,
   settings: `
     <line x1="4" y1="6" x2="10" y2="6"/>
     <line x1="14" y1="6" x2="20" y2="6"/>
@@ -291,20 +285,6 @@ const SVG_PATHS = {
     <line x1="8" y1="8.5" x2="16" y2="8.5"/>
     <line x1="8" y1="12.5" x2="16" y2="12.5"/>
     <line x1="8" y1="16.5" x2="13" y2="16.5"/>
-  `,
-  archive: `
-    <rect x="3" y="4" width="18" height="4.5" rx="1.4" fill="currentColor" fill-opacity="0.18"/>
-    <rect x="3" y="4" width="18" height="4.5" rx="1.4"/>
-    <path d="M4.5 8.5V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V8.5"/>
-    <line x1="12" y1="11.5" x2="12" y2="17"/>
-    <polyline points="9.5 14.5 12 17 14.5 14.5"/>
-  `,
-  restore: `
-    <rect x="3" y="4" width="18" height="4.5" rx="1.4" fill="currentColor" fill-opacity="0.18"/>
-    <rect x="3" y="4" width="18" height="4.5" rx="1.4"/>
-    <path d="M4.5 8.5V18.5C4.5 19.6 5.4 20.5 6.5 20.5H17.5C18.6 20.5 19.5 19.6 19.5 18.5V8.5"/>
-    <line x1="12" y1="17" x2="12" y2="11.5"/>
-    <polyline points="9.5 14 12 11.5 14.5 14"/>
   `,
   trash: `
     <path d="M4 6.5H20"/>

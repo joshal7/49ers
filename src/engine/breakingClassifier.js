@@ -398,7 +398,9 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
 
   // 1. Check if a 49ers game is currently in progress (from kickoff until completion)
   for (const g of schedule) {
-    if (!g || g.completed) continue;
+    if (!g || g.completed || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') {
+      continue;
+    }
     const koMs = Date.parse(g.dateIso || '');
     const statusLower = String(g.statusDetail || '').toLowerCase();
     const statusIndicatesLive = /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/.test(statusLower);
@@ -2393,8 +2395,11 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
   }
 
   for (const g of schedule) {
+    if (!g || g.completed || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') {
+      continue;
+    }
     const statusLower = String(g.statusDetail || '').toLowerCase();
-    if (/\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/.test(statusLower) && !g.completed) {
+    if (/\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/.test(statusLower)) {
       return true;
     }
     const koMs = g.dateIso ? new Date(g.dateIso).getTime() : NaN;
@@ -2405,12 +2410,24 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
     }
   }
 
-  const upKoMs =
-    upcoming.dateIso || upcoming.kickoffIso
-      ? new Date(upcoming.dateIso || upcoming.kickoffIso).getTime()
-      : NaN;
-  if (Number.isFinite(upKoMs) && nowMs >= upKoMs - 95 * 60_000 && nowMs <= upKoMs + 4.5 * 3600_000) {
-    return true;
+  const umOppUpper = String(upcoming.oppAbbr || upcoming.opponent?.abbr || '').toUpperCase();
+  const hasMatchedScheduleEntry = schedule.some(g => g && Number(g.week) === Number(upcoming.week));
+  if (
+    !hasMatchedScheduleEntry &&
+    !upcoming.completed &&
+    !upcoming.isByeWeek &&
+    !upcoming.isTbd &&
+    !upcoming.seasonConcluded &&
+    umOppUpper !== 'BYE' &&
+    umOppUpper !== 'TBD'
+  ) {
+    const upKoMs =
+      upcoming.dateIso || upcoming.kickoffIso
+        ? new Date(upcoming.dateIso || upcoming.kickoffIso).getTime()
+        : NaN;
+    if (Number.isFinite(upKoMs) && nowMs >= upKoMs - 95 * 60_000 && nowMs <= upKoMs + 4.5 * 3600_000) {
+      return true;
+    }
   }
 
   return false;
@@ -2419,7 +2436,7 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
 /**
  * Returns true when a video (`item.type === 'video'` or `item.videoId`) is from a prior game slate
  * (e.g. 2+ weeks ago or published before the most recently completed 49ers game) so `Highlights & Videos`
- * and `Film & Trench` refresh cleanly after every completed game.
+ * and `Film & Trench` refresh cleanly after every completed game while remaining populated in the offseason.
  */
 export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.now()) {
   if (!item || (item.type !== 'video' && !item.videoId && !item.videoStreamUrl)) return false;
@@ -2427,11 +2444,11 @@ export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.no
   const pubMs = resolveEffectivePublishTimestampMs(item, nowMs);
   const ageDays = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 86_400_000) : 99;
   const summaryAgeStr = String(item.summary || '');
-  if (/\b([2-9]\d*\s*w(?:eeks?|ks?)|\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?))\s+ago\b/i.test(summaryAgeStr)) {
-    return true;
-  }
 
   if (!appData || typeof appData !== 'object') {
+    if (/\b([2-9]\d*\s*w(?:eeks?|ks?)|\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?))\s+ago\b/i.test(summaryAgeStr)) {
+      return true;
+    }
     return ageDays > 12;
   }
 
@@ -2441,6 +2458,21 @@ export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.no
   const upcomingWk = ctx.upcomingWeek;
   const latestOppNick = String(ctx.latestCompletedOppNickname || '').trim();
   const upcomingOppNick = String(ctx.upcomingOppNickname || '').trim();
+  const isOffseasonWindow =
+    Boolean(appData?.scheduleMatchup?.upcomingMatchup?.seasonConcluded) ||
+    ((!Number.isFinite(ctx.upcomingKickoffMs) || (ctx.upcomingKickoffMs - nowMs) / 86_400_000 > 21) &&
+      (!Number.isFinite(latestCompKoMs) || (nowMs - latestCompKoMs) / 86_400_000 > 21));
+
+  if (isOffseasonWindow) {
+    if (/\b([4-9]\d*\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?))\s+ago\b/i.test(summaryAgeStr)) {
+      return true;
+    }
+    return ageDays > 90;
+  }
+
+  if (/\b([2-9]\d*\s*w(?:eeks?|ks?)|\d+\s*mo(?:nths?)?|\d+\s*y(?:ears?|rs?))\s+ago\b/i.test(summaryAgeStr)) {
+    return true;
+  }
 
   if (Number.isFinite(latestCompKoMs)) {
     const daysSinceCompletedGame = (nowMs - latestCompKoMs) / 86_400_000;
@@ -2500,22 +2532,37 @@ export function isStalePriorGameVideo(item = {}, appData = null, nowMs = Date.no
  */
 export function filterFreshVideosForCurrentSlate(items = [], appData = null, nowMs = Date.now()) {
   if (!Array.isArray(items) || items.length === 0) return items;
-  const fresh = items.filter(it => !isStalePriorGameVideo(it, appData, nowMs));
-  // Safety floor right after final whistle (while ESPN/49ers.com clips are transcoding or on stadium Wi-Fi):
-  // never drop `Highlights & Videos` to 0 items if non-film videos within the last 10 days exist in `items`.
-  const isHighlightVid = it =>
-    (it?.type === 'video' || Boolean(it?.videoId) || Boolean(it?.videoStreamUrl)) && it?.category !== 'film';
+  let fresh = items.filter(it => !isStalePriorGameVideo(it, appData, nowMs));
+  // Safety floor right after final whistle (while ESPN/49ers.com clips are transcoding or on stadium Wi-Fi)
+  // and during Bye / offseason lulls: never drop `Highlights & Videos` or `Film & Trench` videos to 0 items
+  // when recent clips exist in `items`.
+  const isVid = it => it?.type === 'video' || Boolean(it?.videoId) || Boolean(it?.videoStreamUrl);
+  const isHighlightVid = it => isVid(it) && it?.category !== 'film';
+  const isFilmVid = it => isVid(it) && it?.category === 'film';
   if (!fresh.some(isHighlightVid) && items.some(isHighlightVid)) {
     const recentHighlights = items
       .filter(it => {
         if (!isHighlightVid(it)) return false;
         const pMs = resolveEffectivePublishTimestampMs(it, nowMs);
-        return Number.isFinite(pMs) && nowMs - pMs <= 10 * 86_400_000;
+        return Number.isFinite(pMs) && nowMs - pMs <= 14 * 86_400_000;
       })
       .sort((a, b) => (resolveEffectivePublishTimestampMs(b, nowMs) || 0) - (resolveEffectivePublishTimestampMs(a, nowMs) || 0))
       .slice(0, 6);
     if (recentHighlights.length > 0) {
-      return [...fresh, ...recentHighlights];
+      fresh = [...fresh, ...recentHighlights];
+    }
+  }
+  if (!fresh.some(isFilmVid) && items.some(isFilmVid)) {
+    const recentFilm = items
+      .filter(it => {
+        if (!isFilmVid(it)) return false;
+        const pMs = resolveEffectivePublishTimestampMs(it, nowMs);
+        return Number.isFinite(pMs) && nowMs - pMs <= 45 * 86_400_000;
+      })
+      .sort((a, b) => (resolveEffectivePublishTimestampMs(b, nowMs) || 0) - (resolveEffectivePublishTimestampMs(a, nowMs) || 0))
+      .slice(0, 6);
+    if (recentFilm.length > 0) {
+      fresh = [...fresh, ...recentFilm];
     }
   }
   return fresh;
@@ -2709,7 +2756,7 @@ function collectScheduleGamesForBrief(appData = null) {
   const seenKeys = new Set();
 
   for (const g of rawSched) {
-    if (!g || g.isByeWeek) continue;
+    if (!g || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') continue;
     const koIso = g.dateIso || g.kickoffIso || '';
     const koMs = koIso ? Date.parse(koIso) : NaN;
     if (!Number.isFinite(koMs)) continue;
@@ -2720,7 +2767,8 @@ function collectScheduleGamesForBrief(appData = null) {
   }
 
   const um = appData?.scheduleMatchup?.upcomingMatchup;
-  if (um && um.oppAbbr && String(um.oppAbbr).toUpperCase() !== 'BYE') {
+  const umOpp = String(um?.oppAbbr || '').toUpperCase();
+  if (um && umOpp && umOpp !== 'BYE' && umOpp !== 'TBD' && !um.isTbd && !um.seasonConcluded) {
     const umIso = um.dateIso || um.kickoffIso || '';
     const umKoMs = umIso ? Date.parse(umIso) : NaN;
     const umKey = `REG:${Number(um.week || 0)}`;
