@@ -9192,6 +9192,329 @@ test(
   }
 );
 
+await testAsync(
+  'In-game & post-game injury rollover promotes Renardo Green despite ESPN IDP lag while guarding tent returners, healthy starters, promo duplicates & teammate bleed',
+  async () => {
+    const {
+      assemblePlayerNewsItemText,
+      extractInjuryBodyPartFromProse,
+      evaluateCorroboratedNewsInjurySignal,
+      reconcileRosterAndHealthWithNews
+    } = await import('../src/engine/injuryProbabilityModel.js');
+    const { resolveEarlyWeekRolloverInput } = await import('../src/engine/gameDayRosterEngine.js');
+
+    // 0. Live data/health.json invariant: Renardo Green (CB #0, Back) is listed cleanly on Week 11 Injury Report
+    const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+    const liveGreenRow = (liveHealth.practiceReport || []).find(r => r.name === 'Renardo Green');
+    assert.ok(liveGreenRow, 'Renardo Green must be present on data/health.json practiceReport');
+    assert.equal(liveGreenRow.injuryType, 'Back');
+    assert.ok(
+      liveGreenRow.playProbabilityPct >= 60 && liveGreenRow.playProbabilityPct <= 75,
+      `Expected Renardo Green playProbabilityPct in [60, 75], got ${liveGreenRow.playProbabilityPct}`
+    );
+    assert.ok(
+      !/is active for sunday|defeated the 49ers 29 renardo|\.\./i.test(liveGreenRow.beatComment || ''),
+      `Renardo Green beatComment must be clean & grammatical: ${liveGreenRow.beatComment}`
+    );
+
+    // 1. Sentence-boundary assembly & body-part extraction (including "w/his back injury" and homonym guards)
+    const assembled = assemblePlayerNewsItemText(
+      {
+        title: '49ers vs. Cowboys Grades',
+        summary: 'The Falcons defeated the 49ers 29',
+        playerSnippet: 'Renardo Green left with the same back injury he dealt with all week ..',
+        playerSnippets: {
+          '9999': 'Ephesians Prysock went in for Renardo Green. Renardo Green left with the same back injury he dealt with all week.'
+        }
+      },
+      'Renardo Green',
+      '4427325'
+    );
+    assert.ok(
+      assembled.fullBody.includes('29. Renardo Green'),
+      `Truncated summary must terminate cleanly with a period before playerSnippet: ${assembled.fullBody}`
+    );
+    assert.equal(
+      extractInjuryBodyPartFromProse('#49ers CB Renardo Green, who was unable to finish the game w/his back injury, is day to day.'),
+      'Back'
+    );
+    assert.equal(
+      extractInjuryBodyPartFromProse('Player returned back to the huddle and lent a hand on the drive.'),
+      '',
+      'Non-medical football homonyms ("back to the huddle", "lent a hand") must never false-match Back/Hand'
+    );
+
+    // 2. Simulate Monday 12:19 PM PT state: ESPN still shows stale Sunday "Green (back) is active for Sunday's game",
+    //    only post-kickoff recap snippets / beat posts exist -> Green MUST be promoted onto practiceReport!
+    const wk10KoMs = Date.parse('2026-11-15T21:25:00Z');
+    const wk10EndMs = wk10KoMs + 3.25 * 3_600_000;
+    const monMorningMs = Date.parse('2026-11-16T20:19:00Z');
+
+    const mockAppData = {
+      meta: { seasonYear: 2026, currentWeek: 11, byeWeek: 8 },
+      roster: {
+        players: [
+          {
+            id: '4427325',
+            name: 'Renardo Green',
+            position: 'CB',
+            jersey: 0,
+            rosterBucket: 'active',
+            primarySnapPct: 93,
+            capHit2026: 1_550_000,
+            health: {
+              isOnPracticeReport: false,
+              status: 'Active',
+              injuryType: '',
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              shortComment: "Green (back) is active for Sunday's game against the Cowboys.",
+              longComment: "Green (back) is active for Sunday's game against the Cowboys.",
+              playProbabilityPct: 95,
+              playBadgeLabel: '95% • Full Go',
+              weeklyHistory2026: [{ week: 10, injury: 'Back', gameStatus: 'Questionable', practiceStatus: 'LP' }]
+            }
+          },
+          {
+            id: '4362887',
+            name: 'Deommodore Lenoir',
+            position: 'CB',
+            jersey: 2,
+            rosterBucket: 'active',
+            primarySnapPct: 98,
+            capHit2026: 14_200_000,
+            health: {
+              isOnPracticeReport: false,
+              status: 'Active',
+              injuryType: '',
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              shortComment: "Lenoir (foot) is active for Sunday's game against the Cowboys.",
+              longComment: "Lenoir (foot) is active for Sunday's game against the Cowboys.",
+              playProbabilityPct: 95,
+              playBadgeLabel: '95% • Full Go',
+              weeklyHistory2026: [{ week: 10, injury: 'Foot', gameStatus: 'Questionable', practiceStatus: 'LP' }]
+            }
+          },
+          {
+            id: '3915416',
+            name: 'Demarcus Robinson',
+            position: 'WR',
+            jersey: 15,
+            rosterBucket: 'active',
+            primarySnapPct: 64,
+            capHit2026: 2_500_000,
+            health: {
+              isOnPracticeReport: false,
+              status: 'Active',
+              injuryType: '',
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              shortComment: '',
+              longComment: '',
+              playProbabilityPct: 99,
+              playBadgeLabel: '99% • Full Go',
+              weeklyHistory2026: []
+            }
+          },
+          {
+            id: '4241986',
+            name: 'Dominick Puni',
+            position: 'G',
+            jersey: 77,
+            rosterBucket: 'active',
+            primarySnapPct: 100,
+            capHit2026: 1_300_000,
+            health: {
+              isOnPracticeReport: false,
+              status: 'Active',
+              injuryType: '',
+              wed: '-',
+              thu: '-',
+              fri: '-',
+              shortComment: '',
+              longComment: '',
+              playProbabilityPct: 99,
+              playBadgeLabel: '99% • Full Go',
+              weeklyHistory2026: []
+            }
+          }
+        ]
+      },
+      health: {
+        week: 11,
+        byeWeek: 8,
+        practiceReport: [],
+        irAndReserveTracker: []
+      },
+      news: {
+        rawStream: [
+          // Pre-kickoff Week 10 clearance tweet (must NEVER promote Lenoir or Green on its own)
+          {
+            id: 'pregame_lenoir',
+            type: 'tweet',
+            author: 'Matt Maiocco',
+            trustTier: 1,
+            publishedAt: new Date(wk10KoMs - 60 * 60_000).toISOString(),
+            fullText: 'Deommodore Lenoir (foot) and Renardo Green (back) are active today in Dallas.'
+          },
+          // Mid-game Q2 blue-tent tweet for Demarcus Robinson FOLLOWED by return-to-game tweet -> must cancel!
+          {
+            id: 'midgame_drob_tent',
+            type: 'tweet',
+            author: 'Matt Barrows',
+            trustTier: 1,
+            publishedAt: new Date(wk10KoMs + 45 * 60_000).toISOString(),
+            fullText: 'WR Demarcus Robinson went into the blue medical tent and is questionable to return.'
+          },
+          {
+            id: 'midgame_drob_back',
+            type: 'tweet',
+            author: 'Matt Barrows',
+            trustTier: 1,
+            publishedAt: new Date(wk10KoMs + 58 * 60_000).toISOString(),
+            fullText: 'Demarcus Robinson has returned to the game after a brief stint in the blue medical tent.'
+          },
+          // Brand-new Q3 in-game exit for previously unlisted Dominick Puni (published DURING the game before wk10EndMs!)
+          {
+            id: 'midgame_puni_exit',
+            type: 'tweet',
+            author: 'Nick Wagoner',
+            trustTier: 1,
+            publishedAt: new Date(wk10KoMs + 115 * 60_000).toISOString(),
+            fullText: '49ers RG Dominick Puni suffered an ankle injury in the third quarter and will not return.'
+          },
+          // Post-game recap article + social link-card promo pointing to the SAME canonical URL (must dedupe to 1 source, not 2!)
+          {
+            id: 'wz_green_art',
+            type: 'article',
+            outletId: '49ers_webzone',
+            author: 'David Bonilla',
+            trustTier: 2,
+            url: 'https://www.49erswebzone.com/articles/199999-shanahan-injury-update/',
+            publishedAt: new Date(wk10EndMs + 30 * 60_000).toISOString(),
+            title: 'Kyle Shanahan provides postgame injury update',
+            playerSnippets: {
+              '4427325': "Kyle Shanahan said [CB] Renardo Green left with a back injury in the second half and didn't return."
+            }
+          },
+          {
+            id: 'wz_green_promo_tweet',
+            type: 'tweet',
+            outletId: '49ers_webzone',
+            author: '49ers Webzone',
+            trustTier: 2,
+            url: 'https://x.com/49erswebzone/status/199999',
+            externalUrl: 'https://www.49erswebzone.com/articles/199999-shanahan-injury-update/?utm_source=x',
+            externalDescription: "Kyle Shanahan said Renardo Green left with a back injury in the second half and didn't return.",
+            publishedAt: new Date(wk10EndMs + 32 * 60_000).toISOString(),
+            fullText: 'Kyle Shanahan provides postgame injury update Read:'
+          }
+        ]
+      },
+      scheduleMatchup: {
+        schedule: [
+          { week: 10, completed: true, dateIso: new Date(wk10KoMs).toISOString(), opponent: { abbr: 'DAL', name: 'Dallas Cowboys' } },
+          { week: 11, completed: false, dateIso: '2026-11-23T01:15:00Z', opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }
+        ]
+      }
+    };
+
+    // Verify URL-based canonical deduplication on wz_green_art + wz_green_promo_tweet
+    const greenSig = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Renardo Green',
+      playerId: '4427325',
+      rosterBucket: 'active',
+      newsItems: mockAppData.news.rawStream,
+      rosterPlayerNames: mockAppData.roster.players.map(p => p.name),
+      nowMs: monMorningMs,
+      windowStartMs: wk10EndMs,
+      lastCompletedGameKickoffMs: wk10KoMs,
+      lastCompletedWeek: 10,
+      priorWeekInjuryType: 'Back'
+    });
+    assert.equal(greenSig.corroboratingCount, 1, 'Article + its own promo link-tweet must deduplicate to 1 source');
+    assert.equal(greenSig.signalType, 'SUSTAINED_IN_GAME_INJURY');
+    assert.equal(greenSig.inferredInjuryType, 'Back');
+    assert.equal(greenSig.exitedWithoutReturn, true);
+    assert.ok(greenSig.confidence >= 0.42);
+
+    const didMutate = reconcileRosterAndHealthWithNews(mockAppData, { nowMs: monMorningMs });
+    assert.equal(didMutate, true);
+
+    const promotedNames = mockAppData.health.practiceReport.map(r => r.name);
+    assert.ok(promotedNames.includes('Renardo Green'), 'Renardo Green must be promoted onto practiceReport');
+    assert.ok(promotedNames.includes('Dominick Puni'), 'Previously unlisted Dominick Puni (in-game ankle exit) must be promoted');
+    assert.ok(!promotedNames.includes('Deommodore Lenoir'), 'Healthy pregame Questionable starter Lenoir must stay OFF report');
+    assert.ok(!promotedNames.includes('Demarcus Robinson'), 'Blue-tent returner Demarcus Robinson must stay OFF report');
+
+    const puniRow = mockAppData.health.practiceReport.find(r => r.name === 'Dominick Puni');
+    assert.equal(puniRow.injuryType, 'Ankle');
+    assert.equal(puniRow.sustainedInLastGame, true);
+
+    // 3. Verify Official Wednesday 49ers.com Report Supersession: once `_hasLiveOfficialCurrentWeekSfReport = true`
+    //    and a player is omitted as a full participant, Sunday's exit note does NOT re-promote them!
+    mockAppData.health._hasLiveOfficialCurrentWeekSfReport = true;
+    for (const p of mockAppData.roster.players) {
+      p.health.isOnPracticeReport = false;
+      p.health.status = 'Active';
+      p.health.injuryType = '';
+    }
+    mockAppData.health.practiceReport = [];
+    reconcileRosterAndHealthWithNews(mockAppData, { nowMs: Date.parse('2026-11-18T23:30:00Z') });
+    assert.equal(
+      mockAppData.health.practiceReport.length,
+      0,
+      'Once official Wednesday 49ers.com report publishes omitting players, Sunday exit notes must not re-promote them'
+    );
+
+    // 4. Verify `resolveEarlyWeekRolloverInput` teammate clause isolation & surgery/IR-candidate Doubtful detection
+    const avgRoll = resolveEarlyWeekRolloverInput({
+      playerName: 'Andrew Van Ginkel',
+      rawStatus: 'Questionable',
+      injuryType: 'Concussion',
+      shortComment: "Van Ginkel exited Sunday's loss to the Ravens with a concussion, while fellow LB Blake Cashman (concussion) is inactive.",
+      longComment: '',
+      upcomingWeek: 11,
+      lastCompletedWeek: 10,
+      playedInCompletedGame: true
+    });
+    assert.equal(avgRoll.skip, false);
+    assert.equal(avgRoll.missedPriorGame, false, 'Teammate Blake Cashman "is inactive" must NOT bleed into Van Ginkel missedPriorGame');
+    assert.equal(avgRoll.sustainedInLastGame, true);
+    assert.equal(avgRoll.exitedWithoutReturn, true);
+
+    const addisonRoll = resolveEarlyWeekRolloverInput({
+      playerName: 'Jordan Addison',
+      rawStatus: 'Questionable',
+      injuryType: 'Foot',
+      shortComment: 'Addison suffered a foot injury Sunday that requires surgery and makes him a candidate for injured reserve.',
+      longComment: '',
+      upcomingWeek: 11,
+      lastCompletedWeek: 10,
+      playedInCompletedGame: true
+    });
+    assert.equal(addisonRoll.skip, false);
+    assert.equal(addisonRoll.effectiveStatus, 'Doubtful', 'Requires surgery / IR candidate must downgrade early-week status to Doubtful');
+
+    const lenoirRoll = resolveEarlyWeekRolloverInput({
+      playerName: 'Deommodore Lenoir',
+      rawStatus: 'Active',
+      injuryType: 'Foot',
+      shortComment: "Lenoir (foot) is active for Sunday's game against the Cowboys.",
+      longComment: '',
+      upcomingWeek: 11,
+      lastCompletedWeek: 10,
+      playedInCompletedGame: true,
+      hasPostKickoffInjurySignal: false
+    });
+    assert.equal(lenoirRoll.skip, true, 'Starter who suited up and finished unscathed with stale pregame active note must skip');
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

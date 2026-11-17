@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T23:21:07.153Z",
+  "updatedAt": "2026-11-17T00:08:14.161Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -24752,7 +24752,7 @@
       "teamInjuriesUrl": "https://www.espn.com/nfl/team/injuries/_/name/min",
       "byeWeek": 6,
       "summary": {
-        "overallAvailabilityScore": 70,
+        "overallAvailabilityScore": 69,
         "activeStartersHealthy": 14,
         "totalStarters": 22,
         "startersOutCount": 1,
@@ -25460,7 +25460,7 @@
           "thu": "-",
           "fri": "-",
           "injuryType": "Thumb",
-          "gameStatus": "Questionable",
+          "gameStatus": "Doubtful",
           "shortComment": "Vikings head coach Kevin O'Connell said Monday that Addison will require surgery on his thumb and will miss a few weeks, Alec Lewis of The Athletic reports.",
           "longComment": "O'Connell indicated that Addison will be a candidate for injured reserve, though if he does end up being deactivated, the Vikings anticipate that the wideout would be able to return after sitting out the minimum four games. Addison injured his thumb at Friday's practice and subsequently was inactive for Sunday's 30-10 win over Green Bay. For as long as Addison is sidelined, Jauan Jennings (calf), Myles Price and Tai Felton will be the options to see added reps behind No. 1 receiver Justin Jefferson.",
           "isStarter": true,
@@ -25643,11 +25643,11 @@
           "longComment": "Van Ginkel sustained a quad injury late in Sunday's game against Green Bay. The 31-year-old has yet to miss a regular-season game in 2026, recording 28 tackles (16 solo), including 8.5 sacks, one pass deflection and one interception in nine contests.",
           "isStarter": true,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 79,
+          "playProbabilityPct": 75,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "79% • GTD",
+          "playBadgeLabel": "75% • GTD",
           "factors": [
-            "Questionable tag adjusted by player career prior (84%)",
+            "Active in prior game; day-to-day evaluation ahead of Wednesday practice (base prior 84%)",
             "Soft-tissue re-aggravation caution (Quadriceps)"
           ],
           "archetypeNote": "Veteran starter profile (8th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance."
@@ -25669,11 +25669,11 @@
           "longComment": "Jones is being evaluated by medical staff to determine whether he can return to Sunday's game. He was a practice squad elevation Saturday to give the Vikings more depth at wide receiver due to the absences of both Jordan Addison (thumb) and Jauan Jennings (calf).",
           "isStarter": false,
           "isIrReturnQuestionable": false,
-          "playProbabilityPct": 80,
+          "playProbabilityPct": 76,
           "playTier": "FIFTY_FIFTY",
-          "playBadgeLabel": "80% • GTD",
+          "playBadgeLabel": "76% • GTD",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)",
+            "Active in prior game; day-to-day evaluation ahead of Wednesday practice (base prior 76%)",
             "Manageable pain-tolerance injury profile (Shoulder)"
           ],
           "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline)."
@@ -26018,7 +26018,7 @@
       "spread": "SF -3.0",
       "openingSpread": "Opened SF -3.5 (Draft Kings)",
       "overUnder": 46.5,
-      "moneyline": "SF -166 | MIN +140",
+      "moneyline": "SF -162 | MIN +136",
       "impliedScore": "SF 24.8 – MIN 21.8",
       "restAdvantage": "Even Rest (Standard Prep Week)"
     },

@@ -3241,11 +3241,12 @@ async function main() {
       if (it.outletId !== '49ers_webzone' && it.outletId !== '49ers_official') return false;
       const pubMs = Date.parse(it.publishedAt || '');
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > 96 * 3_600_000) return false;
-      return /\b(injur\w*|practice\s+report|participation|inactives?|status|shanahan\s+reveals)\b/i.test(
+      return /\b(injur\w*|practice\s+report|participation|inactives?|status|shanahan\s+(?:reveals|shares))\b/i.test(
         `${it.title || ''} ${it.summary || ''}`
       );
     })
-    .slice(0, 5);
+    .sort((a, b) => (Date.parse(b.publishedAt || '') || 0) - (Date.parse(a.publishedAt || '') || 0))
+    .slice(0, 8);
 
   if (injuryEnrichTargets.length > 0) {
     await Promise.all(
@@ -3284,7 +3285,19 @@ async function main() {
             .filter(s => s.length >= 22);
           const snippets = {};
           for (const mp of artItem.mentionedPlayers || []) {
-            const hitIdx = bodySentences.findIndex(s => doesClauseMentionPlayer(s, mp.name, { allowSurname: true }));
+            const concreteIdx = bodySentences.findIndex(
+              (s, idx) =>
+                doesClauseMentionPlayer(s, mp.name, { allowSurname: true }) &&
+                !/\bprovides?\s+(?:an?\s+)?(?:injury\s+)?updates?\s+on\b/i.test(s) &&
+                (idx > 0 ||
+                  /\b(left|exited|return|unable|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|practice|limited|dnp|window|activate|achilles|back|knee|groin|ankle|hamstring|shoulder|foot|concussion|mri|surgery)\b/i.test(
+                    s
+                  ))
+            );
+            const hitIdx =
+              concreteIdx >= 0
+                ? concreteIdx
+                : bodySentences.findIndex(s => doesClauseMentionPlayer(s, mp.name, { allowSurname: true }));
             if (hitIdx >= 0) {
               const joined = [bodySentences[hitIdx], bodySentences[hitIdx + 1] || '', bodySentences[hitIdx + 2] || '']
                 .filter(Boolean)
@@ -3644,6 +3657,7 @@ async function main() {
   const healthReconcileContainer = {
     week: detectedCurrentWeek,
     byeWeek: detectedByeWeek,
+    _hasLiveOfficialCurrentWeekSfReport: Boolean(officialInjReport.hasSfReport),
     practiceReport: practiceReportPlayers,
     irAndReserveTracker: irTrackerPlayers
   };

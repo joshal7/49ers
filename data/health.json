@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T23:21:07.153Z",
+  "updatedAt": "2026-11-17T00:08:14.161Z",
   "week": 11,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -17,6 +17,7 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
@@ -28,7 +29,8 @@
       "factors": [
         "Missed 3 consecutive games without practice participation — awaiting Wednesday report",
         "Matches player's documented chronic history (Achilles)",
-        "Soft-tissue re-aggravation caution (Achilles)"
+        "Soft-tissue re-aggravation caution (Achilles)",
+        "Post-game update (beat report): exited prior game with Achilles"
       ],
       "beatComment": "After missing the 49ers' last three games while recovering from right Achilles tendinitis, Evans looks to have a chance at returning to action in Week 11. After staying behind in the Bay Area this past weekend for the 49ers' 46-40 win in Dallas, Evans is scheduled to meet back up with the 49ers this week in Colorado Springs, where the team will be holding practices at high altitude to get acclimated for Sunday's matchup with the Vikings in Mexico City. If Evans is able to practice in some capacity Wednesday through Friday and if his Achilles responds well, he'll likely be cleared for his first game action since Week 6."
     },
@@ -40,6 +42,7 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
       "rosterBucket": "ir",
       "isIrReturnWindow": true,
+      "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
@@ -62,6 +65,7 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
       "wed": "-",
       "thu": "-",
       "fri": "-",
@@ -74,7 +78,7 @@
         "Exited prior game with injury and did not return — awaiting Wednesday practice evaluation",
         "In-game aggravation / recurrence of prior-week Back injury (-6% caution)"
       ],
-      "beatComment": "The Falcons defeated the 49ers 29 Renardo Green left with the same back injury he dealt with all week. There hasn’t been much about Green’s status for next week as of this writing but Kyle Shanahan said he was already playing hurt .. Renardo Green left with the same back injury he dealt with all week."
+      "beatComment": "#49ers CB Renardo Green’s back injury is still the only one on the report today out of Sunday’s game, per Kyle Shanahan. Green is again day to day this week."
     },
     {
       "playerId": "4240542",
@@ -84,6 +88,7 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
       "rosterBucket": "ir",
       "isIrReturnWindow": true,
+      "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
