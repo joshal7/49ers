@@ -4654,13 +4654,14 @@ export async function refreshDailyTopNewsBriefIfDue({
     if (sourceCandidates.length === 0) {
       return { updated: false, reason: 'no_source_candidates' };
     }
+    const workerCycleKey = `${activeCycle}-v5`;
 
     // 1. Check Shared Worker KV first whenever `workerBaseUrl` is configured (even if a local `geminiApiKey` is also set!)
     //    so Phone and Web converge on the exact same brief with 0 duplicate AI calls.
     if (baseUrl && !force) {
       try {
         const kvGetRes = await fetch(
-          `${baseUrl}/api/daily-news-brief?cycleKey=${encodeURIComponent(activeCycle)}`,
+          `${baseUrl}/api/daily-news-brief?cycleKey=${encodeURIComponent(workerCycleKey)}`,
           {
             method: 'GET',
             headers: {
@@ -4729,7 +4730,7 @@ export async function refreshDailyTopNewsBriefIfDue({
               'X-Group-Passcode': prefs?.groupPasscode || ''
             },
             body: JSON.stringify({
-              cycleKey: activeCycle,
+              cycleKey: workerCycleKey,
               forceRefresh: Boolean(force),
               prompt: promptText,
               systemPrompt
@@ -4801,7 +4802,7 @@ export async function refreshDailyTopNewsBriefIfDue({
                 'X-Group-Passcode': prefs?.groupPasscode || ''
               },
               body: JSON.stringify({
-                cycleKey: activeCycle,
+                cycleKey: workerCycleKey,
                 seedRawText: rawSynthesizedText,
                 modelUsed,
                 generatedAt
