@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T00:08:14.161Z",
+  "updatedAt": "2026-11-17T06:51:35.892Z",
   "windowDays": 7,
   "shows": [
     {
@@ -12,7 +12,7 @@
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/5b/63/ed/5b63ed60-2449-1c6b-4f1d-5e3f2a4f410c/mza_13504327500715854238.png/600x600bb.jpg",
-      "episodeCount7d": 12
+      "episodeCount7d": 11
     },
     {
       "id": "49ers_talk",
@@ -615,26 +615,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
       "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
       "audioStreamUrl": "https://serve.castfire.com/audio/8531298/8531298_2026-07-21-221538.192.mp3?rssID=6590"
-    },
-    {
-      "id": "pod_the_gold_standard_1000800919918",
-      "trackId": 1000800919918,
-      "collectionId": 1524313515,
-      "showId": "the_gold_standard",
-      "showName": "The Gold Standard",
-      "showFullTitle": "The Gold Standard: San Francisco 49ers Podcast Network",
-      "hosts": "Rob \"Stats\" Guerrera & Levin Black",
-      "network": "Audacy / Bleav",
-      "title": "Under Review: How the 49ers took the Raiders apart on both sides of the ball",
-      "summary": "How the 49ers took the Raiders apart on both sides of the ball The San Francisco 49ers dominated the Raiders on Sunday, and we go through drive by drive to break down the biggest plays, sequences, and coaching decisions. It wasn't perfect by any stretch, but there's a lot to like about Sunday. SIGN UP FOR OUR…",
-      "publishedAt": "2026-11-10T03:01:59.000Z",
-      "durationMinutes": 65,
-      "durationDisplay": "65 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/7a/4a/42/7a4a4233-672a-d420-0ace-42731ff68b09/mza_8573800118241606558.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/under-review-how-the-49ers-took-the-raiders-apart-on/id1524313515?i=1000800919918",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515",
-      "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b",
-      "audioStreamUrl": "https://serve.castfire.com/audio/8531450/8531450_2026-07-21-221850.192.mp3?rssID=6590"
     }
   ]
 }

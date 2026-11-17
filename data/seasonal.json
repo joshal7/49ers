@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T00:08:14.161Z",
+  "updatedAt": "2026-11-17T06:51:35.892Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T13:00:00-08:00",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 1:00 PM PT",
@@ -136,7 +136,7 @@
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/gtktmsfcxc1eijwpwzyq",
         "teamAbbr": "BAL",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
-        "currentTeam": "BAL (4-5 QB Injury Pivot)",
+        "currentTeam": "BAL (4-6 QB Injury Pivot)",
         "position": "WR",
         "prorated2026CapCharge": 1000000,
         "cap2027Impact": "$0 Gtd Until Mar 17, 2027 ($7.5M Team Option)",
@@ -168,7 +168,7 @@
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/t9j95jylmjpevgbkvmqn",
         "teamAbbr": "LAC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
-        "currentTeam": "LAC (0-8 Seller)",
+        "currentTeam": "LAC (1-8 Seller)",
         "position": "EDGE",
         "prorated2026CapCharge": 4000000,
         "cap2027Impact": "$0 (Expiring 1-Yr Rental)",
@@ -216,7 +216,7 @@
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/lyvsrjh4mjb4dqwp6shm",
         "teamAbbr": "LAC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
-        "currentTeam": "LAC (0-8 Seller)",
+        "currentTeam": "LAC (1-8 Seller)",
         "position": "WR",
         "prorated2026CapCharge": 1340000,
         "cap2027Impact": "⚠️ $18.0M Gtd 5th-Yr Option (Requires LAC Conversion)",
@@ -232,7 +232,7 @@
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ptrcpfheqfuuyiqexmsq",
         "teamAbbr": "LAC",
         "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
-        "currentTeam": "LAC (0-8 Seller)",
+        "currentTeam": "LAC (1-8 Seller)",
         "position": "CB",
         "prorated2026CapCharge": 3000000,
         "cap2027Impact": "$0 (Expiring UFA)",
@@ -345,20 +345,20 @@
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
         "division": "NFC West",
         "currentRecord": "8-1",
-        "powerRating": 1587,
-        "projectedWins": 12.9,
-        "makePlayoffsPct": 97.7,
-        "winDivisionPct": 86.7,
-        "seed1ByePct": 47,
-        "wildCardPct": 10.9,
+        "powerRating": 1582,
+        "projectedWins": 12.8,
+        "makePlayoffsPct": 97.8,
+        "winDivisionPct": 86.2,
+        "seed1ByePct": 46.2,
+        "wildCardPct": 11.5,
         "seedDistribution": {
-          "1": 47,
-          "2": 36.3,
-          "3": 3.2,
+          "1": 46.2,
+          "2": 36.4,
+          "3": 3.4,
           "4": 0.3,
-          "5": 3.5,
-          "6": 4.1,
-          "7": 3.4
+          "5": 3.6,
+          "6": 4.2,
+          "7": 3.8
         },
         "missedPlayoffsPct": 2.3
       },
@@ -369,20 +369,20 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
           "division": "NFC West",
           "currentRecord": "8-1",
-          "powerRating": 1587,
-          "projectedWins": 12.9,
-          "makePlayoffsPct": 97.7,
-          "winDivisionPct": 86.7,
-          "seed1ByePct": 47,
-          "wildCardPct": 10.9,
+          "powerRating": 1582,
+          "projectedWins": 12.8,
+          "makePlayoffsPct": 97.8,
+          "winDivisionPct": 86.2,
+          "seed1ByePct": 46.2,
+          "wildCardPct": 11.5,
           "seedDistribution": {
-            "1": 47,
-            "2": 36.3,
-            "3": 3.2,
+            "1": 46.2,
+            "2": 36.4,
+            "3": 3.4,
             "4": 0.3,
-            "5": 3.5,
-            "6": 4.1,
-            "7": 3.4
+            "5": 3.6,
+            "6": 4.2,
+            "7": 3.8
           },
           "missedPlayoffsPct": 2.3
         },
@@ -392,22 +392,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
           "division": "NFC North",
           "currentRecord": "7-2",
-          "powerRating": 1538,
+          "powerRating": 1537,
           "projectedWins": 11.5,
-          "makePlayoffsPct": 90.4,
-          "winDivisionPct": 37.5,
-          "seed1ByePct": 19.2,
-          "wildCardPct": 52.9,
+          "makePlayoffsPct": 91.1,
+          "winDivisionPct": 38,
+          "seed1ByePct": 19.7,
+          "wildCardPct": 53.1,
           "seedDistribution": {
-            "1": 19.2,
-            "2": 17.2,
+            "1": 19.7,
+            "2": 17.3,
             "3": 1,
-            "4": 0.1,
-            "5": 26.2,
+            "4": 0,
+            "5": 26.3,
             "6": 16.5,
             "7": 10.2
           },
-          "missedPlayoffsPct": 9.6
+          "missedPlayoffsPct": 8.9
         },
         {
           "abbr": "DET",
@@ -415,22 +415,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
           "division": "NFC North",
           "currentRecord": "7-2",
-          "powerRating": 1551,
-          "projectedWins": 11.5,
-          "makePlayoffsPct": 86.2,
-          "winDivisionPct": 36.2,
-          "seed1ByePct": 17.8,
-          "wildCardPct": 50,
+          "powerRating": 1547,
+          "projectedWins": 11.4,
+          "makePlayoffsPct": 85.3,
+          "winDivisionPct": 35.8,
+          "seed1ByePct": 17.6,
+          "wildCardPct": 49.5,
           "seedDistribution": {
-            "1": 17.8,
-            "2": 17.2,
+            "1": 17.6,
+            "2": 17.1,
             "3": 1.1,
             "4": 0.1,
-            "5": 21.4,
+            "5": 21,
             "6": 16.4,
             "7": 12.2
           },
-          "missedPlayoffsPct": 13.9
+          "missedPlayoffsPct": 14.7
         },
         {
           "abbr": "CHI",
@@ -438,22 +438,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png",
           "division": "NFC North",
           "currentRecord": "7-2",
-          "powerRating": 1548,
+          "powerRating": 1543,
           "projectedWins": 11.2,
-          "makePlayoffsPct": 81,
-          "winDivisionPct": 23.6,
-          "seed1ByePct": 11.5,
-          "wildCardPct": 57.4,
+          "makePlayoffsPct": 81.5,
+          "winDivisionPct": 23.5,
+          "seed1ByePct": 11.8,
+          "wildCardPct": 58,
           "seedDistribution": {
-            "1": 11.5,
-            "2": 11.6,
+            "1": 11.8,
+            "2": 11.2,
             "3": 0.5,
             "4": 0,
-            "5": 21.5,
-            "6": 19.6,
-            "7": 16.3
+            "5": 22,
+            "6": 19.7,
+            "7": 16.4
           },
-          "missedPlayoffsPct": 19
+          "missedPlayoffsPct": 18.5
         },
         {
           "abbr": "NYG",
@@ -461,22 +461,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
           "division": "NFC East",
           "currentRecord": "5-3-1",
-          "powerRating": 1509,
+          "powerRating": 1505,
           "projectedWins": 9.4,
-          "makePlayoffsPct": 70.6,
-          "winDivisionPct": 69.1,
+          "makePlayoffsPct": 69.3,
+          "winDivisionPct": 67.6,
           "seed1ByePct": 1.2,
-          "wildCardPct": 1.5,
+          "wildCardPct": 1.6,
           "seedDistribution": {
             "1": 1.2,
             "2": 5.6,
-            "3": 46.5,
-            "4": 15.8,
+            "3": 46.2,
+            "4": 14.6,
             "5": 0.1,
-            "6": 0.3,
-            "7": 1.1
+            "6": 0.4,
+            "7": 1.2
           },
-          "missedPlayoffsPct": 29.4
+          "missedPlayoffsPct": 30.8
         },
         {
           "abbr": "LAR",
@@ -484,45 +484,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
           "division": "NFC West",
           "currentRecord": "6-4",
-          "powerRating": 1570,
+          "powerRating": 1567,
           "projectedWins": 9.8,
-          "makePlayoffsPct": 51.5,
-          "winDivisionPct": 6.5,
-          "seed1ByePct": 1.6,
-          "wildCardPct": 45,
+          "makePlayoffsPct": 51.3,
+          "winDivisionPct": 7.2,
+          "seed1ByePct": 1.9,
+          "wildCardPct": 44.1,
           "seedDistribution": {
-            "1": 1.6,
-            "2": 4,
+            "1": 1.9,
+            "2": 4.4,
             "3": 0.9,
             "4": 0,
-            "5": 13.1,
-            "6": 15.4,
-            "7": 16.5
+            "5": 12.8,
+            "6": 15.1,
+            "7": 16.2
           },
-          "missedPlayoffsPct": 48.5
-        },
-        {
-          "abbr": "CAR",
-          "name": "Carolina Panthers",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
-          "division": "NFC South",
-          "currentRecord": "4-5",
-          "powerRating": 1492,
-          "projectedWins": 8,
-          "makePlayoffsPct": 44.8,
-          "winDivisionPct": 43.7,
-          "seed1ByePct": 0.1,
-          "wildCardPct": 1.1,
-          "seedDistribution": {
-            "1": 0.1,
-            "2": 0.8,
-            "3": 16.2,
-            "4": 26.6,
-            "5": 0,
-            "6": 0.2,
-            "7": 0.9
-          },
-          "missedPlayoffsPct": 55.2
+          "missedPlayoffsPct": 48.7
         },
         {
           "abbr": "GB",
@@ -530,22 +507,45 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
           "division": "NFC North",
           "currentRecord": "6-4",
-          "powerRating": 1524,
-          "projectedWins": 9.6,
-          "makePlayoffsPct": 44.3,
-          "winDivisionPct": 2.8,
+          "powerRating": 1519,
+          "projectedWins": 9.5,
+          "makePlayoffsPct": 43.9,
+          "winDivisionPct": 2.7,
           "seed1ByePct": 0.5,
-          "wildCardPct": 41.5,
+          "wildCardPct": 41.1,
           "seedDistribution": {
             "1": 0.5,
-            "2": 2,
-            "3": 0.2,
+            "2": 2.2,
+            "3": 0.1,
             "4": 0,
-            "5": 7.5,
-            "6": 15,
-            "7": 19.1
+            "5": 7.6,
+            "6": 14.2,
+            "7": 19.4
           },
-          "missedPlayoffsPct": 55.8
+          "missedPlayoffsPct": 56.1
+        },
+        {
+          "abbr": "CAR",
+          "name": "Carolina Panthers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
+          "division": "NFC South",
+          "currentRecord": "4-5",
+          "powerRating": 1489,
+          "projectedWins": 7.9,
+          "makePlayoffsPct": 43.9,
+          "winDivisionPct": 43,
+          "seed1ByePct": 0.1,
+          "wildCardPct": 1,
+          "seedDistribution": {
+            "1": 0.1,
+            "2": 0.7,
+            "3": 15,
+            "4": 27.2,
+            "5": 0.1,
+            "6": 0.2,
+            "7": 0.7
+          },
+          "missedPlayoffsPct": 56.1
         },
         {
           "abbr": "SEA",
@@ -553,22 +553,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
           "division": "NFC West",
           "currentRecord": "6-4",
-          "powerRating": 1541,
+          "powerRating": 1537,
           "projectedWins": 9.6,
-          "makePlayoffsPct": 42.6,
-          "winDivisionPct": 6.8,
+          "makePlayoffsPct": 42.7,
+          "winDivisionPct": 6.6,
           "seed1ByePct": 1,
-          "wildCardPct": 35.9,
+          "wildCardPct": 36.1,
           "seedDistribution": {
             "1": 1,
-            "2": 4.8,
+            "2": 4.6,
             "3": 0.9,
             "4": 0.1,
-            "5": 6.7,
-            "6": 11.8,
-            "7": 17.4
+            "5": 6.6,
+            "6": 12.5,
+            "7": 17
           },
-          "missedPlayoffsPct": 57.4
+          "missedPlayoffsPct": 57.3
         },
         {
           "abbr": "TB",
@@ -576,22 +576,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
           "division": "NFC South",
           "currentRecord": "3-6",
-          "powerRating": 1526,
-          "projectedWins": 7.5,
-          "makePlayoffsPct": 39.6,
-          "winDivisionPct": 38.9,
+          "powerRating": 1523,
+          "projectedWins": 7.4,
+          "makePlayoffsPct": 39.1,
+          "winDivisionPct": 38.6,
           "seed1ByePct": 0,
-          "wildCardPct": 0.7,
+          "wildCardPct": 0.5,
           "seedDistribution": {
             "1": 0,
-            "2": 0.2,
-            "3": 11.5,
-            "4": 27.2,
+            "2": 0.3,
+            "3": 10.6,
+            "4": 27.6,
             "5": 0,
-            "6": 0.2,
-            "7": 0.5
+            "6": 0.1,
+            "7": 0.4
           },
-          "missedPlayoffsPct": 60.4
+          "missedPlayoffsPct": 60.9
         },
         {
           "abbr": "DAL",
@@ -601,20 +601,20 @@
           "currentRecord": "4-6",
           "powerRating": 1494,
           "projectedWins": 7.4,
-          "makePlayoffsPct": 16.6,
-          "winDivisionPct": 15.2,
+          "makePlayoffsPct": 17.6,
+          "winDivisionPct": 16.2,
           "seed1ByePct": 0,
           "wildCardPct": 1.4,
           "seedDistribution": {
             "1": 0,
             "2": 0.1,
-            "3": 6.5,
-            "4": 8.6,
+            "3": 7.4,
+            "4": 8.7,
             "5": 0,
             "6": 0.3,
             "7": 1.1
           },
-          "missedPlayoffsPct": 83.4
+          "missedPlayoffsPct": 82.5
         },
         {
           "abbr": "WAS",
@@ -622,22 +622,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
           "division": "NFC East",
           "currentRecord": "3-5-1",
-          "powerRating": 1469,
-          "projectedWins": 7.1,
-          "makePlayoffsPct": 15.4,
-          "winDivisionPct": 14.4,
+          "powerRating": 1472,
+          "projectedWins": 7.2,
+          "makePlayoffsPct": 16.1,
+          "winDivisionPct": 15,
           "seed1ByePct": 0,
-          "wildCardPct": 1,
+          "wildCardPct": 1.2,
           "seedDistribution": {
             "1": 0,
-            "2": 0.1,
-            "3": 7.6,
-            "4": 6.7,
+            "2": 0.2,
+            "3": 8.4,
+            "4": 6.5,
             "5": 0.1,
             "6": 0.2,
             "7": 0.8
           },
-          "missedPlayoffsPct": 84.7
+          "missedPlayoffsPct": 83.9
         },
         {
           "abbr": "NO",
@@ -645,22 +645,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
           "division": "NFC South",
           "currentRecord": "3-6",
-          "powerRating": 1454,
-          "projectedWins": 6.3,
-          "makePlayoffsPct": 10.7,
-          "winDivisionPct": 10.3,
+          "powerRating": 1460,
+          "projectedWins": 6.4,
+          "makePlayoffsPct": 11.6,
+          "winDivisionPct": 11.3,
           "seed1ByePct": 0,
           "wildCardPct": 0.4,
           "seedDistribution": {
             "1": 0,
-            "2": 0,
-            "3": 2.7,
-            "4": 7.6,
+            "2": 0.1,
+            "3": 3,
+            "4": 8.2,
             "5": 0,
-            "6": 0,
-            "7": 0.4
+            "6": 0.1,
+            "7": 0.3
           },
-          "missedPlayoffsPct": 89.3
+          "missedPlayoffsPct": 88.4
         },
         {
           "abbr": "ATL",
@@ -668,22 +668,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
           "division": "NFC South",
           "currentRecord": "3-7",
-          "powerRating": 1448,
-          "projectedWins": 5.9,
+          "powerRating": 1451,
+          "projectedWins": 6,
           "makePlayoffsPct": 7.4,
-          "winDivisionPct": 7.1,
+          "winDivisionPct": 7.2,
           "seed1ByePct": 0,
           "wildCardPct": 0.2,
           "seedDistribution": {
             "1": 0,
             "2": 0,
-            "3": 1,
-            "4": 6.1,
+            "3": 1.2,
+            "4": 6,
             "5": 0,
             "6": 0,
             "7": 0.2
           },
-          "missedPlayoffsPct": 92.7
+          "missedPlayoffsPct": 92.6
         },
         {
           "abbr": "PHI",
@@ -691,22 +691,22 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
           "division": "NFC East",
           "currentRecord": "2-7",
-          "powerRating": 1419,
+          "powerRating": 1426,
           "projectedWins": 5.2,
-          "makePlayoffsPct": 1.4,
-          "winDivisionPct": 1.3,
+          "makePlayoffsPct": 1.3,
+          "winDivisionPct": 1.2,
           "seed1ByePct": 0,
-          "wildCardPct": 0,
+          "wildCardPct": 0.1,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0.4,
-            "4": 0.9,
+            "4": 0.8,
             "5": 0,
             "6": 0,
-            "7": 0
+            "7": 0.1
           },
-          "missedPlayoffsPct": 98.6
+          "missedPlayoffsPct": 98.7
         },
         {
           "abbr": "ARI",
@@ -714,12 +714,12 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
           "division": "NFC West",
           "currentRecord": "3-7",
-          "powerRating": 1420,
+          "powerRating": 1424,
           "projectedWins": 6,
-          "makePlayoffsPct": 0.1,
+          "makePlayoffsPct": 0.2,
           "winDivisionPct": 0,
           "seed1ByePct": 0,
-          "wildCardPct": 0.1,
+          "wildCardPct": 0.2,
           "seedDistribution": {
             "1": 0,
             "2": 0,
@@ -729,7 +729,7 @@
             "6": 0,
             "7": 0.1
           },
-          "missedPlayoffsPct": 99.9
+          "missedPlayoffsPct": 99.8
         }
       ]
     },
@@ -746,19 +746,19 @@
         "rootAgainstTeam": "MIN",
         "rootFor": "SF",
         "rootSide": "HOME",
-        "homeWinProbPct": 57,
-        "expectedImpactScore": 41.6,
+        "homeWinProbPct": 56.4,
+        "expectedImpactScore": 42.5,
         "leverageTag": "Direct Control",
         "leverageReason": "49ers head-to-head result directly controls NFC West & #1 Seed Bye trajectory",
-        "maxSwingPct": 42,
+        "maxSwingPct": 42.8,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 42,
-        "seed1SwingPct": 42,
-        "divSwingPct": 10.4,
-        "berthSwingPct": 3.6,
-        "byeLeveragePct": 42,
-        "divisionLeveragePct": 10.4,
-        "totalLeverageScore": 63,
+        "primaryDeltaPct": 42.8,
+        "seed1SwingPct": 42.8,
+        "divSwingPct": 9.6,
+        "berthSwingPct": 2.9,
+        "byeLeveragePct": 42.8,
+        "divisionLeveragePct": 9.6,
+        "totalLeverageScore": 62.7,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png"
       },
@@ -774,19 +774,19 @@
         "rootAgainstTeam": "DET",
         "rootFor": "TB",
         "rootSide": "AWAY",
-        "homeWinProbPct": 58.7,
-        "expectedImpactScore": 8.3,
+        "homeWinProbPct": 58.5,
+        "expectedImpactScore": 6.8,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops NFC top-seed contender DET in the #1 Seed Bye chase",
-        "maxSwingPct": 8.4,
+        "maxSwingPct": 6.9,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 8.4,
-        "seed1SwingPct": 8.4,
-        "divSwingPct": 0.2,
-        "berthSwingPct": 0.4,
-        "byeLeveragePct": 8.4,
-        "divisionLeveragePct": 0.2,
-        "totalLeverageScore": 10.5,
+        "primaryDeltaPct": 6.9,
+        "seed1SwingPct": 6.9,
+        "divSwingPct": 0.1,
+        "berthSwingPct": 0.2,
+        "byeLeveragePct": 6.9,
+        "divisionLeveragePct": 0.1,
+        "totalLeverageScore": 8.5,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png"
       },
@@ -802,19 +802,19 @@
         "rootAgainstTeam": "CHI",
         "rootFor": "NO",
         "rootSide": "AWAY",
-        "homeWinProbPct": 67.9,
-        "expectedImpactScore": 4.2,
+        "homeWinProbPct": 66.5,
+        "expectedImpactScore": 4.8,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops NFC top-seed contender CHI in the #1 Seed Bye chase",
-        "maxSwingPct": 4.5,
+        "maxSwingPct": 5,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.5,
-        "seed1SwingPct": 4.5,
-        "divSwingPct": 0.1,
-        "berthSwingPct": 0.6,
-        "byeLeveragePct": 4.5,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 5.9,
+        "primaryDeltaPct": 5,
+        "seed1SwingPct": 5,
+        "divSwingPct": 0,
+        "berthSwingPct": 0.3,
+        "byeLeveragePct": 5,
+        "divisionLeveragePct": 0,
+        "totalLeverageScore": 6.2,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png"
       },
@@ -831,48 +831,20 @@
         "rootFor": "JAX",
         "rootSide": "AWAY",
         "homeWinProbPct": 42,
-        "expectedImpactScore": 1.2,
+        "expectedImpactScore": 1.1,
         "leverageTag": "Inter-Conf Help",
         "leverageReason": "AFC club JAX hands NFC contender NYG a loss without adding an NFC rival win",
-        "maxSwingPct": 1.2,
+        "maxSwingPct": 1.1,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 1.2,
-        "seed1SwingPct": 1.2,
-        "divSwingPct": 0.5,
-        "berthSwingPct": 0.2,
-        "byeLeveragePct": 1.2,
-        "divisionLeveragePct": 0.5,
-        "totalLeverageScore": 2.1,
+        "primaryDeltaPct": 1.1,
+        "seed1SwingPct": 1.1,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.1,
+        "byeLeveragePct": 1.1,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 1.6,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png"
-      },
-      {
-        "gameId": "2026_11_ARI_KC",
-        "week": 11,
-        "matchupLabel": "ARI @ KC",
-        "away": "ARI",
-        "home": "KC",
-        "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "KC",
-        "rootAgainstTeam": "ARI",
-        "rootFor": "KC",
-        "rootSide": "HOME",
-        "homeWinProbPct": 75.3,
-        "expectedImpactScore": 0.4,
-        "leverageTag": "NFC West Race",
-        "leverageReason": "Hands division rival ARI a loss in the NFC West crown & tiebreaker race",
-        "maxSwingPct": 0.5,
-        "primaryMetric": "NFC West",
-        "primaryDeltaPct": 0.5,
-        "seed1SwingPct": 0.3,
-        "divSwingPct": 0.5,
-        "berthSwingPct": 0.1,
-        "byeLeveragePct": 0.3,
-        "divisionLeveragePct": 0.5,
-        "totalLeverageScore": 0.9,
-        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
-        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png"
       },
       {
         "gameId": "2026_11_TEN_DAL",
@@ -886,49 +858,21 @@
         "rootAgainstTeam": "TEN",
         "rootFor": "DAL",
         "rootSide": "HOME",
-        "homeWinProbPct": 64.5,
-        "expectedImpactScore": 0.2,
+        "homeWinProbPct": 64.1,
+        "expectedImpactScore": 0.3,
         "leverageTag": "SOV / Tiebreaker",
         "leverageReason": "Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. TEN",
-        "maxSwingPct": 0.2,
+        "maxSwingPct": 0.3,
         "primaryMetric": "NFC West",
-        "primaryDeltaPct": 0.2,
-        "seed1SwingPct": 0.1,
-        "divSwingPct": 0.2,
+        "primaryDeltaPct": 0.3,
+        "seed1SwingPct": 0,
+        "divSwingPct": 0.3,
         "berthSwingPct": 0.1,
-        "byeLeveragePct": 0.1,
-        "divisionLeveragePct": 0.2,
+        "byeLeveragePct": 0,
+        "divisionLeveragePct": 0.3,
         "totalLeverageScore": 0.4,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
-      },
-      {
-        "gameId": "2026_11_CIN_WAS",
-        "week": 11,
-        "matchupLabel": "CIN @ WAS",
-        "away": "CIN",
-        "home": "WAS",
-        "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "WAS",
-        "rootAgainstTeam": "CIN",
-        "rootFor": "WAS",
-        "rootSide": "HOME",
-        "homeWinProbPct": 39.9,
-        "expectedImpactScore": 0.2,
-        "leverageTag": "#1 Bye Race",
-        "leverageReason": "Drops NFC top-seed contender CIN in the #1 Seed Bye chase",
-        "maxSwingPct": 0.2,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 0.2,
-        "seed1SwingPct": 0.2,
-        "divSwingPct": 0.1,
-        "berthSwingPct": 0,
-        "byeLeveragePct": 0.2,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 0.3,
-        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png",
-        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
       },
       {
         "gameId": "2026_11_BAL_CAR",
@@ -942,21 +886,49 @@
         "rootAgainstTeam": "BAL",
         "rootFor": "CAR",
         "rootSide": "HOME",
-        "homeWinProbPct": 59.8,
-        "expectedImpactScore": 0.1,
-        "leverageTag": "#1 Bye Race",
-        "leverageReason": "Drops NFC top-seed contender BAL in the #1 Seed Bye chase",
-        "maxSwingPct": 0.1,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 0.1,
+        "homeWinProbPct": 59,
+        "expectedImpactScore": 0.2,
+        "leverageTag": "SOV / Tiebreaker",
+        "leverageReason": "Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. BAL",
+        "maxSwingPct": 0.2,
+        "primaryMetric": "NFC West",
+        "primaryDeltaPct": 0.2,
         "seed1SwingPct": 0.1,
-        "divSwingPct": 0.1,
+        "divSwingPct": 0.2,
         "berthSwingPct": 0,
         "byeLeveragePct": 0.1,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 0.2,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 0.3,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png"
+      },
+      {
+        "gameId": "2026_11_ARI_KC",
+        "week": 11,
+        "matchupLabel": "ARI @ KC",
+        "away": "ARI",
+        "home": "KC",
+        "is49ersGame": false,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "ARI",
+        "rootAgainstTeam": "KC",
+        "rootFor": "ARI",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 74.5,
+        "expectedImpactScore": 0.2,
+        "leverageTag": "#1 Bye Race",
+        "leverageReason": "Drops NFC top-seed contender KC in the #1 Seed Bye chase",
+        "maxSwingPct": 0.2,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 0.2,
+        "seed1SwingPct": 0.2,
+        "divSwingPct": 0.1,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 0.2,
+        "divisionLeveragePct": 0.1,
+        "totalLeverageScore": 0.3,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png"
       },
       {
         "gameId": "2026_11_PIT_PHI",
@@ -970,21 +942,49 @@
         "rootAgainstTeam": "PHI",
         "rootFor": "PIT",
         "rootSide": "AWAY",
-        "homeWinProbPct": 43.4,
-        "expectedImpactScore": 0.1,
+        "homeWinProbPct": 44,
+        "expectedImpactScore": 0.2,
         "leverageTag": "Inter-Conf Help",
         "leverageReason": "AFC club PIT hands NFC contender PHI a loss without adding an NFC rival win",
+        "maxSwingPct": 0.2,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 0.2,
+        "seed1SwingPct": 0.2,
+        "divSwingPct": 0,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 0.2,
+        "divisionLeveragePct": 0,
+        "totalLeverageScore": 0.2,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+      },
+      {
+        "gameId": "2026_11_CIN_WAS",
+        "week": 11,
+        "matchupLabel": "CIN @ WAS",
+        "away": "CIN",
+        "home": "WAS",
+        "is49ersGame": false,
+        "recommendedWinner": "HOME",
+        "rootForTeam": "WAS",
+        "rootAgainstTeam": "CIN",
+        "rootFor": "WAS",
+        "rootSide": "HOME",
+        "homeWinProbPct": 40.6,
+        "expectedImpactScore": 0.1,
+        "leverageTag": "#1 Bye Race",
+        "leverageReason": "Drops NFC top-seed contender CIN in the #1 Seed Bye chase",
         "maxSwingPct": 0.1,
         "primaryMetric": "#1 Seed Bye",
         "primaryDeltaPct": 0.1,
         "seed1SwingPct": 0.1,
         "divSwingPct": 0,
-        "berthSwingPct": 0,
+        "berthSwingPct": 0.1,
         "byeLeveragePct": 0.1,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 0.1,
-        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
-        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+        "totalLeverageScore": 0.2,
+        "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png",
+        "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
       },
       {
         "gameId": "2026_12_SEA_SF",
@@ -998,19 +998,19 @@
         "rootAgainstTeam": "SEA",
         "rootFor": "SF",
         "rootSide": "HOME",
-        "homeWinProbPct": 61.6,
-        "expectedImpactScore": 23.5,
+        "homeWinProbPct": 61.5,
+        "expectedImpactScore": 25.1,
         "leverageTag": "Direct Control",
         "leverageReason": "49ers head-to-head result directly controls NFC West & #1 Seed Bye trajectory",
-        "maxSwingPct": 24.1,
+        "maxSwingPct": 25.7,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 24.1,
-        "seed1SwingPct": 24.1,
-        "divSwingPct": 23.1,
-        "berthSwingPct": 4.7,
-        "byeLeveragePct": 24.1,
-        "divisionLeveragePct": 23.1,
-        "totalLeverageScore": 54.8,
+        "primaryDeltaPct": 25.7,
+        "seed1SwingPct": 25.7,
+        "divSwingPct": 20.9,
+        "berthSwingPct": 4.2,
+        "byeLeveragePct": 25.7,
+        "divisionLeveragePct": 20.9,
+        "totalLeverageScore": 54.3,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png"
       },
@@ -1026,19 +1026,19 @@
         "rootAgainstTeam": "MIN",
         "rootFor": "ATL",
         "rootSide": "AWAY",
-        "homeWinProbPct": 67.4,
-        "expectedImpactScore": 4.6,
+        "homeWinProbPct": 66.9,
+        "expectedImpactScore": 5.5,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops NFC top-seed contender MIN in the #1 Seed Bye chase",
-        "maxSwingPct": 4.9,
+        "maxSwingPct": 5.8,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.9,
-        "seed1SwingPct": 4.9,
+        "primaryDeltaPct": 5.8,
+        "seed1SwingPct": 5.8,
         "divSwingPct": 0.1,
-        "berthSwingPct": 0.3,
-        "byeLeveragePct": 4.9,
+        "berthSwingPct": 0.2,
+        "byeLeveragePct": 5.8,
         "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 6.2,
+        "totalLeverageScore": 7.2,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
       },
@@ -1054,19 +1054,19 @@
         "rootAgainstTeam": "LAR",
         "rootFor": "GB",
         "rootSide": "AWAY",
-        "homeWinProbPct": 61.6,
-        "expectedImpactScore": 4.3,
+        "homeWinProbPct": 61.9,
+        "expectedImpactScore": 4,
         "leverageTag": "NFC West Race",
         "leverageReason": "Hands division rival LAR a loss in the NFC West crown & tiebreaker race",
-        "maxSwingPct": 4.4,
+        "maxSwingPct": 4.1,
         "primaryMetric": "NFC West",
-        "primaryDeltaPct": 4.4,
-        "seed1SwingPct": 1.1,
-        "divSwingPct": 4.4,
-        "berthSwingPct": 0.4,
-        "byeLeveragePct": 1.1,
-        "divisionLeveragePct": 4.4,
-        "totalLeverageScore": 6,
+        "primaryDeltaPct": 4.1,
+        "seed1SwingPct": 1.2,
+        "divSwingPct": 4.1,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 1.2,
+        "divisionLeveragePct": 4.1,
+        "totalLeverageScore": 5.5,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png"
       }
@@ -1074,18 +1074,18 @@
     "seedPathCards": [
       {
         "target": "#1 Seed & First-Round Bye",
-        "currentProbPct": 47,
-        "pathSummary": "At 8-1 (3-0 NFC West, 5-1 NFC; 12.9 projected wins), SF leads a deep NFC field at 47% in Empirical-Bayes + EPA + SOS simulations—ahead of Minnesota, Chicago, and Detroit—with direct head-to-head NFC tiebreaker leverage across its 8 remaining games."
+        "currentProbPct": 46.2,
+        "pathSummary": "At 8-1 (3-0 NFC West, 5-1 NFC; 12.8 projected wins), SF leads a deep NFC field at 46.2% in Empirical-Bayes + EPA + SOS simulations—ahead of Minnesota, Chicago, and Detroit—with direct head-to-head NFC tiebreaker leverage across its 8 remaining games."
       },
       {
         "target": "NFC West Division Title (Seeds #1–#4)",
-        "currentProbPct": 86.7,
-        "pathSummary": "Sitting at 8-1 overall and 3-0 inside the NFC West (+85 pt diff), banked divisional head-to-head tiebreakers anchor NFC West division equity at 86.7%."
+        "currentProbPct": 86.2,
+        "pathSummary": "Sitting at 8-1 overall and 3-0 inside the NFC West (+85 pt diff), banked divisional head-to-head tiebreakers anchor NFC West division equity at 86.2%."
       },
       {
         "target": "Playoff Berth (Seeds #1–#7)",
-        "currentProbPct": 97.7,
-        "pathSummary": "With 8 wins banked through 9 games (5-1 conference record), reaching 10+ total wins across the remaining 8 games yields 97.7% overall postseason probability."
+        "currentProbPct": 97.8,
+        "pathSummary": "With 8 wins banked through 9 games (5-1 conference record), reaching 10+ total wins across the remaining 8 games yields 97.8% overall postseason probability."
       }
     ],
     "simulatorInputs": {
@@ -1105,9 +1105,9 @@
           "confLosses": 1,
           "confTies": 0,
           "pointDiff": 85,
-          "netEpaPerGame": 14.226,
-          "sosSpreadAdj": -0.791,
-          "powerRating": 1587
+          "netEpaPerGame": 11.99,
+          "sosSpreadAdj": -0.738,
+          "powerRating": 1582
         },
         {
           "abbr": "DET",
@@ -1124,9 +1124,9 @@
           "confLosses": 1,
           "confTies": 0,
           "pointDiff": 58,
-          "netEpaPerGame": 5.595,
-          "sosSpreadAdj": -0.622,
-          "powerRating": 1551
+          "netEpaPerGame": 4.54,
+          "sosSpreadAdj": -0.604,
+          "powerRating": 1547
         },
         {
           "abbr": "MIN",
@@ -1143,9 +1143,9 @@
           "confLosses": 1,
           "confTies": 0,
           "pointDiff": 50,
-          "netEpaPerGame": 1.963,
-          "sosSpreadAdj": 0.316,
-          "powerRating": 1538
+          "netEpaPerGame": 1.639,
+          "sosSpreadAdj": 0.271,
+          "powerRating": 1537
         },
         {
           "abbr": "CHI",
@@ -1162,9 +1162,9 @@
           "confLosses": 2,
           "confTies": 0,
           "pointDiff": 57,
-          "netEpaPerGame": 4.59,
-          "sosSpreadAdj": -0.422,
-          "powerRating": 1548
+          "netEpaPerGame": 3.371,
+          "sosSpreadAdj": -0.44,
+          "powerRating": 1543
         },
         {
           "abbr": "GB",
@@ -1181,9 +1181,9 @@
           "confLosses": 4,
           "confTies": 0,
           "pointDiff": 5,
-          "netEpaPerGame": 4.353,
-          "sosSpreadAdj": 0.236,
-          "powerRating": 1524
+          "netEpaPerGame": 3.167,
+          "sosSpreadAdj": 0.192,
+          "powerRating": 1519
         },
         {
           "abbr": "SEA",
@@ -1200,9 +1200,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": 48,
-          "netEpaPerGame": 4.444,
-          "sosSpreadAdj": -0.56,
-          "powerRating": 1541
+          "netEpaPerGame": 3.53,
+          "sosSpreadAdj": -0.52,
+          "powerRating": 1537
         },
         {
           "abbr": "LAR",
@@ -1219,9 +1219,9 @@
           "confLosses": 2,
           "confTies": 0,
           "pointDiff": 61,
-          "netEpaPerGame": 12.431,
-          "sosSpreadAdj": -0.944,
-          "powerRating": 1570
+          "netEpaPerGame": 10.812,
+          "sosSpreadAdj": -0.9,
+          "powerRating": 1567
         },
         {
           "abbr": "NYG",
@@ -1238,9 +1238,9 @@
           "confLosses": 3,
           "confTies": 1,
           "pointDiff": 7,
-          "netEpaPerGame": 2.703,
-          "sosSpreadAdj": -1.16,
-          "powerRating": 1509
+          "netEpaPerGame": 1.513,
+          "sosSpreadAdj": -1.062,
+          "powerRating": 1505
         },
         {
           "abbr": "CAR",
@@ -1257,9 +1257,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": -17,
-          "netEpaPerGame": 0.651,
-          "sosSpreadAdj": -0.262,
-          "powerRating": 1492
+          "netEpaPerGame": 0.08,
+          "sosSpreadAdj": -0.253,
+          "powerRating": 1489
         },
         {
           "abbr": "DAL",
@@ -1277,7 +1277,7 @@
           "confTies": 0,
           "pointDiff": 4,
           "netEpaPerGame": -0.842,
-          "sosSpreadAdj": -0.584,
+          "sosSpreadAdj": -0.56,
           "powerRating": 1494
         },
         {
@@ -1295,9 +1295,9 @@
           "confLosses": 4,
           "confTies": 1,
           "pointDiff": -27,
-          "netEpaPerGame": -3.779,
-          "sosSpreadAdj": 0.004,
-          "powerRating": 1469
+          "netEpaPerGame": -3.112,
+          "sosSpreadAdj": -0.013,
+          "powerRating": 1472
         },
         {
           "abbr": "TB",
@@ -1314,9 +1314,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": 24,
-          "netEpaPerGame": 2.966,
-          "sosSpreadAdj": 0.409,
-          "powerRating": 1526
+          "netEpaPerGame": 2.127,
+          "sosSpreadAdj": 0.391,
+          "powerRating": 1523
         },
         {
           "abbr": "NO",
@@ -1333,9 +1333,9 @@
           "confLosses": 4,
           "confTies": 0,
           "pointDiff": -34,
-          "netEpaPerGame": -6.152,
-          "sosSpreadAdj": -0.342,
-          "powerRating": 1454
+          "netEpaPerGame": -4.437,
+          "sosSpreadAdj": -0.302,
+          "powerRating": 1460
         },
         {
           "abbr": "ATL",
@@ -1352,9 +1352,9 @@
           "confLosses": 3,
           "confTies": 0,
           "pointDiff": -57,
-          "netEpaPerGame": -6.913,
-          "sosSpreadAdj": 1.06,
-          "powerRating": 1448
+          "netEpaPerGame": -6.048,
+          "sosSpreadAdj": 1.004,
+          "powerRating": 1451
         },
         {
           "abbr": "ARI",
@@ -1371,9 +1371,9 @@
           "confLosses": 6,
           "confTies": 0,
           "pointDiff": -105,
-          "netEpaPerGame": -10.26,
-          "sosSpreadAdj": 1.244,
-          "powerRating": 1420
+          "netEpaPerGame": -8.792,
+          "sosSpreadAdj": 1.148,
+          "powerRating": 1424
         },
         {
           "abbr": "PHI",
@@ -1390,46 +1390,46 @@
           "confLosses": 6,
           "confTies": 0,
           "pointDiff": -73,
-          "netEpaPerGame": -13.104,
-          "sosSpreadAdj": 0.462,
-          "powerRating": 1419
+          "netEpaPerGame": -10.364,
+          "sosSpreadAdj": 0.413,
+          "powerRating": 1426
         }
       ],
       "afcPowerRatings": {
-        "BUF": 1584,
-        "KC": 1578,
-        "JAX": 1601,
-        "CIN": 1576,
-        "DEN": 1513,
-        "PIT": 1501,
-        "CLE": 1469,
-        "NE": 1482,
-        "BAL": 1459,
-        "LV": 1452,
+        "BUF": 1577,
+        "KC": 1574,
+        "JAX": 1597,
+        "CIN": 1574,
+        "DEN": 1512,
+        "PIT": 1504,
+        "CLE": 1473,
+        "NE": 1485,
+        "LV": 1456,
+        "BAL": 1462,
         "HOU": 1517,
-        "IND": 1428,
+        "IND": 1435,
         "NYJ": 1451,
-        "MIA": 1432,
-        "TEN": 1426,
-        "LAC": 1412
+        "LAC": 1418,
+        "MIA": 1438,
+        "TEN": 1429
       },
       "afcRatings": {
-        "BUF": 1584,
-        "KC": 1578,
-        "JAX": 1601,
-        "CIN": 1576,
-        "DEN": 1513,
-        "PIT": 1501,
-        "CLE": 1469,
-        "NE": 1482,
-        "BAL": 1459,
-        "LV": 1452,
+        "BUF": 1577,
+        "KC": 1574,
+        "JAX": 1597,
+        "CIN": 1574,
+        "DEN": 1512,
+        "PIT": 1504,
+        "CLE": 1473,
+        "NE": 1485,
+        "LV": 1456,
+        "BAL": 1462,
         "HOU": 1517,
-        "IND": 1428,
+        "IND": 1435,
         "NYJ": 1451,
-        "MIA": 1432,
-        "TEN": 1426,
-        "LAC": 1412
+        "LAC": 1418,
+        "MIA": 1438,
+        "TEN": 1429
       },
       "afcStandings": {
         "BUF": {
@@ -1480,17 +1480,17 @@
           "ties": 0,
           "pointDiff": -21
         },
-        "BAL": {
-          "wins": 4,
-          "losses": 5,
-          "ties": 0,
-          "pointDiff": -47
-        },
         "LV": {
           "wins": 4,
           "losses": 6,
           "ties": 0,
           "pointDiff": -38
+        },
+        "BAL": {
+          "wins": 4,
+          "losses": 6,
+          "ties": 0,
+          "pointDiff": -50
         },
         "HOU": {
           "wins": 3,
@@ -1510,6 +1510,12 @@
           "ties": 0,
           "pointDiff": -60
         },
+        "LAC": {
+          "wins": 1,
+          "losses": 8,
+          "ties": 0,
+          "pointDiff": -95
+        },
         "MIA": {
           "wins": 1,
           "losses": 8,
@@ -1521,12 +1527,6 @@
           "losses": 8,
           "ties": 0,
           "pointDiff": -72
-        },
-        "LAC": {
-          "wins": 0,
-          "losses": 8,
-          "ties": 0,
-          "pointDiff": -98
         }
       },
       "completedGames": [
@@ -2721,16 +2721,17 @@
           "away": "PIT",
           "homeScore": 38,
           "awayScore": 18
-        }
-      ],
-      "remainingGames": [
+        },
         {
           "id": "2026_10_LAC_BAL",
           "week": 10,
           "home": "BAL",
           "away": "LAC",
-          "neutral": false
-        },
+          "homeScore": 20,
+          "awayScore": 23
+        }
+      ],
+      "remainingGames": [
         {
           "id": "2026_11_IND_HOU",
           "week": 11,
@@ -3752,7 +3753,7 @@
         "siteName": "Tankathon",
         "analyst": "Tankathon Live Mock",
         "url": "https://www.tankathon.com/nfl/mock_draft",
-        "publishedAt": "2026-11-17T00:08:11.576Z",
+        "publishedAt": "2026-11-17T06:51:27.417Z",
         "projectedPick": 31,
         "round": 1,
         "playerName": "Lance Heard",
@@ -4012,7 +4013,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 1,
-        "spread": 3,
+        "spread": 1,
         "boards": {
           "consensus": {
             "rank": 2,
@@ -4020,8 +4021,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 5,
-            "delta": -3,
+            "rank": 3,
+            "delta": -1,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -4063,7 +4064,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 1,
-        "spread": 1,
+        "spread": 2,
         "boards": {
           "consensus": {
             "rank": 3,
@@ -4071,8 +4072,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 3,
-            "delta": 0,
+            "rank": 5,
+            "delta": -2,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -4581,8 +4582,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 17,
-            "delta": -4,
+            "rank": 16,
+            "delta": -3,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -4675,7 +4676,7 @@
         "canonicalPos": "RB",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 12,
+        "spread": 13,
         "boards": {
           "consensus": {
             "rank": 15,
@@ -4683,8 +4684,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 27,
-            "delta": -12,
+            "rank": 28,
+            "delta": -13,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -4734,8 +4735,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 20,
-            "delta": -4,
+            "rank": 22,
+            "delta": -6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -4777,7 +4778,7 @@
         "canonicalPos": "TE",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 11,
+        "spread": 8,
         "boards": {
           "consensus": {
             "rank": 17,
@@ -4785,8 +4786,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 26,
-            "delta": -9,
+            "rank": 23,
+            "delta": -6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -4828,7 +4829,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 2,
-        "spread": 10,
+        "spread": 9,
         "boards": {
           "consensus": {
             "rank": 18,
@@ -4836,8 +4837,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 16,
-            "delta": 2,
+            "rank": 17,
+            "delta": 1,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5032,7 +5033,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 9,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 22,
@@ -5040,8 +5041,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 23,
-            "delta": -1,
+            "rank": 25,
+            "delta": -3,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5134,7 +5135,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 2,
-        "spread": 2,
+        "spread": 5,
         "boards": {
           "consensus": {
             "rank": 24,
@@ -5142,8 +5143,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 22,
-            "delta": 2,
+            "rank": 19,
+            "delta": 5,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5192,8 +5193,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 28,
-            "delta": -3,
+            "rank": 27,
+            "delta": -2,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5235,7 +5236,7 @@
         "canonicalPos": "QB",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 26,
+        "spread": 27,
         "boards": {
           "consensus": {
             "rank": 26,
@@ -5243,8 +5244,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 21,
-            "delta": 5,
+            "rank": 20,
+            "delta": 6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5337,7 +5338,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 7,
+        "spread": 6,
         "boards": {
           "consensus": {
             "rank": 28,
@@ -5345,8 +5346,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 25,
-            "delta": 3,
+            "rank": 26,
+            "delta": 2,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5489,7 +5490,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 12,
+        "spread": 10,
         "boards": {
           "consensus": {
             "rank": 31,
@@ -5497,8 +5498,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 19,
-            "delta": 12,
+            "rank": 21,
+            "delta": 10,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -5994,7 +5995,7 @@
         "canonicalPos": "TE",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 17,
+        "spread": 18,
         "boards": {
           "consensus": {
             "rank": 41,
@@ -6002,8 +6003,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 50,
-            "delta": -9,
+            "rank": 51,
+            "delta": -10,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6044,7 +6045,7 @@
         "canonicalPos": "RB",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 7,
+        "spread": 6,
         "boards": {
           "consensus": {
             "rank": 42,
@@ -6052,8 +6053,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 49,
-            "delta": -7,
+            "rank": 48,
+            "delta": -6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6095,7 +6096,7 @@
         "canonicalPos": "S",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 18,
+        "spread": 17,
         "boards": {
           "consensus": {
             "rank": 43,
@@ -6103,8 +6104,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 54,
-            "delta": -11,
+            "rank": 53,
+            "delta": -10,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6448,7 +6449,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 2,
+        "spread": 1,
         "boards": {
           "consensus": {
             "rank": 50,
@@ -6456,8 +6457,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 48,
-            "delta": 2,
+            "rank": 49,
+            "delta": 1,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6497,7 +6498,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 21,
+        "spread": 20,
         "boards": {
           "consensus": {
             "rank": 51,
@@ -6505,8 +6506,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 70,
-            "delta": -19,
+            "rank": 69,
+            "delta": -18,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6548,7 +6549,7 @@
         "canonicalPos": "S",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 8,
+        "spread": 7,
         "boards": {
           "consensus": {
             "rank": 52,
@@ -6556,8 +6557,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 59,
-            "delta": -7,
+            "rank": 58,
+            "delta": -6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6598,7 +6599,7 @@
         "canonicalPos": "RB",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 11,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 53,
@@ -6606,8 +6607,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 56,
-            "delta": -3,
+            "rank": 57,
+            "delta": -4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6698,7 +6699,7 @@
         "canonicalPos": "IOL",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 39,
+        "spread": 44,
         "boards": {
           "consensus": {
             "rank": 55,
@@ -6706,8 +6707,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 76,
-            "delta": -21,
+            "rank": 81,
+            "delta": -26,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6747,7 +6748,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 7,
+        "spread": 4,
         "boards": {
           "consensus": {
             "rank": 56,
@@ -6755,8 +6756,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 63,
-            "delta": -7,
+            "rank": 60,
+            "delta": -4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6797,7 +6798,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 25,
+        "spread": 22,
         "boards": {
           "consensus": {
             "rank": 57,
@@ -6805,8 +6806,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 73,
-            "delta": -16,
+            "rank": 70,
+            "delta": -13,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6848,7 +6849,7 @@
         "canonicalPos": "IOL",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 16,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 58,
@@ -6856,8 +6857,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 62,
-            "delta": -4,
+            "rank": 56,
+            "delta": 2,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6905,8 +6906,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 69,
-            "delta": -10,
+            "rank": 68,
+            "delta": -9,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6947,7 +6948,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 8,
+        "spread": 9,
         "boards": {
           "consensus": {
             "rank": 60,
@@ -6955,8 +6956,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 55,
-            "delta": 5,
+            "rank": 54,
+            "delta": 6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -6997,7 +6998,7 @@
         "canonicalPos": "QB",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 9,
+        "spread": 17,
         "boards": {
           "consensus": {
             "rank": 61,
@@ -7005,8 +7006,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 52,
-            "delta": 9,
+            "rank": 75,
+            "delta": -14,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7047,7 +7048,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 9,
+        "spread": 10,
         "boards": {
           "consensus": {
             "rank": 62,
@@ -7055,8 +7056,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 53,
-            "delta": 9,
+            "rank": 52,
+            "delta": 10,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7105,8 +7106,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 68,
-            "delta": -5,
+            "rank": 63,
+            "delta": 0,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7148,7 +7149,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 13,
+        "spread": 14,
         "boards": {
           "consensus": {
             "rank": 64,
@@ -7156,8 +7157,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 51,
-            "delta": 13,
+            "rank": 50,
+            "delta": 14,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7197,7 +7198,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 13,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 65,
@@ -7205,8 +7206,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 78,
-            "delta": -13,
+            "rank": 77,
+            "delta": -12,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7297,7 +7298,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 10,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 67,
@@ -7305,8 +7306,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 57,
-            "delta": 10,
+            "rank": 55,
+            "delta": 12,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7498,7 +7499,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 10,
+        "spread": 9,
         "boards": {
           "consensus": {
             "rank": 71,
@@ -7506,8 +7507,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 81,
-            "delta": -10,
+            "rank": 80,
+            "delta": -9,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7548,7 +7549,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 16,
+        "spread": 10,
         "boards": {
           "consensus": {
             "rank": 72,
@@ -7556,8 +7557,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 80,
-            "delta": -8,
+            "rank": 74,
+            "delta": -2,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7597,7 +7598,7 @@
         "canonicalPos": "QB",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 33,
+        "spread": 32,
         "boards": {
           "consensus": {
             "rank": 73,
@@ -7605,8 +7606,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 58,
-            "delta": 15,
+            "rank": 59,
+            "delta": 14,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7647,7 +7648,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 14,
+        "spread": 10,
         "boards": {
           "consensus": {
             "rank": 74,
@@ -7655,8 +7656,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 60,
-            "delta": 14,
+            "rank": 64,
+            "delta": 10,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7696,7 +7697,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 18,
+        "spread": 14,
         "boards": {
           "consensus": {
             "rank": 75,
@@ -7704,8 +7705,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 83,
-            "delta": -8,
+            "rank": 79,
+            "delta": -4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7795,7 +7796,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 10,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 77,
@@ -7803,8 +7804,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 74,
-            "delta": 3,
+            "rank": 73,
+            "delta": 4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7902,8 +7903,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 79,
-            "delta": 0,
+            "rank": 78,
+            "delta": 1,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -7993,7 +7994,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 12,
+        "spread": 13,
         "boards": {
           "consensus": {
             "rank": 81,
@@ -8001,8 +8002,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 82,
-            "delta": -1,
+            "rank": 83,
+            "delta": -2,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8042,7 +8043,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 11,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 82,
@@ -8050,8 +8051,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 93,
-            "delta": -11,
+            "rank": 94,
+            "delta": -12,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8240,7 +8241,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 17,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 86,
@@ -8248,8 +8249,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 77,
-            "delta": 9,
+            "rank": 82,
+            "delta": 4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8291,7 +8292,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 23,
+        "spread": 25,
         "boards": {
           "consensus": {
             "rank": 87,
@@ -8299,8 +8300,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 64,
-            "delta": 23,
+            "rank": 62,
+            "delta": 25,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8399,8 +8400,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 96,
-            "delta": -7,
+            "rank": 93,
+            "delta": -4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8441,7 +8442,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 7,
+        "spread": 6,
         "boards": {
           "consensus": {
             "rank": 90,
@@ -8449,8 +8450,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 97,
-            "delta": -7,
+            "rank": 96,
+            "delta": -6,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8591,7 +8592,7 @@
         "canonicalPos": "TE",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 10,
+        "spread": 8,
         "boards": {
           "consensus": {
             "rank": 93,
@@ -8599,8 +8600,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 99,
-            "delta": -6,
+            "rank": 97,
+            "delta": -4,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8641,7 +8642,7 @@
         "canonicalPos": "LB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 8,
+        "spread": 7,
         "boards": {
           "consensus": {
             "rank": 94,
@@ -8649,8 +8650,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 102,
-            "delta": -8,
+            "rank": 101,
+            "delta": -7,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8741,7 +8742,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 26,
+        "spread": 25,
         "boards": {
           "consensus": {
             "rank": 96,
@@ -8749,8 +8750,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 75,
-            "delta": 21,
+            "rank": 76,
+            "delta": 20,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8791,7 +8792,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 6,
+        "spread": 5,
         "boards": {
           "consensus": {
             "rank": 97,
@@ -8799,8 +8800,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 101,
-            "delta": -4,
+            "rank": 100,
+            "delta": -3,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8899,8 +8900,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 98,
-            "delta": 1,
+            "rank": 99,
+            "delta": 0,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -8990,7 +8991,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 4,
-        "spread": 9,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 101,
@@ -8998,8 +8999,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 100,
-            "delta": 1,
+            "rank": 98,
+            "delta": 3,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -9098,8 +9099,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 103,
-            "delta": 0,
+            "rank": 104,
+            "delta": -1,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -9587,7 +9588,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 4,
-        "spread": 19,
+        "spread": 10,
         "boards": {
           "consensus": {
             "rank": 113,
@@ -9595,8 +9596,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 94,
-            "delta": 19,
+            "rank": 103,
+            "delta": 10,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -9981,7 +9982,7 @@
         "canonicalPos": "LB",
         "pos_group": "DEF",
         "tier": 4,
-        "spread": 19,
+        "spread": 21,
         "boards": {
           "consensus": {
             "rank": 121,
@@ -9989,8 +9990,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 104,
-            "delta": 17,
+            "rank": 102,
+            "delta": 19,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -10039,8 +10040,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 113,
-            "delta": 9,
+            "rank": 108,
+            "delta": 14,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -10328,7 +10329,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 4,
-        "spread": 20,
+        "spread": 15,
         "boards": {
           "consensus": {
             "rank": 128,
@@ -10336,8 +10337,8 @@
             "updated_at": "2026-11-16"
           },
           "buzz": {
-            "rank": 108,
-            "delta": 20,
+            "rank": 113,
+            "delta": 15,
             "updated_at": "2026-11-15"
           },
           "pff": {
@@ -14031,8 +14032,8 @@
         "shanahanLynchFitScore": 91,
         "archetypeNote": "Zone-intelligent defensive back suited for Raheem Morris's disguised split-safety coverage shells.",
         "nflScoutingUrl": null,
-        "scoutingReportUrl": "https://sticktothemodel.com/player/rod-moore",
-        "profileUrl": "https://sticktothemodel.com/player/rod-moore",
+        "scoutingReportUrl": "https://sticktothemodel.com/player/rod-moore-jr",
+        "profileUrl": "https://sticktothemodel.com/player/rod-moore-jr",
         "tankathonUrl": "https://www.tankathon.com/nfl/players/rod-moore",
         "mockDbUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
         "id": "rod-moore-2027",
@@ -17488,13 +17489,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "vwyKFf_WQX8",
-          "url": "https://www.youtube.com/watch?v=vwyKFf_WQX8",
-          "title": "Gracen Halton Full College Football Highlights💥| Oklahoma Defensive Tackle | NFL Draft Film",
-          "channel": "The NFL Film Room",
-          "publishedAgo": "7mo ago",
-          "duration": "8:14",
-          "thumbnailUrl": "https://i.ytimg.com/vi/vwyKFf_WQX8/hqdefault.jpg",
+          "videoId": "1Zfw4pl5YHo",
+          "url": "https://www.youtube.com/watch?v=1Zfw4pl5YHo",
+          "title": "Gracen Halton Highlights | San Francisco 49ers Defensive Lineman | Oklahoma | 2026 NFL Draft",
+          "channel": "Under The Radar Prospects",
+          "publishedAgo": "10mo ago",
+          "duration": "4:23",
+          "thumbnailUrl": "https://i.ytimg.com/vi/1Zfw4pl5YHo/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }
@@ -17643,13 +17644,13 @@
           ]
         },
         "highlightVideo": {
-          "videoId": "VDkuIBpwlWs",
-          "url": "https://www.youtube.com/watch?v=VDkuIBpwlWs",
-          "title": "Watch 49ers fourth-round draft pick Carver Willis' college highlights | NBC Sports Bay Area",
-          "channel": "NBC Sports Bay Area & California",
+          "videoId": "epn6x5ZEOtc",
+          "url": "https://www.youtube.com/watch?v=epn6x5ZEOtc",
+          "title": "49ers Draft Carver Willis: New Left Guard Contender",
+          "channel": "DNN",
           "publishedAgo": "6mo ago",
-          "duration": "1:30",
-          "thumbnailUrl": "https://i.ytimg.com/vi/VDkuIBpwlWs/hqdefault.jpg",
+          "duration": "0:57",
+          "thumbnailUrl": "https://i.ytimg.com/vi/epn6x5ZEOtc/hqdefault.jpg",
           "exists": true,
           "embeddable": true
         }

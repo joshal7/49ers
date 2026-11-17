@@ -2,14 +2,15 @@
  * 5-Tab Player Dossier Slide-Up Bottom Sheet Renderer
  * Tabs:
  * 1. overview  — Bio, Draft Info, Snap %, Efficiency Callout & Player News
- * 2. stats     — 2026 Season vs Career Year-by-Year Standard + EPA + NextGen Stats + PFR Adv
- * 3. spider    — MockDraftable 0–100th Positional Percentile SVG Radar Chart + Comps
- * 4. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
- * 5. health    — Week 9 Practice Progression, Player Toughness/Vet-Rest Priors & 2026 Injury Log
+ * 2. health    — Weekly Practice Progression, Health News (Tweets, Videos & Articles), Priors & IR Log
+ * 3. stats     — 2026 Season vs Career Year-by-Year Standard + EPA + NextGen Stats + PFR Adv
+ * 4. spider    — MockDraftable 0–100th Positional Percentile SVG Radar Chart + Comps
+ * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
 import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
+import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
 import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
@@ -45,11 +46,16 @@ export function renderInjuryNewsItemCardHtml(
     playerName = '',
     directPosts = [],
     excludePlayerId = '',
-    outerClassName = 'injury-news-item-card'
+    outerClassName = 'injury-news-item-card',
+    activeVideosSet = new Set()
   } = {}
 ) {
-  const isTweet = n.type === 'tweet' || n.type === 'social';
-  const hasImg = Boolean(n.imageUrl && /^https:\/\//i.test(n.imageUrl));
+  const isVideo = n.type === 'video';
+  const isTweet = !isVideo && (n.type === 'tweet' || n.type === 'social');
+  const safeStreamCandidate =
+    n.videoStreamUrl && /^https:\/\//i.test(String(n.videoStreamUrl).trim())
+      ? String(n.videoStreamUrl).trim()
+      : '';
   const authorName = n.author || n.reporterName || n.outletName || '49ers Beat';
   const resolvedMentionUrl = isTweet
     ? sanitizeExternalUrl(
@@ -60,11 +66,25 @@ export function renderInjuryNewsItemCardHtml(
         '#'
       )
     : sanitizeExternalUrl(n.url, '#');
+  const externalVideoCardUrl =
+    !n.videoId &&
+    !safeStreamCandidate &&
+    (isVideo || Boolean(n.isHighlightClip && n.externalVideoUrl)) &&
+    (n.externalVideoUrl || resolvedMentionUrl)
+      ? sanitizeExternalUrl(n.externalVideoUrl || resolvedMentionUrl, null)
+      : '';
+  const effectiveStreamOrCardUrl = safeStreamCandidate || externalVideoCardUrl;
+  const effectiveEmbeddable = safeStreamCandidate || n.videoId ? n.embeddable !== false : false;
+  const hasPlayableVideo = Boolean(n.videoId || effectiveStreamOrCardUrl);
+  const vidKey = hasPlayableVideo ? `dossier_vid_${n.id || ''}` : null;
+  const isVidOpen = Boolean(vidKey && activeVideosSet instanceof Set && activeVideosSet.has(vidKey));
+  const hasImg = !isVideo && !hasPlayableVideo && Boolean(n.imageUrl && /^https:\/\//i.test(n.imageUrl));
   const authorHref = sanitizeExternalUrl(
     n.authorProfileUrl || resolveItemAuthorProfileUrl(n, resolvedMentionUrl),
     resolvedMentionUrl
   );
   const ageStr = n.publishedAt ? formatRelativeAge(n.publishedAt) : '';
+  const ageWithDuration = hasPlayableVideo && n.duration ? `${n.duration} • ${ageStr}` : ageStr;
 
   const tweetFormatted = isTweet
     ? formatTweetBodyForDisplay(
@@ -86,6 +106,7 @@ export function renderInjuryNewsItemCardHtml(
 
   const cleanSummary =
     !isTweet &&
+    !isVideo &&
     n.summary &&
     !n.summary.startsWith('Published via ') &&
     n.summary.toLowerCase() !== `${authorName} • ${n.outletName || ''}`.toLowerCase()
@@ -128,13 +149,19 @@ export function renderInjuryNewsItemCardHtml(
     n.wireSource === 'espn_player_wire' || String(n.id || '').startsWith('espn_pwire_')
       ? 'Injury Wire'
       : 'Article';
+  const formatTypeBadgeHtml =
+    isVideo || hasPlayableVideo
+      ? `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Video</span></span>`
+      : !isTweet
+        ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${esc(nonTweetBadgeLabel)}</span></span>`
+        : '';
 
   return `
-    <div class="player-mention-card ${esc(outerClassName)} ${isUrgentCard ? 'breaking-elevated' : ''}" data-mention-type="${isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
+    <div class="player-mention-card ${esc(outerClassName)} ${isUrgentCard ? 'breaking-elevated' : ''}" data-mention-type="${isVideo ? 'video' : isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
       <div class="player-mention-meta">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
           ${breakingPill}
-          ${!isTweet ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${esc(nonTweetBadgeLabel)}</span></span>` : ''}
+          ${formatTypeBadgeHtml}
           <span class="player-mention-author">
             ${
               authorHref
@@ -143,7 +170,7 @@ export function renderInjuryNewsItemCardHtml(
             }
           </span>
         </div>
-        ${ageStr ? `<span class="mono" style="font-size:11px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(ageStr)}</span>` : ''}
+        ${ageWithDuration ? `<span class="mono" style="font-size:11px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(ageWithDuration)}</span>` : ''}
       </div>
 
       <div class="${hasImg ? 'media-split-row' : ''}" style="margin-top:5px">
@@ -206,6 +233,30 @@ export function renderInjuryNewsItemCardHtml(
             : ''
         }
       </div>
+      ${
+        hasPlayableVideo
+          ? `<div style="margin-top:6px">
+              ${renderVideoEmbedOrFacade(
+                vidKey,
+                n.videoId || '',
+                0,
+                headlineText || `Watch Clip (${n.duration || 'Video'})`,
+                n.outletName || authorName,
+                isVidOpen,
+                effectiveEmbeddable,
+                {
+                  compactFooter: true,
+                  videoStreamUrl: effectiveStreamOrCardUrl || '',
+                  posterUrl: n.imageUrl || '',
+                  externalWatchUrl:
+                    sanitizeExternalUrl(n.externalVideoUrl, null) ||
+                    (resolvedMentionUrl !== '#' ? resolvedMentionUrl : '') ||
+                    ''
+                }
+              )}
+            </div>`
+          : ''
+      }
     </div>
   `;
 }
@@ -218,16 +269,17 @@ export function renderPlayerDossierSheetHtml({
   rawStream = [],
   appData = null,
   userPrefs = null,
-  reportersById = null
+  reportersById = null,
+  activeVideosSet = new Set()
 }) {
   if (!player) return `<div class="empty-state">Player not found.</div>`;
 
   const tabDefs = [
     ['overview', 'football', 'Overview'],
-    ['stats', 'season', 'Stats & EPA'],
+    ['health', 'heartPulse', 'Health'],
+    ['stats', 'season', 'Stats'],
     ['spider', 'radar', 'Spider Chart'],
-    ['contract', 'cap', 'Contract & Cap'],
-    ['health', 'heartPulse', 'Health & Priors']
+    ['contract', 'cap', 'Contract']
   ];
 
   const tabsBar = `
@@ -250,7 +302,7 @@ export function renderPlayerDossierSheetHtml({
   let contentHtml = '';
 
   if (activeTab === 'overview') {
-    contentHtml = renderOverviewTab(player, rawStream, appData, userPrefs, reportersById);
+    contentHtml = renderOverviewTab(player, rawStream, appData, userPrefs, reportersById, activeVideosSet);
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(player, statsMode);
   } else if (activeTab === 'spider') {
@@ -258,13 +310,20 @@ export function renderPlayerDossierSheetHtml({
   } else if (activeTab === 'contract') {
     contentHtml = renderContractTab(player, txScenario);
   } else if (activeTab === 'health') {
-    contentHtml = renderHealthTab(player, rawStream, appData, userPrefs, reportersById);
+    contentHtml = renderHealthTab(player, rawStream, appData, userPrefs, reportersById, activeVideosSet);
   }
 
   return `${tabsBar}${contentHtml}`;
 }
 
-function renderOverviewTab(p, rawStream = [], appData = null, userPrefs = null, reportersById = null) {
+function renderOverviewTab(
+  p,
+  rawStream = [],
+  appData = null,
+  userPrefs = null,
+  reportersById = null,
+  activeVideosSet = new Set()
+) {
   const nowMs = Date.now();
   const prunedRaw = Array.isArray(rawStream) && rawStream.length > 0
     ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
@@ -311,7 +370,8 @@ function renderOverviewTab(p, rawStream = [], appData = null, userPrefs = null, 
                   playerName: p.name,
                   directPosts: combinedDirectPosts,
                   excludePlayerId: p.id,
-                  outerClassName: 'subcard-panel'
+                  outerClassName: 'subcard-panel',
+                  activeVideosSet
                 })
               )
               .join('')}
@@ -695,7 +755,8 @@ function renderHealthTab(
   rawStream = [],
   appData = null,
   userPrefs = null,
-  reportersById = null
+  reportersById = null,
+  activeVideosSet = new Set()
 ) {
   const h = p.health || {};
   const isIrOrReserve = p.rosterBucket === 'ir' || p.rosterBucket === 'suspended';
@@ -706,7 +767,39 @@ function renderHealthTab(
       1
   );
   const byeWeek = Number(appData?.health?.byeWeek || 8);
-  const showInjuryNewsCard = isPlayerEligibleForInjuryNews(p, { currentWeek, byeWeek });
+  const isEligibleByStatus = isPlayerEligibleForInjuryNews(p, { currentWeek, byeWeek });
+
+  const nowMs = Date.now();
+  const prunedHealthRaw =
+    Array.isArray(rawStream) && rawStream.length > 0
+      ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
+      : rawStream;
+  const prunedHealthRecent =
+    Array.isArray(p.recentNews) && p.recentNews.length > 0
+      ? filterOutCompletedGameAvailabilityItems(p.recentNews, appData, nowMs)
+      : p.recentNews;
+  const classifiedHealthRaw =
+    Array.isArray(prunedHealthRaw) && prunedHealthRaw.length > 0
+      ? sortNewsWithBreakingPriority(prunedHealthRaw, nowMs, { appData })
+      : prunedHealthRaw;
+  const classifiedHealthRecent =
+    Array.isArray(prunedHealthRecent) && prunedHealthRecent.length > 0
+      ? sortNewsWithBreakingPriority(prunedHealthRecent, nowMs, { appData })
+      : prunedHealthRecent;
+  const injuryItems = rankPlayerInjuryNews(
+    { ...p, recentNews: classifiedHealthRecent },
+    {
+      rawStream: classifiedHealthRaw,
+      appData: appData ? { ...appData, news: { ...(appData.news || {}), rawStream: classifiedHealthRaw } } : null,
+      userPrefs,
+      reportersById,
+      nowMs,
+      maxAgeDays: 14,
+      maxItems: 25,
+      includeFallbackCard: isEligibleByStatus
+    }
+  );
+  const showInjuryNewsCard = isEligibleByStatus || injuryItems.length > 0;
 
   const practiceBoxesHtml = `
     <div class="kpi-grid" data-practice-days-grid>
@@ -734,44 +827,13 @@ function renderHealthTab(
         </div>
       </div>
     </div>
-    ${showInjuryNewsCard ? practiceBoxesHtml : ''}
+    ${isEligibleByStatus ? practiceBoxesHtml : ''}
     `
     : practiceBoxesHtml;
 
-  const nowMs = Date.now();
-  const prunedHealthRaw =
-    showInjuryNewsCard && Array.isArray(rawStream) && rawStream.length > 0
-      ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
-      : rawStream;
-  const prunedHealthRecent =
-    showInjuryNewsCard && Array.isArray(p.recentNews) && p.recentNews.length > 0
-      ? filterOutCompletedGameAvailabilityItems(p.recentNews, appData, nowMs)
-      : p.recentNews;
-  const classifiedHealthRaw =
-    showInjuryNewsCard && Array.isArray(prunedHealthRaw) && prunedHealthRaw.length > 0
-      ? sortNewsWithBreakingPriority(prunedHealthRaw, nowMs, { appData })
-      : prunedHealthRaw;
-  const classifiedHealthRecent =
-    showInjuryNewsCard && Array.isArray(prunedHealthRecent) && prunedHealthRecent.length > 0
-      ? sortNewsWithBreakingPriority(prunedHealthRecent, nowMs, { appData })
-      : prunedHealthRecent;
-  const injuryItems = showInjuryNewsCard
-    ? rankPlayerInjuryNews(
-        { ...p, recentNews: classifiedHealthRecent },
-        {
-          rawStream: classifiedHealthRaw,
-          appData: appData ? { ...appData, news: { ...(appData.news || {}), rawStream: classifiedHealthRaw } } : null,
-          userPrefs,
-          reportersById,
-          nowMs,
-          maxAgeDays: 8,
-          maxItems: 5
-        }
-      )
-    : [];
-
   const combinedDirectPosts = [
     ...(Array.isArray(rawStream) ? rawStream : []),
+    ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
     ...(Array.isArray(p.recentNews) ? p.recentNews : [])
   ];
 
@@ -783,7 +845,7 @@ function renderHealthTab(
           <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('news', 14)}</div>
           <h3 class="card-title" style="font-size:14px">Injury News</h3>
         </div>
-        <span class="mono" style="font-size:11px;color:var(--text-muted)">${injuryItems.length} ${injuryItems.length === 1 ? 'update' : 'updates'} · 7d</span>
+        <span class="mono" style="font-size:11px;color:var(--text-muted)">${injuryItems.length} ${injuryItems.length === 1 ? 'update' : 'updates'}</span>
       </div>
       ${
         injuryItems.length > 0
@@ -793,7 +855,8 @@ function renderHealthTab(
                   renderInjuryNewsItemCardHtml(item, {
                     playerName: p.name,
                     directPosts: combinedDirectPosts,
-                    excludePlayerId: p.id
+                    excludePlayerId: p.id,
+                    activeVideosSet
                   })
                 )
                 .join('')}

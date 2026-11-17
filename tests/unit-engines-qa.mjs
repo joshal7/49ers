@@ -9149,7 +9149,10 @@ test(
     assert.equal(postGameCapCheck.active, false, 'Post-game window 6 days after deadline with no cap wire must gate off cap boilerplate');
     assert.ok(briefPrompt.includes('SALARY CAP RESTRAINT'), 'Post-game prompt must explicitly restrain unprompted salary-cap filler');
 
-    const liveBriefProse = liveData.news.dailyTopNewsBrief.bullets.join(' ');
+    const postGameRecapBrief = liveData.news.dailyTopNewsBrief?.isPostGame
+      ? liveData.news.dailyTopNewsBrief
+      : buildDeterministicDailyTopNewsBrief(liveData, postGameNowMs);
+    const liveBriefProse = postGameRecapBrief.bullets.join(' ');
     assert.ok(
       !/article 13|void years|\$39\.\d+m|\$35\.\d+m/i.test(liveBriefProse),
       `Post-game brief must NOT contain formulaic salary-cap rollover boilerplate: ${liveBriefProse}`
@@ -9159,6 +9162,17 @@ test(
     assert.ok(/Purdy/.test(liveBriefProse) && /389/.test(liveBriefProse), 'Post-game brief must spotlight Purdy 389 passing yards');
     assert.ok(/Keenan Allen/.test(liveBriefProse), 'Post-game brief must include Keenan Allen debut');
     assert.ok(/343/.test(liveBriefProse) && /Renardo Green/.test(liveBriefProse), 'Post-game brief must honestly report 343 passing yards yielded & Renardo Green injury exit');
+
+    // Also verify non-postgame deterministic fallback meets ~165-275 word count without cap filler
+    const midWeekFallback = buildDeterministicDailyTopNewsBrief(liveData, Date.parse('2026-11-17T06:45:00Z'));
+    assert.ok(
+      midWeekFallback.wordCount >= 165 && midWeekFallback.wordCount <= 275,
+      `Mid-week deterministic brief wordCount (${midWeekFallback.wordCount}) must stay ~2/3 of Coaching Matchup`
+    );
+    assert.ok(
+      !/article 13|void years/i.test(midWeekFallback.bullets.join(' ')),
+      'Mid-week brief with no active cap wire must omit formulaic salary-cap filler'
+    );
 
     // Offseason window (March) automatically enables salary-cap & free-agency context
     const marchOffseasonMs = Date.parse('2027-03-14T18:00:00Z');
@@ -9512,6 +9526,109 @@ await testAsync(
       hasPostKickoffInjurySignal: false
     });
     assert.equal(lenoirRoll.skip, true, 'Starter who suited up and finished unscathed with stale pregame active note must skip');
+  }
+);
+
+await testAsync(
+  'Player Dossier renames "Health & Priors" -> "Health", places Health immediately right of Overview, and surfaces full list of tweets, videos & articles on Health tab',
+  async () => {
+    const { renderPlayerDossierSheetHtml } = await import('../src/views/playerSheetView.js');
+
+    const liveBundle = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'))
+    };
+
+    const green = liveBundle.roster.players.find(p => p.name === 'Renardo Green');
+    assert.ok(green, 'Renardo Green must exist in live roster');
+
+    // Inject a standalone health video (`type: 'video'`) alongside live tweets, video-tweets, and articles
+    const streamWithMedicalVid = [
+      {
+        id: 'yt_green_medical_breakdown',
+        type: 'video',
+        videoId: 'dQw4w9WgXcQ',
+        embeddable: true,
+        duration: '4:12',
+        author: '49ers Medical Breakdown',
+        outletName: 'YouTube',
+        publishedAt: new Date().toISOString(),
+        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        title: 'Kyle Shanahan gives Renardo Green back injury update ahead of Week 11',
+        summary: 'Detailed breakdown of Renardo Green back injury exit and day-to-day timeline.',
+        mentionedPlayers: [{ id: green.id, name: 'Renardo Green' }]
+      },
+      ...liveBundle.news.rawStream
+    ];
+
+    const greenHealthHtml = renderPlayerDossierSheetHtml({
+      player: green,
+      activeTab: 'health',
+      rawStream: streamWithMedicalVid,
+      appData: liveBundle
+    });
+
+    // 1 & 2: Tab order & naming ("Overview" -> "Health" -> "Stats" -> "Spider Chart" -> "Contract")
+    assert.ok(!greenHealthHtml.includes('Health &amp; Priors') && !greenHealthHtml.includes('Health & Priors'));
+    assert.ok(!greenHealthHtml.includes('Stats &amp; EPA') && !greenHealthHtml.includes('Stats & EPA'));
+    assert.ok(!greenHealthHtml.includes('Contract &amp; Cap') && !greenHealthHtml.includes('Contract & Cap'));
+    const tabMatches = [...greenHealthHtml.matchAll(/data-player-tab="([^"]+)"[\s\S]*?<span>([^<]+)<\/span>/g)];
+    assert.deepEqual(
+      tabMatches.map(m => [m[1], m[2]]),
+      [
+        ['overview', 'Overview'],
+        ['health', 'Health'],
+        ['stats', 'Stats'],
+        ['spider', 'Spider Chart'],
+        ['contract', 'Contract']
+      ],
+      'Dossier tabs must be ordered Overview -> Health -> Stats -> Spider Chart -> Contract'
+    );
+
+    // 3: Full uncapped list of tweets, videos, and articles on Renardo Green's Health tab
+    const cardTypes = [...greenHealthHtml.matchAll(/data-mention-type="([^"]+)"/g)].map(m => m[1]);
+    assert.ok(cardTypes.length >= 7, `Expected full list (>=7) of health items for Renardo Green, got ${cardTypes.length}`);
+    assert.ok(cardTypes.includes('tweet'), 'Renardo Green Health tab must include health tweets');
+    assert.ok(cardTypes.includes('article'), 'Renardo Green Health tab must include health articles');
+    assert.ok(cardTypes.includes('video'), 'Renardo Green Health tab must include health videos');
+    assert.ok(
+      greenHealthHtml.includes('data-action="play-inline-video"'),
+      'Health tab video items must render playable inline video facade'
+    );
+
+    // Even if a player is currently marked Active (`isOnPracticeReport: false`, e.g. Deommodore Lenoir or unpromoted state),
+    // any genuine health tweets/videos/articles about them MUST still appear on their Health tab!
+    const unflaggedGreen = {
+      ...green,
+      health: { ...green.health, status: 'Active', injuryType: '', isOnPracticeReport: false }
+    };
+    const unflaggedGreenHtml = renderPlayerDossierSheetHtml({
+      player: unflaggedGreen,
+      activeTab: 'health',
+      rawStream: liveBundle.news.rawStream,
+      appData: liveBundle
+    });
+    assert.ok(
+      unflaggedGreenHtml.includes('data-player-injury-news') &&
+        [...unflaggedGreenHtml.matchAll(/data-mention-type="/g)].length >= 6,
+      'Active player with genuine health tweets/videos/articles must still display full Injury News list on Health tab'
+    );
+
+    // Healthy player with zero genuine health news (Brock Purdy) still omits Injury News clutter
+    const purdy = liveBundle.roster.players.find(p => p.name === 'Brock Purdy');
+    const purdyHealthHtml = renderPlayerDossierSheetHtml({
+      player: purdy,
+      activeTab: 'health',
+      rawStream: liveBundle.news.rawStream,
+      appData: liveBundle
+    });
+    assert.ok(
+      !purdyHealthHtml.includes('data-player-injury-news'),
+      'Healthy player with zero health items (Brock Purdy) must not render empty/false-positive Injury News card'
+    );
   }
 );
 

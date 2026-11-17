@@ -3518,9 +3518,9 @@ async function main() {
     bucket.push(mentionObj);
   }
 
-  // First pass: map all multi-source tweets & articles in rawNewsStream to every mentioned player
+  // First pass: map all multi-source tweets, videos & articles in rawNewsStream to every mentioned player
   for (const item of rawNewsStream) {
-    if (item.type === 'video' || item.isClickbait) continue;
+    if (item.isClickbait) continue;
     const isPlayerWireBlurb = String(item.id || '').startsWith('espn_pwire_');
     const primaryOwnerId = isPlayerWireBlurb ? String(item.mentionedPlayers?.[0]?.id || '') : '';
     for (const mp of item.mentionedPlayers || []) {
@@ -3528,13 +3528,14 @@ async function main() {
         continue;
       }
       const pSnippet = String(item.playerSnippets?.[String(mp.id)] || item.playerSnippet || '').trim();
+      const itemType = item.type === 'video' ? 'video' : item.type === 'tweet' ? 'tweet' : 'article';
       addMentionToPlayer(mp.id, {
         id: item.id,
-        type: item.type === 'tweet' ? 'tweet' : 'article',
+        type: itemType,
         wireSource: item.wireSource || null,
         headline: item.title,
-        fullText: item.type === 'tweet' ? item.fullText || item.title : null,
-        isFullTweet: item.type === 'tweet' ? item.isFullTweet !== false : false,
+        fullText: itemType === 'tweet' ? item.fullText || item.title : null,
+        isFullTweet: itemType === 'tweet' ? item.isFullTweet !== false : false,
         summary: pSnippet || item.summary || '',
         playerSnippet: pSnippet || undefined,
         author: item.author || item.reporterName || item.outletName || '49ers Beat',
@@ -3543,6 +3544,12 @@ async function main() {
         outletName: item.outletName || '49ers Beat',
         publishedAt: item.publishedAt,
         imageUrl: item.imageUrl || '',
+        videoId: item.videoId || null,
+        videoStreamUrl: item.videoStreamUrl || null,
+        externalVideoUrl: item.externalVideoUrl || null,
+        duration: item.duration || null,
+        embeddable: item.embeddable !== undefined ? Boolean(item.embeddable) : undefined,
+        isHighlightClip: Boolean(item.isHighlightClip),
         url: item.url,
         externalUrl: item.externalUrl || null,
         externalTitle: item.externalTitle || null,

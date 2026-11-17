@@ -5282,7 +5282,7 @@ export function isPureVeteranRestEntry(healthOrRow = {}) {
 }
 
 /**
- * Determines whether a player qualifies for the "Injury News" card under `Health & Priors`:
+ * Determines whether a player qualifies for the "Injury News" card under `Health`:
  *  1. Any active-roster (or IR-return Questionable) player who is genuinely injured / on the weekly Injury Report
  *     (excluding healthy `NIR - Rest` maintenance days), OR
  *  2. Any player on IR / PUP predicted to return within the next 2–3 weeks (`isPracticeWindowOpen`,
@@ -5363,8 +5363,15 @@ export function isPlayerEligibleForInjuryNews(player = null, { currentWeek = 1, 
   return false;
 }
 
+const NON_MEDICAL_FOOTBALL_IDIOM_STRIP_RE =
+  /\b(?:injury[- ](?:plagued|riddled|depleted|decimated|ravaged|hit|marred)|massive\s+injury\s+wave|injury\s+(?:wave|bug|front|luck|crisis|woes)|despite\s+(?:a\s+(?:carousel|rash|string|wave)\s+of\s+[^.!?]{0,45})?\binjur(?:y|ies)\b|(?:carousel|group|corps|room)\s+of\s+(?:receivers|wideouts|linemen|corners|backs)[^.!?]{0,45}\binjur\w*|without\s+(?:any\s+|another\s+)?(?:massive\s+)?injur\w*|keep\s+(?:them|him|her|players|veterans|starters|everyone)\s+healthy|(?:get|stay|remain|getting|staying|keeping)\s+healthy|emerged\s+relatively\s+healthy|seemed\s+like\s+he\s+was\s+hurt[\s\S]{0,75}assuming\s+not|discuss\s+[^.!?]{0,45}\binjuries\b|had\s+the\s+same\s+injury\s+last\s+(?:season|year)|leaned\s+his\s+(?:left\s+|right\s+)?shoulder\s+into|over\s+his\s+(?:left\s+|right\s+)?shoulder|chip\s+on\s+his\s+shoulder|took\s+a\s+knee|taking\s+a\s+knee|on\s+one\s+knee|fumble\s+recover\w*|recover\s+an\s+onside\s+kick|clear(?:ed|s|ing)?\s+the\s+(?:path|pocket|lane|way)|elevat(?:e|ed|ing)\s+his\s+(?:game|play))\b/gi;
+
 const INJURY_NEWS_TOPIC_RELEVANCE_RE =
-  /(?:\(\s*(?:back|foot|hip|neck|hand|knee|ankle|shoulder|rib|calf|quad|groin|wrist|thumb|elbow|toe|illness)\s*\)|\b(?:injur(?:y|ed|ies)|practice[d]?|practicing|practice[- ]squad\w*|elevat(?:e|ed|ing|ions?)|participat(?:e|ed|ing|ion|ant)|limited|dnp|did not practice|didn't practice|not practicing|no practice|full go|full participant|(?:good|ready)\s+to\s+(?:go|play)|expected\s+to\s+(?:play|suit\s+up|miss|be\s+activated)|on\s+track\s+to\s+(?:play|suit\s+up)|plan(?:s|ning)?\s+to\s+play|will\s+play|set\s+to\s+play|suit\s+up|game-time\s+decision|no\s+(?:official\s+)?injury\s+designation|without\s+an?\s+(?:official\s+)?(?:injury\s+)?designation|side\s*lines?|side\s+field|rehab(?:bing)?|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|sprinting|running\s+routes|working\s+with\s+trainers|individual\s+drills|team\s+drills|non-contact|walking\s+boot|brace|helmet\s+off|observer|locker\s+room|medical\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|concussion|protocol|hamstring|achilles|ankle|high-ankle|knee|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|(?:lower\s+|upper\s+)?back\s+(?:injury|spasms|tightness|issue|pain)|foot\s+(?:injury|sprain|fracture|issue)|shoulder|groin|adductor|calf|quad|hip\s+(?:injury|pointer|flexor|issue)|oblique|pectoral|rib|wrist|hand\s+(?:injury|fracture|surgery)|thumb|neck\s+(?:injury|stinger|spasms|issue)|elbow|illness|sprain|strain|tear|torn|fracture|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|practice\s+window|designated\s+to\s+return|activated|setback|aggravat(?:e|ed)|clearance|cleared|healthy|recovery|recuperat|trending\s+up|return(?:ed|ing)?\s+to\s+(?:practice|action|the\s+field|(?:the\s+|sunday['’]?s\s+|monday['’]?s\s+|thursday['’]?s\s+|saturday['’]?s\s+)?(?:game|contest|matchup))|back\s+in\s+the\s+(?:game|huddle|lineup)|back\s+on\s+the\s+field|unable\s+to\s+finish\s+(?:[\w' -]{0,16}\s+)?game|did(?:n['’]?t|\s+not)\s+return|will\s+not\s+return|won['’]?t\s+return|shaken\s+up|limped\s+off|helped\s+off|carted\s+off|sidelined|capped\s+session)\b)/i;
+  /(?:\(\s*(?:back|foot|hip|neck|hand|knee|ankle|shoulder|rib|ribs|calf|quad|quadriceps|groin|adductor|wrist|thumb|elbow|toe|pectoral|pec|oblique|concussion|illness)\s*\)|\b(?:injur(?:y|ed|ies)|(?:limited|full|non-?|did\s+not|didn['’]?t|no|missed|missing|return(?:ed|ing)?\s+to|back\s+(?:at|in|to|on\s+the)|at\s+today['’]?s|in\s+(?:wednesday|thursday|friday|today)['’]?s)\s*(?:practice[d]?|practicing|participant|participation|session|walk-?through)|participat(?:e|ed|ing|ion)\s+in\s+(?:[\w' -]{0,18}\s+)?practice|walk-?through\s+but\s+not\s+practice|practice\s+(?:report|window|status|participation)|not\s+participating|full\s+go|(?:good|ready)\s+to\s+(?:go|play)|expected\s+to\s+(?:play|suit\s+up|miss|be\s+activated)|on\s+track\s+to\s+(?:play|suit\s+up|be\s+activated)|plan(?:s|ning)?\s+to\s+play|set\s+to\s+play|game-time\s+decision|no\s+(?:official\s+)?injury\s+designation|without\s+an?\s+(?:official\s+)?(?:injury\s+)?designation|side\s*lines?\s+with\s+trainers|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|side\s+field|rehab\s+field|rehab(?:bing)?|working\s+with\s+trainers|non-contact|walking\s+boot|brace|observer|(?:headed|walked|limped|helped|carted|taken|escorted)\s+(?:off\s+)?to\s+the\s+locker\s+room|medical\s+tent|blue\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|(?:passed|failed)\s+(?:his|a|the)\s+physical|concussion|protocol|hamstring|achilles|tendinitis|ankle|high-ankle|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|(?:lower\s+|upper\s+)?back\s+(?:injur\w*|spasms?|tightness|issue|pain|strain)|left\s+with\s+(?:his|a|an|the(?:\s+same)?)\s+(?:lower\s+|upper\s+)?back|foot\s+(?:injur\w*|sprain|fracture|issue|pain)|battled\s+a\s+bad\s+(?:foot|ankle|knee|back|shoulder|hamstring|hip|hand|wrist)|fresh\s+off\s+a\s+(?:hamstring|ankle|knee|groin|calf|shoulder|back|foot|concussion)|(?:were|was|is|been|still|playing|already|got)\s+hurt\b|hurt\s+(?:his|your)\s+(?:shoulder|back|ankle|knee|foot|hamstring|groin|calf|hand|wrist|neck|hip|elbow|rib|ribs)|shoulder\s+(?:injur\w*|sprain|strain|harness|brace|surgery|issue|soreness)|knee\s+(?:injur\w*|sprain|brace|surgery|swelling|soreness|issue)|groin|adductor|calf|quadriceps|quad\s+(?:injur\w*|strain|contusion|issue)|hip\s+(?:injur\w*|pointer|flexor|issue|strain)|oblique|pectoral|ribs?\s+(?:injur\w*|fracture|cartilage|issue)|wrist\s+(?:injur\w*|sprain|fracture|cast|brace|issue)|hand\s+(?:injur\w*|fracture|surgery|cast)|thumb\s+(?:injur\w*|sprain|fracture|surgery)|neck\s+(?:injur\w*|stinger|spasms?|issue)|elbow\s+(?:injur\w*|sprain|brace|issue)|illness|sprain\w*|strain\w*|tear|torn|fracture[d]?|dislocated|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|designated\s+(?:for|to)\s+return|activated\s+from|setback|aggravat\w*|fully\s+heals?\b|heal(?:ing|ed)\b|act(?:ing)?\s+up\s+again|recovery\s+(?:is\s+progressing|from|timeline|process)|['’]s\s+recovery\b|recuperat\w*|return(?:ed|ing)?\s+(?:from\s+(?:an?\s+|his\s+)?(?:injur\w*|ir\b|achilles|hamstring|ankle|knee)|to\s+(?:action|the\s+field|(?:the\s+|sunday['’]?s\s+|monday['’]?s\s+|thursday['’]?s\s+|saturday['’]?s\s+)?game))|unable\s+to\s+finish\s+(?:[\w' -]{0,16}\s+)?game|did(?:n['’]?t|\s+not)\s+return|will\s+not\s+return|won['’]?t\s+return|shaken\s+up|limped\s+off|helped\s+off|carted\s+off|sidelined|capped\s+session)\b)/i;
+
+function sanitizeTextForPlayerHealthCheck(text = '') {
+  return String(text || '').replace(NON_MEDICAL_FOOTBALL_IDIOM_STRIP_RE, ' ');
+}
 
 const INJURY_REHAB_COLOR_DETAIL_RE =
   /\b(spotted\s+(?:running|sprinting|jogging|working|cutting|throwing|catching)|on\s+the\s+(?:side\s*lines?|side\s+field|rehab\s+field)|working\s+(?:on\s+(?:a|the)\s+(?:side|rehab)\s+field|with\s+trainers)|running\s+(?:on\s+the\s+side|routes|sprints)|cutting|individual\s+drills|indy\s+drills|team\s+drills|7-on-7|11-on-11|in\s+cleats|in\s+pads|with\s+a\s+helmet|without\s+a\s+(?:brace|boot|limp)|walking\s+boot|blue\s+non-contact|non-contact\s+jersey|was\s+an\s+observer|moving\s+well|full\s+speed|capped\s+session|for\s+the\s+first\s+time\s+since|making\s+solid\s+progress)\b/i;
@@ -5395,7 +5402,7 @@ export function computeInjuryNewsRankScore(
     appData = null
   } = {}
 ) {
-  if (!item || !player?.name || item.isClickbait || item.type === 'video') return null;
+  if (!item || !player?.name || item.isClickbait) return null;
 
   // Prevent another player's ESPN/RotoWire player-page blurb (`espn_pwire_<ownerId>_*`) from leaking into `player`'s Injury News
   const itemIdStr = String(item.id || '');
@@ -5432,7 +5439,8 @@ export function computeInjuryNewsRankScore(
   }
 
   const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
-  const checkScope = scoped || playerSpecificSnippet || fullBody;
+  if (!scoped) return null;
+  const checkScope = scoped;
 
   // Adopt shared app-wide completed-game availability filter + prune prior-week sideline blue-tent/return tweets
   // Scope long-term/IR exemption strictly to THIS player's clause so another player's IR window doesn't leak pre-game DNP notes!
@@ -5459,7 +5467,8 @@ export function computeInjuryNewsRankScore(
     }
   }
 
-  if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(checkScope)) {
+  const sanitizedHealthScope = sanitizeTextForPlayerHealthCheck(checkScope);
+  if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizedHealthScope)) {
     return null;
   }
   // Reject fantasy start/sit / betting props fluff
@@ -5600,7 +5609,8 @@ export function rankPlayerInjuryNews(
     reportersById = null,
     nowMs = Date.now(),
     maxAgeDays = 8,
-    maxItems = 5
+    maxItems = 25,
+    includeFallbackCard = true
   } = {}
 ) {
   if (!player?.name) return [];
@@ -5619,15 +5629,23 @@ export function rankPlayerInjuryNews(
   const hasObservedPracticeThisWeek =
     (h.wed && h.wed !== '-') || (h.thu && h.thu !== '-') || (h.fri && h.fri !== '-');
 
+  const candidateTypePriority = it => {
+    // Prefer direct reporter X posts & rich standalone articles/videos over Bluesky mirrors or bare promo link-tweets
+    const isPromoLinkTweet =
+      (it?.type === 'tweet' || it?.type === 'social') &&
+      Boolean(it?.externalUrl) &&
+      /\bread:\s*$/i.test(String(it?.fullText || it?.title || '').trim());
+    if (isPromoLinkTweet) return 3;
+    if (isDirectXStatusUrl(it?.url)) return 0;
+    if (isBlueskyPostUrl(it?.url)) return 2;
+    return 1;
+  };
+
   const combinedCandidates = [
     ...(Array.isArray(rawStream) ? rawStream : []),
     ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
     ...(Array.isArray(player.recentNews) ? player.recentNews : [])
-  ].sort((a, b) => {
-    const aRank = isDirectXStatusUrl(a?.url) ? 0 : isBlueskyPostUrl(a?.url) ? 2 : 1;
-    const bRank = isDirectXStatusUrl(b?.url) ? 0 : isBlueskyPostUrl(b?.url) ? 2 : 1;
-    return aRank - bRank;
-  });
+  ].sort((a, b) => candidateTypePriority(a) - candidateTypePriority(b));
 
   const directPosts = combinedCandidates.filter(
     it =>
@@ -5635,12 +5653,21 @@ export function rankPlayerInjuryNews(
       isDirectSocialPostUrl(String(it?.url || ''))
   );
 
+  const normCanonUrl = u =>
+    String(u || '')
+      .toLowerCase()
+      .replace(/^https?:\/\/(?:www\.)?/, '')
+      .replace(/[?#].*$/, '')
+      .replace(/\/+$/, '');
+
   const seenExact = new Set();
+  const seenCanonUrls = new Set();
   const scored = [];
 
   for (const cand of combinedCandidates) {
     if (!cand || isItemMutedByPrefs(cand, userPrefs, reportersById)) continue;
-    const isTw = cand.type === 'tweet' || cand.type === 'social';
+    const isVid = cand.type === 'video';
+    const isTw = !isVid && (cand.type === 'tweet' || cand.type === 'social');
     const rawUrl = isTw
       ? resolveOriginalTweetUrl(
           {
@@ -5657,9 +5684,15 @@ export function rankPlayerInjuryNews(
 
     const leadKey = String(cand.fullText || cand.title || cand.headline || '')
       .toLowerCase()
+      .replace(/https?:\/\/\S+/g, '')
       .replace(/[^a-z0-9]/g, '')
       .slice(0, 72);
     if (!leadKey || seenExact.has(leadKey)) continue;
+
+    const urlCanon = !safeUrl.includes('#:~:text=') ? normCanonUrl(safeUrl) : '';
+    const extCanon = cand.externalUrl ? normCanonUrl(cand.externalUrl) : '';
+    if (urlCanon && seenCanonUrls.has(urlCanon)) continue;
+    if (extCanon && seenCanonUrls.has(extCanon)) continue;
 
     const rankMeta = computeInjuryNewsRankScore(cand, {
       player,
@@ -5673,6 +5706,9 @@ export function rankPlayerInjuryNews(
     if (!rankMeta) continue;
 
     seenExact.add(leadKey);
+    if (urlCanon) seenCanonUrls.add(urlCanon);
+    if (extCanon) seenCanonUrls.add(extCanon);
+
     const authorName = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
     const authorProfileUrl = sanitizeExternalUrl(
       resolveItemAuthorProfileUrl(cand, safeUrl),
@@ -5683,27 +5719,29 @@ export function rankPlayerInjuryNews(
         ? Object.entries(cand.playerSnippets)
             .filter(([k, v]) => k !== String(player.id || '') && v && doesClauseMentionPlayer(String(v), player.name, { allowSurname: false }))
             .map(([, v]) => String(v).trim())
-            .find(s => INJURY_NEWS_TOPIC_RELEVANCE_RE.test(s)) || ''
+            .find(s => INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(s))) || ''
         : '';
     const directSnippetText = String(
       cand.playerSnippet || cand.playerSnippets?.[String(player.id || '')] || ''
     ).trim();
     const playerSnippetText =
-      directSnippetText && INJURY_NEWS_TOPIC_RELEVANCE_RE.test(directSnippetText)
+      directSnippetText && INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(directSnippetText))
         ? directSnippetText
         : crossSnippetText || directSnippetText;
     const resolvedSummary =
       !isTw &&
+      !isVid &&
       playerSnippetText &&
       (!cand.summary ||
         !doesClauseMentionPlayer(cand.summary, player.name, { allowSurname: true }) ||
-        (INJURY_NEWS_TOPIC_RELEVANCE_RE.test(playerSnippetText) && !INJURY_NEWS_TOPIC_RELEVANCE_RE.test(cand.summary)))
+        (INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(playerSnippetText)) &&
+          !INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(cand.summary))))
         ? playerSnippetText
         : cand.summary || cand.externalDescription || '';
 
     scored.push({
       ...cand,
-      type: isTw ? 'tweet' : 'article',
+      type: isVid ? 'video' : isTw ? 'tweet' : 'article',
       headline: cand.headline || cand.title || '',
       title: cand.title || cand.headline || '',
       summary: resolvedSummary,
@@ -5724,19 +5762,23 @@ export function rankPlayerInjuryNews(
       (parseFlexibleIsoMs(b.publishedAt) || 0) - (parseFlexibleIsoMs(a.publishedAt) || 0)
   );
 
-  // Deduplicate same-day echoes of the exact same practice status by different wire mirrors,
-  // keeping the highest-scored / richest card on top and attaching echoes into `confirmingReports`
+  // Consolidate only bare multi-player dry practice-report list tweets into `confirmingReports`
+  // while keeping every distinct tweet, video, and article visible in the player's Health list!
   const deduped = [];
   for (const item of scored) {
     const itemMs = parseFlexibleIsoMs(item.publishedAt) || 0;
     const itemText = `${item.fullText || ''} ${item.title || ''} ${item.summary || ''}`.toLowerCase();
-    const bucketTag = INJURY_REHAB_COLOR_DETAIL_RE.test(itemText)
-      ? null // Never collapse distinct side-field rehab observation tweets into bare practice buckets!
-      : /\b(21-day|practice window|designated to return|placed on injured reserve)\b/.test(itemText)
-        ? 'ir_window'
-        : /\b(limited|did not practice|didn't practice|not practicing|no practice|not participating|full participant)\b/.test(itemText)
-          ? 'practice_status'
-          : null;
+    const bucketTag =
+      item.type === 'tweet' &&
+      !item.videoStreamUrl &&
+      !item.videoId &&
+      !INJURY_REHAB_COLOR_DETAIL_RE.test(itemText) &&
+      item.wireSource !== 'espn_player_wire' &&
+      /\b(pre\s+practice\s+report|practice\s+report\s*:\s*not\s+participating|not\s+participating\s+(?:wr|rb|cb|dl|dt|de|lb|ol|ot|te|qb|s)|no\s+practice\s+for\s+.*or)\b/.test(
+        itemText
+      )
+        ? 'multi_player_practice_list'
+        : null;
 
     if (bucketTag) {
       const existingLead = deduped.find(d => {
@@ -5764,9 +5806,9 @@ export function rankPlayerInjuryNews(
     if (deduped.length >= maxItems) break;
   }
 
-  // Clean fallback: if an injured player has no matched stream card in the 8-day feed yet,
+  // Clean fallback: if an injured player has no matched stream card in the feed yet,
   // synthesize a grounded beat/medical update card from their verified ESPN/RotoWire/49ers.com injury note
-  if (deduped.length === 0) {
+  if (deduped.length === 0 && includeFallbackCard) {
     const fallbackProse = pickMeaningfulInjuryComment(h.irBeatNote, h.longComment, h.shortComment, player.beatComment);
     if (fallbackProse && !isBareStatusPlaceholderComment(fallbackProse)) {
       const parsedAttr = extractBeatAttributionFromText(fallbackProse, {

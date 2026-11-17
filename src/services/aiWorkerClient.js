@@ -4174,31 +4174,48 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
 
     // Bullet B: Fresh 49ers & Opponent Injury / Practice Updates
     const healthSentences = [];
-    if (irOpenList.length > 0) {
-      const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'), 0);
-      const lpPart =
-        lpPlayers.length > 0
-          ? ` alongside limited work for ${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))}`
-          : '';
-      healthSentences.push(
-        `San Francisco opened ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window${lpPart}${irCite}.`
-      );
-    } else if (lpPlayers.length > 0) {
-      healthSentences.push(
-        `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} logged limited practice reps ${latestDayInfo.label}${pickCite(/injury|practice|limited/i, 0)}.`
-      );
-    }
-    if (dnpPlayers.length > 0) {
-      const injRepCite = pickCite(/injury report|miss practice|no practice|did not practice/i, 1);
-      const fpTail =
-        fpPlayers.length > 0
-          ? `, while ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
-          : vetRestPlayers.length > 0
-            ? `, with ${joinNamesNatural(vetRestPlayers.slice(0, 2).map(p => p.name))} taking veteran rest`
+    if (!latestDayInfo.key) {
+      const activeEvalPlayers = prList.filter(p => !p.isIrReturnWindow && !/rest/i.test(p.injuryType || ''));
+      const evalCite = pickCite(/injury|shanahan|back|achilles|day to day|practice/i, 0);
+      if (activeEvalPlayers.length > 0) {
+        healthSentences.push(
+          `Entering Week ${wk} preparation, head coach Kyle Shanahan and the medical staff evaluate ${joinNamesNatural(activeEvalPlayers.slice(0, 4).map(fmtPlayerInj))} ahead of Wednesday's initial participation report${evalCite}.`
+        );
+      }
+      if (irOpenList.length > 0) {
+        const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'), 1);
+        healthSentences.push(
+          `${joinNamesNatural(irOpenList.slice(0, 3).map(fmtPlayerInj))} continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation${irCite}.`
+        );
+      }
+    } else {
+      if (irOpenList.length > 0) {
+        const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'), 0);
+        const nonIrLp = lpPlayers.filter(lp => !irOpenList.some(ir => ir.name === lp.name));
+        const lpPart =
+          nonIrLp.length > 0
+            ? ` alongside limited work for ${joinNamesNatural(nonIrLp.slice(0, 3).map(fmtPlayerInj))}`
             : '';
-      healthSentences.push(
-        `${joinNamesNatural(dnpPlayers.slice(0, 4).map(fmtPlayerInj))} did not practice ${latestDayInfo.label}${fpTail}${injRepCite}.`
-      );
+        healthSentences.push(
+          `San Francisco opened ${irOpenList[0].position} ${irOpenList[0].name}'s 21-day IR practice window${lpPart}${irCite}.`
+        );
+      } else if (lpPlayers.length > 0) {
+        healthSentences.push(
+          `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} logged limited practice reps ${latestDayInfo.label}${pickCite(/injury|practice|limited/i, 0)}.`
+        );
+      }
+      if (dnpPlayers.length > 0) {
+        const injRepCite = pickCite(/injury report|miss practice|no practice|did not practice/i, 1);
+        const fpTail =
+          fpPlayers.length > 0
+            ? `, while ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
+            : vetRestPlayers.length > 0
+              ? `, with ${joinNamesNatural(vetRestPlayers.slice(0, 2).map(p => p.name))} taking veteran rest`
+              : '';
+        healthSentences.push(
+          `${joinNamesNatural(dnpPlayers.slice(0, 4).map(fmtPlayerInj))} did not practice ${latestDayInfo.label}${fpTail}${injRepCite}.`
+        );
+      }
     }
     if (healthSentences.length === 0) {
       healthSentences.push(
@@ -4207,24 +4224,40 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     }
     dynamicBullets.push(`Injury & Practice Status: ${healthSentences.join(' ')}`);
 
-    // Bullet C: Key Matchup & Tactical Storyline
+    // Bullet C: Key Matchup & Tactical Storyline (using verified team ranks & opponent staff)
     const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
     const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
     const matchupCite = pickCite(
-      new RegExp(`${oppName.split(' ').pop()}|altitude|pass rush|protection|ground game|offense`, 'i'),
+      new RegExp(`${oppName.split(' ').pop()}|altitude|pass rush|protection|ground game|offense|defense|scheme`, 'i'),
       1
     );
+    const rawCoachHead = String(um?.coachingMatchup?.headline || '')
+      .replace(/^Kyle Shanahan\s*&\s*DC\s*Raheem Morris\s*vs\.?\s*/i, '')
+      .trim();
+    const oppShortToken = String(oppName || '').split(/\s+/).pop() || '';
+    const coachHeadline = rawCoachHead
+      .replace(new RegExp(`^(?:the\\s+)?(?:${oppName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}|${oppShortToken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\s+`, 'i'), '')
+      .trim();
+    const sfOdds = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
+    const spreadNote = um.betting?.spread ? `, ${um.betting.spread}` : '';
+    const oppContext = coachHeadline ? `${oppName} (${um.oppRecord || 'NFL'}${spreadNote}, ${coachHeadline})` : `${oppName} (${um.oppRecord || 'NFL'}${spreadNote})`;
     if (dnpCbPlayers.length >= 2 && cbStoryCite) {
       dynamicBullets.push(
-        `Week ${wk} Matchup Keys: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, San Francisco (${um.betting?.spread || rec}) leans on play-action efficiency and ball-control offense against the ${oppName}${matchupCite}.`
+        `Week ${wk} Matchup Keys: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan and DC Raheem Morris lean on play-action efficiency, split-safety disguise, and sustained ball-control drives against ${oppContext}${matchupCite}.`
       );
     } else {
       dynamicBullets.push(
-        `Week ${wk} Matchup Keys: Kyle Shanahan and Raheem Morris prepare for the ${oppName} (${um.oppRecord || 'NFL'}, ${um.betting?.spread || 'Pick'}) with pass protection, four-man rush pressure, and red-zone execution in focus${matchupCite}.`
+        `Week ${wk} Matchup Keys: Kyle Shanahan and DC Raheem Morris prepare for the ${oppContext} with interior pass protection, condensed split motion, four-man pass-rush integrity, third-down efficiency, and red-zone conversion execution in primary focus across early-week installation${matchupCite}.`
       );
     }
 
-    // Bullet D: Fresh Lead Wire / NFC Contender / Team Development (ensuring >=3 non-redundant bullets even with 0 cap filler!)
+    // Bullet D: Standings & NFC Playoff Leverage (only when non-redundant)
+    const playoffCite = pickCite(/playoff|seed|nfc|standings|division/i, 2);
+    dynamicBullets.push(
+      `NFC Playoff Trajectory: Entering Week ${wk} at ${rec} (${m.standingSummary || 'NFC West'}), San Francisco carries a ${sfOdds.makePlayoffsPct ?? 93}% postseason projection, ${sfOdds.winDivisionPct ?? 82}% NFC West division title mark, and ${sfOdds.seed1ByePct ?? 40}% #1 Seed Bye equity into the second-half conference stretch${playoffCite}.`
+    );
+
+    // Bullet E: Fresh Beat Wire Storyline
     const unusedLead = candidates.find(
       c =>
         !usedRefSet.has(c.refId) &&
@@ -4233,21 +4266,22 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     );
     if (unusedLead) {
       const rawLeadTxt = unusedLead.summary || unusedLead.fullBody || unusedLead.title;
-      const firstSent = (rawLeadTxt.match(/^[^.!?]+[.!?]/) || [rawLeadTxt])[0]
+      let firstSent = (
+        rawLeadTxt
+          .replace(/\b(vs|No|St|Jr|Sr)\./gi, '$1__DOT__')
+          .match(/^[^.!?]+[.!?]?/) || [rawLeadTxt]
+      )[0]
+        .replace(/__DOT__/g, '.')
         .trim()
         .replace(/[.!?]+$/, '');
+      const quoteCount = (firstSent.match(/"/g) || []).length;
+      if (quoteCount % 2 === 1) firstSent = `${firstSent}"`;
       usedRefSet.add(unusedLead.refId);
       citedIds.push(unusedLead.refId);
       const subLabel = /nfc|rams|seahawks|cardinals|vikings|lions|eagles|playoff|seed/i.test(rawLeadTxt)
-        ? 'NFC & Matchup Watch'
+        ? 'NFC & Opponent Watch'
         : 'Around the Beat';
       dynamicBullets.push(`${subLabel}: ${firstSent} [${unusedLead.refId}].`);
-    } else if (dynamicBullets.length < 3) {
-      const sfOdds = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
-      const standCite = pickCite(() => true, 2);
-      dynamicBullets.push(
-        `NFC Standings Outlook: Sitting at ${rec} (${m.standingSummary || 'NFC West'}), San Francisco holds a ${sfOdds.makePlayoffsPct ?? 93}% playoff projection and ${sfOdds.winDivisionPct ?? 82}% division mark entering Week ${wk}${standCite}.`
-      );
     }
   }
 

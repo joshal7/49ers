@@ -1545,21 +1545,31 @@ async function main() {
 
     console.log('\n=== [5/9] 5-Tab Player Dossier Sheet (QB, OL Non-Box-Score, PS Non-Top-51 & SVG Spider Chart) ===');
 
-    await runStep('5-Tab Player Dossier renders Overview, 2026/Career EPA+NGS, SVG Spider Chart, 6 Contract Scenarios & Health Priors', async () => {
+    await runStep('5-Tab Player Dossier renders Overview, Health, Stats (2026/Career EPA+NGS), Spider Chart, and Contract scenarios', async () => {
       await cdp.eval(() => document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click());
 
-      // Open Brock Purdy Dossier
-      const openedTitle = await cdp.eval(() => {
+      // Open Brock Purdy Dossier and verify exact tab order & compact labels
+      const openedInfo = await cdp.eval(() => {
         const purdyBtn = Array.from(document.querySelectorAll('.player-row')).find(el =>
           el.textContent.includes('Brock Purdy')
         );
         purdyBtn.click();
-        return document.getElementById('sheetTitle')?.textContent?.trim();
+        const tabs = Array.from(document.querySelectorAll('#sheetBody [data-action="set-player-tab"]'));
+        return {
+          title: document.getElementById('sheetTitle')?.textContent?.trim(),
+          tabKeys: tabs.map(t => t.getAttribute('data-player-tab')),
+          tabLabels: tabs.map(t => t.textContent.trim())
+        };
       });
-      assert(openedTitle === 'Brock Purdy', `Expected Brock Purdy sheet, got ${openedTitle}`);
+      assert(openedInfo.title === 'Brock Purdy', `Expected Brock Purdy sheet, got ${openedInfo.title}`);
+      assert(
+        JSON.stringify(openedInfo.tabKeys) === JSON.stringify(['overview', 'health', 'stats', 'spider', 'contract']) &&
+          JSON.stringify(openedInfo.tabLabels) === JSON.stringify(['Overview', 'Health', 'Stats', 'Spider Chart', 'Contract']),
+        `Unexpected Player Dossier tab order/labels: ${JSON.stringify(openedInfo)}`
+      );
       await cdp.assertNoOverflow('Player Dossier: Overview Tab');
 
-      // Stats & EPA (2026 + Career toggle)
+      // Stats (2026 + Career toggle)
       const statsInfo = await cdp.eval(() => {
         document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]').click();
         const text2026 = document.getElementById('sheetBody').textContent;
@@ -1589,7 +1599,7 @@ async function main() {
       );
       await cdp.assertNoOverflow('Player Dossier: Spider Chart Tab');
 
-      // Contract & Cap tab across all 6 transaction scenarios
+      // Contract tab across all 6 transaction scenarios
       for (const tx of ['cut', 'june_1_cut', 'trade', 'june_1_trade', 'restructure', 'extension']) {
         const ok = await cdp.eval(t => {
           const btn = document.querySelector(`[data-action="set-player-tx-scenario"][data-tx="${t}"]`);
@@ -1604,12 +1614,25 @@ async function main() {
       }
       await cdp.assertNoOverflow('Player Dossier: Contract Tab');
 
-      // Health & Priors tab
-      const healthTxt = await cdp.eval(() => {
+      // Health tab (immediately right of Overview, labeled "Health")
+      const healthAudit = await cdp.eval(() => {
+        const tabs = Array.from(document.querySelectorAll('#sheetBody [data-action="set-player-tab"]')).map(el => ({
+          key: el.getAttribute('data-player-tab'),
+          label: el.textContent.trim()
+        }));
         document.querySelector('[data-action="set-player-tab"][data-player-tab="health"]').click();
-        return document.getElementById('sheetBody').textContent;
+        return {
+          tabs,
+          txt: document.getElementById('sheetBody').textContent
+        };
       });
-      assert(!healthTxt.includes('NaN') && healthTxt.length > 40, 'Health tab failed to render cleanly');
+      assert(
+        healthAudit.tabs[0]?.key === 'overview' &&
+          healthAudit.tabs[1]?.key === 'health' &&
+          healthAudit.tabs[1]?.label === 'Health',
+        `Expected Health tab immediately right of Overview labeled "Health", got ${JSON.stringify(healthAudit.tabs)}`
+      );
+      assert(!healthAudit.txt.includes('NaN') && healthAudit.txt.length > 40, 'Health tab failed to render cleanly');
       await cdp.assertNoOverflow('Player Dossier: Health Tab');
 
       // Close via Escape key
@@ -1992,7 +2015,7 @@ async function main() {
       );
 
       // Verify Feature #1 & #2: Team Health `Injury News` card (between Injury Report & IR, sorted lowest->highest play %)
-      // AND Player Dossier `Health & Priors` `Injury News` card (below Wed/Thu/Fri & above Player Availability Prior)
+      // AND Player Dossier `Health` `Injury News` card (below Wed/Thu/Fri & above Player Availability Prior)
       const injuryNewsDomAudit = await cdp.eval(() => {
         document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
         const mainEl = document.getElementById('mainView');
@@ -2025,7 +2048,7 @@ async function main() {
           }
         }
 
-        // Click the first injured player's header button -> must open Player Dossier directly on `Health & Priors` (`health`) tab!
+        // Click the first injured player's header button -> must open Player Dossier directly on `Health` (`health`) tab!
         const firstPlayerBtn = entries[0]?.querySelector('.health-injury-player-head[data-action="open-player-sheet"]');
         const expectedPlayerId = firstPlayerBtn?.getAttribute('data-player-id') || '';
         firstPlayerBtn?.click();
@@ -2125,7 +2148,7 @@ async function main() {
       );
       assert(
         injuryNewsDomAudit.sheetOpen && injuryNewsDomAudit.activeDossierTab === 'health',
-        `Clicking player name in Injury News must open their Health & Priors tab, got tab="${injuryNewsDomAudit.activeDossierTab}"`
+        `Clicking player name in Injury News must open their Health tab, got tab="${injuryNewsDomAudit.activeDossierTab}"`
       );
       assert(
         injuryNewsDomAudit.practiceBeforeNews && injuryNewsDomAudit.newsBeforePrior && injuryNewsDomAudit.dossierNewsItemsCount >= 1,
@@ -2133,7 +2156,7 @@ async function main() {
       );
       assert(
         !injuryNewsDomAudit.purdyHasInjNews,
-        'Healthy starter (Brock Purdy) should not display an Injury News card on Health & Priors'
+        'Healthy starter (Brock Purdy) should not display an Injury News card on Health tab'
       );
       assert(
         injuryNewsDomAudit.irReturnerHasInjNews,
@@ -4697,7 +4720,7 @@ async function main() {
         await sleep(45);
         document.querySelector('[data-action="open-player-sheet"]')?.click();
         await sleep(60);
-        for (const ptab of ['overview', 'stats', 'spider', 'contract', 'health']) {
+        for (const ptab of ['overview', 'health', 'stats', 'spider', 'contract']) {
           document.querySelector('#sheetBody [data-action="set-player-tab"][data-player-tab="' + ptab + '"]')?.click();
           await sleep(35);
           auditVisibleAnchors('player:' + ptab);
@@ -5339,7 +5362,7 @@ async function main() {
         const h2hModalRows = document.querySelectorAll('#rankModalBody .rank-modal-row').length;
         document.getElementById('closeRankModalBtn')?.click();
 
-        // 3. Open Brock Purdy Dossier -> Stats & EPA -> click #X Rank inside Sheet -> verify Modal stacks WITHOUT closing Dossier!
+        // 3. Open Brock Purdy Dossier -> Stats -> click #X Rank inside Sheet -> verify Modal stacks WITHOUT closing Dossier!
         document.querySelector('[data-nav-tab="roster"]').click();
         document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
         const inp = document.getElementById('rosterSearchInput');
@@ -5371,7 +5394,7 @@ async function main() {
         );
         document.getElementById('closeSheetBtn')?.click();
 
-        // 4. Open Nick Bosa -> Stats & EPA -> Career Year-by-Year -> verify defensive columns & zero blank Passing/Receiving columns
+        // 4. Open Nick Bosa -> Stats -> Career Year-by-Year -> verify defensive columns & zero blank Passing/Receiving columns
         const setLiveRosterSearch = q => {
           const liveInp = document.getElementById('rosterSearchInput');
           liveInp.value = q;

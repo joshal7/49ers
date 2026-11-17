@@ -5050,7 +5050,7 @@ tr.unit-overall-banner.overall-stat-row td {
   flex-shrink: 0;
 }
 
-/* Injury News Cards (Player Dossier Health & Priors + Team Health Injury News) */
+/* Injury News Cards (Player Dossier Health + Team Health Injury News) */
 .injury-news-dossier-card {
   padding: 11px 12px;
   margin: 2px 0;
