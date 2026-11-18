@@ -31,6 +31,7 @@ import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import { resolveConsistentPowerRankings } from '../engine/powerRankingsEngine.js';
 import {
   evaluateCombineLeaderboardWindow,
   evaluateTradeDeadlineStatus,
@@ -1441,7 +1442,17 @@ function renderTeamStatsAndPower(appData) {
   const ts = appData?.scheduleMatchup?.teamStats;
   const units = ts?.units || [];
   const ranks = appData?.scheduleMatchup?.teamStatRankings || [];
-  const pwr = appData?.scheduleMatchup?.powerRankings || {};
+  const oppFullName = appData?.scheduleMatchup?.upcomingMatchup?.oppName || '';
+  const oppShort = oppFullName ? oppFullName.trim().split(/\s+/).pop() : null;
+  const pwr = resolveConsistentPowerRankings(
+    appData?.scheduleMatchup?.powerRankings || {},
+    appData?.scheduleMatchup?.schedule || [],
+    {
+      currentWeek: appData?.meta?.currentWeek || null,
+      sfRecord: appData?.meta?.teamRecord || null,
+      oppShortName: oppShort
+    }
+  );
   const seasonYear = Number(appData?.meta?.seasonYear) || 2026;
   const pfrSeasonUrl = buildPfrTeamSeasonUrl('SF', seasonYear);
 
@@ -1577,36 +1588,74 @@ function renderTeamStatsAndPower(appData) {
   return `
     ${unitCardsHtml}
 
-    <section class="card">
+    <section class="card" id="powerRankingsCard">
       <div class="card-header">
         <div class="card-title-group">
           <div class="card-eyebrow">${esc(String(pwr.weekLabel || '').replace(/\s+Consensus$/i, ''))}</div>
           <h2 class="card-title">Power Rankings</h2>
         </div>
-        <span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus</span>
+        ${
+          pwr.consensusRank != null
+            ? `<span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus</span>`
+            : `<span class="badge badge-gold mono" style="font-size:12px">Updating</span>`
+        }
       </div>
 
       <p style="margin:0 0 10px;font-size:13px;color:var(--text-secondary)">${escJargon(pwr.synthesizedTakeaway)}</p>
 
       <div style="display:flex;flex-direction:column;gap:8px">
-        ${(pwr.sources || [])
-          .map(
-            s => `
-          <div class="subcard-panel">
+        ${
+          (pwr.sources || []).length > 0
+            ? (pwr.sources || [])
+                .map(
+                  s => `
+          <div class="subcard-panel" data-power-source="${esc(s.id || '')}" data-power-rank="${s.rank}">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px">
               ${
                 sanitizeExternalUrl(s.url, null)
                   ? `<a href="${esc(sanitizeExternalUrl(s.url))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(s.outlet)}</strong> ${iconSvg('externalLink', 11)}</a>`
                   : `<strong>${esc(s.outlet)}</strong>`
               }
-              <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta)})</span>
+              <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta || '0')})</span>
             </div>
             <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(s.blurb)}</div>
           </div>
         `
-          )
-          .join('')}
+                )
+                .join('')
+            : `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-secondary)">Awaiting verified post-game ranking updates. Older-week ratings are excluded until updated.</div>`
+        }
       </div>
+
+      ${
+        (pwr.excludedStaleSources || []).length > 0
+          ? `
+        <details class="stats-expand-details" data-power-excluded="true" style="margin-top:8px">
+          <summary class="stats-expand-summary">
+            <span>Awaiting Week ${esc(String(pwr.latestCompletedWeek || ''))} Update (${pwr.excludedStaleSources.length})</span>
+            <span class="mono stats-expand-hint">Excluded</span>
+          </summary>
+          <div class="stats-expand-body" style="display:flex;flex-direction:column;gap:6px;padding-top:6px">
+            <div style="font-size:12px;color:var(--text-muted)">Prior-week rankings are disregarded for week consistency until each outlet incorporates the 49ers' latest game.</div>
+            ${pwr.excludedStaleSources
+              .map(
+                s => `
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px">
+                ${
+                  sanitizeExternalUrl(s.url, null)
+                    ? `<a href="${esc(sanitizeExternalUrl(s.url))}" target="_blank" rel="noopener noreferrer" class="ext-link">${esc(s.outlet)} ${iconSvg('externalLink', 10)}</a>`
+                    : `<span>${esc(s.outlet)}</span>`
+                }
+                <span class="mono" style="font-size:11.5px;color:var(--text-muted)">${s.throughWeek != null ? `Still thru Wk ${s.throughWeek}` : s.reportedRecord ? `Still ${esc(s.reportedRecord)}` : 'Prior week'}</span>
+              </div>
+            `
+              )
+              .join('')}
+          </div>
+        </details>
+      `
+          : ''
+      }
     </section>
   `;
 }

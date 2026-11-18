@@ -52,6 +52,19 @@ import {
 } from '../src/engine/breakingClassifier.js';
 import { getJargonEntry } from '../src/engine/jargonGlossary.js';
 import {
+  resolveLatestCompletedSfGame,
+  evaluatePowerRankingSourceFreshness,
+  resolveConsistentPowerRankings
+} from '../src/engine/powerRankingsEngine.js';
+import {
+  parseInpredictableHtml,
+  parseNfeloHtml,
+  parseRbsdmRatingsJson,
+  parseCbsSportsHtml,
+  parseEspnFpiJson,
+  parseEspnPanelArticle
+} from '../scripts/lib/powerRankingsFetcher.mjs';
+import {
   TEAM_STAT_UNITS_SCHEMA,
   computeLeagueTeamStatsPayload,
   refreshLiveStandingsMetricsInTeamStats,
@@ -2701,6 +2714,271 @@ test(
     assert.equal(west.health.playBadgeLabel, '95% • Full Go');
   }
 );
+
+test('Power Rankings: verified live parsers (Inpredictable, nfelo, RBSDM, CBS, ESPN FPI & Panel) + strict 24h post-game week consistency', () => {
+  // 1. Parser verification: Inpredictable HTML
+  const inpHtml = `
+    <div>As of November 16, 2026</div>
+    <table>
+      <tr>
+        <td>5</td><td>&nbspSF</td><td>5</td>
+        <td><span onMouseover='tooltip.show("Past Week GPF 11/16 : 4.3",150)'>50,38</span></td>
+        <td>4.3</td><td>1,2,3</td><td>5.0</td><td>3</td><td>1,2</td><td>-0.7</td><td>18</td><td>1,2</td>
+        <td>8-1</td><td>1</td><td>98.0%</td><td>0,1</td>
+        <td><span onMouseover='tooltip.show("<b>Past Schedule:</b><br />Wk 1: LA 6.6<br />Wk 9: LV -7.8<br />Wk 10: @DAL 1.8",150)'>-1.8</span></td>
+      </tr>
+    </table>
+  `;
+  const inp = parseInpredictableHtml(inpHtml);
+  assert.ok(inp, 'Inpredictable parser should return SF entry');
+  assert.equal(inp.rank, 5);
+  assert.equal(inp.delta, '0');
+  assert.equal(inp.reportedRecord, '8-1');
+  assert.equal(inp.gamesIncluded, 9);
+  assert.equal(inp.throughWeek, 10);
+  assert.equal(inp.asOfIso, '2026-11-16');
+  assert.equal(inp.verified, true);
+
+  // 2. Parser verification: nfelo Next.js SSR HTML (32 teams)
+  const nfeloTeams = [];
+  const fakeAbbrs = [
+    'JAX', 'BUF', 'LAR', 'SEA', 'CIN', 'KC', 'SF', 'DET',
+    'CHI', 'MIN', 'DEN', 'PHI', 'BAL', 'GB', 'HOU', 'LAC',
+    'PIT', 'TB', 'WAS', 'DAL', 'ATL', 'NE', 'ARI', 'IND',
+    'MIA', 'NYJ', 'NO', 'CLE', 'CAR', 'LV', 'TEN', 'NYG'
+  ];
+  for (let i = 0; i < 32; i += 1) {
+    const abbr = fakeAbbrs[i];
+    const score = i === 6 ? 1630.78 : 1700 - i * 10;
+    const spread = i === 6 ? 5.5 : 8.0 - i * 0.4;
+    const wow = i === 6 ? 2.3 : 0.0;
+    nfeloTeams.push({
+      team: abbr,
+      season: 2026,
+      nfelo: score,
+      spreadValue: spread,
+      spreadValueWoWChange: wow,
+      wins: i === 6 ? 8 : 5,
+      losses: i === 6 ? 1 : 4,
+      ties: 0,
+      epaPerPlayRank: i === 6 ? 1 : i + 1,
+      netEpaPerPlayRank: i === 6 ? 3 : i + 1
+    });
+  }
+  const nfeloHtml = `<script>self.__next_f.push([1,"${JSON.stringify(nfeloTeams).replace(/"/g, '\\"')}"])</script>`;
+  const nfelo = parseNfeloHtml(nfeloHtml, { seasonYear: 2026 });
+  assert.ok(nfelo, 'nfelo parser should return SF entry');
+  assert.equal(nfelo.rank, 7);
+  assert.equal(nfelo.reportedRecord, '8-1');
+  assert.equal(nfelo.gamesIncluded, 9);
+  assert.equal(nfelo.verified, true);
+
+  // 3. Parser verification: RBSDM Team Ratings JSON
+  const rbsdmTeams = [];
+  for (let i = 0; i < 32; i += 1) {
+    const abbr = i === 0 ? 'SF' : `R${String(i).padStart(2, '0')}`;
+    rbsdmTeams.push({
+      team: abbr,
+      tier: i < 4 ? 1 : 3,
+      win_pct: i === 0 ? 74.42 : 73.0 - i * 1.2,
+      week_ago_win_pct: i === 0 ? 72.1 : i === 1 ? 73.5 : 70.0 - i * 1.2,
+      record_wins: i === 0 ? 8 : 5,
+      record_losses: i === 0 ? 1 : 4,
+      record_ties: 0,
+      mean_wins: i === 0 ? 13.44 : 8.5
+    });
+  }
+  const rbsdm = parseRbsdmRatingsJson(
+    { stamp: { change_week: 10, season: 2026, ratings_updated_at: '2026-11-17T15:30:32Z' }, teams: rbsdmTeams },
+    { season_week_bounds: [{ season: 2026, max_week: 10 }] }
+  );
+  assert.ok(rbsdm, 'RBSDM parser should return SF entry');
+  assert.equal(rbsdm.rank, 1);
+  assert.equal(rbsdm.delta, '+1');
+  assert.equal(rbsdm.reportedRecord, '8-1');
+  assert.equal(rbsdm.throughWeek, 10);
+  assert.equal(rbsdm.url, 'https://rbsdm.com/#ratings');
+
+  // 4. Parser verification: CBS Sports HTML
+  const cbsHtml = `
+    <title>Prisco's NFL Week 11 Power Rankings - CBS Sports</title>
+    <script type="application/ld+json">{"dateModified":"2026-11-17T13:34:36+00:00"}</script>
+    <table>
+      <tr class="team-rankings-stats">
+        <td><span class="rank">2</span></td>
+        <td><a href="https://www.cbssports.com/nfl/teams/SF/san-francisco-49ers/">49ers</a></td>
+        <td>The offense was great in the victory over the Cowboys, but the defense gave up 40.</td>
+        <td class="cell-left ">--</td>
+        <td>8-1-0</td>
+      </tr>
+    </table>
+  `;
+  const cbs = parseCbsSportsHtml(cbsHtml);
+  assert.ok(cbs, 'CBS Sports parser should return SF entry');
+  assert.equal(cbs.rank, 2);
+  assert.equal(cbs.delta, '0');
+  assert.equal(cbs.forWeek, 11);
+  assert.equal(cbs.throughWeek, 10);
+  assert.equal(cbs.reportedRecord, '8-1');
+  assert.equal(cbs.gamesIncluded, 9);
+
+  // 5. Parser verification: ESPN FPI JSON
+  const fpiTeams = [];
+  for (let i = 0; i < 32; i += 1) {
+    fpiTeams.push({
+      team: { abbreviation: i === 0 ? 'SF' : `E${i}` },
+      categories: [
+        { name: 'fpi', values: [i === 0 ? 6.608 : 5 - i * 0.3, i + 1, 0, i === 0 ? 8 : 5, i === 0 ? 1 : 4, 0] },
+        { name: 'efficiencies', values: [1, 12] },
+        { name: 'projections', values: [13.785, 21.9] }
+      ]
+    });
+  }
+  const fpi = parseEspnFpiJson({
+    lastUpdated: '2026-11-17T07:00Z',
+    currentSeason: { type: { week: { number: 10 } } },
+    categories: [
+      { name: 'fpi', names: ['fpi', 'fpirank', 'rankchange7days', 'numwins', 'numlosses', 'numties'] },
+      { name: 'efficiencies', names: ['offefficiencyrank', 'defefficiencyrank'] },
+      { name: 'projections', names: ['projectedw', 'probwintitle'] }
+    ],
+    teams: fpiTeams
+  });
+  assert.ok(fpi, 'ESPN FPI parser should return SF entry');
+  assert.equal(fpi.rank, 1);
+  assert.equal(fpi.delta, '0');
+  assert.equal(fpi.reportedRecord, '8-1');
+  assert.equal(fpi.throughWeek, 10);
+
+  // 6. Parser verification: ESPN Weekly Panel Article
+  const espnPanel = parseEspnPanelArticle(
+    {
+      headline: 'NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs',
+      url: 'https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason',
+      published: '2026-11-17T20:45:39Z'
+    },
+    '<h2>1. San Francisco 49ers (8-1)</h2><p><strong>Week 10 result:</strong> Beat the Cowboys 46-40<br/><strong>Week 10 ranking:</strong> 2<br/>LB Fred Warner leads the defense with 88 tackles.</p><h2>2. Buffalo Bills (8-1)</h2>'
+  );
+  assert.ok(espnPanel, 'ESPN Panel parser should return SF entry');
+  assert.equal(espnPanel.rank, 1);
+  assert.equal(espnPanel.delta, '+1');
+  assert.equal(espnPanel.reportedRecord, '8-1');
+  assert.equal(espnPanel.forWeek, 11);
+  assert.equal(espnPanel.throughWeek, 10);
+
+  // 7. Strict 24-hour Post-Game Freshness Cutoff & Week Consistency Engine
+  // Simulate 49ers 9 completed games through Week 10 (Week 8 Bye), Week 10 kicked off Sun Nov 15 21:25Z (ended Mon Nov 16 00:55Z)
+  const sfScheduleWk10 = [
+    { week: 1, seasonType: 'REG', result: 'W', kickoffIso: '2026-09-13T20:25Z' },
+    { week: 2, seasonType: 'REG', result: 'W', kickoffIso: '2026-09-20T20:05Z' },
+    { week: 3, seasonType: 'REG', result: 'W', kickoffIso: '2026-09-27T20:25Z' },
+    { week: 4, seasonType: 'REG', result: 'W', kickoffIso: '2026-10-04T20:25Z' },
+    { week: 5, seasonType: 'REG', result: 'L', kickoffIso: '2026-10-11T20:25Z' },
+    { week: 6, seasonType: 'REG', result: 'W', kickoffIso: '2026-10-18T20:05Z' },
+    { week: 7, seasonType: 'REG', result: 'W', kickoffIso: '2026-10-25T17:00Z' },
+    { week: 8, seasonType: 'REG', isBye: true, oppAbbr: 'BYE' },
+    { week: 9, seasonType: 'REG', result: 'W', kickoffIso: '2026-11-08T21:05Z' },
+    { week: 10, seasonType: 'REG', result: 'W', kickoffIso: '2026-11-15T21:25Z' },
+    { week: 11, seasonType: 'REG', result: null, kickoffIso: '2026-11-23T01:20Z' }
+  ];
+
+  const staleCbsWk9 = {
+    id: 'cbs',
+    outlet: 'CBS Sports NFL Power Rankings',
+    shortName: 'CBS Sports',
+    url: 'https://www.cbssports.com/nfl/powerrankings/',
+    rank: 2,
+    delta: '+1',
+    reportedRecord: '7-1',
+    gamesIncluded: 8,
+    throughWeek: 9,
+    forWeek: 10,
+    verified: true,
+    blurb: 'Week 10 rankings prior to Cowboys win.'
+  };
+  const staleEspnWk9 = {
+    id: 'espn_panel',
+    outlet: 'ESPN NFL Power Rankings Panel',
+    shortName: 'ESPN Panel',
+    url: 'https://www.espn.com/nfl/story/_/id/50435694/nfl-power-rankings-week-10',
+    rank: 2,
+    delta: '0',
+    reportedRecord: '7-1',
+    gamesIncluded: 8,
+    throughWeek: 9,
+    forWeek: 10,
+    verified: true,
+    blurb: 'Week 10 panel prior to Cowboys win.'
+  };
+
+  // Case A: 26 hours after Week 10 game ended (Mon Nov 17 02:55Z) -> strict cutoff active!
+  // Mix of 3 fresh Week 10 models (Inpredictable #5, nfelo #7, RBSDM #1) + 2 stale Week 9 polls (CBS #2, ESPN #2)
+  const afterCutoffMs = Date.parse('2026-11-17T02:55:00Z');
+  const resolvedStrict = resolveConsistentPowerRankings(
+    { allSources: [inp, nfelo, rbsdm, staleCbsWk9, staleEspnWk9] },
+    sfScheduleWk10,
+    { nowMs: afterCutoffMs, currentWeek: 11 }
+  );
+  assert.equal(resolvedStrict.pastFreshnessCutoff, true, '26h post-game must exceed 24h cutoff');
+  assert.equal(resolvedStrict.consistentThroughWeek, 10);
+  assert.equal(resolvedStrict.sources.length, 3, 'Only the 3 Week 10 sources should be active after 24h cutoff');
+  assert.equal(resolvedStrict.disregardedStaleCount, 2, '2 stale Week 9 polls must be disregarded');
+  assert.deepEqual(resolvedStrict.sources.map(s => s.id), ['rbsdm', 'inpredictable', 'nfelo']);
+  // Mean of [1, 5, 7] = 13/3 = 4.33 => Consensus #4, Range #1–#7
+  assert.equal(resolvedStrict.consensusRank, 4);
+  assert.equal(resolvedStrict.rangeShort, '#1–#7');
+
+  // Case B: 26 hours after game ended, ALL sources still stale (Week 9 only) -> must NOT show stale ranks!
+  const resolvedAllStaleAfter24h = resolveConsistentPowerRankings(
+    { allSources: [staleCbsWk9, staleEspnWk9] },
+    sfScheduleWk10,
+    { nowMs: afterCutoffMs, currentWeek: 11 }
+  );
+  assert.equal(resolvedAllStaleAfter24h.sources.length, 0, 'After 24h, stale prior-week rankings must be completely disregarded');
+  assert.equal(resolvedAllStaleAfter24h.consensusRank, null);
+  assert.equal(resolvedAllStaleAfter24h.cohortStatus, 'awaiting_post_game_updates');
+  assert.equal(resolvedAllStaleAfter24h.disregardedStaleCount, 2);
+
+  // Case C: 4 hours after game ended (< 24h), only 1 source updated to Week 10 while 2 are still Week 9 -> hold consistent Week 9 cohort (never mix weeks!)
+  const earlyPostGameMs = Date.parse('2026-11-16T05:00:00Z');
+  const resolvedPreCutoffHold = resolveConsistentPowerRankings(
+    { allSources: [rbsdm, staleCbsWk9, staleEspnWk9] },
+    sfScheduleWk10,
+    { nowMs: earlyPostGameMs, currentWeek: 11 }
+  );
+  assert.equal(resolvedPreCutoffHold.pastFreshnessCutoff, false);
+  assert.equal(resolvedPreCutoffHold.cohortStatus, 'pre_cutoff_prior_week');
+  assert.equal(resolvedPreCutoffHold.consistentThroughWeek, 9);
+  assert.equal(resolvedPreCutoffHold.sources.length, 2, 'Must hold on consistent Week 9 cohort rather than mixing Wk 9 + Wk 10');
+  assert.ok(resolvedPreCutoffHold.sources.every(s => s.throughWeek === 9));
+
+  // Case D: 10 hours after game ended (< 24h), >= 2 sources updated to Week 10 -> promote consistent Week 10 cohort and exclude Week 9
+  const resolvedPreCutoffPromote = resolveConsistentPowerRankings(
+    { allSources: [inp, nfelo, rbsdm, staleCbsWk9, staleEspnWk9] },
+    sfScheduleWk10,
+    { nowMs: Date.parse('2026-11-16T11:00:00Z'), currentWeek: 11 }
+  );
+  assert.equal(resolvedPreCutoffPromote.cohortStatus, 'latest_game_partial');
+  assert.equal(resolvedPreCutoffPromote.consistentThroughWeek, 10);
+  assert.equal(resolvedPreCutoffPromote.sources.length, 3);
+  assert.equal(resolvedPreCutoffPromote.disregardedStaleCount, 2);
+
+  // Case E: Compiled data/schedule-matchup.json verified accuracy & week-consistency audit
+  const smCompiled = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const compiledPwr = smCompiled.powerRankings || {};
+  assert.ok(Array.isArray(compiledPwr.sources) && compiledPwr.sources.length >= 3, 'Compiled powerRankings must have verified live sources');
+  for (const s of compiledPwr.sources) {
+    assert.equal(s.verified, true, `Compiled power ranking source ${s.outlet} must be verified`);
+    assert.ok(Number.isInteger(s.rank) && s.rank >= 1 && s.rank <= 32, `Invalid rank for ${s.outlet}`);
+    assert.equal(s.includesLatestGame, true, `Active power ranking source ${s.outlet} must include the latest completed game`);
+  }
+  const expectedAvg = compiledPwr.sources.reduce((sum, s) => sum + s.rank, 0) / compiledPwr.sources.length;
+  assert.equal(
+    compiledPwr.consensusRank,
+    Math.round(expectedAvg),
+    'Compiled consensusRank must equal exact rounded mean of active verified sources'
+  );
+});
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {

@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 
 import { parseOverTheCapHtml } from './lib/otcParser.mjs';
 import { buildCombineIndexer } from './lib/combineSpider.mjs';
+import { fetchLivePowerRankings } from './lib/powerRankingsFetcher.mjs';
 import {
   searchYouTubeVideos,
   searchYouTubeChannelVideos,
@@ -5199,28 +5200,26 @@ async function main() {
     practiceSummaryBullets
   });
 
-  const liveEspnPrStoryUrl = sanitizeExternalUrl(
-    (espnNews.articles || []).find(
-      a => !a.premium && /nfl power rankings/i.test(a.headline || '') && a.links?.web?.href
-    )?.links?.web?.href || '',
-    'https://www.espn.com/nfl/fpi'
+  let prevSchedulePowerRankings = null;
+  try {
+    const prevSmForPr = JSON.parse(fs.readFileSync(path.join(dataDir, 'schedule-matchup.json'), 'utf8'));
+    prevSchedulePowerRankings = prevSmForPr?.powerRankings || null;
+  } catch {
+    prevSchedulePowerRankings = null;
+  }
+
+  const powerRankings = await fetchLivePowerRankings({
+    seasonYear,
+    currentWeek,
+    schedule: scheduleItems,
+    sfRecord: sfStandingsDetail.record,
+    oppShortName,
+    espnNewsArticles: espnNews.articles || [],
+    previousPowerRankings: prevSchedulePowerRankings
+  });
+  console.log(
+    `[power-rankings] Resolved ${powerRankings.sources?.length || 0} consistent sources (${powerRankings.weekLabel || 'N/A'}) -> Consensus #${powerRankings.consensusRank ?? '—'} (${powerRankings.rangeShort || '—'}), excluded stale: ${powerRankings.disregardedStaleCount || 0}`
   );
-  const consensusPowerRank = Math.max(1, Math.min(32, sfStandingsDetail.playoffSeed <= 2 ? 2 : sfStandingsDetail.playoffSeed + 1));
-  const powerRankings = {
-    weekLabel: `Entering Week ${currentWeek}`,
-    consensusRank: consensusPowerRank,
-    previousRank: Math.min(32, consensusPowerRank + 1),
-    rangeDisplay: `#${Math.max(1, consensusPowerRank - 1)} – #${Math.min(32, consensusPowerRank + 1)} across 5 national & market power models`,
-    synthesizedTakeaway:
-      `National evaluators and market Elo/EPA models place the ${sfStandingsDetail.record} 49ers at #${consensusPowerRank} overall (#${sfStandingsDetail.playoffSeed} Seed in the NFC, ${sfStandingsDetail.pointDiff >= 0 ? '+' : ''}${sfStandingsDetail.pointDiff} pt diff). Analysts highlight San Francisco's #${sfPassEpaRank.rank} passing EPA offense paired with an interior defensive line bolstered by DeForest Buckner and Osa Odighizuwa alongside Nick Bosa.`,
-    sources: [
-      { outlet: 'Inpredictable / Betting Market Power Rating', url: 'https://stats.inpredictable.com/rankings/nfl.php', rank: Math.max(1, consensusPowerRank - 1), delta: '+1', blurb: `Market spreads price the ${sfStandingsDetail.record} 49ers in the NFL's elite tier entering Week ${currentWeek} vs. ${oppNameTarget}.` },
-      { outlet: 'CBS Sports NFL Power Rankings', url: 'https://www.cbssports.com/nfl/powerrankings/', rank: consensusPowerRank, delta: '+1', blurb: `Sitting at ${sfStandingsDetail.record} (${sfStandingsDetail.divRecord} NFC West) with DeForest Buckner added to the interior keeps San Francisco atop NFC contenders.` },
-      { outlet: 'ESPN NFL Power Index & Panel', url: liveEspnPrStoryUrl, rank: consensusPowerRank, delta: '0', blurb: `Brock Purdy's efficiency (#${sfPassEpaRank.rank} Passing EPA/gm) anchors the offense while the defensive front reloads.` },
-      { outlet: 'nfelo Quantitative Elo & EPA Power Ratings', url: 'https://nfeloapp.com/nfl-power-ratings/', rank: Math.min(32, consensusPowerRank + 1), delta: '+1', blurb: `San Francisco's trench profile and +${sfStandingsDetail.pointDiff} point differential travel into Week ${currentWeek} against ${oppShortName}.` },
-      { outlet: 'RBSDM / nflverse EPA Composite', url: 'https://rbsdm.com/stats/stats/', rank: consensusPowerRank, delta: '0', blurb: `#${sfPassEpaRank.rank} dropback EPA combined with the league's #${sfSackAllowRank.rank} pass-block sack avoidance (${sfSackAllowRank.value.toFixed(1)}%).` }
-    ]
-  };
 
   // 10. Build NFC Standings & Remaining Games for Calibrated 10,000-Run Monte Carlo (`data/seasonal.json`)
   const intlSfWeeks = new Set(

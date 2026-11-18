@@ -20,6 +20,7 @@ import {
 } from './uiHelpers.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import { resolveConsistentPowerRankings } from '../engine/powerRankingsEngine.js';
 import {
   partitionCompletedTradesByWindow,
   resolveCompleteScheduleModel,
@@ -745,12 +746,24 @@ function renderSingleDashboardCard({
               { key: toDiff.key, label: 'Turnover Diff', rank: toDiff.rank, displayValue: toDiff.displayValue }
             ]
           : (appData?.scheduleMatchup?.teamStatRankings || []).slice(0, 3);
-      const pwr = appData?.scheduleMatchup?.powerRankings || {};
+      const pwr = resolveConsistentPowerRankings(
+        appData?.scheduleMatchup?.powerRankings || {},
+        appData?.scheduleMatchup?.schedule || [],
+        {
+          currentWeek: appData?.meta?.currentWeek || null,
+          sfRecord: appData?.meta?.teamRecord || null
+        }
+      );
       externalHeaderLink = `<a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:12.5px">
-          <span><strong>Consensus Power Rank:</strong> #${pwr.consensusRank || 2} NFL</span>
-          <span class="badge badge-gold mono">Range ${esc(pwr.rangeDisplay?.split(' ')[0] || '#1–#3')}</span>
+          ${
+            pwr.consensusRank != null
+              ? `<span><strong>Consensus Power Rank:</strong> #${pwr.consensusRank} NFL</span>
+          <span class="badge badge-gold mono">Range ${esc(pwr.rangeShort || `#${pwr.consensusRank}`)}</span>`
+              : `<span><strong>Power Rankings:</strong> Updating post-Week ${esc(String(pwr.latestCompletedWeek || ''))}</span>
+          <span class="badge badge-gold mono">Syncing</span>`
+          }
         </div>
         <div class="kpi-grid">
           ${topRanks
