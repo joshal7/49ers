@@ -4752,8 +4752,15 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
     return true;
   }
 
-  // 3. Valid non-stale upstream brief (e.g. `pipeline-grounded` for `activeCycle`)
-  if (upstreamValid) {
+  // 3. Valid non-stale upstream brief (e.g. `pipeline-grounded` for `activeCycle`) —
+  //    auto-upgrade legacy degraded fallbacks (duplicate Week headline, canned filler, or mid-phrase `vs` truncation)
+  const upstreamBulletsJoined = Array.isArray(upstream?.bullets) ? upstream.bullets.join(' ') : '';
+  const upstreamIsDegradedLegacyFallback =
+    upstream?.source === 'pipeline-grounded' &&
+    (/\bWeek\s+\d+\s+Briefing:\s*Week\s+\d+/i.test(String(upstream?.headline || '')) ||
+      /condensed split motion,\s*four-man pass-rush integrity/i.test(upstreamBulletsJoined) ||
+      /\bwin\s+vs\s+\[/i.test(upstreamBulletsJoined));
+  if (upstreamValid && !upstreamIsDegradedLegacyFallback) {
     appData.news.dailyTopNewsBrief = upstream;
     return false;
   }
@@ -4764,19 +4771,22 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
     return true;
   }
 
-  // 5. Upstream & cache are missing or stale for `activeCycle`: rebuild immediately from live hydrated `appData`
+  // 5. Upstream & cache are missing, stale, or legacy-degraded for `activeCycle`: rebuild immediately from live hydrated `appData`
   //    (unless `appData` is still a cold unhydrated pre-game snapshot, in which case keep non-null fallback until hydration settles)
-  if (!upstream || !isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
+  if (!upstream || upstreamIsDegradedLegacyFallback || !isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
     const prevId = appData.news.dailyTopNewsBrief?.id || '';
+    const prevHeadline = appData.news.dailyTopNewsBrief?.headline || '';
     const freshFallback = buildDeterministicDailyTopNewsBrief(appData, nowMs, {
-      generatedAt: new Date(nowMs).toISOString(),
+      generatedAt: upstreamIsDegradedLegacyFallback && upstream?.generatedAt
+        ? upstream.generatedAt
+        : new Date(nowMs).toISOString(),
       cycleKey: activeCycle,
       isPostGame: cycleState.isPostGameCycle,
       gameWeek: cycleState.targetGame ? Number(cycleState.targetGame.week) : null,
       source: 'live-deterministic-fallback'
     });
     appData.news.dailyTopNewsBrief = freshFallback;
-    return freshFallback?.id !== prevId;
+    return freshFallback?.id !== prevId || freshFallback?.headline !== prevHeadline;
   }
 
   return false;

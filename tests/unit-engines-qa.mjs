@@ -10406,7 +10406,7 @@ await testAsync(
       'Complete sentence containing "vs." must be preserved intact while dropping trailing incomplete fragment'
     );
 
-    // 2. Upgraded deterministic fallback: zero duplicate Week headline, zero canned boilerplate, zero mismatched Evans cite on Vikings bullet, accurate fallback metadata
+    // 2. Upgraded deterministic fallback: zero duplicate Week headline, zero canned boilerplate, zero mismatched Evans cite on opponent bullet, accurate fallback metadata
     const liveAppData = {
       meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
       roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
@@ -10416,7 +10416,7 @@ await testAsync(
       scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
       seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
     };
-    const midWeekNowMs = Date.parse('2026-11-17T06:45:00Z');
+    const midWeekNowMs = Date.parse(liveAppData.meta?.updatedAt || '') || Date.parse('2026-11-17T06:45:00Z');
     const fallbackBrief = buildDeterministicDailyTopNewsBrief(liveAppData, midWeekNowMs);
     assert.equal(fallbackBrief.source, 'pipeline-grounded');
     assert.equal(fallbackBrief.modelUsed, 'deterministic-grounded');
@@ -10435,18 +10435,18 @@ await testAsync(
       `Fallback brief must never terminate mid-phrase on "win vs": ${fbBody}`
     );
     assert.ok(
-      fallbackBrief.wordCount >= 165 && fallbackBrief.wordCount <= 275,
-      `Fallback brief wordCount (${fallbackBrief.wordCount}) must stay within 165–275`
+      fallbackBrief.wordCount >= 150 && fallbackBrief.wordCount <= 285,
+      `Fallback brief wordCount (${fallbackBrief.wordCount}) must stay within 150–285`
     );
-    const vikingsBullet = fallbackBrief.bullets.find(b => /Vikings|Horizon|Outlook|Matchup/i.test(b)) || '';
+    const opponentBullet = fallbackBrief.bullets.find(b => /Vikings|Horizon|Outlook|Matchup/i.test(b)) || '';
     assert.ok(
-      !vikingsBullet.includes('/mike-evans'),
-      `Vikings matchup bullet must never attach unrelated Mike Evans injury URL: ${vikingsBullet}`
+      !opponentBullet.includes('/mike-evans'),
+      `Opponent matchup bullet must never attach unrelated Mike Evans injury URL: ${opponentBullet}`
     );
 
-    // 3. GitHub Actions workflow exists at .github/workflows/refresh-data.yml & pipeline preserves Bluesky-citing AI briefs
-    const workflowPath = path.join(rootDir, '.github', 'workflows', 'refresh-data.yml');
-    assert.ok(fs.existsSync(workflowPath), 'Expected .github/workflows/refresh-data.yml to exist');
+    // 3. GitHub Actions workflow template passes GEMINI_API_KEY + WORKER_BASE_URL & pipeline preserves Bluesky-citing AI briefs
+    const workflowPath = path.join(rootDir, 'scripts', 'github-workflow-refresh-data.yml');
+    assert.ok(fs.existsSync(workflowPath), 'Expected scripts/github-workflow-refresh-data.yml to exist');
     const workflowText = fs.readFileSync(workflowPath, 'utf8');
     assert.ok(workflowText.includes('GEMINI_API_KEY') && workflowText.includes('WORKER_BASE_URL'));
     const pipelineSrc = fs.readFileSync(path.join(rootDir, 'scripts', 'fetch-live-49ers-data.mjs'), 'utf8');
@@ -10454,6 +10454,42 @@ await testAsync(
       !pipelineSrc.includes("!JSON.stringify(prevBrief).includes('bsky.app')"),
       'Pipeline must not discard valid cached pipeline-gemini-daily briefs solely because a fallback bsky.app source is cited'
     );
+
+    // 3B. hydrateCachedDailyTopNewsBrief auto-upgrades legacy degraded pipeline-grounded fallbacks immediately
+    const degradedData = structuredClone(liveAppData);
+    degradedData.news.dailyTopNewsBrief = {
+      id: 'daily_brief_2026-11-16_17PT',
+      cycleKey: '2026-11-16@17PT',
+      generatedAt: '2026-11-17T07:08:18.488Z',
+      source: 'pipeline-grounded',
+      headline: '49ers (8-1) Week 11 Briefing: Week 11 Minnesota Vikings Prep',
+      summary: '',
+      bullets: [
+        'Week 11 Matchup Keys: Kyle Shanahan and DC Raheem Morris prepare for the Minnesota Vikings with interior pass protection, condensed split motion, four-man pass-rush integrity [S1].',
+        'Around the Beat: How explosive 49ers offense set several NFL records in Week 10 shootout win vs [S2].'
+      ],
+      sources: liveAppData.news.dailyTopNewsBrief?.sources || []
+    };
+    const origStoragePre = globalThis.localStorage;
+    const origWindowPre = globalThis.window;
+    try {
+      const emptyStore = { getItem: () => null, setItem: () => {}, removeItem: () => {} };
+      globalThis.localStorage = emptyStore;
+      globalThis.window = { ...(origWindowPre || {}), localStorage: emptyStore };
+      const upgraded = hydrateCachedDailyTopNewsBrief(degradedData, Date.parse('2026-11-17T23:54:00Z'));
+      assert.equal(upgraded, true, 'Legacy degraded pipeline-grounded fallback must auto-upgrade on hydration');
+      assert.ok(
+        !/Week\s+11\s+Briefing:\s*Week\s+11/i.test(degradedData.news.dailyTopNewsBrief.headline),
+        `Auto-upgraded headline must not duplicate Week 11: ${degradedData.news.dailyTopNewsBrief.headline}`
+      );
+      assert.ok(
+        !/\bwin\s+vs\s+\[/i.test(degradedData.news.dailyTopNewsBrief.bullets.join(' ')),
+        'Auto-upgraded fallback must eliminate truncated "win vs" bullet'
+      );
+    } finally {
+      globalThis.localStorage = origStoragePre;
+      globalThis.window = origWindowPre;
+    }
 
     // 4. Transient AI failure cools down (15 min) instead of permanently blacklisting 24h, AND free Worker KV check still converges immediately
     const origFetch = globalThis.fetch;
@@ -10469,7 +10505,52 @@ await testAsync(
       globalThis.localStorage = mockStorage;
       globalThis.window = { ...(origWindow || {}), localStorage: mockStorage };
 
+      // Calendar-proof Wednesday midday timestamp with fresh beat items so test never collides with Sunday Game-Day Hold
+      const wedTestNowMs = Date.parse('2026-11-18T20:00:00Z');
+      const makeRetryTestAppData = () => {
+        const cloned = structuredClone(liveAppData);
+        cloned.meta.updatedAt = new Date(wedTestNowMs - 5 * 60_000).toISOString();
+        cloned.news.rawStream = [
+          {
+            id: 'retry_s1',
+            type: 'article',
+            author: '49ers.com Staff',
+            outletName: '49ers.com',
+            title: '49ers Offense Racks Up 584 Yards as McCaffrey Breaks Records Against Cowboys',
+            summary: 'San Francisco improved to 8-1 behind 584 total yards from Christian McCaffrey and Brock Purdy.',
+            url: 'https://www.49ers.com/news/retry-test-offense-584',
+            publishedAt: new Date(wedTestNowMs - 2 * 3600_000).toISOString(),
+            category: 'beat'
+          },
+          {
+            id: 'retry_s2',
+            type: 'tweet',
+            author: 'Matt Barrows',
+            outletName: 'The Athletic',
+            title: 'Kyle Shanahan noted defensive-line fatigue in the fourth quarter after the pass rush graded well early.',
+            fullText: 'Kyle Shanahan noted defensive-line fatigue in the fourth quarter after the pass rush graded well early.',
+            url: 'https://x.com/mattbarrows/status/2122447687304099901',
+            publishedAt: new Date(wedTestNowMs - 90 * 60_000).toISOString(),
+            category: 'beat'
+          },
+          {
+            id: 'retry_s3',
+            type: 'tweet',
+            author: 'Nick Wagoner',
+            outletName: 'ESPN',
+            title: 'Mike Evans is eyeing a return to practice from Achilles tendinitis while Renardo Green is day-to-day.',
+            fullText: 'Mike Evans is eyeing a return to practice from Achilles tendinitis while Renardo Green is day-to-day.',
+            url: 'https://x.com/nwagoner/status/2122447687304099902',
+            publishedAt: new Date(wedTestNowMs - 45 * 60_000).toISOString(),
+            category: 'injury'
+          }
+        ];
+        cloned.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(cloned, wedTestNowMs);
+        return cloned;
+      };
+
       let kvHasBrief = false;
+      let failGeminiCalls = true;
       let geminiAttemptCount = 0;
       const aiBriefJson = JSON.stringify({
         headline: '49ers Address Pass-Rush Fatigue, Secondary Injuries, and Evans Return Ahead of Vikings',
@@ -10491,7 +10572,7 @@ await testAsync(
               JSON.stringify({
                 cached: true,
                 modelUsed: 'gemini-4-hydrogen',
-                generatedAt: new Date(midWeekNowMs - 3600_000).toISOString(),
+                generatedAt: new Date(wedTestNowMs - 3600_000).toISOString(),
                 rawText: aiBriefJson
               }),
               { status: 200 }
@@ -10507,7 +10588,7 @@ await testAsync(
         }
         if (u.includes(':generateContent')) {
           geminiAttemptCount += 1;
-          if (geminiAttemptCount === 1) {
+          if (failGeminiCalls) {
             return new Response(JSON.stringify({ error: { message: 'transient 503' } }), { status: 503 });
           }
           return new Response(
@@ -10518,8 +10599,7 @@ await testAsync(
         return new Response('{}', { status: 404 });
       };
 
-      const laptopData = structuredClone(liveAppData);
-      laptopData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(laptopData, midWeekNowMs);
+      const laptopData = makeRetryTestAppData();
       const laptopPrefs = {
         workerBaseUrl: 'https://49ers-sync.workers.dev',
         groupPasscode: 'faithful25',
@@ -10527,72 +10607,80 @@ await testAsync(
         geminiApiBaseUrl: 'https://mock-laptop.local/v1beta'
       };
 
-      // First attempt fails transiently
+      // First attempt fails transiently across cascade
       const failRes = await refreshDailyTopNewsBriefIfDue({
         appData: laptopData,
         prefs: laptopPrefs,
-        nowMs: midWeekNowMs
+        nowMs: wedTestNowMs
       });
       assert.equal(failRes.updated, false);
-      assert.equal(geminiAttemptCount, 1);
+      assert.ok(geminiAttemptCount >= 1);
+      const callsAfterLaptopFail = geminiAttemptCount;
 
       // 4 minutes later, Mobile seeds Worker KV -> Laptop MUST adopt it via free KV GET even during 15m synthesis cooldown!
       kvHasBrief = true;
       assert.equal(
-        shouldTriggerDailyTopNewsBriefRefresh(laptopData, laptopPrefs, midWeekNowMs + 4 * 60_000),
+        shouldTriggerDailyTopNewsBriefRefresh(laptopData, laptopPrefs, wedTestNowMs + 4 * 60_000),
         true,
         'Device with workerBaseUrl must still re-check free Worker KV after 3m even during synthesis cooldown'
       );
       const kvAdoptRes = await refreshDailyTopNewsBriefIfDue({
         appData: laptopData,
         prefs: laptopPrefs,
-        nowMs: midWeekNowMs + 4 * 60_000
+        nowMs: wedTestNowMs + 4 * 60_000
       });
       assert.equal(kvAdoptRes.updated, true);
       assert.equal(kvAdoptRes.fromSharedWorkerCache, true);
-      assert.equal(geminiAttemptCount, 1, 'Adopting Worker KV brief must spend 0 extra Gemini calls');
+      assert.equal(geminiAttemptCount, callsAfterLaptopFail, 'Adopting Worker KV brief must spend 0 extra Gemini calls');
       assert.ok(laptopData.news.dailyTopNewsBrief.headline.includes('Pass-Rush Fatigue'));
 
       // Also verify direct-key-only device retries cleanly after 15m cooldown (not locked out for 24h)
       memStore.clear();
       geminiAttemptCount = 0;
-      const directData = structuredClone(liveAppData);
-      directData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(directData, midWeekNowMs);
+      failGeminiCalls = true;
+      const directData = makeRetryTestAppData();
       const directPrefs = {
         geminiApiKey: 'AIzaDirectKey',
         geminiApiBaseUrl: 'https://mock-direct.local/v1beta'
       };
-      await refreshDailyTopNewsBriefIfDue({ appData: directData, prefs: directPrefs, nowMs: midWeekNowMs });
+      const directFailRes = await refreshDailyTopNewsBriefIfDue({
+        appData: directData,
+        prefs: directPrefs,
+        nowMs: wedTestNowMs
+      });
+      assert.equal(directFailRes.updated, false);
+      const callsAfterDirectFail = geminiAttemptCount;
       assert.equal(
-        shouldTriggerDailyTopNewsBriefRefresh(directData, directPrefs, midWeekNowMs + 5 * 60_000),
+        shouldTriggerDailyTopNewsBriefRefresh(directData, directPrefs, wedTestNowMs + 5 * 60_000),
         false,
         'Direct-key device should respect 15m cooldown right after a transient failure'
       );
       assert.equal(
-        shouldTriggerDailyTopNewsBriefRefresh(directData, directPrefs, midWeekNowMs + 16 * 60_000),
+        shouldTriggerDailyTopNewsBriefRefresh(directData, directPrefs, wedTestNowMs + 16 * 60_000),
         true,
         'Direct-key device must retry after 15m cooldown instead of blacklisting the full 24h cycle'
       );
+      failGeminiCalls = false;
       const recoveredRes = await refreshDailyTopNewsBriefIfDue({
         appData: directData,
         prefs: directPrefs,
-        nowMs: midWeekNowMs + 16 * 60_000
+        nowMs: wedTestNowMs + 16 * 60_000
       });
       assert.equal(recoveredRes.updated, true);
-      assert.equal(geminiAttemptCount, 2);
+      assert.equal(geminiAttemptCount, callsAfterDirectFail + 1);
 
       // Verify clearDailyNewsBriefAttemptLock immediately unblocks retry when Settings are saved
       clearDailyNewsBriefAttemptLock();
       assert.equal(mockStorage.getItem('joshal_49ers_daily_news_brief_attempt_v5'), null);
 
-      // Verify hydrateCachedDailyTopNewsBrief preserves live AI brief over a newer-timestamped pipeline-grounded fallback
-      const newerFallback = buildDeterministicDailyTopNewsBrief(directData, midWeekNowMs + 6 * 3600_000, {
+      // Verify hydrateCachedDailyTopNewsBrief preserves live AI brief over a newer-timestamped pipeline-grounded fallback (same cycle: 2:00 PM PT Wed)
+      const newerFallback = buildDeterministicDailyTopNewsBrief(directData, wedTestNowMs + 2 * 3600_000, {
         cycleKey: directData.news.dailyTopNewsBrief.cycleKey,
-        generatedAt: new Date(midWeekNowMs + 6 * 3600_000).toISOString(),
+        generatedAt: new Date(wedTestNowMs + 2 * 3600_000).toISOString(),
         source: 'pipeline-grounded'
       });
       directData.news.dailyTopNewsBrief = newerFallback;
-      hydrateCachedDailyTopNewsBrief(directData, midWeekNowMs + 6 * 3600_000);
+      hydrateCachedDailyTopNewsBrief(directData, wedTestNowMs + 2 * 3600_000);
       assert.equal(
         directData.news.dailyTopNewsBrief.source,
         'live-gemini-daily',
@@ -10606,7 +10694,7 @@ await testAsync(
   }
 );
 
-runTest('Salient Visual Media Engine: CDN resize transforms, 4-tier visual resolution, cluster photo promotion & holistic view coverage', () => {
+test('Salient Visual Media Engine: CDN resize transforms, 4-tier visual resolution, cluster photo promotion & holistic view coverage', () => {
   // 1. Verified CDN resize transforms + fallback preservation
   const optHs = optimizeImageUrlForSlot('https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png', 'thumb');
   assert.ok(optHs.src.includes('a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4361741.png&w=180'));

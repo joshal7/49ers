@@ -49,6 +49,8 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_NEWS_API_KEY: ${{ secrets.GEMINI_NEWS_API_KEY }}
+          WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
+          GROUP_PASSCODE: ${{ secrets.GROUP_PASSCODE }}
           GEMINI_SYNTHESIS_MODEL: auto
         run: node scripts/fetch-live-49ers-data.mjs
 
