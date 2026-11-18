@@ -719,16 +719,51 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
     return false;
   };
 
+  const FINITE_CLAUSE_PREDICATE_RE =
+    /\b(?:is|was|are|were|has|had|left|exited|departed|suffered|sustained|missed|practiced|returned|played|ruled|remains|can['’]?t|cannot|won['’]?t|will|didn['’]?t|did\s+not|battled|dealing|sat\s+out|logged|upgraded|downgraded|aggravated)\b/i;
+
+  const splitIndependentPlayerCommaClauses = segment => {
+    // Only split comma-separated independent clauses when BOTH sides have their own finite verb predicate
+    // and the right side starts with a capitalized player/position subject (preserving shared-predicate lists
+    // like "hopeful to get Deebo Samuel, Trent Williams, and CJ West back to practice on Wednesday").
+    if (!segment.includes(',')) return [segment];
+    const commaBoundaryRe =
+      /,\s+(?=(?:and\s+)?(?:(?:fellow|WR|RB|FB|CB|DT|DE|DL|LB|TE|QB|OT|OG|OL|S|DB|K|P)\s+)?[A-Z][a-zA-Z'.-]+)/g;
+    const cuts = [0];
+    let m;
+    while ((m = commaBoundaryRe.exec(segment)) !== null) {
+      const prevStart = cuts[cuts.length - 1];
+      const leftPart = segment.slice(prevStart, m.index).trim();
+      const rightStart = m.index + m[0].length;
+      const rightFull = segment.slice(rightStart).trim();
+      const rightNextComma = rightFull.indexOf(',');
+      const rightHead = rightNextComma >= 0 ? rightFull.slice(0, rightNextComma) : rightFull;
+      if (FINITE_CLAUSE_PREDICATE_RE.test(leftPart) && FINITE_CLAUSE_PREDICATE_RE.test(rightHead)) {
+        cuts.push(rightStart);
+      }
+    }
+    if (cuts.length === 1) return [segment];
+    const out = [];
+    for (let i = 0; i < cuts.length; i++) {
+      const start = cuts[i];
+      const end = i + 1 < cuts.length ? cuts[i + 1] : segment.length;
+      const piece = segment.slice(start, end).replace(/,\s*$/, '').trim();
+      if (piece) out.push(piece);
+    }
+    return out.length > 0 ? out : [segment];
+  };
+
   const kept = [];
   let activeSubjectIsTarget = false;
   let anyTargetMentioned = false;
 
   for (const sent of sentences) {
-    // Also split compound contrast clauses inside a sentence when different players are on each side
-    const parts = sent
+    // Also split compound contrast clauses & independent multi-player comma clauses when different players are on each side
+    const contrastParts = sent
       .split(/,\s*(?=(?:[Ww]hile|[Ww]hereas|[Bb]ut|[Tt]hough|[Aa]lthough)\s+(?:(?:fellow|WR|RB|CB|DT|DE|LB|TE|QB|OT|OL|DL|S)\s+)?[A-Z])/)
       .map(p => p.trim())
       .filter(Boolean);
+    const parts = contrastParts.flatMap(splitIndependentPlayerCommaClauses);
 
     for (const clause of parts) {
       const hasTarget =
@@ -1292,7 +1327,11 @@ function hasExpectedPracticeReturnSignal(beatNote = '') {
     return false;
   }
   // Reject vague/speculative phrasing ("getting close", "could return", "might practice")
-  if (/\b(?:could|might|may|possibly|perhaps|wonder if|getting close)\b[^.;]{0,28}\b(?:return|back|practice|open)\b/i.test(beatNote)) {
+  // and explicitly hedged uncertainty ("not sure yet", "would only go so far", "see if he can", "if <player> is able to practice")
+  if (
+    /\b(?:could|might|may|possibly|perhaps|wonder if|getting close)\b[^.;]{0,28}\b(?:return|back|practice|open)\b/i.test(beatNote) ||
+    /\b(?:not sure yet|would only go so far|see if he can|if [a-z'. -]{1,28} (?:is able|can|manages) to practice)\b/i.test(beatNote)
+  ) {
     return false;
   }
   return /\b(?:hopeful to (?:get|have)\b[^.;]{0,55}\bback (?:to|at) practice|expect(?:s|ed|ing)?\b[^.;]{0,55}\b(?:to be )?back (?:to|at) practice|on track to return to practice|hopes? to have\b[^.;]{0,45}\b(?:back )?at practice|expected back\b[^.;]{0,25}(?:at practice|wednesday|this week)|(?:plan|plans|planning|expect|expects|expecting|set|slated)\s+to\s+open\b[^.;]{0,55}\bpractice window)\b/i.test(
@@ -2027,11 +2066,21 @@ export function derivePriorWeekAbsenceProfile({
     consecutiveMissedGames = Math.max(1, consecutiveMissedGames);
   }
 
-  if (
-    /\b(?:second straight|third straight|fourth straight|consecutive (?:games|contests)|last (?:two|three|four|five) (?:games|contests))\b/i.test(
-      noteLower
-    )
-  ) {
+  const streakWordMap = {
+    two: 2, second: 2,
+    three: 3, third: 3,
+    four: 4, fourth: 4,
+    five: 5, fifth: 5,
+    six: 6, sixth: 6
+  };
+  const streakMatch = noteLower.match(
+    /\b(?:(second|third|fourth|fifth|sixth)\s+(?:straight|consecutive)|(?:last|past)\s+(two|three|four|five|six|\d+)\s+(?:games|contests|matchups)|(two|three|four|five|six|\d+)\s+(?:consecutive|straight)\s+(?:games|contests|matchups))\b/i
+  );
+  if (streakMatch) {
+    const tok = (streakMatch[1] || streakMatch[2] || streakMatch[3] || '').toLowerCase();
+    const parsedCnt = streakWordMap[tok] || Number(tok) || 2;
+    consecutiveMissedGames = Math.max(parsedCnt, consecutiveMissedGames);
+  } else if (/\bconsecutive\s+(?:games|contests)\b/i.test(noteLower)) {
     consecutiveMissedGames = Math.max(2, consecutiveMissedGames);
   }
 
@@ -3448,13 +3497,13 @@ export function computePlayerPlayProbability(input = {}) {
     beatNote
   });
   const missedPriorGame =
-    input.missedPriorGame !== undefined ? Boolean(input.missedPriorGame) : priorAbsence.missedPriorGame;
+    input.missedPriorGame != null ? Boolean(input.missedPriorGame) : priorAbsence.missedPriorGame;
   const consecutiveMissedGames =
-    input.consecutiveMissedGames !== undefined
+    input.consecutiveMissedGames != null
       ? Number(input.consecutiveMissedGames) || 0
       : priorAbsence.consecutiveMissedGames;
   const priorWeekPracticed =
-    input.priorWeekPracticed !== undefined ? input.priorWeekPracticed : priorAbsence.priorWeekPracticed;
+    input.priorWeekPracticed != null ? input.priorWeekPracticed : priorAbsence.priorWeekPracticed;
   const exitedPriorGameWithoutReturn =
     !missedPriorGame &&
     (Boolean(input.exitedPriorGameWithoutReturn) ||

@@ -10042,6 +10042,177 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'Early-week rollover preserves multi-week sidelined players ("chance at returning to action in Week 11") instead of falsely wiping to 95% Full Go, isolates comma-separated multi-player clauses, and preserves weeklyHistory priorWeekPracticed',
+  async () => {
+    const {
+      computePlayerPlayProbability,
+      evaluateCorroboratedNewsInjurySignal,
+      scopeBeatTextToPlayer
+    } = await import('../src/engine/injuryProbabilityModel.js');
+    const { resolveEarlyWeekRolloverInput } = await import('../src/engine/gameDayRosterEngine.js');
+
+    const evansShort =
+      'Head coach Kyle Shanahan said Monday that the 49ers are "hoping to" have Evans (Achilles) back at practice this week, Nick Wagoner of ESPN.com reports.';
+    const evansLong =
+      "Evans missed the 49ers' last three games while recovering from right Achilles tendinitis, but he has a chance at returning to action in Week 11. After staying behind in the Bay Area this past weekend for the team's 46-40 win in Dallas, he's scheduled to meet back up with the 49ers this week in Colorado Springs, where the team will be holding practices at high altitude to get acclimated for Sunday's matchup with the Vikings in Mexico City. If Evans is able to practice in some capacity Wednesday through Friday and if his Achilles responds well, he'll likely be cleared to play for the first time since Week 6.";
+
+    // 1A. Even when `playedInCompletedGame` is `null` (e.g., ESPN boxscore roster unavailable), Evans MUST NOT be skipped!
+    const evansRollNull = resolveEarlyWeekRolloverInput({
+      playerName: 'Mike Evans',
+      rawStatus: 'Questionable',
+      injuryType: 'Achilles',
+      shortComment: evansShort,
+      longComment: evansLong,
+      upcomingWeek: 11,
+      lastCompletedWeek: 10,
+      blurbDateIso: '2026-11-16T22:05:00Z',
+      lastCompletedGameKickoffMs: Date.parse('2026-11-15T21:25:00Z'),
+      playedInCompletedGame: null,
+      hasPostKickoffInjurySignal: false
+    });
+    assert.equal(evansRollNull.skip, false, 'Hedged "chance at returning to action in Week 11" must NEVER skip Evans to 95% Full Go');
+    assert.equal(evansRollNull.effectiveStatus, 'Questionable');
+    assert.equal(evansRollNull.missedPriorGame, true, '"missed the 49ers\' last three games" must set missedPriorGame=true');
+    assert.equal(evansRollNull.missedPriorGameKnown, true);
+    assert.equal(evansRollNull.sustainedInLastGame, false);
+    assert.equal(evansRollNull.exitedWithoutReturn, false);
+
+    // 1B. With explicit `playedInCompletedGame: false`
+    const evansRollFalse = resolveEarlyWeekRolloverInput({
+      playerName: 'Mike Evans',
+      rawStatus: 'Questionable',
+      injuryType: 'Achilles',
+      shortComment: evansShort,
+      longComment: evansLong,
+      upcomingWeek: 11,
+      lastCompletedWeek: 10,
+      playedInCompletedGame: false,
+      hasPostKickoffInjurySignal: false
+    });
+    assert.equal(evansRollFalse.skip, false);
+    assert.equal(evansRollFalse.missedPriorGame, true);
+
+    // 2. Evans Week 11 Tuesday probability stays realistic (~42% Long Shot), never 95% Full Go and zero bogus "exited prior game" factor
+    const evansProb = computePlayerPlayProbability({
+      name: 'Mike Evans',
+      position: 'WR',
+      experienceYears: 13,
+      snapPct: 54,
+      gameStatus: evansRollNull.effectiveStatus,
+      priorWeekStatus: 'Questionable',
+      missedPriorGame: evansRollNull.missedPriorGameKnown ? evansRollNull.missedPriorGame : undefined,
+      priorWeekPracticed: evansRollNull.priorWeekPracticed,
+      sustainedInLastGame: false,
+      exitedPriorGameWithoutReturn: false,
+      weeklyHistory: [
+        { week: 7, injury: 'Ribs', gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+        { week: 9, injury: 'Ribs', gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+        { week: 10, injury: 'Achilles', gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' }
+      ],
+      currentWeek: 11,
+      byeWeek: 8,
+      rosterBucket: 'active',
+      injuryType: 'Achilles',
+      wed: '-',
+      thu: '-',
+      fri: '-',
+      beatNote: evansRollNull.beatNoteForModel
+    });
+    assert.ok(
+      evansProb.probabilityPct >= 35 && evansProb.probabilityPct <= 50,
+      `Expected Mike Evans Week 11 pre-practice probability in 35–50% Long Shot range, got ${evansProb.probabilityPct}% (${evansProb.badgeLabel})`
+    );
+    assert.ok(
+      !evansProb.factors.some(f => /exited prior game/i.test(f)),
+      `Mike Evans factors must never falsely claim exited prior game: ${JSON.stringify(evansProb.factors)}`
+    );
+
+    // 3. Passing `priorWeekPracticed: null` from rollover must NOT clobber `weeklyHistory` prior LP participation!
+    const lpReturnerProb = computePlayerPlayProbability({
+      name: 'Ricky Pearsall',
+      position: 'WR',
+      gameStatus: 'Questionable',
+      missedPriorGame: true,
+      priorWeekPracticed: null,
+      weeklyHistory: [{ week: 10, injury: 'Shoulder', gameStatus: 'Out', practiceStatus: 'Limited Participation in Practice' }],
+      currentWeek: 11,
+      byeWeek: 8,
+      rosterBucket: 'active',
+      injuryType: 'Shoulder',
+      wed: '-',
+      thu: '-',
+      fri: '-',
+      beatNote: 'Pearsall missed Sunday and is questionable entering Week 11.'
+    });
+    assert.ok(
+      lpReturnerProb.probabilityPct >= 65,
+      `Null priorWeekPracticed must fall back to weeklyHistory LP ramp (>=65%), got ${lpReturnerProb.probabilityPct}%`
+    );
+
+    // 4. `scopeBeatTextToPlayer` isolates comma-separated independent multi-player clauses while preserving shared-predicate lists
+    const multiSent =
+      "Deebo is fresh off a hamstring, Renardo Green left with his back, and Mike Evans still can't get on the field.";
+    const evansOnly = scopeBeatTextToPlayer(multiSent, 'Mike Evans', ['Deebo Samuel Sr.', 'Renardo Green', 'Mike Evans']);
+    const greenOnly = scopeBeatTextToPlayer(multiSent, 'Renardo Green', ['Deebo Samuel Sr.', 'Renardo Green', 'Mike Evans']);
+    assert.ok(!/left with his back/i.test(evansOnly), `Renardo Green exit must NOT bleed onto Mike Evans: ${evansOnly}`);
+    assert.ok(/Mike Evans still can't get on the field/i.test(evansOnly), `Mike Evans clause must be preserved: ${evansOnly}`);
+    assert.ok(/Renardo Green left with his back/i.test(greenOnly), `Renardo Green clause must preserve back exit: ${greenOnly}`);
+
+    const sharedListSent =
+      "Shanahan said he's hopeful to get Deebo Samuel, Trent Williams, and CJ West back to practice on Wednesday.";
+    const westShared = scopeBeatTextToPlayer(sharedListSent, 'C.J. West', ['Deebo Samuel Sr.', 'Trent Williams', 'C.J. West']);
+    assert.ok(
+      /hopeful to get/i.test(westShared) && /back to practice on Wednesday/i.test(westShared),
+      `Shared-predicate player list must remain intact for CJ West: ${westShared}`
+    );
+
+    // 5. Multi-player recap article containing Renardo Green exit must NOT generate SUSTAINED_IN_GAME_INJURY for Mike Evans
+    const evansSignal = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Mike Evans',
+      playerId: '16737',
+      rosterBucket: 'active',
+      newsItems: [
+        {
+          id: 'nn_291',
+          type: 'article',
+          trustTier: 2,
+          author: 'The Coach',
+          publishedAt: '2026-11-16T19:01:00Z',
+          title: 'We’re Firemen: The 49ers need to stay who they are',
+          playerSnippets: { '16737': multiSent }
+        },
+        {
+          id: 'wz_298',
+          type: 'article',
+          trustTier: 2,
+          author: '49ers Webzone',
+          publishedAt: '2026-11-17T00:58:45Z',
+          title: 'Transcript: Kyle Shanahan shares 49ers updates',
+          playerSnippets: {
+            '16737': 'Do you expect to bring WR Mike Evans back to practice this week? "I\'m hoping to, just not sure yet."'
+          }
+        }
+      ],
+      rosterPlayerNames: ['Deebo Samuel Sr.', 'Renardo Green', 'Mike Evans'],
+      nowMs: Date.parse('2026-11-17T23:50:00Z'),
+      windowStartMs: Date.parse('2026-11-16T00:25:00Z'),
+      lastCompletedGameKickoffMs: Date.parse('2026-11-15T21:25:00Z'),
+      lastCompletedWeek: 10
+    });
+    assert.notEqual(
+      evansSignal.signalType,
+      'SUSTAINED_IN_GAME_INJURY',
+      `Mike Evans must never get SUSTAINED_IN_GAME_INJURY from Renardo Green clause bleed (got ${evansSignal.signalType})`
+    );
+    assert.notEqual(
+      evansSignal.signalType,
+      'EXPECTED_PRACTICE_RETURN',
+      `Hedged "hoping to, just not sure yet" must not fire EXPECTED_PRACTICE_RETURN (got ${evansSignal.signalType})`
+    );
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

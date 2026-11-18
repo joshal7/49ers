@@ -61,6 +61,7 @@ import {
   classifyIrAndReserveTimeline,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
+  scopeBeatTextToPlayer,
   select22OffDefStartersFromDepthChart,
   sortIrTrackerPriority
 } from '../src/engine/injuryProbabilityModel.js';
@@ -1219,11 +1220,11 @@ async function main() {
           const pMs = a?.published ? Date.parse(a.published) : NaN;
           if (!Number.isFinite(pMs) || pMs < latestCompletedEventKoMs) return false;
           const body = `${a.headline || ''} ${a.description || ''}`;
-          return (
-            doesClauseMentionPlayer(body, fullName, { allowSurname: true }) &&
-            /\b(exited|left (?:sunday|monday|thursday|saturday|the )['’]?s? game|did not return|will not return|suffered a|sustained a|injured his|underwent an mri|scheduled for an mri|\bmri\b|placed on (?:ir|injured reserve)|week-to-week)\b/i.test(
-              body
-            )
+          if (!doesClauseMentionPlayer(body, fullName, { allowSurname: true })) return false;
+          const scopedBody = scopeBeatTextToPlayer(body, fullName);
+          if (!scopedBody) return false;
+          return /\b(exited|left (?:sunday|monday|thursday|saturday|the )['’]?s? game|did not return|will not return|suffered a|sustained a|injured his|underwent an mri|scheduled for an mri|\bmri\b|placed on (?:ir|injured reserve)|week-to-week)\b/i.test(
+            scopedBody
           );
         });
 
@@ -1237,6 +1238,8 @@ async function main() {
               longComment: rawLongComment,
               upcomingWeek: detectedCurrentWeek,
               lastCompletedWeek: pipelineGameContext.latestCompletedWeek || null,
+              blurbDateIso: webInj?.date || inlineInj?.date || null,
+              lastCompletedGameKickoffMs: latestCompletedEventKoMs,
               playedInCompletedGame: playedInLastGameForRoll,
               hasPostKickoffInjurySignal: hasPostKoAcuteSignal
             })
@@ -1369,10 +1372,16 @@ async function main() {
         snapPct: primarySnapPct,
         gameStatus: effectiveGameStatusForModel,
         priorWeekStatus: rawStatus,
-        missedPriorGame: sfEarlyRoll ? sfEarlyRoll.missedPriorGame : undefined,
+        missedPriorGame: sfEarlyRoll
+          ? sfEarlyRoll.missedPriorGameKnown
+            ? sfEarlyRoll.missedPriorGame
+            : undefined
+          : undefined,
         priorWeekPracticed: sfEarlyRoll ? sfEarlyRoll.priorWeekPracticed : undefined,
-        sustainedInLastGame: sfEarlyRoll ? Boolean(sfEarlyRoll.sustainedInLastGame) : undefined,
-        exitedPriorGameWithoutReturn: sfEarlyRoll ? Boolean(sfEarlyRoll.exitedWithoutReturn) : undefined,
+        sustainedInLastGame: sfEarlyRoll ? !sfEarlyRoll.missedPriorGame && Boolean(sfEarlyRoll.sustainedInLastGame) : undefined,
+        exitedPriorGameWithoutReturn: sfEarlyRoll
+          ? !sfEarlyRoll.missedPriorGame && Boolean(sfEarlyRoll.exitedWithoutReturn)
+          : undefined,
         weeklyHistory: weeklyInjByName.get(nk) || [],
         earliestEligibleWeek: irClassification?.earliestEligibleWeek ?? null,
         currentWeek: detectedCurrentWeek,
@@ -4439,7 +4448,10 @@ async function main() {
                 injuryType: specificInjuryType,
                 shortComment: rawShort,
                 longComment: rawLong,
-                upcomingWeek: currentWeek
+                upcomingWeek: currentWeek,
+                lastCompletedWeek: pipelineGameContext.latestCompletedWeek || null,
+                blurbDateIso: oppWebInj?.date || inlineInj?.date || null,
+                lastCompletedGameKickoffMs: latestCompletedEventKoMs
               })
             : null;
         if (oppEarlyRoll?.skip) {
@@ -4533,7 +4545,11 @@ async function main() {
           snapPct,
           gameStatus: effectiveOppStatus,
           priorWeekStatus: rawStatus,
-          missedPriorGame: oppEarlyRoll ? oppEarlyRoll.missedPriorGame : undefined,
+          missedPriorGame: oppEarlyRoll
+            ? oppEarlyRoll.missedPriorGameKnown
+              ? oppEarlyRoll.missedPriorGame
+              : undefined
+            : undefined,
           priorWeekPracticed: oppEarlyRoll ? oppEarlyRoll.priorWeekPracticed : undefined,
           sustainedInLastGame: oppEarlyRoll ? Boolean(oppEarlyRoll.sustainedInLastGame) : undefined,
           exitedPriorGameWithoutReturn: oppEarlyRoll ? Boolean(oppEarlyRoll.exitedWithoutReturn) : undefined,
@@ -4638,7 +4654,10 @@ async function main() {
             injuryType,
             shortComment: rawShort,
             longComment: rawLong,
-            upcomingWeek: currentWeek
+            upcomingWeek: currentWeek,
+            lastCompletedWeek: pipelineGameContext.latestCompletedWeek || null,
+            blurbDateIso: item.date || item.notes?.items?.[0]?.date || null,
+            lastCompletedGameKickoffMs: latestCompletedEventKoMs
           })
         : null;
     if (oppFallbackEarlyRoll?.skip) continue;

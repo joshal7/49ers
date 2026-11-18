@@ -1527,6 +1527,8 @@ export function resolveEarlyWeekRolloverInput({
   longComment = '',
   upcomingWeek = null,
   lastCompletedWeek = null,
+  blurbDateIso = null,
+  lastCompletedGameKickoffMs = null,
   playedInCompletedGame = null,
   hasPostKickoffInjurySignal = false,
   postKickoffInjuryNote = ''
@@ -1558,6 +1560,23 @@ export function resolveEarlyWeekRolloverInput({
       beatNoteForModel: ''
     };
   }
+
+  const blurbMs = blurbDateIso ? Date.parse(String(blurbDateIso)) : NaN;
+  const isFreshPostGameBlurb =
+    Number.isFinite(blurbMs) &&
+    Number.isFinite(lastCompletedGameKickoffMs) &&
+    lastCompletedGameKickoffMs > 0 &&
+    blurbMs >= lastCompletedGameKickoffMs + 2.5 * 3_600_000;
+
+  const hasMissedPriorGameProse =
+    /\b(is inactive|was inactive|remained inactive|officially inactive|ruled out for (?:sunday|monday|thursday|saturday|today)|will not play|won't play|missing (?:a |his )?(?:second|third|fourth|fifth) (?:straight|consecutive)|will miss (?:his )?(?:second|third|fourth|fifth) (?:straight|consecutive)|missed (?:the (?:[a-z0-9'.-]+ )?)?(?:last|past) (?:two|three|four|five|six|\d+) (?:games|contests|matchups)|has missed (?:the )?(?:last|past )?(?:two|three|four|five|six|\d+) (?:consecutive |straight )?(?:games|contests|matchups)|missed (?:sunday|monday|thursday|saturday|last week|week \d+)|sat out (?:sunday|monday|thursday|saturday|last week|week \d+)|staying behind|stayed behind|didn'?t travel|did not travel|hasn'?t played since|has not played since|for the first time since week \d+)\b/i.test(
+      combined
+    );
+
+  const hasUpcomingWeekUncertaintyProse =
+    /\b(hoping to (?:have|get)|hopes? to (?:have|get)|hopeful (?:to|he can)|just not sure yet|has a chance (?:at|to|of) return|chance (?:at|to|of) returning|chance to return|could return|might return|may return|if [a-z'. -]{1,28} (?:is able|can|manages) to practice|practice participation will determine|worth monitoring|up in the air|questionable at best|day-to-day|make progress ahead of|back at practice this week|return to practice)\b/i.test(
+      combined
+    );
 
   // Strip historical week injury origins (e.g. "injured his back in Week 9" when rolling into Week 11)
   // so prior-week background context never triggers a false post-game acute injury flag!
@@ -1614,8 +1633,16 @@ export function resolveEarlyWeekRolloverInput({
     }
   }
 
-  // Drop players who were already cleared ahead of the completed game with zero newly sustained in-game or post-game injury
+  // Drop players who were already cleared ahead of the completed game with zero newly sustained in-game or post-game injury.
+  // NEVER drop players who missed the completed game (`playedInCompletedGame === false` or missed-game prose) or whose
+  // fresh post-game / Questionable blurb expresses upcoming-week practice/return uncertainty (e.g. "has a chance at returning to action in Week 11").
+  const canCheckPriorPreGameClearance =
+    playedInCompletedGame !== false &&
+    !hasMissedPriorGameProse &&
+    !(statusLower === 'questionable' && (hasUpcomingWeekUncertaintyProse || isFreshPostGameBlurb));
+
   if (
+    canCheckPriorPreGameClearance &&
     (statusLower === 'active' ||
       statusLower === 'healthy' ||
       statusLower === '' ||
@@ -1634,8 +1661,17 @@ export function resolveEarlyWeekRolloverInput({
       };
     }
 
+    const referencesUpcomingWeekReturn = Boolean(
+      upcomingWeek &&
+        new RegExp(
+          `\\b(?:returning to action|return to action|get back on the field|cleared to play)[^.;]{0,36}\\bweek\\s*${Number(upcomingWeek)}\\b`,
+          'i'
+        ).test(combined)
+    );
     const wasClearedPreGame =
-      /\b(does not (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|doesn'?t (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|has no (?:official )?(?:injury )?designation|no official injury designation|off the injury report|designation now a thing of the past|return(?:ing)? to action|he'?ll return to action|set to get back on the field|all set to suit up|now set to go|appears to have done him well|gave him some extra recovery time|cleared (?:the league'?s )?concussion protocol)\b/i.test(
+      !referencesUpcomingWeekReturn &&
+      !hasUpcomingWeekUncertaintyProse &&
+      /\b(does not (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|doesn'?t (?:have|carry) (?:an?y? )?(?:official )?(?:injury )?designation|has no (?:official )?(?:injury )?designation|no official injury designation|off the injury report|designation now a thing of the past|(?:he'?ll|will|is|set to|slated to)\s+return to action|set to get back on the field|all set to suit up|now set to go|appears to have done him well|gave him some extra recovery time|cleared (?:the league'?s )?concussion protocol)\b/i.test(
         combined
       );
     if (!hasAcuteCompletedGameInjuryInProse && !hasPostKickoffInjurySignal && wasClearedPreGame) {
@@ -1715,9 +1751,15 @@ export function resolveEarlyWeekRolloverInput({
       : playedInCompletedGame === false ||
         statusLower === 'out' ||
         statusLower === 'inactive' ||
-        /\b(is inactive|was inactive|officially inactive|ruled out for (?:sunday|monday|thursday|saturday|today)|will not play|won't play|missing a (?:second|third|fourth) straight|will miss his (?:second|third|fourth) straight)\b/i.test(
-          combined
-        );
+        hasMissedPriorGameProse;
+
+  const missedPriorGameKnown =
+    playedInCompletedGame === true ||
+    playedInCompletedGame === false ||
+    playedAndHurtInGameProse ||
+    statusLower === 'out' ||
+    statusLower === 'inactive' ||
+    hasMissedPriorGameProse;
 
   const sustainedInLastGame =
     !missedPriorGame && (Boolean(hasPostKickoffInjurySignal) || playedAndHurtInGameProse || hasAcuteCompletedGameInjuryInProse);
@@ -1733,7 +1775,7 @@ export function resolveEarlyWeekRolloverInput({
     if (/\b(trio of limited practices|limited practices during the week|limited all week|practiced on a limited basis)\b/i.test(combined)) {
       priorWeekPracticed = true;
     } else if (
-      /\b(hasn't been able to practice|has not been able to practice|trio of '?dnps?'?|did not practice all week|not practicing in any capacity)\b/i.test(
+      /\b(hasn't been able to practice|has not been able to practice|trio of '?dnps?'?|logging '?dnps?'? last week|did not practice all week|not practicing in any capacity|hasn't practiced|has not practiced|without practicing)\b/i.test(
         combined
       )
     ) {
@@ -1754,7 +1796,7 @@ export function resolveEarlyWeekRolloverInput({
     beatNoteForModel = beatNoteForModel
       .replace(
         /\b(ruled out for the (?:rest|remainder) of [^.;,]*|out for the (?:rest|remainder) of (?:the |sunday'?s |monday'?s |thursday'?s |saturday'?s )?(?:game|contest|matchup)|will not return[^.;,]*|won'?t return[^.;,]*|done for the (?:day|night|game)|is inactive|was inactive|officially inactive|ruled out|will not play|won't play|is out for|will miss (?:his |a )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|missing (?:a |his )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|miss(?:ing)? (?:sunday|monday|thursday|saturday)'?s?|inactive (?:sunday|monday|thursday|saturday)|inactive for (?:sunday|monday|thursday|saturday))\b/gi,
-        'exited previous game'
+        missedPriorGame ? 'sidelined previously' : 'exited previous game'
       )
       .replace(/^inactive\.?$/i, '');
   }
@@ -1764,6 +1806,7 @@ export function resolveEarlyWeekRolloverInput({
     effectiveStatus,
     beatNoteForModel,
     missedPriorGame,
+    missedPriorGameKnown,
     priorWeekPracticed,
     sustainedInLastGame,
     exitedWithoutReturn
@@ -1836,10 +1879,16 @@ export function rolloverPracticeReportForUpcomingWeek(
       snapPct: r.snapPct ?? null,
       gameStatus: cleanStatus,
       priorWeekStatus: r.gameStatus || '',
-      missedPriorGame: clearPracticeDays ? earlyRoll.missedPriorGame : false,
+      missedPriorGame: clearPracticeDays
+        ? earlyRoll.missedPriorGameKnown
+          ? earlyRoll.missedPriorGame
+          : undefined
+        : false,
       priorWeekPracticed: clearPracticeDays ? resolvedPriorPracticed : null,
-      sustainedInLastGame: sustainedInGame || Boolean(earlyRoll.sustainedInLastGame),
-      exitedPriorGameWithoutReturn: Boolean(earlyRoll.exitedWithoutReturn || r?.exitedPriorGameWithoutReturn),
+      sustainedInLastGame: earlyRoll.missedPriorGame ? false : sustainedInGame || Boolean(earlyRoll.sustainedInLastGame),
+      exitedPriorGameWithoutReturn: earlyRoll.missedPriorGame
+        ? false
+        : Boolean(earlyRoll.exitedWithoutReturn || r?.exitedPriorGameWithoutReturn),
       rosterBucket: r.isIrReturnQuestionable ? 'ir' : 'active',
       isIrReturnQuestionable: Boolean(r.isIrReturnQuestionable),
       injuryType: r.injuryType || '',

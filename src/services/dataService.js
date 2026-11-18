@@ -5030,6 +5030,8 @@ export async function hydrateLiveEspnOverlay(appData) {
                 longComment: !isBareStatusPlaceholderComment(rawLongField) ? rawLongField : longC,
                 upcomingWeek: appData.scheduleMatchup.upcomingMatchup?.week,
                 lastCompletedWeek: latestCompletedSchedGame?.week || null,
+                blurbDateIso,
+                lastCompletedGameKickoffMs: latestCompletedKickoffMsForOverlay,
                 playedInCompletedGame,
                 hasPostKickoffInjurySignal,
                 postKickoffInjuryNote: postKoSig?.leadClause || ''
@@ -5144,12 +5146,20 @@ export async function hydrateLiveEspnOverlay(appData) {
           fantasyStatusAbbr: fantasyAbbr,
           gameStatus: effectiveStatusForModel,
           priorWeekStatus: rawStatus,
-          missedPriorGame: sfEarlyRoll ? sfEarlyRoll.missedPriorGame : undefined,
+          missedPriorGame: sfEarlyRoll
+            ? sfEarlyRoll.missedPriorGameKnown
+              ? sfEarlyRoll.missedPriorGame
+              : undefined
+            : undefined,
           priorWeekPracticed: sfEarlyRoll ? sfEarlyRoll.priorWeekPracticed : undefined,
-          sustainedInLastGame: Boolean(sfEarlyRoll?.sustainedInLastGame || rp.health.sustainedInLastGame),
-          exitedPriorGameWithoutReturn: Boolean(
-            sfEarlyRoll?.exitedWithoutReturn || postKoSig?.exitedWithoutReturn || rp.health.exitedPriorGameWithoutReturn
-          ),
+          sustainedInLastGame: sfEarlyRoll?.missedPriorGame
+            ? false
+            : Boolean(sfEarlyRoll?.sustainedInLastGame || rp.health.sustainedInLastGame),
+          exitedPriorGameWithoutReturn: sfEarlyRoll?.missedPriorGame
+            ? false
+            : Boolean(
+                sfEarlyRoll?.exitedWithoutReturn || postKoSig?.exitedWithoutReturn || rp.health.exitedPriorGameWithoutReturn
+              ),
           weeklyHistory: rp.health.weeklyHistory2026 || [],
           currentWeek: appData.scheduleMatchup.upcomingMatchup?.week,
           byeWeek: appData.health?.byeWeek || 8,
@@ -5179,7 +5189,10 @@ export async function hydrateLiveEspnOverlay(appData) {
         if (bodyPart && (rp.rosterBucket === 'active' || !rp.health.injuryType || rp.health.injuryType === 'Undisclosed')) {
           rp.health.injuryType = bodyPart;
         }
-        if (hasPostKickoffInjurySignal) {
+        if (sfEarlyRoll?.missedPriorGame) {
+          rp.health.sustainedInLastGame = false;
+          rp.health.exitedPriorGameWithoutReturn = false;
+        } else if (hasPostKickoffInjurySignal) {
           rp.health.sustainedInLastGame = true;
           if (postKoSig?.exitedWithoutReturn) rp.health.exitedPriorGameWithoutReturn = true;
         }
@@ -5297,7 +5310,10 @@ export async function hydrateLiveEspnOverlay(appData) {
                 injuryType: bodyPart,
                 shortComment: !isBareStatusPlaceholderComment(rawOppShort) ? rawOppShort : shortC,
                 longComment: !isBareStatusPlaceholderComment(rawOppLong) ? rawOppLong : longC,
-                upcomingWeek: appData.scheduleMatchup.upcomingMatchup?.week
+                upcomingWeek: appData.scheduleMatchup.upcomingMatchup?.week,
+                lastCompletedWeek: latestCompletedSchedGame?.week || null,
+                blurbDateIso: item.date || item.notes?.items?.[0]?.date || null,
+                lastCompletedGameKickoffMs: latestCompletedKickoffMsForOverlay
               })
             : null;
         if (oppEarlyRoll?.skip) {
@@ -5357,7 +5373,11 @@ export async function hydrateLiveEspnOverlay(appData) {
           snapPct: prevEntry?.snapPct ?? null,
           gameStatus: effectiveOppGameSt,
           priorWeekStatus: rawSt,
-          missedPriorGame: oppEarlyRoll ? oppEarlyRoll.missedPriorGame : undefined,
+          missedPriorGame: oppEarlyRoll
+            ? oppEarlyRoll.missedPriorGameKnown
+              ? oppEarlyRoll.missedPriorGame
+              : undefined
+            : undefined,
           priorWeekPracticed: oppEarlyRoll ? oppEarlyRoll.priorWeekPracticed : undefined,
           sustainedInLastGame: oppEarlyRoll ? Boolean(oppEarlyRoll.sustainedInLastGame) : undefined,
           exitedPriorGameWithoutReturn: oppEarlyRoll ? Boolean(oppEarlyRoll.exitedWithoutReturn) : undefined,
