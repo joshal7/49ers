@@ -11,7 +11,10 @@ import {
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
-import { getReporterTrustTier } from '../engine/beatAttributionEngine.js';
+import {
+  buildXBeatListSearchUrl,
+  getReporterTrustTier
+} from '../engine/beatAttributionEngine.js';
 import {
   evaluatePushSupportStatus,
   runUniversalSearch
@@ -235,9 +238,29 @@ export function renderSettingsSheetHtml({
       </div>
     </div>
 
+    <!-- Direct X Beat Lists (Synced Live with Enabled Reporters Below) -->
+    <div id="settingsSourcesSection" class="subcard-panel" data-settings-x-beat-lists style="display:flex;flex-direction:column;gap:7px">
+      <div class="sub-label" style="margin:0">5. Direct X Beat Lists</div>
+      <div style="font-size:11.5px;color:var(--text-secondary)">Live X searches synced with your enabled beat voices below.</div>
+      <div class="x-beat-launch-strip" aria-label="Live X Beat Search">
+        <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Beat Reporters, Columnists &amp; Official Team handles from Settings">
+          <span>Trusted Beat</span>${iconSvg('externalLink', 10)}
+        </a>
+        <a href="${esc(buildXBeatListSearchUrl('film', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Film, Analytics &amp; Podcast Analysts from Settings">
+          <span>Film &amp; Analysts</span>${iconSvg('externalLink', 10)}
+        </a>
+        <a href="${esc(buildXBeatListSearchUrl('injuries', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="Live 49ers sideline, practice &amp; warmup injury updates across Tier 1–3 beat voices">
+          <span>Injury Scoops</span>${iconSvg('externalLink', 10)}
+        </a>
+        <a href="${esc(buildXBeatListSearchUrl('insiders', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 National NFL Insiders, Draft Evaluators &amp; League Analysts scoped to 49ers">
+          <span>NFL Insiders</span>${iconSvg('externalLink', 10)}
+        </a>
+      </div>
+    </div>
+
     <!-- Outlet Toggles -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:7px">
-      <div class="sub-label">5. News Outlets &amp; Channels (${outlets.length})</div>
+      <div class="sub-label">6. News Outlets &amp; Channels (${outlets.length})</div>
       <div class="settings-outlets-grid">
         ${outlets
           .map(o => {
@@ -257,7 +280,7 @@ export function renderSettingsSheetHtml({
     <!-- Individual Beat Reporters & Insiders -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="sub-label">6. Beat Reporters &amp; Analysts (${reporters.length})</div>
+        <div class="sub-label">7. Beat Reporters &amp; Analysts (${reporters.length})</div>
         <div style="display:flex;gap:6px">
           <button type="button" class="btn-ghost" data-action="enable-all-reporters">${iconSvg('check', 12)}<span>Enable All</span></button>
         </div>

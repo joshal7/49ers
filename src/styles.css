@@ -1122,11 +1122,28 @@ a:hover {
 .brief-card {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  padding: 12px;
+  gap: 6px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
   background: var(--bg-card-alt);
   border: 1px solid var(--border-subtle);
+}
+
+.wire-card-body-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wire-card-summary {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.wire-card-players-row {
+  margin-top: 2px;
 }
 
 .brief-headline {
@@ -3816,8 +3833,8 @@ button.featured-player-chip:active {
     font-size: 11.5px;
   }
   .brief-card {
-    padding: 10px 11px;
-    gap: 7px;
+    padding: 9px 10px;
+    gap: 5px;
   }
   .beat-podcast-ep-card {
     padding: 9px 10px;
@@ -6543,12 +6560,12 @@ a.raw-item-thumb.salient-thumb:hover {
   white-space: nowrap;
 }
 
-/* Slim Sort (`Top + Latest` | `Top` | `Latest`) + Trending Topic Chips Strip */
+/* Slim Sort (`Top + Latest` | `Top` | `Latest`) Strip */
 .news-digest-controls {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .news-sort-row {

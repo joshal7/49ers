@@ -381,14 +381,14 @@ function renderSingleDashboardCard({
                       <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
                     </div>
                     <div class="${twThumbHtml ? 'media-split-row' : ''}">
-                      <div style="min-width:0">
+                      <div class="wire-card-body-col">
                         <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link" data-mark-read-key="${esc(twReadKey)}">
                           ${esc(fullShortTweet)}
                           <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                         </a>
                         ${
                           showExtChip
-                            ? `<div style="margin-top:4px">
+                            ? `<div>
                                 <a href="${esc(safeTwExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" data-mark-read-key="${esc(twReadKey)}">
                                   <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
                                   ${iconSvg('external', 10)}
@@ -396,10 +396,10 @@ function renderSingleDashboardCard({
                               </div>`
                             : ''
                         }
+                        ${tw.mentionedPlayers?.length ? `<div class="wire-card-players-row">${renderPlayerChipsStripHtml(tw.mentionedPlayers, 3)}</div>` : ''}
                       </div>
                       ${twThumbHtml}
                     </div>
-                    ${tw.mentionedPlayers?.length ? `<div style="margin-top:5px">${renderPlayerChipsStripHtml(tw.mentionedPlayers, 3)}</div>` : ''}
                   </div>
                 `;
                   })

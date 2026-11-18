@@ -4176,16 +4176,19 @@ async function main() {
       }
     });
 
-    await runStep('Live X-Beat Multi-Source Telemetry, Live X Search Strip & X-First Reporter Links', async () => {
+    await runStep('Live X-Beat Multi-Source Telemetry, Sources Sheet Direct X Beat Lists & X-First Reporter Links', async () => {
       await cdp.setViewport(402, 874, true);
       const xAudit = await cdp.eval(() => {
         const cfg = window.__49ersDiagnostics?.getLiveWireConfig?.() || {};
         document.querySelector('.nav-tab-btn[data-nav-tab="news"]')?.click();
-        const strip = document.querySelector('.x-beat-launch-strip');
-        const detailsEl = strip?.closest('details');
+        const toolbarStrip = document.querySelector('.news-toolbar-card .x-beat-launch-strip');
         const headH = Math.round(document.querySelector('.news-toolbar-head')?.getBoundingClientRect().height || 0);
         const cardH = Math.round(document.querySelector('.news-toolbar-card')?.getBoundingClientRect().height || 0);
-        if (detailsEl) detailsEl.open = true;
+
+        // Open Sources (Settings focused on Sources) and verify Direct X Beat Lists + X-first reporter links + Trust Tier badges + full handle coverage
+        document.querySelector('[data-action="open-settings"][data-settings-focus="sources"]')?.click();
+        const sheetBody = document.getElementById('sheetBody');
+        const strip = sheetBody?.querySelector('#settingsSourcesSection .x-beat-launch-strip');
         const stripLinks = Array.from(strip?.querySelectorAll('a.x-beat-chip') || []).map(a => ({
           label: a.textContent.trim(),
           href: a.getAttribute('href') || '',
@@ -4197,11 +4200,6 @@ async function main() {
             }
           })()
         }));
-        if (detailsEl) detailsEl.open = false;
-
-        // Open Settings and verify X-first reporter links + Trust Tier badges + full Direct X handle coverage
-        document.getElementById('openSettingsBtn')?.click();
-        const sheetBody = document.getElementById('sheetBody');
         const repAnchorHrefs = Array.from(sheetBody?.querySelectorAll('label a[href]') || [])
           .map(a => a.getAttribute('href') || '');
         const settingsHandles = Array.from(
@@ -4236,6 +4234,7 @@ async function main() {
 
         return {
           cfg,
+          toolbarStripPresent: Boolean(toolbarStrip),
           stripExists: Boolean(strip),
           stripLinks,
           missingSettingsHandles,
@@ -4252,19 +4251,23 @@ async function main() {
         `Expected >=5 live wire sources in diagnostics, got ${JSON.stringify(xAudit.cfg)}`
       );
       assert(
+        !xAudit.toolbarStripPresent,
+        'Direct X Beat Lists must be inside Sources sheet rather than taking space in News & Film toolbar'
+      );
+      assert(
         xAudit.stripExists &&
           xAudit.stripLinks.length === 4 &&
           xAudit.stripLinks.every(
             l => l.href.startsWith('https://x.com/search?q=') && l.href.includes('f=live') && l.qLen <= 500
           ),
-        `Live X Search strip missing, invalid, or exceeded 500-char X query cap: ${JSON.stringify(xAudit.stripLinks)}`
+        `Live X Search strip missing in Sources sheet, invalid, or exceeded 500-char X query cap: ${JSON.stringify(xAudit.stripLinks)}`
       );
       assert(
         xAudit.missingSettingsHandles.length === 0,
         `Direct X Beat Lists omitted Settings Tier 1–3 handles: ${JSON.stringify(xAudit.missingSettingsHandles)}`
       );
       assert(
-        xAudit.headH <= 68 && xAudit.cardH <= 180,
+        xAudit.headH <= 68 && xAudit.cardH <= 145,
         `News toolbar compact geometry regressed: head=${xAudit.headH}px, card=${xAudit.cardH}px`
       );
       assert(
@@ -5788,9 +5791,22 @@ async function main() {
         const afterLatestSort = document.querySelector('[data-news-sort-bar] .active')?.getAttribute('data-sort-mode') || '';
         document.querySelector('[data-action="set-news-sort"][data-sort-mode="hybrid"]')?.click();
 
-        // Verify Story Timeline & TL;DR micro-button
+        // Verify Story Timeline, removed TL;DR / View Image / Topic Chip Strip, and tight side-thumb + player-chip overlap
         const timelineCount = document.querySelectorAll('[data-story-timeline="true"]').length;
         const tldrBtnCount = document.querySelectorAll('.wire-micro-btn[data-action="analyze-topic-jump"]').length;
+        const viewImageBtnCount = document.querySelectorAll('[data-action="open-media-lightbox"]').length;
+        const topicStripCount = document.querySelectorAll('[data-news-topic-strip], .news-topic-chip-strip').length;
+        const cardsWithThumbAndChips = Array.from(document.querySelectorAll('.brief-card')).filter(
+          c => c.querySelector('.media-split-row .salient-thumb') && c.querySelector('.featured-players-strip')
+        );
+        const chipsInsideSplitCount = cardsWithThumbAndChips.filter(c =>
+          Boolean(c.querySelector('.media-split-row .featured-players-strip'))
+        ).length;
+        const overlappingCardCount = cardsWithThumbAndChips.filter(c => {
+          const thumbRect = c.querySelector('.media-split-row .salient-thumb')?.getBoundingClientRect();
+          const chipsRect = c.querySelector('.media-split-row .featured-players-strip')?.getBoundingClientRect();
+          return thumbRect && chipsRect && chipsRect.right <= thumbRect.left + 2;
+        }).length;
 
         // Toggle Compact Density Mode & revert to Rich
         document.querySelector('[data-action="toggle-feed-density"]')?.click();
@@ -5826,6 +5842,11 @@ async function main() {
           afterLatestSort,
           timelineCount,
           tldrBtnCount,
+          viewImageBtnCount,
+          topicStripCount,
+          cardsWithThumbAndChipsCount: cardsWithThumbAndChips.length,
+          chipsInsideSplitCount,
+          overlappingCardCount,
           compactApplied,
           richRestored,
           hasPushSection,
@@ -5843,7 +5864,15 @@ async function main() {
           digestAudit.afterLatestSort === 'latest',
         `3-mode News sort check failed: ${JSON.stringify(digestAudit)}`
       );
-      assert(digestAudit.tldrBtnCount >= 1, `Expected >=1 on-card TL;DR button: ${JSON.stringify(digestAudit)}`);
+      assert(digestAudit.tldrBtnCount === 0, `Expected 0 on-card TL;DR buttons: ${JSON.stringify(digestAudit)}`);
+      assert(digestAudit.viewImageBtnCount === 0, `Expected 0 on-card View Image buttons: ${JSON.stringify(digestAudit)}`);
+      assert(digestAudit.topicStripCount === 0, `Expected 0 topic filter strips in News & Film: ${JSON.stringify(digestAudit)}`);
+      assert(
+        digestAudit.cardsWithThumbAndChipsCount === 0 ||
+          (digestAudit.chipsInsideSplitCount === digestAudit.cardsWithThumbAndChipsCount &&
+            digestAudit.overlappingCardCount === digestAudit.cardsWithThumbAndChipsCount),
+        `Expected player chips to sit inside .media-split-row beside the right-rail thumbnail: ${JSON.stringify(digestAudit)}`
+      );
       assert(digestAudit.compactApplied && digestAudit.richRestored, `Compact/Rich density toggle failed: ${JSON.stringify(digestAudit)}`);
       assert(
         digestAudit.hasPushSection && digestAudit.pushChannelCount === 3 && digestAudit.hasDensitySetting,

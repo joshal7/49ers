@@ -50,7 +50,6 @@ import {
   normalizeMarkdownInlineLinksInText
 } from '../engine/linkIntegrity.js';
 import {
-  buildXBeatListSearchUrl,
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
@@ -66,13 +65,9 @@ import {
   isItemRead,
   computeCatchUpState,
   sortNewsFeedByMode,
-  extractTrendingTopicChips,
-  filterItemsByTopicChip,
   buildStoryTimelineEntries,
-  shouldShowItemAskAiButton,
   extractPresserTakeaways,
-  estimateItemEffortCue,
-  extractInlinePreviewVisual
+  estimateItemEffortCue
 } from '../engine/digestExperienceEngine.js';
 
 export const NEWS_NAV_CLUSTERS = [
@@ -576,7 +571,6 @@ export function renderWireItemCardHtml(
     rawCleanSummary && !isSummaryRedundantWithTitle(displayTitle, rawCleanSummary) ? rawCleanSummary : '';
 
   const effortCue = estimateItemEffortCue(item);
-  const inlineVisualPreview = !isCompactMode ? extractInlinePreviewVisual(item) : null;
 
   const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
   const thumbTargetHref = resolvedItemUrl || safeExtUrl || '';
@@ -640,14 +634,17 @@ export function renderWireItemCardHtml(
           .join(', ')
       : '';
 
-  const showAskAi = shouldShowItemAskAiButton(item, confirmingList.length);
-  const askAiPrompt = `Give me the 3-4 verified facts, scheme/roster impact, and any cap/health implications for: "${String(displayTitle || '').slice(0, 140)}"`;
   const rightMetaPrefix =
     hasPlayableVideo && item.duration
       ? `${item.duration} • `
       : effortCue
         ? `${effortCue} • `
         : '';
+
+  const playerChipsHtml =
+    !isCompactMode && item.mentionedPlayers?.length
+      ? `<div class="wire-card-players-row">${renderPlayerChipsStripHtml(item.mentionedPlayers, 4)}</div>`
+      : '';
 
   return `
     <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''} ${showLeadHero ? 'has-lead-hero' : ''} ${itemAlreadyRead ? 'is-read-item' : ''} ${isNewSinceVisit && !itemAlreadyRead ? 'is-new-item' : ''} ${isCompactMode ? 'compact-wire-card' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}" data-read-key="${esc(readKey)}">
@@ -665,7 +662,7 @@ export function renderWireItemCardHtml(
         <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(rightMetaPrefix)}${esc(formatRelativeAge(item.publishedAt))}</span>
       </div>
       <div class="${hasThumb ? 'media-split-row' : ''}">
-        <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
+        <div class="wire-card-body-col">
           <div class="wire-card-headline" style="font-weight:${isTweet ? '600' : '700'};font-size:${showLeadHero ? '14.5px' : isCompactMode ? '13.2px' : '13.6px'};line-height:1.38">
             ${
               resolvedItemUrl
@@ -673,97 +670,72 @@ export function renderWireItemCardHtml(
                 : esc(displayTitle)
             }
           </div>
-          ${cleanSummary ? `<div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(cleanSummary)}</div>` : ''}
+          ${cleanSummary ? `<div class="wire-card-summary">${escJargon(cleanSummary)}</div>` : ''}
           ${
-            confirmingList.length > 0
-              ? `<details class="compact-details confirming-reports-toggle" data-confirming-reports data-story-timeline="true">
-                   <summary class="compact-details-summary" style="justify-content:space-between">
-                     <span>+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}${relatedSourcesPreview ? ` · ${esc(relatedSourcesPreview)}` : ''}</span>
-                     <span class="mono" style="font-size:10px;color:var(--text-muted)">Timeline ▾</span>
-                   </summary>
-                   <div class="story-timeline-rail" style="margin-top:6px">
-                     ${timelineEntries
-                       .slice(0, 7)
-                       .map(entry => {
-                         const crAuthorHref = sanitizeExternalUrl(
-                           resolveItemAuthorProfileUrl(entry.rawItem, entry.href),
-                           entry.href
-                         );
-                         const lensCls =
-                           entry.lens === 'Official'
-                             ? 'badge-positive'
-                             : entry.lens === 'Film'
-                               ? 'badge-gold'
-                               : 'badge-neutral';
-                         return `<div class="story-timeline-step ${entry.isLead ? 'is-lead' : ''}">
-                           <span class="story-timeline-dot" aria-hidden="true"></span>
-                           <div class="story-timeline-content">
-                             <div class="story-timeline-head">
-                               <span class="badge ${lensCls}" style="font-size:9.3px;padding:1px 5px">${esc(entry.lens)}</span>
-                               ${
-                                 entry.timelineMarker
-                                   ? `<span class="mono story-timeline-marker">${esc(entry.timelineMarker)}</span>`
-                                   : ''
-                               }
-                               ${
-                                 crAuthorHref
-                                   ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(entry.author)}</strong></a>`
-                                   : `<strong>${esc(entry.author)}</strong>`
-                               }
-                               <span class="mono" style="color:var(--text-muted)">· ${esc(formatRelativeAge(entry.publishedAt))}</span>
-                             </div>
-                             ${
-                               entry.href && entry.href !== '#'
-                                 ? `<a href="${esc(entry.href)}" target="_blank" rel="noopener noreferrer" class="ext-link story-timeline-snippet" data-mark-read-key="${esc(readKey)}">${esc(entry.body.slice(0, 145))}${entry.body.length > 145 ? '…' : ''}</a>`
-                                 : `<div class="story-timeline-snippet">${esc(entry.body.slice(0, 145))}${entry.body.length > 145 ? '…' : ''}</div>`
-                             }
-                           </div>
-                         </div>`;
-                       })
-                       .join('')}
-                   </div>
-                 </details>`
+            showLinkedStory
+              ? `<div class="wire-card-actions-row">
+                  <a href="${esc(safeExtUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" data-mark-read-key="${esc(readKey)}">
+                    <span>Article: ${esc((item.externalTitle || item.outletName || 'Open Story').slice(0, 48))}</span>
+                    ${iconSvg('externalLink', 10)}
+                  </a>
+                </div>`
               : ''
           }
+          ${playerChipsHtml}
         </div>
         ${sideThumbHtml}
       </div>
       ${
-        showLinkedStory || inlineVisualPreview || showAskAi
-          ? `<div class="wire-card-actions-row">
-              ${
-                showLinkedStory
-                  ? `<a href="${esc(safeExtUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" data-mark-read-key="${esc(readKey)}">
-                       <span>Article: ${esc((item.externalTitle || item.outletName || 'Open Story').slice(0, 48))}</span>
-                       ${iconSvg('externalLink', 10)}
-                     </a>`
-                  : ''
-              }
-              ${
-                inlineVisualPreview
-                  ? `<button type="button" class="wire-micro-btn" data-action="open-media-lightbox"
-                             data-media-src="${esc(inlineVisualPreview.src)}"
-                             data-media-fallback="${esc(inlineVisualPreview.fallbackSrc)}"
-                             data-media-title="${esc(displayTitle.slice(0, 90))}"
-                             data-media-author="${esc(authorName)}"
-                             data-media-href="${esc(resolvedItemUrl || '')}">
-                       ${iconSvg('image', 11)}
-                       <span>${esc(inlineVisualPreview.label)}</span>
-                     </button>`
-                  : ''
-              }
-              ${
-                showAskAi
-                  ? `<button type="button" class="wire-micro-btn" data-action="analyze-topic-jump" data-prompt="${esc(askAiPrompt)}" title="Get a 3-point verified AI breakdown">
-                       ${iconSvg('sparkles', 11)}
-                       <span>TL;DR</span>
-                     </button>`
-                  : ''
-              }
-            </div>`
+        confirmingList.length > 0
+          ? `<details class="compact-details confirming-reports-toggle" data-confirming-reports data-story-timeline="true">
+               <summary class="compact-details-summary" style="justify-content:space-between">
+                 <span>+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}${relatedSourcesPreview ? ` · ${esc(relatedSourcesPreview)}` : ''}</span>
+                 <span class="mono" style="font-size:10px;color:var(--text-muted)">Timeline ▾</span>
+               </summary>
+               <div class="story-timeline-rail" style="margin-top:6px">
+                 ${timelineEntries
+                   .slice(0, 7)
+                   .map(entry => {
+                     const crAuthorHref = sanitizeExternalUrl(
+                       resolveItemAuthorProfileUrl(entry.rawItem, entry.href),
+                       entry.href
+                     );
+                     const lensCls =
+                       entry.lens === 'Official'
+                         ? 'badge-positive'
+                         : entry.lens === 'Film'
+                           ? 'badge-gold'
+                           : 'badge-neutral';
+                     return `<div class="story-timeline-step ${entry.isLead ? 'is-lead' : ''}">
+                       <span class="story-timeline-dot" aria-hidden="true"></span>
+                       <div class="story-timeline-content">
+                         <div class="story-timeline-head">
+                           <span class="badge ${lensCls}" style="font-size:9.3px;padding:1px 5px">${esc(entry.lens)}</span>
+                           ${
+                             entry.timelineMarker
+                               ? `<span class="mono story-timeline-marker">${esc(entry.timelineMarker)}</span>`
+                               : ''
+                           }
+                           ${
+                             crAuthorHref
+                               ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(entry.author)}</strong></a>`
+                               : `<strong>${esc(entry.author)}</strong>`
+                           }
+                           <span class="mono" style="color:var(--text-muted)">· ${esc(formatRelativeAge(entry.publishedAt))}</span>
+                         </div>
+                         ${
+                           entry.href && entry.href !== '#'
+                             ? `<a href="${esc(entry.href)}" target="_blank" rel="noopener noreferrer" class="ext-link story-timeline-snippet" data-mark-read-key="${esc(readKey)}">${esc(entry.body.slice(0, 145))}${entry.body.length > 145 ? '…' : ''}</a>`
+                             : `<div class="story-timeline-snippet">${esc(entry.body.slice(0, 145))}${entry.body.length > 145 ? '…' : ''}</div>`
+                         }
+                       </div>
+                     </div>`;
+                   })
+                   .join('')}
+               </div>
+             </details>`
           : ''
       }
-      ${!isCompactMode && item.mentionedPlayers?.length ? renderPlayerChipsStripHtml(item.mentionedPlayers, 4) : ''}
       ${
         hasPlayableVideo
           ? renderVideoEmbedOrFacade(
@@ -948,7 +920,7 @@ export function renderNewsViewHtml({
               ${iconSvg('bolt', 12)}
               <span>${isSyncingWire ? 'Sync…' : esc(syncAge)}</span>
             </button>
-            <button type="button" class="btn-ghost btn-compact" data-action="open-settings" title="Filter Beat Sources &amp; Reporters">
+            <button type="button" class="btn-ghost btn-compact" data-action="open-settings" data-settings-focus="sources" title="Direct X Beat Lists, News Outlets &amp; Beat Reporters">
               ${iconSvg('settings', 13)}
               <span>Sources${mutedCount > 0 ? ` (${mutedCount})` : ''}</span>
             </button>
@@ -978,30 +950,10 @@ export function renderNewsViewHtml({
         `
         ).join('')}
       </div>
-
-      <details class="compact-details">
-        <summary class="compact-details-summary">
-          <span>Direct X Beat Lists</span>
-        </summary>
-        <div class="x-beat-launch-strip" aria-label="Live X Beat Search" style="margin-top:6px">
-          <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Beat Reporters, Columnists &amp; Official Team handles from Settings">
-            <span>Trusted Beat</span>${iconSvg('externalLink', 10)}
-          </a>
-          <a href="${esc(buildXBeatListSearchUrl('film', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Film, Analytics &amp; Podcast Analysts from Settings">
-            <span>Film &amp; Analysts</span>${iconSvg('externalLink', 10)}
-          </a>
-          <a href="${esc(buildXBeatListSearchUrl('injuries', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="Live 49ers sideline, practice &amp; warmup injury updates across Tier 1–3 beat voices">
-            <span>Injury Scoops</span>${iconSvg('externalLink', 10)}
-          </a>
-          <a href="${esc(buildXBeatListSearchUrl('insiders', { reporters: appData?.reporters?.reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 National NFL Insiders, Draft Evaluators &amp; League Analysts scoped to 49ers">
-            <span>NFL Insiders</span>${iconSvg('externalLink', 10)}
-          </a>
-        </div>
-      </details>
     </div>
   `;
 
-  // Compute active list for trending chips & catch-up watermark
+  // Compute active list for search & catch-up watermark
   const baseActivePool =
     activeFilter === 'all'
       ? dedupedRaw
@@ -1015,31 +967,17 @@ export function renderNewsViewHtml({
               ? dedupedFilmAndTrench
               : dedupedTradesAndRoster;
 
-  const trendingChips = extractTrendingTopicChips(baseActivePool, {
-    activeCategory: activeFilter,
-    appData,
-    nowMs,
-    maxChips: 6
-  });
-  const effectiveTopicKey =
-    newsTopicFilter && newsTopicFilter !== 'all' && trendingChips.some(c => c.key === newsTopicFilter)
-      ? newsTopicFilter
-      : 'all';
-
   const cleanSearchQuery = String(newsSearchQuery || '').trim();
   const applyTopicAndSearch = list => {
-    let out = effectiveTopicKey !== 'all' ? filterItemsByTopicChip(list, effectiveTopicKey) : list;
-    if (cleanSearchQuery) {
-      const tokens = cleanSearchQuery.toLowerCase().split(/\s+/).filter(Boolean);
-      out = out.filter(it => {
-        const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''} ${it.author || ''} ${it.outletName || ''} ${(it.mentionedPlayers || []).map(p => p.name).join(' ')}`.toLowerCase();
-        return tokens.every(tok => hay.includes(tok));
-      });
-    }
-    return out;
+    if (!cleanSearchQuery) return list;
+    const tokens = cleanSearchQuery.toLowerCase().split(/\s+/).filter(Boolean);
+    return list.filter(it => {
+      const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''} ${it.author || ''} ${it.outletName || ''} ${(it.mentionedPlayers || []).map(p => p.name).join(' ')}`.toLowerCase();
+      return tokens.every(tok => hay.includes(tok));
+    });
   };
 
-  // Slim Sort (`Top+Latest` default | `Top` | `Latest`) + Trending Topic Chips strip right below `.news-toolbar-card`
+  // Slim Sort (`Top+Latest` default | `Top` | `Latest`) strip right below `.news-toolbar-card`
   const digestControlsStrip = `
     <div class="news-digest-controls" data-news-digest-controls>
       <div class="news-sort-row">
@@ -1066,29 +1004,6 @@ export function renderNewsViewHtml({
             : ''
         }
       </div>
-      ${
-        trendingChips.length >= 2
-          ? `<div class="news-topic-chip-strip" role="group" aria-label="Trending Topics and Players" data-news-topic-strip>
-               <button type="button" class="topic-chip-btn ${effectiveTopicKey === 'all' ? 'active' : ''}" data-action="set-news-topic" data-topic-key="all">
-                 <span>All</span>
-               </button>
-               ${trendingChips
-                 .map(
-                   ch => `
-                 <button type="button"
-                         class="topic-chip-btn ${effectiveTopicKey === ch.key ? 'active' : ''}"
-                         data-action="set-news-topic"
-                         data-topic-key="${esc(ch.key)}"
-                         title="Filter by ${esc(ch.fullLabel || ch.label)}">
-                   <span>${esc(ch.label)}</span>
-                   <span class="mono topic-chip-cnt">${ch.count}</span>
-                 </button>
-               `
-                 )
-                 .join('')}
-             </div>`
-          : ''
-      }
     </div>
   `;
 
@@ -1148,7 +1063,7 @@ export function renderNewsViewHtml({
     const gdWindow = evaluateGameDayAboveBriefWindow(appData, dailyBrief, nowMs, {
       requireAiSource: requireAiPostGameBrief
     });
-    const isNarrowedByTopicOrSearch = effectiveTopicKey !== 'all' || Boolean(cleanSearchQuery);
+    const isNarrowedByTopicOrSearch = Boolean(cleanSearchQuery);
     const scopedRaw = applyTopicAndSearch(dedupedRaw);
 
     if (isNarrowedByTopicOrSearch) {

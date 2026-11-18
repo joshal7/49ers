@@ -1706,11 +1706,19 @@ function bindEvents() {
         break;
       }
 
-      case 'open-settings':
+      case 'open-settings': {
+        const focusSection = btn.getAttribute('data-settings-focus') || '';
         state.pushStatusNotice = '';
         state.sheetMode = 'settings';
         renderSheet();
+        if (focusSection === 'sources') {
+          requestAnimationFrame(() => {
+            const targetEl = document.getElementById('settingsSourcesSection');
+            if (targetEl) targetEl.scrollIntoView({ behavior: 'instant', block: 'start' });
+          });
+        }
         break;
+      }
 
       case 'open-search':
         state.sheetMode = 'search';
