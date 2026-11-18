@@ -1225,6 +1225,66 @@ export default {
       return jsonResponse({ analyses, episodes }, 200, cors);
     }
 
+    // Quiet Opt-In Web Push Alerts (Zero Clickbait, Zero Score Spam)
+    if (request.method === 'GET' && url.pathname === '/api/push-config') {
+      const vapidPublicKey = String(env.VAPID_PUBLIC_KEY || '').trim();
+      return jsonResponse(
+        {
+          supported: Boolean(vapidPublicKey),
+          vapidPublicKey: vapidPublicKey || null,
+          channels: ['tier1Breaking', 'dailyBriefReady', 'practiceDowngrades']
+        },
+        200,
+        cors
+      );
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/push-subscribe') {
+      const body = await parseJsonBodySafe(request);
+      const endpoint = String(body?.subscription?.endpoint || '').trim();
+      if (!endpoint || !/^https:\/\//i.test(endpoint)) {
+        return jsonResponse({ error: 'Valid HTTPS push subscription endpoint required' }, 400, cors);
+      }
+      const channels = {
+        tier1Breaking: body?.channels?.tier1Breaking !== false,
+        dailyBriefReady: body?.channels?.dailyBriefReady !== false,
+        practiceDowngrades: Boolean(body?.channels?.practiceDowngrades)
+      };
+      const subHash = await hashKey(endpoint);
+      const record = {
+        id: subHash,
+        endpoint,
+        keys: body?.subscription?.keys || {},
+        channels,
+        author: String(body?.author || 'Faithful').slice(0, 40),
+        updatedAt: new Date().toISOString()
+      };
+      if (env.SHARED_CACHE) {
+        await env.SHARED_CACHE.put(`push:sub:${subHash}`, JSON.stringify(record), {
+          expirationTtl: 60 * 60 * 24 * 90
+        });
+        const idx = (await env.SHARED_CACHE.get('index:push_subs', 'json')) || [];
+        const nextIdx = [subHash, ...idx.filter(x => x !== subHash)].slice(0, 100);
+        await env.SHARED_CACHE.put('index:push_subs', JSON.stringify(nextIdx));
+      }
+      return jsonResponse({ subscribed: true, id: subHash, channels }, 200, cors);
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/push-unsubscribe') {
+      const body = await parseJsonBodySafe(request);
+      const endpoint = String(body?.endpoint || body?.subscription?.endpoint || '').trim();
+      if (endpoint && env.SHARED_CACHE) {
+        const subHash = await hashKey(endpoint);
+        await env.SHARED_CACHE.delete(`push:sub:${subHash}`);
+        const idx = (await env.SHARED_CACHE.get('index:push_subs', 'json')) || [];
+        await env.SHARED_CACHE.put(
+          'index:push_subs',
+          JSON.stringify(idx.filter(x => x !== subHash))
+        );
+      }
+      return jsonResponse({ subscribed: false }, 200, cors);
+    }
+
     if (request.method === 'POST' && url.pathname === '/api/matchup-intel') {
       const body = await parseJsonBodySafe(request);
       if (!body || !body.prompt) {

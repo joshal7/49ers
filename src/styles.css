@@ -6478,3 +6478,564 @@ a.raw-item-thumb.salient-thumb:hover {
     display: none;
   }
 }
+
+/* ==========================================================================
+   High-Signal Information Digestion Upgrades (Minimalistic & Zero-Overflow)
+   ========================================================================== */
+
+/* Header Search Icon Button */
+.header-search-btn {
+  padding: 0 9px;
+  min-width: 34px;
+}
+
+/* Bottom Nav Subtle Unread Badge */
+.nav-tab-btn {
+  position: relative;
+}
+
+.nav-unread-dot {
+  position: absolute;
+  top: 4px;
+  right: calc(50% - 20px);
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--scarlet-bright);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 15px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+/* Pull-to-Refresh Pill */
+.pull-refresh-pill {
+  margin: 0 auto 8px;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  transition: transform 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.pull-refresh-pill.armed {
+  color: var(--gold-bright);
+  border-color: var(--gold-border);
+}
+
+/* Keep News Toolbar Head ultra-compact on narrow portrait screens */
+.news-toolbar-actions {
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.news-toolbar-actions .btn-compact {
+  padding: 4px 7px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Slim Sort (`Top + Latest` | `Top` | `Latest`) + Trending Topic Chips Strip */
+.news-digest-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.news-sort-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.news-sort-seg {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  width: auto;
+  padding: 2px;
+  gap: 2px;
+}
+
+.news-sort-btn {
+  min-height: 27px;
+  padding: 3px 9px;
+  font-size: 11.2px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.news-search-active-pill {
+  min-height: 27px;
+  padding: 3px 9px;
+  font-size: 11px;
+  gap: 5px;
+}
+
+.news-topic-chip-strip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 1px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.news-topic-chip-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.topic-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 3.5px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 11.2px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.topic-chip-btn.active {
+  background: var(--scarlet-soft);
+  border-color: var(--scarlet-bright);
+  color: var(--text-primary);
+}
+
+.topic-chip-cnt {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.topic-chip-btn.active .topic-chip-cnt {
+  color: var(--gold-bright);
+}
+
+/* Catch-Up Watermark Bar, Home Pill & Read/Seen Dimming */
+.catchup-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 11px;
+  margin-bottom: 8px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--gold-border);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.catchup-bar-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.new-item-dot {
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background: var(--scarlet-bright);
+  flex-shrink: 0;
+}
+
+.catchup-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.catchup-divider::before,
+.catchup-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.home-catchup-pill-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.catchup-home-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--scarlet-soft);
+  border: 1px solid rgba(212, 25, 25, 0.32);
+  color: var(--text-primary);
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.brief-card.is-read-item,
+.home-wire-item.is-read-item,
+.home-article-row.is-read-item {
+  opacity: 0.72;
+}
+
+.brief-card.is-read-item .wire-card-headline {
+  font-weight: 500 !important;
+}
+
+/* Compact Scan Density Mode */
+.wire-list-compact {
+  padding: 10px;
+}
+
+.brief-card.compact-wire-card {
+  padding: 8px 10px;
+  gap: 4px;
+}
+
+/* Chronological Full-Coverage Story Timeline */
+.story-timeline-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border-left: 1.5px solid var(--gold-border);
+  margin-left: 5px;
+  padding-left: 10px;
+}
+
+.story-timeline-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.story-timeline-dot {
+  position: absolute;
+  left: -14.5px;
+  top: 5px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--gold);
+}
+
+.story-timeline-step.is-lead .story-timeline-dot {
+  background: var(--scarlet-bright);
+  border-color: var(--scarlet-bright);
+}
+
+.story-timeline-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  font-size: 11.2px;
+}
+
+.story-timeline-marker {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.story-timeline-snippet {
+  font-size: 11.8px;
+  line-height: 1.38;
+  color: var(--text-secondary);
+}
+
+/* Subtle Card Action Strip (Article Link + Expand Chart + TL;DR) */
+.wire-card-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.wire-micro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2.5px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+  font-size: 10.8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.14s ease, color 0.14s ease;
+}
+
+.wire-micro-btn:hover {
+  border-color: var(--gold-border);
+  color: var(--gold-bright);
+}
+
+/* Presser Takeaways Collapsible Strip */
+.presser-strip-card {
+  padding: 10px 13px;
+}
+
+.presser-strip-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.presser-strip-summary::-webkit-details-marker {
+  display: none;
+}
+
+.presser-strip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--gold-soft);
+  color: var(--gold-bright);
+  flex-shrink: 0;
+}
+
+.presser-strip-title {
+  font-size: 12.8px;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.presser-strip-speakers {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.presser-strip-meta {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.presser-strip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.presser-quote-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.presser-quote-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.presser-quote-body {
+  font-size: 12.5px;
+  line-height: 1.44;
+  color: var(--text-secondary);
+}
+
+/* Directional Delta Chips (Health, Stats, Power Rankings, Playoffs) */
+.delta-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 5px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.3;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.delta-chip.positive {
+  background: var(--emerald-soft);
+  color: var(--emerald);
+}
+
+.delta-chip.danger {
+  background: var(--crimson-soft);
+  color: var(--crimson);
+}
+
+/* Universal Search Sheet */
+.universal-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.universal-search-wrap .search-input-wrap {
+  position: relative;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--bg-card-alt);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.search-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.search-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.search-result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.search-result-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-alt);
+  color: var(--text-primary);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.search-result-row:hover {
+  border-color: var(--gold-border);
+  text-decoration: none;
+}
+
+.search-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--gold-soft);
+  color: var(--gold-bright);
+  flex-shrink: 0;
+}
+
+.search-result-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.search-result-title {
+  font-size: 12.8px;
+  line-height: 1.32;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.search-result-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-row-arrow {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Inline Chart / Image Preview Lightbox */
+.media-lightbox-card {
+  max-width: 680px;
+}
+
+.media-lightbox-body {
+  padding: 12px 14px 14px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.media-lightbox-img-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.media-lightbox-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+  object-fit: contain;
+}
+
+@media (max-width: 390px) {
+  .header-actions .header-btn-label {
+    display: none;
+  }
+}

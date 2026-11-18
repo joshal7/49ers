@@ -65,6 +65,14 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js';
 import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
+import {
+  getItemReadKey,
+  isItemRead,
+  computeCatchUpState,
+  computePracticeTrajectoryDelta,
+  formatRankDeltaCue,
+  formatPlayoffOddsDeltaCue
+} from '../engine/digestExperienceEngine.js';
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
@@ -76,7 +84,8 @@ export function renderHomeDashboardHtml({
   filteredRawItems,
   userPrefs = null,
   activeVideosSet = new Set(),
-  isCustomizingLayout
+  isCustomizingLayout,
+  sessionLastVisitedAt = null
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const customizeBar = `
@@ -118,7 +127,8 @@ export function renderHomeDashboardHtml({
         filteredRawItems,
         userPrefs,
         activeVideosSet,
-        isCustomizingLayout
+        isCustomizingLayout,
+        sessionLastVisitedAt
       })
     )
     .join('');
@@ -158,7 +168,8 @@ function renderSingleDashboardCard({
   filteredRawItems,
   userPrefs = null,
   activeVideosSet = new Set(),
-  isCustomizingLayout
+  isCustomizingLayout,
+  sessionLastVisitedAt = null
 }) {
   const reorderControlsHtml = isCustomizingLayout
     ? `
@@ -230,7 +241,13 @@ function renderSingleDashboardCard({
         ).sort(rankHomeSalience),
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
-      const topArticles = balanceFeedTopSalience(
+      // Anti-redundancy scrub: skip articles already linked inside topTweets on Home
+      const tweetLinkedNormUrls = new Set();
+      for (const tw of topTweets) {
+        if (tw.externalUrl) tweetLinkedNormUrls.add(String(tw.externalUrl).trim().toLowerCase().replace(/\/+$/, ''));
+        if (tw.url) tweetLinkedNormUrls.add(String(tw.url).trim().toLowerCase().replace(/\/+$/, ''));
+      }
+      const allHomeArticles = balanceFeedTopSalience(
         deduplicateAndGroupWireItems(
           prioritizedHomeStream.filter(
             it =>
@@ -243,7 +260,27 @@ function renderSingleDashboardCard({
           { nowMs: nowHomeMs, preserveFormat: 'articles', appData }
         ).sort(rankHomeSalience),
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
-      ).slice(0, 3);
+      );
+      const nonDupHomeArticles = allHomeArticles.filter(art => {
+        const normU = String(art.url || '').trim().toLowerCase().replace(/\/+$/, '');
+        return !normU || !tweetLinkedNormUrls.has(normU);
+      });
+      const topArticles = (nonDupHomeArticles.length >= 2 ? nonDupHomeArticles : allHomeArticles).slice(0, 3);
+      const readKeysSet = new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : []);
+      const homeCatchUp = computeCatchUpState(
+        rawList,
+        { lastVisitedAt: sessionLastVisitedAt, readKeys: readKeysSet },
+        nowHomeMs
+      );
+      const homeCatchUpBarHtml = homeCatchUp.hasWatermark
+        ? `<div class="home-catchup-pill-row">
+             <button type="button" class="catchup-home-chip" data-action="jump-view" data-target-tab="news">
+               <span class="new-item-dot" aria-hidden="true"></span>
+               <span><strong>${homeCatchUp.newCount} new</strong> since ${esc(homeCatchUp.lastVisitedLabel)}</span>
+               ${iconSvg('arrowRight', 11)}
+             </button>
+           </div>`
+        : '';
 
       const rosterPlayers = appData?.roster?.players || [];
       const breakingTopHomeHtml =
@@ -271,6 +308,7 @@ function renderSingleDashboardCard({
 
       bodyHtml = `
         <div style="display:flex;flex-direction:column;gap:10px">
+          ${homeCatchUpBarHtml}
           ${breakingTopHomeHtml}
           ${homeDailyBriefHtml}
 
@@ -325,8 +363,10 @@ function renderSingleDashboardCard({
                           extraClass: 'home-wire-thumb'
                         })
                       : '';
+                    const twReadKey = getItemReadKey(tw);
+                    const twIsRead = isItemRead(tw, readKeysSet);
                     return `
-                  <div class="home-wire-item ${isUrgentTw ? 'breaking-elevated' : ''}">
+                  <div class="home-wire-item ${isUrgentTw ? 'breaking-elevated' : ''} ${twIsRead ? 'is-read-item' : ''}" data-read-key="${esc(twReadKey)}">
                     <div class="home-wire-meta">
                       <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0">
                         ${
@@ -342,14 +382,14 @@ function renderSingleDashboardCard({
                     </div>
                     <div class="${twThumbHtml ? 'media-split-row' : ''}">
                       <div style="min-width:0">
-                        <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
+                        <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link" data-mark-read-key="${esc(twReadKey)}">
                           ${esc(fullShortTweet)}
                           <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
                         </a>
                         ${
                           showExtChip
                             ? `<div style="margin-top:4px">
-                                <a href="${esc(safeTwExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                                <a href="${esc(safeTwExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" data-mark-read-key="${esc(twReadKey)}">
                                   <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
                                   ${iconSvg('external', 10)}
                                 </a>
@@ -400,8 +440,10 @@ function renderSingleDashboardCard({
                           extraClass: 'home-article-thumb'
                         })
                       : '';
+                    const artReadKey = getItemReadKey(art);
+                    const artIsRead = isItemRead(art, readKeysSet);
                     return `
-                  <a href="${esc(safeArtUrl)}" target="_blank" rel="noopener noreferrer" class="home-article-row">
+                  <a href="${esc(safeArtUrl)}" target="_blank" rel="noopener noreferrer" class="home-article-row ${artIsRead ? 'is-read-item' : ''}" data-read-key="${esc(artReadKey)}" data-mark-read-key="${esc(artReadKey)}">
                     <div style="min-width:0;flex:1">
                       <div style="font-weight:700;font-size:12.6px;line-height:1.34;color:var(--text-primary)">${esc(art.title)}</div>
                       <div style="font-size:11px;color:var(--text-muted);margin-top:3px;display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap">
@@ -561,13 +603,18 @@ function renderSingleDashboardCard({
           ? resolveGameDayInjuryRows(rawPr, sfGameDay, { activeRosterPlayers: sfActive53 })
           : rawPr
       ).slice(0, 4);
+      const healthSnapMap = userPrefs?.deltaSnapshots?.healthByPlayer || {};
       const sfInjUrl = appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/';
       externalHeaderLink = `<a href="${esc(sfInjUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="display:flex;flex-direction:column;gap:6px">
           ${pr
-            .map(
-              p => `
+            .map(p => {
+              const delta = computePracticeTrajectoryDelta(p, healthSnapMap[String(p.playerId)] || null);
+              const deltaChipHtml = delta
+                ? `<span class="delta-chip ${delta.tone} mono" data-health-delta>${esc(delta.displayLabel)}</span>`
+                : '';
+              return `
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;padding:6px 9px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--border-subtle);cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}">
               <div style="display:flex;align-items:center;gap:8px;min-width:0">
                 ${renderPlayerAvatarHtml(p, 28)}
@@ -575,10 +622,13 @@ function renderSingleDashboardCard({
                   <strong>${esc(p.name)}</strong> <span style="color:var(--text-muted)">(${esc(p.position)} • ${esc(p.injuryType)})</span>
                 </span>
               </div>
-              <span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(p.playBadgeLabel)}</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;flex-shrink:0">
+                ${deltaChipHtml}
+                <span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(p.playBadgeLabel)}</span>
+              </span>
             </div>
-          `
-            )
+          `;
+            })
             .join('')}
         </div>
       `;
@@ -697,22 +747,30 @@ function renderSingleDashboardCard({
       const berthPct = sf.makePlayoffsPct ?? 93.0;
       const divPct = sf.winDivisionPct ?? 82.6;
       const byePct = sf.seed1ByePct ?? 34.5;
+      const baseSf = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
+      const refSf =
+        Object.keys(userPrefs?.playoffForcedWinners || {}).length > 0
+          ? baseSf
+          : userPrefs?.deltaSnapshots?.playoffBaseline || {};
+      const berthDelta = formatPlayoffOddsDeltaCue(berthPct, refSf.makePlayoffsPct);
+      const divDelta = formatPlayoffOddsDeltaCue(divPct, refSf.winDivisionPct);
+      const byeDelta = formatPlayoffOddsDeltaCue(byePct, refSf.seed1ByePct);
       externalHeaderLink = `<a href="https://www.nfl.com/standings/playoff-picture" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Standings</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div class="kpi-grid">
           <div class="kpi-box">
             <div class="kpi-label">Playoff Berth</div>
-            <div class="kpi-val mono" style="color:var(--emerald)">${berthPct}%</div>
+            <div class="kpi-val mono" style="color:var(--emerald)">${berthPct}%${berthDelta ? ` <span class="delta-chip ${berthDelta.tone}">${esc(berthDelta.text)}</span>` : ''}</div>
             ${renderMiniMeterHtml(berthPct, 'emerald')}
           </div>
           <div class="kpi-box">
             <div class="kpi-label">Win NFC West</div>
-            <div class="kpi-val mono" style="color:var(--gold-bright)">${divPct}%</div>
+            <div class="kpi-val mono" style="color:var(--gold-bright)">${divPct}%${divDelta ? ` <span class="delta-chip ${divDelta.tone}">${esc(divDelta.text)}</span>` : ''}</div>
             ${renderMiniMeterHtml(divPct, 'gold')}
           </div>
           <div class="kpi-box">
             <div class="kpi-label">#1 Seed Bye</div>
-            <div class="kpi-val mono">${byePct}%</div>
+            <div class="kpi-val mono">${byePct}%${byeDelta ? ` <span class="delta-chip ${byeDelta.tone}">${esc(byeDelta.text)}</span>` : ''}</div>
             ${renderMiniMeterHtml(byePct, 'scarlet')}
           </div>
         </div>
@@ -795,12 +853,14 @@ function renderSingleDashboardCard({
           sfRecord: appData?.meta?.teamRecord || null
         }
       );
+      const pwrDelta = formatRankDeltaCue(pwr.consensusRank, pwr.previousRank);
+      const statSnaps = userPrefs?.deltaSnapshots?.statsByKey || {};
       externalHeaderLink = `<a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:12.5px">
           ${
             pwr.consensusRank != null
-              ? `<span><strong>Consensus Power Rank:</strong> #${pwr.consensusRank} NFL</span>
+              ? `<span><strong>Consensus Power Rank:</strong> #${pwr.consensusRank} NFL${pwrDelta ? ` <span class="delta-chip ${pwrDelta.tone} mono">${esc(pwrDelta.text)}</span>` : ''}</span>
           <span class="badge badge-gold mono">Range ${esc(pwr.rangeShort || `#${pwr.consensusRank}`)}</span>`
               : `<span><strong>Power Rankings:</strong> Updating post-Week ${esc(String(pwr.latestCompletedWeek || ''))}</span>
           <span class="badge badge-gold mono">Syncing</span>`
@@ -808,15 +868,16 @@ function renderSingleDashboardCard({
         </div>
         <div class="kpi-grid">
           ${topRanks
-            .map(
-              r => `
+            .map(r => {
+              const rDelta = formatRankDeltaCue(r.rank, statSnaps[r.key]?.rank);
+              return `
             <div class="kpi-box" ${r.key ? `style="cursor:pointer" role="button" tabindex="0" data-action="open-stat-rank-modal" data-rank-scope="team" data-rank-key="${esc(r.key)}"` : ''}>
               <div class="kpi-label">${escJargon(r.label.replace('Offensive ', ''))}</div>
-              <div class="kpi-val mono" style="font-size:13px">#${r.rank} (${esc(r.displayValue)})</div>
+              <div class="kpi-val mono" style="font-size:13px">#${r.rank}${rDelta ? ` <span class="delta-chip ${rDelta.tone}">${esc(rDelta.text)}</span>` : ''} (${esc(r.displayValue)})</div>
               ${renderMiniMeterHtml(((33 - Number(r.rank || 16)) / 32) * 100, r.rank <= 8 ? 'emerald' : 'gold')}
             </div>
-          `
-            )
+          `;
+            })
             .join('')}
         </div>
       `;

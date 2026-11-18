@@ -95,6 +95,27 @@ import {
   computeNewsSalienceScore
 } from '../src/engine/antiFluffFilter.js';
 import {
+  NEWS_SORT_MODES,
+  normalizeNewsSortMode,
+  getItemReadKey,
+  isItemRead,
+  computeCatchUpState,
+  sortNewsFeedByMode,
+  extractTrendingTopicChips,
+  filterItemsByTopicChip,
+  classifySourceLensTag,
+  buildStoryTimelineEntries,
+  shouldShowItemAskAiButton,
+  computePracticeTrajectoryDelta,
+  formatRankDeltaCue,
+  formatPlayoffOddsDeltaCue,
+  extractPresserTakeaways,
+  estimateItemEffortCue,
+  extractInlinePreviewVisual,
+  runUniversalSearch,
+  urlBase64ToUint8Array
+} from '../src/engine/digestExperienceEngine.js';
+import {
   extractBeatAttributionFromText,
   corroborateAndAnnotateWireStream,
   buildXBeatListSearchUrl,
@@ -11222,6 +11243,173 @@ await testAsync(
     assert.ok(briefHtml.includes('>Article<'), 'Daily Brief Sources drawer must label promoted link-drop as Article');
   }
 );
+
+test('Digest Experience Engine: Catch-up watermark, 3-mode sort (Top+Latest default), topic chips, story timeline, deltas, presser takeaways, effort cues & universal search', () => {
+  const nowMs = Date.parse('2026-11-17T22:00:00Z');
+  assert.equal(normalizeNewsSortMode(''), 'hybrid');
+  assert.equal(normalizeNewsSortMode('invalid'), 'hybrid');
+  assert.equal(NEWS_SORT_MODES[0].key, 'hybrid');
+  assert.equal(NEWS_SORT_MODES[0].label, 'Top + Latest');
+
+  // 1. Catch-Up Watermark & Read State
+  const sampleItems = [
+    {
+      id: 'item_new_1',
+      type: 'tweet',
+      title: 'Kyle Shanahan said Mike Evans is trending up for Week 11 practice.',
+      fullText: 'Kyle Shanahan said WR Mike Evans (Achilles) is flying to Colorado Springs and could return to Wednesday practice.',
+      author: 'Matt Maiocco',
+      outletName: 'NBC Sports Bay Area',
+      url: 'https://x.com/MaioccoNBCS/status/1001',
+      publishedAt: '2026-11-17T21:30:00Z',
+      storyRank: 75,
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }]
+    },
+    {
+      id: 'item_new_2',
+      type: 'article',
+      category: 'film',
+      title: 'All-22 Breakdown: How Brock Purdy Dissected Two-High Shells vs Dallas',
+      summary: 'Purdy posted +0.42 EPA/play off play-action motion stacks.',
+      author: "JT O'Sullivan",
+      outletName: 'The QB School',
+      url: 'https://example.com/purdy-all22',
+      publishedAt: '2026-11-17T20:15:00Z',
+      storyRank: 92,
+      wordCount: 1100,
+      mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy' }]
+    },
+    {
+      id: 'item_old_1',
+      type: 'tweet',
+      title: 'John Lynch told reporters Renardo Green is day-to-day with back tightness.',
+      fullText: 'John Lynch told reporters CB Renardo Green (back) remains day-to-day after Sunday.',
+      author: 'Adam Schefter',
+      outletName: 'ESPN',
+      isNationalInsider: true,
+      url: 'https://x.com/AdamSchefter/status/1002',
+      publishedAt: '2026-11-17T16:00:00Z',
+      storyRank: 88,
+      mentionedPlayers: [{ id: '4427325', name: 'Renardo Green' }]
+    }
+  ];
+
+  // First visit (no lastVisitedAt) must never show a fake watermark
+  const firstVisit = computeCatchUpState(sampleItems, { lastVisitedAt: null, readKeys: [] }, nowMs);
+  assert.equal(firstVisit.hasWatermark, false);
+  assert.equal(firstVisit.newCount, 0);
+
+  // Returning visit after 18:00Z sees 2 new items (item_new_1 & item_new_2)
+  const returning = computeCatchUpState(
+    sampleItems,
+    { lastVisitedAt: '2026-11-17T18:00:00Z', readKeys: [] },
+    nowMs
+  );
+  assert.equal(returning.hasWatermark, true);
+  assert.equal(returning.newCount, 2);
+  assert.equal(returning.watermarkInsertBeforeIdx, 2);
+
+  // Marking one read reduces newCount to 1
+  const readSet = new Set([getItemReadKey(sampleItems[0])]);
+  assert.equal(isItemRead(sampleItems[0], readSet), true);
+  const afterRead = computeCatchUpState(
+    sampleItems,
+    { lastVisitedAt: '2026-11-17T18:00:00Z', readKeys: readSet },
+    nowMs
+  );
+  assert.equal(afterRead.newCount, 1);
+
+  // 2. 3-mode Sorting (`hybrid`, `top`, `latest`)
+  const latestSorted = sortNewsFeedByMode(sampleItems, 'latest', { nowMs });
+  assert.equal(latestSorted[0].id, 'item_new_1', 'Latest mode must sort strictly newest first');
+  const topSorted = sortNewsFeedByMode(sampleItems, 'top', { nowMs });
+  assert.equal(topSorted[0].id, 'item_new_2', 'Top mode must prioritize highest salience');
+  const hybridSorted = sortNewsFeedByMode(sampleItems, 'hybrid', { nowMs });
+  assert.equal(hybridSorted.length, 3);
+
+  // 3. Trending Topic Chips & Filtering
+  const chipPool = [...sampleItems, { ...sampleItems[0], id: 'item_new_3', url: 'https://x.com/MaioccoNBCS/status/1003' }];
+  const chips = extractTrendingTopicChips(chipPool, { activeCategory: 'all', nowMs });
+  assert.ok(chips.some(c => c.key === 'topic:injuries'), 'Expected Injuries trending chip');
+  assert.ok(chips.some(c => c.key === 'player:16737'), 'Expected Mike Evans player chip');
+  const injFiltered = filterItemsByTopicChip(chipPool, 'topic:injuries');
+  assert.ok(injFiltered.length >= 2 && injFiltered.length < chipPool.length);
+
+  // 4. Story Timeline & Source-Lens Tagging
+  assert.equal(classifySourceLensTag({ outletName: '49ers.com' }), 'Official');
+  assert.equal(classifySourceLensTag(sampleItems[1]), 'Film');
+  assert.equal(classifySourceLensTag(sampleItems[2]), 'National');
+  assert.equal(classifySourceLensTag(sampleItems[0]), 'Beat');
+  const timeline = buildStoryTimelineEntries(sampleItems[0], [sampleItems[2]], sampleItems);
+  assert.equal(timeline.length, 2);
+  assert.equal(timeline[0].id, 'item_old_1', 'Timeline must order oldest -> newest');
+  assert.equal(timeline[0].timelineMarker, 'First');
+  assert.equal(timeline[1].timelineMarker, 'Latest');
+  assert.equal(shouldShowItemAskAiButton(sampleItems[1], 0), true);
+
+  // 5. Directional Delta Cues
+  const upTraj = computePracticeTrajectoryDelta({ wed: 'DNP', thu: 'LP', fri: 'FP', playProbabilityPct: 86 });
+  assert.equal(upTraj.trajectory.direction, 'up');
+  assert.equal(upTraj.displayLabel, 'DNP→FP ↑');
+  const downTraj = computePracticeTrajectoryDelta({ wed: 'FP', thu: 'LP', fri: 'DNP', playProbabilityPct: 18 });
+  assert.equal(downTraj.trajectory.direction, 'down');
+  assert.equal(downTraj.tone, 'danger');
+  const probShiftOnly = computePracticeTrajectoryDelta(
+    { wed: '-', thu: '-', fri: '-', playProbabilityPct: 68 },
+    { playProbabilityPct: 45 }
+  );
+  assert.equal(probShiftOnly.displayLabel, '+23%');
+  assert.equal(formatRankDeltaCue(3, 5).text, '▲2');
+  assert.equal(formatRankDeltaCue(6, 4).text, '▼2');
+  assert.equal(formatRankDeltaCue(3, 3, '0'), null, 'Zero movement must return null (no noisy (0) clutter)');
+  assert.equal(formatPlayoffOddsDeltaCue(86.4, 82.0).text, '+4.4%');
+  assert.equal(formatPlayoffOddsDeltaCue(82.0, 82.0), null);
+
+  // 6. Presser Takeaways Extractor
+  const pressers = extractPresserTakeaways(sampleItems, { nowMs });
+  assert.equal(pressers.length, 2, 'Should distill 2 distinct Shanahan + Lynch podium takeaways');
+  assert.ok(pressers.some(p => p.speaker === 'Shanahan'));
+  assert.ok(pressers.some(p => p.speaker === 'Lynch'));
+
+  // 7. Reading-Time / Effort Cues & Inline Chart Preview Detection
+  assert.equal(estimateItemEffortCue(sampleItems[1]), 'Film study');
+  assert.equal(estimateItemEffortCue({ type: 'article', wireSource: 'espn_player_wire', title: 'Short update' }), 'Quick note');
+  assert.equal(estimateItemEffortCue({ type: 'video', duration: '12:30' }), '', 'Videos already show duration');
+  const chartPreview = extractInlinePreviewVisual({
+    type: 'tweet',
+    title: '49ers EPA/play scatter chart through Week 10',
+    imageUrl: 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:abc/chart123'
+  });
+  assert.ok(chartPreview && chartPreview.isChart && chartPreview.src.includes('/img/feed_fullsize/'));
+  assert.equal(
+    extractInlinePreviewVisual({
+      type: 'tweet',
+      title: 'Mike Evans update',
+      imageUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/16737.png'
+    }),
+    null,
+    'Headshots must not trigger chart preview button'
+  );
+
+  // 8. Universal Instant Search & Push Helper
+  const searchRes = runUniversalSearch('#13', {
+    appData: {
+      roster: {
+        players: [
+          { id: '4361741', name: 'Brock Purdy', position: 'QB', jersey: 13, rosterBucket: 'active' },
+          { id: '16737', name: 'Mike Evans', position: 'WR', jersey: 5, rosterBucket: 'active' }
+        ]
+      },
+      beatPodcasts: { episodes: [{ id: 'ep1', title: 'Purdy Week 10 Film Review', showName: '49ers Talk' }] }
+    },
+    filteredRawItems: sampleItems
+  });
+  assert.equal(searchRes.players[0].name, 'Brock Purdy', '#13 jersey lookup must match Brock Purdy');
+
+  const capSearch = runUniversalSearch('cap', { appData: { roster: { players: [] } }, filteredRawItems: sampleItems });
+  assert.ok(capSearch.sections.some(s => s.subTab === 'cap'), 'Searching "cap" must surface Salary Cap quick jump');
+  assert.ok(urlBase64ToUint8Array('SGVsbG8').length === 5, 'Base64URL decoder must return Uint8Array');
+});
 
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);

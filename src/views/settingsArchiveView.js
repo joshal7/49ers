@@ -1,11 +1,21 @@
 /**
- * Settings (Theme, Feed Filters, Outlet & Reporter Toggles, Cloud Sync) Sheet Renderer
+ * Settings (Theme, Feed Density, Quiet Alerts, Outlet & Reporter Toggles, Cloud Sync)
+ * & Universal Instant Search Sheet Renderer
  */
 
-import { esc } from './uiHelpers.js';
+import {
+  esc,
+  formatRelativeAge,
+  playProbBadgeClass,
+  renderPlayerAvatarHtml
+} from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { getReporterTrustTier } from '../engine/beatAttributionEngine.js';
+import {
+  evaluatePushSupportStatus,
+  runUniversalSearch
+} from '../engine/digestExperienceEngine.js';
 import {
   AI_STUDIO_DIRECT_KEY_URL,
   renderGeminiApiKeyStepByStepGuideHtml
@@ -14,12 +24,28 @@ import {
 export function renderSettingsSheetHtml({
   userPrefs,
   reportersData,
-  reporterSearch = ''
+  reporterSearch = '',
+  pushStatusNotice = ''
 }) {
   const outlets = reportersData?.outlets || [];
   const reporters = reportersData?.reporters || [];
   const disabledOutlets = new Set(userPrefs?.disabledOutlets || []);
   const disabledReps = new Set(userPrefs?.disabledReporterIds || []);
+  const feedDensity = userPrefs?.feedDensity === 'compact' ? 'compact' : 'rich';
+  const pushPrefs = userPrefs?.pushAlerts || {
+    enabled: false,
+    channels: { tier1Breaking: true, dailyBriefReady: true, practiceDowngrades: false }
+  };
+  const pushSupport = evaluatePushSupportStatus();
+  const pushStatusLabel = pushPrefs.enabled
+    ? pushPrefs.endpoint
+      ? 'Push Active'
+      : 'Active (Local)'
+    : pushSupport.reason === 'ios_requires_pwa'
+      ? 'Add to Home Screen'
+      : pushSupport.permission === 'denied'
+        ? 'Blocked in Browser'
+        : 'Off';
 
   const q = String(reporterSearch || '').toLowerCase().trim();
   const visibleReporters = reporters.filter(
@@ -42,10 +68,26 @@ export function renderSettingsSheetHtml({
         </button>
       </div>
 
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap" data-settings-feed-density>
+        <div style="min-width:0;flex:1 1 160px">
+          <strong>Feed Density</strong>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Rich editorial cards vs. compact headline scan</div>
+        </div>
+        <div class="segmented-control compact-seg" role="group" aria-label="Feed Reading Density" style="flex-shrink:0">
+          <button type="button" class="pill-btn seg-btn ${feedDensity === 'rich' ? 'active' : ''}" data-action="set-feed-density" data-density="rich">
+            <span>Rich</span>
+          </button>
+          <button type="button" class="pill-btn seg-btn ${feedDensity === 'compact' ? 'active' : ''}" data-action="set-feed-density" data-density="compact">
+            ${iconSvg('layoutList', 12)}
+            <span>Compact</span>
+          </button>
+        </div>
+      </div>
+
       <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
         <div>
           <strong>Mute Opinion Columnists</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Hides opinion-heavy commentary while keeping beat reporting &amp; film</div>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Hides opinion commentary while keeping beat reporting &amp; film</div>
         </div>
         <input type="checkbox" data-action="toggle-pref-bool" data-pref-key="muteHotTakePersonalities"
                ${userPrefs.muteHotTakePersonalities ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--scarlet)" />
@@ -54,16 +96,72 @@ export function renderSettingsSheetHtml({
       <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
         <div>
           <strong>Analytics, Film &amp; Cap Only</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Filters stream to EPA, All-22 film &amp; salary cap coverage</div>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Scopes stream to EPA, All-22 film &amp; salary cap coverage</div>
         </div>
         <input type="checkbox" data-action="toggle-pref-bool" data-pref-key="strictAnalyticsFilmOnly"
                ${userPrefs.strictAnalyticsFilmOnly ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--scarlet)" />
       </label>
     </div>
 
+    <!-- Quiet Opt-In Push Alerts (Zero Clickbait, Zero Score Spam) -->
+    <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px" data-settings-push-alerts>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div class="sub-label" style="margin:0">2. Quiet Alerts (Opt-In Only)</div>
+        <span class="badge ${pushPrefs.enabled ? 'badge-positive' : 'badge-neutral'} mono" data-push-status-badge>${esc(pushStatusLabel)}</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
+        High-signal alerts only — zero live score spam, zero clickbait promos.
+        ${pushSupport.isIosBrowserTab ? '<strong>iPhone tip:</strong> Tap Share → Add to Home Screen to unlock iOS Web Push.' : ''}
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
+          <div>
+            <strong style="font-size:12.5px">Tier-1 Breaking Only</strong>
+            <div style="font-size:11px;color:var(--text-secondary)">Trades, major injury/IR moves &amp; official game-day inactives</div>
+          </div>
+          <input type="checkbox" data-action="toggle-push-channel" data-push-channel="tier1Breaking"
+                 ${pushPrefs.channels?.tier1Breaking !== false ? 'checked' : ''} style="width:19px;height:19px;accent-color:var(--scarlet)" />
+        </label>
+
+        <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
+          <div>
+            <strong style="font-size:12.5px">Daily 5:00 PM PT Top-News Brief</strong>
+            <div style="font-size:11px;color:var(--text-secondary)">One daily digest ping when the synthesized briefing drops</div>
+          </div>
+          <input type="checkbox" data-action="toggle-push-channel" data-push-channel="dailyBriefReady"
+                 ${pushPrefs.channels?.dailyBriefReady !== false ? 'checked' : ''} style="width:19px;height:19px;accent-color:var(--scarlet)" />
+        </label>
+
+        <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
+          <div>
+            <strong style="font-size:12.5px">Practice Downgrades (DNP / Out)</strong>
+            <div style="font-size:11px;color:var(--text-secondary)">Alert when a key starter drops to DNP or is ruled Out</div>
+          </div>
+          <input type="checkbox" data-action="toggle-push-channel" data-push-channel="practiceDowngrades"
+                 ${pushPrefs.channels?.practiceDowngrades ? 'checked' : ''} style="width:19px;height:19px;accent-color:var(--scarlet)" />
+        </label>
+      </div>
+
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:2px">
+        <button type="button" class="${pushPrefs.enabled ? 'btn-ghost' : 'btn-secondary'}" data-action="toggle-push-subscription" style="flex:1 1 160px">
+          ${iconSvg('bell', 13)}
+          <span>${pushPrefs.enabled ? 'Disable Quiet Alerts' : 'Enable Quiet Alerts'}</span>
+        </button>
+        ${
+          pushPrefs.enabled
+            ? `<button type="button" class="btn-ghost" data-action="test-quiet-alert">
+                 <span>Send Test</span>
+               </button>`
+            : ''
+        }
+      </div>
+      ${pushStatusNotice ? `<div style="font-size:11.5px;color:var(--gold-bright)" data-push-notice>${esc(pushStatusNotice)}</div>` : ''}
+    </div>
+
     <!-- Podcast Preferences (Host Format & Default Duration) -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px" data-settings-podcast-prefs>
-      <div class="sub-label">2. Custom Podcast Preferences</div>
+      <div class="sub-label">3. Custom Podcast Preferences</div>
       <div>
         <div style="font-size:11.5px;color:var(--text-secondary);margin-bottom:5px">Host Format</div>
         <div class="segmented-control compact-seg" role="group" aria-label="Podcast Host Format">
@@ -88,7 +186,7 @@ export function renderSettingsSheetHtml({
 
     <!-- Display Name, API Key & Cloud Sync -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
-      <div class="sub-label">3. Profile, API Key &amp; Cloud Sync</div>
+      <div class="sub-label">4. Profile, API Key &amp; Cloud Sync</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px">
         <div>
           <label style="font-size:11px;color:var(--text-secondary)" for="prefAuthorInput">Your Display Name</label>
@@ -139,7 +237,7 @@ export function renderSettingsSheetHtml({
 
     <!-- Outlet Toggles -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:7px">
-      <div class="sub-label">4. News Outlets &amp; Channels (${outlets.length})</div>
+      <div class="sub-label">5. News Outlets &amp; Channels (${outlets.length})</div>
       <div class="settings-outlets-grid">
         ${outlets
           .map(o => {
@@ -159,7 +257,7 @@ export function renderSettingsSheetHtml({
     <!-- Individual Beat Reporters & Insiders -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="sub-label">5. Beat Reporters &amp; Analysts (${reporters.length})</div>
+        <div class="sub-label">6. Beat Reporters &amp; Analysts (${reporters.length})</div>
         <div style="display:flex;gap:6px">
           <button type="button" class="btn-ghost" data-action="enable-all-reporters">${iconSvg('check', 12)}<span>Enable All</span></button>
         </div>
@@ -201,6 +299,187 @@ export function renderSettingsSheetHtml({
           })
           .join('')}
       </div>
+    </div>
+  `;
+}
+
+export function renderUniversalSearchSheetHtml({
+  query = '',
+  appData = null,
+  filteredRawItems = [],
+  allEpisodes = [],
+  allAnalyses = []
+}) {
+  const res = runUniversalSearch(query, {
+    appData,
+    filteredRawItems,
+    allEpisodes,
+    allAnalyses
+  });
+  const hasQuery = Boolean(res.query);
+
+  // Suggested quick pills when query is empty (top injured starters + key shortcuts)
+  const injuredSuggestions = (appData?.health?.practiceReport || [])
+    .slice(0, 3)
+    .map(p => p?.name)
+    .filter(Boolean);
+  const quickChips = [...injuredSuggestions, 'Purdy', 'Cap', 'Film', 'Playoffs'].slice(0, 6);
+
+  const playersHtml =
+    res.players.length > 0
+      ? `
+        <div class="search-group" data-search-group="players">
+          <div class="sub-label">Players (${res.players.length})</div>
+          <div class="search-result-list">
+            ${res.players
+              .map(
+                p => `
+              <button type="button" class="search-result-row" data-action="search-open-player" data-player-id="${esc(p.id)}">
+                ${renderPlayerAvatarHtml(p, 30)}
+                <div class="search-result-meta">
+                  <div class="search-result-title"><strong>${esc(p.name)}</strong> <span class="mono" style="color:var(--gold-bright);font-size:11px">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</span></div>
+                  <div class="search-result-sub">${esc(p.injuryType ? `${p.injuryType} • ${p.playBadgeLabel || ''}` : p.rosterBucket === 'ir' ? 'Injured Reserve' : 'Active 53')}</div>
+                </div>
+                ${
+                  p.playBadgeLabel && p.injuryType
+                    ? `<span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono" style="font-size:10px">${esc(p.playBadgeLabel)}</span>`
+                    : `<span class="search-row-arrow">${iconSvg('arrowRight', 13)}</span>`
+                }
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  const newsHtml =
+    res.news.length > 0
+      ? `
+        <div class="search-group" data-search-group="news">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px">
+            <div class="sub-label" style="margin:0">News &amp; Film (${res.totalNewsMatches})</div>
+            <button type="button" class="btn-ghost btn-compact" data-action="search-filter-news-feed" data-search-query="${esc(res.query)}">
+              <span>Filter Feed</span>
+              ${iconSvg('arrowRight', 11)}
+            </button>
+          </div>
+          <div class="search-result-list">
+            ${res.news
+              .map(
+                n => `
+              <a href="${esc(n.href)}" target="_blank" rel="noopener noreferrer" class="search-result-row search-result-link" data-read-key="${esc(n.id || n.href)}">
+                <div class="search-result-meta">
+                  <div class="search-result-title">${esc(n.title.slice(0, 120))}${n.title.length > 120 ? '…' : ''}</div>
+                  <div class="search-result-sub">${esc(n.author)}${n.publishedAt ? ` • ${esc(formatRelativeAge(n.publishedAt))}` : ''}</div>
+                </div>
+                <span class="search-row-arrow">${iconSvg('externalLink', 12)}</span>
+              </a>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  const audioHtml =
+    res.audioAndAi.length > 0
+      ? `
+        <div class="search-group" data-search-group="audio">
+          <div class="sub-label">Podcasts &amp; AI Briefs (${res.audioAndAi.length})</div>
+          <div class="search-result-list">
+            ${res.audioAndAi
+              .map(
+                a => `
+              <button type="button" class="search-result-row" data-action="search-jump-audio" data-audio-kind="${esc(a.kind)}" data-show-id="${esc(a.showId || '')}">
+                <span class="search-result-icon" aria-hidden="true">${iconSvg(a.kind === 'analysis' ? 'sparkles' : 'audio', 14)}</span>
+                <div class="search-result-meta">
+                  <div class="search-result-title">${esc(a.title)}</div>
+                  <div class="search-result-sub">${esc(a.subtitle)}${a.publishedAt ? ` • ${esc(formatRelativeAge(a.publishedAt))}` : ''}</div>
+                </div>
+                <span class="search-row-arrow">${iconSvg('arrowRight', 13)}</span>
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  const sectionsHtml =
+    res.sections.length > 0
+      ? `
+        <div class="search-group" data-search-group="sections">
+          <div class="sub-label">${hasQuery ? 'Quick Jumps' : 'Sections &amp; Tools'}</div>
+          <div class="search-result-list">
+            ${res.sections
+              .map(
+                s => `
+              <button type="button" class="search-result-row" data-action="search-jump-section" data-nav-tab="${esc(s.navTab)}" data-sub-tab="${esc(s.subTab || '')}">
+                <div class="search-result-meta">
+                  <div class="search-result-title"><strong>${esc(s.title)}</strong></div>
+                  <div class="search-result-sub">${esc(s.subtitle)}</div>
+                </div>
+                <span class="search-row-arrow">${iconSvg('arrowRight', 13)}</span>
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  const emptyStateHtml =
+    hasQuery && res.totalCount === 0
+      ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-secondary)">
+           No direct matches for <strong>&ldquo;${esc(res.query)}&rdquo;</strong>.
+           <div style="margin-top:8px">
+             <button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`49ers deep dive on ${res.query}`)}">
+               ${iconSvg('sparkles', 13)}
+               <span>Ask AI about &ldquo;${esc(res.query.slice(0, 32))}&rdquo;</span>
+             </button>
+           </div>
+         </div>`
+      : '';
+
+  return `
+    <div class="universal-search-wrap" data-universal-search>
+      <div class="search-input-wrap">
+        ${iconSvg('search', 16, 'search-input-icon')}
+        <input type="search" id="universalSearchInput" class="text-input has-lead-icon"
+               style="font-size:16px"
+               placeholder="Search players, #13, injuries, news, film, cap, podcasts…"
+               value="${esc(query)}"
+               autocomplete="off"
+               aria-label="Search 49ers Faithful" />
+        ${
+          hasQuery
+            ? `<button type="button" class="search-clear-btn" data-action="clear-universal-search" aria-label="Clear search">${iconSvg('close', 13)}</button>`
+            : ''
+        }
+      </div>
+
+      ${
+        !hasQuery
+          ? `<div class="search-quick-chips" aria-label="Suggested Searches">
+              ${quickChips
+                .map(
+                  ch => `<button type="button" class="pill-btn" data-action="fill-universal-search" data-search-query="${esc(ch)}">${esc(ch)}</button>`
+                )
+                .join('')}
+             </div>`
+          : ''
+      }
+
+      ${playersHtml}
+      ${newsHtml}
+      ${audioHtml}
+      ${sectionsHtml}
+      ${emptyStateHtml}
     </div>
   `;
 }

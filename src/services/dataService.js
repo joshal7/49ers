@@ -315,6 +315,26 @@ export const DEFAULT_USER_PREFS = {
   disabledOutlets: [],
   muteHotTakePersonalities: false,
   strictAnalyticsFilmOnly: false,
+  newsSortMode: 'hybrid', // 'hybrid' (Top + Latest default) | 'top' | 'latest'
+  feedDensity: 'rich', // 'rich' | 'compact'
+  lastVisitedAt: null, // ISO watermark of prior session / caught-up timestamp
+  readItemKeys: [], // bounded array (<=400) of opened/read wire item IDs or URLs
+  pushAlerts: {
+    enabled: false,
+    channels: {
+      tier1Breaking: true,
+      dailyBriefReady: true,
+      practiceDowngrades: false
+    },
+    subscribedAt: null,
+    endpoint: ''
+  },
+  deltaSnapshots: {
+    week: null,
+    healthByPlayer: {},
+    statsByKey: {},
+    playoffBaseline: null
+  },
   groupPasscode: '',
   authorName: 'Josh',
   podFormat: 'two_host', // 'two_host' | 'solo'
@@ -381,7 +401,45 @@ export function loadUserPrefs() {
       localCustomAnalyses: Array.isArray(parsed.localCustomAnalyses) ? parsed.localCustomAnalyses : [],
       localCustomEpisodes: Array.isArray(parsed.localCustomEpisodes) ? parsed.localCustomEpisodes : [],
       deletedEpisodeIds: Array.isArray(parsed.deletedEpisodeIds) ? parsed.deletedEpisodeIds : [],
-      deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : []
+      deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : [],
+      newsSortMode:
+        parsed.newsSortMode === 'top' || parsed.newsSortMode === 'latest' ? parsed.newsSortMode : 'hybrid',
+      feedDensity: parsed.feedDensity === 'compact' ? 'compact' : 'rich',
+      lastVisitedAt:
+        typeof parsed.lastVisitedAt === 'string' && !Number.isNaN(Date.parse(parsed.lastVisitedAt))
+          ? parsed.lastVisitedAt
+          : null,
+      readItemKeys: Array.isArray(parsed.readItemKeys)
+        ? parsed.readItemKeys.filter(k => typeof k === 'string' && k.length > 0).slice(-400)
+        : [],
+      pushAlerts: {
+        enabled: Boolean(parsed.pushAlerts?.enabled),
+        channels: {
+          tier1Breaking: parsed.pushAlerts?.channels?.tier1Breaking !== false,
+          dailyBriefReady: parsed.pushAlerts?.channels?.dailyBriefReady !== false,
+          practiceDowngrades: Boolean(parsed.pushAlerts?.channels?.practiceDowngrades)
+        },
+        subscribedAt: typeof parsed.pushAlerts?.subscribedAt === 'string' ? parsed.pushAlerts.subscribedAt : null,
+        endpoint: typeof parsed.pushAlerts?.endpoint === 'string' ? parsed.pushAlerts.endpoint : ''
+      },
+      deltaSnapshots:
+        parsed.deltaSnapshots && typeof parsed.deltaSnapshots === 'object' && !Array.isArray(parsed.deltaSnapshots)
+          ? {
+              week: Number.isFinite(Number(parsed.deltaSnapshots.week)) ? Number(parsed.deltaSnapshots.week) : null,
+              healthByPlayer:
+                parsed.deltaSnapshots.healthByPlayer && typeof parsed.deltaSnapshots.healthByPlayer === 'object'
+                  ? parsed.deltaSnapshots.healthByPlayer
+                  : {},
+              statsByKey:
+                parsed.deltaSnapshots.statsByKey && typeof parsed.deltaSnapshots.statsByKey === 'object'
+                  ? parsed.deltaSnapshots.statsByKey
+                  : {},
+              playoffBaseline:
+                parsed.deltaSnapshots.playoffBaseline && typeof parsed.deltaSnapshots.playoffBaseline === 'object'
+                  ? parsed.deltaSnapshots.playoffBaseline
+                  : null
+            }
+          : { week: null, healthByPlayer: {}, statsByKey: {}, playoffBaseline: null }
     };
   } catch {
     return structuredCloneFallback(DEFAULT_USER_PREFS);

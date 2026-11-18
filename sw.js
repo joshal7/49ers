@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v98';
+const CACHE_NAME = '49ers-faithful-v99';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -18,6 +18,7 @@ const CORE_ASSETS = [
   './src/engine/beatAttributionEngine.js',
   './src/engine/groundingValidator.js',
   './src/engine/breakingClassifier.js',
+  './src/engine/digestExperienceEngine.js',
   './src/engine/linkIntegrity.js',
   './src/engine/salientMediaEngine.js',
   './src/engine/jargonGlossary.js',
@@ -166,5 +167,62 @@ self.addEventListener('fetch', event => {
         return cached || Response.error();
       }
     })()
+  );
+});
+
+// Quiet Opt-In Web Push Alerts (Tier-1 Breaking, 5 PM PT Brief, Practice Downgrades)
+self.addEventListener('push', event => {
+  let payload = {
+    title: '49ers Faithful Briefing',
+    body: 'High-signal 49ers update available.',
+    tag: '49ers-quiet-alert',
+    url: './'
+  };
+  try {
+    if (event.data) {
+      const parsed = event.data.json();
+      if (parsed && typeof parsed === 'object') {
+        payload = {
+          title: String(parsed.title || payload.title).slice(0, 90),
+          body: String(parsed.body || payload.body).slice(0, 220),
+          tag: String(parsed.tag || payload.tag).slice(0, 64),
+          url: typeof parsed.url === 'string' && parsed.url.startsWith('./') ? parsed.url : './'
+        };
+      }
+    }
+  } catch {
+    try {
+      const txt = event.data?.text?.();
+      if (txt) payload.body = String(txt).slice(0, 220);
+    } catch {}
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title, {
+      body: payload.body,
+      icon: './apple-touch-icon.png',
+      badge: './apple-touch-icon.png',
+      tag: payload.tag,
+      renotify: false,
+      data: { url: payload.url }
+    })
+  );
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const targetUrl = event.notification?.data?.url || './';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if ('focus' in client) {
+          return client.focus();
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(targetUrl);
+      }
+      return undefined;
+    })
   );
 });

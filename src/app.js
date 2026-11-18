@@ -30,7 +30,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=75';
+} from './services/dataService.js?v=85';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -84,17 +84,26 @@ import {
   normalizeBigBoardSort
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
-import { iconSvg } from './views/icons.js?v=48';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=69';
+import { iconSvg } from './views/icons.js?v=85';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=85';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=69';
+} from './views/newsView.js?v=85';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=74';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=69';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=85';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
-import { renderSettingsSheetHtml } from './views/settingsArchiveView.js?v=60';
+import {
+  renderSettingsSheetHtml,
+  renderUniversalSearchSheetHtml
+} from './views/settingsArchiveView.js?v=85';
+import {
+  normalizeNewsSortMode,
+  computeCatchUpState,
+  urlBase64ToUint8Array,
+  evaluatePushSupportStatus
+} from './engine/digestExperienceEngine.js?v=85';
 
 const state = {
   appData: null,
@@ -107,9 +116,16 @@ const state = {
 
   // News state
   newsCategoryFilter: 'all',
+  newsSortMode: 'hybrid', // 'hybrid' (Top + Latest default) | 'top' | 'latest'
+  newsTopicFilter: 'all',
+  newsSearchQuery: '',
   activeVideosSet: new Set(),
   lastWireSyncAt: null,
   isSyncingWire: false,
+  sessionLastVisitedAt: null,
+  tabScrollPositions: {},
+  universalSearchQuery: '',
+  pushStatusNotice: '',
 
   // Roster & Cap state
   rosterSubTab: 'roster',
@@ -162,7 +178,7 @@ const state = {
   shareToastTargetId: null,
 
   // Bottom Sheet & Rank Modal state
-  sheetMode: null, // 'player' | 'settings' | null
+  sheetMode: null, // 'player' | 'settings' | 'search' | null
   sheetPlayerId: null,
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
@@ -321,6 +337,308 @@ function applyTheme(theme) {
   if (metaTheme) {
     metaTheme.setAttribute('content', clean === 'light' ? '#F7F5F0' : '#0B0D10');
   }
+}
+
+function applyFeedDensity(density) {
+  const clean = density === 'compact' ? 'compact' : 'rich';
+  document.documentElement.setAttribute('data-feed-density', clean);
+}
+
+function getActiveScrollMemoryKey() {
+  if (state.activeNavTab === 'season') return `season:${state.seasonSubTab}`;
+  if (state.activeNavTab === 'roster') return `roster:${state.rosterSubTab}`;
+  if (state.activeNavTab === 'audio') return `audio:${state.studioSubTab}`;
+  return state.activeNavTab || 'home';
+}
+
+function saveCurrentTabScroll() {
+  const key = getActiveScrollMemoryKey();
+  state.tabScrollPositions[key] = Math.max(0, Math.round(window.scrollY || 0));
+}
+
+function restoreScrollForCurrentTab({ fallbackTop = 0 } = {}) {
+  const key = getActiveScrollMemoryKey();
+  const saved = Number(state.tabScrollPositions[key]);
+  const targetY = Number.isFinite(saved) && saved >= 0 ? saved : fallbackTop;
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: targetY, behavior: 'instant' });
+  });
+}
+
+function markReadKey(key) {
+  const clean = String(key || '').trim();
+  if (!clean) return;
+  const cur = Array.isArray(state.prefs.readItemKeys) ? state.prefs.readItemKeys : [];
+  if (!cur.includes(clean)) {
+    state.prefs.readItemKeys = [...cur.slice(-399), clean];
+    saveUserPrefs(state.prefs);
+  }
+  document.querySelectorAll(`[data-read-key="${CSS.escape(clean)}"]`).forEach(el => {
+    el.classList.add('is-read-item');
+    el.classList.remove('is-new-item');
+    const dot = el.querySelector('.new-item-dot');
+    if (dot) dot.remove();
+  });
+  syncNavUnreadBadge();
+}
+
+function markAllCaughtUp() {
+  const nowIso = new Date().toISOString();
+  state.prefs.lastVisitedAt = nowIso;
+  state.sessionLastVisitedAt = nowIso;
+  saveUserPrefs(state.prefs);
+  syncNavUnreadBadge();
+  renderMain();
+}
+
+function syncNavUnreadBadge() {
+  const newsTabBtn = document.querySelector('.nav-tab-btn[data-nav-tab="news"]');
+  if (!newsTabBtn || !state.appData) return;
+  let badge = newsTabBtn.querySelector('.nav-unread-dot');
+  const filteredRaw = filterNewsByUserPrefs(
+    state.appData.news?.rawStream || [],
+    getReportersMap(),
+    state.prefs
+  );
+  const catchUp = computeCatchUpState(
+    filteredRaw,
+    {
+      lastVisitedAt: state.sessionLastVisitedAt,
+      readKeys: state.prefs.readItemKeys || []
+    },
+    Date.now()
+  );
+  if (catchUp.hasWatermark && catchUp.newCount > 0) {
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'nav-unread-dot mono';
+      badge.setAttribute('aria-label', `${catchUp.newCount} new updates`);
+      newsTabBtn.appendChild(badge);
+    }
+    badge.textContent = catchUp.newCount > 9 ? '9+' : String(catchUp.newCount);
+  } else if (badge) {
+    badge.remove();
+  }
+}
+
+function openMediaLightbox({ src = '', fallbackSrc = '', title = '', author = '', href = '' } = {}) {
+  const safeSrc = sanitizeExternalUrl(src, null);
+  const safeFallback = sanitizeExternalUrl(fallbackSrc, null);
+  if (!safeSrc && !safeFallback) return;
+  const backdrop = document.getElementById('inlineMediaLightboxBackdrop');
+  const eyebrow = document.getElementById('mediaLightboxEyebrow');
+  const titleEl = document.getElementById('mediaLightboxTitle');
+  const body = document.getElementById('mediaLightboxBody');
+  if (!backdrop || !body) return;
+  if (eyebrow) eyebrow.textContent = author || 'Beat Media';
+  if (titleEl) titleEl.textContent = title || 'Preview';
+  const safeHref = sanitizeExternalUrl(href, null);
+  body.innerHTML = `
+    <div class="media-lightbox-img-wrap">
+      <img src="${esc(safeSrc || safeFallback)}" ${safeFallback && safeFallback !== safeSrc ? `data-fallback-src="${esc(safeFallback)}"` : ''} alt="${esc(title || 'Beat media preview')}" class="media-lightbox-img" decoding="async" />
+    </div>
+    ${
+      safeHref
+        ? `<div style="display:flex;justify-content:flex-end;margin-top:10px">
+             <a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+               <span>Open Original Post</span>${iconSvg('externalLink', 11)}
+             </a>
+           </div>`
+        : ''
+    }
+  `;
+  backdrop.hidden = false;
+}
+
+function closeMediaLightbox() {
+  const backdrop = document.getElementById('inlineMediaLightboxBackdrop');
+  const body = document.getElementById('mediaLightboxBody');
+  if (backdrop) backdrop.hidden = true;
+  if (body) body.innerHTML = '';
+}
+
+function captureDeltaSnapshotsOnBoot(appData) {
+  if (!appData) return;
+  const curWeek = Number(appData?.meta?.currentWeek || 0) || null;
+  const existing = state.prefs.deltaSnapshots || {
+    week: null,
+    healthByPlayer: {},
+    statsByKey: {},
+    playoffBaseline: null
+  };
+
+  // Seed initial baseline snapshot on first visit, or roll forward when week advances
+  const needsSeed = !existing.week || Object.keys(existing.healthByPlayer || {}).length === 0;
+  const weekAdvanced = curWeek && existing.week && curWeek > existing.week;
+
+  if (needsSeed) {
+    const healthByPlayer = {};
+    for (const r of appData?.health?.practiceReport || []) {
+      if (r?.playerId) {
+        healthByPlayer[String(r.playerId)] = {
+          playProbabilityPct: Number(r.playProbabilityPct ?? 0),
+          wed: r.wed || '-',
+          thu: r.thu || '-',
+          fri: r.fri || '-'
+        };
+      }
+    }
+    const statsByKey = {};
+    for (const u of appData?.scheduleMatchup?.teamStats?.units || []) {
+      if (u?.overall?.key && Number.isFinite(Number(u.overall.rank))) {
+        statsByKey[u.overall.key] = { rank: Number(u.overall.rank) };
+      }
+    }
+    const baseSf = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
+    state.prefs.deltaSnapshots = {
+      week: curWeek,
+      healthByPlayer,
+      statsByKey,
+      playoffBaseline: baseSf
+        ? {
+            makePlayoffsPct: baseSf.makePlayoffsPct,
+            winDivisionPct: baseSf.winDivisionPct,
+            seed1ByePct: baseSf.seed1ByePct
+          }
+        : null
+    };
+    saveUserPrefs(state.prefs);
+  } else if (weekAdvanced) {
+    // Keep prior week's stats/playoff baseline visible during this session, then roll forward on hide
+    state._pendingWeekSnapshotRollover = curWeek;
+  }
+}
+
+async function toggleQuietPushAlerts() {
+  const pushPrefs = state.prefs.pushAlerts || {
+    enabled: false,
+    channels: { tier1Breaking: true, dailyBriefReady: true, practiceDowngrades: false },
+    subscribedAt: null,
+    endpoint: ''
+  };
+  const workerBase = String(state.prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+
+  if (pushPrefs.enabled) {
+    // Disable cleanly
+    try {
+      const reg = await navigator.serviceWorker?.ready;
+      const sub = await reg?.pushManager?.getSubscription?.();
+      if (sub) {
+        const endpoint = sub.endpoint;
+        await sub.unsubscribe().catch(() => {});
+        if (workerBase && /^https:\/\//i.test(workerBase)) {
+          fetch(`${workerBase}/api/push-unsubscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ endpoint })
+          }).catch(() => {});
+        }
+      }
+    } catch {}
+    state.prefs.pushAlerts = { ...pushPrefs, enabled: false, endpoint: '', subscribedAt: null };
+    state.pushStatusNotice = 'Quiet alerts turned off.';
+    saveUserPrefs(state.prefs);
+    renderSheet({ preserveScroll: true });
+    return;
+  }
+
+  const support = evaluatePushSupportStatus();
+  if (support.reason === 'ios_requires_pwa') {
+    state.pushStatusNotice = 'On iPhone, tap Safari Share → Add to Home Screen first to enable Web Push.';
+    renderSheet({ preserveScroll: true });
+    return;
+  }
+
+  if (typeof Notification === 'undefined') {
+    state.pushStatusNotice = 'Notifications are not supported in this browser.';
+    renderSheet({ preserveScroll: true });
+    return;
+  }
+
+  let perm = Notification.permission;
+  if (perm === 'default') {
+    try {
+      perm = await Notification.requestPermission();
+    } catch {
+      perm = 'denied';
+    }
+  }
+  if (perm !== 'granted') {
+    state.pushStatusNotice = 'Notification permission was blocked. Enable it in browser site settings.';
+    renderSheet({ preserveScroll: true });
+    return;
+  }
+
+  let subscribedEndpoint = '';
+  let noticeMsg = 'Quiet alerts active on this device.';
+
+  if (workerBase && /^https:\/\//i.test(workerBase) && 'serviceWorker' in navigator && 'PushManager' in window) {
+    try {
+      const cfgRes = await fetch(`${workerBase}/api/push-config`, { signal: AbortSignal.timeout(4500) });
+      const cfg = cfgRes.ok ? await cfgRes.json() : null;
+      if (cfg?.vapidPublicKey) {
+        const reg = await navigator.serviceWorker.ready;
+        const existingSub = await reg.pushManager.getSubscription();
+        const sub =
+          existingSub ||
+          (await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(cfg.vapidPublicKey)
+          }));
+        subscribedEndpoint = sub.endpoint || '';
+        const saveRes = await fetch(`${workerBase}/api/push-subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subscription: sub.toJSON(),
+            channels: pushPrefs.channels,
+            author: state.prefs.authorName || 'Faithful'
+          })
+        });
+        if (saveRes.ok) {
+          noticeMsg = 'Quiet Web Push alerts connected to Worker.';
+        }
+      }
+    } catch {
+      noticeMsg = 'Quiet alerts active locally (Worker push sync skipped).';
+    }
+  }
+
+  state.prefs.pushAlerts = {
+    ...pushPrefs,
+    enabled: true,
+    endpoint: subscribedEndpoint,
+    subscribedAt: new Date().toISOString()
+  };
+  state.pushStatusNotice = noticeMsg;
+  saveUserPrefs(state.prefs);
+  renderSheet({ preserveScroll: true });
+}
+
+async function sendTestQuietAlert() {
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') {
+    state.pushStatusNotice = 'Enable browser notification permission first.';
+    renderSheet({ preserveScroll: true });
+    return;
+  }
+  const title = '49ers Faithful · Quiet Alert Test';
+  const body = 'High-signal alerts only (Tier-1 breaking & 5:00 PM PT daily brief). Zero score spam.';
+  try {
+    const reg = await navigator.serviceWorker?.ready;
+    if (reg?.showNotification) {
+      await reg.showNotification(title, {
+        body,
+        icon: './apple-touch-icon.png',
+        tag: '49ers-quiet-test'
+      });
+    } else {
+      new Notification(title, { body, icon: './apple-touch-icon.png' });
+    }
+    state.pushStatusNotice = 'Test alert sent.';
+  } catch {
+    state.pushStatusNotice = 'Test alert triggered (check device notification center).';
+  }
+  renderSheet({ preserveScroll: true });
 }
 
 function getReportersMap() {
@@ -534,7 +852,8 @@ function renderMain() {
         filteredRawItems,
         userPrefs: state.prefs,
         activeVideosSet: state.activeVideosSet,
-        isCustomizingLayout: state.isCustomizingLayout
+        isCustomizingLayout: state.isCustomizingLayout,
+        sessionLastVisitedAt: state.sessionLastVisitedAt
       });
     } else if (tab === 'news') {
       const filteredRawItems = filterNewsByUserPrefs(
@@ -545,12 +864,16 @@ function renderMain() {
       mainEl.innerHTML = renderNewsViewHtml({
         appData: state.appData,
         newsCategoryFilter: state.newsCategoryFilter,
+        newsSortMode: state.newsSortMode,
+        newsTopicFilter: state.newsTopicFilter,
+        newsSearchQuery: state.newsSearchQuery,
         filteredRawItems,
         reportersById: reportersMap,
         activeVideosSet: state.activeVideosSet,
         userPrefs: state.prefs,
         lastWireSyncAt: state.lastWireSyncAt || state.appData.meta?.updatedAt,
-        isSyncingWire: state.isSyncingWire
+        isSyncingWire: state.isSyncingWire,
+        sessionLastVisitedAt: state.sessionLastVisitedAt
       });
     } else if (tab === 'roster') {
       const activeYearMoves = getCapMovesForYear(activeCapYear);
@@ -629,6 +952,7 @@ function renderMain() {
   bindAllMountedInlineVideos();
   renderHeader();
   renderNavTabs();
+  syncNavUnreadBadge();
 }
 
 function safePlayInlineVideo(videoEl) {
@@ -886,7 +1210,24 @@ function renderSheet({ preserveScroll = false } = {}) {
       body.innerHTML = renderSettingsSheetHtml({
         userPrefs: state.prefs,
         reportersData: state.appData?.reporters,
-        reporterSearch: state.reporterSearch
+        reporterSearch: state.reporterSearch,
+        pushStatusNotice: state.pushStatusNotice
+      });
+      if (!preserveScroll) body.scrollTop = 0;
+    } else if (state.sheetMode === 'search') {
+      if (eyebrow) eyebrow.textContent = 'Universal Search';
+      if (title) title.textContent = 'Find Anything';
+      const filteredRawItems = filterNewsByUserPrefs(
+        state.appData?.news?.rawStream || [],
+        getReportersMap(),
+        state.prefs
+      );
+      body.innerHTML = renderUniversalSearchSheetHtml({
+        query: state.universalSearchQuery,
+        appData: state.appData,
+        filteredRawItems,
+        allEpisodes: getAllEpisodes(),
+        allAnalyses: getSavedAnalyses()
       });
       if (!preserveScroll) body.scrollTop = 0;
     }
@@ -1060,11 +1401,17 @@ async function triggerDailyTopNewsBriefSync() {
 }
 
 function bindEvents() {
-  // Bottom Nav Tabs
+  // Bottom Nav Tabs (with per-tab scroll memory; tapping active tab scrolls cleanly to top)
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      state.activeNavTab = btn.getAttribute('data-nav-tab') || 'home';
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      const nextTab = btn.getAttribute('data-nav-tab') || 'home';
+      if (nextTab === state.activeNavTab) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        state.tabScrollPositions[getActiveScrollMemoryKey()] = 0;
+        return;
+      }
+      saveCurrentTabScroll();
+      state.activeNavTab = nextTab;
       if (!state.appData) {
         renderNavTabs();
         bootOrRecoverAppData({ manual: true });
@@ -1083,19 +1430,34 @@ function bindEvents() {
         triggerDailyTopNewsBriefSync();
       }
       renderMain();
+      restoreScrollForCurrentTab({ fallbackTop: 0 });
     });
   });
 
   // Top Header triggers
   document.getElementById('brandHomeTrigger')?.addEventListener('click', () => {
+    saveCurrentTabScroll();
     state.activeNavTab = 'home';
     window.scrollTo({ top: 0, behavior: 'instant' });
     renderMain();
   });
 
+  document.getElementById('openSearchBtn')?.addEventListener('click', () => {
+    state.sheetMode = 'search';
+    renderSheet();
+    requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+  });
+
   document.getElementById('openSettingsBtn')?.addEventListener('click', () => {
+    state.pushStatusNotice = '';
     state.sheetMode = 'settings';
     renderSheet();
+  });
+
+  document.getElementById('inlineMediaLightboxBackdrop')?.addEventListener('click', e => {
+    if (e.target.id === 'inlineMediaLightboxBackdrop') {
+      closeMediaLightbox();
+    }
   });
 
   document.getElementById('closeSheetBtn')?.addEventListener('click', () => {
@@ -1145,6 +1507,21 @@ function bindEvents() {
     if (e.key === 'Enter' && e.target?.id === 'inlineGeminiApiKeyInput') {
       e.preventDefault();
       document.querySelector('[data-action="save-inline-gemini-key"]')?.click();
+      return;
+    }
+    const mediaBackdrop = document.getElementById('inlineMediaLightboxBackdrop');
+    if (e.key === 'Escape' && mediaBackdrop && !mediaBackdrop.hidden) {
+      closeMediaLightbox();
+      return;
+    }
+    if (
+      (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) &&
+      !e.target?.closest?.('input, textarea, select, [contenteditable]')
+    ) {
+      e.preventDefault();
+      state.sheetMode = 'search';
+      renderSheet();
+      requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
       return;
     }
     if (e.key === 'Escape' && state.sheetMode) {
@@ -1215,6 +1592,11 @@ function bindEvents() {
     const pop = document.getElementById('jargonPopover');
     if (pop && !pop.hidden && !e.target.closest('#jargonPopover')) {
       closeJargonPopover();
+    }
+
+    const markReadHit = e.target.closest('[data-mark-read-key]');
+    if (markReadHit) {
+      markReadKey(markReadHit.getAttribute('data-mark-read-key'));
     }
 
     const anchorHit = e.target.closest('a[href]');
@@ -1325,9 +1707,87 @@ function bindEvents() {
       }
 
       case 'open-settings':
+        state.pushStatusNotice = '';
         state.sheetMode = 'settings';
         renderSheet();
         break;
+
+      case 'open-search':
+        state.sheetMode = 'search';
+        renderSheet();
+        requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+        break;
+
+      case 'fill-universal-search':
+        state.universalSearchQuery = btn.getAttribute('data-search-query') || '';
+        renderSheet();
+        requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+        break;
+
+      case 'clear-universal-search':
+        state.universalSearchQuery = '';
+        renderSheet();
+        requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+        break;
+
+      case 'search-open-player': {
+        const pid = btn.getAttribute('data-player-id');
+        const target = getPlayerById(pid);
+        if (target) {
+          state.sheetMode = 'player';
+          state.sheetPlayerId = target.id;
+          state.sheetPlayerTab = 'overview';
+          renderSheet();
+        }
+        break;
+      }
+
+      case 'search-filter-news-feed': {
+        const q = btn.getAttribute('data-search-query') || state.universalSearchQuery || '';
+        state.sheetMode = null;
+        renderSheet();
+        saveCurrentTabScroll();
+        state.activeNavTab = 'news';
+        state.newsCategoryFilter = 'all';
+        state.newsTopicFilter = 'all';
+        state.newsSearchQuery = q.trim();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+      }
+
+      case 'search-jump-audio': {
+        const kind = btn.getAttribute('data-audio-kind') || 'beat_podcasts';
+        const showId = btn.getAttribute('data-show-id') || '';
+        state.sheetMode = null;
+        renderSheet();
+        saveCurrentTabScroll();
+        state.activeNavTab = 'audio';
+        state.studioSubTab =
+          kind === 'analysis' ? 'analysis' : kind === 'autopod' ? 'podcast' : 'beat_podcasts';
+        if (kind === 'beat_podcast' && showId) {
+          state.beatPodViewMode = 'date';
+          state.beatPodShowFilter = showId;
+        }
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+      }
+
+      case 'search-jump-section': {
+        const navTab = btn.getAttribute('data-nav-tab') || 'home';
+        const subTab = btn.getAttribute('data-sub-tab') || '';
+        state.sheetMode = null;
+        renderSheet();
+        saveCurrentTabScroll();
+        state.activeNavTab = navTab;
+        if (navTab === 'season' && subTab) state.seasonSubTab = subTab;
+        else if (navTab === 'roster' && subTab) state.rosterSubTab = subTab;
+        else if (navTab === 'audio' && subTab) state.studioSubTab = subTab;
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+      }
 
       case 'close-sheet':
         state.sheetMode = null;
@@ -1337,10 +1797,77 @@ function bindEvents() {
       case 'set-news-category': {
         const reqCat = btn.getAttribute('data-category') || 'all';
         state.newsCategoryFilter = VALID_NEWS_CATEGORIES.has(reqCat) ? reqCat : 'all';
+        state.newsTopicFilter = 'all';
         state.activeVideosSet.clear();
         renderMain();
         break;
       }
+
+      case 'set-news-sort': {
+        const nextSort = normalizeNewsSortMode(btn.getAttribute('data-sort-mode') || 'hybrid');
+        state.newsSortMode = nextSort;
+        state.prefs.newsSortMode = nextSort;
+        saveUserPrefs(state.prefs);
+        renderMain();
+        break;
+      }
+
+      case 'set-news-topic': {
+        const nextTopic = btn.getAttribute('data-topic-key') || 'all';
+        state.newsTopicFilter = state.newsTopicFilter === nextTopic ? 'all' : nextTopic;
+        renderMain();
+        break;
+      }
+
+      case 'clear-news-search-filter':
+        state.newsSearchQuery = '';
+        renderMain();
+        break;
+
+      case 'mark-all-caught-up':
+        markAllCaughtUp();
+        break;
+
+      case 'set-feed-density': {
+        const nextDensity = btn.getAttribute('data-density') === 'compact' ? 'compact' : 'rich';
+        state.prefs.feedDensity = nextDensity;
+        applyFeedDensity(nextDensity);
+        saveUserPrefs(state.prefs);
+        if (state.sheetMode === 'settings') renderSheet({ preserveScroll: true });
+        renderMain();
+        break;
+      }
+
+      case 'toggle-feed-density': {
+        const nextDensity = state.prefs.feedDensity === 'compact' ? 'rich' : 'compact';
+        state.prefs.feedDensity = nextDensity;
+        applyFeedDensity(nextDensity);
+        saveUserPrefs(state.prefs);
+        renderMain();
+        break;
+      }
+
+      case 'open-media-lightbox':
+        openMediaLightbox({
+          src: btn.getAttribute('data-media-src') || '',
+          fallbackSrc: btn.getAttribute('data-media-fallback') || '',
+          title: btn.getAttribute('data-media-title') || '',
+          author: btn.getAttribute('data-media-author') || '',
+          href: btn.getAttribute('data-media-href') || ''
+        });
+        break;
+
+      case 'close-media-lightbox':
+        closeMediaLightbox();
+        break;
+
+      case 'toggle-push-subscription':
+        await toggleQuietPushAlerts();
+        break;
+
+      case 'test-quiet-alert':
+        await sendTestQuietAlert();
+        break;
 
       case 'play-inline-video': {
         const key = btn.getAttribute('data-vid-key');
@@ -2302,6 +2829,9 @@ function bindEvents() {
     } else if (t.id === 'reporterFilterSearchInput') {
       state.reporterSearch = t.value;
       renderSheet();
+    } else if (t.id === 'universalSearchInput') {
+      state.universalSearchQuery = t.value;
+      renderSheet({ preserveScroll: false });
     }
   });
 
@@ -2340,6 +2870,23 @@ function bindEvents() {
         state.prefs[key] = Boolean(t.checked);
         saveUserPrefs(state.prefs);
         renderMain();
+      }
+    } else if (t.getAttribute('data-action') === 'toggle-push-channel') {
+      const ch = t.getAttribute('data-push-channel');
+      if (ch && ['tier1Breaking', 'dailyBriefReady', 'practiceDowngrades'].includes(ch)) {
+        if (!state.prefs.pushAlerts) {
+          state.prefs.pushAlerts = {
+            enabled: false,
+            channels: { tier1Breaking: true, dailyBriefReady: true, practiceDowngrades: false },
+            subscribedAt: null,
+            endpoint: ''
+          };
+        }
+        state.prefs.pushAlerts.channels = {
+          ...(state.prefs.pushAlerts.channels || {}),
+          [ch]: Boolean(t.checked)
+        };
+        saveUserPrefs(state.prefs);
       }
     } else if (t.getAttribute('data-action') === 'toggle-reporter') {
       const rid = t.getAttribute('data-reporter-id');
@@ -2403,6 +2950,82 @@ function bindEvents() {
       }
     },
     true
+  );
+
+  // Pull-to-refresh gesture at top of Home & News & Film (mobile ergonomics)
+  let ptrStartY = null;
+  let ptrDeltaY = 0;
+  let ptrArmed = false;
+  const ptrEl = document.getElementById('pullRefreshIndicator');
+  const ptrLabel = document.getElementById('pullRefreshLabel');
+
+  document.addEventListener(
+    'touchstart',
+    e => {
+      if (
+        (state.activeNavTab !== 'home' && state.activeNavTab !== 'news') ||
+        state.sheetMode ||
+        state.rankModal ||
+        window.scrollY > 2 ||
+        e.touches.length !== 1
+      ) {
+        ptrStartY = null;
+        return;
+      }
+      ptrStartY = e.touches[0].clientY;
+      ptrDeltaY = 0;
+      ptrArmed = false;
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    'touchmove',
+    e => {
+      if (ptrStartY === null || e.touches.length !== 1) return;
+      const dy = e.touches[0].clientY - ptrStartY;
+      if (dy <= 14 || window.scrollY > 2) {
+        if (ptrEl && !ptrEl.hidden) ptrEl.hidden = true;
+        ptrArmed = false;
+        return;
+      }
+      ptrDeltaY = Math.min(96, dy);
+      if (ptrDeltaY >= 24 && ptrEl && ptrLabel) {
+        ptrEl.hidden = false;
+        ptrArmed = ptrDeltaY >= 60;
+        ptrEl.classList.toggle('armed', ptrArmed);
+        ptrLabel.textContent = ptrArmed ? 'Release to sync live wire' : 'Pull to sync live wire';
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    'touchend',
+    () => {
+      if (ptrStartY === null) return;
+      const shouldSync = ptrArmed && !state.isSyncingWire;
+      ptrStartY = null;
+      ptrDeltaY = 0;
+      ptrArmed = false;
+      if (shouldSync && ptrEl && ptrLabel) {
+        ptrEl.hidden = false;
+        ptrEl.classList.add('armed');
+        ptrLabel.textContent = 'Syncing live wire…';
+        pollLowLatencyTweetAndInjuryWire(true).finally(() => {
+          setTimeout(() => {
+            if (ptrEl) {
+              ptrEl.hidden = true;
+              ptrEl.classList.remove('armed');
+            }
+          }, 400);
+        });
+      } else if (ptrEl) {
+        ptrEl.hidden = true;
+        ptrEl.classList.remove('armed');
+      }
+    },
+    { passive: true }
   );
 }
 
@@ -3007,6 +3630,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       state.lastWireSyncAt = state.appData.meta.updatedAt;
     }
 
+    captureDeltaSnapshotsOnBoot(state.appData);
     renderHeader();
     renderMain();
 
@@ -3070,6 +3694,15 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
 async function init() {
   state.prefs = loadUserPrefs();
   applyTheme(state.prefs.theme);
+  applyFeedDensity(state.prefs.feedDensity);
+  state.newsSortMode = normalizeNewsSortMode(state.prefs.newsSortMode || 'hybrid');
+  // Preserve prior visit watermark for the entire active session so "N new since …" stays stable
+  state.sessionLastVisitedAt = state.prefs.lastVisitedAt || null;
+  if (!state.prefs.lastVisitedAt) {
+    state.prefs.lastVisitedAt = new Date().toISOString();
+    saveUserPrefs(state.prefs);
+  }
+  const sessionBootMs = Date.now();
   if (state.prefs?.capSelectedYear) {
     state.capSelectedYear = String(state.prefs.capSelectedYear);
   }
@@ -3149,6 +3782,14 @@ async function init() {
 
   // Register recovery & live-sync listeners unconditionally so even an offline cold boot self-heals automatically
   document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      // Advance persisted visit watermark cleanly after active session (>=15s) so next visit highlights new items
+      if (Date.now() - sessionBootMs >= 15_000) {
+        state.prefs.lastVisitedAt = new Date().toISOString();
+        saveUserPrefs(state.prefs);
+      }
+      return;
+    }
     if (document.visibilityState === 'visible') {
       if (!state.appData) {
         bootOrRecoverAppData({ manual: false });
@@ -3223,7 +3864,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=89', { updateViaCache: 'none' })
+        .register('./sw.js?v=99', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

@@ -69,6 +69,11 @@ import {
   isEffectiveOffDefStarter
 } from '../engine/injuryProbabilityModel.js';
 import { renderInjuryNewsItemCardHtml } from './playerSheetView.js';
+import {
+  computePracticeTrajectoryDelta,
+  formatRankDeltaCue,
+  formatPlayoffOddsDeltaCue
+} from '../engine/digestExperienceEngine.js';
 
 function formatPracCell(val) {
   const s = String(val ?? '').trim();
@@ -413,10 +418,10 @@ export function renderSeasonMatchupViewHtml({
 
   if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit);
   if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData, userPrefs, reportersById);
-  if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData);
+  if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData, userPrefs);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (seasonSub === 'playoffs')
-    return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks);
+    return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks, userPrefs);
   if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
   if (seasonSub === 'draft_prep') {
     return (
@@ -1293,8 +1298,15 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
           </thead>
           <tbody>
             ${sfReport
-              .map(
-                p => `
+              .map(p => {
+                const healthSnapMap = userPrefs?.deltaSnapshots?.healthByPlayer || {};
+                const delta = computePracticeTrajectoryDelta(p, healthSnapMap[String(p.playerId)] || null);
+                const trajArrowHtml = delta?.trajectory
+                  ? ` <span class="delta-chip ${delta.trajectory.tone} mono" data-health-delta title="${esc(delta.trajectory.shortLabel)}">${esc(delta.trajectory.arrow)}</span>`
+                  : delta?.probDelta
+                    ? ` <span class="delta-chip ${delta.probDelta.tone} mono" data-health-delta>${esc(delta.probDelta.label)}</span>`
+                    : '';
+                return `
               <tr style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health">
                 <td class="sticky-first-col">
                   <div class="sticky-player-cell">
@@ -1307,10 +1319,10 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
                 </td>
                 <td>${esc(p.injuryType)}</td>
                 <td class="mono">${esc(formatPracCell(p.wed))} / ${esc(formatPracCell(p.thu))} / ${esc(formatPracCell(p.fri))}</td>
-                <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(p.playBadgeLabel))}</span></td>
+                <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(p.playBadgeLabel))}</span>${trajArrowHtml}</td>
               </tr>
-            `
-              )
+            `;
+              })
               .join('')}
           </tbody>
         </table>
@@ -1441,10 +1453,11 @@ function renderTeamStatsRowsHtml(rows = []) {
     .join('');
 }
 
-function renderTeamStatsAndPower(appData) {
+function renderTeamStatsAndPower(appData, userPrefs = null) {
   const ts = appData?.scheduleMatchup?.teamStats;
   const units = ts?.units || [];
   const ranks = appData?.scheduleMatchup?.teamStatRankings || [];
+  const statSnaps = userPrefs?.deltaSnapshots?.statsByKey || {};
   const oppFullName = appData?.scheduleMatchup?.upcomingMatchup?.oppName || '';
   const oppShort = oppFullName ? oppFullName.trim().split(/\s+/).pop() : null;
   const pwr = resolveConsistentPowerRankings(
@@ -1495,7 +1508,15 @@ function renderTeamStatsAndPower(appData) {
                   </td>
                   <td class="mono num-col overall-val-cell" data-overall-col="sf-val"><strong>${esc(overallDisp)}</strong></td>
                   <td class="rank-col overall-rank-cell" data-overall-col="sf-rank">
-                    <div class="unit-overall-right">${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: true, large: true })}</div>
+                    <div class="unit-overall-right">
+                      ${renderTeamRankTriggerHtml(u.overall?.rank || 16, u.overall?.key, { showMeter: true, large: true })}
+                      ${(() => {
+                        const unitDelta = formatRankDeltaCue(u.overall?.rank, statSnaps[u.overall?.key]?.rank);
+                        return unitDelta
+                          ? `<span class="delta-chip ${unitDelta.tone} mono" data-stat-delta>${esc(unitDelta.text)}</span>`
+                          : '';
+                      })()}
+                    </div>
                   </td>
                   <td class="mono num-col overall-val-cell overall-avg-cell" data-overall-col="nfl-avg">${esc(overallAvgDisp)}</td>
                 </tr>
@@ -1599,7 +1620,10 @@ function renderTeamStatsAndPower(appData) {
         </div>
         ${
           pwr.consensusRank != null
-            ? `<span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus</span>`
+            ? (() => {
+                const cDelta = formatRankDeltaCue(pwr.consensusRank, pwr.previousRank);
+                return `<span class="badge badge-positive mono" style="font-size:13px">#${pwr.consensusRank} Consensus${cDelta ? ` <span class="delta-chip ${cDelta.tone}">${esc(cDelta.text)}</span>` : ''}</span>`;
+              })()
             : `<span class="badge badge-gold mono" style="font-size:12px">Updating</span>`
         }
       </div>
@@ -1610,8 +1634,9 @@ function renderTeamStatsAndPower(appData) {
         ${
           (pwr.sources || []).length > 0
             ? (pwr.sources || [])
-                .map(
-                  s => `
+                .map(s => {
+                  const sDelta = formatRankDeltaCue(s.rank, s.previousRank, s.delta);
+                  return `
           <div class="subcard-panel" data-power-source="${esc(s.id || '')}" data-power-rank="${s.rank}">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px">
               ${
@@ -1619,12 +1644,15 @@ function renderTeamStatsAndPower(appData) {
                   ? `<a href="${esc(sanitizeExternalUrl(s.url))}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(s.outlet)}</strong> ${iconSvg('externalLink', 11)}</a>`
                   : `<strong>${esc(s.outlet)}</strong>`
               }
-              <span class="badge badge-gold mono">Rank #${s.rank} (${esc(s.delta || '0')})</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;flex-shrink:0">
+                ${sDelta ? `<span class="delta-chip ${sDelta.tone} mono">${esc(sDelta.text)}</span>` : ''}
+                <span class="badge badge-gold mono">#${s.rank}</span>
+              </span>
             </div>
             <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(s.blurb)}</div>
           </div>
-        `
-                )
+        `;
+                })
                 .join('')
             : `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-secondary)">Awaiting verified post-game ranking updates. Older-week ratings are excluded until updated.</div>`
         }
@@ -1936,12 +1964,17 @@ function renderRootingGameRowHtml(g, forcedWinners) {
   `;
 }
 
-function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks = null) {
+function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks = null, userPrefs = null) {
   const pp = appData?.seasonal?.playoffPicture || {};
   const sim = mcSimResult || pp.baselineSimulation || {};
   const sf = sim.sfOdds || {};
   const seeds = sf.seedDistribution || {};
   const overrideCount = Object.keys(forcedWinners || {}).length;
+  const baseSf = pp.baselineSimulation?.sfOdds || {};
+  const refSf = overrideCount > 0 ? baseSf : userPrefs?.deltaSnapshots?.playoffBaseline || {};
+  const makeDelta = formatPlayoffOddsDeltaCue(sf.makePlayoffsPct, refSf.makePlayoffsPct);
+  const divDelta = formatPlayoffOddsDeltaCue(sf.winDivisionPct, refSf.winDivisionPct);
+  const byeDelta = formatPlayoffOddsDeltaCue(sf.seed1ByePct, refSf.seed1ByePct);
 
   const byWeek = new Map();
   for (const g of pp.rootingLeverage || []) {
@@ -2005,17 +2038,17 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
       <div class="kpi-grid">
         <div class="kpi-box">
           <div class="kpi-label">Make Playoffs</div>
-          <div class="kpi-val mono" style="color:var(--emerald)">${sf.makePlayoffsPct ?? 0}%</div>
+          <div class="kpi-val mono" style="color:var(--emerald)">${sf.makePlayoffsPct ?? 0}%${makeDelta ? ` <span class="delta-chip ${makeDelta.tone}" data-playoff-delta>${esc(makeDelta.text)}</span>` : ''}</div>
           ${renderMiniMeterHtml(sf.makePlayoffsPct ?? 0, 'emerald')}
         </div>
         <div class="kpi-box">
           <div class="kpi-label">Win NFC West</div>
-          <div class="kpi-val mono" style="color:var(--gold-bright)">${sf.winDivisionPct ?? 0}%</div>
+          <div class="kpi-val mono" style="color:var(--gold-bright)">${sf.winDivisionPct ?? 0}%${divDelta ? ` <span class="delta-chip ${divDelta.tone}" data-playoff-delta>${esc(divDelta.text)}</span>` : ''}</div>
           ${renderMiniMeterHtml(sf.winDivisionPct ?? 0, 'gold')}
         </div>
         <div class="kpi-box">
           <div class="kpi-label">#1 Seed Bye</div>
-          <div class="kpi-val mono">${sf.seed1ByePct ?? 0}%</div>
+          <div class="kpi-val mono">${sf.seed1ByePct ?? 0}%${byeDelta ? ` <span class="delta-chip ${byeDelta.tone}" data-playoff-delta>${esc(byeDelta.text)}</span>` : ''}</div>
           ${renderMiniMeterHtml(sf.seed1ByePct ?? 0, 'scarlet')}
         </div>
       </div>

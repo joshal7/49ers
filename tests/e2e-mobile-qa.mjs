@@ -5756,6 +5756,102 @@ async function main() {
       await cdp.assertNoOverflow('Open 21-Day IR Window Health & Reversion');
     });
 
+    await runStep('High-Signal Digestion Suite: Universal Search, 3-Mode Sort (Top+Latest default), Topic Chips, Timeline, Catch-Up Watermark, Density Toggle & Quiet Push Settings', async () => {
+      await cdp.setViewport(393, 852, true, 3);
+      const digestAudit = await cdp.eval(() => {
+        // 1. Universal Search via Header Icon
+        const searchBtn = document.getElementById('openSearchBtn');
+        searchBtn?.click();
+        const searchInput = document.getElementById('universalSearchInput');
+        const inputFontPx = searchInput ? parseFloat(getComputedStyle(searchInput).fontSize) : 0;
+        if (searchInput) {
+          searchInput.value = 'Purdy';
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        const playerHits = document.querySelectorAll('[data-search-group="players"] .search-result-row').length;
+        const xssInput = document.getElementById('universalSearchInput');
+        if (xssInput) {
+          xssInput.value = '<img src=x onerror=window.__xssSearch=1>';
+          xssInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        const xssTriggered = Boolean(window.__xssSearch);
+        document.getElementById('closeSheetBtn')?.click();
+
+        // 2. Navigate to News & Film -> Verify Top+Latest default sort, Topic Chips, Story Timeline, Density Toggle
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        const sortBtns = Array.from(document.querySelectorAll('[data-news-sort-bar] [data-action="set-news-sort"]'));
+        const sortModes = sortBtns.map(b => b.getAttribute('data-sort-mode'));
+        const activeSortMode = sortBtns.find(b => b.classList.contains('active'))?.getAttribute('data-sort-mode') || '';
+
+        // Switch to Latest, then back to Top + Latest
+        document.querySelector('[data-action="set-news-sort"][data-sort-mode="latest"]')?.click();
+        const afterLatestSort = document.querySelector('[data-news-sort-bar] .active')?.getAttribute('data-sort-mode') || '';
+        document.querySelector('[data-action="set-news-sort"][data-sort-mode="hybrid"]')?.click();
+
+        // Verify Story Timeline & TL;DR micro-button
+        const timelineCount = document.querySelectorAll('[data-story-timeline="true"]').length;
+        const tldrBtnCount = document.querySelectorAll('.wire-micro-btn[data-action="analyze-topic-jump"]').length;
+
+        // Toggle Compact Density Mode & revert to Rich
+        document.querySelector('[data-action="toggle-feed-density"]')?.click();
+        const compactApplied = document.documentElement.getAttribute('data-feed-density') === 'compact';
+        document.querySelector('[data-action="toggle-feed-density"]')?.click();
+        const richRestored = document.documentElement.getAttribute('data-feed-density') === 'rich';
+
+        // 3. Settings -> Quiet Alerts & Feed Density controls present
+        document.getElementById('openSettingsBtn')?.click();
+        const hasPushSection = Boolean(document.querySelector('[data-settings-push-alerts]'));
+        const pushChannelCount = document.querySelectorAll('[data-action="toggle-push-channel"]').length;
+        const hasDensitySetting = Boolean(document.querySelector('[data-settings-feed-density]'));
+        document.getElementById('closeSheetBtn')?.click();
+
+        // 4. Playoff Rooting Override Delta Badge
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="playoffs"]')?.click();
+        const firstRootBtn = document.querySelector('[data-action="toggle-playoff-winner"]');
+        if (firstRootBtn) firstRootBtn.click();
+        const playoffDeltaCount = document.querySelectorAll('[data-playoff-delta]').length;
+        document.querySelector('[data-action="reset-playoff-overrides"]')?.click();
+
+        // Return Home cleanly
+        document.querySelector('[data-nav-tab="home"]')?.click();
+
+        return {
+          hasSearchBtn: Boolean(searchBtn),
+          inputFontPx,
+          playerHits,
+          xssTriggered,
+          sortModes,
+          activeSortMode,
+          afterLatestSort,
+          timelineCount,
+          tldrBtnCount,
+          compactApplied,
+          richRestored,
+          hasPushSection,
+          pushChannelCount,
+          hasDensitySetting,
+          playoffDeltaCount
+        };
+      });
+
+      assert(digestAudit.hasSearchBtn && digestAudit.inputFontPx >= 16, `Universal search button/input invalid: ${JSON.stringify(digestAudit)}`);
+      assert(digestAudit.playerHits >= 1 && !digestAudit.xssTriggered, `Universal search hits/XSS check failed: ${JSON.stringify(digestAudit)}`);
+      assert(
+        JSON.stringify(digestAudit.sortModes) === JSON.stringify(['hybrid', 'top', 'latest']) &&
+          digestAudit.activeSortMode === 'hybrid' &&
+          digestAudit.afterLatestSort === 'latest',
+        `3-mode News sort check failed: ${JSON.stringify(digestAudit)}`
+      );
+      assert(digestAudit.tldrBtnCount >= 1, `Expected >=1 on-card TL;DR button: ${JSON.stringify(digestAudit)}`);
+      assert(digestAudit.compactApplied && digestAudit.richRestored, `Compact/Rich density toggle failed: ${JSON.stringify(digestAudit)}`);
+      assert(
+        digestAudit.hasPushSection && digestAudit.pushChannelCount === 3 && digestAudit.hasDensitySetting,
+        `Settings Quiet Push Alerts / Density controls missing: ${JSON.stringify(digestAudit)}`
+      );
+      await cdp.assertNoOverflow('High-Signal Digestion Suite (393x852)');
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,
