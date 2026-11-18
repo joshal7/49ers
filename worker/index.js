@@ -702,8 +702,87 @@ export default {
       );
     }
 
+    const ALLOWED_SHORTENER_HOST_RE =
+      /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl)$/i;
+    const stripEdgeTrackingParams = raw => {
+      try {
+        const u = new URL(raw);
+        for (const k of [...u.searchParams.keys()]) {
+          if (/^(?:utm_|fbclid$|gclid$|mc_cid$|mc_eid$|ref_src$|ref_url$|_osource$)/i.test(k)) {
+            u.searchParams.delete(k);
+          }
+        }
+        return u.toString();
+      } catch {
+        return raw;
+      }
+    };
+    const expandAllowedShortenerUrlEdge = async rawInput => {
+      const clean = String(rawInput || '').trim();
+      if (!clean) return '';
+      let parsed;
+      try {
+        parsed = new URL(clean.startsWith('http://') ? `https://${clean.slice(7)}` : clean);
+      } catch {
+        return '';
+      }
+      if (parsed.protocol !== 'https:' || !ALLOWED_SHORTENER_HOST_RE.test(parsed.hostname.toLowerCase())) {
+        return '';
+      }
+      const normalizedShort = parsed.toString();
+      const kvKey = `expand_v1:${normalizedShort}`;
+      const cached = await env.SHARED_CACHE?.get(kvKey);
+      if (cached !== null && cached !== undefined) {
+        return cached;
+      }
+      let resolved = '';
+      for (const method of ['HEAD', 'GET']) {
+        try {
+          const r = await fetch(normalizedShort, {
+            method,
+            redirect: 'follow',
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+            },
+            signal: AbortSignal.timeout(3500)
+          });
+          if (r?.url) {
+            const dest = new URL(r.url.startsWith('http://') ? `https://${r.url.slice(7)}` : r.url);
+            if (dest.protocol === 'https:' && !ALLOWED_SHORTENER_HOST_RE.test(dest.hostname.toLowerCase())) {
+              resolved = stripEdgeTrackingParams(dest.toString());
+              break;
+            }
+          }
+        } catch {}
+      }
+      if (env.SHARED_CACHE) {
+        await env.SHARED_CACHE.put(kvKey, resolved, { expirationTtl: resolved ? 86400 : 1800 });
+      }
+      return resolved;
+    };
+
+    if (request.method === 'POST' && url.pathname === '/api/expand-urls') {
+      let body = null;
+      try {
+        body = await request.json();
+      } catch {
+        return jsonResponse({ error: 'Invalid JSON body' }, 400, cors);
+      }
+      const inputUrls = Array.isArray(body?.urls) ? body.urls.slice(0, 12) : [];
+      const expanded = {};
+      await Promise.all(
+        inputUrls.map(async rawU => {
+          const key = String(rawU || '').trim();
+          if (!key) return;
+          const dest = await expandAllowedShortenerUrlEdge(key);
+          if (dest) expanded[key] = dest;
+        })
+      );
+      return jsonResponse({ expanded }, 200, cors);
+    }
+
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
-      const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v2', 'json');
+      const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v4', 'json');
       if (cachedWire && Array.isArray(cachedWire.items)) {
         return jsonResponse({ cached: true, ...cachedWire }, 200, cors);
       }
@@ -715,6 +794,7 @@ export default {
         { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', sfOnly: false },
         { outletId: 'pfrumors', outletName: 'Pro Football Rumors', url: 'https://www.profootballrumors.com/san-francisco-49ers/feed', sfOnly: false },
         { outletId: 'nfl_trade_rumors', outletName: 'NFL Trade Rumors', url: 'https://nfltraderumors.co/feed/', sfOnly: true },
+        { outletId: 'nfl_network', outletName: 'ProFootballTalk', url: 'https://www.nbcsports.com/nfl/profootballtalk.rss', sfOnly: true },
         { outletId: 'sf_standard', outletName: 'The SF Standard', url: 'https://www.sfstandard.com/sports/feed/', sfOnly: true }
       ];
 
@@ -736,6 +816,27 @@ export default {
           .trim();
 
       const sfRe = /\b(49ers|niners|san francisco|shanahan|lynch|saleh|purdy|bosa|mccaffrey|kittle|warner|deebo|aiyuk|pearsall|lenoir|greenlaw|renardo green|mustapha|ji['’]?ayir brown|upton stout|trent williams|mykel williams|buckner|odighizuwa|keion white|keenan allen|mike evans|juszczyk|jennings|guerendo|watkins|dugger|prysock)\b/i;
+      const otherTeamLeadRe = /\b(rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers)\b/i;
+      const histSfBioRe = /\b(originally signed (?:on )?with (?:the )?(?:49ers|san francisco|niners)|(?:was )?(?:selected|drafted|taken) [\s\S]{0,55}by (?:the )?(?:49ers|san francisco|niners)|began (?:his|their) (?:nfl )?career with (?:the )?(?:49ers|san francisco|niners)|spent (?:time|his rookie|the \d{4} season|\d+ seasons?) with (?:the )?(?:49ers|san francisco|niners)|played (?:for|with) (?:the )?(?:49ers|san francisco|niners) (?:from|in) 20(?:0\d|1\d|2[0-4])|stint with (?:the )?(?:49ers|san francisco|niners)|undrafted free agent [\s\S]{0,50}(?:49ers|san francisco|niners))\b/i;
+      const stripWpFooter = s =>
+        String(s || '')
+          .replace(/\s*The post [\s\S]*? appeared first on [^\n.]+(?:\.[a-z]{2,4})?\.?/gi, '')
+          .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '')
+          .trim();
+      const stripHistBio = s =>
+        stripWpFooter(s)
+          .split(/(?<=[.!?])\s+/)
+          .filter(sent => sent && !histSfBioRe.test(sent))
+          .join(' ')
+          .trim();
+      const isEdgeItem49ersRelevant = (titleText, summaryText) => {
+        const cleanTitle = stripWpFooter(titleText);
+        const titleNoFormer = cleanTitle.replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
+        if (sfRe.test(titleNoFormer)) return true;
+        if (otherTeamLeadRe.test(cleanTitle)) return false;
+        const cleanBody = stripHistBio(summaryText).replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
+        return sfRe.test(cleanBody);
+      };
       const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|49erswebzone|nbcs49ers|ninersnation|davidbonilla49)$/i;
       const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
       const discoveredStatusMap = new Map();
@@ -760,10 +861,12 @@ export default {
               }
             }
             const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
-            for (const block of blocks.slice(0, 10)) {
-              const title = decodeBasic((block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
-              const summary = decodeBasic(
-                ((block.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || '')
+            for (const block of blocks.slice(0, src.sfOnly ? 30 : 12)) {
+              const title = stripWpFooter(decodeBasic((block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || ''));
+              const summary = stripWpFooter(
+                decodeBasic(
+                  ((block.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || '')
+                )
               ).slice(0, 260);
               const link = decodeBasic(
                 (block.match(/<link[^>]*href="([^"]+)"/i) || [])[1] ||
@@ -774,7 +877,7 @@ export default {
                 (block.match(/<(?:pubDate|published|updated)>([\s\S]*?)<\/(?:pubDate|published|updated)>/i) || [])[1] || ''
               );
               if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
-              if (src.sfOnly && !sfRe.test(`${title} ${summary}`)) continue;
+              if (src.sfOnly && !isEdgeItem49ersRelevant(title, summary)) continue;
               seenEdgeUrls.add(link);
               const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
               items.push({
@@ -897,12 +1000,36 @@ export default {
                 : '';
             const thumb = syn.photos?.[0]?.url || syn.mediaDetails?.[0]?.media_url_https || syn.video?.poster || '';
             const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
+            const synUrls = Array.isArray(syn.entities?.urls) ? syn.entities.urls : [];
+            const rawExtU =
+              synUrls.find(u => u?.expanded_url && !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u.expanded_url))
+                ?.expanded_url ||
+              syn.card?.binding_values?.card_url?.string_value ||
+              '';
+            let resolvedExtU = rawExtU;
+            if (resolvedExtU) {
+              try {
+                const parsedExt = new URL(resolvedExtU.startsWith('http://') ? `https://${resolvedExtU.slice(7)}` : resolvedExtU);
+                if (ALLOWED_SHORTENER_HOST_RE.test(parsedExt.hostname.toLowerCase())) {
+                  resolvedExtU = await expandAllowedShortenerUrlEdge(parsedExt.toString());
+                } else {
+                  resolvedExtU = stripEdgeTrackingParams(parsedExt.toString());
+                }
+              } catch {
+                resolvedExtU = '';
+              }
+            }
+            const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
+            const synCardDesc = syn.card?.binding_values?.description?.string_value || null;
             items.push({
               id: `x_edge_${sid}`,
               type: 'tweet',
               title: txt.slice(0, 320),
               fullText: txt,
               url: `https://x.com/${handle}/status/${sid}`,
+              externalUrl: resolvedExtU || null,
+              externalTitle: resolvedExtU ? synCardTitle : null,
+              externalDescription: resolvedExtU ? synCardDesc : null,
               imageUrl: thumb.startsWith('https://') ? thumb : '',
               videoStreamUrl: bestMp4 || undefined,
               isHighlightClip: Boolean(bestMp4 && durMs >= 8000),
@@ -921,7 +1048,7 @@ export default {
 
       const payload = { updatedAt: new Date().toISOString(), items };
       if (env.SHARED_CACHE && items.length > 0) {
-        await env.SHARED_CACHE.put('wire:rss_live_v2', JSON.stringify(payload), { expirationTtl: 60 });
+        await env.SHARED_CACHE.put('wire:rss_live_v4', JSON.stringify(payload), { expirationTtl: 60 });
       }
       return jsonResponse({ cached: false, ...payload }, 200, cors);
     }

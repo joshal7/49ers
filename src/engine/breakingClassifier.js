@@ -19,6 +19,7 @@
  */
 
 import {
+  BSKY_ACTOR_TO_X_HANDLE,
   corroborateAndAnnotateWireStream,
   isBlueskyPostUrl,
   isDirectXStatusUrl,
@@ -2633,8 +2634,15 @@ function extractCreditedStaffWriterFromBrandPost(rawTweetText = '') {
   for (const rx of patterns) {
     const m = txt.match(rx);
     if (!m) continue;
-    const rawCandidate = m[1].replace(/\.bsky\.social$/i, '').trim();
-    const resolved = resolveReporterFromNameOrHandle(rawCandidate);
+    const rawActorLower = m[1].toLowerCase().trim();
+    const mappedX =
+      BSKY_ACTOR_TO_X_HANDLE[rawActorLower] ||
+      BSKY_ACTOR_TO_X_HANDLE[`${rawActorLower}.bsky.social`] ||
+      '';
+    const rawCandidate = rawActorLower.replace(/\.bsky\.social$/i, '').trim();
+    const resolved =
+      (mappedX ? resolveReporterFromNameOrHandle(mappedX) : null) ||
+      resolveReporterFromNameOrHandle(rawCandidate);
     if (resolved && !isPodiumSubjectId(resolved.id) && resolved.id !== '49ers_news') {
       return resolved;
     }

@@ -4979,10 +4979,11 @@ export async function refreshDailyTopNewsBriefIfDue({
   }
 
   SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = (async () => {
-    const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
-    if (sourceCandidates.length === 0) {
-      return { updated: false, reason: 'no_source_candidates' };
-    }
+    try {
+      const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
+      if (sourceCandidates.length === 0) {
+        return { updated: false, reason: 'no_source_candidates' };
+      }
     const workerCycleKey = `${activeCycle}-v5`;
 
     // 1. ALWAYS check Shared Worker KV first whenever `workerBaseUrl` is configured (even if a local
@@ -5189,6 +5190,7 @@ export async function refreshDailyTopNewsBriefIfDue({
         failCount: prevFailCount + 1
       });
       return { updated: false, reason: 'request_failed_graceful_fallback' };
+    }
     } finally {
       SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = null;
     }
