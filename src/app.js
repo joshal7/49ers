@@ -49,7 +49,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=84';
+} from './services/aiWorkerClient.js?v=86';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile

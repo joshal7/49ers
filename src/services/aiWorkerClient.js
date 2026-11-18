@@ -4264,7 +4264,10 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       ? appData.scheduleMatchup.schedule
       : [];
     const latestDoneGame = [...schedList].reverse().find(g => g?.completed && !g?.isByeWeek) || null;
-    const latestDoneKickMs = latestDoneGame?.date ? Date.parse(latestDoneGame.date) : NaN;
+    const latestDoneKickMs =
+      latestDoneGame?.dateIso || latestDoneGame?.date
+        ? Date.parse(latestDoneGame.dateIso || latestDoneGame.date)
+        : NaN;
     const isFreshRecentGameFallout =
       Boolean(latestDoneGame) &&
       Number.isFinite(latestDoneKickMs) &&
@@ -4356,13 +4359,18 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       const qb = recentRecap.sfPassing?.[0] || null;
       const star1 = recentRecap.sfScrimmageLeaders?.[0] || null;
       const standingShort = (m.standingSummary || 'NFC West').split('•')[0].trim();
+      const offNoiseRe = /\b(defensive struggles|fumble call|challenged|pass[- ]?rush|ticket prices|achilles|tendinitis|injury)\b/i;
       const offCites = pickMultiCites(
-        new RegExp(`584|records|offense|mccaffrey|purdy|${rOppLast.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i'),
+        c => {
+          const txt = `${c.title || ''} ${c.fullBody || ''}`;
+          if (offNoiseRe.test(txt)) return false;
+          return new RegExp(`584|records|offense|mccaffrey|purdy|deebo|keenan allen|${rOppLast.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i').test(txt);
+        },
         2
       );
       const starTail =
         star1 && qb
-          ? ` ${star1.name} totaled ${star1.scrimmageYards} scrimmage yards and ${star1.totalTds} touchdown${star1.totalTds === 1 ? '' : 's'} while ${qb.name} threw for ${qb.yards} yards and ${qb.tds} TDs in Kyle Shanahan's attack${pickCite(new RegExp(`${star1.name.split(' ').pop()}|${qb.name.split(' ').pop()}|offense|shanahan`, 'i'))}.`
+          ? ` ${star1.name} totaled ${star1.scrimmageYards} scrimmage yards and ${star1.totalTds} touchdown${star1.totalTds === 1 ? '' : 's'} while ${qb.name} threw for ${qb.yards} yards and ${qb.tds} TDs in Kyle Shanahan's attack${pickCite(c => !offNoiseRe.test(`${c.title} ${c.fullBody}`) && new RegExp(`${star1.name.split(' ').pop()}|${qb.name.split(' ').pop()}|offense|deebo|keenan allen`, 'i').test(`${c.title} ${c.fullBody}`))}.`
           : '';
       dynamicBullets.push(
         `${rOppLast} Offensive Surge: Fresh off moving to ${rec} (${standingShort}) with a ${rScore ? `${rScore} ` : ''}${rWin ? 'win over' : 'result against'} ${rCity}, San Francisco piled up ${sTeam.totalYards} total yards${offCites}.${starTail}`
@@ -4374,13 +4382,15 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         const mentionsBosaBuckner = candidates.some(
           c => /\bbosa\b/i.test(`${c.title} ${c.fullBody}`) && /\bbuckner\b/i.test(`${c.title} ${c.fullBody}`)
         );
-        const frontPair = mentionsBosaBuckner ? ' with Nick Bosa and DeForest Buckner anchoring the front' : '';
+        const frontLead = mentionsBosaBuckner
+          ? 'Even with Nick Bosa and DeForest Buckner anchoring the front, San Francisco'
+          : 'San Francisco';
         const sackPhrase =
           def.sacksRecorded != null && def.sacksRecorded <= 1
             ? `generated just ${def.sacksRecorded} sack${def.sacksRecorded === 1 ? '' : 's'}`
             : 'faced late-game pressure questions';
         dynamicBullets.push(
-          `Pass-Rush & Front Review: Even${frontPair}, San Francisco ${sackPhrase} against ${rCity}, with Kyle Shanahan pointing to fourth-quarter defensive-line fatigue after the front graded solidly early${prCites}.`
+          `Pass-Rush & Front Review: ${frontLead} ${sackPhrase} against ${rCity}, with Kyle Shanahan pointing to fourth-quarter defensive-line fatigue after the front graded solidly early${prCites}.`
         );
       }
     }
@@ -4389,14 +4399,22 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     const healthSentences = [];
     if (!latestDayInfo.key) {
       if (activeEvalPlayers.length > 0) {
-        const evalNamesRe = new RegExp(
-          activeEvalPlayers
+        const evalSurnameRe = new RegExp(
+          `\\b(${activeEvalPlayers
             .slice(0, 4)
             .map(p => p.name.split(' ').pop().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-            .join('|') + '|achilles|back|day[- ]to[- ]day|injury updates',
+            .join('|')})\\b`,
           'i'
         );
-        const evalCites = pickMultiCites(evalNamesRe, 2);
+        const injuryCtxRe =
+          /\b(injur(?:y|ies|ed)|achilles|tendinitis|day[- ]to[- ]day|practice|status|sideline|back\s+(?:injury|tightness|issue)|cornerbacks?)\b/i;
+        const evalCites = pickMultiCites(
+          c => {
+            const txt = `${c.title || ''} ${c.fullBody || ''}`;
+            return injuryCtxRe.test(txt) && (evalSurnameRe.test(txt) || /\binjury\s+updates\b/i.test(txt));
+          },
+          2
+        );
         healthSentences.push(
           `Entering Week ${wk} preparation, head coach Kyle Shanahan and the medical staff evaluate ${joinNamesNatural(activeEvalPlayers.slice(0, 4).map(fmtPlayerInj))} ahead of Wednesday's initial participation report${evalCites}.`
         );
@@ -4466,7 +4484,14 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       `${oppShortToken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}|altitude|mexico city|flores|o'connell|power rankings`,
       'i'
     );
-    const matchupCites = pickMultiCites(oppRe, 2);
+    const tvGuideNoiseRe = /\b(how to watch|watch,\s*stream|tv channel|live stream|plus odds)\b/i;
+    const matchupCites = pickMultiCites(
+      c => {
+        const txt = `${c.title || ''} ${c.fullBody || ''}`;
+        return oppRe.test(txt) && !tvGuideNoiseRe.test(txt);
+      },
+      2
+    );
     const playoffCite = pickCite(/playoff|seed|nfc|standings|division|power rankings/i);
     const hasAltitudeNews = candidates.some(c => /altitude|mexico city|7,350/i.test(`${c.title} ${c.fullBody}`));
     const venueClause = hasAltitudeNews ? ' at high altitude in Mexico City' : '';
@@ -4513,6 +4538,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         const protectedLead = String(rawLeadTxt || '').replace(ABBREV_DOT_PROTECT_RE, '$1__ABBRDOT__');
         let firstSent = (protectedLead.match(/^[^.!?]+[.!?]?/) || [protectedLead])[0]
           .replace(/__ABBRDOT__/g, '.')
+          .replace(/^\s*(49ers|Niners)\s+\1\b/i, '$1')
           .trim()
           .replace(/[.!?]+$/, '');
         const quoteCount = (firstSent.match(/"/g) || []).length;
