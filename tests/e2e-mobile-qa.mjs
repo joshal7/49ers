@@ -5791,10 +5791,12 @@ async function main() {
         const afterLatestSort = document.querySelector('[data-news-sort-bar] .active')?.getAttribute('data-sort-mode') || '';
         document.querySelector('[data-action="set-news-sort"][data-sort-mode="hybrid"]')?.click();
 
-        // Verify Story Timeline, removed TL;DR / View Image / Topic Chip Strip, and tight side-thumb + player-chip overlap
+        // Verify Story Timeline, zero micro-action pills (TL;DR / View Image / Expand Chart), zero topic filter bar, and tight side-thumb + player-chip overlap
         const timelineCount = document.querySelectorAll('[data-story-timeline="true"]').length;
-        const tldrBtnCount = document.querySelectorAll('.wire-micro-btn[data-action="analyze-topic-jump"]').length;
-        const viewImageBtnCount = document.querySelectorAll('[data-action="open-media-lightbox"]').length;
+        const microBtnCount = document.querySelectorAll('.wire-micro-btn, [data-action="open-media-lightbox"]').length;
+        const cardButtonsText = Array.from(document.querySelectorAll('.brief-card button'))
+          .map(b => b.textContent.trim())
+          .filter(t => /^(?:TL;DR|View Image|Expand Chart)$/i.test(t));
         const topicStripCount = document.querySelectorAll('[data-news-topic-strip], .news-topic-chip-strip').length;
         const cardsWithThumbAndChips = Array.from(document.querySelectorAll('.brief-card')).filter(
           c => c.querySelector('.media-split-row .salient-thumb') && c.querySelector('.featured-players-strip')
@@ -5841,8 +5843,8 @@ async function main() {
           activeSortMode,
           afterLatestSort,
           timelineCount,
-          tldrBtnCount,
-          viewImageBtnCount,
+          microBtnCount,
+          cardButtonsText,
           topicStripCount,
           cardsWithThumbAndChipsCount: cardsWithThumbAndChips.length,
           chipsInsideSplitCount,
@@ -5864,8 +5866,10 @@ async function main() {
           digestAudit.afterLatestSort === 'latest',
         `3-mode News sort check failed: ${JSON.stringify(digestAudit)}`
       );
-      assert(digestAudit.tldrBtnCount === 0, `Expected 0 on-card TL;DR buttons: ${JSON.stringify(digestAudit)}`);
-      assert(digestAudit.viewImageBtnCount === 0, `Expected 0 on-card View Image buttons: ${JSON.stringify(digestAudit)}`);
+      assert(
+        digestAudit.microBtnCount === 0 && digestAudit.cardButtonsText.length === 0,
+        `Expected 0 TL;DR / View Image / Expand Chart micro-buttons on cards: ${JSON.stringify(digestAudit)}`
+      );
       assert(digestAudit.topicStripCount === 0, `Expected 0 topic filter strips in News & Film: ${JSON.stringify(digestAudit)}`);
       assert(
         digestAudit.cardsWithThumbAndChipsCount === 0 ||

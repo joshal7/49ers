@@ -451,7 +451,7 @@ function renderSingleDashboardCard({
                         <span class="inline-ext-icon" style="margin-left:0">${iconSvg('external', 10)}</span>
                       </div>
                     </div>
-                    ${artThumbHtml || `<span class="source-open-pill">${iconSvg('external', 12)}</span>`}
+                    ${artThumbHtml}
                   </a>
                 `;
                   })

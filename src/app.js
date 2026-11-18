@@ -421,42 +421,6 @@ function syncNavUnreadBadge() {
   }
 }
 
-function openMediaLightbox({ src = '', fallbackSrc = '', title = '', author = '', href = '' } = {}) {
-  const safeSrc = sanitizeExternalUrl(src, null);
-  const safeFallback = sanitizeExternalUrl(fallbackSrc, null);
-  if (!safeSrc && !safeFallback) return;
-  const backdrop = document.getElementById('inlineMediaLightboxBackdrop');
-  const eyebrow = document.getElementById('mediaLightboxEyebrow');
-  const titleEl = document.getElementById('mediaLightboxTitle');
-  const body = document.getElementById('mediaLightboxBody');
-  if (!backdrop || !body) return;
-  if (eyebrow) eyebrow.textContent = author || 'Beat Media';
-  if (titleEl) titleEl.textContent = title || 'Preview';
-  const safeHref = sanitizeExternalUrl(href, null);
-  body.innerHTML = `
-    <div class="media-lightbox-img-wrap">
-      <img src="${esc(safeSrc || safeFallback)}" ${safeFallback && safeFallback !== safeSrc ? `data-fallback-src="${esc(safeFallback)}"` : ''} alt="${esc(title || 'Beat media preview')}" class="media-lightbox-img" decoding="async" />
-    </div>
-    ${
-      safeHref
-        ? `<div style="display:flex;justify-content:flex-end;margin-top:10px">
-             <a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-               <span>Open Original Post</span>${iconSvg('externalLink', 11)}
-             </a>
-           </div>`
-        : ''
-    }
-  `;
-  backdrop.hidden = false;
-}
-
-function closeMediaLightbox() {
-  const backdrop = document.getElementById('inlineMediaLightboxBackdrop');
-  const body = document.getElementById('mediaLightboxBody');
-  if (backdrop) backdrop.hidden = true;
-  if (body) body.innerHTML = '';
-}
-
 function captureDeltaSnapshotsOnBoot(appData) {
   if (!appData) return;
   const curWeek = Number(appData?.meta?.currentWeek || 0) || null;
@@ -1454,12 +1418,6 @@ function bindEvents() {
     renderSheet();
   });
 
-  document.getElementById('inlineMediaLightboxBackdrop')?.addEventListener('click', e => {
-    if (e.target.id === 'inlineMediaLightboxBackdrop') {
-      closeMediaLightbox();
-    }
-  });
-
   document.getElementById('closeSheetBtn')?.addEventListener('click', () => {
     state.sheetMode = null;
     renderSheet();
@@ -1507,11 +1465,6 @@ function bindEvents() {
     if (e.key === 'Enter' && e.target?.id === 'inlineGeminiApiKeyInput') {
       e.preventDefault();
       document.querySelector('[data-action="save-inline-gemini-key"]')?.click();
-      return;
-    }
-    const mediaBackdrop = document.getElementById('inlineMediaLightboxBackdrop');
-    if (e.key === 'Escape' && mediaBackdrop && !mediaBackdrop.hidden) {
-      closeMediaLightbox();
       return;
     }
     if (
@@ -1854,20 +1807,6 @@ function bindEvents() {
         renderMain();
         break;
       }
-
-      case 'open-media-lightbox':
-        openMediaLightbox({
-          src: btn.getAttribute('data-media-src') || '',
-          fallbackSrc: btn.getAttribute('data-media-fallback') || '',
-          title: btn.getAttribute('data-media-title') || '',
-          author: btn.getAttribute('data-media-author') || '',
-          href: btn.getAttribute('data-media-href') || ''
-        });
-        break;
-
-      case 'close-media-lightbox':
-        closeMediaLightbox();
-        break;
 
       case 'toggle-push-subscription':
         await toggleQuietPushAlerts();
