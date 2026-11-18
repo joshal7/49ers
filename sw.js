@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v93';
+const CACHE_NAME = '49ers-faithful-v96';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -19,6 +19,7 @@ const CORE_ASSETS = [
   './src/engine/groundingValidator.js',
   './src/engine/breakingClassifier.js',
   './src/engine/linkIntegrity.js',
+  './src/engine/salientMediaEngine.js',
   './src/engine/jargonGlossary.js',
   './src/engine/statsLeaderboardEngine.js',
   './src/engine/powerRankingsEngine.js',

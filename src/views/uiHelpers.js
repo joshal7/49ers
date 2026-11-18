@@ -5,6 +5,7 @@
 import { annotateJargonPlainText, jargonTerm, jargonInfoIcon } from '../engine/jargonGlossary.js';
 import { resolveReporterFromNameOrHandle } from '../engine/beatAttributionEngine.js';
 import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
+import { optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 
 export { jargonTerm, jargonInfoIcon };
@@ -398,7 +399,10 @@ export function playerInitials(name = '') {
 export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
   const { showJerseyBadge = false, hero = false, extraClass = '' } = opts;
   const rawUrl = String(player?.headshotUrl || '').trim();
-  const hasValidUrl = /^https:\/\//i.test(rawUrl);
+  const optImg = /^https:\/\//i.test(rawUrl)
+    ? optimizeImageUrlForSlot(rawUrl, hero ? 'hero' : 'avatar')
+    : { src: '', fallbackSrc: '' };
+  const hasValidUrl = Boolean(optImg.src);
   const fallbackLabel =
     !showJerseyBadge && player?.jersey != null
       ? `#${player.jersey}`
@@ -409,7 +413,7 @@ export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
       <span class="player-avatar-fallback mono" aria-hidden="true">${esc(fallbackLabel)}</span>
       ${
         hasValidUrl
-          ? `<img class="player-avatar-img" src="${esc(rawUrl)}" alt="${esc(player?.name || 'Player')}" width="${Number(size)}" height="${Number(size)}" loading="lazy" decoding="async" />`
+          ? `<img class="player-avatar-img" src="${esc(optImg.src)}" ${optImg.fallbackSrc ? `data-fallback-src="${esc(optImg.fallbackSrc)}"` : ''} alt="${esc(player?.name || 'Player')}" width="${Number(size)}" height="${Number(size)}" loading="lazy" decoding="async" />`
           : ''
       }
       ${
@@ -433,12 +437,118 @@ export function renderTeamLogoHtml(abbr = 'SF', logoUrl = '', size = 24, extraCl
     `;
   }
   const resolved = espnTeamLogoUrl(cleanAbbr, logoUrl);
+  const optLogo = optimizeImageUrlForSlot(resolved, 'logo');
+  const imgSrc = optLogo.src || resolved;
   return `
     <span class="team-logo-wrap ${extraClass}" style="--logo-size:${Number(size)}px">
       <span class="team-logo-fallback mono" aria-hidden="true">${esc(cleanAbbr)}</span>
-      <img class="team-logo-img" src="${esc(resolved)}" alt="${esc(cleanAbbr)}" width="${Number(size)}" height="${Number(size)}" loading="lazy" decoding="async" />
+      <img class="team-logo-img" src="${esc(imgSrc)}" ${optLogo.fallbackSrc ? `data-fallback-src="${esc(optLogo.fallbackSrc)}"` : ''} alt="${esc(cleanAbbr)}" width="${Number(size)}" height="${Number(size)}" loading="lazy" decoding="async" />
     </span>
   `;
+}
+
+/**
+ * Renders a crisp, latency-optimized right-rail thumbnail across News, Home, Sources,
+ * Player Dossiers & Health feeds. Handles all 4 visual tiers:
+ * - `editorial`: full-bleed sports photography (`object-fit: cover`, top-weighted focal crop)
+ * - `player`: stadium-spotlight transparent headshot with subtle jersey number pill
+ * - `matchup`: dual-crest SF × OPP visual badge
+ * - `team`: compact 49ers editorial/podium crest badge
+ *
+ * Uses `asStatic: true` whenever embedded inside an outer `<a>` card to guarantee zero nested `<a>` tags.
+ */
+export function renderSalientThumbHtml(
+  visual,
+  {
+    href = '',
+    size = 'lg', // 'lg' (84px) | 'md' (64px) | 'sm' (48px)
+    eager = false,
+    asStatic = false,
+    extraClass = ''
+  } = {}
+) {
+  if (!visual || !visual.kind) return '';
+
+  const dim = size === 'sm' ? 48 : size === 'md' ? 64 : 84;
+  const sizeCls = size === 'sm' ? 'thumb-sm' : size === 'md' ? 'thumb-md' : 'thumb-lg';
+  const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" fetchpriority="low"';
+  const safeHref = !asStatic && href ? sanitizeExternalUrl(href, null) : null;
+  const cls = `raw-item-thumb salient-thumb ${sizeCls} thumb-kind-${esc(visual.kind)} ${extraClass}`.trim();
+
+  let innerHtml = '';
+
+  if (visual.kind === 'editorial') {
+    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || '49ers photo')}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />`;
+  } else if (visual.kind === 'player') {
+    const showJersey = size !== 'sm' && visual.jersey != null && visual.jersey !== '';
+    innerHtml = `
+      <img class="salient-player-cutout" src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || visual.playerName || '49ers player')}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />
+      ${showJersey ? `<span class="salient-thumb-chip mono">#${esc(String(visual.jersey))}</span>` : ''}
+    `;
+  } else if (visual.kind === 'matchup') {
+    const crestDim = size === 'sm' ? 20 : size === 'md' ? 26 : 32;
+    innerHtml = `
+      <span class="salient-matchup-crests" aria-hidden="true">
+        <img class="salient-crest sf" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="SF" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
+        <span class="salient-crest-sep"></span>
+        <img class="salient-crest opp" src="${esc(visual.oppLogoSrc)}" ${visual.oppLogoFallback ? `data-fallback-src="${esc(visual.oppLogoFallback)}"` : ''} alt="${esc(visual.oppAbbr || 'OPP')}" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
+      </span>
+      ${size !== 'sm' ? `<span class="salient-thumb-chip mono">vs ${esc(visual.oppAbbr || 'NFL')}</span>` : ''}
+    `;
+  } else if (visual.kind === 'team') {
+    const crestDim = size === 'sm' ? 24 : size === 'md' ? 30 : 38;
+    innerHtml = `
+      <img class="salient-team-emblem" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="San Francisco 49ers" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
+      ${size !== 'sm' && visual.tagLabel ? `<span class="salient-thumb-chip mono">${esc(visual.tagLabel)}</span>` : ''}
+    `;
+  } else {
+    return '';
+  }
+
+  if (safeHref) {
+    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="${cls}" data-salient-thumb="${esc(visual.kind)}" aria-hidden="true" tabindex="-1">${innerHtml}</a>`;
+  }
+  return `<span class="${cls}" data-salient-thumb="${esc(visual.kind)}" aria-hidden="true">${innerHtml}</span>`;
+}
+
+/**
+ * Renders a sleek, restrained 16:9 / 2.2:1 editorial lead hero photograph for the
+ * Daily Top News Brief or #1 Lead Editorial Story in News & Film.
+ */
+export function renderSalientHeroBannerHtml(
+  hero,
+  {
+    href = '',
+    compact = false,
+    creditLabel = '',
+    badgeText = '',
+    eager = true,
+    extraClass = ''
+  } = {}
+) {
+  if (!hero?.src) return '';
+  const safeHref = href ? sanitizeExternalUrl(href, null) : null;
+  const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" fetchpriority="low"';
+  const credit = creditLabel || hero.creditLabel || '';
+  const wrapCls = `salient-hero-banner ${compact ? 'compact' : ''} ${extraClass}`.trim();
+
+  const imgHtml = `
+    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(hero.alt || '49ers editorial photo')}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
+    <span class="salient-hero-scrim" aria-hidden="true"></span>
+    ${
+      badgeText || credit
+        ? `<span class="salient-hero-meta">
+             ${badgeText ? `<span class="salient-hero-badge mono">${esc(badgeText)}</span>` : '<span></span>'}
+             ${credit ? `<span class="salient-hero-credit">${esc(credit)}</span>` : ''}
+           </span>`
+        : ''
+    }
+  `;
+
+  if (safeHref) {
+    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb ${wrapCls}" data-salient-hero="true" aria-hidden="true" tabindex="-1">${imgHtml}</a>`;
+  }
+  return `<div class="${wrapCls}" data-salient-hero="true">${imgHtml}</div>`;
 }
 
 export function renderPlayerChipsStripHtml(players = [], max = 5) {

@@ -44,10 +44,12 @@ import {
   checkAndAutoUpdateBestGeminiModel,
   hydrateCachedDailyMatchupIntel,
   refreshDailyMatchupIntelIfDue,
+  clearDailyMatchupIntelAttemptLock,
   hydrateCachedDailyTopNewsBrief,
   shouldTriggerDailyTopNewsBriefRefresh,
-  refreshDailyTopNewsBriefIfDue
-} from './services/aiWorkerClient.js?v=75';
+  refreshDailyTopNewsBriefIfDue,
+  clearDailyNewsBriefAttemptLock
+} from './services/aiWorkerClient.js?v=81';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -2241,6 +2243,8 @@ function bindEvents() {
           }
         }
         saveUserPrefs(state.prefs);
+        clearDailyNewsBriefAttemptLock();
+        clearDailyMatchupIntelAttemptLock();
         state.geminiKeyNotice = '';
         if (state.jobStatus?.error) state.jobStatus = null;
         const shared = await fetchSharedWorkerFeed(state.prefs);
@@ -2386,8 +2390,14 @@ function bindEvents() {
     e => {
       const target = e.target;
       if (target && target.tagName === 'IMG') {
+        const fallbackSrc = target.getAttribute('data-fallback-src');
+        if (fallbackSrc && /^https:\/\//i.test(fallbackSrc) && target.src !== fallbackSrc) {
+          target.removeAttribute('data-fallback-src');
+          target.src = fallbackSrc;
+          return;
+        }
         const wrap = target.closest(
-          '.player-avatar, .team-logo-wrap, .brief-hero-media, .raw-item-thumb, .yt-facade-media, .video-thumb-stage, .beat-podcast-art-wrap'
+          '.player-avatar, .team-logo-wrap, .brief-hero-media, .salient-hero-banner, .raw-item-thumb, .yt-facade-media, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item'
         );
         if (wrap) wrap.classList.add('img-error');
       }
@@ -2442,23 +2452,32 @@ function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
       );
     }
   }
-  // Preserve fresher live-generated AI Daily Brief ONLY when same cycle, non-stale, and upstream isn't canonical pipeline AI
+  // Preserve a non-stale AI Daily Brief over a deterministic fallback (`pipeline-grounded`) for the same cycle,
+  // regardless of timestamp; canonical `pipeline-gemini-daily` from upstream always wins for 100% Phone & Web parity.
   const prevBrief = prevData.news?.dailyTopNewsBrief;
   const nextBrief = nextData.news?.dailyTopNewsBrief;
   if (prevBrief?.generatedAt && nextData.news) {
     const prevMs = Date.parse(prevBrief.generatedAt) || 0;
     const nextMs = Date.parse(nextBrief?.generatedAt || '') || 0;
     const prevNonStale = !isDailyBriefStaleForLiveState(prevBrief, nextData, Date.now());
-    const upstreamIsCanonicalSameCycle =
+    const prevIsAi =
+      prevBrief.source === 'live-gemini-daily' || prevBrief.source === 'pipeline-gemini-daily';
+    const nextIsCanonicalSameCycle =
       nextBrief &&
       nextBrief.cycleKey === prevBrief.cycleKey &&
       nextBrief.source === 'pipeline-gemini-daily' &&
       !isDailyBriefStaleForLiveState(nextBrief, nextData, Date.now());
+    const nextIsAiSameCycle =
+      nextBrief &&
+      nextBrief.cycleKey === prevBrief.cycleKey &&
+      (nextBrief.source === 'pipeline-gemini-daily' || nextBrief.source === 'live-gemini-daily') &&
+      !isDailyBriefStaleForLiveState(nextBrief, nextData, Date.now());
     if (
       prevNonStale &&
-      !upstreamIsCanonicalSameCycle &&
-      prevBrief.source === 'live-gemini-daily' &&
-      (!nextBrief || (prevBrief.cycleKey === nextBrief.cycleKey && prevMs > nextMs))
+      prevIsAi &&
+      !nextIsCanonicalSameCycle &&
+      (!nextBrief ||
+        (prevBrief.cycleKey === nextBrief.cycleKey && (!nextIsAiSameCycle || prevMs > nextMs)))
     ) {
       nextData.news.dailyTopNewsBrief = prevBrief;
     }

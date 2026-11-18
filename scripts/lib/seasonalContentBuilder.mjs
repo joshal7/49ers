@@ -7,8 +7,10 @@
 
 import {
   classifyBreakingItem,
+  extractBlueskyBestExternalLink,
   formatTweetBodyForDisplay,
   isRedundantProfileSelfLink,
+  promoteLinkDropTweetToArticle,
   stripRedundantAuthorBoilerplate
 } from '../../src/engine/breakingClassifier.js';
 import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
@@ -21,13 +23,16 @@ import {
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
   getPlayerLookupKeys,
+  is49ersRelevantWireItem,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledPublisher,
   normalizePlayerKey,
   sanitizeExternalUrl,
   selectBestXSyndicationMp4,
-  slugifyPlayerName
+  slugifyPlayerName,
+  stripAggregatorBoilerplate,
+  stripHistoricalSfBioSentences
 } from '../../src/engine/linkIntegrity.js';
 import {
   buildTargetedOriginalTweetUrl,
@@ -584,11 +589,39 @@ export async function fetchLiveBeatSocialPosts() {
           const pubMs = new Date(pubIso).getTime();
           if (Number.isFinite(pubMs) && pubMs < sevenDaysAgoMs) continue;
 
-          const extTitle = post?.embed?.external?.title || '';
-          const extDesc = post?.embed?.external?.description || '';
-          const extUri = post?.embed?.external?.uri || '';
-          const extThumb = post?.embed?.external?.thumb || post?.embed?.images?.[0]?.thumb || '';
-          if (acc.requireKeyword && !sfKeywords.test(`${rawText} ${extTitle} ${extDesc}`)) continue;
+          const extLink = extractBlueskyBestExternalLink(post, rec);
+          const extTitle = stripAggregatorBoilerplate(extLink.title || '');
+          const extDesc = stripAggregatorBoilerplate(extLink.description || '');
+          const nonBioExtDesc = stripHistoricalSfBioSentences(extDesc);
+          const extUri = extLink.uri || '';
+          const extThumb = extLink.thumb || post?.embed?.images?.[0]?.thumb || '';
+          if (
+            isOffTopicLeagueFiller({
+              url: extUri,
+              title: rawText,
+              summary: `${extTitle} ${nonBioExtDesc}`,
+              hasRosterMatch: sfKeywords.test(`${rawText} ${extTitle} ${nonBioExtDesc}`)
+            })
+          ) {
+            continue;
+          }
+          if (acc.requireKeyword) {
+            const leadHasSf = sfKeywords.test(rawText);
+            const bodyHasSf = sfKeywords.test(`${extTitle} ${nonBioExtDesc}`);
+            if (
+              !is49ersRelevantWireItem({
+                title: rawText,
+                fullText: rawText,
+                externalTitle: extTitle,
+                externalDescription: extDesc,
+                isNationalFeed: true,
+                leadRosterMatchCount: leadHasSf ? 1 : 0,
+                bodyRosterMatchCount: bodyHasSf ? 1 : 0
+              })
+            ) {
+              continue;
+            }
+          }
 
           const rkey = (post.uri || '').split('/').pop();
           const attr = extractBeatAttributionFromText(rawText, acc);
@@ -989,6 +1022,8 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     fallbackAuthorName,
     fallbackAuthorUrl,
     expandedExtUrl,
+    externalTitle = null,
+    externalDescription = null,
     mediaImageUrl,
     videoStreamUrl = '',
     videoDurationFmt = '',
@@ -1067,7 +1102,11 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
       summary: '',
       url: canonicalUrl,
       externalUrl: safeExt && !isPaywalledPublisher('', safeExt) ? safeExt : null,
-      externalTitle: null,
+      externalTitle: safeExt && !isPaywalledPublisher('', safeExt) && externalTitle ? stripAggregatorBoilerplate(externalTitle) : null,
+      externalDescription:
+        safeExt && !isPaywalledPublisher('', safeExt) && externalDescription
+          ? stripAggregatorBoilerplate(externalDescription).slice(0, 320)
+          : null,
       imageUrl: mediaImageUrl && mediaImageUrl.startsWith('https://') ? mediaImageUrl : '',
       videoStreamUrl: videoStreamUrl && videoStreamUrl.startsWith('https://') ? videoStreamUrl : undefined,
       isHighlightClip: Boolean(isHighlightClip && videoStreamUrl && videoStreamUrl.startsWith('https://')),
@@ -1096,7 +1135,22 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
             if (synRes.ok) {
               const syn = await synRes.json();
               if (syn && typeof syn.text === 'string' && syn.text.trim()) {
-                const rawExpUrl = syn.entities?.urls?.[0]?.expanded_url || '';
+                const pickSynExternalUrl = obj => {
+                  const urls = Array.isArray(obj?.entities?.urls) ? obj.entities.urls : [];
+                  const nonSocial = urls.find(
+                    u => u?.expanded_url && !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u.expanded_url)
+                  );
+                  return (
+                    nonSocial?.expanded_url ||
+                    obj?.card?.binding_values?.card_url?.string_value ||
+                    urls[0]?.expanded_url ||
+                    ''
+                  );
+                };
+                const rawExpUrl = pickSynExternalUrl(syn);
+                const expandedSynUrl = rawExpUrl ? await expandShortenerUrl(rawExpUrl) : '';
+                const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
+                const synCardDesc = syn.card?.binding_values?.description?.string_value || null;
                 const mediaThumb =
                   syn.photos?.[0]?.url ||
                   syn.mediaDetails?.[0]?.media_url_https ||
@@ -1117,7 +1171,9 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   rawBodyText: syn.text,
                   fallbackAuthorName: syn.user?.name || screenName,
                   fallbackAuthorUrl: `https://x.com/${screenName}`,
-                  expandedExtUrl: rawExpUrl,
+                  expandedExtUrl: expandedSynUrl,
+                  externalTitle: synCardTitle,
+                  externalDescription: synCardDesc,
                   mediaImageUrl: mediaThumb,
                   videoStreamUrl: bestMp4,
                   videoDurationFmt: vidDurFmt,
@@ -1142,6 +1198,8 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                       qtDurMs >= 5000
                         ? `${Math.floor(qtDurMs / 60000)}:${String(Math.round((qtDurMs % 60000) / 1000)).padStart(2, '0')}`
                         : '';
+                    const qtRawUrl = pickSynExternalUrl(qt);
+                    const qtExpUrl = qtRawUrl ? await expandShortenerUrl(qtRawUrl) : '';
                     const qtBuilt = buildHydratedTweetItem({
                       statusId: qtId,
                       handle: qtHandle,
@@ -1150,7 +1208,9 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                       rawBodyText: qt.text || '',
                       fallbackAuthorName: qt.user?.name || qtHandle,
                       fallbackAuthorUrl: `https://x.com/${qtHandle}`,
-                      expandedExtUrl: qt.entities?.urls?.[0]?.expanded_url || '',
+                      expandedExtUrl: qtExpUrl,
+                      externalTitle: qt.card?.binding_values?.title?.string_value || null,
+                      externalDescription: qt.card?.binding_values?.description?.string_value || null,
                       mediaImageUrl: qt.photos?.[0]?.url || qt.mediaDetails?.[0]?.media_url_https || qt.video?.poster || '',
                       videoStreamUrl: qtMp4,
                       videoDurationFmt: qtDurFmt,
@@ -1538,24 +1598,11 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
     const seenTitleKeys = new Set();
     const scoredCandidates = [];
 
-    for (const it of rawItems) {
-      if (it?.type === 'video' || it?.isClickbait) continue;
-      let isTw = it?.type === 'tweet' || it?.type === 'social';
-      let resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
-
-      // Prioritize direct X status links or canonical non-paywalled article URLs over Bluesky links
-      if (isBlueskyPostUrl(resolvedUrl)) {
-        const safeExt = sanitizeExternalUrl(it.externalUrl, null);
-        if (
-          safeExt &&
-          !isBlueskyPostUrl(safeExt) &&
-          !isPaywalledPublisher(it.outletName, safeExt) &&
-          !isRedundantProfileSelfLink(safeExt, resolvedUrl)
-        ) {
-          resolvedUrl = safeExt;
-          isTw = false;
-        }
-      }
+    for (const rawIt of rawItems) {
+      if (rawIt?.type === 'video' || rawIt?.isClickbait) continue;
+      const it = promoteLinkDropTweetToArticle(rawIt);
+      const isTw = it?.type === 'tweet' || it?.type === 'social';
+      const resolvedUrl = isTw ? resolveOriginalTweetUrl(it, rawItems) : it?.url;
 
       const safeItemUrl = sanitizeExternalUrl(resolvedUrl, null);
       const dedupUrlKey =

@@ -13,7 +13,12 @@
  * 6. NFL CBA 4-Game IR Minimum Calculator (explicitly excluding Bye Weeks from the 4-game count!)
  */
 
-import { isPaywalledPublisher, sanitizeExternalUrl, buildEspnPlayerNewsAnchorUrl } from './linkIntegrity.js';
+import {
+  AMBIGUOUS_PLAYER_SURNAMES,
+  isPaywalledPublisher,
+  sanitizeExternalUrl,
+  buildEspnPlayerNewsAnchorUrl
+} from './linkIntegrity.js';
 import {
   buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
@@ -315,34 +320,7 @@ function stripGenerationalSuffix(name = '') {
     .trim();
 }
 
-const AMBIGUOUS_CLAUSE_SURNAMES = new Set([
-  'west',
-  'green',
-  'white',
-  'brown',
-  'black',
-  'young',
-  'long',
-  'short',
-  'hill',
-  'hall',
-  'king',
-  'ward',
-  'cook',
-  'ford',
-  'bell',
-  'gray',
-  'wood',
-  'park',
-  'james',
-  'kirk',
-  'jones',
-  'allen',
-  'williams',
-  'robinson',
-  'evans',
-  'neal'
-]);
+const AMBIGUOUS_CLAUSE_SURNAMES = AMBIGUOUS_PLAYER_SURNAMES;
 
 const POS_GROUP_BY_TOKEN = {
   qb: 'QB',
@@ -2058,7 +2036,7 @@ export function derivePriorWeekAbsenceProfile({
     !missedPriorGame &&
     (stLower === 'out' ||
       stLower === 'inactive' ||
-      /\b(?:sidelined previously|missed (?:sunday|monday|thursday|saturday|last week)|missing a (?:second|third|fourth) straight|miss his (?:second|third|fourth) straight)\b/i.test(
+      /\b(?:sidelined previously|missed (?:sunday|monday|thursday|saturday|last week|week \d+)|missed (?:the (?:[a-z0-9'.-]+ )?)?(?:last|past) (?:two|three|four|five|six|\d+) (?:games|contests|matchups)|has missed (?:the )?(?:last|past )?(?:two|three|four|five|six|\d+) (?:consecutive |straight )?(?:games|contests|matchups)|missing (?:a |his )?(?:second|third|fourth|fifth) (?:straight|consecutive)|miss his (?:second|third|fourth|fifth) (?:straight|consecutive)|staying behind|stayed behind|hasn't played since|has not played since|for the first time since week \d+)\b/i.test(
         noteLower
       ))
   ) {
@@ -2088,7 +2066,7 @@ export function derivePriorWeekAbsenceProfile({
     if (/\b(?:trio of limited practices|limited practices during the week|limited all week|practiced on a limited basis)\b/i.test(noteLower)) {
       priorWeekPracticed = true;
     } else if (
-      /\b(?:hasn't been able to practice|has not been able to practice|trio of '?dnps?'?|did not practice all week|not practicing in any capacity|hasn't practiced)\b/i.test(
+      /\b(?:hasn't been able to practice|has not been able to practice|trio of '?dnps?'?|logging '?dnps?'? last week|did not practice all week|not practicing in any capacity|hasn't practiced|has not practiced|without practicing)\b/i.test(
         noteLower
       )
     ) {

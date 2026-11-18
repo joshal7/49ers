@@ -10,6 +10,7 @@
 import { formatCompactDollars } from './capSimulator.js';
 import { getDisallowedFormer49ers } from './groundingValidator.js';
 import { isStaleCompletedGameAvailabilityItem, resolveGameNewsContext } from './breakingClassifier.js';
+import { AMBIGUOUS_PLAYER_SURNAMES } from './linkIntegrity.js';
 
 export const POSITION_GROUP_DEFINITIONS = [
   {
@@ -175,34 +176,7 @@ export function normalizeDisplayTopic(rawQuery = '') {
     .replace(/\breciever\b/gi, 'receiver');
 }
 
-const COMMON_ENGLISH_SURNAME_STOPLIST = new Set([
-  'ward',
-  'cook',
-  'west',
-  'long',
-  'hill',
-  'king',
-  'reed',
-  'hall',
-  'gray',
-  'wood',
-  'park',
-  'white',
-  'green',
-  'brown',
-  'young',
-  'scott',
-  'stout',
-  'height',
-  'bell',
-  'ford',
-  'grant',
-  'james',
-  'miles',
-  'price',
-  'smith',
-  'stone'
-]);
+const COMMON_ENGLISH_SURNAME_STOPLIST = AMBIGUOUS_PLAYER_SURNAMES;
 
 function escapeRegexLiteral(s = '') {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

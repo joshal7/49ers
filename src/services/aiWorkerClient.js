@@ -31,6 +31,7 @@ import {
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
+  promoteLinkDropTweetToArticle,
   filterOutCompletedGameAvailabilityItems,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
@@ -3010,13 +3011,23 @@ function stripEmojisAndUrls(str = '') {
     .trim();
 }
 
-function extractCompleteRssSentences(rawSummary = '') {
+const ABBREV_DOT_PROTECT_RE =
+  /\b(vs|No|St|Jr|Sr|Dr|Mr|Mrs|Ms|U\.S|a\.m|p\.m|Ft|Mt|Est|Jan|Feb|Mar|Apr|Aug|Sep|Sept|Oct|Nov|Dec)\./gi;
+
+export function extractCompleteRssSentences(rawSummary = '') {
   const clean = stripEmojisAndUrls(rawSummary);
   if (!clean) return '';
-  if (/[.!?]["'”’)]?$/.test(clean)) return clean;
+  const protectedText = clean.replace(ABBREV_DOT_PROTECT_RE, '$1__ABBRDOT__');
+  if (/[.!?]["'”’)]?$/.test(protectedText)) {
+    return clean;
+  }
   // Drop trailing mid-word/mid-sentence RSS truncation fragments lacking terminal punctuation
-  const sentences = clean.match(/[^.!?]+[.!?]+["'”’)]?(?=\s|$)/g);
-  return sentences && sentences.length > 0 ? sentences.join(' ').trim() : '';
+  const sentences = protectedText.match(/[^.!?]+[.!?]+["'”’)]?(?=\s|$)/g);
+  if (!sentences || sentences.length === 0) return '';
+  return sentences
+    .join(' ')
+    .replace(/__ABBRDOT__/g, '.')
+    .trim();
 }
 
 function formatBriefSourceRelativeAge(publishedAt, nowMs = Date.now()) {
@@ -3143,15 +3154,16 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 18, now
   const candidates = [];
   let snapListCount = 0;
 
-  const pushCandidate = (it, parentStoryKey = '') => {
-    if (!it || candidates.length >= maxSources) return;
+  const pushCandidate = (rawIt, parentStoryKey = '') => {
+    if (!rawIt || candidates.length >= maxSources) return;
+    const it = promoteLinkDropTweetToArticle(rawIt);
     let isTw = it.type === 'tweet' || it.type === 'social';
     let resolvedUrl = isTw ? resolveOriginalTweetUrl(it, prioritized) : it.url;
     let effectiveAuthor = String(it.author || it.reporterName || it.outletName || '49ers Beat').trim();
     let effectiveOutlet = String(it.outletName || effectiveAuthor || '49ers Beat').trim();
 
-    // Prioritize direct X status links (or canonical non-paywalled article URLs on link-share posts) over Bluesky links
-    if (isBlueskyPostUrl(resolvedUrl)) {
+    // For genuine salient Bluesky tweets, prefer a corroborating direct X status link when available
+    if (isTw && isBlueskyPostUrl(resolvedUrl)) {
       const confirmingX = Array.isArray(it.confirmingReports)
         ? it.confirmingReports.find(cr => {
             const crUrl =
@@ -3168,17 +3180,6 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 18, now
         ).trim();
         effectiveOutlet = String(confirmingX.outletName || effectiveOutlet).trim();
         isTw = true;
-      } else {
-        const safeExtArticleUrl = sanitizeExternalUrl(it.externalUrl, null);
-        if (
-          safeExtArticleUrl &&
-          !isBlueskyPostUrl(safeExtArticleUrl) &&
-          !isPaywalledPublisher(it.outletName, safeExtArticleUrl) &&
-          !isRedundantProfileSelfLink(safeExtArticleUrl, resolvedUrl)
-        ) {
-          resolvedUrl = safeExtArticleUrl;
-          isTw = false;
-        }
       }
     }
 
@@ -3828,7 +3829,17 @@ export function parseAndSanitizeDailyTopNewsBrief(
   // Rendered UI displays `headline` + `bullets` (no redundant summary box)
   const wordCount = countVisibleBriefWords(headline) + bulletsWords;
 
-  const resolvedBriefModel = meta.modelUsed || PRIMARY_GEMINI_REASONING_MODEL;
+  const resolvedSource = meta.source || 'live-gemini-daily';
+  const isDeterministicSource =
+    resolvedSource === 'pipeline-grounded' || resolvedSource === 'live-deterministic-fallback';
+  const resolvedBriefModel =
+    meta.modelUsed || (isDeterministicSource ? 'deterministic-grounded' : PRIMARY_GEMINI_REASONING_MODEL);
+  const resolvedThinkingLevel =
+    meta.thinkingLevel !== undefined
+      ? meta.thinkingLevel
+      : isDeterministicSource
+        ? 'NONE'
+        : resolveGeminiThinkingLevelLabel(resolvedBriefModel);
   return {
     id: `daily_brief_${cycleKey.replace(/[^A-Za-z0-9_-]/g, '_')}`,
     cycleKey,
@@ -3838,8 +3849,8 @@ export function parseAndSanitizeDailyTopNewsBrief(
     teamRecord: String(appData?.meta?.teamRecord || ''),
     generatedAt: nowIso,
     modelUsed: resolvedBriefModel,
-    thinkingLevel: resolveGeminiThinkingLevelLabel(resolvedBriefModel),
-    source: meta.source || 'live-gemini-daily',
+    thinkingLevel: resolvedThinkingLevel,
+    source: resolvedSource,
     wordCount,
     headline,
     summary: finalSummary,
@@ -3875,20 +3886,43 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
 
   const citedIds = [];
   const usedRefSet = new Set();
-  const pickCite = (regexOrFn, fallbackIdx = null) => {
+  const pickCite = (regexOrFn, fallbackIdx = null, { allowUnmatchedFallback = false } = {}) => {
     const pred =
       typeof regexOrFn === 'function'
         ? regexOrFn
         : c => regexOrFn.test(`${c.title || ''} ${c.fullBody || ''}`);
     let found = candidates.find(c => !usedRefSet.has(c.refId) && pred(c));
     if (!found) found = candidates.find(c => pred(c));
-    if (!found && fallbackIdx != null && candidates[fallbackIdx]) {
+    if (!found && allowUnmatchedFallback && fallbackIdx != null && candidates[fallbackIdx]) {
       found = candidates[fallbackIdx];
     }
     if (!found) return '';
     usedRefSet.add(found.refId);
     if (!citedIds.includes(found.refId)) citedIds.push(found.refId);
     return ` [${found.refId}]`;
+  };
+  const pickMultiCites = (regexOrFn, maxCount = 2) => {
+    const pred =
+      typeof regexOrFn === 'function'
+        ? regexOrFn
+        : c => regexOrFn.test(`${c.title || ''} ${c.fullBody || ''}`);
+    const picked = [];
+    for (const c of candidates) {
+      if (picked.length >= maxCount) break;
+      if (!usedRefSet.has(c.refId) && pred(c)) {
+        usedRefSet.add(c.refId);
+        if (!citedIds.includes(c.refId)) citedIds.push(c.refId);
+        picked.push(`[${c.refId}]`);
+      }
+    }
+    if (picked.length === 0) {
+      const reused = candidates.find(c => pred(c));
+      if (reused) {
+        if (!citedIds.includes(reused.refId)) citedIds.push(reused.refId);
+        picked.push(`[${reused.refId}]`);
+      }
+    }
+    return picked.length > 0 ? ` ${picked.join(' ')}` : '';
   };
 
   const joinNamesNatural = list => {
@@ -4223,14 +4257,54 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       );
     }
   } else {
-    // Mid-Week / Breaking News / Offseason Dynamic Selection (Zero Forced Cap Filler!)
+    // Mid-Week / Monday-Presser / Breaking News / Offseason Dynamic Selection (Zero Canned Boilerplate & Zero Forced Cap Filler!)
+    const oppShortToken = String(oppName || '').split(/\s+/).pop() || '';
+    const activeEvalPlayers = prList.filter(p => !p.isIrReturnWindow && !/rest/i.test(p.injuryType || ''));
+    const schedList = Array.isArray(appData?.scheduleMatchup?.schedule)
+      ? appData.scheduleMatchup.schedule
+      : [];
+    const latestDoneGame = [...schedList].reverse().find(g => g?.completed && !g?.isByeWeek) || null;
+    const latestDoneKickMs = latestDoneGame?.date ? Date.parse(latestDoneGame.date) : NaN;
+    const isFreshRecentGameFallout =
+      Boolean(latestDoneGame) &&
+      Number.isFinite(latestDoneKickMs) &&
+      nowMs - latestDoneKickMs >= 0 &&
+      nowMs - latestDoneKickMs <= 60 * 3_600_000;
+    const recentRecap = appData?.scheduleMatchup?.lastCompletedGameRecap || null;
+    const hasRecentBox =
+      isFreshRecentGameFallout &&
+      recentRecap &&
+      (Number(recentRecap.week) === Number(latestDoneGame.week) ||
+        (latestDoneGame.id && String(recentRecap.gameId) === String(latestDoneGame.id))) &&
+      Number(recentRecap.sfTeamStats?.totalYards || 0) > 0;
+
+    const passRushRe =
+      /\b(pass[- ]?rush|sack drought|not getting (?:many\/any )?sacks|fourth[- ]quarter|defensive[- ]line fatigue|bosa|buckner)\b/i;
+    const hasPassRushStory = candidates.some(c => passRushRe.test(`${c.title || ''} ${c.fullBody || ''}`));
+    const hasHealthHeadlineFocus =
+      dnpPlayers.length > 0 || activeEvalPlayers.length > 0 || irOpenList.length > 0;
+
     const headlineTopics = [];
     if (topFreshTrade?.player) headlineTopics.push(`${topFreshTrade.player} Trade`);
     if (restructureFact?.player) headlineTopics.push(`${restructureFact.player.split(' ').pop()} Restructure`);
-    headlineTopics.push(
-      latestDayInfo.key ? `${latestDayInfo.label} Injury Status` : `Week ${wk} ${oppName} Prep`
-    );
-    headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics.slice(0, 3).join(' & ')}`;
+    if (hasPassRushStory) headlineTopics.push('Pass-Rush Review');
+    if (latestDayInfo.key) {
+      headlineTopics.push(`${latestDayInfo.label} Injury Report`);
+    } else if (hasHealthHeadlineFocus) {
+      headlineTopics.push('Injury Updates');
+    } else if (hasRecentBox && latestDoneGame?.opponent?.name) {
+      headlineTopics.push(`${latestDoneGame.opponent.name.split(' ').pop()} Fallout`);
+    }
+    const cleanOppTail =
+      oppShortToken && !/^(opponent|tbd|bye)$/i.test(oppShortToken)
+        ? ` Ahead of ${oppShortToken}`
+        : '';
+    if (headlineTopics.length === 0) {
+      headlineTopics.push(oppShortToken ? `${oppShortToken} Preparation` : 'Weekly Update');
+      headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics[0]}`;
+    } else {
+      headline = `49ers (${rec}) Week ${wk} Briefing: ${headlineTopics.slice(0, 2).join(' & ')}${cleanOppTail}`;
+    }
 
     // Optional Bullet A: Fresh Trade, Signing, or Cap Restructure (ONLY if genuinely active!)
     if (topFreshTrade || signingFact || restructureFact || capStatus.isOffseason) {
@@ -4240,8 +4314,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
           .replace(/\s*\(via [^)]+\)/i, '')
           .toLowerCase();
         const officialTradeCite = pickCite(
-          c => /acquire|trade/i.test(c.title) && new RegExp(topFreshTrade.player.split(' ').pop(), 'i').test(c.title),
-          0
+          c => /acquire|trade/i.test(c.title) && new RegExp(topFreshTrade.player.split(' ').pop(), 'i').test(c.title)
         );
         const psClause = signingFact ? ` and signed ${signingFact.who} to the ${signingFact.bucket}` : '';
         rosterSentences.push(
@@ -4249,7 +4322,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         );
       } else if (signingFact) {
         rosterSentences.push(
-          `San Francisco signed ${signingFact.who} to the ${signingFact.bucket}${pickCite(/signed|roster|practice squad/i, 0)}.`
+          `San Francisco signed ${signingFact.who} to the ${signingFact.bucket}${pickCite(/signed|roster|practice squad/i)}.`
         );
       }
       if (restructureFact) {
@@ -4259,7 +4332,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         );
       } else if (capStatus.isOffseason) {
         rosterSentences.push(
-          `San Francisco manages $${capGrossM}M in ${capYr} cap space alongside ${nextYr}'s ${capNextLabel} projection${pickCite(/cap|contract|draft|free agen/i, 0)}.`
+          `San Francisco manages $${capGrossM}M in ${capYr} cap space alongside ${nextYr}'s ${capNextLabel} projection${pickCite(/cap|contract|draft|free agen/i)}.`
         );
       }
       if (rosterSentences.length > 0) {
@@ -4267,25 +4340,83 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       }
     }
 
-    // Bullet B: Fresh 49ers & Opponent Injury / Practice Updates
+    // Bullet B (Monday/Early-Week Presser Cycle): Grounded Recent-Game Offensive & Defensive Fallout
+    if (hasRecentBox) {
+      const rOpp = latestDoneGame.opponent?.name || latestDoneGame.opponent?.abbr || 'Opponent';
+      const rOppLast = rOpp.split(' ').pop();
+      const rCity = TEAM_CITY_BY_ABBR[String(latestDoneGame.opponent?.abbr || '').toUpperCase()] || rOppLast;
+      const rScore =
+        latestDoneGame.sfScore != null && latestDoneGame.oppScore != null
+          ? `${latestDoneGame.sfScore}–${latestDoneGame.oppScore}`
+          : '';
+      const rWin =
+        latestDoneGame.result === 'W' ||
+        (latestDoneGame.sfScore != null && Number(latestDoneGame.sfScore) > Number(latestDoneGame.oppScore));
+      const sTeam = recentRecap.sfTeamStats;
+      const qb = recentRecap.sfPassing?.[0] || null;
+      const star1 = recentRecap.sfScrimmageLeaders?.[0] || null;
+      const standingShort = (m.standingSummary || 'NFC West').split('•')[0].trim();
+      const offCites = pickMultiCites(
+        new RegExp(`584|records|offense|mccaffrey|purdy|${rOppLast.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i'),
+        2
+      );
+      const starTail =
+        star1 && qb
+          ? ` ${star1.name} totaled ${star1.scrimmageYards} scrimmage yards and ${star1.totalTds} touchdown${star1.totalTds === 1 ? '' : 's'} while ${qb.name} threw for ${qb.yards} yards and ${qb.tds} TDs in Kyle Shanahan's attack${pickCite(new RegExp(`${star1.name.split(' ').pop()}|${qb.name.split(' ').pop()}|offense|shanahan`, 'i'))}.`
+          : '';
+      dynamicBullets.push(
+        `${rOppLast} Offensive Surge: Fresh off moving to ${rec} (${standingShort}) with a ${rScore ? `${rScore} ` : ''}${rWin ? 'win over' : 'result against'} ${rCity}, San Francisco piled up ${sTeam.totalYards} total yards${offCites}.${starTail}`
+      );
+
+      if (hasPassRushStory) {
+        const def = recentRecap.sfDefense || {};
+        const prCites = pickMultiCites(passRushRe, 2);
+        const mentionsBosaBuckner = candidates.some(
+          c => /\bbosa\b/i.test(`${c.title} ${c.fullBody}`) && /\bbuckner\b/i.test(`${c.title} ${c.fullBody}`)
+        );
+        const frontPair = mentionsBosaBuckner ? ' with Nick Bosa and DeForest Buckner anchoring the front' : '';
+        const sackPhrase =
+          def.sacksRecorded != null && def.sacksRecorded <= 1
+            ? `generated just ${def.sacksRecorded} sack${def.sacksRecorded === 1 ? '' : 's'}`
+            : 'faced late-game pressure questions';
+        dynamicBullets.push(
+          `Pass-Rush & Front Review: Even${frontPair}, San Francisco ${sackPhrase} against ${rCity}, with Kyle Shanahan pointing to fourth-quarter defensive-line fatigue after the front graded solidly early${prCites}.`
+        );
+      }
+    }
+
+    // Bullet C: Fresh 49ers Injury / Practice & 21-Day IR Return Window Updates (distinct topic-matched cites)
     const healthSentences = [];
     if (!latestDayInfo.key) {
-      const activeEvalPlayers = prList.filter(p => !p.isIrReturnWindow && !/rest/i.test(p.injuryType || ''));
-      const evalCite = pickCite(/injury|shanahan|back|achilles|day to day|practice/i, 0);
       if (activeEvalPlayers.length > 0) {
+        const evalNamesRe = new RegExp(
+          activeEvalPlayers
+            .slice(0, 4)
+            .map(p => p.name.split(' ').pop().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+            .join('|') + '|achilles|back|day[- ]to[- ]day|injury updates',
+          'i'
+        );
+        const evalCites = pickMultiCites(evalNamesRe, 2);
         healthSentences.push(
-          `Entering Week ${wk} preparation, head coach Kyle Shanahan and the medical staff evaluate ${joinNamesNatural(activeEvalPlayers.slice(0, 4).map(fmtPlayerInj))} ahead of Wednesday's initial participation report${evalCite}.`
+          `Entering Week ${wk} preparation, head coach Kyle Shanahan and the medical staff evaluate ${joinNamesNatural(activeEvalPlayers.slice(0, 4).map(fmtPlayerInj))} ahead of Wednesday's initial participation report${evalCites}.`
         );
       }
       if (irOpenList.length > 0) {
-        const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'), 1);
+        const irNamesRe = new RegExp(
+          irOpenList
+            .slice(0, 3)
+            .map(p => p.name.split(' ').pop().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+            .join('|') + '|21-day|injured reserve|injury updates|return to practice',
+          'i'
+        );
+        const irCite = pickCite(irNamesRe);
         healthSentences.push(
           `${joinNamesNatural(irOpenList.slice(0, 3).map(fmtPlayerInj))} continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation${irCite}.`
         );
       }
     } else {
       if (irOpenList.length > 0) {
-        const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'), 0);
+        const irCite = pickCite(new RegExp(irOpenList[0].name.split(' ').pop(), 'i'));
         const nonIrLp = lpPlayers.filter(lp => !irOpenList.some(ir => ir.name === lp.name));
         const lpPart =
           nonIrLp.length > 0
@@ -4296,11 +4427,11 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         );
       } else if (lpPlayers.length > 0) {
         healthSentences.push(
-          `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} logged limited practice reps ${latestDayInfo.label}${pickCite(/injury|practice|limited/i, 0)}.`
+          `${joinNamesNatural(lpPlayers.slice(0, 3).map(fmtPlayerInj))} logged limited practice reps ${latestDayInfo.label}${pickCite(/injury|practice|limited/i)}.`
         );
       }
       if (dnpPlayers.length > 0) {
-        const injRepCite = pickCite(/injury report|miss practice|no practice|did not practice/i, 1);
+        const injRepCite = pickCite(/injury report|miss practice|no practice|did not practice/i);
         const fpTail =
           fpPlayers.length > 0
             ? `, while ${joinNamesNatural(fpPlayers.slice(0, 2).map(fmtPlayerInj))} practiced in full`
@@ -4314,69 +4445,87 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     }
     if (healthSentences.length === 0) {
       healthSentences.push(
-        `Core starters enter ${latestDayInfo.label} on track as medical staff monitor routine recovery ahead of the ${oppName}${pickCite(/health|injury|practice/i, 0)}.`
+        `Core starters enter ${latestDayInfo.label} on track as medical staff monitor routine recovery ahead of the ${oppName}${pickCite(/health|injury|practice/i)}.`
       );
     }
     dynamicBullets.push(`Injury & Practice Status: ${healthSentences.join(' ')}`);
 
-    // Bullet C: Key Matchup & Tactical Storyline (using verified team ranks & opponent staff)
-    const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
-    const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
-    const matchupCite = pickCite(
-      new RegExp(`${oppName.split(' ').pop()}|altitude|pass rush|protection|ground game|offense|defense|scheme`, 'i'),
-      1
-    );
+    // Bullet D: Grounded Upcoming Opponent & NFC Playoff Horizon (zero canned tactical filler!)
     const rawCoachHead = String(um?.coachingMatchup?.headline || '')
       .replace(/^Kyle Shanahan\s*&\s*DC\s*Raheem Morris\s*vs\.?\s*/i, '')
       .trim();
-    const oppShortToken = String(oppName || '').split(/\s+/).pop() || '';
     const coachHeadline = rawCoachHead
       .replace(new RegExp(`^(?:the\\s+)?(?:${oppName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}|${oppShortToken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\s+`, 'i'), '')
       .trim();
     const sfOdds = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
     const spreadNote = um.betting?.spread ? `, ${um.betting.spread}` : '';
-    const oppContext = coachHeadline ? `${oppName} (${um.oppRecord || 'NFL'}${spreadNote}, ${coachHeadline})` : `${oppName} (${um.oppRecord || 'NFL'}${spreadNote})`;
-    if (dnpCbPlayers.length >= 2 && cbStoryCite) {
+    const oppContext = coachHeadline
+      ? `${oppName} (${um.oppRecord || 'NFL'}${spreadNote}, ${coachHeadline})`
+      : `${oppName} (${um.oppRecord || 'NFL'}${spreadNote})`;
+    const oppRe = new RegExp(
+      `${oppShortToken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}|altitude|mexico city|flores|o'connell|power rankings`,
+      'i'
+    );
+    const matchupCites = pickMultiCites(oppRe, 2);
+    const playoffCite = pickCite(/playoff|seed|nfc|standings|division|power rankings/i);
+    const hasAltitudeNews = candidates.some(c => /altitude|mexico city|7,350/i.test(`${c.title} ${c.fullBody}`));
+    const venueClause = hasAltitudeNews ? ' at high altitude in Mexico City' : '';
+
+    if (dynamicBullets.length >= 3) {
+      // Combine upcoming matchup + NFC playoff position cleanly in one tight bullet (~45 words)
       dynamicBullets.push(
-        `Week ${wk} Matchup Keys: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan and DC Raheem Morris lean on play-action efficiency, split-safety disguise, and sustained ball-control drives against ${oppContext}${matchupCite}.`
+        `Week ${wk} ${oppShortToken || 'Matchup'} & NFC Standing: Turning to the ${oppContext}${venueClause}${matchupCites}, San Francisco (${rec}, ${m.standingSummary || 'NFC West'}) holds a ${sfOdds.makePlayoffsPct ?? 93}% postseason projection, ${sfOdds.winDivisionPct ?? 82}% NFC West title mark, and ${sfOdds.seed1ByePct ?? 40}% #1 Seed Bye equity${playoffCite}.`
       );
     } else {
+      const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
+      const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
+      if (dnpCbPlayers.length >= 2 && cbStoryCite) {
+        dynamicBullets.push(
+          `Week ${wk} Matchup & Secondary Watch: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan and DC Raheem Morris turn focus to the ${oppContext}${venueClause}${matchupCites}.`
+        );
+      } else {
+        dynamicBullets.push(
+          `Week ${wk} ${oppShortToken || 'Opponent'} Outlook: Kyle Shanahan and DC Raheem Morris open installation for the ${oppContext}${venueClause} as San Francisco prepares for a pivotal NFC matchup${matchupCites}.`
+        );
+      }
       dynamicBullets.push(
-        `Week ${wk} Matchup Keys: Kyle Shanahan and DC Raheem Morris prepare for the ${oppContext} with interior pass protection, condensed split motion, four-man pass-rush integrity, third-down efficiency, and red-zone conversion execution in primary focus across early-week installation${matchupCite}.`
+        `NFC Playoff Trajectory: Entering Week ${wk} at ${rec} (${m.standingSummary || 'NFC West'}), San Francisco carries a ${sfOdds.makePlayoffsPct ?? 93}% postseason projection, ${sfOdds.winDivisionPct ?? 82}% NFC West division title mark, and ${sfOdds.seed1ByePct ?? 40}% #1 Seed Bye equity into the conference stretch${playoffCite}.`
       );
     }
 
-    // Bullet D: Standings & NFC Playoff Leverage (only when non-redundant)
-    const playoffCite = pickCite(/playoff|seed|nfc|standings|division/i, 2);
-    dynamicBullets.push(
-      `NFC Playoff Trajectory: Entering Week ${wk} at ${rec} (${m.standingSummary || 'NFC West'}), San Francisco carries a ${sfOdds.makePlayoffsPct ?? 93}% postseason projection, ${sfOdds.winDivisionPct ?? 82}% NFC West division title mark, and ${sfOdds.seed1ByePct ?? 40}% #1 Seed Bye equity into the second-half conference stretch${playoffCite}.`
-    );
-
-    // Bullet E: Fresh Beat Wire Storyline
-    const unusedLead = candidates.find(
-      c =>
-        !usedRefSet.has(c.refId) &&
-        (c.summary?.length >= 40 || (c.type === 'tweet' && (c.fullBody || '').length >= 55)) &&
-        !/\?|latest on|click here|morning report/i.test(`${c.title} ${c.summary || ''} ${c.fullBody || ''}`)
-    );
-    if (unusedLead) {
-      const rawLeadTxt = unusedLead.summary || unusedLead.fullBody || unusedLead.title;
-      let firstSent = (
-        rawLeadTxt
-          .replace(/\b(vs|No|St|Jr|Sr)\./gi, '$1__DOT__')
-          .match(/^[^.!?]+[.!?]?/) || [rawLeadTxt]
-      )[0]
-        .replace(/__DOT__/g, '.')
-        .trim()
-        .replace(/[.!?]+$/, '');
-      const quoteCount = (firstSent.match(/"/g) || []).length;
-      if (quoteCount % 2 === 1) firstSent = `${firstSent}"`;
-      usedRefSet.add(unusedLead.refId);
-      citedIds.push(unusedLead.refId);
-      const subLabel = /nfc|rams|seahawks|cardinals|vikings|lions|eagles|playoff|seed/i.test(rawLeadTxt)
-        ? 'NFC & Opponent Watch'
-        : 'Around the Beat';
-      dynamicBullets.push(`${subLabel}: ${firstSent} [${unusedLead.refId}].`);
+    // Bullet E: Fresh Beat Wire Storyline ONLY when we have <4 bullets, with abbreviation-safe complete sentence & dangling-tail guard
+    if (dynamicBullets.length < 4) {
+      const DANGLING_TAIL_RE = /\b(vs|versus|for|with|in|at|to|of|from|after|against|over|and|or|the|a|an)$/i;
+      const unusedLead = candidates.find(c => {
+        if (usedRefSet.has(c.refId)) return false;
+        const txt = `${c.title || ''} ${c.summary || ''} ${c.fullBody || ''}`;
+        if (/\?|latest on|click here|morning report/i.test(txt)) return false;
+        const candidateText = c.summary?.length >= 45 ? c.summary : c.title?.length >= 42 ? c.title : c.fullBody || '';
+        return candidateText.length >= 42;
+      });
+      if (unusedLead) {
+        const rawLeadTxt =
+          unusedLead.summary && unusedLead.summary.length >= 45
+            ? unusedLead.summary
+            : unusedLead.title && unusedLead.title.length >= 42
+              ? unusedLead.title
+              : unusedLead.fullBody || unusedLead.title;
+        const protectedLead = String(rawLeadTxt || '').replace(ABBREV_DOT_PROTECT_RE, '$1__ABBRDOT__');
+        let firstSent = (protectedLead.match(/^[^.!?]+[.!?]?/) || [protectedLead])[0]
+          .replace(/__ABBRDOT__/g, '.')
+          .trim()
+          .replace(/[.!?]+$/, '');
+        const quoteCount = (firstSent.match(/"/g) || []).length;
+        if (quoteCount % 2 === 1) firstSent = `${firstSent}"`;
+        if (firstSent.length >= 36 && !DANGLING_TAIL_RE.test(firstSent)) {
+          usedRefSet.add(unusedLead.refId);
+          citedIds.push(unusedLead.refId);
+          const subLabel = /nfc|rams|seahawks|cardinals|vikings|lions|eagles|playoff|seed/i.test(rawLeadTxt)
+            ? 'NFC & Opponent Watch'
+            : 'Around the Beat';
+          dynamicBullets.push(`${subLabel}: ${firstSent} [${unusedLead.refId}].`);
+        }
+      }
     }
   }
 
@@ -4389,6 +4538,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       : cycleState.targetGame
         ? Number(cycleState.targetGame.week)
         : Number(wk) || null;
+  const deterministicSource = meta.source || 'pipeline-grounded';
 
   const built = parseAndSanitizeDailyTopNewsBrief(
     {
@@ -4404,8 +4554,9 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       cycleKey: effectiveCycleKey,
       isPostGame: effectiveIsPostGame,
       gameWeek: effectiveGameWeek,
-      modelUsed: meta.modelUsed || PRIMARY_GEMINI_REASONING_MODEL,
-      source: meta.source || 'pipeline-grounded'
+      modelUsed: meta.modelUsed || 'deterministic-grounded',
+      thinkingLevel: meta.thinkingLevel ?? 'NONE',
+      source: deterministicSource
     }
   );
 
@@ -4418,9 +4569,9 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       gameWeek: effectiveGameWeek,
       teamRecord: rec,
       generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
-      modelUsed: PRIMARY_GEMINI_REASONING_MODEL,
-      thinkingLevel: 'XHIGH',
-      source: meta.source || 'pipeline-grounded',
+      modelUsed: meta.modelUsed || 'deterministic-grounded',
+      thinkingLevel: meta.thinkingLevel ?? 'NONE',
+      source: deterministicSource,
       wordCount: 205,
       headline,
       summary: '',
@@ -4660,6 +4811,36 @@ export function hasPendingPostGameAiBriefAttempt(appData, prefs = {}, nowMs = Da
   return true;
 }
 
+const DAILY_NEWS_BRIEF_RETRY_COOLDOWN_MS = 15 * 60_000;
+const DAILY_NEWS_BRIEF_LONG_COOLDOWN_MS = 60 * 60_000;
+const DAILY_NEWS_BRIEF_INTERRUPTED_COOLDOWN_MS = 2 * 60_000;
+const DAILY_NEWS_BRIEF_KV_RECHECK_MS = 3 * 60_000;
+const DAILY_NEWS_BRIEF_MAX_RETRIES_PER_CYCLE = 4;
+
+function isDailyBriefSynthesisCoolingDown(attempt, activeCycle, nowMs = Date.now()) {
+  if (!attempt || attempt.cycleKey !== activeCycle) return false;
+  if (attempt.succeeded === true) return true;
+  const attemptedMs = Date.parse(attempt.attemptedAt || '');
+  if (!Number.isFinite(attemptedMs)) return false;
+  if (attempt.completedWithoutAi === false) {
+    // Tab/device closed mid-flight without finishing: short cooldown before retry
+    return nowMs - attemptedMs < DAILY_NEWS_BRIEF_INTERRUPTED_COOLDOWN_MS;
+  }
+  const failCount = Math.max(1, Number(attempt.failCount) || 1);
+  if (failCount >= DAILY_NEWS_BRIEF_MAX_RETRIES_PER_CYCLE) return true;
+  const cooldownMs =
+    failCount >= 3 ? DAILY_NEWS_BRIEF_LONG_COOLDOWN_MS : DAILY_NEWS_BRIEF_RETRY_COOLDOWN_MS;
+  return nowMs - attemptedMs < cooldownMs;
+}
+
+export function clearDailyNewsBriefAttemptLock() {
+  safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+}
+
+export function clearDailyMatchupIntelAttemptLock() {
+  safeDeleteLocalKey(DAILY_MATCHUP_ATTEMPT_KEY);
+}
+
 /**
  * Lightweight synchronous check used by background wire polling & visibility resume to detect when
  * a new daily or post-game AI Top-News Brief cycle has just become ready to synthesize.
@@ -4692,7 +4873,13 @@ export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs
   }
 
   const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
-  if (attempt && attempt.cycleKey === activeCycle) return false;
+  if (isDailyBriefSynthesisCoolingDown(attempt, activeCycle, nowMs)) {
+    if (!baseUrl) return false;
+    const lastKvMs = Date.parse(attempt?.lastKvCheckAt || attempt?.attemptedAt || '');
+    if (Number.isFinite(lastKvMs) && nowMs - lastKvMs < DAILY_NEWS_BRIEF_KV_RECHECK_MS) {
+      return false;
+    }
+  }
 
   return true;
 }
@@ -4737,6 +4924,9 @@ export async function refreshDailyTopNewsBriefIfDue({
   const activeCycle = cycleState.activeCycleKey;
   const existing = appData.news.dailyTopNewsBrief;
 
+  const priorAttempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+  const synthesisCoolingDown = !force && isDailyBriefSynthesisCoolingDown(priorAttempt, activeCycle, nowMs);
+
   if (!force) {
     // Hold the daily AI credit during live games (`[T-90m, Final + buffer)`) so the post-game brief gets it
     if (
@@ -4768,9 +4958,9 @@ export async function refreshDailyTopNewsBriefIfDue({
       appData.news.dailyTopNewsBrief = cached;
       return { updated: false, fromCache: true, cycleKey: activeCycle };
     }
-    const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
-    if (attempt && attempt.cycleKey === activeCycle) {
-      return { updated: false, alreadyAttemptedThisCycle: true, cycleKey: activeCycle };
+    // If no shared Worker is configured and local synthesis is cooling down after a recent failure, skip cleanly
+    if (synthesisCoolingDown && !baseUrl) {
+      return { updated: false, alreadyAttemptedThisCycle: true, coolingDown: true, cycleKey: activeCycle };
     }
   }
 
@@ -4785,8 +4975,9 @@ export async function refreshDailyTopNewsBriefIfDue({
     }
     const workerCycleKey = `${activeCycle}-v5`;
 
-    // 1. Check Shared Worker KV first whenever `workerBaseUrl` is configured (even if a local `geminiApiKey` is also set!)
-    //    so Phone and Web converge on the exact same brief with 0 duplicate AI calls.
+    // 1. ALWAYS check Shared Worker KV first whenever `workerBaseUrl` is configured (even if a local
+    //    `geminiApiKey` is set or a prior direct synthesis attempt is cooling down!) — 0 Gemini credits spent
+    //    so Phone and Laptop immediately converge on the exact same brief.
     if (baseUrl && !force) {
       try {
         const kvGetRes = await fetchWithTimeout(
@@ -4816,6 +5007,7 @@ export async function refreshDailyTopNewsBriefIfDue({
               }
             );
             if (fromKv && !isDailyBriefStaleForLiveState(fromKv, appData, nowMs)) {
+              safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
               safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, fromKv);
               appData.news.dailyTopNewsBrief = fromKv;
               return {
@@ -4832,10 +5024,26 @@ export async function refreshDailyTopNewsBriefIfDue({
       }
     }
 
+    if (synthesisCoolingDown) {
+      if (priorAttempt && priorAttempt.cycleKey === activeCycle) {
+        safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+          ...priorAttempt,
+          lastKvCheckAt: new Date(nowMs).toISOString()
+        });
+      }
+      return { updated: false, alreadyAttemptedThisCycle: true, coolingDown: true, cycleKey: activeCycle };
+    }
+
+    const prevFailCount =
+      priorAttempt && priorAttempt.cycleKey === activeCycle && priorAttempt.completedWithoutAi === true
+        ? Math.max(0, Number(priorAttempt.failCount) || 1)
+        : 0;
+
     safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
       cycleKey: activeCycle,
       attemptedAt: new Date(nowMs).toISOString(),
-      completedWithoutAi: false
+      completedWithoutAi: false,
+      failCount: prevFailCount
     });
 
     const priorBriefCandidate =
@@ -4951,11 +5159,14 @@ export async function refreshDailyTopNewsBriefIfDue({
         safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
           cycleKey: activeCycle,
           attemptedAt: new Date(nowMs).toISOString(),
-          completedWithoutAi: true
+          lastKvCheckAt: new Date(nowMs).toISOString(),
+          completedWithoutAi: true,
+          failCount: prevFailCount + 1
         });
         return { updated: false, reason: 'invalid_or_empty_payload' };
       }
 
+      safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
       safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, normalized);
       appData.news.dailyTopNewsBrief = normalized;
       return { updated: true, modelUsed, cycleKey: activeCycle };
@@ -4963,7 +5174,9 @@ export async function refreshDailyTopNewsBriefIfDue({
       safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
         cycleKey: activeCycle,
         attemptedAt: new Date(nowMs).toISOString(),
-        completedWithoutAi: true
+        lastKvCheckAt: new Date(nowMs).toISOString(),
+        completedWithoutAi: true,
+        failCount: prevFailCount + 1
       });
       return { updated: false, reason: 'request_failed_graceful_fallback' };
     } finally {

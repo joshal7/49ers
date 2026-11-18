@@ -22,6 +22,14 @@ import {
   resolveCompleteScheduleModel
 } from '../src/engine/seasonStateMachine.js';
 import {
+  isEditorialPhotoUrl,
+  isHeadshotImageUrl,
+  optimizeImageUrlForSlot,
+  resolveSalientCardVisual,
+  resolveDailyBriefHeroMedia,
+  resolveAudioEpisodeVisual
+} from '../src/engine/salientMediaEngine.js';
+import {
   JARGON_GLOSSARY,
   getJargonEntry,
   jargonInfoIcon,
@@ -10043,6 +10051,163 @@ await testAsync(
 );
 
 await testAsync(
+  'Ambiguous surname guard ("4-6 Weeks" != Jon Weeks, "Joey Bosa" != Nick Bosa), historical 49ers bio relevance filter & unambiguous aggregator publisher display',
+  async () => {
+    const {
+      AMBIGUOUS_PLAYER_SURNAMES,
+      formatWireSourceDisplayName,
+      is49ersRelevantWireItem,
+      stripAggregatorBoilerplate,
+      stripHistoricalSfBioSentences
+    } = await import('../src/engine/linkIntegrity.js');
+    const { matchPlayersClient } = await import('../src/services/dataService.js');
+    const { doesClauseMentionPlayer } = await import('../src/engine/injuryProbabilityModel.js');
+    const { parseTopicIntent } = await import('../src/engine/deepResearchEngine.js');
+    const { classifyNewsItemCategory } = await import('../src/engine/breakingClassifier.js');
+
+    assert.ok(AMBIGUOUS_PLAYER_SURNAMES.has('weeks'), '"weeks" must be in AMBIGUOUS_PLAYER_SURNAMES');
+
+    const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+    const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+    const players = rosterJson.players || [];
+
+    // 1. "4-6 Weeks", "through ten weeks", "in recent weeks" must NEVER match Jon Weeks
+    const ramsHeadline = 'Rams C Coleman Shelton Expected To Miss 4-6 Weeks With Hamstring Injury';
+    const ramsBioDesc =
+      'Rams C Coleman Shelton is expected to miss four to six weeks after suffering a hamstring injury in the team’s Week 10 win over the Cardinals, per PFT. Shelton, 31, originally signed on with the 49ers as an undrafted free agent out of Washington back in 2018. He was cut coming out of the preseason […] The post Rams C Coleman Shelton Expected To Miss 4-6 Weeks With Hamstring Injury appeared first on NFLTradeRumors.co.';
+
+    assert.equal(
+      matchPlayersClient(ramsHeadline, players, 12, { allowUniqueSurnames: true }).some(p => p.name === 'Jon Weeks'),
+      false,
+      '"4-6 Weeks" must NEVER match 49ers LS Jon Weeks'
+    );
+    assert.equal(
+      matchPlayersClient('The NFC playoff picture is set through ten weeks.', players, 12).some(p => p.name === 'Jon Weeks'),
+      false,
+      '"ten weeks" must NEVER match Jon Weeks'
+    );
+    assert.equal(
+      doesClauseMentionPlayer(ramsHeadline, 'Jon Weeks', { allowSurname: true }),
+      false,
+      'Injury clause matcher must reject "4-6 Weeks" for Jon Weeks'
+    );
+    assert.equal(
+      parseTopicIntent('Expected to miss 4-6 weeks with hamstring injury', { roster: rosterJson })
+        .explicitlyNamedPlayers.some(p => p.name === 'Jon Weeks'),
+      false,
+      'Deep Research intent parser must not match "4-6 weeks" as Jon Weeks'
+    );
+
+    // Legitimate full-name and position-prefixed Jon Weeks references MUST still match
+    assert.ok(
+      matchPlayersClient('2/3 Jon Weeks 10, Jordan James 8, Fred Warner 7', players, 12).some(p => p.name === 'Jon Weeks'),
+      'Full name "Jon Weeks" must still match'
+    );
+    assert.ok(
+      matchPlayersClient('49ers LS Weeks signed a one-year contract extension.', players, 12).some(p => p.name === 'Jon Weeks'),
+      'Position-compatible "LS Weeks" must still match Jon Weeks'
+    );
+    assert.equal(
+      matchPlayersClient('WR Weeks caught two touchdowns', players, 12).some(p => p.name === 'Jon Weeks'),
+      false,
+      'Incompatible position prefix "WR Weeks" must not match LS Jon Weeks'
+    );
+
+    // Conflicting first-name guard ("Joey Bosa" != Nick Bosa, "Kurt Warner" != Fred Warner)
+    assert.equal(
+      matchPlayersClient('Bills pass rusher Joey Bosa recorded two sacks.', players, 12).some(p => p.name === 'Nick Bosa'),
+      false,
+      '"Joey Bosa" must not match Nick Bosa'
+    );
+    assert.equal(
+      matchPlayersClient('Hall of Famer Kurt Warner broke down Brock Purdy tape.', players, 12).some(p => p.name === 'Fred Warner'),
+      false,
+      '"Kurt Warner" must not match Fred Warner'
+    );
+
+    // 2. Boilerplate & historical 49ers career-bio stripping + strict national wire relevance
+    const strippedFooter = stripAggregatorBoilerplate(ramsBioDesc);
+    assert.ok(!/appeared first on NFLTradeRumors\.co/i.test(strippedFooter), 'WordPress aggregator footer must be stripped');
+    const strippedBio = stripHistoricalSfBioSentences(ramsBioDesc);
+    assert.ok(!/\b49ers\b/i.test(strippedBio), '2018 historical 49ers UDFA bio sentence must be stripped');
+
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: ramsHeadline,
+        fullText: ramsHeadline,
+        externalTitle: ramsHeadline,
+        externalDescription: ramsBioDesc,
+        isNationalFeed: true,
+        leadRosterMatchCount: 0,
+        bodyRosterMatchCount: 0
+      }),
+      false,
+      'Rams Coleman Shelton injury with only a 2018 49ers UDFA bio mention must be rejected'
+    );
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: 'Former 49ers QB Trey Lance traded to Giants',
+        fullText: 'Former 49ers QB Trey Lance traded to Giants',
+        isNationalFeed: true,
+        leadRosterMatchCount: 0,
+        bodyRosterMatchCount: 0
+      }),
+      false,
+      'Other-team headline mentioning only "Former 49ers" must be rejected'
+    );
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: 'NFC Notes: Brock Purdy, Aaron Donald, 49ers, Rams, Seahawks',
+        fullText: 'NFC Notes: Brock Purdy, Aaron Donald, 49ers, Rams, Seahawks',
+        isNationalFeed: true,
+        leadRosterMatchCount: 1,
+        bodyRosterMatchCount: 0
+      }),
+      true,
+      'Multi-team NFC Notes explicitly featuring 49ers & Brock Purdy must pass'
+    );
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: "Seahawks HC Mike Macdonald said today that Sam Darnold is on track to play next week against the 49ers following Seattle's bye.",
+        fullText: "Seahawks HC Mike Macdonald said today that Sam Darnold is on track to play next week against the 49ers following Seattle's bye.",
+        isNationalFeed: true,
+        leadRosterMatchCount: 0,
+        bodyRosterMatchCount: 0
+      }),
+      true,
+      'Upcoming opponent QB availability explicitly naming "against the 49ers" must pass'
+    );
+
+    // 3. Publisher display disambiguation & injury-vs-trade categorization
+    assert.equal(formatWireSourceDisplayName('NFL Trade Rumors'), 'NFLTradeRumors.co');
+    assert.equal(formatWireSourceDisplayName('Pro Football Rumors'), 'ProFootballRumors.com');
+    assert.equal(formatWireSourceDisplayName('Matt Maiocco'), 'Matt Maiocco');
+    assert.equal(
+      classifyNewsItemCategory({
+        type: 'article',
+        title: '49ers C Jake Brendel Expected To Miss 4-6 Weeks With Hamstring Injury',
+        summary: strippedBio,
+        outletName: 'NFL Trade Rumors'
+      }),
+      'injury',
+      'Injury report from NFLTradeRumors.co must classify as injury, never roster/trade'
+    );
+
+    // 4. Compiled data/news.json must have zero false-positive Jon Weeks tags
+    for (const it of newsJson.rawStream || []) {
+      const hasJonWeeksChip = (it.mentionedPlayers || []).some(p => p.name === 'Jon Weeks');
+      if (hasJonWeeksChip) {
+        const hay = `${it.title || ''} ${it.fullText || ''} ${it.summary || ''} ${it.playerSnippets?.['13729'] || ''}`;
+        assert.ok(
+          /\b(jon\s+weeks|j\.\s*weeks|ls\s+weeks)\b/i.test(hay),
+          `False-positive Jon Weeks chip remained on ${it.id}: ${it.title}`
+        );
+      }
+    }
+  }
+);
+
+await testAsync(
   'Early-week rollover preserves multi-week sidelined players ("chance at returning to action in Week 11") instead of falsely wiping to 95% Full Go, isolates comma-separated multi-player clauses, and preserves weeklyHistory priorWeekPracticed',
   async () => {
     const {
@@ -10210,6 +10375,763 @@ await testAsync(
       'EXPECTED_PRACTICE_RETURN',
       `Hedged "hoping to, just not sure yet" must not fire EXPECTED_PRACTICE_RETURN (got ${evansSignal.signalType})`
     );
+  }
+);
+
+await testAsync(
+  'Cross-device Top News Brief parity: workflow installed, retry cooldown + Worker KV lookup recover from transient errors, no "vs." truncation or duplicate Week headline or mismatched fallback cites',
+  async () => {
+    const {
+      extractCompleteRssSentences,
+      buildDeterministicDailyTopNewsBrief,
+      refreshDailyTopNewsBriefIfDue,
+      shouldTriggerDailyTopNewsBriefRefresh,
+      clearDailyNewsBriefAttemptLock,
+      hydrateCachedDailyTopNewsBrief
+    } = await import('../src/services/aiWorkerClient.js');
+
+    // 1. Abbreviation-safe RSS sentence extraction never chops "win vs. Cowboys" into "win vs."
+    assert.equal(
+      extractCompleteRssSentences(
+        "How explosive 49ers' offense set several NFL records in Week 10 shootout win vs. Cowboys"
+      ),
+      '',
+      'Headline without terminal punctuation must not split on "vs." into a dangling fragment'
+    );
+    assert.equal(
+      extractCompleteRssSentences(
+        'San Francisco scored 46 points vs. Dallas. Brock Purdy threw for 389 yards and four scores'
+      ),
+      'San Francisco scored 46 points vs. Dallas.',
+      'Complete sentence containing "vs." must be preserved intact while dropping trailing incomplete fragment'
+    );
+
+    // 2. Upgraded deterministic fallback: zero duplicate Week headline, zero canned boilerplate, zero mismatched Evans cite on Vikings bullet, accurate fallback metadata
+    const liveAppData = {
+      meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
+      cap: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
+      seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+    };
+    const midWeekNowMs = Date.parse('2026-11-17T06:45:00Z');
+    const fallbackBrief = buildDeterministicDailyTopNewsBrief(liveAppData, midWeekNowMs);
+    assert.equal(fallbackBrief.source, 'pipeline-grounded');
+    assert.equal(fallbackBrief.modelUsed, 'deterministic-grounded');
+    assert.equal(fallbackBrief.thinkingLevel, 'NONE');
+    assert.ok(
+      !/Week\s+\d+\s+Briefing:\s*Week\s+\d+/i.test(fallbackBrief.headline),
+      `Fallback headline must never duplicate Week N: "${fallbackBrief.headline}"`
+    );
+    const fbBody = fallbackBrief.bullets.join(' ');
+    assert.ok(
+      !/condensed split motion,\s*four-man pass-rush integrity/i.test(fbBody),
+      `Fallback brief must not contain generic canned matchup boilerplate: ${fbBody}`
+    );
+    assert.ok(
+      !/\bwin\s+vs\s+\[/i.test(fbBody),
+      `Fallback brief must never terminate mid-phrase on "win vs": ${fbBody}`
+    );
+    assert.ok(
+      fallbackBrief.wordCount >= 165 && fallbackBrief.wordCount <= 275,
+      `Fallback brief wordCount (${fallbackBrief.wordCount}) must stay within 165–275`
+    );
+    const vikingsBullet = fallbackBrief.bullets.find(b => /Vikings|Horizon|Outlook|Matchup/i.test(b)) || '';
+    assert.ok(
+      !vikingsBullet.includes('/mike-evans'),
+      `Vikings matchup bullet must never attach unrelated Mike Evans injury URL: ${vikingsBullet}`
+    );
+
+    // 3. GitHub Actions workflow exists at .github/workflows/refresh-data.yml & pipeline preserves Bluesky-citing AI briefs
+    const workflowPath = path.join(rootDir, '.github', 'workflows', 'refresh-data.yml');
+    assert.ok(fs.existsSync(workflowPath), 'Expected .github/workflows/refresh-data.yml to exist');
+    const workflowText = fs.readFileSync(workflowPath, 'utf8');
+    assert.ok(workflowText.includes('GEMINI_API_KEY') && workflowText.includes('WORKER_BASE_URL'));
+    const pipelineSrc = fs.readFileSync(path.join(rootDir, 'scripts', 'fetch-live-49ers-data.mjs'), 'utf8');
+    assert.ok(
+      !pipelineSrc.includes("!JSON.stringify(prevBrief).includes('bsky.app')"),
+      'Pipeline must not discard valid cached pipeline-gemini-daily briefs solely because a fallback bsky.app source is cited'
+    );
+
+    // 4. Transient AI failure cools down (15 min) instead of permanently blacklisting 24h, AND free Worker KV check still converges immediately
+    const origFetch = globalThis.fetch;
+    const origStorage = globalThis.localStorage;
+    const origWindow = globalThis.window;
+    const memStore = new Map();
+    const mockStorage = {
+      getItem: k => (memStore.has(k) ? memStore.get(k) : null),
+      setItem: (k, v) => memStore.set(k, String(v)),
+      removeItem: k => memStore.delete(k)
+    };
+    try {
+      globalThis.localStorage = mockStorage;
+      globalThis.window = { ...(origWindow || {}), localStorage: mockStorage };
+
+      let kvHasBrief = false;
+      let geminiAttemptCount = 0;
+      const aiBriefJson = JSON.stringify({
+        headline: '49ers Address Pass-Rush Fatigue, Secondary Injuries, and Evans Return Ahead of Vikings',
+        summary: '',
+        bullets: [
+          'Historic Cowboys Offensive Outburst: San Francisco improved to 8-1 after piling up 584 yards against Dallas behind Christian McCaffrey and Brock Purdy [S1].',
+          'Fourth-Quarter Pass-Rush Fatigue: Kyle Shanahan noted the pass rush graded solidly early before defensive-line fatigue hit late [S2].',
+          'Evans and Cornerback Updates: Wide receiver Mike Evans is eyeing a return to practice from Achilles tendinitis while Renardo Green is day-to-day [S3].'
+        ],
+        citedSourceIds: ['S1', 'S2', 'S3']
+      });
+
+      globalThis.fetch = async (url, init = {}) => {
+        const u = String(url);
+        const method = String(init.method || 'GET').toUpperCase();
+        if (u.includes('/api/daily-news-brief') && method === 'GET') {
+          if (kvHasBrief) {
+            return new Response(
+              JSON.stringify({
+                cached: true,
+                modelUsed: 'gemini-4-hydrogen',
+                generatedAt: new Date(midWeekNowMs - 3600_000).toISOString(),
+                rawText: aiBriefJson
+              }),
+              { status: 200 }
+            );
+          }
+          return new Response(JSON.stringify({ cached: false, rawText: '' }), { status: 200 });
+        }
+        if (u.includes('/api/daily-news-brief') && method === 'POST') {
+          return new Response(JSON.stringify({ error: 'transient 502' }), { status: 502 });
+        }
+        if (u.includes('/models?')) {
+          return new Response(JSON.stringify({ models: [{ name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] }] }), { status: 200 });
+        }
+        if (u.includes(':generateContent')) {
+          geminiAttemptCount += 1;
+          if (geminiAttemptCount === 1) {
+            return new Response(JSON.stringify({ error: { message: 'transient 503' } }), { status: 503 });
+          }
+          return new Response(
+            JSON.stringify({ candidates: [{ content: { parts: [{ text: aiBriefJson }] } }] }),
+            { status: 200 }
+          );
+        }
+        return new Response('{}', { status: 404 });
+      };
+
+      const laptopData = structuredClone(liveAppData);
+      laptopData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(laptopData, midWeekNowMs);
+      const laptopPrefs = {
+        workerBaseUrl: 'https://49ers-sync.workers.dev',
+        groupPasscode: 'faithful25',
+        geminiApiKey: 'AIzaLaptopKey',
+        geminiApiBaseUrl: 'https://mock-laptop.local/v1beta'
+      };
+
+      // First attempt fails transiently
+      const failRes = await refreshDailyTopNewsBriefIfDue({
+        appData: laptopData,
+        prefs: laptopPrefs,
+        nowMs: midWeekNowMs
+      });
+      assert.equal(failRes.updated, false);
+      assert.equal(geminiAttemptCount, 1);
+
+      // 4 minutes later, Mobile seeds Worker KV -> Laptop MUST adopt it via free KV GET even during 15m synthesis cooldown!
+      kvHasBrief = true;
+      assert.equal(
+        shouldTriggerDailyTopNewsBriefRefresh(laptopData, laptopPrefs, midWeekNowMs + 4 * 60_000),
+        true,
+        'Device with workerBaseUrl must still re-check free Worker KV after 3m even during synthesis cooldown'
+      );
+      const kvAdoptRes = await refreshDailyTopNewsBriefIfDue({
+        appData: laptopData,
+        prefs: laptopPrefs,
+        nowMs: midWeekNowMs + 4 * 60_000
+      });
+      assert.equal(kvAdoptRes.updated, true);
+      assert.equal(kvAdoptRes.fromSharedWorkerCache, true);
+      assert.equal(geminiAttemptCount, 1, 'Adopting Worker KV brief must spend 0 extra Gemini calls');
+      assert.ok(laptopData.news.dailyTopNewsBrief.headline.includes('Pass-Rush Fatigue'));
+
+      // Also verify direct-key-only device retries cleanly after 15m cooldown (not locked out for 24h)
+      memStore.clear();
+      geminiAttemptCount = 0;
+      const directData = structuredClone(liveAppData);
+      directData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(directData, midWeekNowMs);
+      const directPrefs = {
+        geminiApiKey: 'AIzaDirectKey',
+        geminiApiBaseUrl: 'https://mock-direct.local/v1beta'
+      };
+      await refreshDailyTopNewsBriefIfDue({ appData: directData, prefs: directPrefs, nowMs: midWeekNowMs });
+      assert.equal(
+        shouldTriggerDailyTopNewsBriefRefresh(directData, directPrefs, midWeekNowMs + 5 * 60_000),
+        false,
+        'Direct-key device should respect 15m cooldown right after a transient failure'
+      );
+      assert.equal(
+        shouldTriggerDailyTopNewsBriefRefresh(directData, directPrefs, midWeekNowMs + 16 * 60_000),
+        true,
+        'Direct-key device must retry after 15m cooldown instead of blacklisting the full 24h cycle'
+      );
+      const recoveredRes = await refreshDailyTopNewsBriefIfDue({
+        appData: directData,
+        prefs: directPrefs,
+        nowMs: midWeekNowMs + 16 * 60_000
+      });
+      assert.equal(recoveredRes.updated, true);
+      assert.equal(geminiAttemptCount, 2);
+
+      // Verify clearDailyNewsBriefAttemptLock immediately unblocks retry when Settings are saved
+      clearDailyNewsBriefAttemptLock();
+      assert.equal(mockStorage.getItem('joshal_49ers_daily_news_brief_attempt_v5'), null);
+
+      // Verify hydrateCachedDailyTopNewsBrief preserves live AI brief over a newer-timestamped pipeline-grounded fallback
+      const newerFallback = buildDeterministicDailyTopNewsBrief(directData, midWeekNowMs + 6 * 3600_000, {
+        cycleKey: directData.news.dailyTopNewsBrief.cycleKey,
+        generatedAt: new Date(midWeekNowMs + 6 * 3600_000).toISOString(),
+        source: 'pipeline-grounded'
+      });
+      directData.news.dailyTopNewsBrief = newerFallback;
+      hydrateCachedDailyTopNewsBrief(directData, midWeekNowMs + 6 * 3600_000);
+      assert.equal(
+        directData.news.dailyTopNewsBrief.source,
+        'live-gemini-daily',
+        'Cached live-gemini-daily brief must always beat a newer-timestamped pipeline-grounded fallback for the same cycle'
+      );
+    } finally {
+      globalThis.fetch = origFetch;
+      globalThis.localStorage = origStorage;
+      globalThis.window = origWindow;
+    }
+  }
+);
+
+runTest('Salient Visual Media Engine: CDN resize transforms, 4-tier visual resolution, cluster photo promotion & holistic view coverage', () => {
+  // 1. Verified CDN resize transforms + fallback preservation
+  const optHs = optimizeImageUrlForSlot('https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png', 'thumb');
+  assert.ok(optHs.src.includes('a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4361741.png&w=180'));
+  assert.equal(optHs.fallbackSrc, 'https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png');
+
+  const optLogo = optimizeImageUrlForSlot('https://a.espncdn.com/i/teamlogos/nfl/500/sf.png', 'logo');
+  assert.ok(optLogo.src.includes('a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/sf.png&w=96&h=96'));
+  assert.equal(optLogo.fallbackSrc, 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png');
+
+  const optTw = optimizeImageUrlForSlot('https://pbs.twimg.com/media/HXRndonaQAAfqqC.jpg', 'thumb');
+  assert.equal(optTw.src, 'https://pbs.twimg.com/media/HXRndonaQAAfqqC?format=webp&name=360x360');
+  assert.equal(optTw.fallbackSrc, 'https://pbs.twimg.com/media/HXRndonaQAAfqqC.jpg');
+
+  const optNn = optimizeImageUrlForSlot(
+    'https://platform.ninersnation.com/wp-content/uploads/sites/115/2026/11/gettyimages-2305283884.jpg?quality=90&strip=all',
+    'thumb'
+  );
+  assert.ok(optNn.src.includes('w=320') && optNn.src.includes('quality=80'));
+
+  const optClub = optimizeImageUrlForSlot(
+    'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/k9mjyceeg70bibwndz1r.jpg',
+    'thumb'
+  );
+  assert.ok(optClub.src.includes('f_auto,q_auto,w_360'));
+
+  const optPod = optimizeImageUrlForSlot(
+    'https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/5b/63/ed/mza_123.png/600x600bb.jpg',
+    'artwork'
+  );
+  assert.ok(optPod.src.endsWith('/160x160bb.jpg'));
+
+  // 2. Editorial vs headshot classification
+  assert.equal(isHeadshotImageUrl('https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png'), true);
+  assert.equal(isEditorialPhotoUrl('https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png'), false);
+  assert.equal(isEditorialPhotoUrl('https://s.espncdn.com/stitcher/sports/football/nfl/events/401873063.png?templateId=espn.applewatch.awayhome.1'), false);
+  assert.equal(isEditorialPhotoUrl('https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/test.jpg'), true);
+
+  // 3. 4-tier visual resolution cascade + excludePlayerId non-redundancy
+  const metaLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+  const rosterLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const healthLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+  const newsLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const schedLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const reportersLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'reporters.json'), 'utf8'));
+  const beatPodsLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'beat-podcasts.json'), 'utf8'));
+  const podIndexLocal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'podcasts', 'index.json'), 'utf8'));
+  const sampleRoster = rosterLocal.players || [];
+  const purdy = sampleRoster.find(p => /brock purdy/i.test(p.name));
+  assert.ok(purdy?.headshotUrl, 'Roster must include Brock Purdy with headshotUrl');
+
+  const edVisual = resolveSalientCardVisual(
+    {
+      title: '49ers offense sets records vs Cowboys',
+      imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/test.jpg'
+    },
+    { rosterPlayers: sampleRoster }
+  );
+  assert.equal(edVisual?.kind, 'editorial');
+
+  const playerFallback = resolveSalientCardVisual(
+    {
+      title: 'NFC Notes: Brock Purdy efficiency surges entering Week 11',
+      imageUrl: '',
+      mentionedPlayers: []
+    },
+    { rosterPlayers: sampleRoster }
+  );
+  assert.equal(playerFallback?.kind, 'player');
+  assert.equal(playerFallback?.playerId, String(purdy.id));
+
+  // Inside Brock Purdy's own dossier (`excludePlayerId = purdy.id`), suppress redundant headshot!
+  const suppressedInOwnDossier = resolveSalientCardVisual(
+    {
+      title: 'Brock Purdy throws three touchdowns in practice',
+      imageUrl: purdy.headshotUrl,
+      mentionedPlayers: [purdy]
+    },
+    { rosterPlayers: sampleRoster, excludePlayerId: purdy.id, allowTeamFallback: false }
+  );
+  assert.equal(suppressedInOwnDossier, null, 'Must not repeat the same player headshot inside their own Player Dossier');
+
+  // Opponent matchup dual-crest fallback when no photo or player is present
+  const matchupVisual = resolveSalientCardVisual(
+    {
+      title: 'The Cowboys are going to have a chance to win this.',
+      imageUrl: '',
+      mentionedPlayers: []
+    },
+    { rosterPlayers: sampleRoster }
+  );
+  assert.equal(matchupVisual?.kind, 'matchup');
+  assert.equal(matchupVisual?.oppAbbr, 'DAL');
+
+  // Official 49ers Coach/Podium emblem fallback
+  const coachVisual = resolveSalientCardVisual(
+    {
+      title: 'Kyle Shanahan on the 49ers pass rush after Week 10',
+      imageUrl: '',
+      mentionedPlayers: []
+    },
+    { rosterPlayers: sampleRoster }
+  );
+  assert.equal(coachVisual?.kind, 'team');
+  assert.equal(coachVisual?.tagLabel, 'COACH');
+
+  // 4. Cluster photo inheritance: confirming report editorial photo upgrades text-only lead
+  const clusteredWithPhoto = deduplicateAndGroupWireItems(
+    [
+      {
+        id: 'x_lead_no_img',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        outletName: 'NBC Sports Bay Area',
+        trustTier: 1,
+        url: 'https://x.com/MaioccoNBCS/status/999000111222333',
+        title: 'Brock Purdy named NFC Offensive Player of the Week after 46-40 win over Cowboys',
+        fullText: 'Brock Purdy named NFC Offensive Player of the Week after 46-40 win over Cowboys',
+        imageUrl: '',
+        publishedAt: new Date(Date.now() - 30 * 60_000).toISOString()
+      },
+      {
+        id: 'art_confirm_with_img',
+        type: 'article',
+        author: 'NBC Sports Bay Area',
+        outletName: 'NBC Sports Bay Area',
+        trustTier: 2,
+        url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-nfc-player-week/999999/',
+        title: 'Brock Purdy named NFC Offensive Player of the Week after 46-40 Cowboys win',
+        imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/purdy-hero.jpg',
+        publishedAt: new Date(Date.now() - 25 * 60_000).toISOString()
+      }
+    ],
+    { nowMs: Date.now() }
+  );
+  assert.equal(clusteredWithPhoto.length, 1);
+  assert.ok(
+    isEditorialPhotoUrl(clusteredWithPhoto[0].imageUrl),
+    'Story cluster lead must inherit editorial photo from confirming report'
+  );
+
+  // 5. Daily Top News Brief hero selection strictly picks a real editorial photo (never a headshot)
+  const briefHero = resolveDailyBriefHeroMedia(newsLocal.dailyTopNewsBrief, newsLocal.rawStream || [], {
+    rosterPlayers: sampleRoster
+  });
+  assert.ok(briefHero && isEditorialPhotoUrl(briefHero.rawUrl), 'Daily Top News Brief must resolve a real editorial photo');
+
+  // 6. Audio episode visual accents extract mentioned players & opponent
+  const epVisual = resolveAudioEpisodeVisual(
+    {
+      title: 'Week 9 Trench & Scheme Preview: Bosa + Buckner Debut vs. Raiders',
+      topic: 'Week 9 LV @ SF Matchup'
+    },
+    { rosterPlayers: sampleRoster }
+  );
+  assert.equal(epVisual.opponent?.abbr, 'LV');
+  assert.ok(epVisual.players.length >= 1, 'Episode visual resolver should detect mentioned 49ers stars');
+
+  // 7. Rendered Home & News views include salient photos on tweets, articles & Daily Brief with zero regressions
+  const appMock = {
+    meta: metaLocal,
+    roster: rosterLocal,
+    health: healthLocal,
+    cap: capData,
+    news: newsLocal,
+    scheduleMatchup: schedLocal,
+    seasonal: seasonalData,
+    reporters: reportersLocal,
+    beatPodcasts: beatPodsLocal,
+    podcastIndex: podIndexLocal
+  };
+  const renderedNewsAll = renderNewsViewHtml({
+    appData: appMock,
+    newsCategoryFilter: 'all',
+    filteredRawItems: newsLocal.rawStream || [],
+    userPrefs: {}
+  });
+  assert.ok(renderedNewsAll.includes('data-salient-hero="true"'), 'News & Film Daily Brief must render editorial hero photo');
+  assert.ok(renderedNewsAll.includes('data-salient-thumb='), 'News & Film feed cards must render salient thumbnails');
+
+  const renderedHome = renderHomeDashboardHtml({
+    orderedBlocks: ALL_DASHBOARD_BLOCKS.filter(b => DEFAULT_HOME_BLOCK_IDS.includes(b.id)),
+    appData: appMock,
+    simCapResult: { summary: {}, moveCount: 0, baseYear: '2026' },
+    mcSimResult: seasonalData.playoffPicture?.baselineSimulation || {},
+    filteredClusters: [],
+    filteredRawItems: newsLocal.rawStream || [],
+    userPrefs: {},
+    isCustomizingLayout: false
+  });
+  assert.ok(renderedHome.includes('home-wire-thumb'), 'Home Latest Tweets must render salient right-rail thumbnails');
+  assert.ok(renderedHome.includes('home-article-thumb'), 'Home Latest Articles must render salient right-rail thumbnails');
+  assert.ok(renderedHome.includes('home-pod-art-stack'), 'Home Audio & AI card must render overlapping Beat Podcast show artwork');
+  const homeMatchupMatch = renderedHome.match(/data-dashboard-block="upcoming_matchup"[\s\S]*?<\/article>/);
+  assert.ok(homeMatchupMatch && !homeMatchupMatch[0].includes('player-avatar'), 'Home Upcoming Matchup must preserve 0 player avatars');
+});
+
+await testAsync(
+  'Holistic Link-Drop Tweet -> Direct Article Promotion: bypasses intermediate social hop for 90%+ article link-drops while preserving salient tweets with complementary links',
+  async () => {
+    const {
+      extractBlueskyBestExternalLink,
+      isDirectArticleUrl,
+      isPublicationOrBrandSocialAccount,
+      isArticleLinkDropTweet,
+      promoteLinkDropTweetToArticle,
+      reconcileLinkDropTweetsWithArticles
+    } = await import('../src/engine/breakingClassifier.js');
+    const { hydrateLiveBlueskyBeatWire } = await import('../src/services/dataService.js');
+    const { renderWireItemCardHtml, renderDailyTopNewsBriefHtml } = await import('../src/views/newsView.js');
+
+    // 1. Direct article URL validation
+    assert.equal(isDirectArticleUrl('https://nfltraderumors.co/nfc-notes-christian-mccaffrey-49ers-cowboys-giants/'), true);
+    assert.equal(isDirectArticleUrl('https://www.49erswebzone.com/articles/205235-transcript-shanahan/'), true);
+    assert.equal(isDirectArticleUrl('https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/week-11/1978963/'), true);
+    assert.equal(isDirectArticleUrl('https://youtu.be/MJYAXBf05vM'), false, 'YouTube is video, not article');
+    assert.equal(isDirectArticleUrl('https://open.spotify.com/episode/6FrjIKMcvJCsNV3JNBHhOh'), false, 'Spotify is podcast, not article');
+    assert.equal(isDirectArticleUrl('https://www.nytimes.com/athletic/7781234/49ers/'), false, 'Paywalled Athletic must not promote');
+    assert.equal(isDirectArticleUrl('https://dlvr.it/TAbC12'), false, 'Unexpanded shortener must not promote');
+    assert.equal(isDirectArticleUrl('https://www.49erswebzone.com/articles/'), false, 'Bare section root must not promote');
+    assert.equal(isDirectArticleUrl('https://www.nbcsportsbayarea.com/mlb/san-francisco-giants/hire/1979637/'), false, 'MLB URL must not promote');
+
+    // 2. Pure brand link-drop tweets MUST promote directly to type='article' with direct article URL & no redundant Article chip
+    const wzLinkDrop = {
+      id: 'wz_bsky_1',
+      type: 'tweet',
+      author: '49ers Webzone',
+      reporterName: '49ers Webzone',
+      outletId: '49ers_webzone',
+      outletName: '49ers Webzone',
+      authorHandle: '@49erswebzone',
+      title: "#49ers' Defensive Struggles Could Become a Major Playoff Problem Read:",
+      fullText: "#49ers' Defensive Struggles Could Become a Major Playoff Problem Read:",
+      url: 'https://bsky.app/profile/49erswebzone.bsky.social/post/3n2testwz1',
+      externalUrl: 'https://www.49erswebzone.com/articles/205250-defensive-struggles-playoff-problem/',
+      externalTitle: "49ers' Defensive Struggles Could Become a Major Playoff Problem",
+      externalDescription: 'San Francisco gave up 40 points in Dallas despite improving to 8-1.',
+      publishedAt: new Date().toISOString()
+    };
+    const wzPromoted = promoteLinkDropTweetToArticle(wzLinkDrop);
+    assert.equal(wzPromoted.type, 'article', '49ers Webzone Read: tweet must promote to article');
+    assert.equal(wzPromoted.url, 'https://www.49erswebzone.com/articles/205250-defensive-struggles-playoff-problem/');
+    assert.equal(wzPromoted.externalUrl, null, 'Promoted article must clear externalUrl so no redundant Article pill renders');
+    assert.equal(wzPromoted.title, "49ers' Defensive Struggles Could Become a Major Playoff Problem");
+    assert.ok(wzPromoted.summary.includes('40 points'), 'Promoted article must carry externalDescription as summary');
+    const wzCardHtml = renderWireItemCardHtml(wzPromoted);
+    assert.ok(wzCardHtml.includes('data-raw-type="article"'), 'Rendered card must be labeled article');
+    assert.ok(wzCardHtml.includes('<span>Article</span>'), 'Rendered card must display Article badge');
+    assert.ok(!wzCardHtml.includes('bsky.app'), 'Rendered card must link directly to article, bypassing Bluesky');
+    assert.ok(!wzCardHtml.includes('Article: 49ers'), 'Rendered card must not duplicate Article chip');
+
+    // 3. NFL Trade Rumors exact headline link-drop & ProFootballTalk exact headline link-drop -> promote to article
+    const nfltrPromoted = promoteLinkDropTweetToArticle({
+      id: 'nfltr_bsky_1',
+      type: 'tweet',
+      author: 'NFL Trade Rumors',
+      outletId: 'nfl_trade_rumors',
+      outletName: 'NFL Trade Rumors',
+      authorHandle: '@nflrums',
+      title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+      fullText: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+      url: 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q',
+      externalUrl: 'https://nfltraderumors.co/nfc-notes-christian-mccaffrey-christian-parker-49ers-cowboys-giants/',
+      externalTitle: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+      externalDescription: '49ers RB Christian McCaffrey had a massive game against the Cowboys defense.',
+      publishedAt: new Date().toISOString()
+    });
+    assert.equal(nfltrPromoted.type, 'article');
+    assert.equal(nfltrPromoted.url, 'https://nfltraderumors.co/nfc-notes-christian-mccaffrey-christian-parker-49ers-cowboys-giants/');
+    assert.equal(nfltrPromoted.promotedFromSocialUrl, 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q');
+
+    const pftPromoted = promoteLinkDropTweetToArticle({
+      id: 'pft_bsky_1',
+      type: 'tweet',
+      author: 'ProFootballTalk',
+      reporterId: 'mike_florio',
+      outletId: 'nfl_network',
+      outletName: 'NBC ProFootballTalk',
+      authorHandle: '@ProFootballTalk',
+      title: 'Von Miller blames himself, not the play call, for Christian McCaffrey’s late TD.',
+      fullText: 'Von Miller blames himself, not the play call, for Christian McCaffrey’s late TD.',
+      url: 'https://bsky.app/profile/profootballtalk.bsky.social/post/3n2i3g7uib22t',
+      externalUrl: 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/von-miller-blames-himself',
+      externalTitle: "Von Miller blames himself, not the play call, for Christian McCaffrey's late TD",
+      publishedAt: new Date().toISOString()
+    });
+    assert.equal(pftPromoted.type, 'article');
+    assert.equal(pftPromoted.url, 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/von-miller-blames-himself');
+
+    // 4. NBCSBA brand desk teaser with `(via @mattmaiocco.bsky.social)` -> promotes to article AND resolves writer byline
+    const nbcsbaPromoted = promoteLinkDropTweetToArticle({
+      id: 'nbcs_bsky_1',
+      type: 'tweet',
+      author: '49ers on NBCSBA',
+      outletId: 'nbcsba',
+      outletName: 'NBC Sports Bay Area',
+      authorHandle: '@NBCS49ers',
+      title: '"I\'m not worried about Nick." Kyle Shanahan is confident Nick Bosa will return to form (via @mattmaiocco.bsky.social)',
+      fullText: '"I\'m not worried about Nick." Kyle Shanahan is confident Nick Bosa will return to form (via @mattmaiocco.bsky.social)',
+      url: 'https://bsky.app/profile/nbcs49ers.bsky.social/post/3n2hn4rl3xc22',
+      externalUrl: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-sack-injury-kyle-shanahan/1980800/',
+      externalTitle: 'Why Nick Bosa’s sack-less season doesn’t worry 49ers coach Kyle Shanahan',
+      externalDescription: 'San Francisco 49ers coach Kyle Shanahan is confident it is only a matter of time for Nick Bosa.',
+      publishedAt: new Date().toISOString()
+    });
+    assert.equal(nbcsbaPromoted.type, 'article');
+    assert.equal(nbcsbaPromoted.url, 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-sack-injury-kyle-shanahan/1980800/');
+    assert.equal(nbcsbaPromoted.author, 'Matt Maiocco', 'Brand desk via-@writer attribution should credit Matt Maiocco cleanly');
+
+    // 5. Individual writer pure self-promo link-drop (facet link) -> promotes to article
+    const facetExtract = extractBlueskyBestExternalLink(
+      { embed: null },
+      {
+        text: "Kyle Shanahan talks QBs -- in detail about the 49ers' old Kirk Cousins Plan and also agreeing that Brock Purdy is playing at an all-time level. sfstandard.com/2026/11/16/k...",
+        facets: [
+          {
+            features: [
+              {
+                $type: 'app.bsky.richtext.facet#link',
+                uri: 'https://sfstandard.com/2026/11/16/kyle-shanahan-brock-purdy-kirk-cousins/'
+              }
+            ]
+          }
+        ]
+      }
+    );
+    assert.equal(facetExtract.uri, 'https://sfstandard.com/2026/11/16/kyle-shanahan-brock-purdy-kirk-cousins/');
+    const tkPromoted = promoteLinkDropTweetToArticle({
+      id: 'tk_bsky_1',
+      type: 'tweet',
+      author: 'Tim Kawakami',
+      reporterId: 'tim_kawakami',
+      outletId: 'sf_standard',
+      outletName: 'The SF Standard',
+      authorHandle: '@timkawakami',
+      fullText: "Brock Purdy's apex, band of 30-something brothers, a pass rush that has to be better (right?) and other reasons the 49ers are ready to win the Super Bowl sfstandard.com/2026/11/15/4...",
+      url: 'https://bsky.app/profile/timkawakami.bsky.social/post/3n2fpv762ms24',
+      externalUrl: 'https://sfstandard.com/2026/11/15/49ers-super-bowl-chances-nfc-west-contenders/',
+      externalTitle: 'Kawakami: 10 reasons why 49ers are ready to get to the Super Bowl — and win it',
+      publishedAt: new Date().toISOString()
+    });
+    assert.equal(tkPromoted.type, 'article', 'Individual columnist bare-slug self-promo teaser should promote to article');
+    assert.equal(tkPromoted.url, 'https://sfstandard.com/2026/11/15/49ers-super-bowl-chances-nfc-west-contenders/');
+
+    // 6. SALIENT TWEETS WITH COMPLEMENTARY ARTICLES MUST STAY TWEETS!
+    // Case 6a: Adam Schefter breaking news + "Story via @BradyHenderson:" (even when mirror bot duplicates text into externalTitle!)
+    const schefterSalient = {
+      id: 'schefter_bsky_salient',
+      type: 'tweet',
+      author: 'Adam Schefter',
+      reporterId: 'adam_schefter',
+      outletId: 'espn',
+      outletName: 'ESPN NFL Insider',
+      authorHandle: '@AdamSchefter',
+      fullText: "Seahawks HC Mike Macdonald said today that Sam Darnold is still the team’s starter when healthy, and that he’a on track to play next week against the 49ers following Seattle's bye. Story via @BradyHenderson:",
+      url: 'https://bsky.app/profile/adamscheftermirror.bsky.social/post/3n2hrs3pww32t',
+      externalUrl: 'https://www.espn.com/nfl/story/_/id/50504531/seahawks-macdonald-optimisitic-qb-darnold-plays-bye-week',
+      externalTitle: "Seahawks HC Mike Macdonald said today that Sam Darnold is still the team’s starter when healthy, and that he’a on track to play next week against the 49ers following Seattle's bye. Story via @BradyHenderson:",
+      externalDescription: '',
+      publishedAt: new Date().toISOString()
+    };
+    assert.equal(isPublicationOrBrandSocialAccount(schefterSalient), false);
+    assert.equal(isArticleLinkDropTweet(schefterSalient).isLinkDrop, false, 'Salient insider tweet with Story via @... must NOT demote to article');
+    assert.equal(promoteLinkDropTweetToArticle(schefterSalient).type, 'tweet');
+    assert.equal(promoteLinkDropTweetToArticle(schefterSalient).externalUrl, schefterSalient.externalUrl);
+
+    // Case 6b: Individual beat writer sharing concrete novel EPA/snap stats + complementary column link
+    const maioccoStatsTweet = {
+      id: 'maiocco_stats_salient',
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      reporterId: 'matt_maiocco',
+      outletId: 'nbcsba',
+      outletName: 'NBC Sports Bay Area',
+      authorHandle: '@MaioccoNBCS',
+      fullText: 'Brock Purdy posted +0.42 EPA/play and a 78.4% completion rate on play-action across 65 offensive snaps against Dallas. Full film breakdown:',
+      url: 'https://x.com/MaioccoNBCS/status/2122999888777666555',
+      externalUrl: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/purdy-play-action-breakdown/1980999/',
+      externalTitle: 'How Brock Purdy shredded Dallas in Week 10',
+      publishedAt: new Date().toISOString()
+    };
+    assert.equal(isArticleLinkDropTweet(maioccoStatsTweet).isLinkDrop, false, 'Beat writer tweet with novel stats (+0.42 EPA/play, 78.4%, 65 snaps) must stay tweet');
+
+    // Case 6c: Individual beat writer reporting acute injury/practice news + complementary story link
+    const wagonerInjuryTweet = {
+      id: 'wagoner_inj_salient',
+      type: 'tweet',
+      author: 'Nick Wagoner',
+      reporterId: 'nick_wagoner',
+      outletId: 'espn',
+      outletName: 'ESPN 49ers Beat',
+      authorHandle: '@nwagoner',
+      fullText: 'WR Mike Evans (Achilles) is flying to Colorado Springs tonight and Kyle Shanahan hopes he returns to practice Wednesday ahead of Week 11 vs. Minnesota. Full story:',
+      url: 'https://x.com/nwagoner/status/2122999888777666444',
+      externalUrl: 'https://www.espn.com/nfl/story/_/id/50509999/49ers-evans-practice-week-11',
+      externalTitle: '49ers Week 11 Injury Notebook',
+      publishedAt: new Date().toISOString()
+    };
+    assert.equal(isArticleLinkDropTweet(wagonerInjuryTweet).isLinkDrop, false, 'Beat writer tweet breaking injury/practice details must stay tweet');
+
+    // 7. Stream-level reconciliation collapses unexpanded dlvr.it Bluesky brand link-drop into matching direct RSS article
+    const reconciledStream = reconcileLinkDropTweetsWithArticles([
+      {
+        id: 'bsky_nfltr_unexpanded',
+        type: 'tweet',
+        author: 'NFL Trade Rumors',
+        outletId: 'nfl_trade_rumors',
+        outletName: 'NFL Trade Rumors',
+        authorHandle: '@nflrums',
+        title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+        fullText: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+        url: 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q',
+        externalUrl: null,
+        imageUrl: 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:test/cmc.jpg',
+        publishedAt: '2026-11-17T23:16:00Z'
+      },
+      {
+        id: 'rss_nfltr_direct',
+        type: 'article',
+        author: 'NFL Trade Rumors',
+        outletId: 'nfl_trade_rumors',
+        outletName: 'NFL Trade Rumors',
+        title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+        summary: '49ers RB Christian McCaffrey had a massive game against Dallas.',
+        url: 'https://nfltraderumors.co/nfc-notes-christian-mccaffrey-christian-parker-49ers-cowboys-giants/',
+        imageUrl: '',
+        publishedAt: '2026-11-17T23:14:00Z'
+      }
+    ]);
+    assert.equal(reconciledStream.length, 1, 'Unexpanded brand Bluesky link-drop must collapse into matching direct RSS article');
+    assert.equal(reconciledStream[0].type, 'article');
+    assert.equal(reconciledStream[0].url, 'https://nfltraderumors.co/nfc-notes-christian-mccaffrey-christian-parker-49ers-cowboys-giants/');
+    assert.equal(reconciledStream[0].imageUrl, 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:test/cmc.jpg', 'Reconciled article should inherit Bluesky card thumbnail when missing');
+
+    // 8. Live Bluesky client hydrator unwraps dlvr.it via Worker /api/expand-urls and promotes directly to article!
+    const origFetch = globalThis.fetch;
+    try {
+      globalThis.fetch = async (url, init) => {
+        const u = String(url || '');
+        if (u.includes('/api/expand-urls')) {
+          const parsedBody = JSON.parse(init?.body || '{}');
+          const expanded = {};
+          for (const s of parsedBody.urls || []) {
+            if (s.includes('dlvr.it/TestNfltr1')) {
+              expanded[s] = 'https://nfltraderumors.co/nfc-notes-christian-mccaffrey-49ers-cowboys/';
+            }
+          }
+          return { ok: true, json: async () => ({ expanded }) };
+        }
+        if (u.includes('nfltraderumors.bsky.social')) {
+          return {
+            ok: true,
+            json: async () => ({
+              feed: [
+                {
+                  post: {
+                    uri: 'at://did:plc:nfltr/app.bsky.feed.post/3n2k6eqwce32q',
+                    author: { did: 'did:plc:nfltr', handle: 'nfltraderumors.bsky.social' },
+                    record: {
+                      text: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+                      createdAt: new Date().toISOString()
+                    },
+                    embed: {
+                      external: {
+                        uri: 'https://dlvr.it/TestNfltr1',
+                        title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+                        description: '49ers RB Christian McCaffrey had a massive game against the Cowboys defense.'
+                      }
+                    }
+                  }
+                }
+              ]
+            })
+          };
+        }
+        return { ok: true, json: async () => ({ feed: [] }) };
+      };
+      const liveTestData = {
+        meta: { currentWeek: 11 },
+        scheduleMatchup: { schedule: [] },
+        roster: { players: [{ id: '3117251', name: 'Christian McCaffrey', position: 'RB', jersey: 23, recentNews: [] }] },
+        news: { rawStream: [] }
+      };
+      const added = await hydrateLiveBlueskyBeatWire(liveTestData, {
+        workerBaseUrl: 'https://mock-worker.example.com'
+      });
+      assert.equal(added, 1);
+      assert.equal(liveTestData.news.rawStream[0].type, 'article', 'Live Bluesky dlvr.it link-drop must promote to article');
+      assert.equal(
+        liveTestData.news.rawStream[0].url,
+        'https://nfltraderumors.co/nfc-notes-christian-mccaffrey-49ers-cowboys/',
+        'Live Bluesky dlvr.it link-drop must link directly to unwrapped nfltraderumors.co article'
+      );
+      assert.equal(liveTestData.news.rawStream[0].externalUrl, null);
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+
+    // 9. Daily Top News Brief upgrades inline & Sources (N) links from promoted social URL -> direct article URL + Article label
+    const briefHtml = renderDailyTopNewsBriefHtml(
+      {
+        id: 'brief_promo_test',
+        headline: '49ers Week 11 Briefing',
+        generatedAt: new Date().toISOString(),
+        bullets: [
+          'NFC Notes: Christian McCaffrey drew leaguewide buzz after his Dallas explosion [NFL Trade Rumors](https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q).'
+        ],
+        sources: [
+          {
+            type: 'tweet',
+            author: 'NFL Trade Rumors',
+            outlet: 'NFL Trade Rumors',
+            title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
+            url: 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q',
+            publishedAt: new Date().toISOString()
+          }
+        ]
+      },
+      { rawStream: [nfltrPromoted] }
+    );
+    assert.ok(
+      briefHtml.includes('https://nfltraderumors.co/nfc-notes-christian-mccaffrey-christian-parker-49ers-cowboys-giants/'),
+      'Daily Brief inline link and Sources drawer must upgrade promoted Bluesky link-drop to direct article URL'
+    );
+    assert.ok(!briefHtml.includes('bsky.app/profile/nfltraderumors'), 'Daily Brief must not retain bypassed Bluesky URL');
+    assert.ok(briefHtml.includes('>Article<'), 'Daily Brief Sources drawer must label promoted link-drop as Article');
   }
 );
 

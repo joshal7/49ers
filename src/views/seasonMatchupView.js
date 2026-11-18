@@ -928,6 +928,8 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
                               ${renderInjuryNewsItemCardHtml(topIt, {
                                 playerName: entry.name,
                                 directPosts: [],
+                                excludePlayerId: entry.playerId || '',
+                                rosterPlayers: appData?.roster?.players || [],
                                 outerClassName: 'health-injury-news-card'
                               })}
                             </div>
@@ -1349,6 +1351,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
                     playerName: entry.name,
                     directPosts,
                     excludePlayerId: entry.playerId,
+                    rosterPlayers: appData?.roster?.players || [],
                     outerClassName: 'health-injury-news-card'
                   })}
                 </div>

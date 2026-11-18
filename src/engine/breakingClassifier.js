@@ -22,8 +22,16 @@ import {
   corroborateAndAnnotateWireStream,
   isBlueskyPostUrl,
   isDirectXStatusUrl,
+  isPodiumSubjectId,
+  resolveItemAuthorProfileUrl,
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
+import {
+  isPaywalledPublisher,
+  sanitizeExternalUrl,
+  stripAggregatorBoilerplate
+} from './linkIntegrity.js';
+import { isEditorialPhotoUrl } from './salientMediaEngine.js';
 
 export const SHORT_TWEET_FULL_TEXT_LIMIT = 320;
 
@@ -2194,9 +2202,14 @@ export function deduplicateAndGroupWireItems(
       const demotedPrev = { ...matchedCluster.lead };
       const priorConfirming = Array.isArray(demotedPrev.confirmingReports) ? demotedPrev.confirmingReports : [];
       delete demotedPrev.confirmingReports;
+      const bestClusterImg = isEditorialPhotoUrl(item.imageUrl)
+        ? item.imageUrl
+        : isEditorialPhotoUrl(demotedPrev.imageUrl)
+          ? demotedPrev.imageUrl
+          : item.imageUrl || demotedPrev.imageUrl || '';
       matchedCluster.lead = {
         ...item,
-        imageUrl: item.imageUrl || demotedPrev.imageUrl || '',
+        imageUrl: bestClusterImg,
         videoStreamUrl: item.videoStreamUrl || demotedPrev.videoStreamUrl || undefined,
         duration: item.duration || demotedPrev.duration || undefined,
         isHighlightClip: Boolean(item.isHighlightClip || demotedPrev.isHighlightClip) || undefined,
@@ -2216,6 +2229,12 @@ export function deduplicateAndGroupWireItems(
       matchedCluster.outletKey = outletKey || matchedCluster.outletKey;
     } else {
       matchedCluster.lead.confirmingReports.push(item);
+      if (
+        (!isEditorialPhotoUrl(matchedCluster.lead.imageUrl) && isEditorialPhotoUrl(item.imageUrl)) ||
+        (!matchedCluster.lead.imageUrl && item.imageUrl)
+      ) {
+        matchedCluster.lead.imageUrl = item.imageUrl;
+      }
       if (!matchedCluster.lead.breakingBadge && item.breakingBadge) {
         matchedCluster.lead.breakingBadge = item.breakingBadge;
         matchedCluster.lead.isBreaking = Boolean(item.isBreaking);
@@ -2358,6 +2377,603 @@ export function isRedundantProfileSelfLink(externalUrl = '', itemUrl = '') {
     return true;
   }
   return false;
+}
+
+const NON_ARTICLE_EXTERNAL_HOST_REGEX =
+  /(^|\.)(x\.com|twitter\.com|bsky\.app|instagram\.com|threads\.net|facebook\.com|tiktok\.com|reddit\.com|t\.me|youtube\.com|youtu\.be|vimeo\.com|twitch\.tv|dailymotion\.com|open\.spotify\.com|spotify\.com|podcasts\.apple\.com|music\.amazon\.com|megaphone\.fm|art19\.com|soundcloud\.com|omny\.fm|anchor\.fm|overcast\.fm|pocketcasts\.com)$/i;
+
+const NON_ARTICLE_EXTERNAL_PATH_REGEX =
+  /^\/(?:video|videos|watch|shorts|clips|podcast|podcasts|episodes|mlb|nba|nhl|wnba|mls|golf|tennis|soccer)(?:\/|$)|\/nfl\/player\/_\/id\/\d+/i;
+
+const BARE_SECTION_ROOT_PATH_REGEX =
+  /^\/(?:news|articles|sports|nfl|49ers|san-francisco-49ers|nfl\/san-francisco-49ers|team|roster|schedule|stats|draft|rumors|feed)?\/?$/i;
+
+const BRAND_SOCIAL_HANDLE_SET = new Set([
+  '49erswebzone',
+  'nflrums',
+  'nfltraderumors',
+  'pfrumors',
+  'profootballrumors',
+  'profootballtalk',
+  'nbcs49ers',
+  'nbcsauthentic',
+  'nbcsportsbayarea',
+  'ninersnation',
+  '49ers',
+  'sfstandard',
+  'espnnfl',
+  'espn',
+  'nfl',
+  'nflnetwork',
+  'knbr',
+  '957thegame',
+  'cbssports',
+  'yahoosports',
+  'bleacherreport',
+  'si_nfl',
+  'overthecap',
+  'spotrac',
+  'oursf49ers',
+  '49ershive',
+  'coach_yac'
+]);
+
+const BRAND_SOCIAL_BSKY_ACTOR_REGEX =
+  /\/profile\/(49erswebzone|nfltraderumors|profootballrumors|profootballtalk|nbcs49ers|nbcsportsbayarea|ninersnation|sfstandard|espn|espnnfl|nfl|nflnetwork|49ers|knbr|957thegame|cbssports|yahoosports|overthecap|spotrac)(?:\.bsky\.social|\.com)?\//i;
+
+const BRAND_SOCIAL_NAME_REGEX =
+  /^(?:49ers webzone|nfl trade rumors|nfltraderumors\.co|pro football rumors|profootballrumors\.com|profootballtalk|nbc profootballtalk|49ers on nbcsba|nbc sports bay area|niners nation|san francisco 49ers(?: official)?|49ers\.com(?: official)?|49ers official|the sf standard|sf standard|espn(?: nfl)?|nfl network|nfl(?: beat wire)?|knbr(?: 680)?|95\.7 the game|cbs sports|yahoo sports|bleacher report|overthecap|spotrac|oursf49ers|49ershive)$/i;
+
+const OUTLET_DOMAIN_MAP = {
+  '49ers_webzone': ['49erswebzone.com'],
+  nfl_trade_rumors: ['nfltraderumors.co'],
+  pfrumors: ['profootballrumors.com'],
+  nbcsba: ['nbcsportsbayarea.com', 'nbcsports.com'],
+  niners_nation: ['ninersnation.com'],
+  sf_standard: ['sfstandard.com'],
+  '49ers_official': ['49ers.com'],
+  espn: ['espn.com'],
+  nfl_network: ['nfl.com', 'nbcsports.com'],
+  knbr_radio: ['knbr.com'],
+  overthecap: ['overthecap.com']
+};
+
+const LINK_DROP_STOPWORDS = new Set([
+  'the', 'a', 'an', 'and', 'or', 'for', 'of', 'in', 'on', 'at', 'to', 'by', 'with', 'from', 'into', 'over',
+  'after', 'before', 'about', 'as', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'has', 'have', 'had',
+  'this', 'that', 'these', 'those', 'his', 'her', 'their', 'our', 'its', 'who', 'what', 'why', 'how', 'when',
+  'where', 'will', 'can', 'could', 'would', 'should', 'may', 'might', 'not', 'no', 'more', 'most', 'very',
+  '49ers', 'niners', 'san', 'francisco', 'nfl', 'read', 'story', 'article', 'link', 'here', 'via', 'per',
+  'report', 'recap', 'transcript', 'update', 'updates', 'news', 'details', 'check', 'out', 'full', 'latest',
+  'new', 'column', 'piece', 'shares', 'talks', 'explains', 'reveals', 'says', 'said', 'vs'
+]);
+
+const TRAILING_LINK_CTA_REGEX =
+  /(?:\b(?:read|read more|read here|full story|more here|more|link|details|story|article|here)\s*[:⬇️👇➡️]*\s*$|[⬇️👇➡️🔗]\s*$|(?:https?:\/\/|www\.)\S+\s*$|\b[a-z0-9-]+\.(?:com|co|org|net|football)\/\S+\s*$)/i;
+
+const BRAND_TEASER_HOOK_REGEX =
+  /\b(?:here is (?:where|what|how|why)|joined this group|in several (?:different )?ways|in a very unique way|shares (?:his|her|their) (?:grades|thoughts|takeaways|updates)|hands out (?:team )?grades|delivers the takeaways|highlights five|what went into|sounds? off on|sends clear message|reportedly checked in on a|among several teams to inquire about a trade for this|two key 49ers players|check out the full|my latest|new column|new story|here['’]?s (?:what|why|how|where))\b/i;
+
+const COMPLEMENTARY_STORY_POINTER_REGEX =
+  /\b(?:story|article|report|column|more|full story|full breakdown|details)\s+(?:via|by|from)\s+@?[A-Za-z][A-Za-z0-9_.-]{2,28}\b/i;
+
+const FIRST_PERSON_TWEET_ANALYSIS_REGEX =
+  /\b(?:i think|my take|to me,|imo\b|imho\b|honestly,|worth noting|one thing that stood out|watched the (?:tape|all-22|film)|on the all-22|on tape,)\b/i;
+
+const CONCRETE_STAT_OR_CAP_REGEX =
+  /(?:\$\d+(?:\.\d+)?[mk]?\b|\b\d+(?:\.\d+)?%|\b\d+\s*(?:yards|yds|catches|receptions|targets|snaps|sacks|pressures|tds|touchdowns|interceptions|ints|picks|weeks|days|years|games|plays|carries|attempts)\b|\b(?:epa\/play|cpoe|dvoa|yprr|adot|pff grade)\b|[+-]0\.\d{2}\b)/gi;
+
+/**
+ * Extracts the best external link payload `{ uri, title, description, thumb }` from a Bluesky
+ * feed view `post` and `record`, checking `embed.external`, `embed.media.external` (`recordWithMedia`),
+ * `record.embed.external`, and inline `record.facets` (`app.bsky.richtext.facet#link`) so inline
+ * article links like `sfstandard.com/2026/...` without an external card are never missed.
+ */
+export function extractBlueskyBestExternalLink(post = null, rec = null) {
+  const extEmbed =
+    post?.embed?.external ||
+    post?.embed?.media?.external ||
+    rec?.embed?.external ||
+    rec?.embed?.media?.external ||
+    null;
+  if (extEmbed?.uri) {
+    return {
+      uri: String(extEmbed.uri || '').trim(),
+      title: String(extEmbed.title || '').trim(),
+      description: String(extEmbed.description || '').trim(),
+      thumb: String(extEmbed.thumb || '').trim()
+    };
+  }
+  const facets = Array.isArray(rec?.facets) ? rec.facets : [];
+  let fallbackUri = '';
+  for (const facet of facets) {
+    for (const feat of facet?.features || []) {
+      if (feat?.$type !== 'app.bsky.richtext.facet#link' || !feat?.uri) continue;
+      const uri = String(feat.uri).trim();
+      if (!/^https?:\/\//i.test(uri)) continue;
+      if (isDirectArticleUrl(uri)) {
+        return { uri, title: '', description: '', thumb: '' };
+      }
+      if (!fallbackUri) fallbackUri = uri;
+    }
+  }
+  return { uri: fallbackUri, title: '', description: '', thumb: '' };
+}
+
+/**
+ * Returns true strictly when `rawUrl` is a sanitized, free, direct web article URL
+ * (excluding social posts, videos, podcasts, player bio profiles, shorteners, paywalls,
+ * and bare homepages/section roots).
+ */
+export function isDirectArticleUrl(rawUrl = '') {
+  const safe = sanitizeExternalUrl(rawUrl, null);
+  if (!safe) return false;
+  try {
+    const parsed = new URL(safe);
+    const host = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname || '/';
+    if (NON_ARTICLE_EXTERNAL_HOST_REGEX.test(host)) return false;
+    if (NON_ARTICLE_EXTERNAL_PATH_REGEX.test(pathname)) return false;
+    if (BARE_SECTION_ROOT_PATH_REGEX.test(pathname)) return false;
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length === 0) return false;
+    if (segments.length === 1) {
+      const seg = segments[0];
+      const hasQueryId = parsed.searchParams.has('id') || parsed.searchParams.has('p');
+      if (!hasQueryId && (seg.length < 10 || !/[-_\d]/.test(seg))) {
+        return false;
+      }
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Returns true when an item was posted by a publication, brand, or aggregator social desk
+ * (e.g., 49ers Webzone, NFL Trade Rumors, ProFootballTalk, 49ers on NBCSBA, NBC Sports Bay Area,
+ * Niners Nation, 49ers.com) rather than an individual human beat reporter or NFL insider.
+ */
+export function isPublicationOrBrandSocialAccount(item = {}) {
+  if (!item || typeof item !== 'object') return false;
+  const url = String(item.url || '').trim();
+  if (BRAND_SOCIAL_BSKY_ACTOR_REGEX.test(url)) return true;
+
+  const authorRaw = String(item.author || item.reporterName || '').trim();
+  const handleClean = String(item.authorHandle || '')
+    .replace(/^@/, '')
+    .trim()
+    .toLowerCase();
+
+  // Individual journalists in BEAT_REPORTER_DIRECTORY (except brand entries like 49ers_news or ProFootballTalk)
+  const repEntry = resolveReporterFromNameOrHandle(item.reporterId || authorRaw || handleClean);
+  if (repEntry) {
+    if (repEntry.id === '49ers_news') return true;
+    if (repEntry.id === 'mike_florio' && (/profootballtalk/i.test(authorRaw) || handleClean === 'profootballtalk')) {
+      return true;
+    }
+    return false;
+  }
+
+  if (handleClean && BRAND_SOCIAL_HANDLE_SET.has(handleClean)) return true;
+  if (authorRaw && BRAND_SOCIAL_NAME_REGEX.test(authorRaw)) return true;
+  return false;
+}
+
+function cleanTweetTextForArticleComparison(rawText = '') {
+  return String(rawText || '')
+    .replace(/https?:\/\/\S+/gi, ' ')
+    .replace(/\b(?:www\.)?[a-z0-9-]+\.(?:com|co|org|net|football)\/\S*/gi, ' ')
+    .replace(/\(\s*(?:via|per)\s+@?[A-Za-z0-9_.-]+(?:\.bsky\.social)?\s*\)/gi, ' ')
+    .replace(/\b(?:via|per)\s+@?[A-Za-z0-9_.-]+\.bsky\.social\b/gi, ' ')
+    .replace(/@[A-Za-z0-9_.-]+\.bsky\.social\b/gi, ' ')
+    .replace(/\b(?:read|read more|read here|full story|more here|details|link|story|article)\s*[:⬇️👇➡️]*\s*$/gi, ' ')
+    .replace(/#([A-Za-z0-9_]+)/g, (_, tag) => (/^(fttb|nfl|49ersfaithful|gopackgo|cowboysnation)$/i.test(tag) ? ' ' : tag))
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function cleanArticleHeadlineCandidate(rawTitle = '') {
+  return stripAggregatorBoilerplate(String(rawTitle || ''))
+    .replace(/https?:\/\/\S+/gi, ' ')
+    .replace(/\b(?:www\.)?[a-z0-9-]+\.(?:com|co|org|net|football)\/\S*/gi, ' ')
+    .replace(/\(\s*(?:via|per)\s+@?[A-Za-z0-9_.-]+(?:\.bsky\.social)?\s*\)/gi, ' ')
+    .replace(/\s*\b(?:read|read more|read here|full story|more here|link)\s*[:⬇️👇➡️]*\s*$/gi, '')
+    .replace(/\s+[|–—-]\s+(?:NBC Sports Bay Area|49ers Webzone|ESPN|ProFootballTalk|NFLTradeRumors\.co|Niners Nation|The SF Standard|San Francisco 49ers)\s*$/i, '')
+    .replace(/#49ers\b/gi, '49ers')
+    .replace(/#([A-Z][A-Za-z0-9]+)/g, '$1')
+    .replace(/\s*#(?:FTTB|NFL|49ers)\b/gi, '')
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function tokenizeArticleComparisonText(text = '') {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/'s\b/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 3 && !LINK_DROP_STOPWORDS.has(w));
+}
+
+function isSameOutletArticleDomain(item = {}, targetUrl = '') {
+  if (!targetUrl) return false;
+  let host = '';
+  try {
+    host = new URL(targetUrl).hostname.toLowerCase().replace(/^www\./, '');
+  } catch {
+    return false;
+  }
+  const outletId = String(item.outletId || '').trim().toLowerCase();
+  const knownDomains = OUTLET_DOMAIN_MAP[outletId] || [];
+  if (knownDomains.some(d => host === d || host.endsWith(`.${d}`))) return true;
+
+  const authorSlug = String(item.author || item.outletName || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+  const hostStem = host.split('.')[0].replace(/[^a-z0-9]/g, '');
+  if (authorSlug.length >= 5 && hostStem.length >= 5 && (authorSlug.includes(hostStem) || hostStem.includes(authorSlug))) {
+    return true;
+  }
+  return false;
+}
+
+function extractCreditedStaffWriterFromBrandPost(rawTweetText = '') {
+  const txt = String(rawTweetText || '');
+  if (!txt) return null;
+  const patterns = [
+    /\(\s*(?:via|per)\s+@([A-Za-z0-9_.-]+)\s*\)/i,
+    /@([A-Za-z0-9_.-]+)\.bsky\.social(?:'s)?\s+(?:shares|hands out|delivers|highlights|breaks down|grades|writes|updated)/i,
+    /\b(?:told|spoke (?:to|with)|joined)\s+@([A-Za-z0-9_.-]+)\.bsky\.social\b/i
+  ];
+  for (const rx of patterns) {
+    const m = txt.match(rx);
+    if (!m) continue;
+    const rawCandidate = m[1].replace(/\.bsky\.social$/i, '').trim();
+    const resolved = resolveReporterFromNameOrHandle(rawCandidate);
+    if (resolved && !isPodiumSubjectId(resolved.id) && resolved.id !== '49ers_news') {
+      return resolved;
+    }
+  }
+  return null;
+}
+
+/**
+ * Holistically classifies whether a tweet/social post exists ~90%+ strictly to provide a link
+ * to a free web article (e.g., publisher/brand link-drops like 49ers Webzone `... Read:`,
+ * NFL Trade Rumors / ProFootballTalk exact headline echoes, NBCSBA social-desk article teasers,
+ * or individual self-promo link drops) — vs. a salient tweet containing standalone breaking news,
+ * stats, quotes, threads, or original commentary where the linked article is merely complementary
+ * (e.g., Adam Schefter breaking news + `Story via @BradyHenderson:`).
+ */
+export function isArticleLinkDropTweet(item = {}) {
+  const noPromote = {
+    isLinkDrop: false,
+    reason: 'not_eligible',
+    targetUrl: null,
+    cleanTitle: '',
+    cleanSummary: '',
+    creditedWriter: null
+  };
+  if (!item || typeof item !== 'object') return noPromote;
+
+  const isSocial =
+    item.type === 'tweet' ||
+    item.type === 'social' ||
+    isBlueskyPostUrl(item.url) ||
+    isDirectXStatusUrl(item.url);
+  if (!isSocial) return noPromote;
+
+  // Never demote playable video / highlight clips to plain articles
+  if (item.videoId || item.videoStreamUrl || item.externalVideoUrl || item.isHighlightClip) {
+    return { ...noPromote, reason: 'playable_video' };
+  }
+
+  const targetUrl = sanitizeExternalUrl(item.externalUrl, null);
+  if (
+    !targetUrl ||
+    !isDirectArticleUrl(targetUrl) ||
+    isPaywalledPublisher(item.outletName, targetUrl) ||
+    isRedundantProfileSelfLink(targetUrl, item.url)
+  ) {
+    return { ...noPromote, reason: 'no_free_article_url' };
+  }
+
+  const rawTweetText = stripAggregatorBoilerplate(
+    String(item.fullText || item.title || item.headline || '').trim()
+  );
+  const rawExtTitle = stripAggregatorBoilerplate(String(item.externalTitle || '').trim());
+  const rawExtDesc = stripAggregatorBoilerplate(String(item.externalDescription || '').trim());
+
+  // Threads are always substantive tweets
+  if (/\b[1-9]\s*\/\s*[2-9]\b|🧵|\bthread\b/i.test(rawTweetText)) {
+    return { ...noPromote, reason: 'thread_tweet' };
+  }
+
+  // Detect X-to-Bluesky mirror bots that copy the raw tweet body into embed.external.title with empty description
+  const isMirrorBotFakeExtTitle =
+    Boolean(rawExtTitle) &&
+    !rawExtDesc &&
+    (rawExtTitle.toLowerCase() === rawTweetText.toLowerCase() ||
+      COMPLEMENTARY_STORY_POINTER_REGEX.test(rawExtTitle)) &&
+    (rawTweetText.length > 125 || COMPLEMENTARY_STORY_POINTER_REGEX.test(rawTweetText));
+
+  const strippedTweet = cleanTweetTextForArticleComparison(rawTweetText);
+  const cleanExtTitle = !isMirrorBotFakeExtTitle ? cleanArticleHeadlineCandidate(rawExtTitle) : '';
+  const hasUsableExtTitle =
+    cleanExtTitle.length >= 18 &&
+    !BRAND_SOCIAL_NAME_REGEX.test(cleanExtTitle) &&
+    !/\bon X$/i.test(cleanExtTitle);
+
+  const fallbackCleanedTweetTitle = cleanArticleHeadlineCandidate(rawTweetText);
+  const resolvedArticleTitle = hasUsableExtTitle ? cleanExtTitle : fallbackCleanedTweetTitle;
+  const cleanSummary =
+    rawExtDesc &&
+    rawExtDesc.length >= 20 &&
+    rawExtDesc.toLowerCase() !== resolvedArticleTitle.toLowerCase()
+      ? rawExtDesc.slice(0, 300)
+      : '';
+
+  const isBrandAccount = isPublicationOrBrandSocialAccount(item);
+  const sameOutletDomain = isSameOutletArticleDomain(item, targetUrl);
+  const creditedWriter = isBrandAccount ? extractCreditedStaffWriterFromBrandPost(rawTweetText) : null;
+
+  const tweetTokens = new Set(tokenizeArticleComparisonText(strippedTweet));
+  const extTitleTokens = new Set(tokenizeArticleComparisonText(cleanExtTitle));
+  let sharedCount = 0;
+  const novelWords = [];
+  for (const w of tweetTokens) {
+    if (extTitleTokens.has(w)) sharedCount += 1;
+    else novelWords.push(w);
+  }
+  const tweetContainment = tweetTokens.size > 0 ? sharedCount / tweetTokens.size : 0;
+  const extTitleContainment = extTitleTokens.size > 0 ? sharedCount / extTitleTokens.size : 0;
+  const unionSize = tweetTokens.size + extTitleTokens.size - sharedCount;
+  const jaccard = unionSize > 0 ? sharedCount / unionSize : 0;
+
+  const sentenceCount = strippedTweet
+    ? strippedTweet.split(/[.!?]+(?:\s+|$)/).filter(s => s.trim().length >= 12).length
+    : 0;
+  const tweetStatHits = strippedTweet.match(CONCRETE_STAT_OR_CAP_REGEX) || [];
+  const extTitleLower = cleanExtTitle.toLowerCase();
+  const hasNovelStatsOrCap = tweetStatHits.some(hit => !extTitleLower.includes(hit.toLowerCase()));
+  const hasDirectQuote = /["“][^"”]{28,}["”]/.test(rawTweetText);
+  const hasComplementaryPointer = COMPLEMENTARY_STORY_POINTER_REGEX.test(rawTweetText);
+  const hasFirstPersonAnalysis = FIRST_PERSON_TWEET_ANALYSIS_REGEX.test(strippedTweet);
+  const hasTrailingCta = TRAILING_LINK_CTA_REGEX.test(rawTweetText);
+  const hasTeaserHook = BRAND_TEASER_HOOK_REGEX.test(strippedTweet);
+
+  // 1. Empty or CTA-only link drop (tweet contains virtually no prose besides URL / "Read:")
+  if (strippedTweet.length < 18) {
+    return {
+      isLinkDrop: true,
+      reason: 'empty_or_cta_only',
+      targetUrl,
+      cleanTitle: resolvedArticleTitle,
+      cleanSummary,
+      creditedWriter
+    };
+  }
+
+  // 2. Publication / brand / aggregator social-desk account linking to a free article
+  if (isBrandAccount) {
+    const isRichStandaloneBrandReport =
+      strippedTweet.length >= 240 &&
+      sentenceCount >= 3 &&
+      hasNovelStatsOrCap &&
+      !hasTrailingCta &&
+      !hasTeaserHook;
+    if (!isRichStandaloneBrandReport) {
+      return {
+        isLinkDrop: true,
+        reason: 'brand_article_link_drop',
+        targetUrl,
+        cleanTitle: resolvedArticleTitle,
+        cleanSummary,
+        creditedWriter
+      };
+    }
+    return { ...noPromote, reason: 'brand_standalone_report' };
+  }
+
+  // --- Individual human beat reporters & NFL insiders below ---
+  // Protect salient tweets that deliver standalone news/stats/commentary with a complementary link
+  if (hasComplementaryPointer || hasFirstPersonAnalysis || hasNovelStatsOrCap) {
+    return { ...noPromote, reason: 'salient_individual_tweet' };
+  }
+
+  // 3. Individual journalist exact or near-exact headline echo (no substantive added commentary)
+  if (
+    hasUsableExtTitle &&
+    !hasDirectQuote &&
+    (tweetContainment >= 0.72 || jaccard >= 0.6) &&
+    novelWords.length <= 5
+  ) {
+    return {
+      isLinkDrop: true,
+      reason: 'headline_echo_link_drop',
+      targetUrl,
+      cleanTitle: resolvedArticleTitle,
+      cleanSummary,
+      creditedWriter: null
+    };
+  }
+
+  // 4. Individual journalist explicit self-promo teaser dropping a link to their own publication's article
+  const hasStandaloneBreakingFact =
+    TIER1_MAJOR_BREAKING_EVENT_REGEX.test(strippedTweet) ||
+    TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(strippedTweet) ||
+    IN_GAME_INJURY_RETURN_REGEX.test(strippedTweet) ||
+    POST_GAME_INJURY_FOLLOWUP_REGEX.test(strippedTweet) ||
+    PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(strippedTweet) ||
+    PRE_GAME_PLAY_AVAILABILITY_REGEX.test(strippedTweet);
+  const hasInlineOwnDomainSlugAtEnd =
+    sameOutletDomain &&
+    /(?:https?:\/\/|www\.)?\b[a-z0-9-]+\.(?:com|co|org|net|football)\/\S+\s*$/i.test(rawTweetText);
+  if (
+    sameOutletDomain &&
+    hasTrailingCta &&
+    !hasDirectQuote &&
+    !hasStandaloneBreakingFact &&
+    sentenceCount <= 2 &&
+    strippedTweet.length <= 185 &&
+    (hasTeaserHook ||
+      hasInlineOwnDomainSlugAtEnd ||
+      /\b(?:my latest|new column|new story|new piece|here['’]?s my|wrote about|for @?[a-z0-9_]+)\b/i.test(rawTweetText) ||
+      (hasUsableExtTitle && Math.max(tweetContainment, extTitleContainment) >= 0.45 && novelWords.length <= 12))
+  ) {
+    return {
+      isLinkDrop: true,
+      reason: 'self_promo_article_link_drop',
+      targetUrl,
+      cleanTitle: resolvedArticleTitle,
+      cleanSummary,
+      creditedWriter: null
+    };
+  }
+
+  return { ...noPromote, reason: 'salient_individual_tweet' };
+}
+
+/**
+ * Promotes a pure link-drop tweet into a first-class `'article'` item linking directly to the
+ * canonical article URL (removing the intermediate social hop and redundant `Article:` chip),
+ * while leaving salient tweets with complementary links completely untouched as `'tweet'`.
+ */
+export function promoteLinkDropTweetToArticle(item = {}) {
+  const verdict = isArticleLinkDropTweet(item);
+  if (!verdict.isLinkDrop || !verdict.targetUrl) return item;
+
+  const promotedTitle = verdict.cleanTitle || item.title || item.headline || '49ers Story';
+  const promotedSummary = verdict.cleanSummary || '';
+  const writer = verdict.creditedWriter;
+
+  const promoted = {
+    ...item,
+    type: 'article',
+    url: verdict.targetUrl,
+    promotedFromSocialUrl: item.promotedFromSocialUrl || item.url || null,
+    title: promotedTitle,
+    ...(item.headline !== undefined ? { headline: promotedTitle } : {}),
+    fullText: undefined,
+    isFullTweet: false,
+    summary: promotedSummary,
+    externalUrl: null,
+    externalTitle: null,
+    externalDescription: item.externalDescription || promotedSummary || null
+  };
+
+  if (writer) {
+    promoted.reporterId = writer.id;
+    promoted.reporterName = writer.name;
+    promoted.author = writer.name;
+    promoted.authorHandle = writer.handle || promoted.authorHandle;
+    promoted.trustTier = Math.min(Number(promoted.trustTier) || 2, writer.trustTier || 2);
+  }
+
+  promoted.authorProfileUrl = resolveItemAuthorProfileUrl(promoted, verdict.targetUrl);
+  promoted.category = classifyNewsItemCategory(promoted);
+  return promoted;
+}
+
+/**
+ * Stream-level reconciliation pass that:
+ * 1. Promotes every eligible link-drop tweet into a direct `'article'` linking straight to the article.
+ * 2. Cross-matches any remaining brand/aggregator link-drop tweet (for example, when a live client
+ *    Bluesky embed used an unexpanded `dlvr.it` shortener) against direct `'article'` items already
+ *    in the stream with a matching headline/outlet, collapsing the redundant social link-drop into
+ *    the canonical direct article while preserving any richer thumbnail or player tags.
+ */
+export function reconcileLinkDropTweetsWithArticles(items = []) {
+  if (!Array.isArray(items) || items.length === 0) return items;
+
+  const pass1 = items.map(it => (it && typeof it === 'object' ? promoteLinkDropTweetToArticle(it) : it));
+
+  const articleEntries = [];
+  for (const it of pass1) {
+    if (!it || (it.type !== 'article' && it.type !== 'post')) continue;
+    if (!isDirectArticleUrl(it.url)) continue;
+    const tokens = new Set(tokenizeArticleComparisonText(cleanArticleHeadlineCandidate(it.title || '')));
+    if (tokens.size < 2) continue;
+    articleEntries.push({
+      item: it,
+      tokens,
+      outletKey: String(it.outletId || it.outletName || '').toLowerCase(),
+      pubMs: it.publishedAt ? Date.parse(it.publishedAt) : NaN
+    });
+  }
+
+  if (articleEntries.length === 0) return pass1;
+
+  const reconciled = [];
+  for (const it of pass1) {
+    if (!it || typeof it !== 'object') continue;
+    const isRemainingBrandSocial =
+      (it.type === 'tweet' || it.type === 'social') &&
+      !it.videoId &&
+      !it.videoStreamUrl &&
+      !it.externalVideoUrl &&
+      isPublicationOrBrandSocialAccount(it);
+
+    if (!isRemainingBrandSocial) {
+      reconciled.push(it);
+      continue;
+    }
+
+    const twTokens = new Set(
+      tokenizeArticleComparisonText(
+        cleanTweetTextForArticleComparison(it.fullText || it.title || it.externalTitle || '')
+      )
+    );
+    const twOutletKey = String(it.outletId || it.outletName || '').toLowerCase();
+    const twPubMs = it.publishedAt ? Date.parse(it.publishedAt) : NaN;
+
+    let matchedArticle = null;
+    if (twTokens.size >= 2) {
+      for (const art of articleEntries) {
+        if (Number.isFinite(twPubMs) && Number.isFinite(art.pubMs) && Math.abs(twPubMs - art.pubMs) > 36 * 3_600_000) {
+          continue;
+        }
+        let shared = 0;
+        for (const w of twTokens) {
+          if (art.tokens.has(w)) shared += 1;
+        }
+        const minLen = Math.min(twTokens.size, art.tokens.size);
+        const containment = minLen > 0 ? shared / minLen : 0;
+        const jaccard = shared / (twTokens.size + art.tokens.size - shared);
+        const sameOutlet = Boolean(twOutletKey && art.outletKey && twOutletKey === art.outletKey);
+        if (
+          (sameOutlet && (containment >= 0.72 || jaccard >= 0.58)) ||
+          (shared >= 4 && containment >= 0.82 && jaccard >= 0.68)
+        ) {
+          matchedArticle = art.item;
+          break;
+        }
+      }
+    }
+
+    if (matchedArticle) {
+      // Preserve richer thumbnail, player matches, and social-upgrade mapping onto the canonical direct article
+      if (!matchedArticle.imageUrl && it.imageUrl && /^https:\/\//i.test(it.imageUrl)) {
+        matchedArticle.imageUrl = it.imageUrl;
+      }
+      if (!matchedArticle.promotedFromSocialUrl && it.url) {
+        matchedArticle.promotedFromSocialUrl = it.url;
+      }
+      if ((!matchedArticle.mentionedPlayers || matchedArticle.mentionedPlayers.length === 0) && it.mentionedPlayers?.length) {
+        matchedArticle.mentionedPlayers = it.mentionedPlayers;
+      }
+      continue;
+    }
+
+    reconciled.push(it);
+  }
+
+  return reconciled;
 }
 
 /**

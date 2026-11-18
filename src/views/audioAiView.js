@@ -7,9 +7,15 @@ import {
   escJargon,
   renderMarkdownSafe,
   formatRelativeAge,
+  renderAvatarStackHtml,
+  renderTeamLogoHtml,
   registerRosterPlayersForInlineLinks,
   renderReporterSourceLinksHtml
 } from './uiHelpers.js';
+import {
+  optimizeImageUrlForSlot,
+  resolveAudioEpisodeVisual
+} from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { hasCachedEpisodeAudioSync } from '../services/podcastAudioStore.js';
@@ -492,6 +498,7 @@ function renderPodcastEpisodeRowCard(ep, { showPodcastBadge = true } = {}) {
   const launch = buildNativePodcastAppHref(ep);
   const targetAttrs = launch.isExternalHttp ? `target="_blank" rel="noopener noreferrer"` : '';
   const hasArt = ep.artworkUrl && /^https:\/\//i.test(ep.artworkUrl);
+  const optArt = hasArt ? optimizeImageUrlForSlot(ep.artworkUrl, 'artwork') : { src: '', fallbackSrc: '' };
   const dateLabel = formatPodcastEpisodeDate(ep.publishedAt);
   const relLabel = ep.publishedAt ? formatRelativeAge(ep.publishedAt) : '';
 
@@ -505,7 +512,7 @@ function renderPodcastEpisodeRowCard(ep, { showPodcastBadge = true } = {}) {
         ${
           hasArt
             ? `<div class="beat-podcast-art-wrap">
-                 <img src="${esc(ep.artworkUrl)}" alt="${esc(ep.showName)}" width="52" height="52" loading="lazy" decoding="async" />
+                 <img src="${esc(optArt.src || ep.artworkUrl)}" ${optArt.fallbackSrc ? `data-fallback-src="${esc(optArt.fallbackSrc)}"` : ''} alt="${esc(ep.showName)}" width="52" height="52" loading="lazy" decoding="async" />
                </div>`
             : `<div class="studio-cover-art" aria-hidden="true">${iconSvg('audio', 17)}</div>`
         }
@@ -635,6 +642,7 @@ function renderBeatPodcastsDirectory({
       });
       const showTargetAttrs = showLaunch.isExternalHttp ? `target="_blank" rel="noopener noreferrer"` : '';
       const hasShowArt = show.artworkUrl && /^https:\/\//i.test(show.artworkUrl);
+      const optShowArt = hasShowArt ? optimizeImageUrlForSlot(show.artworkUrl, 'artwork') : { src: '', fallbackSrc: '' };
 
       return `
         <section class="card beat-podcast-show-group" data-podcast-group="${esc(show.id)}">
@@ -644,7 +652,7 @@ function renderBeatPodcastsDirectory({
                 ${
                   hasShowArt
                     ? `<div class="beat-podcast-art-wrap" style="width:44px;height:44px">
-                         <img src="${esc(show.artworkUrl)}" alt="${esc(show.name)}" width="44" height="44" loading="lazy" decoding="async" />
+                         <img src="${esc(optShowArt.src || show.artworkUrl)}" ${optShowArt.fallbackSrc ? `data-fallback-src="${esc(optShowArt.fallbackSrc)}"` : ''} alt="${esc(show.name)}" width="44" height="44" loading="lazy" decoding="async" />
                        </div>`
                     : `<div class="card-icon-badge" aria-hidden="true">${iconSvg('mic', 17)}</div>`
                 }
@@ -961,6 +969,14 @@ function renderPodcastStudio({
                   const turnCnt = ep.transcript?.length || 0;
                   const isCardTranscriptExpanded = expandedTranscriptIds.has(ep.id);
                   const isCopied = shareToastTargetId === ep.id;
+                  const epVisual = resolveAudioEpisodeVisual(ep, { rosterPlayers: appData?.roster?.players || [] });
+                  const epAccentHtml =
+                    epVisual.players.length > 0 || epVisual.opponent
+                      ? `<div class="episode-visual-accents">
+                          ${epVisual.players.length ? renderAvatarStackHtml(epVisual.players, 24, 2) : ''}
+                          ${epVisual.opponent ? renderTeamLogoHtml(epVisual.opponent.abbr, '', 22) : ''}
+                        </div>`
+                      : '';
                   return `
                     <div class="brief-card" data-episode-card="${esc(ep.id)}" style="border-color:${isCurrent ? 'var(--gold)' : 'var(--border-subtle)'}">
                       <div class="episode-row-head">
@@ -984,6 +1000,7 @@ function renderPodcastStudio({
                           <div style="font-weight:800;font-size:14px">${esc(ep.title)}</div>
                           <div style="font-size:12px;color:var(--text-secondary)">${esc(ep.topic)}</div>
                         </div>
+                        ${epAccentHtml}
                       </div>
                       ${renderSourceChips(ep.sourceLinks || [])}
                       <div class="podcast-action-row" style="margin-top:4px">

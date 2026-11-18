@@ -6096,3 +6096,385 @@ tr.unit-overall-banner.overall-stat-row td {
   border-style: dashed;
   border-color: var(--gold-border);
 }
+
+/* ============================================================================
+   Salient Visual Media System (Google News × Bleacher Report × The Athletic)
+   ============================================================================ */
+
+/* Skip off-screen layout/paint for long News & Film feeds without hurting scroll smoothness */
+.brief-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 138px;
+}
+
+.brief-card.has-lead-hero {
+  gap: 8px;
+}
+
+/* Editorial Lead Hero Photograph (Daily Top News Brief & #1 Lead Story) */
+.salient-hero-banner {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 204px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(135deg, rgba(170, 0, 0, 0.14), var(--bg-primary));
+  text-decoration: none;
+  margin: 0;
+}
+
+.salient-hero-banner.daily-brief-hero {
+  margin: 8px 0 9px;
+}
+
+.salient-hero-banner.compact {
+  aspect-ratio: 2.25 / 1;
+  max-height: 148px;
+  border-radius: 10px;
+}
+
+.salient-hero-banner.wire-hero-media {
+  max-height: 196px;
+  border-radius: 11px;
+  margin-bottom: 2px;
+}
+
+.salient-hero-banner.img-error {
+  display: none !important;
+}
+
+.salient-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+a.salient-hero-banner:hover .salient-hero-img {
+  transform: scale(1.025);
+}
+
+.salient-hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 10, 16, 0.02) 45%,
+    rgba(8, 10, 16, 0.68) 100%
+  );
+}
+
+.salient-hero-meta {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  bottom: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.salient-hero-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(170, 0, 0, 0.88);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.salient-hero-credit {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(10, 13, 20, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72%;
+}
+
+/* Uniform Right-Rail Salient Thumbnails across News, Home, Dossiers & Sources */
+.raw-item-thumb.salient-thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-primary);
+  transition: border-color 0.16s ease, transform 0.16s ease;
+}
+
+.raw-item-thumb.salient-thumb.thumb-lg {
+  width: 84px;
+  height: 84px;
+  border-radius: 11px;
+}
+
+.raw-item-thumb.salient-thumb.thumb-md {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+}
+
+.raw-item-thumb.salient-thumb.thumb-sm {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+}
+
+a.raw-item-thumb.salient-thumb:hover {
+  border-color: var(--gold-border);
+}
+
+.raw-item-thumb.salient-thumb.thumb-kind-editorial img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+/* Stadium-Lit Player Spotlight Tile (Turns transparent ESPN headshots into editorial cards) */
+.raw-item-thumb.salient-thumb.thumb-kind-player {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(196, 30, 30, 0.44), rgba(18, 22, 32, 0.96) 76%);
+  border-color: rgba(214, 182, 108, 0.34);
+}
+
+[data-theme="light"] .raw-item-thumb.salient-thumb.thumb-kind-player {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(170, 0, 0, 0.14), rgba(240, 234, 220, 0.98) 76%);
+  border-color: rgba(154, 122, 54, 0.35);
+}
+
+.raw-item-thumb.salient-thumb .salient-player-cutout {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  padding: 4px 2px 0;
+  display: block;
+}
+
+/* Opponent Matchup Dual-Crest Tile (SF × OPP) */
+.raw-item-thumb.salient-thumb.thumb-kind-matchup {
+  background:
+    linear-gradient(135deg, rgba(170, 0, 0, 0.28) 0%, rgba(18, 22, 32, 0.94) 50%, rgba(179, 153, 93, 0.2) 100%);
+  border-color: rgba(214, 182, 108, 0.32);
+}
+
+[data-theme="light"] .raw-item-thumb.salient-thumb.thumb-kind-matchup {
+  background:
+    linear-gradient(135deg, rgba(170, 0, 0, 0.12) 0%, rgba(246, 242, 232, 0.98) 52%, rgba(179, 153, 93, 0.18) 100%);
+  border-color: rgba(154, 122, 54, 0.34);
+}
+
+.salient-matchup-crests {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.thumb-sm .salient-matchup-crests {
+  padding-bottom: 0;
+}
+
+.salient-crest {
+  width: 44%;
+  height: 44%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.32));
+}
+
+.salient-crest.sf {
+  transform: translate(3px, -5px);
+}
+
+.salient-crest.opp {
+  transform: translate(-3px, 5px);
+}
+
+.salient-crest-sep {
+  width: 1px;
+  height: 46%;
+  background: rgba(214, 182, 108, 0.55);
+  transform: rotate(22deg);
+  flex-shrink: 0;
+}
+
+/* Official 49ers Podium / Editorial Emblem Tile */
+.raw-item-thumb.salient-thumb.thumb-kind-team {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(170, 0, 0, 0.3), rgba(18, 22, 32, 0.96) 78%);
+  border-color: rgba(214, 182, 108, 0.3);
+}
+
+[data-theme="light"] .raw-item-thumb.salient-thumb.thumb-kind-team {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(170, 0, 0, 0.12), rgba(244, 239, 228, 0.98) 78%);
+  border-color: rgba(154, 122, 54, 0.32);
+}
+
+.salient-team-emblem {
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+  transform: translateY(-5px);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+.thumb-sm .salient-team-emblem {
+  width: 62%;
+  height: 62%;
+  transform: none;
+}
+
+/* Crisp Bottom Micro-Tag Pill on Player / Matchup / Team Tiles */
+.salient-thumb-chip {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  left: 3px;
+  text-align: center;
+  font-size: 8.6px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  padding: 1.5px 4px;
+  border-radius: 5px;
+  background: rgba(10, 13, 20, 0.78);
+  color: #F4E5BE;
+  border: 1px solid rgba(229, 207, 150, 0.25);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.thumb-kind-player .salient-thumb-chip {
+  left: auto;
+  padding: 1.5px 5px;
+}
+
+[data-theme="light"] .salient-thumb-chip {
+  background: rgba(28, 23, 20, 0.82);
+  color: #F7E8C3;
+}
+
+/* Daily Brief Sources Row with Google-News-style Right Thumbnail */
+.synthesis-source-sheet-row.has-source-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Home Audio & AI Overlapping Beat Podcast Show Art Strip */
+.home-pod-art-stack {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding-left: 4px;
+}
+
+.home-pod-art-item {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1.5px solid var(--bg-card);
+  background: var(--bg-primary);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
+  margin-left: -8px;
+  flex-shrink: 0;
+}
+
+.home-pod-art-item:first-child {
+  margin-left: 0;
+}
+
+.home-pod-art-item.img-error {
+  display: none !important;
+}
+
+.home-pod-art-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Auto Podcast Saved Episode Visual Accents (Players + Opponent Crest) */
+.episode-visual-accents {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding-top: 2px;
+}
+
+/* Responsive Refinements across Mobile Portrait, Narrow Phones, & Desktop */
+@media (min-width: 640px) {
+  .raw-item-thumb.salient-thumb.thumb-lg {
+    width: 96px;
+    height: 78px;
+  }
+
+  .salient-hero-banner {
+    max-height: 268px;
+  }
+
+  .salient-hero-banner.compact {
+    max-height: 204px;
+  }
+}
+
+@media (max-width: 400px) {
+  .raw-item-thumb.salient-thumb.thumb-lg {
+    width: 74px;
+    height: 74px;
+  }
+
+  .raw-item-thumb.salient-thumb.thumb-md {
+    width: 58px;
+    height: 58px;
+  }
+
+  .home-pod-art-item {
+    width: 24px;
+    height: 24px;
+    margin-left: -7px;
+  }
+}
+
+@media (max-width: 350px) {
+  .home-pod-art-stack {
+    display: none;
+  }
+}

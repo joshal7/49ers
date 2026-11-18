@@ -48,7 +48,9 @@ import { runPlayoffMonteCarlo } from '../src/engine/playoffMonteCarlo.js';
 import {
   deduplicateAndGroupWireItems,
   sortNewsWithBreakingPriority,
-  isRedundantProfileSelfLink
+  isRedundantProfileSelfLink,
+  isArticleLinkDropTweet,
+  reconcileLinkDropTweetsWithArticles
 } from '../src/engine/breakingClassifier.js';
 import { getJargonEntry } from '../src/engine/jargonGlossary.js';
 import {
@@ -2978,6 +2980,32 @@ test('Power Rankings: verified live parsers (Inpredictable, nfelo, RBSDM, CBS, E
     Math.round(expectedAvg),
     'Compiled consensusRank must equal exact rounded mean of active verified sources'
   );
+});
+
+test('Holistic Regression: Link-drop tweets in compiled data/news.json promote cleanly to direct Articles while preserving salient tweets', () => {
+  const compiledNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const reconciled = reconcileLinkDropTweetsWithArticles(compiledNews.rawStream || []);
+
+  // Zero remaining link-drop tweets should exist after reconciliation
+  const unpromotedLinkDrops = reconciled.filter(it => isArticleLinkDropTweet(it).isLinkDrop);
+  assert.equal(
+    unpromotedLinkDrops.length,
+    0,
+    `Every eligible article link-drop tweet must be promoted (found ${unpromotedLinkDrops.length})`
+  );
+
+  // Zero brand "Read:" social cards linking to bsky.app when they have an article URL
+  const lingeringReadBsky = reconciled.filter(
+    it =>
+      (it.type === 'tweet' || it.type === 'social') &&
+      /bsky\.app\/profile\/49erswebzone/i.test(String(it.url || '')) &&
+      Boolean(it.externalUrl)
+  );
+  assert.equal(lingeringReadBsky.length, 0, '49ers Webzone Bluesky link-drops must bypass bsky.app and become Articles');
+
+  // Verify genuine salient beat tweets remain tweets
+  const remainingTweets = reconciled.filter(it => it.type === 'tweet' || it.type === 'social');
+  assert.ok(remainingTweets.length >= 20, `Salient beat tweets must remain tweets (found ${remainingTweets.length})`);
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);

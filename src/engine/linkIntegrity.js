@@ -282,13 +282,396 @@ export function stripTrackingParams(rawUrl = '') {
 }
 
 const OFF_TOPIC_LEAGUE_FILLER_URL_REGEX =
-  /^https?:\/\/(?:www\.|m\.)?espn\.com\/(?:fantasy\/|espn\/betting\/)/i;
+  /^https?:\/\/(?:(?:www\.|m\.)?espn\.com\/(?:fantasy\/|espn\/betting\/)|[^/]+\/(?:mlb|nba|nhl|wnba|mls|golf|tennis|soccer)\/)/i;
 
 const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
   /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|week \d+\s+uniforms|best arrivals|nfl week \d+\s+trolls|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates)\b/i;
 
 const SF_RELEVANCE_TERM_REGEX =
   /\b(49er|49ers|niners|san francisco|santa clara|levi['’]?s|shanahan|lynch|morris|saleh|foerster|kocurek|purdy|bosa|mccaffrey|kittle|warner|trent williams|mykel williams|aiyuk|buckner|odighizuwa|lenoir|pearsall|jennings|deebo|mike evans|greenlaw|mustapha|ji['’]?ayir|renardo green|upton stout|gracen halton|jordan watkins|mckivitz|brendel|puni|juszczyk|pineiro|demarcus robinson|christian kirk|brandin cooks|nate hobbs|stribling|dugger|mac jones|keion white|romello height)\b/i;
+
+const EXPLICIT_SF_ENTITY_REGEX =
+  /\b(49er|49ers|niners|san francisco|santa clara|levi['’]?s|kyle shanahan|shanahan|john lynch|robert saleh|raheem morris|#49ers|#fttb)\b/i;
+
+const OTHER_NFL_TEAM_LEAD_REGEX =
+  /\b(rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers)\b/i;
+
+const HISTORICAL_SF_BIO_SENTENCE_REGEX =
+  /\b(originally signed (?:on )?with (?:the )?(?:49ers|san francisco|niners)|(?:was )?(?:selected|drafted|taken) [\s\S]{0,55}by (?:the )?(?:49ers|san francisco|niners)|began (?:his|their) (?:nfl )?career with (?:the )?(?:49ers|san francisco|niners)|spent (?:time|his rookie|the \d{4} season|\d+ seasons?) with (?:the )?(?:49ers|san francisco|niners)|played (?:for|with) (?:the )?(?:49ers|san francisco|niners) (?:from|in) 20(?:0\d|1\d|2[0-4])|stint with (?:the )?(?:49ers|san francisco|niners)|entered the nfl [\s\S]{0,45}(?:49ers|san francisco|niners)|signed on with (?:the )?(?:49ers|san francisco|niners) as an undrafted|undrafted free agent [\s\S]{0,50}(?:49ers|san francisco|niners))\b/i;
+
+/**
+ * Canonical single-source-of-truth set of common English words and common NFL surnames
+ * that MUST NOT trigger bare standalone-surname player matching (require full name or
+ * position/injury context like `LS Weeks` or `West (knee)`).
+ */
+export const AMBIGUOUS_PLAYER_SURNAMES = new Set([
+  // Common English words, time units, directions, colors, football/body nouns & verbs
+  'weeks',
+  'week',
+  'days',
+  'day',
+  'months',
+  'years',
+  'height',
+  'weight',
+  'stout',
+  'farmer',
+  'wallow',
+  'cooks',
+  'cook',
+  'west',
+  'east',
+  'north',
+  'south',
+  'long',
+  'short',
+  'high',
+  'lowe',
+  'strong',
+  'swift',
+  'smart',
+  'hardy',
+  'wild',
+  'wise',
+  'free',
+  'rich',
+  'good',
+  'best',
+  'gross',
+  'cross',
+  'field',
+  'fields',
+  'love',
+  'price',
+  'miles',
+  'stone',
+  'wood',
+  'park',
+  'hill',
+  'hall',
+  'king',
+  'bell',
+  'ford',
+  'grant',
+  'reed',
+  'ward',
+  'camp',
+  'team',
+  'play',
+  'plays',
+  'pass',
+  'rush',
+  'kick',
+  'punt',
+  'snap',
+  'line',
+  'back',
+  'hurt',
+  'hurts',
+  'burns',
+  'chase',
+  'hunt',
+  'picks',
+  'banks',
+  'bridges',
+  'white',
+  'black',
+  'green',
+  'brown',
+  'gray',
+  'grey',
+  'blue',
+  'gold',
+  'young',
+  'forrest',
+  // Common NFL & English surnames (and first-name collisions)
+  'allen',
+  'anderson',
+  'baker',
+  'barnes',
+  'beal',
+  'bennett',
+  'brooks',
+  'bryant',
+  'butler',
+  'campbell',
+  'carr',
+  'carter',
+  'clark',
+  'cole',
+  'collins',
+  'cooper',
+  'cruz',
+  'davis',
+  'edwards',
+  'evans',
+  'farrell',
+  'foster',
+  'graham',
+  'griffin',
+  'grimes',
+  'harris',
+  'hayes',
+  'henderson',
+  'hobbs',
+  'hodge',
+  'howard',
+  'hughes',
+  'jackson',
+  'james',
+  'jenkins',
+  'johnson',
+  'jones',
+  'kareem',
+  'kelly',
+  'kirk',
+  'lewis',
+  'martin',
+  'mason',
+  'mccormick',
+  'miller',
+  'mitchell',
+  'moore',
+  'morris',
+  'murphy',
+  'myers',
+  'neal',
+  'parker',
+  'patterson',
+  'perry',
+  'phillips',
+  'powell',
+  'rivera',
+  'roberts',
+  'robinson',
+  'rogers',
+  'ross',
+  'russell',
+  'samuel',
+  'sanders',
+  'scott',
+  'simmons',
+  'smith',
+  'stewart',
+  'stroman',
+  'taylor',
+  'thomas',
+  'thompson',
+  'turner',
+  'valdez',
+  'walker',
+  'washington',
+  'watkins',
+  'watson',
+  'williams',
+  'willis',
+  'wilson',
+  'wright'
+]);
+
+const POS_GROUP_COMPAT_MAP = {
+  qb: 'QB',
+  rb: 'RB',
+  fb: 'RB',
+  wr: 'WR',
+  te: 'TE',
+  lt: 'OL',
+  lg: 'OL',
+  c: 'OL',
+  rg: 'OL',
+  rt: 'OL',
+  ot: 'OL',
+  og: 'OL',
+  ol: 'OL',
+  t: 'OL',
+  g: 'OL',
+  dt: 'DL',
+  de: 'DL',
+  dl: 'DL',
+  nt: 'DL',
+  edge: 'DL',
+  lb: 'LB',
+  ilb: 'LB',
+  olb: 'LB',
+  mlb: 'LB',
+  cb: 'DB',
+  nb: 'DB',
+  db: 'DB',
+  s: 'DB',
+  fs: 'DB',
+  ss: 'DB',
+  saf: 'DB',
+  k: 'ST',
+  pk: 'ST',
+  p: 'ST',
+  ls: 'ST'
+};
+
+export function isCompatiblePositionToken(posToken = '', playerPosition = '') {
+  const g1 = POS_GROUP_COMPAT_MAP[String(posToken || '').toLowerCase().replace(/s$/, '')];
+  const g2 = POS_GROUP_COMPAT_MAP[String(playerPosition || '').toLowerCase()];
+  if (!g1 || !g2) return true;
+  if (g1 === g2) return true;
+  if (
+    (g1 === 'LB' && String(playerPosition || '').toUpperCase() === 'DE') ||
+    (g1 === 'DL' && String(playerPosition || '').toUpperCase() === 'OLB')
+  ) {
+    return true;
+  }
+  return false;
+}
+
+const NON_FIRST_NAME_PREFIXES = new Set([
+  'qb', 'qbs', 'rb', 'rbs', 'fb', 'fbs', 'wr', 'wrs', 'te', 'tes',
+  'lt', 'lg', 'c', 'rg', 'rt', 'ot', 'ots', 'og', 'ogs', 'ol',
+  'dt', 'dts', 'de', 'des', 'dl', 'dls', 'nt', 'nts', 'edge',
+  'lb', 'lbs', 'ilb', 'olb', 'mlb', 'cb', 'cbs', 'nb', 'db', 'dbs', 's', 'fs', 'ss', 'saf', 'safs',
+  'k', 'pk', 'p', 'ls',
+  'coach', 'per', 'for', 'from', 'with', 'without', 'that', 'while', 'whereas', 'although', 'though',
+  'and', 'or', 'but', 'neither', 'either', 'nor', 'both', 'get', 'got', 'have', 'had', 'has', 'is', 'are',
+  'was', 'were', 'be', 'been', 'being', 'to', 'of', 'in', 'on', 'at', 'by', 'as', 'if', 'so', 'the', 'a', 'an',
+  'his', 'her', 'their', 'our', 'my', 'your', 'its', 'this', 'these', 'those', 'who', 'what', 'which', 'why',
+  'how', 'when', 'where', 'here', 'there', 'also', 'still', 'just', 'only', 'even', 'back', 'now', 'then',
+  'expecting', 'expect', 'expects', 'expected', 'said', 'says', 'told', 'thinks', 'believes', 'hopes',
+  'veteran', 'veterans', 'rookie', 'rookies', 'starter', 'starters', 'backup', 'fellow', 'pro', 'bowl',
+  'wideout', 'wideouts', 'receiver', 'receivers', 'corner', 'corners', 'cornerback', 'cornerbacks',
+  'tackle', 'tackles', 'guard', 'guards', 'center', 'linebacker', 'linebackers', 'safety', 'safeties',
+  'defender', 'defenders', 'lineman', 'linemen', 'rusher', 'backs', 'end', 'ends', 'kicker', 'punter',
+  'missing', 'limited', 'full', 'not', 'no', 'after', 'before', 'since', 'until', 'against', 'versus', 'vs',
+  'over', 'under', 'around', 'behind', 'between', 'through', 'into', 'onto', 'off', 'out', 'up', 'down',
+  'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
+  'today', 'yesterday', 'tomorrow', 'practice', 'status', 'update', 'report', 'notes', 'news',
+  'niners', 'francisco', 'san', '49ers', 'nfl', 'nfc', 'afc', 'watch', 'see', 'look', 'like', 'than',
+  'including', 'featuring', 'minus', 'plus', 'keep', 'keeps', 'keeping', 'made', 'make', 'makes',
+  'signed', 'waived', 'traded', 'acquired', 'activated', 'designated', 'placed', 'released', 'named',
+  'called', 'asked', 'gives', 'gave', 'takes', 'took', 'puts', 'put', 'sets', 'set', 'leads', 'led',
+  'hits', 'hit', 'finds', 'found', 'gets', 'sees', 'saw', 'wants', 'needs', 'uses', 'used'
+]);
+
+const QUANTIFIER_BEFORE_WORD_REGEX =
+  /(?:\b\d+(?:\s*[-–to]+\s*\d+)?|\b(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|several|multiple|couple|few|many|next|last|past|recent|coming|early|late|final|first|second|third|fourth|fifth|more|extra)\s+(?:to\s+(?:two|three|four|five|six|seven|eight|nine|ten)\s+)?)$/i;
+
+/**
+ * Verifies that at least one bare standalone occurrence of `surname` in `rawText` is NOT
+ * preceded by a conflicting capitalized first name (e.g., "Joey Bosa" for Nick Bosa,
+ * "Kurt Warner" for Fred Warner) or a numeric/English quantifier (e.g., "4-6 Weeks", "two weeks").
+ */
+export function hasSafeStandaloneSurnameMatch(rawText = '', surname = '', playerFullName = '') {
+  const text = String(rawText || '').replace(/[’‘]/g, "'");
+  const cleanSurname = String(surname || '').trim();
+  if (!text || cleanSurname.length < 4) return false;
+  const escaped = cleanSurname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const targetFirst = String(playerFullName || '')
+    .trim()
+    .split(/\s+/)[0]
+    ?.replace(/\./g, '')
+    .toLowerCase() || '';
+
+  const re = new RegExp(`\\b${escaped}\\b`, 'gi');
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const before = text.slice(Math.max(0, m.index - 42), m.index);
+    const beforeTrim = before.trimEnd();
+    if (QUANTIFIER_BEFORE_WORD_REGEX.test(beforeTrim)) {
+      continue;
+    }
+    const prevCap = beforeTrim.match(/(?:^|[\s([{"'/,-])((?:[A-Z]\.){1,3}|[A-Z][a-z'-]{1,18})$/);
+    if (prevCap) {
+      const prevTok = prevCap[1].replace(/\./g, '').toLowerCase();
+      if (
+        prevTok &&
+        !NON_FIRST_NAME_PREFIXES.has(prevTok) &&
+        prevTok !== targetFirst &&
+        !(targetFirst.length >= 2 && prevTok.length === 1 && targetFirst.startsWith(prevTok))
+      ) {
+        continue;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Strips WordPress / RSS syndication footers (`The post ... appeared first on NFLTradeRumors.co.`)
+ * so aggregator domain names never trigger false trade/roster classifications or relevance hits.
+ */
+export function stripAggregatorBoilerplate(text = '') {
+  return String(text || '')
+    .replace(/\s*The post [\s\S]*? appeared first on [^\n.]+(?:\.[a-z]{2,4})?\.?/gi, '')
+    .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Removes historical career-bio sentences that reference the 49ers solely in a player's distant past
+ * (e.g., "Shelton, 31, originally signed on with the 49ers as an undrafted free agent out of Washington
+ * back in 2018.") so non-49ers players on other NFL teams do not leak into the 49ers news stream.
+ */
+export function stripHistoricalSfBioSentences(text = '') {
+  const clean = stripAggregatorBoilerplate(text);
+  if (!clean) return '';
+  const masked = clean
+    .replace(/\b([A-Z])\.([A-Z])\./g, '$1\u0000$2\u0000')
+    .replace(/\b([A-Z])\.(?=\s+[A-Z])/g, '$1\u0000')
+    .replace(/\b(vs|no|st|jr|sr|mr|dr|mt)\./gi, '$1\u0000');
+  const kept = masked
+    .split(/(?<=[.!?])\s+/)
+    .map(s => s.replace(/\u0000/g, '.').trim())
+    .filter(s => s && !HISTORICAL_SF_BIO_SENTENCE_REGEX.test(s));
+  return kept.join(' ').trim();
+}
+
+/**
+ * Determines whether a national/league-wide wire item is genuinely relevant to the 49ers.
+ * Prevents other-team stories (e.g. "Rams C Coleman Shelton Expected To Miss 4-6 Weeks...")
+ * from leaking in via boilerplate historical career-bio mentions ("originally signed with the 49ers in 2018").
+ */
+export function is49ersRelevantWireItem({
+  title = '',
+  fullText = '',
+  summary = '',
+  externalTitle = '',
+  externalDescription = '',
+  isNationalFeed = true,
+  leadRosterMatchCount = 0,
+  bodyRosterMatchCount = 0
+} = {}) {
+  if (!isNationalFeed) return true;
+  const leadText = stripAggregatorBoilerplate(`${title || ''} ${fullText || ''}`).trim();
+  const leadWithoutFormer = leadText.replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
+  if (EXPLICIT_SF_ENTITY_REGEX.test(leadWithoutFormer)) {
+    return true;
+  }
+  if (Number(leadRosterMatchCount) > 0) {
+    return true;
+  }
+  if (OTHER_NFL_TEAM_LEAD_REGEX.test(leadText)) {
+    return false;
+  }
+  const cleanBody = stripHistoricalSfBioSentences(
+    `${externalTitle || ''} ${summary || ''} ${externalDescription || ''}`
+  );
+  const bodyWithoutFormer = cleanBody.replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
+  if (EXPLICIT_SF_ENTITY_REGEX.test(bodyWithoutFormer)) {
+    return true;
+  }
+  return Number(bodyRosterMatchCount) > 0;
+}
+
+/**
+ * Formats ambiguous aggregator publisher names as explicit web domains (`NFLTradeRumors.co`,
+ * `ProFootballRumors.com`) so non-trade stories from those outlets never read like a
+ * "Trade Rumors" category heading in wire cards.
+ */
+export function formatWireSourceDisplayName(authorName = '', item = null) {
+  const raw = String(authorName || item?.author || item?.reporterName || item?.outletName || '49ers Beat').trim();
+  const lower = raw.toLowerCase();
+  if (lower === 'nfl trade rumors' || lower === 'nfltraderumors') return 'NFLTradeRumors.co';
+  if (lower === 'pro football rumors' || lower === 'profootballrumors') return 'ProFootballRumors.com';
+  return raw || '49ers Beat';
+}
 
 /**
  * Identifies generic league-wide filler (fantasy D/ST, survivor pools, betting lines roundups,
@@ -301,8 +684,8 @@ export function isOffTopicLeagueFiller({
   hasRosterMatch = false
 } = {}) {
   const u = String(url || '').trim();
-  const t = String(title || '').trim();
-  const s = String(summary || '').trim();
+  const t = stripAggregatorBoilerplate(String(title || '').trim());
+  const s = stripHistoricalSfBioSentences(String(summary || '').trim());
   if (u && OFF_TOPIC_LEAGUE_FILLER_URL_REGEX.test(u)) return true;
   if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(t)) return true;
   if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !/\b(49ers|niners|san francisco)\b/i.test(t)) {

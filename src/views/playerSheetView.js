@@ -8,7 +8,8 @@
  * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
-import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderPlayerAvatarHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderPlayerAvatarHtml, renderSalientThumbHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
@@ -25,6 +26,7 @@ import {
   filterOutCompletedGameAvailabilityItems
 } from '../engine/breakingClassifier.js';
 import {
+  formatWireSourceDisplayName,
   isIndividualOtcPlayerUrl,
   isPaywalledPublisher,
   sanitizeExternalUrl
@@ -46,6 +48,7 @@ export function renderInjuryNewsItemCardHtml(
     playerName = '',
     directPosts = [],
     excludePlayerId = '',
+    rosterPlayers = [],
     outerClassName = 'injury-news-item-card',
     activeVideosSet = new Set()
   } = {}
@@ -56,7 +59,8 @@ export function renderInjuryNewsItemCardHtml(
     n.videoStreamUrl && /^https:\/\//i.test(String(n.videoStreamUrl).trim())
       ? String(n.videoStreamUrl).trim()
       : '';
-  const authorName = n.author || n.reporterName || n.outletName || '49ers Beat';
+  const rawAuthorName = n.author || n.reporterName || n.outletName || '49ers Beat';
+  const authorName = formatWireSourceDisplayName(rawAuthorName, n);
   const resolvedMentionUrl = isTweet
     ? sanitizeExternalUrl(
         resolveOriginalTweetUrl(
@@ -78,7 +82,23 @@ export function renderInjuryNewsItemCardHtml(
   const hasPlayableVideo = Boolean(n.videoId || effectiveStreamOrCardUrl);
   const vidKey = hasPlayableVideo ? `dossier_vid_${n.id || ''}` : null;
   const isVidOpen = Boolean(vidKey && activeVideosSet instanceof Set && activeVideosSet.has(vidKey));
-  const hasImg = !isVideo && !hasPlayableVideo && Boolean(n.imageUrl && /^https:\/\//i.test(n.imageUrl));
+  const salientVisual =
+    !isVideo && !hasPlayableVideo
+      ? resolveSalientCardVisual(n, {
+          rosterPlayers,
+          excludePlayerId,
+          slot: 'thumb',
+          allowTeamFallback: false
+        })
+      : null;
+  const thumbHtml = salientVisual
+    ? renderSalientThumbHtml(salientVisual, {
+        href: resolvedMentionUrl !== '#' ? resolvedMentionUrl : '',
+        size: 'md',
+        extraClass: 'dossier-mention-thumb'
+      })
+    : '';
+  const hasImg = Boolean(thumbHtml);
   const authorHref = sanitizeExternalUrl(
     n.authorProfileUrl || resolveItemAuthorProfileUrl(n, resolvedMentionUrl),
     resolvedMentionUrl
@@ -88,7 +108,7 @@ export function renderInjuryNewsItemCardHtml(
 
   const tweetFormatted = isTweet
     ? formatTweetBodyForDisplay(
-        stripRedundantAuthorBoilerplate(n.fullText || n.headline || n.title || '', authorName),
+        stripRedundantAuthorBoilerplate(n.fullText || n.headline || n.title || '', rawAuthorName),
         SHORT_TWEET_FULL_TEXT_LIMIT
       )
     : null;
@@ -101,7 +121,7 @@ export function renderInjuryNewsItemCardHtml(
       .toLowerCase()
       .includes(String(n.externalDescription).toLowerCase().slice(0, 28)) &&
     String(n.externalDescription).trim().toLowerCase() !== String(n.externalTitle || '').trim().toLowerCase()
-      ? stripRedundantAuthorBoilerplate(n.externalDescription, authorName)
+      ? stripRedundantAuthorBoilerplate(n.externalDescription, rawAuthorName)
       : '';
 
   const cleanSummary =
@@ -109,8 +129,8 @@ export function renderInjuryNewsItemCardHtml(
     !isVideo &&
     n.summary &&
     !n.summary.startsWith('Published via ') &&
-    n.summary.toLowerCase() !== `${authorName} • ${n.outletName || ''}`.toLowerCase()
-      ? stripRedundantAuthorBoilerplate(n.summary, authorName)
+    n.summary.toLowerCase() !== `${rawAuthorName} • ${n.outletName || ''}`.toLowerCase()
+      ? stripRedundantAuthorBoilerplate(n.summary, rawAuthorName)
       : '';
 
   const isUrgentCard = isUrgentBreakingBadge(n.breakingBadge);
@@ -225,13 +245,7 @@ export function renderInjuryNewsItemCardHtml(
               : ''
           }
         </div>
-        ${
-          hasImg
-            ? `<div class="raw-item-thumb compact" style="width:54px;height:54px">
-                <img src="${esc(n.imageUrl)}" alt="${esc(headlineText || authorName)}" width="54" height="54" loading="lazy" decoding="async" />
-              </div>`
-            : ''
-        }
+        ${thumbHtml}
       </div>
       ${
         hasPlayableVideo
@@ -370,6 +384,7 @@ function renderOverviewTab(
                   playerName: p.name,
                   directPosts: combinedDirectPosts,
                   excludePlayerId: p.id,
+                  rosterPlayers: appData?.roster?.players || [],
                   outerClassName: 'subcard-panel',
                   activeVideosSet
                 })
@@ -856,6 +871,7 @@ function renderHealthTab(
                     playerName: p.name,
                     directPosts: combinedDirectPosts,
                     excludePlayerId: p.id,
+                    rosterPlayers: appData?.roster?.players || [],
                     activeVideosSet
                   })
                 )

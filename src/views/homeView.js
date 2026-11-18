@@ -15,9 +15,14 @@ import {
   renderTeamLogoHtml,
   renderAvatarStackHtml,
   renderPlayerChipsStripHtml,
+  renderSalientThumbHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
+import {
+  optimizeImageUrlForSlot,
+  resolveSalientCardVisual
+} from '../engine/salientMediaEngine.js';
 import { iconSvg, blockIconName } from './icons.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 import { resolveConsistentPowerRankings } from '../engine/powerRankingsEngine.js';
@@ -43,6 +48,7 @@ import { computeNewsSalienceScore } from '../engine/antiFluffFilter.js';
 import {
   buildMockDraftTeamUrl,
   buildPfrTeamDraftUrl,
+  formatWireSourceDisplayName,
   isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
@@ -239,14 +245,18 @@ function renderSingleDashboardCard({
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
 
+      const rosterPlayers = appData?.roster?.players || [];
       const breakingTopHomeHtml =
         breakingAboveBrief.length > 0
           ? `<div style="display:flex;flex-direction:column;gap:8px" data-breaking-above-brief>
               ${breakingAboveBrief
-                .map(item =>
+                .map((item, idx) =>
                   renderWireItemCardHtml(item, {
                     prioritizedRaw: prioritizedHomeStream,
-                    activeVideosSet
+                    activeVideosSet,
+                    rosterPlayers,
+                    isLeadFeatured: idx === 0,
+                    eagerImage: idx === 0
                   })
                 )
                 .join('')}
@@ -274,12 +284,13 @@ function renderSingleDashboardCard({
               </div>
               <div class="home-wire-list">
                 ${topTweets
-                  .map(tw => {
-                    const authorName = tw.author || tw.reporterName || tw.outletName || '49ers Beat';
+                  .map((tw, idx) => {
+                    const rawAuthorName = tw.author || tw.reporterName || tw.outletName || '49ers Beat';
+                    const authorName = formatWireSourceDisplayName(rawAuthorName, tw);
                     const resolvedTwUrl = sanitizeExternalUrl(resolveOriginalTweetUrl(tw, rawList), '#');
                     const cleanedTweetBody = stripRedundantAuthorBoilerplate(
                       tw.fullText || tw.title || '',
-                      authorName
+                      rawAuthorName
                     );
                     const fullShortTweet = formatTweetBodyForDisplay(
                       cleanedTweetBody,
@@ -301,6 +312,19 @@ function renderSingleDashboardCard({
                           : tw.breakingBadge === 'ROSTER MOVE' || tw.breakingBadge === 'TRADE INTEL'
                             ? 'badge-gold'
                             : 'badge-neutral';
+                    const twVisual = resolveSalientCardVisual(tw, {
+                      rosterPlayers,
+                      slot: 'thumb',
+                      allowTeamFallback: true
+                    });
+                    const twThumbHtml = twVisual
+                      ? renderSalientThumbHtml(twVisual, {
+                          href: resolvedTwUrl !== '#' ? resolvedTwUrl : safeTwExt || '',
+                          size: 'md',
+                          eager: idx === 0,
+                          extraClass: 'home-wire-thumb'
+                        })
+                      : '';
                     return `
                   <div class="home-wire-item ${isUrgentTw ? 'breaking-elevated' : ''}">
                     <div class="home-wire-meta">
@@ -310,27 +334,32 @@ function renderSingleDashboardCard({
                             ? `<span class="badge ${twBadgeCls}" style="font-size:9.5px;padding:1.5px 6px">${esc(tw.breakingBadge)}</span>`
                             : ''
                         }
-                        <a href="${esc(sanitizeExternalUrl(resolveItemAuthorProfileUrl(tw, resolvedTwUrl), resolvedTwUrl))}" target="_blank" rel="noopener noreferrer" class="wire-author-link">
+                        <a href="${esc(sanitizeExternalUrl(resolveItemAuthorProfileUrl(tw, resolvedTwUrl), resolvedTwUrl))}" target="_blank" rel="noopener noreferrer" class="wire-author-link" data-wire-author-link>
                           <strong>${esc(authorName)}</strong>
                         </a>
                       </div>
                       <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
                     </div>
-                    <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
-                      ${esc(fullShortTweet)}
-                      <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
-                    </a>
-                    ${
-                      showExtChip
-                        ? `<div style="margin-top:3px">
-                            <a href="${esc(safeTwExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-                              <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
-                              ${iconSvg('external', 10)}
-                            </a>
-                          </div>`
-                        : ''
-                    }
-                    ${tw.mentionedPlayers?.length ? `<div style="margin-top:4px">${renderPlayerChipsStripHtml(tw.mentionedPlayers, 3)}</div>` : ''}
+                    <div class="${twThumbHtml ? 'media-split-row' : ''}">
+                      <div style="min-width:0">
+                        <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link">
+                          ${esc(fullShortTweet)}
+                          <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
+                        </a>
+                        ${
+                          showExtChip
+                            ? `<div style="margin-top:4px">
+                                <a href="${esc(safeTwExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                                  <span>Article: ${esc((tw.externalTitle || tw.outletName || 'Read Story').slice(0, 48))}${(tw.externalTitle || '').length > 48 ? '…' : ''}</span>
+                                  ${iconSvg('external', 10)}
+                                </a>
+                              </div>`
+                            : ''
+                        }
+                      </div>
+                      ${twThumbHtml}
+                    </div>
+                    ${tw.mentionedPlayers?.length ? `<div style="margin-top:5px">${renderPlayerChipsStripHtml(tw.mentionedPlayers, 3)}</div>` : ''}
                   </div>
                 `;
                   })
@@ -352,23 +381,35 @@ function renderSingleDashboardCard({
                 ${topArticles
                   .map(art => {
                     const safeArtUrl = sanitizeExternalUrl(art.url, '#');
-                    const hasArtImg = art.imageUrl && /^https:\/\//i.test(art.imageUrl);
+                    const artOutletLabel = formatWireSourceDisplayName(art.outletName || '49ers Beat', art);
+                    const artReporterLabel = art.reporterName ? formatWireSourceDisplayName(art.reporterName, art) : '';
+                    const artByline =
+                      artReporterLabel &&
+                      artReporterLabel.toLowerCase() !== artOutletLabel.toLowerCase()
+                        ? `${artOutletLabel} • ${artReporterLabel}`
+                        : artOutletLabel;
+                    const artVisual = resolveSalientCardVisual(art, {
+                      rosterPlayers,
+                      slot: 'thumb',
+                      allowTeamFallback: true
+                    });
+                    const artThumbHtml = artVisual
+                      ? renderSalientThumbHtml(artVisual, {
+                          size: 'md',
+                          asStatic: true,
+                          extraClass: 'home-article-thumb'
+                        })
+                      : '';
                     return `
                   <a href="${esc(safeArtUrl)}" target="_blank" rel="noopener noreferrer" class="home-article-row">
-                    ${
-                      hasArtImg
-                        ? `<span class="raw-item-thumb" style="width:44px;height:44px;border-radius:8px">
-                            <img src="${esc(art.imageUrl)}" alt="${esc(art.title)}" width="44" height="44" loading="lazy" decoding="async" />
-                          </span>`
-                        : ''
-                    }
                     <div style="min-width:0;flex:1">
-                      <div style="font-weight:700;font-size:12.5px;line-height:1.32;color:var(--text-primary)">${esc(art.title)}</div>
-                      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">
-                        ${esc(art.outletName || '49ers Beat')} • ${esc(art.reporterName || '')} • ${esc(relTime(art.publishedAt))}
+                      <div style="font-weight:700;font-size:12.6px;line-height:1.34;color:var(--text-primary)">${esc(art.title)}</div>
+                      <div style="font-size:11px;color:var(--text-muted);margin-top:3px;display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap">
+                        <span>${esc(artByline)} • ${esc(relTime(art.publishedAt))}</span>
+                        <span class="inline-ext-icon" style="margin-left:0">${iconSvg('external', 10)}</span>
                       </div>
                     </div>
-                    <span class="source-open-pill">${iconSvg('external', 12)}</span>
+                    ${artThumbHtml || `<span class="source-open-pill">${iconSvg('external', 12)}</span>`}
                   </a>
                 `;
                   })
@@ -868,8 +909,21 @@ function renderSingleDashboardCard({
     case 'autopodcast_ai': {
       const eps = appData?.podcastIndex?.episodes || [];
       const epCount = eps.length;
+      const beatShows = (appData?.beatPodcasts?.shows || []).filter(s => s?.artworkUrl && /^https:\/\//i.test(s.artworkUrl)).slice(0, 4);
       const beatEpsCount = (appData?.beatPodcasts?.episodes || []).length;
       const latestEp = eps[0];
+      const showArtStackHtml = beatShows.length
+        ? `<div class="home-pod-art-stack" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="beat_podcasts" aria-label="Open 49ers Beat Podcasts">
+            ${beatShows
+              .map(s => {
+                const opt = optimizeImageUrlForSlot(s.artworkUrl, 'artwork');
+                return `<span class="home-pod-art-item" title="${esc(s.name)}">
+                  <img src="${esc(opt.src || s.artworkUrl)}" ${opt.fallbackSrc ? `data-fallback-src="${esc(opt.fallbackSrc)}"` : ''} alt="${esc(s.name)}" width="28" height="28" loading="lazy" decoding="async" />
+                </span>`;
+              })
+              .join('')}
+          </div>`
+        : '';
       bodyHtml = `
         <div class="episode-row-head">
           <div class="studio-cover-art" aria-hidden="true">
@@ -882,7 +936,7 @@ function renderSingleDashboardCard({
               <span style="height:5px"></span>
             </span>
           </div>
-          <div style="min-width:0;font-size:12.5px;color:var(--text-secondary)">
+          <div style="min-width:0;flex:1;font-size:12.5px;color:var(--text-secondary)">
             <div style="color:var(--text-primary);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
               <span class="inline-player-link" role="button" tabindex="0" style="border-bottom-style:none" data-action="jump-studio-sub" data-studio-sub="podcast">${esc(latestEp?.title || `${epCount} Two-Host Audio Briefings Ready`)}</span>
             </div>
@@ -892,6 +946,7 @@ function renderSingleDashboardCard({
               <span class="inline-player-link" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="analysis">AI Analysis</span>
             </div>
           </div>
+          ${showArtStackHtml}
         </div>
       `;
       deepDiveAttr = `data-action="jump-view" data-target-tab="audio"`;

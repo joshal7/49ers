@@ -12,8 +12,15 @@ import {
   escJargon,
   formatRelativeAge,
   renderPlayerChipsStripHtml,
+  renderSalientThumbHtml,
+  renderSalientHeroBannerHtml,
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
+import {
+  optimizeImageUrlForSlot,
+  resolveDailyBriefHeroMedia,
+  resolveSalientCardVisual
+} from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -22,6 +29,7 @@ import {
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
+  promoteLinkDropTweetToArticle,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
   formatTweetBodyForDisplay,
@@ -33,6 +41,7 @@ import {
   partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
 import {
+  formatWireSourceDisplayName,
   isPaywalledPublisher,
   sanitizeExternalUrl,
   MARKDOWN_HTTPS_INLINE_LINK_SOURCE,
@@ -97,11 +106,11 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
   const rawSources = Array.isArray(dailyBrief?.sources) ? dailyBrief.sources : [];
   const seen = new Set();
   const safeList = [];
-  const rawByUrl = new Map(
-    (Array.isArray(rawStream) ? rawStream : [])
-      .filter(it => it?.url)
-      .map(it => [String(it.url).trim(), it])
-  );
+  const rawByUrl = new Map();
+  for (const it of Array.isArray(rawStream) ? rawStream : []) {
+    if (it?.url) rawByUrl.set(String(it.url).trim(), it);
+    if (it?.promotedFromSocialUrl) rawByUrl.set(String(it.promotedFromSocialUrl).trim(), it);
+  }
 
   for (const sl of rawSources) {
     if (!sl) continue;
@@ -113,7 +122,7 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
       /^https?:\/\/(?:www\.)?(?:x|twitter|bsky)\./i.test(String(sl.url || ''));
     const handleMatch = rawTitle.match(/^(@[A-Za-z0-9_]+):\s*(.*)$/);
     const effectiveHandle = sl.authorHandle || (handleMatch ? handleMatch[1] : '');
-    const cleanTitle = handleMatch ? handleMatch[2].trim() : rawTitle.trim();
+    let cleanTitle = handleMatch ? handleMatch[2].trim() : rawTitle.trim();
 
     if (
       appData &&
@@ -131,8 +140,22 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
       continue;
     }
 
-    let resolvedUrl = isTw
-      ? resolveOriginalTweetUrl(
+    const streamMatch = rawByUrl.get(String(sl.url || '').trim()) || null;
+    let resolvedUrl = sl.url;
+
+    // Upgrade link-drop social posts directly to their canonical article URL & Article label
+    if (streamMatch && streamMatch.type === 'article' && streamMatch.promotedFromSocialUrl && streamMatch.url) {
+      resolvedUrl = streamMatch.url;
+      isTw = false;
+      if (streamMatch.title) cleanTitle = streamMatch.title;
+    } else if (isTw) {
+      const promotedMatch = streamMatch ? promoteLinkDropTweetToArticle(streamMatch) : null;
+      if (promotedMatch && promotedMatch.type === 'article' && promotedMatch.url) {
+        resolvedUrl = promotedMatch.url;
+        isTw = false;
+        if (promotedMatch.title) cleanTitle = promotedMatch.title;
+      } else {
+        resolvedUrl = resolveOriginalTweetUrl(
           {
             type: 'tweet',
             url: sl.url || '',
@@ -143,21 +166,7 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
             publishedAt: sl.publishedAt || dailyBrief?.generatedAt || ''
           },
           rawStream
-        )
-      : sl.url;
-
-    // If still pointing to Bluesky and the underlying stream item carries a free canonical article URL, upgrade to it
-    if (/^https?:\/\/bsky\.app\//i.test(String(resolvedUrl || ''))) {
-      const streamMatch = rawByUrl.get(String(sl.url || '').trim());
-      const extSafe = sanitizeExternalUrl(streamMatch?.externalUrl, null);
-      if (
-        extSafe &&
-        !/^https?:\/\/bsky\.app\//i.test(extSafe) &&
-        !isPaywalledPublisher(sl.outlet, extSafe) &&
-        !isRedundantProfileSelfLink(extSafe, resolvedUrl)
-      ) {
-        resolvedUrl = extSafe;
-        isTw = false;
+        );
       }
     }
 
@@ -291,6 +300,13 @@ export function renderDailyTopNewsBriefHtml(
   const seenJargon = new Set();
   const safeSources = resolveDailyBriefSafeSources(brief, rawStream, appData);
   const urlUpgradeMap = new Map();
+  for (const it of Array.isArray(rawStream) ? rawStream : []) {
+    if (it?.promotedFromSocialUrl && it?.url && it.promotedFromSocialUrl !== it.url) {
+      urlUpgradeMap.set(it.promotedFromSocialUrl, it.url);
+      urlUpgradeMap.set(encodeMarkdownLinkUrl(it.promotedFromSocialUrl), it.url);
+      urlUpgradeMap.set(decodeMarkdownLinkUrlParens(it.promotedFromSocialUrl), it.url);
+    }
+  }
   for (const s of safeSources) {
     if (s.originalUrl && s.url && s.originalUrl !== s.url) {
       urlUpgradeMap.set(s.originalUrl, s.url);
@@ -303,6 +319,23 @@ export function renderDailyTopNewsBriefHtml(
   const outerCls = asSubcard
     ? 'subcard-panel daily-news-brief-card daily-news-brief-subcard'
     : 'card daily-news-brief-card';
+
+  const rosterPlayers = appData?.roster?.players || [];
+  const rawByLowerUrl = new Map();
+  for (const it of Array.isArray(rawStream) ? rawStream : []) {
+    if (it?.url) rawByLowerUrl.set(String(it.url).trim().toLowerCase(), it);
+    if (it?.externalUrl) rawByLowerUrl.set(String(it.externalUrl).trim().toLowerCase(), it);
+    if (it?.promotedFromSocialUrl) rawByLowerUrl.set(String(it.promotedFromSocialUrl).trim().toLowerCase(), it);
+  }
+  const briefHero = resolveDailyBriefHeroMedia(brief, rawStream, { rosterPlayers });
+  const briefHeroHtml = briefHero
+    ? renderSalientHeroBannerHtml(briefHero, {
+        compact: asSubcard,
+        creditLabel: briefHero.creditLabel ? `Photo · ${briefHero.creditLabel}` : '',
+        eager: true,
+        extraClass: 'daily-brief-hero'
+      })
+    : '';
 
   const sourcesDrawerHtml =
     safeSources.length > 0
@@ -322,18 +355,39 @@ export function renderDailyTopNewsBriefHtml(
                     rep.author && rep.outlet && rep.author.toLowerCase() !== rep.outlet.toLowerCase()
                       ? `${rep.author} • ${rep.outlet}`
                       : rep.outlet || rep.author || 'Source';
+                  const matchedItem =
+                    rawByLowerUrl.get(String(rep.originalUrl || '').trim().toLowerCase()) ||
+                    rawByLowerUrl.get(String(rep.url || '').trim().toLowerCase()) ||
+                    {
+                      title: rep.title,
+                      url: rep.url,
+                      author: rep.author,
+                      outletName: rep.outlet,
+                      type: rep.type
+                    };
+                  const srcVisual = resolveSalientCardVisual(matchedItem, {
+                    rosterPlayers,
+                    slot: 'thumb',
+                    allowTeamFallback: false
+                  });
+                  const srcThumbHtml = srcVisual
+                    ? renderSalientThumbHtml(srcVisual, { size: 'sm', asStatic: true, extraClass: 'brief-source-thumb' })
+                    : '';
                   return `
-                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row" data-brief-source-row>
-                      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-                        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
-                          <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
-                          <strong style="font-size:11.6px;color:var(--gold-bright)">${esc(attribution)}</strong>
+                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row ${srcThumbHtml ? 'has-source-thumb' : ''}" data-brief-source-row>
+                      <div style="min-width:0;flex:1">
+                        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+                          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+                            <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
+                            <strong style="font-size:11.6px;color:var(--gold-bright)">${esc(attribution)}</strong>
+                          </div>
+                          ${rep.publishedAt ? `<span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(formatRelativeAge(rep.publishedAt))}</span>` : ''}
                         </div>
-                        ${rep.publishedAt ? `<span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(formatRelativeAge(rep.publishedAt))}</span>` : ''}
+                        <div style="font-size:12.4px;font-weight:600;line-height:1.36;color:var(--text-primary)">
+                          ${esc(rep.title)} ${iconSvg('externalLink', 11)}
+                        </div>
                       </div>
-                      <div style="font-size:12.4px;font-weight:600;line-height:1.36;color:var(--text-primary)">
-                        ${esc(rep.title)} ${iconSvg('externalLink', 11)}
-                      </div>
+                      ${srcThumbHtml}
                     </a>
                   `;
                 })
@@ -361,6 +415,7 @@ export function renderDailyTopNewsBriefHtml(
         </div>
         <span class="mono daily-brief-age" data-daily-brief-age title="Generated ${esc(brief.generatedAt || '')}">${esc(ageTiny)}</span>
       </div>
+      ${briefHeroHtml}
       <ul class="brief-bullets coaching-bullets daily-brief-bullets">
         ${(brief.bullets || []).map(b => formatDailyBriefBulletHtml(b, seenJargon, urlUpgradeMap)).join('')}
       </ul>
@@ -422,7 +477,16 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
   return '';
 }
 
-export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideosSet = new Set() } = {}) {
+export function renderWireItemCardHtml(
+  item,
+  {
+    prioritizedRaw = [],
+    activeVideosSet = new Set(),
+    rosterPlayers = [],
+    isLeadFeatured = false,
+    eagerImage = false
+  } = {}
+) {
   const safeStreamCandidate =
     item.videoStreamUrl && /^https:\/\//i.test(String(item.videoStreamUrl).trim())
       ? String(item.videoStreamUrl).trim()
@@ -431,7 +495,8 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
   const isVideo = item.type === 'video';
   const isUrgent = isUrgentBreakingBadge(item.breakingBadge);
 
-  const authorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+  const rawAuthorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+  const authorName = formatWireSourceDisplayName(rawAuthorName, item);
   const resolvedItemUrl = isTweet
     ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
     : sanitizeExternalUrl(item.url, null);
@@ -452,7 +517,7 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
     resolvedItemUrl
   );
   const rawBody = isTweet
-    ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', authorName)
+    ? stripRedundantAuthorBoilerplate(item.fullText || item.title || '', rawAuthorName)
     : item.title || '';
   const displayTitle = isTweet
     ? formatTweetBodyForDisplay(rawBody, SHORT_TWEET_FULL_TEXT_LIMIT).text
@@ -463,12 +528,39 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
     !isTweet &&
     item.summary &&
     !item.summary.startsWith('Published via ') &&
-    item.summary.toLowerCase() !== `${authorName} • ${item.outletName || ''}`.toLowerCase()
-      ? stripRedundantAuthorBoilerplate(item.summary, authorName)
+    item.summary.toLowerCase() !== `${rawAuthorName} • ${item.outletName || ''}`.toLowerCase()
+      ? stripRedundantAuthorBoilerplate(item.summary, rawAuthorName)
       : '';
 
-  const hasThumb = !isVideo && !hasPlayableVideo && item.imageUrl && /^https:\/\//i.test(item.imageUrl);
   const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
+  const thumbTargetHref = resolvedItemUrl || safeExtUrl || '';
+  const wantsLeadHeroSlot = Boolean((isLeadFeatured || isUrgent) && !isVideo && !hasPlayableVideo);
+  const salientVisual =
+    !isVideo && !hasPlayableVideo
+      ? resolveSalientCardVisual(item, {
+          rosterPlayers,
+          slot: wantsLeadHeroSlot ? 'hero' : 'thumb',
+          allowTeamFallback: true
+        })
+      : null;
+  const showLeadHero = Boolean(wantsLeadHeroSlot && salientVisual?.kind === 'editorial');
+  const sideThumbHtml =
+    !showLeadHero && salientVisual
+      ? renderSalientThumbHtml(salientVisual, {
+          href: thumbTargetHref,
+          size: 'lg',
+          eager: eagerImage
+        })
+      : '';
+  const leadHeroHtml = showLeadHero
+    ? renderSalientHeroBannerHtml(salientVisual, {
+        href: thumbTargetHref,
+        compact: false,
+        eager: eagerImage || isLeadFeatured,
+        extraClass: 'wire-hero-media'
+      })
+    : '';
+  const hasThumb = Boolean(sideThumbHtml);
   const normCmpUrl = u => String(u || '').replace(/\/+$/, '').toLowerCase();
   const showLinkedStory =
     Boolean(safeExtUrl) &&
@@ -499,7 +591,8 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
       : '';
 
   return `
-    <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}">
+    <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''} ${showLeadHero ? 'has-lead-hero' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}">
+      ${leadHeroHtml}
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
           ${renderWireSignalBadgeHtml(item, isVideo, isTweet)}
@@ -513,7 +606,7 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
       </div>
       <div class="${hasThumb ? 'media-split-row' : ''}">
         <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
-          <div style="font-weight:${isTweet ? '600' : '700'};font-size:13.6px;line-height:1.42">
+          <div style="font-weight:${isTweet ? '600' : '700'};font-size:${showLeadHero ? '14.5px' : '13.6px'};line-height:1.4">
             ${
               resolvedItemUrl
                 ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
@@ -560,17 +653,7 @@ export function renderWireItemCardHtml(item, { prioritizedRaw = [], activeVideos
               : ''
           }
         </div>
-        ${
-          hasThumb && (resolvedItemUrl || sanitizeExternalUrl(item.externalUrl, null))
-            ? `<a href="${esc(resolvedItemUrl || sanitizeExternalUrl(item.externalUrl))}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb" aria-hidden="true" tabindex="-1">
-                <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
-              </a>`
-            : hasThumb
-              ? `<div class="raw-item-thumb" aria-hidden="true">
-                  <img src="${esc(item.imageUrl)}" alt="${esc(displayTitle)}" width="72" height="72" loading="lazy" decoding="async" />
-                </div>`
-              : ''
-        }
+        ${sideThumbHtml}
       </div>
       ${
         showLinkedStory
@@ -790,6 +873,7 @@ export function renderNewsViewHtml({
         `
         : '';
 
+    const rosterPlayers = appData?.roster?.players || [];
     const breakingTopHtml =
       breakingAboveBrief.length > 0
         ? `
@@ -797,7 +881,15 @@ export function renderNewsViewHtml({
             ${gameDayBannerHtml}
             ${breakingAboveBrief
               .slice(0, 45)
-              .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
+              .map((item, idx) =>
+                renderWireItemCardHtml(item, {
+                  prioritizedRaw,
+                  activeVideosSet,
+                  rosterPlayers,
+                  isLeadFeatured: idx === 0,
+                  eagerImage: idx < 2
+                })
+              )
               .join('')}
           </div>
         `
@@ -818,7 +910,15 @@ export function renderNewsViewHtml({
           <div class="card" style="display:flex;flex-direction:column;gap:9px">
             ${remainingBelowBrief
               .slice(0, 65)
-              .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
+              .map((item, idx) =>
+                renderWireItemCardHtml(item, {
+                  prioritizedRaw,
+                  activeVideosSet,
+                  rosterPlayers,
+                  isLeadFeatured: false,
+                  eagerImage: idx < 2
+                })
+              )
               .join('')}
           </div>
         `;
@@ -826,6 +926,7 @@ export function renderNewsViewHtml({
     return `${topToolbar}${breakingTopHtml}${briefHtml}${belowListHtml}`;
   }
 
+  const rosterPlayers = appData?.roster?.players || [];
   const visibleFiltered =
     activeFilter === 'tweets'
       ? balanceFeedTopSalience(dedupedTweets, { nowMs, appData })
@@ -844,7 +945,15 @@ export function renderNewsViewHtml({
         <div class="card" style="display:flex;flex-direction:column;gap:9px">
           ${visibleFiltered
             .slice(0, 65)
-            .map(item => renderWireItemCardHtml(item, { prioritizedRaw, activeVideosSet }))
+            .map((item, idx) =>
+              renderWireItemCardHtml(item, {
+                prioritizedRaw,
+                activeVideosSet,
+                rosterPlayers,
+                isLeadFeatured: idx === 0 && activeFilter !== 'videos',
+                eagerImage: idx < 2
+              })
+            )
             .join('')}
         </div>
       `;
@@ -866,7 +975,10 @@ export function renderVideoEmbedOrFacade(
     videoStreamUrl && /^https:\/\//i.test(String(videoStreamUrl)) ? String(videoStreamUrl).trim() : '';
 
   if (!videoId && safeStreamUrl) {
-    const safePoster = posterUrl && /^https:\/\//i.test(String(posterUrl)) ? String(posterUrl).trim() : '';
+    const rawPoster = posterUrl && /^https:\/\//i.test(String(posterUrl)) ? String(posterUrl).trim() : '';
+    const optPoster = rawPoster ? optimizeImageUrlForSlot(rawPoster, 'hero') : { src: '', fallbackSrc: '' };
+    const safePoster = optPoster.src || rawPoster;
+    const posterFallbackAttr = optPoster.fallbackSrc ? `data-fallback-src="${esc(optPoster.fallbackSrc)}"` : '';
     const safeOutUrl = sanitizeExternalUrl(externalWatchUrl, safeStreamUrl) || safeStreamUrl;
     const providerLabel = /x\.com|twimg\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
       ? 'X'
@@ -885,7 +997,7 @@ export function renderVideoEmbedOrFacade(
             <div class="video-thumb-stage">
               ${
                 safePoster
-                  ? `<img src="${esc(safePoster)}" alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
+                  ? `<img src="${esc(safePoster)}" ${posterFallbackAttr} alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
                   : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
               }
               <div class="video-thumb-overlay">
@@ -916,7 +1028,7 @@ export function renderVideoEmbedOrFacade(
         <div class="video-thumb-stage" style="cursor:pointer" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
           ${
             safePoster
-              ? `<img src="${esc(safePoster)}" alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
+              ? `<img src="${esc(safePoster)}" ${posterFallbackAttr} alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
               : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
           }
           <div class="video-thumb-overlay">
