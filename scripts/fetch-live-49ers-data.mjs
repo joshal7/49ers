@@ -59,8 +59,10 @@ import {
   doesClauseMentionPlayer,
   extractPracticeDaysFromText,
   classifyIrAndReserveTimeline,
+  isBareStatusPlaceholderComment,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
+  resolveOfficialReportGameStatus,
   scopeBeatTextToPlayer,
   select22OffDefStartersFromDepthChart,
   sortIrTrackerPriority
@@ -933,6 +935,45 @@ async function main() {
   const cbsSfInjuries = parseCbsTeamInjuriesHtml(cbsSfInjuriesHtml);
   const sfTxAnalysis = analyzeTeamTransactions(espnSfTxJson.transactions || [], seasonYear);
 
+  // Non-destructive same-week W/T/F practice carryover from previous on-disk build so hourly Saturday
+  // refreshes NEVER forget Friday practice when `49ers.com` lags or Saturday ESPN blurbs overwrite Friday prose!
+  const prevSfPracticeByKey = new Map();
+  const prevOppPracticeByKey = new Map();
+  try {
+    const prevHealthDisk = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'health.json'), 'utf8'));
+    if (Number(prevHealthDisk?.week) === Number(detectedCurrentWeek)) {
+      for (const r of prevHealthDisk.practiceReport || []) {
+        const ck = canonicalPlayerKey(r?.name || '');
+        if (ck && ((r.wed && r.wed !== '-') || (r.thu && r.thu !== '-') || (r.fri && r.fri !== '-'))) {
+          prevSfPracticeByKey.set(ck, { wed: r.wed || '-', thu: r.thu || '-', fri: r.fri || '-' });
+        }
+      }
+      for (const r of prevHealthDisk.irAndReserveTracker || []) {
+        const ck = canonicalPlayerKey(r?.name || '');
+        if (ck && !prevSfPracticeByKey.has(ck) && ((r.wed && r.wed !== '-') || (r.thu && r.thu !== '-') || (r.fri && r.fri !== '-'))) {
+          prevSfPracticeByKey.set(ck, { wed: r.wed || '-', thu: r.thu || '-', fri: r.fri || '-' });
+        }
+      }
+    }
+  } catch {}
+  try {
+    const prevSmDisk = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'schedule-matchup.json'), 'utf8'));
+    const prevUm = prevSmDisk?.upcomingMatchup;
+    const targetOppAbbrPre = normalizeTeamAbbr(nextEspnOppCompetitor?.team?.abbreviation || '');
+    if (
+      prevUm &&
+      Number(prevUm.week) === Number(detectedCurrentWeek) &&
+      normalizeTeamAbbr(prevUm.oppAbbr || '') === targetOppAbbrPre
+    ) {
+      for (const r of prevUm.opponentHealth?.injuryReport || []) {
+        const ck = canonicalPlayerKey(r?.name || '');
+        if (ck && ((r.wed && r.wed !== '-') || (r.thu && r.thu !== '-') || (r.fri && r.fri !== '-'))) {
+          prevOppPracticeByKey.set(ck, { wed: r.wed || '-', thu: r.thu || '-', fri: r.fri || '-' });
+        }
+      }
+    }
+  } catch {}
+
   const sfAthleteIdsForDeepHealth = [];
   for (const group of espnRoster.athletes || []) {
     const gKey = String(group.position || '');
@@ -1258,7 +1299,8 @@ async function main() {
       const isGenuineInjuryReportEntry =
         bucket === 'active'
           ? officialInjReport.hasSfReport
-            ? Boolean(offInjRec)
+            ? Boolean(offInjRec) ||
+              (!isEarlyRestEntry && ['out', 'doubtful', 'questionable'].includes(rawStatus.toLowerCase()))
             : !isEarlyRestEntry &&
               (['out', 'doubtful', 'questionable'].includes(rawStatus.toLowerCase()) ||
                 Boolean(explicitInjType) ||
@@ -1274,8 +1316,10 @@ async function main() {
       const shortComment = isGenuineInjuryReportEntry ? rawShortComment : '';
       const longComment = isGenuineInjuryReportEntry ? rawLongComment : '';
 
-      // Practice participation: prefer official 49ers.com Wed/Thu/Fri report when available;
+      // Practice participation: prefer official 49ers.com Wed/Thu/Fri report when available,
+      // with non-destructive same-week carryover so Saturday builds never forget Friday practice;
       // before Wednesday's first practice report of the upcoming week, keep W / T / F blank ('-')!
+      const prevSfPrac = !sfBeforePracticeWindow ? prevSfPracticeByKey.get(canonKey) || null : null;
       let wed = '-';
       let thu = '-';
       let fri = '-';
@@ -1297,66 +1341,68 @@ async function main() {
               allowHeuristicFill: false
             })
           : { wed: '-', thu: '-', fri: '-' };
-        wed = offInjRec.wed && offInjRec.wed !== '-' ? offInjRec.wed : proseFallback.wed || '-';
-        thu = offInjRec.thu && offInjRec.thu !== '-' ? offInjRec.thu : proseFallback.thu || '-';
-        fri = offInjRec.fri && offInjRec.fri !== '-' ? offInjRec.fri : proseFallback.fri || '-';
+        wed =
+          offInjRec.wed && offInjRec.wed !== '-'
+            ? offInjRec.wed
+            : proseFallback.wed && proseFallback.wed !== '-'
+              ? proseFallback.wed
+              : prevSfPrac?.wed || '-';
+        thu =
+          offInjRec.thu && offInjRec.thu !== '-'
+            ? offInjRec.thu
+            : proseFallback.thu && proseFallback.thu !== '-'
+              ? proseFallback.thu
+              : prevSfPrac?.thu || '-';
+        fri =
+          offInjRec.fri && offInjRec.fri !== '-'
+            ? offInjRec.fri
+            : proseFallback.fri && proseFallback.fri !== '-'
+              ? proseFallback.fri
+              : prevSfPrac?.fri || '-';
       } else if (!sfBeforePracticeWindow && bucket === 'active' && isGenuineInjuryReportEntry) {
         const extracted = extractPracticeDaysFromText({
           statusRaw: rawStatus,
           injuryType,
           shortComment,
           longComment,
-          kickoffIso: nextEspnEvent?.date || ''
+          kickoffIso: nextEspnEvent?.date || '',
+          allowHeuristicFill: !prevSfPrac
         });
-        wed = extracted.wed;
-        thu = extracted.thu;
-        fri = extracted.fri;
+        wed = extracted.wed && extracted.wed !== '-' ? extracted.wed : prevSfPrac?.wed || '-';
+        thu = extracted.thu && extracted.thu !== '-' ? extracted.thu : prevSfPrac?.thu || '-';
+        fri = extracted.fri && extracted.fri !== '-' ? extracted.fri : prevSfPrac?.fri || '-';
       } else if (!sfBeforePracticeWindow && isIrReturnQuestionable) {
         const extractedIr = extractPracticeDaysFromText({
           statusRaw: 'Questionable',
           injuryType,
           shortComment,
           longComment,
-          kickoffIso: nextEspnEvent?.date || ''
+          kickoffIso: nextEspnEvent?.date || '',
+          allowHeuristicFill: !prevSfPrac
         });
-        wed = extractedIr.wed !== '-' ? extractedIr.wed : 'LP';
-        thu = extractedIr.thu;
-        fri = extractedIr.fri;
+        wed = extractedIr.wed !== '-' ? extractedIr.wed : prevSfPrac?.wed || 'LP';
+        thu = extractedIr.thu !== '-' ? extractedIr.thu : prevSfPrac?.thu || '-';
+        fri = extractedIr.fri !== '-' ? extractedIr.fri : prevSfPrac?.fri || '-';
       }
+
+      const sfDowngradeProseRe =
+        /\b(?:downgraded\s+to\s+(?:out|doubtful|questionable)|ruled\s+out|did\s+not\s+travel|didn['’]?t\s+travel|added\s+to\s+(?:the\s+)?injury\s+report|suffered\s+a\s+setback|setback\s+(?:at|in|during)\s+practice|illness)\b/i;
 
       const resolveOfficialMidWeekOrFinalStatus = (offRec, fbRaw = '', effectiveInj = '') => {
         if (!offRec) return fbRaw;
-        if (offRec.gameStatus) return offRec.gameStatus;
-        // Only treat as pure Active maintenance when no secondary medical injury accompanied a Thu/Fri LP/DNP tag!
         const hasSecondaryMedical =
           Boolean(effectiveInj) &&
           !/not injury related|\bnir\b|\brest\b|personal/i.test(effectiveInj) &&
-          (offRec.thu === 'LP' || offRec.thu === 'DNP' || offRec.fri === 'LP' || offRec.fri === 'DNP');
-        if (
-          !hasSecondaryMedical &&
-          (offRec.wed === 'Vet Rest' ||
-            offRec.thu === 'Vet Rest' ||
-            offRec.fri === 'Vet Rest' ||
-            /not injury related|\bnir\b|\brest\b|personal/i.test(offRec.injuryType || ''))
-        ) {
-          return 'Active';
-        }
-        // Only when Friday's final practice column is populated (`fri !== '-'`) does blank `gameStatus` mean Cleared/Active!
-        if (offRec.fri && offRec.fri !== '-') {
-          return 'Active';
-        }
-        const fbL = String(fbRaw || '').trim().toLowerCase();
-        if (
-          fbL === 'out' &&
-          offRec.wed !== 'LP' &&
-          offRec.wed !== 'FP' &&
-          offRec.thu !== 'LP' &&
-          offRec.thu !== 'FP'
-        ) {
-          return 'Out';
-        }
-        if (fbL === 'doubtful') return 'Doubtful';
-        return 'Questionable';
+          (thu === 'LP' || thu === 'DNP' || fri === 'LP' || fri === 'DNP');
+        return resolveOfficialReportGameStatus({
+          offRec: { ...offRec, wed, thu, fri },
+          teamHasGameDesignations: Boolean(officialInjReport.hasSfGameDesignations),
+          existingStatus: fbRaw,
+          effectiveInjuryType: effectiveInj,
+          hasSecondaryMedical,
+          isPureRest: /not injury related|\bnir\b|\brest\b|personal/i.test(offRec.injuryType || ''),
+          espnHasDowngradeProse: sfDowngradeProseRe.test(`${shortComment} ${longComment}`)
+        });
       };
 
       const effectiveGameStatusForModel = isIrReturnQuestionable
@@ -4893,6 +4939,119 @@ async function main() {
     ...oppHealthyOffCandidates.map(enrichOppEntry),
     ...oppHealthyDefCandidates.map(enrichOppEntry)
   ];
+
+  // Enrich Opponent injured/Questionable/Doubtful/Out players with ESPN per-player news wire so
+  // build-time `data/schedule-matchup.json` gets real practice days (when CMS leaves Friday blank),
+  // real medical prose (replacing bare "out" placeholders), and trending up/down signals!
+  const oppWireBuildItems = [];
+  const oppWireTargets = oppInjuryReportPlayers
+    .map(row => ({
+      row,
+      pid: String(
+        row.id ||
+          (String(row.espnUrl || '').match(/\/id\/(\d+)/)?.[1] || '') ||
+          (String(row.headshotUrl || '').match(/\/(\d+)\.png/)?.[1] || '')
+      )
+    }))
+    .filter(x => /^\d{4,10}$/.test(x.pid))
+    .slice(0, 16);
+
+  if (oppWireTargets.length > 0) {
+    const oppKickMs = Date.parse(nextEspnEvent?.date || nextScheduledGame?.dateIso || '');
+    const oppWireFloorMs = Number.isFinite(oppKickMs)
+      ? oppKickMs - 6 * 86_400_000
+      : Date.now() - 6 * 86_400_000;
+    await Promise.all(
+      oppWireTargets.map(async ({ row, pid }) => {
+        try {
+          const json = await fetchJson(
+            `https://site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(pid)}&limit=4`
+          );
+          const entries = Array.isArray(json?.feed) ? [...json.feed].reverse() : [];
+          for (const entry of entries) {
+            const pubMs = Date.parse(entry.published || entry.lastModified || '');
+            if (!Number.isFinite(pubMs) || pubMs < oppWireFloorMs) continue;
+            const headline = cleanSensationalistText(String(entry.headline || '').replace(/<[^>]+>/g, ' ').trim());
+            const desc = cleanSensationalistText(String(entry.description || '').replace(/<[^>]+>/g, ' ').trim());
+            const story = cleanSensationalistText(String(entry.story || '').replace(/<[^>]+>/g, ' ').trim());
+            const leadText = desc || headline;
+            if (leadText && leadText.length >= 16) {
+              oppWireBuildItems.push({
+                id: `espn_pwire_${pid}_${entry.id || pubMs}`,
+                type: 'tweet',
+                title: leadText,
+                fullText: leadText,
+                summary: story && story !== leadText ? story : headline !== leadText ? headline : '',
+                publishedAt: new Date(pubMs).toISOString(),
+                url: entry.links?.web?.href || row.espnUrl || 'https://www.espn.com/nfl/injuries',
+                author: entry.byline ? String(entry.byline).replace(/^By\s+/i, '').trim() : `${oppAbbrTarget} Beat Wire`,
+                outletName: 'ESPN / X Beat Wire',
+                trustTier: 1,
+                wireSource: 'espn_player_wire',
+                primaryPlayer: { id: pid, name: row.name }
+              });
+              if (isBareStatusPlaceholderComment(row.longComment) && !isBareStatusPlaceholderComment(story || leadText)) {
+                row.longComment = story || leadText;
+                if (isBareStatusPlaceholderComment(row.shortComment)) {
+                  row.shortComment = leadText;
+                }
+              }
+            }
+            if (!oppBeforePracticeWindow) {
+              const parsed = extractPracticeDaysFromText({
+                statusRaw: row.gameStatus || 'Questionable',
+                injuryType: row.injuryType || '',
+                shortComment: `${headline} ${desc}`.trim(),
+                longComment: story,
+                kickoffIso: nextEspnEvent?.date || nextScheduledGame?.dateIso || '',
+                allowHeuristicFill: false
+              });
+              for (const slot of ['wed', 'thu', 'fri']) {
+                if ((!row[slot] || row[slot] === '-') && parsed[slot] && parsed[slot] !== '-') {
+                  row[slot] = parsed[slot];
+                }
+              }
+            }
+          }
+        } catch {}
+      })
+    );
+  }
+
+  const oppHealthReconcileContainer = {
+    injuryReport: oppInjuryReportPlayers,
+    irReserve: oppIrPlayers,
+    activeRoster: oppActiveRosterPlayers,
+    keyStartersHealthy: oppKeyHealthyStarters,
+    summary: { totalStarters: 22 }
+  };
+  for (const row of oppInjuryReportPlayers) {
+    const offRec = officialInjReport.oppByKey.get(canonicalPlayerKey(row.name));
+    if (offRec) {
+      row._officialSlots = {
+        ...(offRec.wed && offRec.wed !== '-' ? { wed: true } : {}),
+        ...(offRec.thu && offRec.thu !== '-' ? { thu: true } : {}),
+        ...(offRec.fri && offRec.fri !== '-' ? { fri: true } : {})
+      };
+    }
+  }
+  reconcileRosterAndHealthWithNews({
+    meta: { currentWeek: detectedCurrentWeek, seasonYear },
+    roster: { players: [{ id: 'opp_stub', name: '', health: null }] },
+    news: { rawStream: rawNewsStream },
+    _oppNewsWire: oppWireBuildItems,
+    scheduleMatchup: {
+      schedule: pipelineAppDataStub.scheduleMatchup.schedule,
+      upcomingMatchup: {
+        ...pipelineAppDataStub.scheduleMatchup.upcomingMatchup,
+        opponentHealth: oppHealthReconcileContainer
+      }
+    }
+  });
+  for (const row of oppInjuryReportPlayers) {
+    delete row._officialSlots;
+    delete row._slotPubMs;
+  }
 
   oppIrPlayers.sort(
     (a, b) => sortIrTrackerPriority(a) - sortIrTrackerPriority(b) || (b.snapPct ?? 0) - (a.snapPct ?? 0) || a.name.localeCompare(b.name)

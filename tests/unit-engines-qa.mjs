@@ -65,7 +65,13 @@ import {
   hasWindowDefinitelyNotOpeningSignal,
   hasDefiniteIrNonActivationOrWindowClosedSignal,
   sanitizeIrBeatNoteForCurrentWeek,
-  detectOpen21DayIrWindowFromHistory
+  detectOpen21DayIrWindowFromHistory,
+  extractPracticeDaysFromText,
+  hasTrendingDownwardSignal,
+  hasTrendingUpwardSignal,
+  evaluateCorroboratedNewsInjurySignal,
+  resolveOfficialReportGameStatus,
+  reconcileRosterAndHealthWithNews
 } from '../src/engine/injuryProbabilityModel.js';
 import {
   canonicalPlayerKey,
@@ -221,7 +227,11 @@ import {
   extractGeminiModelFamilyKey,
   buildGeminiThinkingConfig
 } from '../src/engine/geminiStudioPrompts.js';
-import { hydrateLiveGameDayRosters } from '../src/services/dataService.js';
+import {
+  hydrateLiveGameDayRosters,
+  persistWeeklyPracticeSnapshot,
+  hydrateCachedWeeklyPracticeAndInactives
+} from '../src/services/dataService.js';
 import { buildTeamInjuryNewsFeed } from '../src/engine/injuryProbabilityModel.js';
 import {
   NEWS_NAV_CLUSTERS,
@@ -1989,7 +1999,10 @@ test('Opponent Health & Play Likelihood has full parity with 49ers Health (Avail
   assert.ok(oh.keyStartersHealthy.some(s => s.unit === 'Offense'), 'Offensive healthy starters included');
   assert.ok(oh.keyStartersHealthy.some(s => s.unit === 'Defense'), 'Defensive healthy starters included');
   assert.ok(oh.injuryReport.length >= 1);
-  const earlyWeek = isBeforeWeeklyPracticeWindow(sched.upcomingMatchup?.kickoffIso || '');
+  const earlyWeek = isBeforeWeeklyPracticeWindow(
+    sched.upcomingMatchup?.kickoffIso || '',
+    Date.parse(sched.updatedAt || '')
+  );
   for (const p of oh.injuryReport) {
     assert.ok(typeof p.archetypeNote === 'string' && p.archetypeNote.length > 5);
     assert.ok(Array.isArray(p.factors) && p.factors.length >= 1);
@@ -2447,7 +2460,10 @@ test('Live 2026 Health, Roster & Depth Chart datasets eliminate Alfred Collins b
   // Official 49ers.com practice participation & early-week blank W/T/F rollover verification
   const matchupJson = JSON.parse(matchupRaw);
   assert.equal(health.week, matchupJson.upcomingMatchup.week, 'health.json week must match upcomingMatchup.week');
-  const sfEarlyWeek = isBeforeWeeklyPracticeWindow(matchupJson.upcomingMatchup.kickoffIso || '');
+  const sfEarlyWeek = isBeforeWeeklyPracticeWindow(
+    matchupJson.upcomingMatchup.kickoffIso || '',
+    Date.parse(health.updatedAt || '')
+  );
   if (sfEarlyWeek) {
     for (const row of health.practiceReport) {
       assert.equal(row.wed, '-', `Early-week SF row ${row.name} must have blank wed ('-')`);
@@ -11464,6 +11480,732 @@ test('Digest Experience Engine: Catch-up watermark, 2-mode sort (Top default | L
   const capSearch = runUniversalSearch('cap', { appData: { roster: { players: [] } }, filteredRawItems: sampleItems });
   assert.ok(capSearch.sections.some(s => s.subTab === 'cap'), 'Searching "cap" must surface Salary Cap quick jump');
   assert.ok(urlBase64ToUint8Array('SGVsbG8').length === 5, 'Base64URL decoder must return Uint8Array');
+});
+
+test('49ers & Opponent Injury Robustness: multi-day practice prose, MNF/TNF HTML columns, status guards & trending up/down signals', () => {
+  // 1. Multi-day practice prose parsing (segment-isolated, zero cross-comma corruption, speculative guard)
+  assert.deepEqual(
+    extractPracticeDaysFromText({ shortComment: 'Did not practice Wednesday, limited Thursday, full Friday' }),
+    { wed: 'DNP', thu: 'LP', fri: 'FP' },
+    'Comma-separated W/T/F progression must not corrupt Thu/Fri into DNP'
+  );
+  assert.deepEqual(
+    extractPracticeDaysFromText({ shortComment: 'did not practice Wed/Thu, but was limited Friday' }),
+    { wed: 'DNP', thu: 'DNP', fri: 'LP' },
+    'Conjunction-separated Wed/Thu DNP + Fri LP must parse cleanly'
+  );
+  assert.deepEqual(
+    extractPracticeDaysFromText({
+      shortComment: "held out of Friday's practice after being limited Thursday",
+      allowHeuristicFill: false
+    }),
+    { wed: '-', thu: 'LP', fri: 'DNP' },
+    'Late-week Friday held-out after Thursday LP must parse accurately'
+  );
+  assert.deepEqual(
+    extractPracticeDaysFromText({
+      shortComment: "missed Wednesday and Thursday's practices before upgrading to limited on Friday"
+    }),
+    { wed: 'DNP', thu: 'DNP', fri: 'LP' }
+  );
+  assert.deepEqual(
+    extractPracticeDaysFromText({
+      shortComment: 'upgraded to a full practice Friday after being limited Wednesday and Thursday'
+    }),
+    { wed: 'LP', thu: 'LP', fri: 'FP' }
+  );
+  assert.deepEqual(
+    extractPracticeDaysFromText({
+      shortComment: 'is expected to be limited Friday and questionable for Sunday',
+      allowHeuristicFill: false
+    }),
+    { wed: '-', thu: '-', fri: '-' },
+    'Speculative future practice expectations must not be recorded as observed practice'
+  );
+  // Non-Sunday game weekday mapping (MNF Thu/Fri/Sat & TNF Mon/Tue/Wed)
+  assert.deepEqual(
+    extractPracticeDaysFromText({
+      shortComment: 'Did not practice Thursday, limited Friday, full Saturday',
+      kickoffIso: '2026-11-24T01:15:00Z', // Monday Night Football
+      nowMs: Date.parse('2026-11-22T22:00:00Z')
+    }),
+    { wed: 'DNP', thu: 'LP', fri: 'FP' },
+    'MNF Thu/Fri/Sat must map cleanly into slots 1/2/3'
+  );
+  assert.deepEqual(
+    extractPracticeDaysFromText({
+      shortComment: 'Limited Monday, full Tuesday and Wednesday',
+      kickoffIso: '2026-11-20T01:15:00Z', // Thursday Night Football
+      nowMs: Date.parse('2026-11-19T22:00:00Z')
+    }),
+    { wed: 'LP', thu: 'FP', fri: 'FP' },
+    'TNF Mon/Tue/Wed must map cleanly into slots 1/2/3'
+  );
+
+  // 2. Official 49ers.com HTML Parser for MNF (Thu/Fri/Sat) & TNF (Mon/Tue/Wed) + Game-Designation flags
+  const mnfHtml = `
+    <section><h3>San Francisco 49ers</h3><table>
+      <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Game Status</th></tr></thead>
+      <tbody>
+        <tr><td>Mike Evans</td><td>WR</td><td>Achilles</td><td>DNP</td><td>LP</td><td>FP</td><td>Questionable</td></tr>
+        <tr><td>Renardo Green</td><td>CB</td><td>Back</td><td>DNP</td><td>DNP</td><td>LP</td><td></td></tr>
+      </tbody>
+    </table></section>
+    <section><h3>Minnesota Vikings</h3><table>
+      <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Game Status</th></tr></thead>
+      <tbody>
+        <tr><td>Justin Jefferson</td><td>WR</td><td>Hamstring</td><td>DNP</td><td>LP</td><td>LP</td><td>Questionable</td></tr>
+      </tbody>
+    </table></section>`;
+  const mnfParsed = parseOfficial49ersInjuryReportHtml(mnfHtml, 'Minnesota Vikings');
+  assert.equal(mnfParsed.hasSfReport, true);
+  assert.equal(mnfParsed.hasOppReport, true);
+  assert.equal(mnfParsed.hasSfGameDesignations, true);
+  assert.equal(mnfParsed.hasOppGameDesignations, true);
+  const sfEvansMnf = mnfParsed.sfByKey.get(canonicalPlayerKey('Mike Evans'));
+  assert.deepEqual(
+    { wed: sfEvansMnf?.wed, thu: sfEvansMnf?.thu, fri: sfEvansMnf?.fri },
+    { wed: 'DNP', thu: 'LP', fri: 'FP' },
+    'MNF Thu/Fri/Sat HTML columns must map positionally to wed/thu/fri for SF'
+  );
+  const oppJjMnf = mnfParsed.oppByKey.get(canonicalPlayerKey('Justin Jefferson'));
+  assert.deepEqual(
+    { wed: oppJjMnf?.wed, thu: oppJjMnf?.thu, fri: oppJjMnf?.fri },
+    { wed: 'DNP', thu: 'LP', fri: 'LP' },
+    'MNF Thu/Fri/Sat HTML columns must map positionally to wed/thu/fri for Opponent'
+  );
+
+  const tnfMidweekHtml = `
+    <section><h3>San Francisco 49ers</h3><table>
+      <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Game Status</th></tr></thead>
+      <tbody>
+        <tr><td>Brock Purdy</td><td>QB</td><td>Toe</td><td>LP</td><td>FP</td><td></td><td></td></tr>
+      </tbody>
+    </table></section>`;
+  const tnfParsed = parseOfficial49ersInjuryReportHtml(tnfMidweekHtml, '');
+  assert.equal(tnfParsed.hasSfGameDesignations, false, 'Mid-week table with blank game statuses must report hasSfGameDesignations=false');
+  const sfPurdyTnf = tnfParsed.sfByKey.get(canonicalPlayerKey('Brock Purdy'));
+  assert.equal(sfPurdyTnf?.wed, 'LP');
+  assert.equal(sfPurdyTnf?.thu, 'FP');
+  assert.equal(sfPurdyTnf?.fri, '-');
+
+  // 3. resolveOfficialReportGameStatus invariants (never clear Friday DNP or clobber Saturday ESPN downgrade)
+  assert.equal(
+    resolveOfficialReportGameStatus({
+      offRec: { wed: 'DNP', thu: 'DNP', fri: 'DNP', gameStatus: '' },
+      teamHasGameDesignations: true,
+      existingStatus: 'Questionable',
+      effectiveInjuryType: 'Hamstring',
+      hasSecondaryMedical: false,
+      isPureRest: false,
+      espnHasDowngradeProse: false
+    }),
+    'Questionable',
+    'Non-Rest Friday DNP with blank gameStatus must NEVER auto-clear to Active'
+  );
+  assert.equal(
+    resolveOfficialReportGameStatus({
+      offRec: { wed: 'DNP', thu: 'FP', fri: 'DNP', gameStatus: '' },
+      teamHasGameDesignations: true,
+      existingStatus: 'Active',
+      effectiveInjuryType: 'Not Injury Related - Rest',
+      hasSecondaryMedical: false,
+      isPureRest: true,
+      espnHasDowngradeProse: false
+    }),
+    'Active',
+    'Pure Veteran Rest Friday DNP with blank gameStatus may cleanly resolve to Active'
+  );
+  assert.equal(
+    resolveOfficialReportGameStatus({
+      offRec: { wed: 'DNP', thu: 'LP', fri: 'LP', gameStatus: 'Questionable' },
+      teamHasGameDesignations: true,
+      existingStatus: 'Out',
+      effectiveInjuryType: 'Achilles',
+      hasSecondaryMedical: false,
+      isPureRest: false,
+      espnHasDowngradeProse: false
+    }),
+    'Out',
+    'Lagging Friday 49ers.com Questionable must NEVER overwrite a live Saturday ESPN Out downgrade'
+  );
+  assert.equal(
+    resolveOfficialReportGameStatus({
+      offRec: { wed: 'LP', thu: 'LP', fri: '-', gameStatus: '' },
+      teamHasGameDesignations: false,
+      existingStatus: 'Questionable',
+      effectiveInjuryType: 'Knee',
+      hasSecondaryMedical: false,
+      isPureRest: false,
+      espnHasDowngradeProse: false
+    }),
+    'Questionable',
+    'Unfinalized mid-week table with blank gameStatus must NEVER auto-clear LP to Active'
+  );
+  assert.equal(
+    resolveOfficialReportGameStatus({
+      offRec: { wed: 'LP', thu: 'FP', fri: 'FP', gameStatus: '' },
+      teamHasGameDesignations: true,
+      existingStatus: 'Questionable',
+      effectiveInjuryType: 'Ankle',
+      hasSecondaryMedical: false,
+      isPureRest: false,
+      espnHasDowngradeProse: false
+    }),
+    'Active',
+    'Finalized Friday table with fri=FP and blank gameStatus cleanly clears to Active'
+  );
+
+  // 4. Trending Upward / Downward, Late Setback, Negations & Saturday Concussion Clearance
+  assert.equal(hasTrendingDownwardSignal('Mike Evans is trending downward ahead of Sunday after soreness'), true);
+  assert.equal(hasTrendingDownwardSignal('Suffered a setback in Friday walkthrough; uphill battle to play'), true);
+  assert.equal(hasTrendingDownwardSignal('No setback for Mike Evans; feeling much better today'), false, 'Negated "no setback" must NOT fire downward signal');
+  assert.equal(hasTrendingUpwardSignal('Mike Evans is trending upward and optimistic he plays Sunday'), true);
+  assert.equal(hasTrendingUpwardSignal('Not trending up and not optimistic he can go this week'), false, 'Negated "not trending up" must NOT fire upward signal');
+  assert.equal(hasTrendingUpwardSignal('If he is trending upward by Friday he could play'), false, 'Conditional "if he is trending upward" must NOT fire upward signal');
+
+  const basePlayerInput = {
+    name: 'Mike Evans',
+    position: 'WR',
+    snapPct: 86,
+    gameStatus: 'Questionable',
+    injuryType: 'Achilles',
+    wed: 'DNP',
+    thu: 'DNP',
+    fri: 'LP'
+  };
+  const nowMs = Date.parse('2026-11-21T18:00:00Z'); // Saturday 10:00 AM PT
+  const baseProb = computePlayerPlayProbability({ ...basePlayerInput, beatNote: 'Limited Friday.' });
+
+  // Trending upward tweet (Saturday) lifts probability meaningfully
+  const upSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Mike Evans',
+    newsItems: [
+      {
+        title: 'Mike Evans is trending upward and 49ers are optimistic he plays Sunday vs Vikings',
+        author: 'Adam Schefter',
+        publishedAt: '2026-11-21T17:00:00Z'
+      },
+      {
+        title: 'Mike Evans trending in the right direction after Friday work',
+        author: 'Matt Maiocco',
+        publishedAt: '2026-11-21T17:15:00Z'
+      }
+    ],
+    nowMs
+  });
+  assert.equal(upSig.signalType, 'TRENDING_UPWARD');
+  const upProb = computePlayerPlayProbability({ ...basePlayerInput, corroboratedNewsSignal: upSig });
+  assert.ok(upProb.probabilityPct >= baseProb.probabilityPct + 6, `Trending upward (${upProb.probabilityPct}%) must exceed neutral baseline (${baseProb.probabilityPct}%) by >=6 pts`);
+
+  // Trending downward + late setback tweet (Saturday) drops probability sharply
+  const downSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Mike Evans',
+    newsItems: [
+      {
+        title: 'Mike Evans is trending downward after suffering a late-week setback with his Achilles; uphill battle to play',
+        author: 'Ian Rapoport',
+        publishedAt: '2026-11-21T17:30:00Z'
+      },
+      {
+        title: 'Mike Evans trending in the wrong direction ahead of Sunday after Friday setback',
+        author: 'Matt Barrows',
+        publishedAt: '2026-11-21T17:40:00Z'
+      }
+    ],
+    nowMs
+  });
+  assert.equal(downSig.signalType, 'TRENDING_DOWNWARD');
+  assert.equal(downSig.hasLateSetback, true);
+  const downProb = computePlayerPlayProbability({ ...basePlayerInput, corroboratedNewsSignal: downSig });
+  assert.ok(downProb.probabilityPct <= 30, `Late-setback trending downward must drop probability <= 30%, got ${downProb.probabilityPct}%`);
+
+  // Opposing Head Coach quote + fresh Saturday trend beats stale Wednesday same-polarity note
+  const oppTrendSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Justin Jefferson',
+    newsItems: [
+      {
+        title: 'Justin Jefferson did not practice Wednesday due to hamstring tightness',
+        author: 'Kevin Seifert',
+        publishedAt: '2026-11-18T21:00:00Z'
+      },
+      {
+        title: "Vikings head coach Kevin O'Connell said Justin Jefferson is trending downward and facing an uphill battle to play Sunday",
+        author: 'Tom Pelissero',
+        publishedAt: '2026-11-21T17:20:00Z'
+      }
+    ],
+    nowMs
+  });
+  assert.equal(oppTrendSig.signalType, 'TRENDING_DOWNWARD', 'Fresh Saturday opposing coach downward trend must outrank stale Wednesday DNP note');
+
+  // Saturday concussion protocol clearance lifts Questionable concussion player >= 85%
+  const concSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Ricky Pearsall',
+    newsItems: [
+      {
+        title: 'Ricky Pearsall has cleared concussion protocol and is good to go for Sunday',
+        author: 'Matt Barrows',
+        publishedAt: '2026-11-21T16:30:00Z'
+      },
+      {
+        title: 'Ricky Pearsall cleared the NFL concussion protocol on Saturday',
+        author: 'Matt Maiocco',
+        publishedAt: '2026-11-21T16:40:00Z'
+      }
+    ],
+    nowMs
+  });
+  assert.equal(concSig.signalType, 'CLEARED_CONCUSSION_PROTOCOL');
+  const concProb = computePlayerPlayProbability({
+    name: 'Ricky Pearsall',
+    position: 'WR',
+    snapPct: 78,
+    gameStatus: 'Questionable',
+    injuryType: 'Concussion',
+    wed: 'DNP',
+    thu: 'LP',
+    fri: 'LP',
+    corroboratedNewsSignal: concSig
+  });
+  assert.ok(concProb.probabilityPct >= 85, `Cleared concussion protocol must lift probability >= 85%, got ${concProb.probabilityPct}%`);
+
+  // Corroborated RULED_OUT_WEEK overrides mid-week thu='LP' even when fri='-'
+  const ruledOutSig = evaluateCorroboratedNewsInjurySignal({
+    playerName: 'Renardo Green',
+    newsItems: [
+      {
+        title: 'Kyle Shanahan said CB Renardo Green (back) has been ruled out for Sunday vs Vikings',
+        author: 'Nick Wagoner',
+        publishedAt: '2026-11-21T17:45:00Z'
+      }
+    ],
+    nowMs
+  });
+  assert.equal(ruledOutSig.signalType, 'RULED_OUT_WEEK');
+  const ruledOutProb = computePlayerPlayProbability({
+    name: 'Renardo Green',
+    position: 'CB',
+    snapPct: 91,
+    gameStatus: 'Questionable',
+    injuryType: 'Back',
+    wed: 'DNP',
+    thu: 'LP',
+    fri: '-',
+    corroboratedNewsSignal: ruledOutSig
+  });
+  assert.equal(ruledOutProb.probabilityPct, 0, 'Corroborated RULED_OUT_WEEK must force 0% even when mid-week thu=LP and fri=-');
+});
+
+test('49ers & Opponent Weekly Snapshot Non-Destructive Merge, Official Slot Protection & Full Opponent Wire Reconciliation', () => {
+  // 1. Mock browser localStorage to verify Friday practice is NEVER erased by a Saturday blank snapshot
+  const memStore = new Map();
+  const prevWindow = globalThis.window;
+  globalThis.window = {
+    localStorage: {
+      getItem: k => (memStore.has(k) ? memStore.get(k) : null),
+      setItem: (k, v) => memStore.set(k, String(v)),
+      removeItem: k => memStore.delete(k)
+    }
+  };
+  try {
+    const fridayAppData = {
+      meta: { seasonYear: 2026, currentWeek: 11 },
+      roster: {
+        players: [
+          {
+            id: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            rosterBucket: 'active',
+            snapSharePct: 86,
+            health: { status: 'Questionable', injuryType: 'Achilles', wed: 'DNP', thu: 'LP', fri: 'LP', playProbabilityPct: 58 }
+          }
+        ]
+      },
+      health: {
+        week: 11,
+        practiceReport: [
+          {
+            playerId: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            wed: 'DNP',
+            thu: 'LP',
+            fri: 'LP',
+            injuryType: 'Achilles',
+            gameStatus: 'Questionable',
+            playProbabilityPct: 58,
+            beatComment: 'Limited Friday.'
+          }
+        ]
+      },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 11,
+          oppAbbr: 'MIN',
+          kickoffIso: '2026-11-23T01:20:00Z',
+          opponentHealth: {
+            injuryReport: [
+              {
+                name: 'Justin Jefferson',
+                position: 'WR',
+                wed: 'DNP',
+                thu: 'LP',
+                fri: 'FP',
+                injuryType: 'Hamstring',
+                gameStatus: 'Questionable',
+                playProbabilityPct: 82,
+                shortComment: 'Full practice Friday.'
+              }
+            ],
+            keyStartersHealthy: [],
+            irReserve: []
+          }
+        }
+      }
+    };
+    persistWeeklyPracticeSnapshot(fridayAppData);
+
+    // Saturday morning transient upstream refresh temporarily blanks Friday (`fri: '-'`)
+    const saturdayBlankAppData = JSON.parse(JSON.stringify(fridayAppData));
+    saturdayBlankAppData.roster.players[0].health.fri = '-';
+    saturdayBlankAppData.health.practiceReport[0].fri = '-';
+    saturdayBlankAppData.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport[0].fri = '-';
+
+    // Non-destructive save must NOT wipe Friday practice in localStorage
+    persistWeeklyPracticeSnapshot(saturdayBlankAppData);
+
+    // Hydrate into a fresh Saturday bundle -> Friday practice MUST be restored for BOTH SF & Opponent!
+    const freshSatBundle = JSON.parse(JSON.stringify(saturdayBlankAppData));
+    hydrateCachedWeeklyPracticeAndInactives(freshSatBundle);
+    assert.equal(freshSatBundle.health.practiceReport[0].fri, 'LP', 'SF Friday practice must survive Saturday transient blank snapshot');
+    assert.equal(freshSatBundle.roster.players[0].health.fri, 'LP', 'SF roster Friday practice must survive Saturday transient blank snapshot');
+    assert.equal(freshSatBundle.roster.players[0].health._practiceRestoredFromCache, true);
+    assert.equal(
+      freshSatBundle.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport[0].fri,
+      'FP',
+      'Opponent Friday practice must survive Saturday transient blank snapshot'
+    );
+  } finally {
+    if (prevWindow === undefined) delete globalThis.window;
+    else globalThis.window = prevWindow;
+  }
+
+  // 2. Official `_officialSlots` protection + Full Opponent `_oppNewsWire` Reconciliation inside `reconcileRosterAndHealthWithNews`
+  const nowIso = '2026-11-21T18:00:00Z'; // Saturday 10:00 AM PT
+  const mockReconcileData = {
+    meta: { seasonYear: 2026, currentWeek: 11, updatedAt: nowIso },
+    roster: {
+      players: [
+        {
+          id: '16737',
+          name: 'Mike Evans',
+          position: 'WR',
+          rosterBucket: 'active',
+          snapSharePct: 86,
+          health: {
+            isOnPracticeReport: true,
+            status: 'Questionable',
+            injuryType: 'Achilles',
+            wed: 'DNP',
+            thu: 'LP',
+            fri: 'LP',
+            _officialSlots: { wed: true, thu: true, fri: true },
+            playProbabilityPct: 58,
+            beatNote: 'Limited Friday.'
+          }
+        },
+        {
+          id: '4427325',
+          name: 'Renardo Green',
+          position: 'CB',
+          rosterBucket: 'active',
+          snapSharePct: 91,
+          health: {
+            status: 'Questionable',
+            injuryType: 'Back',
+            wed: 'DNP',
+            thu: 'LP',
+            fri: '-',
+            playProbabilityPct: 55,
+            beatNote: 'Back tightness.'
+          }
+        }
+      ]
+    },
+    health: {
+      week: 11,
+      practiceReport: [
+        {
+          playerId: '16737',
+          name: 'Mike Evans',
+          position: 'WR',
+          wed: 'DNP',
+          thu: 'LP',
+          fri: 'LP',
+          _officialSlots: { wed: true, thu: true, fri: true },
+          injuryType: 'Achilles',
+          gameStatus: 'Questionable',
+          playProbabilityPct: 58,
+          beatComment: 'Limited Friday.'
+        },
+        {
+          playerId: '4427325',
+          name: 'Renardo Green',
+          position: 'CB',
+          wed: 'DNP',
+          thu: 'LP',
+          fri: '-',
+          injuryType: 'Back',
+          gameStatus: 'Questionable',
+          playProbabilityPct: 55,
+          beatComment: 'Back tightness.'
+        }
+      ],
+      irAndReserveTracker: []
+    },
+    news: {
+      rawStream: [
+        // Earlier-in-the-day open-media beat tweet claiming DNP Friday MUST NOT clobber official 49ers.com fri='LP'!
+        {
+          id: 'sf_open_media_1',
+          title: 'Mike Evans was not seen during open media portion of Friday practice',
+          summary: 'Mike Evans did not practice Friday during open viewing.',
+          author: 'David Lombardi',
+          publishedAt: '2026-11-20T19:15:00Z'
+        },
+        // Corroborated Saturday ruled-out report for Renardo Green -> must sync status='Out' and 0%
+        {
+          id: 'sf_ruled_out_1',
+          title: 'Kyle Shanahan confirms CB Renardo Green (back) is ruled out for Sunday vs Vikings',
+          author: 'Matt Maiocco',
+          publishedAt: '2026-11-21T17:10:00Z'
+        }
+      ]
+    },
+    _oppNewsWire: [
+      // Fills missing Friday LP + upgrades bare "questionable" placeholder + applies trending upward shift for Justin Jefferson
+      {
+        id: 'opp_jj_1',
+        title: 'Justin Jefferson was limited in Friday practice and is trending upward ahead of Sunday vs 49ers',
+        summary: 'Vikings WR Justin Jefferson (hamstring) logged limited work Friday and is trending in the right direction to play.',
+        author: 'Adam Schefter',
+        publishedAt: '2026-11-21T16:30:00Z'
+      },
+      // Downgrades Brian O'Neill via trending downward + late setback + upgrades bare "out"/"questionable" note
+      {
+        id: 'opp_oneill_1',
+        title: "Vikings RT Brian O'Neill (knee) is trending downward after a late-week setback and faces an uphill battle",
+        author: 'Ian Rapoport',
+        publishedAt: '2026-11-21T17:00:00Z'
+      },
+      // Promotes healthy starter Jonathan Greenard to Out when ruled out Saturday!
+      {
+        id: 'opp_greenard_1',
+        title: "Vikings head coach Kevin O'Connell ruled out EDGE Jonathan Greenard (shoulder) for Sunday against the 49ers",
+        author: 'Tom Pelissero',
+        publishedAt: '2026-11-21T17:25:00Z'
+      }
+    ],
+    scheduleMatchup: {
+      upcomingMatchup: {
+        week: 11,
+        oppAbbr: 'MIN',
+        opponent: 'Minnesota Vikings',
+        kickoffIso: '2026-11-23T01:20:00Z',
+        opponentHealth: {
+          summary: { totalStarters: 22, healthyStarters: 20, startersOutOrIr: 0, overallAvailabilityScore: 95 },
+          injuryReport: [
+            {
+              name: 'Justin Jefferson',
+              position: 'WR',
+              isStarter: true,
+              wed: 'DNP',
+              thu: 'LP',
+              fri: '-',
+              injuryType: 'Hamstring',
+              gameStatus: 'Questionable',
+              playProbabilityPct: 50,
+              shortComment: 'questionable'
+            },
+            {
+              name: "Brian O'Neill",
+              position: 'OT',
+              isStarter: true,
+              wed: 'LP',
+              thu: 'LP',
+              fri: 'LP',
+              injuryType: 'Knee',
+              gameStatus: 'Questionable',
+              playProbabilityPct: 68,
+              shortComment: 'questionable'
+            }
+          ],
+          keyStartersHealthy: [
+            { name: 'Jonathan Greenard', position: 'DE', unit: 'Defense', status: 'Active' },
+            { name: 'J.J. McCarthy', position: 'QB', unit: 'Offense', status: 'Active' }
+          ],
+          irReserve: []
+        }
+      }
+    }
+  };
+
+  reconcileRosterAndHealthWithNews(mockReconcileData, { nowMs: Date.parse(nowIso) });
+
+  // Verify SF official Friday LP protected from open-media tweet
+  const sfEvans = mockReconcileData.health.practiceReport.find(r => r.name === 'Mike Evans');
+  assert.equal(sfEvans.fri, 'LP', 'Official 49ers.com fri=LP must NOT be overwritten by earlier open-media DNP tweet');
+
+  // Verify SF corroborated ruled-out updates status to Out & 0%
+  const sfGreen = mockReconcileData.health.practiceReport.find(r => r.name === 'Renardo Green');
+  assert.equal(sfGreen.playProbabilityPct, 0, 'Corroborated SF RULED_OUT_WEEK must set 0%');
+  assert.equal(sfGreen.gameStatus, 'Out', 'Corroborated SF RULED_OUT_WEEK must sync gameStatus to Out');
+  assert.equal(mockReconcileData.roster.players[1].health.status, 'Out');
+
+  // Verify Opponent Friday LP filled, bare "questionable" upgraded, and trending upward lifted probability
+  const oh = mockReconcileData.scheduleMatchup.upcomingMatchup.opponentHealth;
+  const oppJj = oh.injuryReport.find(r => r.name === 'Justin Jefferson');
+  assert.equal(oppJj.fri, 'LP', 'Opponent blank Friday slot must be filled from _oppNewsWire');
+  assert.ok(oppJj.playProbabilityPct >= 66, `Opponent trending upward + Fri LP must lift probability >= 66%, got ${oppJj.playProbabilityPct}%`);
+  assert.ok(oppJj.shortComment.length > 20 && !/^questionable$/i.test(oppJj.shortComment), 'Bare "questionable" opponent comment must be upgraded from wire');
+
+  // Verify Opponent trending downward + setback dropped probability sharply (from 81% OT baseline -> Long Shot <= 45%)
+  const oppOneill = oh.injuryReport.find(r => r.name === "Brian O'Neill");
+  assert.ok(oppOneill.playProbabilityPct <= 45, `Opponent trending downward setback must drop probability <= 45%, got ${oppOneill.playProbabilityPct}%`);
+
+  // Verify newly ruled-out Opponent starter promoted out of keyStartersHealthy into injuryReport at 0% Out
+  const oppGreenard = oh.injuryReport.find(r => r.name === 'Jonathan Greenard');
+  assert.ok(oppGreenard, 'Newly ruled-out Opponent starter must be promoted to opponentHealth.injuryReport');
+  assert.equal(oppGreenard.playProbabilityPct, 0);
+  assert.equal(oppGreenard.gameStatus, 'Out');
+  assert.ok(!oh.keyStartersHealthy.some(s => s.name === 'Jonathan Greenard'), 'Promoted injured starter must be removed from keyStartersHealthy');
+  assert.ok(oh.summary.overallAvailabilityScore < 95, 'Opponent Availability Index must recompute downward after starter ruled out');
+});
+
+await testAsync('hydrateLiveEspnOverlay protects live ESPN-designated SF injuries & Saturday downgrades from lagging 49ers.com HTML', async () => {
+  const origFetch = globalThis.fetch;
+  try {
+    const friKickoffIso = new Date(Date.now() + 30 * 3600_000).toISOString(); // Saturday (~30h before kickoff)
+    const appData = {
+      meta: { seasonYear: 2026, currentWeek: 11, updatedAt: new Date().toISOString() },
+      roster: {
+        players: [
+          {
+            id: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            jersey: 5,
+            rosterBucket: 'active',
+            snapSharePct: 86,
+            health: { status: 'Questionable', injuryType: 'Achilles', wed: 'DNP', thu: 'LP', fri: 'LP', playProbabilityPct: 58 }
+          },
+          {
+            id: '4427325',
+            name: 'Renardo Green',
+            position: 'CB',
+            jersey: 0,
+            rosterBucket: 'active',
+            snapSharePct: 91,
+            health: { status: 'Active', injuryType: 'None', wed: '-', thu: '-', fri: '-', playProbabilityPct: 95 }
+          }
+        ]
+      },
+      health: {
+        week: 11,
+        practiceReport: [
+          {
+            playerId: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            wed: 'DNP',
+            thu: 'LP',
+            fri: 'LP',
+            injuryType: 'Achilles',
+            gameStatus: 'Questionable',
+            playProbabilityPct: 58,
+            beatComment: 'Limited Friday.'
+          }
+        ],
+        irAndReserveTracker: []
+      },
+      news: { rawStream: [] },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 11,
+          oppAbbr: 'MIN',
+          opponent: 'Minnesota Vikings',
+          kickoffIso: friKickoffIso,
+          opponentHealth: { injuryReport: [], keyStartersHealthy: [], irReserve: [] }
+        },
+        games: []
+      }
+    };
+
+    // Mock ESPN live feed: Saturday downgrade for Mike Evans -> Out AND late Saturday add for Renardo Green -> Questionable
+    // Mock 49ers.com HTML: LAGGING Friday table (Mike Evans still Questionable; Renardo Green completely missing!)
+    const lagging49ersHtml = `
+      <section><h3>San Francisco 49ers</h3><table>
+        <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Game Status</th></tr></thead>
+        <tbody>
+          <tr><td>Mike Evans</td><td>WR</td><td>Achilles</td><td>DNP</td><td>LP</td><td>LP</td><td>Questionable</td></tr>
+        </tbody>
+      </table></section>`;
+
+    globalThis.fetch = async url => {
+      const u = String(url || '');
+      if (u.includes('site.api.espn.com/apis/site/v2/sports/football/nfl/injuries')) {
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            injuries: [
+              {
+                id: '25',
+                displayName: 'San Francisco 49ers',
+                injuries: [
+                  {
+                    status: 'Out',
+                    date: new Date().toISOString(),
+                    details: { type: 'Achilles' },
+                    shortComment: 'Downgraded to Out on Saturday after Achilles tightened up overnight.',
+                    athlete: { id: '16737', displayName: 'Mike Evans', position: { abbreviation: 'WR' } }
+                  },
+                  {
+                    status: 'Questionable',
+                    date: new Date().toISOString(),
+                    details: { type: 'Back' },
+                    shortComment: 'Added to the Saturday injury report as questionable with back tightness.',
+                    athlete: { id: '4427325', displayName: 'Renardo Green', position: { abbreviation: 'CB' } }
+                  }
+                ]
+              }
+            ]
+          })
+        };
+      }
+      if (u.includes('49ers.com/team/injury-report') || u.includes('api.allorigins.win') || u.includes('corsproxy.io') || u.includes('api.codetabs.com')) {
+        return { ok: true, status: 200, text: async () => lagging49ersHtml };
+      }
+      return { ok: false, status: 404, json: async () => ({}), text: async () => '' };
+    };
+
+    await hydrateLiveEspnOverlay(appData);
+
+    const evansRow = appData.health.practiceReport.find(r => r.name === 'Mike Evans');
+    const greenRow = appData.health.practiceReport.find(r => r.name === 'Renardo Green');
+    assert.ok(evansRow, 'Mike Evans must remain on practiceReport');
+    assert.equal(evansRow.gameStatus, 'Out', 'Lagging Friday 49ers.com Questionable must NOT revert live Saturday ESPN Out downgrade');
+    assert.equal(evansRow.playProbabilityPct, 0, 'Downgraded Out player must compute 0%');
+    assert.equal(evansRow.fri, 'LP', 'Friday practice participation must be preserved alongside Saturday Out downgrade');
+
+    assert.ok(greenRow, 'Renardo Green explicitly added on live ESPN must NOT be wiped by lagging 49ers.com HTML');
+    assert.equal(greenRow.gameStatus, 'Questionable');
+    assert.ok(greenRow.playProbabilityPct < 90, `Late Saturday Questionable add must stay injured (<90%), got ${greenRow.playProbabilityPct}%`);
+  } finally {
+    globalThis.fetch = origFetch;
+  }
 });
 
 console.log(`\n======================================================`);

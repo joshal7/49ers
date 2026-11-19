@@ -10,6 +10,7 @@ import {
 import { simulateCapScenario } from './engine/capSimulator.js?v=65';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
+import { reconcileRosterAndHealthWithNews } from './engine/injuryProbabilityModel.js';
 import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
@@ -30,7 +31,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=85';
+} from './services/dataService.js?v=86';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -97,13 +98,13 @@ import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml
-} from './views/settingsArchiveView.js?v=85';
+} from './views/settingsArchiveView.js?v=86';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
   urlBase64ToUint8Array,
   evaluatePushSupportStatus
-} from './engine/digestExperienceEngine.js?v=85';
+} from './engine/digestExperienceEngine.js?v=86';
 
 const state = {
   appData: null,
@@ -3068,6 +3069,19 @@ function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
     Number(prevData.liveGameDay.week) === Number(nextData.scheduleMatchup?.upcomingMatchup?.week)
   ) {
     nextData.liveGameDay = prevData.liveGameDay;
+  }
+  const nextOppKey = `${Number(nextData.scheduleMatchup?.upcomingMatchup?.week || 0)}:${String(
+    nextData.scheduleMatchup?.upcomingMatchup?.oppAbbr || ''
+  ).toUpperCase()}`;
+  if (Array.isArray(prevData._oppNewsWire) && prevData._oppNewsWire.length > 0 && prevData._oppNewsWireKey === nextOppKey) {
+    nextData._oppNewsWire = prevData._oppNewsWire;
+    nextData._oppNewsWireKey = prevData._oppNewsWireKey;
+  }
+  if (
+    (Array.isArray(prevData.news?.rawStream) && prevData.news.rawStream.some(it => it && it.wireSource)) ||
+    (Array.isArray(nextData._oppNewsWire) && nextData._oppNewsWire.length > 0)
+  ) {
+    reconcileRosterAndHealthWithNews(nextData);
   }
   return nextData;
 }

@@ -1189,7 +1189,9 @@ export function detectOpen21DayIrWindowFromHistory({
         .trim();
       if (!fullBody) continue;
       const trustTier = Number(item.trustTier || 2);
-      const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
+      const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(
+        `${item.author || ''} ${item.reporterName || ''} ${fullBody}`
+      );
       const isOfficial =
         item.outletId === '49ers_official' ||
         item.wireSource === 'official_transactions' ||
@@ -1288,8 +1290,38 @@ export function detectOpen21DayIrWindowFromHistory({
 
 function hasNegativePlayConsensusSignal(beatNote = '') {
   if (!beatNote) return false;
-  return /\b(?:long shot|unlikely to (?:play|suit up|be activated)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be ready|be activated)|expecting\b[^.;]{0,42}\b(?:this week|to play|to be ready|to suit up)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
+  return /\b(?:long shot|unlikely to (?:play|suit up|be activated|be ready|go)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be ready|be activated)|expecting\b[^.;]{0,42}\b(?:this week|to play|to be ready|to suit up)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
     beatNote
+  );
+}
+
+export function hasTrendingDownwardSignal(beatNote = '') {
+  if (!beatNote) return false;
+  const norm = stripInitialAndHonorificDots(beatNote);
+  const setbackScrubbed = norm.replace(
+    /\b(?:no|without\s+(?:a|any)|avoid(?:ed|ing)?\s+(?:a|any)|didn['’]?t\s+(?:suffer|have)\s+(?:a|any)|not\s+(?:a|any))\s+setbacks?\b/gi,
+    'clear'
+  );
+  return /\b(?:trending\s+(?:down(?:ward)?|in\s+the\s+wrong\s+direction|toward\s+(?:missing|sitting\s+out|being\s+out|not\s+playing|being\s+inactive))|(?:moving|heading|pointing)\s+in\s+the\s+wrong\s+direction|(?:not|less|no\s+longer)\s+(?:optimistic|encouraged|confident|promising)|pessimistic|not\s+looking\s+(?:good|promising|great)|(?:doesn['’]?t|does\s+not)\s+(?:look|seem)\s+(?:good|promising|likely)|(?:facing|faces?)\s+an?\s+uphill\s+battle|uphill\s+battle\s+to\s+(?:play|suit\s+up|go|be\s+ready)|leaning\s+toward\s+(?:missing|sitting\s+out|not\s+playing|holding\s+him\s+out|sitting)|(?:suffered|had|experienced|dealt\s+with)\s+a\s+setback|setback\s+(?:at|in|during)\s+practice|re-?aggravat(?:ed|ing)|tweaked\s+(?:his|the)\b[^.;]{0,30}\b(?:again|at\s+practice|in\s+practice)|feeling\s+worse|hard\s+to\s+see\s+him\s+(?:playing|suiting\s+up)|(?:will|going\s+to)\s+be\s+tough\s+for\s+him\s+to\s+play|slim\s+chance|added\s+to\s+(?:the\s+)?injury\s+report\s+(?:friday|saturday|late)|downgraded\s+to\s+(?:questionable|doubtful)|not\s+trending\s+(?:up(?:ward)?|in\s+the\s+right\s+direction))\b/i.test(
+    setbackScrubbed
+  );
+}
+
+export function hasTrendingUpwardSignal(beatNote = '') {
+  if (
+    !beatNote ||
+    hasNegativePlayConsensusSignal(beatNote) ||
+    hasTrendingDownwardSignal(beatNote) ||
+    hasDefiniteIrNonActivationOrWindowClosedSignal(beatNote)
+  ) {
+    return false;
+  }
+  const norm = stripInitialAndHonorificDots(beatNote);
+  if (/\b(?:if|whether|unless)\s+(?:he|they)\s+(?:is|are|were)\s+(?:trending|optimistic|feeling\s+better)\b/i.test(norm)) {
+    return false;
+  }
+  return /\b(?:trending\s+(?:up(?:ward)?|in\s+the\s+right\s+direction|toward\s+(?:playing|suiting\s+up|returning|being\s+active|being\s+available|making\s+(?:his\s+)?return))|(?:moving|heading|pointing)\s+in\s+the\s+right\s+direction|pointing\s+toward\s+(?:playing|suiting\s+up|returning)|optimistic\s+(?:about|that|he(?:['’]?ll|\s+will|\s+can)|to\s+(?:play|suit\s+up|go|return))|encouraged\s+(?:by|about)|encouraging\s+signs?|leaning\s+toward\s+(?:playing|suiting\s+up|being\s+active|going)|(?:has|have)\s+a\s+(?:good|strong|solid|realistic)\s+chance\s+(?:to|of|at)\s+(?:play|playing|suit|suiting|return|returning)|good\s+chance\s+(?:he\s+)?(?:plays|suits\s+up|returns)|making\s+(?:good|solid|steady|encouraging|significant)\s+progress|expect(?:s|ed|ing)?\b[^.;]{0,36}\bto\s+make\s+progress|progressing\s+well|feeling\s+(?:much\s+|a\s+lot\s+)?better|looks?\s+(?:good|promising|like\s+he(?:['’]?ll|\s+will)\s+(?:play|suit\s+up|go))|confident\b[^.;]{0,36}\b(?:play|suit\s+up|good\s+to\s+go|ready|available))\b/i.test(
+    norm
   );
 }
 
@@ -1312,13 +1344,13 @@ function hasExpectedPracticeReturnSignal(beatNote = '') {
   ) {
     return false;
   }
-  return /\b(?:hopeful to (?:get|have)\b[^.;]{0,55}\bback (?:to|at) practice|expect(?:s|ed|ing)?\b[^.;]{0,55}\b(?:to be )?back (?:to|at) practice|on track to return to practice|hopes? to have\b[^.;]{0,45}\b(?:back )?at practice|expected back\b[^.;]{0,25}(?:at practice|wednesday|this week)|(?:plan|plans|planning|expect|expects|expecting|set|slated)\s+to\s+open\b[^.;]{0,55}\bpractice window)\b/i.test(
+  return /\b(?:hopeful to (?:get|have)\b[^.;]{0,55}\bback (?:to|at) practice|expect(?:s|ed|ing)?\b[^.;]{0,55}\b(?:to be )?back (?:to|at) practice|expect(?:s|ed|ing)?\s+to\s+practice|on track to return to practice|hopes? to have\b[^.;]{0,45}\b(?:back )?at practice|expected back\b[^.;]{0,25}(?:at practice|wednesday|this week)|(?:plan|plans|planning|expect|expects|expecting|set|slated)\s+to\s+open\b[^.;]{0,55}\bpractice window)\b/i.test(
     beatNote
   );
 }
 
 function hasAffirmativePlayOrActivationSignal(beatNote = '') {
-  if (!beatNote || hasNegativePlayConsensusSignal(beatNote) || hasDefiniteIrNonActivationOrWindowClosedSignal(beatNote)) return false;
+  if (!beatNote || hasNegativePlayConsensusSignal(beatNote) || hasTrendingDownwardSignal(beatNote) || hasDefiniteIrNonActivationOrWindowClosedSignal(beatNote)) return false;
   if (/\b(?:if|whether|unless|assuming)\s+(?:he|they)\s+(?:is|are|were)\s+(?:good to go|ready to go|able to play)\b/i.test(beatNote)) {
     return false;
   }
@@ -1328,7 +1360,7 @@ function hasAffirmativePlayOrActivationSignal(beatNote = '') {
 }
 
 const VERIFIED_TIER1_REPORTER_NAMES_RE =
-  /\b(matt barrows|matt maiocco|nick wagoner|david lombardi|cam inman|eric branch|vic tafur|jennifer lee chan|sam warren|noah furtado|harrison rich|adam schefter|ian rapoport|tom pelissero|mike garafolo|jeremy fowler|briana jeannel)\b/i;
+  /\b(matt barrows|matt maiocco|nick wagoner|david lombardi|cam inman|eric branch|vic tafur|jennifer lee chan|sam warren|noah furtado|harrison rich|adam schefter|ian rapoport|tom pelissero|mike garafolo|jeremy fowler|dianna russini|jay glazer|albert breer|briana jeannel)\b/i;
 
 const SPECULATIVE_CLAUSE_GUARD_RE =
   /\b(could activate|might activate|could return|might return|wonder if|speculat|rumor|my guess|would make sense|should consider|shouldn't rush|why the 49ers|if he (?:can't|cannot|is forced|misses)|candidates? to (?:see|draw|replace)|in line for more|fantasy|waiver wire|start\/sit|lineup)\b/i;
@@ -1648,7 +1680,9 @@ export function evaluateCorroboratedNewsInjurySignal({
     }
 
     const trustTierProbe = Number(item.trustTier || 2);
-    const hasInlineTier1Probe = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
+    const hasInlineTier1Probe = VERIFIED_TIER1_REPORTER_NAMES_RE.test(
+      `${item.author || ''} ${item.reporterName || ''} ${fullBody}`
+    );
     const isOfficialSourceProbe = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
     const isTrustedWireProbe = item.wireSource === 'espn_player_wire' || item.wireSource === 'rotowire_rss';
 
@@ -1703,10 +1737,10 @@ export function evaluateCorroboratedNewsInjurySignal({
     }
 
     const hasCoachQuote =
-      /\b(?:kyle shanahan|coach shanahan|shanahan|head coach|john lynch|gm john lynch)\b[^.]{0,80}\b(?:said|says|relayed|explained|announced|indicated|noted|told|expects?|hopeful|provided|revealed|reveals)\b|\b(?:coach kyle shanahan|shanahan|john lynch)\s+said\b|\bper (?:coach )?(?:kyle )?shanahan\b/i.test(
+      /\b(?:kyle shanahan|coach shanahan|shanahan|head coach|john lynch|gm john lynch|coach\s+[a-z][a-z'.-]{1,18}(?:\s+[a-z][a-z'.-]{1,18})?)\b[^.]{0,80}\b(?:said|says|relayed|explained|announced|indicated|noted|told|expects?|hopeful|optimistic|encouraged|provided|revealed|reveals|confirms?|confirmed|ruled|rules|stated|shared|added|called)\b|\b(?:coach kyle shanahan|shanahan|john lynch)\s+(?:said|confirms?|confirmed|ruled)\b|\bper (?:head )?coach\b/i.test(
         scoped
       ) ||
-      (/\b(?:shanahan|john lynch)\s+(?:said|provided\s+an?\s+injury\s+update|reveals\s+latest)\b/i.test(fullBody) &&
+      (/\b(?:shanahan|john lynch|head coach|coach\s+[a-z][a-z'.-]{1,18}(?:\s+[a-z][a-z'.-]{1,18})?)\s+(?:said|confirms?|confirmed|ruled|provided\s+an?\s+injury\s+update|reveals\s+latest)\b/i.test(fullBody) &&
         !SPECULATIVE_CLAUSE_GUARD_RE.test(scoped));
 
     if (!hasCoachQuote && SPECULATIVE_CLAUSE_GUARD_RE.test(scoped)) {
@@ -1765,13 +1799,21 @@ export function evaluateCorroboratedNewsInjurySignal({
 
     const hasObservedNonPractice =
       pubMs >= postGameMinMs &&
-      /\b(?:not practicing(?:\s+today)?|did not practice|didn't practice|non-participant|not participating|no practice for|was an observer|watching from the sideline)\b/i.test(
+      /\b(?:not practicing(?:\s+today)?|did not practice|didn't practice|did not participate|didn't participate|non-participant|not participating|no practice for|missed\s+(?:(?:wednesday|thursday|friday|today)['’]?s\s+)?practice|held out of\s+(?:(?:wednesday|thursday|friday|today)['’]?s\s+)?practice|was an observer|observer for|watching from the sideline)\b/i.test(
         scoped
       );
     const hasObservedPracticeReturn =
       pubMs >= postGameMinMs &&
       !hasObservedNonPractice &&
-      /\b(?:limited (?:today )?(?:at|in) [a-z']*\s*practice|limited practice participant|limited participant|practiced on a limited basis|back on the practice field|practiced in full|full participant)\b/i.test(
+      /\b(?:limited (?:today )?(?:at|in) [a-z']*\s*practice|limited practice participant|limited participant|practiced (?:on a limited basis|in a limited (?:capacity|role))|upgraded to (?:a )?(?:limited|full)|back on the practice field|returned to (?:the )?practice|practiced in full|practiced fully|full participant)\b/i.test(
+        scoped
+      );
+    const hasLateSetbackPhrase =
+      pubMs >= postGameMinMs &&
+      !/\b(?:no|without\s+(?:a|any)|avoid(?:ed|ing)?\s+(?:a|any)|didn['’]?t\s+(?:suffer|have)\s+(?:a|any))\s+(?:late[- ]week\s+|new\s+)?setbacks?\b/i.test(
+        scoped
+      ) &&
+      /\b(?:(?:suffered|had|experienced|dealt\s+with|dealing\s+with|after|following)\s+(?:a|an)\s+(?:late[- ]week\s+|practice\s+|friday\s+|saturday\s+|minor\s+|new\s+)?setback|late[- ]week\s+setback|setback\s+(?:at|in|during)\s+practice|re-?aggravat(?:ed|ing)|tweaked\s+(?:his|the)\b[^.;]{0,30}\b(?:again|at\s+practice|in\s+practice)|added\s+to\s+(?:the\s+)?injury\s+report\s+(?:friday|saturday|late)|downgraded\s+to\s+(?:questionable|doubtful))\b/i.test(
         scoped
       );
 
@@ -1785,9 +1827,15 @@ export function evaluateCorroboratedNewsInjurySignal({
     } else if (pubMs >= postGameMinMs && hasAffirmativeRuledOutSignal(scoped)) {
       signalType = 'RULED_OUT_WEEK';
       direction = -1.0;
+    } else if (pubMs >= postGameMinMs && hasClearedConcussionProtocolSignal(scoped)) {
+      signalType = 'CLEARED_CONCUSSION_PROTOCOL';
+      direction = 0.92;
     } else if (pubMs >= postGameMinMs && hasNegativePlayConsensusSignal(scoped)) {
       signalType = 'UNLIKELY_THIS_WEEK';
       direction = -0.82;
+    } else if (pubMs >= postGameMinMs && hasTrendingDownwardSignal(scoped)) {
+      signalType = 'TRENDING_DOWNWARD';
+      direction = hasLateSetbackPhrase ? -0.74 : -0.64;
     } else if (hasObservedNonPractice) {
       signalType = 'OBSERVED_DNP_PRACTICE';
       direction = -0.62;
@@ -1797,6 +1845,9 @@ export function evaluateCorroboratedNewsInjurySignal({
     } else if (pubMs >= postGameMinMs && hasAffirmativePlayOrActivationSignal(scoped)) {
       signalType = 'EXPECTED_TO_PLAY';
       direction = 0.80;
+    } else if (pubMs >= postGameMinMs && hasTrendingUpwardSignal(scoped)) {
+      signalType = 'TRENDING_UPWARD';
+      direction = 0.56;
     } else if (hasObservedPracticeReturn) {
       signalType = 'OBSERVED_PRACTICE_RETURN';
       direction = 0.66;
@@ -1876,6 +1927,7 @@ export function evaluateCorroboratedNewsInjurySignal({
         inferredInjuryType: extractedInj || (samePolarityAsPrev ? prev.inferredInjuryType : '') || '',
         exitedWithoutReturn: samePolarityAsPrev ? Boolean(obsExitedNoReturn || prev.exitedWithoutReturn) : obsExitedNoReturn,
         isAggravation: samePolarityAsPrev ? Boolean(obsIsAggravation || prev.isAggravation) : obsIsAggravation,
+        hasLateSetback: samePolarityAsPrev ? Boolean(hasLateSetbackPhrase || prev.hasLateSetback) : hasLateSetbackPhrase,
         isMultiWeekOrSurgery: samePolarityAsPrev
           ? Boolean(obsIsMultiWeekOrSurgery || prev.isMultiWeekOrSurgery)
           : obsIsMultiWeekOrSurgery,
@@ -1941,15 +1993,29 @@ export function evaluateCorroboratedNewsInjurySignal({
   const opposingConf = dominantSign >= 0 ? 1 - negRemaining : 1 - posRemaining;
   const confidence = Math.max(0, Math.min(0.94, rawConf - opposingConf * 0.65));
 
-  // Pick dominant signalType matching net polarity (preferring rich coach-quoted / body-part-specific clauses for leadClause)
+  // Pick dominant signalType matching net polarity (decaying stale >24h same-polarity notes so fresh Sat trend/ruling leads!)
   const matchingObs = obsList.filter(o => Math.sign(o.direction) === dominantSign);
+  const obsLeadRank = o => {
+    const recencyMult = Math.pow(0.5, Math.max(0, newestPubMs - o.pubMs) / (24 * 3_600_000));
+    const trendOrRulingBoost =
+      o.signalType === 'RULED_OUT_WEEK' ||
+      o.signalType === 'CLEARED_CONCUSSION_PROTOCOL' ||
+      o.signalType === 'UNLIKELY_THIS_WEEK' ||
+      o.signalType === 'EXPECTED_TO_PLAY' ||
+      o.signalType === 'TRENDING_DOWNWARD' ||
+      o.signalType === 'TRENDING_UPWARD'
+        ? 0.12
+        : 0;
+    return (
+      (Math.abs(o.direction) * o.weight +
+        trendOrRulingBoost +
+        (o.inferredInjuryType ? 0.06 : 0) +
+        (o.hasCoachQuote ? 0.05 : 0)) *
+      recencyMult
+    );
+  };
   const primaryObs =
-    matchingObs.sort(
-      (a, b) =>
-        Math.abs(b.direction) * b.weight + (b.inferredInjuryType ? 0.08 : 0) + (b.hasCoachQuote ? 0.06 : 0) -
-          (Math.abs(a.direction) * a.weight + (a.inferredInjuryType ? 0.08 : 0) + (a.hasCoachQuote ? 0.06 : 0)) ||
-        b.pubMs - a.pubMs
-    )[0] || obsList[0];
+    matchingObs.sort((a, b) => obsLeadRank(b) - obsLeadRank(a) || b.pubMs - a.pubMs)[0] || obsList[0];
 
   const bestInferredInj =
     primaryObs.inferredInjuryType ||
@@ -1972,6 +2038,7 @@ export function evaluateCorroboratedNewsInjurySignal({
     inferredInjuryType: bestInferredInj,
     exitedWithoutReturn: matchingObs.some(o => o.exitedWithoutReturn),
     isAggravation: matchingObs.some(o => o.isAggravation),
+    hasLateSetback: matchingObs.some(o => o.hasLateSetback),
     isMultiWeekOrSurgery: matchingObs.some(o => o.isMultiWeekOrSurgery),
     latestPubMs: newestPubMs,
     leadClause: primaryObs.scopedClause,
@@ -2181,44 +2248,102 @@ export function extractPracticeDaysFromText({
     };
   }
 
-  const detectDay = dayRegex => {
-    const statusExpr =
-      "(did not practice|didn't practice|did not participate|not practicing|not participating|non-participant|no practice|was an observer|observer for|observer at|sidelined|sat out|limited practice participant|limited participant|limited participation|limited practice|limited session|limited in practice|limited at practice|limited on|was limited|practiced in a limited capacity|practiced on a limited basis|full practice participant|full participant|full participation|full practice|practiced in full|full session)";
-    const m1 = lower.match(new RegExp(`${statusExpr}[^.;]{0,52}${dayRegex}`, 'i'));
-    const m2 = lower.match(new RegExp(`${dayRegex}[^.;]{0,44}${statusExpr}`, 'i'));
-    const fullSpan = (m1?.[0] || m2?.[0] || '').toLowerCase();
-    const matchIdx = m1?.index ?? m2?.index ?? -1;
-    const prefixWindow = matchIdx >= 0 ? lower.slice(Math.max(0, matchIdx - 42), matchIdx) : '';
-    if (
-      /\b(?:unlikely\s+to\s+be|likely\s+to\s+be|more\s+than\s+a|opportunities\s+to|opportunity\s+to|hoping\s+to\s+be|hope(?:s|ful)?\s+to|expect(?:s|ed|ing)?\s+to\s+be|could\s+be\s+a|might\s+be\s+a)\b/i.test(
-        `${prefixWindow} ${fullSpan}`
-      )
-    ) {
+  const koMs = kickoffIso ? Date.parse(kickoffIso) : NaN;
+  const koWeekday = Number.isFinite(koMs) ? extractPtDayMeta(koMs).weekday : 'Sun';
+  const mapDayWordToCanonicalSlot = dayWord => {
+    const wd = String(dayWord || '').slice(0, 3).toLowerCase();
+    if (koWeekday === 'Wed') {
+      if (wd === 'mon') return 'wed';
+      if (wd === 'tue') return 'thu';
       return null;
     }
-    const phrase = (m1?.[1] || m2?.[1] || '').toLowerCase();
-    if (!phrase) return null;
-    if (phrase.includes('full')) return 'FP';
-    if (phrase.includes('limited')) return 'LP';
-    if (
-      phrase.includes('did not') ||
-      phrase.includes("didn't") ||
-      phrase.includes('not practic') ||
-      phrase.includes('not participat') ||
-      phrase.includes('no practice') ||
-      phrase.includes('observer') ||
-      phrase.includes('non-') ||
-      phrase.includes('sidelined') ||
-      phrase.includes('sat out')
-    ) {
-      return isRest ? 'Vet Rest' : 'DNP';
+    if (koWeekday === 'Thu') {
+      if (wd === 'mon') return 'wed';
+      if (wd === 'tue') return 'thu';
+      if (wd === 'wed') return 'fri';
+      return null;
     }
+    if (koWeekday === 'Fri' || koWeekday === 'Sat') {
+      if (wd === 'tue') return 'wed';
+      if (wd === 'wed') return 'thu';
+      if (wd === 'thu') return 'fri';
+      return null;
+    }
+    if (koWeekday === 'Mon') {
+      if (wd === 'thu') return 'wed';
+      if (wd === 'fri') return 'thu';
+      if (wd === 'sat') return 'fri';
+      return null;
+    }
+    if (wd === 'wed') return 'wed';
+    if (wd === 'thu') return 'thu';
+    if (wd === 'fri') return 'fri';
     return null;
   };
 
-  let wed = detectDay('wednesday');
-  let thu = detectDay('thursday');
-  let fri = detectDay('friday');
+  const DAY_WORD_SRC = 'mon(?:day)?|tue(?:s(?:day)?)?|wed(?:nesday)?|thu(?:rs?(?:day)?)?|fri(?:day)?|sat(?:urday)?';
+
+  const SPECULATIVE_SEG_GUARD_RE = new RegExp(
+    `\\b(?:unlikely\\s+to\\s+be|likely\\s+to\\s+be|more\\s+than\\s+a|opportunities\\s+to|opportunity\\s+to|hoping\\s+to\\s+be|hope(?:s|ful)?\\s+to|expect(?:s|ed|ing)?\\s+to\\s+be|could\\s+be\\s+a|might\\s+be\\s+a|plan(?:s|ning)?\\s+to\\s+practice|will\\s+(?:practice|be\\s+limited|not\\s+practice)\\s+(?:${DAY_WORD_SRC}))\\b`,
+    'i'
+  );
+
+  const DNP_SEG_RE = new RegExp(
+    `\\b(?:did not practice|didn['’]?t practice|did not participate|didn['’]?t participate|not practicing|not participating|non-participant|no practice|was an observer|observer (?:for|at)|sidelined\\s+(?:at|for|in|from|on|${DAY_WORD_SRC})|sat out|held out(?:\\s+of)?|absent\\s+from|missed\\s+(?:(?:${DAY_WORD_SRC}|all\\s+three|consecutive|another|[\\w' -]{0,28})\\s+)?practices?|missed\\s+(?:(?:${DAY_WORD_SRC})(?:['’]?s)?\\s+)?(?:sessions?|walkthroughs?)|missing\\s+(?:(?:${DAY_WORD_SRC}|[\\w' -]{0,24})\\s+)?practices?)\\b`,
+    'i'
+  );
+
+  const LP_SEG_RE = new RegExp(
+    `\\b(?:limited\\s+(?:practice\\s+)?participant|limited\\s+participation|limited\\s+practice|limited\\s+session|limited\\s+(?:in|at|on|during)\\s+(?:[\\w' -]{0,24})?(?:practice|session|${DAY_WORD_SRC})|(?:was|were|remained|being|stayed)\\s+limited|upgraded\\s+to\\s+(?:a\\s+)?limited|returned\\s+to\\s+limited|logged\\s+a\\s+(?:limited|capped)\\s+(?:session|practice)|practiced\\s+(?:in\\s+a\\s+limited\\s+(?:capacity|role)|on\\s+a\\s+limited\\s+basis)|(?:^|[\\s,(;])limited(?=\\s+(?:${DAY_WORD_SRC})\\b))\\b`,
+    'i'
+  );
+
+  const FP_SEG_RE = new RegExp(
+    `\\b(?:full\\s+(?:practice\\s+)?participant|full\\s+participation|full\\s+practice|full\\s+session|full\\s+go\\s+(?:at|in|on|${DAY_WORD_SRC})|practiced\\s+in\\s+full|practiced\\s+fully|practiced\\s+without\\s+(?:limitations|restrictions)|upgraded\\s+to\\s+(?:a\\s+)?full|logged\\s+a\\s+full\\s+(?:session|practice)|(?:^|[\\s,(;])full(?=\\s+(?:${DAY_WORD_SRC})\\b))\\b`,
+    'i'
+  );
+
+  // Split multi-day practice prose into isolated clauses so "did not practice Wednesday, limited Thursday, full Friday"
+  // or "upgraded to full Friday after being limited Wednesday and Thursday" never bleeds codes across days!
+  const segments = lower
+    .split(
+      /[.;!\n]+|,\s*|\b(?:but|while|whereas|before|after|then|following|prior\s+to)\b|\band\s+(?=(?:was\s+|were\s+|is\s+|has\s+been\s+|remained\s+|being\s+)?(?:did\s+not|didn['’]?t|not\s+practic|not\s+participat|missed|missing|held\s+out|sat\s+out|sidelined|limited|full|practiced|logged|upgraded|downgraded|returned))/i
+    )
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const dayMatchRe = new RegExp(`\\b(${DAY_WORD_SRC})\\b`, 'gi');
+  const slots = { wed: null, thu: null, fri: null };
+  for (const seg of segments) {
+    if (SPECULATIVE_SEG_GUARD_RE.test(seg)) continue;
+
+    let segCode = null;
+    if (DNP_SEG_RE.test(seg)) {
+      segCode = isRest ? 'Vet Rest' : 'DNP';
+    } else if (FP_SEG_RE.test(seg)) {
+      segCode = 'FP';
+    } else if (LP_SEG_RE.test(seg)) {
+      segCode = 'LP';
+    }
+    if (!segCode) continue;
+
+    if (/\bwed(?:nesday)?\s+(?:through|thru|-)\s+fri(?:day)?\b|\bmon(?:day)?\s+(?:through|thru|-)\s+wed(?:nesday)?\b|\bthu(?:rs?(?:day)?)?\s+(?:through|thru|-)\s+sat(?:urday)?\b/i.test(seg)) {
+      slots.wed = slots.wed || segCode;
+      slots.thu = slots.thu || segCode;
+      slots.fri = slots.fri || segCode;
+      continue;
+    }
+
+    const dayMatches = [...seg.matchAll(dayMatchRe)];
+    for (const dm of dayMatches) {
+      const targetSlot = mapDayWordToCanonicalSlot(dm[1]);
+      if (targetSlot && !slots[targetSlot]) {
+        slots[targetSlot] = segCode;
+      }
+    }
+  }
+
+  let { wed, thu, fri } = slots;
 
   if (/did not practice all week|missed all three practices|missing practice all week|trio of '?dnps?'?/i.test(lower)) {
     wed = wed || 'DNP';
@@ -2228,14 +2353,13 @@ export function extractPracticeDaysFromText({
     wed = wed || 'LP';
     thu = thu || 'LP';
     fri = fri || 'LP';
-  } else if (/full participant all week|practiced in full all week/i.test(lower)) {
+  } else if (/full participant all week|practiced in full all week|trio of full practices|three full practices/i.test(lower)) {
     wed = wed || 'FP';
     thu = thu || 'FP';
     fri = fri || 'FP';
   }
 
   // Calendar-aware future-day guard when upcoming `kickoffIso` is supplied
-  const koMs = kickoffIso ? Date.parse(kickoffIso) : NaN;
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
   if (Number.isFinite(koMs) && ts < koMs) {
     const koPt = extractPtDayMeta(koMs);
@@ -2507,7 +2631,15 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
   const sfByKey = new Map();
   const oppByKey = new Map();
   if (!html || typeof html !== 'string') {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
+    return {
+      hasSfReport: false,
+      hasOppReport: false,
+      hasSfGameDesignations: false,
+      hasOppGameDesignations: false,
+      reportMatchesCurrentOpponent: false,
+      sfByKey,
+      oppByKey
+    };
   }
 
   const oppLower = String(oppTeamName || '').toLowerCase();
@@ -2516,6 +2648,8 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
   const candidateTables = [];
   let match;
 
+  const PRACTICE_DAY_HDR_RE = /^(?:mon|tue|wed|thu|fri|sat)$/;
+
   while ((match = tableRegex.exec(html)) !== null) {
     const tableHtml = match[0];
     const precedingContext = stripHtmlTagsBasic(html.slice(Math.max(0, match.index - 650), match.index)).toLowerCase();
@@ -2523,24 +2657,44 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
       ...(tableHtml.match(/<thead[\s\S]*?<\/thead>/i)?.[0] || '').matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)
     ].map(m => stripHtmlTagsBasic(m[1]).toLowerCase());
 
-    if (!headers.includes('player') || (!headers.includes('wed') && !headers.includes('thu') && !headers.includes('fri'))) {
+    const dayColIndices = headers.reduce((acc, h, idx) => {
+      if (PRACTICE_DAY_HDR_RE.test(h)) acc.push(idx);
+      return acc;
+    }, []);
+    if (!headers.includes('player') || dayColIndices.length === 0) {
       continue;
     }
-    candidateTables.push({ tableHtml, precedingContext, headers });
+    candidateTables.push({ tableHtml, precedingContext, headers, dayColIndices });
   }
 
   if (candidateTables.length === 0) {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
+    return {
+      hasSfReport: false,
+      hasOppReport: false,
+      hasSfGameDesignations: false,
+      hasOppGameDesignations: false,
+      reportMatchesCurrentOpponent: false,
+      sfByKey,
+      oppByKey
+    };
   }
 
   const reportMatchesCurrentOpponent =
     !oppMascot || candidateTables.some(t => t.precedingContext.includes(oppMascot));
   if (!reportMatchesCurrentOpponent) {
-    return { hasSfReport: false, hasOppReport: false, reportMatchesCurrentOpponent: false, sfByKey, oppByKey };
+    return {
+      hasSfReport: false,
+      hasOppReport: false,
+      hasSfGameDesignations: false,
+      hasOppGameDesignations: false,
+      reportMatchesCurrentOpponent: false,
+      sfByKey,
+      oppByKey
+    };
   }
 
   let tableIdx = 0;
-  for (const { tableHtml, precedingContext, headers } of candidateTables) {
+  for (const { tableHtml, precedingContext, headers, dayColIndices } of candidateTables) {
     const isSf =
       precedingContext.includes('san francisco 49ers') &&
       (!oppMascot || precedingContext.lastIndexOf('49ers') > precedingContext.lastIndexOf(oppMascot));
@@ -2550,11 +2704,10 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
     const pIdx = headers.indexOf('player');
     const posIdx = headers.indexOf('position');
     const injIdx = headers.indexOf('injury');
-    const d1Idx = headers.findIndex(h => h === 'wed' || h === 'tue' || h === 'thu');
-    const wedIdx = headers.indexOf('wed');
-    const thuIdx = headers.indexOf('thu');
-    const friIdx = headers.indexOf('fri');
-    const satIdx = headers.indexOf('sat');
+    // Map practice day columns positionally in table order (handles Sun Wed/Thu/Fri, MNF Thu/Fri/Sat, TNF Mon/Tue/Wed, Sat Tue/Wed/Thu!)
+    const slot1Idx = dayColIndices[0] ?? -1;
+    const slot2Idx = dayColIndices[1] ?? -1;
+    const slot3Idx = dayColIndices[2] ?? -1;
     const gsIdx = headers.findIndex(h => h.includes('status'));
 
     const tbody = tableHtml.match(/<tbody[\s\S]*?<\/tbody>/i)?.[0] || '';
@@ -2568,9 +2721,9 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
       const cleanInjury = formatCleanOfficialInjuryLabel(rawInjury);
       const normGameStatus = gsIdx >= 0 ? normalizeOfficialGameStatusShared(cells[gsIdx]) : '';
 
-      const c1 = wedIdx >= 0 ? cells[wedIdx] : d1Idx >= 0 ? cells[d1Idx] : '-';
-      const c2 = thuIdx >= 0 ? cells[thuIdx] : '-';
-      const c3 = friIdx >= 0 ? cells[friIdx] : satIdx >= 0 ? cells[satIdx] : '-';
+      const c1 = slot1Idx >= 0 ? cells[slot1Idx] : '-';
+      const c2 = slot2Idx >= 0 ? cells[slot2Idx] : '-';
+      const c3 = slot3Idx >= 0 ? cells[slot3Idx] : '-';
 
       const isActiveCell = v => {
         const up = String(v || '').trim().toUpperCase();
@@ -2604,13 +2757,91 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
     }
   }
 
+  const hasSfGameDesignations = [...sfByKey.values()].some(r => Boolean(r.gameStatus));
+  const hasOppGameDesignations = [...oppByKey.values()].some(r => Boolean(r.gameStatus));
+
   return {
     hasSfReport: sfByKey.size > 0,
     hasOppReport: oppByKey.size > 0,
+    hasSfGameDesignations,
+    hasOppGameDesignations,
     reportMatchesCurrentOpponent: true,
     sfByKey,
     oppByKey
   };
+}
+
+/**
+ * Reconciles an official 49ers.com weekly injury report row's `gameStatus` against live ESPN status
+ * and practice participation without ever auto-clearing a non-Rest Friday DNP or clobbering a live
+ * Saturday ESPN downgrade (`Out` / `Doubtful`) back to Friday's `Questionable` / `Active`.
+ */
+export function resolveOfficialReportGameStatus({
+  offRec = null,
+  teamHasGameDesignations = false,
+  existingStatus = '',
+  effectiveInjuryType = '',
+  hasSecondaryMedical = false,
+  isPureRest = false,
+  espnHasDowngradeProse = false
+} = {}) {
+  if (!offRec) return existingStatus || 'Questionable';
+  const prevL = String(existingStatus || '').trim().toLowerCase();
+  const offSt = String(offRec.gameStatus || '').trim();
+  const offL = offSt.toLowerCase();
+
+  const severity = s => (s === 'out' ? 4 : s === 'doubtful' ? 3 : s === 'questionable' ? 2 : 1);
+  const practicedEarlierInWeek =
+    offRec.wed === 'LP' || offRec.wed === 'FP' || offRec.thu === 'LP' || offRec.thu === 'FP';
+  const practicedFinalDay = Boolean(offRec.fri && offRec.fri !== '-');
+  const finalDayIsDnp = offRec.fri === 'DNP';
+
+  if (offSt) {
+    if (
+      (prevL === 'out' || prevL === 'doubtful') &&
+      severity(prevL) > severity(offL) &&
+      (practicedFinalDay || teamHasGameDesignations || espnHasDowngradeProse)
+    ) {
+      return prevL === 'out' ? 'Out' : 'Doubtful';
+    }
+    return offSt;
+  }
+
+  if (
+    !hasSecondaryMedical &&
+    (isPureRest ||
+      offRec.wed === 'Vet Rest' ||
+      offRec.thu === 'Vet Rest' ||
+      offRec.fri === 'Vet Rest' ||
+      isRestOrPersonalInjuryLabel(effectiveInjuryType || offRec.injuryType || ''))
+  ) {
+    if (espnHasDowngradeProse && ['out', 'doubtful', 'questionable'].includes(prevL)) {
+      return prevL === 'out' ? 'Out' : prevL === 'doubtful' ? 'Doubtful' : 'Questionable';
+    }
+    return 'Active';
+  }
+
+  if (practicedFinalDay && teamHasGameDesignations) {
+    if (finalDayIsDnp) {
+      if (prevL === 'out') return 'Out';
+      if (prevL === 'doubtful') return 'Doubtful';
+      return 'Questionable';
+    }
+    if (prevL === 'out') return 'Out';
+    if (prevL === 'doubtful') return 'Doubtful';
+    if (espnHasDowngradeProse && prevL === 'questionable') return 'Questionable';
+    return 'Active';
+  }
+
+  if (offRec.fri === 'FP' && !espnHasDowngradeProse && prevL !== 'out' && prevL !== 'doubtful') {
+    return 'Active';
+  }
+
+  if (prevL === 'out' && !practicedEarlierInWeek && offRec.fri !== 'LP' && offRec.fri !== 'FP') {
+    return 'Out';
+  }
+  if (prevL === 'doubtful') return 'Doubtful';
+  return 'Questionable';
 }
 
 function extractParentheticalInjuryForPlayer(text = '', playerName = '', sharedSurnames = null) {
@@ -2676,7 +2907,9 @@ export function extractLivePracticeParticipationFromWire({
     if (!fullBody) continue;
 
     const trustTier = Number(item.trustTier || 2);
-    const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody);
+    const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(
+      `${item.author || ''} ${item.reporterName || ''} ${fullBody}`
+    );
     const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
     const isPlayerWire = item.wireSource === 'espn_player_wire' || item.wireSource === 'rotowire_rss' || item.wireSource === 'bsky_mirror';
     if (trustTier >= 3 && !hasInlineTier1 && !isOfficial && !isPlayerWire) continue;
@@ -2897,18 +3130,18 @@ export function extractLivePracticeParticipationFromWire({
           }) || slot;
 
         const isDnpClause =
-          /\b(?:not practicing(?:\s+today)?|are not practicing|is not practicing|did not practice|didn't practice|did not participate|not partic?ipating|non-participant|no practice for|was an observer|observer for|sat out\s+(?:practice|wednesday|thursday|friday|today)|sidelined\s+(?:at|for|in)\s+practice)\b/i.test(
+          /\b(?:not practicing(?:\s+today)?|are not practicing|is not practicing|did not practice|didn['’]?t practice|did not participate|didn['’]?t participate|not partic?ipating|non-participant|no practice for|missed\s+(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|today)(?:['’]?s)?\s+)?practice|held out of\s+(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|today)(?:['’]?s)?\s+)?practice|absent from\s+(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|today)(?:['’]?s)?\s+)?practice|was an observer|observer for|sat out\s+(?:practice|monday|tuesday|wednesday|thursday|friday|saturday|today)|sidelined\s+(?:at|for|in)\s+practice)\b/i.test(
             clause
           );
         const isLpClause =
           !isDnpClause &&
-          /\b(?:is limited(?:\s+today)?(?:\s+at|\s+in)?\s*practice|was (?:a )?limited(?:\s+practice)?\s*participant|was limited\s+(?:in|at|on|wednesday|thursday|friday|today)|limited\s+(?:practice\s+)?participant|limited\s+participation|practiced\s+(?:on\s+a\s+limited\s+basis|in\s+a\s+limited\s+capacity)|logged\s+a\s+(?:limited|capped)\s+session|limited\s+today\s+at\s+practice)\b/i.test(
+          /\b(?:is limited(?:\s+today)?(?:\s+at|\s+in)?\s*practice|was (?:a )?limited(?:\s+practice)?\s*participant|was limited\s+(?:in|at|on|monday|tuesday|wednesday|thursday|friday|saturday|today)|limited\s+in\s+(?:monday|tuesday|wednesday|thursday|friday|saturday|today)(?:['’]?s)?\s*practice|limited\s+(?:practice\s+)?participant|limited\s+participation|practiced\s+(?:on\s+a\s+limited\s+basis|in\s+a\s+limited\s+(?:capacity|role))|upgraded\s+to\s+(?:a\s+)?limited|returned\s+to\s+limited\s+practice|logged\s+a\s+(?:limited|capped)\s+(?:session|practice)|limited\s+today\s+at\s+practice)\b/i.test(
             clause
           );
         const isFpClause =
           !isDnpClause &&
           !isLpClause &&
-          /\b(?:full\s+(?:practice\s+)?participant|practiced\s+in\s+full|full\s+participation\s+(?:in|at|on)|was\s+a\s+full\s+participant)\b/i.test(
+          /\b(?:full\s+(?:practice\s+)?participant|practiced\s+in\s+full|practiced\s+fully|practiced\s+without\s+(?:limitations|restrictions)|upgraded\s+to\s+(?:a\s+)?full\s+(?:practice|session|participant)|logged\s+a\s+full\s+(?:session|practice)|full\s+participation\s+(?:in|at|on)|was\s+a\s+full\s+participant|full\s+go\s+at\s+practice)\b/i.test(
             clause
           );
 
@@ -3094,9 +3327,8 @@ export function computePlayerPlayProbability(input = {}) {
       hasAffirmativePlayOrActivationSignal(currentWeekIrNote));
 
   const affirmativeRuledOut =
-    !hasMidWeekActivePractice &&
-    (hasAffirmativeRuledOutSignal(isIrBucketOrStatus ? currentWeekIrNote : beatNote) ||
-      Boolean(newsSig && newsSig.signalType === 'RULED_OUT_WEEK' && newsSig.confidence >= 0.6));
+    Boolean(newsSig && newsSig.signalType === 'RULED_OUT_WEEK' && newsSig.confidence >= 0.6) ||
+    (!hasMidWeekActivePractice && hasAffirmativeRuledOutSignal(isIrBucketOrStatus ? currentWeekIrNote : beatNote));
 
   const irWindowEval = isIrBucketOrStatus
     ? evaluateWeeklyIrActivationWindow({
@@ -3366,10 +3598,20 @@ export function computePlayerPlayProbability(input = {}) {
         const blend = Math.min(0.86, conf * 0.94);
         irProb = Math.min(irProb, irProb * (1 - blend) + 0.20 * blend);
         factors.push(`Coaching/beat consensus (${srcLabel}): unlikely to be activated this week`);
+      } else if (newsSig.signalType === 'TRENDING_DOWNWARD') {
+        const target = newsSig.hasLateSetback ? 0.24 : 0.34;
+        const blend = Math.min(0.80, conf * 0.86);
+        irProb = Math.min(irProb, irProb * (1 - blend) + target * blend);
+        factors.push(`Coaching/beat trend (${srcLabel}): trending downward for activation this week`);
       } else if (newsSig.signalType === 'EXPECTED_TO_PLAY') {
         const blend = Math.min(0.88, conf * 0.92);
         irProb = Math.max(irProb, irProb * (1 - blend) + 0.82 * blend);
         factors.push(`Coaching/beat consensus (${srcLabel}): expected to be activated from IR`);
+      } else if (newsSig.signalType === 'TRENDING_UPWARD') {
+        const target = Math.min(0.80, Math.max(irProb + 0.08, 0.72));
+        const blend = Math.min(0.76, conf * 0.82);
+        irProb = Math.max(irProb, irProb * (1 - blend) + target * blend);
+        factors.push(`Coaching/beat trend (${srcLabel}): trending upward toward IR activation`);
       } else if (newsSig.signalType === 'OBSERVED_DNP_PRACTICE' && !hasObservedPracticeThisWeek) {
         irProb = Math.min(irProb, 0.24);
         factors.push(`Beat practice observation (${srcLabel}): did not practice today`);
@@ -3380,9 +3622,15 @@ export function computePlayerPlayProbability(input = {}) {
     } else if (hasNegativePlayConsensusSignal(currentWeekIrNote)) {
       irProb = Math.min(irProb, 0.22);
       factors.push('Beat consensus: long shot to be activated this week');
+    } else if (hasTrendingDownwardSignal(currentWeekIrNote)) {
+      irProb = Math.min(irProb, Math.max(0.24, irProb - 0.16));
+      factors.push('Beat trend: trending downward / setback caution for activation');
     } else if (hasAffirmativePlayOrActivationSignal(currentWeekIrNote)) {
       irProb = Math.max(irProb, 0.80);
       factors.push('Coaching/beat consensus: expected to be activated ahead of game');
+    } else if (hasTrendingUpwardSignal(currentWeekIrNote)) {
+      irProb = Math.max(irProb, Math.min(0.78, irProb + 0.08));
+      factors.push('Beat trend: trending upward toward IR activation');
     }
 
     factors.push('Requires formal 53-man roster activation prior to weekly NFL transaction deadline');
@@ -3465,7 +3713,10 @@ export function computePlayerPlayProbability(input = {}) {
 
   const isConcussion =
     injuryLower.includes('concussion') || /\bconcussion protocol\b/i.test(beatNote);
-  const clearedConcussion = hasClearedConcussionProtocolSignal(beatNote);
+  const clearedConcussion =
+    hasClearedConcussionProtocolSignal(beatNote) ||
+    Boolean(newsSig && newsSig.signalType === 'CLEARED_CONCUSSION_PROTOCOL' && newsSig.confidence >= 0.4) ||
+    hasClearedConcussionProtocolSignal(newsSig?.leadClause || '');
 
   const priorAbsence = derivePriorWeekAbsenceProfile({
     weeklyHistory: input.weeklyHistory,
@@ -3771,10 +4022,24 @@ export function computePlayerPlayProbability(input = {}) {
           ? 'coaching staff report'
           : 'beat report';
 
-    if (newsSig.signalType === 'UNLIKELY_THIS_WEEK' && fri !== 'FP' && thu !== 'FP') {
+    if (newsSig.signalType === 'CLEARED_CONCUSSION_PROTOCOL') {
+      prob = Math.max(prob, 0.93);
+      factors.push(`Medical clearance (${srcLabel}): cleared NFL Concussion Protocol`);
+    } else if (newsSig.signalType === 'UNLIKELY_THIS_WEEK' && ((fri !== 'FP' && thu !== 'FP') || newsSig.hasLateSetback)) {
       const blend = Math.min(0.86, conf * 0.94);
       prob = Math.min(prob, prob * (1 - blend) + 0.18 * blend);
       factors.push(`Coaching/beat consensus (${srcLabel}): not expected to play this week`);
+    } else if (newsSig.signalType === 'TRENDING_DOWNWARD' && (fri !== 'FP' || newsSig.hasLateSetback || statusRaw === 'questionable')) {
+      const downTarget = newsSig.hasLateSetback
+        ? Math.min(prob, 0.24)
+        : Math.max(0.26, Math.min(0.46, prob - 0.24));
+      const blend = newsSig.hasLateSetback
+        ? Math.min(0.88, Math.max(conf * 1.25, 0.68))
+        : Math.min(0.82, Math.max(conf * 1.0, 0.44));
+      prob = Math.min(prob, prob * (1 - blend) + downTarget * blend);
+      factors.push(
+        `Coaching/beat trend (${srcLabel}): ${newsSig.hasLateSetback ? 'late setback / downgraded outlook' : 'trending downward for game day'}`
+      );
     } else if (newsSig.signalType === 'OBSERVED_DNP_PRACTICE' && !hasObservedPracticeThisWeek) {
       const dnpTarget = missedPriorGame ? 0.28 : 0.38;
       const blend = Math.min(0.88, conf * 0.92);
@@ -3797,14 +4062,24 @@ export function computePlayerPlayProbability(input = {}) {
       }
       factors.push(`Coaching/beat update (${srcLabel}): expected back at practice Wednesday (pending Wed–Fri workload)`);
     } else if (newsSig.signalType === 'EXPECTED_TO_PLAY') {
-      const targetCap = statusRaw === 'questionable' ? 0.84 : 0.86;
+      const corroboratedHighConf = conf >= 0.65 && fri !== 'DNP' && statusRaw !== 'doubtful';
+      const targetCap = statusRaw === 'questionable' ? (corroboratedHighConf ? 0.88 : 0.84) : 0.88;
       const blend = Math.min(0.88, conf * 0.92);
       prob = Math.max(prob, prob * (1 - blend) + targetCap * blend);
       if (statusRaw === 'questionable' && hasAffirmativePlayOrActivationSignal(beatNote)) {
         prob = Math.max(prob, 0.78);
       }
-      if (statusRaw === 'questionable') prob = Math.min(prob, 0.84);
+      if (statusRaw === 'questionable') prob = Math.min(prob, corroboratedHighConf ? 0.88 : 0.84);
       factors.push(`Beat/podium consensus (${srcLabel}): on track to suit up`);
+    } else if (newsSig.signalType === 'TRENDING_UPWARD' && statusRaw !== 'doubtful' && fri !== 'DNP') {
+      const upTarget = !hasObservedPracticeThisWeek
+        ? Math.min(0.76, Math.max(prob + 0.14, 0.64))
+        : Math.min(0.86, Math.max(prob + 0.10, prior.questionablePlayRate + 0.04));
+      const blend = Math.min(0.78, conf * 0.84);
+      if (upTarget > prob) {
+        prob = prob * (1 - blend) + upTarget * blend;
+      }
+      factors.push(`Coaching/beat trend (${srcLabel}): trending upward / optimistic to suit up`);
     } else if (newsSig.signalType === 'SUSTAINED_IN_GAME_INJURY' && !hasObservedPracticeThisWeek) {
       if (newsSig.isMultiWeekOrSurgery) {
         const blend = Math.min(0.88, conf * 0.94);
@@ -3824,6 +4099,9 @@ export function computePlayerPlayProbability(input = {}) {
   } else if (hasNegativePlayConsensusSignal(beatNote)) {
     prob = Math.min(prob, 0.20);
     factors.push('Beat consensus: unlikely / not expected to suit up');
+  } else if (hasTrendingDownwardSignal(beatNote) && (fri !== 'FP' || /\b(?:setback|re-?aggravat|downgraded|added to)\b/i.test(beatNote))) {
+    prob = Math.min(prob, Math.max(0.28, prob - 0.18));
+    factors.push('Beat trend: trending downward / setback caution ahead of game');
   } else if (!hasObservedPracticeThisWeek && hasNegativePracticeExpectationSignal(beatNote)) {
     prob = Math.min(prob, 0.30);
     factors.push('Early-week beat note: unlikely to practice Wednesday / questionable at best');
@@ -3843,6 +4121,10 @@ export function computePlayerPlayProbability(input = {}) {
   } else if (hasAffirmativePlayOrActivationSignal(beatNote)) {
     prob = statusRaw === 'questionable' ? Math.min(0.84, Math.max(prob, 0.78)) : Math.max(prob, 0.84);
     factors.push('Beat/podium consensus: on track to suit up');
+  } else if (hasTrendingUpwardSignal(beatNote) && statusRaw !== 'doubtful' && fri !== 'DNP') {
+    const cap = !hasObservedPracticeThisWeek ? 0.72 : 0.85;
+    prob = Math.max(prob, Math.min(cap, prob + 0.08));
+    factors.push('Coaching/beat trend: trending upward / making progress ahead of game');
   }
 
   const pct = Math.max(1, Math.min(99, Math.round(prob * 100)));
@@ -4541,7 +4823,10 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
     }
 
     const wirePrac = liveWirePracticeMap.get(p.id) || null;
-    let practiceChanged = false;
+    let practiceChanged = Boolean(p.health._practiceRestoredFromCache);
+    if (p.health._practiceRestoredFromCache) {
+      delete p.health._practiceRestoredFromCache;
+    }
     if (wirePrac) {
       if (!p.health._slotPubMs || typeof p.health._slotPubMs !== 'object') {
         p.health._slotPubMs = { wed: 0, thu: 0, fri: 0 };
@@ -4550,8 +4835,11 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         const candSlotVal = wirePrac[slot];
         const candSlotMs = wirePrac.slotPubMs?.[slot] || 0;
         const prevSlotMs = p.health._slotPubMs[slot] || 0;
+        // Never let an earlier open-media beat tweet overwrite an authoritative `49ers.com` official practice cell!
+        const isOfficialProtected = Boolean(p.health._officialSlots?.[slot]) && p.health[slot] && p.health[slot] !== '-';
         if (
           candSlotVal &&
+          !isOfficialProtected &&
           (!p.health[slot] ||
             p.health[slot] === '-' ||
             (candSlotMs > 0 && candSlotMs > prevSlotMs && p.health[slot] !== candSlotVal))
@@ -4870,6 +5158,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         newsSig.signalType === 'RULED_OUT_WEEK' ||
         newsSig.signalType === 'UNLIKELY_THIS_WEEK' ||
         newsSig.signalType === 'UNLIKELY_WEDNESDAY_PRACTICE' ||
+        (newsSig.signalType === 'TRENDING_DOWNWARD' && (newsSig.hasLateSetback || Boolean(newsSig.inferredInjuryType))) ||
         (newsSig.signalType === 'DAY_TO_DAY' && Boolean(newsSig.inferredInjuryType)));
 
     if (shouldPromoteActivePlayerFromNews) {
@@ -4880,7 +5169,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         p.health.injuryType || newsSig.inferredInjuryType || priorWeekInjuryType || 'Undisclosed';
       p.health.injuryType = resolvedInj;
       p.health.status =
-        newsSig.signalType === 'RULED_OUT_WEEK' && newsSig.confidence >= 0.65
+        newsSig.signalType === 'RULED_OUT_WEEK' && newsSig.confidence >= 0.6
           ? 'Out'
           : newsSig.isMultiWeekOrSurgery
             ? 'Doubtful'
@@ -4959,6 +5248,15 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         });
 
         if (!appData.health?.gameDayRoster?.isActive) {
+          if (
+            newsSig.signalType === 'RULED_OUT_WEEK' &&
+            newsSig.confidence >= 0.6 &&
+            playProb.probabilityPct === 0 &&
+            p.health.status !== 'Out'
+          ) {
+            p.health.status = 'Out';
+            mutated = true;
+          }
           if (
             p.health.playProbabilityPct !== playProb.probabilityPct ||
             p.health.playBadgeLabel !== playProb.badgeLabel
@@ -5102,96 +5400,399 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
     }
   }
 
-  // Synchronize Upcoming Opponent IR 21-Day Window activation probabilities & weekly deadline reversion
+  // Synchronize Upcoming Opponent Injury Report, Practice Participation, Trending News & IR 21-Day Windows
   const oppHealth = appData?.scheduleMatchup?.upcomingMatchup?.opponentHealth;
-  if (oppHealth && Array.isArray(oppHealth.irReserve) && !oppHealth.gameDayRoster?.isActive) {
-    for (const oppIr of oppHealth.irReserve) {
-      if (!oppIr || oppIr.isSeasonEnding) continue;
-      if (/\bnot\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+practice\b/i.test(String(oppIr.beatNote || ''))) {
-        if (oppIr.isPracticeWindowOpen) {
-          oppIr.isPracticeWindowOpen = false;
-          oppIr.status = 'Injured Reserve';
-          if (/Activation Window/i.test(String(oppIr.projectedReturnWeek || ''))) {
-            oppIr.projectedReturnWeek = 'TBD (21d Window Not Open)';
+  if (oppHealth && !oppHealth.gameDayRoster?.isActive) {
+    const oppWirePool = [];
+    const seenOppWireKeys = new Set();
+    const oppWireSources = [
+      ...(Array.isArray(appData._oppNewsWire) ? appData._oppNewsWire : []),
+      ...(Array.isArray(appData.liveGameDay?.oppWireItems) ? appData.liveGameDay.oppWireItems : []),
+      ...eligibleSignalRawStream
+    ];
+    for (const srcItem of oppWireSources) {
+      if (!srcItem || srcItem.isClickbait || srcItem.type === 'video') continue;
+      const pubMs = parseFlexibleIsoMs(srcItem.publishedAt);
+      if (pubMs === null || pubMs < preScanFloorMs || pubMs > nowMs + 3_600_000) continue;
+      const gk = String(srcItem.id || srcItem.url || srcItem.fullText || srcItem.title || srcItem.headline || '')
+        .toLowerCase()
+        .slice(0, 110);
+      if (!gk || seenOppWireKeys.has(gk)) continue;
+      seenOppWireKeys.add(gk);
+      oppWirePool.push(srcItem);
+    }
+
+    const oppRosterPool = [];
+    const seenOppPoolKeys = new Set();
+    for (const candidate of [
+      ...(Array.isArray(oppHealth.injuryReport) ? oppHealth.injuryReport : []),
+      ...(Array.isArray(oppHealth.activeRoster) ? oppHealth.activeRoster : []),
+      ...(Array.isArray(oppHealth.keyStartersHealthy) ? oppHealth.keyStartersHealthy : [])
+    ]) {
+      const k = canonicalInjuryPlayerKey(candidate?.name || '');
+      if (!k || seenOppPoolKeys.has(k)) continue;
+      seenOppPoolKeys.add(k);
+      const rawId = String(
+        candidate.id ||
+          candidate.playerId ||
+          (String(candidate.espnUrl || '').match(/\/id\/(\d+)/)?.[1] || '') ||
+          k
+      );
+      oppRosterPool.push({
+        id: rawId,
+        name: candidate.name,
+        position: candidate.position || 'ATH',
+        health: { injuryType: candidate.injuryType || '' }
+      });
+    }
+    const oppPlayerNames = oppRosterPool.map(p => p.name).filter(Boolean);
+    const oppSharedSurnames = computeSharedRosterSurnames(oppRosterPool);
+
+    const oppLivePracMap =
+      oppWirePool.length > 0 && oppRosterPool.length > 0
+        ? extractLivePracticeParticipationFromWire({
+            newsItems: oppWirePool,
+            rosterPlayers: oppRosterPool,
+            kickoffIso: upcomingKickoffIso,
+            lastCompletedGameEndMs,
+            nowMs,
+            seasonYear
+          })
+        : new Map();
+    const oppPracByKey = new Map();
+    for (const oppP of oppRosterPool) {
+      const pr = oppLivePracMap.get(oppP.id);
+      if (pr) oppPracByKey.set(canonicalInjuryPlayerKey(oppP.name), pr);
+    }
+
+    if (Array.isArray(oppHealth.injuryReport) && oppWirePool.length > 0) {
+      const priorOppCompletedWk = currentWeek > 1 ? currentWeek - 1 : null;
+      for (const oppRow of oppHealth.injuryReport) {
+        if (!oppRow?.name || oppRow.rosterBucket === 'ir' || oppRow.isIrReturnWindow) continue;
+        const rowKey = canonicalInjuryPlayerKey(oppRow.name);
+        const oppPid = String(
+          oppRow.id ||
+            oppRow.playerId ||
+            (String(oppRow.espnUrl || '').match(/\/id\/(\d+)/)?.[1] || '')
+        );
+        const wirePrac = oppPracByKey.get(rowKey) || null;
+        let oppPracChanged = false;
+        if (wirePrac) {
+          if (!oppRow._slotPubMs || typeof oppRow._slotPubMs !== 'object') {
+            oppRow._slotPubMs = { wed: 0, thu: 0, fri: 0 };
+          }
+          for (const slot of ['wed', 'thu', 'fri']) {
+            const candVal = wirePrac[slot];
+            const candMs = wirePrac.slotPubMs?.[slot] || 0;
+            const prevMs = oppRow._slotPubMs[slot] || 0;
+            const isOffProt = Boolean(oppRow._officialSlots?.[slot]) && oppRow[slot] && oppRow[slot] !== '-';
+            if (
+              candVal &&
+              !isOffProt &&
+              (!oppRow[slot] || oppRow[slot] === '-' || (candMs > 0 && candMs > prevMs && oppRow[slot] !== candVal))
+            ) {
+              oppRow[slot] = candVal;
+              if (candMs > 0) oppRow._slotPubMs[slot] = candMs;
+              oppPracChanged = true;
+              mutated = true;
+            }
+          }
+          if (
+            wirePrac.injuryType &&
+            (!oppRow.injuryType ||
+              oppRow.injuryType === 'Undisclosed' ||
+              (!isRestOrPersonalInjuryLabel(wirePrac.injuryType) && isRestOrPersonalInjuryLabel(oppRow.injuryType)))
+          ) {
+            oppRow.injuryType = wirePrac.injuryType;
+            oppPracChanged = true;
+            mutated = true;
+          }
+        }
+
+        const oppNewsSig = evaluateCorroboratedNewsInjurySignal({
+          playerName: oppRow.name,
+          playerId: oppPid,
+          rosterBucket: oppRow.isIrReturnQuestionable ? 'ir' : 'active',
+          newsItems: oppWirePool,
+          rosterPlayerNames: oppPlayerNames,
+          sharedSurnames: oppSharedSurnames,
+          nowMs,
+          windowStartMs: lastCompletedGameEndMs,
+          lastCompletedGameKickoffMs,
+          lastCompletedWeek: priorOppCompletedWk,
+          priorWeekInjuryType: oppRow.injuryType || ''
+        });
+
+        const bestOppNote = wirePrac?.latestNote || oppNewsSig.leadClause || '';
+        if (bestOppNote && isBareStatusPlaceholderComment(oppRow.longComment)) {
+          oppRow.longComment = bestOppNote;
+          if (isBareStatusPlaceholderComment(oppRow.shortComment)) {
+            oppRow.shortComment = bestOppNote;
           }
           mutated = true;
         }
+
+        if (oppPracChanged || oppNewsSig.hasSignal) {
+          const stClean =
+            oppRow.gameStatus === 'No Designation (Cleared)'
+              ? 'Active'
+              : oppRow.gameStatus === 'IR Return Window (Q)'
+                ? 'Questionable'
+                : oppRow.gameStatus || 'Questionable';
+          const isOppEarlyPre =
+            (oppRow.wed === '-' || !oppRow.wed) &&
+            (oppRow.thu === '-' || !oppRow.thu) &&
+            (oppRow.fri === '-' || !oppRow.fri);
+          const oppCombinedNote = pickMeaningfulInjuryComment(oppRow.longComment, oppRow.shortComment);
+          const oppNoteForModel =
+            isOppEarlyPre && stClean.toLowerCase() !== 'out'
+              ? oppCombinedNote.replace(
+                  /\b(is inactive|was inactive|officially inactive|ruled out|will not play|won't play|is out for|will miss (?:his |a )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|missing (?:a |his )?[a-z0-9 -]*(?:game|contest|matchup|tilt|clash)|miss(?:ing)? (?:sunday|monday|thursday|saturday)'?s?|inactive (?:sunday|monday|thursday|saturday)|inactive for (?:sunday|monday|thursday|saturday))\b/gi,
+                  'sidelined previously'
+                )
+              : oppCombinedNote;
+
+          const oppProb = computePlayerPlayProbability({
+            name: oppRow.name,
+            position: oppRow.position || 'ATH',
+            snapPct: oppRow.snapPct ?? null,
+            gameStatus: stClean,
+            rosterBucket: oppRow.isIrReturnQuestionable ? 'ir' : 'active',
+            isIrReturnQuestionable: Boolean(oppRow.isIrReturnQuestionable),
+            injuryType: oppRow.injuryType || '',
+            wed: oppRow.wed || '-',
+            thu: oppRow.thu || '-',
+            fri: oppRow.fri || '-',
+            beatNote: oppNoteForModel,
+            currentWeek,
+            rosterPlayerNames: oppPlayerNames,
+            corroboratedNewsSignal: oppNewsSig
+          });
+
+          if (
+            oppNewsSig.signalType === 'RULED_OUT_WEEK' &&
+            oppNewsSig.confidence >= 0.6 &&
+            oppProb.probabilityPct === 0 &&
+            oppRow.gameStatus !== 'Out'
+          ) {
+            oppRow.gameStatus = 'Out';
+            mutated = true;
+          }
+          if (
+            oppRow.playProbabilityPct !== oppProb.probabilityPct ||
+            oppRow.playBadgeLabel !== oppProb.badgeLabel
+          ) {
+            mutated = true;
+          }
+          oppRow.playProbabilityPct = oppProb.probabilityPct;
+          oppRow.playTier = oppProb.tier;
+          oppRow.playBadgeLabel = oppProb.badgeLabel;
+          oppRow.factors = oppProb.factors || [];
+        }
       }
-      if (oppIr.isPracticeWindowOpen || (oppIr.playProbabilityPct || 0) > 0) {
-        const oppIrProb = computePlayerPlayProbability({
-          name: oppIr.name,
-          position: oppIr.position || 'ATH',
-          snapPct: oppIr.snapPct ?? null,
-          gameStatus: oppIr.status || 'Injured Reserve',
-          rosterBucket: 'ir',
-          isPracticeWindowOpen: Boolean(oppIr.isPracticeWindowOpen),
-          isSeasonEnding: false,
-          injuryType: oppIr.injuryType || '',
-          wed: oppIr.wed || '-',
-          thu: oppIr.thu || '-',
-          fri: oppIr.fri || '-',
-          beatNote: oppIr.beatNote || '',
-          designatedDateIso: oppIr.designatedDateIso || '',
-          kickoffIso: upcomingKickoffIso,
+
+      // Promote newly injured/downgraded active opponent starters surfaced by corroborated insider/RotoWire news
+      const existingOppReportKeys = new Set(oppHealth.injuryReport.map(r => canonicalInjuryPlayerKey(r?.name || '')));
+      const oppActiveCandidates = [
+        ...(Array.isArray(oppHealth.keyStartersHealthy) ? oppHealth.keyStartersHealthy : []),
+        ...(Array.isArray(oppHealth.activeRoster) ? oppHealth.activeRoster : [])
+      ];
+      const promotedOppKeys = new Set();
+      for (const cand of oppActiveCandidates) {
+        const ck = canonicalInjuryPlayerKey(cand?.name || '');
+        if (!ck || existingOppReportKeys.has(ck) || promotedOppKeys.has(ck)) continue;
+        const candPid = String(cand.id || cand.playerId || (String(cand.espnUrl || '').match(/\/id\/(\d+)/)?.[1] || ''));
+        const candSig = evaluateCorroboratedNewsInjurySignal({
+          playerName: cand.name,
+          playerId: candPid,
+          rosterBucket: 'active',
+          newsItems: oppWirePool,
+          rosterPlayerNames: oppPlayerNames,
+          sharedSurnames: oppSharedSurnames,
           nowMs,
-          schedule,
-          currentWeek,
-          upcomingOppName: 'San Francisco 49ers',
-          upcomingOppAbbr: 'SF',
-          lastCompletedGameKickoffMs
+          windowStartMs: lastCompletedGameEndMs,
+          lastCompletedGameKickoffMs,
+          lastCompletedWeek: priorOppCompletedWk
         });
-        if (
-          oppIr.playProbabilityPct !== oppIrProb.probabilityPct ||
-          oppIr.playBadgeLabel !== oppIrProb.badgeLabel
-        ) {
-          oppIr.playProbabilityPct = oppIrProb.probabilityPct;
-          oppIr.playBadgeLabel = oppIrProb.badgeLabel;
+        const shouldPromoteOpp =
+          candSig.hasSignal &&
+          candSig.confidence >= 0.48 &&
+          (candSig.signalType === 'RULED_OUT_WEEK' ||
+            candSig.signalType === 'UNLIKELY_THIS_WEEK' ||
+            (candSig.signalType === 'TRENDING_DOWNWARD' && (candSig.hasLateSetback || Boolean(candSig.inferredInjuryType))) ||
+            (candSig.signalType === 'SUSTAINED_IN_GAME_INJURY' && Boolean(candSig.inferredInjuryType)));
+        if (!shouldPromoteOpp) continue;
+
+        const wirePrac = oppPracByKey.get(ck) || null;
+        const newSt =
+          candSig.signalType === 'RULED_OUT_WEEK' && candSig.confidence >= 0.6
+            ? 'Out'
+            : candSig.isMultiWeekOrSurgery
+              ? 'Doubtful'
+              : 'Questionable';
+        const newInj = wirePrac?.injuryType || candSig.inferredInjuryType || 'Undisclosed';
+        const newWed = wirePrac?.wed || '-';
+        const newThu = wirePrac?.thu || '-';
+        const newFri = wirePrac?.fri || '-';
+        const newProb = computePlayerPlayProbability({
+          name: cand.name,
+          position: cand.position || 'ATH',
+          snapPct: cand.snapPct ?? null,
+          gameStatus: newSt,
+          rosterBucket: 'active',
+          injuryType: newInj,
+          wed: newWed,
+          thu: newThu,
+          fri: newFri,
+          beatNote: candSig.leadClause || '',
+          currentWeek,
+          rosterPlayerNames: oppPlayerNames,
+          corroboratedNewsSignal: candSig
+        });
+        oppHealth.injuryReport.push({
+          id: candPid || undefined,
+          name: cand.name,
+          position: cand.position || 'ATH',
+          unit: cand.unit || 'Active',
+          jersey: cand.jersey ?? null,
+          headshotUrl: cand.headshotUrl || '',
+          espnUrl: cand.espnUrl || '',
+          snapPct: cand.snapPct ?? null,
+          wed: newWed,
+          thu: newThu,
+          fri: newFri,
+          injuryType: newInj,
+          gameStatus: newSt,
+          shortComment: candSig.leadClause || '',
+          longComment: candSig.leadClause || '',
+          isStarter: cand.isStarter !== false,
+          isIrReturnQuestionable: false,
+          playProbabilityPct: newProb.probabilityPct,
+          playTier: newProb.tier,
+          playBadgeLabel: newProb.badgeLabel,
+          factors: newProb.factors || [],
+          archetypeNote: newProb.priorUsed?.archetypeNote || ''
+        });
+        promotedOppKeys.add(ck);
+        existingOppReportKeys.add(ck);
+        mutated = true;
+      }
+      if (promotedOppKeys.size > 0 && Array.isArray(oppHealth.keyStartersHealthy)) {
+        oppHealth.keyStartersHealthy = oppHealth.keyStartersHealthy.filter(
+          st => !promotedOppKeys.has(canonicalInjuryPlayerKey(st?.name || ''))
+        );
+      }
+    }
+
+    if (Array.isArray(oppHealth.irReserve)) {
+      for (const oppIr of oppHealth.irReserve) {
+        if (!oppIr || oppIr.isSeasonEnding) continue;
+        if (/\bnot\s+(?:yet\s+)?ready\s+to\s+return\s+to\s+practice\b/i.test(String(oppIr.beatNote || ''))) {
+          if (oppIr.isPracticeWindowOpen) {
+            oppIr.isPracticeWindowOpen = false;
+            oppIr.status = 'Injured Reserve';
+            if (/Activation Window/i.test(String(oppIr.projectedReturnWeek || ''))) {
+              oppIr.projectedReturnWeek = 'TBD (21d Window Not Open)';
+            }
+            mutated = true;
+          }
+        }
+        const oppIrSig =
+          oppWirePool.length > 0
+            ? evaluateCorroboratedNewsInjurySignal({
+                playerName: oppIr.name,
+                rosterBucket: 'ir',
+                newsItems: oppWirePool,
+                rosterPlayerNames: oppPlayerNames,
+                sharedSurnames: oppSharedSurnames,
+                nowMs,
+                windowStartMs: lastCompletedGameEndMs,
+                lastCompletedGameKickoffMs
+              })
+            : null;
+        if (oppIrSig?.hasOfficialTxDesignation && !oppIr.isPracticeWindowOpen) {
+          oppIr.isPracticeWindowOpen = true;
+          oppIr.status = 'IR — 21-Day Window Open';
+          oppIr.projectedReturnWeek = `Week ${currentWeek} Activation Window`;
           mutated = true;
         }
-        if (Array.isArray(oppHealth.injuryReport)) {
-          const oppIrKey = canonicalInjuryPlayerKey(oppIr.name);
-          const existingIdx = oppHealth.injuryReport.findIndex(
-            r => canonicalInjuryPlayerKey(r?.name) === oppIrKey
-          );
-          if (oppIr.isPracticeWindowOpen && oppIrProb.probabilityPct > 0) {
-            const irInjRow = {
-              ...(existingIdx >= 0 ? oppHealth.injuryReport[existingIdx] : {}),
-              name: oppIr.name,
-              position: oppIr.position || 'ATH',
-              jersey: oppIr.jersey ?? null,
-              headshotUrl: oppIr.headshotUrl || '',
-              espnUrl: oppIr.espnUrl || '',
-              snapPct: oppIr.snapPct ?? null,
-              rosterBucket: 'ir',
-              isPracticeWindowOpen: true,
-              isIrReturnWindow: true,
-              isIrReturnQuestionable: true,
-              wed: oppIr.wed || '-',
-              thu: oppIr.thu || '-',
-              fri: oppIr.fri || '-',
-              injuryType: oppIr.injuryType || 'Injured Reserve',
-              gameStatus: oppIr.status || 'IR — 21-Day Window Open',
-              shortComment: oppIr.beatNote || '',
-              longComment: oppIr.beatNote || '',
-              playProbabilityPct: oppIrProb.probabilityPct,
-              playTier: oppIrProb.tier,
-              playBadgeLabel: oppIrProb.badgeLabel,
-              factors: oppIrProb.factors || []
-            };
-            if (existingIdx >= 0) {
-              oppHealth.injuryReport[existingIdx] = irInjRow;
-            } else {
-              oppHealth.injuryReport.push(irInjRow);
+        if (oppIr.isPracticeWindowOpen || (oppIr.playProbabilityPct || 0) > 0) {
+          const oppIrProb = computePlayerPlayProbability({
+            name: oppIr.name,
+            position: oppIr.position || 'ATH',
+            snapPct: oppIr.snapPct ?? null,
+            gameStatus: oppIr.status || 'Injured Reserve',
+            rosterBucket: 'ir',
+            isPracticeWindowOpen: Boolean(oppIr.isPracticeWindowOpen),
+            isSeasonEnding: false,
+            injuryType: oppIr.injuryType || '',
+            wed: oppIr.wed || '-',
+            thu: oppIr.thu || '-',
+            fri: oppIr.fri || '-',
+            beatNote: oppIr.beatNote || '',
+            designatedDateIso: oppIr.designatedDateIso || '',
+            kickoffIso: upcomingKickoffIso,
+            nowMs,
+            schedule,
+            currentWeek,
+            upcomingOppName: 'San Francisco 49ers',
+            upcomingOppAbbr: 'SF',
+            lastCompletedGameKickoffMs,
+            corroboratedNewsSignal: oppIrSig
+          });
+          if (
+            oppIr.playProbabilityPct !== oppIrProb.probabilityPct ||
+            oppIr.playBadgeLabel !== oppIrProb.badgeLabel
+          ) {
+            oppIr.playProbabilityPct = oppIrProb.probabilityPct;
+            oppIr.playBadgeLabel = oppIrProb.badgeLabel;
+            mutated = true;
+          }
+          if (Array.isArray(oppHealth.injuryReport)) {
+            const oppIrKey = canonicalInjuryPlayerKey(oppIr.name);
+            const existingIdx = oppHealth.injuryReport.findIndex(
+              r => canonicalInjuryPlayerKey(r?.name) === oppIrKey
+            );
+            if (oppIr.isPracticeWindowOpen && oppIrProb.probabilityPct > 0) {
+              const irInjRow = {
+                ...(existingIdx >= 0 ? oppHealth.injuryReport[existingIdx] : {}),
+                name: oppIr.name,
+                position: oppIr.position || 'ATH',
+                jersey: oppIr.jersey ?? null,
+                headshotUrl: oppIr.headshotUrl || '',
+                espnUrl: oppIr.espnUrl || '',
+                snapPct: oppIr.snapPct ?? null,
+                rosterBucket: 'ir',
+                isPracticeWindowOpen: true,
+                isIrReturnWindow: true,
+                isIrReturnQuestionable: true,
+                wed: oppIr.wed || '-',
+                thu: oppIr.thu || '-',
+                fri: oppIr.fri || '-',
+                injuryType: oppIr.injuryType || 'Injured Reserve',
+                gameStatus: oppIr.status || 'IR — 21-Day Window Open',
+                shortComment: oppIr.beatNote || '',
+                longComment: oppIr.beatNote || '',
+                playProbabilityPct: oppIrProb.probabilityPct,
+                playTier: oppIrProb.tier,
+                playBadgeLabel: oppIrProb.badgeLabel,
+                factors: oppIrProb.factors || []
+              };
+              if (existingIdx >= 0) {
+                oppHealth.injuryReport[existingIdx] = irInjRow;
+              } else {
+                oppHealth.injuryReport.push(irInjRow);
+                mutated = true;
+              }
+            } else if (
+              existingIdx >= 0 &&
+              (oppHealth.injuryReport[existingIdx]?.rosterBucket === 'ir' ||
+                oppHealth.injuryReport[existingIdx]?.isIrReturnWindow ||
+                oppHealth.injuryReport[existingIdx]?.isPracticeWindowOpen)
+            ) {
+              oppHealth.injuryReport.splice(existingIdx, 1);
               mutated = true;
             }
-          } else if (
-            existingIdx >= 0 &&
-            (oppHealth.injuryReport[existingIdx]?.rosterBucket === 'ir' ||
-              oppHealth.injuryReport[existingIdx]?.isIrReturnWindow ||
-              oppHealth.injuryReport[existingIdx]?.isPracticeWindowOpen)
-          ) {
-            oppHealth.injuryReport.splice(existingIdx, 1);
-            mutated = true;
           }
         }
       }
@@ -5709,6 +6310,18 @@ export function computeInjuryNewsRankScore(
 
   const sanitizedHealthScope = sanitizeTextForPlayerHealthCheck(checkScope);
   if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizedHealthScope)) {
+    return null;
+  }
+  // Reject generic press-conference / transcript topic lists ("discusses key injuries, Brock Purdy, Keenan Allen...")
+  // when there is zero player-specific medical, body-part, practice, or status substance in the scoped clause.
+  const isGenericPresserTopicList =
+    /\b(?:transcripts?:|press\s+conference|presser|shares\s+(?:49ers\s+)?injury\s+updates|discusses\s+(?:key\s+)?injuries\s*,)/i.test(
+      fullBody
+    ) &&
+    !/\b(?:ankle|knee|hamstring|groin|calf|achilles|foot|toe|back|shoulder|elbow|wrist|hand|thumb|rib|chest|neck|hip|quad|concussion|adductor|oblique|pectoral|illness|dnp|limited|did not practice|practiced|sidelined|ruled out|questionable|doubtful|injured reserve|\bir\b|21-day|mri|surgery|sprain|strain|tear|fracture|setback|rehab|trending\s+(?:up|down))\b/i.test(
+      sanitizedHealthScope
+    );
+  if (isGenericPresserTopicList) {
     return null;
   }
   // Reject fantasy start/sit / betting props fluff
