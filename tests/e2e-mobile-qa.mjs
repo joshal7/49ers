@@ -1059,6 +1059,66 @@ async function main() {
         );
       }
       assert(categoriesAudit.rosterCards >= 3 && categoriesAudit.hasCapInRoster && !categoriesAudit.hasRosterBrief, `Trades & Roster cap folding check failed: ${JSON.stringify(categoriesAudit)}`);
+
+      // 3a. Default-view summary length cap & rare inline Show more / Show less expand toggle check
+      const summaryExpandAudit = await cdp.eval(() => {
+        document.querySelector('[data-action="set-news-category"][data-category="articles"]')?.click();
+        const visibleSummaries = Array.from(document.querySelectorAll('.wire-card-summary'));
+        let maxVisibleLen = 0;
+        for (const el of visibleSummaries) {
+          const previewEl = el.querySelector('[data-summary-preview]');
+          const txt = (previewEl && !previewEl.hidden ? previewEl.textContent : el.textContent || '').trim();
+          if (txt.length > maxVisibleLen) maxVisibleLen = txt.length;
+        }
+        const expandableEls = Array.from(document.querySelectorAll('[data-expandable-summary]'));
+        let toggleVerified = true;
+        let expandedLen = 0;
+        let previewLen = 0;
+        if (expandableEls.length > 0) {
+          const first = expandableEls[0];
+          const previewEl = first.querySelector('[data-summary-preview]');
+          const fullEl = first.querySelector('[data-summary-full]');
+          previewLen = (previewEl?.textContent || '').trim().length;
+          const startedCollapsed =
+            first.getAttribute('data-expandable-summary') === 'collapsed' &&
+            Boolean(previewEl && !previewEl.hidden) &&
+            Boolean(fullEl && fullEl.hidden);
+          first.querySelector('[data-summary-preview] [data-action="toggle-wire-summary"]')?.click();
+          const becameExpanded =
+            first.getAttribute('data-expandable-summary') === 'expanded' &&
+            Boolean(previewEl && previewEl.hidden) &&
+            Boolean(fullEl && !fullEl.hidden);
+          expandedLen = (fullEl?.textContent || '').trim().length;
+          first.querySelector('[data-summary-full] [data-action="toggle-wire-summary"]')?.click();
+          const recollapsed =
+            first.getAttribute('data-expandable-summary') === 'collapsed' &&
+            Boolean(previewEl && !previewEl.hidden) &&
+            Boolean(fullEl && fullEl.hidden);
+          toggleVerified = startedCollapsed && becameExpanded && recollapsed && expandedLen > previewLen;
+        }
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        return {
+          totalSummaries: visibleSummaries.length,
+          expandableCount: expandableEls.length,
+          maxVisibleLen,
+          toggleVerified,
+          previewLen,
+          expandedLen
+        };
+      });
+      assert(
+        summaryExpandAudit.maxVisibleLen <= 465,
+        `Default-view wire summary exceeded 465 visible chars (wall-of-text regression): ${JSON.stringify(summaryExpandAudit)}`
+      );
+      assert(
+        summaryExpandAudit.expandableCount <= Math.max(3, Math.ceil(summaryExpandAudit.totalSummaries * 0.08)),
+        `Expandable summary toggle appeared too frequently: ${JSON.stringify(summaryExpandAudit)}`
+      );
+      assert(
+        summaryExpandAudit.toggleVerified,
+        `Expandable summary Show more / Show less toggle failed: ${JSON.stringify(summaryExpandAudit)}`
+      );
+
       await cdp.assertNoOverflow('News View After Category & Video Checks');
 
       // 3b. Native Inline MP4 Clip Playback Check (X video.twimg.com / ESPN HD MP4): must return HTTP 206 (zero 403) & decode metadata/frames

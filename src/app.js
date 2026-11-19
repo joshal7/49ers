@@ -1563,6 +1563,24 @@ function bindEvents() {
     const action = btn.getAttribute('data-action');
 
     switch (action) {
+      case 'toggle-wire-summary': {
+        const container = btn.closest('[data-expandable-summary]');
+        if (!container) break;
+        const previewEl = container.querySelector('[data-summary-preview]');
+        const fullEl = container.querySelector('[data-summary-full]');
+        const isExpanded = container.getAttribute('data-expandable-summary') === 'expanded';
+        if (isExpanded) {
+          container.setAttribute('data-expandable-summary', 'collapsed');
+          if (previewEl) previewEl.hidden = false;
+          if (fullEl) fullEl.hidden = true;
+        } else {
+          container.setAttribute('data-expandable-summary', 'expanded');
+          if (previewEl) previewEl.hidden = true;
+          if (fullEl) fullEl.hidden = false;
+        }
+        break;
+      }
+
       case 'toggle-customize-layout':
         state.isCustomizingLayout = !state.isCustomizingLayout;
         renderMain();

@@ -6,6 +6,7 @@ import { annotateJargonPlainText, jargonTerm, jargonInfoIcon } from '../engine/j
 import { resolveReporterFromNameOrHandle } from '../engine/beatAttributionEngine.js';
 import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
 import { optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
+import { splitSummaryForExpandableDisplay } from '../engine/breakingClassifier.js';
 import { iconSvg } from './icons.js';
 
 export { jargonTerm, jargonInfoIcon };
@@ -598,4 +599,24 @@ export function renderMiniMeterHtml(pct = 0, tone = 'gold') {
       <div class="mini-meter-fill tone-${esc(tone)}" style="width:${clamped.toFixed(1)}%"></div>
     </div>
   `;
+}
+
+/**
+ * Renders a wire/article summary with progressive disclosure when it exceeds the rare
+ * long-summary threshold (>450 chars, <2% of feed items), hiding the tail behind an inline
+ * "Show more" / "Show less" button while leaving normal summaries untouched.
+ */
+export function renderExpandableSummaryHtml(
+  summaryText = '',
+  { className = 'wire-card-summary', jargonOptions = undefined, expandThreshold, previewMax } = {}
+) {
+  const split = splitSummaryForExpandableDisplay(summaryText, {
+    ...(expandThreshold != null ? { expandThreshold } : {}),
+    ...(previewMax != null ? { previewMax } : {})
+  });
+  if (!split.fullText) return '';
+  if (!split.isTruncated) {
+    return `<div class="${esc(className)}">${escJargon(split.fullText, jargonOptions)}</div>`;
+  }
+  return `<div class="${esc(className)} is-expandable-summary" data-expandable-summary="collapsed"><span class="wire-summary-preview" data-summary-preview>${escJargon(split.previewText, jargonOptions)} <button type="button" class="wire-summary-toggle-btn" data-action="toggle-wire-summary" aria-expanded="false">Show more</button></span><span class="wire-summary-full" data-summary-full hidden>${escJargon(split.fullText, jargonOptions)} <button type="button" class="wire-summary-toggle-btn" data-action="toggle-wire-summary" aria-expanded="true">Show less</button></span></div>`;
 }

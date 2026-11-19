@@ -1143,6 +1143,43 @@ a:hover {
   line-height: 1.4;
 }
 
+.player-mention-summary {
+  margin-top: 3px;
+}
+
+.wire-summary-preview[hidden],
+.wire-summary-full[hidden] {
+  display: none !important;
+}
+
+.wire-summary-toggle-btn {
+  display: inline;
+  background: none;
+  border: 0;
+  padding: 0 2px;
+  margin: 0;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.14s ease, opacity 0.14s ease;
+}
+
+.wire-summary-toggle-btn:hover,
+.wire-summary-toggle-btn:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline: none;
+}
+
+.wire-summary-toggle-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--gold-soft);
+}
+
 .wire-card-players-row {
   margin-top: 2px;
 }

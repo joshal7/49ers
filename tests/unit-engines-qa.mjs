@@ -176,6 +176,12 @@ import {
 } from '../src/engine/groundingValidator.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
+  WIRE_ARTICLE_EXCERPT_MAX_CHARS,
+  WIRE_SUMMARY_EXPAND_THRESHOLD,
+  WIRE_SUMMARY_PREVIEW_MAX,
+  buildBoundedWireSummary,
+  splitSummaryForExpandableDisplay,
+  sanitizeOversizedDirectArticleSummary,
   isUrgentBreakingBadge,
   classifyNewsItemCategory,
   classifyBreakingItem,
@@ -12707,6 +12713,81 @@ await testAsync(
       sheetLt5Html.includes('data-player-mentions-sort-bar'),
       false,
       'Player with <5 mentions in 7d must NOT render Top|Latest toggle'
+    );
+  }
+);
+
+test(
+  'Wire Summary Bounding, Direct-Article Sanitizer & Rare Expandable Disclosure (>450 chars)',
+  () => {
+    // 1. buildBoundedWireSummary cleans HTML-strip punctuation spacing and stops cleanly on sentence/word boundary
+    const messyEspnBody =
+      "COLORADO SPRINGS, Colo. -- As wide receiver Mike Evans works his way back from Achilles tendinitis , nobody in the San Francisco 49ers ' locker room knows better how frustrating that injury can be than running back Christian McCaffrey . In 2024, McCaffrey missed the first eight games of the season with bilateral Achilles tendinitis and Dr. Daniel Kaplan explained the timeline in great detail over 6,000 more characters.";
+    const bounded = buildBoundedWireSummary(messyEspnBody, WIRE_ARTICLE_EXCERPT_MAX_CHARS);
+    assert.ok(bounded.length <= WIRE_ARTICLE_EXCERPT_MAX_CHARS, `Bounded summary exceeded ${WIRE_ARTICLE_EXCERPT_MAX_CHARS}: ${bounded.length}`);
+    assert.ok(!bounded.includes(' ,') && !bounded.includes("49ers '"), `Stray HTML punctuation spacing must be cleaned: ${bounded}`);
+    assert.ok(bounded.endsWith('Christian McCaffrey.'), `Should end cleanly on complete sentence boundary (ignoring Colo.): ${bounded}`);
+
+    // 2. sanitizeOversizedDirectArticleSummary repairs direct ESPN full-article dumps & misclassified 'film' category
+    const fullEspnStoryItem = {
+      id: 'espn_pwire_16737_50502440',
+      type: 'article',
+      category: 'film',
+      wireSource: 'espn_player_wire',
+      url: 'https://www.espn.com/nfl/story/_/id/50502440/san-francisco-49ers-mike-evans-achilles-tendinitis-injury-recovery',
+      title: "ESPN spoke with a medical professional for a better understanding of Evans' diagnosis.",
+      summary: `${messyEspnBody} ${'Extra medical Q&A paragraph about yards per play and offensive scheme. '.repeat(80)}`
+    };
+    const healed = sanitizeOversizedDirectArticleSummary(fullEspnStoryItem);
+    assert.ok(healed.summary.length <= WIRE_ARTICLE_EXCERPT_MAX_CHARS, `Direct ESPN article summary must be bounded <=280, got ${healed.summary.length}`);
+    assert.notEqual(healed.category, 'film', 'Healing full article body must clear false Film & Trench classification');
+
+    // Legitimate RotoWire player-profile blurb (613 chars) must remain intact (not truncated by direct-article sanitizer)
+    const rotoBlurbItem = {
+      id: 'espn_pwire_16737_64817928',
+      type: 'article',
+      category: 'injury',
+      wireSource: 'espn_player_wire',
+      url: 'https://www.espn.com/nfl/player/_/id/16737/mike-evans#:~:text=Evans',
+      title: 'Kyle Shanahan hoping to have Evans back at practice this week.',
+      summary:
+        "Evans missed the 49ers' last three games while recovering from right Achilles tendinitis, but he has a chance at returning to action in Week 11. After staying behind in the Bay Area this past weekend for the team's 46-40 win in Dallas, he's scheduled to meet back up with the 49ers this week in Colorado Springs, where the team will be holding practices at high altitude to get acclimated for Sunday's matchup with the Vikings in Mexico City. If Evans is able to practice in some capacity Wednesday through Friday and if his Achilles responds well, he'll likely be cleared to play for the first time since Week 6."
+    };
+    assert.equal(sanitizeOversizedDirectArticleSummary(rotoBlurbItem), rotoBlurbItem, 'Legitimate 613-char RotoWire player blurb must remain intact for expandable disclosure');
+
+    // 3. splitSummaryForExpandableDisplay keeps normal summaries (<=450) uncollapsed and collapses rare >450 summaries cleanly
+    const normalSummary = 'Green injured his back in the second half of the 49ers win over the Raiders in Week 9, and he finished that game with four tackles and one interception. Kyle Shanahan indicated Monday that Green is considered day-to-day.';
+    const normalSplit = splitSummaryForExpandableDisplay(normalSummary);
+    assert.equal(normalSplit.isTruncated, false, 'Normal <=450 char summaries must never show expand button');
+
+    const longSplit = splitSummaryForExpandableDisplay(rotoBlurbItem.summary);
+    assert.equal(longSplit.isTruncated, true, `Summary >${WIRE_SUMMARY_EXPAND_THRESHOLD} chars must collapse behind Show more`);
+    assert.ok(longSplit.previewText.length <= WIRE_SUMMARY_PREVIEW_MAX + 26, `Collapsed preview too long: ${longSplit.previewText.length}`);
+    assert.ok(longSplit.fullText.length - longSplit.previewText.length >= 60, 'Collapsed preview must hide meaningful overflow');
+
+    // 4. renderWireItemCardHtml renders plain summary for normal items and Show more/Show less toggle for rare long summaries
+    const normalCardHtml = renderWireItemCardHtml({
+      id: 'art_normal',
+      type: 'article',
+      title: 'Renardo Green practice update',
+      summary: normalSummary,
+      url: 'https://www.49erswebzone.com/articles/normal-1/',
+      author: 'Matt Barrows',
+      publishedAt: new Date().toISOString()
+    });
+    assert.ok(!normalCardHtml.includes('data-expandable-summary'), 'Normal card must not render expand button');
+
+    const longCardHtml = renderWireItemCardHtml({
+      ...rotoBlurbItem,
+      author: 'Nick Wagoner',
+      publishedAt: new Date().toISOString()
+    });
+    assert.ok(
+      longCardHtml.includes('data-expandable-summary="collapsed"') &&
+        longCardHtml.includes('data-action="toggle-wire-summary"') &&
+        longCardHtml.includes('>Show more</button>') &&
+        longCardHtml.includes('>Show less</button>'),
+      'Rare >450-char summary card must render collapsed preview with Show more / Show less toggle'
     );
   }
 );

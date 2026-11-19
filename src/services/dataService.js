@@ -27,6 +27,10 @@ import {
 } from '../engine/playoffMonteCarlo.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
+  WIRE_ARTICLE_EXCERPT_MAX_CHARS,
+  WIRE_BLURB_SUMMARY_MAX_CHARS,
+  buildBoundedWireSummary,
+  sanitizeOversizedDirectArticleSummary,
   classifyBreakingItem,
   classifyNewsItemCategory,
   extractBlueskyBestExternalLink,
@@ -1017,7 +1021,8 @@ function hydrateBundlePostLoad(rawFiles) {
               hasRosterMatch: Array.isArray(it?.mentionedPlayers) && it.mentionedPlayers.length > 0
             })
         )
-        .map(it => {
+        .map(rawIt => {
+          const it = sanitizeOversizedDirectArticleSummary(rawIt);
           const isSoc =
             it?.type === 'tweet' || it?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(it?.url || ''));
           if (!isSoc) return it;
@@ -1059,7 +1064,8 @@ function hydrateBundlePostLoad(rawFiles) {
             const body = `${rn?.fullText || ''} ${rn?.title || ''} ${rn?.headline || ''} ${rn?.summary || ''} ${rn?.externalDescription || ''}`.trim();
             return body && doesClauseMentionPlayer(body, p.name, { allowSurname: true });
           })
-          .map(rn => {
+          .map(rawRn => {
+            const rn = sanitizeOversizedDirectArticleSummary(rawRn);
             const isSoc =
               rn?.type === 'tweet' || rn?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(rn?.url || ''));
             if (!isSoc) return rn;
@@ -2089,10 +2095,30 @@ export async function hydrateLiveEspnPlayerBeatWire(
             continue;
           }
 
-          const sig = scoreContentSignal(cleanFull, rawStory);
+          const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
+          const resolvedTitle =
+            effectiveType === 'tweet'
+              ? tweetDisplay.text
+              : isDirectArticleOrClip
+                ? rawHeadline || cleanLeadSentence || tweetDisplay.text
+                : cleanLeadSentence || rawHeadline || tweetDisplay.text;
+          const resolvedSummary = isDirectArticleOrClip
+            ? rawDesc && rawDesc.toLowerCase() !== resolvedTitle.toLowerCase()
+              ? buildBoundedWireSummary(rawDesc, WIRE_ARTICLE_EXCERPT_MAX_CHARS)
+              : buildBoundedWireSummary(rawStory, WIRE_ARTICLE_EXCERPT_MAX_CHARS)
+            : effectiveType === 'tweet'
+              ? rawStory && rawStory !== cleanFull
+                ? buildBoundedWireSummary(rawStory, WIRE_BLURB_SUMMARY_MAX_CHARS)
+                : ''
+              : buildBoundedWireSummary(
+                  rawStory || (rawDesc !== cleanLeadSentence ? rawDesc : ''),
+                  WIRE_BLURB_SUMMARY_MAX_CHARS
+                );
+
+          const sig = scoreContentSignal(cleanFull, resolvedSummary);
           if (sig.isClickbait) continue;
 
-          const matchedOthers = matchPlayersClient(`${cleanFull} ${rawStory}`, rosterPlayers, 8);
+          const matchedOthers = matchPlayersClient(`${cleanFull} ${resolvedSummary}`, rosterPlayers, 8);
           const primaryMention = {
             id: player.id,
             name: player.name,
@@ -2106,15 +2132,11 @@ export async function hydrateLiveEspnPlayerBeatWire(
               ? [primaryMention, ...matchedOthers.filter(m => String(m.id) !== String(player.id))]
               : [primaryMention];
 
-          const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
           const pwireCand = {
             type: effectiveType,
-            title:
-              effectiveType === 'tweet'
-                ? tweetDisplay.text
-                : cleanLeadSentence || rawHeadline || tweetDisplay.text,
+            title: resolvedTitle,
             fullText: effectiveType === 'tweet' ? cleanFull : undefined,
-            summary: rawStory || rawDesc,
+            summary: resolvedSummary || rawDesc,
             publishedAt: pubIsoStr
           };
           if (isStaleCompletedGameAvailabilityItem(pwireCand, appData)) continue;
@@ -2128,18 +2150,10 @@ export async function hydrateLiveEspnPlayerBeatWire(
           discovered.push({
             id: itemId,
             type: effectiveType,
-            title:
-              effectiveType === 'tweet'
-                ? tweetDisplay.text
-                : cleanLeadSentence || rawHeadline || tweetDisplay.text,
+            title: resolvedTitle,
             fullText: effectiveType === 'tweet' ? cleanFull : undefined,
             isFullTweet: effectiveType === 'tweet' ? tweetDisplay.isFullTweet : undefined,
-            summary:
-              effectiveType === 'tweet'
-                ? rawStory && rawStory !== cleanFull
-                  ? rawStory
-                  : ''
-                : rawStory || (rawDesc !== cleanLeadSentence ? rawDesc : ''),
+            summary: resolvedSummary,
             imageUrl: player.headshotUrl?.startsWith('https://') ? player.headshotUrl : '',
             imageAlt: `${player.name} beat update`,
             mentionedPlayers: mentioned,
@@ -2148,7 +2162,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
             externalUrl: null,
             externalTitle: null,
             outletId: parsedAttr.outletId || 'espn',
-            outletName: parsedAttr.outletName || 'ESPN Injury Wire',
+            outletName: isPlayerBlurb ? parsedAttr.outletName || 'ESPN Injury Wire' : 'ESPN',
             reporterId: parsedAttr.reporterId,
             reporterName: parsedAttr.reporterName,
             author: parsedAttr.author,
@@ -2163,14 +2177,14 @@ export async function hydrateLiveEspnPlayerBeatWire(
             category:
               brk.isInGameInjury ||
               /injur|practice|questionable|ruled out|tent|locker room|return|reserve|activated|mri|ankle|knee|hamstring|shoulder/i.test(
-                `${cleanFull} ${rawStory}`
+                `${cleanFull} ${resolvedSummary}`
               )
                 ? 'injury'
                 : classifyNewsItemCategory({
                     type: effectiveType,
                     title: pwireCand.title,
                     fullText: pwireCand.fullText,
-                    summary: pwireCand.summary
+                    summary: resolvedSummary
                   }),
             signalScore: Math.max(brk.isBreaking ? 93 : 80, sig.signalScore),
             fluffScore: sig.fluffScore,
@@ -6420,7 +6434,12 @@ export async function hydrateLiveOpponentWeeklyPracticeWire(
               type: 'tweet',
               title: leadText,
               fullText: leadText,
-              summary: story && story !== leadText ? story : headline !== leadText ? headline : '',
+              summary:
+                story && story !== leadText
+                  ? buildBoundedWireSummary(story, WIRE_BLURB_SUMMARY_MAX_CHARS)
+                  : headline !== leadText
+                    ? buildBoundedWireSummary(headline, WIRE_ARTICLE_EXCERPT_MAX_CHARS)
+                    : '',
               publishedAt: new Date(pubMs).toISOString(),
               url:
                 sanitizeExternalUrl(entry.links?.web?.href, null) ||

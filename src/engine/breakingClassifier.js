@@ -35,6 +35,10 @@ import {
 import { isEditorialPhotoUrl } from './salientMediaEngine.js';
 
 export const SHORT_TWEET_FULL_TEXT_LIMIT = 320;
+export const WIRE_ARTICLE_EXCERPT_MAX_CHARS = 280;
+export const WIRE_BLURB_SUMMARY_MAX_CHARS = 900;
+export const WIRE_SUMMARY_EXPAND_THRESHOLD = 450;
+export const WIRE_SUMMARY_PREVIEW_MAX = 320;
 
 const URGENT_BREAKING_BADGES = new Set(['BREAKING', 'LIVE INJURY UPDATE', 'LIVE IN-GAME']);
 
@@ -4204,6 +4208,158 @@ export function partitionBreakingNewsAboveBrief(
     gameDayLiveMode: false,
     gameDayPhaseLabel: ''
   };
+}
+
+const WIRE_SUMMARY_ABBREV_RE =
+  /(?:\b(?:Dr|Mr|Mrs|Ms|Jr|Sr|St|No|Vs|Jan|Feb|Mar|Apr|Aug|Sept|Oct|Nov|Dec|Colo|Calif|Tex|Fla|Minn|Wash|Ariz|Ill|Pa|Ga|La|Mo|Nev|Tenn|Mass|Mich|Wis|Ind|Ky|Va|Md|Conn|Okla|Ore|Ark|Kan|Neb|Utah|Idaho|Mont|Wyo|Ala|Miss|S\.C|N\.C|D\.C|U\.S|a\.m|p\.m|etc)|\b[A-Z])\.$/i;
+
+function normalizeWireSummarySpacing(rawText = '') {
+  return String(rawText || '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s+([,.;:!?])/g, '$1')
+    .replace(/\b(49ers|Niners|[A-Za-z]+s)\s+['’](?=\s|$)/g, "$1'")
+    .replace(/\s+['’]s\b/g, "'s")
+    .trim();
+}
+
+function findCleanSentenceEndIndex(text = '', minIdx = 140, maxIdx = 320) {
+  let best = -1;
+  const upper = Math.min(text.length, maxIdx);
+  for (let i = Math.max(0, minIdx); i < upper; i++) {
+    const ch = text[i];
+    if (ch !== '.' && ch !== '!' && ch !== '?') continue;
+    let endPos = i + 1;
+    while (endPos < text.length && /["”'’)\]]/.test(text[endPos])) endPos += 1;
+    if (endPos < text.length && !/\s/.test(text[endPos])) continue;
+    if (ch === '.') {
+      const prefix = text.slice(Math.max(0, i - 12), i + 1);
+      if (WIRE_SUMMARY_ABBREV_RE.test(prefix)) continue;
+    }
+    if (endPos <= maxIdx) {
+      best = endPos;
+    }
+  }
+  return best;
+}
+
+/**
+ * Produces a clean, sentence- or word-bounded excerpt from raw wire/article text so full-length
+ * external articles (e.g., 6,000+ char ESPN story bodies from the player-news API) never bloat
+ * feed cards or misclassify unrelated topics.
+ */
+export function buildBoundedWireSummary(rawText = '', maxChars = WIRE_ARTICLE_EXCERPT_MAX_CHARS) {
+  const clean = normalizeWireSummarySpacing(rawText);
+  if (!clean) return '';
+  const limit = Math.max(80, Number(maxChars) || WIRE_ARTICLE_EXCERPT_MAX_CHARS);
+  if (clean.length <= limit) return clean;
+
+  const sentenceEnd = findCleanSentenceEndIndex(clean, Math.floor(limit * 0.52), limit);
+  if (sentenceEnd > 0) {
+    return clean.slice(0, sentenceEnd).trim();
+  }
+
+  let cut = clean.slice(0, limit - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace >= Math.floor(limit * 0.55)) {
+    cut = cut.slice(0, lastSpace);
+  }
+  cut = cut.replace(/[,;:\-—–(\s]+$/, '').trim();
+  return cut ? `${cut}…` : `${clean.slice(0, limit - 1).trim()}…`;
+}
+
+/**
+ * Splits an unusually long feed-card summary (>450 chars — <2% of normal wire items) into a clean
+ * collapsed preview + full text for progressive-disclosure "Show more" / "Show less" expansion.
+ */
+export function splitSummaryForExpandableDisplay(
+  summary = '',
+  {
+    expandThreshold = WIRE_SUMMARY_EXPAND_THRESHOLD,
+    previewMax = WIRE_SUMMARY_PREVIEW_MAX,
+    minHiddenChars = 60
+  } = {}
+) {
+  const fullText = normalizeWireSummarySpacing(summary);
+  if (!fullText || fullText.length <= expandThreshold) {
+    return {
+      isTruncated: false,
+      previewText: fullText,
+      fullText,
+      endsAtSentence: true
+    };
+  }
+
+  const sentenceEnd = findCleanSentenceEndIndex(
+    fullText,
+    Math.floor(previewMax * 0.62),
+    Math.min(fullText.length - minHiddenChars, previewMax + 25)
+  );
+  if (sentenceEnd > 0 && fullText.length - sentenceEnd >= minHiddenChars) {
+    return {
+      isTruncated: true,
+      previewText: fullText.slice(0, sentenceEnd).trim(),
+      fullText,
+      endsAtSentence: true
+    };
+  }
+
+  let cut = fullText.slice(0, previewMax);
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace >= Math.floor(previewMax * 0.6)) {
+    cut = cut.slice(0, lastSpace);
+  }
+  cut = cut.replace(/[,;:\-—–(\s]+$/, '').trim();
+  if (!cut || fullText.length - cut.length < minHiddenChars) {
+    return {
+      isTruncated: false,
+      previewText: fullText,
+      fullText,
+      endsAtSentence: true
+    };
+  }
+
+  return {
+    isTruncated: true,
+    previewText: `${cut}…`,
+    fullText,
+    endsAtSentence: false
+  };
+}
+
+/**
+ * Self-heals cached or ingested external article items whose `summary` accidentally contains an
+ * entire multi-thousand-character article body (e.g., ESPN `/nfl/story/_/id/...` entries fetched via
+ * the player-news API), preserving legitimate RotoWire/beat player blurbs (<=900 chars).
+ */
+export function sanitizeOversizedDirectArticleSummary(item = {}) {
+  if (!item || typeof item !== 'object' || !item.summary) return item;
+  const rawSummary = String(item.summary || '').trim();
+  if (!rawSummary) return item;
+
+  const url = String(item.url || '').trim();
+  const isDirectEspnStory =
+    /\/nfl\/story\/_\/id\/\d+/i.test(url) &&
+    (item.wireSource === 'espn_player_wire' || String(item.id || '').startsWith('espn_pwire_'));
+  const isRunawayArticleDump =
+    item.type !== 'tweet' &&
+    item.type !== 'social' &&
+    rawSummary.length > 1200 &&
+    /^https?:\/\//i.test(url) &&
+    !/\/nfl\/player\/_\/id\//i.test(url);
+
+  if ((!isDirectEspnStory || rawSummary.length <= 360) && !isRunawayArticleDump) {
+    return item;
+  }
+
+  const boundedSummary = buildBoundedWireSummary(rawSummary, WIRE_ARTICLE_EXCERPT_MAX_CHARS);
+  const next = {
+    ...item,
+    summary: boundedSummary
+  };
+  if (next.category === 'film') {
+    next.category = classifyNewsItemCategory(next);
+  }
+  return next;
 }
 
 export { buildStorySignatureKey };

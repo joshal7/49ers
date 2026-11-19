@@ -8,7 +8,7 @@
  * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
-import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderPlayerAvatarHtml, renderSalientThumbHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
@@ -247,7 +247,7 @@ export function renderInjuryNewsItemCardHtml(
                      : ''
                  }`
               : `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(headlineText)}</strong> ${iconSvg('externalLink', 12)}</a>
-                 ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(cleanSummary, { excludePlayerId })}</div>` : ''}`
+                 ${cleanSummary ? renderExpandableSummaryHtml(cleanSummary, { className: 'wire-card-summary player-mention-summary', jargonOptions: { excludePlayerId } }) : ''}`
           }
           ${!hasPlayableVideo ? similarStoriesDrawerHtml : ''}
         </div>

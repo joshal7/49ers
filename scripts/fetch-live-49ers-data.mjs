@@ -91,6 +91,9 @@ import {
   normalizeScheduleGameItem
 } from '../src/engine/seasonStateMachine.js';
 import {
+  WIRE_ARTICLE_EXCERPT_MAX_CHARS,
+  WIRE_BLURB_SUMMARY_MAX_CHARS,
+  buildBoundedWireSummary,
   classifyBreakingItem,
   classifyNewsItemCategory,
   promoteLinkDropTweetToArticle,
@@ -2333,10 +2336,28 @@ async function main() {
             if (!itemUrl) continue;
 
             const fmtTw = formatTweetBodyForDisplay(cleanFull);
+            const resolvedTitle =
+              effectiveType === 'tweet'
+                ? fmtTw.text
+                : isDirectArticleOrClip
+                  ? rawHeadline || cleanLeadSentence || fmtTw.text
+                  : cleanLeadSentence || rawHeadline || fmtTw.text;
+            const resolvedSummary = isDirectArticleOrClip
+              ? rawDesc && rawDesc.toLowerCase() !== resolvedTitle.toLowerCase()
+                ? buildBoundedWireSummary(rawDesc, WIRE_ARTICLE_EXCERPT_MAX_CHARS)
+                : buildBoundedWireSummary(rawStory, WIRE_ARTICLE_EXCERPT_MAX_CHARS)
+              : effectiveType === 'tweet'
+                ? rawStory && rawStory !== cleanFull
+                  ? buildBoundedWireSummary(rawStory, WIRE_BLURB_SUMMARY_MAX_CHARS)
+                  : ''
+                : buildBoundedWireSummary(
+                    rawStory || (rawDesc !== cleanLeadSentence ? rawDesc : ''),
+                    WIRE_BLURB_SUMMARY_MAX_CHARS
+                  );
             const brk = classifyBreakingItem({
-              title: effectiveType === 'tweet' ? fmtTw.text : cleanLeadSentence || rawHeadline || fmtTw.text,
+              title: resolvedTitle,
               fullText: cleanFull,
-              summary: rawStory || rawDesc,
+              summary: resolvedSummary || rawDesc,
               publishedAt: pubIsoStr
             });
 
@@ -2346,18 +2367,10 @@ async function main() {
             const pwItemDraft = {
               id: `espn_pwire_${p.id}_${wireToken}`,
               type: effectiveType,
-              title:
-                effectiveType === 'tweet'
-                  ? fmtTw.text
-                  : cleanLeadSentence || rawHeadline || fmtTw.text,
+              title: resolvedTitle,
               fullText: effectiveType === 'tweet' ? cleanFull : undefined,
               isFullTweet: effectiveType === 'tweet' ? fmtTw.isFullTweet : undefined,
-              summary:
-                effectiveType === 'tweet'
-                  ? rawStory && rawStory !== cleanFull
-                    ? rawStory
-                    : ''
-                  : rawStory || (rawDesc !== cleanLeadSentence ? rawDesc : ''),
+              summary: resolvedSummary,
               imageUrl: p.headshotUrl || '',
               imageAlt: `${p.name} beat update`,
               primaryPlayer: p,
@@ -4984,7 +4997,12 @@ async function main() {
                 type: 'tweet',
                 title: leadText,
                 fullText: leadText,
-                summary: story && story !== leadText ? story : headline !== leadText ? headline : '',
+                summary:
+                  story && story !== leadText
+                    ? buildBoundedWireSummary(story, WIRE_BLURB_SUMMARY_MAX_CHARS)
+                    : headline !== leadText
+                      ? buildBoundedWireSummary(headline, WIRE_ARTICLE_EXCERPT_MAX_CHARS)
+                      : '',
                 publishedAt: new Date(pubMs).toISOString(),
                 url: entry.links?.web?.href || row.espnUrl || 'https://www.espn.com/nfl/injuries',
                 author: entry.byline ? String(entry.byline).replace(/^By\s+/i, '').trim() : `${oppAbbrTarget} Beat Wire`,

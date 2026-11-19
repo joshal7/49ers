@@ -11,6 +11,7 @@ import {
   esc,
   escJargon,
   formatRelativeAge,
+  renderExpandableSummaryHtml,
   renderPlayerChipsStripHtml,
   renderSalientThumbHtml,
   renderSalientHeroBannerHtml,
@@ -734,7 +735,7 @@ export function renderWireItemCardHtml(
                 : esc(displayTitle)
             }
           </div>
-          ${cleanSummary ? `<div class="wire-card-summary">${escJargon(cleanSummary)}</div>` : ''}
+          ${cleanSummary ? renderExpandableSummaryHtml(cleanSummary, { className: 'wire-card-summary' }) : ''}
           ${
             showLinkedStory
               ? `<div class="wire-card-actions-row">

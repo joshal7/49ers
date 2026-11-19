@@ -46,11 +46,13 @@ import {
 } from '../src/engine/injuryProbabilityModel.js';
 import { runPlayoffMonteCarlo } from '../src/engine/playoffMonteCarlo.js';
 import {
+  WIRE_BLURB_SUMMARY_MAX_CHARS,
   deduplicateAndGroupWireItems,
   sortNewsWithBreakingPriority,
   isRedundantProfileSelfLink,
   isArticleLinkDropTweet,
-  reconcileLinkDropTweetsWithArticles
+  reconcileLinkDropTweetsWithArticles,
+  splitSummaryForExpandableDisplay
 } from '../src/engine/breakingClassifier.js';
 import { getJargonEntry } from '../src/engine/jargonGlossary.js';
 import {
@@ -3006,6 +3008,39 @@ test('Holistic Regression: Link-drop tweets in compiled data/news.json promote c
   // Verify genuine salient beat tweets remain tweets
   const remainingTweets = reconciled.filter(it => it.type === 'tweet' || it.type === 'social');
   assert.ok(remainingTweets.length >= 20, `Salient beat tweets must remain tweets (found ${remainingTweets.length})`);
+});
+
+test('Holistic Regression: Compiled news.json has zero unbounded full-article summary dumps and rare expandable-summary rate (<5%)', () => {
+  const compiledNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const stream = compiledNews.rawStream || [];
+
+  const oversizedDirectStories = stream.filter(
+    it => /\/nfl\/story\/_\/id\/\d+/i.test(String(it.url || '')) && String(it.summary || '').length > 360
+  );
+  assert.equal(
+    oversizedDirectStories.length,
+    0,
+    `Direct ESPN /nfl/story/ articles must never dump full article bodies into summary: ${oversizedDirectStories.map(i => `${i.id}(${i.summary.length})`).join(', ')}`
+  );
+
+  const runawaySummaries = stream.filter(it => String(it.summary || '').length > WIRE_BLURB_SUMMARY_MAX_CHARS);
+  assert.equal(
+    runawaySummaries.length,
+    0,
+    `Zero wire items may exceed ${WIRE_BLURB_SUMMARY_MAX_CHARS}-char summary safety cap: ${runawaySummaries.map(i => `${i.id}(${i.summary.length})`).join(', ')}`
+  );
+
+  const nonTweetWithSummary = stream.filter(
+    it => it.type !== 'tweet' && it.type !== 'social' && it.type !== 'video' && String(it.summary || '').trim().length > 0
+  );
+  const expandableCount = nonTweetWithSummary.filter(
+    it => splitSummaryForExpandableDisplay(it.summary).isTruncated
+  ).length;
+  const expandableRatio = nonTweetWithSummary.length > 0 ? expandableCount / nonTweetWithSummary.length : 0;
+  assert.ok(
+    expandableRatio < 0.05,
+    `Expandable summary button should appear infrequently (<5% of article summaries), got ${expandableCount}/${nonTweetWithSummary.length} (${(expandableRatio * 100).toFixed(1)}%)`
+  );
 });
 
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
