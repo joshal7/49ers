@@ -5930,6 +5930,12 @@ async function main() {
         const allDrawersUseSimilarStories = groupedDrawerLabels.every(
           lbl => /^Similar stories \(\d+\)$/.test(lbl)
         );
+        const videoSimilarOrderOk = Array.from(document.querySelectorAll('.brief-card')).every(card => {
+          const vidBox = card.querySelector('.video-embed-box');
+          const simDrawer = card.querySelector('[data-similar-stories="true"]');
+          if (!vidBox || !simDrawer) return true;
+          return vidBox.getBoundingClientRect().bottom <= simDrawer.getBoundingClientRect().top + 2;
+        });
         const firstSimilarDrawer = document.querySelector('[data-similar-stories="true"]');
         let expandedSimilarRowCount = 0;
         if (firstSimilarDrawer) {
@@ -6004,6 +6010,7 @@ async function main() {
           timelineCount,
           topGroupedDrawers,
           allDrawersUseSimilarStories,
+          videoSimilarOrderOk,
           groupedDrawerLabels,
           expandedSimilarRowCount,
           microBtnCount,
@@ -6045,6 +6052,7 @@ async function main() {
         digestAudit.latestGroupedDrawers === 0 &&
           digestAudit.topGroupedDrawers >= 1 &&
           digestAudit.allDrawersUseSimilarStories &&
+          digestAudit.videoSimilarOrderOk &&
           digestAudit.expandedSimilarRowCount >= 1,
         `Top-only Similar Stories grouping / Latest ungrouped check failed: ${JSON.stringify(digestAudit)}`
       );

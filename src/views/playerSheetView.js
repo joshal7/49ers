@@ -176,6 +176,43 @@ export function renderInjuryNewsItemCardHtml(
         ? `<span class="badge badge-neutral">${iconSvg('news', 11)}<span>${esc(nonTweetBadgeLabel)}</span></span>`
         : '';
 
+  const similarStoriesDrawerHtml =
+    confirmingList.length > 0
+      ? `<details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-cluster-kind="${n.clusterKind === 'corroboration' ? 'corroboration' : 'similar'}" style="margin-top:6px">
+           <summary class="compact-details-summary">
+             <span>Similar stories (${confirmingList.length})</span>
+           </summary>
+           <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
+             ${confirmingList
+               .slice(0, 5)
+               .map(cr => {
+                 const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
+                 const crOutlet = cr.outletName || '';
+                 const crAttrib =
+                   crAuthor && crOutlet && crAuthor.toLowerCase() !== crOutlet.toLowerCase()
+                     ? `${crAuthor} • ${crOutlet}`
+                     : crAuthor || crOutlet || 'Beat';
+                 const crBody = stripRedundantAuthorBoilerplate(cr.title || cr.headline || cr.fullText || '', crAuthor);
+                 const crIsTw = cr.type === 'tweet' || cr.type === 'social';
+                 const crHref = crIsTw
+                   ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '#')
+                   : sanitizeExternalUrl(cr.url, '#');
+                 return `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row" style="padding:7px 9px">
+                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:2px">
+                     <div style="display:flex;align-items:center;gap:5px;min-width:0">
+                       <span class="badge ${crIsTw ? 'badge-gold' : 'badge-neutral'}" style="font-size:9.3px;padding:1px 5px">${crIsTw ? 'Tweet' : 'Article'}</span>
+                       <strong style="font-size:11.2px;color:var(--gold-bright)">${esc(crAttrib)}</strong>
+                     </div>
+                     <span class="mono" style="font-size:10px;color:var(--text-muted)">${esc(formatRelativeAge(cr.publishedAt))}</span>
+                   </div>
+                   <div style="font-size:11.8px;font-weight:600;line-height:1.34;color:var(--text-primary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''} ${iconSvg('externalLink', 10)}</div>
+                 </a>`;
+               })
+               .join('')}
+           </div>
+         </details>`
+      : '';
+
   return `
     <div class="player-mention-card ${esc(outerClassName)} ${isUrgentCard ? 'breaking-elevated' : ''}" data-mention-type="${isVideo ? 'video' : isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
       <div class="player-mention-meta">
@@ -212,43 +249,7 @@ export function renderInjuryNewsItemCardHtml(
               : `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(headlineText)}</strong> ${iconSvg('externalLink', 12)}</a>
                  ${cleanSummary ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(cleanSummary, { excludePlayerId })}</div>` : ''}`
           }
-          ${
-            confirmingList.length > 0
-              ? `<details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-cluster-kind="${n.clusterKind === 'corroboration' ? 'corroboration' : 'similar'}" style="margin-top:5px">
-                   <summary class="compact-details-summary">
-                     <span>Similar stories (${confirmingList.length})</span>
-                   </summary>
-                   <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
-                     ${confirmingList
-                       .slice(0, 5)
-                       .map(cr => {
-                         const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
-                         const crOutlet = cr.outletName || '';
-                         const crAttrib =
-                           crAuthor && crOutlet && crAuthor.toLowerCase() !== crOutlet.toLowerCase()
-                             ? `${crAuthor} • ${crOutlet}`
-                             : crAuthor || crOutlet || 'Beat';
-                         const crBody = stripRedundantAuthorBoilerplate(cr.title || cr.headline || cr.fullText || '', crAuthor);
-                         const crIsTw = cr.type === 'tweet' || cr.type === 'social';
-                         const crHref = crIsTw
-                           ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '#')
-                           : sanitizeExternalUrl(cr.url, '#');
-                         return `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row" style="padding:7px 9px">
-                           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:2px">
-                             <div style="display:flex;align-items:center;gap:5px;min-width:0">
-                               <span class="badge ${crIsTw ? 'badge-gold' : 'badge-neutral'}" style="font-size:9.3px;padding:1px 5px">${crIsTw ? 'Tweet' : 'Article'}</span>
-                               <strong style="font-size:11.2px;color:var(--gold-bright)">${esc(crAttrib)}</strong>
-                             </div>
-                             <span class="mono" style="font-size:10px;color:var(--text-muted)">${esc(formatRelativeAge(cr.publishedAt))}</span>
-                           </div>
-                           <div style="font-size:11.8px;font-weight:600;line-height:1.34;color:var(--text-primary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''} ${iconSvg('externalLink', 10)}</div>
-                         </a>`;
-                       })
-                       .join('')}
-                   </div>
-                 </details>`
-              : ''
-          }
+          ${!hasPlayableVideo ? similarStoriesDrawerHtml : ''}
         </div>
         ${thumbHtml}
       </div>
@@ -273,7 +274,8 @@ export function renderInjuryNewsItemCardHtml(
                     ''
                 }
               )}
-            </div>`
+            </div>
+            ${similarStoriesDrawerHtml}`
           : ''
       }
     </div>

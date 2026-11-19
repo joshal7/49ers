@@ -749,7 +749,6 @@ export function renderWireItemCardHtml(
         </div>
         ${sideThumbHtml}
       </div>
-      ${relatedStoriesDrawerHtml}
       ${
         hasPlayableVideo
           ? renderVideoEmbedOrFacade(
@@ -773,6 +772,7 @@ export function renderWireItemCardHtml(
             )
           : ''
       }
+      ${relatedStoriesDrawerHtml}
     </div>
   `;
 }

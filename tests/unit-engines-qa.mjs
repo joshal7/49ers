@@ -237,8 +237,10 @@ import {
   NEWS_NAV_CLUSTERS,
   VALID_NEWS_CATEGORIES,
   renderNewsViewHtml,
-  renderDailyTopNewsBriefHtml
+  renderDailyTopNewsBriefHtml,
+  renderWireItemCardHtml
 } from '../src/views/newsView.js';
+import { renderInjuryNewsItemCardHtml } from '../src/views/playerSheetView.js';
 import { renderHomeDashboardHtml } from '../src/views/homeView.js';
 import {
   DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
@@ -12416,6 +12418,47 @@ test('Top-only Similar Stories grouping collapses paraphrased multi-outlet cover
       !corroborationClusterHtml.includes('Confirming reports') &&
       !corroborationClusterHtml.includes('story-timeline-marker'),
     'Injury/corroboration clusters must also render unified Similar stories (N) label without Timeline/FIRST/LATEST clutter'
+  );
+
+  // Verify video cards render `Similar stories (N)` BELOW `.video-embed-box` in both News & Film and Player Cards
+  const videoWithSimilar = {
+    id: 'vid_clip_similar',
+    type: 'video',
+    isHighlightClip: true,
+    videoStreamUrl: 'https://video.twimg.com/ext_tw_video/199999/pu/vid/avc1/1280x720/clip.mp4',
+    imageUrl: 'https://pbs.twimg.com/ext_tw_video_thumb/199999/pu/img/poster.jpg',
+    duration: '0:37',
+    author: 'Jon Machota',
+    outletName: 'The Athletic',
+    title: 'Cowboys owner Jerry Jones not surprised to see so many 49ers fans inside AT&T Stadium today',
+    url: 'https://x.com/jonmachota/status/2199200000000000001',
+    publishedAt: new Date(nowMs - 3 * 3_600_000).toISOString(),
+    confirmingReports: [
+      {
+        id: 'vid_rel_1',
+        type: 'article',
+        author: '49ers Webzone',
+        outletName: '49ers Webzone',
+        title: 'Jerry Jones reacts to 49ers fan takeover at AT&T Stadium',
+        url: 'https://www.49erswebzone.com/articles/999002-jerry-jones-fans/',
+        publishedAt: new Date(nowMs - 2 * 3_600_000).toISOString()
+      }
+    ]
+  };
+  const wireVideoHtml = renderWireItemCardHtml(videoWithSimilar, { prioritizedRaw: [videoWithSimilar] });
+  const wireVideoIdx = wireVideoHtml.indexOf('video-embed-box');
+  const wireSimilarIdx = wireVideoHtml.indexOf('data-similar-stories="true"');
+  assert.ok(
+    wireVideoIdx > -1 && wireSimilarIdx > wireVideoIdx,
+    'News & Film video cards must render Similar stories drawer BELOW the inline video box'
+  );
+
+  const playerVideoHtml = renderInjuryNewsItemCardHtml(videoWithSimilar, { directPosts: [videoWithSimilar] });
+  const playerVideoIdx = playerVideoHtml.indexOf('video-embed-box');
+  const playerSimilarIdx = playerVideoHtml.indexOf('data-similar-stories="true"');
+  assert.ok(
+    playerVideoIdx > -1 && playerSimilarIdx > playerVideoIdx,
+    'Player Card video items must render Similar stories drawer BELOW the inline video box'
   );
 
   const topUngroupedHtml = renderNewsViewHtml({

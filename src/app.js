@@ -90,9 +90,9 @@ import { renderHomeDashboardHtml } from './views/homeView.js?v=85';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=87';
+} from './views/newsView.js?v=88';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=76';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=77';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=85';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
@@ -3835,7 +3835,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=101', { updateViaCache: 'none' })
+        .register('./sw.js?v=102', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };
