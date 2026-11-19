@@ -13328,6 +13328,337 @@ test(
   }
 );
 
+await testAsync(
+  'Proactive 5:00 PM PT & variable game-day post-game brief scheduling: GitHub Actions workflow, Wrangler crons, Worker scheduled()/runScheduledDailyNewsBrief(), KV cache-hit zero-credit guard, game-day hold & pre-resolved seedData citation parity',
+  async () => {
+    const {
+      default: edgeWorker,
+      runScheduledDailyNewsBrief,
+      overlayLiveEspnScheduleForBrief
+    } = await import('../worker/index.js');
+    const { parseAndSanitizeDailyTopNewsBrief } = await import('../src/services/aiWorkerClient.js');
+
+    // 1. GitHub Actions workflow template exists, schedules 5:05 PM PT + 30m windows, and matches .github/workflows/refresh-data.yml when installed
+    const activeWfPath = path.join(rootDir, '.github', 'workflows', 'refresh-data.yml');
+    const templateWfPath = path.join(rootDir, 'scripts', 'github-workflow-refresh-data.yml');
+    assert.ok(fs.existsSync(templateWfPath), 'Expected scripts/github-workflow-refresh-data.yml to exist');
+    const templateWfText = fs.readFileSync(templateWfPath, 'utf8');
+    if (fs.existsSync(activeWfPath)) {
+      const activeWfText = fs.readFileSync(activeWfPath, 'utf8');
+      assert.equal(activeWfText, templateWfText, '.github/workflows/refresh-data.yml must stay synced with scripts/github-workflow-refresh-data.yml');
+    }
+    assert.ok(
+      templateWfText.includes("cron: '5 0,1 * * *'") &&
+        templateWfText.includes("cron: '*/30 15-23,0-7 * * *'") &&
+        templateWfText.includes('GEMINI_API_KEY') &&
+        templateWfText.includes('WORKER_BASE_URL'),
+      'GitHub Actions workflow must schedule 5:05 PM PT + 30m windows and pass Gemini/Worker secrets'
+    );
+
+    // 2. Wrangler config registers 5:02 PM PT + half-hourly daytime/game-day cron triggers
+    const wranglerText = fs.readFileSync(path.join(rootDir, 'worker', 'wrangler.toml'), 'utf8');
+    assert.ok(
+      wranglerText.includes('"2 0,1 * * *"') &&
+        wranglerText.includes('"*/30 16-23,0-7 * * *"') &&
+        wranglerText.includes('"15 */6 * * *"'),
+      'worker/wrangler.toml must register 6h model discovery, 5:02 PM PT daily brief, and half-hourly game-day crons'
+    );
+
+    // 3. Mock KV + fetch to test runScheduledDailyNewsBrief end-to-end across 5:02 PM PT, cache hit, game-day hold, and post-game completion
+    const kvStore = new Map();
+    const mockKv = {
+      async get(key, type) {
+        if (!kvStore.has(key)) return null;
+        const val = kvStore.get(key);
+        if (type === 'json') return typeof val === 'string' ? JSON.parse(val) : val;
+        return typeof val === 'string' ? val : JSON.stringify(val);
+      },
+      async put(key, val) {
+        kvStore.set(key, typeof val === 'string' ? val : JSON.stringify(val));
+      },
+      async delete(key) {
+        kvStore.delete(key);
+      }
+    };
+    const mockEnv = {
+      SHARED_CACHE: mockKv,
+      ALLOWED_ORIGIN: 'https://49ers.joshal.com',
+      GEMINI_API_KEY: 'test-key-proactive-brief',
+      GEMINI_DEFAULT_FREE_MODEL: 'gemini-4-hydrogen'
+    };
+
+    const metaJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
+    const schedJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+    const healthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
+    const capJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+    const depthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8'));
+    const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+    const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+
+    let geminiCalls = 0;
+    let mockEspnSchedule = { events: [] };
+    let mockEspnNews = {
+      articles: [
+        {
+          id: '50599901',
+          headline: '49ers finish Colorado Springs altitude prep ahead of Vikings matchup',
+          description: 'Kyle Shanahan praised Nick Bosa and Brock Purdy after Thursday afternoon drills in Colorado Springs.',
+          links: { web: { href: 'https://www.espn.com/nfl/story/_/id/50599901/49ers-altitude-prep-vikings' } },
+          byline: 'Nick Wagoner',
+          published: '2026-11-20T00:30:00Z'
+        },
+        {
+          id: '50599902',
+          headline: 'Christian McCaffrey leads NFC rushing attack entering Week 11',
+          description: 'San Francisco sits 8-1 atop the NFC West with Brock Purdy and Christian McCaffrey clicking.',
+          links: { web: { href: 'https://www.espn.com/nfl/story/_/id/50599902/49ers-mccaffrey-week-11' } },
+          byline: 'Nick Wagoner',
+          published: '2026-11-20T00:10:00Z'
+        }
+      ]
+    };
+
+    const origFetch = globalThis.fetch;
+    globalThis.fetch = async (input, init) => {
+      const url = typeof input === 'string' ? input : input?.url || '';
+      if (url.endsWith('/data/schedule-matchup.json')) {
+        return new Response(JSON.stringify(schedJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.endsWith('/data/meta.json')) {
+        return new Response(JSON.stringify(metaJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.endsWith('/data/health.json')) {
+        return new Response(JSON.stringify(healthJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.endsWith('/data/cap.json')) {
+        return new Response(JSON.stringify(capJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.endsWith('/data/depth-chart.json')) {
+        return new Response(JSON.stringify(depthJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.endsWith('/data/seasonal.json')) {
+        return new Response(JSON.stringify(seasonalJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.endsWith('/data/news.json')) {
+        return new Response(JSON.stringify(newsJson), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.includes('teams/sf/schedule')) {
+        return new Response(JSON.stringify(mockEspnSchedule), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.includes('nfl/news?team=25')) {
+        return new Response(JSON.stringify(mockEspnNews), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (url.includes('generativelanguage.googleapis.com')) {
+        geminiCalls += 1;
+        const bodyObj = init?.body ? JSON.parse(init.body) : {};
+        const promptStr = String(bodyObj?.contents?.[0]?.parts?.[0]?.text || '');
+        const isPostGamePrompt = /COMPLETED GAME PRIMARY LEAD/i.test(promptStr);
+        const mockBriefJson = isPostGamePrompt
+          ? {
+              headline: '49ers Move to 9-1 With Commanding Week 11 Win Over Vikings in Mexico City',
+              bullets: [
+                {
+                  subtopic: 'Mexico City Victory',
+                  body: 'San Francisco improved to 9-1 with a 31-24 Week 11 triumph over Minnesota at Estadio Banorte [S1].'
+                },
+                {
+                  subtopic: 'Offensive Execution',
+                  body: 'Brock Purdy and Christian McCaffrey controlled possession at 7,200 feet while sustaining red-zone efficiency [S2].'
+                },
+                {
+                  subtopic: 'NFC Top Seed Grip',
+                  body: 'With the head-to-head victory over Minnesota, San Francisco tightened its hold on the NFC West and conference lead [S1].'
+                }
+              ],
+              citedSourceIds: ['S1', 'S2']
+            }
+          : {
+              headline: '49ers Finalize Colorado Altitude Prep Ahead of Week 11 Vikings Showdown',
+              bullets: [
+                {
+                  subtopic: 'Altitude Prep Wraps',
+                  body: 'San Francisco completed its Colorado Springs practice block to acclimate for Estadio Banorte against Minnesota [S1].'
+                },
+                {
+                  subtopic: 'Offensive Rhythm Intact',
+                  body: 'Brock Purdy and Christian McCaffrey carry an 8-1 NFC-leading attack into Sunday night against Brian Flores [S2].'
+                },
+                {
+                  subtopic: 'Pass-Rush & Health Focus',
+                  body: 'Nick Bosa emphasized four-man rush finish while the training staff monitored wide receiver Mike Evans ahead of Friday [S1].'
+                }
+              ],
+              citedSourceIds: ['S1', 'S2']
+            };
+        return new Response(
+          JSON.stringify({
+            candidates: [{ content: { parts: [{ text: JSON.stringify(mockBriefJson) }] } }]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('', { status: 200 });
+    };
+
+    try {
+      // 3A. 5:02 PM PST Thursday Nov 19 (`2026-11-20T01:02:00Z`) proactively generates `2026-11-19@17PT`
+      const thu502PmPtMs = Date.parse('2026-11-20T01:02:00Z');
+      const res5pm = await runScheduledDailyNewsBrief(mockEnv, {
+        nowMs: thu502PmPtMs,
+        cron: '2 0,1 * * *'
+      });
+      assert.equal(res5pm.ok, true);
+      assert.equal(res5pm.generated, true, '5:02 PM PT cron must proactively synthesize the new daily brief');
+      assert.equal(res5pm.cycleKey, '2026-11-19@17PT');
+      assert.equal(geminiCalls, 1, 'Expected exactly 1 Gemini call at 5:02 PM PT');
+      assert.equal(kvStore.has('daily_news_brief_lock:2026-11-19@17PT-v5'), false, 'In-flight KV lock must be cleaned up');
+
+      const stored5pm = await mockKv.get('daily_news_brief_v5:2026-11-19@17PT-v5', 'json');
+      assert.ok(stored5pm && stored5pm.scheduled === true, 'Stored brief must be tagged scheduled: true');
+      assert.equal(stored5pm.generatedAt, '2026-11-20T01:02:00.000Z', 'generatedAt must reflect 5:02 PM PT cron run');
+      assert.ok(
+        stored5pm.data && Array.isArray(stored5pm.data.bullets) && stored5pm.data.bullets.length >= 3,
+        'Stored KV payload must include pre-resolved data with inline links & sources'
+      );
+
+      // 3B. Next morning 8:30 AM PST Friday (`2026-11-20T16:30:00Z`) hits KV cache with 0 Gemini calls!
+      const friMorningMs = Date.parse('2026-11-20T16:30:00Z');
+      const resCacheHit = await runScheduledDailyNewsBrief(mockEnv, {
+        nowMs: friMorningMs,
+        cron: '*/30 16-23,0-7 * * *'
+      });
+      assert.equal(resCacheHit.skipped, true);
+      assert.equal(resCacheHit.reason, 'already_cached');
+      assert.equal(resCacheHit.generatedAt, '2026-11-20T01:02:00.000Z');
+      assert.equal(geminiCalls, 1, 'Cached cycle must spend 0 additional Gemini credits');
+
+      // 3C. Game Day Hold: Sunday Nov 22 at 5:02 PM PST (18 min before 5:20 PM PST Vikings kickoff) must NOT fire!
+      const sunGameDay502PmMs = Date.parse('2026-11-23T01:02:00Z');
+      const resHold = await runScheduledDailyNewsBrief(mockEnv, {
+        nowMs: sunGameDay502PmMs,
+        cron: '2 0,1 * * *'
+      });
+      assert.equal(resHold.skipped, true);
+      assert.equal(resHold.reason, 'gameday_hold', 'Game-day 5:02 PM PT cron inside [T-90m, Final) must hold');
+      assert.equal(geminiCalls, 1, 'Game-day hold must spend 0 Gemini credits');
+
+      // 3D. Variable Game-Day Post-Game Completion: ESPN marks Week 11 Final (SF 31, MIN 24) -> post-game cron generates `2026-11-22@postgame-wk11`
+      mockEspnSchedule = {
+        events: [
+          {
+            id: '401873077',
+            date: '2026-11-23T01:20Z',
+            seasonType: { type: 2 },
+            week: { number: 11 },
+            competitions: [
+              {
+                status: { type: { completed: true, state: 'post', shortDetail: 'Final' } },
+                competitors: [
+                  { id: '25', team: { abbreviation: 'SF' }, score: { value: 31, displayValue: '31' }, winner: true },
+                  { id: '16', team: { abbreviation: 'MIN' }, score: { value: 24, displayValue: '24' }, winner: false }
+                ]
+              }
+            ]
+          }
+        ]
+      };
+      mockEspnNews = {
+        articles: [
+          {
+            id: '50599991',
+            headline: '49ers defeat Vikings 31-24 in Mexico City to reach 9-1',
+            description: 'Brock Purdy and Christian McCaffrey powered San Francisco past Minnesota in Week 11.',
+            links: { web: { href: 'https://www.espn.com/nfl/story/_/id/50599991/49ers-defeat-vikings-mexico-city' } },
+            byline: 'Nick Wagoner',
+            published: '2026-11-23T04:40:00Z'
+          },
+          {
+            id: '50599992',
+            headline: 'Kyle Shanahan postgame takeaways after Week 11 win over Vikings',
+            description: 'San Francisco defense closed the fourth quarter cleanly at high altitude.',
+            links: { web: { href: 'https://www.espn.com/nfl/story/_/id/50599992/shanahan-postgame-vikings' } },
+            byline: 'Nick Wagoner',
+            published: '2026-11-23T04:50:00Z'
+          },
+          {
+            id: '50599993',
+            headline: 'Nick Bosa and Raheem Morris credit late-game rush against Minnesota',
+            description: '49ers move to 9-1 and keep sole possession of the NFC top seed.',
+            links: { web: { href: 'https://www.espn.com/nfl/story/_/id/50599993/bosa-postgame-vikings' } },
+            byline: 'Nick Wagoner',
+            published: '2026-11-23T04:55:00Z'
+          }
+        ]
+      };
+      // Simulate first post-game completion observation at 8:30 PM PST (04:30 UTC), then 9:00 PM PST (05:00 UTC, >=18m buffer!)
+      const schedCopyForOverlay = structuredClone(schedJson);
+      const metaCopyForOverlay = structuredClone(metaJson);
+      await overlayLiveEspnScheduleForBrief(schedCopyForOverlay, metaCopyForOverlay, mockEspnSchedule, {
+        nowMs: Date.parse('2026-11-23T04:30:00Z'),
+        env: mockEnv
+      });
+      assert.equal(metaCopyForOverlay.teamRecord, '9-1', 'Live ESPN overlay must advance team record to 9-1');
+
+      const sunPostGame900PmMs = Date.parse('2026-11-23T05:00:00Z');
+      const resPostGame = await runScheduledDailyNewsBrief(mockEnv, {
+        nowMs: sunPostGame900PmMs,
+        cron: '*/30 16-23,0-7 * * *'
+      });
+      assert.equal(resPostGame.ok, true);
+      assert.equal(resPostGame.generated, true, 'Post-game half-hourly cron must proactively synthesize post-game brief after Final + buffer');
+      assert.equal(resPostGame.cycleKey, '2026-11-22@postgame-wk11');
+      assert.equal(geminiCalls, 2, 'Expected exactly 1 additional Gemini call for post-game cycle');
+
+      // 3E. Pre-resolved KV `data` preserves original inline-cited sources even if client sourceCandidates shifted later
+      const rehydrated = parseAndSanitizeDailyTopNewsBrief(
+        stored5pm.data,
+        [
+          {
+            refId: 'S1',
+            type: 'article',
+            author: 'Different Writer',
+            outlet: 'Different Outlet',
+            citeLabel: 'Different Outlet',
+            title: 'Unrelated Next-Day Story',
+            url: 'https://www.49ers.com/news/unrelated-next-day-story',
+            publishedAt: '2026-11-20T16:00:00Z'
+          }
+        ],
+        { meta: metaJson, roster: { players: [] } },
+        { cycleKey: '2026-11-19@17PT', generatedAt: stored5pm.generatedAt, source: 'live-gemini-daily' }
+      );
+      assert.ok(
+        rehydrated.sources.some(s => s.url === 'https://www.espn.com/nfl/story/_/id/50599901/49ers-altitude-prep-vikings'),
+        'Pre-resolved KV data must preserve original cited source URLs even when client candidates shift hours later'
+      );
+
+      // 3F. POST /api/daily-news-brief accepts `seedData` alongside `seedRawText` and GET returns it
+      const seedReq = new Request('https://worker.example.com/api/daily-news-brief', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cycleKey: '2026-11-25@17PT-v5',
+          seedRawText: '{"headline":"Seeded"}',
+          seedData: stored5pm.data,
+          modelUsed: 'gemini-4-hydrogen',
+          generatedAt: '2026-11-26T01:05:00.000Z'
+        })
+      });
+      const seedResp = await edgeWorker.fetch(seedReq, mockEnv);
+      assert.equal(seedResp.status, 200);
+      const getResp = await edgeWorker.fetch(
+        new Request('https://worker.example.com/api/daily-news-brief?cycleKey=2026-11-25@17PT-v5'),
+        mockEnv
+      );
+      const getJson = await getResp.json();
+      assert.equal(getJson.cached, true);
+      assert.equal(getJson.data?.headline, stored5pm.data.headline, 'GET /api/daily-news-brief must serve seeded data object');
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

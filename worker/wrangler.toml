@@ -13,9 +13,9 @@ id = "REPLACE_WITH_YOUR_FREE_KV_NAMESPACE_ID"
 binding = "PODCAST_BUCKET"
 bucket_name = "49ers-autopodcasts"
 
-# 3. Periodic Free-Model Auto-Discovery & 5:00 PM PT Cron Triggers
+# 3. Periodic Free-Model Auto-Discovery (6h), 5:00 PM PT Daily Brief & Half-Hourly Game-Day/Practice Checks
 [triggers]
-crons = ["15 */6 * * *", "2 0,1 * * *"]
+crons = ["15 */6 * * *", "2 0,1 * * *", "*/30 16-23,0-7 * * *"]
 
 [vars]
 ALLOWED_ORIGIN = "https://49ers.joshal.com"

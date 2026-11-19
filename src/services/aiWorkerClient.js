@@ -3775,21 +3775,27 @@ export function parseAndSanitizeDailyTopNewsBrief(
     return `${cleanNoPeriod} [${fallbackSrc.citeLabel}](${encodeMarkdownLinkUrl(fallbackSrc.url)}).`;
   });
 
-  // Order expandable bottom `sources`: inline-cited sources first, then remaining top StoryRank candidates (up to 12)
+  // Order expandable bottom `sources`: pre-resolved brief sources (from shared KV `data`) & inline-cited sources first, then remaining top StoryRank candidates (up to 12)
   const orderedSources = [];
   const seenSourceUrls = new Set();
   const addSrc = src => {
-    if (!src?.url || seenSourceUrls.has(src.url) || orderedSources.length >= 12) return;
-    seenSourceUrls.add(src.url);
+    const cleanUrl = sanitizeExternalUrl(src?.url || '');
+    if (!cleanUrl || isPaywalledPublisher(cleanUrl) || seenSourceUrls.has(cleanUrl) || orderedSources.length >= 12) return;
+    seenSourceUrls.add(cleanUrl);
     orderedSources.push({
       type: src.type || 'article',
       author: src.author || '49ers Beat',
       outlet: src.outlet || '49ers Beat',
       title: src.title || 'Open Report',
-      url: src.url,
+      url: cleanUrl,
       publishedAt: src.publishedAt || null
     });
   };
+  if (Array.isArray(parsed.sources)) {
+    for (const s of parsed.sources) {
+      addSrc(s);
+    }
+  }
   for (const refId of citedRefIds) {
     if (byRefId.has(refId)) addSrc(byRefId.get(refId));
   }
@@ -3798,10 +3804,14 @@ export function parseAndSanitizeDailyTopNewsBrief(
   }
 
   const coveredStoryKeys = Array.from(
-    new Set(sourceCandidates.slice(0, 14).map(s => s.storyKey).filter(Boolean))
+    new Set([
+      ...(Array.isArray(parsed.coveredStoryKeys) ? parsed.coveredStoryKeys : []),
+      ...sourceCandidates.slice(0, 14).map(s => s.storyKey)
+    ].filter(Boolean))
   );
   const coveredUrls = Array.from(
     new Set([
+      ...(Array.isArray(parsed.coveredUrls) ? parsed.coveredUrls : []),
       ...orderedSources.map(s => s.url),
       ...sourceCandidates.slice(0, 14).flatMap(s => [s.url, ...(s.confirmingUrls || [])])
     ])
@@ -5183,6 +5193,7 @@ export async function refreshDailyTopNewsBriefIfDue({
               body: JSON.stringify({
                 cycleKey: workerCycleKey,
                 seedRawText: rawSynthesizedText,
+                seedData: normalized,
                 modelUsed,
                 generatedAt
               })

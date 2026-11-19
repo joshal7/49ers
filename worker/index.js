@@ -13,7 +13,7 @@
  * - POST /api/matchup-intel      -> Generates non-time-sensitive 1/day Matchup Intel Briefing (Gemini 4 Hydrogen `XHIGH`)
  * - POST /api/analyze            -> Runs live On-Demand Deep Analysis (Gemini 4 Hydrogen `HIGH` Thinking + Google Search Grounding)
  * - POST /api/podcast            -> Generates live Auto Pod script (Gemini 4 Hydrogen `HIGH`) + Multi-Speaker TTS audio, stores in R2 & indexes in KV
- * - CRON scheduled()             -> Periodically polls `/v1beta/models` every 6h and auto-upgrades to the best free Gemini model
+ * - CRON scheduled()             -> Polls `/v1beta/models` every 6h and proactively synthesizes & caches the 1/day 5:00 PM PT (and variable game-day post-game) Top-News Brief in KV
  */
 
 import {
@@ -44,6 +44,18 @@ import {
   isAllowedInlineVideoStreamUrl,
   selectBestXSyndicationMp4
 } from '../src/engine/linkIntegrity.js';
+import {
+  resolveNewsBriefCycleState,
+  isDailyBriefStaleForLiveState,
+  isAppDataAwaitingLivePostGameHydration
+} from '../src/engine/breakingClassifier.js';
+import { buildLiveGroundingSystemPrompt } from '../src/engine/groundingValidator.js';
+import {
+  DAILY_NEWS_BRIEF_PEAK_HOUR_PT,
+  selectTopNewsBriefSourceCandidates,
+  buildDailyTopNewsBriefPrompt,
+  parseAndSanitizeDailyTopNewsBrief
+} from '../src/services/aiWorkerClient.js';
 
 export const DEFAULT_FREE_MODEL_CASCADE = [
   'gemini-4-hydrogen',
@@ -528,9 +540,832 @@ async function callGeminiAudioTtsWithFallback(env, payload) {
   return { res: lastRes, audioModelUsed: cascade[0] };
 }
 
+const ALLOWED_SHORTENER_HOST_RE =
+  /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl|es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)$/i;
+
+function stripEdgeTrackingParams(raw) {
+  try {
+    const u = new URL(raw);
+    for (const k of [...u.searchParams.keys()]) {
+      if (/^(?:utm_|fbclid$|gclid$|mc_cid$|mc_eid$|ref_src$|ref_url$|_osource$)/i.test(k)) {
+        u.searchParams.delete(k);
+      }
+    }
+    return u.toString();
+  } catch {
+    return raw;
+  }
+}
+
+async function expandAllowedShortenerUrlEdge(env, rawInput) {
+  const clean = String(rawInput || '').trim();
+  if (!clean) return '';
+  let parsed;
+  try {
+    parsed = new URL(clean.startsWith('http://') ? `https://${clean.slice(7)}` : clean);
+  } catch {
+    return '';
+  }
+  if (parsed.protocol !== 'https:' || !ALLOWED_SHORTENER_HOST_RE.test(parsed.hostname.toLowerCase())) {
+    return '';
+  }
+  const normalizedShort = parsed.toString();
+  const kvKey = `expand_v1:${normalizedShort}`;
+  const cached = await env.SHARED_CACHE?.get(kvKey);
+  if (cached !== null && cached !== undefined) {
+    return cached;
+  }
+  let resolved = '';
+  for (const method of ['HEAD', 'GET']) {
+    try {
+      const r = await fetch(normalizedShort, {
+        method,
+        redirect: 'follow',
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+        },
+        signal: AbortSignal.timeout(3500)
+      });
+      if (r?.url) {
+        const dest = new URL(r.url.startsWith('http://') ? `https://${r.url.slice(7)}` : r.url);
+        if (dest.protocol === 'https:' && !ALLOWED_SHORTENER_HOST_RE.test(dest.hostname.toLowerCase())) {
+          resolved = stripEdgeTrackingParams(dest.toString());
+          break;
+        }
+      }
+    } catch {}
+  }
+  if (env.SHARED_CACHE) {
+    await env.SHARED_CACHE.put(kvKey, resolved, { expirationTtl: resolved ? 86400 : 1800 });
+  }
+  return resolved;
+}
+
+async function collectEdgeLiveWire(
+  env,
+  { maxXHydrate = 14, includeYouTube = true, useCache = true, writeCache = true } = {}
+) {
+  if (useCache) {
+    const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v5', 'json');
+    if (cachedWire && Array.isArray(cachedWire.items)) {
+      return { cached: true, ...cachedWire };
+    }
+  }
+
+  const rssSources = [
+    { outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1', sfOnly: false },
+    { outletId: '49ers_official', outletName: '49ers.com Official', url: 'https://www.49ers.com/rss/news', sfOnly: false },
+    { outletId: 'niners_nation', outletName: 'Niners Nation', url: 'https://www.ninersnation.com/rss/current.xml', sfOnly: false },
+    { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', sfOnly: false },
+    { outletId: 'pfrumors', outletName: 'Pro Football Rumors', url: 'https://www.profootballrumors.com/san-francisco-49ers/feed', sfOnly: false },
+    { outletId: 'nfl_trade_rumors', outletName: 'NFL Trade Rumors', url: 'https://nfltraderumors.co/feed/', sfOnly: true },
+    { outletId: 'nfl_network', outletName: 'ProFootballTalk', url: 'https://www.nbcsports.com/nfl/profootballtalk.rss', sfOnly: true },
+    { outletId: 'sf_standard', outletName: 'The SF Standard', url: 'https://www.sfstandard.com/sports/feed/', sfOnly: true }
+  ];
+
+  const ytChannels = includeYouTube
+    ? [
+        { channelId: 'UCeIOarQkwmGhimim9cDUTng', channel: 'San Francisco 49ers', sfOnly: false, embeddable: false },
+        { channelId: 'UCDVYQ4Zhbm3S2dlz7P1GBDg', channel: 'NFL', sfOnly: true, embeddable: false },
+        { channelId: 'UCGfxHp2yuimtLsFaq1r7aIQ', channel: 'The QB School', sfOnly: true, embeddable: true },
+        { channelId: 'UCt1LfHRE5eGiacPVtiaC10w', channel: "Jonnydel's Football Academy", sfOnly: true, embeddable: true }
+      ]
+    : [];
+
+  const decodeBasic = str =>
+    String(str || '')
+      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;|&apos;/g, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  const sfExplicitRe =
+    /(?:\b(?:49er|49ers|niners|san francisco|santa clara|levi['’]?s(?:\s+stadium)?|kyle shanahan|shanahan|john lynch|raheem morris|klay kubiak|kris kocurek|chris foerster|paraag marathe|jed york)\b|(?:^|[\s([{"',|/-])#(?:49ers|fttb)\b)/i;
+  const sfPlayerRe =
+    /\b(brock purdy|purdy|nick bosa|christian mccaffrey|mccaffrey|george kittle|kittle|fred warner|deebo samuel|deebo|brandon aiyuk|aiyuk|ricky pearsall|pearsall|deommodore lenoir|lenoir|dre greenlaw|greenlaw|renardo green|malik mustapha|mustapha|ji['’]?ayir brown|upton stout|trent williams|mykel williams|deforest buckner|buckner|osa odighizuwa|odighizuwa|keion white|keenan allen|mike evans|kyle juszczyk|juszczyk|isaac guerendo|guerendo|jordan watkins|jaden dugger|ephesians prysock|prysock|mac jones|christian kirk|brandin cooks|demarcus robinson|nate hobbs|romello height|gracen halton|c\.?j\.? west|eddy pineiro|colton mckivitz|dominick puni|jake brendel)\b/i;
+  const sfRe = new RegExp(`(?:${sfExplicitRe.source}|${sfPlayerRe.source})`, 'i');
+  const otherTeamLeadRe = /\b(rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers)\b/i;
+  const otherTeamOrCityPat =
+    '(?:rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|pats|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers|arizona|atlanta|baltimore|buffalo|carolina|chicago|cincinnati|cleveland|dallas|denver|detroit|green\\s+bay|houston|indianapolis|jacksonville|kansas\\s+city|las\\s+vegas|los\\s+angeles|miami|minnesota|new\\s+england|new\\s+orleans|new\\s+york|philadelphia|pittsburgh|seattle|tampa\\s+bay|tennessee|washington)';
+  const staffRolePat =
+    '(?:head\\s+coach|interim\\s+(?:head\\s+)?coach|coach|hc|offensive\\s+coordinator|oc|defensive\\s+coordinator|dc|special\\s+teams\\s+coordinator|stc|general\\s+manager|gm|assistant(?:\\s+coach)?|coordinator|quarterbacks?\\s+coach|linebackers?\\s+coach|defensive\\s+line\\s+coach|offensive\\s+line\\s+coach|pass\\s+game\\s+coordinator|run\\s+game\\s+coordinator)';
+  const otherTeamStaffAttrRe = new RegExp(
+    `\\b${otherTeamOrCityPat}(?:['’]s?)?\\s+${staffRolePat}\\s+([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?)\\b`,
+    'gi'
+  );
+  const personOtherTeamApposRe = new RegExp(
+    `\\b([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?),\\s+(?:the\\s+)?${otherTeamOrCityPat}(?:['’]s?)?\\s+${staffRolePat}\\b`,
+    'gi'
+  );
+  const formerSfRe =
+    /\b(?:former|ex[-\s])\s*(?:san\s+francisco\s+)?(?:49ers|niners)(?:\s+(?:hc|oc|dc|gm|head\s+coach|assistant|coach|coordinator|qb|rb|fb|wr|te|ol|dl|lb|cb|db|de|dt|s|k|p|ls|exec|executive|scout))?\b/gi;
+  const conflictingLeadershipRe =
+    /\b(?:mike\s+shanahan|klint\s+kubiak|gary\s+kubiak|marshawn\s+lynch|paxton\s+lynch|joey\s+bosa|kurt\s+warner|kyle\s+dugger|alvin\s+kamara|josh\s+allen)\b/gi;
+  const histSfBioRe = /\b(originally signed (?:on )?with (?:the )?(?:49ers|san francisco|niners)|(?:was )?(?:selected|drafted|taken) [\s\S]{0,55}by (?:the )?(?:49ers|san francisco|niners)|began (?:his|their) (?:nfl )?career with (?:the )?(?:49ers|san francisco|niners)|spent (?:time|his rookie|the \d{4} season|\d+ seasons?) with (?:the )?(?:49ers|san francisco|niners)|played (?:for|with) (?:the )?(?:49ers|san francisco|niners) (?:from|in) 20(?:0\d|1\d|2[0-4])|stint with (?:the )?(?:49ers|san francisco|niners)|undrafted free agent [\s\S]{0,50}(?:49ers|san francisco|niners))\b/i;
+  const stripWpFooter = s =>
+    String(s || '')
+      .replace(/\s*The post [\s\S]*? appeared first on [^\n.]+(?:\.[a-z]{2,4})?\.?/gi, '')
+      .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '')
+      .trim();
+  const stripNonSfContextsEdge = s =>
+    String(s || '')
+      .replace(formerSfRe, ' ')
+      .replace(conflictingLeadershipRe, ' ')
+      .replace(otherTeamStaffAttrRe, (m, namePart) =>
+        /^[A-Z]/.test(String(namePart || '').trim()) && !/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(namePart) ? ' ' : m
+      )
+      .replace(personOtherTeamApposRe, (m, namePart) =>
+        /^[A-Z]/.test(String(namePart || '').trim()) && !/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(namePart) ? ' ' : m
+      )
+      .replace(/\s+/g, ' ')
+      .trim();
+  const stripHistBio = s =>
+    stripWpFooter(s)
+      .split(/(?<=[.!?])\s+/)
+      .filter(sent => sent && !histSfBioRe.test(sent))
+      .join(' ')
+      .trim();
+  const isEdgeItem49ersRelevant = (titleText, summaryText) => {
+    const cleanTitle = stripWpFooter(titleText);
+    const titleClean = stripNonSfContextsEdge(cleanTitle);
+    if (sfRe.test(titleClean)) return true;
+    if (otherTeamLeadRe.test(cleanTitle)) return false;
+    const cleanBody = stripHistBio(summaryText);
+    const bodyClean = stripNonSfContextsEdge(cleanBody);
+    if (sfExplicitRe.test(bodyClean)) return true;
+    if (otherTeamLeadRe.test(cleanBody)) return false;
+    return sfPlayerRe.test(bodyClean);
+  };
+  const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|49erswebzone|nbcs49ers|ninersnation|davidbonilla49)$/i;
+  const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
+  const discoveredStatusMap = new Map();
+  const seenEdgeUrls = new Set();
+  const items = [];
+  const nowEdgeMs = Date.now();
+
+  await Promise.all([
+    ...rssSources.map(async src => {
+      try {
+        const r = await fetch(src.url, {
+          headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
+          signal: AbortSignal.timeout(4500)
+        });
+        if (!r.ok) return;
+        const xml = await r.text();
+        for (const xm of xml.replace(/\\\//g, '/').matchAll(xStatusRe)) {
+          const h = xm[1];
+          const sid = xm[2];
+          if (!/^(i|intent|share|hashtag|search)$/i.test(h) && !discoveredStatusMap.has(sid)) {
+            discoveredStatusMap.set(sid, h);
+          }
+        }
+        const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
+        for (const block of blocks.slice(0, src.sfOnly ? 30 : 12)) {
+          const title = stripWpFooter(decodeBasic((block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || ''));
+          const summary = stripWpFooter(
+            decodeBasic(
+              ((block.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || '')
+            )
+          ).slice(0, 260);
+          const link = decodeBasic(
+            (block.match(/<link[^>]*href="([^"]+)"/i) || [])[1] ||
+              (block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] ||
+              ''
+          );
+          const pubRaw = decodeBasic(
+            (block.match(/<(?:pubDate|published|updated)>([\s\S]*?)<\/(?:pubDate|published|updated)>/i) || [])[1] || ''
+          );
+          if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
+          if (src.sfOnly && !isEdgeItem49ersRelevant(title, summary)) continue;
+          seenEdgeUrls.add(link);
+          const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+          items.push({
+            type: 'article',
+            title,
+            summary,
+            url: link,
+            outletId: src.outletId,
+            outletName: src.outletName,
+            publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString()
+          });
+        }
+      } catch {}
+    }),
+    (async () => {
+      try {
+        const wzRes = await fetch('https://www.49erswebzone.com/articles/', {
+          headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
+          signal: AbortSignal.timeout(4500)
+        });
+        if (!wzRes.ok) return;
+        const wzHtml = await wzRes.text();
+        for (const liMatch of wzHtml.matchAll(/<li\s+id="item-\d+"[^>]*>([\s\S]*?)<\/li>/gi)) {
+          const li = liMatch[1];
+          const tm = li.match(
+            /<div[^>]*class="[^"]*content-news-title[^"]*"[^>]*>\s*<a[^>]*href="(https:\/\/www\.49erswebzone\.com\/articles\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/i
+          );
+          if (!tm) continue;
+          const link = tm[1].trim();
+          const title = decodeBasic(tm[2]);
+          if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
+          const summary = decodeBasic((li.match(/<span\s+class="description"[^>]*>([\s\S]*?)<\/span>/i) || [])[1] || '').slice(0, 260);
+          const writer = decodeBasic((li.match(/<a\s+href="https:\/\/www\.49erswebzone\.com\/articles\/writer\/[^"]+"[^>]*>([\s\S]*?)<\/a>/i) || [])[1] || '');
+          const relM = li.match(/&bull;\s*(\d+)\s*(mins?|minutes?|hrs?|hours?|days?)\b/i);
+          const absM = li.match(
+            /&bull;\s*([A-Z][a-z]{2,8}\s+\d{1,2},\s*\d{4})(?:\s+at\s+(\d{1,2}:\d{2}\s*[AP]M))?/i
+          );
+          let pubMs = nowEdgeMs - 3_600_000;
+          if (relM) {
+            const n = Number(relM[1]);
+            const u = relM[2].toLowerCase();
+            if (u.startsWith('m')) pubMs = nowEdgeMs - n * 60_000;
+            else if (u.startsWith('h')) pubMs = nowEdgeMs - n * 3_600_000;
+            else if (u.startsWith('d')) pubMs = nowEdgeMs - n * 86_400_000;
+          } else if (absM) {
+            const parsedAbs = Date.parse(`${absM[1]} ${absM[2] || '12:00 PM'} PST`);
+            if (Number.isFinite(parsedAbs)) pubMs = Math.min(nowEdgeMs, parsedAbs);
+          }
+          seenEdgeUrls.add(link);
+          items.push({
+            type: 'article',
+            title,
+            summary,
+            url: link,
+            author: writer || '49ers Webzone',
+            outletId: '49ers_webzone',
+            outletName: '49ers Webzone',
+            publishedAt: new Date(Math.min(nowEdgeMs, pubMs)).toISOString()
+          });
+        }
+      } catch {}
+    })(),
+    ...ytChannels.map(async ch => {
+      try {
+        const r = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`, {
+          headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
+          signal: AbortSignal.timeout(4500)
+        });
+        if (!r.ok) return;
+        const xml = await r.text();
+        const entries = xml.match(/<entry\b[\s\S]*?<\/entry>/gi) || [];
+        for (const entry of entries.slice(0, 6)) {
+          const videoId = ((entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1] || '').trim();
+          const title = decodeBasic((entry.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+          const pubRaw = ((entry.match(/<published>([^<]+)<\/published>/i) || [])[1] || '').trim();
+          if (!videoId || !title || /#shorts\b/i.test(title)) continue;
+          if (ch.sfOnly && !sfRe.test(stripNonSfContextsEdge(title))) continue;
+          const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+          if (Number.isFinite(pubMs) && nowEdgeMs - pubMs > 10 * 86_400_000) continue;
+          items.push({
+            id: `edge_yt_${videoId}`,
+            type: 'video',
+            videoId,
+            embeddable: ch.embeddable,
+            title,
+            summary: '',
+            imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+            url: `https://www.youtube.com/watch?v=${videoId}`,
+            outletId: 'youtube',
+            outletName: ch.channel,
+            author: ch.channel,
+            publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString()
+          });
+        }
+      } catch {}
+    })
+  ]);
+
+  if (maxXHydrate > 0) {
+    const newestXIds = [...discoveredStatusMap.entries()]
+      .sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1))
+      .slice(0, maxXHydrate);
+    await Promise.all(
+      newestXIds.map(async ([sid, fallbackHandle]) => {
+        try {
+          const sr = await fetch(`https://cdn.syndication.twimg.com/tweet-result?id=${sid}&token=x`, {
+            signal: AbortSignal.timeout(3500)
+          });
+          if (!sr.ok) return;
+          const syn = await sr.json();
+          const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
+          if (!txt || txt.length < 16) return;
+          const handle = syn.user?.screen_name || fallbackHandle;
+          if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(stripNonSfContextsEdge(txt))) return;
+          const bestMp4 = selectBestXSyndicationMp4(syn);
+          const durMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
+          const durFmt =
+            durMs >= 5000
+              ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}`
+              : '';
+          const synCardBv = syn.card?.binding_values || {};
+          const synCardThumb =
+            synCardBv.summary_photo_image_large?.image_value?.url ||
+            synCardBv.summary_photo_image?.image_value?.url ||
+            synCardBv.photo_image_full_size_large?.image_value?.url ||
+            synCardBv.thumbnail_image_large?.image_value?.url ||
+            synCardBv.thumbnail_image?.image_value?.url ||
+            '';
+          const thumb =
+            syn.photos?.[0]?.url ||
+            syn.mediaDetails?.[0]?.media_url_https ||
+            syn.video?.poster ||
+            synCardThumb ||
+            '';
+          const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
+          const synUrls = Array.isArray(syn.entities?.urls) ? syn.entities.urls : [];
+          const rawExtU =
+            synUrls.find(u => u?.expanded_url && !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u.expanded_url))
+              ?.expanded_url ||
+            syn.card?.binding_values?.card_url?.string_value ||
+            '';
+          let resolvedExtU = rawExtU;
+          if (resolvedExtU) {
+            try {
+              const parsedExt = new URL(resolvedExtU.startsWith('http://') ? `https://${resolvedExtU.slice(7)}` : resolvedExtU);
+              if (ALLOWED_SHORTENER_HOST_RE.test(parsedExt.hostname.toLowerCase())) {
+                resolvedExtU = await expandAllowedShortenerUrlEdge(env, parsedExt.toString());
+              } else {
+                resolvedExtU = stripEdgeTrackingParams(parsedExt.toString());
+              }
+            } catch {
+              resolvedExtU = '';
+            }
+          }
+          const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
+          const synCardDesc = syn.card?.binding_values?.description?.string_value || null;
+          items.push({
+            id: `x_edge_${sid}`,
+            type: 'tweet',
+            title: txt.slice(0, 320),
+            fullText: txt,
+            url: `https://x.com/${handle}/status/${sid}`,
+            externalUrl: resolvedExtU || null,
+            externalTitle: resolvedExtU ? synCardTitle : null,
+            externalDescription: resolvedExtU ? synCardDesc : null,
+            imageUrl: thumb.startsWith('https://') ? thumb : '',
+            videoStreamUrl: bestMp4 || undefined,
+            isHighlightClip: Boolean(bestMp4 && durMs >= 8000),
+            duration: durFmt || undefined,
+            embeddable: true,
+            outletId: 'x_beat',
+            outletName: 'X Beat',
+            author: syn.user?.name || `@${handle}`,
+            authorHandle: `@${handle}`,
+            authorProfileUrl: `https://x.com/${handle}`,
+            publishedAt: new Date(Math.min(nowEdgeMs, snowMs)).toISOString()
+          });
+        } catch {}
+      })
+    );
+  }
+
+  const payload = { updatedAt: new Date().toISOString(), items };
+  if (writeCache && env.SHARED_CACHE && items.length > 0 && includeYouTube && maxXHydrate >= 10) {
+    await env.SHARED_CACHE.put('wire:rss_live_v5', JSON.stringify(payload), { expirationTtl: 60 });
+  }
+  return { cached: false, ...payload };
+}
+
+function parseEspnScoreNum(rawScore) {
+  if (rawScore === null || rawScore === undefined) return null;
+  if (typeof rawScore === 'object') {
+    const v = rawScore.value ?? rawScore.displayValue;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }
+  const n = Number(rawScore);
+  return Number.isFinite(n) ? n : null;
+}
+
+export async function overlayLiveEspnScheduleForBrief(
+  scheduleMatchup,
+  meta,
+  espnScheduleJson,
+  { nowMs = Date.now(), env = null } = {}
+) {
+  const sched = Array.isArray(scheduleMatchup?.schedule) ? scheduleMatchup.schedule : [];
+  const events = Array.isArray(espnScheduleJson?.events) ? espnScheduleJson.events : [];
+  if (sched.length === 0 || events.length === 0) return;
+
+  const byId = new Map();
+  const byWeekType = new Map();
+  for (const g of sched) {
+    if (g?.id) byId.set(String(g.id), g);
+    const st = String(g?.seasonType || 'REG').toUpperCase();
+    if (g?.week != null) byWeekType.set(`${st}:${Number(g.week)}`, g);
+  }
+
+  let regWins = 0;
+  let regLosses = 0;
+  let regTies = 0;
+  let countedReg = 0;
+
+  for (const ev of events) {
+    const comp = Array.isArray(ev?.competitions) ? ev.competitions[0] : null;
+    if (!comp) continue;
+    const statusType = comp.status?.type || {};
+    const stNum = Number(ev?.seasonType?.type || ev?.season?.type || 2);
+    const seasonType = stNum === 1 ? 'PRE' : stNum === 3 ? 'POST' : 'REG';
+    const wk = Number(ev?.week?.number || 0);
+    const target = byId.get(String(ev.id || '')) || byWeekType.get(`${seasonType}:${wk}`);
+    if (!target) continue;
+
+    const competitors = Array.isArray(comp.competitors) ? comp.competitors : [];
+    const sfComp = competitors.find(
+      c => String(c?.team?.abbreviation || '').toUpperCase() === 'SF' || String(c?.id || '') === '25'
+    );
+    const oppComp = competitors.find(c => c !== sfComp);
+    const sfScore = parseEspnScoreNum(sfComp?.score);
+    const oppScore = parseEspnScoreNum(oppComp?.score);
+    const isCompleted = Boolean(statusType.completed) || String(statusType.state || '').toLowerCase() === 'post';
+    const stateStr = String(statusType.state || '').toLowerCase();
+
+    if (ev.date && !target.dateIso) target.dateIso = ev.date;
+    if (stateStr) target.statusState = stateStr;
+    if (statusType.shortDetail || statusType.description) {
+      target.statusDetail = statusType.shortDetail || statusType.description;
+    }
+    if (sfScore !== null && oppScore !== null && (isCompleted || stateStr === 'in')) {
+      target.sfScore = sfScore;
+      target.oppScore = oppScore;
+    }
+    if (isCompleted) {
+      const wasCompletedBefore = Boolean(target.completed);
+      target.completed = true;
+      if (sfScore !== null && oppScore !== null) {
+        target.result = sfScore > oppScore ? 'W' : sfScore < oppScore ? 'L' : 'T';
+      } else if (sfComp?.winner === true) {
+        target.result = 'W';
+      } else if (oppComp?.winner === true) {
+        target.result = 'L';
+      }
+      if (!target.completedAt && ev.id) {
+        const compKvKey = `game_completed_at:${String(ev.id)}`;
+        let seenCompletedIso = null;
+        if (env?.SHARED_CACHE) {
+          seenCompletedIso = await env.SHARED_CACHE.get(compKvKey);
+          if (!seenCompletedIso && !wasCompletedBefore) {
+            seenCompletedIso = new Date(nowMs).toISOString();
+            await env.SHARED_CACHE.put(compKvKey, seenCompletedIso, { expirationTtl: 60 * 60 * 48 });
+          }
+        }
+        if (seenCompletedIso) target.completedAt = seenCompletedIso;
+      }
+    }
+  }
+
+  for (const g of sched) {
+    if (String(g?.seasonType || 'REG').toUpperCase() === 'REG' && g.completed && g.result) {
+      countedReg += 1;
+      if (g.result === 'W') regWins += 1;
+      else if (g.result === 'L') regLosses += 1;
+      else if (g.result === 'T') regTies += 1;
+    }
+  }
+  if (meta && countedReg > 0) {
+    meta.teamRecord = regTies > 0 ? `${regWins}-${regLosses}-${regTies}` : `${regWins}-${regLosses}`;
+  }
+}
+
+function buildLightweightRosterFromFeeds(cap, depthChart, health) {
+  const seen = new Map();
+  const addPlayer = (name, position, status = 'Active') => {
+    const cleanName = String(name || '').trim();
+    if (!cleanName || cleanName.length < 3) return;
+    const key = cleanName.toLowerCase();
+    if (!seen.has(key)) {
+      seen.set(key, { name: cleanName, position: String(position || ''), status });
+    }
+  };
+  for (const p of Array.isArray(cap?.players) ? cap.players : []) {
+    addPlayer(p?.name, p?.position, p?.status || 'Active');
+  }
+  for (const unit of Array.isArray(depthChart?.units) ? depthChart.units : []) {
+    for (const grp of Array.isArray(unit?.groups) ? unit.groups : []) {
+      for (const p of Array.isArray(grp?.players) ? grp.players : []) {
+        addPlayer(p?.name, p?.position || grp?.position, p?.status || 'Active');
+      }
+    }
+  }
+  for (const p of Array.isArray(health?.practiceReport) ? health.practiceReport : []) {
+    addPlayer(p?.name, p?.position, p?.rosterBucket === 'ir' ? 'IR' : 'Active');
+  }
+  return { players: [...seen.values()] };
+}
+
+async function fetchJsonSafeEdge(url, timeoutMs = 6000) {
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': '49ersFaithfulEdge/2.0', Accept: 'application/json' },
+      signal: AbortSignal.timeout(timeoutMs)
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Proactively checks whether the active Daily Top-News Brief cycle (5:00 PM PT on non-game days;
+ * variable post-game completion + podium buffer on game days) is due and synthesizes/caches it
+ * in Shared Cloudflare KV (`daily_news_brief_v5:<cycleKey>-v5`) with 0 credits spent on cache hits.
+ */
+export async function runScheduledDailyNewsBrief(
+  env,
+  { nowMs = Date.now(), cron = '', force = false } = {}
+) {
+  const newsKey = env?.GEMINI_NEWS_API_KEY || env?.GEMINI_API_KEY;
+  if (!newsKey) {
+    return { ok: false, skipped: true, reason: 'no_gemini_api_key' };
+  }
+  if (!env?.SHARED_CACHE) {
+    return { ok: false, skipped: true, reason: 'no_shared_cache' };
+  }
+
+  const siteOrigin = String(env.DATA_SITE_ORIGIN || env.ALLOWED_ORIGIN || 'https://49ers.joshal.com')
+    .trim()
+    .replace(/\/+$/, '');
+
+  // 1. Lightweight schedule + live ESPN status check (2 subrequests) before doing any heavy work
+  const [scheduleMatchup, espnScheduleJson] = await Promise.all([
+    fetchJsonSafeEdge(`${siteOrigin}/data/schedule-matchup.json`, 6000),
+    fetchJsonSafeEdge('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule', 5000)
+  ]);
+
+  if (!scheduleMatchup) {
+    return { ok: false, skipped: true, reason: 'schedule_fetch_failed' };
+  }
+
+  await overlayLiveEspnScheduleForBrief(scheduleMatchup, null, espnScheduleJson, { nowMs, env });
+
+  const preCycleState = resolveNewsBriefCycleState(
+    nowMs,
+    { scheduleMatchup, news: { rawStream: [] } },
+    DAILY_NEWS_BRIEF_PEAK_HOUR_PT
+  );
+  if (preCycleState.isGameDayHold && !force) {
+    return {
+      ok: true,
+      skipped: true,
+      reason: 'gameday_hold',
+      cycleKey: preCycleState.activeCycleKey,
+      cron
+    };
+  }
+
+  const preCycleKey = preCycleState.activeCycleKey;
+  const preWorkerCycleKey = `${preCycleKey}-v5`;
+  const preCacheKey = `daily_news_brief_v5:${preWorkerCycleKey}`;
+
+  // 2. Fast-exit on KV cache hit (0 Gemini credits spent!) unless stale relative to live health/game state
+  let prefetchedHealth = null;
+  if (!force) {
+    const existing = await env.SHARED_CACHE.get(preCacheKey, 'json');
+    if (existing && (existing.data || existing.rawText)) {
+      prefetchedHealth = await fetchJsonSafeEdge(`${siteOrigin}/data/health.json`, 5000);
+      const existingBriefObj = existing.data || null;
+      const stale = existingBriefObj
+        ? isDailyBriefStaleForLiveState(existingBriefObj, { scheduleMatchup, health: prefetchedHealth }, nowMs)
+        : false;
+      if (!stale) {
+        return {
+          ok: true,
+          skipped: true,
+          reason: 'already_cached',
+          cycleKey: preCycleKey,
+          generatedAt: existing.generatedAt || null,
+          cron
+        };
+      }
+    }
+  }
+
+  // 3. Distributed KV lock prevents concurrent double-spend if a browser POST lands at the exact same second
+  const lockKey = `daily_news_brief_lock:${preWorkerCycleKey}`;
+  if (!force) {
+    const existingLock = await env.SHARED_CACHE.get(lockKey);
+    if (existingLock) {
+      return { ok: true, skipped: true, reason: 'in_flight_lock', cycleKey: preCycleKey, cron };
+    }
+  }
+  await env.SHARED_CACHE.put(lockKey, new Date(nowMs).toISOString(), { expirationTtl: 120 });
+
+  try {
+    // 4. Hydrate remaining lightweight canonical data + fresh ESPN/RSS wire (stays well under 50 subrequests)
+    const [meta, news, healthFresh, cap, depthChart, seasonal, espnNewsJson, edgeWire] = await Promise.all([
+      fetchJsonSafeEdge(`${siteOrigin}/data/meta.json`, 5500),
+      fetchJsonSafeEdge(`${siteOrigin}/data/news.json`, 6500),
+      prefetchedHealth ? Promise.resolve(prefetchedHealth) : fetchJsonSafeEdge(`${siteOrigin}/data/health.json`, 5500),
+      fetchJsonSafeEdge(`${siteOrigin}/data/cap.json`, 6000),
+      fetchJsonSafeEdge(`${siteOrigin}/data/depth-chart.json`, 5500),
+      fetchJsonSafeEdge(`${siteOrigin}/data/seasonal.json`, 6000),
+      fetchJsonSafeEdge('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25', 5000),
+      collectEdgeLiveWire(env, { maxXHydrate: 4, includeYouTube: false, useCache: true, writeCache: false }).catch(
+        () => ({ items: [] })
+      )
+    ]);
+
+    const appMeta = meta && typeof meta === 'object' ? meta : { seasonYear: 2026, teamRecord: '' };
+    await overlayLiveEspnScheduleForBrief(scheduleMatchup, appMeta, espnScheduleJson, { nowMs, env });
+
+    const baseStream = Array.isArray(news?.rawStream) ? [...news.rawStream] : [];
+    const seenUrls = new Set(
+      baseStream.map(it => String(it?.url || '').trim().toLowerCase()).filter(Boolean)
+    );
+    const pushFreshItem = it => {
+      const u = String(it?.url || '').trim();
+      const key = u.toLowerCase();
+      if (!u || !it?.title || seenUrls.has(key)) return;
+      seenUrls.add(key);
+      baseStream.unshift(it);
+    };
+
+    for (const art of Array.isArray(espnNewsJson?.articles) ? espnNewsJson.articles : []) {
+      const link = art?.links?.web?.href || art?.links?.mobile?.href || '';
+      if (!link || !art?.headline) continue;
+      pushFreshItem({
+        id: `espn_cron_${art.id || art.dataSourceIdentifier || Math.random().toString(36).slice(2, 8)}`,
+        type: 'article',
+        title: String(art.headline).trim(),
+        summary: String(art.description || '').trim().slice(0, 260),
+        url: link.replace(/^http:\/\//i, 'https://'),
+        author: art.byline || 'ESPN',
+        outletId: 'espn',
+        outletName: 'ESPN',
+        publishedAt: art.published || art.lastModified || new Date(nowMs).toISOString()
+      });
+    }
+    for (const wireIt of Array.isArray(edgeWire?.items) ? edgeWire.items : []) {
+      pushFreshItem(wireIt);
+    }
+
+    const appData = {
+      meta: appMeta,
+      scheduleMatchup,
+      health: healthFresh || { practiceReport: [], irAndReserveTracker: [] },
+      cap: cap || { years: {}, players: [] },
+      depthChart: depthChart || { units: [] },
+      seasonal: seasonal || {},
+      roster: buildLightweightRosterFromFeeds(cap, depthChart, healthFresh),
+      news: {
+        ...(news || {}),
+        rawStream: baseStream
+      }
+    };
+
+    // Re-evaluate cycle state & post-game hydration readiness with live wire merged
+    const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+    if (cycleState.isGameDayHold && !force) {
+      return { ok: true, skipped: true, reason: 'gameday_hold', cycleKey: cycleState.activeCycleKey, cron };
+    }
+    if (isAppDataAwaitingLivePostGameHydration(appData, nowMs) && !force) {
+      return {
+        ok: true,
+        skipped: true,
+        reason: 'awaiting_postgame_hydration',
+        cycleKey: cycleState.activeCycleKey,
+        cron
+      };
+    }
+
+    const activeCycle = cycleState.activeCycleKey;
+    const workerCycleKey = `${activeCycle}-v5`;
+    const cacheKey = `daily_news_brief_v5:${workerCycleKey}`;
+
+    if (cacheKey !== preCacheKey && !force) {
+      const existingAlt = await env.SHARED_CACHE.get(cacheKey, 'json');
+      if (
+        existingAlt &&
+        (existingAlt.data || existingAlt.rawText) &&
+        !(existingAlt.data && isDailyBriefStaleForLiveState(existingAlt.data, appData, nowMs))
+      ) {
+        return {
+          ok: true,
+          skipped: true,
+          reason: 'already_cached',
+          cycleKey: activeCycle,
+          generatedAt: existingAlt.generatedAt || null,
+          cron
+        };
+      }
+    }
+
+    const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
+    if (sourceCandidates.length === 0) {
+      return { ok: false, skipped: true, reason: 'no_source_candidates', cycleKey: activeCycle, cron };
+    }
+
+    const prevBrief =
+      news?.dailyTopNewsBrief && news.dailyTopNewsBrief.cycleKey !== activeCycle
+        ? news.dailyTopNewsBrief
+        : null;
+    const promptText = buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs, {
+      previousBrief: prevBrief
+    });
+    const effectiveSystem = `${EDITORIAL_SYSTEM_PROMPT}\n\n${buildLiveGroundingSystemPrompt(appData)}`;
+
+    const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
+    const scopedEnv = {
+      ...env,
+      GEMINI_API_KEY: newsKey,
+      GEMINI_DEFAULT_FREE_MODEL: PRIMARY_GEMINI_REASONING_MODEL
+    };
+    const {
+      res: geminiRes,
+      modelUsed,
+      thinkingLevelUsed
+    } = await callGeminiTextWithFallback(
+      scopedEnv,
+      {
+        systemInstruction: { parts: [{ text: effectiveSystem }] },
+        tools: [{ google_search: {} }],
+        generationConfig: {
+          temperature: 0.16,
+          thinkingConfig: { thinkingBudget }
+        },
+        contents: [{ role: 'user', parts: [{ text: String(promptText).slice(0, 24000) }] }]
+      },
+      { preferredThinkingLevel: 'XHIGH' }
+    );
+
+    if (!geminiRes || !geminiRes.ok) {
+      return {
+        ok: false,
+        skipped: false,
+        reason: 'gemini_api_error',
+        status: geminiRes?.status || 0,
+        cycleKey: activeCycle,
+        cron
+      };
+    }
+
+    const rawJson = await geminiRes.json();
+    const rawText = scrubStaleWeightHallucinations(extractNonThoughtText(rawJson), String(promptText));
+    const resolvedModel = modelUsed || PRIMARY_GEMINI_REASONING_MODEL;
+    const generatedAt = new Date(nowMs).toISOString();
+
+    const normalized = parseAndSanitizeDailyTopNewsBrief(rawText, sourceCandidates, appData, {
+      cycleKey: activeCycle,
+      isPostGame: cycleState.isPostGameCycle,
+      gameWeek: cycleState.targetGame ? Number(cycleState.targetGame.week) : Number(appMeta.currentWeek) || null,
+      generatedAt,
+      modelUsed: resolvedModel,
+      source: 'live-gemini-daily'
+    });
+
+    if (!normalized) {
+      return { ok: false, skipped: false, reason: 'invalid_gemini_payload', cycleKey: activeCycle, cron };
+    }
+
+    const payloadOut = {
+      cycleKey: workerCycleKey,
+      modelUsed: resolvedModel,
+      thinkingLevel: thinkingLevelUsed || resolveGeminiThinkingLevelLabel(resolvedModel, 'XHIGH'),
+      generatedAt,
+      rawText,
+      data: normalized,
+      scheduled: true
+    };
+
+    await env.SHARED_CACHE.put(cacheKey, JSON.stringify(payloadOut), {
+      expirationTtl: 60 * 60 * 26
+    });
+
+    return {
+      ok: true,
+      generated: true,
+      cycleKey: activeCycle,
+      modelUsed: resolvedModel,
+      generatedAt,
+      wordCount: normalized.wordCount,
+      cron
+    };
+  } finally {
+    if (typeof env.SHARED_CACHE.delete === 'function') {
+      await env.SHARED_CACHE.delete(lockKey).catch(() => {});
+    }
+  }
+}
+
 export default {
-  async scheduled(_event, env, ctx) {
-    const task = pollAndCacheBestFreeModel(env);
+  async scheduled(event, env, ctx) {
+    const cron = String(event?.cron || '');
+    const nowMs = Number.isFinite(event?.scheduledTime) ? event.scheduledTime : Date.now();
+    const runTasks = async () => {
+      const shouldPollModels =
+        !cron ||
+        cron === '15 */6 * * *' ||
+        !(await env.SHARED_CACHE?.get('meta:best_free_model'));
+      if (shouldPollModels) {
+        await pollAndCacheBestFreeModel(env).catch(() => {});
+      }
+      await runScheduledDailyNewsBrief(env, { nowMs, cron }).catch(() => {});
+    };
+    const task = runTasks();
     if (ctx && typeof ctx.waitUntil === 'function') {
       ctx.waitUntil(task);
     } else {
@@ -710,65 +1545,6 @@ export default {
       );
     }
 
-    const ALLOWED_SHORTENER_HOST_RE =
-      /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl|es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)$/i;
-    const stripEdgeTrackingParams = raw => {
-      try {
-        const u = new URL(raw);
-        for (const k of [...u.searchParams.keys()]) {
-          if (/^(?:utm_|fbclid$|gclid$|mc_cid$|mc_eid$|ref_src$|ref_url$|_osource$)/i.test(k)) {
-            u.searchParams.delete(k);
-          }
-        }
-        return u.toString();
-      } catch {
-        return raw;
-      }
-    };
-    const expandAllowedShortenerUrlEdge = async rawInput => {
-      const clean = String(rawInput || '').trim();
-      if (!clean) return '';
-      let parsed;
-      try {
-        parsed = new URL(clean.startsWith('http://') ? `https://${clean.slice(7)}` : clean);
-      } catch {
-        return '';
-      }
-      if (parsed.protocol !== 'https:' || !ALLOWED_SHORTENER_HOST_RE.test(parsed.hostname.toLowerCase())) {
-        return '';
-      }
-      const normalizedShort = parsed.toString();
-      const kvKey = `expand_v1:${normalizedShort}`;
-      const cached = await env.SHARED_CACHE?.get(kvKey);
-      if (cached !== null && cached !== undefined) {
-        return cached;
-      }
-      let resolved = '';
-      for (const method of ['HEAD', 'GET']) {
-        try {
-          const r = await fetch(normalizedShort, {
-            method,
-            redirect: 'follow',
-            headers: {
-              'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
-            },
-            signal: AbortSignal.timeout(3500)
-          });
-          if (r?.url) {
-            const dest = new URL(r.url.startsWith('http://') ? `https://${r.url.slice(7)}` : r.url);
-            if (dest.protocol === 'https:' && !ALLOWED_SHORTENER_HOST_RE.test(dest.hostname.toLowerCase())) {
-              resolved = stripEdgeTrackingParams(dest.toString());
-              break;
-            }
-          }
-        } catch {}
-      }
-      if (env.SHARED_CACHE) {
-        await env.SHARED_CACHE.put(kvKey, resolved, { expirationTtl: resolved ? 86400 : 1800 });
-      }
-      return resolved;
-    };
-
     if (request.method === 'POST' && url.pathname === '/api/expand-urls') {
       let body = null;
       try {
@@ -782,7 +1558,7 @@ export default {
         inputUrls.map(async rawU => {
           const key = String(rawU || '').trim();
           if (!key) return;
-          const dest = await expandAllowedShortenerUrlEdge(key);
+          const dest = await expandAllowedShortenerUrlEdge(env, key);
           if (dest) expanded[key] = dest;
         })
       );
@@ -790,323 +1566,13 @@ export default {
     }
 
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
-      const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v5', 'json');
-      if (cachedWire && Array.isArray(cachedWire.items)) {
-        return jsonResponse({ cached: true, ...cachedWire }, 200, cors);
-      }
-
-      const rssSources = [
-        { outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1', sfOnly: false },
-        { outletId: '49ers_official', outletName: '49ers.com Official', url: 'https://www.49ers.com/rss/news', sfOnly: false },
-        { outletId: 'niners_nation', outletName: 'Niners Nation', url: 'https://www.ninersnation.com/rss/current.xml', sfOnly: false },
-        { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', sfOnly: false },
-        { outletId: 'pfrumors', outletName: 'Pro Football Rumors', url: 'https://www.profootballrumors.com/san-francisco-49ers/feed', sfOnly: false },
-        { outletId: 'nfl_trade_rumors', outletName: 'NFL Trade Rumors', url: 'https://nfltraderumors.co/feed/', sfOnly: true },
-        { outletId: 'nfl_network', outletName: 'ProFootballTalk', url: 'https://www.nbcsports.com/nfl/profootballtalk.rss', sfOnly: true },
-        { outletId: 'sf_standard', outletName: 'The SF Standard', url: 'https://www.sfstandard.com/sports/feed/', sfOnly: true }
-      ];
-
-      const ytChannels = [
-        { channelId: 'UCeIOarQkwmGhimim9cDUTng', channel: 'San Francisco 49ers', sfOnly: false, embeddable: false },
-        { channelId: 'UCDVYQ4Zhbm3S2dlz7P1GBDg', channel: 'NFL', sfOnly: true, embeddable: false },
-        { channelId: 'UCGfxHp2yuimtLsFaq1r7aIQ', channel: 'The QB School', sfOnly: true, embeddable: true },
-        { channelId: 'UCt1LfHRE5eGiacPVtiaC10w', channel: "Jonnydel's Football Academy", sfOnly: true, embeddable: true }
-      ];
-
-      const decodeBasic = str =>
-        String(str || '')
-          .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-          .replace(/<[^>]+>/g, ' ')
-          .replace(/&amp;/g, '&')
-          .replace(/&quot;/g, '"')
-          .replace(/&#39;|&apos;/g, "'")
-          .replace(/\s+/g, ' ')
-          .trim();
-
-      const sfExplicitRe =
-        /(?:\b(?:49er|49ers|niners|san francisco|santa clara|levi['’]?s(?:\s+stadium)?|kyle shanahan|shanahan|john lynch|raheem morris|klay kubiak|kris kocurek|chris foerster|paraag marathe|jed york)\b|(?:^|[\s([{"',|/-])#(?:49ers|fttb)\b)/i;
-      const sfPlayerRe =
-        /\b(brock purdy|purdy|nick bosa|christian mccaffrey|mccaffrey|george kittle|kittle|fred warner|deebo samuel|deebo|brandon aiyuk|aiyuk|ricky pearsall|pearsall|deommodore lenoir|lenoir|dre greenlaw|greenlaw|renardo green|malik mustapha|mustapha|ji['’]?ayir brown|upton stout|trent williams|mykel williams|deforest buckner|buckner|osa odighizuwa|odighizuwa|keion white|keenan allen|mike evans|kyle juszczyk|juszczyk|isaac guerendo|guerendo|jordan watkins|jaden dugger|ephesians prysock|prysock|mac jones|christian kirk|brandin cooks|demarcus robinson|nate hobbs|romello height|gracen halton|c\.?j\.? west|eddy pineiro|colton mckivitz|dominick puni|jake brendel)\b/i;
-      const sfRe = new RegExp(`(?:${sfExplicitRe.source}|${sfPlayerRe.source})`, 'i');
-      const otherTeamLeadRe = /\b(rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers)\b/i;
-      const otherTeamOrCityPat =
-        '(?:rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|pats|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers|arizona|atlanta|baltimore|buffalo|carolina|chicago|cincinnati|cleveland|dallas|denver|detroit|green\\s+bay|houston|indianapolis|jacksonville|kansas\\s+city|las\\s+vegas|los\\s+angeles|miami|minnesota|new\\s+england|new\\s+orleans|new\\s+york|philadelphia|pittsburgh|seattle|tampa\\s+bay|tennessee|washington)';
-      const staffRolePat =
-        '(?:head\\s+coach|interim\\s+(?:head\\s+)?coach|coach|hc|offensive\\s+coordinator|oc|defensive\\s+coordinator|dc|special\\s+teams\\s+coordinator|stc|general\\s+manager|gm|assistant(?:\\s+coach)?|coordinator|quarterbacks?\\s+coach|linebackers?\\s+coach|defensive\\s+line\\s+coach|offensive\\s+line\\s+coach|pass\\s+game\\s+coordinator|run\\s+game\\s+coordinator)';
-      const otherTeamStaffAttrRe = new RegExp(
-        `\\b${otherTeamOrCityPat}(?:['’]s?)?\\s+${staffRolePat}\\s+([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?)\\b`,
-        'gi'
-      );
-      const personOtherTeamApposRe = new RegExp(
-        `\\b([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?),\\s+(?:the\\s+)?${otherTeamOrCityPat}(?:['’]s?)?\\s+${staffRolePat}\\b`,
-        'gi'
-      );
-      const formerSfRe =
-        /\b(?:former|ex[-\s])\s*(?:san\s+francisco\s+)?(?:49ers|niners)(?:\s+(?:hc|oc|dc|gm|head\s+coach|assistant|coach|coordinator|qb|rb|fb|wr|te|ol|dl|lb|cb|db|de|dt|s|k|p|ls|exec|executive|scout))?\b/gi;
-      const conflictingLeadershipRe =
-        /\b(?:mike\s+shanahan|klint\s+kubiak|gary\s+kubiak|marshawn\s+lynch|paxton\s+lynch|joey\s+bosa|kurt\s+warner|kyle\s+dugger|alvin\s+kamara|josh\s+allen)\b/gi;
-      const histSfBioRe = /\b(originally signed (?:on )?with (?:the )?(?:49ers|san francisco|niners)|(?:was )?(?:selected|drafted|taken) [\s\S]{0,55}by (?:the )?(?:49ers|san francisco|niners)|began (?:his|their) (?:nfl )?career with (?:the )?(?:49ers|san francisco|niners)|spent (?:time|his rookie|the \d{4} season|\d+ seasons?) with (?:the )?(?:49ers|san francisco|niners)|played (?:for|with) (?:the )?(?:49ers|san francisco|niners) (?:from|in) 20(?:0\d|1\d|2[0-4])|stint with (?:the )?(?:49ers|san francisco|niners)|undrafted free agent [\s\S]{0,50}(?:49ers|san francisco|niners))\b/i;
-      const stripWpFooter = s =>
-        String(s || '')
-          .replace(/\s*The post [\s\S]*? appeared first on [^\n.]+(?:\.[a-z]{2,4})?\.?/gi, '')
-          .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '')
-          .trim();
-      const stripNonSfContextsEdge = s =>
-        String(s || '')
-          .replace(formerSfRe, ' ')
-          .replace(conflictingLeadershipRe, ' ')
-          .replace(otherTeamStaffAttrRe, (m, namePart) =>
-            /^[A-Z]/.test(String(namePart || '').trim()) && !/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(namePart) ? ' ' : m
-          )
-          .replace(personOtherTeamApposRe, (m, namePart) =>
-            /^[A-Z]/.test(String(namePart || '').trim()) && !/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(namePart) ? ' ' : m
-          )
-          .replace(/\s+/g, ' ')
-          .trim();
-      const stripHistBio = s =>
-        stripWpFooter(s)
-          .split(/(?<=[.!?])\s+/)
-          .filter(sent => sent && !histSfBioRe.test(sent))
-          .join(' ')
-          .trim();
-      const isEdgeItem49ersRelevant = (titleText, summaryText) => {
-        const cleanTitle = stripWpFooter(titleText);
-        const titleClean = stripNonSfContextsEdge(cleanTitle);
-        if (sfRe.test(titleClean)) return true;
-        if (otherTeamLeadRe.test(cleanTitle)) return false;
-        const cleanBody = stripHistBio(summaryText);
-        const bodyClean = stripNonSfContextsEdge(cleanBody);
-        if (sfExplicitRe.test(bodyClean)) return true;
-        if (otherTeamLeadRe.test(cleanBody)) return false;
-        return sfPlayerRe.test(bodyClean);
-      };
-      const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|49erswebzone|nbcs49ers|ninersnation|davidbonilla49)$/i;
-      const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
-      const discoveredStatusMap = new Map();
-      const seenEdgeUrls = new Set();
-      const items = [];
-      const nowEdgeMs = Date.now();
-
-      await Promise.all([
-        ...rssSources.map(async src => {
-          try {
-            const r = await fetch(src.url, {
-              headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
-              signal: AbortSignal.timeout(4500)
-            });
-            if (!r.ok) return;
-            const xml = await r.text();
-            for (const xm of xml.replace(/\\\//g, '/').matchAll(xStatusRe)) {
-              const h = xm[1];
-              const sid = xm[2];
-              if (!/^(i|intent|share|hashtag|search)$/i.test(h) && !discoveredStatusMap.has(sid)) {
-                discoveredStatusMap.set(sid, h);
-              }
-            }
-            const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
-            for (const block of blocks.slice(0, src.sfOnly ? 30 : 12)) {
-              const title = stripWpFooter(decodeBasic((block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || ''));
-              const summary = stripWpFooter(
-                decodeBasic(
-                  ((block.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || '')
-                )
-              ).slice(0, 260);
-              const link = decodeBasic(
-                (block.match(/<link[^>]*href="([^"]+)"/i) || [])[1] ||
-                  (block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] ||
-                  ''
-              );
-              const pubRaw = decodeBasic(
-                (block.match(/<(?:pubDate|published|updated)>([\s\S]*?)<\/(?:pubDate|published|updated)>/i) || [])[1] || ''
-              );
-              if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
-              if (src.sfOnly && !isEdgeItem49ersRelevant(title, summary)) continue;
-              seenEdgeUrls.add(link);
-              const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
-              items.push({
-                type: 'article',
-                title,
-                summary,
-                url: link,
-                outletId: src.outletId,
-                outletName: src.outletName,
-                publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString()
-              });
-            }
-          } catch {}
-        }),
-        (async () => {
-          try {
-            const wzRes = await fetch('https://www.49erswebzone.com/articles/', {
-              headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
-              signal: AbortSignal.timeout(4500)
-            });
-            if (!wzRes.ok) return;
-            const wzHtml = await wzRes.text();
-            for (const liMatch of wzHtml.matchAll(/<li\s+id="item-\d+"[^>]*>([\s\S]*?)<\/li>/gi)) {
-              const li = liMatch[1];
-              const tm = li.match(
-                /<div[^>]*class="[^"]*content-news-title[^"]*"[^>]*>\s*<a[^>]*href="(https:\/\/www\.49erswebzone\.com\/articles\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/i
-              );
-              if (!tm) continue;
-              const link = tm[1].trim();
-              const title = decodeBasic(tm[2]);
-              if (!title || !/^https:\/\//i.test(link) || seenEdgeUrls.has(link)) continue;
-              const summary = decodeBasic((li.match(/<span\s+class="description"[^>]*>([\s\S]*?)<\/span>/i) || [])[1] || '').slice(0, 260);
-              const writer = decodeBasic((li.match(/<a\s+href="https:\/\/www\.49erswebzone\.com\/articles\/writer\/[^"]+"[^>]*>([\s\S]*?)<\/a>/i) || [])[1] || '');
-              const relM = li.match(/&bull;\s*(\d+)\s*(mins?|minutes?|hrs?|hours?|days?)\b/i);
-              const absM = li.match(
-                /&bull;\s*([A-Z][a-z]{2,8}\s+\d{1,2},\s*\d{4})(?:\s+at\s+(\d{1,2}:\d{2}\s*[AP]M))?/i
-              );
-              let pubMs = nowEdgeMs - 3_600_000;
-              if (relM) {
-                const n = Number(relM[1]);
-                const u = relM[2].toLowerCase();
-                if (u.startsWith('m')) pubMs = nowEdgeMs - n * 60_000;
-                else if (u.startsWith('h')) pubMs = nowEdgeMs - n * 3_600_000;
-                else if (u.startsWith('d')) pubMs = nowEdgeMs - n * 86_400_000;
-              } else if (absM) {
-                const parsedAbs = Date.parse(`${absM[1]} ${absM[2] || '12:00 PM'} PST`);
-                if (Number.isFinite(parsedAbs)) pubMs = Math.min(nowEdgeMs, parsedAbs);
-              }
-              seenEdgeUrls.add(link);
-              items.push({
-                type: 'article',
-                title,
-                summary,
-                url: link,
-                author: writer || '49ers Webzone',
-                outletId: '49ers_webzone',
-                outletName: '49ers Webzone',
-                publishedAt: new Date(Math.min(nowEdgeMs, pubMs)).toISOString()
-              });
-            }
-          } catch {}
-        })(),
-        ...ytChannels.map(async ch => {
-          try {
-            const r = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`, {
-              headers: { 'User-Agent': '49ersFaithfulEdge/2.0' },
-              signal: AbortSignal.timeout(4500)
-            });
-            if (!r.ok) return;
-            const xml = await r.text();
-            const entries = xml.match(/<entry\b[\s\S]*?<\/entry>/gi) || [];
-            for (const entry of entries.slice(0, 6)) {
-              const videoId = ((entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1] || '').trim();
-              const title = decodeBasic((entry.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
-              const pubRaw = ((entry.match(/<published>([^<]+)<\/published>/i) || [])[1] || '').trim();
-              if (!videoId || !title || /#shorts\b/i.test(title)) continue;
-              if (ch.sfOnly && !sfRe.test(stripNonSfContextsEdge(title))) continue;
-              const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
-              if (Number.isFinite(pubMs) && nowEdgeMs - pubMs > 10 * 86_400_000) continue;
-              items.push({
-                id: `edge_yt_${videoId}`,
-                type: 'video',
-                videoId,
-                embeddable: ch.embeddable,
-                title,
-                summary: '',
-                imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-                url: `https://www.youtube.com/watch?v=${videoId}`,
-                outletId: 'youtube',
-                outletName: ch.channel,
-                author: ch.channel,
-                publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString()
-              });
-            }
-          } catch {}
-        })
-      ]);
-
-      // Hydrate up to 14 newest embedded X status posts (including native `syn.video` MP4 highlight clips!)
-      const newestXIds = [...discoveredStatusMap.entries()]
-        .sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1))
-        .slice(0, 14);
-      await Promise.all(
-        newestXIds.map(async ([sid, fallbackHandle]) => {
-          try {
-            const sr = await fetch(`https://cdn.syndication.twimg.com/tweet-result?id=${sid}&token=x`, {
-              signal: AbortSignal.timeout(3500)
-            });
-            if (!sr.ok) return;
-            const syn = await sr.json();
-            const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
-            if (!txt || txt.length < 16) return;
-            const handle = syn.user?.screen_name || fallbackHandle;
-            if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(stripNonSfContextsEdge(txt))) return;
-            const bestMp4 = selectBestXSyndicationMp4(syn);
-            const durMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
-            const durFmt =
-              durMs >= 5000
-                ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}`
-                : '';
-            const synCardBv = syn.card?.binding_values || {};
-            const synCardThumb =
-              synCardBv.summary_photo_image_large?.image_value?.url ||
-              synCardBv.summary_photo_image?.image_value?.url ||
-              synCardBv.photo_image_full_size_large?.image_value?.url ||
-              synCardBv.thumbnail_image_large?.image_value?.url ||
-              synCardBv.thumbnail_image?.image_value?.url ||
-              '';
-            const thumb =
-              syn.photos?.[0]?.url ||
-              syn.mediaDetails?.[0]?.media_url_https ||
-              syn.video?.poster ||
-              synCardThumb ||
-              '';
-            const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
-            const synUrls = Array.isArray(syn.entities?.urls) ? syn.entities.urls : [];
-            const rawExtU =
-              synUrls.find(u => u?.expanded_url && !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u.expanded_url))
-                ?.expanded_url ||
-              syn.card?.binding_values?.card_url?.string_value ||
-              '';
-            let resolvedExtU = rawExtU;
-            if (resolvedExtU) {
-              try {
-                const parsedExt = new URL(resolvedExtU.startsWith('http://') ? `https://${resolvedExtU.slice(7)}` : resolvedExtU);
-                if (ALLOWED_SHORTENER_HOST_RE.test(parsedExt.hostname.toLowerCase())) {
-                  resolvedExtU = await expandAllowedShortenerUrlEdge(parsedExt.toString());
-                } else {
-                  resolvedExtU = stripEdgeTrackingParams(parsedExt.toString());
-                }
-              } catch {
-                resolvedExtU = '';
-              }
-            }
-            const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
-            const synCardDesc = syn.card?.binding_values?.description?.string_value || null;
-            items.push({
-              id: `x_edge_${sid}`,
-              type: 'tweet',
-              title: txt.slice(0, 320),
-              fullText: txt,
-              url: `https://x.com/${handle}/status/${sid}`,
-              externalUrl: resolvedExtU || null,
-              externalTitle: resolvedExtU ? synCardTitle : null,
-              externalDescription: resolvedExtU ? synCardDesc : null,
-              imageUrl: thumb.startsWith('https://') ? thumb : '',
-              videoStreamUrl: bestMp4 || undefined,
-              isHighlightClip: Boolean(bestMp4 && durMs >= 8000),
-              duration: durFmt || undefined,
-              embeddable: true,
-              outletId: 'x_beat',
-              outletName: 'X Beat',
-              author: syn.user?.name || `@${handle}`,
-              authorHandle: `@${handle}`,
-              authorProfileUrl: `https://x.com/${handle}`,
-              publishedAt: new Date(Math.min(nowEdgeMs, snowMs)).toISOString()
-            });
-          } catch {}
-        })
-      );
-
-      const payload = { updatedAt: new Date().toISOString(), items };
-      if (env.SHARED_CACHE && items.length > 0) {
-        await env.SHARED_CACHE.put('wire:rss_live_v5', JSON.stringify(payload), { expirationTtl: 60 });
-      }
-      return jsonResponse({ cached: false, ...payload }, 200, cors);
+      const wirePayload = await collectEdgeLiveWire(env, {
+        maxXHydrate: 14,
+        includeYouTube: true,
+        useCache: true,
+        writeCache: true
+      });
+      return jsonResponse(wirePayload, 200, cors);
     }
 
     if (request.method === 'GET' && url.pathname === '/api/gameday-inactives') {
@@ -1420,7 +1886,7 @@ export default {
 
     if (request.method === 'POST' && url.pathname === '/api/daily-news-brief') {
       const body = await parseJsonBodySafe(request);
-      if (!body || (!body.prompt && !body.seedRawText)) {
+      if (!body || (!body.prompt && !body.seedRawText && !body.seedData)) {
         return jsonResponse({ error: 'Invalid daily news brief request' }, 400, cors);
       }
       const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
@@ -1431,14 +1897,24 @@ export default {
         return jsonResponse({ cached: true, ...existing }, 200, cors);
       }
 
-      if (body.seedRawText && typeof body.seedRawText === 'string' && !body.prompt) {
+      if ((body.seedRawText || body.seedData) && !body.prompt) {
         const seedModel = String(body.modelUsed || PRIMARY_GEMINI_REASONING_MODEL).slice(0, 64);
+        const validSeedData =
+          body.seedData &&
+          typeof body.seedData === 'object' &&
+          !Array.isArray(body.seedData) &&
+          typeof body.seedData.headline === 'string' &&
+          Array.isArray(body.seedData.bullets) &&
+          body.seedData.bullets.length >= 2
+            ? body.seedData
+            : undefined;
         const seededPayload = {
           cycleKey,
           modelUsed: seedModel,
           thinkingLevel: resolveGeminiThinkingLevelLabel(seedModel, 'XHIGH'),
           generatedAt: String(body.generatedAt || new Date().toISOString()).slice(0, 40),
-          rawText: body.seedRawText.slice(0, 16000)
+          rawText: typeof body.seedRawText === 'string' ? body.seedRawText.slice(0, 16000) : '',
+          ...(validSeedData ? { data: validSeedData } : {})
         };
         if (env.SHARED_CACHE) {
           await env.SHARED_CACHE.put(cacheKey, JSON.stringify(seededPayload), {

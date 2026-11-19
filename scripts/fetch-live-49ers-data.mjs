@@ -6172,6 +6172,7 @@ async function main() {
                   body: JSON.stringify({
                     cycleKey: workerBriefCycleKey,
                     seedRawText: aiNewsBriefRes.rawText,
+                    seedData: dailyTopNewsBrief,
                     modelUsed: dailyTopNewsBrief.modelUsed,
                     generatedAt: synthGenIso
                   }),

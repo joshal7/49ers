@@ -4,7 +4,7 @@ on:
   schedule:
     # Runs every 30 minutes across practice, transaction, game & late-night SNF/MNF post-game windows (15:00-07:59 UTC = 7am-11:59pm PST / 8am-12:59am PDT),
     # explicitly triggers right after the 5:00 PM PT daily NFL news peak (00:05 & 01:05 UTC for PDT/PST)
-    # for the Gemini 4 Hydrogen (XHIGH) Top News Brief, plus hourly overnight.
+    # for the Gemini 4 Hydrogen (XHIGH) Top News Brief (adopting Shared Worker KV if already generated at 5:02 PM PT), plus hourly overnight.
     - cron: '*/30 15-23,0-7 * * *'
     - cron: '5 0,1 * * *'
     - cron: '23 8-14 * * *'
@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT || github.token }}
-          fetch-depth: 1
+          fetch-depth: 5
 
       - name: Setup Node.js 22
         uses: actions/setup-node@v4
