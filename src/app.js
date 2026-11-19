@@ -31,7 +31,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=87';
+} from './services/dataService.js?v=88';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -104,7 +104,7 @@ import {
   computeCatchUpState,
   urlBase64ToUint8Array,
   evaluatePushSupportStatus
-} from './engine/digestExperienceEngine.js?v=88';
+} from './engine/digestExperienceEngine.js?v=89';
 
 const state = {
   appData: null,
@@ -571,8 +571,22 @@ function syncHealthDeltaSnapshots(appData) {
       ? Number(prev.currentPct)
       : Number(prev.playProbabilityPct);
 
-    // Never regress to an earlier/blank practice state within the same week (e.g. cached static JSON flash)
-    if (days < prevDays) continue;
+    // Ignore completely blank fallback flashes (days === 0) when a real practice report was already cached,
+    // but self-heal when live official sync has fewer non-blank days than a stale/poisoned earlier snapshot (e.g. rolled-back fake Thu LP)
+    if (days < prevDays) {
+      if (days === 0) continue;
+      healthByPlayer[pid] = {
+        playProbabilityPct: pct,
+        currentPct: pct,
+        currentSig: sig,
+        daysCount: days,
+        wed: r.wed || '-',
+        thu: r.thu || '-',
+        fri: r.fri || '-'
+      };
+      changed = true;
+      continue;
+    }
 
     if (sig !== prevSig) {
       healthByPlayer[pid] = {
@@ -4017,7 +4031,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=104', { updateViaCache: 'none' })
+        .register('./sw.js?v=105', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

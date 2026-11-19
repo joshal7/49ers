@@ -666,6 +666,9 @@ function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
       if (Number.isFinite(fresh.priorDayPlayProbabilityPct)) {
         next.priorDayPlayProbabilityPct = fresh.priorDayPlayProbabilityPct;
       }
+      if (typeof fresh.hasPreReportPracticeReturnDelta === 'boolean') {
+        next.hasPreReportPracticeReturnDelta = fresh.hasPreReportPracticeReturnDelta;
+      }
       if (fresh.playBadgeLabel) next.playBadgeLabel = fresh.playBadgeLabel;
       if (fresh.playTier) next.playTier = fresh.playTier;
       if (Array.isArray(fresh.factors) && fresh.factors.length > 0) next.factors = fresh.factors;
@@ -6015,12 +6018,16 @@ export async function hydrateLiveEspnOverlay(appData) {
               wed: rp.health.wed,
               thu: rp.health.thu,
               fri: rp.health.fri,
+              hasSideFieldRehab: Boolean(rp.health.hasSideFieldRehab),
+              kickoffIso: nextGameKickoffIso,
+              blurbDateIso: rp.health.blurbDateIso || null,
               beatNote: combinedBeat
             });
             rp.health.playProbabilityPct = playProb.probabilityPct;
             rp.health.playTier = playProb.tier;
             rp.health.playBadgeLabel = playProb.badgeLabel;
             rp.health.factors = playProb.factors;
+            rp.health.hasPreReportPracticeReturn = Boolean(playProb.appliedPreReportPracticeReturn);
           } else if (rp.rosterBucket === 'ir' && !rp.health.isSeasonEnding) {
             if (rp.health.wed !== '-' || rp.health.thu !== '-' || rp.health.fri !== '-') {
               rp.health.isPracticeWindowOpen = true;

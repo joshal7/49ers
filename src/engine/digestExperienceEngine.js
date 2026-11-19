@@ -500,8 +500,11 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
     } else {
       const snapDiff = Number.isFinite(snapPct) ? Math.round(curPct - snapPct) : NaN;
       const priorDayDiff = Number.isFinite(priorDayPct) ? Math.round(curPct - priorDayPct) : NaN;
-      const chosenDiff =
-        Number.isFinite(snapDiff) && Math.abs(snapDiff) >= 5
+      const preferPreReportPrior =
+        Boolean(row.hasPreReportPracticeReturnDelta) && Number.isFinite(priorDayDiff) && priorDayDiff >= 5;
+      const chosenDiff = preferPreReportPrior
+        ? priorDayDiff
+        : Number.isFinite(snapDiff) && Math.abs(snapDiff) >= 5
           ? snapDiff
           : Number.isFinite(priorDayDiff) && Math.abs(priorDayDiff) >= 5
             ? priorDayDiff
@@ -510,7 +513,8 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
         probDelta = {
           diff: chosenDiff,
           label: `${chosenDiff > 0 ? '+' : ''}${chosenDiff}%`,
-          tone: chosenDiff > 0 ? 'positive' : 'danger'
+          tone: chosenDiff > 0 ? 'positive' : 'danger',
+          isPreReportReturn: preferPreReportPrior
         };
       }
     }
@@ -534,7 +538,9 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
       ? `${trajectory.pairLabel} (${probDelta.label})`
       : trajectory
         ? trajectory.shortLabel
-        : `Play likelihood ${probDelta.label} vs prior update`;
+        : probDelta?.isPreReportReturn
+          ? `Observed practice return ahead of official report (${probDelta.label} vs prior practice day)`
+          : `Play likelihood ${probDelta.label} vs prior update`;
 
   return {
     trajectory,

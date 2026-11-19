@@ -14115,6 +14115,216 @@ await testAsync(
       0,
       'Teammate return article ("boosting hopes for Brock Purdy\'s offense") must NOT create Injury News on healthy Brock Purdy'
     );
+
+    // 6. Non-speculative next-day practice-return news (before official Thursday report) MUST be credited without fabricating thu=LP or showing stale -16%
+    const { hasObservedPracticeReturnSignal } = await import('../src/engine/injuryProbabilityModel.js');
+    assert.equal(hasObservedPracticeReturnSignal(evansShort + ' ' + evansLong), true, 'Factual "suited up for Thursday\'s practice" sentence must pass even with conditional 2nd sentence');
+    assert.equal(hasObservedPracticeReturnSignal('Mike Evans (Achilles) is practicing on the sideline today.'), true, 'Factual sideline practice observation must match');
+    assert.equal(hasObservedPracticeReturnSignal(wzBoostArticle.summary), true, 'Factual "Mike Evans returned to practice" must match');
+    assert.equal(hasObservedPracticeReturnSignal('Mike Evans not practicing but he was doing some work on a side field.'), false, 'Negated Wed "not practicing" must NOT match observed practice return');
+    assert.equal(hasObservedPracticeReturnSignal('The 49ers are hoping to have Mike Evans back at practice this week.'), false, 'Speculative "hoping to" must NOT match observed practice return');
+    assert.equal(hasObservedPracticeReturnSignal('Assuming Evans is able to log at least a limited practice Thursday.'), false, 'Conditional "Assuming..." alone must NOT match observed practice return');
+
+    // Guard against midweek conditional "if he's cleared to return to action Sunday" deleting ESPN wire reports while keeping genuine in-game blue-tent return cancellation
+    const liveThuItems = [
+      {
+        id: 'espn_pwire_16737_thu_real',
+        wireSource: 'espn_player_wire',
+        trustTier: 1,
+        primaryPlayer: { id: '16737', name: 'Mike Evans' },
+        mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }],
+        author: 'Cam Inman',
+        publishedAt: '2026-11-19T20:13:00Z',
+        title: evansShort,
+        summary: evansLong
+      },
+      wzBoostArticle,
+      {
+        id: 'barrows_wed_dnp',
+        wireSource: 'bluesky',
+        trustTier: 1,
+        author: 'Matt Barrows',
+        publishedAt: '2026-11-18T20:55:09Z',
+        title: "49ers' Air Force Academy practice observations… - Mike Evans not practicing but he was doing some work on a side field.",
+        summary: ''
+      }
+    ];
+    const thuCorroborated = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Mike Evans',
+      playerId: '16737',
+      rosterBucket: 'active',
+      newsItems: liveThuItems,
+      rosterPlayerNames: ['Mike Evans', 'Brock Purdy'],
+      lastCompletedGameKickoffMs: Date.parse('2026-11-15T21:25:00Z'),
+      nowMs: thuMiddayMs,
+      priorWeekInjuryType: 'Achilles'
+    });
+    assert.equal(thuCorroborated.hasSignal, true, 'Corroborated Thu Cam Inman + Webzone practice return must NOT be deleted by conditional "cleared to return" or Wed DNP');
+    assert.equal(thuCorroborated.signalType, 'OBSERVED_PRACTICE_RETURN');
+    assert.equal(thuCorroborated.corroboratingCount, 2, 'Both Cam Inman ESPN wire and 49ers Webzone must corroborate Thursday practice return');
+    assert.ok(thuCorroborated.confidence >= 0.65, `Expected high confidence >=0.65 after superseding prior-day Wed DNP, got ${thuCorroborated.confidence}`);
+
+    // Same-day conflicting reports (within <=6h) MUST still reduce confidence appropriately
+    const sameDayConflict = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Mike Evans',
+      playerId: '16737',
+      rosterBucket: 'active',
+      newsItems: [
+        liveThuItems[0],
+        {
+          id: 'same_day_dnp_conflict',
+          wireSource: 'bluesky',
+          trustTier: 1,
+          author: 'Matt Barrows',
+          publishedAt: '2026-11-19T19:45:00Z',
+          title: 'Mike Evans (Achilles) is not practicing today at Air Force Academy.',
+          summary: ''
+        }
+      ],
+      rosterPlayerNames: ['Mike Evans'],
+      lastCompletedGameKickoffMs: Date.parse('2026-11-15T21:25:00Z'),
+      nowMs: thuMiddayMs,
+      priorWeekInjuryType: 'Achilles'
+    });
+    assert.ok(
+      sameDayConflict.confidence < thuCorroborated.confidence - 0.15,
+      `Same-day conflicting DNP must still penalize confidence (${sameDayConflict.confidence} vs ${thuCorroborated.confidence})`
+    );
+
+    // Genuine in-game blue-tent return STILL cancels mid-game questionable-to-return tweet
+    const inGameCancelSig = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Renardo Green',
+      playerId: '4431490',
+      rosterBucket: 'active',
+      newsItems: [
+        {
+          id: 'q2_tent_qtr',
+          trustTier: 1,
+          author: 'Nick Wagoner',
+          publishedAt: '2026-11-15T22:10:00Z',
+          title: 'CB Renardo Green (back) is questionable to return.'
+        },
+        {
+          id: 'q2_cleared_return',
+          trustTier: 1,
+          author: 'Matt Maiocco',
+          publishedAt: '2026-11-15T22:22:00Z',
+          title: 'Renardo Green (back) was evaluated on the sideline and has been cleared to return to action.'
+        }
+      ],
+      rosterPlayerNames: ['Renardo Green'],
+      lastCompletedGameKickoffMs: Date.parse('2026-11-15T21:25:00Z'),
+      windowStartMs: Date.parse('2026-11-16T00:30:00Z'),
+      nowMs: Date.parse('2026-11-16T18:00:00Z')
+    });
+    assert.equal(inGameCancelSig.hasSignal, false, 'Genuine in-game "has been cleared to return to action" must still cancel Q2 questionable-to-return tent visit');
+
+    // Reconcile full pre-report Thursday state: W/T/F stays DNP/-/-, probability steps cleanly above Wed DNP and below Thu LP, delta chip is positive +XX% (not -16%)
+    const mockPreReportThuApp = {
+      meta: { seasonYear: 2026, currentWeek: 11 },
+      roster: {
+        players: [
+          {
+            id: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            jersey: 5,
+            experienceYears: 13,
+            primarySnapPct: 54,
+            capHit2026: 18_000_000,
+            rosterBucket: 'active',
+            health: {
+              status: 'Questionable',
+              injuryType: 'Achilles',
+              isOnPracticeReport: true,
+              wed: 'DNP',
+              thu: '-',
+              fri: '-',
+              hasSideFieldRehab: true,
+              shortComment: evansShort,
+              longComment: evansLong,
+              blurbDateIso: '2026-11-19T20:13:00Z',
+              weeklyHistory2026: evansHist3Missed
+            },
+            recentNews: []
+          }
+        ]
+      },
+      health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
+      news: { rawStream: liveThuItems },
+      scheduleMatchup: {
+        schedule: [
+          { week: 10, dateIso: '2026-11-15T21:25:00Z', completed: true },
+          { week: 11, dateIso: kickoffIso, completed: false }
+        ],
+        upcomingMatchup: { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', kickoffIso }
+      }
+    };
+    reconcileRosterAndHealthWithNews(mockPreReportThuApp, { nowMs: thuMiddayMs });
+    const preReportRow = mockPreReportThuApp.health.practiceReport.find(r => r.name === 'Mike Evans');
+    assert.equal(preReportRow?.wed, 'DNP');
+    assert.equal(preReportRow?.thu, '-', 'Official Thu column must remain blank ahead of official club report');
+    assert.equal(preReportRow?.fri, '-');
+    assert.ok(
+      preReportRow.playProbabilityPct >= 34 && preReportRow.playProbabilityPct < thuFirstLp.probabilityPct,
+      `Pre-report Thu practice return (${preReportRow.playProbabilityPct}%) must sit strictly above Wed DNP (~25%) and below official Thu LP (${thuFirstLp.probabilityPct}%)`
+    );
+    assert.equal(preReportRow.hasPreReportPracticeReturnDelta, true);
+    assert.ok(preReportRow.priorDayPlayProbabilityPct >= 20 && preReportRow.priorDayPlayProbabilityPct <= 27);
+    const preReportDeltaVsTue = computePracticeTrajectoryDelta(preReportRow, { playProbabilityPct: 42 });
+    assert.ok(
+      preReportDeltaVsTue && preReportDeltaVsTue.tone === 'positive' && preReportDeltaVsTue.compactLabel.startsWith('+'),
+      `Pre-report practice return must show modest positive +XX% chip (not stale -16% vs Tuesday 42%), got ${JSON.stringify(preReportDeltaVsTue)}`
+    );
+
+    // Guard against double-counting "suited up for Thursday's practice" once official Thu LP posts
+    const officialThuLpNoDouble = computePlayerPlayProbability({
+      name: 'Mike Evans',
+      position: 'WR',
+      experienceYears: 13,
+      snapPct: 54,
+      rosterBucket: 'active',
+      gameStatus: 'Questionable',
+      injuryType: 'Achilles',
+      wed: 'DNP',
+      thu: 'LP',
+      fri: '-',
+      hasSideFieldRehab: true,
+      beatNote: evansShort + ' ' + evansLong,
+      corroboratedNewsSignal: thuCorroborated,
+      weeklyHistory: evansHist3Missed,
+      currentWeek: 11,
+      byeWeek: 8,
+      kickoffIso,
+      nowMs: thuMiddayMs
+    });
+    assert.equal(
+      officialThuLpNoDouble.probabilityPct,
+      thuFirstLp.probabilityPct,
+      'Once official Thu LP posts, "suited up for Thursday\'s practice" must NOT double-boost probability above official Thu LP'
+    );
+
+    // Guard against stale Wednesday text firing pre-report return on a Wednesday DNP
+    const staleWedProb = computePlayerPlayProbability({
+      name: 'Mike Evans',
+      position: 'WR',
+      experienceYears: 13,
+      snapPct: 54,
+      rosterBucket: 'active',
+      gameStatus: 'Questionable',
+      injuryType: 'Achilles',
+      wed: 'DNP',
+      thu: '-',
+      fri: '-',
+      beatNote: 'Mike Evans was suited up for Wednesday practice.',
+      blurbDateIso: '2026-11-18T19:00:00Z',
+      weeklyHistory: evansHist3Missed,
+      currentWeek: 11,
+      byeWeek: 8,
+      kickoffIso,
+      nowMs: Date.parse('2026-11-18T22:00:00Z')
+    });
+    assert.equal(staleWedProb.appliedPreReportPracticeReturn, false, 'Same-day/Wednesday text must NEVER trigger next-day pre-report practice return on Wed DNP');
   }
 );
 
