@@ -146,6 +146,100 @@ export function cleanSensationalistText(rawText = '') {
     .trim();
 }
 
+const PODIUM_FALLBACK_IDS = new Set(['kyle_shanahan', 'john_lynch']);
+
+function resolveReporterMetaForPrefs(rid, item, reportersById) {
+  if (rid && reportersById instanceof Map) {
+    const mapped = reportersById.get(rid);
+    if (mapped) return mapped;
+  }
+  if (rid) {
+    const byId = resolveReporterFromNameOrHandle(rid);
+    if (byId) return byId;
+  }
+  if (item) {
+    const inferred = resolveReporterFromNameOrHandle(
+      item.author || item.reporterName || item.authorHandle || ''
+    );
+    if (inferred && !PODIUM_FALLBACK_IDS.has(inferred.id)) return inferred;
+  }
+  return null;
+}
+
+function isHotTakeReporterMeta(rep) {
+  return Boolean(rep && (rep.styleTag === 'opinion-hot-take' || rep.isHotTake));
+}
+
+/**
+ * Single source of truth for per-user source, reporter, hot-take, strict-analytics, and clickbait
+ * filtering shared across `News & Film`, `Home`, and Player Card (`Overview` & `Health`).
+ */
+export function isItemAllowedByUserPrefs(
+  item = null,
+  reportersById = null,
+  userPrefs = null,
+  precomputedSets = null
+) {
+  if (!item || typeof item !== 'object') return false;
+  if (item.isClickbait) return false;
+  if (!userPrefs || typeof userPrefs !== 'object') return true;
+
+  const disabledReporters =
+    precomputedSets?.disabledReporters || new Set(userPrefs.disabledReporterIds || []);
+  const disabledOutlets =
+    precomputedSets?.disabledOutlets || new Set(userPrefs.disabledOutlets || []);
+  const muteHotTakes = Boolean(userPrefs.muteHotTakePersonalities);
+  const strictAnalytics = Boolean(userPrefs.strictAnalyticsFilmOnly);
+
+  const hasPrefsToCheck =
+    disabledReporters.size > 0 || disabledOutlets.size > 0 || muteHotTakes || strictAnalytics;
+  if (!hasPrefsToCheck) return true;
+
+  const inferredRep =
+    !item.reporterId || !item.outletId
+      ? resolveReporterMetaForPrefs(item.reporterId || null, item, reportersById)
+      : null;
+  const resolvedOutletId = item.outletId || inferredRep?.outletId || null;
+
+  // Check outlet filter
+  if (resolvedOutletId && disabledOutlets.has(resolvedOutletId)) {
+    return false;
+  }
+
+  // For clustered briefs with multiple cited reporters, keep brief as long as AT LEAST ONE cited reporter is enabled
+  if (Array.isArray(item.citedReporterIds) && item.citedReporterIds.length > 0) {
+    const activeCitations = item.citedReporterIds.filter(rid => {
+      if (disabledReporters.has(rid)) return false;
+      const rep = resolveReporterMetaForPrefs(rid, null, reportersById);
+      if (muteHotTakes && isHotTakeReporterMeta(rep)) return false;
+      return true;
+    });
+    if (activeCitations.length === 0) return false;
+  } else {
+    const resolvedRepId = item.reporterId || inferredRep?.id || null;
+    if (resolvedRepId) {
+      if (disabledReporters.has(resolvedRepId)) return false;
+      const rep = resolveReporterMetaForPrefs(resolvedRepId, item, reportersById);
+      if (muteHotTakes && isHotTakeReporterMeta(rep)) return false;
+    }
+  }
+
+  if (strictAnalytics) {
+    const cat = String(item.category || '').toLowerCase();
+    const highSignal =
+      cat === 'film' ||
+      cat === 'cap' ||
+      cat === 'analytics' ||
+      cat === 'injury' ||
+      cat === 'scheme' ||
+      cat === 'roster' ||
+      Number(item.signalScore || 65) >= 60;
+    if (!highSignal) return false;
+  }
+
+  return true;
+}
+
 /**
  * Filters news items and clustered briefs according to user preferences:
  * - disabledReporterIds: Set/Array of reporter IDs muted by user
@@ -154,50 +248,13 @@ export function cleanSensationalistText(rawText = '') {
  * - strictAnalyticsFilmOnly: boolean
  */
 export function filterNewsByUserPrefs(items = [], reportersById = new Map(), userPrefs = {}) {
-  const disabledReporters = new Set(userPrefs.disabledReporterIds || []);
-  const disabledOutlets = new Set(userPrefs.disabledOutlets || []);
-  const muteHotTakes = Boolean(userPrefs.muteHotTakePersonalities);
-  const strictAnalytics = Boolean(userPrefs.strictAnalyticsFilmOnly);
-
-  return items.filter(item => {
-    // Check outlet filter
-    if (item.outletId && disabledOutlets.has(item.outletId)) {
-      return false;
-    }
-
-    // For clustered briefs with multiple cited reporters, keep brief as long as AT LEAST ONE cited reporter is enabled
-    if (Array.isArray(item.citedReporterIds) && item.citedReporterIds.length > 0) {
-      const activeCitations = item.citedReporterIds.filter(rid => {
-        if (disabledReporters.has(rid)) return false;
-        const rep = reportersById.get(rid);
-        if (muteHotTakes && rep?.styleTag === 'opinion-hot-take') return false;
-        return true;
-      });
-      if (activeCitations.length === 0) return false;
-    } else if (item.reporterId) {
-      if (disabledReporters.has(item.reporterId)) return false;
-      const rep = reportersById.get(item.reporterId);
-      if (muteHotTakes && rep?.styleTag === 'opinion-hot-take') return false;
-    }
-
-    if (strictAnalytics) {
-      const cat = String(item.category || '').toLowerCase();
-      const highSignal =
-        cat === 'film' ||
-        cat === 'cap' ||
-        cat === 'analytics' ||
-        cat === 'injury' ||
-        cat === 'scheme' ||
-        cat === 'roster' ||
-        Number(item.signalScore || 65) >= 60;
-      if (!highSignal) return false;
-    }
-
-    // Always drop items flagged as clickbait
-    if (item.isClickbait) return false;
-
-    return true;
-  });
+  const precomputedSets = {
+    disabledReporters: new Set(userPrefs?.disabledReporterIds || []),
+    disabledOutlets: new Set(userPrefs?.disabledOutlets || [])
+  };
+  return items.filter(item =>
+    isItemAllowedByUserPrefs(item, reportersById, userPrefs, precomputedSets)
+  );
 }
 
 /**

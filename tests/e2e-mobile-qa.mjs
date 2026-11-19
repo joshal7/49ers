@@ -1777,6 +1777,122 @@ async function main() {
           mentionsAudit.nickBosa.allHaveAuthor,
         `Nick Bosa 7d mentions incomplete: ${JSON.stringify(mentionsAudit.nickBosa)}`
       );
+
+      // Verify Recent Mentions Top | Latest toggle threshold (>=5 shows inline header toggle, <5 hides it,
+      // switching preserves scroll & updates mode, opening another player resets to Top)
+      const mentionsSortUiAudit = await cdp.eval(() => {
+        const setRosterSearch = val => {
+          const inp = document.getElementById('rosterSearchInput');
+          if (!inp) return;
+          inp.value = val;
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        const openPlayerByName = targetName => {
+          setRosterSearch(targetName);
+          const row = Array.from(document.querySelectorAll('.player-row')).find(el =>
+            el.textContent.includes(targetName)
+          );
+          if (!row) return false;
+          row.click();
+          document.querySelector('[data-action="set-player-tab"][data-player-tab="overview"]')?.click();
+          return true;
+        };
+
+        // 1. Brock Purdy has >=5 mentions -> toggle MUST appear inline in Recent Mentions header
+        const purdyOpened = openPlayerByName('Brock Purdy');
+        const sheetBody = document.getElementById('sheetBody');
+        const purdyCardsCount = document.querySelectorAll('#sheetBody [data-player-overview-mentions] .player-mention-card').length;
+        const purdyHasToggle = Boolean(document.querySelector('#sheetBody [data-player-mentions-sort-bar]'));
+        const purdyInitialMode = document.querySelector('#sheetBody [data-player-overview-mentions]')?.getAttribute('data-mentions-sort-mode');
+        const headerRect = document.querySelector('#sheetBody .player-mentions-header')?.getBoundingClientRect();
+        const toggleRect = document.querySelector('#sheetBody [data-player-mentions-sort-bar]')?.getBoundingClientRect();
+        const sheetRect = sheetBody?.getBoundingClientRect();
+        const toggleFitsSheet = Boolean(
+          headerRect && toggleRect && sheetRect && toggleRect.right <= sheetRect.right + 1
+        );
+
+        // Scroll down to mentions, click Latest, verify mode flips + scroll preserved
+        sheetBody.scrollTop = 220;
+        const beforeScroll = sheetBody.scrollTop;
+        document.querySelector('#sheetBody [data-action="set-player-mentions-sort"][data-sort-mode="latest"]')?.click();
+        const afterLatestMode = document.querySelector('#sheetBody [data-player-overview-mentions]')?.getAttribute('data-mentions-sort-mode');
+        const latestBtnPressed = document.querySelector('#sheetBody [data-action="set-player-mentions-sort"][data-sort-mode="latest"]')?.getAttribute('aria-pressed');
+        const afterScroll = sheetBody.scrollTop;
+
+        // Switch back to Top
+        document.querySelector('#sheetBody [data-action="set-player-mentions-sort"][data-sort-mode="top"]')?.click();
+        const afterTopMode = document.querySelector('#sheetBody [data-player-overview-mentions]')?.getAttribute('data-mentions-sort-mode');
+
+        // Leave Purdy on Latest, then open a player with <5 mentions to verify reset + hidden toggle
+        document.querySelector('#sheetBody [data-action="set-player-mentions-sort"][data-sort-mode="latest"]')?.click();
+        document.getElementById('closeSheetBtn')?.click();
+
+        // Find a roster player with <5 mentions (re-query live rosterSearchInput after renderMain)
+        setRosterSearch('');
+        let lt5PlayerChecked = false;
+        let lt5Count = -1;
+        let lt5HasToggle = false;
+        const rows = Array.from(document.querySelectorAll('.player-row'));
+        for (const r of rows.slice(-15)) {
+          r.click();
+          document.querySelector('[data-action="set-player-tab"][data-player-tab="overview"]')?.click();
+          const cnt = document.querySelectorAll('#sheetBody [data-player-overview-mentions] .player-mention-card').length;
+          if (cnt < 5) {
+            lt5PlayerChecked = true;
+            lt5Count = cnt;
+            lt5HasToggle = Boolean(document.querySelector('#sheetBody [data-player-mentions-sort-bar]'));
+            document.getElementById('closeSheetBtn')?.click();
+            break;
+          }
+          document.getElementById('closeSheetBtn')?.click();
+        }
+
+        // Re-open Brock Purdy -> must have reset to `top`
+        openPlayerByName('Brock Purdy');
+        const purdyReopenedMode = document.querySelector('#sheetBody [data-player-overview-mentions]')?.getAttribute('data-mentions-sort-mode');
+        document.getElementById('closeSheetBtn')?.click();
+        setRosterSearch('');
+
+        return {
+          purdyOpened,
+          purdyCardsCount,
+          purdyHasToggle,
+          purdyInitialMode,
+          toggleFitsSheet,
+          beforeScroll,
+          afterScroll,
+          afterLatestMode,
+          latestBtnPressed,
+          afterTopMode,
+          lt5PlayerChecked,
+          lt5Count,
+          lt5HasToggle,
+          purdyReopenedMode
+        };
+      });
+      assert(
+        mentionsSortUiAudit.purdyOpened &&
+          mentionsSortUiAudit.purdyCardsCount >= 5 &&
+          mentionsSortUiAudit.purdyHasToggle &&
+          mentionsSortUiAudit.purdyInitialMode === 'top' &&
+          mentionsSortUiAudit.toggleFitsSheet,
+        `Recent Mentions Top|Latest toggle failed on >=5 player: ${JSON.stringify(mentionsSortUiAudit)}`
+      );
+      assert(
+        mentionsSortUiAudit.afterLatestMode === 'latest' &&
+          mentionsSortUiAudit.latestBtnPressed === 'true' &&
+          mentionsSortUiAudit.afterTopMode === 'top' &&
+          Math.abs(mentionsSortUiAudit.afterScroll - mentionsSortUiAudit.beforeScroll) <= 40,
+        `Recent Mentions Top|Latest toggle switch or scroll preservation failed: ${JSON.stringify(mentionsSortUiAudit)}`
+      );
+      assert(
+        mentionsSortUiAudit.lt5PlayerChecked && !mentionsSortUiAudit.lt5HasToggle,
+        `Player with <5 mentions must hide Top|Latest toggle: ${JSON.stringify(mentionsSortUiAudit)}`
+      );
+      assert(
+        mentionsSortUiAudit.purdyReopenedMode === 'top',
+        `Opening a new player card must reset mentions sort back to Top: ${JSON.stringify(mentionsSortUiAudit)}`
+      );
       await cdp.assertNoOverflow('Player Mentions Verification');
 
       // Verify Player Card top-right `1m ago` (`#sheetSyncWireBtn`) live refresh button, furious-click safety,

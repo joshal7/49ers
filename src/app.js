@@ -92,7 +92,7 @@ import {
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=86';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=74';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=75';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=85';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
@@ -104,7 +104,7 @@ import {
   computeCatchUpState,
   urlBase64ToUint8Array,
   evaluatePushSupportStatus
-} from './engine/digestExperienceEngine.js?v=86';
+} from './engine/digestExperienceEngine.js?v=87';
 
 const state = {
   appData: null,
@@ -184,6 +184,7 @@ const state = {
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
   sheetPlayerTxScenario: 'cut',
+  sheetPlayerMentionsSort: 'top',
   reporterSearch: '',
   rankModal: null // { scope: 'team' | 'player', key: string, playerId: string | null }
 };
@@ -1152,6 +1153,7 @@ function renderSheet({ preserveScroll = false } = {}) {
         activeTab: state.sheetPlayerTab,
         statsMode: state.sheetPlayerStatsMode,
         txScenario: state.sheetPlayerTxScenario,
+        mentionsSortMode: state.sheetPlayerMentionsSort,
         rawStream: state.appData?.news?.rawStream || [],
         appData: state.appData,
         userPrefs: state.prefs,
@@ -1699,6 +1701,7 @@ function bindEvents() {
           state.sheetMode = 'player';
           state.sheetPlayerId = target.id;
           state.sheetPlayerTab = 'overview';
+          state.sheetPlayerMentionsSort = 'top';
           renderSheet();
         }
         break;
@@ -1878,6 +1881,7 @@ function bindEvents() {
           state.sheetMode = 'player';
           state.sheetPlayerId = player.id;
           state.sheetPlayerTab = btn.getAttribute('data-initial-tab') || 'overview';
+          state.sheetPlayerMentionsSort = 'top';
           renderSheet();
         }
         break;
@@ -1886,6 +1890,11 @@ function bindEvents() {
       case 'set-player-tab':
         state.sheetPlayerTab = btn.getAttribute('data-player-tab') || 'overview';
         renderSheet();
+        break;
+
+      case 'set-player-mentions-sort':
+        state.sheetPlayerMentionsSort = normalizeNewsSortMode(btn.getAttribute('data-sort-mode') || 'top');
+        renderSheet({ preserveScroll: true });
         break;
 
       case 'set-player-stats-mode':
@@ -2112,6 +2121,7 @@ function bindEvents() {
           state.sheetMode = 'player';
           state.sheetPlayerId = targetPlayer.id;
           state.sheetPlayerTab = 'stats';
+          state.sheetPlayerMentionsSort = 'top';
           renderSheet();
         }
         break;
@@ -3825,7 +3835,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=99', { updateViaCache: 'none' })
+        .register('./sw.js?v=100', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

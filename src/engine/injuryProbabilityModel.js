@@ -33,8 +33,15 @@ import {
   classifyBreakingItem,
   computeWireStoryRank,
   isStaleCompletedGameAvailabilityItem,
+  isUrgentBreakingBadge,
   resolveGameNewsContext
 } from './breakingClassifier.js';
+import { isItemAllowedByUserPrefs } from './antiFluffFilter.js';
+import {
+  compareLatestNewsItems,
+  computeTopSignalScore,
+  normalizeNewsSortMode
+} from './digestExperienceEngine.js';
 
 export const CURATED_49ERS_PLAYER_PRIORS = {
   'Trent Williams': {
@@ -6226,38 +6233,65 @@ const INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE =
 const INJURY_STATUS_MILESTONE_RE =
   /\b(opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|activated\s+from|placed\s+on\s+(?:injured\s+reserve|ir\b)|back\s+on\s+the\s+practice\s+field|returned\s+to\s+(?:on-field\s+)?practice|cleared\s+(?:the\s+)?concussion\s+protocol|suffered\s+a\s+setback|aggravated|ruled\s+out)\b/i;
 
+const PLAYER_LONG_TERM_OR_IR_TIMELINE_RE =
+  /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i;
+
+const COMPLETED_GAME_AVAILABILITY_BLURB_RE =
+  /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|before\s+[a-z]+\s+game|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|in\s+order\s+to\s+play|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i;
+
+const PRIOR_WEEK_SIDELINE_TENT_RE =
+  /\b(questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|no\s+announced\s+injury\s+yet|into\s+the\s+blue\s+tent|blue\s+medical\s+tent|medical\s+tent|limping\s+towards\s+the\s+bench|sitting\s+on\s+the\s+bench)\b/i;
+
+const FANTASY_OR_BETTING_FLUFF_RE =
+  /\b(fantasy\s+managers|waiver\s+wire|start\/sit|draftkings|fanduel|parlay|over\/under\s+prop)\b/i;
+
+const OVERVIEW_ON_FIELD_SUBSTANCE_RE =
+  /\b(all-22|all 22|film|tape|epa|cpoe|qbr|pff|pass[- ]block|run[- ]block|pressure|sack|touchdown|passing tds|rushing tds|receiving|interception|pick-six|milestone|nfl record|franchise record|hall of fame|\bhof\b|snap count|snap share|extension|restructure|activated|21-day|practice window|designated to return|wide-9|two-high|red-zone|third-down)\b/i;
+
+const OVERVIEW_TRIVIA_OR_BEEF_RE =
+  /\b(beef|squashed|feud|all good now|temporary jersey|jersey no\.|gifts him no\.|freely gave[\s\S]{0,30}no\.\s*\d+|off the field)\b/i;
+
+const OVERVIEW_MOCK_DRAFT_RE =
+  /\b(mock draft|3-round|7-round|way-too-early|draft simulator)\b/i;
+
 /**
- * Computes a deterministic Joint Recency + Salience/Importance score for a candidate injury tweet or article
- * pertaining to `player`. Returns `null` if the item does not genuinely mention `player` or is unrelated to
- * their injury, practice participation, or recovery progression.
+ * Shared candidate validation & general-news enrichment helper used by BOTH
+ * `computeOverviewMentionRankScore` (`Overview -> Recent Mentions`) and
+ * `computeInjuryNewsRankScore` (`Health -> Injury News`).
+ *
+ * Ensures owner isolation, age bounds, player mention & clause scoping, completed-game pruning,
+ * and shared `breakingClassifier` (`classifyBreakingItem` + `computeWireStoryRank`) +
+ * `digestExperienceEngine` (`computeTopSignalScore`) enrichment stay 100% unified with `News & Film`.
  */
-export function computeInjuryNewsRankScore(
+function evaluatePlayerNewsCandidateGuard(
   item = {},
   {
     player = null,
     rosterPlayerNames = [],
     nowMs = Date.now(),
-    maxAgeDays = 8,
+    maxAgeDays = 7,
     lastCompletedKickoffMs = null,
-    hasObservedPracticeThisWeek = false,
-    appData = null
+    appData = null,
+    gameContext = null,
+    requireScopedClause = false
   } = {}
 ) {
   if (!item || !player?.name || item.isClickbait) return null;
 
-  // Prevent another player's ESPN/RotoWire player-page blurb (`espn_pwire_<ownerId>_*`) from leaking into `player`'s Injury News
+  // Enforce strict primary-owner isolation on ESPN/RotoWire player bio blurbs (`espn_pwire_<ownerId>_*`)
   const itemIdStr = String(item.id || '');
+  const playerIdStr = String(player.id || '');
   if (itemIdStr.startsWith('espn_pwire_')) {
     const ownerId = itemIdStr.split('_')[2] || '';
-    if (ownerId && /^\d+$/.test(ownerId) && /^\d+$/.test(String(player.id || '')) && ownerId !== String(player.id)) {
+    if (ownerId && /^\d+$/.test(ownerId) && /^\d+$/.test(playerIdStr) && ownerId !== playerIdStr) {
       return null;
     }
   }
   if (
     item.primaryPlayer?.id &&
     /^\d+$/.test(String(item.primaryPlayer.id)) &&
-    /^\d+$/.test(String(player.id || '')) &&
-    String(item.primaryPlayer.id) !== String(player.id) &&
+    /^\d+$/.test(playerIdStr) &&
+    String(item.primaryPlayer.id) !== playerIdStr &&
     item.wireSource === 'espn_player_wire'
   ) {
     return null;
@@ -6269,44 +6303,334 @@ export function computeInjuryNewsRankScore(
   if (ageHours > maxAgeDays * 24 || pubMs > nowMs + 3_600_000) return null;
 
   const playerSpecificSnippet = String(
-    item.playerSnippet || item.playerSnippets?.[String(player.id || '')] || ''
+    item.playerSnippet || item.playerSnippets?.[playerIdStr] || ''
   ).trim();
-  const { fullBody } = assemblePlayerNewsItemText(item, player.name, player.id);
-  if (!fullBody || fullBody.length < 15) return null;
+  const { primaryLead, secondaryText, fullBody } = assemblePlayerNewsItemText(
+    item,
+    player.name,
+    player.id
+  );
+  if (!fullBody || fullBody.length < 14) return null;
 
-  // Strict text mention verification (eliminates any false-positive general NFL articles)
+  // Strict text mention verification (eliminates false-positive general NFL articles & homonyms)
   if (!doesClauseMentionPlayer(fullBody, player.name, { allowSurname: true })) {
     return null;
   }
 
   const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
-  if (!scoped) return null;
-  const checkScope = scoped;
+  if (requireScopedClause && !scoped) return null;
+  const checkScope = scoped || playerSpecificSnippet || fullBody;
 
-  // Adopt shared app-wide completed-game availability filter + prune prior-week sideline blue-tent/return tweets
-  // Scope long-term/IR exemption strictly to THIS player's clause so another player's IR window doesn't leak pre-game DNP notes!
-  const hasLongTermOrIrTimeline =
-    /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i.test(
-      checkScope
-    );
+  // Scope long-term/IR exemption strictly to THIS player's clause so another player's IR window
+  // never leaks stale pre-game DNP blurbs onto this player's card
+  const hasLongTermOrIrTimeline = PLAYER_LONG_TERM_OR_IR_TIMELINE_RE.test(checkScope);
   if (!hasLongTermOrIrTimeline && appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs)) {
     return null;
   }
 
-  if (Number.isFinite(lastCompletedKickoffMs) && pubMs < lastCompletedKickoffMs + 20 * 60_000) {
-    const isCompletedGamePracticeOrAvailBlurb =
-      /\b(inactives?\s*:|is\s+officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|game-time\s+decision|in\s+order\s+to\s+play|(?:good|ready)\s+to\s+(?:go|play))\b/i.test(
-        fullBody
-      );
-    const isPriorWeekSidelineTentTweet =
-      pubMs < lastCompletedKickoffMs - 2 * 3_600_000 &&
-      /\b(questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|no\s+announced\s+injury\s+yet|into\s+the\s+blue\s+tent|blue\s+medical\s+tent|medical\s+tent|limping\s+towards\s+the\s+bench|sitting\s+on\s+the\s+bench)\b/i.test(
-        fullBody
-      );
-    if (!hasLongTermOrIrTimeline && (isCompletedGamePracticeOrAvailBlurb || isPriorWeekSidelineTentTweet)) {
+  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
+  const effectiveCompletedKoMs = Number.isFinite(lastCompletedKickoffMs)
+    ? lastCompletedKickoffMs
+    : ctx?.latestCompletedKickoffMs ?? null;
+
+  // Prune pre-completed-game practice/status blurbs and prior-week sideline blue-tent/return tweets
+  if (
+    Number.isFinite(effectiveCompletedKoMs) &&
+    pubMs < effectiveCompletedKoMs + 20 * 60_000 &&
+    !hasLongTermOrIrTimeline
+  ) {
+    const isCompletedGameAvail = COMPLETED_GAME_AVAILABILITY_BLURB_RE.test(fullBody);
+    const isPriorWeekTent =
+      pubMs < effectiveCompletedKoMs - 2 * 3_600_000 && PRIOR_WEEK_SIDELINE_TENT_RE.test(fullBody);
+    if (isCompletedGameAvail || isPriorWeekTent) {
       return null;
     }
   }
+
+  if (FANTASY_OR_BETTING_FLUFF_RE.test(checkScope) || FANTASY_OR_BETTING_FLUFF_RE.test(fullBody)) {
+    return null;
+  }
+
+  const cls = classifyBreakingItem(
+    {
+      ...item,
+      title: item.title || item.headline || primaryLead,
+      summary: secondaryText
+    },
+    nowMs,
+    ctx
+  );
+  if (cls.isStalePreGameAvailability || (cls.breakingPriority || 0) < 0) {
+    return null;
+  }
+
+  return {
+    primaryLead,
+    secondaryText,
+    fullBody,
+    scoped,
+    checkScope,
+    pubMs,
+    ageHours,
+    ctx,
+    effectiveCompletedKoMs,
+    hasLongTermOrIrTimeline,
+    cls
+  };
+}
+
+function buildUnifiedWireEnrichedItem(
+  item = {},
+  cls = {},
+  fullBody = '',
+  nowMs = Date.now(),
+  ctx = null,
+  { suppressBreaking = false } = {}
+) {
+  const repEntry = resolveReporterFromNameOrHandle(
+    item.reporterId || item.author || item.reporterName || item.authorHandle
+  );
+  const resolvedTier =
+    Number(item.trustTier) ||
+    repEntry?.trustTier ||
+    (VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody) ? 1 : 2);
+  const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
+  const trustTier = isOfficial ? 1 : resolvedTier;
+
+  const enriched = suppressBreaking
+    ? {
+        ...item,
+        trustTier,
+        storyTier: 'standard',
+        isBreaking: false,
+        isUrgentBreaking: false,
+        isInGameInjury: false,
+        breakingPriority: 0,
+        breakingBadge: null
+      }
+    : {
+        ...item,
+        trustTier,
+        storyTier: item.storyTier || cls.storyTier || 'standard',
+        isBreaking: item.isBreaking ?? cls.isBreaking,
+        isUrgentBreaking: item.isUrgentBreaking ?? cls.isUrgentBreaking,
+        isInGameInjury: item.isInGameInjury ?? cls.isInGameInjury,
+        breakingPriority: item.breakingPriority ?? cls.breakingPriority,
+        breakingBadge: item.breakingBadge ?? cls.breakingBadge
+      };
+
+  const wireRankRaw = computeWireStoryRank(enriched, nowMs, ctx);
+  const safeWireRank = Math.max(0, Number.isFinite(wireRankRaw) ? wireRankRaw : 0);
+  enriched.storyRank = safeWireRank;
+  const topSignalScore = computeTopSignalScore(enriched, nowMs);
+  return { enriched, storyRank: safeWireRank, topSignalScore };
+}
+
+function resolveLastCompletedKickoffMs(appData = null, gameCtx = null) {
+  const schedule = appData?.scheduleMatchup?.schedule || [];
+  const completedKickoffs = schedule
+    .filter(g => g?.completed && (g.dateIso || g.kickoffIso))
+    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
+    .filter(ms => ms !== null)
+    .sort((a, b) => b - a);
+  return completedKickoffs.length > 0 ? completedKickoffs[0] : gameCtx?.latestCompletedKickoffMs ?? null;
+}
+
+/**
+ * Shared candidate collection, unified `isItemAllowedByUserPrefs` source filtering, direct X-link
+ * resolution, paywall blocking, canonical URL/lead deduplication, and player-scoped snippet
+ * extraction used by BOTH `rankPlayerInjuryNews` and `rankPlayerOverviewMentions`.
+ */
+function collectScoredPlayerCandidates(
+  player,
+  { rawStream = [], appData = null, userPrefs = null, reportersById = null, nowMs = Date.now() },
+  scoreCandidateFn,
+  { requireSanitizedInjurySnippet = false } = {}
+) {
+  const candidateTypePriority = it => {
+    // Prefer direct reporter X posts & rich standalone articles/videos over Bluesky mirrors or bare promo link-tweets
+    const isPromoLinkTweet =
+      (it?.type === 'tweet' || it?.type === 'social') &&
+      Boolean(it?.externalUrl) &&
+      /\bread:\s*$/i.test(String(it?.fullText || it?.title || '').trim());
+    if (isPromoLinkTweet) return 3;
+    if (isDirectXStatusUrl(it?.url)) return 0;
+    if (isBlueskyPostUrl(it?.url)) return 2;
+    return 1;
+  };
+
+  const combinedCandidates = [
+    ...(Array.isArray(rawStream) ? rawStream : []),
+    ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
+    ...(Array.isArray(player.recentNews) ? player.recentNews : [])
+  ].sort((a, b) => candidateTypePriority(a) - candidateTypePriority(b));
+
+  const directPosts = combinedCandidates.filter(
+    it =>
+      (it?.type === 'tweet' || it?.type === 'social') &&
+      isDirectSocialPostUrl(String(it?.url || ''))
+  );
+
+  const precomputedPrefSets =
+    userPrefs && typeof userPrefs === 'object'
+      ? {
+          disabledReporters: new Set(userPrefs.disabledReporterIds || []),
+          disabledOutlets: new Set(userPrefs.disabledOutlets || [])
+        }
+      : null;
+
+  const normCanonUrl = u =>
+    String(u || '')
+      .toLowerCase()
+      .replace(/^https?:\/\/(?:www\.)?/, '')
+      .replace(/[?#].*$/, '')
+      .replace(/\/+$/, '');
+
+  const seenLeadKeys = new Set();
+  const seenCanonUrls = new Set();
+  const scored = [];
+  const pidStr = String(player.id || '');
+
+  for (const cand of combinedCandidates) {
+    if (!cand || !isItemAllowedByUserPrefs(cand, reportersById, userPrefs, precomputedPrefSets)) {
+      continue;
+    }
+
+    const isVid = cand.type === 'video';
+    const isTw =
+      !isVid &&
+      (cand.type === 'tweet' || cand.type === 'social' || isBlueskyPostUrl(String(cand.url || '')));
+    const rawUrl = isTw
+      ? resolveOriginalTweetUrl(
+          {
+            ...cand,
+            type: 'tweet',
+            primaryPlayer: { name: player.name },
+            title: cand.title || cand.headline || ''
+          },
+          directPosts
+        )
+      : cand.url;
+    const safeUrl = sanitizeExternalUrl(rawUrl, null);
+    if (!safeUrl || isPaywalledPublisher(cand.outletName, safeUrl)) continue;
+
+    const leadKey = String(cand.fullText || cand.title || cand.headline || '')
+      .toLowerCase()
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .slice(0, 72);
+    if (!leadKey || seenLeadKeys.has(leadKey)) continue;
+
+    const urlCanon = !safeUrl.includes('#:~:text=') ? normCanonUrl(safeUrl) : '';
+    const extCanon = cand.externalUrl ? normCanonUrl(cand.externalUrl) : '';
+    if (urlCanon && seenCanonUrls.has(urlCanon)) continue;
+    if (extCanon && seenCanonUrls.has(extCanon)) continue;
+
+    const candWithResolvedUrl = safeUrl !== cand.url ? { ...cand, url: safeUrl } : cand;
+    const rankMeta = scoreCandidateFn(candWithResolvedUrl);
+    if (!rankMeta) continue;
+
+    seenLeadKeys.add(leadKey);
+    if (urlCanon) seenCanonUrls.add(urlCanon);
+    if (extCanon) seenCanonUrls.add(extCanon);
+
+    const rawAuthor = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
+    const authorName = String(rawAuthor).trim().toUpperCase() === 'NFL' ? 'NFL Official' : rawAuthor;
+    const authorProfileUrl = sanitizeExternalUrl(
+      resolveItemAuthorProfileUrl(cand, safeUrl),
+      safeUrl
+    );
+
+    const testSnippetHealth = txt =>
+      INJURY_NEWS_TOPIC_RELEVANCE_RE.test(
+        requireSanitizedInjurySnippet ? sanitizeTextForPlayerHealthCheck(txt) : txt
+      );
+
+    const crossSnippetText =
+      cand.playerSnippets && typeof cand.playerSnippets === 'object'
+        ? Object.entries(cand.playerSnippets)
+            .filter(
+              ([k, v]) =>
+                k !== pidStr &&
+                v &&
+                doesClauseMentionPlayer(String(v), player.name, { allowSurname: false })
+            )
+            .map(([, v]) => String(v).trim())
+            .find(s => testSnippetHealth(s)) || ''
+        : '';
+    const directSnippetText = String(cand.playerSnippet || cand.playerSnippets?.[pidStr] || '').trim();
+    const playerSnippetText =
+      directSnippetText && testSnippetHealth(directSnippetText)
+        ? directSnippetText
+        : crossSnippetText || directSnippetText;
+    const resolvedSummary =
+      !isTw &&
+      !isVid &&
+      playerSnippetText &&
+      (!cand.summary ||
+        !doesClauseMentionPlayer(cand.summary, player.name, { allowSurname: true }) ||
+        (testSnippetHealth(playerSnippetText) && !testSnippetHealth(cand.summary)))
+        ? playerSnippetText
+        : cand.summary || cand.externalDescription || '';
+
+    const clsMeta = rankMeta.classifiedMeta || {};
+    scored.push({
+      ...cand,
+      type: isVid ? 'video' : isTw ? 'tweet' : 'article',
+      headline: cand.headline || cand.title || '',
+      title: cand.title || cand.headline || '',
+      summary: resolvedSummary,
+      fullText: isTw ? cand.fullText || cand.title || cand.headline || '' : cand.fullText || null,
+      author: authorName,
+      authorProfileUrl,
+      url: safeUrl,
+      isBreaking: Boolean(clsMeta.isBreaking ?? cand.isBreaking),
+      isUrgentBreaking: Boolean(clsMeta.isUrgentBreaking ?? cand.isUrgentBreaking),
+      isInGameInjury: Boolean(clsMeta.isInGameInjury ?? cand.isInGameInjury),
+      breakingBadge: clsMeta.breakingBadge ?? cand.breakingBadge ?? null,
+      storyTier: clsMeta.storyTier || cand.storyTier || 'standard',
+      storyRank: clsMeta.storyRank ?? cand.storyRank ?? 0,
+      _rankMeta: rankMeta
+    });
+  }
+
+  return scored;
+}
+
+/**
+ * Computes a deterministic Joint Recency + Medical Salience score for a candidate injury tweet,
+ * video, or article pertaining to `player`. Anchors to the shared general-news `StoryRank` /
+ * `computeTopSignalScore` foundation (authority, corroboration, X-first, Kickoff Epoch Wall,
+ * live in-game boosts) and layers injury-specific rehab/medical/superseded-practice logic on top.
+ */
+export function computeInjuryNewsRankScore(
+  item = {},
+  {
+    player = null,
+    rosterPlayerNames = [],
+    nowMs = Date.now(),
+    maxAgeDays = 8,
+    lastCompletedKickoffMs = null,
+    hasObservedPracticeThisWeek = false,
+    appData = null,
+    gameContext = null
+  } = {}
+) {
+  const guard = evaluatePlayerNewsCandidateGuard(item, {
+    player,
+    rosterPlayerNames,
+    nowMs,
+    maxAgeDays,
+    lastCompletedKickoffMs,
+    appData,
+    gameContext,
+    requireScopedClause: true
+  });
+  if (!guard) return null;
+
+  const { fullBody, scoped, checkScope, pubMs, ageHours, ctx, effectiveCompletedKoMs, hasLongTermOrIrTimeline, cls } =
+    guard;
+  if (fullBody.length < 15) return null;
 
   const sanitizedHealthScope = sanitizeTextForPlayerHealthCheck(checkScope);
   if (!INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizedHealthScope)) {
@@ -6324,22 +6648,22 @@ export function computeInjuryNewsRankScore(
   if (isGenericPresserTopicList) {
     return null;
   }
-  // Reject fantasy start/sit / betting props fluff
-  if (/\b(fantasy\s+managers|waiver\s+wire|start\/sit|draftkings|fanduel|parlay|over\/under\s+prop)\b/i.test(checkScope)) {
-    return null;
-  }
 
-  // 1. Steep Recency Curve (0..64 pts, 5.5-hour half-life) + Kickoff Epoch Wall alignment so post-game injury updates
-  //    always outrank pre-kickoff practice observations from the already-completed game
+  // 1. Shared General-News Foundation (`computeWireStoryRank` + `computeTopSignalScore`):
+  //    Inherits authority tiers, corroboration velocity, rewrite-aggregator demotion, X-first priority,
+  //    Kickoff Epoch Wall, and live in-game injury overrides from the app-wide News engine!
+  const { enriched, topSignalScore } = buildUnifiedWireEnrichedItem(item, cls, fullBody, nowMs, ctx);
+  const sharedNewsAnchor = Math.min(90, Math.max(0, topSignalScore)) * 0.42;
+
+  // 2. Steep Medical Recency Curve (0..54 pts, 5.5-hour half-life) + pre-kickoff demotion
   const injPreKickoffDemote =
-    Number.isFinite(lastCompletedKickoffMs) &&
-    nowMs - lastCompletedKickoffMs <= 72 * 3_600_000 &&
-    pubMs < lastCompletedKickoffMs - 10 * 60_000 &&
+    Number.isFinite(effectiveCompletedKoMs) &&
+    nowMs - effectiveCompletedKoMs <= 72 * 3_600_000 &&
+    pubMs < effectiveCompletedKoMs - 10 * 60_000 &&
     !hasLongTermOrIrTimeline;
-  const recencyScore = 64 * Math.pow(0.5, ageHours / 5.5);
+  const recencyScore = 54 * Math.pow(0.5, ageHours / 5.5) * (injPreKickoffDemote ? 0.35 : 1);
 
-  // 2. Observational Side-Field & Rehab Progression Color (0..28 pts, decayed over 30h half-life so 3-day-old
-  //    Wednesday "observer" notes never override fresh Friday/Saturday availability updates!)
+  // 3. Observational Side-Field & Rehab Progression Color (0..28 pts, 30h half-life)
   const salienceAgeDecay = Math.pow(0.5, ageHours / 30);
   let colorScore = 0;
   if (INJURY_REHAB_COLOR_DETAIL_RE.test(checkScope)) {
@@ -6350,17 +6674,20 @@ export function computeInjuryNewsRankScore(
   }
   colorScore = Math.min(28, colorScore) * salienceAgeDecay * (injPreKickoffDemote ? 0.35 : 1);
 
-  // 3. Medical Diagnostic / Coaching Quote / Timeline Detail (0..20 pts, age-decayed)
+  // 4. Medical Diagnostic / Coaching Quote / Timeline Detail (0..20 pts, age-decayed)
   let medicalScore = 0;
   if (INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE.test(checkScope)) {
     medicalScore += 18;
   }
-  if (player.health?.injuryType && checkScope.toLowerCase().includes(String(player.health.injuryType).split(/[ ,/-]/)[0].toLowerCase())) {
+  if (
+    player.health?.injuryType &&
+    checkScope.toLowerCase().includes(String(player.health.injuryType).split(/[ ,/-]/)[0].toLowerCase())
+  ) {
     medicalScore += 3;
   }
   medicalScore = Math.min(20, medicalScore) * salienceAgeDecay;
 
-  // 4. Status Milestone / Late-Week Game-Availability Scoop vs Routine Participation (0..22 pts)
+  // 5. Status Milestone / Late-Week Game-Availability Scoop vs Routine Participation (0..22 pts)
   const isLateWeekAvailabilityScoop =
     /\b(?:(?:confident|optimistic)[\s\S]{0,65}\b(?:good to go|will play|ready to go|able to play)|(?:good|ready)\s+to\s+go\s+for\s+(?:sunday|monday|thursday|saturday|week\s+\d+)|expected\s+to\s+(?:play|suit\s+up|be\s+activated|miss)|on\s+track\s+to\s+(?:play|suit\s+up)|did\s+not\s+elevate\s+any[\s\S]{0,30}practice[- ]squad|no\s+(?:official\s+)?injury\s+designation|does\s+not\s+(?:have|carry)\s+an?\s+(?:official\s+)?(?:injury\s+)?designation|officially\s+(?:active|inactive)|unlikely\s+to\s+(?:play|suit\s+up)|game-time\s+decision)\b/i.test(
       `${checkScope} ${fullBody}`
@@ -6372,28 +6699,18 @@ export function computeInjuryNewsRankScore(
     milestoneScore = 16 * salienceAgeDecay;
   } else if (
     /\b(limited\s+(?:practice\s+)?participant|limited\s+today|did\s+not\s+practice|didn't\s+practice|not\s+practicing|no\s+practice\s+for|not\s+participating|full\s+participant|practiced\s+in\s+full)\b/i.test(
-       fullBody
+      fullBody
     )
   ) {
     milestoneScore = 10 * salienceAgeDecay;
   }
 
-  // 5. Reporter Authority, Corroboration & Player-Focus Specificity (-4..24 pts)
-  const repEntry = resolveReporterFromNameOrHandle(
-    item.reporterId || item.author || item.reporterName || item.authorHandle
-  );
-  const effectiveTier = Number(item.trustTier) || repEntry?.trustTier || (VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody) ? 1 : 2);
-  const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
-  let authorityScore = isOfficial || effectiveTier <= 1 ? 14 : effectiveTier === 2 ? 9 : 4;
-  if (item.isFirstMoverInjuryScoop || Number(item.corroborationCount || 1) >= 2) {
-    authorityScore += 4;
-  }
-
+  // 6. Single-Player Focus Specificity (-4..+6 pts)
   const focusRatio = scoped ? scoped.length / Math.max(1, fullBody.length) : 0.4;
   const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
   const focusScore = focusRatio >= 0.5 && mentionedCnt <= 3 ? 6 : mentionedCnt >= 5 ? -4 : 2;
 
-  // 6. Superseded Earlier-Practice-Day & Pre-Practice Expectation Penalties
+  // 7. Superseded Earlier-Practice-Day & Pre-Practice Expectation Penalties
   const friLogged = Boolean(player.health?.fri && player.health.fri !== '-');
   const thuLogged = Boolean(player.health?.thu && player.health.thu !== '-');
   const citesOnlyWedOrThuPractice =
@@ -6420,38 +6737,33 @@ export function computeInjuryNewsRankScore(
     supersededPenalty = -18;
   }
 
-  const xBonus = isDirectXStatusUrl(item.url) ? 2.5 : isBlueskyPostUrl(item.url) ? -1.0 : 0;
-
   const totalScore = Number(
-    (recencyScore + colorScore + medicalScore + milestoneScore + authorityScore + focusScore + supersededPenalty + xBonus).toFixed(2)
+    (
+      sharedNewsAnchor +
+      recencyScore +
+      colorScore +
+      medicalScore +
+      milestoneScore +
+      focusScore +
+      supersededPenalty
+    ).toFixed(2)
   );
 
   return {
     totalScore,
+    sharedNewsAnchor: Number(sharedNewsAnchor.toFixed(2)),
     recencyScore: Number(recencyScore.toFixed(2)),
-    salienceScore: Number((colorScore + medicalScore + milestoneScore + authorityScore + focusScore).toFixed(2)),
+    salienceScore: Number((sharedNewsAnchor + colorScore + medicalScore + milestoneScore + focusScore).toFixed(2)),
     hasRehabColor: colorScore >= 20,
     ageHours: Number(ageHours.toFixed(2)),
-    scopedText: checkScope
+    scopedText: checkScope,
+    classifiedMeta: enriched
   };
 }
 
-function isItemMutedByPrefs(item = {}, userPrefs = null, reportersById = null) {
-  if (!userPrefs || typeof userPrefs !== 'object') return false;
-  const disabledReps = new Set(userPrefs.disabledReporterIds || []);
-  const disabledOutlets = new Set(userPrefs.disabledOutlets || []);
-  if (item.reporterId && disabledReps.has(item.reporterId)) return true;
-  if (item.outletId && disabledOutlets.has(item.outletId)) return true;
-  if (userPrefs.muteHotTakePersonalities && item.reporterId && reportersById instanceof Map) {
-    const rep = reportersById.get(item.reporterId);
-    if (rep?.isHotTake) return true;
-  }
-  return false;
-}
-
 /**
- * Returns the deduplicated, Recency + Salience stack-ranked list of injury & recovery tweets/articles
- * for `player` over the past ~7–8 days.
+ * Returns the deduplicated, Recency + Medical Salience stack-ranked list of injury & recovery
+ * tweets, videos, and articles for `player`.
  */
 export function rankPlayerInjuryNews(
   player = null,
@@ -6470,150 +6782,47 @@ export function rankPlayerInjuryNews(
   const h = player.health || {};
   const rosterPlayers = appData?.roster?.players || [];
   const rosterPlayerNames = rosterPlayers.map(rp => rp?.name).filter(Boolean);
-
-  const schedule = appData?.scheduleMatchup?.schedule || [];
-  const completedKickoffs = schedule
-    .filter(g => g?.completed && (g.dateIso || g.kickoffIso))
-    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
-    .filter(ms => ms !== null)
-    .sort((a, b) => b - a);
-  const lastCompletedKickoffMs = completedKickoffs.length > 0 ? completedKickoffs[0] : null;
-
+  const gameCtx = appData ? resolveGameNewsContext(appData, nowMs) : null;
+  const lastCompletedKickoffMs = resolveLastCompletedKickoffMs(appData, gameCtx);
   const hasObservedPracticeThisWeek =
     (h.wed && h.wed !== '-') || (h.thu && h.thu !== '-') || (h.fri && h.fri !== '-');
 
-  const candidateTypePriority = it => {
-    // Prefer direct reporter X posts & rich standalone articles/videos over Bluesky mirrors or bare promo link-tweets
-    const isPromoLinkTweet =
-      (it?.type === 'tweet' || it?.type === 'social') &&
-      Boolean(it?.externalUrl) &&
-      /\bread:\s*$/i.test(String(it?.fullText || it?.title || '').trim());
-    if (isPromoLinkTweet) return 3;
-    if (isDirectXStatusUrl(it?.url)) return 0;
-    if (isBlueskyPostUrl(it?.url)) return 2;
-    return 1;
-  };
+  const scored = collectScoredPlayerCandidates(
+    player,
+    { rawStream, appData, userPrefs, reportersById, nowMs },
+    cand =>
+      computeInjuryNewsRankScore(cand, {
+        player,
+        rosterPlayerNames,
+        nowMs,
+        maxAgeDays,
+        lastCompletedKickoffMs,
+        hasObservedPracticeThisWeek,
+        appData,
+        gameContext: gameCtx
+      }),
+    { requireSanitizedInjurySnippet: true }
+  ).map(item => {
+    const meta = item._rankMeta;
+    const { _rankMeta, ...cleanItem } = item;
+    return {
+      ...cleanItem,
+      injuryRankScore: meta.totalScore,
+      injurySalienceScore: meta.salienceScore,
+      hasRehabColor: meta.hasRehabColor
+    };
+  });
 
-  const combinedCandidates = [
-    ...(Array.isArray(rawStream) ? rawStream : []),
-    ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
-    ...(Array.isArray(player.recentNews) ? player.recentNews : [])
-  ].sort((a, b) => candidateTypePriority(a) - candidateTypePriority(b));
-
-  const directPosts = combinedCandidates.filter(
-    it =>
-      (it?.type === 'tweet' || it?.type === 'social') &&
-      isDirectSocialPostUrl(String(it?.url || ''))
-  );
-
-  const normCanonUrl = u =>
-    String(u || '')
-      .toLowerCase()
-      .replace(/^https?:\/\/(?:www\.)?/, '')
-      .replace(/[?#].*$/, '')
-      .replace(/\/+$/, '');
-
-  const seenExact = new Set();
-  const seenCanonUrls = new Set();
-  const scored = [];
-
-  for (const cand of combinedCandidates) {
-    if (!cand || isItemMutedByPrefs(cand, userPrefs, reportersById)) continue;
-    const isVid = cand.type === 'video';
-    const isTw = !isVid && (cand.type === 'tweet' || cand.type === 'social');
-    const rawUrl = isTw
-      ? resolveOriginalTweetUrl(
-          {
-            ...cand,
-            type: 'tweet',
-            primaryPlayer: { name: player.name },
-            title: cand.title || cand.headline || ''
-          },
-          directPosts
-        )
-      : cand.url;
-    const safeUrl = sanitizeExternalUrl(rawUrl, null);
-    if (!safeUrl || isPaywalledPublisher(cand.outletName, safeUrl)) continue;
-
-    const leadKey = String(cand.fullText || cand.title || cand.headline || '')
-      .toLowerCase()
-      .replace(/https?:\/\/\S+/g, '')
-      .replace(/[^a-z0-9]/g, '')
-      .slice(0, 72);
-    if (!leadKey || seenExact.has(leadKey)) continue;
-
-    const urlCanon = !safeUrl.includes('#:~:text=') ? normCanonUrl(safeUrl) : '';
-    const extCanon = cand.externalUrl ? normCanonUrl(cand.externalUrl) : '';
-    if (urlCanon && seenCanonUrls.has(urlCanon)) continue;
-    if (extCanon && seenCanonUrls.has(extCanon)) continue;
-
-    const rankMeta = computeInjuryNewsRankScore(cand, {
-      player,
-      rosterPlayerNames,
-      nowMs,
-      maxAgeDays,
-      lastCompletedKickoffMs,
-      hasObservedPracticeThisWeek,
-      appData
-    });
-    if (!rankMeta) continue;
-
-    seenExact.add(leadKey);
-    if (urlCanon) seenCanonUrls.add(urlCanon);
-    if (extCanon) seenCanonUrls.add(extCanon);
-
-    const authorName = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
-    const authorProfileUrl = sanitizeExternalUrl(
-      resolveItemAuthorProfileUrl(cand, safeUrl),
-      safeUrl
-    );
-    const crossSnippetText =
-      cand.playerSnippets && typeof cand.playerSnippets === 'object'
-        ? Object.entries(cand.playerSnippets)
-            .filter(([k, v]) => k !== String(player.id || '') && v && doesClauseMentionPlayer(String(v), player.name, { allowSurname: false }))
-            .map(([, v]) => String(v).trim())
-            .find(s => INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(s))) || ''
-        : '';
-    const directSnippetText = String(
-      cand.playerSnippet || cand.playerSnippets?.[String(player.id || '')] || ''
-    ).trim();
-    const playerSnippetText =
-      directSnippetText && INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(directSnippetText))
-        ? directSnippetText
-        : crossSnippetText || directSnippetText;
-    const resolvedSummary =
-      !isTw &&
-      !isVid &&
-      playerSnippetText &&
-      (!cand.summary ||
-        !doesClauseMentionPlayer(cand.summary, player.name, { allowSurname: true }) ||
-        (INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(playerSnippetText)) &&
-          !INJURY_NEWS_TOPIC_RELEVANCE_RE.test(sanitizeTextForPlayerHealthCheck(cand.summary))))
-        ? playerSnippetText
-        : cand.summary || cand.externalDescription || '';
-
-    scored.push({
-      ...cand,
-      type: isVid ? 'video' : isTw ? 'tweet' : 'article',
-      headline: cand.headline || cand.title || '',
-      title: cand.title || cand.headline || '',
-      summary: resolvedSummary,
-      fullText: isTw ? cand.fullText || cand.title || cand.headline || '' : cand.fullText || null,
-      author: authorName,
-      authorProfileUrl,
-      url: safeUrl,
-      injuryRankScore: rankMeta.totalScore,
-      injurySalienceScore: rankMeta.salienceScore,
-      hasRehabColor: rankMeta.hasRehabColor
-    });
-  }
-
-  // Sort by Joint Recency + Salience score descending (tie-break by newer timestamp)
-  scored.sort(
-    (a, b) =>
+  // Sort by live in-game urgent pin -> Joint Recency + Medical Salience score desc -> newest timestamp
+  scored.sort((a, b) => {
+    const aLive = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
+    const bLive = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
+    if (aLive !== bLive) return bLive - aLive;
+    return (
       b.injuryRankScore - a.injuryRankScore ||
       (parseFlexibleIsoMs(b.publishedAt) || 0) - (parseFlexibleIsoMs(a.publishedAt) || 0)
-  );
+    );
+  });
 
   // Consolidate only bare multi-player dry practice-report list tweets into `confirmingReports`
   // while keeping every distinct tweet, video, and article visible in the player's Health list!
@@ -6642,7 +6851,9 @@ export function rankPlayerInjuryNews(
       if (existingLead) {
         if (!Array.isArray(existingLead.confirmingReports)) existingLead.confirmingReports = [];
         if (
-          !existingLead.confirmingReports.some(cr => (cr.author || '').toLowerCase() === (item.author || '').toLowerCase()) &&
+          !existingLead.confirmingReports.some(
+            cr => (cr.author || '').toLowerCase() === (item.author || '').toLowerCase()
+          ) &&
           (existingLead.author || '').toLowerCase() !== (item.author || '').toLowerCase()
         ) {
           existingLead.confirmingReports.push(item);
@@ -6707,21 +6918,11 @@ export function rankPlayerInjuryNews(
   return deduped;
 }
 
-const OVERVIEW_ON_FIELD_SUBSTANCE_RE =
-  /\b(all-22|all 22|film|tape|epa|cpoe|qbr|pff|pass[- ]block|run[- ]block|pressure|sack|touchdown|passing tds|rushing tds|receiving|interception|pick-six|milestone|nfl record|franchise record|hall of fame|\bhof\b|snap count|snap share|extension|restructure|activated|21-day|practice window|designated to return|wide-9|two-high|red-zone|third-down)\b/i;
-
-const OVERVIEW_TRIVIA_OR_BEEF_RE =
-  /\b(beef|squashed|feud|all good now|temporary jersey|jersey no\.|gifts him no\.|freely gave[\s\S]{0,30}no\.\s*\d+|off the field)\b/i;
-
-const OVERVIEW_MOCK_DRAFT_RE =
-  /\b(mock draft|3-round|7-round|way-too-early|draft simulator)\b/i;
-
 /**
- * Computes a deterministic player-centric score for `Overview -> Recent Mentions (7d)` by directly adopting
- * the app-wide timeliness engine (`breakingClassifier.js`: `isStaleCompletedGameAvailabilityItem`,
- * `resolveGameNewsContext`, `classifyBreakingItem`, `computeWireStoryRank`, and Kickoff Epoch Wall)
- * combined with primary-player focus so fresh X tweets, in-game injuries, and post-game updates always
- * lead while stale prior-game practice/tent blurbs and secondary ripple mentions never crowd out real news.
+ * Computes a unified player-centric `Top` score for `Overview -> Recent Mentions (7d)` by directly
+ * building on the app-wide `News & Film` `Top` algorithm (`computeWireStoryRank` + `computeTopSignalScore`)
+ * and layering ONLY player-focus relevance & noise modifiers on top—so general news improvements
+ * automatically lift both `News & Film` and Player Card `Recent Mentions`.
  */
 export function computeOverviewMentionRankScore(
   item = {},
@@ -6729,91 +6930,27 @@ export function computeOverviewMentionRankScore(
     player = null,
     rosterPlayerNames = [],
     nowMs = Date.now(),
-    maxAgeDays = 8,
+    maxAgeDays = 7,
     lastCompletedKickoffMs = null,
     appData = null,
     gameContext = null
   } = {}
 ) {
-  if (!item || !player?.name || item.isClickbait || item.type === 'video') return null;
+  const guard = evaluatePlayerNewsCandidateGuard(item, {
+    player,
+    rosterPlayerNames,
+    nowMs,
+    maxAgeDays,
+    lastCompletedKickoffMs,
+    appData,
+    gameContext,
+    requireScopedClause: false
+  });
+  if (!guard) return null;
 
-  // Enforce strict primary-owner isolation on ESPN/RotoWire player bio blurbs (`espn_pwire_<ownerId>_*`)
-  const itemIdStr = String(item.id || '');
-  if (itemIdStr.startsWith('espn_pwire_')) {
-    const ownerId = itemIdStr.split('_')[2] || '';
-    if (ownerId && /^\d+$/.test(ownerId) && /^\d+$/.test(String(player.id || '')) && ownerId !== String(player.id)) {
-      return null;
-    }
-  }
-  if (
-    item.primaryPlayer?.id &&
-    /^\d+$/.test(String(item.primaryPlayer.id)) &&
-    /^\d+$/.test(String(player.id || '')) &&
-    String(item.primaryPlayer.id) !== String(player.id) &&
-    item.wireSource === 'espn_player_wire'
-  ) {
-    return null;
-  }
+  const { primaryLead: primaryText, secondaryText, fullBody, scoped, checkScope, ageHours, ctx, cls } = guard;
 
-  const pubMs = parseFlexibleIsoMs(item.publishedAt);
-  if (pubMs === null) return null;
-  const ageHours = Math.max(0, (nowMs - pubMs) / 3_600_000);
-  if (ageHours > maxAgeDays * 24 || pubMs > nowMs + 3_600_000) return null;
-
-  const playerSpecificSnippet = String(
-    item.playerSnippet || item.playerSnippets?.[String(player.id || '')] || ''
-  ).trim();
-  const { primaryLead: primaryText, secondaryText, fullBody } = assemblePlayerNewsItemText(
-    item,
-    player.name,
-    player.id
-  );
-  if (!fullBody || fullBody.length < 14) return null;
-
-  // Verify genuine mention of `player` (blocking homonyms like "Kirk Cousins" or "NFC West")
-  if (!doesClauseMentionPlayer(fullBody, player.name, { allowSurname: true })) {
-    return null;
-  }
-
-  const scoped = scopeBeatTextToPlayer(fullBody, player.name, rosterPlayerNames);
-  const checkScope = scoped || playerSpecificSnippet || fullBody;
-
-  // Delegate completed-game pre-game availability pruning directly to shared `breakingClassifier.js`
-  const hasLongTermOrIrTimeline =
-    /\b(placed\s+on\s+(?:injured\s+reserve|ir\b)|activated\s+from|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture)\b/i.test(
-      checkScope
-    );
-  if (!hasLongTermOrIrTimeline && appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs)) {
-    return null;
-  }
-
-  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
-  const effectiveCompletedKoMs = Number.isFinite(lastCompletedKickoffMs)
-    ? lastCompletedKickoffMs
-    : ctx?.latestCompletedKickoffMs ?? null;
-
-  // Prune pre-completed-game practice/status blurbs and prior-week sideline blue-tent/return tweets
-  if (Number.isFinite(effectiveCompletedKoMs) && pubMs < effectiveCompletedKoMs + 20 * 60_000 && !hasLongTermOrIrTimeline) {
-    const isCompletedGamePracticeOrAvailBlurb =
-      /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|before\s+[a-z]+\s+game|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|in\s+order\s+to\s+play|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i.test(
-        fullBody
-      );
-    const isPriorWeekSidelineTentTweet =
-      pubMs < effectiveCompletedKoMs - 2 * 3_600_000 &&
-      /\b(questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|no\s+announced\s+injury\s+yet|into\s+the\s+blue\s+tent|blue\s+medical\s+tent|medical\s+tent|limping\s+towards\s+the\s+bench|sitting\s+on\s+the\s+bench)\b/i.test(
-        fullBody
-      );
-    if (isCompletedGamePracticeOrAvailBlurb || isPriorWeekSidelineTentTweet) {
-      return null;
-    }
-  }
-
-  // Reject fantasy start/sit / betting props fluff
-  if (/\b(fantasy\s+managers|waiver\s+wire|start\/sit|draftkings|fanduel|parlay|over\/under\s+prop)\b/i.test(fullBody)) {
-    return null;
-  }
-
-  // 1. Primary Subject vs. Secondary Ripple Mention (-12..+24 pts)
+  // 1. Primary Subject vs. Secondary Ripple Mention Multiplier
   const leadClause = (primaryText.split(/[.;!?\n]/)[0] || primaryText).trim();
   const inLeadClause = doesClauseMentionPlayer(leadClause, player.name, { allowSurname: true });
   const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
@@ -6830,143 +6967,59 @@ export function computeOverviewMentionRankScore(
     );
   const focusRatio = scoped ? scoped.length / Math.max(1, fullBody.length) : 0.45;
 
-  let focusScore = 0;
-  if (isPrimaryPlayerFocus) {
-    focusScore += 16;
+  // 2. Shared App-Wide `News & Film` `Top` Foundation (`computeWireStoryRank` + `computeTopSignalScore`)
+  //    Suppress breaking/tier boosts when the headline is actually another player's transaction.
+  const { enriched, topSignalScore } = buildUnifiedWireEnrichedItem(item, cls, fullBody, nowMs, ctx, {
+    suppressBreaking: isOtherPlayerTransactionLead
+  });
+
+  let focusMult = 0.68;
+  if (isPrimaryPlayerFocus || enriched.isInGameInjury) {
+    focusMult = (focusRatio >= 0.55 || isSoleSubjectInSummary) && mentionedCnt <= 2 ? 1.35 : 1.18;
   } else if (isOtherPlayerTransactionLead) {
-    // Lead announces another player's transaction while `player` is only a secondary ripple/tail mention
-    focusScore -= 12;
-  }
-  if ((focusRatio >= 0.55 || isSoleSubjectInSummary) && mentionedCnt <= 2) {
-    focusScore += 8;
+    focusMult = 0.32;
   } else if (mentionedCnt >= 5) {
-    focusScore -= 4;
+    focusMult = 0.55;
   }
 
-  // 2. Shared App-Wide `classifyBreakingItem` + `computeWireStoryRank` + Kickoff Epoch Wall
-  const cls = classifyBreakingItem(
-    {
-      ...item,
-      title: item.title || item.headline || primaryText,
-      summary: secondaryText
-    },
-    nowMs,
-    ctx
-  );
-  if (cls.isStalePreGameAvailability || (cls.breakingPriority || 0) < 0) {
-    return null;
-  }
-
-  const enrichedForWireRank = isOtherPlayerTransactionLead
-    ? {
-        ...item,
-        storyTier: 'standard',
-        isBreaking: false,
-        isUrgentBreaking: false,
-        isInGameInjury: false,
-        breakingPriority: 0,
-        breakingBadge: null
-      }
-    : {
-        ...item,
-        storyTier: item.storyTier || cls.storyTier || 'standard',
-        isBreaking: item.isBreaking ?? cls.isBreaking,
-        isUrgentBreaking: item.isUrgentBreaking ?? cls.isUrgentBreaking,
-        isInGameInjury: item.isInGameInjury ?? cls.isInGameInjury,
-        breakingPriority: item.breakingPriority ?? cls.breakingPriority,
-        breakingBadge: item.breakingBadge ?? cls.breakingBadge
-      };
-
-  const wireRankRaw = computeWireStoryRank(enrichedForWireRank, nowMs, ctx);
-  const effectiveStoryRank =
-    Math.min(220, Math.max(0, Number.isFinite(wireRankRaw) ? wireRankRaw : 0)) *
-    (isPrimaryPlayerFocus || enrichedForWireRank.isInGameInjury ? 0.75 : 0.45);
-
-  let urgentBoost = 0;
-  if (enrichedForWireRank.isInGameInjury && ageHours <= 6) {
-    urgentBoost = 95;
-  } else if (
-    (enrichedForWireRank.breakingBadge === 'BREAKING' ||
-      enrichedForWireRank.breakingBadge === 'LIVE INJURY UPDATE') &&
-    ageHours <= 8 &&
-    isPrimaryPlayerFocus
-  ) {
-    urgentBoost = 46;
-  }
-
-  // 3. App-Aligned Steep Recency Curve (0..56 pts, 8h half-life + Kickoff Epoch Wall alignment)
-  const refKoMs = ctx?.inGame ? ctx.activeKickoffMs : effectiveCompletedKoMs;
-  const isPreRecentKickoff =
-    Number.isFinite(refKoMs) &&
-    nowMs - refKoMs <= 72 * 3_600_000 &&
-    pubMs < refKoMs - 10 * 60_000 &&
-    enrichedForWireRank.storyTier !== 'tier1_major';
-  const epochMult = isPreRecentKickoff ? (ctx?.inGame || ctx?.postGameImmediate ? 0.25 : 0.42) : 1.0;
-  const recencyScore = 56 * Math.pow(0.5, ageHours / 8.0) * epochMult;
-
-  // 4. Football, Injury, Film & Milestone Substance (-22..+24 pts)
-  let substanceScore = 0;
-  if (INJURY_REHAB_COLOR_DETAIL_RE.test(checkScope)) {
-    substanceScore += 16;
-  } else if (
+  // 3. Player-Card Substance & Noise Modifiers (mock drafts / trivia demoted; film/milestone/rehab lifted)
+  const hasFootballOrMedicalSubstance =
+    INJURY_REHAB_COLOR_DETAIL_RE.test(checkScope) ||
     INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE.test(checkScope) ||
     INJURY_STATUS_MILESTONE_RE.test(checkScope) ||
-    /\b(left\s+with\s+a|exited\s+with|suffered\s+a|sustained\s+a|injury\s+update|limited\s+(?:practice\s+)?participant|limited\s+in\s+his\s+return|did\s+not\s+practice|not\s+practicing|non-participant)\b/i.test(
-      checkScope
-    )
-  ) {
-    substanceScore += 14;
-  }
-  if (
     OVERVIEW_ON_FIELD_SUBSTANCE_RE.test(checkScope) ||
-    /\b(\d+\s+snaps|starting\s+(?:defense|offense)|matched\s+up\s+against|targets|tackles|yards|pass\s+breakups?)\b/i.test(
+    /\b(\d+\s+snaps|starting\s+(?:defense|offense)|matched\s+up\s+against|targets|tackles|yards|pass\s+breakups?|left\s+with\s+a|exited\s+with|suffered\s+a|sustained\s+a|injury\s+update)\b/i.test(
       checkScope
-    )
-  ) {
-    substanceScore += 12;
-  }
-  substanceScore = Math.min(24, substanceScore);
+    );
 
+  let substanceMult = 1.0;
   if (OVERVIEW_MOCK_DRAFT_RE.test(fullBody)) {
-    substanceScore -= 22;
+    substanceMult = 0.25;
   } else if (OVERVIEW_TRIVIA_OR_BEEF_RE.test(fullBody)) {
-    substanceScore -= 9;
+    substanceMult = 0.55;
+  } else if (hasFootballOrMedicalSubstance) {
+    substanceMult = isPrimaryPlayerFocus ? 1.24 : 1.08;
   }
 
-  // 5. Reporter Trust Tier & Multi-Reporter Corroboration (+4..+16 pts)
-  const repEntry = resolveReporterFromNameOrHandle(
-    item.reporterId || item.author || item.reporterName || item.authorHandle
-  );
-  const effectiveTier =
-    Number(item.trustTier) || repEntry?.trustTier || (VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody) ? 1 : 2);
-  const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
-  let authorityScore = isOfficial || effectiveTier <= 1 ? 12 : effectiveTier === 2 ? 8 : 4;
-  if (item.isFirstMoverInjuryScoop || Number(item.corroborationCount || 1) >= 2) {
-    authorityScore += 4;
-  }
-
-  const xBonus = isDirectXStatusUrl(item.url) ? 2.5 : isBlueskyPostUrl(item.url) ? -1.0 : 0;
-
-  const totalScore = Number(
-    (urgentBoost + effectiveStoryRank + recencyScore + focusScore + substanceScore + authorityScore + xBonus).toFixed(2)
-  );
+  // Keep live in-game injuries strictly pinned above standard chatter on this player's card
+  const urgentInGameFloor = enriched.isInGameInjury && ageHours <= 6 ? 120 : 0;
+  const totalScore = Number((urgentInGameFloor + topSignalScore * focusMult * substanceMult).toFixed(4));
 
   return {
     totalScore,
-    storyRankBoost: Number(effectiveStoryRank.toFixed(2)),
-    recencyScore: Number(recencyScore.toFixed(2)),
-    focusScore,
-    substanceScore,
+    topSignalScore: Number(topSignalScore.toFixed(4)),
+    focusMult,
+    substanceMult,
     ageHours: Number(ageHours.toFixed(2)),
     isOtherPlayerTransactionLead,
-    classifiedMeta: enrichedForWireRank
+    classifiedMeta: enriched
   };
 }
 
 /**
- * Stack-ranks, link-verifies, and deduplicates `Overview -> Recent Mentions (7d)` for `player`,
- * merging live `rawStream` updates with `player.recentNews` and collapsing same-topic echoes into
- * `confirmingReports` while preserving rich Tweet + Article variety.
+ * Stack-ranks (or chronologically sorts via `sortMode: 'top' | 'latest'`), link-verifies, and
+ * deduplicates `Overview -> Recent Mentions (7d)` for `player`, sharing the unified `News & Film`
+ * user-prefs, `StoryRank` / `computeTopSignalScore`, and `compareLatestNewsItems` primitives.
  */
 export function rankPlayerOverviewMentions(
   player = null,
@@ -6976,149 +7029,50 @@ export function rankPlayerOverviewMentions(
     userPrefs = null,
     reportersById = null,
     nowMs = Date.now(),
-    maxAgeDays = 8,
-    maxItems = 10
+    maxAgeDays = 7,
+    maxItems = 10,
+    sortMode = 'top'
   } = {}
 ) {
   if (!player?.name) return [];
+  const activeSort = normalizeNewsSortMode(sortMode);
   const rosterPlayers = appData?.roster?.players || [];
   const rosterPlayerNames = rosterPlayers.map(rp => rp?.name).filter(Boolean);
   const gameCtx = appData ? resolveGameNewsContext(appData, nowMs) : null;
+  const lastCompletedKickoffMs = resolveLastCompletedKickoffMs(appData, gameCtx);
 
-  const schedule = appData?.scheduleMatchup?.schedule || [];
-  const completedKickoffs = schedule
-    .filter(g => g?.completed && (g.dateIso || g.kickoffIso))
-    .map(g => parseFlexibleIsoMs(g.dateIso || g.kickoffIso))
-    .filter(ms => ms !== null)
-    .sort((a, b) => b - a);
-  const lastCompletedKickoffMs =
-    completedKickoffs.length > 0 ? completedKickoffs[0] : gameCtx?.latestCompletedKickoffMs ?? null;
-
-  const combinedCandidates = [
-    ...(Array.isArray(rawStream) ? rawStream : []),
-    ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
-    ...(Array.isArray(player.recentNews) ? player.recentNews : [])
-  ].sort((a, b) => {
-    const aRank = isDirectXStatusUrl(a?.url) ? 0 : isBlueskyPostUrl(a?.url) ? 2 : 1;
-    const bRank = isDirectXStatusUrl(b?.url) ? 0 : isBlueskyPostUrl(b?.url) ? 2 : 1;
-    return aRank - bRank;
+  const scored = collectScoredPlayerCandidates(
+    player,
+    { rawStream, appData, userPrefs, reportersById, nowMs },
+    cand =>
+      computeOverviewMentionRankScore(cand, {
+        player,
+        rosterPlayerNames,
+        nowMs,
+        maxAgeDays,
+        lastCompletedKickoffMs,
+        appData,
+        gameContext: gameCtx
+      }),
+    { requireSanitizedInjurySnippet: false }
+  ).map(item => {
+    const meta = item._rankMeta;
+    const { _rankMeta, ...cleanItem } = item;
+    return {
+      ...cleanItem,
+      overviewRankScore: meta.totalScore
+    };
   });
 
-  const directPosts = combinedCandidates.filter(
-    it =>
-      (it?.type === 'tweet' || it?.type === 'social') &&
-      isDirectSocialPostUrl(String(it?.url || ''))
-  );
-
-  const seenUrlKeys = new Set();
-  const seenLeadKeys = new Set();
-  const scored = [];
-
-  for (const cand of combinedCandidates) {
-    if (!cand || isItemMutedByPrefs(cand, userPrefs, reportersById)) continue;
-    const isTw =
-      cand.type === 'tweet' ||
-      cand.type === 'social' ||
-      isBlueskyPostUrl(String(cand.url || ''));
-    const rawUrl = isTw
-      ? resolveOriginalTweetUrl(
-          {
-            ...cand,
-            type: 'tweet',
-            primaryPlayer: { name: player.name },
-            title: cand.title || cand.headline || ''
-          },
-          directPosts
-        )
-      : cand.url;
-    const safeUrl = sanitizeExternalUrl(rawUrl, null);
-    if (!safeUrl || isPaywalledPublisher(cand.outletName, safeUrl)) continue;
-
-    const leadKey = String(cand.fullText || cand.title || cand.headline || '')
-      .toLowerCase()
-      .replace(/https?:\/\/\S+/g, '')
-      .replace(/[^a-z0-9]/g, '')
-      .slice(0, 68);
-    if (!leadKey || seenLeadKeys.has(leadKey)) continue;
-    const normUrlKey = safeUrl.toLowerCase().replace(/\/+$/, '');
-    const normExtUrlKey = cand.externalUrl
-      ? String(cand.externalUrl).toLowerCase().replace(/\/+$/, '')
-      : '';
-    // Allow shared practice-list tweet URL across different players, but never twice on the SAME player
-    // (nor both a standalone article and its own outlet promo link-tweet pointing to the exact same URL)
-    if (!safeUrl.includes('#:~:text=') && seenUrlKeys.has(normUrlKey)) continue;
-    if (normExtUrlKey && seenUrlKeys.has(normExtUrlKey)) continue;
-
-    const rankMeta = computeOverviewMentionRankScore(cand, {
-      player,
-      rosterPlayerNames,
-      nowMs,
-      maxAgeDays,
-      lastCompletedKickoffMs,
-      appData,
-      gameContext: gameCtx
-    });
-    if (!rankMeta) continue;
-
-    seenLeadKeys.add(leadKey);
-    seenUrlKeys.add(normUrlKey);
-    if (normExtUrlKey) seenUrlKeys.add(normExtUrlKey);
-
-    const authorName = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
-    const authorProfileUrl = sanitizeExternalUrl(
-      resolveItemAuthorProfileUrl(cand, safeUrl),
-      safeUrl
-    );
-    const crossSnippetText =
-      cand.playerSnippets && typeof cand.playerSnippets === 'object'
-        ? Object.entries(cand.playerSnippets)
-            .filter(([k, v]) => k !== String(player.id || '') && v && doesClauseMentionPlayer(String(v), player.name, { allowSurname: false }))
-            .map(([, v]) => String(v).trim())
-            .find(s => INJURY_NEWS_TOPIC_RELEVANCE_RE.test(s)) || ''
-        : '';
-    const directSnippetText = String(
-      cand.playerSnippet || cand.playerSnippets?.[String(player.id || '')] || ''
-    ).trim();
-    const playerSnippetText =
-      directSnippetText && INJURY_NEWS_TOPIC_RELEVANCE_RE.test(directSnippetText)
-        ? directSnippetText
-        : crossSnippetText || directSnippetText;
-    const resolvedSummary =
-      !isTw &&
-      playerSnippetText &&
-      (!cand.summary ||
-        !doesClauseMentionPlayer(cand.summary, player.name, { allowSurname: true }) ||
-        (INJURY_NEWS_TOPIC_RELEVANCE_RE.test(playerSnippetText) && !INJURY_NEWS_TOPIC_RELEVANCE_RE.test(cand.summary)))
-        ? playerSnippetText
-        : cand.summary || cand.externalDescription || '';
-    const clsMeta = rankMeta.classifiedMeta || {};
-
-    scored.push({
-      ...cand,
-      type: isTw ? 'tweet' : 'article',
-      headline: cand.headline || cand.title || '',
-      title: cand.title || cand.headline || '',
-      summary: resolvedSummary,
-      fullText: isTw ? cand.fullText || cand.title || cand.headline || '' : cand.fullText || null,
-      author: authorName,
-      authorProfileUrl,
-      url: safeUrl,
-      isBreaking: Boolean(clsMeta.isBreaking),
-      isInGameInjury: Boolean(clsMeta.isInGameInjury),
-      breakingBadge: clsMeta.breakingBadge || null,
-      storyTier: clsMeta.storyTier || cand.storyTier || 'standard',
-      overviewRankScore: rankMeta.totalScore
-    });
-  }
-
+  // Always pick the highest-ranked lead card first when collapsing duplicate echoes
   scored.sort(
     (a, b) =>
       b.overviewRankScore - a.overviewRankScore ||
       (parseFlexibleIsoMs(b.publishedAt) || 0) - (parseFlexibleIsoMs(a.publishedAt) || 0)
   );
 
-  // Consolidate same-day duplicate quote/status echoes (e.g. 4 "beef" quote posts or duplicate dry practice lists)
-  // into `confirmingReports` on the strongest lead card while preserving distinct articles & tweets!
+  // Consolidate same-day duplicate quote/status echoes across the full 7d pool BEFORE sorting/slicing
+  // so toggling `Top` <-> `Latest` operates on the exact same deduplicated pool and never drops fresh items!
   const deduped = [];
   for (const item of scored) {
     const itemMs = parseFlexibleIsoMs(item.publishedAt) || 0;
@@ -7158,10 +7112,22 @@ export function rankPlayerOverviewMentions(
       _overviewEchoTag: echoTag,
       confirmingReports: Array.isArray(item.confirmingReports) ? [...item.confirmingReports] : []
     });
-    if (deduped.length >= maxItems) break;
   }
 
-  return deduped;
+  if (activeSort === 'latest') {
+    deduped.sort(compareLatestNewsItems);
+  } else {
+    deduped.sort((a, b) => {
+      const aLive = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
+      const bLive = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
+      if (aLive !== bLive) return bLive - aLive;
+      const diff = (b.overviewRankScore || 0) - (a.overviewRankScore || 0);
+      if (diff !== 0) return diff;
+      return (parseFlexibleIsoMs(b.publishedAt) || 0) - (parseFlexibleIsoMs(a.publishedAt) || 0);
+    });
+  }
+
+  return deduped.slice(0, maxItems);
 }
 
 /**

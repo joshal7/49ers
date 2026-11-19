@@ -12394,6 +12394,234 @@ test('Top-only Similar Stories grouping collapses paraphrased multi-outlet cover
   assert.ok(!latestHtml.includes('data-similar-stories="true"'), 'Latest chronological wire must never group stories even when Top grouping setting is ON');
 });
 
+await testAsync(
+  'Unified Player Card & News Engine: shared userPrefs (hot-take/outlet/strictAnalytics), Top/Latest toggle (>=5 vs <5), video inclusion, and full-pool Latest slicing',
+  async () => {
+    const { isItemAllowedByUserPrefs } = await import('../src/engine/antiFluffFilter.js');
+    const { rankPlayerOverviewMentions, rankPlayerInjuryNews } = await import('../src/engine/injuryProbabilityModel.js');
+    const { renderPlayerDossierSheetHtml } = await import('../src/views/playerSheetView.js');
+
+    const nowMs = Date.parse('2026-11-19T18:00:00Z');
+    const reportersData = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'reporters.json'), 'utf8'));
+    const reportersById = new Map((reportersData.reporters || []).map(r => [r.id, r]));
+
+    const purdy = {
+      id: '4361741',
+      name: 'Brock Purdy',
+      position: 'QB',
+      unit: 'Offense',
+      rosterBucket: 'active',
+      displayHeight: '6-1',
+      displayWeight: '220 lbs',
+      age: 26,
+      college: 'Iowa State',
+      draftInfo: '2022 Rd 7 (#262)',
+      primarySnapPct: 99,
+      capHit2026: 53_000_000,
+      health: { status: 'Questionable', injuryType: 'Ankle', playProbabilityPct: 86, playBadgeLabel: '86% • Likely', wed: 'LP', thu: 'FP', fri: '-' },
+      recentNews: [
+        // Item without reporterId/outletId (simulating legacy recentNews) from hot-take personality Grant Cohn
+        {
+          id: 'hot_take_no_id',
+          type: 'tweet',
+          author: 'Grant Cohn',
+          outletName: 'YouTube',
+          title: 'Brock Purdy (ankle) practice hot take after Thursday session',
+          fullText: 'Brock Purdy (ankle) practice hot take after Thursday session',
+          url: 'https://x.com/grantcohn/status/2199000000000000001',
+          publishedAt: new Date(nowMs - 45 * 60_000).toISOString()
+        }
+      ]
+    };
+
+    const syntheticStream = [
+      // 1. High-signal All-22 film video (6h old) -> MUST be included in Overview & rank near top in `top` mode
+      {
+        id: 'qb_school_video',
+        type: 'video',
+        category: 'film',
+        videoId: 'qbsPurdyWk10',
+        embeddable: true,
+        author: 'The QB School',
+        reporterId: 'jt_osullivan',
+        outletId: 'youtube_film',
+        outletName: 'The QB School',
+        trustTier: 1,
+        signalScore: 95,
+        title: 'Brock Purdy vs the Cowboys Week 10, 2026 All-22 Analysis',
+        url: 'https://www.youtube.com/watch?v=qbsPurdyWk10',
+        publishedAt: new Date(nowMs - 6 * 3_600_000).toISOString()
+      },
+      // 2. Primary Tier-1 milestone/film article (5h old)
+      {
+        id: 'maiocco_film_art',
+        type: 'article',
+        category: 'film',
+        author: 'Matt Maiocco',
+        reporterId: 'matt_maiocco',
+        outletId: 'nbcsba',
+        outletName: 'NBC Sports Bay Area',
+        trustTier: 1,
+        signalScore: 92,
+        title: 'Brock Purdy reaches 100 career passing touchdowns while dissecting two-high coverage shells',
+        url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/purdy-100-tds-test/',
+        publishedAt: new Date(nowMs - 5 * 3_600_000).toISOString()
+      },
+      // 3. Brand-new (10m old) mock-draft fluff -> low rank in `top`, #1 in `latest`!
+      {
+        id: 'newest_mock_draft',
+        type: 'article',
+        category: 'beat',
+        author: '49ers Webzone',
+        outletId: '49ers_webzone',
+        outletName: '49ers Webzone',
+        trustTier: 2,
+        signalScore: 52,
+        title: '49ers add offensive line protection for Brock Purdy in 3-round 2027 NFL mock draft',
+        url: 'https://www.49erswebzone.com/articles/999001-purdy-mock-draft/',
+        publishedAt: new Date(nowMs - 10 * 60_000).toISOString()
+      },
+      // 4. Fresh 2h injury/practice tweet (Tier 1)
+      {
+        id: 'barrows_ankle_prac',
+        type: 'tweet',
+        category: 'injury',
+        author: 'Matt Barrows',
+        reporterId: 'matt_barrows',
+        outletId: 'athletic',
+        outletName: 'The Athletic',
+        trustTier: 1,
+        signalScore: 88,
+        title: 'Brock Purdy (ankle) was a full participant in Thursday practice and moved cleanly in individual drills.',
+        fullText: 'Brock Purdy (ankle) was a full participant in Thursday practice and moved cleanly in individual drills.',
+        url: 'https://x.com/mattbarrows/status/2199000000000000002',
+        publishedAt: new Date(nowMs - 2 * 3_600_000).toISOString()
+      },
+      // 5. 3h old primary X quote tweet
+      {
+        id: 'wagoner_quote_tw',
+        type: 'tweet',
+        category: 'beat',
+        author: 'Nick Wagoner',
+        reporterId: 'nick_wagoner',
+        outletId: 'espn',
+        outletName: 'ESPN',
+        trustTier: 1,
+        signalScore: 84,
+        title: 'Brock Purdy on third-down red-zone sequencing ahead of Seattle matchup.',
+        fullText: 'Brock Purdy on third-down red-zone sequencing ahead of Seattle matchup.',
+        url: 'https://x.com/nwagoner/status/2199000000000000003',
+        publishedAt: new Date(nowMs - 3 * 3_600_000).toISOString()
+      },
+      // 6. 8h old article (ensures >=5 mentions even after muting hot takes)
+      {
+        id: 'lombardi_epa_art',
+        type: 'article',
+        category: 'analytics',
+        author: 'David Lombardi',
+        reporterId: 'david_lombardi',
+        outletId: 'sf_standard',
+        outletName: 'The SF Standard',
+        trustTier: 1,
+        signalScore: 90,
+        title: 'Brock Purdy leads NFL in EPA per dropback and CPOE over the past four weeks',
+        url: 'https://sfstandard.com/sports/brock-purdy-epa-cpoe-test/',
+        publishedAt: new Date(nowMs - 8 * 3_600_000).toISOString()
+      },
+      // 7. 7.5-day-old article -> MUST be excluded by strict 7-day window (`maxAgeDays: 7`)
+      {
+        id: 'expired_7_5d_art',
+        type: 'article',
+        author: 'Cam Inman',
+        reporterId: 'cam_inman',
+        outletId: 'bay_area_news',
+        outletName: 'Mercury News',
+        trustTier: 1,
+        title: 'Brock Purdy reflects on early-season rhythm eight days ago',
+        url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/purdy-8d-old-test/',
+        publishedAt: new Date(nowMs - 7.5 * 86_400_000).toISOString()
+      }
+    ];
+
+    // 1. Unified userPrefs check: muteHotTakePersonalities blocks Grant Cohn (styleTag === 'opinion-hot-take')
+    //    even without explicit reporterId, across isItemAllowedByUserPrefs, Overview, and Injury News!
+    assert.equal(
+      isItemAllowedByUserPrefs(purdy.recentNews[0], reportersById, { muteHotTakePersonalities: true }),
+      false,
+      'isItemAllowedByUserPrefs must mute opinion-hot-take reporters even when reporterId is absent on player.recentNews'
+    );
+
+    const mutedPrefs = { muteHotTakePersonalities: true, disabledReporterIds: [], disabledOutlets: [] };
+    const topMentions = rankPlayerOverviewMentions(purdy, {
+      rawStream: syntheticStream,
+      userPrefs: mutedPrefs,
+      reportersById,
+      nowMs,
+      maxAgeDays: 7,
+      maxItems: 10,
+      sortMode: 'top'
+    });
+    assert.equal(topMentions.some(m => m.id === 'hot_take_no_id'), false, 'Overview mentions must hide hot-take personalities when muteHotTakePersonalities is enabled');
+    assert.equal(topMentions.some(m => m.id === 'expired_7_5d_art'), false, 'Overview mentions must strictly enforce 7-day window');
+    assert.equal(topMentions.some(m => m.id === 'qb_school_video' && m.type === 'video'), true, 'Overview mentions must surface high-signal All-22 film videos');
+    assert.notEqual(topMentions[0].id, 'newest_mock_draft', 'Top sort must NOT let a 10m-old mock draft outrank primary film/injury/beat coverage');
+    assert.equal(topMentions.length, 6, `Expected 6 valid 7d mentions after muting Grant Cohn & pruning >7d, got ${topMentions.length}`);
+
+    const injMuted = rankPlayerInjuryNews(purdy, {
+      rawStream: syntheticStream,
+      userPrefs: mutedPrefs,
+      reportersById,
+      nowMs
+    });
+    assert.equal(injMuted.some(m => m.id === 'hot_take_no_id'), false, 'Injury News must also honor muteHotTakePersonalities via unified filter');
+    assert.equal(injMuted.some(m => m.id === 'barrows_ankle_prac'), true, 'Injury News must retain verified Tier-1 ankle practice update');
+
+    // 2. Latest mode sorts strictly newest-first across the full deduplicated 7d pool BEFORE slicing `maxItems`!
+    const latestMentions = rankPlayerOverviewMentions(purdy, {
+      rawStream: syntheticStream,
+      userPrefs: mutedPrefs,
+      reportersById,
+      nowMs,
+      maxAgeDays: 7,
+      maxItems: 3, // tighter cap than pool size (6) to prove Latest sorts BEFORE slicing!
+      sortMode: 'latest'
+    });
+    assert.equal(latestMentions[0].id, 'newest_mock_draft', 'Latest sort must surface the newest 10m-old item #1 even when maxItems < pool size');
+    assert.equal(latestMentions[1].id, 'barrows_ankle_prac', 'Latest sort must order strictly chronologically (#2 = 2h old)');
+    assert.equal(latestMentions[2].id, 'wagoner_quote_tw', 'Latest sort must order strictly chronologically (#3 = 3h old)');
+
+    // 3. UI Threshold: >=5 mentions renders compact Top|Latest toggle inline in header; <5 omits it!
+    const sheetGe5Html = renderPlayerDossierSheetHtml({
+      player: purdy,
+      activeTab: 'overview',
+      mentionsSortMode: 'latest',
+      rawStream: syntheticStream,
+      userPrefs: mutedPrefs,
+      reportersById
+    });
+    assert.ok(sheetGe5Html.includes('data-player-mentions-sort-bar'), 'Player with >=5 mentions in 7d must render Top|Latest toggle');
+    assert.ok(
+      sheetGe5Html.includes('data-action="set-player-mentions-sort"') &&
+        sheetGe5Html.includes('data-mentions-sort-mode="latest"'),
+      'Player mentions sort toggle must reflect active Latest state'
+    );
+
+    const sheetLt5Html = renderPlayerDossierSheetHtml({
+      player: { ...purdy, recentNews: [] },
+      activeTab: 'overview',
+      mentionsSortMode: 'top',
+      rawStream: syntheticStream.slice(0, 4),
+      userPrefs: mutedPrefs,
+      reportersById
+    });
+    assert.equal(
+      sheetLt5Html.includes('data-player-mentions-sort-bar'),
+      false,
+      'Player with <5 mentions in 7d must NOT render Top|Latest toggle'
+    );
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

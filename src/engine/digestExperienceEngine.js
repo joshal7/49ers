@@ -160,7 +160,7 @@ function getItemTimestampMs(item = {}) {
   return Number.isFinite(ms) ? ms : 0;
 }
 
-function computeTopSignalScore(item = {}, nowMs = Date.now()) {
+export function computeTopSignalScore(item = {}, nowMs = Date.now()) {
   const pubMs = getItemTimestampMs(item);
   const ageHours = pubMs > 0 ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 72;
   const storyRank = Number(item.storyRank);
@@ -179,18 +179,20 @@ function computeTopSignalScore(item = {}, nowMs = Date.now()) {
   return (baseSignal + corroborationBonus + urgentBonus) * gentleDecay;
 }
 
+export function compareLatestNewsItems(a = {}, b = {}) {
+  const aLiveInj = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
+  const bLiveInj = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
+  if (aLiveInj !== bLiveInj) return bLiveInj - aLiveInj;
+  return getItemTimestampMs(b) - getItemTimestampMs(a);
+}
+
 export function sortNewsFeedByMode(items = [], sortMode = 'top', { nowMs = Date.now() } = {}) {
   const mode = normalizeNewsSortMode(sortMode);
   const list = Array.isArray(items) ? [...items] : [];
   if (list.length <= 1) return list;
 
   if (mode === 'latest') {
-    return list.sort((a, b) => {
-      const aLiveInj = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
-      const bLiveInj = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
-      if (aLiveInj !== bLiveInj) return bLiveInj - aLiveInj;
-      return getItemTimestampMs(b) - getItemTimestampMs(a);
-    });
+    return list.sort(compareLatestNewsItems);
   }
 
   // Default: 'top' (storyRank impact + freshness + corroboration decay, with live in-game urgent injuries pinned #1)

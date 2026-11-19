@@ -18,17 +18,13 @@ import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
-  sortNewsWithBreakingPriority,
-  deduplicateAndGroupWireItems,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
-  formatTweetBodyForDisplay,
-  filterOutCompletedGameAvailabilityItems
+  formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import {
   formatWireSourceDisplayName,
   isIndividualOtcPlayerUrl,
-  isPaywalledPublisher,
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 import {
@@ -36,6 +32,10 @@ import {
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
+import {
+  NEWS_SORT_MODES,
+  normalizeNewsSortMode
+} from '../engine/digestExperienceEngine.js';
 import {
   isPlayerEligibleForInjuryNews,
   rankPlayerInjuryNews,
@@ -286,6 +286,7 @@ export function renderPlayerDossierSheetHtml({
   activeTab = 'overview',
   statsMode = '2026', // '2026' | 'career'
   txScenario = 'cut',
+  mentionsSortMode = 'top', // 'top' | 'latest'
   rawStream = [],
   appData = null,
   userPrefs = null,
@@ -322,7 +323,15 @@ export function renderPlayerDossierSheetHtml({
   let contentHtml = '';
 
   if (activeTab === 'overview') {
-    contentHtml = renderOverviewTab(player, rawStream, appData, userPrefs, reportersById, activeVideosSet);
+    contentHtml = renderOverviewTab(
+      player,
+      rawStream,
+      appData,
+      userPrefs,
+      reportersById,
+      activeVideosSet,
+      mentionsSortMode
+    );
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(player, statsMode);
   } else if (activeTab === 'spider') {
@@ -336,52 +345,69 @@ export function renderPlayerDossierSheetHtml({
   return `${tabsBar}${contentHtml}`;
 }
 
+const PLAYER_MENTIONS_SORT_MIN_ITEMS = 5;
+
 function renderOverviewTab(
   p,
   rawStream = [],
   appData = null,
   userPrefs = null,
   reportersById = null,
-  activeVideosSet = new Set()
+  activeVideosSet = new Set(),
+  mentionsSortMode = 'top'
 ) {
   const nowMs = Date.now();
-  const prunedRaw = Array.isArray(rawStream) && rawStream.length > 0
-    ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
-    : [];
-  const prunedRecent = Array.isArray(p.recentNews) && p.recentNews.length > 0
-    ? filterOutCompletedGameAvailabilityItems(p.recentNews, appData, nowMs)
-    : [];
-  const classifiedRaw = prunedRaw.length > 0
-    ? sortNewsWithBreakingPriority(prunedRaw, nowMs, { appData })
-    : [];
-  const classifiedRecent = prunedRecent.length > 0
-    ? sortNewsWithBreakingPriority(prunedRecent, nowMs, { appData })
-    : [];
-  const sortedMentions = rankPlayerOverviewMentions(
-    { ...p, recentNews: classifiedRecent },
-    {
-      rawStream: classifiedRaw,
-      appData: appData ? { ...appData, news: { ...(appData.news || {}), rawStream: classifiedRaw } } : null,
-      userPrefs,
-      reportersById,
-      nowMs,
-      maxAgeDays: 8,
-      maxItems: 10
-    }
-  );
+  const activeMentionsSort = normalizeNewsSortMode(mentionsSortMode);
+  const sortedMentions = rankPlayerOverviewMentions(p, {
+    rawStream,
+    appData,
+    userPrefs,
+    reportersById,
+    nowMs,
+    maxAgeDays: 7,
+    maxItems: 10,
+    sortMode: activeMentionsSort
+  });
+  const showMentionsSortToggle = sortedMentions.length >= PLAYER_MENTIONS_SORT_MIN_ITEMS;
   const combinedDirectPosts = [
     ...(Array.isArray(rawStream) ? rawStream : []),
     ...(Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : []),
     ...sortedMentions
   ];
 
+  const mentionsHeaderRightHtml = showMentionsSortToggle
+    ? `
+      <div class="segmented-control news-sort-seg player-mentions-sort-seg" role="group" aria-label="Sort Recent Mentions" data-player-mentions-sort-bar>
+        ${NEWS_SORT_MODES.map(
+          m => `
+            <button type="button"
+                    class="pill-btn seg-btn news-sort-btn ${activeMentionsSort === m.key ? 'active' : ''}"
+                    data-action="set-player-mentions-sort"
+                    data-sort-mode="${esc(m.key)}"
+                    title="${esc(m.title)}"
+                    aria-pressed="${activeMentionsSort === m.key ? 'true' : 'false'}">
+              <span>${esc(m.label)}</span>
+            </button>
+          `
+        ).join('')}
+      </div>
+    `
+    : `<span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} update${sortedMentions.length === 1 ? '' : 's'}</span>`;
+
   const newsHtml =
     sortedMentions.length > 0
       ? `
-        <div class="player-mentions-section" data-player-overview-mentions>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px">
-            <div class="sub-label" style="margin:0">Recent Mentions (7d)</div>
-            <span class="mono" style="font-size:11px;color:var(--text-muted)">${sortedMentions.length} update${sortedMentions.length === 1 ? '' : 's'}</span>
+        <div class="player-mentions-section" data-player-overview-mentions data-mentions-sort-mode="${esc(activeMentionsSort)}">
+          <div class="player-mentions-header" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px">
+            <div style="display:flex;align-items:center;gap:6px;min-width:0">
+              <div class="sub-label" style="margin:0">Recent Mentions (7d)</div>
+              ${
+                showMentionsSortToggle
+                  ? `<span class="mono" style="font-size:11px;color:var(--text-muted)">· ${sortedMentions.length}</span>`
+                  : ''
+              }
+            </div>
+            ${mentionsHeaderRightHtml}
           </div>
           <div style="display:flex;flex-direction:column;gap:7px">
             ${sortedMentions
@@ -399,7 +425,7 @@ function renderOverviewTab(
           </div>
         </div>
       `
-      : `<div style="font-size:12px;color:var(--text-muted)">No beat tweets or articles specific to ${esc(p.name)} in the past 7 days.</div>`;
+      : `<div style="font-size:12px;color:var(--text-muted)">No beat tweets, videos, or articles specific to ${esc(p.name)} in the past 7 days.</div>`;
 
   const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
   const safeOtcUrl = sanitizeExternalUrl(p.otcUrl, null);
@@ -791,35 +817,16 @@ function renderHealthTab(
   const isEligibleByStatus = isPlayerEligibleForInjuryNews(p, { currentWeek, byeWeek });
 
   const nowMs = Date.now();
-  const prunedHealthRaw =
-    Array.isArray(rawStream) && rawStream.length > 0
-      ? filterOutCompletedGameAvailabilityItems(rawStream, appData, nowMs)
-      : rawStream;
-  const prunedHealthRecent =
-    Array.isArray(p.recentNews) && p.recentNews.length > 0
-      ? filterOutCompletedGameAvailabilityItems(p.recentNews, appData, nowMs)
-      : p.recentNews;
-  const classifiedHealthRaw =
-    Array.isArray(prunedHealthRaw) && prunedHealthRaw.length > 0
-      ? sortNewsWithBreakingPriority(prunedHealthRaw, nowMs, { appData })
-      : prunedHealthRaw;
-  const classifiedHealthRecent =
-    Array.isArray(prunedHealthRecent) && prunedHealthRecent.length > 0
-      ? sortNewsWithBreakingPriority(prunedHealthRecent, nowMs, { appData })
-      : prunedHealthRecent;
-  const injuryItems = rankPlayerInjuryNews(
-    { ...p, recentNews: classifiedHealthRecent },
-    {
-      rawStream: classifiedHealthRaw,
-      appData: appData ? { ...appData, news: { ...(appData.news || {}), rawStream: classifiedHealthRaw } } : null,
-      userPrefs,
-      reportersById,
-      nowMs,
-      maxAgeDays: 14,
-      maxItems: 25,
-      includeFallbackCard: isEligibleByStatus
-    }
-  );
+  const injuryItems = rankPlayerInjuryNews(p, {
+    rawStream,
+    appData,
+    userPrefs,
+    reportersById,
+    nowMs,
+    maxAgeDays: 14,
+    maxItems: 25,
+    includeFallbackCard: isEligibleByStatus
+  });
   const showInjuryNewsCard = isEligibleByStatus || injuryItems.length > 0;
 
   const practiceBoxesHtml = `
