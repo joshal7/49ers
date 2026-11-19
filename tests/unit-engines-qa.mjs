@@ -12371,6 +12371,52 @@ test('Top-only Similar Stories grouping collapses paraphrased multi-outlet cover
   });
   assert.ok(topGroupedHtml.includes('Similar stories (2)'), 'Top grouped Articles view must render Similar stories (2) drawer for Nick Bosa cluster');
   assert.ok(topGroupedHtml.includes('data-similar-story-row') && topGroupedHtml.includes('synthesis-source-sheet-row'), 'Similar stories drawer must use the clean Brief Sources row UI');
+  assert.ok(!topGroupedHtml.includes('Confirming reports'), 'Grouped drawers must consolidate to Similar stories (no Confirming reports label)');
+  assert.ok(!topGroupedHtml.includes('All Coverage') && !topGroupedHtml.includes('Timeline ▾'), 'Grouped drawer header must not render redundant All Coverage / Timeline right-side carets');
+
+  // Verify corroboration clusters (e.g. injury/practice reports) ALSO consolidate cleanly to `Similar stories (N)`
+  const corroborationClusterHtml = renderNewsViewHtml({
+    appData: minimalAppData,
+    newsCategoryFilter: 'tweets',
+    newsSortMode: 'top',
+    filteredRawItems: [
+      {
+        id: 'evans_prac_1',
+        type: 'tweet',
+        category: 'injury',
+        author: 'Matt Barrows',
+        outletName: 'The Athletic',
+        trustTier: 1,
+        mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }],
+        title: 'Mike Evans is hoping to return to practice this week per Kyle Shanahan.',
+        fullText: 'Mike Evans is hoping to return to practice this week per Kyle Shanahan.',
+        url: 'https://x.com/mattbarrows/status/2199100000000000001',
+        publishedAt: new Date(nowMs - 2 * 3_600_000).toISOString()
+      },
+      {
+        id: 'evans_prac_2',
+        type: 'tweet',
+        category: 'injury',
+        author: 'Jennifer Lee Chan',
+        outletName: 'NBC Sports Bay Area',
+        trustTier: 1,
+        mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }],
+        title: '#49ers WR Mike Evans is flying in tonight — Shanahan hopes to get him back in practice this week.',
+        fullText: '#49ers WR Mike Evans is flying in tonight — Shanahan hopes to get him back in practice this week.',
+        url: 'https://x.com/jenniferleechan/status/2199100000000000002',
+        publishedAt: new Date(nowMs - 1.5 * 3_600_000).toISOString()
+      }
+    ],
+    userPrefs: { groupSimilarStories: true },
+    nowMs
+  });
+  assert.ok(
+    corroborationClusterHtml.includes('data-cluster-kind="corroboration"') &&
+      corroborationClusterHtml.includes('Similar stories (1)') &&
+      !corroborationClusterHtml.includes('Confirming reports') &&
+      !corroborationClusterHtml.includes('story-timeline-marker'),
+    'Injury/corroboration clusters must also render unified Similar stories (N) label without Timeline/FIRST/LATEST clutter'
+  );
 
   const topUngroupedHtml = renderNewsViewHtml({
     appData: minimalAppData,

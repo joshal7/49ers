@@ -5922,9 +5922,14 @@ async function main() {
         const latestGroupedDrawers = document.querySelectorAll('[data-similar-stories="true"]').length;
         document.querySelector('[data-action="set-news-sort"][data-sort-mode="top"]')?.click();
 
-        // Verify Similar Stories / Confirming Reports drawers in Top, expand first drawer, zero micro-action pills, zero topic filter bar, and tight side-thumb + player-chip overlap
+        // Verify unified Similar stories (N) drawers in Top, expand first drawer, zero Confirming reports / double-caret labels, zero micro-action pills, zero topic filter bar, and tight side-thumb + player-chip overlap
         const timelineCount = document.querySelectorAll('[data-story-timeline="true"]').length;
         const topGroupedDrawers = document.querySelectorAll('[data-similar-stories="true"]').length;
+        const groupedDrawerLabels = Array.from(document.querySelectorAll('[data-similar-stories="true"] > summary'))
+          .map(s => s.textContent.replace(/\s+/g, ' ').trim());
+        const allDrawersUseSimilarStories = groupedDrawerLabels.every(
+          lbl => /^Similar stories \(\d+\)$/.test(lbl)
+        );
         const firstSimilarDrawer = document.querySelector('[data-similar-stories="true"]');
         let expandedSimilarRowCount = 0;
         if (firstSimilarDrawer) {
@@ -5998,6 +6003,8 @@ async function main() {
           latestGroupedDrawers,
           timelineCount,
           topGroupedDrawers,
+          allDrawersUseSimilarStories,
+          groupedDrawerLabels,
           expandedSimilarRowCount,
           microBtnCount,
           cardButtonsText,
@@ -6037,6 +6044,7 @@ async function main() {
       assert(
         digestAudit.latestGroupedDrawers === 0 &&
           digestAudit.topGroupedDrawers >= 1 &&
+          digestAudit.allDrawersUseSimilarStories &&
           digestAudit.expandedSimilarRowCount >= 1,
         `Top-only Similar Stories grouping / Latest ungrouped check failed: ${JSON.stringify(digestAudit)}`
       );

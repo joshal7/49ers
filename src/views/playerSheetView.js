@@ -215,9 +215,8 @@ export function renderInjuryNewsItemCardHtml(
           ${
             confirmingList.length > 0
               ? `<details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-cluster-kind="${n.clusterKind === 'corroboration' ? 'corroboration' : 'similar'}" style="margin-top:5px">
-                   <summary class="compact-details-summary" style="justify-content:space-between">
-                     <span>${n.clusterKind === 'corroboration' ? `Confirming reports (${confirmingList.length})` : `Similar stories (${confirmingList.length})`}</span>
-                     <span class="mono" style="font-size:10px;color:var(--text-muted)">${n.clusterKind === 'corroboration' ? 'Timeline ▾' : 'All Coverage ▾'}</span>
+                   <summary class="compact-details-summary">
+                     <span>Similar stories (${confirmingList.length})</span>
                    </summary>
                    <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
                      ${confirmingList

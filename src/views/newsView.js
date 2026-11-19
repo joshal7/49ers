@@ -65,7 +65,6 @@ import {
   isItemRead,
   computeCatchUpState,
   sortNewsFeedByMode,
-  buildStoryTimelineEntries,
   extractPresserTakeaways,
   estimateItemEffortCue
 } from '../engine/digestExperienceEngine.js';
@@ -509,23 +508,8 @@ function isSummaryRedundantWithTitle(title = '', summary = '') {
 
 function renderRelatedStoriesDrawerHtml(item, confirmingList = [], { prioritizedRaw = [], rosterPlayers = [] } = {}) {
   if (!Array.isArray(confirmingList) || confirmingList.length === 0) return '';
-  const isCorroboration = item?.clusterKind === 'corroboration';
-  const clusterKind = isCorroboration ? 'corroboration' : 'similar';
-  const summaryLabel = isCorroboration
-    ? `Confirming reports (${confirmingList.length})`
-    : `Similar stories (${confirmingList.length})`;
-  const rightHint = isCorroboration ? 'Timeline ▾' : 'All Coverage ▾';
-
-  // Build optional chronological offset map (`First`, `+12m`, `+2h`) for corroboration clusters
-  const offsetByUrl = new Map();
-  if (isCorroboration) {
-    const timelineEntries = buildStoryTimelineEntries(item, confirmingList, prioritizedRaw);
-    for (const te of timelineEntries) {
-      if (te?.href && te.timelineMarker) {
-        offsetByUrl.set(String(te.href).trim().toLowerCase(), te.timelineMarker);
-      }
-    }
-  }
+  const clusterKind = item?.clusterKind === 'corroboration' ? 'corroboration' : 'similar';
+  const summaryLabel = `Similar stories (${confirmingList.length})`;
 
   const rowsHtml = confirmingList
     .slice(0, 8)
@@ -559,7 +543,6 @@ function renderRelatedStoriesDrawerHtml(item, confirmingList = [], { prioritized
         ? renderSalientThumbHtml(crVisual, { size: 'sm', asStatic: true, extraClass: 'brief-source-thumb' })
         : '';
       const crReadKey = getItemReadKey(cr);
-      const timelineMarker = isCorroboration ? offsetByUrl.get(String(crHref || '').trim().toLowerCase()) || '' : '';
       const isValidLink = Boolean(crHref && crHref !== '#');
       const rowOpen = isValidLink
         ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row ${crThumbHtml ? 'has-source-thumb' : ''}" data-similar-story-row data-mark-read-key="${esc(crReadKey)}">`
@@ -572,7 +555,6 @@ function renderRelatedStoriesDrawerHtml(item, confirmingList = [], { prioritized
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
                 <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
-                ${timelineMarker ? `<span class="mono story-timeline-marker">${esc(timelineMarker)}</span>` : ''}
                 <strong style="font-size:11.6px;color:var(--gold-bright)">${esc(attribution)}</strong>
               </div>
               ${cr?.publishedAt ? `<span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(formatRelativeAge(cr.publishedAt))}</span>` : ''}
@@ -589,9 +571,8 @@ function renderRelatedStoriesDrawerHtml(item, confirmingList = [], { prioritized
 
   return `
     <details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-story-timeline="true" data-cluster-kind="${esc(clusterKind)}">
-      <summary class="compact-details-summary" style="justify-content:space-between">
+      <summary class="compact-details-summary">
         <span>${esc(summaryLabel)}</span>
-        <span class="mono" style="font-size:10px;color:var(--text-muted)">${esc(rightHint)}</span>
       </summary>
       <div class="similar-stories-list" style="display:flex;flex-direction:column;gap:6px;margin-top:7px">
         ${rowsHtml}
