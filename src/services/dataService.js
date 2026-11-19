@@ -67,6 +67,7 @@ import {
   buildEspnTeamInjuriesUrl,
   buildEspnTeamLogoUrl,
   buildPfrHeadToHeadUrl,
+  hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
   isCompatiblePositionToken,
@@ -1593,7 +1594,6 @@ export async function hydrateLiveBlueskyBeatWire(
     appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
   );
   const rosterPlayers = appData.roster?.players || [];
-  const sfKeywordsRe = /\b(49ers|niners|san francisco|shanahan|john lynch|levi's stadium|#49ers|#fttb)\b/i;
 
   const pendingItems = [];
   const shortUrlsToExpand = new Set();
@@ -1618,7 +1618,10 @@ export async function hydrateLiveBlueskyBeatWire(
             continue;
           }
           const extLink = extractBlueskyBestExternalLink(post, rec);
-          const rawOrig = String(rec?.text || extLink.title || '').replace(/\s+/g, ' ').trim();
+          const rawOrig = String(rec?.text || extLink.title || '')
+            .replace(/\s+/g, ' ')
+            .replace(/\s*(?:Original post|View original post)\s*$/i, '')
+            .trim();
           if (!rawOrig || rawOrig.length < 18) continue;
 
           const parsedAttr = extractBeatAttributionFromText(rawOrig, acct);
@@ -1629,8 +1632,8 @@ export async function hydrateLiveBlueskyBeatWire(
             : '';
           const nonBioExtDesc = stripHistoricalSfBioSentences(cleanExtDesc);
           const combinedNonBioCheck = `${cleanFull} ${cleanExtTitle} ${nonBioExtDesc}`.trim();
-          const hasExplicitSfInLead = sfKeywordsRe.test(cleanFull);
-          const hasExplicitSfInBody = sfKeywordsRe.test(combinedNonBioCheck);
+          const hasExplicitSfInLead = hasExplicit49ersEntity(cleanFull);
+          const hasExplicitSfInBody = hasExplicit49ersEntity(combinedNonBioCheck);
           const leadMentioned = matchPlayersClient(cleanFull, rosterPlayers, 12, {
             allowUniqueSurnames: !acct.isNationalInsider || hasExplicitSfInLead
           });
@@ -1739,7 +1742,9 @@ export async function hydrateLiveBlueskyBeatWire(
                 : post?.embed?.video || null;
           const imgThumb = vidEmbed?.thumbnail || post?.embed?.images?.[0]?.thumb || extLink.thumb || '';
           const rawExtUri = extLink.uri || '';
-          if (rawExtUri && isOpaqueShortenerUrl(rawExtUri)) {
+          const isSportsShortener =
+            rawExtUri && /^https?:\/\/(?:www\.)?(?:es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)\//i.test(rawExtUri);
+          if (rawExtUri && (isOpaqueShortenerUrl(rawExtUri) || isSportsShortener)) {
             shortUrlsToExpand.add(rawExtUri);
           }
           const safeExtUrl = sanitizeExternalUrl(rawExtUri, null);
@@ -1850,7 +1855,7 @@ export async function hydrateLiveBlueskyBeatWire(
   const discovered = [];
   for (const entry of pendingItems) {
     let built = entry.item;
-    if (!built.externalUrl && entry._rawExtUri && expandedShortMap[entry._rawExtUri]) {
+    if (entry._rawExtUri && expandedShortMap[entry._rawExtUri]) {
       const resolvedUrl = sanitizeExternalUrl(expandedShortMap[entry._rawExtUri], null);
       if (resolvedUrl) {
         built = {
@@ -3042,11 +3047,21 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
       const nonBioSummary = stripHistoricalSfBioSentences(summary);
       const leadTextEdge = `${title} ${fullText || ''}`.trim();
       const leadMatchesEdge = matchPlayersClient(leadTextEdge, rosterPlayers, 8, {
-        allowUniqueSurnames: !isNationalEdgeOutlet || /\b(49ers|niners|san francisco)\b/i.test(leadTextEdge)
+        allowUniqueSurnames: !isNationalEdgeOutlet || hasExplicit49ersEntity(leadTextEdge)
       });
       const bodyMatchesEdge = matchPlayersClient(nonBioSummary, rosterPlayers, 8, {
-        allowUniqueSurnames: !isNationalEdgeOutlet || /\b(49ers|niners|san francisco)\b/i.test(`${leadTextEdge} ${nonBioSummary}`)
+        allowUniqueSurnames: !isNationalEdgeOutlet || hasExplicit49ersEntity(`${leadTextEdge} ${nonBioSummary}`)
       });
+      if (
+        isOffTopicLeagueFiller({
+          url: raw.externalUrl || url || '',
+          title: leadTextEdge,
+          summary: nonBioSummary,
+          hasRosterMatch: leadMatchesEdge.length > 0 || bodyMatchesEdge.length > 0
+        })
+      ) {
+        continue;
+      }
       if (
         isNationalEdgeOutlet &&
         !is49ersRelevantWireItem({
@@ -3062,7 +3077,7 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
       }
 
       const mentioned = matchPlayersClient(`${title} ${fullText || ''} ${nonBioSummary}`, rosterPlayers, 12, {
-        allowUniqueSurnames: !isNationalEdgeOutlet || /\b(49ers|niners|san francisco)\b/i.test(`${leadTextEdge} ${nonBioSummary}`)
+        allowUniqueSurnames: !isNationalEdgeOutlet || hasExplicit49ersEntity(`${leadTextEdge} ${nonBioSummary}`)
       });
       const sig = scoreContentSignal(fullText || title, nonBioSummary);
       if (sig.isClickbait) continue;

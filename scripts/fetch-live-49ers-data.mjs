@@ -136,6 +136,7 @@ import {
   buildPfrTeamSeasonUrl,
   createPlayerIdentityResolver,
   getPlayerLookupKeys,
+  hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
   isCompatiblePositionToken,
@@ -2000,7 +2001,7 @@ async function main() {
     liveYtFilmClips2,
     beatPodcasts7d
   ] = await Promise.all([
-    fetchLiveBeatSocialPosts().catch(() => []),
+    fetchLiveBeatSocialPosts({ rosterPlayers }).catch(() => []),
     fetchText('https://www.ninersnation.com/rss/current.xml').catch(() => ''),
     fetchText('https://www.49ers.com/rss/news').catch(() => ''),
     fetchText('https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1').catch(() => ''),
@@ -2013,7 +2014,7 @@ async function main() {
     fetchText('https://profootballtalk.nbcsports.com/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
     fetchText('https://www.49erswebzone.com/articles/').catch(() => ''),
-    fetchCuratedYouTubeChannelVideos({ qbNames: active49ersQbNames, maxAgeDays: 11 }).catch(() => []),
+    fetchCuratedYouTubeChannelVideos({ qbNames: active49ersQbNames, rosterPlayers, maxAgeDays: 11 }).catch(() => []),
     searchYouTubeChannelVideos(
       'UCeIOarQkwmGhimim9cDUTng',
       'San Francisco 49ers',
@@ -3025,7 +3026,23 @@ async function main() {
     const desc = cleanSensationalistText(
       decodeHtmlEntitiesBasic(xml.match(/<description>([\s\S]*?)<\/description>/i)?.[1]?.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').replace(/<[^>]+>/g, ' ') || '')
     );
-    if (!title || !/\b(49ers|niners|shanahan|purdy|bosa|aiyuk|mccaffrey|kittle|buckner|mike evans)\b/i.test(`${title} ${desc}`)) {
+    if (!title) continue;
+    const sfStdNonBioDesc = stripHistoricalSfBioSentences(desc);
+    const sfStdLeadMatches = matchMentionedPlayers(title, 12, {
+      allowUniqueSurnames: hasExplicit49ersEntity(title)
+    });
+    const sfStdBodyMatches = matchMentionedPlayers(sfStdNonBioDesc, 12, {
+      allowUniqueSurnames: hasExplicit49ersEntity(`${title} ${sfStdNonBioDesc}`)
+    });
+    if (
+      !is49ersRelevantWireItem({
+        title,
+        summary: desc,
+        isNationalFeed: true,
+        leadRosterMatchCount: sfStdLeadMatches.length,
+        bodyRosterMatchCount: sfStdBodyMatches.length
+      })
+    ) {
       continue;
     }
     const link = sanitizeExternalUrl(xml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim() || '', null);

@@ -287,14 +287,69 @@ const OFF_TOPIC_LEAGUE_FILLER_URL_REGEX =
 const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
   /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|week \d+\s+uniforms|best arrivals|nfl week \d+\s+trolls|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates)\b/i;
 
-const SF_RELEVANCE_TERM_REGEX =
-  /\b(49er|49ers|niners|san francisco|santa clara|levi['’]?s|shanahan|lynch|morris|saleh|foerster|kocurek|purdy|bosa|mccaffrey|kittle|warner|trent williams|mykel williams|aiyuk|buckner|odighizuwa|lenoir|pearsall|jennings|deebo|mike evans|greenlaw|mustapha|ji['’]?ayir|renardo green|upton stout|gracen halton|jordan watkins|mckivitz|brendel|puni|juszczyk|pineiro|demarcus robinson|christian kirk|brandin cooks|nate hobbs|stribling|dugger|mac jones|keion white|romello height)\b/i;
+/**
+ * Canonical single-source-of-truth registry of current 49ers leadership & front-office names
+ * used for national-wire entity relevance checks (never bare ambiguous surnames like `morris` or `lynch`).
+ */
+export const CURRENT_49ERS_LEADERSHIP_NAMES = [
+  'Kyle Shanahan',
+  'John Lynch',
+  'Raheem Morris',
+  'Klay Kubiak',
+  'Chris Foerster',
+  'Kris Kocurek',
+  'Paraag Marathe',
+  'Jed York'
+];
+
+/**
+ * Departed former 49ers coaches who now lead or have led other NFL staffs.
+ * Must NEVER be treated as current 49ers relevance triggers on national wire feeds.
+ */
+export const KNOWN_FORMER_49ERS_COACHES = [
+  'Robert Saleh',
+  'DeMeco Ryans',
+  'Mike McDaniel',
+  'Klint Kubiak',
+  'Steve Wilks',
+  'Nick Sorensen',
+  'Brandon Staley',
+  'Bobby Slowik',
+  'Brian Griese',
+  'Anthony Lynn',
+  'Mike LaFleur',
+  'Jeff Ulbrich',
+  'Gus Bradley',
+  'Brian Schneider'
+];
 
 const EXPLICIT_SF_ENTITY_REGEX =
-  /\b(49er|49ers|niners|san francisco|santa clara|levi['’]?s|kyle shanahan|shanahan|john lynch|robert saleh|raheem morris|#49ers|#fttb)\b/i;
+  /(?:\b(?:49er|49ers|niners|san francisco|santa clara|levi['’]?s(?:\s+stadium)?|kyle shanahan|shanahan|john lynch|raheem morris|klay kubiak|kris kocurek|chris foerster|paraag marathe|jed york)\b|(?:^|[\s([{"',|/-])#(?:49ers|fttb)\b)/i;
 
 const OTHER_NFL_TEAM_LEAD_REGEX =
   /\b(rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers)\b/i;
+
+const OTHER_NFL_TEAM_OR_CITY_PATTERN =
+  '(?:rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|pats|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers|arizona|atlanta|baltimore|buffalo|carolina|chicago|cincinnati|cleveland|dallas|denver|detroit|green\\s+bay|houston|indianapolis|jacksonville|kansas\\s+city|las\\s+vegas|los\\s+angeles|miami|minnesota|new\\s+england|new\\s+orleans|new\\s+york|philadelphia|pittsburgh|seattle|tampa\\s+bay|tennessee|washington)';
+
+const NON_49ERS_STAFF_ROLE_PATTERN =
+  '(?:head\\s+coach|interim\\s+(?:head\\s+)?coach|coach|hc|offensive\\s+coordinator|oc|defensive\\s+coordinator|dc|special\\s+teams\\s+coordinator|stc|general\\s+manager|gm|assistant(?:\\s+coach)?|coordinator|quarterbacks?\\s+coach|linebackers?\\s+coach|defensive\\s+line\\s+coach|offensive\\s+line\\s+coach|pass\\s+game\\s+coordinator|run\\s+game\\s+coordinator)';
+
+const OTHER_TEAM_STAFF_ATTRIBUTION_REGEX = new RegExp(
+  `\\b${OTHER_NFL_TEAM_OR_CITY_PATTERN}(?:['’]s?)?\\s+${NON_49ERS_STAFF_ROLE_PATTERN}\\s+([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?)\\b`,
+  'gi'
+);
+
+const PERSON_OTHER_TEAM_APPOSITIVE_REGEX = new RegExp(
+  `\\b([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?),\\s+(?:the\\s+)?${OTHER_NFL_TEAM_OR_CITY_PATTERN}(?:['’]s?)?\\s+${NON_49ERS_STAFF_ROLE_PATTERN}\\b`,
+  'gi'
+);
+
+const FORMER_SF_PREFIX_REGEX =
+  /\b(?:former|ex[-\s])\s*(?:san\s+francisco\s+)?(?:49ers|niners)(?:\s+(?:hc|oc|dc|gm|head\s+coach|assistant|coach|coordinator|qb|rb|fb|wr|te|ol|dl|lb|cb|db|de|dt|s|k|p|ls|exec|executive|scout))?\b/gi;
+
+const CONFLICTING_LEADERSHIP_NAMES_REGEX =
+  /\b(?:mike\s+shanahan|klint\s+kubiak|gary\s+kubiak|marshawn\s+lynch|paxton\s+lynch)\b/gi;
 
 const HISTORICAL_SF_BIO_SENTENCE_REGEX =
   /\b(originally signed (?:on )?with (?:the )?(?:49ers|san francisco|niners)|(?:was )?(?:selected|drafted|taken) [\s\S]{0,55}by (?:the )?(?:49ers|san francisco|niners)|began (?:his|their) (?:nfl )?career with (?:the )?(?:49ers|san francisco|niners)|spent (?:time|his rookie|the \d{4} season|\d+ seasons?) with (?:the )?(?:49ers|san francisco|niners)|played (?:for|with) (?:the )?(?:49ers|san francisco|niners) (?:from|in) 20(?:0\d|1\d|2[0-4])|stint with (?:the )?(?:49ers|san francisco|niners)|entered the nfl [\s\S]{0,45}(?:49ers|san francisco|niners)|signed on with (?:the )?(?:49ers|san francisco|niners) as an undrafted|undrafted free agent [\s\S]{0,50}(?:49ers|san francisco|niners))\b/i;
@@ -398,14 +453,17 @@ export const AMBIGUOUS_PLAYER_SURNAMES = new Set([
   'carr',
   'carter',
   'clark',
+  'colby',
   'cole',
   'collins',
   'cooper',
   'cruz',
   'davis',
+  'dugger',
   'edwards',
   'evans',
   'farrell',
+  'fehoko',
   'foster',
   'graham',
   'griffin',
@@ -422,6 +480,7 @@ export const AMBIGUOUS_PLAYER_SURNAMES = new Set([
   'jenkins',
   'johnson',
   'jones',
+  'kamara',
   'kareem',
   'kelly',
   'kirk',
@@ -446,6 +505,7 @@ export const AMBIGUOUS_PLAYER_SURNAMES = new Set([
   'robinson',
   'rogers',
   'ross',
+  'rourke',
   'russell',
   'samuel',
   'sanders',
@@ -624,9 +684,53 @@ export function stripHistoricalSfBioSentences(text = '') {
 }
 
 /**
+ * Strips non-49ers entity attributions before checking for explicit 49ers team/leadership signals:
+ * - "former 49ers ..." / "ex-49ers ..." references
+ * - Conflicting non-49ers family/surname homonyms ("Mike Shanahan", "Klint Kubiak", "Marshawn Lynch")
+ * - Other-team staff attributions ("Titans head coach Robert Saleh", "Bears head coach Klay Kubiak",
+ *   "Raheem Morris, the Falcons' head coach") so even future coaching departures never leak other-team stories.
+ */
+export function stripNon49ersEntityContexts(text = '') {
+  const raw = String(text || '');
+  if (!raw) return '';
+  const isLikelyPersonNamePart = candidate => {
+    const words = String(candidate || '').trim().split(/\s+/).filter(Boolean);
+    if (words.length === 0) return false;
+    const firstWord = words[0];
+    if (!/^[A-Z]/.test(firstWord)) return false;
+    const lowerFirst = firstWord.replace(/\./g, '').toLowerCase();
+    if (NON_FIRST_NAME_PREFIXES.has(lowerFirst)) return false;
+    if (/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(candidate)) return false;
+    return true;
+  };
+  return raw
+    .replace(FORMER_SF_PREFIX_REGEX, ' ')
+    .replace(CONFLICTING_LEADERSHIP_NAMES_REGEX, ' ')
+    .replace(OTHER_TEAM_STAFF_ATTRIBUTION_REGEX, (fullMatch, namePart) =>
+      isLikelyPersonNamePart(namePart) ? ' ' : fullMatch
+    )
+    .replace(PERSON_OTHER_TEAM_APPOSITIVE_REGEX, (fullMatch, namePart) =>
+      isLikelyPersonNamePart(namePart) ? ' ' : fullMatch
+    )
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Returns true if `text` contains a verified, non-former, non-other-team-attributed
+ * 49ers franchise or current leadership reference.
+ */
+export function hasExplicit49ersEntity(text = '') {
+  const cleaned = stripNon49ersEntityContexts(stripAggregatorBoilerplate(text));
+  if (!cleaned) return false;
+  return EXPLICIT_SF_ENTITY_REGEX.test(cleaned);
+}
+
+/**
  * Determines whether a national/league-wide wire item is genuinely relevant to the 49ers.
- * Prevents other-team stories (e.g. "Rams C Coleman Shelton Expected To Miss 4-6 Weeks...")
- * from leaking in via boilerplate historical career-bio mentions ("originally signed with the 49ers in 2018").
+ * Prevents other-team stories (e.g. "Rams C Coleman Shelton Expected To Miss 4-6 Weeks..." or
+ * "Cam Ward: Shift in offensive philosophy..." mentioning "Titans head coach Robert Saleh")
+ * from leaking in via boilerplate historical career-bio mentions, departed coaches, or body-only other-team framing.
  */
 export function is49ersRelevantWireItem({
   title = '',
@@ -640,8 +744,8 @@ export function is49ersRelevantWireItem({
 } = {}) {
   if (!isNationalFeed) return true;
   const leadText = stripAggregatorBoilerplate(`${title || ''} ${fullText || ''}`).trim();
-  const leadWithoutFormer = leadText.replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
-  if (EXPLICIT_SF_ENTITY_REGEX.test(leadWithoutFormer)) {
+  const leadClean = stripNon49ersEntityContexts(leadText);
+  if (EXPLICIT_SF_ENTITY_REGEX.test(leadClean)) {
     return true;
   }
   if (Number(leadRosterMatchCount) > 0) {
@@ -653,9 +757,12 @@ export function is49ersRelevantWireItem({
   const cleanBody = stripHistoricalSfBioSentences(
     `${externalTitle || ''} ${summary || ''} ${externalDescription || ''}`
   );
-  const bodyWithoutFormer = cleanBody.replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
-  if (EXPLICIT_SF_ENTITY_REGEX.test(bodyWithoutFormer)) {
+  const bodyClean = stripNon49ersEntityContexts(cleanBody);
+  if (EXPLICIT_SF_ENTITY_REGEX.test(bodyClean)) {
     return true;
+  }
+  if (OTHER_NFL_TEAM_LEAD_REGEX.test(cleanBody)) {
+    return false;
   }
   return Number(bodyRosterMatchCount) > 0;
 }
@@ -691,8 +798,8 @@ export function isOffTopicLeagueFiller({
   if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !/\b(49ers|niners|san francisco)\b/i.test(t)) {
     return true;
   }
-  const combined = `${t} ${s}`;
-  if (!hasRosterMatch && !SF_RELEVANCE_TERM_REGEX.test(combined)) {
+  const combinedClean = stripNon49ersEntityContexts(`${t} ${s}`);
+  if (!hasRosterMatch && !EXPLICIT_SF_ENTITY_REGEX.test(combinedClean)) {
     return true;
   }
   return false;

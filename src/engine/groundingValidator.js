@@ -4,6 +4,8 @@
  * Deep Scouting/Cap Analyses, Autopodcasts, and Cloudflare Worker prompts.
  */
 
+import { KNOWN_FORMER_49ERS_COACHES } from './linkIntegrity.js';
+
 function normPlayerKey(name = '') {
   return String(name || '')
     .toLowerCase()
@@ -77,12 +79,15 @@ export function validateNoHallucinatedRosterClaims(text = '', rosterPlayers = []
   const hay = String(text || '');
   if (!hay.trim()) return { valid: true, ok: true, violations: [] };
 
-  const disallowed = getDisallowedFormer49ers(rosterPlayers);
+  const disallowed = [...getDisallowedFormer49ers(rosterPlayers), ...KNOWN_FORMER_49ERS_COACHES];
+  const formerCoachSet = new Set(KNOWN_FORMER_49ERS_COACHES);
   const violations = [];
   const historicalOrExternalContextRe =
     /\b(retired|former|departed|ex-49er|no longer|not currently on|not on the active|not on the 2026|not on the live|waived|released|signed elsewhere|free agency departure|dead\s*cap|dead\s*money|post-june|void\s*year|trade\s*target|trade\s*candidate|trade\s*fit|seller|patriots|new\s*england|raiders|las\s*vegas|rams|los\s*angeles|chargers|cowboys|dallas|eagles|philadelphia|commanders|washington|giants|new\s*york|jets|lions|detroit|buccaneers|tampa|panthers|carolina|cardinals|arizona|chiefs|kansas\s*city|broncos|denver|bills|buffalo|dolphins|miami|ravens|baltimore|bengals|cincinnati|browns|cleveland|steelers|pittsburgh|saints|new\s*orleans|colts|indianapolis|vikings|minnesota|texans|houston|falcons|atlanta|bears|chicago|titans|tennessee|jaguars|jacksonville|seahawks|seattle|packers|green\s*bay)\b/i;
   const strictDisallowedOnlyRe =
-    /\b(not on the|no longer|former|departed|disallowed|never on)\b/i;
+    /\b(not on the|no longer|former|departed|disallowed|never on|ex-49er|previously)\b/i;
+  const externalTeamCoachRoleRe =
+    /\b(?:titans|tennessee|texans|houston|dolphins|miami|raiders|las\s+vegas|jets|new\s+york|falcons|atlanta|saints|new\s+orleans|browns|cleveland|cardinals|arizona|panthers|carolina|bears|chicago|colts|indianapolis|jaguars|jacksonville|vikings|minnesota|seahawks|seattle|rams|los\s+angeles|chargers|chiefs|kansas\s+city|broncos|denver|bills|buffalo|patriots|new\s+england|ravens|baltimore|bengals|cincinnati|steelers|pittsburgh|cowboys|dallas|eagles|philadelphia|giants|commanders|washington|lions|detroit|packers|green\s+bay|buccaneers|tampa)\b(?:'s|’s)?\s+(?:head\s+coach|coach|hc|oc|dc|offensive\s+coordinator|defensive\s+coordinator|coordinator|staff)\b/i;
 
   for (const formerName of disallowed) {
     const escaped = formerName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/['’]/g, "['’]?");
@@ -92,6 +97,15 @@ export function validateNoHallucinatedRosterClaims(text = '', rosterPlayers = []
       const start = Math.max(0, match.index - 130);
       const end = Math.min(hay.length, match.index + formerName.length + 130);
       const windowSlice = hay.slice(start, end);
+      if (formerCoachSet.has(formerName)) {
+        const isAllowedCoachMention =
+          strictDisallowedOnlyRe.test(windowSlice) || externalTeamCoachRoleRe.test(windowSlice);
+        if (!isAllowedCoachMention) {
+          violations.push(formerName);
+          break;
+        }
+        continue;
+      }
       const allowedRe = formerName === 'Bryce Huff' ? strictDisallowedOnlyRe : historicalOrExternalContextRe;
       if (!allowedRe.test(windowSlice)) {
         violations.push(formerName);
@@ -140,7 +154,13 @@ const FORMER_49ER_POSITION_GROUP = {
   'Isaac Yiadom': 'DB',
   "Rock Ya-Sin": 'DB',
   'Jake Moody': 'ST',
-  'Mitch Wishnowsky': 'ST'
+  'Mitch Wishnowsky': 'ST',
+  'Robert Saleh': 'DC',
+  'Nick Sorensen': 'DC',
+  'Steve Wilks': 'DC',
+  'DeMeco Ryans': 'DC',
+  'Mike McDaniel': 'OC',
+  'Klint Kubiak': 'OC'
 };
 
 /**
@@ -163,12 +183,14 @@ export function sanitizeHallucinatedRosterText(text = '', rosterPlayers = []) {
   const pickActiveByGroup = grp => {
     if (grp === 'QB') return active.find(p => p.position === 'QB')?.name || 'Brock Purdy';
     if (grp === 'RB') return active.find(p => p.position === 'RB')?.name || 'Christian McCaffrey';
-    if (grp === 'WR') return active.find(p => p.position === 'WR')?.name || 'Jauan Jennings';
+    if (grp === 'WR') return active.find(p => p.position === 'WR')?.name || 'Ricky Pearsall';
     if (grp === 'TE') return active.find(p => p.position === 'TE')?.name || 'George Kittle';
     if (grp === 'OL') return active.find(p => ['OT', 'T', 'G', 'C', 'OL', 'OG'].includes(p.position))?.name || 'Dominick Puni';
     if (grp === 'LB') return active.find(p => ['LB', 'ILB', 'MLB'].includes(p.position))?.name || 'Fred Warner';
     if (grp === 'DB') return active.find(p => ['CB', 'S', 'DB', 'FS', 'SS'].includes(p.position))?.name || 'Deommodore Lenoir';
     if (grp === 'ST') return active.find(p => ['K', 'P', 'LS'].includes(p.position))?.name || fallbackEdge;
+    if (grp === 'DC') return 'Raheem Morris';
+    if (grp === 'OC') return 'Klay Kubiak';
     return fallbackEdge;
   };
 
@@ -197,7 +219,7 @@ export function buildLiveGroundingSystemPrompt(appData = null) {
     '0. Achieve 100% factual accuracy, exact CBA cap arithmetic, and coaching-tape analytical depth with focused, non-repetitive internal reasoning: consult the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT first, run at most 1–2 targeted Google Search queries ONLY if a post-snapshot external fact is genuinely needed, and avoid redundant internal re-drafting loops.',
     `1. NEVER rely on stale pre-trained model weights for roster membership, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations. Anchor strictly to the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT (synced ${syncStamp}) and live Google Search Grounding.`,
     '2. COACHING, CAP & DRAFT RULES OF TRUTH:',
-    '   - Coaching Staff: Head Coach Kyle Shanahan; Defensive Coordinator Raheem Morris (Wide-9 4-man pass rush married to disguised two-high / Cover-3 Buzz / Quarters coverage rotations).',
+    '   - Coaching Staff: Head Coach Kyle Shanahan; Offensive Coordinator Klay Kubiak; Defensive Coordinator Raheem Morris (Wide-9 4-man pass rush married to disguised two-high / Cover-3 Buzz / Quarters coverage rotations). Former 49ers coaches Robert Saleh (Titans HC), Nick Sorensen, Steve Wilks, DeMeco Ryans (Texans HC), Mike McDaniel (Dolphins HC), and Klint Kubiak (Raiders HC) are NO LONGER on the 49ers staff.',
     '   - Multi-Year CBA Cap Math (WHEN CAP/CONTRACTS ARE RELEVANT): Whenever a topic or news item actually involves salary cap, contracts, restructures, extensions, or trade/free-agency affordability, pair 2026 Top-51 cap space (~$35.16M+) with the projected 2027 cap deficit (~-$31.54M+) under CBA Article 13 1-for-1 rollover (never portray 2026 cap space as unencumbered spending cash). Do NOT shoehorn unprompted salary-cap boilerplate into game recaps, injury updates, or news summaries where no cap or contract move occurred.',
     '   - Midseason Trade Proration: Acquiring teams absorb only remaining weekly base-salary proration (e.g., 9/18ths at Week 9) while bonus proration stays on the seller ledger—giving SF ~$65M+ of annualized base-salary purchasing power WITHOUT forcing sellers to eat salary, though every 2026 dollar spent deepens the 2027 deficit.',
     '   - 2027 Draft Capital: Anchor to the exact pick list in the snapshot (6 picks total after trading SF\'s own 2027 4th-rounder to Indianapolis for DT DeForest Buckner; Rd 6 via BAL, Rd 7 via KC). Reject Day-2 pick overpays for rentals.',

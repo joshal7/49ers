@@ -67,7 +67,7 @@ UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVE
 1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations.
 2. Treat the provided AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT and live Google Search Grounding as your SOLE source of truth for current-season facts.
 3. MANDATORY COACHING, CAP & DRAFT GROUNDING:
-   - Head Coach: Kyle Shanahan | Defensive Coordinator: Raheem Morris (Wide-9 4-man rush married to disguised split-safety / Cover-3 Buzz / Quarters rotations).
+   - Head Coach: Kyle Shanahan | Offensive Coordinator: Klay Kubiak | Defensive Coordinator: Raheem Morris (Wide-9 4-man rush married to disguised split-safety / Cover-3 Buzz / Quarters rotations). Former 49ers coaches Robert Saleh (Titans HC), Nick Sorensen, Steve Wilks, DeMeco Ryans (Texans HC), Mike McDaniel (Dolphins HC), and Klint Kubiak (Raiders HC) are NO LONGER on San Francisco's staff.
    - Multi-Year CBA Cap Reality (When Cap/Contracts Are Relevant): Unused 2026 Top-51 cap space rolls over 1-for-1 under CBA Article 13 to offset San Francisco's projected 2027 cap deficit (never treat 2026 cap space as "free money" detached from 2027 obligations). Cite cap math ONLY when salary cap, contracts, or transactions are genuinely relevant—never shoehorn unprompted cap rollover boilerplate into game recaps, injury updates, or non-cap news summaries.
    - Midseason Trade Proration Math: Acquiring clubs absorb only the remaining weekly proration (e.g., 9/18ths at Week 9) of a player's 2026 base salary while signing/option bonus proration stays with the seller—meaning $35.16M in 2026 space carries ~$65M+ of annualized base-salary purchasing power WITHOUT requiring sellers to eat salary, though every $1 spent in 2026 directly deepens the 2027 deficit.
    - 2027 Draft Capital: Check the exact pick count in the snapshot (SF owns 6 picks in 2027 after trading its own 2027 4th-rounder to Indianapolis for DT DeForest Buckner; Rd 6 is via BAL and Rd 7 is via KC). Do not recommend reckless Day-2 pick overpays for expiring rentals.
@@ -293,8 +293,12 @@ const RETIRED_OR_DEPARTED_GUARDRAIL_NAMES = [
   'Jake Moody',
   'Sam Darnold',
   'Jimmy Garoppolo',
-  'Trey Lance'
+  'Trey Lance',
+  'Robert Saleh',
+  'Nick Sorensen',
+  'Steve Wilks'
 ];
+const DEPARTED_COACH_GUARDRAIL_SET = new Set(['Robert Saleh', 'Nick Sorensen', 'Steve Wilks']);
 
 function scrubStaleWeightHallucinations(text = '', contextSummary = '') {
   let out = String(text || '');
@@ -333,6 +337,10 @@ function scrubStaleWeightHallucinations(text = '', contextSummary = '') {
 
     if (!hasActiveHallucination) continue;
 
+    if (DEPARTED_COACH_GUARDRAIL_SET.has(name)) {
+      out = out.replace(new RegExp(`\\b${escaped}\\b`, 'gi'), 'Raheem Morris');
+      continue;
+    }
     const listCommaRe = new RegExp(`\\b${escaped},\\s*`, 'gi');
     out = out.replace(listCommaRe, '');
     out = out.replace(new RegExp(`\\b${escaped}\\b`, 'gi'), 'Mykel Williams');
@@ -703,7 +711,7 @@ export default {
     }
 
     const ALLOWED_SHORTENER_HOST_RE =
-      /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl)$/i;
+      /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl|es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)$/i;
     const stripEdgeTrackingParams = raw => {
       try {
         const u = new URL(raw);
@@ -782,7 +790,7 @@ export default {
     }
 
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
-      const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v4', 'json');
+      const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v5', 'json');
       if (cachedWire && Array.isArray(cachedWire.items)) {
         return jsonResponse({ cached: true, ...cachedWire }, 200, cors);
       }
@@ -815,13 +823,45 @@ export default {
           .replace(/\s+/g, ' ')
           .trim();
 
-      const sfRe = /\b(49ers|niners|san francisco|shanahan|lynch|saleh|purdy|bosa|mccaffrey|kittle|warner|deebo|aiyuk|pearsall|lenoir|greenlaw|renardo green|mustapha|ji['’]?ayir brown|upton stout|trent williams|mykel williams|buckner|odighizuwa|keion white|keenan allen|mike evans|juszczyk|jennings|guerendo|watkins|dugger|prysock)\b/i;
+      const sfExplicitRe =
+        /(?:\b(?:49er|49ers|niners|san francisco|santa clara|levi['’]?s(?:\s+stadium)?|kyle shanahan|shanahan|john lynch|raheem morris|klay kubiak|kris kocurek|chris foerster|paraag marathe|jed york)\b|(?:^|[\s([{"',|/-])#(?:49ers|fttb)\b)/i;
+      const sfPlayerRe =
+        /\b(brock purdy|purdy|nick bosa|christian mccaffrey|mccaffrey|george kittle|kittle|fred warner|deebo samuel|deebo|brandon aiyuk|aiyuk|ricky pearsall|pearsall|deommodore lenoir|lenoir|dre greenlaw|greenlaw|renardo green|malik mustapha|mustapha|ji['’]?ayir brown|upton stout|trent williams|mykel williams|deforest buckner|buckner|osa odighizuwa|odighizuwa|keion white|keenan allen|mike evans|kyle juszczyk|juszczyk|isaac guerendo|guerendo|jordan watkins|jaden dugger|ephesians prysock|prysock|mac jones|christian kirk|brandin cooks|demarcus robinson|nate hobbs|romello height|gracen halton|c\.?j\.? west|eddy pineiro|colton mckivitz|dominick puni|jake brendel)\b/i;
+      const sfRe = new RegExp(`(?:${sfExplicitRe.source}|${sfPlayerRe.source})`, 'i');
       const otherTeamLeadRe = /\b(rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers)\b/i;
+      const otherTeamOrCityPat =
+        '(?:rams|seahawks|cardinals|cowboys|eagles|giants|commanders|bears|lions|packers|vikings|falcons|panthers|saints|buccaneers|bucs|bills|dolphins|patriots|pats|jets|ravens|bengals|browns|steelers|texans|colts|jaguars|jags|titans|broncos|chiefs|raiders|chargers|arizona|atlanta|baltimore|buffalo|carolina|chicago|cincinnati|cleveland|dallas|denver|detroit|green\\s+bay|houston|indianapolis|jacksonville|kansas\\s+city|las\\s+vegas|los\\s+angeles|miami|minnesota|new\\s+england|new\\s+orleans|new\\s+york|philadelphia|pittsburgh|seattle|tampa\\s+bay|tennessee|washington)';
+      const staffRolePat =
+        '(?:head\\s+coach|interim\\s+(?:head\\s+)?coach|coach|hc|offensive\\s+coordinator|oc|defensive\\s+coordinator|dc|special\\s+teams\\s+coordinator|stc|general\\s+manager|gm|assistant(?:\\s+coach)?|coordinator|quarterbacks?\\s+coach|linebackers?\\s+coach|defensive\\s+line\\s+coach|offensive\\s+line\\s+coach|pass\\s+game\\s+coordinator|run\\s+game\\s+coordinator)';
+      const otherTeamStaffAttrRe = new RegExp(
+        `\\b${otherTeamOrCityPat}(?:['’]s?)?\\s+${staffRolePat}\\s+([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?)\\b`,
+        'gi'
+      );
+      const personOtherTeamApposRe = new RegExp(
+        `\\b([A-Za-z][A-Za-z'.-]+(?:\\s+[A-Za-z][A-Za-z'.-]+)?),\\s+(?:the\\s+)?${otherTeamOrCityPat}(?:['’]s?)?\\s+${staffRolePat}\\b`,
+        'gi'
+      );
+      const formerSfRe =
+        /\b(?:former|ex[-\s])\s*(?:san\s+francisco\s+)?(?:49ers|niners)(?:\s+(?:hc|oc|dc|gm|head\s+coach|assistant|coach|coordinator|qb|rb|fb|wr|te|ol|dl|lb|cb|db|de|dt|s|k|p|ls|exec|executive|scout))?\b/gi;
+      const conflictingLeadershipRe =
+        /\b(?:mike\s+shanahan|klint\s+kubiak|gary\s+kubiak|marshawn\s+lynch|paxton\s+lynch|joey\s+bosa|kurt\s+warner|kyle\s+dugger|alvin\s+kamara|josh\s+allen)\b/gi;
       const histSfBioRe = /\b(originally signed (?:on )?with (?:the )?(?:49ers|san francisco|niners)|(?:was )?(?:selected|drafted|taken) [\s\S]{0,55}by (?:the )?(?:49ers|san francisco|niners)|began (?:his|their) (?:nfl )?career with (?:the )?(?:49ers|san francisco|niners)|spent (?:time|his rookie|the \d{4} season|\d+ seasons?) with (?:the )?(?:49ers|san francisco|niners)|played (?:for|with) (?:the )?(?:49ers|san francisco|niners) (?:from|in) 20(?:0\d|1\d|2[0-4])|stint with (?:the )?(?:49ers|san francisco|niners)|undrafted free agent [\s\S]{0,50}(?:49ers|san francisco|niners))\b/i;
       const stripWpFooter = s =>
         String(s || '')
           .replace(/\s*The post [\s\S]*? appeared first on [^\n.]+(?:\.[a-z]{2,4})?\.?/gi, '')
           .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '')
+          .trim();
+      const stripNonSfContextsEdge = s =>
+        String(s || '')
+          .replace(formerSfRe, ' ')
+          .replace(conflictingLeadershipRe, ' ')
+          .replace(otherTeamStaffAttrRe, (m, namePart) =>
+            /^[A-Z]/.test(String(namePart || '').trim()) && !/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(namePart) ? ' ' : m
+          )
+          .replace(personOtherTeamApposRe, (m, namePart) =>
+            /^[A-Z]/.test(String(namePart || '').trim()) && !/\b(?:49er|49ers|niners|san\s+francisco)\b/i.test(namePart) ? ' ' : m
+          )
+          .replace(/\s+/g, ' ')
           .trim();
       const stripHistBio = s =>
         stripWpFooter(s)
@@ -831,11 +871,14 @@ export default {
           .trim();
       const isEdgeItem49ersRelevant = (titleText, summaryText) => {
         const cleanTitle = stripWpFooter(titleText);
-        const titleNoFormer = cleanTitle.replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
-        if (sfRe.test(titleNoFormer)) return true;
+        const titleClean = stripNonSfContextsEdge(cleanTitle);
+        if (sfRe.test(titleClean)) return true;
         if (otherTeamLeadRe.test(cleanTitle)) return false;
-        const cleanBody = stripHistBio(summaryText).replace(/\bformer\s+(?:san francisco\s+)?(?:49ers|niners)\b/gi, '');
-        return sfRe.test(cleanBody);
+        const cleanBody = stripHistBio(summaryText);
+        const bodyClean = stripNonSfContextsEdge(cleanBody);
+        if (sfExplicitRe.test(bodyClean)) return true;
+        if (otherTeamLeadRe.test(cleanBody)) return false;
+        return sfPlayerRe.test(bodyClean);
       };
       const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|49erswebzone|nbcs49ers|ninersnation|davidbonilla49)$/i;
       const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
@@ -954,7 +997,7 @@ export default {
               const title = decodeBasic((entry.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
               const pubRaw = ((entry.match(/<published>([^<]+)<\/published>/i) || [])[1] || '').trim();
               if (!videoId || !title || /#shorts\b/i.test(title)) continue;
-              if (ch.sfOnly && !sfRe.test(title)) continue;
+              if (ch.sfOnly && !sfRe.test(stripNonSfContextsEdge(title))) continue;
               const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
               if (Number.isFinite(pubMs) && nowEdgeMs - pubMs > 10 * 86_400_000) continue;
               items.push({
@@ -991,14 +1034,27 @@ export default {
             const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
             if (!txt || txt.length < 16) return;
             const handle = syn.user?.screen_name || fallbackHandle;
-            if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(txt)) return;
+            if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(stripNonSfContextsEdge(txt))) return;
             const bestMp4 = selectBestXSyndicationMp4(syn);
             const durMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
             const durFmt =
               durMs >= 5000
                 ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}`
                 : '';
-            const thumb = syn.photos?.[0]?.url || syn.mediaDetails?.[0]?.media_url_https || syn.video?.poster || '';
+            const synCardBv = syn.card?.binding_values || {};
+            const synCardThumb =
+              synCardBv.summary_photo_image_large?.image_value?.url ||
+              synCardBv.summary_photo_image?.image_value?.url ||
+              synCardBv.photo_image_full_size_large?.image_value?.url ||
+              synCardBv.thumbnail_image_large?.image_value?.url ||
+              synCardBv.thumbnail_image?.image_value?.url ||
+              '';
+            const thumb =
+              syn.photos?.[0]?.url ||
+              syn.mediaDetails?.[0]?.media_url_https ||
+              syn.video?.poster ||
+              synCardThumb ||
+              '';
             const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
             const synUrls = Array.isArray(syn.entities?.urls) ? syn.entities.urls : [];
             const rawExtU =
@@ -1048,7 +1104,7 @@ export default {
 
       const payload = { updatedAt: new Date().toISOString(), items };
       if (env.SHARED_CACHE && items.length > 0) {
-        await env.SHARED_CACHE.put('wire:rss_live_v4', JSON.stringify(payload), { expirationTtl: 60 });
+        await env.SHARED_CACHE.put('wire:rss_live_v5', JSON.stringify(payload), { expirationTtl: 60 });
       }
       return jsonResponse({ cached: false, ...payload }, 200, cors);
     }

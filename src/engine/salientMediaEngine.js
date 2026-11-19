@@ -380,7 +380,7 @@ function findClusterEditorialPhoto(item = {}) {
 
 function classifyTeamEmblemTag(text = '', author = '') {
   const hay = `${text} ${author}`;
-  if (/\b(?:kyle shanahan|shanahan|robert saleh|raheem morris|koc|coach|podium|presser)\b/i.test(hay)) {
+  if (/\b(?:kyle shanahan|shanahan|raheem morris|klay kubiak|kris kocurek|chris foerster|coach|podium|presser)\b/i.test(hay)) {
     return 'COACH';
   }
   if (/\b(?:john lynch|lynch|front office|cap space|salary cap|trade deadline|draft)\b/i.test(hay)) {

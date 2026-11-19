@@ -194,6 +194,8 @@ import {
   balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
+  extractBlueskyBestExternalLink,
+  resolveTweetLinkedArticlePreview,
   isPreGamePlayAvailabilityItem,
   isStaleCompletedGameAvailabilityItem,
   filterOutCompletedGameAvailabilityItems,
@@ -10253,6 +10255,180 @@ await testAsync(
 );
 
 await testAsync(
+  'Departed coaches (Titans HC Robert Saleh / future coach departures), departed players, other-team body framing, and NFL surname homonyms never leak into 49ers wire or AI grounding',
+  async () => {
+    const {
+      hasExplicit49ersEntity,
+      is49ersRelevantWireItem,
+      isOffTopicLeagueFiller,
+      stripNon49ersEntityContexts
+    } = await import('../src/engine/linkIntegrity.js');
+    const { matchPlayersClient } = await import('../src/services/dataService.js');
+    const {
+      sanitizeHallucinatedRosterText,
+      validateNoHallucinatedRosterClaims
+    } = await import('../src/engine/groundingValidator.js');
+    const { extractPresserTakeaways } = await import('../src/engine/digestExperienceEngine.js');
+
+    const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+    const players = rosterJson.players || [];
+
+    // 1. Exact ProFootballTalk Titans / Cam Ward / Robert Saleh regression
+    const camWardTitle = 'Cam Ward: Shift in offensive philosophy "what we all wanted"';
+    const camWardBody =
+      "Titans head coach Robert Saleh said earlier this week that the Titans recently shifted their offensive philosophy to put more on quarterback Cam Ward's plate over the rest of the season.";
+    assert.equal(hasExplicit49ersEntity(`${camWardTitle} ${camWardBody}`), false, 'Titans HC Robert Saleh must not match as explicit 49ers entity');
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: camWardTitle,
+        fullText: camWardTitle,
+        externalTitle: camWardTitle,
+        externalDescription: camWardBody,
+        isNationalFeed: true,
+        leadRosterMatchCount: 0,
+        bodyRosterMatchCount: 0
+      }),
+      false,
+      'PFT Cam Ward / Titans HC Robert Saleh article must be rejected by national wire relevance filter'
+    );
+    assert.equal(
+      isOffTopicLeagueFiller({
+        url: 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/cam-ward-shift',
+        title: camWardTitle,
+        summary: camWardBody,
+        hasRosterMatch: false
+      }),
+      true,
+      'PFT Cam Ward / Titans HC Robert Saleh article must be classified as off-topic league filler'
+    );
+
+    // 2. General future-proof guard: even if a CURRENT 49ers coordinator is attributed to another NFL team
+    const futureCoachTitle = 'Caleb Williams excited about new offensive approach';
+    const futureCoachBody = 'Bears head coach Klay Kubiak said the Bears are opening up the playbook for Caleb Williams.';
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: futureCoachTitle,
+        fullText: futureCoachTitle,
+        summary: futureCoachBody,
+        isNationalFeed: true,
+        leadRosterMatchCount: 0,
+        bodyRosterMatchCount: 0
+      }),
+      false,
+      'Other-team staff attribution ("Bears head coach Klay Kubiak") must be stripped and rejected'
+    );
+    const appositiveCoachBody = "Raheem Morris, the Falcons' head coach, said Atlanta's defense is improving.";
+    assert.equal(
+      hasExplicit49ersEntity(appositiveCoachBody),
+      false,
+      'Appositive other-team attribution ("Raheem Morris, the Falcons\' head coach") must be stripped'
+    );
+
+    // 3. Departed players & NFL surname homonyms must NOT match active 49ers
+    const jenningsTitle = 'Jauan Jennings expected to play Sunday';
+    const jenningsBody = 'Patriots wide receiver Jauan Jennings returned to full practice Friday.';
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: jenningsTitle,
+        fullText: jenningsTitle,
+        summary: jenningsBody,
+        isNationalFeed: true,
+        leadRosterMatchCount: matchPlayersClient(jenningsTitle, players, 8, { allowUniqueSurnames: false }).length,
+        bodyRosterMatchCount: matchPlayersClient(jenningsBody, players, 8, { allowUniqueSurnames: false }).length
+      }),
+      false,
+      'Departed player Jauan Jennings on Patriots must be rejected'
+    );
+    assert.equal(
+      isOffTopicLeagueFiller({
+        url: 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jauan-jennings',
+        title: jenningsTitle,
+        summary: jenningsBody,
+        hasRosterMatch: false
+      }),
+      true,
+      'Departed player Jauan Jennings must not match hardcoded SF relevance terms'
+    );
+    assert.equal(
+      matchPlayersClient('Patriots safety Kyle Dugger suffered an ankle injury.', players, 12, { allowUniqueSurnames: true }).length,
+      0,
+      'Kyle Dugger must not match 49ers LB Jaden Dugger'
+    );
+    assert.equal(
+      matchPlayersClient('Saints RB Alvin Kamara logged a limited practice.', players, 12, { allowUniqueSurnames: true }).length,
+      0,
+      'Alvin Kamara must not match 49ers DE Mikail Kamara'
+    );
+    assert.equal(
+      hasExplicit49ersEntity('Broncos legend Mike Shanahan spoke at the ceremony.'),
+      false,
+      'Mike Shanahan must not match Kyle Shanahan'
+    );
+    assert.equal(
+      hasExplicit49ersEntity('Raiders OC Klint Kubiak broke down Las Vegas run concepts.'),
+      false,
+      'Klint Kubiak must not match Klay Kubiak'
+    );
+    const klintPresser = extractPresserTakeaways(
+      [
+        {
+          id: 'klint_1',
+          type: 'article',
+          title: 'Raiders OC Klint Kubiak said Las Vegas wants to establish the run on Sunday.',
+          url: 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/klint-kubiak',
+          publishedAt: new Date().toISOString()
+        }
+      ],
+      { nowMs: Date.now() }
+    );
+    assert.equal(klintPresser.length, 0, 'Presser speaker detector must not misattribute Klint Kubiak to Klay Kubiak');
+
+    // 4. Legitimate 49ers stories & hashtags MUST continue to pass
+    assert.equal(hasExplicit49ersEntity('Moving on up @SAP | #FTTB'), true, '#FTTB after space/punctuation must match');
+    assert.equal(hasExplicit49ersEntity('49ers DC Raheem Morris explains Wide-9 blitz package'), true, '49ers DC Raheem Morris must match');
+    assert.equal(
+      is49ersRelevantWireItem({
+        title: 'Veteran WR draws deadline trade interest',
+        summary: 'The 49ers are among three contenders checking in on the veteran receiver.',
+        isNationalFeed: true,
+        leadRosterMatchCount: 0,
+        bodyRosterMatchCount: 0
+      }),
+      true,
+      'League-wide headline with explicit 49ers body relevance must pass'
+    );
+    assert.ok(
+      /Kyle Shanahan/i.test(stripNon49ersEntityContexts("Vikings coach Kevin O'Connell praised Kyle Shanahan's motion sequencing.")),
+      'Stripping other-team coach name must preserve subsequent 49ers coach mentions'
+    );
+
+    // 5. Grounding validator flags departed 49ers coaches cited as current SF staff, while permitting external-team context
+    const badCoachCheck = validateNoHallucinatedRosterClaims(
+      "DC Robert Saleh's Wide-9 front in Santa Clara held Dallas to 3.4 yards per carry.",
+      players
+    );
+    assert.equal(badCoachCheck.valid, false, 'Grounding validator must flag Robert Saleh cited as current 49ers DC');
+    assert.ok(
+      sanitizeHallucinatedRosterText("DC Robert Saleh's Wide-9 front in Santa Clara.", players).includes('Raheem Morris'),
+      'Sanitizer must replace hallucinated current SF DC Robert Saleh with Raheem Morris'
+    );
+    const okCoachCheck = validateNoHallucinatedRosterClaims(
+      '1-7 Titans (coached by former SF DC Robert Saleh) open to recouping draft picks.',
+      players
+    );
+    assert.equal(okCoachCheck.valid, true, 'Grounding validator must allow verified Titans/former SF DC Robert Saleh mention');
+
+    // 6. Static regression guards: neither linkIntegrity.js nor worker/index.js sfRe may contain stale saleh/jennings
+    const linkIntegritySrc = fs.readFileSync(path.join(rootDir, 'src', 'engine', 'linkIntegrity.js'), 'utf8');
+    const explicitBlock = linkIntegritySrc.match(/const EXPLICIT_SF_ENTITY_REGEX\s*=\s*[\s\S]*?;/);
+    assert.ok(explicitBlock && !/saleh|jennings/i.test(explicitBlock[0]), 'EXPLICIT_SF_ENTITY_REGEX must not contain saleh or jennings');
+    const workerSrc = fs.readFileSync(path.join(rootDir, 'worker', 'index.js'), 'utf8');
+    const workerWireBlock = workerSrc.match(/const sfExplicitRe\s*=[\s\S]*?const isEdgeItem49ersRelevant/);
+    assert.ok(workerWireBlock && !/saleh|jennings/i.test(workerWireBlock[0]), 'worker/index.js live-wire relevance regex must not contain saleh or jennings');
+  }
+);
+
+await testAsync(
   'Early-week rollover preserves multi-week sidelined players ("chance at returning to action in Week 11") instead of falsely wiping to 95% Full Go, isolates comma-separated multi-player clauses, and preserves weeklyHistory priorWeekPracticed',
   async () => {
     const {
@@ -12897,6 +13073,257 @@ test(
     assert.ok(
       sim1ReadHtml.includes('class="source-row-headline is-tweet-body"'),
       'Tweet rows inside Similar stories must also use .is-tweet-body for regular weight'
+    );
+  }
+);
+
+test(
+  'Direct-Click Linked Article Preview Cards on Tweets across News, Similar Stories, Brief Sources, Home & Player Sheet',
+  () => {
+    const assertZeroNestedAnchors = (html, ctxLabel) => {
+      // Lightweight balanced-tag check ensuring no <a> opens inside another <a>
+      const tokens = html.match(/<\/?a(?:\s[^>]*)?>/gi) || [];
+      let depth = 0;
+      for (const tok of tokens) {
+        if (/^<a\b/i.test(tok)) {
+          depth += 1;
+          assert.ok(depth <= 1, `Nested <a> tag detected in ${ctxLabel}`);
+        } else {
+          depth = Math.max(0, depth - 1);
+        }
+      }
+    };
+
+    // 1. formatTweetBodyForDisplay strips trailing Bluesky mirror-bot "Original post" boilerplate
+    const cleanedMirror = formatTweetBodyForDisplay(
+      '49ers DE Nick Bosa on his four-game sack drought: "I don\'t think I\'m playing my best football right now." Story via @nwagoner: Original post'
+    );
+    assert.ok(
+      !cleanedMirror.text.includes('Original post') && cleanedMirror.text.endsWith('Story via @nwagoner:'),
+      `Trailing "Original post" boilerplate must be stripped: ${cleanedMirror.text}`
+    );
+
+    // 2. extractBlueskyBestExternalLink ignores "Original post" x.com facet and extracts ESPN article embed
+    const bskyPostWithOriginalFacet = {
+      embed: {
+        external: {
+          uri: 'https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought',
+          title: '49ers DE Nick Bosa on his four-game sack drought: "I don\'t think I\'m playing my best football right now." Story via @nwagoner:',
+          description: '',
+          thumb: 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:schefter/bosa.jpg'
+        }
+      }
+    };
+    const bskyRecWithOriginalFacet = {
+      text: '49ers DE Nick Bosa on his four-game sack drought... Original post',
+      facets: [
+        {
+          features: [
+            {
+              $type: 'app.bsky.richtext.facet#link',
+              uri: 'https://x.com/AdamSchefter/status/1991000000000000001'
+            }
+          ]
+        }
+      ]
+    };
+    const extracted = extractBlueskyBestExternalLink(bskyPostWithOriginalFacet, bskyRecWithOriginalFacet);
+    assert.equal(
+      extracted.uri,
+      'https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought'
+    );
+    // Also when embed.external is absent and facets contain BOTH x.com Original post + direct article link
+    const extractedFromFacets = extractBlueskyBestExternalLink(
+      {},
+      {
+        facets: [
+          { features: [{ $type: 'app.bsky.richtext.facet#link', uri: 'https://x.com/AdamSchefter/status/1991000000000000001' }] },
+          { features: [{ $type: 'app.bsky.richtext.facet#link', uri: 'https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought' }] }
+        ]
+      }
+    );
+    assert.equal(
+      extractedFromFacets.uri,
+      'https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought'
+    );
+
+    // 3. resolveTweetLinkedArticlePreview: cross-match by ESPN story ID recovers real headline, byline & ESPN CDN photo
+    const wagonerArticle = {
+      id: 'espn_art_50526309',
+      type: 'article',
+      author: 'Nick Wagoner',
+      reporterName: 'Nick Wagoner',
+      outletName: 'ESPN',
+      title: "Niners' Nick Bosa on 4-game sack drought: 'Don't think I'm playing my best'",
+      url: 'https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-4-game-sack-drought',
+      imageUrl: 'https://a.espncdn.com/photo/2026/1118/r1420001_1296x729_16-9.jpg',
+      publishedAt: new Date(Date.now() - 4 * 3600_000).toISOString()
+    };
+    const schefterBosaTweet = {
+      id: 'bsky_live_adam_schefter_bosa',
+      type: 'tweet',
+      author: 'Adam Schefter',
+      reporterName: 'Adam Schefter',
+      outletName: 'ESPN NFL Insider',
+      title: '49ers DE Nick Bosa on his four-game sack drought: "I don\'t think I\'m playing my best football right now." Story via @nwagoner: Original post',
+      fullText: '49ers DE Nick Bosa on his four-game sack drought: "I don\'t think I\'m playing my best football right now." Story via @nwagoner: Original post',
+      url: 'https://bsky.app/profile/adamscheftermirror.bsky.social/post/3n2bosa97',
+      externalUrl: 'https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought',
+      externalTitle: '49ers DE Nick Bosa on his four-game sack drought: "I don\'t think I\'m playing my best football right now." Story via @nwagoner:',
+      imageUrl: 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:schefter/bosa.jpg',
+      publishedAt: new Date(Date.now() - 2 * 3600_000).toISOString()
+    };
+    const previewMatched = resolveTweetLinkedArticlePreview(schefterBosaTweet, {
+      rawStream: [wagonerArticle, schefterBosaTweet],
+      resolvedItemUrl: schefterBosaTweet.url
+    });
+    assert.ok(previewMatched, 'Schefter tweet linking to ESPN story must resolve a linked article preview');
+    assert.equal(previewMatched.titleSource, 'stream_match');
+    assert.equal(previewMatched.title, "Niners' Nick Bosa on 4-game sack drought: 'Don't think I'm playing my best'");
+    assert.equal(previewMatched.domain, 'espn.com');
+    assert.equal(previewMatched.byline, 'Nick Wagoner');
+    assert.equal(
+      previewMatched.imageUrl,
+      'https://a.espncdn.com/photo/2026/1118/r1420001_1296x729_16-9.jpg',
+      'Should prefer crisp ESPN CDN editorial photo over Bluesky proxy thumb when stream-matched'
+    );
+
+    // 4. Mirror-bot verbatim duplicate externalTitle with NO stream match -> clean fallback (never repeats tweet verbatim)
+    const previewUnmatched = resolveTweetLinkedArticlePreview(schefterBosaTweet, {
+      rawStream: [schefterBosaTweet],
+      resolvedItemUrl: schefterBosaTweet.url
+    });
+    assert.ok(previewUnmatched);
+    assert.equal(previewUnmatched.titleSource, 'editorial_fallback');
+    assert.equal(previewUnmatched.title, 'Read full story on ESPN');
+    assert.equal(previewUnmatched.byline, 'Nick Wagoner', '@nwagoner should resolve cleanly to Nick Wagoner');
+    assert.equal(previewUnmatched.imageUrl, schefterBosaTweet.imageUrl);
+
+    // 5. Rejects paywalled links, social self-links, video tweets & headshot images
+    assert.equal(
+      resolveTweetLinkedArticlePreview({
+        ...schefterBosaTweet,
+        externalUrl: 'https://www.nytimes.com/athletic/7781234/49ers-bosa/'
+      }),
+      null,
+      'Paywalled Athletic link must not render direct linked article card'
+    );
+    assert.equal(
+      resolveTweetLinkedArticlePreview({
+        ...schefterBosaTweet,
+        videoId: 'dQw4w9WgXcQ'
+      }),
+      null,
+      'Playable YouTube video tweet must not duplicate linked article card'
+    );
+    const headshotOnlyPreview = resolveTweetLinkedArticlePreview({
+      ...schefterBosaTweet,
+      imageUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png'
+    });
+    assert.equal(headshotOnlyPreview.imageUrl, '', 'Player cutout headshots must not be stretched into linked article banners');
+
+    // 6. Standalone News & Film tweet card renders Bluesky-style media-top card & suppresses redundant side thumb
+    const standaloneHtml = renderWireItemCardHtml(schefterBosaTweet, {
+      prioritizedRaw: [wagonerArticle, schefterBosaTweet],
+      readKeysSet: new Set()
+    });
+    assertZeroNestedAnchors(standaloneHtml, 'standalone News tweet card');
+    assert.ok(
+      standaloneHtml.includes('data-linked-article-card="true"') &&
+        standaloneHtml.includes('data-linked-article-variant="card"') &&
+        standaloneHtml.includes('href="https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought"'),
+      'Standalone tweet card must render media-top linked article card pointing directly to ESPN'
+    );
+    assert.ok(!standaloneHtml.includes('Original post'), 'Standalone tweet card must not leak "Original post"');
+    assert.ok(
+      !standaloneHtml.includes('data-salient-thumb'),
+      'Standalone tweet card with media-top linked article card must suppress redundant outer side thumbnail'
+    );
+    assert.ok(
+      !standaloneHtml.includes('Article: 49ers'),
+      'Standalone tweet card must replace cramped Article: chip with clean preview card'
+    );
+
+    // 7. Similar stories drawer (exact Image 1 scenario): Jennifer Lee Chan lead + Adam Schefter tweet with linked ESPN article
+    const jlcLeadArticle = {
+      id: 'nbcsba_jlc_bosa',
+      type: 'article',
+      author: 'Jennifer Lee Chan',
+      outletName: 'NBC Sports Bay Area',
+      title: '49ers star Nick Bosa makes honest admission about slow start to 2026 NFL season',
+      url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-honest-admission-2026/1991234/',
+      imageUrl: 'https://media.nbcsportsbayarea.com/2026/11/bosa.jpg',
+      publishedAt: new Date(Date.now() - 6 * 60_000).toISOString(),
+      confirmingReports: [wagonerArticle, schefterBosaTweet]
+    };
+    const clusteredHtml = renderWireItemCardHtml(jlcLeadArticle, {
+      prioritizedRaw: [jlcLeadArticle, wagonerArticle, schefterBosaTweet],
+      readKeysSet: new Set()
+    });
+    assertZeroNestedAnchors(clusteredHtml, 'News Similar stories drawer with linked article tweet');
+    assert.ok(
+      clusteredHtml.includes('data-linked-article-card="true"') &&
+        clusteredHtml.includes('data-linked-article-variant="compact"') &&
+        clusteredHtml.includes('href="https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought"') &&
+        clusteredHtml.includes('espn.com · Nick Wagoner'),
+      'Similar stories tweet row must embed a compact direct-click ESPN preview card with real headline & byline'
+    );
+    assert.ok(
+      !clusteredHtml.includes('Original post'),
+      'Similar stories tweet row must strip "Original post"'
+    );
+
+    // 8. Daily Brief Sources drawer renders linked article preview for tweet source with zero nested <a>
+    const briefWithTweetSource = {
+      id: 'daily_test_linked',
+      headline: 'Nick Bosa Eyes Pass-Rush Breakout Ahead of Week 11',
+      bullets: ['Bosa candid on sack drought [Adam Schefter](https://bsky.app/profile/adamscheftermirror.bsky.social/post/3n2bosa97).'],
+      sources: [
+        {
+          title: schefterBosaTweet.title,
+          url: schefterBosaTweet.url,
+          author: 'Adam Schefter',
+          outlet: 'ESPN NFL Insider',
+          type: 'tweet',
+          publishedAt: schefterBosaTweet.publishedAt
+        }
+      ],
+      generatedAt: new Date().toISOString()
+    };
+    const briefSourcesHtml = renderDailyTopNewsBriefHtml(briefWithTweetSource, {
+      rawStream: [wagonerArticle, schefterBosaTweet],
+      readKeysSet: new Set()
+    });
+    assertZeroNestedAnchors(briefSourcesHtml, 'Daily Brief Sources with linked article tweet');
+    assert.ok(
+      briefSourcesHtml.includes('data-linked-article-card="true"') &&
+        briefSourcesHtml.includes('href="https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought"'),
+      'Daily Brief Sources must surface direct linked article preview card for tweet sources'
+    );
+
+    // 9. Player Sheet mention card & nested Similar stories both render linked article cards with zero nested <a>
+    const playerMentionHtml = renderInjuryNewsItemCardHtml(schefterBosaTweet, {
+      playerName: 'Nick Bosa',
+      directPosts: [wagonerArticle, schefterBosaTweet],
+      excludePlayerId: '4040605',
+      readKeysSet: new Set()
+    });
+    assertZeroNestedAnchors(playerMentionHtml, 'Player Sheet tweet mention card');
+    assert.ok(
+      playerMentionHtml.includes('data-linked-article-card="true"') &&
+        playerMentionHtml.includes('href="https://www.espn.com/nfl/story/_/id/50526309/niners-nick-bosa-says-better-amid-4-game-sack-drought"'),
+      'Player Sheet tweet mention must render direct-click linked article preview card'
+    );
+    const playerClusterHtml = renderInjuryNewsItemCardHtml(jlcLeadArticle, {
+      playerName: 'Nick Bosa',
+      directPosts: [jlcLeadArticle, wagonerArticle, schefterBosaTweet],
+      excludePlayerId: '4040605',
+      readKeysSet: new Set()
+    });
+    assertZeroNestedAnchors(playerClusterHtml, 'Player Sheet Similar stories with linked article tweet');
+    assert.ok(
+      playerClusterHtml.includes('data-linked-article-card="true"'),
+      'Player Sheet Similar stories must embed compact linked article card on tweets'
     );
   }
 );

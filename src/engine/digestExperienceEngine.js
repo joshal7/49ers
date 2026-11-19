@@ -525,14 +525,14 @@ export function formatPlayoffOddsDeltaCue(currentPct, referencePct) {
  * ============================================================================ */
 
 const PRESSER_SPEAKERS = [
-  { name: 'Kyle Shanahan', shortName: 'Shanahan', re: /\b(?:kyle\s+)?shanahan\b/i },
-  { name: 'John Lynch', shortName: 'Lynch', re: /\b(?:john\s+)?lynch\b/i },
-  { name: 'Raheem Morris', shortName: 'Morris', re: /\b(?:raheem\s+)?morris\b/i },
-  { name: 'Klay Kubiak', shortName: 'Kubiak', re: /\b(?:klay\s+)?kubiak\b/i },
+  { name: 'Kyle Shanahan', shortName: 'Shanahan', re: /\b(?:kyle\s+)?shanahan\b/i, rejectRe: /\bmike\s+shanahan\b/i },
+  { name: 'John Lynch', shortName: 'Lynch', re: /\b(?:john\s+)?lynch\b/i, rejectRe: /\b(?:marshawn|paxton)\s+lynch\b/i },
+  { name: 'Raheem Morris', shortName: 'Morris', re: /\braheem\s+morris\b/i },
+  { name: 'Klay Kubiak', shortName: 'Kubiak', re: /\b(?:klay\s+)?kubiak\b/i, rejectRe: /\b(?:klint|gary)\s+kubiak\b/i },
   { name: 'Brock Purdy', shortName: 'Purdy', re: /\b(?:brock\s+)?purdy\b/i },
   { name: 'George Kittle', shortName: 'Kittle', re: /\b(?:george\s+)?kittle\b/i },
-  { name: 'Fred Warner', shortName: 'Warner', re: /\b(?:fred\s+)?warner\b/i },
-  { name: 'Nick Bosa', shortName: 'Bosa', re: /\b(?:nick\s+)?bosa\b/i },
+  { name: 'Fred Warner', shortName: 'Warner', re: /\b(?:fred\s+)?warner\b/i, rejectRe: /\bkurt\s+warner\b/i },
+  { name: 'Nick Bosa', shortName: 'Bosa', re: /\b(?:nick\s+)?bosa\b/i, rejectRe: /\bjoey\s+bosa\b/i },
   { name: 'Christian McCaffrey', shortName: 'McCaffrey', re: /\b(?:christian\s+)?mccaffrey\b/i },
   { name: 'Trent Williams', shortName: 'T. Williams', re: /\btrent\s+williams\b/i }
 ];
@@ -572,7 +572,7 @@ export function extractPresserTakeaways(
     ).trim();
     if (rawBody.length < 35) continue;
 
-    const speaker = PRESSER_SPEAKERS.find(s => s.re.test(rawBody));
+    const speaker = PRESSER_SPEAKERS.find(s => s.re.test(rawBody) && (!s.rejectRe || !s.rejectRe.test(rawBody)));
     if (!speaker) continue;
 
     const hasDirectQuote = /[“"][^”"]{14,}[”"]/.test(rawBody);
