@@ -638,7 +638,7 @@ function renderSingleDashboardCard({
             .map(p => {
               const delta = computePracticeTrajectoryDelta(p, healthSnapMap[String(p.playerId)] || null);
               const deltaChipHtml = delta
-                ? `<span class="delta-chip ${delta.tone} mono" data-health-delta>${esc(delta.displayLabel)}</span>`
+                ? `<span class="delta-chip ${delta.tone} mono" data-health-delta title="${esc(delta.tooltipLabel || delta.displayLabel)}">${esc(delta.displayLabel)}</span>`
                 : '';
               return `
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;padding:6px 9px;border-radius:9px;background:var(--bg-card-alt);border:1px solid var(--border-subtle);cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}">

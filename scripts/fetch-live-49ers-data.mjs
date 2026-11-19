@@ -60,6 +60,7 @@ import {
   extractPracticeDaysFromText,
   classifyIrAndReserveTimeline,
   isBareStatusPlaceholderComment,
+  isRestOrPersonalInjuryLabel,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
   resolveOfficialReportGameStatus,
@@ -1176,7 +1177,7 @@ async function main() {
         inlineInj?.details?.type ||
         leadParenBodyPart ||
         '';
-      const offIsRestOrNir = /not injury related|\bnir\b|\brest\b|personal/i.test(offInjRec?.injuryType || '');
+      const offIsRestOrNir = isRestOrPersonalInjuryLabel(offInjRec?.injuryType || '');
       const offHasMidweekLimitedOrDnp =
         Boolean(offInjRec) &&
         (offInjRec.thu === 'LP' ||
@@ -1188,7 +1189,7 @@ async function main() {
 
       const explicitInjType =
         (hasAddedSecondaryInjuryAfterRest
-          ? secondaryMedicalInjury && !/not injury related|\bnir\b|\brest\b|personal/i.test(secondaryMedicalInjury)
+          ? secondaryMedicalInjury && !isRestOrPersonalInjuryLabel(secondaryMedicalInjury)
             ? secondaryMedicalInjury
             : 'Injury (Reported)'
           : offInjRec?.injuryType) ||
@@ -1396,7 +1397,7 @@ async function main() {
         if (!offRec) return fbRaw;
         const hasSecondaryMedical =
           Boolean(effectiveInj) &&
-          !/not injury related|\bnir\b|\brest\b|personal/i.test(effectiveInj) &&
+          !isRestOrPersonalInjuryLabel(effectiveInj) &&
           (thu === 'LP' || thu === 'DNP' || fri === 'LP' || fri === 'DNP');
         return resolveOfficialReportGameStatus({
           offRec: { ...offRec, wed, thu, fri },
@@ -1404,7 +1405,7 @@ async function main() {
           existingStatus: fbRaw,
           effectiveInjuryType: effectiveInj,
           hasSecondaryMedical,
-          isPureRest: /not injury related|\bnir\b|\brest\b|personal/i.test(offRec.injuryType || ''),
+          isPureRest: isRestOrPersonalInjuryLabel(offRec.injuryType || ''),
           espnHasDowngradeProse: sfDowngradeProseRe.test(`${shortComment} ${longComment}`)
         });
       };
@@ -4674,7 +4675,7 @@ async function main() {
 
         const oppHasSecondaryMedical =
           Boolean(specificInjuryType) &&
-          !/not injury related|\bnir\b|\brest\b|personal/i.test(specificInjuryType) &&
+          !isRestOrPersonalInjuryLabel(specificInjuryType) &&
           offOppInjRec &&
           (thu === 'LP' || thu === 'DNP' || fri === 'LP' || fri === 'DNP');
 
@@ -4688,7 +4689,7 @@ async function main() {
                   (wed === 'Vet Rest' ||
                     thu === 'Vet Rest' ||
                     fri === 'Vet Rest' ||
-                    /not injury related|\bnir\b|\brest\b|personal/i.test(offOppInjRec.injuryType || ''))) ||
+                    isRestOrPersonalInjuryLabel(offOppInjRec.injuryType || ''))) ||
                   (hasOppFridayOfficial && offOppInjRec.fri && offOppInjRec.fri !== '-' && rawOppLower !== 'out' && rawOppLower !== 'doubtful')
                 ? 'Active'
                 : rawOppLower === 'doubtful'
@@ -4840,7 +4841,7 @@ async function main() {
     const effectiveFallbackStatus = offOppFallbackRec
       ? offOppFallbackRec.gameStatus ||
         (offOppFallbackRec.wed === 'Vet Rest' ||
-        /not injury related|\bnir\b|\brest\b|personal/i.test(offOppFallbackRec.injuryType || '') ||
+        isRestOrPersonalInjuryLabel(offOppFallbackRec.injuryType || '') ||
         (offOppFallbackRec.fri && offOppFallbackRec.fri !== '-')
           ? 'Active'
           : ['out', 'doubtful'].includes(rawStatus.toLowerCase())
@@ -4902,7 +4903,7 @@ async function main() {
       seenOppNames.add(nk);
       const isRestTag =
         offOppRec.wed === 'Vet Rest' ||
-        /not injury related|\bnir\b|\brest\b|personal/i.test(offOppRec.injuryType || '');
+        isRestOrPersonalInjuryLabel(offOppRec.injuryType || '');
       const effSt =
         offOppRec.gameStatus ||
         (isRestTag || (offOppRec.fri && offOppRec.fri !== '-') ? 'Active' : 'Questionable');

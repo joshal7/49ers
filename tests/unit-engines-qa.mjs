@@ -13659,6 +13659,465 @@ await testAsync(
   }
 );
 
+test('Same-cycle official briefing & RotoWire paraphrase clustering merges John Lynch KNBR trio while guarding against practice-status, setback, topic-domain, and cross-player false merges', () => {
+  const nowMs = Date.parse('2026-11-19T17:00:00Z');
+  const feed = [
+    {
+      id: 'rw_live_evans_knbr',
+      type: 'tweet',
+      wireSource: 'rotowire_rss',
+      outletName: 'NBC Sports Bay Area',
+      author: 'Matt Maiocco',
+      reporterId: 'matt_maiocco',
+      trustTier: 1,
+      title: 'San Francisco general manager John Lynch said that "there\'s a chance" Evans (Achilles) will take part in a padded practice Thursday.',
+      fullText: 'San Francisco general manager John Lynch said that "there\'s a chance" Evans (Achilles) will take part in a padded practice Thursday.',
+      url: 'https://www.rotowire.com/football/headlines/mike-evans-knbr',
+      publishedAt: new Date(nowMs - 28 * 60_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    {
+      id: 'wz_lynch_evans_knbr',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      title: "49ers' John Lynch shares Mike Evans injury update: 'This week's a big step'",
+      summary: "49ers GM John Lynch says this week is a big step in Mike Evans' recovery, offering hope the veteran receiver could return against the Vikings.",
+      url: 'https://www.49erswebzone.com/articles/john-lynch-mike-evans-injury-update/',
+      imageUrl: 'https://static.49erswebzone.com/evans-action.jpg',
+      publishedAt: new Date(nowMs - 15 * 60_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    {
+      id: 'maiocco_knbr_tweet',
+      type: 'tweet',
+      outletName: 'NBC Sports Bay Area',
+      author: 'Matt Maiocco',
+      reporterId: 'matt_maiocco',
+      trustTier: 1,
+      title: "The 49ers will have a padded practice today at the Air Force Academy and there's a chance WR Mike Evans (Achilles) will be out there, GM John Lynch said on KNBR.",
+      fullText: "The 49ers will have a padded practice today at the Air Force Academy and there's a chance WR Mike Evans (Achilles) will be out there, GM John Lynch said on KNBR.",
+      url: 'https://x.com/MaioccoNBCS/status/1234567890',
+      publishedAt: new Date(nowMs - 38 * 60_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    // Prior-cycle (2d ago) Shanahan quote MUST stay separate
+    {
+      id: 'coach_yac_2d_shanahan',
+      type: 'tweet',
+      outletName: 'X Beat',
+      author: 'Coach Yac',
+      trustTier: 2,
+      title: 'The 49ers are hoping to have Mike Evans back at practice this week, per Kyle Shanahan',
+      fullText: 'The 49ers are hoping to have Mike Evans back at practice this week, per Kyle Shanahan',
+      url: 'https://x.com/Coach_Yac/status/1111111',
+      publishedAt: new Date(nowMs - 48 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    // Guardrail 1: Afternoon official DNP practice report MUST NOT merge with morning Lynch quote
+    {
+      id: 'evans_dnp_thursday',
+      type: 'tweet',
+      outletName: 'NBC Sports Bay Area',
+      author: 'Matt Maiocco',
+      reporterId: 'matt_maiocco',
+      trustTier: 1,
+      title: 'Mike Evans (Achilles) did not practice Thursday, per 49ers injury report.',
+      fullText: 'Mike Evans (Achilles) did not practice Thursday, per 49ers injury report.',
+      url: 'https://x.com/MaioccoNBCS/status/99999999',
+      publishedAt: new Date(nowMs + 3 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    // Guardrail 2: Afternoon acute setback / ruled out MUST NOT merge with morning optimistic quote
+    {
+      id: 'evans_setback_ruled_out',
+      type: 'tweet',
+      outletName: 'ESPN',
+      author: 'Nick Wagoner',
+      reporterId: 'nick_wagoner',
+      trustTier: 1,
+      title: 'GM John Lynch confirmed Mike Evans suffered an Achilles setback and has been ruled out for Sunday.',
+      fullText: 'GM John Lynch confirmed Mike Evans suffered an Achilles setback and has been ruled out for Sunday.',
+      url: 'https://x.com/nwagoner/status/88888888',
+      publishedAt: new Date(nowMs + 4 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    // Guardrail 3: Same speaker + same player + different topic domain (contract vs injury) MUST stay separate
+    {
+      id: 'lynch_evans_contract',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      title: "John Lynch explains how 49ers structured Mike Evans' contract extension",
+      summary: 'John Lynch broke down the salary cap structure of Mike Evans contract on KNBR.',
+      url: 'https://www.49erswebzone.com/articles/lynch-evans-contract/',
+      publishedAt: new Date(nowMs - 10 * 60_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    },
+    // Guardrail 4: Same reporter + same coach (Shanahan) + wire blurb about TWO DIFFERENT players MUST NOT merge
+    {
+      id: 'wagoner_green_tweet',
+      type: 'tweet',
+      outletName: 'ESPN 49ers Beat',
+      author: 'Nick Wagoner',
+      reporterId: 'nick_wagoner',
+      trustTier: 1,
+      title: '#49ers CB Renardo Green (back) is the only injury from Sunday, per Kyle Shanahan.',
+      fullText: '#49ers CB Renardo Green (back) is the only injury from Sunday, per Kyle Shanahan.',
+      url: 'https://x.com/nwagoner/status/77777777',
+      publishedAt: new Date(nowMs - 48 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: 'green', name: 'Renardo Green' }]
+    },
+    {
+      id: 'espn_pwire_evans_shanahan',
+      type: 'article',
+      wireSource: 'espn_player_wire',
+      outletName: 'ESPN 49ers Beat',
+      author: 'Nick Wagoner',
+      reporterId: 'nick_wagoner',
+      trustTier: 1,
+      title: 'Head coach Kyle Shanahan said Monday that the 49ers are "hoping to" have Evans (Achilles) back at practice this week.',
+      url: 'https://www.espn.com/nfl/player/_/id/16737/mike-evans',
+      publishedAt: new Date(nowMs - 47.8 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }]
+    }
+  ];
+
+  const grouped = deduplicateAndGroupWireItems(feed, { nowMs: nowMs + 5 * 3600_000, groupSimilarStories: true });
+  const knbrCluster = grouped.find(x => x.id === 'maiocco_knbr_tweet');
+  assert.ok(knbrCluster, 'Matt Maiocco direct X tweet should lead the John Lynch KNBR cluster over RotoWire paraphrase and blog rewrite');
+  assert.equal(knbrCluster.confirmingReports?.length, 2, 'Both RotoWire paraphrase and 49ers Webzone article must group into the John Lynch KNBR cluster');
+  assert.equal(knbrCluster.imageUrl, 'https://static.49erswebzone.com/evans-action.jpg', 'Lead tweet should inherit editorial action photo from grouped Webzone article');
+
+  assert.ok(grouped.some(x => x.id === 'evans_dnp_thursday'), 'Afternoon official DNP report must NOT be swallowed into morning Lynch quote');
+  assert.ok(grouped.some(x => x.id === 'evans_setback_ruled_out'), 'Afternoon acute setback/ruled-out report must NOT be swallowed into morning optimistic quote');
+  assert.ok(grouped.some(x => x.id === 'lynch_evans_contract'), 'Same-day contract article from John Lynch must NOT merge with his injury update');
+
+  const greenCluster = grouped.find(x => x.id === 'wagoner_green_tweet');
+  assert.ok(greenCluster && (greenCluster.confirmingReports?.length || 0) === 0, 'Renardo Green tweet must NOT merge with Nick Wagoner ESPN blurb about Mike Evans purely via shared coach:shanahan');
+  const shanahanEvansCluster = grouped.find(x => x.id === 'coach_yac_2d_shanahan');
+  assert.ok(shanahanEvansCluster && shanahanEvansCluster.confirmingReports?.some(c => c.id === 'espn_pwire_evans_shanahan'), 'ESPN Mike Evans Shanahan blurb should merge into the 2d-ago Shanahan Mike Evans cluster');
+});
+
+await testAsync(
+  'Injury Report Calibration, Conditional Practice-Day Guard, Compound Medical+Rest Parsing & Trajectory+% Delta Chips',
+  async () => {
+    const {
+      computePlayerPlayProbability,
+      evaluateCorroboratedNewsInjurySignal,
+      extractLivePracticeParticipationFromWire,
+      extractPracticeDaysFromText,
+      isRestOrPersonalInjuryLabel,
+      parseOfficial49ersInjuryReportHtml,
+      reconcileRosterAndHealthWithNews
+    } = await import('../src/engine/injuryProbabilityModel.js');
+    const { computePracticeTrajectoryDelta } = await import('../src/engine/digestExperienceEngine.js');
+    const { renderSeasonMatchupViewHtml } = await import('../src/views/seasonMatchupView.js');
+
+    const kickoffIso = '2026-11-23T01:20:00Z';
+    const thuMiddayMs = Date.parse('2026-11-19T21:26:00Z'); // Thu 1:26 PM PT
+
+    // 1. Exact Mike Evans pre-practice warmup + RotoWire conditional "Assuming ... at least a limited practice Thursday"
+    //    must NEVER fabricate thu='LP' ahead of official Thursday report!
+    const evansShort = "Evans (Achilles) is suited up for Thursday's practice, Cam Inman of The San Jose Mercury News reports.";
+    const evansLong =
+      "Assuming Evans is able to log at least a limited practice Thursday, it'll officially mark his first on-field work since aggravating a right Achilles injury during a Week 6 win against the Commanders. How he fares in drills Thursday and Friday likely will determine if he's cleared to return to action Sunday versus the Vikings in Mexico City.";
+    assert.deepEqual(
+      extractPracticeDaysFromText({
+        statusRaw: 'Questionable',
+        injuryType: 'Achilles',
+        shortComment: evansShort,
+        longComment: evansLong,
+        kickoffIso,
+        nowMs: thuMiddayMs,
+        allowHeuristicFill: false
+      }),
+      { wed: '-', thu: '-', fri: '-' },
+      'Conditional "Assuming ... able to log at least a limited practice Thursday" must NEVER fabricate thu=LP'
+    );
+    for (const condNote of [
+      'If he is able to log a limited practice Thursday, he could suit up Sunday.',
+      "There's a chance Evans logs a limited session Thursday.",
+      'He could log a full practice Friday if his Achilles responds well.'
+    ]) {
+      assert.deepEqual(
+        extractPracticeDaysFromText({
+          statusRaw: 'Questionable',
+          injuryType: 'Achilles',
+          shortComment: condNote,
+          kickoffIso,
+          nowMs: Date.parse('2026-11-20T22:00:00Z'),
+          allowHeuristicFill: false
+        }),
+        { wed: '-', thu: '-', fri: '-' },
+        `Speculative/conditional prose must stay blank: "${condNote}"`
+      );
+    }
+    // Confirmed post-practice participation MUST still parse cleanly
+    assert.deepEqual(
+      extractPracticeDaysFromText({
+        statusRaw: 'Questionable',
+        injuryType: 'Achilles',
+        shortComment: 'Evans (Achilles) practiced in a limited capacity Thursday after sitting out Wednesday.',
+        kickoffIso,
+        nowMs: thuMiddayMs,
+        allowHeuristicFill: false
+      }),
+      { wed: 'DNP', thu: 'LP', fri: '-' },
+      'Confirmed post-practice Thursday LP + Wednesday DNP must still extract cleanly'
+    );
+
+    const evansRosterStub = [
+      {
+        id: '16737',
+        name: 'Mike Evans',
+        position: 'WR',
+        jersey: 5,
+        experienceYears: 13,
+        primarySnapPct: 54,
+        rosterBucket: 'active',
+        health: { injuryType: 'Achilles' }
+      }
+    ];
+    const liveWireMap = extractLivePracticeParticipationFromWire({
+      newsItems: [
+        {
+          id: 'espn_pwire_16737_thu_midday',
+          publishedAt: '2026-11-19T20:13:14Z',
+          title: evansShort,
+          summary: evansLong,
+          wireSource: 'espn_player_wire',
+          primaryPlayer: { id: '16737' }
+        }
+      ],
+      rosterPlayers: evansRosterStub,
+      kickoffIso,
+      lastCompletedGameEndMs: Date.parse('2026-11-16T00:00:00Z'),
+      nowMs: thuMiddayMs
+    });
+    assert.equal(
+      liveWireMap.get('16737')?.thu || null,
+      null,
+      'extractLivePracticeParticipationFromWire must NOT fabricate thu=LP from conditional "Assuming..." blurb'
+    );
+
+    // 2. Multi-game absence + load-response monotonicity (Mike Evans 3 missed games w/ 0 prior practices)
+    const evansHist3Missed = [
+      { week: 7, injury: 'Ribs', gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+      { week: 9, injury: 'Ribs', gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' },
+      { week: 10, injury: 'Achilles', gameStatus: 'Out', practiceStatus: 'Did Not Participate In Practice' }
+    ];
+    const evalEvans = (wed, thu, fri, sig = null) =>
+      computePlayerPlayProbability({
+        name: 'Mike Evans',
+        position: 'WR',
+        experienceYears: 13,
+        snapPct: 54,
+        rosterBucket: 'active',
+        gameStatus: 'Questionable',
+        injuryType: 'Achilles',
+        wed,
+        thu,
+        fri,
+        weeklyHistory: evansHist3Missed,
+        currentWeek: 11,
+        byeWeek: 8,
+        corroboratedNewsSignal: sig
+      });
+
+    const wedDnp = evalEvans('DNP', '-', '-');
+    const thuUniformSig = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Mike Evans',
+      playerId: '16737',
+      rosterBucket: 'active',
+      newsItems: [
+        {
+          id: 'maiocco_thu_uniform',
+          author: 'Matt Maiocco',
+          trustTier: 1,
+          publishedAt: '2026-11-19T20:36:42Z',
+          fullText:
+            "WR Mike Evans (Achilles) is in uniform at 49ers' practice and there is now looking like a decent chance he will be available to play Sunday night against the Vikings."
+        }
+      ],
+      rosterPlayerNames: ['Mike Evans'],
+      nowMs: thuMiddayMs,
+      windowStartMs: Date.parse('2026-11-16T00:00:00Z')
+    });
+    assert.equal(thuUniformSig.signalType, 'TRENDING_UPWARD');
+    const thuMiddayTrend = evalEvans('DNP', '-', '-', thuUniformSig);
+    const thuFirstLp = evalEvans('DNP', 'LP', '-');
+    const thuFirstLpWithTrend = evalEvans('DNP', 'LP', '-', thuUniformSig);
+    const friSecondLp = evalEvans('DNP', 'LP', 'LP');
+    const friThreeLp = evalEvans('LP', 'LP', 'LP');
+    const friFull = evalEvans('DNP', 'LP', 'FP');
+    const friSetback = evalEvans('DNP', 'LP', 'DNP');
+    const activePlayerSingleLp = computePlayerPlayProbability({
+      name: 'Renardo Green',
+      position: 'CB',
+      experienceYears: 3,
+      snapPct: 93,
+      rosterBucket: 'active',
+      gameStatus: 'Questionable',
+      injuryType: 'Back',
+      wed: 'LP',
+      thu: '-',
+      fri: '-',
+      weeklyHistory: [{ week: 10, injury: 'Back', gameStatus: 'Questionable', practiceStatus: 'Limited Participation in Practice' }],
+      currentWeek: 11,
+      byeWeek: 8
+    });
+
+    assert.ok(wedDnp.probabilityPct >= 18 && wedDnp.probabilityPct <= 26, `Expected Wed DNP ~22%, got ${wedDnp.probabilityPct}%`);
+    assert.ok(
+      thuMiddayTrend.probabilityPct > wedDnp.probabilityPct && thuMiddayTrend.probabilityPct <= 42,
+      `DNP-only positive uniform trend must give bounded lift (24–42%), got ${thuMiddayTrend.probabilityPct}%`
+    );
+    assert.ok(
+      thuFirstLp.probabilityPct >= 44 && thuFirstLp.probabilityPct <= 54,
+      `1st Thu LP after 3 missed games + Wed DNP must sit in cautious coin-flip band (44–54%), NOT 74%, got ${thuFirstLp.probabilityPct}%`
+    );
+    assert.ok(
+      thuFirstLpWithTrend.probabilityPct + 18 <= activePlayerSingleLp.probabilityPct,
+      `Mike Evans 1st LP (${thuFirstLpWithTrend.probabilityPct}%) must remain well below active-prior-week LP starter Renardo Green (${activePlayerSingleLp.probabilityPct}%)`
+    );
+    assert.ok(
+      friSetback.probabilityPct < wedDnp.probabilityPct &&
+        wedDnp.probabilityPct < thuMiddayTrend.probabilityPct &&
+        thuMiddayTrend.probabilityPct < thuFirstLp.probabilityPct &&
+        thuFirstLp.probabilityPct < friSecondLp.probabilityPct &&
+        friSecondLp.probabilityPct < friThreeLp.probabilityPct &&
+        friThreeLp.probabilityPct < friFull.probabilityPct,
+      `Monotonicity violated: setback=${friSetback.probabilityPct}, wedDnp=${wedDnp.probabilityPct}, trend=${thuMiddayTrend.probabilityPct}, thuLp=${thuFirstLp.probabilityPct}, dnpLpLp=${friSecondLp.probabilityPct}, lpLpLp=${friThreeLp.probabilityPct}, friFp=${friFull.probabilityPct}`
+    );
+
+    // 3. Compound "Neck, Not injury related - resting player" preserves Neck & avoids factors:[] 78% fallthrough
+    assert.equal(isRestOrPersonalInjuryLabel('Not injury related - resting player'), true);
+    assert.equal(isRestOrPersonalInjuryLabel('NIR - Rest'), true);
+    assert.equal(isRestOrPersonalInjuryLabel('Neck, Not injury related - resting player'), false);
+    assert.equal(isRestOrPersonalInjuryLabel('Neck, NIR - Rest'), false);
+
+    const compoundHtml = `
+      <section><h3>San Francisco 49ers</h3><table>
+        <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Game Status</th></tr></thead>
+        <tbody>
+          <tr><td>Dre Greenlaw</td><td>LB</td><td>Neck, Not injury related - resting player</td><td>DNP</td><td></td><td></td><td>UNSPECIFIED</td></tr>
+          <tr><td>Trent Williams</td><td>T</td><td>Not injury related - resting player</td><td>DNP</td><td></td><td></td><td>UNSPECIFIED</td></tr>
+        </tbody>
+      </table></section>`;
+    const parsedComp = parseOfficial49ersInjuryReportHtml(compoundHtml, '');
+    const gl = parsedComp.sfByKey.get('dregreenlaw');
+    const tw = parsedComp.sfByKey.get('trentwilliams');
+    assert.equal(gl?.injuryType, 'Neck, NIR - Rest', 'Compound medical + NIR-Rest must preserve medical body part');
+    assert.equal(gl?.wed, 'DNP', 'Compound medical + NIR-Rest DNP must stay DNP, not Vet Rest');
+    assert.equal(tw?.injuryType, 'NIR - Rest');
+    assert.equal(tw?.wed, 'Vet Rest');
+    const glProb = computePlayerPlayProbability({
+      name: 'Dre Greenlaw',
+      position: 'LB',
+      experienceYears: 8,
+      snapPct: 76,
+      rosterBucket: 'active',
+      gameStatus: 'Questionable',
+      injuryType: gl.injuryType,
+      wed: gl.wed,
+      thu: '-',
+      fri: '-',
+      currentWeek: 11
+    });
+    assert.ok(glProb.factors.length > 0, 'Combined medical + rest DNP must populate explicit explanatory factors');
+    assert.ok(glProb.probabilityPct >= 55 && glProb.probabilityPct <= 70, `Expected combined Neck+Rest Wed DNP in 55–70%, got ${glProb.probabilityPct}%`);
+
+    // 4. Deterministic priorDayPlayProbabilityPct + Trajectory + % delta chip in Health table & Home card
+    const mockMultiDayApp = {
+      meta: { seasonYear: 2026, currentWeek: 11 },
+      roster: {
+        players: [
+          {
+            id: '16737',
+            name: 'Mike Evans',
+            position: 'WR',
+            jersey: 5,
+            experienceYears: 13,
+            primarySnapPct: 54,
+            capHit2026: 18_000_000,
+            rosterBucket: 'active',
+            health: {
+              status: 'Questionable',
+              injuryType: 'Achilles',
+              isOnPracticeReport: true,
+              wed: 'DNP',
+              thu: 'LP',
+              fri: '-',
+              playProbabilityPct: thuFirstLp.probabilityPct,
+              playBadgeLabel: thuFirstLp.badgeLabel,
+              weeklyHistory2026: evansHist3Missed
+            },
+            recentNews: []
+          }
+        ]
+      },
+      health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
+      news: { rawStream: [] },
+      scheduleMatchup: {
+        schedule: [{ week: 11, dateIso: kickoffIso, completed: false }],
+        upcomingMatchup: { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', kickoffIso }
+      }
+    };
+    reconcileRosterAndHealthWithNews(mockMultiDayApp, { nowMs: Date.parse('2026-11-19T23:30:00Z') });
+    const evansRow = mockMultiDayApp.health.practiceReport.find(r => r.name === 'Mike Evans');
+    assert.equal(evansRow?.priorDayPlayProbabilityPct, wedDnp.probabilityPct, 'Multi-day DNP/LP row must compute deterministic Wed DNP priorDayPlayProbabilityPct');
+
+    const deltaObj = computePracticeTrajectoryDelta(evansRow, { playProbabilityPct: 42 });
+    assert.ok(deltaObj && deltaObj.compactLabel.startsWith('↑ +') && deltaObj.compactLabel.endsWith('%'), `Expected compactLabel "↑ +XX%", got "${deltaObj?.compactLabel}"`);
+    assert.ok(deltaObj.displayLabel.startsWith('DNP→LP +') && deltaObj.displayLabel.endsWith('%'), `Expected displayLabel "DNP→LP +XX%", got "${deltaObj?.displayLabel}"`);
+
+    // Sign-consistency guard: stale higher Monday snapshot must NOT show contradictory negative % with upward DNP->LP arrow
+    const signGuardDelta = computePracticeTrajectoryDelta(
+      { wed: 'DNP', thu: 'LP', fri: '-', playProbabilityPct: 54, priorDayPlayProbabilityPct: 28 },
+      { playProbabilityPct: 68 }
+    );
+    assert.equal(signGuardDelta.compactLabel, '↑ +26%', 'Must prefer trajectory-consistent prior-day delta over contradictory stale snapshot');
+
+    const healthHtml = renderSeasonMatchupViewHtml({
+      seasonSub: 'health',
+      appData: mockMultiDayApp,
+      userPrefs: { deltaSnapshots: { healthByPlayer: { '16737': { playProbabilityPct: 42 } } } }
+    });
+    assert.ok(
+      healthHtml.includes(`data-health-delta`) && healthHtml.includes(deltaObj.compactLabel),
+      `Health table must render combined trajectory + % increase chip (${deltaObj.compactLabel}), never a bare arrow`
+    );
+
+    // 5. Trailing participial teammate-beneficiary clause ("..., boosting hopes for Brock Purdy's offense") must NOT bleed Mike Evans injury news onto healthy Brock Purdy
+    const { rankPlayerInjuryNews: rankInjCheck } = await import('../src/engine/injuryProbabilityModel.js');
+    const purdyHealthy = { id: '4361741', name: 'Brock Purdy', position: 'QB', rosterBucket: 'active', health: { status: 'Active', isOnPracticeReport: false } };
+    const wzBoostArticle = {
+      id: 'wz_evans_purdy_boost',
+      type: 'article',
+      title: '49ers get key offensive weapon back at practice ahead of Vikings game',
+      summary: "The 49ers received encouraging injury news as Mike Evans returned to practice ahead of Sunday's Vikings game, boosting hopes for Brock Purdy's offense.",
+      publishedAt: '2026-11-19T20:30:03Z',
+      url: 'https://www.49erswebzone.com/articles/197000/',
+      author: '49ers Webzone',
+      trustTier: 2,
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }, { id: '4361741', name: 'Brock Purdy' }]
+    };
+    assert.equal(
+      rankInjCheck(purdyHealthy, {
+        rawStream: [wzBoostArticle],
+        appData: { roster: { players: [purdyHealthy, { id: '16737', name: 'Mike Evans', position: 'WR' }] }, meta: { currentWeek: 11 }, scheduleMatchup: { schedule: [] } },
+        nowMs: thuMiddayMs,
+        includeFallbackCard: false
+      }).length,
+      0,
+      'Teammate return article ("boosting hopes for Brock Purdy\'s offense") must NOT create Injury News on healthy Brock Purdy'
+    );
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

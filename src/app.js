@@ -31,7 +31,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=86';
+} from './services/dataService.js?v=87';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -86,14 +86,14 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=86';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=87';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=89';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=86';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=87';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
   renderSettingsSheetHtml,
@@ -104,7 +104,7 @@ import {
   computeCatchUpState,
   urlBase64ToUint8Array,
   evaluatePushSupportStatus
-} from './engine/digestExperienceEngine.js?v=87';
+} from './engine/digestExperienceEngine.js?v=88';
 
 const state = {
   appData: null,
@@ -423,32 +423,53 @@ function syncNavUnreadBadge() {
   }
 }
 
+function countObservedPracticeSlots(row = {}) {
+  return [row?.wed, row?.thu, row?.fri].filter(v => {
+    const s = String(v ?? '').trim();
+    return Boolean(s) && s !== '-' && s !== '—';
+  }).length;
+}
+
+function buildPracticeSlotSig(row = {}) {
+  return `${row?.wed || '-'}/${row?.thu || '-'}/${row?.fri || '-'}`;
+}
+
+function buildHealthSnapshotMap(rows = []) {
+  const healthByPlayer = {};
+  for (const r of rows || []) {
+    if (!r?.playerId) continue;
+    const pct = Number(r.playProbabilityPct ?? 0);
+    if (!Number.isFinite(pct)) continue;
+    healthByPlayer[String(r.playerId)] = {
+      playProbabilityPct: pct,
+      currentPct: pct,
+      currentSig: buildPracticeSlotSig(r),
+      daysCount: countObservedPracticeSlots(r),
+      wed: r.wed || '-',
+      thu: r.thu || '-',
+      fri: r.fri || '-'
+    };
+  }
+  return healthByPlayer;
+}
+
 function captureDeltaSnapshotsOnBoot(appData) {
   if (!appData) return;
-  const curWeek = Number(appData?.meta?.currentWeek || 0) || null;
+  const curWeek = Number(appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
   const existing = state.prefs.deltaSnapshots || {
     week: null,
+    healthWeek: null,
     healthByPlayer: {},
     statsByKey: {},
     playoffBaseline: null
   };
 
-  // Seed initial baseline snapshot on first visit, or roll forward when week advances
+  // Seed initial baseline snapshot on first visit, or roll forward cleanly when NFL week advances
   const needsSeed = !existing.week || Object.keys(existing.healthByPlayer || {}).length === 0;
   const weekAdvanced = curWeek && existing.week && curWeek > existing.week;
 
   if (needsSeed) {
-    const healthByPlayer = {};
-    for (const r of appData?.health?.practiceReport || []) {
-      if (r?.playerId) {
-        healthByPlayer[String(r.playerId)] = {
-          playProbabilityPct: Number(r.playProbabilityPct ?? 0),
-          wed: r.wed || '-',
-          thu: r.thu || '-',
-          fri: r.fri || '-'
-        };
-      }
-    }
+    const healthByPlayer = buildHealthSnapshotMap(appData?.health?.practiceReport || []);
     const statsByKey = {};
     for (const u of appData?.scheduleMatchup?.teamStats?.units || []) {
       if (u?.overall?.key && Number.isFinite(Number(u.overall.rank))) {
@@ -458,6 +479,7 @@ function captureDeltaSnapshotsOnBoot(appData) {
     const baseSf = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
     state.prefs.deltaSnapshots = {
       week: curWeek,
+      healthWeek: curWeek,
       healthByPlayer,
       statsByKey,
       playoffBaseline: baseSf
@@ -470,9 +492,148 @@ function captureDeltaSnapshotsOnBoot(appData) {
     };
     saveUserPrefs(state.prefs);
   } else if (weekAdvanced) {
-    // Keep prior week's stats/playoff baseline visible during this session, then roll forward on hide
+    // Roll weekly health baselines immediately so prior-week injury percentages never leak into the new week,
+    // while keeping prior-week team stats / playoff baselines visible for this session until hide.
+    const existingHealthWk = Number(existing.healthWeek || existing.week || 0);
+    if (curWeek > existingHealthWk) {
+      state.prefs.deltaSnapshots = {
+        ...existing,
+        healthWeek: curWeek,
+        healthByPlayer: buildHealthSnapshotMap(appData?.health?.practiceReport || [])
+      };
+      saveUserPrefs(state.prefs);
+    }
     state._pendingWeekSnapshotRollover = curWeek;
   }
+}
+
+/**
+ * Last-distinct-state transition tracker for weekly injury probability deltas.
+ * - Runs atomically AFTER both ESPN overlay and live beat wire complete so mid-hydration states never flicker.
+ * - Seeds newly surfaced mid-week injury reportees so subsequent Thu/Fri changes display exact % deltas.
+ * - Never regresses a snapshot backwards to an earlier blank (`-/-/-`) static bundle state within the same week.
+ */
+function syncHealthDeltaSnapshots(appData) {
+  if (!appData || appData._awaitingInitialLiveWireSync) return;
+  const rows = appData?.health?.practiceReport || [];
+  if (rows.length === 0) return;
+
+  const curWeek = Number(appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
+  const snap = state.prefs.deltaSnapshots || {
+    week: curWeek,
+    healthWeek: curWeek,
+    healthByPlayer: {},
+    statsByKey: {},
+    playoffBaseline: null
+  };
+  const prevHealthWk = Number(snap.healthWeek || snap.week || 0);
+  if (curWeek && prevHealthWk && curWeek > prevHealthWk) {
+    state.prefs.deltaSnapshots = {
+      ...snap,
+      healthWeek: curWeek,
+      healthByPlayer: buildHealthSnapshotMap(rows)
+    };
+    saveUserPrefs(state.prefs);
+    return;
+  }
+
+  const healthByPlayer = { ...(snap.healthByPlayer || {}) };
+  let changed = false;
+
+  for (const r of rows) {
+    const pid = r?.playerId ? String(r.playerId) : '';
+    const pct = Number(r?.playProbabilityPct);
+    if (!pid || !Number.isFinite(pct)) continue;
+
+    const sig = buildPracticeSlotSig(r);
+    const days = countObservedPracticeSlots(r);
+    const prev = healthByPlayer[pid];
+
+    if (!prev) {
+      healthByPlayer[pid] = {
+        playProbabilityPct: pct,
+        currentPct: pct,
+        currentSig: sig,
+        daysCount: days,
+        wed: r.wed || '-',
+        thu: r.thu || '-',
+        fri: r.fri || '-'
+      };
+      changed = true;
+      continue;
+    }
+
+    const prevDays = Number.isFinite(Number(prev.daysCount))
+      ? Number(prev.daysCount)
+      : countObservedPracticeSlots(prev);
+    const prevSig = typeof prev.currentSig === 'string' ? prev.currentSig : buildPracticeSlotSig(prev);
+    const prevCurrent = Number.isFinite(Number(prev.currentPct))
+      ? Number(prev.currentPct)
+      : Number(prev.playProbabilityPct);
+
+    // Never regress to an earlier/blank practice state within the same week (e.g. cached static JSON flash)
+    if (days < prevDays) continue;
+
+    if (sig !== prevSig) {
+      healthByPlayer[pid] = {
+        playProbabilityPct: Number.isFinite(prevCurrent) ? prevCurrent : pct,
+        currentPct: pct,
+        currentSig: sig,
+        daysCount: days,
+        wed: r.wed || '-',
+        thu: r.thu || '-',
+        fri: r.fri || '-'
+      };
+      changed = true;
+    } else if (Number.isFinite(prevCurrent) && Math.abs(pct - prevCurrent) >= 5) {
+      healthByPlayer[pid] = {
+        playProbabilityPct: prevCurrent,
+        currentPct: pct,
+        currentSig: sig,
+        daysCount: days,
+        wed: r.wed || '-',
+        thu: r.thu || '-',
+        fri: r.fri || '-'
+      };
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    state.prefs.deltaSnapshots = {
+      ...snap,
+      healthWeek: curWeek || snap.healthWeek || snap.week,
+      healthByPlayer
+    };
+    saveUserPrefs(state.prefs);
+  }
+}
+
+function commitPendingWeekSnapshotRollover() {
+  const nextWk = state._pendingWeekSnapshotRollover;
+  if (!nextWk || !state.appData) return;
+  const statsByKey = {};
+  for (const u of state.appData?.scheduleMatchup?.teamStats?.units || []) {
+    if (u?.overall?.key && Number.isFinite(Number(u.overall.rank))) {
+      statsByKey[u.overall.key] = { rank: Number(u.overall.rank) };
+    }
+  }
+  const baseSf = state.appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
+  state.prefs.deltaSnapshots = {
+    ...(state.prefs.deltaSnapshots || {}),
+    week: nextWk,
+    healthWeek: nextWk,
+    statsByKey,
+    playoffBaseline: baseSf
+      ? {
+          makePlayoffsPct: baseSf.makePlayoffsPct,
+          winDivisionPct: baseSf.winDivisionPct,
+          seed1ByePct: baseSf.seed1ByePct
+        }
+      : state.prefs.deltaSnapshots?.playoffBaseline || null
+  };
+  state._pendingWeekSnapshotRollover = null;
+  saveUserPrefs(state.prefs);
 }
 
 async function toggleQuietPushAlerts() {
@@ -3149,6 +3310,7 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   lastWirePollMs = Date.now();
   if (state.appData) {
     state.appData._awaitingInitialLiveWireSync = false;
+    syncHealthDeltaSnapshots(state.appData);
   }
 
   const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
@@ -3312,6 +3474,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
     state.lastWireSyncAt = new Date().toISOString();
     lastWirePollMs = Date.now();
     state.appData._awaitingInitialLiveWireSync = false;
+    syncHealthDeltaSnapshots(state.appData);
 
     const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
@@ -3776,6 +3939,7 @@ async function init() {
       if (Date.now() - sessionBootMs >= 15_000) {
         state.prefs.lastVisitedAt = new Date().toISOString();
         saveUserPrefs(state.prefs);
+        commitPendingWeekSnapshotRollover();
       }
       return;
     }
@@ -3853,7 +4017,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=103', { updateViaCache: 'none' })
+        .register('./sw.js?v=104', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

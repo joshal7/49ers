@@ -14,6 +14,7 @@ import {
   extractPracticeDaysFromText,
   isBareStatusPlaceholderComment,
   isPlayerEligibleForInjuryNews,
+  isRestOrPersonalInjuryLabel,
   parseOfficial49ersInjuryReportHtml,
   pickMeaningfulInjuryComment,
   reconcileRosterAndHealthWithNews,
@@ -90,7 +91,8 @@ import {
 import { refreshLiveStandingsMetricsInTeamStats } from '../engine/statsLeaderboardEngine.js';
 
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
-const WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v1';
+const LEGACY_WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v1';
+const WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v2';
 const GAMEDAY_INACTIVES_CACHE_KEY = 'joshal_49ers_gameday_inactives_v1';
 const GITHUB_RAW_DATA_BASE = 'https://raw.githubusercontent.com/joshal7/49ers/main/data';
 
@@ -338,6 +340,7 @@ export const DEFAULT_USER_PREFS = {
   },
   deltaSnapshots: {
     week: null,
+    healthWeek: null,
     healthByPlayer: {},
     statsByKey: {},
     playoffBaseline: null
@@ -433,6 +436,11 @@ export function loadUserPrefs() {
         parsed.deltaSnapshots && typeof parsed.deltaSnapshots === 'object' && !Array.isArray(parsed.deltaSnapshots)
           ? {
               week: Number.isFinite(Number(parsed.deltaSnapshots.week)) ? Number(parsed.deltaSnapshots.week) : null,
+              healthWeek: Number.isFinite(Number(parsed.deltaSnapshots.healthWeek))
+                ? Number(parsed.deltaSnapshots.healthWeek)
+                : Number.isFinite(Number(parsed.deltaSnapshots.week))
+                  ? Number(parsed.deltaSnapshots.week)
+                  : null,
               healthByPlayer:
                 parsed.deltaSnapshots.healthByPlayer && typeof parsed.deltaSnapshots.healthByPlayer === 'object'
                   ? parsed.deltaSnapshots.healthByPlayer
@@ -446,7 +454,7 @@ export function loadUserPrefs() {
                   ? parsed.deltaSnapshots.playoffBaseline
                   : null
             }
-          : { week: null, healthByPlayer: {}, statsByKey: {}, playoffBaseline: null }
+          : { week: null, healthWeek: null, healthByPlayer: {}, statsByKey: {}, playoffBaseline: null }
     };
   } catch {
     return structuredCloneFallback(DEFAULT_USER_PREFS);
@@ -623,7 +631,8 @@ export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000
 function isRealMedicalInjuryLabel(label = '') {
   const s = String(label || '').trim();
   if (!s) return false;
-  return !/not injury related|\bnir\b|\brest\b|personal|cleared|undisclosed|coach'?s decision|healthy scratch/i.test(s);
+  if (isRestOrPersonalInjuryLabel(s)) return false;
+  return !/^(?:cleared|undisclosed|coach'?s decision|healthy scratch|none|n\/a)\b/i.test(s);
 }
 
 function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
@@ -654,6 +663,9 @@ function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
     if (!/in \(active\)|out \(inactive\)/i.test(freshBadge)) {
       if (fresh.gameStatus) next.gameStatus = fresh.gameStatus;
       if (Number.isFinite(fresh.playProbabilityPct)) next.playProbabilityPct = fresh.playProbabilityPct;
+      if (Number.isFinite(fresh.priorDayPlayProbabilityPct)) {
+        next.priorDayPlayProbabilityPct = fresh.priorDayPlayProbabilityPct;
+      }
       if (fresh.playBadgeLabel) next.playBadgeLabel = fresh.playBadgeLabel;
       if (fresh.playTier) next.playTier = fresh.playTier;
       if (Array.isArray(fresh.factors) && fresh.factors.length > 0) next.factors = fresh.factors;
@@ -824,6 +836,9 @@ export function hydrateCachedWeeklyPracticeAndInactives(appData) {
   const kickoffIso = um.kickoffIso || um.dateIso || '';
 
   try {
+    try {
+      window.localStorage.removeItem(LEGACY_WEEKLY_PRACTICE_CACHE_KEY);
+    } catch {}
     const rawPrac = window.localStorage.getItem(WEEKLY_PRACTICE_CACHE_KEY);
     if (rawPrac && week > 0 && !isBeforeWeeklyPracticeWindow(kickoffIso)) {
       const parsed = JSON.parse(rawPrac);
@@ -5945,7 +5960,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           }
 
           if (rp.rosterBucket === 'active') {
-            const offIsRest = /not injury related|\bnir\b|\brest\b|personal/i.test(offRec.injuryType || '');
+            const offIsRest = isRestOrPersonalInjuryLabel(offRec.injuryType || '');
             const existingIsRealMedical = isRealMedicalInjuryLabel(rp.health.injuryType);
             const fallbackMedicalFromProse = extractBodyPartSafe(
               `${rp.health.shortComment || ''} ${rp.health.longComment || ''}`
@@ -6152,7 +6167,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           ...(offOppRec.fri && offOppRec.fri !== '-' ? { fri: true } : {})
         };
 
-        const offIsRest = /not injury related|\bnir\b|\brest\b|personal/i.test(offOppRec.injuryType || '');
+        const offIsRest = isRestOrPersonalInjuryLabel(offOppRec.injuryType || '');
         const existingRealMed = isRealMedicalInjuryLabel(existing?.injuryType);
         const hasMidweekInjOpp =
           mergedThu === 'LP' ||

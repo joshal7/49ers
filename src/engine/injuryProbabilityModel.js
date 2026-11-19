@@ -744,9 +744,12 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
   let anyTargetMentioned = false;
 
   for (const sent of sentences) {
-    // Also split compound contrast clauses & independent multi-player comma clauses when different players are on each side
+    // Also split compound contrast clauses, trailing participial impact clauses ("..., boosting hopes for Brock Purdy's offense"),
+    // & independent multi-player comma clauses when different players are on each side
     const contrastParts = sent
-      .split(/,\s*(?=(?:[Ww]hile|[Ww]hereas|[Bb]ut|[Tt]hough|[Aa]lthough)\s+(?:(?:fellow|WR|RB|CB|DT|DE|LB|TE|QB|OT|OL|DL|S)\s+)?[A-Z])/)
+      .split(
+        /,\s*(?=(?:(?:[Ww]hile|[Ww]hereas|[Bb]ut|[Tt]hough|[Aa]lthough)\s+(?:(?:fellow|WR|RB|CB|DT|DE|LB|TE|QB|OT|OL|DL|S)\s+)?[A-Z]|(?:boosting|helping|giving|opening|leaving|affecting|impacting|forcing|allowing|benefiting|hurting|creating|putting|keeping)\b))/
+      )
       .map(p => p.trim())
       .filter(Boolean);
     const parts = contrastParts.flatMap(splitIndependentPlayerCommaClauses);
@@ -1325,10 +1328,13 @@ export function hasTrendingUpwardSignal(beatNote = '') {
     return false;
   }
   const norm = stripInitialAndHonorificDots(beatNote);
-  if (/\b(?:if|whether|unless)\s+(?:he|they)\s+(?:is|are|were)\s+(?:trending|optimistic|feeling\s+better)\b/i.test(norm)) {
+  if (
+    /\b(?:if|whether|unless)\s+(?:he|they)\s+(?:is|are|were)\s+(?:trending|optimistic|feeling\s+better|suited\s+up|in\s+uniform)\b/i.test(norm) ||
+    /\b(?:not|n't|never)\s+(?:suited\s+up|in\s+uniform)\b/i.test(norm)
+  ) {
     return false;
   }
-  return /\b(?:trending\s+(?:up(?:ward)?|in\s+the\s+right\s+direction|toward\s+(?:playing|suiting\s+up|returning|being\s+active|being\s+available|making\s+(?:his\s+)?return))|(?:moving|heading|pointing)\s+in\s+the\s+right\s+direction|pointing\s+toward\s+(?:playing|suiting\s+up|returning)|optimistic\s+(?:about|that|he(?:['’]?ll|\s+will|\s+can)|to\s+(?:play|suit\s+up|go|return))|encouraged\s+(?:by|about)|encouraging\s+signs?|leaning\s+toward\s+(?:playing|suiting\s+up|being\s+active|going)|(?:has|have)\s+a\s+(?:good|strong|solid|realistic)\s+chance\s+(?:to|of|at)\s+(?:play|playing|suit|suiting|return|returning)|good\s+chance\s+(?:he\s+)?(?:plays|suits\s+up|returns)|making\s+(?:good|solid|steady|encouraging|significant)\s+progress|expect(?:s|ed|ing)?\b[^.;]{0,36}\bto\s+make\s+progress|progressing\s+well|feeling\s+(?:much\s+|a\s+lot\s+)?better|looks?\s+(?:good|promising|like\s+he(?:['’]?ll|\s+will)\s+(?:play|suit\s+up|go))|confident\b[^.;]{0,36}\b(?:play|suit\s+up|good\s+to\s+go|ready|available))\b/i.test(
+  return /\b(?:trending\s+(?:up(?:ward)?|in\s+the\s+right\s+direction|toward\s+(?:playing|suiting\s+up|returning|being\s+active|being\s+available|making\s+(?:his\s+)?return))|(?:moving|heading|pointing)\s+in\s+the\s+right\s+direction|pointing\s+toward\s+(?:playing|suiting\s+up|returning)|optimistic\s+(?:about|that|he(?:['’]?ll|\s+will|\s+can)|to\s+(?:play|suit\s+up|go|return))|encouraged\s+(?:by|about)|encouraging\s+signs?|leaning\s+toward\s+(?:playing|suiting\s+up|being\s+active|going)|(?:has|have|looking\s+like)\s+a\s+(?:good|strong|solid|realistic|decent)\s+chance\s+(?:(?:to|of|at)\s+(?:play|playing|suit|suiting|return|returning|be(?:ing)?\s+(?:available|active))|(?:that\s+)?he(?:\s+will|['’]?ll|\s+can)?\s+(?:play|suit\s+up|return|be\s+(?:available|active)))|(?:good|decent)\s+chance\s+(?:he\s+)?(?:plays|suits\s+up|returns|will\s+(?:play|suit\s+up|return|be\s+available))|making\s+(?:good|solid|steady|encouraging|significant)\s+progress|expect(?:s|ed|ing)?\b[^.;]{0,36}\bto\s+make\s+progress|progressing\s+well|feeling\s+(?:much\s+|a\s+lot\s+)?better|looks?\s+(?:good|promising|like\s+he(?:['’]?ll|\s+will)\s+(?:play|suit\s+up|go))|confident\b[^.;]{0,36}\b(?:play|suit\s+up|good\s+to\s+go|ready|available)|(?:is|was)\s+(?:suited\s+up\s+for|in\s+uniform\s+(?:at|for))\s+(?:[a-z0-9'’ -]{0,28}\s+)?practice)\b/i.test(
     norm
   );
 }
@@ -1676,12 +1682,14 @@ export function evaluateCorroboratedNewsInjurySignal({
       : item.wireSource === 'espn_player_wire' && item.primaryPlayer?.id
         ? String(item.primaryPlayer.id)
         : '';
-    const allowSurnameForSignal = !pwireOwnerId || (playerId && pwireOwnerId === String(playerId)) || inMentionedList;
+    const isPwireOwner = Boolean(pwireOwnerId && playerId && pwireOwnerId === String(playerId));
+    const allowSurnameForSignal = !pwireOwnerId || isPwireOwner || inMentionedList;
     if (
       !inMentionedList &&
       !doesClauseMentionPlayer(fullBody, playerName, {
         allowSurname: allowSurnameForSignal,
-        sharedSurnames: sharedSet
+        sharedSurnames: sharedSet,
+        isPrimaryOwner: isPwireOwner
       })
     ) {
       continue;
@@ -2170,7 +2178,6 @@ function hasClearedConcussionProtocolSignal(beatNote = '') {
  */
 export function normalizePracticeCode(rawText = '', injuryType = '') {
   const s = String(rawText || '').toLowerCase().trim();
-  const inj = String(injuryType || '').toLowerCase();
   if (!s || s === '-' || s === 'n/a') return 'NONE';
   if (s === 'fp' || s.includes('full')) return 'FP';
   if (s === 'lp' || s.includes('limited')) return 'LP';
@@ -2179,8 +2186,7 @@ export function normalizePracticeCode(rawText = '', injuryType = '') {
     s === 'rest' ||
     s === 'dnp_rest' ||
     s.includes('rest') ||
-    inj.includes('rest') ||
-    inj.includes('not injury related')
+    isRestOrPersonalInjuryLabel(injuryType)
   ) {
     return 'DNP_REST';
   }
@@ -2244,8 +2250,9 @@ export function extractPracticeDaysFromText({
   const combined = `${shortComment || ''} ${longComment || ''}`.trim();
   const lower = combined.toLowerCase();
   const stLower = String(statusRaw || '').toLowerCase().trim();
-  const injLower = String(injuryType || '').toLowerCase().trim();
-  const isRest = injLower.includes('rest') || injLower.includes('not injury related') || /\brest\b/.test(lower);
+  const isRest =
+    isRestOrPersonalInjuryLabel(injuryType) ||
+    (!injuryType && /\b(?:vet(?:eran)?\s+rest|resting\s+player|not\s+injury\s+related)\b/.test(lower));
 
   const slashMatch = combined.match(/\b(DNP|LP|FP)\s*\/\s*(DNP|LP|FP)\s*\/\s*(DNP|LP|FP)\b/i);
   if (slashMatch) {
@@ -2292,12 +2299,12 @@ export function extractPracticeDaysFromText({
   const DAY_WORD_SRC = 'mon(?:day)?|tue(?:s(?:day)?)?|wed(?:nesday)?|thu(?:rs?(?:day)?)?|fri(?:day)?|sat(?:urday)?';
 
   const SPECULATIVE_SEG_GUARD_RE = new RegExp(
-    `\\b(?:unlikely\\s+to\\s+be|likely\\s+to\\s+be|more\\s+than\\s+a|opportunities\\s+to|opportunity\\s+to|hoping\\s+to\\s+be|hope(?:s|ful)?\\s+to|expect(?:s|ed|ing)?\\s+to\\s+be|could\\s+be\\s+a|might\\s+be\\s+a|plan(?:s|ning)?\\s+to\\s+practice|will\\s+(?:practice|be\\s+limited|not\\s+practice)\\s+(?:${DAY_WORD_SRC}))\\b`,
+    `\\b(?:assuming\\b|if\\s+(?:he|they|[a-z'.-]{2,20})\\s+(?:is|are|can|could|manages?|logs?|practices?|participates?|gets?|remains?)|whether\\s+(?:he|they|[a-z'.-]{2,20})|unless\\s+(?:he|they)|provided\\s+(?:that\\s+)?(?:he|they)|barring\\s+a\\s+setback|at\\s+least\\s+a\\s+(?:limited|full)|(?:is|are|be|being)\\s+able\\s+to\\s+(?:log|practice|participate|return|get)|there['’]?s\\s+a\\s+chance|chance\\s+(?:to|of|at|he|they)\\b|unlikely\\s+to\\s+be|likely\\s+to\\s+be|more\\s+than\\s+a|opportunities\\s+to|opportunity\\s+to|hoping\\s+to\\s+(?:be|log|practice|get|return)|hope(?:s|ful)?\\s+to|expect(?:s|ed|ing)?\\s+to\\s+(?:be|log|practice|participate|return|miss)|projected\\s+to|slated\\s+to|scheduled\\s+to|in\\s+line\\s+to|poised\\s+to|looking\\s+to|aiming\\s+to|trying\\s+to|needs?\\s+to\\s+(?:log|practice|participate|be)|(?:could|might|may|would|should)\\s+(?:be\\s+a|log|practice|participate|return\\s+to|miss|sit\\s+out)|plan(?:s|ning)?\\s+to\\s+(?:practice|participate|log)|will\\s+(?:likely\\s+|probably\\s+)?(?:need\\s+to\\s+|have\\s+to\\s+)?(?:practice|participate|be\\s+limited|be\\s+full|log\\s+(?:a|at\\s+least)|not\\s+practice|miss|sit\\s+out)(?:\\s+(?:in|on|at|a|at\\s+least|${DAY_WORD_SRC}))?)\\b`,
     'i'
   );
 
   const DNP_SEG_RE = new RegExp(
-    `\\b(?:did not practice|didn['’]?t practice|did not participate|didn['’]?t participate|not practicing|not participating|non-participant|no practice|was an observer|observer (?:for|at)|sidelined\\s+(?:at|for|in|from|on|${DAY_WORD_SRC})|sat out|held out(?:\\s+of)?|absent\\s+from|missed\\s+(?:(?:${DAY_WORD_SRC}|all\\s+three|consecutive|another|[\\w' -]{0,28})\\s+)?practices?|missed\\s+(?:(?:${DAY_WORD_SRC})(?:['’]?s)?\\s+)?(?:sessions?|walkthroughs?)|missing\\s+(?:(?:${DAY_WORD_SRC}|[\\w' -]{0,24})\\s+)?practices?)\\b`,
+    `\\b(?:did not practice|didn['’]?t practice|did not participate|didn['’]?t participate|not practicing|not participating|non-participant|no practice|was an observer|observer (?:for|at)|sidelined\\s+(?:at|for|in|from|on|${DAY_WORD_SRC})|(?:sat|sitting)\\s+out|held out(?:\\s+of)?|absent\\s+from|missed\\s+(?:(?:${DAY_WORD_SRC}|all\\s+three|consecutive|another|[\\w' -]{0,28})\\s+)?practices?|missed\\s+(?:(?:${DAY_WORD_SRC})(?:['’]?s)?\\s+)?(?:sessions?|walkthroughs?)|missing\\s+(?:(?:${DAY_WORD_SRC}|[\\w' -]{0,24})\\s+)?practices?)\\b`,
     'i'
   );
 
@@ -2454,7 +2461,7 @@ export function extractPracticeDaysFromText({
 }
 
 const FUTURE_PRACTICE_EXPECTATION_GUARD_RE =
-  /\b(?:expect(?:s|ed|ing)?\b[^.;]{0,55}\b(?:back|at|to)\s+practice|hopeful\b[^.;]{0,55}\bpractice|hopes?\s+to\b[^.;]{0,45}\bpractice|plan(?:s|ning)?\s+to\s+(?:practice|open)|will\s+(?:practice|be\s+limited|not\s+practice)\s+(?:wednesday|thursday|friday|tomorrow)|should\s+(?:give|provide|shed)\b[^.;]{0,55}\b(?:report|context|insight)|worth\s+(?:keeping\s+an\s+eye|monitoring)\b[^.;]{0,65}\bpractice|unlikely\s+to\s+(?:participate\s+in\s+|be\b[^.;]{0,40}\b)?(?:practice|participant)|(?:appears?|seems?)\s+(?:unlikely|likely)\s+to\s+be\b|(?:anything|nothing)\s+more\s+than\s+a\s+limited|opportunities\s+to\s+practice|could\s+return\s+to\s+practice|might\s+practice)\b/i;
+  /\b(?:assuming\b|if\s+(?:he|they|[a-z'.-]{2,20})\s+(?:is|are|can|could|manages?|logs?|practices?|participates?|gets?)|whether\s+(?:he|they|[a-z'.-]{2,20})|at\s+least\s+a\s+(?:limited|full)|(?:is|are|be|being)\s+able\s+to\s+(?:log|practice|participate|return)|there['’]?s\s+a\s+chance|chance\s+(?:to|of|at|he|they)\b|expect(?:s|ed|ing)?\b[^.;]{0,55}\b(?:back|at|to)\s+practice|hopeful\b[^.;]{0,55}\bpractice|hopes?\s+to\b[^.;]{0,45}\bpractice|plan(?:s|ning)?\s+to\s+(?:practice|open|participate|log)|will\s+(?:likely\s+|probably\s+)?(?:practice|be\s+limited|be\s+full|log\s+(?:a|at\s+least)|not\s+practice)\s+(?:wednesday|thursday|friday|tomorrow|in|on|at|a)|should\s+(?:give|provide|shed)\b[^.;]{0,55}\b(?:report|context|insight)|worth\s+(?:keeping\s+an\s+eye|monitoring)\b[^.;]{0,65}\bpractice|unlikely\s+to\s+(?:participate\s+in\s+|be\b[^.;]{0,40}\b)?(?:practice|participant)|(?:appears?|seems?)\s+(?:unlikely|likely)\s+to\s+be\b|(?:anything|nothing)\s+more\s+than\s+a\s+limited|opportunities\s+to\s+practice|(?:could|might|may|would|should)\s+(?:return\s+to\s+practice|practice|log\s+(?:a|at\s+least)|be\s+(?:a\s+)?(?:limited|full)))\b/i;
 
 const SIDE_FIELD_REHAB_OBSERVATION_RE =
   /\b(?:spotted\s+(?:running|sprinting|jogging|working|cutting|throwing|catching)|working\s+(?:on\s+(?:a|the)\s+(?:side|rehab)\s+field|with\s+trainers)|on\s+the\s+(?:side\s*lines?|side\s+field|rehab\s+field)|running\s+(?:on\s+the\s+side|routes\s+on\s+the\s+side|sprints))s?\b/i;
@@ -2558,8 +2565,20 @@ function computeSharedRosterSurnames(players = []) {
   return shared;
 }
 
-function isRestOrPersonalInjuryLabel(label = '') {
-  return /not injury related|\bnir\b|resting player|\brest\b|personal|coach'?s decision/i.test(String(label || '').trim());
+export function isRestOrPersonalInjuryLabel(label = '') {
+  const s = String(label || '').trim();
+  if (!s) return false;
+  if (!/not injury related|\bnir\b|resting player|\brest\b|personal|coach'?s decision/i.test(s)) {
+    return false;
+  }
+  // Compound labels like "Neck, Not injury related - resting player" or "Knee / NIR - Rest" contain a real medical injury!
+  const medicalRemainder = s
+    .replace(/\bnot\s+injury\s+related(?:\s*[-–—:,]\s*(?:resting\s+player|veteran\s+rest|vet\s+rest|rest|personal|other))?/gi, '')
+    .replace(/\bnir\s*[-–—:]?\s*(?:veteran\s+rest|vet\s+rest|resting\s+player|rest|personal|other)?/gi, '')
+    .replace(/\b(?:veteran\s+rest|vet\s+rest|resting\s+player|rest|personal|coach'?s\s+decision|other)\b/gi, '')
+    .replace(/[\s,/|–—-]+/g, '')
+    .trim();
+  return medicalRemainder.length === 0;
 }
 
 function decodeHtmlEntitiesBasic(str = '') {
@@ -2615,10 +2634,16 @@ function normalizeOfficialPracticeCellShared(
 function formatCleanOfficialInjuryLabel(rawInjury = '') {
   const trimmed = String(rawInjury || '').trim();
   if (!trimmed) return '';
-  if (/not injury related.*personal|nir\s*-\s*personal/i.test(trimmed)) return 'NIR - Personal';
-  if (/not injury related.*rest|nir\s*-\s*rest/i.test(trimmed)) return 'NIR - Rest';
-  // Insert wrap-friendly spaces around compound body-part slashes ("Hamstring/Back" -> "Hamstring / Back")
-  return trimmed.replace(/([A-Za-z])\s*\/\s*([A-Za-z])/g, '$1 / $2');
+  // Replace verbose NFL GSIS NIR phrases in-place so compound labels like "Neck, Not injury related - resting player"
+  // preserve the real medical body part ("Neck, NIR - Rest") instead of discarding it!
+  return trimmed
+    .replace(/\bnot\s+injury\s+related\s*[-–—:]\s*personal\b/gi, 'NIR - Personal')
+    .replace(/\bnot\s+injury\s+related\s*[-–—:]\s*(?:resting\s+player|veteran\s+rest|vet\s+rest|rest)\b/gi, 'NIR - Rest')
+    .replace(/\bnir\s*[-–—:]\s*personal\b/gi, 'NIR - Personal')
+    .replace(/\bnir\s*[-–—:]\s*(?:resting\s+player|veteran\s+rest|vet\s+rest|rest)\b/gi, 'NIR - Rest')
+    .replace(/\s*,\s*/g, ', ')
+    .replace(/([A-Za-z])\s*\/\s*([A-Za-z])/g, '$1 / $2')
+    .trim();
 }
 
 function normalizeOfficialGameStatusShared(rawStatus = '') {
@@ -3834,27 +3859,69 @@ export function computePlayerPlayProbability(input = {}) {
       factors.push('Remains in early stages of NFL 5-Step Concussion Protocol');
     }
   } else {
-    // Derive base from Wed/Thu/Fri practice progression (including trajectory directionality)
+    // Derive base from Wed/Thu/Fri practice progression (including trajectory directionality & multi-game absence ramps)
+    const missedCntLabel = consecutiveMissedGames > 1 ? `${consecutiveMissedGames}-game` : 'prior-game';
+    const priorAdj = (prior.questionablePlayRate - 0.78) * 0.35;
+    const hasCombinedRestTag =
+      hasRealMedicalInjury &&
+      /\b(?:not\s+injury\s+related|nir\s*-\s*rest|resting\s+player|vet(?:eran)?\s+rest)\b/i.test(injuryLower);
+
     if (fri === 'FP') {
       prob = 0.93;
       factors.push('Logged Full Participation (FP) on Friday');
     } else if (fri === 'LP') {
       if (wed === 'DNP' && thu === 'DNP') {
-        prob = 0.56;
-        factors.push('Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance');
+        if (missedPriorGame) {
+          prob = priorWeekPracticed === true ? 0.50 : consecutiveMissedGames >= 2 ? 0.42 : 0.48;
+          factors.push(
+            `Late-week salvage (DNP/DNP/LP) following ${missedCntLabel} absence; requires pre-game warmup clearance`
+          );
+        } else {
+          prob = 0.56;
+          factors.push('Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance');
+        }
       } else if (wed === 'FP' || thu === 'FP') {
         prob = Math.max(0.35, prior.questionablePlayRate - 0.14);
         factors.push('Late-week practice downgrade (FP earlier in week -> Friday LP); elevated flare-up caution');
       } else if (wed === 'DNP' && thu === 'LP') {
-        prob = Math.min(0.89, prior.questionablePlayRate + 0.03);
-        factors.push(
-          `Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
-        );
+        if (missedPriorGame) {
+          const baseTwoLp =
+            priorWeekPracticed === true
+              ? consecutiveMissedGames >= 2
+                ? 0.74
+                : 0.78
+              : consecutiveMissedGames >= 2
+                ? 0.66
+                : 0.72;
+          prob = baseTwoLp + priorAdj;
+          factors.push(
+            `Consecutive Thu/Fri Limited (Wed DNP -> Thu LP -> Fri LP) following ${missedCntLabel} absence${
+              priorWeekPracticed === false ? ' without prior practice' : ''
+            }`
+          );
+        } else {
+          prob = Math.min(0.89, prior.questionablePlayRate + 0.03);
+          factors.push(
+            `Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+          );
+        }
       } else {
-        prob = prior.questionablePlayRate;
-        factors.push(
-          `Friday Limited (LP) — anchored to player Questionable play prior (${Math.round(prior.questionablePlayRate * 100)}%)`
-        );
+        if (missedPriorGame) {
+          prob =
+            priorWeekPracticed === true
+              ? Math.max(0.68, prior.questionablePlayRate - (consecutiveMissedGames >= 2 ? 0.05 : 0.02))
+              : Math.max(0.62, (consecutiveMissedGames >= 2 ? 0.72 : 0.76) + priorAdj);
+          factors.push(
+            `Friday Limited (LP) following ${missedCntLabel} absence${
+              priorWeekPracticed === false ? ' without prior practice' : ''
+            } (base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+          );
+        } else {
+          prob = prior.questionablePlayRate;
+          factors.push(
+            `Friday Limited (LP) — anchored to player Questionable play prior (${Math.round(prior.questionablePlayRate * 100)}%)`
+          );
+        }
       }
     } else if (fri === 'DNP') {
       if (wed === 'DNP_REST' && thu === 'LP') {
@@ -3882,6 +3949,24 @@ export function computePlayerPlayProbability(input = {}) {
         if (prior.isVeteranRestHabitual && !missedPriorGame) {
           prob = 0.85;
           factors.push('Expected veteran ramp-up (Wed maintenance -> Thu LP)');
+        } else if (missedPriorGame) {
+          // Returning from multi-game absence with a single Thu LP after Wed DNP still requires 24h Friday load response check!
+          const firstLpBase =
+            priorWeekPracticed === true
+              ? consecutiveMissedGames >= 2
+                ? 0.64
+                : 0.68
+              : consecutiveMissedGames >= 3
+                ? 0.54
+                : consecutiveMissedGames === 2
+                  ? 0.57
+                  : 0.62;
+          prob = firstLpBase + priorAdj;
+          factors.push(
+            `First Limited session (Wed DNP -> Thu LP) following ${missedCntLabel} absence${
+              priorWeekPracticed === false ? ' without prior practice' : ''
+            } — awaiting Friday load response`
+          );
         } else {
           prob = Math.min(0.84, prior.questionablePlayRate - 0.02);
           factors.push(
@@ -3889,12 +3974,35 @@ export function computePlayerPlayProbability(input = {}) {
           );
         }
       } else if (thu === 'LP') {
-        prob = missedPriorGame
-          ? Math.max(0.62, prior.questionablePlayRate - (consecutiveMissedGames >= 2 ? 0.03 : 0.01))
-          : prior.questionablePlayRate;
-        factors.push(
-          `Thursday Limited Participation (LP); player toughness prior = ${Math.round(prior.questionablePlayRate * 100)}%`
-        );
+        if (missedPriorGame) {
+          const thuLpBase =
+            wed === 'LP'
+              ? priorWeekPracticed === true
+                ? consecutiveMissedGames >= 2
+                  ? 0.72
+                  : 0.76
+                : consecutiveMissedGames >= 2
+                  ? 0.68
+                  : 0.72
+              : priorWeekPracticed === true
+                ? consecutiveMissedGames >= 2
+                  ? 0.66
+                  : 0.70
+                : consecutiveMissedGames >= 2
+                  ? 0.60
+                  : 0.65;
+          prob = thuLpBase + priorAdj;
+          factors.push(
+            wed === 'LP'
+              ? `Consecutive Wed/Thu Limited (LP -> LP) following ${missedCntLabel} absence`
+              : `Thursday Limited Participation (LP) following ${missedCntLabel} absence — awaiting Friday response`
+          );
+        } else {
+          prob = prior.questionablePlayRate;
+          factors.push(
+            `Thursday Limited Participation (LP); player toughness prior = ${Math.round(prior.questionablePlayRate * 100)}%`
+          );
+        }
       } else if (wed === 'DNP' && thu === 'DNP') {
         prob = missedPriorGame
           ? 0.22
@@ -3907,10 +4015,12 @@ export function computePlayerPlayProbability(input = {}) {
         factors.push('Full Participation (FP) logged on Wednesday');
       } else if (wed === 'LP' && thu === 'NONE') {
         if (missedPriorGame) {
-          const absenceStep = consecutiveMissedGames >= 2 ? 0.05 : 0.03;
-          prob = Math.max(0.64, prior.questionablePlayRate - absenceStep);
+          prob =
+            priorWeekPracticed === true
+              ? Math.max(0.68, prior.questionablePlayRate - (consecutiveMissedGames >= 2 ? 0.05 : 0.03))
+              : (consecutiveMissedGames >= 2 ? 0.66 : 0.70) + priorAdj;
           factors.push(
-            `Returned to Limited Participation (LP) on Wednesday following ${consecutiveMissedGames > 1 ? `${consecutiveMissedGames}-game` : 'prior-game'} absence`
+            `Returned to Limited Participation (LP) on Wednesday following ${missedCntLabel} absence`
           );
         } else {
           prob = prior.questionablePlayRate;
@@ -3922,6 +4032,11 @@ export function computePlayerPlayProbability(input = {}) {
         if (missedPriorGame) {
           prob = 0.28 + (prior.questionablePlayRate - 0.78) * 0.25;
           factors.push('Did Not Participate (DNP) on Wednesday; remains sidelined from practice');
+        } else if (hasCombinedRestTag) {
+          prob = prior.isVeteranRestHabitual && !sustainedInLastGame ? 0.64 : 0.56;
+          factors.push(
+            `Did Not Participate (DNP) on Wednesday with combined medical + veteran rest tag (${injuryType}); awaiting Thursday participation`
+          );
         } else if (prior.isVeteranRestHabitual && !sustainedInLastGame) {
           prob = 0.56;
           factors.push('Did Not Participate (DNP) on Wednesday (veteran maintenance profile, awaiting Thursday workload)');
@@ -3933,6 +4048,11 @@ export function computePlayerPlayProbability(input = {}) {
           prob += 0.03;
           factors.push('Spotted working/running on side rehab field during practice (+3%)');
         }
+      } else if (wed === 'DNP_REST' && thu === 'NONE') {
+        prob = prior.isVeteranRestHabitual && !missedPriorGame ? 0.68 : 0.58;
+        factors.push(
+          `Wednesday rest/non-participation alongside active medical tag (${injuryType || statusRaw || 'reported'}); awaiting Thursday participation`
+        );
       } else if ((statusRaw === 'questionable' || isIrReturnQuestionable) && !hasObservedPracticeThisWeek) {
         // Early-week pre-practice rollover (Mon/Tue/Wed AM before first practice report):
         // Calibrated to 2024–2026 NFL empirical next-game rates (Missed + Prior DNP = 33.7%; Missed + Prior LP/FP = 51.8%–67%; Active Day-to-Day = 74%–82%)
@@ -4080,9 +4200,23 @@ export function computePlayerPlayProbability(input = {}) {
       if (statusRaw === 'questionable') prob = Math.min(prob, corroboratedHighConf ? 0.88 : 0.84);
       factors.push(`Beat/podium consensus (${srcLabel}): on track to suit up`);
     } else if (newsSig.signalType === 'TRENDING_UPWARD' && statusRaw !== 'doubtful' && fri !== 'DNP') {
-      const upTarget = !hasObservedPracticeThisWeek
-        ? Math.min(0.76, Math.max(prob + 0.14, 0.64))
-        : Math.min(0.86, Math.max(prob + 0.10, prior.questionablePlayRate + 0.04));
+      const hasOnlyDnpSoFar = hasObservedPracticeThisWeek && !loggedActivePracticeReps;
+      let upTarget;
+      if (hasOnlyDnpSoFar) {
+        upTarget =
+          wed === 'DNP' && thu === 'DNP'
+            ? Math.min(0.36, prob + 0.10)
+            : Math.min(missedPriorGame ? 0.44 : 0.56, prob + 0.18);
+      } else if (!hasObservedPracticeThisWeek) {
+        upTarget =
+          missedPriorGame && priorWeekPracticed !== true
+            ? Math.min(0.62, prob + 0.14)
+            : Math.min(0.76, Math.max(prob + 0.14, 0.64));
+      } else if (missedPriorGame && priorWeekPracticed !== true && thu !== 'FP' && fri !== 'FP') {
+        upTarget = Math.min(0.76, prob + 0.10);
+      } else {
+        upTarget = Math.min(0.86, Math.max(prob + 0.10, prior.questionablePlayRate + 0.04));
+      }
       const blend = Math.min(0.78, conf * 0.84);
       if (upTarget > prob) {
         prob = prob * (1 - blend) + upTarget * blend;
@@ -4130,7 +4264,18 @@ export function computePlayerPlayProbability(input = {}) {
     prob = statusRaw === 'questionable' ? Math.min(0.84, Math.max(prob, 0.78)) : Math.max(prob, 0.84);
     factors.push('Beat/podium consensus: on track to suit up');
   } else if (hasTrendingUpwardSignal(beatNote) && statusRaw !== 'doubtful' && fri !== 'DNP') {
-    const cap = !hasObservedPracticeThisWeek ? 0.72 : 0.85;
+    const hasOnlyDnpSoFar = hasObservedPracticeThisWeek && !loggedActivePracticeReps;
+    const cap = hasOnlyDnpSoFar
+      ? missedPriorGame
+        ? 0.42
+        : 0.54
+      : !hasObservedPracticeThisWeek
+        ? missedPriorGame && priorWeekPracticed !== true
+          ? 0.60
+          : 0.72
+        : missedPriorGame && priorWeekPracticed !== true && thu !== 'FP' && fri !== 'FP'
+          ? 0.74
+          : 0.85;
     prob = Math.max(prob, Math.min(cap, prob + 0.08));
     factors.push('Coaching/beat trend: trending upward / making progress ahead of game');
   }
@@ -5334,6 +5479,72 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
       ? appData.health.practiceReport.map(r => `${r.playerId || r.name}:${r.playProbabilityPct}:${r.wed}:${r.thu}:${r.fri}:${r.injuryType}`).join('|')
       : '';
 
+    const computePriorDayProb = p => {
+      if (shouldBlankEarlyWeek) return null;
+      const w = p.health.wed && p.health.wed !== '-' ? p.health.wed : '-';
+      const t = p.health.thu && p.health.thu !== '-' ? p.health.thu : '-';
+      const f = p.health.fri && p.health.fri !== '-' ? p.health.fri : '-';
+      const filledCount = [w, t, f].filter(v => v !== '-').length;
+      if (filledCount < 2) return null;
+      const prevW = w;
+      const prevT = f !== '-' ? t : '-';
+      const prevF = '-';
+      const hadPriorRestriction =
+        /^(?:dnp|lp|limited|did not)/i.test(prevW) || /^(?:dnp|lp|limited|did not)/i.test(prevT);
+      const rawSt = String(p.health.status || '');
+      const priorStatus =
+        p.rosterBucket === 'ir'
+          ? rawSt || 'IR — 21-Day Window Open'
+          : hadPriorRestriction && /^(?:active|no designation|cleared|out|doubtful)/i.test(rawSt)
+            ? 'Questionable'
+            : rawSt || 'Questionable';
+      const refNote = pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment, p.health.irBeatNote);
+      const priorAbs = derivePriorWeekAbsenceProfile({
+        weeklyHistory: p.health.weeklyHistory2026 || [],
+        currentWeek,
+        byeWeek,
+        beatNote: refNote
+      });
+      const priorCalc = computePlayerPlayProbability({
+        name: p.name,
+        position: p.position,
+        experienceYears: p.experienceYears ?? null,
+        snapPct: p.primarySnapPct ?? null,
+        gameStatus: priorStatus,
+        rosterBucket: p.rosterBucket || 'active',
+        isPracticeWindowOpen: Boolean(p.health.isPracticeWindowOpen),
+        isIrReturnQuestionable: Boolean(p.health.isIrReturnQuestionable),
+        isSeasonEnding: Boolean(p.health.isSeasonEnding),
+        sustainedInLastGame: Boolean(p.health.sustainedInLastGame),
+        exitedPriorGameWithoutReturn: Boolean(p.health.exitedPriorGameWithoutReturn),
+        missedPriorGame: priorAbs.missedPriorGame,
+        consecutiveMissedGames: priorAbs.consecutiveMissedGames,
+        priorWeekPracticed: priorAbs.priorWeekPracticed,
+        fantasyStatusAbbr: p.health.fantasyStatusAbbr || '',
+        injuryType: p.health.injuryType || '',
+        wed: prevW,
+        thu: prevT,
+        fri: prevF,
+        hasSideFieldRehab: Boolean(p.health.hasSideFieldRehab),
+        beatNote: '',
+        designatedDateIso: p.health.designatedDateIso || '',
+        kickoffIso: upcomingKickoffIso,
+        nowMs,
+        schedule,
+        seasonConcluded,
+        weeklyHistory: p.health.weeklyHistory2026 || [],
+        earliestEligibleWeek: p.health.earliestEligibleWeek ?? null,
+        currentWeek,
+        byeWeek,
+        upcomingOppName,
+        upcomingOppAbbr,
+        blurbDateIso: p.health.blurbDateIso || null,
+        lastCompletedGameKickoffMs,
+        rosterPlayerNames
+      });
+      return Number.isFinite(priorCalc?.probabilityPct) ? priorCalc.probabilityPct : null;
+    };
+
     appData.health.practiceReport = rosterPlayers
       .filter(p => p.health?.isOnPracticeReport)
       .sort(
@@ -5358,6 +5569,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           (p.health.wed === 'Vet Rest' ? 'NIR - Veteran Rest' : 'Cleared — No Designation'),
         gameStatus: p.health.status,
         playProbabilityPct: p.health.playProbabilityPct,
+        priorDayPlayProbabilityPct: computePriorDayProb(p),
         playBadgeLabel: p.health.playBadgeLabel,
         archetypeNote: p.health.archetypeNote || '',
         factors: p.health.factors || [],

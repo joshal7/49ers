@@ -446,18 +446,21 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
   if (days.length >= 2) {
     const first = days[0];
     const last = days[days.length - 1];
+    const pairLabel = `${first.code}→${last.code}`;
     if (last.level > first.level) {
       trajectory = {
         direction: 'up',
         arrow: '↑',
-        shortLabel: `${first.code}→${last.code} ↑`,
+        pairLabel,
+        shortLabel: `${pairLabel} ↑`,
         tone: 'positive'
       };
     } else if (last.level < first.level) {
       trajectory = {
         direction: 'down',
         arrow: '↓',
-        shortLabel: `${first.code}→${last.code} ↓`,
+        pairLabel,
+        shortLabel: `${pairLabel} ↓`,
         tone: 'danger'
       };
     }
@@ -465,23 +468,80 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
 
   let probDelta = null;
   const curPct = Number(row.playProbabilityPct);
-  const prevPct = Number(prevSnapshotEntry?.playProbabilityPct);
-  if (Number.isFinite(curPct) && Number.isFinite(prevPct)) {
-    const diff = Math.round(curPct - prevPct);
-    if (Math.abs(diff) >= 5) {
-      probDelta = {
-        diff,
-        label: `${diff > 0 ? '+' : ''}${diff}%`,
-        tone: diff > 0 ? 'positive' : 'danger'
-      };
+  const priorDayPct =
+    row.priorDayPlayProbabilityPct !== null && row.priorDayPlayProbabilityPct !== undefined
+      ? Number(row.priorDayPlayProbabilityPct)
+      : NaN;
+  const snapPct =
+    prevSnapshotEntry?.playProbabilityPct !== null && prevSnapshotEntry?.playProbabilityPct !== undefined
+      ? Number(prevSnapshotEntry.playProbabilityPct)
+      : NaN;
+
+  if (Number.isFinite(curPct)) {
+    if (trajectory) {
+      const expectedSign = trajectory.direction === 'up' ? 1 : -1;
+      const priorDayDiff = Number.isFinite(priorDayPct) ? Math.round(curPct - priorDayPct) : NaN;
+      const snapDiff = Number.isFinite(snapPct) ? Math.round(curPct - snapPct) : NaN;
+      let chosenDiff = NaN;
+      if (Number.isFinite(priorDayDiff) && priorDayDiff !== 0 && Math.sign(priorDayDiff) === expectedSign) {
+        chosenDiff = priorDayDiff;
+      } else if (Number.isFinite(snapDiff) && snapDiff !== 0 && Math.sign(snapDiff) === expectedSign) {
+        chosenDiff = snapDiff;
+      } else if (Number.isFinite(priorDayDiff) && Math.abs(priorDayDiff) >= 5) {
+        chosenDiff = priorDayDiff;
+      }
+      if (Number.isFinite(chosenDiff) && chosenDiff !== 0) {
+        probDelta = {
+          diff: chosenDiff,
+          label: `${chosenDiff > 0 ? '+' : ''}${chosenDiff}%`,
+          tone: chosenDiff > 0 ? 'positive' : 'danger'
+        };
+      }
+    } else {
+      const snapDiff = Number.isFinite(snapPct) ? Math.round(curPct - snapPct) : NaN;
+      const priorDayDiff = Number.isFinite(priorDayPct) ? Math.round(curPct - priorDayPct) : NaN;
+      const chosenDiff =
+        Number.isFinite(snapDiff) && Math.abs(snapDiff) >= 5
+          ? snapDiff
+          : Number.isFinite(priorDayDiff) && Math.abs(priorDayDiff) >= 5
+            ? priorDayDiff
+            : NaN;
+      if (Number.isFinite(chosenDiff)) {
+        probDelta = {
+          diff: chosenDiff,
+          label: `${chosenDiff > 0 ? '+' : ''}${chosenDiff}%`,
+          tone: chosenDiff > 0 ? 'positive' : 'danger'
+        };
+      }
     }
   }
 
   if (!trajectory && !probDelta) return null;
+  const compactLabel =
+    trajectory && probDelta
+      ? `${trajectory.arrow} ${probDelta.label}`
+      : probDelta
+        ? probDelta.label
+        : trajectory.arrow;
+  const displayLabel =
+    trajectory && probDelta
+      ? `${trajectory.pairLabel} ${probDelta.label}`
+      : trajectory
+        ? trajectory.shortLabel
+        : probDelta.label;
+  const tooltipLabel =
+    trajectory && probDelta
+      ? `${trajectory.pairLabel} (${probDelta.label})`
+      : trajectory
+        ? trajectory.shortLabel
+        : `Play likelihood ${probDelta.label} vs prior update`;
+
   return {
     trajectory,
     probDelta,
-    displayLabel: trajectory ? trajectory.shortLabel : probDelta.label,
+    compactLabel,
+    displayLabel,
+    tooltipLabel,
     tone: trajectory ? trajectory.tone : probDelta.tone
   };
 }

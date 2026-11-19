@@ -1800,10 +1800,106 @@ function resolvePracticeStatusBucket(text = '') {
 }
 
 function isPlayerBioWireBlurbItem(item = {}) {
+  const id = String(item?.id || '');
+  const url = String(item?.url || '');
+  const ws = String(item?.wireSource || '');
   return (
-    /^espn_pwire_/i.test(String(item?.id || '')) ||
-    /espn\.com\/nfl\/player\/_\/id\//i.test(String(item?.url || ''))
+    ws === 'espn_player_wire' ||
+    ws === 'rotowire_rss' ||
+    /^espn_pwire_/i.test(id) ||
+    /^rw_live_/i.test(id) ||
+    /espn\.com\/nfl\/player\/_\/id\//i.test(url) ||
+    /rotowire\.com/i.test(url)
   );
+}
+
+const GENERIC_PLAY_BY_PLAY_BRIDGE_WORDS = new Set([
+  'yard', 'yards', 'catch', 'catches', 'pass', 'passes', 'play', 'plays', 'down', 'touchdown',
+  'drive', 'quarter', 'first', 'second', 'third', 'fourth', 'run', 'rush', 'score', 'ball',
+  'field', 'target', 'snap', 'snaps', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday',
+  'friday', 'saturday', 'today', 'tonight', 'tomorrow', 'yesterday', 'veteran', 'general', 'manager'
+]);
+
+function extractOfficialSpeakerKey(item = {}) {
+  const isArticle = item?.type === 'article' || item?.type === 'post';
+  const isDigest = isMultiTopicDigestOrRoundup(item);
+  const lead = extractPrimaryClaimText(item);
+  const sub = isArticle && !isDigest ? cleanWireSummaryForMatching(item?.summary || '').slice(0, 175) : '';
+  const probe = `${lead} ${sub}`.toLowerCase();
+  if (/\b(?:john\s+)?lynch\b/.test(probe)) return 'fo:lynch';
+  if (/\b(?:kyle\s+)?shanahan\b/.test(probe)) return 'coach:shanahan';
+  if (/\b(?:robert\s+)?saleh\b/.test(probe)) return 'coord:saleh';
+  if (/\b(?:klint\s+)?kubiak\b/.test(probe)) return 'coord:kubiak';
+  if (/\b(?:brandon\s+)?staley\b/.test(probe)) return 'coord:staley';
+  if (/\b(?:nick\s+)?sorensen\b/.test(probe)) return 'coord:sorensen';
+  if (/\b(?:chris\s+)?foerster\b/.test(probe)) return 'coord:foerster';
+  return null;
+}
+
+function resolveBriefingTopicDomain(item = {}) {
+  const isArticle = item?.type === 'article' || item?.type === 'post';
+  const isDigest = isMultiTopicDigestOrRoundup(item);
+  const lead = extractPrimaryClaimText(item);
+  const sub = isArticle && !isDigest ? cleanWireSummaryForMatching(item?.summary || '').slice(0, 175) : '';
+  const probe = `${lead} ${sub}`.toLowerCase();
+  if (
+    /\b(injur(?:y|ies|ed)|achilles|hamstring|ankle|knee|back|shoulder|groin|calf|foot|concussion|quad|pectoral|elbow|wrist|thumb|ribs|oblique|recovery|rehab|padded practice|return to practice|back at practice|could return|chance to return|hoping to have|practice window|injured reserve|\bir\b|questionable|doubtful|ruled out|day-to-day|week-to-week|surgery|mri|x-ray|healthy|health update)\b/.test(
+      probe
+    )
+  ) {
+    return 'injury_recovery';
+  }
+  if (
+    /\b(trade[ds]?|trading|acquir(?:e|ed|ing)|contract|extension|restructure|salary cap|free agen|signing|re-sign|waiv(?:e|ed)|release[ds]?|asking price|exemption|roster spot)\b/.test(
+      probe
+    )
+  ) {
+    return 'trade_contract';
+  }
+  if (
+    /\b(sack|pass rush|snap count|starting|benched|depth chart|film|tape|play-?calling|scheme|weak link|struggl(?:e|es|ing)|breakout|impressed|prais(?:e|es|ed))\b/.test(
+      probe
+    )
+  ) {
+    return 'performance_role';
+  }
+  return null;
+}
+
+function extractPrimaryPlayerSlug(item = {}) {
+  const players = Array.isArray(item?.mentionedPlayers) ? item.mentionedPlayers : [];
+  if (players.length === 0 || players.length > 2) return '';
+  const lead = extractPrimaryClaimText(item);
+  const matched =
+    players.find(mp => {
+      const surname = String(mp?.name || '')
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .trim()
+        .split(/\s+/)
+        .slice(-1)[0];
+      return surname && surname.length >= 3 && new RegExp(`\\b${escapeRegexToken(surname)}\\b`, 'i').test(lead);
+    }) || (players.length === 1 ? players[0] : null);
+  if (!matched) return '';
+  return String(matched.name || matched.id || '')
+    .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+function hasAcuteInjuryEscalation(text = '') {
+  return /\b(ruled out|placed on (?:injured reserve|ir)|season-ending|undergo(?:es|ing)? surgery|underwent surgery|\bmri\b|x-ray|setback|carted off|downgraded|will not play|out for (?:sunday|monday|thursday|week \d+))\b/i.test(
+    String(text || '')
+  );
+}
+
+function hasPracticeOrEscalationConflict(bucketA, bucketB, textA = '', textB = '') {
+  if (bucketA && bucketB && bucketA !== bucketB) return true;
+  const officialStatuses = new Set(['dnp', 'lp', 'fp']);
+  if ((officialStatuses.has(bucketA) && !bucketB) || (officialStatuses.has(bucketB) && !bucketA)) {
+    return true;
+  }
+  if (hasAcuteInjuryEscalation(textA) !== hasAcuteInjuryEscalation(textB)) return true;
+  return false;
 }
 
 /**
@@ -2032,7 +2128,7 @@ function buildStorySignatureKey(item = {}) {
   if (
     !isDigest &&
     headlinePKey &&
-    /\b(hoping to have|hoping[\s\S]{0,25}returns? to practice|chance to return|hopes to get|fly(?:ing)? (?:to|into) colorado)\b/i.test(
+    /\b(hoping['"“”‘’]?\s+to['"“”‘’]?\s+have|hoping['"“”‘’]?[\s\S]{0,25}returns? to practice|chance to return|hopes to get|fly(?:ing)? (?:to|into) colorado)\b/i.test(
       lead
     )
   ) {
@@ -2054,6 +2150,14 @@ function buildStorySignatureKey(item = {}) {
   }
 
   return null;
+}
+
+function shareAnyPlayerEntity(setA, setB) {
+  if (!setA?.size || !setB?.size) return false;
+  for (const x of setA) {
+    if (x.startsWith('pname:') && setB.has(x)) return true;
+  }
+  return false;
 }
 
 function setOverlapSimilarity(setA, setB) {
@@ -2183,8 +2287,13 @@ export function deduplicateAndGroupWireItems(
       }
     }
     const outletKey = String(item.outletId || item.outletName || '').toLowerCase();
-    const itemPracticeBucket = resolvePracticeStatusBucket(extractPrimaryClaimText(item));
+    const itemLeadText = extractPrimaryClaimText(item);
+    const itemPracticeBucket = resolvePracticeStatusBucket(itemLeadText);
     const itemIsBioBlurb = isPlayerBioWireBlurbItem(item);
+    const itemSpeaker = extractOfficialSpeakerKey(item);
+    const itemTopicDomain = resolveBriefingTopicDomain(item);
+    const itemPrimaryPlayer = extractPrimaryPlayerSlug(item);
+    const itemReporterKey = String(item.reporterId || item.reporterName || item.author || '').toLowerCase().trim();
     const itemPrimaryUrl = canonicalComparableUrl(item.url || '');
     const itemExternalUrl = canonicalComparableUrl(item.externalUrl || '');
 
@@ -2259,20 +2368,41 @@ export function deduplicateAndGroupWireItems(
         break;
       }
 
-      // 2b. Secondary ESPN/RotoWire player-bio paraphrase of a beat reporter's original practice/injury tweet
-      //     (e.g. Matt Barrows tweet "CBs Renardo Green (back) and Deommodore Lenoir (foot) are not practicing today"
-      //      + ESPN player blurb "Green (back) did not practice Wednesday, Matt Barrows reports")
+      // 2b. Secondary ESPN/RotoWire player-wire paraphrase of a beat reporter's original tweet (or twin ESPN+RotoWire blurbs citing same reporter)
+      //     (e.g. Matt Maiocco KNBR tweet + RotoWire/ESPN paraphrase citing Matt Maiocco, or Matt Barrows DNP tweet + ESPN bio blurb)
       const leadIsBioBlurb = isPlayerBioWireBlurbItem(cl.lead);
+      const leadLeadText = extractPrimaryClaimText(cl.lead);
+      const leadPracticeBucket = resolvePracticeStatusBucket(leadLeadText);
+      const leadReporterKey = String(cl.lead.reporterId || cl.lead.reporterName || cl.lead.author || '')
+        .toLowerCase()
+        .trim();
+      const statusOrEscalationConflict = hasPracticeOrEscalationConflict(
+        itemPracticeBucket,
+        leadPracticeBucket,
+        itemLeadText,
+        leadLeadText
+      );
       if (
         (itemIsBioBlurb || leadIsBioBlurb) &&
-        itemIsBioBlurb !== leadIsBioBlurb &&
-        item.reporterId &&
-        item.reporterId === cl.lead.reporterId &&
-        entSim.jaccard > 0 &&
+        itemReporterKey &&
+        itemReporterKey === leadReporterKey &&
+        shareAnyPlayerEntity(entities, cl.entities) &&
+        !statusOrEscalationConflict &&
         (!itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= 14 * 3_600_000)
       ) {
-        const leadPracticeBucket = resolvePracticeStatusBucket(extractPrimaryClaimText(cl.lead));
-        if (itemPracticeBucket && itemPracticeBucket === leadPracticeBucket) {
+        const samePracticeBucket = Boolean(itemPracticeBucket && itemPracticeBucket === leadPracticeBucket);
+        const withinParaphraseWindow = !itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= 8 * 3_600_000;
+        const sameSpeaker = Boolean(itemSpeaker && cl.speaker && itemSpeaker === cl.speaker);
+        let sharedNonEntityWords = 0;
+        for (const t of combinedUnigrams) {
+          if (cl.combinedUnigrams.has(t) && !entityNameWords.has(t) && !GENERIC_PLAY_BY_PLAY_BRIDGE_WORDS.has(t)) {
+            sharedNonEntityWords += 1;
+          }
+        }
+        if (
+          samePracticeBucket ||
+          (withinParaphraseWindow && (!sigKey || !cl.sigKey || sigKey === cl.sigKey) && (sameSpeaker || sharedNonEntityWords >= 2))
+        ) {
           matchedCluster = cl;
           bestSim = 0.9;
           break;
@@ -2338,10 +2468,10 @@ export function deduplicateAndGroupWireItems(
       }
 
       // 3. Cross-outlet TF-IDF Headline Token + Entity Hybrid Similarity (Google News single-pass threshold)
-      //    Require shared entities when both items mention players so unrelated player stories never merge!
+      //    Require shared player entities (`pname:*`) when both items mention players so unrelated player stories never merge via shared coach/opponent!
       const bothHavePlayers =
         (item.mentionedPlayers?.length || 0) > 0 && (cl.lead.mentionedPlayers?.length || 0) > 0;
-      if (bothHavePlayers && entSim.jaccard === 0) {
+      if (bothHavePlayers && !shareAnyPlayerEntity(entities, cl.entities)) {
         continue;
       }
 
@@ -2353,24 +2483,34 @@ export function deduplicateAndGroupWireItems(
         continue;
       }
 
-      // 3b. Summary-assisted Same-Entity Bridge for paraphrased beat articles within 24h
+      // 3b. Summary-assisted Same-Entity Bridge for paraphrased beat coverage within 24h (articles) or 12h (cross-format article↔tweet)
       //     (e.g. headline "makes honest admission about slow start" + summary "not playing his best... first sack"
       //      matching "Nick Bosa: I don't think I've played my best football").
-      //     Requires non-entity content tokens to overlap so sharing 2 player names (4 name tokens) never falsely bridges!
+      //     Requires non-entity, non-play-by-play content tokens to overlap so sharing player names or game stats never falsely bridges!
       const itemIsArt = item.type === 'article' || item.type === 'post';
       const leadIsArt = cl.lead.type === 'article' || cl.lead.type === 'post';
+      const sameSinglePlayer = Boolean(itemPrimaryPlayer && cl.primaryPlayer && itemPrimaryPlayer === cl.primaryPlayer);
+      const bridgeWindowMs = itemIsArt && leadIsArt ? 24 * 3_600_000 : 12 * 3_600_000;
       if (
-        itemIsArt &&
-        leadIsArt &&
+        (itemIsArt || leadIsArt) &&
         !itemIsDigest &&
         !cl.isDigest &&
-        entSim.jaccard >= 0.34 &&
-        (!itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= 24 * 3_600_000)
+        !itemIsVideo &&
+        !leadIsVideo &&
+        !statusOrEscalationConflict &&
+        ((itemIsArt && leadIsArt && entSim.jaccard >= 0.34) || (sameSinglePlayer && entSim.jaccard >= 0.45)) &&
+        (!itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= bridgeWindowMs)
       ) {
         const subSim = setOverlapSimilarity(combinedUnigrams, cl.combinedUnigrams);
         let sharedContentCount = 0;
         for (const t of combinedUnigrams) {
-          if (cl.combinedUnigrams.has(t) && !entityNameWords.has(t)) sharedContentCount += 1;
+          if (
+            cl.combinedUnigrams.has(t) &&
+            !entityNameWords.has(t) &&
+            !GENERIC_PLAY_BY_PLAY_BRIDGE_WORDS.has(t)
+          ) {
+            sharedContentCount += 1;
+          }
         }
         const summaryBridgeScore = 0.55 * subSim.jaccard + 0.45 * entSim.jaccard;
         if (
@@ -2380,6 +2520,39 @@ export function deduplicateAndGroupWireItems(
           summaryBridgeScore > bestSim
         ) {
           bestSim = summaryBridgeScore;
+          matchedCluster = cl;
+          continue;
+        }
+      }
+
+      // 3c. Same-Cycle Official Briefing / Radio Interview Cluster (Cross-Format: Tweet ↔ Wire Blurb ↔ Article)
+      //     Groups different pull-quotes from the exact same GM/Coach/Coordinator briefing (e.g. John Lynch on KNBR
+      //     discussing Mike Evans' Achilles recovery / padded practice chance) within a tight 10h cycle while
+      //     strictly blocking next-day updates, multi-player transcripts, different speakers, or status escalations!
+      const leadTimeMs = resolveEffectivePublishTimestampMs(cl.lead, nowMs) || cl.anchorMs;
+      const withinBriefingCycle =
+        !itemMs ||
+        !leadTimeMs ||
+        Math.abs(leadTimeMs - itemMs) <= 10 * 3_600_000 ||
+        (cl.anchorMs && Math.abs(cl.anchorMs - itemMs) <= 10 * 3_600_000);
+      if (
+        !itemIsDigest &&
+        !cl.isDigest &&
+        !itemIsVideo &&
+        !leadIsVideo &&
+        !statusOrEscalationConflict &&
+        itemSpeaker &&
+        cl.speaker &&
+        itemSpeaker === cl.speaker &&
+        sameSinglePlayer &&
+        itemTopicDomain &&
+        cl.topicDomain &&
+        itemTopicDomain === cl.topicDomain &&
+        withinBriefingCycle
+      ) {
+        const briefingScore = 0.84;
+        if (briefingScore > bestSim) {
+          bestSim = briefingScore;
           matchedCluster = cl;
         }
       }
@@ -2394,6 +2567,9 @@ export function deduplicateAndGroupWireItems(
         sigKey,
         outletKey,
         isDigest: itemIsDigest,
+        speaker: itemSpeaker,
+        topicDomain: itemTopicDomain,
+        primaryPlayer: itemPrimaryPlayer,
         anchorMs: itemMs,
         oldestMs: itemMs,
         newestMs: itemMs,
@@ -2407,6 +2583,9 @@ export function deduplicateAndGroupWireItems(
     }
 
     matchedCluster.members.push(item);
+    if (!matchedCluster.speaker && itemSpeaker) matchedCluster.speaker = itemSpeaker;
+    if (!matchedCluster.topicDomain && itemTopicDomain) matchedCluster.topicDomain = itemTopicDomain;
+    if (!matchedCluster.primaryPlayer && itemPrimaryPlayer) matchedCluster.primaryPlayer = itemPrimaryPlayer;
     if (itemMs) {
       if (!matchedCluster.oldestMs || itemMs < matchedCluster.oldestMs) matchedCluster.oldestMs = itemMs;
       if (!matchedCluster.newestMs || itemMs > matchedCluster.newestMs) matchedCluster.newestMs = itemMs;

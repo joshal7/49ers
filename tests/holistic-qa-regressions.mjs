@@ -3043,6 +3043,81 @@ test('Holistic Regression: Compiled news.json has zero unbounded full-article su
   );
 });
 
+await testAsync(
+  'Holistic Regression: Legacy v1 practice cache self-heals poisoned Thursday LP, while live v2 cache + multi-day % delta chips persist cleanly',
+  async () => {
+    const { hydrateCachedWeeklyPracticeAndInactives, persistWeeklyPracticeSnapshot } = await import(
+      '../src/services/dataService.js'
+    );
+    const memStore = new Map();
+    const prevWin = globalThis.window;
+    globalThis.window = {
+      localStorage: {
+        getItem: k => (memStore.has(k) ? memStore.get(k) : null),
+        setItem: (k, v) => memStore.set(k, String(v)),
+        removeItem: k => memStore.delete(k)
+      }
+    };
+    try {
+      // Seed poisoned legacy v1 cache containing bogus Evans thu='LP'
+      memStore.set(
+        'joshal_49ers_weekly_practice_v1',
+        JSON.stringify({
+          seasonYear: 2026,
+          week: 11,
+          oppAbbr: 'MIN',
+          savedAtMs: Date.now(),
+          sf: { mikeevans: { wed: 'DNP', thu: 'LP', fri: '-', injuryType: 'Achilles', gameStatus: 'Questionable' } },
+          opp: {}
+        })
+      );
+
+      const appMock = {
+        meta: { seasonYear: 2026, currentWeek: 11 },
+        roster: {
+          players: [
+            {
+              id: '16737',
+              name: 'Mike Evans',
+              position: 'WR',
+              rosterBucket: 'active',
+              health: { wed: 'DNP', thu: '-', fri: '-', injuryType: 'Achilles', status: 'Questionable', isOnPracticeReport: true }
+            }
+          ]
+        },
+        health: {
+          week: 11,
+          practiceReport: [
+            { playerId: '16737', name: 'Mike Evans', position: 'WR', wed: 'DNP', thu: '-', fri: '-', injuryType: 'Achilles', gameStatus: 'Questionable', playProbabilityPct: 28 }
+          ]
+        },
+        scheduleMatchup: {
+          upcomingMatchup: { week: 11, oppAbbr: 'MIN', kickoffIso: '2026-11-23T01:20:00Z', opponentHealth: { injuryReport: [] } },
+          schedule: [{ week: 11, dateIso: '2026-11-23T01:20:00Z', completed: false }]
+        }
+      };
+
+      hydrateCachedWeeklyPracticeAndInactives(appMock);
+      assert.equal(memStore.has('joshal_49ers_weekly_practice_v1'), false, 'Legacy v1 practice cache must be purged automatically');
+      assert.equal(appMock.roster.players[0].health.thu, '-', 'Poisoned v1 thu=LP must NOT restore onto Mike Evans');
+      assert.equal(appMock.health.practiceReport[0].thu, '-', 'Poisoned v1 thu=LP must NOT restore onto practiceReport');
+
+      // Now persist legitimate v2 snapshot and confirm v2 round-trip works
+      appMock.health.practiceReport[0].thu = 'LP';
+      appMock.roster.players[0].health.thu = 'LP';
+      persistWeeklyPracticeSnapshot(appMock);
+      assert.equal(memStore.has('joshal_49ers_weekly_practice_v2'), true, 'Legitimate snapshot must persist under v2 cache key');
+
+      appMock.roster.players[0].health.thu = '-';
+      appMock.health.practiceReport[0].thu = '-';
+      hydrateCachedWeeklyPracticeAndInactives(appMock);
+      assert.equal(appMock.roster.players[0].health.thu, 'LP', 'Legitimate v2 snapshot must restore cleanly on reload');
+    } finally {
+      globalThis.window = prevWin;
+    }
+  }
+);
+
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {
   process.exit(1);

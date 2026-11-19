@@ -1302,11 +1302,9 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
               .map(p => {
                 const healthSnapMap = userPrefs?.deltaSnapshots?.healthByPlayer || {};
                 const delta = computePracticeTrajectoryDelta(p, healthSnapMap[String(p.playerId)] || null);
-                const trajArrowHtml = delta?.trajectory
-                  ? ` <span class="delta-chip ${delta.trajectory.tone} mono" data-health-delta title="${esc(delta.trajectory.shortLabel)}">${esc(delta.trajectory.arrow)}</span>`
-                  : delta?.probDelta
-                    ? ` <span class="delta-chip ${delta.probDelta.tone} mono" data-health-delta>${esc(delta.probDelta.label)}</span>`
-                    : '';
+                const trajArrowHtml = delta
+                  ? ` <span class="delta-chip ${delta.tone} mono" data-health-delta title="${esc(delta.tooltipLabel || delta.displayLabel)}">${esc(delta.compactLabel || delta.displayLabel)}</span>`
+                  : '';
                 return `
               <tr style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health">
                 <td class="sticky-first-col">
