@@ -465,7 +465,8 @@ export function renderSalientThumbHtml(
     size = 'lg', // 'lg' (84px) | 'md' (64px) | 'sm' (48px)
     eager = false,
     asStatic = false,
-    extraClass = ''
+    extraClass = '',
+    markReadKey = ''
   } = {}
 ) {
   if (!visual || !visual.kind) return '';
@@ -507,7 +508,8 @@ export function renderSalientThumbHtml(
   }
 
   if (safeHref) {
-    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="${cls}" data-salient-thumb="${esc(visual.kind)}" aria-hidden="true" tabindex="-1">${innerHtml}</a>`;
+    const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
+    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="${cls}" data-salient-thumb="${esc(visual.kind)}"${readAttr} aria-hidden="true" tabindex="-1">${innerHtml}</a>`;
   }
   return `<span class="${cls}" data-salient-thumb="${esc(visual.kind)}" aria-hidden="true">${innerHtml}</span>`;
 }
@@ -524,7 +526,8 @@ export function renderSalientHeroBannerHtml(
     creditLabel = '',
     badgeText = '',
     eager = true,
-    extraClass = ''
+    extraClass = '',
+    markReadKey = ''
   } = {}
 ) {
   if (!hero?.src) return '';
@@ -547,7 +550,8 @@ export function renderSalientHeroBannerHtml(
   `;
 
   if (safeHref) {
-    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb ${wrapCls}" data-salient-hero="true" aria-hidden="true" tabindex="-1">${imgHtml}</a>`;
+    const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
+    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb ${wrapCls}" data-salient-hero="true"${readAttr} aria-hidden="true" tabindex="-1">${imgHtml}</a>`;
   }
   return `<div class="${wrapCls}" data-salient-hero="true">${imgHtml}</div>`;
 }

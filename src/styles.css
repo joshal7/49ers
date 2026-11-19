@@ -14,6 +14,7 @@
   --text-primary: #F4F6F9;
   --text-secondary: #A5B1C2;
   --text-muted: #6E7B8F;
+  --text-read: #8E9AAF;
 
   --scarlet: #AA0000;
   --scarlet-bright: #D41919;
@@ -60,6 +61,7 @@
   --text-primary: #14171C;
   --text-secondary: #434C59;
   --text-muted: #687385;
+  --text-read: #636C79;
 
   --scarlet: #AA0000;
   --scarlet-bright: #B80000;
@@ -1130,6 +1132,42 @@ a:hover {
   border: 1px solid var(--border-subtle);
 }
 
+.wire-card-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wire-card-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.wire-author-single-link,
+.wire-author-label {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.wire-author-single-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.wire-card-age {
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
 .wire-card-body-col {
   min-width: 0;
   display: flex;
@@ -1137,10 +1175,103 @@ a:hover {
   gap: 4px;
 }
 
+.wire-card-headline {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.33;
+  letter-spacing: -0.012em;
+  color: var(--text-primary);
+  overflow-wrap: break-word;
+}
+
+.brief-card.has-lead-hero .wire-card-headline:not(.is-tweet-body) {
+  font-size: 15.5px;
+}
+
+.brief-card.compact-wire-card .wire-card-headline:not(.is-tweet-body) {
+  font-size: 13.6px;
+}
+
+.wire-card-headline.is-tweet-body {
+  font-size: 13.6px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+
+.brief-card.compact-wire-card .wire-card-headline.is-tweet-body {
+  font-size: 13px;
+}
+
+.wire-headline-link {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.wire-headline-link:hover,
+.wire-headline-link:focus-visible {
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.wire-inline-ext {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: -1.5px;
+  margin-left: 2px;
+  color: var(--text-muted);
+}
+
+.wire-headline-link:hover .wire-inline-ext,
+.home-wire-text-link:hover .wire-inline-ext,
+.home-article-row:hover .wire-inline-ext,
+.player-mention-tweet-body:hover .wire-inline-ext,
+.similar-story-row:hover .wire-inline-ext,
+[data-brief-source-row]:hover .wire-inline-ext {
+  color: var(--gold-bright);
+}
+
 .wire-card-summary {
-  font-size: 12.5px;
+  font-size: 12.8px;
+  font-weight: 400;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.44;
+}
+
+.source-row-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+
+.source-row-author {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.source-row-age {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.source-row-headline {
+  font-size: 12.8px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.source-row-headline.is-tweet-body {
+  font-size: 12.6px;
+  font-weight: 400;
+  line-height: 1.42;
 }
 
 .player-mention-summary {
@@ -2832,7 +2963,10 @@ button.featured-player-chip:active {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--gold-bright);
   text-decoration: none;
   min-width: 0;
 }
@@ -2842,20 +2976,29 @@ button.featured-player-chip:active {
   color: var(--text-muted);
 }
 
-.wire-author-link:hover strong {
-  color: var(--gold-bright);
+.wire-author-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.home-wire-age {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 .home-wire-text-link {
   display: block;
-  font-size: 12.5px;
-  line-height: 1.38;
-  color: var(--text-secondary);
+  font-size: 13.2px;
+  font-weight: 400;
+  line-height: 1.42;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
 .home-wire-text-link:hover {
-  color: var(--text-primary);
+  color: var(--gold-bright);
+  text-decoration: none;
 }
 
 .inline-ext-icon {
@@ -2881,6 +3024,37 @@ button.featured-player-chip:active {
 .home-article-row:hover {
   border-color: var(--gold-border);
   background: var(--gold-soft);
+  text-decoration: none;
+}
+
+.home-article-title {
+  font-weight: 700;
+  font-size: 13.4px;
+  line-height: 1.34;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.home-article-byline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.home-article-author {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.home-article-age {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 .source-open-pill {
@@ -3061,16 +3235,25 @@ button.featured-player-chip:active {
 }
 
 .player-mention-author {
-  font-size: 11.5px;
-  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.player-mention-headline {
+  font-size: 13.6px;
+  font-weight: 700;
+  line-height: 1.34;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 .player-mention-tweet-body {
   display: block;
   color: var(--text-primary);
-  font-size: 12.8px;
+  font-size: 13.2px;
   line-height: 1.44;
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
   word-break: break-word;
 }
@@ -4331,7 +4514,7 @@ button.gameday-active-pill:hover {
 
 .wire-author-link {
   color: var(--gold-bright);
-  font-size: 11.8px;
+  font-size: 12px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -4412,6 +4595,7 @@ button.gameday-active-pill:hover {
 .synthesis-source-sheet-row:hover {
   border-color: var(--gold-border);
   background: var(--bg-elevated);
+  text-decoration: none;
 }
 
 /* Collapsible Previous Games Box in Schedule View */
@@ -6762,14 +6946,59 @@ a.raw-item-thumb.salient-thumb:hover {
   cursor: pointer;
 }
 
-.brief-card.is-read-item,
-.home-wire-item.is-read-item,
-.home-article-row.is-read-item {
-  opacity: 0.72;
+/* Scoped, Non-Cascading Independent Read State (never dims nested unread Similar Stories or washes out photos) */
+.brief-card.is-read-item > .wire-card-meta-row .wire-author-single-link,
+.brief-card.is-read-item > .wire-card-meta-row .wire-author-label,
+.player-mention-card.is-read-item > .player-mention-meta .wire-author-single-link,
+.player-mention-card.is-read-item > .player-mention-meta .wire-author-label,
+.home-wire-item.is-read-item > .home-wire-meta .wire-author-link,
+.home-article-row.is-read-item .home-article-author,
+.similar-story-row.is-read-item .source-row-author,
+[data-brief-source-row].is-read-item .source-row-author {
+  opacity: 0.74;
 }
 
-.brief-card.is-read-item .wire-card-headline {
-  font-weight: 500 !important;
+.brief-card.is-read-item > .wire-card-meta-row .wire-card-age::before,
+.player-mention-card.is-read-item > .player-mention-meta .wire-card-age::before,
+.home-wire-item.is-read-item > .home-wire-meta .home-wire-age::before,
+.home-article-row.is-read-item .home-article-age::before,
+.similar-story-row.is-read-item .source-row-age:not(:empty)::before,
+[data-brief-source-row].is-read-item .source-row-age:not(:empty)::before {
+  content: 'Read · ';
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.similar-story-row.is-read-item .source-row-age:empty::before,
+[data-brief-source-row].is-read-item .source-row-age:empty::before {
+  content: 'Read';
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.brief-card.is-read-item > .wire-card-main-row > .wire-card-body-col > .wire-card-headline,
+.player-mention-card.is-read-item > .player-mention-main-row > .wire-card-body-col > .player-mention-headline,
+.home-article-row.is-read-item .home-article-title {
+  color: var(--text-read);
+  font-weight: 500;
+}
+
+.brief-card.is-read-item > .wire-card-main-row > .wire-card-body-col > .wire-card-headline.is-tweet-body,
+.player-mention-card.is-read-item > .player-mention-main-row > .wire-card-body-col > .player-mention-tweet-body,
+.home-wire-item.is-read-item > .home-wire-main-row > .wire-card-body-col > .home-wire-text-link {
+  color: var(--text-read);
+  font-weight: 400;
+}
+
+.brief-card.is-read-item > .wire-card-main-row > .wire-card-body-col > .wire-card-summary,
+.player-mention-card.is-read-item > .player-mention-main-row > .wire-card-body-col > .wire-card-summary {
+  color: var(--text-muted);
+}
+
+.similar-story-row.is-read-item .source-row-headline,
+[data-brief-source-row].is-read-item .source-row-headline {
+  color: var(--text-read);
+  font-weight: 400;
 }
 
 /* Compact Scan Density Mode */

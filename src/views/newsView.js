@@ -298,7 +298,7 @@ function formatDailyBriefBulletHtml(bullet = '', seenJargon = null, urlUpgradeMa
  */
 export function renderDailyTopNewsBriefHtml(
   dailyBrief,
-  { rawStream = [], appData = null, asSubcard = false } = {}
+  { rawStream = [], appData = null, asSubcard = false, readKeysSet = null } = {}
 ) {
   const rawBrief =
     dailyBrief && typeof dailyBrief === 'object' && Array.isArray(dailyBrief.bullets) && dailyBrief.bullets.length > 0
@@ -383,18 +383,21 @@ export function renderDailyTopNewsBriefHtml(
                   const srcThumbHtml = srcVisual
                     ? renderSalientThumbHtml(srcVisual, { size: 'sm', asStatic: true, extraClass: 'brief-source-thumb' })
                     : '';
+                  const srcReadKey = getItemReadKey(matchedItem);
+                  const srcIsRead = isItemRead(matchedItem, readKeysSet);
+                  const srcIsTw = rep.type === 'tweet';
                   return `
-                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row ${srcThumbHtml ? 'has-source-thumb' : ''}" data-brief-source-row>
+                    <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row ${srcThumbHtml ? 'has-source-thumb' : ''} ${srcIsRead ? 'is-read-item' : ''}" data-brief-source-row data-read-key="${esc(srcReadKey)}" data-mark-read-key="${esc(srcReadKey)}">
                       <div style="min-width:0;flex:1">
-                        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+                        <div class="source-row-meta">
                           <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
                             <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
-                            <strong style="font-size:11.6px;color:var(--gold-bright)">${esc(attribution)}</strong>
+                            <strong class="source-row-author">${esc(attribution)}</strong>
                           </div>
-                          ${rep.publishedAt ? `<span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(formatRelativeAge(rep.publishedAt))}</span>` : ''}
+                          <span class="mono source-row-age">${rep.publishedAt ? esc(formatRelativeAge(rep.publishedAt)) : ''}</span>
                         </div>
-                        <div style="font-size:12.4px;font-weight:600;line-height:1.36;color:var(--text-primary)">
-                          ${esc(rep.title)} ${iconSvg('externalLink', 11)}
+                        <div class="source-row-headline ${srcIsTw ? 'is-tweet-body' : ''}">
+                          ${esc(rep.title)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span>
                         </div>
                       </div>
                       ${srcThumbHtml}
@@ -507,7 +510,11 @@ function isSummaryRedundantWithTitle(title = '', summary = '') {
   return false;
 }
 
-function renderRelatedStoriesDrawerHtml(item, confirmingList = [], { prioritizedRaw = [], rosterPlayers = [] } = {}) {
+function renderRelatedStoriesDrawerHtml(
+  item,
+  confirmingList = [],
+  { prioritizedRaw = [], rosterPlayers = [], readKeysSet = null } = {}
+) {
   if (!Array.isArray(confirmingList) || confirmingList.length === 0) return '';
   const clusterKind = item?.clusterKind === 'corroboration' ? 'corroboration' : 'similar';
   const summaryLabel = `Similar stories (${confirmingList.length})`;
@@ -544,24 +551,26 @@ function renderRelatedStoriesDrawerHtml(item, confirmingList = [], { prioritized
         ? renderSalientThumbHtml(crVisual, { size: 'sm', asStatic: true, extraClass: 'brief-source-thumb' })
         : '';
       const crReadKey = getItemReadKey(cr);
+      const crIsRead = isItemRead(cr, readKeysSet);
       const isValidLink = Boolean(crHref && crHref !== '#');
+      const rowCls = `synthesis-source-sheet-row similar-story-row ${crThumbHtml ? 'has-source-thumb' : ''} ${crIsRead ? 'is-read-item' : ''}`.trim();
       const rowOpen = isValidLink
-        ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row ${crThumbHtml ? 'has-source-thumb' : ''}" data-similar-story-row data-mark-read-key="${esc(crReadKey)}">`
-        : `<div class="synthesis-source-sheet-row similar-story-row ${crThumbHtml ? 'has-source-thumb' : ''}" data-similar-story-row>`;
+        ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="${rowCls}" data-similar-story-row data-read-key="${esc(crReadKey)}" data-mark-read-key="${esc(crReadKey)}">`
+        : `<div class="${rowCls}" data-similar-story-row data-read-key="${esc(crReadKey)}">`;
       const rowClose = isValidLink ? '</a>' : '</div>';
 
       return `
         ${rowOpen}
           <div style="min-width:0;flex:1">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+            <div class="source-row-meta">
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
                 <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
-                <strong style="font-size:11.6px;color:var(--gold-bright)">${esc(attribution)}</strong>
+                <strong class="source-row-author">${esc(attribution)}</strong>
               </div>
-              ${cr?.publishedAt ? `<span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(formatRelativeAge(cr.publishedAt))}</span>` : ''}
+              <span class="mono source-row-age">${cr?.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
             </div>
-            <div style="font-size:12.4px;font-weight:600;line-height:1.36;color:var(--text-primary)">
-              ${esc(displayHeadline)}${isValidLink ? ` ${iconSvg('externalLink', 11)}` : ''}
+            <div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">
+              ${esc(displayHeadline)}${isValidLink ? ` <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span>` : ''}
             </div>
           </div>
           ${crThumbHtml}
@@ -666,7 +675,8 @@ export function renderWireItemCardHtml(
       ? renderSalientThumbHtml(salientVisual, {
           href: thumbTargetHref,
           size: 'lg',
-          eager: eagerImage
+          eager: eagerImage,
+          markReadKey: readKey
         })
       : '';
   const leadHeroHtml = showLeadHero
@@ -674,7 +684,8 @@ export function renderWireItemCardHtml(
         href: thumbTargetHref,
         compact: false,
         eager: eagerImage || isLeadFeatured,
-        extraClass: 'wire-hero-media'
+        extraClass: 'wire-hero-media',
+        markReadKey: readKey
       })
     : '';
   const hasThumb = Boolean(sideThumbHtml);
@@ -696,7 +707,7 @@ export function renderWireItemCardHtml(
   });
   const relatedStoriesDrawerHtml =
     confirmingList.length > 0
-      ? renderRelatedStoriesDrawerHtml(item, confirmingList, { prioritizedRaw, rosterPlayers })
+      ? renderRelatedStoriesDrawerHtml(item, confirmingList, { prioritizedRaw, rosterPlayers, readKeysSet })
       : '';
 
   const rightMetaPrefix =
@@ -714,24 +725,24 @@ export function renderWireItemCardHtml(
   return `
     <div class="brief-card ${isUrgent ? 'breaking-elevated' : ''} ${showLeadHero ? 'has-lead-hero' : ''} ${itemAlreadyRead ? 'is-read-item' : ''} ${isNewSinceVisit && !itemAlreadyRead ? 'is-new-item' : ''} ${isCompactMode ? 'compact-wire-card' : ''}" data-raw-type="${esc(item.type || 'article')}" data-raw-category="${esc(item.category || 'beat')}" data-read-key="${esc(readKey)}">
       ${leadHeroHtml}
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+      <div class="wire-card-meta-row">
+        <div class="wire-card-meta-left">
           ${isNewSinceVisit && !itemAlreadyRead ? `<span class="new-item-dot" title="New since last visit" aria-hidden="true"></span>` : ''}
           ${renderWireSignalBadgeHtml(item, isVideo, isTweet)}
           ${
             authorHref
               ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="wire-author-single-link" data-wire-author-link><strong>${esc(authorName)}</strong></a>`
-              : `<strong style="font-size:12.5px;color:var(--gold-bright)">${esc(authorName)}</strong>`
+              : `<strong class="wire-author-label">${esc(authorName)}</strong>`
           }
         </div>
-        <span class="mono" style="font-size:11.5px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(rightMetaPrefix)}${esc(formatRelativeAge(item.publishedAt))}</span>
+        <span class="mono wire-card-age" data-wire-age>${esc(rightMetaPrefix)}${esc(formatRelativeAge(item.publishedAt))}</span>
       </div>
-      <div class="${hasThumb ? 'media-split-row' : ''}">
+      <div class="wire-card-main-row ${hasThumb ? 'media-split-row' : ''}">
         <div class="wire-card-body-col">
-          <div class="wire-card-headline" style="font-weight:${isTweet ? '600' : '700'};font-size:${showLeadHero ? '14.5px' : isCompactMode ? '13.2px' : '13.6px'};line-height:1.38">
+          <div class="wire-card-headline ${isTweet ? 'is-tweet-body' : ''}">
             ${
               resolvedItemUrl
-                ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" data-mark-read-key="${esc(readKey)}" style="${isTweet ? 'display:inline;color:var(--text-primary)' : ''}">${esc(displayTitle)} ${iconSvg('externalLink', 12)}</a>`
+                ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(readKey)}">${esc(displayTitle)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
                 : esc(displayTitle)
             }
           </div>
@@ -1133,7 +1144,8 @@ export function renderNewsViewHtml({
     const briefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
       rawStream: prioritizedRaw,
       appData,
-      asSubcard: false
+      asSubcard: false,
+      readKeysSet
     });
 
     const presserTakeaways = extractPresserTakeaways(prioritizedRaw, { nowMs });

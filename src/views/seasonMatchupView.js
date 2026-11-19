@@ -416,7 +416,7 @@ export function renderSeasonMatchupViewHtml({
     </div>
   `;
 
-  if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit);
+  if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit, userPrefs);
   if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData, userPrefs, reportersById);
   if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData, userPrefs);
   if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
@@ -600,7 +600,7 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
   `;
 }
 
-function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
+function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs = null) {
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const bet = um.betting || {};
   const oppHealth = um.opponentHealth || {};
@@ -935,7 +935,8 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense') {
                                 directPosts: [],
                                 excludePlayerId: entry.playerId || '',
                                 rosterPlayers: appData?.roster?.players || [],
-                                outerClassName: 'health-injury-news-card'
+                                outerClassName: 'health-injury-news-card',
+                                readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : [])
                               })}
                             </div>
                           `;
@@ -1364,7 +1365,8 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
                     directPosts,
                     excludePlayerId: entry.playerId,
                     rosterPlayers: appData?.roster?.players || [],
-                    outerClassName: 'health-injury-news-card'
+                    outerClassName: 'health-injury-news-card',
+                    readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : [])
                   })}
                 </div>
               `

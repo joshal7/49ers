@@ -298,7 +298,8 @@ function renderSingleDashboardCard({
                     activeVideosSet,
                     rosterPlayers,
                     isLeadFeatured: idx === 0,
-                    eagerImage: idx === 0
+                    eagerImage: idx === 0,
+                    readKeysSet
                   })
                 )
                 .join('')}
@@ -308,7 +309,8 @@ function renderSingleDashboardCard({
       const homeDailyBriefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
         rawStream: prioritizedHomeStream,
         appData,
-        asSubcard: true
+        asSubcard: true,
+        readKeysSet
       });
 
       bodyHtml = `
@@ -360,16 +362,17 @@ function renderSingleDashboardCard({
                       slot: 'thumb',
                       allowTeamFallback: true
                     });
+                    const twReadKey = getItemReadKey(tw);
+                    const twIsRead = isItemRead(tw, readKeysSet);
                     const twThumbHtml = twVisual
                       ? renderSalientThumbHtml(twVisual, {
                           href: resolvedTwUrl !== '#' ? resolvedTwUrl : safeTwExt || '',
                           size: 'md',
                           eager: idx === 0,
-                          extraClass: 'home-wire-thumb'
+                          extraClass: 'home-wire-thumb',
+                          markReadKey: twReadKey
                         })
                       : '';
-                    const twReadKey = getItemReadKey(tw);
-                    const twIsRead = isItemRead(tw, readKeysSet);
                     return `
                   <div class="home-wire-item ${isUrgentTw ? 'breaking-elevated' : ''} ${twIsRead ? 'is-read-item' : ''}" data-read-key="${esc(twReadKey)}">
                     <div class="home-wire-meta">
@@ -383,13 +386,13 @@ function renderSingleDashboardCard({
                           <strong>${esc(authorName)}</strong>
                         </a>
                       </div>
-                      <span class="mono" style="font-size:10.5px;color:var(--text-muted)">${esc(relTime(tw.publishedAt))}</span>
+                      <span class="mono home-wire-age">${esc(relTime(tw.publishedAt))}</span>
                     </div>
-                    <div class="${twThumbHtml ? 'media-split-row' : ''}">
+                    <div class="home-wire-main-row ${twThumbHtml ? 'media-split-row' : ''}">
                       <div class="wire-card-body-col">
                         <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link" data-mark-read-key="${esc(twReadKey)}">
                           ${esc(fullShortTweet)}
-                          <span class="inline-ext-icon">${iconSvg('external', 11)}</span>
+                          <span class="wire-inline-ext">${iconSvg('external', 11)}</span>
                         </a>
                         ${
                           showExtChip
@@ -450,10 +453,10 @@ function renderSingleDashboardCard({
                     return `
                   <a href="${esc(safeArtUrl)}" target="_blank" rel="noopener noreferrer" class="home-article-row ${artIsRead ? 'is-read-item' : ''}" data-read-key="${esc(artReadKey)}" data-mark-read-key="${esc(artReadKey)}">
                     <div style="min-width:0;flex:1">
-                      <div style="font-weight:700;font-size:12.6px;line-height:1.34;color:var(--text-primary)">${esc(art.title)}</div>
-                      <div style="font-size:11px;color:var(--text-muted);margin-top:3px;display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap">
-                        <span>${esc(artByline)} • ${esc(relTime(art.publishedAt))}</span>
-                        <span class="inline-ext-icon" style="margin-left:0">${iconSvg('external', 10)}</span>
+                      <div class="home-article-title">${esc(art.title)} <span class="wire-inline-ext">${iconSvg('external', 10)}</span></div>
+                      <div class="home-article-byline">
+                        <strong class="home-article-author">${esc(artByline)}</strong>
+                        <span class="mono home-article-age">${esc(relTime(art.publishedAt))}</span>
                       </div>
                     </div>
                     ${artThumbHtml}

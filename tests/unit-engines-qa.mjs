@@ -12792,6 +12792,115 @@ test(
   }
 );
 
+test(
+  'Unified Card Typography & Independent Read State (Main Story vs Similar Stories)',
+  () => {
+    const nowIso = new Date().toISOString();
+    const sim1 = {
+      id: 'sim_story_1',
+      type: 'article',
+      author: 'Matt Maiocco',
+      outletName: 'NBC Sports Bay Area',
+      title: 'Nick Bosa opens up on pass-rush adjustments ahead of Week 11',
+      url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/bosa-adjustments/1/',
+      publishedAt: nowIso
+    };
+    const sim2 = {
+      id: 'sim_story_2',
+      type: 'tweet',
+      author: 'David Lombardi',
+      authorHandle: '@LombardiHimself',
+      outletName: 'X',
+      title: 'Bosa noted the interior push has forced offenses to chip more aggressively.',
+      fullText: 'Bosa noted the interior push has forced offenses to chip more aggressively.',
+      url: 'https://x.com/LombardiHimself/status/1999999999999999991',
+      publishedAt: nowIso
+    };
+    const mainArticle = {
+      id: 'main_bosa_article',
+      type: 'article',
+      author: 'Nick Wagoner',
+      outletName: 'ESPN',
+      title: "Niners' Nick Bosa on 4-game sack drought: 'Don't think I'm playing my best'",
+      summary: 'Niners star Nick Bosa acknowledged his performance this season has not met his standard.',
+      url: 'https://www.espn.com/nfl/story/_/id/99999999/nick-bosa-sack-drought',
+      publishedAt: nowIso,
+      confirmingReports: [sim1, sim2]
+    };
+    const mainTweet = {
+      id: 'main_evans_tweet',
+      type: 'tweet',
+      author: 'Coach Yac',
+      authorHandle: '@Coach_Yac',
+      outletName: 'X',
+      title: 'The 49ers are hoping to have Mike Evans back at practice this week, per Kyle Shanahan',
+      fullText: 'The 49ers are hoping to have Mike Evans back at practice this week, per Kyle Shanahan',
+      url: 'https://x.com/Coach_Yac/status/1999999999999999992',
+      publishedAt: nowIso
+    };
+
+    // 1. Unified typography markup: articles use bold .wire-card-headline + .wire-headline-link; tweets use .is-tweet-body
+    const unreadArticleHtml = renderWireItemCardHtml(mainArticle, { readKeysSet: new Set() });
+    assert.ok(
+      unreadArticleHtml.includes('class="wire-card-headline "') || unreadArticleHtml.includes('class="wire-card-headline"'),
+      'Article card must use standard .wire-card-headline class without .is-tweet-body'
+    );
+    assert.ok(
+      unreadArticleHtml.includes('class="ext-link wire-headline-link"'),
+      'Article headline link must use unified .wire-headline-link class'
+    );
+    assert.ok(
+      !unreadArticleHtml.includes('style="font-weight:'),
+      'Wire headline must rely on unified CSS classes rather than inline font-weight overrides'
+    );
+
+    const unreadTweetHtml = renderWireItemCardHtml(mainTweet, { readKeysSet: new Set() });
+    assert.ok(
+      unreadTweetHtml.includes('class="wire-card-headline is-tweet-body"'),
+      'Tweet card must apply .is-tweet-body for natural regular-weight primary ink'
+    );
+
+    // 2. Reading ONLY the main story marks main .brief-card read while keeping BOTH similar stories UNREAD
+    const mainReadHtml = renderWireItemCardHtml(mainArticle, {
+      readKeysSet: new Set(['main_bosa_article'])
+    });
+    assert.ok(
+      /class="brief-card[^"]*is-read-item[^"]*"[^>]*data-read-key="main_bosa_article"/.test(mainReadHtml),
+      'Main card must carry .is-read-item when main_bosa_article is in readKeysSet'
+    );
+    assert.ok(
+      !/class="[^"]*similar-story-row[^"]*is-read-item[^"]*"[^>]*data-read-key="sim_story_1"/.test(mainReadHtml) &&
+        !/class="[^"]*similar-story-row[^"]*is-read-item[^"]*"[^>]*data-read-key="sim_story_2"/.test(mainReadHtml),
+      'Unclicked similar stories inside a read main card must remain unread (no .is-read-item)'
+    );
+
+    // 3. Reading ONLY sim_story_1 marks ONLY sim_story_1 read while keeping main card and sim_story_2 UNREAD
+    const sim1ReadHtml = renderWireItemCardHtml(mainArticle, {
+      readKeysSet: new Set(['sim_story_1'])
+    });
+    assert.ok(
+      !/class="brief-card[^"]*is-read-item[^"]*"[^>]*data-read-key="main_bosa_article"/.test(sim1ReadHtml),
+      'Clicking a similar story must NOT mark the main story card as read'
+    );
+    assert.ok(
+      /class="[^"]*similar-story-row[^"]*is-read-item[^"]*"[^>]*data-similar-story-row data-read-key="sim_story_1"/.test(
+        sim1ReadHtml
+      ),
+      'Clicked similar story sim_story_1 must carry .is-read-item and data-read-key'
+    );
+    assert.ok(
+      !/class="[^"]*similar-story-row[^"]*is-read-item[^"]*"[^>]*data-similar-story-row data-read-key="sim_story_2"/.test(
+        sim1ReadHtml
+      ),
+      'Sibling unclicked similar story sim_story_2 must remain unread'
+    );
+    assert.ok(
+      sim1ReadHtml.includes('class="source-row-headline is-tweet-body"'),
+      'Tweet rows inside Similar stories must also use .is-tweet-body for regular weight'
+    );
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

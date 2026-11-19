@@ -34,7 +34,9 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import {
   NEWS_SORT_MODES,
-  normalizeNewsSortMode
+  normalizeNewsSortMode,
+  getItemReadKey,
+  isItemRead
 } from '../engine/digestExperienceEngine.js';
 import {
   isPlayerEligibleForInjuryNews,
@@ -50,11 +52,14 @@ export function renderInjuryNewsItemCardHtml(
     excludePlayerId = '',
     rosterPlayers = [],
     outerClassName = 'injury-news-item-card',
-    activeVideosSet = new Set()
+    activeVideosSet = new Set(),
+    readKeysSet = null
   } = {}
 ) {
   const isVideo = n.type === 'video';
   const isTweet = !isVideo && (n.type === 'tweet' || n.type === 'social');
+  const itemReadKey = getItemReadKey(n);
+  const itemAlreadyRead = isItemRead(n, readKeysSet);
   const safeStreamCandidate =
     n.videoStreamUrl && /^https:\/\//i.test(String(n.videoStreamUrl).trim())
       ? String(n.videoStreamUrl).trim()
@@ -95,7 +100,8 @@ export function renderInjuryNewsItemCardHtml(
     ? renderSalientThumbHtml(salientVisual, {
         href: resolvedMentionUrl !== '#' ? resolvedMentionUrl : '',
         size: 'md',
-        extraClass: 'dossier-mention-thumb'
+        extraClass: 'dossier-mention-thumb',
+        markReadKey: itemReadKey
       })
     : '';
   const hasImg = Boolean(thumbHtml);
@@ -197,15 +203,17 @@ export function renderInjuryNewsItemCardHtml(
                  const crHref = crIsTw
                    ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '#')
                    : sanitizeExternalUrl(cr.url, '#');
-                 return `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row" style="padding:7px 9px">
-                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:2px">
+                 const crReadKey = getItemReadKey(cr);
+                 const crIsRead = isItemRead(cr, readKeysSet);
+                 return `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row ${crIsRead ? 'is-read-item' : ''}" data-similar-story-row data-read-key="${esc(crReadKey)}" data-mark-read-key="${esc(crReadKey)}" style="padding:7px 9px">
+                   <div class="source-row-meta" style="margin-bottom:2px">
                      <div style="display:flex;align-items:center;gap:5px;min-width:0">
                        <span class="badge ${crIsTw ? 'badge-gold' : 'badge-neutral'}" style="font-size:9.3px;padding:1px 5px">${crIsTw ? 'Tweet' : 'Article'}</span>
-                       <strong style="font-size:11.2px;color:var(--gold-bright)">${esc(crAttrib)}</strong>
+                       <strong class="source-row-author">${esc(crAttrib)}</strong>
                      </div>
-                     <span class="mono" style="font-size:10px;color:var(--text-muted)">${esc(formatRelativeAge(cr.publishedAt))}</span>
+                     <span class="mono source-row-age">${cr.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
                    </div>
-                   <div style="font-size:11.8px;font-weight:600;line-height:1.34;color:var(--text-primary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''} ${iconSvg('externalLink', 10)}</div>
+                   <div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''} <span class="wire-inline-ext">${iconSvg('externalLink', 10)}</span></div>
                  </a>`;
                })
                .join('')}
@@ -214,7 +222,7 @@ export function renderInjuryNewsItemCardHtml(
       : '';
 
   return `
-    <div class="player-mention-card ${esc(outerClassName)} ${isUrgentCard ? 'breaking-elevated' : ''}" data-mention-type="${isVideo ? 'video' : isTweet ? 'tweet' : 'article'}" style="font-size:12.5px">
+    <div class="player-mention-card ${esc(outerClassName)} ${isUrgentCard ? 'breaking-elevated' : ''} ${itemAlreadyRead ? 'is-read-item' : ''}" data-mention-type="${isVideo ? 'video' : isTweet ? 'tweet' : 'article'}" data-read-key="${esc(itemReadKey)}">
       <div class="player-mention-meta">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
           ${breakingPill}
@@ -222,31 +230,31 @@ export function renderInjuryNewsItemCardHtml(
           <span class="player-mention-author">
             ${
               authorHref
-                ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(authorName)}</strong></a>`
-                : `<strong>${esc(authorName)}</strong>`
+                ? `<a href="${esc(authorHref)}" target="_blank" rel="noopener noreferrer" class="wire-author-single-link"><strong>${esc(authorName)}</strong></a>`
+                : `<strong class="wire-author-label">${esc(authorName)}</strong>`
             }
           </span>
         </div>
-        ${ageWithDuration ? `<span class="mono" style="font-size:11px;color:var(--text-muted);flex-shrink:0" data-wire-age>${esc(ageWithDuration)}</span>` : ''}
+        ${ageWithDuration ? `<span class="mono wire-card-age" data-wire-age>${esc(ageWithDuration)}</span>` : ''}
       </div>
 
-      <div class="${hasImg ? 'media-split-row' : ''}" style="margin-top:5px">
-        <div style="min-width:0">
+      <div class="player-mention-main-row ${hasImg ? 'media-split-row' : ''}" style="margin-top:5px">
+        <div class="wire-card-body-col">
           ${
             isTweet
-              ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body">${esc(tweetFormatted.text)} <span class="inline-ext-icon">${iconSvg('externalLink', 11)}</span></a>
-                 ${tweetLinkContext ? `<div style="color:var(--text-secondary);margin-top:3px">${escJargon(tweetLinkContext, { excludePlayerId })}</div>` : ''}
+              ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body" data-mark-read-key="${esc(itemReadKey)}">${esc(tweetFormatted.text)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>
+                 ${tweetLinkContext ? `<div class="wire-card-summary" style="margin-top:2px">${escJargon(tweetLinkContext, { excludePlayerId })}</div>` : ''}
                  ${
                    showMentionExt
                      ? `<div style="margin-top:5px">
-                          <a href="${esc(safeMentionExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+                          <a href="${esc(safeMentionExt)}" target="_blank" rel="noopener noreferrer" class="source-chip-link" data-mark-read-key="${esc(itemReadKey)}">
                             <span>Article: ${esc((n.externalTitle || headlineText || n.outletName || 'Read Story').slice(0, 56))}</span>
                             ${iconSvg('externalLink', 10)}
                           </a>
                         </div>`
                      : ''
                  }`
-              : `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(headlineText)}</strong> ${iconSvg('externalLink', 12)}</a>
+              : `<div class="player-mention-headline"><a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(itemReadKey)}">${esc(headlineText)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a></div>
                  ${cleanSummary ? renderExpandableSummaryHtml(cleanSummary, { className: 'wire-card-summary player-mention-summary', jargonOptions: { excludePlayerId } }) : ''}`
           }
           ${!hasPlayableVideo ? similarStoriesDrawerHtml : ''}
@@ -419,7 +427,8 @@ function renderOverviewTab(
                   excludePlayerId: p.id,
                   rosterPlayers: appData?.roster?.players || [],
                   outerClassName: 'subcard-panel',
-                  activeVideosSet
+                  activeVideosSet,
+                  readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : [])
                 })
               )
               .join('')}
@@ -886,7 +895,8 @@ function renderHealthTab(
                     directPosts: combinedDirectPosts,
                     excludePlayerId: p.id,
                     rosterPlayers: appData?.roster?.players || [],
-                    activeVideosSet
+                    activeVideosSet,
+                    readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : [])
                   })
                 )
                 .join('')}

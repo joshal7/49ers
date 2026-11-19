@@ -71,7 +71,7 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=50';
+} from './views/uiHelpers.js?v=51';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
 import {
   isAllowedInlineVideoStreamUrl,
@@ -86,14 +86,14 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=85';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=86';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=88';
+} from './views/newsView.js?v=89';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=77';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=85';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=86';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
   renderSettingsSheetHtml,
@@ -3853,7 +3853,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=102', { updateViaCache: 'none' })
+        .register('./sw.js?v=103', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

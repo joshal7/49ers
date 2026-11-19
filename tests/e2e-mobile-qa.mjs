@@ -1186,6 +1186,184 @@ async function main() {
         `Inline MP4 clip failed to load or play: ${JSON.stringify(inlineMp4Audit)}`
       );
 
+      // 3c. Unified News Card Typography & Scoped Independent Read State (Light + Dark)
+      const cardTypographyAndReadAudit = await cdp.eval(() => {
+        const origTheme = document.documentElement.getAttribute('data-theme') || '';
+        const resolveColor = varExpr => {
+          const probe = document.createElement('span');
+          probe.style.color = varExpr;
+          document.body.appendChild(probe);
+          const c = getComputedStyle(probe).color;
+          probe.remove();
+          return c;
+        };
+
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        const allCards = Array.from(document.querySelectorAll('.brief-card'));
+        const unreadArticleCard = allCards.find(
+          c => c.getAttribute('data-raw-type') === 'article' && !c.classList.contains('is-read-item')
+        );
+        const unreadTweetCard = allCards.find(
+          c =>
+            (c.getAttribute('data-raw-type') === 'tweet' || c.getAttribute('data-raw-type') === 'social') &&
+            !c.classList.contains('is-read-item')
+        );
+        const clusteredCard = allCards.find(
+          c =>
+            !c.classList.contains('is-read-item') &&
+            c.querySelectorAll('a.similar-story-row[data-read-key]').length >= 2
+        );
+
+        const readSnapshotForTheme = themeVal => {
+          if (themeVal) document.documentElement.setAttribute('data-theme', themeVal);
+          else document.documentElement.removeAttribute('data-theme');
+          const expectedPrimary = resolveColor('var(--text-primary)');
+          const expectedRead = resolveColor('var(--text-read)');
+          const expectedGold = resolveColor('var(--gold-bright)');
+
+          const artAuthorEl = unreadArticleCard?.querySelector('.wire-author-single-link, .wire-author-label');
+          const artHeadlineEl = unreadArticleCard?.querySelector('.wire-card-headline');
+          const artLinkEl = unreadArticleCard?.querySelector('.wire-card-headline .wire-headline-link');
+          const twBodyEl = unreadTweetCard?.querySelector('.wire-card-headline.is-tweet-body');
+          const twLinkEl = unreadTweetCard?.querySelector('.wire-card-headline.is-tweet-body .wire-headline-link');
+
+          const artAuthorCs = artAuthorEl ? getComputedStyle(artAuthorEl) : null;
+          const artHeadCs = artHeadlineEl ? getComputedStyle(artHeadlineEl) : null;
+          const artLinkCs = artLinkEl ? getComputedStyle(artLinkEl) : null;
+          const twBodyCs = twBodyEl ? getComputedStyle(twBodyEl) : null;
+          const twLinkCs = twLinkEl ? getComputedStyle(twLinkEl) : null;
+
+          return {
+            theme: themeVal || 'dark',
+            expectedPrimary,
+            expectedRead,
+            expectedGold,
+            artAuthorSize: artAuthorCs ? parseFloat(artAuthorCs.fontSize) : 0,
+            artAuthorColor: artAuthorCs?.color || '',
+            artHeadSize: artHeadCs ? parseFloat(artHeadCs.fontSize) : 0,
+            artHeadWeight: artHeadCs ? Number(artHeadCs.fontWeight) : 0,
+            artLinkColor: artLinkCs?.color || '',
+            artLinkDisplay: artLinkCs?.display || '',
+            twBodyWeight: twBodyCs ? Number(twBodyCs.fontWeight) : 0,
+            twLinkColor: twLinkCs?.color || ''
+          };
+        };
+
+        const lightRes = readSnapshotForTheme('light');
+        const darkRes = readSnapshotForTheme('');
+
+        // Test independent read state on a clustered card in BOTH Light & Dark without external navigation
+        let clusterResults = [];
+        if (clusteredCard) {
+          const drawer = clusteredCard.querySelector('details.similar-stories-drawer');
+          if (drawer) drawer.open = true;
+          const simRows = Array.from(clusteredCard.querySelectorAll('a.similar-story-row[data-read-key]'));
+          const sim0 = simRows[0];
+          const sim1 = simRows[1];
+          const preventOnce = ev => ev.preventDefault();
+
+          // Step 1: click sim0 only
+          sim0.addEventListener('click', preventOnce, { once: true });
+          sim0.click();
+
+          const step1ByTheme = ['light', ''].map(t => {
+            if (t) document.documentElement.setAttribute('data-theme', t);
+            else document.documentElement.removeAttribute('data-theme');
+            return {
+              theme: t || 'dark',
+              expectedPrimary: resolveColor('var(--text-primary)'),
+              expectedRead: resolveColor('var(--text-read)'),
+              mainRead: clusteredCard.classList.contains('is-read-item'),
+              sim0Read: sim0.classList.contains('is-read-item'),
+              sim1Read: sim1.classList.contains('is-read-item'),
+              mainColor: getComputedStyle(clusteredCard.querySelector('.wire-card-headline')).color,
+              sim0Color: getComputedStyle(sim0.querySelector('.source-row-headline')).color,
+              sim1Color: getComputedStyle(sim1.querySelector('.source-row-headline')).color
+            };
+          });
+
+          // Step 2: now click main card headline -> main card becomes read, sim1 MUST stay unread at opacity 1 & primary color
+          const mainLink = clusteredCard.querySelector('.wire-card-headline a[data-mark-read-key]');
+          if (mainLink) {
+            mainLink.addEventListener('click', preventOnce, { once: true });
+            mainLink.click();
+          }
+
+          const step2ByTheme = ['light', ''].map(t => {
+            if (t) document.documentElement.setAttribute('data-theme', t);
+            else document.documentElement.removeAttribute('data-theme');
+            return {
+              theme: t || 'dark',
+              expectedPrimary: resolveColor('var(--text-primary)'),
+              expectedRead: resolveColor('var(--text-read)'),
+              mainRead: clusteredCard.classList.contains('is-read-item'),
+              mainOpacity: parseFloat(getComputedStyle(clusteredCard).opacity),
+              mainColor: getComputedStyle(clusteredCard.querySelector('.wire-card-headline')).color,
+              mainReadCue: getComputedStyle(clusteredCard.querySelector('[data-wire-age]'), '::before').content,
+              sim1Read: sim1.classList.contains('is-read-item'),
+              sim1Opacity: parseFloat(getComputedStyle(sim1).opacity),
+              sim1Color: getComputedStyle(sim1.querySelector('.source-row-headline')).color
+            };
+          });
+
+          clusterResults = [step1ByTheme, step2ByTheme];
+          if (drawer) drawer.open = false;
+        }
+
+        if (origTheme) document.documentElement.setAttribute('data-theme', origTheme);
+        else document.documentElement.removeAttribute('data-theme');
+        return { lightRes, darkRes, clusterResults };
+      });
+
+      for (const modeRes of [cardTypographyAndReadAudit.lightRes, cardTypographyAndReadAudit.darkRes]) {
+        assert(
+          modeRes.artAuthorSize > 0 && modeRes.artHeadSize > modeRes.artAuthorSize,
+          `[${modeRes.theme}] Article headline (${modeRes.artHeadSize}px) must be larger than author byline (${modeRes.artAuthorSize}px)`
+        );
+        assert(
+          modeRes.artAuthorColor === modeRes.expectedGold,
+          `[${modeRes.theme}] Author byline must use brand gold (${modeRes.expectedGold}), got ${modeRes.artAuthorColor}`
+        );
+        assert(
+          modeRes.artHeadWeight === 700 &&
+            modeRes.artLinkColor === modeRes.expectedPrimary &&
+            modeRes.artLinkDisplay === 'inline',
+          `[${modeRes.theme}] Unread article headline must be bold 700 in unified primary ink (${modeRes.expectedPrimary}) inline; got ${JSON.stringify(modeRes)}`
+        );
+        if (modeRes.twBodyWeight > 0) {
+          assert(
+            modeRes.twBodyWeight === 400 && modeRes.twLinkColor === modeRes.expectedPrimary,
+            `[${modeRes.theme}] Unread tweet body must be regular 400 weight (not bold) in unified primary ink (${modeRes.expectedPrimary}); got weight=${modeRes.twBodyWeight}, color=${modeRes.twLinkColor}`
+          );
+        }
+      }
+      if (cardTypographyAndReadAudit.clusterResults.length === 2) {
+        const [step1ByTheme, step2ByTheme] = cardTypographyAndReadAudit.clusterResults;
+        for (const s1 of step1ByTheme) {
+          assert(
+            !s1.mainRead &&
+              s1.sim0Read &&
+              !s1.sim1Read &&
+              s1.mainColor === s1.expectedPrimary &&
+              s1.sim0Color === s1.expectedRead &&
+              s1.sim1Color === s1.expectedPrimary,
+            `[${s1.theme}] Clicking a similar story must mark ONLY that similar story read and keep main & sibling unread: ${JSON.stringify(s1)}`
+          );
+        }
+        for (const s2 of step2ByTheme) {
+          assert(
+            s2.mainRead &&
+              s2.mainOpacity === 1 &&
+              s2.mainColor === s2.expectedRead &&
+              String(s2.mainReadCue).includes('Read') &&
+              !s2.sim1Read &&
+              s2.sim1Opacity === 1 &&
+              s2.sim1Color === s2.expectedPrimary,
+            `[${s2.theme}] Clicking main story must scope read state to main card (opacity 1 + Read cue) while keeping unread similar stories full contrast: ${JSON.stringify(s2)}`
+          );
+        }
+      }
+
       // 4. Test Ask AI jump button on Daily Top News Brief
       const jumpedPrompt = await cdp.eval(() => {
         const jumpBtn = document.querySelector('[data-action="analyze-topic-jump"]');
