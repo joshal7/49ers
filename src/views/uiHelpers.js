@@ -624,3 +624,64 @@ export function renderExpandableSummaryHtml(
   }
   return `<div class="${esc(className)} is-expandable-summary" data-expandable-summary="collapsed"><span class="wire-summary-preview" data-summary-preview>${escJargon(split.previewText, jargonOptions)} <button type="button" class="wire-summary-toggle-btn" data-action="toggle-wire-summary" aria-expanded="false">Show more</button></span><span class="wire-summary-full" data-summary-full hidden>${escJargon(split.fullText, jargonOptions)} <button type="button" class="wire-summary-toggle-btn" data-action="toggle-wire-summary" aria-expanded="true">Show less</button></span></div>`;
 }
+
+/**
+ * Renders a tasteful, uncluttered direct-click linked article preview card embedded directly
+ * below a tweet — eliminating the extra hop through X or Bluesky.
+ *
+ * Variants:
+ * - `'card'` (Bluesky/X media-top link card): Used on standalone Tweet cards when a real
+ *   editorial photograph is available (`aspect-ratio` banner on top, crisp 2-line title + domain below).
+ * - `'compact'` (Horizontal link preview card): Used inside `Similar stories`, `Daily Brief Sources`,
+ *   `Home` compact tweet rows, `Compact` scan mode, or whenever no editorial photo is attached.
+ */
+export function renderTweetLinkedArticleCardHtml(
+  preview = null,
+  { variant = 'card', markReadKey = '', eager = false, extraClass = '' } = {}
+) {
+  if (!preview || !preview.url) return '';
+  const safeHref = sanitizeExternalUrl(preview.url, null);
+  if (!safeHref) return '';
+
+  const hasPhoto = Boolean(preview.imageUrl);
+  const effectiveVariant = variant === 'card' && hasPhoto ? 'card' : 'compact';
+  const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" fetchpriority="low"';
+  const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
+
+  let mediaHtml = '';
+  if (hasPhoto) {
+    const opt = optimizeImageUrlForSlot(preview.imageUrl, effectiveVariant === 'card' ? 'hero' : 'thumb');
+    if (opt.src) {
+      const dims = effectiveVariant === 'card' ? 'width="560" height="280"' : 'width="84" height="56"';
+      mediaHtml = `<span class="tweet-linked-article-media"><img src="${esc(opt.src)}" ${opt.fallbackSrc ? `data-fallback-src="${esc(opt.fallbackSrc)}"` : ''} alt="${esc(preview.title || preview.publisherName || 'Linked article photo')}" ${dims} ${loadAttr} decoding="async" /></span>`;
+    }
+  }
+
+  const domainText = preview.domain || preview.publisherName || 'Article';
+  const bylineSuffix = preview.byline ? ` · ${preview.byline}` : '';
+  const ctaLabel = preview.isPodcast ? 'Listen' : 'Read';
+  const cls = [
+    'tweet-linked-article-card',
+    effectiveVariant === 'card' ? 'is-media-top' : 'is-compact',
+    mediaHtml ? 'has-media' : 'no-media',
+    extraClass
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return `
+    <a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="${cls}" data-linked-article-card="true" data-linked-article-variant="${esc(effectiveVariant)}" data-linked-article-domain="${esc(domainText)}"${readAttr}>
+      ${mediaHtml}
+      <span class="tweet-linked-article-body">
+        <span class="tweet-linked-article-title">${esc(preview.title || `Read full story on ${preview.publisherName || domainText}`)}</span>
+        <span class="tweet-linked-article-meta">
+          <span class="tweet-linked-article-domain">
+            ${iconSvg('globe', 11)}
+            <span class="tweet-linked-article-domain-text">${esc(domainText)}${esc(bylineSuffix)}</span>
+          </span>
+          <span class="tweet-linked-article-cta">${esc(ctaLabel)} ${iconSvg('externalLink', 10)}</span>
+        </span>
+      </span>
+    </a>
+  `;
+}

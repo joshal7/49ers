@@ -2721,15 +2721,19 @@ const CONCRETE_STAT_OR_CAP_REGEX =
  * article links like `sfstandard.com/2026/...` without an external card are never missed.
  */
 export function extractBlueskyBestExternalLink(post = null, rec = null) {
+  const isSocialOriginLink = uri =>
+    /^https?:\/\/(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(String(uri || '').trim());
+
   const extEmbed =
     post?.embed?.external ||
     post?.embed?.media?.external ||
     rec?.embed?.external ||
     rec?.embed?.media?.external ||
     null;
-  if (extEmbed?.uri) {
+  const extEmbedUri = String(extEmbed?.uri || '').trim();
+  if (extEmbedUri && !isSocialOriginLink(extEmbedUri)) {
     return {
-      uri: String(extEmbed.uri || '').trim(),
+      uri: extEmbedUri,
       title: String(extEmbed.title || '').trim(),
       description: String(extEmbed.description || '').trim(),
       thumb: String(extEmbed.thumb || '').trim()
@@ -2743,10 +2747,23 @@ export function extractBlueskyBestExternalLink(post = null, rec = null) {
       const uri = String(feat.uri).trim();
       if (!/^https?:\/\//i.test(uri)) continue;
       if (isDirectArticleUrl(uri)) {
-        return { uri, title: '', description: '', thumb: '' };
+        return {
+          uri,
+          title: '',
+          description: '',
+          thumb: String(extEmbed?.thumb || '').trim()
+        };
       }
-      if (!fallbackUri) fallbackUri = uri;
+      if (!fallbackUri && !isSocialOriginLink(uri)) fallbackUri = uri;
     }
+  }
+  if (extEmbedUri && !fallbackUri) {
+    return {
+      uri: extEmbedUri,
+      title: String(extEmbed.title || '').trim(),
+      description: String(extEmbed.description || '').trim(),
+      thumb: String(extEmbed.thumb || '').trim()
+    };
   }
   return { uri: fallbackUri, title: '', description: '', thumb: '' };
 }
@@ -3234,13 +3251,279 @@ export function reconcileLinkDropTweetsWithArticles(items = []) {
   return reconciled;
 }
 
+const LINKED_ARTICLE_PUBLISHER_MAP = {
+  'espn.com': 'ESPN',
+  'es.pn': 'ESPN',
+  'nbcsportsbayarea.com': 'NBC Sports Bay Area',
+  'nbcsports.com': 'NBC Sports',
+  '49ers.com': '49ers.com',
+  '49erswebzone.com': '49ers Webzone',
+  'ninersnation.com': 'Niners Nation',
+  'sfstandard.com': 'The SF Standard',
+  'nfl.com': 'NFL.com',
+  'on.nfl.com': 'NFL.com',
+  'cbssports.com': 'CBS Sports',
+  'profootballrumors.com': 'Pro Football Rumors',
+  'nfltraderumors.co': 'NFLTradeRumors.co',
+  'overthecap.com': 'OverTheCap',
+  'spotrac.com': 'Spotrac',
+  'si.com': 'Sports Illustrated',
+  'ninerswire.usatoday.com': 'Niners Wire',
+  'usatoday.com': 'USA Today',
+  'knbr.com': 'KNBR',
+  'foxsports.com': 'FOX Sports',
+  'bleacherreport.com': 'Bleacher Report',
+  'sports.yahoo.com': 'Yahoo Sports',
+  'yahoo.com': 'Yahoo Sports',
+  'theringer.com': 'The Ringer',
+  'the33rdteam.com': 'The 33rd Team',
+  'sfgate.com': 'SFGATE',
+  'sacbee.com': 'Sacramento Bee',
+  'pff.com': 'PFF',
+  'open.spotify.com': 'Spotify',
+  'spotify.com': 'Spotify',
+  'podcasts.apple.com': 'Apple Podcasts',
+  'youtube.com': 'YouTube',
+  'youtu.be': 'YouTube'
+};
+
+const PODCAST_EXTERNAL_HOST_RE =
+  /(^|\.)(open\.spotify\.com|spotify\.com|podcasts\.apple\.com|music\.amazon\.com|megaphone\.fm|art19\.com|soundcloud\.com|omny\.fm|anchor\.fm|overcast\.fm|pocketcasts\.com)$/i;
+
+const SOCIAL_ORIGIN_LINK_RE = /^https?:\/\/(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i;
+
+const linkedArticleStreamIndexCache = new WeakMap();
+
+function extractArticleStoryKey(rawUrl = '') {
+  const s = String(rawUrl || '').trim();
+  if (!s) return '';
+  const espnStory = s.match(/espn\.com\/(?:[^/]+\/)*story\/_\/id\/(\d+)/i);
+  if (espnStory) return `espn_story:${espnStory[1]}`;
+  return '';
+}
+
+function getLinkedArticleStreamIndex(rawStream = []) {
+  if (!Array.isArray(rawStream) || rawStream.length === 0) return null;
+  if (linkedArticleStreamIndexCache.has(rawStream)) {
+    return linkedArticleStreamIndexCache.get(rawStream);
+  }
+  const byCanonicalUrl = new Map();
+  const byStoryKey = new Map();
+  const registerArticle = cand => {
+    if (!cand || typeof cand !== 'object') return;
+    if (cand.type !== 'article' && cand.type !== 'post') return;
+    const safeUrl = sanitizeExternalUrl(cand.url, null);
+    if (!safeUrl || SOCIAL_ORIGIN_LINK_RE.test(safeUrl)) return;
+    const canon = canonicalComparableUrl(safeUrl);
+    if (canon && !byCanonicalUrl.has(canon)) byCanonicalUrl.set(canon, cand);
+    const storyKey = extractArticleStoryKey(safeUrl);
+    if (storyKey && !byStoryKey.has(storyKey)) byStoryKey.set(storyKey, cand);
+  };
+  for (const it of rawStream) {
+    registerArticle(it);
+    if (Array.isArray(it?.confirmingReports)) {
+      for (const cr of it.confirmingReports) registerArticle(cr);
+    }
+  }
+  const index = { byCanonicalUrl, byStoryKey };
+  linkedArticleStreamIndexCache.set(rawStream, index);
+  return index;
+}
+
+function resolveFriendlyPublisherName(domain = '') {
+  const clean = String(domain || '')
+    .toLowerCase()
+    .replace(/^(?:www|m|amp)\./, '')
+    .trim();
+  if (!clean) return 'Article';
+  if (LINKED_ARTICLE_PUBLISHER_MAP[clean]) return LINKED_ARTICLE_PUBLISHER_MAP[clean];
+  for (const [hostKey, label] of Object.entries(LINKED_ARTICLE_PUBLISHER_MAP)) {
+    if (clean.endsWith(`.${hostKey}`)) return label;
+  }
+  return clean;
+}
+
+function isMirrorBotDuplicateExternalTitle(extTitle = '', tweetBody = '') {
+  const norm = str =>
+    cleanTweetTextForArticleComparison(String(str || ''))
+      .toLowerCase()
+      .replace(/[’‘]/g, "'")
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  const a = norm(extTitle);
+  const b = norm(tweetBody);
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const prefixLen = Math.min(48, a.length, b.length);
+  if (prefixLen >= 28 && (a.startsWith(b.slice(0, prefixLen)) || b.startsWith(a.slice(0, prefixLen)))) {
+    return true;
+  }
+  const aTokens = new Set(a.split(' ').filter(w => w.length >= 3));
+  const bTokens = new Set(b.split(' ').filter(w => w.length >= 3));
+  if (aTokens.size >= 4 && bTokens.size >= 4) {
+    let shared = 0;
+    for (const w of aTokens) {
+      if (bTokens.has(w)) shared += 1;
+    }
+    const containment = shared / Math.min(aTokens.size, bTokens.size);
+    if (containment >= 0.84) return true;
+  }
+  return false;
+}
+
+function extractCreditedStoryBylineFromTweet(rawTweetText = '') {
+  const txt = String(rawTweetText || '');
+  const m = txt.match(/\b(?:story|article|report|column|more|details)\s+(?:via|by|from)\s+@([A-Za-z0-9_.-]{2,30})\b/i);
+  if (!m?.[1]) return '';
+  const handleRaw = m[1].replace(/\.bsky\.social$/i, '').trim();
+  if (!handleRaw) return '';
+  const mappedX =
+    BSKY_ACTOR_TO_X_HANDLE[m[1].toLowerCase()] ||
+    BSKY_ACTOR_TO_X_HANDLE[`${handleRaw.toLowerCase()}.bsky.social`] ||
+    '';
+  const rep =
+    (mappedX ? resolveReporterFromNameOrHandle(mappedX) : null) ||
+    resolveReporterFromNameOrHandle(handleRaw);
+  if (rep && !isPodiumSubjectId(rep.id) && rep.id !== '49ers_news') {
+    return rep.name;
+  }
+  return `@${handleRaw}`;
+}
+
+/**
+ * Resolves a clean, direct-click linked article preview payload for any tweet/social item
+ * carrying a free, non-social `externalUrl` — allowing users to click straight to the linked
+ * article (e.g. ESPN, NBCSBA, 49ers.com, SF Standard) without hopping through X or Bluesky.
+ *
+ * Cross-references `rawStream` (by canonical URL or ESPN story ID) to recover the real article
+ * headline, publisher, byline, and crisp editorial photo whenever Bluesky mirror bots duplicate
+ * the tweet text into `embed.external.title`.
+ */
+export function resolveTweetLinkedArticlePreview(
+  item = null,
+  { rawStream = [], resolvedItemUrl = '' } = {}
+) {
+  if (!item || typeof item !== 'object') return null;
+  const isTweet = item.type === 'tweet' || item.type === 'social';
+  if (!isTweet) return null;
+
+  // Avoid duplicating a linked card when the tweet already renders an inline playable video player
+  const hasPlayableVideo = Boolean(
+    item.videoId || item.videoStreamUrl || (item.isHighlightClip && item.externalVideoUrl)
+  );
+  if (hasPlayableVideo) return null;
+
+  const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
+  if (!safeExtUrl) return null;
+  if (SOCIAL_ORIGIN_LINK_RE.test(safeExtUrl)) return null;
+  if (isPaywalledPublisher(item.outletName, safeExtUrl)) return null;
+  if (isRedundantProfileSelfLink(safeExtUrl, resolvedItemUrl)) return null;
+  if (isRedundantProfileSelfLink(safeExtUrl, item.url)) return null;
+  if (resolvedItemUrl && canonicalComparableUrl(safeExtUrl) === canonicalComparableUrl(resolvedItemUrl)) {
+    return null;
+  }
+  if (/\bon X$/i.test(String(item.externalTitle || '').trim())) return null;
+
+  let domain = '';
+  try {
+    domain = new URL(safeExtUrl).hostname.toLowerCase().replace(/^(?:www|m|amp)\./, '');
+  } catch {
+    return null;
+  }
+  if (!domain) return null;
+
+  const publisherName = resolveFriendlyPublisherName(domain);
+  const isPodcast = PODCAST_EXTERNAL_HOST_RE.test(domain);
+  const isArticle = !isPodcast && isDirectArticleUrl(safeExtUrl);
+
+  const streamIndex = getLinkedArticleStreamIndex(rawStream);
+  const matchedArticle = streamIndex
+    ? streamIndex.byCanonicalUrl.get(canonicalComparableUrl(safeExtUrl)) ||
+      streamIndex.byStoryKey.get(extractArticleStoryKey(safeExtUrl)) ||
+      null
+    : null;
+
+  const tweetText = formatTweetBodyForDisplay(item.fullText || item.title || item.headline || '').text;
+  const rawMatchedTitle = matchedArticle?.title
+    ? cleanArticleHeadlineCandidate(String(matchedArticle.title))
+    : '';
+  const rawExtTitle = item.externalTitle
+    ? cleanArticleHeadlineCandidate(
+        String(item.externalTitle).replace(/\s*(?:Original post|View original post)\s*$/i, '')
+      )
+    : '';
+
+  let title = '';
+  let titleSource = 'editorial_fallback';
+  let byline = '';
+
+  if (rawMatchedTitle.length >= 12) {
+    title = rawMatchedTitle;
+    titleSource = 'stream_match';
+    const matchedAuthor = String(matchedArticle.reporterName || matchedArticle.author || '').trim();
+    if (
+      matchedAuthor &&
+      matchedAuthor.toLowerCase() !== publisherName.toLowerCase() &&
+      !BRAND_SOCIAL_NAME_REGEX.test(matchedAuthor)
+    ) {
+      byline = matchedAuthor;
+    }
+  } else if (
+    rawExtTitle.length >= 10 &&
+    !BRAND_SOCIAL_NAME_REGEX.test(rawExtTitle) &&
+    !/^https?:\/\//i.test(rawExtTitle) &&
+    !isMirrorBotDuplicateExternalTitle(rawExtTitle, tweetText)
+  ) {
+    title = rawExtTitle;
+    titleSource = 'external_title';
+  }
+
+  if (!byline) {
+    byline = extractCreditedStoryBylineFromTweet(tweetText);
+  }
+
+  if (!title) {
+    if (isPodcast) {
+      title = `Listen to episode on ${publisherName}`;
+    } else if (isArticle) {
+      title = `Read full story on ${publisherName}`;
+    } else {
+      title = `Open link on ${publisherName}`;
+    }
+    titleSource = 'editorial_fallback';
+  }
+
+  const matchedEditorialImg = isEditorialPhotoUrl(matchedArticle?.imageUrl)
+    ? String(matchedArticle.imageUrl).trim()
+    : '';
+  const itemEditorialImg = isEditorialPhotoUrl(item.imageUrl) ? String(item.imageUrl).trim() : '';
+  const preferMatchedOverBsky =
+    Boolean(matchedEditorialImg) && (!itemEditorialImg || itemEditorialImg.includes('cdn.bsky.app'));
+  const imageUrl = preferMatchedOverBsky ? matchedEditorialImg : itemEditorialImg || matchedEditorialImg || '';
+
+  return {
+    url: safeExtUrl,
+    domain,
+    publisherName,
+    title,
+    byline,
+    imageUrl,
+    isDirectArticle: isArticle,
+    isPodcast,
+    titleSource
+  };
+}
+
 /**
  * Formats a tweet's body so short tweets (<= 320 chars) preserve 100% of their full text
- * without mid-sentence truncation, while very long posts trim cleanly at a word boundary.
+ * without mid-sentence truncation, while stripping Bluesky mirror-bot "Original post" boilerplate
+ * and trimming very long posts cleanly at a word boundary.
  */
 export function formatTweetBodyForDisplay(rawText = '', limit = SHORT_TWEET_FULL_TEXT_LIMIT) {
   const cleaned = String(rawText || '')
     .replace(/\s+/g, ' ')
+    .replace(/\s*(?:Original post|View original post)\s*$/i, '')
     .trim();
   if (!cleaned) {
     return { text: '', isFullTweet: true, originalLength: 0 };

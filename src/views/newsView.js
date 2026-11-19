@@ -15,6 +15,7 @@ import {
   renderPlayerChipsStripHtml,
   renderSalientThumbHtml,
   renderSalientHeroBannerHtml,
+  renderTweetLinkedArticleCardHtml,
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import {
@@ -31,6 +32,7 @@ import {
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
   promoteLinkDropTweetToArticle,
+  resolveTweetLinkedArticlePreview,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
   formatTweetBodyForDisplay,
@@ -386,6 +388,38 @@ export function renderDailyTopNewsBriefHtml(
                   const srcReadKey = getItemReadKey(matchedItem);
                   const srcIsRead = isItemRead(matchedItem, readKeysSet);
                   const srcIsTw = rep.type === 'tweet';
+                  const srcLinkedPreview = srcIsTw
+                    ? resolveTweetLinkedArticlePreview(matchedItem, { rawStream, resolvedItemUrl: rep.url })
+                    : null;
+                  const srcLinkedCardHtml = srcLinkedPreview
+                    ? renderTweetLinkedArticleCardHtml(srcLinkedPreview, {
+                        variant: 'compact',
+                        markReadKey: srcReadKey
+                      })
+                    : '';
+                  const effectiveSrcThumbHtml = srcLinkedPreview?.imageUrl ? '' : srcThumbHtml;
+                  if (srcLinkedCardHtml) {
+                    return `
+                      <div class="synthesis-source-sheet-row has-linked-article-card ${effectiveSrcThumbHtml ? 'has-source-thumb' : ''} ${srcIsRead ? 'is-read-item' : ''}" data-brief-source-row data-read-key="${esc(srcReadKey)}">
+                        <div class="similar-story-top-row">
+                          <div style="min-width:0;flex:1">
+                            <div class="source-row-meta">
+                              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+                                <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
+                                <strong class="source-row-author">${esc(attribution)}</strong>
+                              </div>
+                              <span class="mono source-row-age">${rep.publishedAt ? esc(formatRelativeAge(rep.publishedAt)) : ''}</span>
+                            </div>
+                            <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(srcReadKey)}">
+                              ${esc(rep.title)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span>
+                            </a>
+                          </div>
+                          ${effectiveSrcThumbHtml}
+                        </div>
+                        ${srcLinkedCardHtml}
+                      </div>
+                    `;
+                  }
                   return `
                     <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row ${srcThumbHtml ? 'has-source-thumb' : ''} ${srcIsRead ? 'is-read-item' : ''}" data-brief-source-row data-read-key="${esc(srcReadKey)}" data-mark-read-key="${esc(srcReadKey)}">
                       <div style="min-width:0;flex:1">
@@ -513,11 +547,16 @@ function isSummaryRedundantWithTitle(title = '', summary = '') {
 function renderRelatedStoriesDrawerHtml(
   item,
   confirmingList = [],
-  { prioritizedRaw = [], rosterPlayers = [], readKeysSet = null } = {}
+  { prioritizedRaw = [], rosterPlayers = [], readKeysSet = null, parentShownUrls = null } = {}
 ) {
   if (!Array.isArray(confirmingList) || confirmingList.length === 0) return '';
   const clusterKind = item?.clusterKind === 'corroboration' ? 'corroboration' : 'similar';
   const summaryLabel = `Similar stories (${confirmingList.length})`;
+  const normUrl = u =>
+    String(u || '')
+      .replace(/^https?:\/\/(?:www\.|m\.)/i, 'https://')
+      .replace(/\/+$/, '')
+      .toLowerCase();
 
   const rowsHtml = confirmingList
     .slice(0, 8)
@@ -553,6 +592,47 @@ function renderRelatedStoriesDrawerHtml(
       const crReadKey = getItemReadKey(cr);
       const crIsRead = isItemRead(cr, readKeysSet);
       const isValidLink = Boolean(crHref && crHref !== '#');
+      const rawCrLinkedPreview = crIsTw
+        ? resolveTweetLinkedArticlePreview(cr, { rawStream: prioritizedRaw, resolvedItemUrl: isValidLink ? crHref : '' })
+        : null;
+      const crLinkedPreview =
+        rawCrLinkedPreview && !(parentShownUrls && parentShownUrls.has(normUrl(rawCrLinkedPreview.url)))
+          ? rawCrLinkedPreview
+          : null;
+      const crLinkedCardHtml = crLinkedPreview
+        ? renderTweetLinkedArticleCardHtml(crLinkedPreview, {
+            variant: 'compact',
+            markReadKey: crReadKey
+          })
+        : '';
+      const effectiveCrThumbHtml = crLinkedPreview?.imageUrl ? '' : crThumbHtml;
+
+      if (crLinkedCardHtml) {
+        const divCls = `synthesis-source-sheet-row similar-story-row has-linked-article-card ${effectiveCrThumbHtml ? 'has-source-thumb' : ''} ${crIsRead ? 'is-read-item' : ''}`.trim();
+        return `
+          <div class="${divCls}" data-similar-story-row data-read-key="${esc(crReadKey)}">
+            <div class="similar-story-top-row">
+              <div style="min-width:0;flex:1">
+                <div class="source-row-meta">
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+                    <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
+                    <strong class="source-row-author">${esc(attribution)}</strong>
+                  </div>
+                  <span class="mono source-row-age">${cr?.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
+                </div>
+                ${
+                  isValidLink
+                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
+                    : `<div class="source-row-headline is-tweet-body">${esc(displayHeadline)}</div>`
+                }
+              </div>
+              ${effectiveCrThumbHtml}
+            </div>
+            ${crLinkedCardHtml}
+          </div>
+        `;
+      }
+
       const rowCls = `synthesis-source-sheet-row similar-story-row ${crThumbHtml ? 'has-source-thumb' : ''} ${crIsRead ? 'is-read-item' : ''}`.trim();
       const rowOpen = isValidLink
         ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="${rowCls}" data-similar-story-row data-read-key="${esc(crReadKey)}" data-mark-read-key="${esc(crReadKey)}">`
@@ -657,12 +737,25 @@ export function renderWireItemCardHtml(
   const effortCue = estimateItemEffortCue(item);
 
   const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
+  const linkedArticlePreview =
+    isTweet && !hasPlayableVideo
+      ? resolveTweetLinkedArticlePreview(item, { rawStream: prioritizedRaw, resolvedItemUrl })
+      : null;
+  const linkedArticleVariant = isCompactMode || !linkedArticlePreview?.imageUrl ? 'compact' : 'card';
+  const linkedArticleCardHtml = linkedArticlePreview
+    ? renderTweetLinkedArticleCardHtml(linkedArticlePreview, {
+        variant: linkedArticleVariant,
+        markReadKey: readKey,
+        eager: eagerImage
+      })
+    : '';
+  const linkedCardOwnsMedia = Boolean(linkedArticlePreview?.imageUrl && linkedArticleCardHtml);
   const thumbTargetHref = resolvedItemUrl || safeExtUrl || '';
   const wantsLeadHeroSlot = Boolean(
-    !isCompactMode && (isLeadFeatured || isUrgent) && !isVideo && !hasPlayableVideo
+    !isCompactMode && !linkedCardOwnsMedia && (isLeadFeatured || isUrgent) && !isVideo && !hasPlayableVideo
   );
   const salientVisual =
-    !isCompactMode && !isVideo && !hasPlayableVideo
+    !isCompactMode && !linkedCardOwnsMedia && !isVideo && !hasPlayableVideo
       ? resolveSalientCardVisual(item, {
           rosterPlayers,
           slot: wantsLeadHeroSlot ? 'hero' : 'thumb',
@@ -689,25 +782,41 @@ export function renderWireItemCardHtml(
       })
     : '';
   const hasThumb = Boolean(sideThumbHtml);
-  const normCmpUrl = u => String(u || '').replace(/\/+$/, '').toLowerCase();
+  const normCmpUrl = u =>
+    String(u || '')
+      .replace(/^https?:\/\/(?:www\.|m\.)/i, 'https://')
+      .replace(/\/+$/, '')
+      .toLowerCase();
+  const effectiveLinkedExtUrl = linkedArticlePreview?.url || safeExtUrl || '';
   const showLinkedStory =
+    !linkedArticleCardHtml &&
     Boolean(safeExtUrl) &&
     normCmpUrl(safeExtUrl) !== normCmpUrl(resolvedItemUrl) &&
     !isRedundantProfileSelfLink(safeExtUrl, resolvedItemUrl) &&
     !isRedundantProfileSelfLink(safeExtUrl, item.url) &&
     !/\bon X$/i.test(String(item.externalTitle || ''));
+  const parentShownUrls = new Set(
+    [resolvedItemUrl, linkedArticleCardHtml || showLinkedStory ? effectiveLinkedExtUrl : '']
+      .map(normCmpUrl)
+      .filter(Boolean)
+  );
   const confirmingList = (Array.isArray(item.confirmingReports) ? item.confirmingReports : []).filter(cr => {
     const crIsTw = cr?.type === 'tweet' || cr?.type === 'social';
     const crHref = crIsTw
       ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '')
       : sanitizeExternalUrl(cr?.url, '');
-    if (showLinkedStory && crHref && normCmpUrl(crHref) === normCmpUrl(safeExtUrl)) return false;
+    if ((linkedArticleCardHtml || showLinkedStory) && effectiveLinkedExtUrl && crHref && normCmpUrl(crHref) === normCmpUrl(effectiveLinkedExtUrl)) return false;
     if (resolvedItemUrl && crHref && normCmpUrl(crHref) === normCmpUrl(resolvedItemUrl)) return false;
     return true;
   });
   const relatedStoriesDrawerHtml =
     confirmingList.length > 0
-      ? renderRelatedStoriesDrawerHtml(item, confirmingList, { prioritizedRaw, rosterPlayers, readKeysSet })
+      ? renderRelatedStoriesDrawerHtml(item, confirmingList, {
+          prioritizedRaw,
+          rosterPlayers,
+          readKeysSet,
+          parentShownUrls
+        })
       : '';
 
   const rightMetaPrefix =
@@ -747,6 +856,7 @@ export function renderWireItemCardHtml(
             }
           </div>
           ${cleanSummary ? renderExpandableSummaryHtml(cleanSummary, { className: 'wire-card-summary' }) : ''}
+          ${linkedArticleCardHtml}
           ${
             showLinkedStory
               ? `<div class="wire-card-actions-row">

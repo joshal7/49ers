@@ -1364,6 +1364,74 @@ async function main() {
         }
       }
 
+      // 3b. Direct-Click Linked Article Preview Cards on Tweets (Tweets tab)
+      const linkedArticleAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const tweetsBtn = document.querySelector('[data-action="select-news-cat"][data-cat="tweets"]');
+        if (tweetsBtn) {
+          tweetsBtn.click();
+          await sleep(60);
+        }
+        const linkedCards = Array.from(document.querySelectorAll('[data-linked-article-card="true"]'));
+        const tweetBodies = Array.from(document.querySelectorAll('.wire-card-headline.is-tweet-body')).map(el =>
+          (el.textContent || '').trim()
+        );
+        const leakingOriginalPost = tweetBodies.filter(t => /\bOriginal post\b/i.test(t));
+        const badCards = [];
+        for (const card of linkedCards) {
+          const href = card.getAttribute('href') || '';
+          const rect = card.getBoundingClientRect();
+          const title = (card.querySelector('.tweet-linked-article-title')?.textContent || '').trim();
+          const domain = (card.querySelector('.tweet-linked-article-domain-text')?.textContent || '').trim();
+          const nested = Boolean(card.parentElement?.closest('a') || card.querySelector('a'));
+          const isSocialRedirect = /^https?:\/\/(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i.test(href);
+          if (
+            !href.startsWith('https://') ||
+            isSocialRedirect ||
+            !title ||
+            !domain ||
+            nested ||
+            rect.right > window.innerWidth + 1.5
+          ) {
+            badCards.push({ href, title, domain, nested, right: rect.right, innerW: window.innerWidth });
+          }
+        }
+        let clickMarksRead = true;
+        if (linkedCards[0]) {
+          const parentCard = linkedCards[0].closest('[data-read-key]');
+          linkedCards[0].addEventListener('click', ev => ev.preventDefault(), { once: true });
+          linkedCards[0].click();
+          clickMarksRead = Boolean(parentCard && parentCard.classList.contains('is-read-item'));
+        }
+        const allBtn = document.querySelector('[data-action="select-news-cat"][data-cat="all"]');
+        if (allBtn) {
+          allBtn.click();
+          await sleep(60);
+        }
+        return {
+          linkedCount: linkedCards.length,
+          badCards,
+          leakingOriginalPost,
+          clickMarksRead
+        };
+      });
+      assert(
+        linkedArticleAudit.linkedCount >= 1,
+        `Tweets tab should render >= 1 direct-click linked article preview card from live data; got ${linkedArticleAudit.linkedCount}`
+      );
+      assert(
+        linkedArticleAudit.badCards.length === 0,
+        `Linked article preview cards failed link/layout/nested-anchor checks: ${JSON.stringify(linkedArticleAudit.badCards)}`
+      );
+      assert(
+        linkedArticleAudit.leakingOriginalPost.length === 0,
+        `No tweet body may leak "Original post" mirror boilerplate: ${JSON.stringify(linkedArticleAudit.leakingOriginalPost)}`
+      );
+      assert(
+        linkedArticleAudit.clickMarksRead,
+        'Clicking a direct linked article preview card must mark its parent tweet card as read'
+      );
+
       // 4. Test Ask AI jump button on Daily Top News Brief
       const jumpedPrompt = await cdp.eval(() => {
         const jumpBtn = document.querySelector('[data-action="analyze-topic-jump"]');

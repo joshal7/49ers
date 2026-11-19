@@ -16,6 +16,7 @@ import {
   renderAvatarStackHtml,
   renderPlayerChipsStripHtml,
   renderSalientThumbHtml,
+  renderTweetLinkedArticleCardHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
@@ -39,6 +40,7 @@ import {
   balanceFeedTopSalience,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
+  resolveTweetLinkedArticlePreview,
   formatTweetBodyForDisplay,
   filterOutCompletedGameAvailabilityItems,
   filterFreshVideosForCurrentSlate,
@@ -342,7 +344,21 @@ function renderSingleDashboardCard({
                       SHORT_TWEET_FULL_TEXT_LIMIT
                     ).text;
                     const safeTwExt = sanitizeExternalUrl(tw.externalUrl, null);
+                    const twLinkedPreview = resolveTweetLinkedArticlePreview(tw, {
+                      rawStream: rawList,
+                      resolvedItemUrl: resolvedTwUrl !== '#' ? resolvedTwUrl : ''
+                    });
+                    const twReadKey = getItemReadKey(tw);
+                    const twIsRead = isItemRead(tw, readKeysSet);
+                    const twLinkedCardHtml = twLinkedPreview
+                      ? renderTweetLinkedArticleCardHtml(twLinkedPreview, {
+                          variant: 'compact',
+                          markReadKey: twReadKey,
+                          eager: idx === 0
+                        })
+                      : '';
                     const showExtChip =
+                      !twLinkedCardHtml &&
                       Boolean(safeTwExt) &&
                       !isRedundantProfileSelfLink(safeTwExt, resolvedTwUrl) &&
                       !isRedundantProfileSelfLink(safeTwExt, tw.url) &&
@@ -357,13 +373,14 @@ function renderSingleDashboardCard({
                           : tw.breakingBadge === 'ROSTER MOVE' || tw.breakingBadge === 'TRADE INTEL'
                             ? 'badge-gold'
                             : 'badge-neutral';
-                    const twVisual = resolveSalientCardVisual(tw, {
-                      rosterPlayers,
-                      slot: 'thumb',
-                      allowTeamFallback: true
-                    });
-                    const twReadKey = getItemReadKey(tw);
-                    const twIsRead = isItemRead(tw, readKeysSet);
+                    const twVisual =
+                      !twLinkedPreview?.imageUrl
+                        ? resolveSalientCardVisual(tw, {
+                            rosterPlayers,
+                            slot: 'thumb',
+                            allowTeamFallback: true
+                          })
+                        : null;
                     const twThumbHtml = twVisual
                       ? renderSalientThumbHtml(twVisual, {
                           href: resolvedTwUrl !== '#' ? resolvedTwUrl : safeTwExt || '',
@@ -394,6 +411,7 @@ function renderSingleDashboardCard({
                           ${esc(fullShortTweet)}
                           <span class="wire-inline-ext">${iconSvg('external', 11)}</span>
                         </a>
+                        ${twLinkedCardHtml}
                         ${
                           showExtChip
                             ? `<div>

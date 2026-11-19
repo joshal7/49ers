@@ -9,12 +9,15 @@ import {
   classifyBreakingItem,
   extractBlueskyBestExternalLink,
   formatTweetBodyForDisplay,
+  isDirectArticleUrl,
   isRedundantProfileSelfLink,
   promoteLinkDropTweetToArticle,
+  resolveTweetLinkedArticlePreview,
   stripRedundantAuthorBoilerplate
 } from '../../src/engine/breakingClassifier.js';
 import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
 import {
+  AMBIGUOUS_PLAYER_SURNAMES,
   OTC_TEAM_CAP_URL,
   buildMockDraftBigBoardUrl,
   buildMockDraftProspectUrl,
@@ -23,6 +26,8 @@ import {
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
   getPlayerLookupKeys,
+  hasExplicit49ersEntity,
+  hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
@@ -32,7 +37,8 @@ import {
   selectBestXSyndicationMp4,
   slugifyPlayerName,
   stripAggregatorBoilerplate,
-  stripHistoricalSfBioSentences
+  stripHistoricalSfBioSentences,
+  stripNon49ersEntityContexts
 } from '../../src/engine/linkIntegrity.js';
 import {
   buildTargetedOriginalTweetUrl,
@@ -220,6 +226,7 @@ export async function searchYouTubeChannelVideos(channelId, channelName, query, 
  */
 export async function fetchCuratedYouTubeChannelVideos({
   qbNames = ['Brock Purdy'],
+  rosterPlayers = [],
   maxAgeDays = 11,
   nowMs = Date.now()
 } = {}) {
@@ -228,7 +235,7 @@ export async function fetchCuratedYouTubeChannelVideos({
       const clean = String(nm || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
       const parts = clean.split(/\s+/);
       const last = parts[parts.length - 1] || '';
-      return [clean, last.length >= 5 && !/^(jones|smith|brown|allen|young|white)$/i.test(last) ? last : ''];
+      return [clean, last.length >= 5 && !AMBIGUOUS_PLAYER_SURNAMES.has(last.toLowerCase()) ? last : ''];
     })
     .filter(Boolean)
     .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
@@ -237,8 +244,37 @@ export async function fetchCuratedYouTubeChannelVideos({
     `\\b(${['49ers', 'niners', 'san francisco', 'shanahan', ...escapedQbTokens].join('|')})\\b`,
     'i'
   );
-  const sfTeamFilterRe =
-    /\b(49ers|niners|san francisco|purdy|bosa|mccaffrey|kittle|warner|buckner|shanahan|allen|deebo|lenoir)\b/i;
+  const dynamicRosterFullNames = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
+    .map(p => String(p?.name || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim())
+    .filter(nm => nm && nm.includes(' ') && nm.length >= 7)
+    .map(nm => nm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const sfTeamFilterRe = new RegExp(
+    `\\b(${[
+      '49ers',
+      'niners',
+      'san francisco',
+      'kyle shanahan',
+      'shanahan',
+      'raheem morris',
+      'klay kubiak',
+      'brock purdy',
+      'purdy',
+      'nick bosa',
+      'christian mccaffrey',
+      'mccaffrey',
+      'george kittle',
+      'kittle',
+      'fred warner',
+      'deforest buckner',
+      'keenan allen',
+      'deebo samuel',
+      'deebo',
+      'deommodore lenoir',
+      'lenoir',
+      ...dynamicRosterFullNames
+    ].join('|')})\\b`,
+    'i'
+  );
 
   const channels = [
     {
@@ -357,11 +393,14 @@ export async function fetchCuratedYouTubeChannelVideos({
 
 const shortenerExpandCache = new Map();
 
+const SPORTS_SHORTENER_HOST_RE = /^https?:\/\/(?:www\.)?(?:es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)\//i;
+
 export async function expandShortenerUrl(rawUrl = '') {
   const clean = String(rawUrl || '').trim();
-  if (!clean || !isOpaqueShortenerUrl(clean)) return clean;
+  const isSportsShort = SPORTS_SHORTENER_HOST_RE.test(clean);
+  if (!clean || (!isOpaqueShortenerUrl(clean) && !isSportsShort)) return clean;
   if (shortenerExpandCache.has(clean)) return shortenerExpandCache.get(clean);
-  let resolved = '';
+  let resolved = isSportsShort ? clean : '';
   try {
     const res = await fetch(clean, {
       redirect: 'follow',
@@ -374,7 +413,7 @@ export async function expandShortenerUrl(rawUrl = '') {
       resolved = res.url;
     }
   } catch {
-    resolved = '';
+    resolved = isSportsShort ? clean : '';
   }
   shortenerExpandCache.set(clean, resolved);
   return resolved;
@@ -384,7 +423,7 @@ export async function expandShortenerUrl(rawUrl = '') {
  * Pulls live, real-time 49ers beat reporter & insider social posts via public Bluesky XRPC feeds,
  * complete with author attribution, full text for short tweets, breaking classification, and links.
  */
-export async function fetchLiveBeatSocialPosts() {
+export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
   const accounts = [
     {
       actor: 'mattmaiocco.bsky.social',
@@ -555,8 +594,35 @@ export async function fetchLiveBeatSocialPosts() {
     }
   ];
 
-  const sfKeywords =
-    /\b(49ers|niners|san francisco|shanahan|lynch|purdy|bosa|mccaffrey|aiyuk|kittle|warner|buckner|odighizuwa|lenoir|pearsall|mike evans|deebo|brandin cooks|christian kirk|demarcus robinson|greenlaw|trent williams|mykel williams|keion white|romello height|santa clara)\b/i;
+  const liveRosterMatchers = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
+    .filter(p => p?.name)
+    .map(p => {
+      const clean = String(p.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+      const parts = clean.split(/\s+/);
+      const surname = parts.length > 1 ? parts[parts.length - 1] : '';
+      const escapedFull = clean.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return {
+        fullName: clean,
+        surname,
+        fullRe: new RegExp(`\\b${escapedFull}\\b`, 'i'),
+        allowBareSurname: surname.length >= 5 && !AMBIGUOUS_PLAYER_SURNAMES.has(surname.toLowerCase())
+      };
+    });
+  const countLiveRosterMatches = (rawTxt = '', allowUniqueSurnames = false) => {
+    const cleanTxt = stripNon49ersEntityContexts(rawTxt);
+    if (!cleanTxt || liveRosterMatchers.length === 0) return 0;
+    let hits = 0;
+    for (const m of liveRosterMatchers) {
+      if (m.fullRe.test(cleanTxt)) {
+        hits += 1;
+      } else if (allowUniqueSurnames && m.allowBareSurname && hasSafeStandaloneSurnameMatch(cleanTxt, m.surname, m.fullName)) {
+        hits += 1;
+      }
+    }
+    return hits;
+  };
+  const fallbackSfPlayerRe =
+    /\b(brock purdy|nick bosa|christian mccaffrey|brandon aiyuk|george kittle|fred warner|deforest buckner|osa odighizuwa|deommodore lenoir|ricky pearsall|mike evans|deebo samuel|keenan allen|brandin cooks|christian kirk|demarcus robinson|dre greenlaw|trent williams|mykel williams|keion white|romello height)\b/i;
   const posts = [];
   const sevenDaysAgoMs = Date.now() - 7 * 86400_000;
 
@@ -595,19 +661,31 @@ export async function fetchLiveBeatSocialPosts() {
           const nonBioExtDesc = stripHistoricalSfBioSentences(extDesc);
           const extUri = extLink.uri || '';
           const extThumb = extLink.thumb || post?.embed?.images?.[0]?.thumb || '';
+          const leadExplicitSf = hasExplicit49ersEntity(rawText);
+          const bodyExplicitSf = hasExplicit49ersEntity(`${rawText} ${extTitle} ${nonBioExtDesc}`);
+          const leadRosterHits =
+            liveRosterMatchers.length > 0
+              ? countLiveRosterMatches(rawText, !acc.requireKeyword || leadExplicitSf)
+              : fallbackSfPlayerRe.test(stripNon49ersEntityContexts(rawText))
+                ? 1
+                : 0;
+          const bodyRosterHits =
+            liveRosterMatchers.length > 0
+              ? countLiveRosterMatches(`${extTitle} ${nonBioExtDesc}`, !acc.requireKeyword || bodyExplicitSf)
+              : fallbackSfPlayerRe.test(stripNon49ersEntityContexts(`${extTitle} ${nonBioExtDesc}`))
+                ? 1
+                : 0;
           if (
             isOffTopicLeagueFiller({
               url: extUri,
               title: rawText,
               summary: `${extTitle} ${nonBioExtDesc}`,
-              hasRosterMatch: sfKeywords.test(`${rawText} ${extTitle} ${nonBioExtDesc}`)
+              hasRosterMatch: leadRosterHits > 0 || bodyRosterHits > 0
             })
           ) {
             continue;
           }
           if (acc.requireKeyword) {
-            const leadHasSf = sfKeywords.test(rawText);
-            const bodyHasSf = sfKeywords.test(`${extTitle} ${nonBioExtDesc}`);
             if (
               !is49ersRelevantWireItem({
                 title: rawText,
@@ -615,8 +693,8 @@ export async function fetchLiveBeatSocialPosts() {
                 externalTitle: extTitle,
                 externalDescription: extDesc,
                 isNationalFeed: true,
-                leadRosterMatchCount: leadHasSf ? 1 : 0,
-                bodyRosterMatchCount: bodyHasSf ? 1 : 0
+                leadRosterMatchCount: leadRosterHits,
+                bodyRosterMatchCount: bodyRosterHits
               })
             ) {
               continue;
@@ -682,6 +760,63 @@ export async function fetchLiveBeatSocialPosts() {
       }
     })
   );
+
+  // Enrich tweets whose external article link lacks a clean non-duplicate headline or high-res og:image (bounded build-time pass)
+  const ogDecodeHtml = s =>
+    String(s || '')
+      .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+      .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+      .replace(/&amp;/gi, '&')
+      .replace(/&quot;/gi, '"')
+      .replace(/&apos;|&#039;/gi, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+  const extractMetaTag = (html, key) => {
+    const rx1 = new RegExp(`<meta[^>]+(?:property|name)=["']${key}["'][^>]+content=["']([^"']{6,320})["']`, 'i');
+    const rx2 = new RegExp(`<meta[^>]+content=["']([^"']{6,320})["'][^>]+(?:property|name)=["']${key}["']`, 'i');
+    const m = html.match(rx1) || html.match(rx2);
+    return m?.[1] ? ogDecodeHtml(m[1]) : '';
+  };
+  const needsOgEnrich = posts
+    .filter(p => {
+      if (!p.externalUrl || !isDirectArticleUrl(p.externalUrl) || isPaywalledPublisher(p.outletName, p.externalUrl)) {
+        return false;
+      }
+      const preview = resolveTweetLinkedArticlePreview(p, { rawStream: [], resolvedItemUrl: p.url });
+      return Boolean(preview && (preview.titleSource === 'editorial_fallback' || !p.imageUrl || p.imageUrl.includes('cdn.bsky.app')));
+    })
+    .slice(0, 10);
+
+  if (needsOgEnrich.length > 0) {
+    await Promise.all(
+      needsOgEnrich.map(async p => {
+        try {
+          const res = await fetch(p.externalUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+              Accept: 'text/html'
+            },
+            signal: AbortSignal.timeout(3500)
+          });
+          if (!res.ok) return;
+          const html = (await res.text()).slice(0, 28000);
+          const ogTitle =
+            extractMetaTag(html, 'og:title') ||
+            extractMetaTag(html, 'twitter:title') ||
+            ogDecodeHtml((html.match(/<title[^>]*>([^<]{8,220})<\/title>/i) || [])[1] || '');
+          const ogImage = extractMetaTag(html, 'og:image') || extractMetaTag(html, 'twitter:image');
+          if (ogTitle && ogTitle.length >= 12) {
+            p.externalTitle = stripAggregatorBoilerplate(ogTitle);
+          }
+          if (ogImage && /^https:\/\//i.test(ogImage) && (!p.imageUrl || p.imageUrl.includes('cdn.bsky.app'))) {
+            p.imageUrl = ogImage;
+          }
+        } catch {
+          // Ignore single article OG fetch timeout
+        }
+      })
+    );
+  }
 
   return posts.sort((a, b) => {
     const pDiff = (b.breakingPriority || 0) - (a.breakingPriority || 0);
@@ -881,7 +1016,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
         .split(/\s+/)
         .pop()
     )
-    .filter(s => s && s.length >= 5 && !/^(jones|smith|brown|allen|young|white|green|davis|moore|scott|williams|thomas|wilson)$/i.test(s))
+    .filter(s => s && s.length >= 5 && !AMBIGUOUS_PLAYER_SURNAMES.has(s.toLowerCase()))
     .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 
   const sfRelevantRegex = new RegExp(
@@ -889,32 +1024,35 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
       '49ers',
       'niners',
       'san francisco',
+      'kyle shanahan',
       'shanahan',
-      'lynch',
-      'marathe',
+      'john lynch',
+      'raheem morris',
+      'klay kubiak',
+      'paraag marathe',
       'purdy',
-      'bosa',
+      'nick bosa',
       'mccaffrey',
       'aiyuk',
       'kittle',
-      'warner',
+      'fred warner',
       'buckner',
       'odighizuwa',
       'lenoir',
       'pearsall',
-      'evans',
+      'mike evans',
       'deebo',
       'keenan allen',
       'mac jones',
       'jack jones',
       'renardo green',
-      'cooks',
-      'kirk',
-      'robinson',
-      'halton',
-      'stout',
-      'sigle',
-      'hobbs',
+      'brandin cooks',
+      'christian kirk',
+      'demarcus robinson',
+      'gracen halton',
+      'upton stout',
+      'marques sigle',
+      'nate hobbs',
       'santa clara',
       ...rosterTokens
     ].join('|')})\\b`,
@@ -938,6 +1076,8 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
       'san francisco',
       'kyle shanahan',
       'john lynch',
+      'raheem morris',
+      'klay kubiak',
       'paraag marathe',
       'santa clara',
       'brock purdy',
@@ -1033,10 +1173,11 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     if (!bodyText || bodyText.length < 16) return null;
     const handleLower = handle.toLowerCase();
     if (handleLower !== '49ers') {
+      const cleanedRelevanceText = stripNon49ersEntityContexts(bodyText);
       const isLocal49ersHandle = local49ersXHandles.has(handleLower);
       if (isLocal49ersHandle) {
-        if (!sfRelevantRegex.test(bodyText)) return null;
-      } else if (!sfExplicitOrFullNameRegex.test(bodyText)) {
+        if (!sfRelevantRegex.test(cleanedRelevanceText)) return null;
+      } else if (!sfExplicitOrFullNameRegex.test(cleanedRelevanceText)) {
         return null;
       }
     }
@@ -1147,6 +1288,17 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                     ''
                   );
                 };
+                const pickSynCardImage = obj => {
+                  const bv = obj?.card?.binding_values || {};
+                  return (
+                    bv.summary_photo_image_large?.image_value?.url ||
+                    bv.summary_photo_image?.image_value?.url ||
+                    bv.photo_image_full_size_large?.image_value?.url ||
+                    bv.thumbnail_image_large?.image_value?.url ||
+                    bv.thumbnail_image?.image_value?.url ||
+                    ''
+                  );
+                };
                 const rawExpUrl = pickSynExternalUrl(syn);
                 const expandedSynUrl = rawExpUrl ? await expandShortenerUrl(rawExpUrl) : '';
                 const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
@@ -1155,6 +1307,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   syn.photos?.[0]?.url ||
                   syn.mediaDetails?.[0]?.media_url_https ||
                   syn.video?.poster ||
+                  pickSynCardImage(syn) ||
                   '';
                 const bestMp4 = selectBestXSyndicationMp4(syn);
                 const vidDurMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
@@ -1211,7 +1364,12 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                       expandedExtUrl: qtExpUrl,
                       externalTitle: qt.card?.binding_values?.title?.string_value || null,
                       externalDescription: qt.card?.binding_values?.description?.string_value || null,
-                      mediaImageUrl: qt.photos?.[0]?.url || qt.mediaDetails?.[0]?.media_url_https || qt.video?.poster || '',
+                      mediaImageUrl:
+                        qt.photos?.[0]?.url ||
+                        qt.mediaDetails?.[0]?.media_url_https ||
+                        qt.video?.poster ||
+                        pickSynCardImage(qt) ||
+                        '',
                       videoStreamUrl: qtMp4,
                       videoDurationFmt: qtDurFmt,
                       isHighlightClip: Boolean(qtMp4 && qtDurMs >= 8000)

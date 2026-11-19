@@ -8,7 +8,7 @@
  * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
-import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
@@ -20,6 +20,7 @@ import {
   isUrgentBreakingBadge,
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
+  resolveTweetLinkedArticlePreview,
   formatTweetBodyForDisplay
 } from '../engine/breakingClassifier.js';
 import {
@@ -87,8 +88,21 @@ export function renderInjuryNewsItemCardHtml(
   const hasPlayableVideo = Boolean(n.videoId || effectiveStreamOrCardUrl);
   const vidKey = hasPlayableVideo ? `dossier_vid_${n.id || ''}` : null;
   const isVidOpen = Boolean(vidKey && activeVideosSet instanceof Set && activeVideosSet.has(vidKey));
+  const mentionLinkedPreview =
+    isTweet && !hasPlayableVideo
+      ? resolveTweetLinkedArticlePreview(n, {
+          rawStream: directPosts,
+          resolvedItemUrl: resolvedMentionUrl !== '#' ? resolvedMentionUrl : ''
+        })
+      : null;
+  const mentionLinkedCardHtml = mentionLinkedPreview
+    ? renderTweetLinkedArticleCardHtml(mentionLinkedPreview, {
+        variant: mentionLinkedPreview.imageUrl ? 'card' : 'compact',
+        markReadKey: itemReadKey
+      })
+    : '';
   const salientVisual =
-    !isVideo && !hasPlayableVideo
+    !isVideo && !hasPlayableVideo && !mentionLinkedPreview?.imageUrl
       ? resolveSalientCardVisual(n, {
           rosterPlayers,
           excludePlayerId,
@@ -153,7 +167,9 @@ export function renderInjuryNewsItemCardHtml(
 
   const safeMentionExt = sanitizeExternalUrl(n.externalUrl, null);
   const normCmpUrl = u => String(u || '').replace(/\/+$/, '').toLowerCase();
+  const effectiveMentionExtUrl = mentionLinkedPreview?.url || safeMentionExt || '';
   const showMentionExt =
+    !mentionLinkedCardHtml &&
     Boolean(safeMentionExt) &&
     normCmpUrl(safeMentionExt) !== normCmpUrl(resolvedMentionUrl) &&
     !isRedundantProfileSelfLink(safeMentionExt, resolvedMentionUrl) &&
@@ -165,7 +181,7 @@ export function renderInjuryNewsItemCardHtml(
     const crHref = crIsTw
       ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '')
       : sanitizeExternalUrl(cr?.url, '');
-    if (showMentionExt && crHref && normCmpUrl(crHref) === normCmpUrl(safeMentionExt)) return false;
+    if ((mentionLinkedCardHtml || showMentionExt) && effectiveMentionExtUrl && crHref && normCmpUrl(crHref) === normCmpUrl(effectiveMentionExtUrl)) return false;
     if (resolvedMentionUrl && crHref && normCmpUrl(crHref) === normCmpUrl(resolvedMentionUrl)) return false;
     return true;
   });
@@ -198,13 +214,42 @@ export function renderInjuryNewsItemCardHtml(
                    crAuthor && crOutlet && crAuthor.toLowerCase() !== crOutlet.toLowerCase()
                      ? `${crAuthor} • ${crOutlet}`
                      : crAuthor || crOutlet || 'Beat';
-                 const crBody = stripRedundantAuthorBoilerplate(cr.title || cr.headline || cr.fullText || '', crAuthor);
                  const crIsTw = cr.type === 'tweet' || cr.type === 'social';
+                 const crBody = crIsTw
+                   ? formatTweetBodyForDisplay(
+                       stripRedundantAuthorBoilerplate(cr.fullText || cr.title || cr.headline || '', crAuthor)
+                     ).text
+                   : stripRedundantAuthorBoilerplate(cr.title || cr.headline || cr.fullText || '', crAuthor);
                  const crHref = crIsTw
                    ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '#')
                    : sanitizeExternalUrl(cr.url, '#');
                  const crReadKey = getItemReadKey(cr);
                  const crIsRead = isItemRead(cr, readKeysSet);
+                 const crLinkedPreview = crIsTw
+                   ? resolveTweetLinkedArticlePreview(cr, {
+                       rawStream: directPosts,
+                       resolvedItemUrl: crHref !== '#' ? crHref : ''
+                     })
+                   : null;
+                 const crLinkedCardHtml = crLinkedPreview
+                   ? renderTweetLinkedArticleCardHtml(crLinkedPreview, {
+                       variant: 'compact',
+                       markReadKey: crReadKey
+                     })
+                   : '';
+                 if (crLinkedCardHtml) {
+                   return `<div class="synthesis-source-sheet-row similar-story-row has-linked-article-card ${crIsRead ? 'is-read-item' : ''}" data-similar-story-row data-read-key="${esc(crReadKey)}" style="padding:7px 9px">
+                     <div class="source-row-meta" style="margin-bottom:2px">
+                       <div style="display:flex;align-items:center;gap:5px;min-width:0">
+                         <span class="badge badge-gold" style="font-size:9.3px;padding:1px 5px">Tweet</span>
+                         <strong class="source-row-author">${esc(crAttrib)}</strong>
+                       </div>
+                       <span class="mono source-row-age">${cr.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
+                     </div>
+                     <a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''} <span class="wire-inline-ext">${iconSvg('externalLink', 10)}</span></a>
+                     ${crLinkedCardHtml}
+                   </div>`;
+                 }
                  return `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row ${crIsRead ? 'is-read-item' : ''}" data-similar-story-row data-read-key="${esc(crReadKey)}" data-mark-read-key="${esc(crReadKey)}" style="padding:7px 9px">
                    <div class="source-row-meta" style="margin-bottom:2px">
                      <div style="display:flex;align-items:center;gap:5px;min-width:0">
@@ -243,7 +288,8 @@ export function renderInjuryNewsItemCardHtml(
           ${
             isTweet
               ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body" data-mark-read-key="${esc(itemReadKey)}">${esc(tweetFormatted.text)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>
-                 ${tweetLinkContext ? `<div class="wire-card-summary" style="margin-top:2px">${escJargon(tweetLinkContext, { excludePlayerId })}</div>` : ''}
+                 ${!mentionLinkedCardHtml && tweetLinkContext ? `<div class="wire-card-summary" style="margin-top:2px">${escJargon(tweetLinkContext, { excludePlayerId })}</div>` : ''}
+                 ${mentionLinkedCardHtml}
                  ${
                    showMentionExt
                      ? `<div style="margin-top:5px">

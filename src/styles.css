@@ -7287,3 +7287,221 @@ a.raw-item-thumb.salient-thumb:hover {
     display: none;
   }
 }
+
+/* Direct-Click Linked Article Preview Cards inside Tweets (Bluesky/X-inspired, zero extra hop) */
+.tweet-linked-article-card {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-top: 7px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-alt);
+  color: var(--text-primary);
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.tweet-linked-article-card:hover,
+.tweet-linked-article-card:focus-visible {
+  border-color: var(--gold-border);
+  background: var(--bg-elevated);
+  text-decoration: none;
+}
+
+.synthesis-source-sheet-row .tweet-linked-article-card,
+.similar-story-row .tweet-linked-article-card {
+  margin-top: 2px;
+  background: rgba(255, 255, 255, 0.032);
+}
+
+[data-theme="light"] .synthesis-source-sheet-row .tweet-linked-article-card,
+[data-theme="light"] .similar-story-row .tweet-linked-article-card {
+  background: var(--bg-card);
+}
+
+.synthesis-source-sheet-row .tweet-linked-article-card:hover,
+.similar-story-row .tweet-linked-article-card:hover {
+  border-color: var(--gold-border);
+  background: var(--bg-elevated);
+}
+
+/* Variant 1: Media-Top Stacked Preview Card (Standalone Tweet Cards with Editorial Photo) */
+.tweet-linked-article-card.is-media-top {
+  flex-direction: column;
+}
+
+.tweet-linked-article-card.is-media-top .tweet-linked-article-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.05 / 1;
+  max-height: 176px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.tweet-linked-article-card.is-media-top .tweet-linked-article-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.tweet-linked-article-card.is-media-top .tweet-linked-article-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 11px;
+  min-width: 0;
+}
+
+/* Variant 2: Compact Horizontal Preview Card (Similar Stories, Home, Sources, Compact Mode & Image-less) */
+.tweet-linked-article-card.is-compact {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.tweet-linked-article-card.is-compact .tweet-linked-article-media {
+  display: block;
+  width: 86px;
+  min-width: 86px;
+  max-width: 86px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.tweet-linked-article-card.is-compact .tweet-linked-article-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 58px;
+  max-height: 82px;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.tweet-linked-article-card.is-compact .tweet-linked-article-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.tweet-linked-article-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: 12.6px;
+  font-weight: 600;
+  line-height: 1.32;
+  color: var(--text-primary);
+}
+
+.tweet-linked-article-card.is-compact .tweet-linked-article-title {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.tweet-linked-article-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--text-muted);
+}
+
+.tweet-linked-article-domain {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.tweet-linked-article-domain .ui-icon {
+  flex-shrink: 0;
+  opacity: 0.78;
+}
+
+.tweet-linked-article-domain-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tweet-linked-article-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  font-size: 10.8px;
+  font-weight: 600;
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+
+.tweet-linked-article-card:hover .tweet-linked-article-title {
+  color: var(--text-primary);
+}
+
+/* Container tweaks for Similar Stories / Brief Sources rows holding a nested Linked Article Card */
+.synthesis-source-sheet-row.has-linked-article-card,
+.similar-story-row.has-linked-article-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.similar-story-top-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+}
+
+.similar-story-tweet-link {
+  display: block;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.similar-story-tweet-link:hover,
+.similar-story-tweet-link:focus-visible {
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.brief-card.is-read-item > .wire-card-main-row .tweet-linked-article-title,
+.player-mention-card.is-read-item > .player-mention-main-row .tweet-linked-article-title,
+.home-wire-item.is-read-item > .home-wire-main-row .tweet-linked-article-title,
+.similar-story-row.is-read-item .tweet-linked-article-title,
+[data-brief-source-row].is-read-item .tweet-linked-article-title {
+  color: var(--text-read);
+  font-weight: 500;
+}
+
+@media (max-width: 390px) {
+  .tweet-linked-article-card.is-compact .tweet-linked-article-media {
+    width: 72px;
+    min-width: 72px;
+    max-width: 72px;
+  }
+
+  .tweet-linked-article-card.is-media-top .tweet-linked-article-media {
+    max-height: 152px;
+  }
+}
