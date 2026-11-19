@@ -11244,12 +11244,16 @@ await testAsync(
   }
 );
 
-test('Digest Experience Engine: Catch-up watermark, 3-mode sort (Top+Latest default), topic chips, story timeline, deltas, presser takeaways, effort cues & universal search', () => {
+test('Digest Experience Engine: Catch-up watermark, 2-mode sort (Top default | Latest), simplified News toolbar, topic chips, story timeline, deltas, presser takeaways, effort cues & universal search', () => {
   const nowMs = Date.parse('2026-11-17T22:00:00Z');
-  assert.equal(normalizeNewsSortMode(''), 'hybrid');
-  assert.equal(normalizeNewsSortMode('invalid'), 'hybrid');
-  assert.equal(NEWS_SORT_MODES[0].key, 'hybrid');
-  assert.equal(NEWS_SORT_MODES[0].label, 'Top + Latest');
+  assert.equal(normalizeNewsSortMode(''), 'top');
+  assert.equal(normalizeNewsSortMode('invalid'), 'top');
+  assert.equal(normalizeNewsSortMode('hybrid'), 'top', 'Legacy hybrid sort pref must normalize to top');
+  assert.equal(NEWS_SORT_MODES.length, 2);
+  assert.equal(NEWS_SORT_MODES[0].key, 'top');
+  assert.equal(NEWS_SORT_MODES[0].label, 'Top');
+  assert.equal(NEWS_SORT_MODES[1].key, 'latest');
+  assert.equal(NEWS_SORT_MODES[1].label, 'Latest');
 
   // 1. Catch-Up Watermark & Read State
   const sampleItems = [
@@ -11319,13 +11323,64 @@ test('Digest Experience Engine: Catch-up watermark, 3-mode sort (Top+Latest defa
   );
   assert.equal(afterRead.newCount, 1);
 
-  // 2. 3-mode Sorting (`hybrid`, `top`, `latest`)
+  // 2. 2-mode Sorting (`top` default | `latest`) + legacy `hybrid` -> `top` fallback + live in-game injury pin
   const latestSorted = sortNewsFeedByMode(sampleItems, 'latest', { nowMs });
   assert.equal(latestSorted[0].id, 'item_new_1', 'Latest mode must sort strictly newest first');
   const topSorted = sortNewsFeedByMode(sampleItems, 'top', { nowMs });
   assert.equal(topSorted[0].id, 'item_new_2', 'Top mode must prioritize highest salience');
-  const hybridSorted = sortNewsFeedByMode(sampleItems, 'hybrid', { nowMs });
-  assert.equal(hybridSorted.length, 3);
+  const legacyHybridSorted = sortNewsFeedByMode(sampleItems, 'hybrid', { nowMs });
+  assert.deepEqual(
+    legacyHybridSorted.map(x => x.id),
+    topSorted.map(x => x.id),
+    'Legacy hybrid mode must match Top mode ordering'
+  );
+  const withLiveInj = [
+    ...sampleItems,
+    {
+      id: 'item_live_inj',
+      type: 'tweet',
+      title: 'Brock Purdy heads to blue medical tent',
+      publishedAt: '2026-11-17T21:55:00Z',
+      isInGameInjury: true,
+      breakingBadge: 'LIVE INJURY UPDATE',
+      storyRank: 40
+    }
+  ];
+  assert.equal(
+    sortNewsFeedByMode(withLiveInj, 'top', { nowMs })[0].id,
+    'item_live_inj',
+    'Top mode must still pin live in-game urgent injuries to #1'
+  );
+
+  // 2b. Simplified News toolbar layout: Top/Latest top-left, no News & Film logo, no Scan/Rich button in News toolbar
+  const renderedToolbarHtml = renderNewsViewHtml({
+    appData: { roster: { players: [] }, news: {} },
+    filteredRawItems: sampleItems,
+    userPrefs: { feedDensity: 'rich', newsSortMode: 'top' },
+    nowMs
+  });
+  assert.ok(!renderedToolbarHtml.includes('news-toolbar-brand'), 'News toolbar must not render News & Film brand block');
+  assert.ok(!renderedToolbarHtml.includes('toggle-feed-density'), 'News toolbar must not render Scan/Rich density toggle');
+  assert.ok(!renderedToolbarHtml.includes('Top + Latest'), 'News toolbar must not render Top + Latest option');
+  assert.ok(!renderedToolbarHtml.includes('data-news-digest-controls'), 'Extra digest strip must be omitted when no search filter is active');
+  const titleRowIdx = renderedToolbarHtml.indexOf('news-toolbar-title-row');
+  const sortBarIdx = renderedToolbarHtml.indexOf('data-news-sort-bar');
+  const actionsIdx = renderedToolbarHtml.indexOf('news-toolbar-actions');
+  assert.ok(
+    titleRowIdx > 0 && sortBarIdx > titleRowIdx && sortBarIdx < actionsIdx,
+    'Top / Latest segmented control must sit on the top-left of .news-toolbar-title-row before .news-toolbar-actions'
+  );
+  const renderedSearchHtml = renderNewsViewHtml({
+    appData: { roster: { players: [] }, news: {} },
+    filteredRawItems: sampleItems,
+    newsSearchQuery: 'Purdy',
+    userPrefs: { feedDensity: 'rich', newsSortMode: 'top' },
+    nowMs
+  });
+  assert.ok(
+    renderedSearchHtml.includes('clear-news-search-filter'),
+    'Active search query must still render clear-search pill'
+  );
 
   // 3. Trending Topic Chips & Filtering
   const chipPool = [...sampleItems, { ...sampleItems[0], id: 'item_new_3', url: 'https://x.com/MaioccoNBCS/status/1003' }];

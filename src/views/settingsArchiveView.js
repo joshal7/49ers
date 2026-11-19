@@ -74,15 +74,15 @@ export function renderSettingsSheetHtml({
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap" data-settings-feed-density>
         <div style="min-width:0;flex:1 1 160px">
           <strong>Feed Density</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Rich editorial cards vs. compact headline scan</div>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Rich editorial cards (default) vs. compact headline scan</div>
         </div>
         <div class="segmented-control compact-seg" role="group" aria-label="Feed Reading Density" style="flex-shrink:0">
-          <button type="button" class="pill-btn seg-btn ${feedDensity === 'rich' ? 'active' : ''}" data-action="set-feed-density" data-density="rich">
+          <button type="button" class="pill-btn seg-btn ${feedDensity === 'rich' ? 'active' : ''}" data-action="set-feed-density" data-density="rich" aria-pressed="${feedDensity === 'rich' ? 'true' : 'false'}">
             <span>Rich</span>
           </button>
-          <button type="button" class="pill-btn seg-btn ${feedDensity === 'compact' ? 'active' : ''}" data-action="set-feed-density" data-density="compact">
+          <button type="button" class="pill-btn seg-btn ${feedDensity === 'compact' ? 'active' : ''}" data-action="set-feed-density" data-density="compact" aria-pressed="${feedDensity === 'compact' ? 'true' : 'false'}">
             ${iconSvg('layoutList', 12)}
-            <span>Compact</span>
+            <span>Scan</span>
           </button>
         </div>
       </div>

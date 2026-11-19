@@ -89,7 +89,7 @@ import { renderHomeDashboardHtml } from './views/homeView.js?v=85';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=85';
+} from './views/newsView.js?v=86';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=74';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=85';
@@ -116,7 +116,7 @@ const state = {
 
   // News state
   newsCategoryFilter: 'all',
-  newsSortMode: 'hybrid', // 'hybrid' (Top + Latest default) | 'top' | 'latest'
+  newsSortMode: 'top', // 'top' (default) | 'latest'
   newsTopicFilter: 'all',
   newsSearchQuery: '',
   activeVideosSet: new Set(),
@@ -1765,7 +1765,7 @@ function bindEvents() {
       }
 
       case 'set-news-sort': {
-        const nextSort = normalizeNewsSortMode(btn.getAttribute('data-sort-mode') || 'hybrid');
+        const nextSort = normalizeNewsSortMode(btn.getAttribute('data-sort-mode') || 'top');
         state.newsSortMode = nextSort;
         state.prefs.newsSortMode = nextSort;
         saveUserPrefs(state.prefs);
@@ -3642,7 +3642,7 @@ async function init() {
   state.prefs = loadUserPrefs();
   applyTheme(state.prefs.theme);
   applyFeedDensity(state.prefs.feedDensity);
-  state.newsSortMode = normalizeNewsSortMode(state.prefs.newsSortMode || 'hybrid');
+  state.newsSortMode = normalizeNewsSortMode(state.prefs.newsSortMode || 'top');
   // Preserve prior visit watermark for the entire active session so "N new since …" stays stable
   state.sessionLastVisitedAt = state.prefs.lastVisitedAt || null;
   if (!state.prefs.lastVisitedAt) {

@@ -5759,7 +5759,7 @@ async function main() {
       await cdp.assertNoOverflow('Open 21-Day IR Window Health & Reversion');
     });
 
-    await runStep('High-Signal Digestion Suite: Universal Search, 3-Mode Sort (Top+Latest default), Topic Chips, Timeline, Catch-Up Watermark, Density Toggle & Quiet Push Settings', async () => {
+    await runStep('High-Signal Digestion Suite: Universal Search, Simplified News Header (Top/Latest top-left, no logo/density toggle), Timeline, Catch-Up Watermark, Tune Density & Quiet Push Settings', async () => {
       await cdp.setViewport(393, 852, true, 3);
       const digestAudit = await cdp.eval(() => {
         // 1. Universal Search via Header Icon
@@ -5780,16 +5780,30 @@ async function main() {
         const xssTriggered = Boolean(window.__xssSearch);
         document.getElementById('closeSheetBtn')?.click();
 
-        // 2. Navigate to News & Film -> Verify Top+Latest default sort, Topic Chips, Story Timeline, Density Toggle
+        // 2. Navigate to News & Film -> Verify simplified top-left Top/Latest sort, zero logo, zero inline Scan/Rich toggle, rich default
         document.querySelector('[data-nav-tab="news"]')?.click();
+        const hasNewsBrandLogo = Boolean(document.querySelector('.news-toolbar-card .news-toolbar-brand'));
+        const hasInlineDensityBtn = Boolean(document.querySelector('.news-toolbar-card [data-action="toggle-feed-density"]'));
+        const hasExtraDigestStrip = Boolean(document.querySelector('[data-news-digest-controls]'));
+        const defaultDensityAttr = document.documentElement.getAttribute('data-feed-density') || '';
+        const sortBarEl = document.querySelector('.news-toolbar-head .news-toolbar-title-row [data-news-sort-bar]');
+        const actionsEl = document.querySelector('.news-toolbar-head .news-toolbar-title-row .news-toolbar-actions');
+        const sortRect = sortBarEl?.getBoundingClientRect();
+        const actionsRect = actionsEl?.getBoundingClientRect();
+        const sortTopLeftSingleRow = Boolean(
+          sortRect &&
+            actionsRect &&
+            sortRect.right <= actionsRect.left + 2 &&
+            Math.abs(sortRect.top - actionsRect.top) <= 10
+        );
         const sortBtns = Array.from(document.querySelectorAll('[data-news-sort-bar] [data-action="set-news-sort"]'));
         const sortModes = sortBtns.map(b => b.getAttribute('data-sort-mode'));
         const activeSortMode = sortBtns.find(b => b.classList.contains('active'))?.getAttribute('data-sort-mode') || '';
 
-        // Switch to Latest, then back to Top + Latest
+        // Switch to Latest, then back to Top
         document.querySelector('[data-action="set-news-sort"][data-sort-mode="latest"]')?.click();
         const afterLatestSort = document.querySelector('[data-news-sort-bar] .active')?.getAttribute('data-sort-mode') || '';
-        document.querySelector('[data-action="set-news-sort"][data-sort-mode="hybrid"]')?.click();
+        document.querySelector('[data-action="set-news-sort"][data-sort-mode="top"]')?.click();
 
         // Verify Story Timeline, zero micro-action pills (TL;DR / View Image / Expand Chart), zero topic filter bar, and tight side-thumb + player-chip overlap
         const timelineCount = document.querySelectorAll('[data-story-timeline="true"]').length;
@@ -5810,17 +5824,15 @@ async function main() {
           return thumbRect && chipsRect && chipsRect.right <= thumbRect.left + 2;
         }).length;
 
-        // Toggle Compact Density Mode & revert to Rich
-        document.querySelector('[data-action="toggle-feed-density"]')?.click();
-        const compactApplied = document.documentElement.getAttribute('data-feed-density') === 'compact';
-        document.querySelector('[data-action="toggle-feed-density"]')?.click();
-        const richRestored = document.documentElement.getAttribute('data-feed-density') === 'rich';
-
-        // 3. Settings -> Quiet Alerts & Feed Density controls present
+        // 3. Tune (Settings) -> Quiet Alerts & Feed Density (Rich default -> Scan/Compact -> Rich)
         document.getElementById('openSettingsBtn')?.click();
         const hasPushSection = Boolean(document.querySelector('[data-settings-push-alerts]'));
         const pushChannelCount = document.querySelectorAll('[data-action="toggle-push-channel"]').length;
         const hasDensitySetting = Boolean(document.querySelector('[data-settings-feed-density]'));
+        document.querySelector('[data-settings-feed-density] [data-action="set-feed-density"][data-density="compact"]')?.click();
+        const compactApplied = document.documentElement.getAttribute('data-feed-density') === 'compact';
+        document.querySelector('[data-settings-feed-density] [data-action="set-feed-density"][data-density="rich"]')?.click();
+        const richRestored = document.documentElement.getAttribute('data-feed-density') === 'rich';
         document.getElementById('closeSheetBtn')?.click();
 
         // 4. Playoff Rooting Override Delta Badge
@@ -5839,6 +5851,11 @@ async function main() {
           inputFontPx,
           playerHits,
           xssTriggered,
+          hasNewsBrandLogo,
+          hasInlineDensityBtn,
+          hasExtraDigestStrip,
+          defaultDensityAttr,
+          sortTopLeftSingleRow,
           sortModes,
           activeSortMode,
           afterLatestSort,
@@ -5861,10 +5878,18 @@ async function main() {
       assert(digestAudit.hasSearchBtn && digestAudit.inputFontPx >= 16, `Universal search button/input invalid: ${JSON.stringify(digestAudit)}`);
       assert(digestAudit.playerHits >= 1 && !digestAudit.xssTriggered, `Universal search hits/XSS check failed: ${JSON.stringify(digestAudit)}`);
       assert(
-        JSON.stringify(digestAudit.sortModes) === JSON.stringify(['hybrid', 'top', 'latest']) &&
-          digestAudit.activeSortMode === 'hybrid' &&
+        !digestAudit.hasNewsBrandLogo &&
+          !digestAudit.hasInlineDensityBtn &&
+          !digestAudit.hasExtraDigestStrip &&
+          digestAudit.defaultDensityAttr === 'rich' &&
+          digestAudit.sortTopLeftSingleRow,
+        `Simplified News header layout check failed: ${JSON.stringify(digestAudit)}`
+      );
+      assert(
+        JSON.stringify(digestAudit.sortModes) === JSON.stringify(['top', 'latest']) &&
+          digestAudit.activeSortMode === 'top' &&
           digestAudit.afterLatestSort === 'latest',
-        `3-mode News sort check failed: ${JSON.stringify(digestAudit)}`
+        `2-mode News sort check failed: ${JSON.stringify(digestAudit)}`
       );
       assert(
         digestAudit.microBtnCount === 0 && digestAudit.cardButtonsText.length === 0,

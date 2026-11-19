@@ -398,7 +398,8 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 
 .news-toolbar-brand {
@@ -6560,7 +6561,7 @@ a.raw-item-thumb.salient-thumb:hover {
   white-space: nowrap;
 }
 
-/* Slim Sort (`Top + Latest` | `Top` | `Latest`) Strip */
+/* Slim Sort (`Top` | `Latest`) Segmented Control (top-left of News toolbar) & optional active search strip */
 .news-digest-controls {
   display: flex;
   flex-direction: column;
@@ -6578,15 +6579,16 @@ a.raw-item-thumb.salient-thumb:hover {
 
 .news-sort-seg {
   display: inline-grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
   width: auto;
+  flex-shrink: 0;
   padding: 2px;
   gap: 2px;
 }
 
 .news-sort-btn {
-  min-height: 27px;
-  padding: 3px 9px;
+  min-height: 26px;
+  padding: 3px 10px;
   font-size: 11.2px;
   font-weight: 700;
   white-space: nowrap;

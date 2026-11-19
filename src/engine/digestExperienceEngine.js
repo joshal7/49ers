@@ -4,7 +4,7 @@
  * Powers:
  * 1. "Since You Last Visited" Catch-Up Watermark & Read/Seen State
  * 2. Universal Instant Search (Players, News & Film, Podcasts & AI, Quick Section Jumps)
- * 3. 3-Mode News Feed Sorting (`hybrid` Top + Latest default | `top` | `latest`) & Auto-Derived Topic/Player Chips
+ * 3. 2-Mode News Feed Sorting (`top` default | `latest`) & Auto-Derived Topic/Player Chips
  * 4. Chronological "Full Coverage" Story Timeline & Source-Lens Tagging (`Beat` / `National` / `Film` / `Official`)
  * 5. Directional Delta Cues (Practice Trajectory `DNP→LP ↑`, Play-Prob Shifts, Rank `▲/▼`, Playoff Odds Deltas)
  * 6. Auto-Distilled "Presser Takeaways & Key Quotes" Extractor (Shanahan / Lynch / Coordinators / Captains)
@@ -24,12 +24,11 @@ import {
 import { resolveOriginalTweetUrl } from './beatAttributionEngine.js';
 
 export const NEWS_SORT_MODES = [
-  { key: 'hybrid', label: 'Top + Latest', shortLabel: 'Top+Latest', title: 'Balanced blend of top signal and latest updates (Default)' },
-  { key: 'top', label: 'Top', shortLabel: 'Top', title: 'Highest-impact stories, film studies & corroborated scoops' },
+  { key: 'top', label: 'Top', shortLabel: 'Top', title: 'Highest-impact stories, breaking updates & corroborated scoops (Default)' },
   { key: 'latest', label: 'Latest', shortLabel: 'Latest', title: 'Strict chronological wire (newest first)' }
 ];
 
-export const VALID_NEWS_SORT_MODES = new Set(['hybrid', 'top', 'latest']);
+export const VALID_NEWS_SORT_MODES = new Set(['top', 'latest']);
 
 export const DEFAULT_PUSH_ALERT_PREFS = {
   enabled: false,
@@ -42,9 +41,9 @@ export const DEFAULT_PUSH_ALERT_PREFS = {
   endpoint: ''
 };
 
-export function normalizeNewsSortMode(raw = 'hybrid') {
-  const s = String(raw || 'hybrid').toLowerCase().trim();
-  return VALID_NEWS_SORT_MODES.has(s) ? s : 'hybrid';
+export function normalizeNewsSortMode(raw = 'top') {
+  const s = String(raw || 'top').toLowerCase().trim();
+  return VALID_NEWS_SORT_MODES.has(s) ? s : 'top';
 }
 
 /* ============================================================================
@@ -152,7 +151,7 @@ export function computeCatchUpState(
 }
 
 /* ============================================================================
- * 3. 3-Mode News Feed Sorting (`hybrid` Top+Latest default | `top` | `latest`)
+ * 3. 2-Mode News Feed Sorting (`top` default | `latest`)
  *    & Auto-Generated Trending Topic / Player Filter Chips
  * ============================================================================ */
 
@@ -161,23 +160,7 @@ function getItemTimestampMs(item = {}) {
   return Number.isFinite(ms) ? ms : 0;
 }
 
-function computeHybridTopLatestScore(item = {}, nowMs = Date.now()) {
-  const pubMs = getItemTimestampMs(item);
-  const ageHours = pubMs > 0 ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 48;
-  const storyRank = Number(item.storyRank);
-  const baseSignal = Number.isFinite(storyRank) && storyRank > 0
-    ? storyRank
-    : computeNewsSalienceScore(item) * 2.1;
-
-  // Freshness boost rewards items from the last 0–18h smoothly so brand-new beat updates rise
-  // naturally alongside high-salience stories without letting minor fluff bury major news.
-  const recencyBoost = 52 * Math.pow(0.5, ageHours / 10.5);
-  const corroborationBonus = Math.min(18, (item.confirmingReports?.length || 0) * 5.5);
-  const urgentBonus = isUrgentBreakingBadge(item.breakingBadge) ? 45 : 0;
-  return baseSignal * 0.85 + recencyBoost + corroborationBonus + urgentBonus;
-}
-
-function computePureTopSignalScore(item = {}, nowMs = Date.now()) {
+function computeTopSignalScore(item = {}, nowMs = Date.now()) {
   const pubMs = getItemTimestampMs(item);
   const ageHours = pubMs > 0 ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 72;
   const storyRank = Number(item.storyRank);
@@ -186,12 +169,12 @@ function computePureTopSignalScore(item = {}, nowMs = Date.now()) {
     : computeNewsSalienceScore(item) * 2.2;
   const corroborationBonus = Math.min(28, (item.confirmingReports?.length || 0) * 8);
   const urgentBonus = isUrgentBreakingBadge(item.breakingBadge) ? 35 : 0;
-  // Gentle 60-hour half-life so top stories/film breakdowns of the cycle dominate
+  // Gentle 60-hour half-life so top stories/film breakdowns of the cycle dominate while stale multi-day items decay cleanly
   const gentleDecay = Math.pow(0.5, Math.max(0, ageHours - 6) / 60);
   return (baseSignal + corroborationBonus + urgentBonus) * gentleDecay;
 }
 
-export function sortNewsFeedByMode(items = [], sortMode = 'hybrid', { nowMs = Date.now() } = {}) {
+export function sortNewsFeedByMode(items = [], sortMode = 'top', { nowMs = Date.now() } = {}) {
   const mode = normalizeNewsSortMode(sortMode);
   const list = Array.isArray(items) ? [...items] : [];
   if (list.length <= 1) return list;
@@ -205,20 +188,12 @@ export function sortNewsFeedByMode(items = [], sortMode = 'hybrid', { nowMs = Da
     });
   }
 
-  if (mode === 'top') {
-    return list.sort((a, b) => {
-      const diff = computePureTopSignalScore(b, nowMs) - computePureTopSignalScore(a, nowMs);
-      if (Math.abs(diff) >= 0.4) return diff;
-      return getItemTimestampMs(b) - getItemTimestampMs(a);
-    });
-  }
-
-  // Default: 'hybrid' (Top + Latest)
+  // Default: 'top' (storyRank impact + freshness + corroboration decay, with live in-game urgent injuries pinned #1)
   return list.sort((a, b) => {
     const aLiveInj = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
     const bLiveInj = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
     if (aLiveInj !== bLiveInj) return bLiveInj - aLiveInj;
-    const diff = computeHybridTopLatestScore(b, nowMs) - computeHybridTopLatestScore(a, nowMs);
+    const diff = computeTopSignalScore(b, nowMs) - computeTopSignalScore(a, nowMs);
     if (Math.abs(diff) >= 0.4) return diff;
     return getItemTimestampMs(b) - getItemTimestampMs(a);
   });

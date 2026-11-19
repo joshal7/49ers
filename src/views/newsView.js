@@ -803,7 +803,7 @@ function renderPresserTakeawaysStripHtml(takeaways = []) {
 export function renderNewsViewHtml({
   appData = null,
   newsCategoryFilter = 'all', // 'all' | 'tweets' | 'articles' | 'videos' | 'film' | 'roster'
-  newsSortMode = 'hybrid', // 'hybrid' (Top + Latest default) | 'top' | 'latest'
+  newsSortMode = 'top', // 'top' (default) | 'latest'
   newsTopicFilter = 'all',
   newsSearchQuery = '',
   filteredRawItems,
@@ -818,7 +818,7 @@ export function renderNewsViewHtml({
   const activeFilter = ['all', 'tweets', 'articles', 'videos', 'film', 'roster'].includes(newsCategoryFilter)
     ? newsCategoryFilter
     : 'all';
-  const activeSort = normalizeNewsSortMode(newsSortMode || userPrefs?.newsSortMode || 'hybrid');
+  const activeSort = normalizeNewsSortMode(newsSortMode || userPrefs?.newsSortMode || 'top');
   const isCompactMode = userPrefs?.feedDensity === 'compact';
   const readKeysSet = new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : []);
   const mutedCount =
@@ -907,15 +907,21 @@ export function renderNewsViewHtml({
     <div class="card subnav-card news-toolbar-card" role="navigation" aria-label="News and Film Categories">
       <div class="news-toolbar-head">
         <div class="news-toolbar-title-row">
-          <div class="news-toolbar-brand">
-            <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('news', 15)}</div>
-            <h2 class="card-title">News &amp; Film</h2>
+          <div class="segmented-control news-sort-seg" role="group" aria-label="Sort News Feed" data-news-sort-bar>
+            ${NEWS_SORT_MODES.map(
+              m => `
+                <button type="button"
+                        class="pill-btn seg-btn news-sort-btn ${activeSort === m.key ? 'active' : ''}"
+                        data-action="set-news-sort"
+                        data-sort-mode="${esc(m.key)}"
+                        title="${esc(m.title)}"
+                        aria-pressed="${activeSort === m.key ? 'true' : 'false'}">
+                  <span>${esc(m.label)}</span>
+                </button>
+              `
+            ).join('')}
           </div>
           <div class="news-toolbar-actions">
-            <button type="button" class="btn-ghost btn-compact" data-action="toggle-feed-density" title="${isCompactMode ? 'Switch to Rich editorial cards' : 'Switch to Compact headline scan'}" aria-label="Toggle Feed Density">
-              ${iconSvg('layoutList', 12)}
-              <span>${isCompactMode ? 'Rich' : 'Scan'}</span>
-            </button>
             <button type="button" class="btn-ghost btn-compact" data-action="sync-live-wire-now" ${isSyncingWire ? 'disabled' : ''} title="Check live beat tweets and injury wire immediately">
               ${iconSvg('bolt', 12)}
               <span>${isSyncingWire ? 'Sync…' : esc(syncAge)}</span>
@@ -977,35 +983,19 @@ export function renderNewsViewHtml({
     });
   };
 
-  // Slim Sort (`Top+Latest` default | `Top` | `Latest`) strip right below `.news-toolbar-card`
-  const digestControlsStrip = `
-    <div class="news-digest-controls" data-news-digest-controls>
-      <div class="news-sort-row">
-        <div class="segmented-control news-sort-seg" role="group" aria-label="Sort News Feed" data-news-sort-bar>
-          ${NEWS_SORT_MODES.map(
-            m => `
-              <button type="button"
-                      class="pill-btn seg-btn news-sort-btn ${activeSort === m.key ? 'active' : ''}"
-                      data-action="set-news-sort"
-                      data-sort-mode="${esc(m.key)}"
-                      title="${esc(m.title)}"
-                      aria-pressed="${activeSort === m.key ? 'true' : 'false'}">
-                <span>${esc(m.label)}</span>
-              </button>
-            `
-          ).join('')}
+  // Only show a slim search-clear strip below the toolbar when an active search filter is applied
+  const activeSearchStrip = cleanSearchQuery
+    ? `
+      <div class="news-digest-controls" data-news-digest-controls>
+        <div class="news-sort-row">
+          <button type="button" class="pill-btn active news-search-active-pill" data-action="clear-news-search-filter" title="Clear feed search filter">
+            <span>&ldquo;${esc(cleanSearchQuery.slice(0, 18))}&rdquo;</span>
+            ${iconSvg('close', 11)}
+          </button>
         </div>
-        ${
-          cleanSearchQuery
-            ? `<button type="button" class="pill-btn active news-search-active-pill" data-action="clear-news-search-filter" title="Clear feed search filter">
-                 <span>&ldquo;${esc(cleanSearchQuery.slice(0, 18))}&rdquo;</span>
-                 ${iconSvg('close', 11)}
-               </button>`
-            : ''
-        }
       </div>
-    </div>
-  `;
+    `
+    : '';
 
   const renderWireListWithWatermark = (items, { isLeadFirst = false } = {}) => {
     const catchUp = computeCatchUpState(
@@ -1071,7 +1061,7 @@ export function renderNewsViewHtml({
         scopedRaw.length === 0
           ? `<div class="card">No feed items match this topic or search filter.</div>`
           : renderWireListWithWatermark(scopedRaw, { isLeadFirst: true });
-      return `${topToolbar}${digestControlsStrip}${filteredAllHtml}`;
+      return `${topToolbar}${activeSearchStrip}${filteredAllHtml}`;
     }
 
     const {
@@ -1138,7 +1128,7 @@ export function renderNewsViewHtml({
         ? `<div class="card">No additional feed items match your active source filters.</div>`
         : renderWireListWithWatermark(remainingBelowBrief, { isLeadFirst: false });
 
-    return `${topToolbar}${digestControlsStrip}${breakingTopHtml}${briefHtml}${presserStripHtml}${belowListHtml}`;
+    return `${topToolbar}${activeSearchStrip}${breakingTopHtml}${briefHtml}${presserStripHtml}${belowListHtml}`;
   }
 
   const visibleFiltered = applyTopicAndSearch(baseActivePool);
@@ -1150,7 +1140,7 @@ export function renderNewsViewHtml({
           isLeadFirst: activeFilter !== 'videos'
         });
 
-  return `${topToolbar}${digestControlsStrip}${filteredListHtml}`;
+  return `${topToolbar}${activeSearchStrip}${filteredListHtml}`;
 }
 
 export function renderVideoEmbedOrFacade(
