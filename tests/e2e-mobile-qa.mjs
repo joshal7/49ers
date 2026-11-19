@@ -1372,7 +1372,36 @@ async function main() {
           tweetsBtn.click();
           await sleep(60);
         }
-        const linkedCards = Array.from(document.querySelectorAll('[data-linked-article-card="true"]'));
+        let linkedCards = Array.from(document.querySelectorAll('[data-linked-article-card="true"]'));
+        // Live external feeds can temporarily flood the top 65 tweets with text-only practice posts;
+        // if no live linked-article tweet sits in the top 65 slice right now, inject a deterministic fixture
+        // and clean it up immediately after verifying DOM rendering, href hygiene, layout & read-state.
+        let injectedTempId = null;
+        const diag = window.__49ersDiagnostics;
+        if (linkedCards.length === 0 && diag?.getState?.()?.appData?.news?.rawStream) {
+          injectedTempId = 'qa_linked_article_tweet_1';
+          const st = diag.getState();
+          st.appData.news.rawStream.unshift({
+            id: injectedTempId,
+            type: 'tweet',
+            author: 'Matt Barrows',
+            reporterId: 'matt_barrows',
+            outletName: '49ers Beat',
+            trustTier: 1,
+            title: '49ers Week 11 practice observations and red-zone package tweaks ahead of Sunday.',
+            fullText: '49ers Week 11 practice observations and red-zone package tweaks ahead of Sunday.',
+            url: 'https://x.com/mattbarrows/status/1999999999999999999',
+            externalUrl: 'https://www.espn.com/nfl/story/_/id/50999999/49ers-week-11-practice-notes',
+            externalTitle: '49ers Week 11 practice notes: Red-zone packages and injury ramp',
+            externalDomain: 'espn.com',
+            publishedAt: new Date().toISOString(),
+            category: 'news'
+          });
+          if (typeof diag.renderActiveView === 'function') diag.renderActiveView();
+          else if (tweetsBtn) tweetsBtn.click();
+          await sleep(80);
+          linkedCards = Array.from(document.querySelectorAll('[data-linked-article-card="true"]'));
+        }
         const tweetBodies = Array.from(document.querySelectorAll('.wire-card-headline.is-tweet-body')).map(el =>
           (el.textContent || '').trim()
         );
@@ -1402,6 +1431,10 @@ async function main() {
           linkedCards[0].addEventListener('click', ev => ev.preventDefault(), { once: true });
           linkedCards[0].click();
           clickMarksRead = Boolean(parentCard && parentCard.classList.contains('is-read-item'));
+        }
+        if (injectedTempId && diag?.getState?.()?.appData?.news?.rawStream) {
+          const st = diag.getState();
+          st.appData.news.rawStream = st.appData.news.rawStream.filter(x => x.id !== injectedTempId);
         }
         const allBtn = document.querySelector('[data-action="select-news-cat"][data-cat="all"]');
         if (allBtn) {

@@ -14325,6 +14325,111 @@ await testAsync(
       nowMs: Date.parse('2026-11-18T22:00:00Z')
     });
     assert.equal(staleWedProb.appliedPreReportPracticeReturn, false, 'Same-day/Wednesday text must NEVER trigger next-day pre-report practice return on Wed DNP');
+
+    // 7. Opposing Team Injury Report +/- % Delta Chips (parity with 49ers Health)
+    const {
+      canonicalOpponentHealthSnapshotKey,
+      computeOpponentPriorDayPlayProbability
+    } = await import('../src/engine/injuryProbabilityModel.js');
+
+    const oppMockRows = [
+      { id: '3917315', name: 'Kyler Murray', position: 'QB', jersey: 1, isStarter: true, snapPct: 86, injuryType: 'Hamstring', wed: 'DNP', thu: 'DNP', fri: '-', gameStatus: 'Out', playProbabilityPct: 0, playBadgeLabel: '0% • Out' },
+      { id: '3915189', name: 'Isaiah Rodgers', position: 'CB', jersey: 2, isStarter: true, snapPct: 83, injuryType: 'Quad', wed: 'FP', thu: 'LP', fri: '-', gameStatus: 'Questionable', playProbabilityPct: 63, playBadgeLabel: '63% • GTD' },
+      { id: '3915416', name: 'Andrew Van Ginkel', position: 'LB', jersey: 43, isStarter: true, snapPct: 81, injuryType: 'Quad', wed: 'LP', thu: 'LP', fri: '-', gameStatus: 'Questionable', playProbabilityPct: 78, playBadgeLabel: '78% • GTD' },
+      { id: '2576414', name: 'Kyle Van Noy', position: 'LB', jersey: 17, isStarter: false, snapPct: 36, injuryType: 'Calf', wed: 'LP', thu: 'FP', fri: '-', gameStatus: 'No Designation (Cleared)', playProbabilityPct: 92, playBadgeLabel: '92% • Cleared' },
+      { id: '4567890', name: 'Bo Richter', position: 'LB', jersey: 98, isStarter: true, snapPct: 74, injuryType: 'Foot', wed: 'LP', thu: '-', fri: '-', gameStatus: 'Questionable', playProbabilityPct: 78, playBadgeLabel: '78% • GTD' }
+    ];
+
+    const rodgersPrior = computeOpponentPriorDayPlayProbability(oppMockRows[1], { currentWeek: 11, kickoffIso });
+    const vanNoyPrior = computeOpponentPriorDayPlayProbability(oppMockRows[3], { currentWeek: 11, kickoffIso });
+    const rodgersDelta = computePracticeTrajectoryDelta({ ...oppMockRows[1], priorDayPlayProbabilityPct: rodgersPrior }, null);
+    const vanNoyDelta = computePracticeTrajectoryDelta({ ...oppMockRows[3], priorDayPlayProbabilityPct: vanNoyPrior }, null);
+    const vanGinkelPrior = computeOpponentPriorDayPlayProbability(oppMockRows[2], { currentWeek: 11, kickoffIso });
+    const vanGinkelDelta = computePracticeTrajectoryDelta({ ...oppMockRows[2], priorDayPlayProbabilityPct: vanGinkelPrior }, null);
+
+    assert.ok(rodgersDelta && rodgersDelta.tone === 'danger' && rodgersDelta.compactLabel.startsWith('↓ -'), `Isaiah Rodgers FP->LP must show red downward % chip, got ${JSON.stringify(rodgersDelta)}`);
+    assert.ok(vanNoyDelta && vanNoyDelta.tone === 'positive' && vanNoyDelta.compactLabel.startsWith('↑ +'), `Kyle Van Noy LP->FP must show green upward % chip, got ${JSON.stringify(vanNoyDelta)}`);
+    assert.equal(vanGinkelDelta, null, 'Flat LP->LP opponent row with no meaningful % shift must not render a noisy delta chip');
+
+    const oppKeyRichter = canonicalOpponentHealthSnapshotKey(oppMockRows[4], 'MIN');
+    assert.equal(oppKeyRichter, 'MIN:4567890', 'Opponent snapshot key must namespace by opponent abbreviation');
+
+    const matchupDeltaApp = {
+      meta: { seasonYear: 2026, currentWeek: 11 },
+      roster: { players: [] },
+      health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
+      news: { rawStream: [] },
+      scheduleMatchup: {
+        schedule: [{ week: 11, dateIso: kickoffIso, completed: false }],
+        upcomingMatchup: {
+          week: 11,
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          kickoffIso,
+          opponentHealth: {
+            injuryReport: oppMockRows,
+            irReserve: [],
+            keyStartersHealthy: [],
+            activeRoster: [],
+            summary: { totalStarters: 22 }
+          }
+        }
+      }
+    };
+    const matchupHtmlWithDeltas = renderSeasonMatchupViewHtml({
+      seasonSub: 'matchup',
+      activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+      appData: matchupDeltaApp,
+      activeVideosSet: new Set(),
+      userPrefs: {
+        deltaSnapshots: {
+          oppHealthKey: '11:MIN',
+          oppHealthByPlayer: { [oppKeyRichter]: { playProbabilityPct: 70 } }
+        }
+      }
+    });
+    assert.ok(
+      matchupHtmlWithDeltas.includes('data-opp-health-delta') &&
+        matchupHtmlWithDeltas.includes(rodgersDelta.compactLabel) &&
+        matchupHtmlWithDeltas.includes(vanNoyDelta.compactLabel) &&
+        matchupHtmlWithDeltas.includes('+8%'),
+      'Matchup opponent injury table must render deterministic multi-day trajectory+% chips and single-day snapshot +% chips'
+    );
+
+    // Cross-opponent guard: stale Week 10 DAL snapshot key must NOT bleed onto Week 11 MIN
+    const matchupHtmlStaleOppKey = renderSeasonMatchupViewHtml({
+      seasonSub: 'matchup',
+      activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+      appData: matchupDeltaApp,
+      activeVideosSet: new Set(),
+      userPrefs: {
+        deltaSnapshots: {
+          oppHealthKey: '10:DAL',
+          oppHealthByPlayer: { [oppKeyRichter]: { playProbabilityPct: 50 } }
+        }
+      }
+    });
+    assert.ok(
+      !matchupHtmlStaleOppKey.includes('+28%'),
+      'Stale prior-opponent delta snapshot (10:DAL) must NEVER bleed onto Week 11 MIN opponent rows'
+    );
+
+    // Game-day resolved badge guard: In (Active) / Out (Inactive) must NOT show stale +/- % delta chips
+    const resolvedGameDayOppApp = structuredClone(matchupDeltaApp);
+    resolvedGameDayOppApp.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport = [
+      { ...oppMockRows[1], playBadgeLabel: 'In (Active)', playProbabilityPct: 100 }
+    ];
+    const resolvedOppHtml = renderSeasonMatchupViewHtml({
+      seasonSub: 'matchup',
+      activePhases: ['YEAR_ROUND', 'IN_SEASON'],
+      appData: resolvedGameDayOppApp,
+      activeVideosSet: new Set(),
+      userPrefs: { deltaSnapshots: { oppHealthKey: '11:MIN', oppHealthByPlayer: {} } }
+    });
+    assert.ok(
+      !resolvedOppHtml.includes('data-opp-health-delta'),
+      'Resolved Game-Day In (Active) / Out (Inactive) opponent rows must NOT render stale +/- % delta chips'
+    );
   }
 );
 

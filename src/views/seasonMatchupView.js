@@ -65,6 +65,8 @@ import {
 } from '../engine/gameDayRosterEngine.js';
 import {
   buildTeamInjuryNewsFeed,
+  canonicalOpponentHealthSnapshotKey,
+  computeOpponentPriorDayPlayProbability,
   computeTeamHealthSummary,
   isEffectiveOffDefStarter
 } from '../engine/injuryProbabilityModel.js';
@@ -868,8 +870,36 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                 </thead>
                 <tbody>
                   ${oppInjReport
-                    .map(
-                      op => `
+                    .map(op => {
+                      const expectedOppKey =
+                        um.week && um.oppAbbr ? `${um.week}:${String(um.oppAbbr).trim().toUpperCase()}` : null;
+                      const oppSnapObj = userPrefs?.deltaSnapshots || {};
+                      const oppSnapValid =
+                        !expectedOppKey || !oppSnapObj.oppHealthKey || oppSnapObj.oppHealthKey === expectedOppKey;
+                      const oppSnapMap = oppSnapValid ? oppSnapObj.oppHealthByPlayer || {} : {};
+                      const oppKey = canonicalOpponentHealthSnapshotKey(op, um.oppAbbr || 'OPP');
+                      const isResolvedGameDayBadge = /in \(active\)|out \(inactive\)/i.test(
+                        String(op.playBadgeLabel || '')
+                      );
+                      const resolvedPriorDayPct =
+                        op.priorDayPlayProbabilityPct !== null && op.priorDayPlayProbabilityPct !== undefined
+                          ? op.priorDayPlayProbabilityPct
+                          : computeOpponentPriorDayPlayProbability(op, {
+                              currentWeek: um.week || null,
+                              kickoffIso: um.kickoffIso || um.dateIso || ''
+                            });
+                      const oppDelta = isResolvedGameDayBadge
+                        ? null
+                        : computePracticeTrajectoryDelta(
+                            resolvedPriorDayPct !== null && resolvedPriorDayPct !== undefined
+                              ? { ...op, priorDayPlayProbabilityPct: resolvedPriorDayPct }
+                              : op,
+                            oppKey ? oppSnapMap[oppKey] || null : null
+                          );
+                      const oppDeltaHtml = oppDelta
+                        ? ` <span class="delta-chip ${oppDelta.tone} mono" data-health-delta data-opp-health-delta title="${esc(oppDelta.tooltipLabel || oppDelta.displayLabel)}">${esc(oppDelta.compactLabel || oppDelta.displayLabel)}</span>`
+                        : '';
+                      return `
                     <tr>
                       <td class="sticky-first-col">
                         <div class="sticky-player-cell">
@@ -888,10 +918,10 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                       </td>
                       <td>${esc(op.injuryType || op.gameStatus || 'Undisclosed')}</td>
                       <td class="mono">${esc(formatPracCell(op.wed))} / ${esc(formatPracCell(op.thu))} / ${esc(formatPracCell(op.fri))}</td>
-                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(op.playBadgeLabel))}</span></td>
+                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(op.playBadgeLabel))}</span>${oppDeltaHtml}</td>
                     </tr>
-                  `
-                    )
+                  `;
+                    })
                     .join('')}
                 </tbody>
               </table>

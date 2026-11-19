@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v117';
+const CACHE_NAME = '49ers-faithful-v118';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;

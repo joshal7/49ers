@@ -10,7 +10,10 @@ import {
 import { simulateCapScenario } from './engine/capSimulator.js?v=65';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
-import { reconcileRosterAndHealthWithNews } from './engine/injuryProbabilityModel.js';
+import {
+  canonicalOpponentHealthSnapshotKey,
+  reconcileRosterAndHealthWithNews
+} from './engine/injuryProbabilityModel.js';
 import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
@@ -31,7 +34,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=88';
+} from './services/dataService.js?v=89';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -93,7 +96,7 @@ import {
 } from './views/newsView.js?v=89';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=87';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=88';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
   renderSettingsSheetHtml,
@@ -434,13 +437,14 @@ function buildPracticeSlotSig(row = {}) {
   return `${row?.wed || '-'}/${row?.thu || '-'}/${row?.fri || '-'}`;
 }
 
-function buildHealthSnapshotMap(rows = []) {
-  const healthByPlayer = {};
+function buildHealthSnapshotMap(rows = [], keyFn = r => (r?.playerId ? String(r.playerId) : '')) {
+  const map = {};
   for (const r of rows || []) {
-    if (!r?.playerId) continue;
+    const key = keyFn(r);
+    if (!key) continue;
     const pct = Number(r.playProbabilityPct ?? 0);
     if (!Number.isFinite(pct)) continue;
-    healthByPlayer[String(r.playerId)] = {
+    map[key] = {
       playProbabilityPct: pct,
       currentPct: pct,
       currentSig: buildPracticeSlotSig(r),
@@ -450,107 +454,35 @@ function buildHealthSnapshotMap(rows = []) {
       fri: r.fri || '-'
     };
   }
-  return healthByPlayer;
+  return map;
 }
 
-function captureDeltaSnapshotsOnBoot(appData) {
-  if (!appData) return;
-  const curWeek = Number(appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
-  const existing = state.prefs.deltaSnapshots || {
-    week: null,
-    healthWeek: null,
-    healthByPlayer: {},
-    statsByKey: {},
-    playoffBaseline: null
-  };
-
-  // Seed initial baseline snapshot on first visit, or roll forward cleanly when NFL week advances
-  const needsSeed = !existing.week || Object.keys(existing.healthByPlayer || {}).length === 0;
-  const weekAdvanced = curWeek && existing.week && curWeek > existing.week;
-
-  if (needsSeed) {
-    const healthByPlayer = buildHealthSnapshotMap(appData?.health?.practiceReport || []);
-    const statsByKey = {};
-    for (const u of appData?.scheduleMatchup?.teamStats?.units || []) {
-      if (u?.overall?.key && Number.isFinite(Number(u.overall.rank))) {
-        statsByKey[u.overall.key] = { rank: Number(u.overall.rank) };
-      }
-    }
-    const baseSf = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
-    state.prefs.deltaSnapshots = {
-      week: curWeek,
-      healthWeek: curWeek,
-      healthByPlayer,
-      statsByKey,
-      playoffBaseline: baseSf
-        ? {
-            makePlayoffsPct: baseSf.makePlayoffsPct,
-            winDivisionPct: baseSf.winDivisionPct,
-            seed1ByePct: baseSf.seed1ByePct
-          }
-        : null
-    };
-    saveUserPrefs(state.prefs);
-  } else if (weekAdvanced) {
-    // Roll weekly health baselines immediately so prior-week injury percentages never leak into the new week,
-    // while keeping prior-week team stats / playoff baselines visible for this session until hide.
-    const existingHealthWk = Number(existing.healthWeek || existing.week || 0);
-    if (curWeek > existingHealthWk) {
-      state.prefs.deltaSnapshots = {
-        ...existing,
-        healthWeek: curWeek,
-        healthByPlayer: buildHealthSnapshotMap(appData?.health?.practiceReport || [])
-      };
-      saveUserPrefs(state.prefs);
-    }
-    state._pendingWeekSnapshotRollover = curWeek;
-  }
+function getCurrentOppHealthContext(appData) {
+  const um = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const oppAbbr = String(um?.oppAbbr || 'OPP')
+    .trim()
+    .toUpperCase();
+  const oppWeek = Number(um?.week || appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
+  const oppRows = um?.opponentHealth?.injuryReport || [];
+  const oppHealthKey = oppWeek && oppAbbr ? `${oppWeek}:${oppAbbr}` : null;
+  return { oppAbbr, oppWeek, oppRows, oppHealthKey };
 }
 
-/**
- * Last-distinct-state transition tracker for weekly injury probability deltas.
- * - Runs atomically AFTER both ESPN overlay and live beat wire complete so mid-hydration states never flicker.
- * - Seeds newly surfaced mid-week injury reportees so subsequent Thu/Fri changes display exact % deltas.
- * - Never regresses a snapshot backwards to an earlier blank (`-/-/-`) static bundle state within the same week.
- */
-function syncHealthDeltaSnapshots(appData) {
-  if (!appData || appData._awaitingInitialLiveWireSync) return;
-  const rows = appData?.health?.practiceReport || [];
-  if (rows.length === 0) return;
-
-  const curWeek = Number(appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
-  const snap = state.prefs.deltaSnapshots || {
-    week: curWeek,
-    healthWeek: curWeek,
-    healthByPlayer: {},
-    statsByKey: {},
-    playoffBaseline: null
-  };
-  const prevHealthWk = Number(snap.healthWeek || snap.week || 0);
-  if (curWeek && prevHealthWk && curWeek > prevHealthWk) {
-    state.prefs.deltaSnapshots = {
-      ...snap,
-      healthWeek: curWeek,
-      healthByPlayer: buildHealthSnapshotMap(rows)
-    };
-    saveUserPrefs(state.prefs);
-    return;
-  }
-
-  const healthByPlayer = { ...(snap.healthByPlayer || {}) };
+function mergeHealthSnapshotTransitions(existingMap = {}, rows = [], keyFn) {
+  const nextMap = { ...(existingMap || {}) };
   let changed = false;
 
-  for (const r of rows) {
-    const pid = r?.playerId ? String(r.playerId) : '';
+  for (const r of rows || []) {
+    const key = keyFn(r);
     const pct = Number(r?.playProbabilityPct);
-    if (!pid || !Number.isFinite(pct)) continue;
+    if (!key || !Number.isFinite(pct)) continue;
 
     const sig = buildPracticeSlotSig(r);
     const days = countObservedPracticeSlots(r);
-    const prev = healthByPlayer[pid];
+    const prev = nextMap[key];
 
     if (!prev) {
-      healthByPlayer[pid] = {
+      nextMap[key] = {
         playProbabilityPct: pct,
         currentPct: pct,
         currentSig: sig,
@@ -572,10 +504,10 @@ function syncHealthDeltaSnapshots(appData) {
       : Number(prev.playProbabilityPct);
 
     // Ignore completely blank fallback flashes (days === 0) when a real practice report was already cached,
-    // but self-heal when live official sync has fewer non-blank days than a stale/poisoned earlier snapshot (e.g. rolled-back fake Thu LP)
+    // but self-heal when live official sync has fewer non-blank days than a stale/poisoned earlier snapshot
     if (days < prevDays) {
       if (days === 0) continue;
-      healthByPlayer[pid] = {
+      nextMap[key] = {
         playProbabilityPct: pct,
         currentPct: pct,
         currentSig: sig,
@@ -589,7 +521,7 @@ function syncHealthDeltaSnapshots(appData) {
     }
 
     if (sig !== prevSig) {
-      healthByPlayer[pid] = {
+      nextMap[key] = {
         playProbabilityPct: Number.isFinite(prevCurrent) ? prevCurrent : pct,
         currentPct: pct,
         currentSig: sig,
@@ -600,7 +532,7 @@ function syncHealthDeltaSnapshots(appData) {
       };
       changed = true;
     } else if (Number.isFinite(prevCurrent) && Math.abs(pct - prevCurrent) >= 5) {
-      healthByPlayer[pid] = {
+      nextMap[key] = {
         playProbabilityPct: prevCurrent,
         currentPct: pct,
         currentSig: sig,
@@ -613,11 +545,148 @@ function syncHealthDeltaSnapshots(appData) {
     }
   }
 
+  return { nextMap, changed };
+}
+
+function captureDeltaSnapshotsOnBoot(appData) {
+  if (!appData) return;
+  const curWeek = Number(appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
+  const { oppAbbr, oppRows, oppHealthKey } = getCurrentOppHealthContext(appData);
+  const oppKeyFn = r => canonicalOpponentHealthSnapshotKey(r, oppAbbr);
+  const existing = state.prefs.deltaSnapshots || {
+    week: null,
+    healthWeek: null,
+    healthByPlayer: {},
+    oppHealthKey: null,
+    oppHealthByPlayer: {},
+    statsByKey: {},
+    playoffBaseline: null
+  };
+
+  // Seed initial baseline snapshot on first visit, or roll forward cleanly when NFL week advances
+  const needsSeed = !existing.week || Object.keys(existing.healthByPlayer || {}).length === 0;
+  const weekAdvanced = curWeek && existing.week && curWeek > existing.week;
+
+  if (needsSeed) {
+    const healthByPlayer = buildHealthSnapshotMap(appData?.health?.practiceReport || []);
+    const oppHealthByPlayer = buildHealthSnapshotMap(oppRows, oppKeyFn);
+    const statsByKey = {};
+    for (const u of appData?.scheduleMatchup?.teamStats?.units || []) {
+      if (u?.overall?.key && Number.isFinite(Number(u.overall.rank))) {
+        statsByKey[u.overall.key] = { rank: Number(u.overall.rank) };
+      }
+    }
+    const baseSf = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
+    state.prefs.deltaSnapshots = {
+      week: curWeek,
+      healthWeek: curWeek,
+      healthByPlayer,
+      oppHealthKey,
+      oppHealthByPlayer,
+      statsByKey,
+      playoffBaseline: baseSf
+        ? {
+            makePlayoffsPct: baseSf.makePlayoffsPct,
+            winDivisionPct: baseSf.winDivisionPct,
+            seed1ByePct: baseSf.seed1ByePct
+          }
+        : null
+    };
+    saveUserPrefs(state.prefs);
+  } else if (weekAdvanced) {
+    // Roll weekly health baselines immediately so prior-week injury percentages never leak into the new week,
+    // while keeping prior-week team stats / playoff baselines visible for this session until hide.
+    const existingHealthWk = Number(existing.healthWeek || existing.week || 0);
+    if (curWeek > existingHealthWk || (oppHealthKey && existing.oppHealthKey !== oppHealthKey)) {
+      state.prefs.deltaSnapshots = {
+        ...existing,
+        healthWeek: curWeek,
+        healthByPlayer: buildHealthSnapshotMap(appData?.health?.practiceReport || []),
+        oppHealthKey,
+        oppHealthByPlayer: buildHealthSnapshotMap(oppRows, oppKeyFn)
+      };
+      saveUserPrefs(state.prefs);
+    }
+    state._pendingWeekSnapshotRollover = curWeek;
+  } else if (
+    oppHealthKey &&
+    (existing.oppHealthKey !== oppHealthKey || Object.keys(existing.oppHealthByPlayer || {}).length === 0) &&
+    oppRows.length > 0
+  ) {
+    state.prefs.deltaSnapshots = {
+      ...existing,
+      oppHealthKey,
+      oppHealthByPlayer: buildHealthSnapshotMap(oppRows, oppKeyFn)
+    };
+    saveUserPrefs(state.prefs);
+  }
+}
+
+/**
+ * Last-distinct-state transition tracker for weekly injury probability deltas (both 49ers & Upcoming Opponent).
+ * - Runs atomically AFTER both ESPN overlay and live beat wire complete so mid-hydration states never flicker.
+ * - Seeds newly surfaced mid-week injury reportees so subsequent Thu/Fri changes display exact % deltas.
+ * - Never regresses a snapshot backwards to an earlier blank (`-/-/-`) static bundle state within the same week.
+ */
+function syncHealthDeltaSnapshots(appData) {
+  if (!appData || appData._awaitingInitialLiveWireSync) return;
+  const rows = appData?.health?.practiceReport || [];
+  const { oppAbbr, oppRows, oppHealthKey } = getCurrentOppHealthContext(appData);
+  if (rows.length === 0 && oppRows.length === 0) return;
+
+  const curWeek = Number(appData?.health?.week || appData?.meta?.currentWeek || 0) || null;
+  const oppKeyFn = r => canonicalOpponentHealthSnapshotKey(r, oppAbbr);
+  const snap = state.prefs.deltaSnapshots || {
+    week: curWeek,
+    healthWeek: curWeek,
+    healthByPlayer: {},
+    oppHealthKey,
+    oppHealthByPlayer: {},
+    statsByKey: {},
+    playoffBaseline: null
+  };
+  const prevHealthWk = Number(snap.healthWeek || snap.week || 0);
+  if (curWeek && prevHealthWk && curWeek > prevHealthWk) {
+    state.prefs.deltaSnapshots = {
+      ...snap,
+      healthWeek: curWeek,
+      healthByPlayer: buildHealthSnapshotMap(rows),
+      oppHealthKey,
+      oppHealthByPlayer: buildHealthSnapshotMap(oppRows, oppKeyFn)
+    };
+    saveUserPrefs(state.prefs);
+    return;
+  }
+
+  let changed = false;
+  let healthByPlayer = snap.healthByPlayer || {};
+  if (rows.length > 0) {
+    const sfRes = mergeHealthSnapshotTransitions(healthByPlayer, rows, r => (r?.playerId ? String(r.playerId) : ''));
+    healthByPlayer = sfRes.nextMap;
+    if (sfRes.changed) changed = true;
+  }
+
+  let oppHealthByPlayer = snap.oppHealthByPlayer || {};
+  let nextOppHealthKey = snap.oppHealthKey || oppHealthKey;
+  if (oppRows.length > 0) {
+    if (oppHealthKey && snap.oppHealthKey !== oppHealthKey) {
+      oppHealthByPlayer = buildHealthSnapshotMap(oppRows, oppKeyFn);
+      nextOppHealthKey = oppHealthKey;
+      changed = true;
+    } else {
+      const oppRes = mergeHealthSnapshotTransitions(oppHealthByPlayer, oppRows, oppKeyFn);
+      oppHealthByPlayer = oppRes.nextMap;
+      if (oppRes.changed) changed = true;
+    }
+  }
+
   if (changed) {
     state.prefs.deltaSnapshots = {
       ...snap,
       healthWeek: curWeek || snap.healthWeek || snap.week,
-      healthByPlayer
+      healthByPlayer,
+      oppHealthKey: nextOppHealthKey,
+      oppHealthByPlayer
     };
     saveUserPrefs(state.prefs);
   }
@@ -4031,7 +4100,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=105', { updateViaCache: 'none' })
+        .register('./sw.js?v=106', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

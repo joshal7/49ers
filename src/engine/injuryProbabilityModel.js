@@ -4502,6 +4502,80 @@ export function formatPlayTierLabel(tier) {
 }
 
 /**
+ * Stable week/opponent-scoped snapshot key for an opposing team injury-report row.
+ * Namespacing by `oppAbbr` ensures prior-week opponent snapshots never collide with the current opponent.
+ */
+export function canonicalOpponentHealthSnapshotKey(row = {}, oppAbbr = '') {
+  const abbr = String(oppAbbr || 'OPP')
+    .trim()
+    .toUpperCase();
+  const rawId = String(
+    row?.id ||
+      row?.playerId ||
+      (String(row?.espnUrl || '').match(/\/id\/(\d+)/)?.[1] || '')
+  ).trim();
+  if (rawId) return `${abbr}:${rawId}`;
+  const nameKey = canonicalInjuryPlayerKey(row?.name || '');
+  return nameKey ? `${abbr}:${nameKey}` : '';
+}
+
+/**
+ * Deterministically computes the prior practice day's play probability for an opposing team injury-report row
+ * so multi-day upgrades/downgrades (e.g. FP->LP, LP->FP, DNP->LP) and pre-report return lifts display exact
+ * trajectory + % delta chips immediately on first load (parity with 49ers Health).
+ */
+export function computeOpponentPriorDayPlayProbability(
+  oppRow = {},
+  { currentWeek = null, kickoffIso = '', nowMs = Date.now(), rosterPlayerNames = [] } = {}
+) {
+  if (!oppRow || !oppRow.name) return null;
+  if (/in \(active\)|out \(inactive\)/i.test(String(oppRow.playBadgeLabel || ''))) return null;
+  const w = oppRow.wed && oppRow.wed !== '-' && oppRow.wed !== '—' ? oppRow.wed : '-';
+  const t = oppRow.thu && oppRow.thu !== '-' && oppRow.thu !== '—' ? oppRow.thu : '-';
+  const f = oppRow.fri && oppRow.fri !== '-' && oppRow.fri !== '—' ? oppRow.fri : '-';
+  const filledCount = [w, t, f].filter(v => v !== '-').length;
+  const isSingleDayPreReportReturn = filledCount === 1 && Boolean(oppRow.hasPreReportPracticeReturn);
+  if (filledCount < 2 && !isSingleDayPreReportReturn) return null;
+
+  const prevW = w;
+  const prevT = isSingleDayPreReportReturn ? t : f !== '-' ? t : '-';
+  const prevF = '-';
+  const hadPriorRestriction =
+    /^(?:dnp|lp|limited|did not)/i.test(prevW) || /^(?:dnp|lp|limited|did not)/i.test(prevT);
+  const rawSt = String(oppRow.gameStatus || '');
+  const cleanSt =
+    rawSt === 'No Designation (Cleared)'
+      ? 'Active'
+      : rawSt === 'IR Return Window (Q)'
+        ? 'Questionable'
+        : rawSt || 'Questionable';
+  const priorStatus = oppRow.isIrReturnQuestionable
+    ? 'Questionable'
+    : hadPriorRestriction && /^(?:active|no designation|cleared|out|doubtful)/i.test(cleanSt)
+      ? 'Questionable'
+      : cleanSt;
+
+  const priorCalc = computePlayerPlayProbability({
+    name: oppRow.name,
+    position: oppRow.position || 'ATH',
+    snapPct: oppRow.snapPct ?? null,
+    gameStatus: priorStatus,
+    rosterBucket: oppRow.isIrReturnQuestionable ? 'ir' : 'active',
+    isIrReturnQuestionable: Boolean(oppRow.isIrReturnQuestionable),
+    injuryType: oppRow.injuryType || '',
+    wed: prevW,
+    thu: prevT,
+    fri: prevF,
+    beatNote: '',
+    kickoffIso,
+    nowMs,
+    currentWeek,
+    rosterPlayerNames
+  });
+  return Number.isFinite(priorCalc?.probabilityPct) ? priorCalc.probabilityPct : null;
+}
+
+/**
  * Computes the earliest eligible NFL return week from Injured Reserve (IR) / PUP.
  * Crucial NFL Rule: A player placed on IR with a designation to return must miss a minimum
  * of FOUR (4) GAMES — Bye weeks do NOT count toward the 4-game requirement!
@@ -5991,6 +6065,9 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
             thu: oppRow.thu || '-',
             fri: oppRow.fri || '-',
             beatNote: oppNoteForModel,
+            kickoffIso: upcomingKickoffIso,
+            nowMs,
+            blurbDateIso: oppRow.blurbDateIso || null,
             currentWeek,
             rosterPlayerNames: oppPlayerNames,
             corroboratedNewsSignal: oppNewsSig
@@ -6015,6 +6092,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           oppRow.playTier = oppProb.tier;
           oppRow.playBadgeLabel = oppProb.badgeLabel;
           oppRow.factors = oppProb.factors || [];
+          oppRow.hasPreReportPracticeReturn = Boolean(oppProb.appliedPreReportPracticeReturn);
         }
       }
 
@@ -6107,6 +6185,26 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
       if (promotedOppKeys.size > 0 && Array.isArray(oppHealth.keyStartersHealthy)) {
         oppHealth.keyStartersHealthy = oppHealth.keyStartersHealthy.filter(
           st => !promotedOppKeys.has(canonicalInjuryPlayerKey(st?.name || ''))
+        );
+      }
+    }
+
+    // Populate deterministic prior-day play probabilities on ALL opponent injury report rows
+    // (even when oppWirePool is empty / offline) for parity with 49ers Health +/- % delta chips.
+    if (Array.isArray(oppHealth.injuryReport)) {
+      for (const oppRow of oppHealth.injuryReport) {
+        if (!oppRow || !oppRow.name) continue;
+        const filledOppSlots = [oppRow.wed, oppRow.thu, oppRow.fri].filter(
+          v => v && v !== '-' && v !== '—'
+        ).length;
+        oppRow.priorDayPlayProbabilityPct = computeOpponentPriorDayPlayProbability(oppRow, {
+          currentWeek,
+          kickoffIso: upcomingKickoffIso,
+          nowMs,
+          rosterPlayerNames: oppPlayerNames
+        });
+        oppRow.hasPreReportPracticeReturnDelta = Boolean(
+          filledOppSlots === 1 && oppRow.hasPreReportPracticeReturn
         );
       }
     }

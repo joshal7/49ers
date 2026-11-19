@@ -7,6 +7,7 @@ import { normalizeScheduleGameItem, resolveCompleteScheduleModel } from '../engi
 import {
   canonicalInjuryPlayerKey,
   collapseInitialDots,
+  computeOpponentPriorDayPlayProbability,
   computePlayerPlayProbability,
   computeTeamHealthSummary,
   doesClauseMentionPlayer,
@@ -342,6 +343,8 @@ export const DEFAULT_USER_PREFS = {
     week: null,
     healthWeek: null,
     healthByPlayer: {},
+    oppHealthKey: null,
+    oppHealthByPlayer: {},
     statsByKey: {},
     playoffBaseline: null
   },
@@ -445,6 +448,12 @@ export function loadUserPrefs() {
                 parsed.deltaSnapshots.healthByPlayer && typeof parsed.deltaSnapshots.healthByPlayer === 'object'
                   ? parsed.deltaSnapshots.healthByPlayer
                   : {},
+              oppHealthKey:
+                typeof parsed.deltaSnapshots.oppHealthKey === 'string' ? parsed.deltaSnapshots.oppHealthKey : null,
+              oppHealthByPlayer:
+                parsed.deltaSnapshots.oppHealthByPlayer && typeof parsed.deltaSnapshots.oppHealthByPlayer === 'object'
+                  ? parsed.deltaSnapshots.oppHealthByPlayer
+                  : {},
               statsByKey:
                 parsed.deltaSnapshots.statsByKey && typeof parsed.deltaSnapshots.statsByKey === 'object'
                   ? parsed.deltaSnapshots.statsByKey
@@ -454,7 +463,15 @@ export function loadUserPrefs() {
                   ? parsed.deltaSnapshots.playoffBaseline
                   : null
             }
-          : { week: null, healthWeek: null, healthByPlayer: {}, statsByKey: {}, playoffBaseline: null }
+          : {
+              week: null,
+              healthWeek: null,
+              healthByPlayer: {},
+              oppHealthKey: null,
+              oppHealthByPlayer: {},
+              statsByKey: {},
+              playoffBaseline: null
+            }
     };
   } catch {
     return structuredCloneFallback(DEFAULT_USER_PREFS);
@@ -6212,10 +6229,13 @@ export async function hydrateLiveEspnOverlay(appData) {
           wed: mergedWed,
           thu: mergedThu,
           fri: mergedFri,
+          kickoffIso: nextGameKickoffIso,
+          blurbDateIso: existing?.blurbDateIso || null,
           beatNote: existingOppBeat
         });
 
-        oppReportByKey.set(oppKey, {
+        const nextOppRow = {
+          id: existing?.id || meta.id || undefined,
           name: existing?.name || meta.name || offOppRec.name,
           position: existing?.position || meta.position || offOppRec.position || 'ATH',
           unit: existing?.unit || meta.unit || classifyRosterUnit(offOppRec.position || '', ''),
@@ -6243,9 +6263,19 @@ export async function hydrateLiveEspnOverlay(appData) {
           playProbabilityPct: prob.probabilityPct,
           playTier: prob.tier,
           playBadgeLabel: prob.badgeLabel,
+          hasPreReportPracticeReturn: Boolean(prob.appliedPreReportPracticeReturn),
           factors: prob.factors || [],
           archetypeNote: prob.priorUsed?.archetypeNote || existing?.archetypeNote || ''
+        };
+        const oppFilledCnt = [mergedWed, mergedThu, mergedFri].filter(v => v && v !== '-' && v !== '—').length;
+        nextOppRow.priorDayPlayProbabilityPct = computeOpponentPriorDayPlayProbability(nextOppRow, {
+          currentWeek: appData.scheduleMatchup.upcomingMatchup?.week || null,
+          kickoffIso: nextGameKickoffIso
         });
+        nextOppRow.hasPreReportPracticeReturnDelta = Boolean(
+          oppFilledCnt === 1 && nextOppRow.hasPreReportPracticeReturn
+        );
+        oppReportByKey.set(oppKey, nextOppRow);
       }
 
       const reconciledOppReport = [...oppReportByKey.values()].sort(
@@ -6541,12 +6571,21 @@ export async function hydrateLiveOpponentWeeklyPracticeWire(
             wed: row.wed || '-',
             thu: row.thu || '-',
             fri: row.fri || '-',
+            kickoffIso: nextGameKickoffIso || um.kickoffIso || um.dateIso || '',
+            blurbDateIso: row.blurbDateIso || null,
             beatNote: `${row.shortComment || ''} ${row.longComment || ''}`.trim()
           });
           row.playProbabilityPct = prob.probabilityPct;
           row.playTier = prob.tier;
           row.playBadgeLabel = prob.badgeLabel;
           row.factors = prob.factors || [];
+          row.hasPreReportPracticeReturn = Boolean(prob.appliedPreReportPracticeReturn);
+          const oppFilled = [row.wed, row.thu, row.fri].filter(v => v && v !== '-' && v !== '—').length;
+          row.priorDayPlayProbabilityPct = computeOpponentPriorDayPlayProbability(row, {
+            currentWeek: um.week || null,
+            kickoffIso: nextGameKickoffIso || um.kickoffIso || um.dateIso || ''
+          });
+          row.hasPreReportPracticeReturnDelta = Boolean(oppFilled === 1 && row.hasPreReportPracticeReturn);
         }
       } catch {}
     })
