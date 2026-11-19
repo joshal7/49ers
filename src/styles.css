@@ -4317,6 +4317,15 @@ button.gameday-active-pill:hover {
   background: rgba(0, 0, 0, 0.024);
 }
 
+.similar-stories-drawer {
+  padding: 5px 9px;
+}
+
+.similar-story-row {
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+}
+
 .related-coverage-row {
   font-size: 11.5px;
   line-height: 1.4;

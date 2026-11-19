@@ -5800,13 +5800,22 @@ async function main() {
         const sortModes = sortBtns.map(b => b.getAttribute('data-sort-mode'));
         const activeSortMode = sortBtns.find(b => b.classList.contains('active'))?.getAttribute('data-sort-mode') || '';
 
-        // Switch to Latest, then back to Top
+        // Switch to Latest (verify chronological flat wire has 0 grouped drawers), then back to Top
         document.querySelector('[data-action="set-news-sort"][data-sort-mode="latest"]')?.click();
         const afterLatestSort = document.querySelector('[data-news-sort-bar] .active')?.getAttribute('data-sort-mode') || '';
+        const latestGroupedDrawers = document.querySelectorAll('[data-similar-stories="true"]').length;
         document.querySelector('[data-action="set-news-sort"][data-sort-mode="top"]')?.click();
 
-        // Verify Story Timeline, zero micro-action pills (TL;DR / View Image / Expand Chart), zero topic filter bar, and tight side-thumb + player-chip overlap
+        // Verify Similar Stories / Confirming Reports drawers in Top, expand first drawer, zero micro-action pills, zero topic filter bar, and tight side-thumb + player-chip overlap
         const timelineCount = document.querySelectorAll('[data-story-timeline="true"]').length;
+        const topGroupedDrawers = document.querySelectorAll('[data-similar-stories="true"]').length;
+        const firstSimilarDrawer = document.querySelector('[data-similar-stories="true"]');
+        let expandedSimilarRowCount = 0;
+        if (firstSimilarDrawer) {
+          firstSimilarDrawer.querySelector('summary')?.click();
+          expandedSimilarRowCount = firstSimilarDrawer.querySelectorAll('[data-similar-story-row]').length;
+          firstSimilarDrawer.querySelector('summary')?.click();
+        }
         const microBtnCount = document.querySelectorAll('.wire-micro-btn, [data-action="open-media-lightbox"]').length;
         const cardButtonsText = Array.from(document.querySelectorAll('.brief-card button'))
           .map(b => b.textContent.trim())
@@ -5824,11 +5833,22 @@ async function main() {
           return thumbRect && chipsRect && chipsRect.right <= thumbRect.left + 2;
         }).length;
 
-        // 3. Tune (Settings) -> Quiet Alerts & Feed Density (Rich default -> Scan/Compact -> Rich)
+        // 3. Tune (Settings) -> Group Similar Stories (Top), Quiet Alerts & Feed Density (Rich default -> Scan/Compact -> Rich)
         document.getElementById('openSettingsBtn')?.click();
         const hasPushSection = Boolean(document.querySelector('[data-settings-push-alerts]'));
         const pushChannelCount = document.querySelectorAll('[data-action="toggle-push-channel"]').length;
         const hasDensitySetting = Boolean(document.querySelector('[data-settings-feed-density]'));
+        const groupSimilarInput = document.querySelector('[data-settings-group-similar] input[data-pref-key="groupSimilarStories"]');
+        const hasGroupSimilarSetting = Boolean(groupSimilarInput);
+        const groupSimilarDefaultChecked = Boolean(groupSimilarInput?.checked);
+        let topDrawersWhenDisabled = -1;
+        let topDrawersWhenRestored = -1;
+        if (groupSimilarInput) {
+          groupSimilarInput.click();
+          topDrawersWhenDisabled = document.querySelectorAll('#mainView [data-similar-stories="true"]').length;
+          groupSimilarInput.click();
+          topDrawersWhenRestored = document.querySelectorAll('#mainView [data-similar-stories="true"]').length;
+        }
         document.querySelector('[data-settings-feed-density] [data-action="set-feed-density"][data-density="compact"]')?.click();
         const compactApplied = document.documentElement.getAttribute('data-feed-density') === 'compact';
         document.querySelector('[data-settings-feed-density] [data-action="set-feed-density"][data-density="rich"]')?.click();
@@ -5859,7 +5879,10 @@ async function main() {
           sortModes,
           activeSortMode,
           afterLatestSort,
+          latestGroupedDrawers,
           timelineCount,
+          topGroupedDrawers,
+          expandedSimilarRowCount,
           microBtnCount,
           cardButtonsText,
           topicStripCount,
@@ -5871,6 +5894,10 @@ async function main() {
           hasPushSection,
           pushChannelCount,
           hasDensitySetting,
+          hasGroupSimilarSetting,
+          groupSimilarDefaultChecked,
+          topDrawersWhenDisabled,
+          topDrawersWhenRestored,
           playoffDeltaCount
         };
       });
@@ -5890,6 +5917,19 @@ async function main() {
           digestAudit.activeSortMode === 'top' &&
           digestAudit.afterLatestSort === 'latest',
         `2-mode News sort check failed: ${JSON.stringify(digestAudit)}`
+      );
+      assert(
+        digestAudit.latestGroupedDrawers === 0 &&
+          digestAudit.topGroupedDrawers >= 1 &&
+          digestAudit.expandedSimilarRowCount >= 1,
+        `Top-only Similar Stories grouping / Latest ungrouped check failed: ${JSON.stringify(digestAudit)}`
+      );
+      assert(
+        digestAudit.hasGroupSimilarSetting &&
+          digestAudit.groupSimilarDefaultChecked &&
+          digestAudit.topDrawersWhenDisabled === 0 &&
+          digestAudit.topDrawersWhenRestored >= 1,
+        `Settings Group Similar Stories (Top) toggle check failed: ${JSON.stringify(digestAudit)}`
       );
       assert(
         digestAudit.microBtnCount === 0 && digestAudit.cardButtonsText.length === 0,

@@ -87,6 +87,15 @@ export function renderSettingsSheetHtml({
         </div>
       </div>
 
+      <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer" data-settings-group-similar>
+        <div>
+          <strong>Group Similar Stories (Top)</strong>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Bundles overlapping coverage under one lead card in Top sort (Latest stays chronological)</div>
+        </div>
+        <input type="checkbox" data-action="toggle-pref-bool" data-pref-key="groupSimilarStories"
+               ${userPrefs.groupSimilarStories !== false ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--scarlet);flex-shrink:0" />
+      </label>
+
       <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
         <div>
           <strong>Mute Opinion Columnists</strong>

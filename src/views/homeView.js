@@ -207,8 +207,13 @@ function renderSingleDashboardCard({
         nowHomeMs,
         { appData }
       );
+      const groupSimilarOnHome = userPrefs?.groupSimilarStories !== false;
       const rawList = balanceFeedTopSalience(
-        deduplicateAndGroupWireItems(prioritizedHomeStream, { nowMs: nowHomeMs, appData }),
+        deduplicateAndGroupWireItems(prioritizedHomeStream, {
+          nowMs: nowHomeMs,
+          appData,
+          groupSimilarStories: groupSimilarOnHome
+        }),
         { nowMs: nowHomeMs, appData }
       );
       const dailyBrief =
@@ -237,7 +242,7 @@ function renderSingleDashboardCard({
               !promotedIds.has(it.id) &&
               !promotedUrls.has(it.url)
           ),
-          { nowMs: nowHomeMs, preserveFormat: 'tweets', appData }
+          { nowMs: nowHomeMs, preserveFormat: 'tweets', appData, groupSimilarStories: groupSimilarOnHome }
         ).sort(rankHomeSalience),
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       ).slice(0, 3);
@@ -257,7 +262,7 @@ function renderSingleDashboardCard({
               !promotedIds.has(it.id) &&
               !promotedUrls.has(it.url)
           ),
-          { nowMs: nowHomeMs, preserveFormat: 'articles', appData }
+          { nowMs: nowHomeMs, preserveFormat: 'articles', appData, groupSimilarStories: groupSimilarOnHome }
         ).sort(rankHomeSalience),
         { nowMs: nowHomeMs, appData, maxConsecutiveInjuries: 2 }
       );

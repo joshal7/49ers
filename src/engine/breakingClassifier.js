@@ -1037,10 +1037,19 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
   );
   const recentBurstCount = Number(item.recentBurstCount) || (clusterAnchorAge <= 3 ? totalSources : 1);
   const velocityDecay = Math.pow(0.5, newestClusterAge / 7.5);
-  const velocityBonus =
+  const rawVelocity =
     (Math.min(22, Math.log2(totalSources) * 8.5) +
       (recentBurstCount >= 3 && clusterAnchorAge <= 6 ? Math.min(10, (recentBurstCount - 1) * 2.5) : 0)) *
-      velocityDecay +
+    velocityDecay;
+  // Prevent low-salience roundup clusters (Power Rankings, Watch Guides, PFF Grades) from shooting to #1
+  // just because 4 outlets published the same boilerplate roundup; dampen general similar-story clusters modestly.
+  const effectiveVelocity = item._isLowSalienceRoundupCluster
+    ? 0
+    : item.clusterKind === 'similar'
+      ? Math.min(10, rawVelocity * 0.45)
+      : rawVelocity;
+  const velocityBonus =
+    effectiveVelocity +
     (item.isFirstMoverInjuryScoop && totalSources === 1 && clusterAnchorAge <= 4 ? 8 : 0);
 
   const signal = Math.max(30, Math.min(100, Number(item.signalScore) || 65));
@@ -1656,8 +1665,28 @@ const CLUSTER_STOPWORDS = new Set([
   'were', 'was', 'been', 'being', 'will', 'would', 'could', 'should', '49ers', 'niners', 'san',
   'francisco', 'nfl', 'team', 'week', 'game', 'read', 'more', 'report', 'reports', 'per', 'via',
   'says', 'said', 'new', 'update', 'updates', 'latest', 'news', 'video', 'watch', 'clip', 'heres',
-  'here', 'how', 'why', 'who', 'his', 'him', 'out', 'off', 'one', 'two'
+  'here', 'how', 'why', 'who', 'his', 'him', 'out', 'off', 'one', 'two',
+  'dont', 'doesnt', 'didnt', 'isnt', 'arent', 'wasnt', 'werent', 'havent', 'hasnt', 'ive', 'hes',
+  'its', 'thats', 'youre', 'theyre', 'star', 'football'
 ]);
+
+const MULTI_TOPIC_DIGEST_REGEX =
+  /\b(morning report|notebook|snap count|live updates|what midseason|what we learned|5 players to watch|five important 49ers|3 keys|transcript|after further review|minutia minute|nfc notes|mailbag)\b/i;
+
+function isMultiTopicDigestOrRoundup(item = {}) {
+  const title = String(item?.title || item?.headline || '').trim();
+  if (MULTI_TOPIC_DIGEST_REGEX.test(title)) return true;
+  if ((item?.mentionedPlayers?.length || 0) >= 5) return true;
+  return false;
+}
+
+function cleanWireSummaryForMatching(raw = '') {
+  return String(raw || '')
+    .replace(/^\s*(?:\(Photo by [^)]+\)\s*\|\s*[^|]+(?:\s+Images)?\s*)/i, '')
+    .replace(/^\s*[A-Z][A-Z\s.,'-]{2,32}\s*[-–—]{1,2}\s*(?:[A-Z]+\s+\d{1,2}\s*:\s*)?/, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 function normalizeStemToken(tok = '') {
   let w = tok.toLowerCase().replace(/^#+/, '').replace(/['’]s$/i, '').replace(/[^a-z0-9-]/g, '');
@@ -1669,6 +1698,11 @@ function normalizeStemToken(tok = '') {
   if (/^(returns|returned|returning)$/.test(w)) return 'return';
   if (/^(inquires|inquired|inquiring|called|calling)$/.test(w)) return 'inquire';
   if (/^(eyeing|eyed|radar)$/.test(w)) return 'radar';
+  if (/^(admits|admitted|admission|acknowledges|acknowledged)$/.test(w)) return 'admit';
+  if (/^(struggles|struggled|struggling)$/.test(w)) return 'struggle';
+  if (/^(sacks|sacked|sackless|sack-less)$/.test(w)) return 'sack';
+  if (/^(playing|played|plays)$/.test(w)) return 'play';
+  if (/^(hoping|hopes|hoped)$/.test(w)) return 'hope';
   if (w.length >= 6 && w.endsWith('ing')) w = w.slice(0, -3);
   else if (w.length >= 5 && w.endsWith('ed')) w = w.slice(0, -2);
   else if (w.length >= 5 && w.endsWith('s') && !w.endsWith('ss')) w = w.slice(0, -1);
@@ -1685,6 +1719,15 @@ function extractHeadlineTokens(item = {}) {
     tokenSet.add(`${words[i]}_${words[i + 1]}`);
   }
   return tokenSet;
+}
+
+function extractArticleSummaryTokens(item = {}) {
+  const isArticle = item?.type === 'article' || item?.type === 'post';
+  if (!isArticle || isMultiTopicDigestOrRoundup(item)) return new Set();
+  const clean = cleanWireSummaryForMatching(item?.summary || '').slice(0, 180);
+  if (!clean) return new Set();
+  const words = clean.split(/\s+/).map(normalizeStemToken).filter(Boolean);
+  return new Set(words);
 }
 
 function extractLeadProperNameSlugs(lead = '') {
@@ -1892,6 +1935,120 @@ function buildStorySignatureKey(item = {}) {
     }
   }
 
+  // 8. Recurring Weekly NFL News & Beat Quote Archetypes (bounded by 36h sliding window so distinct weeks never collide)
+  const isArticleOrPost = item?.type === 'article' || item?.type === 'post';
+  const isDigest = isMultiTopicDigestOrRoundup(item);
+  const cleanSub = isArticleOrPost && !isDigest ? cleanWireSummaryForMatching(item?.summary || '').slice(0, 175) : '';
+  const leadAndSub = cleanSub ? `${lead} ${cleanSub}` : lead;
+  const leadAndSubLower = leadAndSub.toLowerCase();
+
+  // Resolve primary player whose surname actually appears in the lead headline so secondary mentions never hijack clustering
+  const headlinePlayer = (item?.mentionedPlayers || []).find(mp => {
+    const surname = String(mp?.name || '')
+      .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+      .trim()
+      .split(/\s+/)
+      .slice(-1)[0];
+    return surname && surname.length >= 3 && new RegExp(`\\b${escapeRegexToken(surname)}\\b`, 'i').test(lead);
+  });
+  const headlinePKey = headlinePlayer?.name
+    ? String(headlinePlayer.name)
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '')
+    : pKey;
+
+  // 8a. Weekly Power Rankings roundups
+  if (/\bpower rankings?\b/i.test(lead)) {
+    return 'team::power_rankings';
+  }
+
+  // 8b. Weekly How to Watch / Stream / Listen / TV & Odds guides
+  if (/\b(how to watch|ways to watch|watch,?\s*stream,?\s*and listen)\b/i.test(lead)) {
+    return 'team::watch_guide';
+  }
+
+  // 8c. Weekly PFF Grades roundups
+  if (/\bpff grades?\b/i.test(lead)) {
+    return 'team::pff_grades';
+  }
+
+  // 8d. Lack of pre-game roster moves hinting positive availability news
+  if (/\black of\b[\s\S]{0,20}\broster moves\b/i.test(lead)) {
+    return 'team::cb_roster_moves_positive';
+  }
+
+  // 8e. Fumble challenge / non-challenge debate
+  if (/\bfumble\b/i.test(lead) && /\bchalleng/i.test(lead)) {
+    return 'team::fumble_challenge';
+  }
+
+  // 8f. Visiting-fan stadium takeover reactions (e.g. AT&T Stadium / Jerry Jones / Dak Prescott)
+  if (
+    /(?:49ers|niners|niner)\s+(?:fans?|faithful)[\s\S]{0,40}(?:takeover|took over|at&t|stadium|booed)|(?:takeover|took over)[\s\S]{0,30}(?:at&t|cowboys'? stadium)|steep ticket prices[\s\S]{0,45}49ers fan|so many 49ers fans/i.test(
+      lead
+    )
+  ) {
+    return 'team::stadium_takeover';
+  }
+
+  // 8g. High-altitude / Mexico City acclimation prep (title-only so unrelated Colorado Springs datelines never merge)
+  if (/\b(altitude|7,350 feet)\b/i.test(lead)) {
+    return 'team::altitude_prep';
+  }
+
+  // 8h. Post-game defensive struggles / giving up 40 points reactions
+  if (
+    !isDigest &&
+    /\b(defensive struggles|defensive effort|defense vow|substandard showing|defense left frustrated|giving up 40|allowed 40)\b/i.test(
+      lead
+    )
+  ) {
+    return 'team::defensive_struggles_postgame';
+  }
+
+  // 8i. Historic offensive explosion / single-game yardage recaps
+  if (
+    !isDigest &&
+    (/\b(?:584|580)\s+(?:total\s+)?yards?\b/i.test(lead) ||
+      /\b(?:offensive explosion|offense racks up|broke the cowboys|make nfl history in wild win|tout ['"‘]?incredibly dangerous['"’]? offense)\b/i.test(
+        lead
+      )) &&
+    !/\b(grades for|bonus|block)\b/i.test(lead)
+  ) {
+    return 'team::week_offensive_explosion';
+  }
+
+  // 8j. Player-specific trade deadline asking price reports
+  if (headlinePKey && /\b(asking price|high price|2nd-round pick)\b/i.test(lead)) {
+    return `${headlinePKey}::retro_trade_inquiry`;
+  }
+
+  // 8k. Player-specific practice return hope ("hoping to have X back at practice / returns to practice / flying to Colorado Springs")
+  if (
+    !isDigest &&
+    headlinePKey &&
+    /\b(hoping to have|hoping[\s\S]{0,25}returns? to practice|chance to return|hopes to get|fly(?:ing)? (?:to|into) colorado)\b/i.test(
+      lead
+    )
+  ) {
+    return `${headlinePKey}::practice_return_hope`;
+  }
+
+  // 8l. Player-specific sack drought / slow-start self-critique vs. coach defense (e.g. Nick Bosa "not playing my best" cluster)
+  if (
+    !isDigest &&
+    headlinePlayer &&
+    headlinePKey &&
+    /\b(sack drought|sack-less|slow start|not playing (?:my|his) best|don['’]?t think i(?:'m|'ve| am| have) play(?:ing|ed) my best|honest admission|productive [\w\s]{2,20}\?|concern about [\w\s]{2,20} upon|first sack[\s\S]{0,35}eludes|not getting many\/any sacks)\b/i.test(
+      leadAndSubLower
+    )
+  ) {
+    return /\bshanahan\b/i.test(lead)
+      ? `${headlinePKey}::coach_on_sack_drought`
+      : `${headlinePKey}::sack_drought_critique`;
+  }
+
   return null;
 }
 
@@ -1959,12 +2116,35 @@ function scoreClusterLeadQuality(item = {}) {
  * Options:
  * - `preserveFormat`: `'tweets' | 'articles' | 'videos' | null` — when filtering by a specific format tab,
  *   ensures items of that format are never swallowed inside a lead card of a different format!
+ * - `groupSimilarStories`: `boolean` (default `true`) — when `false` (e.g. `Latest` chronological wire or
+ *   when the user disables Top story grouping in Settings), deduplicates exact canonical URLs only and
+ *   leaves distinct articles/tweets flat without hiding items in a similar-stories drawer.
  */
 export function deduplicateAndGroupWireItems(
   items = [],
-  { nowMs = Date.now(), preserveFormat = null, appData = null, gameContext = null } = {}
+  { nowMs = Date.now(), preserveFormat = null, appData = null, gameContext = null, groupSimilarStories = true } = {}
 ) {
   if (!Array.isArray(items) || items.length <= 1) return items;
+
+  // Flat exact-URL-only dedup mode (used for Latest chronological wire or when Top story grouping is turned off)
+  if (groupSimilarStories === false) {
+    const seenUrls = new Set();
+    const flat = [];
+    for (const item of items) {
+      if (!item || typeof item !== 'object') continue;
+      const cu = canonicalComparableUrl(item.url || '');
+      if (cu && !cu.includes('x.com/search?') && seenUrls.has(cu)) continue;
+      if (cu) seenUrls.add(cu);
+      flat.push({
+        ...item,
+        confirmingReports: [],
+        clusterKind: undefined,
+        _isLowSalienceRoundupCluster: undefined
+      });
+    }
+    return flat;
+  }
+
   const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
 
   const clusters = [];
@@ -1984,7 +2164,20 @@ export function deduplicateAndGroupWireItems(
     const itemMs = resolveEffectivePublishTimestampMs(item, nowMs) || 0;
     const sigKey = buildStorySignatureKey(item);
     const tokens = extractHeadlineTokens(item);
+    const summaryTokens = extractArticleSummaryTokens(item);
+    const combinedUnigrams = new Set();
+    for (const t of tokens) {
+      if (!t.includes('_')) combinedUnigrams.add(t);
+    }
+    for (const t of summaryTokens) combinedUnigrams.add(t);
+    const itemIsDigest = isMultiTopicDigestOrRoundup(item);
     const entities = extractEntitySet(item);
+    const entityNameWords = new Set();
+    for (const mp of item?.mentionedPlayers || []) {
+      for (const part of String(mp?.name || '').toLowerCase().split(/[^a-z0-9]+/)) {
+        if (part.length >= 3) entityNameWords.add(part);
+      }
+    }
     const outletKey = String(item.outletId || item.outletName || '').toLowerCase();
     const itemPracticeBucket = resolvePracticeStatusBucket(extractPrimaryClaimText(item));
     const itemIsBioBlurb = isPlayerBioWireBlurbItem(item);
@@ -2082,7 +2275,7 @@ export function deduplicateAndGroupWireItems(
         }
       }
 
-      // Prevent merging items that have DIFFERENT explicit player-specific injury milestones
+      // Prevent merging items that have DIFFERENT explicit player-specific injury milestones or semantic signatures
       if (sigKey && cl.sigKey && sigKey !== cl.sigKey) {
         continue;
       }
@@ -2153,6 +2346,38 @@ export function deduplicateAndGroupWireItems(
       if ((hybridScore >= 0.46 || strongHeadlineEcho) && hybridScore > bestSim) {
         bestSim = hybridScore;
         matchedCluster = cl;
+        continue;
+      }
+
+      // 3b. Summary-assisted Same-Entity Bridge for paraphrased beat articles within 24h
+      //     (e.g. headline "makes honest admission about slow start" + summary "not playing his best... first sack"
+      //      matching "Nick Bosa: I don't think I've played my best football").
+      //     Requires non-entity content tokens to overlap so sharing 2 player names (4 name tokens) never falsely bridges!
+      const itemIsArt = item.type === 'article' || item.type === 'post';
+      const leadIsArt = cl.lead.type === 'article' || cl.lead.type === 'post';
+      if (
+        itemIsArt &&
+        leadIsArt &&
+        !itemIsDigest &&
+        !cl.isDigest &&
+        entSim.jaccard >= 0.34 &&
+        (!itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= 24 * 3_600_000)
+      ) {
+        const subSim = setOverlapSimilarity(combinedUnigrams, cl.combinedUnigrams);
+        let sharedContentCount = 0;
+        for (const t of combinedUnigrams) {
+          if (cl.combinedUnigrams.has(t) && !entityNameWords.has(t)) sharedContentCount += 1;
+        }
+        const summaryBridgeScore = 0.55 * subSim.jaccard + 0.45 * entSim.jaccard;
+        if (
+          sharedContentCount >= 3 &&
+          (subSim.jaccard >= 0.28 || subSim.containment >= 0.5) &&
+          summaryBridgeScore >= 0.38 &&
+          summaryBridgeScore > bestSim
+        ) {
+          bestSim = summaryBridgeScore;
+          matchedCluster = cl;
+        }
       }
     }
 
@@ -2164,10 +2389,12 @@ export function deduplicateAndGroupWireItems(
       clusters.push({
         sigKey,
         outletKey,
+        isDigest: itemIsDigest,
         anchorMs: itemMs,
         oldestMs: itemMs,
         newestMs: itemMs,
         tokens: new Set(tokens),
+        combinedUnigrams: new Set(combinedUnigrams),
         entities: new Set(entities),
         lead: clonedLead,
         members: [item]
@@ -2181,6 +2408,7 @@ export function deduplicateAndGroupWireItems(
       if (!matchedCluster.newestMs || itemMs > matchedCluster.newestMs) matchedCluster.newestMs = itemMs;
     }
     for (const t of tokens) matchedCluster.tokens.add(t);
+    for (const t of combinedUnigrams) matchedCluster.combinedUnigrams.add(t);
     for (const e of entities) matchedCluster.entities.add(e);
 
     const existingQual = scoreClusterLeadQuality(matchedCluster.lead);
@@ -2248,7 +2476,7 @@ export function deduplicateAndGroupWireItems(
     }
   }
 
-  // Finalize cluster metadata, sort related coverage by authority/diversity, and re-rank by corroborated StoryRank!
+  // Finalize cluster metadata, classify clusterKind (`corroboration` vs `similar`), sort related coverage, and re-rank!
   const finalized = clusters.map(cl => {
     const lead = cl.lead;
     if (Array.isArray(lead.confirmingReports) && lead.confirmingReports.length > 0) {
@@ -2275,6 +2503,20 @@ export function deduplicateAndGroupWireItems(
         return Number.isFinite(ms) && nowMs - ms <= 3 * 3_600_000;
       }).length;
 
+      const isLowSalienceRoundup = /^team::(power_rankings|watch_guide|pff_grades)$/.test(cl.sigKey || '');
+      const isBreakingCorroboration =
+        !isLowSalienceRoundup &&
+        (isUrgentBreakingBadge(lead.breakingBadge) ||
+          lead.storyTier === 'tier1_major' ||
+          lead.storyTier === 'tier2_roster' ||
+          lead.category === 'injury' ||
+          lead.category === 'roster' ||
+          /::(ir_roster_move|diagnostic_imaging|recovery_timeline|in_game_injury_status|weekly_injury_report|trade_acquisition|contract_restructure|practice_return_hope|cb_roster_moves_positive)$/.test(
+            cl.sigKey || ''
+          ));
+      lead.clusterKind = isBreakingCorroboration ? 'corroboration' : 'similar';
+      lead._isLowSalienceRoundupCluster = isLowSalienceRoundup;
+
       const leadMs = resolveEffectivePublishTimestampMs(lead, nowMs);
       const leadAge = Number.isFinite(leadMs) ? Math.max(0, (nowMs - leadMs) / 3_600_000) : 24;
       const oldestAge = cl.oldestMs ? Math.max(0, (nowMs - cl.oldestMs) / 3_600_000) : leadAge;
@@ -2285,7 +2527,11 @@ export function deduplicateAndGroupWireItems(
         oldestAge > 14 ? Math.max(leadAge, oldestAge * 0.6) : 0.4 * leadAge + 0.6 * newestAge;
       const priorStoryRank = Number.isFinite(Number(lead.storyRank)) ? Number(lead.storyRank) : 0;
       const recomputedRank = computeWireStoryRank(lead, nowMs, ctx);
-      lead.storyRank = ctx ? recomputedRank : Math.max(priorStoryRank, recomputedRank);
+      lead.storyRank = isLowSalienceRoundup
+        ? Math.min(priorStoryRank || recomputedRank, recomputedRank)
+        : ctx
+          ? recomputedRank
+          : Math.max(priorStoryRank, recomputedRank);
     }
     return lead;
   });

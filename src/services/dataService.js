@@ -317,6 +317,7 @@ export const DEFAULT_USER_PREFS = {
   muteHotTakePersonalities: false,
   strictAnalyticsFilmOnly: false,
   newsSortMode: 'top', // 'top' (default) | 'latest'
+  groupSimilarStories: true, // Google News-style clustering when sorted by Top (Latest stays chronological)
   feedDensity: 'rich', // 'rich' (default) | 'compact'
   lastVisitedAt: null, // ISO watermark of prior session / caught-up timestamp
   readItemKeys: [], // bounded array (<=400) of opened/read wire item IDs or URLs
@@ -404,6 +405,7 @@ export function loadUserPrefs() {
       deletedEpisodeIds: Array.isArray(parsed.deletedEpisodeIds) ? parsed.deletedEpisodeIds : [],
       deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : [],
       newsSortMode: parsed.newsSortMode === 'latest' ? 'latest' : 'top',
+      groupSimilarStories: parsed.groupSimilarStories !== false,
       feedDensity: parsed.feedDensity === 'compact' ? 'compact' : 'rich',
       lastVisitedAt:
         typeof parsed.lastVisitedAt === 'string' && !Number.isNaN(Date.parse(parsed.lastVisitedAt))

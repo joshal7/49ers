@@ -214,30 +214,36 @@ export function renderInjuryNewsItemCardHtml(
           }
           ${
             confirmingList.length > 0
-              ? `<details class="compact-details confirming-reports-toggle" data-confirming-reports style="margin-top:5px">
-                   <summary class="compact-details-summary">+${confirmingList.length} confirming report${confirmingList.length === 1 ? '' : 's'}</summary>
-                   <div style="display:flex;flex-direction:column;gap:4px;margin-top:5px">
+              ? `<details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-cluster-kind="${n.clusterKind === 'corroboration' ? 'corroboration' : 'similar'}" style="margin-top:5px">
+                   <summary class="compact-details-summary" style="justify-content:space-between">
+                     <span>${n.clusterKind === 'corroboration' ? `Confirming reports (${confirmingList.length})` : `Similar stories (${confirmingList.length})`}</span>
+                     <span class="mono" style="font-size:10px;color:var(--text-muted)">${n.clusterKind === 'corroboration' ? 'Timeline ▾' : 'All Coverage ▾'}</span>
+                   </summary>
+                   <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
                      ${confirmingList
-                       .slice(0, 3)
+                       .slice(0, 5)
                        .map(cr => {
                          const crAuthor = cr.author || cr.reporterName || cr.outletName || 'Beat';
-                         const crBody = stripRedundantAuthorBoilerplate(cr.fullText || cr.title || cr.headline || '', crAuthor);
+                         const crOutlet = cr.outletName || '';
+                         const crAttrib =
+                           crAuthor && crOutlet && crAuthor.toLowerCase() !== crOutlet.toLowerCase()
+                             ? `${crAuthor} • ${crOutlet}`
+                             : crAuthor || crOutlet || 'Beat';
+                         const crBody = stripRedundantAuthorBoilerplate(cr.title || cr.headline || cr.fullText || '', crAuthor);
                          const crIsTw = cr.type === 'tweet' || cr.type === 'social';
                          const crHref = crIsTw
                            ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, directPosts), '#')
                            : sanitizeExternalUrl(cr.url, '#');
-                         const crAuthorHref = sanitizeExternalUrl(
-                           resolveItemAuthorProfileUrl(cr, crHref),
-                           crHref
-                         );
-                         return `<div style="font-size:11.5px;color:var(--text-secondary)">
-                           ${
-                             crAuthorHref
-                               ? `<a href="${esc(crAuthorHref)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(crAuthor)}</strong></a>`
-                               : `<strong>${esc(crAuthor)}</strong>`
-                           } <span class="mono" style="color:var(--text-muted)">• ${esc(formatRelativeAge(cr.publishedAt))}</span>:
-                           <a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:var(--text-secondary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''}</a>
-                         </div>`;
+                         return `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="synthesis-source-sheet-row similar-story-row" style="padding:7px 9px">
+                           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:2px">
+                             <div style="display:flex;align-items:center;gap:5px;min-width:0">
+                               <span class="badge ${crIsTw ? 'badge-gold' : 'badge-neutral'}" style="font-size:9.3px;padding:1px 5px">${crIsTw ? 'Tweet' : 'Article'}</span>
+                               <strong style="font-size:11.2px;color:var(--gold-bright)">${esc(crAttrib)}</strong>
+                             </div>
+                             <span class="mono" style="font-size:10px;color:var(--text-muted)">${esc(formatRelativeAge(cr.publishedAt))}</span>
+                           </div>
+                           <div style="font-size:11.8px;font-weight:600;line-height:1.34;color:var(--text-primary)">${esc(crBody.slice(0, 140))}${crBody.length > 140 ? '…' : ''} ${iconSvg('externalLink', 10)}</div>
+                         </a>`;
                        })
                        .join('')}
                    </div>

@@ -12208,6 +12208,192 @@ await testAsync('hydrateLiveEspnOverlay protects live ESPN-designated SF injurie
   }
 });
 
+test('Top-only Similar Stories grouping collapses paraphrased multi-outlet coverage (Nick Bosa sack drought), keeps Latest chronological, and guards against false merges & roundup rank inflation', () => {
+  const nowMs = Date.parse('2026-11-18T22:00:00Z');
+  const sampleFeed = [
+    {
+      id: 'bosa_wagoner',
+      type: 'article',
+      outletName: 'ESPN',
+      author: 'Nick Wagoner',
+      trustTier: 1,
+      signalScore: 80,
+      title: "Niners' Nick Bosa on 4-game sack drought: 'Don't think I'm playing my best'",
+      summary: "Niners star Nick Bosa acknowledged his performance this season, including four straight games with no sacks, hasn't been up to his usual standard.",
+      publishedAt: '2026-11-18T18:00:00Z',
+      url: 'https://www.espn.com/nfl/story/_/id/4900001/nick-bosa-sack-drought',
+      mentionedPlayers: [{ id: 'bosa', name: 'Nick Bosa' }]
+    },
+    {
+      id: 'bosa_chan',
+      type: 'article',
+      outletName: 'NBC Sports Bay Area',
+      author: 'Jennifer Lee Chan',
+      trustTier: 1,
+      signalScore: 76,
+      title: '49ers star Nick Bosa makes honest admission about slow start to 2026 NFL season',
+      summary: "San Francisco 49ers defensive end Nick Bosa knows he's not playing his best football as his first sack of the 2026 NFL season eludes him.",
+      publishedAt: '2026-11-18T18:05:00Z',
+      url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-honest-admission/1001/',
+      mentionedPlayers: [{ id: 'bosa', name: 'Nick Bosa' }]
+    },
+    {
+      id: 'bosa_pft',
+      type: 'article',
+      outletName: 'ProFootballTalk',
+      author: 'ProFootballTalk',
+      trustTier: 2,
+      signalScore: 72,
+      title: "Nick Bosa: I don't think I've played my best football",
+      summary: "49ers defensive end Nick Bosa's only stats in Sunday's 46-40 win over the Cowboys were one quarterback hit, four pressures and three penalties in 34 snaps.",
+      publishedAt: '2026-11-18T21:00:00Z',
+      url: 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/nick-bosa-best-football',
+      mentionedPlayers: [{ id: 'bosa', name: 'Nick Bosa' }]
+    },
+    {
+      id: 'bosa_pft_dup_url',
+      type: 'article',
+      outletName: 'ProFootballTalk',
+      author: 'ProFootballTalk',
+      trustTier: 2,
+      signalScore: 72,
+      title: "Nick Bosa: I don't think I've played my best football",
+      summary: 'Exact duplicate URL should always be deduplicated even in Latest.',
+      publishedAt: '2026-11-18T21:00:00Z',
+      url: 'https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/nick-bosa-best-football?utm_source=test',
+      mentionedPlayers: [{ id: 'bosa', name: 'Nick Bosa' }]
+    },
+    {
+      id: 'height_feature',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      signalScore: 74,
+      title: "Can Romello Height Spark the 49ers' Pass Rush?",
+      summary: 'There has been a lot said recently about the 49ers pass rush while Nick Bosa works back from injury.',
+      publishedAt: '2026-11-18T19:00:00Z',
+      url: 'https://www.49erswebzone.com/articles/romello-height-pass-rush/',
+      mentionedPlayers: [{ id: 'height', name: 'Romello Height' }, { id: 'bosa', name: 'Nick Bosa' }]
+    },
+    {
+      id: 'allen_debut_art',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      signalScore: 73,
+      title: "WR Keenan Allen shines in San Francisco 49ers debut, adding to exciting potential of team's offense",
+      summary: 'Keenan Allen made an immediate impact in his 49ers debut, giving Brock Purdy another weapon.',
+      publishedAt: '2026-11-18T16:00:00Z',
+      url: 'https://www.49erswebzone.com/articles/keenan-allen-debut/',
+      mentionedPlayers: [{ id: 'purdy', name: 'Brock Purdy' }, { id: 'allen', name: 'Keenan Allen' }]
+    },
+    {
+      id: 'allen_play_tweet',
+      type: 'tweet',
+      outletName: 'NBC Sports Bay Area',
+      author: 'Matt Maiocco',
+      trustTier: 1,
+      signalScore: 70,
+      title: 'Third and 12, Brock Purdy escapes the rush and finds Keenan Allen for 23.',
+      fullText: 'Third and 12, Brock Purdy escapes the rush and finds Keenan Allen for 23.',
+      publishedAt: '2026-11-18T15:30:00Z',
+      url: 'https://x.com/MaioccoNBCS/status/999000111222333',
+      mentionedPlayers: [{ id: 'purdy', name: 'Brock Purdy' }, { id: 'allen', name: 'Keenan Allen' }]
+    },
+    {
+      id: 'pr_1',
+      type: 'article',
+      outletName: '49ers.com Official',
+      author: '49ers.com Official',
+      trustTier: 1,
+      signalScore: 68,
+      title: 'Power Rankings: Where the 49ers Stand Entering Week 11',
+      summary: 'National Week 11 NFL power rankings roundup.',
+      publishedAt: '2026-11-18T20:00:00Z',
+      url: 'https://www.49ers.com/news/power-rankings-week-11'
+    },
+    {
+      id: 'pr_2',
+      type: 'article',
+      outletName: '49ers Webzone',
+      author: '49ers Webzone',
+      trustTier: 2,
+      signalScore: 65,
+      title: '49ers in Week 11 power rankings: Massive test ahead vs. Vikings',
+      summary: 'National analysts weigh in on Week 11 power rankings.',
+      publishedAt: '2026-11-18T19:30:00Z',
+      url: 'https://www.49erswebzone.com/articles/week-11-power-rankings/'
+    },
+    {
+      id: 'pr_3',
+      type: 'article',
+      outletName: 'NBC Sports Bay Area',
+      author: 'NBC Sports Bay Area',
+      trustTier: 1,
+      signalScore: 66,
+      title: 'Where NFL-best 49ers sit in the Week 11 power rankings after road win',
+      summary: 'Where the 49ers land in NFL Week 11 power rankings.',
+      publishedAt: '2026-11-18T19:00:00Z',
+      url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/week-11-power-rankings/1002/'
+    }
+  ];
+
+  // 1. Grouped (Top default): 3 Bosa articles -> 1 similar cluster; 3 Power Rankings -> 1 low-salience roundup cluster; Height & Allen tweet stay distinct
+  const grouped = deduplicateAndGroupWireItems(sampleFeed, { nowMs, groupSimilarStories: true });
+  const bosaCluster = grouped.find(it => it.id === 'bosa_wagoner');
+  assert.ok(bosaCluster, 'Nick Wagoner ESPN article should lead the Nick Bosa cluster');
+  assert.equal(bosaCluster.clusterKind, 'similar', 'Nick Bosa quote cluster must be classified as similar');
+  assert.equal(bosaCluster.confirmingReports?.length, 2, 'Both Jennifer Lee Chan and ProFootballTalk articles must fold into Similar stories');
+  assert.ok(grouped.some(it => it.id === 'height_feature'), 'Distinct Romello Height pass-rush feature must NOT be swallowed into Nick Bosa cluster');
+  assert.ok(grouped.some(it => it.id === 'allen_debut_art') && grouped.some(it => it.id === 'allen_play_tweet'), '1-play Purdy-to-Allen tweet must NOT falsely merge into Keenan Allen debut recap');
+
+  const prCluster = grouped.find(it => it.id === 'pr_1');
+  assert.ok(prCluster, 'Power Rankings roundup should consolidate under 49ers.com lead');
+  assert.equal(prCluster.confirmingReports?.length, 2, '3 Week 11 Power Rankings roundups must consolidate into 1 card + 2 similar stories');
+  assert.equal(prCluster._isLowSalienceRoundupCluster, true, 'Power Rankings cluster must be flagged as low-salience roundup to prevent corroboration rank inflation');
+
+  // 2. Flat (Latest or Setting OFF): deduplicates exact URL only, preserves all 3 Bosa articles flat with zero confirmingReports
+  const flat = deduplicateAndGroupWireItems(sampleFeed, { nowMs, groupSimilarStories: false });
+  assert.equal(flat.length, sampleFeed.length - 1, 'Flat mode must remove exact duplicate URL only and keep all distinct stories separate');
+  assert.ok(flat.every(it => (it.confirmingReports?.length || 0) === 0), 'Flat mode must never hide items inside confirmingReports');
+
+  // 3. View rendering: Top + groupSimilarStories=true shows Google News-style Similar stories drawer; Latest & Top(false) stay flat
+  const minimalAppData = { roster: { players: [] }, news: { rawStream: sampleFeed }, schedule: { games: [] } };
+  const topGroupedHtml = renderNewsViewHtml({
+    appData: minimalAppData,
+    newsCategoryFilter: 'articles',
+    newsSortMode: 'top',
+    filteredRawItems: sampleFeed,
+    userPrefs: { groupSimilarStories: true },
+    nowMs
+  });
+  assert.ok(topGroupedHtml.includes('Similar stories (2)'), 'Top grouped Articles view must render Similar stories (2) drawer for Nick Bosa cluster');
+  assert.ok(topGroupedHtml.includes('data-similar-story-row') && topGroupedHtml.includes('synthesis-source-sheet-row'), 'Similar stories drawer must use the clean Brief Sources row UI');
+
+  const topUngroupedHtml = renderNewsViewHtml({
+    appData: minimalAppData,
+    newsCategoryFilter: 'articles',
+    newsSortMode: 'top',
+    filteredRawItems: sampleFeed,
+    userPrefs: { groupSimilarStories: false },
+    nowMs
+  });
+  assert.ok(!topUngroupedHtml.includes('data-similar-stories="true"'), 'Top view with groupSimilarStories=false must render zero Similar stories drawers');
+  assert.ok(topUngroupedHtml.includes('honest admission') && topUngroupedHtml.includes("played my best football"), 'All 3 Nick Bosa articles must render flat when Top grouping is disabled');
+
+  const latestHtml = renderNewsViewHtml({
+    appData: minimalAppData,
+    newsCategoryFilter: 'articles',
+    newsSortMode: 'latest',
+    filteredRawItems: sampleFeed,
+    userPrefs: { groupSimilarStories: true },
+    nowMs
+  });
+  assert.ok(!latestHtml.includes('data-similar-stories="true"'), 'Latest chronological wire must never group stories even when Top grouping setting is ON');
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

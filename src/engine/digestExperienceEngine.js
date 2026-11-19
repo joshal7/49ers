@@ -167,7 +167,12 @@ function computeTopSignalScore(item = {}, nowMs = Date.now()) {
   const baseSignal = Number.isFinite(storyRank) && storyRank > 0
     ? storyRank
     : computeNewsSalienceScore(item) * 2.2;
-  const corroborationBonus = Math.min(28, (item.confirmingReports?.length || 0) * 8);
+  const relatedCount = item.confirmingReports?.length || 0;
+  const corroborationBonus = item._isLowSalienceRoundupCluster
+    ? 0
+    : item.clusterKind === 'similar'
+      ? Math.min(12, relatedCount * 3.5)
+      : Math.min(28, relatedCount * 8);
   const urgentBonus = isUrgentBreakingBadge(item.breakingBadge) ? 35 : 0;
   // Gentle 60-hour half-life so top stories/film breakdowns of the cycle dominate while stale multi-day items decay cleanly
   const gentleDecay = Math.pow(0.5, Math.max(0, ageHours - 6) / 60);
