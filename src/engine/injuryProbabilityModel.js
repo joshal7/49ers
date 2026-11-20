@@ -1301,7 +1301,7 @@ export function detectOpen21DayIrWindowFromHistory({
 
 function hasNegativePlayConsensusSignal(beatNote = '') {
   if (!beatNote) return false;
-  return /\b(?:long shot|unlikely to (?:play|suit up|be activated|be ready|go)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be ready|be activated)|expecting\b[^.;]{0,42}\b(?:this week|to play|to be ready|to suit up)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go))\b/i.test(
+  return /\b(?:long shot|unlikely to (?:play|suit up|be activated|be ready|go)|(?:not|n't|no longer|hardly)\s+(?:expected to (?:play|suit up|be ready|be activated)|expecting\b[^.;]{0,42}\b(?:this week|to play|to be ready|to suit up)|on track to (?:play|suit up)|likely to (?:play|be activated)|good to go)|(?:not\s+traveling|won['’]?t\s+travel|will\s+not\s+travel|not\s+making\s+the\s+trip|hospitalized|admitted\s+to\s+(?:a|the)\s+hospital))\b/i.test(
     beatNote
   );
 }
@@ -2657,6 +2657,27 @@ export function isRestOrPersonalInjuryLabel(label = '') {
   return medicalRemainder.length === 0;
 }
 
+/**
+ * Returns true ONLY when the injury listing is strictly an illness (optionally paired with NIR/Rest),
+ * and false for compound orthopedic/neurological listings like "Ankle, Illness" or "Concussion, Illness".
+ */
+export function isPureIllnessLabel(label = '') {
+  const s = String(label || '').trim();
+  if (!s) return false;
+  if (!/\b(?:illness|flu|influenza|stomach\s+bug|viral|virus|migraine|respiratory|non-covid)\b/i.test(s)) {
+    return false;
+  }
+  const remainder = s
+    .replace(/\bnon[-\s]?covid(?:\s+illness)?\b/gi, '')
+    .replace(/\b(?:illness|flu|influenza|stomach\s+bug|stomach|viral|virus|migraine|respiratory)\b/gi, '')
+    .replace(/\bnot\s+injury\s+related(?:\s*[-–—:,]\s*(?:resting\s+player|veteran\s+rest|vet\s+rest|rest|personal|other))?/gi, '')
+    .replace(/\bnir\s*[-–—:]?\s*(?:veteran\s+rest|vet\s+rest|resting\s+player|rest|personal|other)?/gi, '')
+    .replace(/\b(?:veteran\s+rest|vet\s+rest|resting\s+player|rest|personal|other)\b/gi, '')
+    .replace(/[\s,/|–—-]+/g, '')
+    .trim();
+  return remainder.length === 0;
+}
+
 function decodeHtmlEntitiesBasic(str = '') {
   return String(str || '')
     .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
@@ -3883,8 +3904,9 @@ export function computePlayerPlayProbability(input = {}) {
     return false;
   })();
 
-  // 4. Base Probability from Game Designation, NFL 5-Step Concussion Protocol, or Practice Progression
+  // 4. Base Probability from Game Designation, NFL 5-Step Concussion Protocol, Illness Recovery Curve, or Practice Progression
   let prob = 0.78;
+  const isPureIllness = !isConcussion && isPureIllnessLabel(injuryType);
 
   if (statusRaw === 'doubtful') {
     prob = 0.10 + (prior.questionablePlayRate - 0.78) * 0.25;
@@ -3933,6 +3955,70 @@ export function computePlayerPlayProbability(input = {}) {
     } else {
       prob = 0.18;
       factors.push('Remains in early stages of NFL 5-Step Concussion Protocol');
+    }
+  } else if (isPureIllness) {
+    // Empirical NFL Illness Recovery Model:
+    // Unlike orthopedic soft-tissue/structural setbacks, NFL teams routinely isolate sick players mid-week (Thu/Fri DNP)
+    // to prevent locker-room contagion; historical active rates remain ~70–85% for Thu illness DNP and ~60–70% for Fri illness DNP
+    // (dropping toward ~50% only for 3-day Wed–Fri DNPs or multi-week systemic absences).
+    if (fri === 'FP') {
+      prob = 0.95;
+      factors.push('Logged Full Participation (FP) on Friday following illness');
+    } else if (fri === 'LP') {
+      if (wed === 'DNP' && thu === 'DNP') {
+        prob = 0.82;
+        factors.push('Returned to Friday Limited (LP) after Wed/Thu illness DNPs; strong weekend recovery trend');
+      } else if (wed === 'FP' || thu === 'FP') {
+        prob = 0.82;
+        factors.push('Late-week mild illness (Friday Limited); high historical NFL play rate');
+      } else {
+        prob = 0.88;
+        factors.push('Friday Limited (LP) with illness; NFL players overwhelmingly suit up');
+      }
+    } else if (fri === 'DNP') {
+      if (wed === 'DNP' && thu === 'DNP') {
+        prob = 0.50;
+        factors.push('Missed Wed–Fri practices with persistent illness; true game-time decision (~50% NFL active rate)');
+      } else {
+        prob = 0.62;
+        factors.push('Missed Friday practice with illness (team isolation/recovery protocol; ~60–70% NFL active rate pending pre-game hydration)');
+      }
+    } else {
+      if (thu === 'FP') {
+        prob = 0.94;
+        factors.push('Logged Full Participation (FP) on Thursday following illness');
+      } else if (thu === 'DNP' && (wed === 'LP' || wed === 'FP')) {
+        prob = 0.74;
+        factors.push('Missed Thursday practice with illness (team isolation/recovery protocol with 72h to kickoff; ~70–78% NFL play rate)');
+      } else if (thu === 'LP' && wed === 'FP') {
+        prob = 0.80;
+        factors.push('Mid-week illness downgrade (Wed FP -> Thu LP); high historical NFL play rate');
+      } else if (thu === 'LP' && wed === 'DNP') {
+        prob = 0.88;
+        factors.push('Positive illness recovery ramp (Wed DNP -> Thu LP)');
+      } else if (thu === 'LP') {
+        prob = 0.86;
+        factors.push('Thursday Limited Participation (LP) with illness');
+      } else if (wed === 'DNP' && thu === 'DNP') {
+        prob = 0.68;
+        factors.push('Consecutive Wed/Thu illness DNPs; awaiting Friday clearance with 72h recovery window');
+      } else if (wed === 'FP' && thu === 'NONE') {
+        prob = 0.94;
+        factors.push('Full Participation (FP) logged on Wednesday despite illness');
+      } else if (wed === 'LP' && thu === 'NONE') {
+        prob = 0.86;
+        factors.push('Wednesday Limited Participation (LP) with illness');
+      } else if (wed === 'DNP' && thu === 'NONE') {
+        prob = 0.80;
+        factors.push('Wednesday illness DNP (rest/isolation); high historical NFL play rate with 4 days until kickoff');
+      } else {
+        prob = 0.84;
+        factors.push('Listed with illness ahead of practice week; strong historical NFL active rate');
+      }
+    }
+    if (missedPriorGame && fri !== 'FP' && thu !== 'FP') {
+      prob = Math.max(0.26, prob - 0.18);
+      factors.push('Multi-week illness absence (missed prior game); elevated systemic recovery caution');
     }
   } else {
     // Derive base from Wed/Thu/Fri practice progression (including trajectory directionality & multi-game absence ramps)
@@ -4195,6 +4281,7 @@ export function computePlayerPlayProbability(input = {}) {
     factors.push(`In-game aggravation / recurrence of prior-week ${injuryType} injury (-6% caution)`);
   } else if (
     !isConcussion &&
+    !isPureIllness &&
     loggedActivePracticeReps &&
     prior.questionablePlayRate >= 0.88 &&
     prob >= 0.45 &&
@@ -4210,17 +4297,17 @@ export function computePlayerPlayProbability(input = {}) {
 
   // 6. Injury Biomechanics Modifier (High-caution structural joint vs soft-tissue speed risk vs pain management)
   // Caps combined chronic + soft-tissue deduction at -8% total so returning LP soft-tissue players aren't double-penalized
-  if (!isConcussion && HIGH_CAUTION_STRUCTURAL_KEYWORDS.some(k => injuryLower.includes(k)) && fri !== 'FP' && prob < 0.92) {
+  if (!isConcussion && !isPureIllness && HIGH_CAUTION_STRUCTURAL_KEYWORDS.some(k => injuryLower.includes(k)) && fri !== 'FP' && prob < 0.92) {
     const ded = appliedChronicDeduction ? 0.04 : 0.08;
     prob -= ded;
     totalMedicalDeduction += ded;
     factors.push(`High-caution structural joint/ligament stability profile (${injuryType})`);
-  } else if (!isConcussion && SOFT_TISSUE_KEYWORDS.some(k => injuryLower.includes(k)) && prob < 0.92) {
+  } else if (!isConcussion && !isPureIllness && SOFT_TISSUE_KEYWORDS.some(k => injuryLower.includes(k)) && prob < 0.92) {
     const ded = appliedChronicDeduction ? 0.02 : 0.05;
     prob -= ded;
     totalMedicalDeduction += ded;
     factors.push(`Soft-tissue re-aggravation caution (${injuryType})`);
-  } else if (!isConcussion && MINOR_PAIN_TOLERANCE_KEYWORDS.some(k => injuryLower.includes(k)) && prob >= 0.50 && prob < 0.95) {
+  } else if (!isConcussion && !isPureIllness && MINOR_PAIN_TOLERANCE_KEYWORDS.some(k => injuryLower.includes(k)) && prob >= 0.50 && prob < 0.95) {
     prob += 0.04;
     factors.push(`Manageable pain-tolerance injury profile (${injuryType})`);
   }

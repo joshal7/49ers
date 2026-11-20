@@ -14430,6 +14430,118 @@ await testAsync(
       !resolvedOppHtml.includes('data-opp-health-delta'),
       'Resolved Game-Day In (Active) / Out (Inactive) opponent rows must NOT render stale +/- % delta chips'
     );
+
+    // 8. Empirical NFL Illness Recovery Model vs Orthopedic Setbacks (Mac Jones LP -> DNP Illness)
+    const { isPureIllnessLabel } = await import('../src/engine/injuryProbabilityModel.js');
+    assert.equal(isPureIllnessLabel('Illness'), true);
+    assert.equal(isPureIllnessLabel('Illness, NIR - Rest'), true);
+    assert.equal(isPureIllnessLabel('Hamstring, Illness'), false, 'Compound orthopedic + illness must NOT be treated as pure illness');
+    assert.equal(isPureIllnessLabel('Concussion, Illness'), false, 'Concussion + illness must stay on NFL Concussion Protocol');
+
+    const macWedLp = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: '-',
+      fri: '-'
+    });
+    const macThuDnp = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: 'DNP',
+      fri: '-'
+    });
+    const macFriDnp = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: 'DNP',
+      fri: 'DNP'
+    });
+    const macAll3Dnp = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: 'DNP',
+      thu: 'DNP',
+      fri: 'DNP'
+    });
+    const macFriFp = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: 'DNP',
+      fri: 'FP'
+    });
+    const macNotTraveling = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: 'DNP',
+      fri: '-',
+      beatNote: 'Mac Jones (illness) is not traveling with the 49ers to Mexico City.'
+    });
+    const macOut = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      injuryType: 'Illness',
+      gameStatus: 'Out',
+      wed: 'LP',
+      thu: 'DNP',
+      fri: 'DNP'
+    });
+    const compoundHamstringIllness = computePlayerPlayProbability({
+      name: 'Ricky Pearsall',
+      position: 'WR',
+      injuryType: 'Hamstring, Illness',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: 'DNP',
+      fri: '-'
+    });
+
+    assert.ok(
+      macThuDnp.probabilityPct >= 70 && macThuDnp.probabilityPct <= 78,
+      `Mac Jones pure Illness LP->DNP must align with NFL historical active rate (70–78% GTD, not 34% Long Shot), got ${macThuDnp.probabilityPct}%`
+    );
+    assert.ok(
+      macFriDnp.probabilityPct >= 58 && macFriDnp.probabilityPct <= 68,
+      `Illness Fri DNP after earlier practice must sit in 58–68% GTD range, got ${macFriDnp.probabilityPct}%`
+    );
+    assert.ok(
+      macAll3Dnp.probabilityPct >= 46 && macAll3Dnp.probabilityPct <= 55,
+      `3-day Wed–Fri illness DNP must sit near true 50% coin-flip GTD, got ${macAll3Dnp.probabilityPct}%`
+    );
+    assert.ok(
+      macAll3Dnp.probabilityPct < macFriDnp.probabilityPct &&
+        macFriDnp.probabilityPct < macThuDnp.probabilityPct &&
+        macThuDnp.probabilityPct < macWedLp.probabilityPct &&
+        macWedLp.probabilityPct < macFriFp.probabilityPct,
+      `Illness monotonicity violated: 3dDnp=${macAll3Dnp.probabilityPct}, friDnp=${macFriDnp.probabilityPct}, thuDnp=${macThuDnp.probabilityPct}, wedLp=${macWedLp.probabilityPct}, friFp=${macFriFp.probabilityPct}`
+    );
+    assert.ok(macNotTraveling.probabilityPct <= 22, `Severe illness "not traveling" must drop <=22%, got ${macNotTraveling.probabilityPct}%`);
+    assert.equal(macOut.probabilityPct, 0, 'Official Out illness must remain 0%');
+    assert.ok(
+      compoundHamstringIllness.probabilityPct <= 36,
+      `Compound "Hamstring, Illness" LP->DNP must still trigger orthopedic setback drop (<=36%), got ${compoundHamstringIllness.probabilityPct}%`
+    );
+    const macDelta = computePracticeTrajectoryDelta(
+      { wed: 'LP', thu: 'DNP', fri: '-', playProbabilityPct: macThuDnp.probabilityPct, priorDayPlayProbabilityPct: macWedLp.probabilityPct },
+      null
+    );
+    assert.equal(macDelta?.compactLabel, '↓ -12%', `Expected realistic Mac Jones LP->DNP illness delta "↓ -12%", got "${macDelta?.compactLabel}"`);
   }
 );
 
