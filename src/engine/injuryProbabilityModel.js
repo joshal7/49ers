@@ -745,10 +745,16 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
 
   for (const sent of sentences) {
     // Also split compound contrast clauses, trailing participial impact clauses ("..., boosting hopes for Brock Purdy's offense"),
+    // teammate-reaction clauses ("Brock Purdy, Trent Williams, and George Kittle react to Mike Evans' return to practice"),
     // & independent multi-player comma clauses when different players are on each side
     const contrastParts = sent
       .split(
         /,\s*(?=(?:(?:[Ww]hile|[Ww]hereas|[Bb]ut|[Tt]hough|[Aa]lthough)\s+(?:(?:fellow|WR|RB|CB|DT|DE|LB|TE|QB|OT|OL|DL|S)\s+)?[A-Z]|(?:boosting|helping|giving|opening|leaving|affecting|impacting|forcing|allowing|benefiting|hurting|creating|putting|keeping)\b))/
+      )
+      .flatMap(seg =>
+        seg.split(
+          /\s+(?=(?:react(?:s|ed|ing)?\s+to|weigh(?:s|ed|ing)?\s+in\s+on|share(?:s|d|ing)?\s+(?:their\s+|his\s+)?thoughts\s+on|comment(?:s|ed|ing)?\s+on|speak(?:s|ing)?\s+(?:on|about)|talk(?:s|ed|ing)?\s+about|discuss(?:es|ed|ing)?\s+(?:the\s+)?(?:impact|return|recovery|injury|status|absence|comeback)\s+of)\b)/i
+        )
       )
       .map(p => p.trim())
       .filter(Boolean);
@@ -7262,7 +7268,7 @@ function collectScoredPlayerCandidates(
       directSnippetText && testSnippetHealth(directSnippetText)
         ? directSnippetText
         : crossSnippetText || directSnippetText;
-    const resolvedSummary =
+    const resolvedSummaryRaw =
       !isTw &&
       !isVid &&
       playerSnippetText &&
@@ -7271,6 +7277,9 @@ function collectScoredPlayerCandidates(
         (testSnippetHealth(playerSnippetText) && !testSnippetHealth(cand.summary)))
         ? playerSnippetText
         : cand.summary || cand.externalDescription || '';
+    const resolvedSummary = String(resolvedSummaryRaw || '')
+      .replace(/^\s*\(Photo by [^)]+\)\s*(?:\|\s*(?:Getty\s+Images|USA\s+TODAY\s+Sports|AP\s+Photo|Imagn\s+Images)\s*)?/i, '')
+      .trim();
 
     const clsMeta = rankMeta.classifiedMeta || {};
     scored.push({
@@ -7404,10 +7413,36 @@ export function computeInjuryNewsRankScore(
     milestoneScore = 10 * salienceAgeDecay;
   }
 
-  // 6. Single-Player Focus Specificity (-4..+6 pts)
+  // 6. Single-Player Focus Specificity (-8..+6 pts)
+  // Demote articles/videos whose headline explicitly spotlights a DIFFERENT player (by full name) without naming `player`
+  // (e.g., a Mike Evans-headlined article briefly mentioning Renardo Green in the body), so direct player reports rank #1
+  // while keeping the roundup available when no direct items exist.
+  const rawHeadline = String(item.title || item.headline || '').trim();
+  const isNonTweetWithHeadline = item.type !== 'tweet' && rawHeadline.length > 0;
+  const headlineMentionsTarget =
+    isNonTweetWithHeadline && doesClauseMentionPlayer(rawHeadline, player.name, { allowSurname: true });
+  const targetCanonKey = canonicalInjuryPlayerKey(player.name);
+  const headlineNamesOtherPlayer =
+    isNonTweetWithHeadline &&
+    !headlineMentionsTarget &&
+    (Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers : [])
+      .map(mp => (typeof mp === 'string' ? mp : mp?.name || ''))
+      .concat(rosterPlayerNames)
+      .some(
+        otherName =>
+          otherName &&
+          canonicalInjuryPlayerKey(otherName) !== targetCanonKey &&
+          doesClauseMentionPlayer(rawHeadline, otherName, { allowSurname: false })
+      );
   const focusRatio = scoped ? scoped.length / Math.max(1, fullBody.length) : 0.4;
   const mentionedCnt = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers.length : 1;
-  const focusScore = focusRatio >= 0.5 && mentionedCnt <= 3 ? 6 : mentionedCnt >= 5 ? -4 : 2;
+  const focusScore = headlineNamesOtherPlayer
+    ? -8
+    : focusRatio >= 0.5 && mentionedCnt <= 3
+      ? 6
+      : mentionedCnt >= 5
+        ? -4
+        : 2;
 
   // 7. Superseded Earlier-Practice-Day & Pre-Practice Expectation Penalties
   const friLogged = Boolean(player.health?.fri && player.health.fri !== '-');

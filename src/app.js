@@ -4100,7 +4100,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=108', { updateViaCache: 'none' })
+        .register('./sw.js?v=109', { updateViaCache: 'none' })
         .then(reg => reg.update().catch(() => {}))
         .catch(() => {});
     };

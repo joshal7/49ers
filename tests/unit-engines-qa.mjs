@@ -14690,6 +14690,88 @@ await testAsync(
       `Jordan James Thu addition must render exact drop vs 99% healthy Wed (${jjReconciled.playProbabilityPct - 99}%), got ${jjDeltaChip?.compactLabel}`
     );
     assert.equal(jjDeltaChip?.tone, 'danger');
+
+    // 10. Player Injury News Headline Focus Specificity & Photo-Credit Strip (no overcorrection)
+    const greenRosterObj = { id: '4427325', name: 'Renardo Green', position: 'CB', rosterBucket: 'active', health: { status: 'Questionable', injuryType: 'Back', wed: 'LP', thu: 'FP', fri: '-' } };
+    const evansRosterObj = { id: '16737', name: 'Mike Evans', position: 'WR', rosterBucket: 'active', health: { status: 'Questionable', injuryType: 'Achilles', wed: 'DNP', thu: 'LP', fri: '-' } };
+    const poseyEvansArticle = {
+      id: 'nn_posey_evans_green',
+      type: 'article',
+      author: 'Kyle Posey',
+      outletName: 'Niners Nation',
+      trustTier: 2,
+      title: "The 49ers are 'hoping' Mike Evans returns to practice, but it's 'still too early' to tell",
+      summary: "(Photo by Cooper Neill/Getty Images) | Getty Images The only injury the San Francisco 49ers had in Week 10 was cornerback Renardo Green's back injury. Kyle Shanahan said Green is day-to-day, and the team will further assess him on Wednesday.",
+      url: 'https://www.ninersnation.com/2026/11/17/mike-evans-practice-update',
+      publishedAt: '2026-11-17T18:30:00Z',
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }, { id: '4427325', name: 'Renardo Green' }]
+    };
+    const wagonerGreenTweet = {
+      id: 'nw_green_back',
+      type: 'tweet',
+      author: 'Nick Wagoner',
+      outletName: 'ESPN',
+      trustTier: 1,
+      title: "#49ers CB Renardo Green's back injury is still the only one on the report today out of Sunday's game, per Kyle Shanahan. Green is again day to day this week.",
+      fullText: "#49ers CB Renardo Green's back injury is still the only one on the report today out of Sunday's game, per Kyle Shanahan. Green is again day to day this week.",
+      url: 'https://x.com/nwagoner/status/1999111111111111111',
+      publishedAt: '2026-11-16T21:50:04Z',
+      mentionedPlayers: [{ id: '4427325', name: 'Renardo Green' }]
+    };
+    const focusTestApp = {
+      roster: { players: [greenRosterObj, evansRosterObj] },
+      meta: { currentWeek: 11 },
+      scheduleMatchup: { schedule: [{ week: 10, dateIso: '2026-11-15T21:25:00Z', completed: true }] }
+    };
+    const greenRanked = rankInjCheck(greenRosterObj, {
+      rawStream: [poseyEvansArticle, wagonerGreenTweet],
+      appData: focusTestApp,
+      nowMs: Date.parse('2026-11-20T00:37:00Z'),
+      includeFallbackCard: false
+    });
+    assert.equal(greenRanked.length, 2, 'Mike Evans-headlined article mentioning Renardo Green must stay available (no over-suppression)');
+    assert.equal(greenRanked[0].id, 'nw_green_back', 'Direct Renardo Green injury report must outrank Mike Evans-headlined article on Renardo Green card');
+    assert.ok(
+      !/Photo by|Getty Images/i.test(greenRanked[1].summary || ''),
+      `Leading Getty Images photo credit must be stripped cleanly from summary, got "${greenRanked[1].summary}"`
+    );
+    // When it is the ONLY available item for Renardo Green, it must still surface cleanly
+    const greenFallbackOnly = rankInjCheck(greenRosterObj, {
+      rawStream: [poseyEvansArticle],
+      appData: focusTestApp,
+      nowMs: Date.parse('2026-11-20T00:37:00Z'),
+      includeFallbackCard: false
+    });
+    assert.equal(greenFallbackOnly.length, 1, 'Secondary roundup article must still surface when no direct player report exists');
+
+    // Teammate reaction article ("Brock Purdy, Trent Williams, and George Kittle react to Mike Evans' return to practice")
+    // must NOT create a bogus Injury News card on healthy Brock Purdy while still matching Mike Evans
+    const teammateReactArticle = {
+      id: 'wz_teammates_react_evans',
+      type: 'article',
+      author: '49ers Webzone',
+      outletName: '49ers Webzone',
+      trustTier: 2,
+      title: "49ers players share their thoughts on Mike Evans' return to practice",
+      summary: "49ers players Brock Purdy, Trent Williams, and George Kittle react to Mike Evans' return to practice and discuss what his comeback means for the offense.",
+      url: 'https://www.49erswebzone.com/articles/205320-players-react-mike-evans-practice/',
+      publishedAt: '2026-11-20T00:25:02Z',
+      mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy' }, { id: '16737', name: 'Mike Evans' }]
+    };
+    assert.equal(
+      rankInjCheck(purdyHealthy, {
+        rawStream: [teammateReactArticle],
+        appData: {
+          roster: { players: [purdyHealthy, evansRosterObj] },
+          meta: { currentWeek: 11 },
+          scheduleMatchup: { schedule: [] }
+        },
+        nowMs: Date.parse('2026-11-20T00:40:00Z'),
+        includeFallbackCard: false
+      }).length,
+      0,
+      'Teammate reaction article ("Brock Purdy ... react to Mike Evans\' return to practice") must NOT bleed Injury News onto healthy Brock Purdy'
+    );
   }
 );
 
