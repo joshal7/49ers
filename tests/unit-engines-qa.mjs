@@ -14542,6 +14542,154 @@ await testAsync(
       null
     );
     assert.equal(macDelta?.compactLabel, '↓ -12%', `Expected realistic Mac Jones LP->DNP illness delta "↓ -12%", got "${macDelta?.compactLabel}"`);
+
+    // 9. Mid-Week Injury Report Additions (-/LP/-, -/DNP/-, -/-/LP, -/-/DNP) + Healthy 99% Prior-Day Baseline Delta Chips
+    const { isMidWeekHealthyAdditionRow } = await import('../src/engine/injuryProbabilityModel.js');
+    const jjThuLpAdd = computePlayerPlayProbability({
+      name: 'Jordan James',
+      position: 'RB',
+      experienceYears: 1,
+      injuryType: 'Calf',
+      gameStatus: 'Questionable',
+      wed: '-',
+      thu: 'LP',
+      fri: '-'
+    });
+    const jjSteadyLpLp = computePlayerPlayProbability({
+      name: 'Jordan James',
+      position: 'RB',
+      experienceYears: 1,
+      injuryType: 'Calf',
+      gameStatus: 'Questionable',
+      wed: 'LP',
+      thu: 'LP',
+      fri: '-'
+    });
+    const jjThuDnpAdd = computePlayerPlayProbability({
+      name: 'Jordan James',
+      position: 'RB',
+      experienceYears: 1,
+      injuryType: 'Hamstring',
+      gameStatus: 'Questionable',
+      wed: '-',
+      thu: 'DNP',
+      fri: '-'
+    });
+    const jjFriLpAdd = computePlayerPlayProbability({
+      name: 'Jordan James',
+      position: 'RB',
+      experienceYears: 1,
+      injuryType: 'Calf',
+      gameStatus: 'Questionable',
+      wed: '-',
+      thu: '-',
+      fri: 'LP'
+    });
+    const jjFriDnpAdd = computePlayerPlayProbability({
+      name: 'Jordan James',
+      position: 'RB',
+      experienceYears: 1,
+      injuryType: 'Ankle',
+      gameStatus: 'Questionable',
+      wed: '-',
+      thu: '-',
+      fri: 'DNP'
+    });
+    const thuIllnessDnpAdd = computePlayerPlayProbability({
+      name: 'Mac Jones',
+      position: 'QB',
+      experienceYears: 5,
+      injuryType: 'Illness',
+      gameStatus: 'Questionable',
+      wed: '-',
+      thu: 'DNP',
+      fri: '-'
+    });
+
+    assert.ok(
+      jjThuLpAdd.probabilityPct >= 58 && jjThuLpAdd.probabilityPct < jjSteadyLpLp.probabilityPct,
+      `Mid-week Thu LP soft-tissue addition (${jjThuLpAdd.probabilityPct}%) must sit below steady LP/LP (${jjSteadyLpLp.probabilityPct}%)`
+    );
+    assert.ok(
+      jjFriLpAdd.probabilityPct < jjThuLpAdd.probabilityPct,
+      `Sudden Fri LP addition (${jjFriLpAdd.probabilityPct}%) must carry more caution than Thu LP addition (${jjThuLpAdd.probabilityPct}%)`
+    );
+    assert.ok(
+      jjThuDnpAdd.probabilityPct <= 35,
+      `Mid-week Thu DNP orthopedic addition must drop <=35% (never fall through to 78%), got ${jjThuDnpAdd.probabilityPct}%`
+    );
+    assert.ok(
+      jjFriDnpAdd.probabilityPct <= 25,
+      `Sudden Fri DNP orthopedic addition must drop <=25%, got ${jjFriDnpAdd.probabilityPct}%`
+    );
+    assert.equal(thuIllnessDnpAdd.probabilityPct, 74, 'Mid-week Thu Illness DNP addition must use calibrated 74% illness curve');
+
+    assert.equal(
+      isMidWeekHealthyAdditionRow({ name: 'Jordan James', rosterBucket: 'active', injuryType: 'Calf', wed: '-', thu: 'LP', fri: '-' }),
+      true
+    );
+    assert.equal(
+      isMidWeekHealthyAdditionRow({ name: 'C.J. West', rosterBucket: 'ir', isIrReturnWindow: true, injuryType: 'Knee', wed: '-', thu: 'LP', fri: '-' }),
+      false,
+      'IR 21-day window opened Thursday must NEVER be treated as a 99% healthy Wednesday mid-week addition'
+    );
+    assert.equal(
+      isMidWeekHealthyAdditionRow({ name: 'Trent Williams', rosterBucket: 'active', injuryType: 'NIR - Rest', wed: '-', thu: 'Vet Rest', fri: '-' }),
+      false,
+      'Thursday Vet Rest must NEVER be treated as an injury addition'
+    );
+    assert.equal(
+      isMidWeekHealthyAdditionRow({ name: 'Mike Evans', rosterBucket: 'active', missedPriorGame: true, injuryType: 'Achilles', wed: '-', thu: 'LP', fri: '-' }),
+      false,
+      'Player who missed prior game must NEVER be treated as 99% healthy Wednesday'
+    );
+
+    const mockMidWeekApp = {
+      meta: { seasonYear: 2026, currentWeek: 11 },
+      roster: {
+        players: [
+          {
+            id: '5081901',
+            name: 'Jordan James',
+            position: 'RB',
+            jersey: 29,
+            experienceYears: 1,
+            primarySnapPct: 12,
+            capHit2026: 1_100_000,
+            rosterBucket: 'active',
+            health: {
+              status: 'Questionable',
+              injuryType: 'Calf',
+              isOnPracticeReport: true,
+              wed: '-',
+              thu: 'LP',
+              fri: '-',
+              playProbabilityPct: jjThuLpAdd.probabilityPct,
+              playBadgeLabel: jjThuLpAdd.badgeLabel,
+              weeklyHistory2026: []
+            },
+            recentNews: []
+          }
+        ]
+      },
+      health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
+      news: { rawStream: [] },
+      scheduleMatchup: {
+        schedule: [{ week: 11, dateIso: kickoffIso, completed: false }],
+        upcomingMatchup: { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', kickoffIso }
+      }
+    };
+    reconcileRosterAndHealthWithNews(mockMidWeekApp, { nowMs: Date.parse('2026-11-20T00:00:00Z') });
+    const jjReconciled = mockMidWeekApp.health.practiceReport[0];
+    assert.equal(jjReconciled.priorDayPlayProbabilityPct, 99, 'Mid-week Thu addition must anchor priorDayPlayProbabilityPct to 99% healthy Wednesday');
+    assert.equal(jjReconciled.isMidWeekAdditionDelta, true);
+    const jjDeltaChip = computePracticeTrajectoryDelta(jjReconciled, { playProbabilityPct: 71 });
+    assert.equal(
+      jjDeltaChip?.compactLabel,
+      `${jjReconciled.playProbabilityPct - 99}%`,
+      `Jordan James Thu addition must render exact drop vs 99% healthy Wed (${jjReconciled.playProbabilityPct - 99}%), got ${jjDeltaChip?.compactLabel}`
+    );
+    assert.equal(jjDeltaChip?.tone, 'danger');
   }
 );
 

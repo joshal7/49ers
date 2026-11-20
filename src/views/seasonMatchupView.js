@@ -68,7 +68,8 @@ import {
   canonicalOpponentHealthSnapshotKey,
   computeOpponentPriorDayPlayProbability,
   computeTeamHealthSummary,
-  isEffectiveOffDefStarter
+  isEffectiveOffDefStarter,
+  isMidWeekHealthyAdditionRow
 } from '../engine/injuryProbabilityModel.js';
 import { renderInjuryNewsItemCardHtml } from './playerSheetView.js';
 import {
@@ -888,11 +889,19 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                               currentWeek: um.week || null,
                               kickoffIso: um.kickoffIso || um.dateIso || ''
                             });
+                      const resolvedMidWeekAdd =
+                        typeof op.isMidWeekAdditionDelta === 'boolean'
+                          ? op.isMidWeekAdditionDelta
+                          : isMidWeekHealthyAdditionRow(op);
                       const oppDelta = isResolvedGameDayBadge
                         ? null
                         : computePracticeTrajectoryDelta(
                             resolvedPriorDayPct !== null && resolvedPriorDayPct !== undefined
-                              ? { ...op, priorDayPlayProbabilityPct: resolvedPriorDayPct }
+                              ? {
+                                  ...op,
+                                  priorDayPlayProbabilityPct: resolvedPriorDayPct,
+                                  isMidWeekAdditionDelta: resolvedMidWeekAdd
+                                }
                               : op,
                             oppKey ? oppSnapMap[oppKey] || null : null
                           );

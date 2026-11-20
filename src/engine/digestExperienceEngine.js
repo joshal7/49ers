@@ -502,7 +502,9 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
       const priorDayDiff = Number.isFinite(priorDayPct) ? Math.round(curPct - priorDayPct) : NaN;
       const preferPreReportPrior =
         Boolean(row.hasPreReportPracticeReturnDelta) && Number.isFinite(priorDayDiff) && priorDayDiff >= 5;
-      const chosenDiff = preferPreReportPrior
+      const preferMidWeekAdditionPrior =
+        Boolean(row.isMidWeekAdditionDelta) && Number.isFinite(priorDayDiff) && priorDayDiff <= -5;
+      const chosenDiff = preferPreReportPrior || preferMidWeekAdditionPrior
         ? priorDayDiff
         : Number.isFinite(snapDiff) && Math.abs(snapDiff) >= 5
           ? snapDiff
@@ -514,7 +516,8 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
           diff: chosenDiff,
           label: `${chosenDiff > 0 ? '+' : ''}${chosenDiff}%`,
           tone: chosenDiff > 0 ? 'positive' : 'danger',
-          isPreReportReturn: preferPreReportPrior
+          isPreReportReturn: preferPreReportPrior,
+          isMidWeekAddition: preferMidWeekAdditionPrior
         };
       }
     }
@@ -540,7 +543,9 @@ export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = nul
         ? trajectory.shortLabel
         : probDelta?.isPreReportReturn
           ? `Observed practice return ahead of official report (${probDelta.label} vs prior practice day)`
-          : `Play likelihood ${probDelta.label} vs prior update`;
+          : probDelta?.isMidWeekAddition
+            ? `Added to injury report mid-week (${probDelta.label} vs healthy prior day)`
+            : `Play likelihood ${probDelta.label} vs prior update`;
 
   return {
     trajectory,

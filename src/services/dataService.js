@@ -14,6 +14,7 @@ import {
   evaluateCorroboratedNewsInjurySignal,
   extractPracticeDaysFromText,
   isBareStatusPlaceholderComment,
+  isMidWeekHealthyAdditionRow,
   isPlayerEligibleForInjuryNews,
   isRestOrPersonalInjuryLabel,
   parseOfficial49ersInjuryReportHtml,
@@ -685,6 +686,9 @@ function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
       }
       if (typeof fresh.hasPreReportPracticeReturnDelta === 'boolean') {
         next.hasPreReportPracticeReturnDelta = fresh.hasPreReportPracticeReturnDelta;
+      }
+      if (typeof fresh.isMidWeekAdditionDelta === 'boolean') {
+        next.isMidWeekAdditionDelta = fresh.isMidWeekAdditionDelta;
       }
       if (fresh.playBadgeLabel) next.playBadgeLabel = fresh.playBadgeLabel;
       if (fresh.playTier) next.playTier = fresh.playTier;
@@ -6275,6 +6279,9 @@ export async function hydrateLiveEspnOverlay(appData) {
         nextOppRow.hasPreReportPracticeReturnDelta = Boolean(
           oppFilledCnt === 1 && nextOppRow.hasPreReportPracticeReturn
         );
+        nextOppRow.isMidWeekAdditionDelta = Boolean(
+          oppFilledCnt === 1 && isMidWeekHealthyAdditionRow(nextOppRow)
+        );
         oppReportByKey.set(oppKey, nextOppRow);
       }
 
@@ -6586,6 +6593,7 @@ export async function hydrateLiveOpponentWeeklyPracticeWire(
             kickoffIso: nextGameKickoffIso || um.kickoffIso || um.dateIso || ''
           });
           row.hasPreReportPracticeReturnDelta = Boolean(oppFilled === 1 && row.hasPreReportPracticeReturn);
+          row.isMidWeekAdditionDelta = Boolean(oppFilled === 1 && isMidWeekHealthyAdditionRow(row));
         }
       } catch {}
     })

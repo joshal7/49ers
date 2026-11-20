@@ -3987,9 +3987,13 @@ export function computePlayerPlayProbability(input = {}) {
       if (thu === 'FP') {
         prob = 0.94;
         factors.push('Logged Full Participation (FP) on Thursday following illness');
-      } else if (thu === 'DNP' && (wed === 'LP' || wed === 'FP')) {
+      } else if (thu === 'DNP' && (wed === 'LP' || wed === 'FP' || wed === 'NONE')) {
         prob = 0.74;
-        factors.push('Missed Thursday practice with illness (team isolation/recovery protocol with 72h to kickoff; ~70–78% NFL play rate)');
+        factors.push(
+          wed === 'NONE'
+            ? 'Added Thursday DNP with illness (team isolation/recovery protocol with 72h to kickoff; ~70–78% NFL play rate)'
+            : 'Missed Thursday practice with illness (team isolation/recovery protocol with 72h to kickoff; ~70–78% NFL play rate)'
+        );
       } else if (thu === 'LP' && wed === 'FP') {
         prob = 0.80;
         factors.push('Mid-week illness downgrade (Wed FP -> Thu LP); high historical NFL play rate');
@@ -4028,114 +4032,139 @@ export function computePlayerPlayProbability(input = {}) {
       hasRealMedicalInjury &&
       /\b(?:not\s+injury\s+related|nir\s*-\s*rest|resting\s+player|vet(?:eran)?\s+rest)\b/i.test(injuryLower);
 
-    if (fri === 'FP') {
-      prob = 0.93;
-      factors.push('Logged Full Participation (FP) on Friday');
-    } else if (fri === 'LP') {
-      if (wed === 'DNP' && thu === 'DNP') {
-        if (missedPriorGame) {
-          prob = priorWeekPracticed === true ? 0.50 : consecutiveMissedGames >= 2 ? 0.42 : 0.48;
-          factors.push(
-            `Late-week salvage (DNP/DNP/LP) following ${missedCntLabel} absence; requires pre-game warmup clearance`
-          );
-        } else {
-          prob = 0.56;
-          factors.push('Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance');
-        }
-      } else if (wed === 'FP' || thu === 'FP') {
-        prob = Math.max(0.35, prior.questionablePlayRate - 0.14);
-        factors.push('Late-week practice downgrade (FP earlier in week -> Friday LP); elevated flare-up caution');
-      } else if (wed === 'DNP' && thu === 'LP') {
-        if (missedPriorGame) {
-          const baseTwoLp =
-            priorWeekPracticed === true
-              ? consecutiveMissedGames >= 2
-                ? 0.74
-                : 0.78
-              : consecutiveMissedGames >= 2
-                ? 0.66
-                : 0.72;
-          prob = baseTwoLp + priorAdj;
-          factors.push(
-            `Consecutive Thu/Fri Limited (Wed DNP -> Thu LP -> Fri LP) following ${missedCntLabel} absence${
-              priorWeekPracticed === false ? ' without prior practice' : ''
-            }`
-          );
-        } else {
-          prob = Math.min(0.89, prior.questionablePlayRate + 0.03);
-          factors.push(
-            `Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
-          );
-        }
+  const isActiveHealthyBaselineAddition =
+    rosterBucket === 'active' &&
+    !Boolean(input.isPracticeWindowOpen) &&
+    !Boolean(input.isIrReturnQuestionable) &&
+    !missedPriorGame;
+
+  if (fri === 'FP') {
+    prob = 0.93;
+    factors.push('Logged Full Participation (FP) on Friday');
+  } else if (fri === 'LP') {
+    if (wed === 'DNP' && thu === 'DNP') {
+      if (missedPriorGame) {
+        prob = priorWeekPracticed === true ? 0.50 : consecutiveMissedGames >= 2 ? 0.42 : 0.48;
+        factors.push(
+          `Late-week salvage (DNP/DNP/LP) following ${missedCntLabel} absence; requires pre-game warmup clearance`
+        );
       } else {
-        if (missedPriorGame) {
-          prob =
-            priorWeekPracticed === true
-              ? Math.max(0.68, prior.questionablePlayRate - (consecutiveMissedGames >= 2 ? 0.05 : 0.02))
-              : Math.max(0.62, (consecutiveMissedGames >= 2 ? 0.72 : 0.76) + priorAdj);
-          factors.push(
-            `Friday Limited (LP) following ${missedCntLabel} absence${
-              priorWeekPracticed === false ? ' without prior practice' : ''
-            } (base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
-          );
-        } else {
-          prob = prior.questionablePlayRate;
-          factors.push(
-            `Friday Limited (LP) — anchored to player Questionable play prior (${Math.round(prior.questionablePlayRate * 100)}%)`
-          );
-        }
+        prob = 0.56;
+        factors.push('Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance');
       }
-    } else if (fri === 'DNP') {
-      if (wed === 'DNP_REST' && thu === 'LP') {
-        prob = 0.32;
-        factors.push('Held out of Friday practice (DNP) with injury after Thursday Limited session');
-      } else if (wed === 'LP' || thu === 'LP' || wed === 'FP' || thu === 'FP') {
-        prob = 0.16;
-        factors.push('Mid-week setback alert: downgraded to Friday DNP after practicing earlier in week');
+    } else if (wed === 'FP' || thu === 'FP') {
+      prob = Math.max(0.35, prior.questionablePlayRate - 0.14);
+      factors.push('Late-week practice downgrade (FP earlier in week -> Friday LP); elevated flare-up caution');
+    } else if (wed === 'NONE' && thu === 'NONE' && isActiveHealthyBaselineAddition) {
+      prob = Math.max(0.50, prior.questionablePlayRate - 0.12);
+      factors.push(
+        `Late-week injury addition (added Friday Limited after clean Wed–Thu; base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+      );
+    } else if (wed === 'NONE' && thu === 'LP' && isActiveHealthyBaselineAddition) {
+      prob = Math.max(0.56, prior.questionablePlayRate - 0.04);
+      factors.push('Consecutive Thu/Fri Limited (LP -> LP) following mid-week Thursday injury addition');
+    } else if (wed === 'DNP' && thu === 'LP') {
+      if (missedPriorGame) {
+        const baseTwoLp =
+          priorWeekPracticed === true
+            ? consecutiveMissedGames >= 2
+              ? 0.74
+              : 0.78
+            : consecutiveMissedGames >= 2
+              ? 0.66
+              : 0.72;
+        prob = baseTwoLp + priorAdj;
+        factors.push(
+          `Consecutive Thu/Fri Limited (Wed DNP -> Thu LP -> Fri LP) following ${missedCntLabel} absence${
+            priorWeekPracticed === false ? ' without prior practice' : ''
+          }`
+        );
       } else {
-        prob = 0.08;
-        factors.push('DNP across entire practice week (rarely activated without Friday practice reps)');
+        prob = Math.min(0.89, prior.questionablePlayRate + 0.03);
+        factors.push(
+          `Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+        );
       }
     } else {
-      // Mid-week or Early-week pre-practice (before Friday report is finalized)
-      if (thu === 'FP') {
-        prob = 0.92;
-        factors.push('Logged Full Participation (FP) on Thursday');
-      } else if (thu === 'DNP' && (wed === 'LP' || wed === 'FP')) {
-        prob = 0.34;
-        factors.push('Mid-week setback alert: downgraded to Thursday DNP after practicing Wednesday');
-      } else if (thu === 'LP' && wed === 'FP') {
-        prob = Math.max(0.46, prior.questionablePlayRate - 0.14);
-        factors.push('Mid-week downgrade (Wed FP -> Thu LP); monitoring Friday clearance');
-      } else if (thu === 'LP' && wed === 'DNP') {
-        if (prior.isVeteranRestHabitual && !missedPriorGame) {
-          prob = 0.85;
-          factors.push('Expected veteran ramp-up (Wed maintenance -> Thu LP)');
-        } else if (missedPriorGame) {
-          // Returning from multi-game absence with a single Thu LP after Wed DNP still requires 24h Friday load response check!
-          const firstLpBase =
-            priorWeekPracticed === true
-              ? consecutiveMissedGames >= 2
-                ? 0.64
-                : 0.68
-              : consecutiveMissedGames >= 3
-                ? 0.54
-                : consecutiveMissedGames === 2
-                  ? 0.57
-                  : 0.62;
-          prob = firstLpBase + priorAdj;
-          factors.push(
-            `First Limited session (Wed DNP -> Thu LP) following ${missedCntLabel} absence${
-              priorWeekPracticed === false ? ' without prior practice' : ''
-            } — awaiting Friday load response`
-          );
-        } else {
-          prob = Math.min(0.84, prior.questionablePlayRate - 0.02);
-          factors.push(
-            `Positive upward rehab ramp (Wed DNP -> Thu LP; player prior ${Math.round(prior.questionablePlayRate * 100)}%)`
-          );
-        }
-      } else if (thu === 'LP') {
+      if (missedPriorGame) {
+        prob =
+          priorWeekPracticed === true
+            ? Math.max(0.68, prior.questionablePlayRate - (consecutiveMissedGames >= 2 ? 0.05 : 0.02))
+            : Math.max(0.62, (consecutiveMissedGames >= 2 ? 0.72 : 0.76) + priorAdj);
+        factors.push(
+          `Friday Limited (LP) following ${missedCntLabel} absence${
+            priorWeekPracticed === false ? ' without prior practice' : ''
+          } (base prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+        );
+      } else {
+        prob = prior.questionablePlayRate;
+        factors.push(
+          `Friday Limited (LP) — anchored to player Questionable play prior (${Math.round(prior.questionablePlayRate * 100)}%)`
+        );
+      }
+    }
+  } else if (fri === 'DNP') {
+    if (wed === 'DNP_REST' && thu === 'LP') {
+      prob = 0.32;
+      factors.push('Held out of Friday practice (DNP) with injury after Thursday Limited session');
+    } else if (wed === 'LP' || thu === 'LP' || wed === 'FP' || thu === 'FP') {
+      prob = 0.16;
+      factors.push('Mid-week setback alert: downgraded to Friday DNP after practicing earlier in week');
+    } else if (wed === 'NONE' && thu === 'NONE' && isActiveHealthyBaselineAddition) {
+      prob = 0.20;
+      factors.push('Late-week injury addition (added Friday DNP after clean Wed–Thu; ~75–80% NFL inactive rate)');
+    } else {
+      prob = 0.08;
+      factors.push('DNP across entire practice week (rarely activated without Friday practice reps)');
+    }
+  } else {
+    // Mid-week or Early-week pre-practice (before Friday report is finalized)
+    if (thu === 'FP') {
+      prob = 0.92;
+      factors.push('Logged Full Participation (FP) on Thursday');
+    } else if (thu === 'DNP' && (wed === 'LP' || wed === 'FP')) {
+      prob = 0.34;
+      factors.push('Mid-week setback alert: downgraded to Thursday DNP after practicing Wednesday');
+    } else if (thu === 'DNP' && wed === 'NONE' && isActiveHealthyBaselineAddition) {
+      prob = 0.34;
+      factors.push('Mid-week injury addition (added Thursday DNP after clean Wednesday); elevated game-day risk');
+    } else if (thu === 'LP' && wed === 'FP') {
+      prob = Math.max(0.46, prior.questionablePlayRate - 0.14);
+      factors.push('Mid-week downgrade (Wed FP -> Thu LP); monitoring Friday clearance');
+    } else if (thu === 'LP' && wed === 'DNP') {
+      if (prior.isVeteranRestHabitual && !missedPriorGame) {
+        prob = 0.85;
+        factors.push('Expected veteran ramp-up (Wed maintenance -> Thu LP)');
+      } else if (missedPriorGame) {
+        // Returning from multi-game absence with a single Thu LP after Wed DNP still requires 24h Friday load response check!
+        const firstLpBase =
+          priorWeekPracticed === true
+            ? consecutiveMissedGames >= 2
+              ? 0.64
+              : 0.68
+            : consecutiveMissedGames >= 3
+              ? 0.54
+              : consecutiveMissedGames === 2
+                ? 0.57
+                : 0.62;
+        prob = firstLpBase + priorAdj;
+        factors.push(
+          `First Limited session (Wed DNP -> Thu LP) following ${missedCntLabel} absence${
+            priorWeekPracticed === false ? ' without prior practice' : ''
+          } — awaiting Friday load response`
+        );
+      } else {
+        prob = Math.min(0.84, prior.questionablePlayRate - 0.02);
+        factors.push(
+          `Positive upward rehab ramp (Wed DNP -> Thu LP; player prior ${Math.round(prior.questionablePlayRate * 100)}%)`
+        );
+      }
+    } else if (thu === 'LP' && wed === 'NONE' && isActiveHealthyBaselineAddition) {
+      prob = Math.max(0.56, prior.questionablePlayRate - 0.08);
+      factors.push(
+        `Mid-week injury addition (added Thursday Limited after clean Wednesday; awaiting Friday response)`
+      );
+    } else if (thu === 'LP') {
         if (missedPriorGame) {
           const thuLpBase =
             wed === 'LP'
@@ -4607,9 +4636,40 @@ export function canonicalOpponentHealthSnapshotKey(row = {}, oppAbbr = '') {
 }
 
 /**
+ * Returns true when an active player was NOT on Wednesday's injury report (healthy 99% baseline)
+ * and was newly added on Thursday (`-/LP/-`, `-/DNP/-`) or Friday (`-/-/LP`, `-/-/DNP`).
+ * Strictly excludes IR 21-day window openings, players who missed the prior game, and NIR/Vet Rest.
+ */
+export function isMidWeekHealthyAdditionRow(row = {}) {
+  if (!row || !row.name) return false;
+  if (/in \(active\)|out \(inactive\)/i.test(String(row.playBadgeLabel || ''))) return false;
+  if (
+    row.rosterBucket === 'ir' ||
+    row.rosterBucket === 'suspended' ||
+    Boolean(row.isIrReturnWindow) ||
+    Boolean(row.isPracticeWindowOpen) ||
+    Boolean(row.isIrReturnQuestionable) ||
+    Boolean(row.missedPriorGame)
+  ) {
+    return false;
+  }
+  if (isRestOrPersonalInjuryLabel(row.injuryType || '')) return false;
+  const w = String(row.wed ?? '').trim();
+  const t = String(row.thu ?? '').trim();
+  const f = String(row.fri ?? '').trim();
+  const hasWed = Boolean(w) && w !== '-' && w !== '—';
+  const hasThu = Boolean(t) && t !== '-' && t !== '—';
+  const hasFri = Boolean(f) && f !== '-' && f !== '—';
+  if (hasWed) return false;
+  if (hasThu && !hasFri && !/^vet\s*rest$|^rest$/i.test(t)) return true;
+  if (!hasThu && hasFri && !/^vet\s*rest$|^rest$/i.test(f)) return true;
+  return false;
+}
+
+/**
  * Deterministically computes the prior practice day's play probability for an opposing team injury-report row
- * so multi-day upgrades/downgrades (e.g. FP->LP, LP->FP, DNP->LP) and pre-report return lifts display exact
- * trajectory + % delta chips immediately on first load (parity with 49ers Health).
+ * so multi-day upgrades/downgrades (e.g. FP->LP, LP->FP, DNP->LP), mid-week healthy additions (-/LP/- vs 99%),
+ * and pre-report return lifts display exact trajectory + % delta chips immediately on first load (parity with 49ers Health).
  */
 export function computeOpponentPriorDayPlayProbability(
   oppRow = {},
@@ -4621,6 +4681,9 @@ export function computeOpponentPriorDayPlayProbability(
   const t = oppRow.thu && oppRow.thu !== '-' && oppRow.thu !== '—' ? oppRow.thu : '-';
   const f = oppRow.fri && oppRow.fri !== '-' && oppRow.fri !== '—' ? oppRow.fri : '-';
   const filledCount = [w, t, f].filter(v => v !== '-').length;
+  if (filledCount === 1 && isMidWeekHealthyAdditionRow(oppRow)) {
+    return 99;
+  }
   const isSingleDayPreReportReturn = filledCount === 1 && Boolean(oppRow.hasPreReportPracticeReturn);
   if (filledCount < 2 && !isSingleDayPreReportReturn) return null;
 
@@ -5839,12 +5902,39 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
       ? appData.health.practiceReport.map(r => `${r.playerId || r.name}:${r.playProbabilityPct}:${r.wed}:${r.thu}:${r.fri}:${r.injuryType}`).join('|')
       : '';
 
+    const isSfMidWeekHealthyAdd = p => {
+      if (shouldBlankEarlyWeek) return false;
+      const refNote = pickMeaningfulInjuryComment(p.health.longComment, p.health.shortComment, p.health.irBeatNote);
+      const priorAbs = derivePriorWeekAbsenceProfile({
+        weeklyHistory: p.health.weeklyHistory2026 || [],
+        currentWeek,
+        byeWeek,
+        beatNote: refNote
+      });
+      return isMidWeekHealthyAdditionRow({
+        name: p.name,
+        rosterBucket: p.rosterBucket || 'active',
+        isIrReturnWindow: p.rosterBucket === 'ir' && Boolean(p.health.isPracticeWindowOpen),
+        isPracticeWindowOpen: Boolean(p.health.isPracticeWindowOpen),
+        isIrReturnQuestionable: Boolean(p.health.isIrReturnQuestionable),
+        missedPriorGame: priorAbs.missedPriorGame,
+        injuryType: p.health.injuryType || '',
+        wed: p.health.wed || '-',
+        thu: p.health.thu || '-',
+        fri: p.health.fri || '-',
+        playBadgeLabel: p.health.playBadgeLabel || ''
+      });
+    };
+
     const computePriorDayProb = p => {
       if (shouldBlankEarlyWeek) return null;
       const w = p.health.wed && p.health.wed !== '-' ? p.health.wed : '-';
       const t = p.health.thu && p.health.thu !== '-' ? p.health.thu : '-';
       const f = p.health.fri && p.health.fri !== '-' ? p.health.fri : '-';
       const filledCount = [w, t, f].filter(v => v !== '-').length;
+      if (filledCount === 1 && isSfMidWeekHealthyAdd(p)) {
+        return 99;
+      }
       const isSingleDayPreReportReturn = filledCount === 1 && Boolean(p.health.hasPreReportPracticeReturn);
       if (filledCount < 2 && !isSingleDayPreReportReturn) return null;
       const prevW = w;
@@ -5937,6 +6027,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           playProbabilityPct: p.health.playProbabilityPct,
           priorDayPlayProbabilityPct: computePriorDayProb(p),
           hasPreReportPracticeReturnDelta: Boolean(!shouldBlankEarlyWeek && filledSlots === 1 && p.health.hasPreReportPracticeReturn),
+          isMidWeekAdditionDelta: Boolean(filledSlots === 1 && isSfMidWeekHealthyAdd(p)),
           playBadgeLabel: p.health.playBadgeLabel,
           archetypeNote: p.health.archetypeNote || '',
           factors: p.health.factors || [],
@@ -6292,6 +6383,9 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
         });
         oppRow.hasPreReportPracticeReturnDelta = Boolean(
           filledOppSlots === 1 && oppRow.hasPreReportPracticeReturn
+        );
+        oppRow.isMidWeekAdditionDelta = Boolean(
+          filledOppSlots === 1 && isMidWeekHealthyAdditionRow(oppRow)
         );
       }
     }
