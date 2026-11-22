@@ -635,6 +635,33 @@ await test('Canary Matchup Intel & Daily Brief: platform API works without BYOK 
     assert.equal(fallbackJson.grounded, false);
     assert.equal(fallbackCalls, 2, 'Should try search once then same-model direct once');
 
+    // If Google Search Grounding times out / throws AbortError, retry SAME gemini-4-hydrogen XHIGH without downgrading model
+    let timeoutCalls = 0;
+    globalThis.fetch = async (url, init = {}) => {
+      const body = JSON.parse(init.body || '{}');
+      timeoutCalls += 1;
+      if (Array.isArray(body.tools) && body.tools.length > 0) {
+        throw new Error('The operation was aborted due to timeout');
+      }
+      return new Response(
+        JSON.stringify({ candidates: [{ content: { parts: [{ text: sampleAiPayload }] } }] }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    };
+    const timeoutResp = await canaryWorker.fetch(
+      new Request('https://49ers2.joshal.com/api/matchup-intel?team=SF', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamAbbr: 'SF', seasonYear: 2026, week: 15, oppAbbr: 'TEN', datePt: '2026-11-26', prompt: 'timeout fallback test' })
+      }),
+      mockEnv,
+      {}
+    );
+    const timeoutJson = await timeoutResp.json();
+    assert.equal(timeoutResp.status, 200);
+    assert.equal(timeoutJson.modelUsed, 'gemini-4-hydrogen', 'Search timeout must stay on gemini-4-hydrogen instead of downgrading');
+    assert.equal(timeoutCalls, 2);
+
     // Non-JSON Gemini text must NOT poison shared KV cache
     globalThis.fetch = async () =>
       new Response(

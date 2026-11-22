@@ -269,6 +269,7 @@ async function callGeminiSinglePass(
 
     for (let idx = 0; idx < attempts.length; idx++) {
       const { withSearch, thinkingConfig } = attempts[idx];
+      const attemptTimeoutMs = withSearch ? 30000 : 48000;
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
@@ -283,14 +284,14 @@ async function callGeminiSinglePass(
             },
             contents: [{ role: 'user', parts: [{ text: String(userPrompt).slice(0, 24000) }] }]
           }),
-          signal: AbortSignal.timeout(85000)
+          signal: AbortSignal.timeout(attemptTimeoutMs)
         });
         if (!res.ok) {
           const errSnippet = (await res.text().catch(() => '')).slice(0, 180);
           lastError = `${model} (${withSearch ? 'search' : 'direct'}, HTTP ${res.status}): ${errSnippet || res.statusText}`;
-          // Retry same model without google_search if Search Grounding is rejected or free-tier quota-gated (400/403/429),
+          // Retry same model without google_search if Search Grounding is rejected, quota-gated, or transient-5xx,
           // or retry without XHIGH on HTTP 400. Otherwise advance to the next model in the cascade.
-          if (withSearch && (res.status === 400 || res.status === 403 || res.status === 429)) continue;
+          if (withSearch && (res.status === 400 || res.status === 403 || res.status === 429 || res.status >= 500)) continue;
           if (!withSearch && res.status === 400 && thinkingConfig?.thinkingLevel === 'XHIGH') continue;
           break;
         }
@@ -307,7 +308,9 @@ async function callGeminiSinglePass(
           rawText: text
         };
       } catch (err) {
-        lastError = `${model}: ${err?.message || String(err)}`;
+        lastError = `${model} (${withSearch ? 'search' : 'direct'}): ${err?.message || String(err)}`;
+        // If Google Search grounding timed out or aborted, retry the SAME model directly over our live snapshot!
+        if (withSearch) continue;
         break;
       }
     }
