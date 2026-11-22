@@ -269,7 +269,11 @@ async function callGeminiSinglePass(
 
     for (let idx = 0; idx < attempts.length; idx++) {
       const { withSearch, thinkingConfig } = attempts[idx];
-      const attemptTimeoutMs = withSearch ? 30000 : 48000;
+      const attemptTimeoutMs = withSearch
+        ? 18000
+        : thinkingConfig?.thinkingLevel === 'XHIGH'
+          ? 58000
+          : 28000;
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
@@ -309,8 +313,8 @@ async function callGeminiSinglePass(
         };
       } catch (err) {
         lastError = `${model} (${withSearch ? 'search' : 'direct'}): ${err?.message || String(err)}`;
-        // If Google Search grounding timed out or aborted, retry the SAME model directly over our live snapshot!
-        if (withSearch) continue;
+        // If Google Search grounding or XHIGH timed out on this model, try the next same-model tier (direct XHIGH -> HIGH) before downgrading models.
+        if (withSearch || thinkingConfig?.thinkingLevel === 'XHIGH') continue;
         break;
       }
     }
