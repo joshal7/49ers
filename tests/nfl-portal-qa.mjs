@@ -185,10 +185,11 @@ async function main() {
     assert.equal(total, 32);
   });
 
-  await test('HTML contains all 32 team links (https://<slug>.joshal.com) and zero disallowed phrasing', () => {
+  await test('HTML contains all 32 team links (https://<slug>.joshal.com), accessible labels, zero visible team names & zero disallowed phrasing', () => {
+    assert.ok(!html.includes('class="team-name"'), 'Visible .team-name labels must be removed');
     for (const team of ALL_NFL_TEAMS) {
       assert.ok(html.includes(`href="https://${team.slug}.joshal.com"`), `Missing link for ${team.slug}`);
-      assert.ok(html.includes(team.brandName), `Missing brandName ${team.brandName}`);
+      assert.ok(html.includes(`alt="${team.brandName}"`), `Missing accessible alt for ${team.brandName}`);
     }
     assert.ok(!/nerd\s*hq|the\s+nerd\s+edge/i.test(html), 'Disallowed branding string detected');
   });
@@ -219,19 +220,19 @@ async function main() {
     });
 
     const viewports = [
-      { name: 'iPhone SE (375x667)', width: 375, height: 667, mobile: true, singleScreen: true, shot: 'iphone-se-dark.png' },
-      { name: 'iPhone 16 Safari Bar (393x660)', width: 393, height: 660, mobile: true, singleScreen: true, shot: 'iphone16-safari-dark.png' },
-      { name: 'iPhone 16 (393x852)', width: 393, height: 852, mobile: true, singleScreen: true, shot: 'iphone16-dark.png' },
-      { name: 'iPhone 16 Pro (402x874)', width: 402, height: 874, mobile: true, singleScreen: true },
-      { name: 'iPhone 16 Pro Max (430x932)', width: 430, height: 932, mobile: true, singleScreen: true },
-      { name: 'iPhone 16 Landscape (852x393)', width: 852, height: 393, mobile: true, singleScreen: false },
-      { name: 'Desktop (1280x800)', width: 1280, height: 800, mobile: false, singleScreen: true, shot: 'desktop-dark.png' }
+      { name: 'iPhone SE (375x667)', width: 375, height: 667, mobile: true, singleScreen: true, minLogoPx: 44, shot: 'iphone-se-dark-v2.png' },
+      { name: 'iPhone 16 Safari Bar (393x660)', width: 393, height: 660, mobile: true, singleScreen: true, minLogoPx: 44, shot: 'iphone16-safari-dark-v2.png' },
+      { name: 'iPhone 16 (393x852)', width: 393, height: 852, mobile: true, singleScreen: true, minLogoPx: 58, shot: 'iphone16-dark-v2.png' },
+      { name: 'iPhone 16 Pro (402x874)', width: 402, height: 874, mobile: true, singleScreen: true, minLogoPx: 60 },
+      { name: 'iPhone 16 Pro Max (430x932)', width: 430, height: 932, mobile: true, singleScreen: true, minLogoPx: 64 },
+      { name: 'iPhone 16 Landscape (852x393)', width: 852, height: 393, mobile: true, singleScreen: false, minLogoPx: 56 },
+      { name: 'Desktop (1280x800)', width: 1280, height: 800, mobile: false, singleScreen: true, minLogoPx: 82, shot: 'desktop-dark-v2.png' }
     ];
 
     if (SCREENSHOT_DIR) fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
 
     for (const vp of viewports) {
-      await test(`Viewport ${vp.name}: layout, 32 icons, 0px overflow${vp.singleScreen ? ' & 1-screen fit' : ''}`, async () => {
+      await test(`Viewport ${vp.name}: large readable logos, whitespace balance, 0px overflow${vp.singleScreen ? ' & 1-screen fit' : ''}`, async () => {
         await cdp.send('Emulation.setDeviceMetricsOverride', {
           width: vp.width,
           height: vp.height,
@@ -250,14 +251,27 @@ async function main() {
           const tiles = Array.from(document.querySelectorAll('.team-tile'));
           const imgs = Array.from(document.querySelectorAll('.team-logo'));
           const brokenImgs = imgs.filter(img => !img.complete || img.naturalWidth === 0).map(i => i.src);
-          const clippedNames = tiles.filter(t => {
-            const name = t.querySelector('.team-name');
-            return name && (name.scrollHeight > name.clientHeight + 2 || name.scrollWidth > name.clientWidth + 2);
-          }).map(t => t.dataset.team);
+          const textCount = document.querySelectorAll('.team-name').length;
+          const logoSizes = imgs.map(i => Math.round(i.getBoundingClientRect().width));
+          const minRenderedLogo = Math.min(...logoSizes);
           const outOfBounds = tiles.filter(t => {
             const r = t.getBoundingClientRect();
             return r.right > window.innerWidth + 1 || r.left < -1 || r.bottom > window.innerHeight + 1;
           }).map(t => ({ team: t.dataset.team, bottom: Math.round(t.getBoundingClientRect().bottom), vh: window.innerHeight }));
+          let minSiblingGap = Infinity;
+          for (const grid of document.querySelectorAll('.team-grid')) {
+            const boxes = Array.from(grid.querySelectorAll('.logo-wrap')).map(el => el.getBoundingClientRect());
+            for (let i = 0; i < boxes.length; i++) {
+              for (let j = i + 1; j < boxes.length; j++) {
+                const a = boxes[i];
+                const b = boxes[j];
+                const dx = Math.max(0, b.left - a.right, a.left - b.right);
+                const dy = Math.max(0, b.top - a.bottom, a.top - b.bottom);
+                const gap = Math.max(dx, dy);
+                if (gap < minSiblingGap) minSiblingGap = gap;
+              }
+            }
+          }
           const divOrder = {};
           for (const c of ['NFC', 'AFC']) {
             divOrder[c] = Array.from(document.querySelectorAll('[data-conference="' + c + '"] .div-title')).map(el => el.textContent.trim());
@@ -271,8 +285,10 @@ async function main() {
             afcLeft: afcRect.left,
             tileCount: tiles.length,
             imgCount: imgs.length,
+            textCount,
+            minRenderedLogo,
+            minSiblingGap: Math.round(minSiblingGap),
             brokenImgs,
-            clippedNames,
             outOfBounds,
             divOrder
           };
@@ -280,7 +296,16 @@ async function main() {
 
         assert.equal(metrics.tileCount, 32, 'Expected 32 team tiles');
         assert.equal(metrics.imgCount, 32, 'Expected 32 team logos');
+        assert.equal(metrics.textCount, 0, 'Expected zero visible team name elements');
         assert.deepEqual(metrics.brokenImgs, [], `Broken images: ${metrics.brokenImgs.join(', ')}`);
+        assert.ok(
+          metrics.minRenderedLogo >= vp.minLogoPx,
+          `Logo too small (${metrics.minRenderedLogo}px < ${vp.minLogoPx}px)`
+        );
+        assert.ok(
+          metrics.minSiblingGap >= 5,
+          `Logos too crowded (min gap=${metrics.minSiblingGap}px < 5px)`
+        );
         assert.ok(metrics.nfcRight <= metrics.afcLeft + 1, `NFC (${metrics.nfcRight}) should be left of AFC (${metrics.afcLeft})`);
         assert.deepEqual(metrics.divOrder.NFC, ['North', 'South', 'East', 'West']);
         assert.deepEqual(metrics.divOrder.AFC, ['North', 'South', 'East', 'West']);
@@ -288,7 +313,6 @@ async function main() {
           metrics.scrollWidth <= metrics.innerWidth,
           `Horizontal overflow: scrollWidth=${metrics.scrollWidth} > innerWidth=${metrics.innerWidth}`
         );
-        assert.deepEqual(metrics.clippedNames, [], `Clipped team names: ${metrics.clippedNames.join(', ')}`);
         if (vp.singleScreen) {
           assert.ok(
             metrics.scrollHeight <= metrics.innerHeight,

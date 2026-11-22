@@ -23,7 +23,7 @@ const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 export const PORTAL_CONFERENCES = ['NFC', 'AFC'];
 export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
-const ASSET_VER = '1';
+const ASSET_VER = '2';
 
 function escapeHtml(str = '') {
   return String(str)
@@ -196,13 +196,12 @@ function copyTeamIcons(iconsDir) {
 function renderTeamTile(team) {
   const href = `https://${team.slug}.joshal.com`;
   const accent = team.themes?.dark?.primaryBright || '#60A5FA';
-  const label = escapeHtml(team.brandName);
   const aria = escapeHtml(`${team.brandName} — ${team.fullName} (${team.domain})`);
-  return `<a class="team-tile" href="${href}" data-team="${escapeHtml(team.slug)}" data-abbr="${escapeHtml(team.abbr)}" style="--team-accent:${escapeHtml(accent)}" aria-label="${aria}" title="${escapeHtml(team.fullName)}">
+  const tip = escapeHtml(`${team.brandName} — ${team.fullName}`);
+  return `<a class="team-tile" href="${href}" data-team="${escapeHtml(team.slug)}" data-abbr="${escapeHtml(team.abbr)}" style="--team-accent:${escapeHtml(accent)}" aria-label="${aria}" title="${tip}">
                   <span class="logo-wrap">
                     <img class="team-logo" src="./icons/${escapeHtml(team.slug)}.png?v=${ASSET_VER}" alt="${escapeHtml(team.brandName)}" width="180" height="180" decoding="async" fetchpriority="high">
                   </span>
-                  <span class="team-name">${label}</span>
                 </a>`;
 }
 
@@ -277,18 +276,18 @@ function buildIndexHtml(grouped) {
       --nfc-soft: rgba(59, 130, 246, 0.14);
       --afc: #EF4444;
       --afc-soft: rgba(239, 68, 68, 0.14);
-      --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 20px rgba(0, 0, 0, 0.28);
-      --shadow-logo: 0 3px 8px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 255, 255, 0.12);
-      --icon-size: clamp(28px, min(11.4vw, 4.65dvh), 46px);
-      --radius-card: 12px;
-      --radius-tile: 9px;
+      --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 22px rgba(0, 0, 0, 0.3);
+      --shadow-logo: 0 4px 12px rgba(0, 0, 0, 0.52), 0 0 0 1px rgba(255, 255, 255, 0.14);
+      --icon-size: clamp(44px, min(16.2vw, 6.85dvh), 70px);
+      --radius-card: 14px;
+      --radius-tile: 14px;
       color-scheme: dark;
     }
 
     [data-theme="light"] {
       --bg: #F5F6FA;
       --bg-card: rgba(255, 255, 255, 0.94);
-      --bg-tile-hover: rgba(15, 23, 42, 0.05);
+      --bg-tile-hover: rgba(15, 23, 42, 0.045);
       --border: rgba(15, 23, 42, 0.08);
       --border-strong: rgba(15, 23, 42, 0.16);
       --text: #0F172A;
@@ -298,8 +297,8 @@ function buildIndexHtml(grouped) {
       --nfc-soft: rgba(1, 51, 105, 0.09);
       --afc: #C8102E;
       --afc-soft: rgba(200, 16, 46, 0.09);
-      --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 16px rgba(15, 23, 42, 0.04);
-      --shadow-logo: 0 3px 8px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.08);
+      --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.05);
+      --shadow-logo: 0 4px 12px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(15, 23, 42, 0.08);
       color-scheme: light;
     }
 
@@ -330,15 +329,15 @@ function buildIndexHtml(grouped) {
 
     .shell {
       width: 100%;
-      max-width: 1180px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding-top: max(6px, env(safe-area-inset-top));
-      padding-bottom: max(6px, env(safe-area-inset-bottom));
-      padding-left: max(8px, env(safe-area-inset-left));
-      padding-right: max(8px, env(safe-area-inset-right));
+      padding-top: max(7px, env(safe-area-inset-top));
+      padding-bottom: max(7px, env(safe-area-inset-bottom));
+      padding-left: max(10px, env(safe-area-inset-left));
+      padding-right: max(10px, env(safe-area-inset-right));
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
     /* Single-screen fit lock on portrait phones, tablets, and desktops */
@@ -439,7 +438,7 @@ function buildIndexHtml(grouped) {
       min-height: 0;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 7px;
+      gap: 9px;
     }
 
     .conference {
@@ -447,7 +446,7 @@ function buildIndexHtml(grouped) {
       flex-direction: column;
       min-height: 0;
       min-width: 0;
-      gap: 4px;
+      gap: 6px;
     }
 
     .conf-header {
@@ -456,8 +455,8 @@ function buildIndexHtml(grouped) {
       align-items: center;
       justify-content: center;
       gap: 6px;
-      padding: 3px 8px;
-      border-radius: 8px;
+      padding: 4px 8px;
+      border-radius: 9px;
       background: var(--bg-card);
       border: 1px solid var(--border);
     }
@@ -491,7 +490,7 @@ function buildIndexHtml(grouped) {
 
     .conf-title {
       margin: 0;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.14em;
       line-height: 1.2;
@@ -504,7 +503,7 @@ function buildIndexHtml(grouped) {
       min-height: 0;
       display: grid;
       grid-template-rows: repeat(4, minmax(0, 1fr));
-      gap: 5px;
+      gap: 7px;
     }
 
     .division {
@@ -515,7 +514,7 @@ function buildIndexHtml(grouped) {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: 4px 4px 3px;
+      padding: 5px 7px 6px;
       box-shadow: var(--shadow-card);
     }
 
@@ -523,16 +522,16 @@ function buildIndexHtml(grouped) {
       flex: 0 0 auto;
       display: flex;
       align-items: center;
-      gap: 5px;
-      padding: 0 3px 2px;
+      gap: 6px;
+      padding: 0 3px 4px;
     }
 
     .div-title {
       margin: 0;
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.13em;
       color: var(--text-subtle);
       line-height: 1;
       flex: 0 0 auto;
@@ -544,59 +543,54 @@ function buildIndexHtml(grouped) {
       background: var(--border);
     }
 
-    /* 2x2 team grid per division on iPhone so all 32 fit cleanly in one screen */
+    /* 2x2 logo grid per division on iPhone: large readable logos + balanced whitespace */
     .team-grid {
       flex: 1 1 0;
       min-height: 0;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-rows: repeat(2, minmax(0, 1fr));
-      gap: 2px;
+      place-items: center;
+      gap: 5px;
     }
 
     .team-tile {
-      display: flex;
-      flex-direction: column;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 2px;
-      min-width: 0;
-      min-height: 0;
-      padding: 2px 2px;
+      padding: 2px;
       border-radius: var(--radius-tile);
       text-decoration: none;
       color: var(--text);
-      transition: transform 140ms cubic-bezier(0.22, 1, 0.36, 1), background 140ms ease;
+      transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), background 150ms ease;
       outline: none;
     }
 
     .team-tile:hover {
-      background: var(--bg-tile-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px) scale(1.035);
     }
 
     .team-tile:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
-    .team-tile:focus-visible {
-      box-shadow: 0 0 0 2px var(--team-accent, var(--nfc));
-      background: var(--bg-tile-hover);
+    .team-tile:focus-visible .logo-wrap {
+      box-shadow: 0 0 0 2.5px var(--team-accent, var(--nfc)), var(--shadow-logo);
     }
 
     .logo-wrap {
-      flex: 0 0 auto;
+      display: block;
       width: var(--icon-size);
       height: var(--icon-size);
-      border-radius: 22%;
+      border-radius: 22.5%;
       overflow: hidden;
       box-shadow: var(--shadow-logo);
-      transition: box-shadow 160ms ease, transform 160ms ease;
+      transition: box-shadow 160ms ease;
       background: #0B1018;
     }
 
     .team-tile:hover .logo-wrap {
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.42), 0 0 0 1.5px var(--team-accent, rgba(255, 255, 255, 0.3));
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.44), 0 0 0 2px var(--team-accent, rgba(255, 255, 255, 0.36));
     }
 
     .team-logo {
@@ -606,60 +600,48 @@ function buildIndexHtml(grouped) {
       object-fit: cover;
     }
 
-    .team-name {
-      display: block;
-      width: 100%;
-      text-align: center;
-      font-size: clamp(8.5px, 2.35vw, 10.5px);
-      font-weight: 600;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      text-wrap: balance;
-      overflow-wrap: break-word;
-      max-height: 2.25em;
-      overflow: hidden;
-    }
-
-    /* Taller phones (iPhone 14/15/16/Pro/Pro Max): extra polish & breathing room */
+    /* Taller phones (iPhone 14/15/16/Pro/Pro Max): bold readable logos + generous even air */
     @media (min-height: 760px) and (max-width: 859px) {
       :root {
-        --icon-size: clamp(42px, min(12.6vw, 5.5dvh), 52px);
+        --icon-size: clamp(56px, min(16.6vw, 7.25dvh), 72px);
       }
       .shell {
-        gap: 7px;
-        padding-top: max(10px, env(safe-area-inset-top));
-        padding-bottom: max(10px, env(safe-area-inset-bottom));
-        padding-left: max(10px, env(safe-area-inset-left));
-        padding-right: max(10px, env(safe-area-inset-right));
+        gap: 9px;
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
       }
       .conferences {
-        gap: 9px;
+        gap: 11px;
+      }
+      .conference {
+        gap: 8px;
       }
       .divisions {
-        gap: 7px;
+        gap: 9px;
       }
       .division {
-        padding: 5px 5px 4px;
+        padding: 7px 9px 9px;
+      }
+      .div-header {
+        padding: 0 3px 5px;
       }
       .div-title {
-        font-size: 9.5px;
+        font-size: 10px;
       }
-      .team-tile {
-        gap: 3px;
-      }
-      .team-name {
-        font-size: clamp(9.5px, 2.55vw, 11px);
+      .team-grid {
+        gap: 8px;
       }
     }
 
     /* Short landscape phone fallback: never crush below readable height */
     @media (max-height: 589px) {
       :root {
-        --icon-size: 46px;
+        --icon-size: 60px;
       }
       .shell {
-        padding: 10px 14px 16px;
+        padding: 10px 16px 18px;
         gap: 10px;
       }
       .conferences,
@@ -670,36 +652,28 @@ function buildIndexHtml(grouped) {
       }
       .divisions {
         grid-template-rows: auto;
-        gap: 8px;
+        gap: 10px;
       }
       .division {
-        padding: 8px;
+        padding: 9px 10px 10px;
       }
       .team-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-template-rows: auto;
-        gap: 6px;
-      }
-      .team-tile {
-        padding: 6px 4px;
-        gap: 5px;
-      }
-      .team-name {
-        font-size: 11px;
-        max-height: none;
+        gap: 10px;
       }
     }
 
-    /* Tablet & Desktop: crisp 4-across rows inside each division, still fits on ONE screen */
+    /* Tablet & Desktop: crisp 4-across logo rows inside each division, still fits on ONE screen */
     @media (min-width: 860px) {
       :root {
-        --icon-size: clamp(50px, min(5.4vw, 8.6dvh), 72px);
-        --radius-card: 16px;
-        --radius-tile: 12px;
+        --icon-size: clamp(68px, min(7.6vw, 11.4dvh), 96px);
+        --radius-card: 18px;
+        --radius-tile: 18px;
       }
       .shell {
-        padding: 14px 24px 18px;
-        gap: 12px;
+        padding: 16px 28px 22px;
+        gap: 14px;
       }
       .topbar {
         min-height: 34px;
@@ -720,14 +694,14 @@ function buildIndexHtml(grouped) {
         height: 15px;
       }
       .conferences {
-        gap: 18px;
+        gap: 20px;
       }
       .conference {
-        gap: 10px;
+        gap: 11px;
       }
       .conf-header {
-        padding: 7px 14px;
-        border-radius: 11px;
+        padding: 8px 14px;
+        border-radius: 12px;
         gap: 8px;
       }
       .conf-dot {
@@ -739,13 +713,13 @@ function buildIndexHtml(grouped) {
         letter-spacing: 0.16em;
       }
       .divisions {
-        gap: 10px;
+        gap: 12px;
       }
       .division {
-        padding: 9px 10px 8px;
+        padding: 10px 14px 12px;
       }
       .div-header {
-        padding: 0 4px 6px;
+        padding: 0 4px 8px;
         gap: 8px;
       }
       .div-title {
@@ -755,15 +729,7 @@ function buildIndexHtml(grouped) {
       .team-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-template-rows: 1fr;
-        gap: 6px;
-      }
-      .team-tile {
-        gap: 6px;
-        padding: 6px 4px;
-      }
-      .team-name {
-        font-size: clamp(11px, 1vw, 12.5px);
-        line-height: 1.18;
+        gap: 12px;
       }
     }
   </style>
