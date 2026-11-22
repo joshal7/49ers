@@ -75,10 +75,34 @@ import {
 } from '../engine/injuryProbabilityModel.js';
 import { renderInjuryNewsItemCardHtml } from './playerSheetView.js';
 import {
+  extractEspnPlayerIdFromRecord,
+  resolveNflTeamMeta
+} from '../services/remoteTeamDossierService.js';
+import {
   computePracticeTrajectoryDelta,
   formatRankDeltaCue,
   formatPlayoffOddsDeltaCue
 } from '../engine/digestExperienceEngine.js';
+
+function buildOppSheetTriggerAttrs(player = {}, teamAbbr = '', { initialTab = 'overview' } = {}) {
+  const team = resolveNflTeamMeta(teamAbbr);
+  const name = String(player?.name || '').trim();
+  if (!team || !name) return '';
+  const pid = extractEspnPlayerIdFromRecord(player);
+  const pos = String(player?.position || '').trim();
+  const espnUrl = sanitizeExternalUrl(player?.espnUrl, '') || '';
+  return [
+    'data-action="open-opponent-player-sheet"',
+    `data-opp-team="${esc(team.abbr)}"`,
+    pid ? `data-opp-player-id="${esc(pid)}"` : '',
+    `data-opp-player-name="${esc(name)}"`,
+    pos ? `data-opp-player-pos="${esc(pos)}"` : '',
+    espnUrl ? `data-opp-espn-url="${esc(espnUrl)}"` : '',
+    initialTab && initialTab !== 'overview' ? `data-initial-tab="${esc(initialTab)}"` : ''
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
 
 function formatPracCell(val) {
   const s = String(val ?? '').trim();
@@ -271,14 +295,19 @@ function renderGameDayRosterCard(
             ? `<div class="gameday-inactives-grid">
                 ${inactives
                   .map(p => {
+                    const oppTriggerAttrs = !is49ers ? buildOppSheetTriggerAttrs(p, teamAbbr) : '';
                     const clickAttrs =
                       is49ers && p.playerId
-                        ? `style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health"`
-                        : '';
+                        ? `role="button" tabindex="0" style="cursor:pointer" data-action="open-player-sheet" data-player-id="${esc(p.playerId)}" data-initial-tab="health"`
+                        : oppTriggerAttrs
+                          ? `role="button" tabindex="0" style="cursor:pointer" ${oppTriggerAttrs}`
+                          : '';
                     const nameHtml =
-                      !is49ers && p.espnUrl
-                        ? `<a href="${esc(p.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(p.name)}</strong></a>`
-                        : `<strong>${esc(p.name)}</strong>`;
+                      !is49ers && oppTriggerAttrs
+                        ? `<span class="inline-player-link"><strong>${esc(p.name)}</strong></span>`
+                        : !is49ers && p.espnUrl
+                          ? `<a href="${esc(p.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(p.name)}</strong></a>`
+                          : `<strong>${esc(p.name)}</strong>`;
                     const rawReason = String(p.injuryType || p.reason || '').trim();
                     const displayReason =
                       p.isHealthyScratch || /^healthy scratch$/i.test(rawReason)
@@ -328,6 +357,10 @@ function renderGameDayRosterCard(
                                     }`;
                                     if (is49ers && ap.playerId) {
                                       return `<button type="button" class="gameday-active-pill gameday-active-chip" data-action="open-player-sheet" data-player-id="${esc(ap.playerId)}">${inner}</button>`;
+                                    }
+                                    const oppActiveAttrs = !is49ers ? buildOppSheetTriggerAttrs(ap, teamAbbr) : '';
+                                    if (oppActiveAttrs) {
+                                      return `<button type="button" class="gameday-active-pill gameday-active-chip" ${oppActiveAttrs}>${inner}</button>`;
                                     }
                                     const safeOppUrl = !is49ers ? sanitizeExternalUrl(ap.espnUrl, null) : null;
                                     if (safeOppUrl) {
@@ -922,17 +955,20 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                       const oppDeltaHtml = oppDelta
                         ? ` <span class="delta-chip ${oppDelta.tone} mono" data-health-delta data-opp-health-delta title="${esc(oppDelta.tooltipLabel || oppDelta.displayLabel)}">${esc(oppDelta.compactLabel || oppDelta.displayLabel)}</span>`
                         : '';
+                      const oppRowTrigger = buildOppSheetTriggerAttrs(op, um.oppAbbr || '');
                       return `
-                    <tr>
+                    <tr ${oppRowTrigger ? `style="cursor:pointer" ${oppRowTrigger}` : ''}>
                       <td class="sticky-first-col">
                         <div class="sticky-player-cell">
                           ${renderPlayerAvatarHtml(op, 26)}
                           <div class="sticky-player-meta">
                             <div class="sticky-player-name">
                               ${
-                                op.espnUrl
-                                  ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
-                                  : `<strong>${esc(op.name)}</strong>`
+                                oppRowTrigger
+                                  ? `<button type="button" class="inline-player-link opp-inline-player-btn" ${oppRowTrigger}><strong>${esc(op.name)}</strong></button>`
+                                  : op.espnUrl
+                                    ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
+                                    : `<strong>${esc(op.name)}</strong>`
                               }
                             </div>
                             <div class="sticky-player-sub">${esc(op.position)}${op.jersey != null ? ` #${op.jersey}` : ''} • ${esc(formatOppImportanceTag(op))}</div>
@@ -969,12 +1005,15 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                             publishedAt: new Date().toISOString(),
                             url: entry.espnUrl || oppHealth.teamInjuriesUrl || 'https://www.espn.com/nfl/injuries'
                           };
-                          const nameInner = entry.espnUrl
-                            ? `<a href="${esc(entry.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(entry.name)}</strong></a>`
-                            : `<strong>${esc(entry.name)}</strong>`;
+                          const oppLiveTrigger = buildOppSheetTriggerAttrs(entry, um.oppAbbr || '');
+                          const nameInner = oppLiveTrigger
+                            ? `<span class="inline-player-link"><strong>${esc(entry.name)}</strong></span>`
+                            : entry.espnUrl
+                              ? `<a href="${esc(entry.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(entry.name)}</strong></a>`
+                              : `<strong>${esc(entry.name)}</strong>`;
                           return `
                             <div class="health-injury-news-entry" data-opp-injury-news-player="${esc(entry.name)}" data-play-prob="${entry.playProbabilityPct}">
-                              <div class="health-injury-player-head" style="cursor:default">
+                              <div class="health-injury-player-head" ${oppLiveTrigger ? `role="button" tabindex="0" style="cursor:pointer" ${oppLiveTrigger}` : 'style="cursor:default"'}>
                                 <span class="health-injury-player-ident">
                                   ${renderPlayerAvatarHtml(entry, 32, { showJerseyBadge: entry.jersey != null })}
                                   <span class="health-injury-player-label">
@@ -1006,23 +1045,26 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
               </summary>
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
                 ${oppInjReport
-                  .map(
-                    op => `
+                  .map(op => {
+                    const oppNoteTrigger = buildOppSheetTriggerAttrs(op, um.oppAbbr || '');
+                    return `
                   <div class="subcard-panel" style="font-size:12px">
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
                       <span>
                         ${
-                          op.espnUrl
-                            ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
-                            : `<strong>${esc(op.name)}</strong>`
+                          oppNoteTrigger
+                            ? `<button type="button" class="inline-player-link opp-inline-player-btn" ${oppNoteTrigger}><strong>${esc(op.name)}</strong></button>`
+                            : op.espnUrl
+                              ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
+                              : `<strong>${esc(op.name)}</strong>`
                         } <strong style="color:var(--gold-bright)">(${esc(op.position)} • ${esc(op.injuryType)})</strong>
                       </span>
                       <span class="mono" style="font-size:11px;color:var(--text-muted)">${esc((op.factors || [])[0] || `${formatPracCell(op.wed)}/${formatPracCell(op.thu)}/${formatPracCell(op.fri)}`)}</span>
                     </div>
                     <div style="color:var(--text-secondary)">${escJargon(op.longComment || op.shortComment || op.archetypeNote || '')}</div>
                   </div>
-                `
-                  )
+                `;
+                  })
                   .join('')}
               </div>
             </details>
@@ -1039,15 +1081,25 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
               </summary>
               <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
                 ${oppHealthyStarters
-                  .map(
-                    st => `
+                  .map(st => {
+                    const oppStarterTrigger = buildOppSheetTriggerAttrs(st, um.oppAbbr || '');
+                    if (oppStarterTrigger) {
+                      return `
+                  <button type="button" class="source-chip-link opp-player-chip-btn" style="padding:5px 9px" ${oppStarterTrigger}>
+                    <strong>${esc(st.name)}</strong>
+                    <span style="color:var(--text-muted)">(${esc(st.position)}${st.snapPct ? ` • ${st.snapPct}% snaps` : ''})</span>
+                    <span class="mono" style="color:var(--emerald);font-weight:700">${st.playProbabilityPct}%</span>
+                  </button>
+                `;
+                    }
+                    return `
                   <a href="${esc(st.espnUrl || oppHealth.sourceUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="padding:5px 9px">
                     <strong>${esc(st.name)}</strong>
                     <span style="color:var(--text-muted)">(${esc(st.position)}${st.snapPct ? ` • ${st.snapPct}% snaps` : ''})</span>
                     <span class="mono" style="color:var(--emerald);font-weight:700">${st.playProbabilityPct}%</span>
                   </a>
-                `
-                  )
+                `;
+                  })
                   .join('')}
               </div>
             </details>
@@ -1066,16 +1118,19 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                 ${oppIrList
                   .map(ir => {
                     const meta = formatIrCardBadgeAndSubtitle(ir, appData?.meta?.seasonYear || 2026, { isOpponent: true });
+                    const oppIrTrigger = buildOppSheetTriggerAttrs(ir, um.oppAbbr || '');
                     return `
-                  <div class="subcard-panel" style="font-size:12px">
+                  <div class="subcard-panel" style="font-size:12px${oppIrTrigger ? ';cursor:pointer' : ''}" ${oppIrTrigger ? `role="button" tabindex="0" ${oppIrTrigger}` : ''}>
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                       <div style="display:flex;align-items:center;gap:8px;min-width:0">
                         ${renderPlayerAvatarHtml(ir, 28)}
                         <div>
                           ${
-                            ir.espnUrl
-                              ? `<a href="${esc(ir.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(ir.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
-                              : `<strong>${esc(ir.name)}</strong>`
+                            oppIrTrigger
+                              ? `<span class="inline-player-link"><strong>${esc(ir.name)}</strong></span>`
+                              : ir.espnUrl
+                                ? `<a href="${esc(ir.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(ir.name)}</strong> ${iconSvg('externalLink', 10)}</a>`
+                                : `<strong>${esc(ir.name)}</strong>`
                           }
                           <span style="color:var(--gold-bright)"> (${esc(ir.position)}${ir.injuryType ? ` • ${esc(ir.injuryType)}` : ''})</span>
                         </div>

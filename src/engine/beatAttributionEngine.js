@@ -1036,19 +1036,39 @@ export function buildXPlayerScoopSearchUrl(playerName = '', options = {}) {
     .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
     .trim();
   if (!cleanName) return buildXBeatListSearchUrl('trusted', options);
-  const activeTeam = resolveTeamConfig(options?.team || ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  const remoteCtx = options?.isRemoteTeam ? options : options?.teamContext?.isRemoteTeam ? options.teamContext : null;
+  const activeTeam = resolveTeamConfig(remoteCtx?.abbr || options?.team || ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
   const dotlessName = cleanName.replace(/\b([A-Za-z])\.([A-Za-z])\./g, '$1$2');
   const nameClause = dotlessName !== cleanName ? `("${cleanName}" OR "${dotlessName}")` : `"${cleanName}"`;
   if (activeTeam.abbr === 'SF') {
     const q = `${nameClause} (49ers OR Niners OR from:MaioccoNBCS OR from:nwagoner OR from:mattbarrows OR from:LombardiHimself OR from:jenniferleechan OR from:Eric_Branch OR from:CamInman)`;
     return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
   }
-  const repHandles = (options?.reporters || [])
-    .filter(r => r && r.handle && r.category === 'beat' && Number(r.trustTier || 2) === 1)
-    .slice(0, 6)
-    .map(r => `from:${String(r.handle).replace(/^@/, '')}`);
-  const teamTerms = [activeTeam.nickname, ...repHandles];
-  const q = `${nameClause} (${teamTerms.join(' OR ')})`;
+  const remoteBeatHandles = Array.isArray(remoteCtx?.beatHandles)
+    ? remoteCtx.beatHandles
+        .map(h => String(h || '').replace(/^@/, '').trim())
+        .filter(h => /^[A-Za-z0-9_]{2,25}$/.test(h))
+        .slice(0, 5)
+        .map(h => `from:${h}`)
+    : [];
+  const repHandles = remoteBeatHandles.length
+    ? remoteBeatHandles
+    : (options?.reporters || [])
+        .filter(r => r && r.handle && r.category === 'beat' && Number(r.trustTier || 2) === 1)
+        .slice(0, 6)
+        .map(r => `from:${String(r.handle).replace(/^@/, '')}`);
+  const nickname = String(remoteCtx?.nickname || activeTeam.nickname || '').trim();
+  const city = String(remoteCtx?.city || activeTeam.city || '').trim();
+  const teamTerms = [
+    nickname ? (nickname.includes(' ') ? `"${nickname}"` : nickname) : '',
+    remoteCtx && city && city.toLowerCase() !== nickname.toLowerCase()
+      ? city.includes(' ')
+        ? `"${city}"`
+        : city
+      : '',
+    ...repHandles
+  ].filter(Boolean);
+  const q = `${nameClause} (${(teamTerms.length ? teamTerms : ['NFL']).join(' OR ')})`;
   return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
 }
 

@@ -13,6 +13,8 @@ import { getActiveTeamConfig } from '../config/teamRegistry.js';
 export { jargonTerm, jargonInfoIcon };
 
 let cachedRosterArrayRef = null;
+let cachedRosterTeamAbbr = null;
+let cachedActiveTeamAbbr = null;
 let inlinePlayerRegex = null;
 let inlinePlayerByLowerPhrase = new Map();
 let rosterByCanonKey = new Map();
@@ -29,10 +31,31 @@ function escapeRegexChars(str = '') {
   return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export function registerRosterPlayersForInlineLinks(players = null) {
-  if (!Array.isArray(players) || players.length === 0) return;
-  if (players === cachedRosterArrayRef && inlinePlayerRegex) return;
+export function registerRosterPlayersForInlineLinks(players = null, { teamAbbr = null, activeTeamAbbr = null } = {}) {
+  const resolvedActive = String(activeTeamAbbr || getActiveTeamConfig()?.abbr || 'SF').trim().toUpperCase();
+  const nextTeam = String(teamAbbr || resolvedActive).trim().toUpperCase();
+  if (!Array.isArray(players) || players.length === 0) {
+    if (nextTeam !== resolvedActive) {
+      cachedRosterArrayRef = null;
+      cachedRosterTeamAbbr = nextTeam;
+      cachedActiveTeamAbbr = resolvedActive;
+      inlinePlayerRegex = null;
+      inlinePlayerByLowerPhrase = new Map();
+      rosterByCanonKey = new Map();
+    }
+    return;
+  }
+  if (
+    players === cachedRosterArrayRef &&
+    nextTeam === cachedRosterTeamAbbr &&
+    resolvedActive === cachedActiveTeamAbbr &&
+    inlinePlayerRegex
+  ) {
+    return;
+  }
   cachedRosterArrayRef = players;
+  cachedRosterTeamAbbr = nextTeam;
+  cachedActiveTeamAbbr = resolvedActive;
 
   const phraseMap = new Map();
   const canonMap = new Map();
@@ -135,7 +158,11 @@ export function annotateRosterAndJargonPlainText(
     ) {
       usedPlayers.add(pEntry.id);
       playerCount += 1;
-      out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+      if (cachedRosterTeamAbbr && cachedActiveTeamAbbr && cachedRosterTeamAbbr !== cachedActiveTeamAbbr) {
+        out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-opponent-player-sheet" data-opp-team="${esc(cachedRosterTeamAbbr)}" data-opp-player-id="${esc(pEntry.id)}" data-opp-player-name="${esc(pEntry.name)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+      } else {
+        out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+      }
     } else {
       out += annotateJargonPlainText(matchedText, { maxTerms, seenKeys: usedJargon });
     }

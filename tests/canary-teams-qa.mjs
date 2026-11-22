@@ -10,6 +10,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
+  ALL_NFL_TEAM_ENTRIES,
+  resolveNflTeamMeta,
+  mergeRemoteAndLocalOpponentPlayer
+} from '../src/services/remoteTeamDossierService.js';
+import { renderPlayerDossierSheetHtml } from '../src/views/playerSheetView.js';
+import {
   ALL_NFL_TEAMS,
   CANARY_TEAM_SLUGS,
   buildDeterministicCoachingMatchup,
@@ -1059,6 +1065,72 @@ await test('Player-Level Parity & Zero Regressions (Spider Charts, Stats, Snaps,
       assert.equal(gibbs.health.isOnPracticeReport, false, 'Healthy Jahmyr Gibbs must not be on practice report');
       assert.ok(gibbs.health.playProbabilityPct >= 95, 'Healthy Jahmyr Gibbs must have >= 95% play probability');
     }
+  }
+});
+
+test('Cross-team native player dossiers work symmetrically for all 32 teams (including DET/BUF viewing SF or other opponents)', () => {
+  assert.equal(ALL_NFL_TEAM_ENTRIES.length, 32, 'Remote dossier registry must cover all 32 NFL teams');
+  // 1. On Lions (DET), viewing an SF opponent player treats SF as remote (`49ers.joshal.com`, `49ers.com Report`)
+  setActiveTeamConfig('DET');
+  const sfMeta = resolveNflTeamMeta('SF');
+  const mergedSfOnLions = mergeRemoteAndLocalOpponentPlayer({
+    remotePlayer: {
+      id: '4361741',
+      name: 'Brock Purdy',
+      position: 'QB',
+      unit: 'Offense',
+      rosterBucket: 'active',
+      jersey: 13,
+      espnUrl: 'https://www.espn.com/nfl/player/_/id/4361741/brock-purdy',
+      otcUrl: 'https://overthecap.com/player/brock-purdy/10307/',
+      primarySnapPct: 98,
+      health: { status: 'Active', injuryType: 'Healthy', playProbabilityPct: 99, playBadgeLabel: '99% • Cleared' }
+    },
+    teamMeta: sfMeta,
+    activeTeamAbbr: 'DET'
+  });
+  assert.equal(mergedSfOnLions.teamContext.isRemoteTeam, true, 'SF must be treated as remote when active team is DET');
+  const sfOnLionsOverview = renderPlayerDossierSheetHtml({
+    player: mergedSfOnLions.player,
+    activeTab: 'overview',
+    teamContext: mergedSfOnLions.teamContext,
+    remoteStatus: { state: 'ready' }
+  });
+  assert.ok(sfOnLionsOverview.includes('49ers.joshal.com'), 'SF remote dossier on Lions must link 49ers.joshal.com');
+  const sfOnLionsHealth = renderPlayerDossierSheetHtml({
+    player: mergedSfOnLions.player,
+    activeTab: 'health',
+    teamContext: mergedSfOnLions.teamContext,
+    remoteStatus: { state: 'ready' }
+  });
+  assert.ok(sfOnLionsHealth.includes('49ers.com Report'), 'SF remote dossier Health on Lions must show 49ers.com Report');
+  assert.ok(!sfOnLionsHealth.includes('detroitlions.com Report'), 'SF remote dossier Health on Lions must not leak Lions report');
+
+  // 2. Live Lions & Bills Matchup views wire opposing players to open-opponent-player-sheet instead of ESPN links
+  for (const [slug, abbr] of [['lions', 'DET'], ['bills', 'BUF']]) {
+    setActiveTeamConfig(abbr);
+    const dataDir = path.join(ROOT, 'data', 'teams', slug);
+    const mockData = {
+      meta: JSON.parse(fs.readFileSync(path.join(dataDir, 'meta.json'), 'utf8')),
+      roster: JSON.parse(fs.readFileSync(path.join(dataDir, 'roster.json'), 'utf8')),
+      health: JSON.parse(fs.readFileSync(path.join(dataDir, 'health.json'), 'utf8')),
+      scheduleMatchup: JSON.parse(fs.readFileSync(path.join(dataDir, 'schedule-matchup.json'), 'utf8')),
+      news: JSON.parse(fs.readFileSync(path.join(dataDir, 'news.json'), 'utf8')),
+      cap: JSON.parse(fs.readFileSync(path.join(dataDir, 'cap.json'), 'utf8')),
+      seasonal: JSON.parse(fs.readFileSync(path.join(dataDir, 'seasonal.json'), 'utf8'))
+    };
+    const matchupHtml = renderSeasonMatchupViewHtml({ subTab: 'matchup', appData: mockData, userPrefs: {} });
+    const oppIdx = matchupHtml.indexOf('id="opponentHealthSection"');
+    assert.ok(oppIdx >= 0, `${slug} Matchup must render #opponentHealthSection`);
+    const oppSlice = matchupHtml.slice(oppIdx, oppIdx + 18000);
+    assert.ok(
+      oppSlice.includes('data-action="open-opponent-player-sheet"'),
+      `${slug} Matchup opponent players must open native cross-team dossier sheet`
+    );
+    assert.ok(
+      !oppSlice.includes('href="https://www.espn.com/nfl/player/'),
+      `${slug} Matchup opponent players must not link directly to ESPN player pages`
+    );
   }
 });
 

@@ -3,7 +3,7 @@ const SW_SUB_MATCH = SW_HOST.match(/^([a-z0-9-]+)\.joshal\.com$/);
 const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = SW_RAW_SUB === '49ers' || SW_RAW_SUB === '49ers2' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
-const CACHE_NAME = SW_TEAM_SLUG === '49ers' ? '49ers-faithful-v141' : `${SW_TEAM_SLUG}-hq-v12`;
+const CACHE_NAME = SW_TEAM_SLUG === '49ers' ? '49ers-faithful-v142' : `${SW_TEAM_SLUG}-hq-v13`;
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-', `${SW_TEAM_SLUG}-podcast-studio-audio-`];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -38,6 +38,7 @@ const CORE_ASSETS = [
   './src/components/audioPlayer.js',
   './src/services/dataService.js',
   './src/services/sharedApiKeyStore.js',
+  './src/services/remoteTeamDossierService.js',
   './src/services/aiWorkerClient.js',
   './src/services/podcastAudioStore.js',
   './src/services/shareService.js',

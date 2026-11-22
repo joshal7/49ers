@@ -91,6 +91,17 @@ import {
 } from './services/shareService.js?v=61';
 
 import {
+  resolveNflTeamMeta,
+  getRemoteTeamSheetThemeVars,
+  findPlayerInTeamRoster,
+  buildOpponentSeedPlayer,
+  mergeRemoteAndLocalOpponentPlayer,
+  fetchRemoteTeamBundle,
+  getCachedRemoteTeamBundle,
+  clearRemoteTeamCache
+} from './services/remoteTeamDossierService.js?v=2';
+
+import {
   esc,
   formatRelativeAge,
   rankBadgeClass,
@@ -98,7 +109,7 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=52';
+} from './views/uiHelpers.js?v=53';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
 import {
   isAllowedInlineVideoStreamUrl,
@@ -111,16 +122,16 @@ import {
   normalizeBigBoardLens,
   normalizeBigBoardSort
 } from './engine/draftBigBoardEngine.js?v=56';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=49';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=90';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=91';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=93';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=79';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=92';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=80';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=93';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
 import {
   renderSettingsSheetHtml,
@@ -271,6 +282,7 @@ const state = {
   // Bottom Sheet & Rank Modal state
   sheetMode: null, // 'player' | 'settings' | 'search' | null
   sheetPlayerId: null,
+  sheetRemoteContext: null, // { teamMeta, query, seedPlayer, bundle, remotePlayer, status, error }
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
   sheetPlayerTxScenario: 'cut',
@@ -284,6 +296,7 @@ const inMemorySharedVoiceKeys = new Map();
 let cachedMonteCarloKey = '';
 let cachedMonteCarloResult = null;
 let activeJargonAnchor = null;
+let remoteSheetRequestSeq = 0;
 
 function getCapMovesForYear(yearKey = '2026') {
   const yr = String(yearKey || '2026');
@@ -1424,8 +1437,15 @@ function renderStatRankModal() {
     return;
   }
 
+  const remoteLeaderboardAppData =
+    state.sheetMode === 'player' &&
+    state.sheetRemoteContext?.bundle?.ok &&
+    state.sheetRemoteContext.bundle.appData?.roster?.positionalLeaderboards?.[state.rankModal.key]
+      ? state.sheetRemoteContext.bundle.appData
+      : null;
+
   const model = resolveLeaderboardModalModel({
-    appData: state.appData,
+    appData: remoteLeaderboardAppData || state.appData,
     scope: state.rankModal.scope,
     key: state.rankModal.key,
     playerId: state.rankModal.playerId
@@ -1450,12 +1470,18 @@ function renderStatRankModal() {
         ? renderTeamLogoHtml(r.id, r.logoUrl, 26)
         : renderPlayerAvatarHtml({ name: r.title, headshotUrl: r.headshotUrl }, 28);
 
+    const oppRowTeam =
+      model.scope === 'player' && !r.is49erTeammate && !r.isHighlighted && r.teamAbbr
+        ? resolveNflTeamMeta(r.teamAbbr)
+        : null;
     const nameHtml =
       r.is49erTeammate && r.sfPlayerId
         ? `<button type="button" class="inline-player-link" style="background:none;border:0;padding:0;font:inherit;text-align:left" data-action="open-player-from-rank-modal" data-player-id="${esc(r.sfPlayerId)}"><strong>${esc(r.title)}</strong></button>`
-        : r.extUrl
-          ? `<a href="${esc(r.extUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(r.title)}</strong></a>`
-          : `<strong>${esc(r.title)}</strong>`;
+        : oppRowTeam && oppRowTeam.abbr !== ACTIVE_TEAM.abbr
+          ? `<button type="button" class="inline-player-link" style="background:none;border:0;padding:0;font:inherit;text-align:left" data-action="open-opponent-player-from-rank-modal" data-opp-team="${esc(oppRowTeam.abbr)}" data-opp-player-name="${esc(r.title)}"${r.playerPos ? ` data-opp-player-pos="${esc(r.playerPos)}"` : ''}${r.espnUrl ? ` data-opp-espn-url="${esc(r.espnUrl)}"` : ''}><strong>${esc(r.title)}</strong></button>`
+          : r.extUrl
+            ? `<a href="${esc(r.extUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(r.title)}</strong></a>`
+            : `<strong>${esc(r.title)}</strong>`;
 
     rowsHtml.push(`
       <div class="rank-modal-row ${r.isHighlighted ? 'highlighted' : ''}" ${r.isHighlighted ? 'data-rank-highlight="true"' : ''} data-rank-num="${r.rank}">
@@ -1613,6 +1639,162 @@ function openUniversalSearchSheet({ seedFromActiveFeed = false } = {}) {
   focusUniversalSearchInput({ moveCursorToEnd: true });
 }
 
+const REMOTE_SHEET_THEME_VAR_KEYS = [
+  '--scarlet',
+  '--scarlet-bright',
+  '--scarlet-soft',
+  '--gold',
+  '--gold-bright',
+  '--gold-soft',
+  '--gold-border',
+  '--dossier-hero-glow-primary',
+  '--dossier-hero-glow-secondary',
+  '--pill-active-shadow'
+];
+
+function applyRemoteTeamThemeToSheet(teamMeta = null) {
+  const sheetEl = document.getElementById('bottomSheetContainer');
+  if (!sheetEl) return;
+  if (!teamMeta || teamMeta.abbr === ACTIVE_TEAM.abbr) {
+    sheetEl.removeAttribute('data-remote-team');
+    sheetEl.removeAttribute('data-remote-team-slug');
+    for (const k of REMOTE_SHEET_THEME_VAR_KEYS) {
+      sheetEl.style.removeProperty(k);
+    }
+    return;
+  }
+  const themeMode = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const vars = getRemoteTeamSheetThemeVars(teamMeta, themeMode) || {};
+  sheetEl.setAttribute('data-remote-team', teamMeta.abbr);
+  sheetEl.setAttribute('data-remote-team-slug', teamMeta.slug);
+  for (const [k, v] of Object.entries(vars)) {
+    sheetEl.style.setProperty(k, v);
+  }
+}
+
+async function openOpponentPlayerSheet({
+  teamAbbr = '',
+  playerId = '',
+  playerName = '',
+  position = '',
+  espnUrl = '',
+  initialTab = 'overview',
+  forceRefresh = false
+} = {}) {
+  const teamMeta = resolveNflTeamMeta(teamAbbr);
+  if (!teamMeta) return;
+
+  // If the resolved team is the currently active team site, open local dossier directly
+  if (teamMeta.abbr === ACTIVE_TEAM.abbr) {
+    const localPlayers = state.appData?.roster?.players || [];
+    const localPlayer =
+      (playerId && getPlayerById(playerId)) ||
+      findPlayerInTeamRoster(localPlayers, { playerId, name: playerName, position });
+    if (localPlayer) {
+      state.sheetRemoteContext = null;
+      state.sheetMode = 'player';
+      state.sheetPlayerId = localPlayer.id;
+      state.sheetPlayerTab = initialTab || 'overview';
+      state.sheetPlayerStatsMode = '2026';
+      state.sheetPlayerTxScenario = 'cut';
+      state.sheetPlayerMentionsSort = 'top';
+      renderSheet();
+    }
+    return;
+  }
+
+  const matchupData = state.appData?.scheduleMatchup?.upcomingMatchup || null;
+  const seedPlayer = buildOpponentSeedPlayer({
+    teamMeta,
+    playerId,
+    playerName,
+    matchupData:
+      String(matchupData?.oppAbbr || '').toUpperCase() === teamMeta.abbr ? matchupData : null,
+    extraSeed: { id: playerId, name: playerName, position, espnUrl }
+  });
+
+  const cachedBundle = !forceRefresh ? getCachedRemoteTeamBundle(teamMeta) : null;
+  if (cachedBundle?.ok) {
+    const remotePlayer = findPlayerInTeamRoster(cachedBundle.appData?.roster?.players, {
+      playerId: seedPlayer.id,
+      name: seedPlayer.name,
+      position: seedPlayer.position
+    });
+    remoteSheetRequestSeq += 1;
+    state.sheetMode = 'player';
+    state.sheetPlayerId = remotePlayer?.id || seedPlayer.id;
+    state.sheetPlayerTab = initialTab || 'overview';
+    state.sheetPlayerStatsMode = '2026';
+    state.sheetPlayerTxScenario = 'cut';
+    state.sheetPlayerMentionsSort = 'top';
+    state.sheetRemoteContext = {
+      teamMeta,
+      query: { playerId: seedPlayer.id, name: seedPlayer.name, position: seedPlayer.position, espnUrl },
+      seedPlayer,
+      bundle: cachedBundle,
+      remotePlayer: remotePlayer || null,
+      status: remotePlayer ? 'ready' : 'fallback',
+      error: remotePlayer ? null : 'Player not listed on remote roster'
+    };
+    renderSheet();
+    return;
+  }
+
+  const reqSeq = ++remoteSheetRequestSeq;
+  state.sheetMode = 'player';
+  state.sheetPlayerId = seedPlayer.id;
+  state.sheetPlayerTab = initialTab || 'overview';
+  state.sheetPlayerStatsMode = '2026';
+  state.sheetPlayerTxScenario = 'cut';
+  state.sheetPlayerMentionsSort = 'top';
+  state.sheetRemoteContext = {
+    teamMeta,
+    query: { playerId: seedPlayer.id, name: seedPlayer.name, position: seedPlayer.position, espnUrl },
+    seedPlayer,
+    bundle: null,
+    remotePlayer: null,
+    status: 'loading',
+    error: null
+  };
+  renderSheet();
+
+  const bundle = await fetchRemoteTeamBundle(teamMeta, { forceRefresh });
+  if (
+    reqSeq !== remoteSheetRequestSeq ||
+    state.sheetMode !== 'player' ||
+    state.sheetRemoteContext?.teamMeta?.abbr !== teamMeta.abbr
+  ) {
+    return;
+  }
+
+  if (bundle?.ok) {
+    const remotePlayer = findPlayerInTeamRoster(bundle.appData?.roster?.players, {
+      playerId: seedPlayer.id,
+      name: seedPlayer.name,
+      position: seedPlayer.position
+    });
+    if (remotePlayer?.id) {
+      state.sheetPlayerId = remotePlayer.id;
+    }
+    state.sheetRemoteContext = {
+      ...state.sheetRemoteContext,
+      bundle,
+      remotePlayer: remotePlayer || null,
+      status: remotePlayer ? 'ready' : 'fallback',
+      error: remotePlayer ? null : 'Player not listed on remote roster'
+    };
+  } else {
+    state.sheetRemoteContext = {
+      ...state.sheetRemoteContext,
+      bundle: bundle || null,
+      remotePlayer: null,
+      status: 'fallback',
+      error: bundle?.error || 'Unavailable'
+    };
+  }
+  renderSheet({ preserveScroll: true });
+}
+
 function renderSheet({ preserveScroll = false } = {}) {
   const backdrop = document.getElementById('bottomSheetBackdrop');
   const eyebrow = document.getElementById('sheetEyebrow');
@@ -1621,6 +1803,8 @@ function renderSheet({ preserveScroll = false } = {}) {
   if (!backdrop || !body) return;
 
   if (!state.sheetMode) {
+    state.sheetRemoteContext = null;
+    applyRemoteTeamThemeToSheet(null);
     backdrop.hidden = true;
     backdrop.removeAttribute('data-sheet-mode');
     document.body.classList.remove('sheet-open');
@@ -1644,8 +1828,69 @@ function renderSheet({ preserveScroll = false } = {}) {
   syncLiveWireButtonsDom();
 
   preserveFocusAroundRender(() => {
-    registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
-    if (state.sheetMode === 'player') {
+    registerRosterPlayersForInlineLinks(state.appData?.roster?.players, {
+      teamAbbr: ACTIVE_TEAM.abbr,
+      activeTeamAbbr: ACTIVE_TEAM.abbr
+    });
+    if (state.sheetMode === 'player' && state.sheetRemoteContext?.teamMeta) {
+      const remoteCtx = state.sheetRemoteContext;
+      applyRemoteTeamThemeToSheet(remoteCtx.teamMeta);
+      const merged = mergeRemoteAndLocalOpponentPlayer({
+        remotePlayer: remoteCtx.remotePlayer,
+        remoteBundle: remoteCtx.bundle,
+        seedPlayer: remoteCtx.seedPlayer,
+        teamMeta: remoteCtx.teamMeta,
+        activeTeamAbbr: ACTIVE_TEAM.abbr,
+        localNewsRawStream: state.appData?.news?.rawStream || []
+      });
+      const player = merged.player;
+      if (eyebrow) {
+        eyebrow.textContent = player
+          ? `${remoteCtx.teamMeta.abbr} • ${player.position} • #${player.jersey ?? '—'}`
+          : `${remoteCtx.teamMeta.abbr} Dossier`;
+      }
+      if (title) title.textContent = player ? player.name : 'Player Dossier';
+      try {
+        registerRosterPlayersForInlineLinks(merged.appData?.roster?.players || [], {
+          teamAbbr: remoteCtx.teamMeta.abbr,
+          activeTeamAbbr: ACTIVE_TEAM.abbr
+        });
+        body.innerHTML = renderPlayerDossierSheetHtml({
+          player,
+          activeTab: state.sheetPlayerTab,
+          statsMode: state.sheetPlayerStatsMode,
+          txScenario: state.sheetPlayerTxScenario,
+          mentionsSortMode: state.sheetPlayerMentionsSort,
+          rawStream: merged.rawStream,
+          appData: merged.appData,
+          userPrefs: state.prefs,
+          reportersById: merged.reportersById,
+          activeVideosSet: state.activeVideosSet,
+          teamContext: merged.teamContext,
+          remoteStatus: {
+            state: remoteCtx.status,
+            error: remoteCtx.error
+          }
+        });
+      } finally {
+        registerRosterPlayersForInlineLinks(state.appData?.roster?.players, {
+          teamAbbr: ACTIVE_TEAM.abbr,
+          activeTeamAbbr: ACTIVE_TEAM.abbr
+        });
+      }
+      if (openStatExpanders && openStatExpanders.size > 0) {
+        body.querySelectorAll('details[data-player-stats-expander]').forEach(el => {
+          const secId = el.getAttribute('data-player-stats-expander');
+          if (secId && openStatExpanders.has(secId)) el.open = true;
+        });
+      }
+      if (preserveScroll) {
+        body.scrollTop = prevScrollTop;
+      } else {
+        body.scrollTop = 0;
+      }
+    } else if (state.sheetMode === 'player') {
+      applyRemoteTeamThemeToSheet(null);
       const player = getPlayerById(state.sheetPlayerId);
       if (eyebrow) eyebrow.textContent = player ? `${player.position} • #${player.jersey ?? '—'}` : 'Player Dossier';
       if (title) title.textContent = player ? player.name : 'Player Dossier';
@@ -1673,6 +1918,7 @@ function renderSheet({ preserveScroll = false } = {}) {
         body.scrollTop = 0;
       }
     } else if (state.sheetMode === 'settings') {
+      applyRemoteTeamThemeToSheet(null);
       if (eyebrow) eyebrow.textContent = 'Preferences';
       if (title) title.textContent = 'Settings';
       body.innerHTML = renderSettingsSheetHtml({
@@ -1683,6 +1929,7 @@ function renderSheet({ preserveScroll = false } = {}) {
       });
       if (!preserveScroll) body.scrollTop = 0;
     } else if (state.sheetMode === 'search') {
+      applyRemoteTeamThemeToSheet(null);
       if (eyebrow) eyebrow.textContent = ACTIVE_TEAM.brandName;
       if (title) title.textContent = 'Search';
       const filteredRawItems = getFilteredRawItemsForSearch();
@@ -2346,6 +2593,7 @@ function bindEvents() {
         const target = getPlayerById(pid);
         if (target) {
           if (state.universalSearchQuery.trim()) saveRecentSearchTerm(state.universalSearchQuery.trim());
+          state.sheetRemoteContext = null;
           state.sheetMode = 'player';
           state.sheetPlayerId = target.id;
           state.sheetPlayerTab = 'overview';
@@ -2534,11 +2782,46 @@ function bindEvents() {
         const pid = btn.getAttribute('data-player-id');
         const player = getPlayerById(pid);
         if (player) {
+          state.sheetRemoteContext = null;
           state.sheetMode = 'player';
           state.sheetPlayerId = player.id;
           state.sheetPlayerTab = btn.getAttribute('data-initial-tab') || 'overview';
           state.sheetPlayerMentionsSort = 'top';
           renderSheet();
+        }
+        break;
+      }
+
+      case 'open-opponent-player-sheet': {
+        const teamAbbr = btn.getAttribute('data-opp-team') || '';
+        const oppPid = btn.getAttribute('data-opp-player-id') || '';
+        const oppName = btn.getAttribute('data-opp-player-name') || '';
+        const oppPos = btn.getAttribute('data-opp-player-pos') || '';
+        const oppEspnUrl = btn.getAttribute('data-opp-espn-url') || '';
+        const initialTab = btn.getAttribute('data-initial-tab') || 'overview';
+        void openOpponentPlayerSheet({
+          teamAbbr,
+          playerId: oppPid,
+          playerName: oppName,
+          position: oppPos,
+          espnUrl: oppEspnUrl,
+          initialTab
+        });
+        break;
+      }
+
+      case 'retry-remote-player-sheet': {
+        const rc = state.sheetRemoteContext;
+        if (rc?.teamMeta) {
+          void openOpponentPlayerSheet({
+            teamAbbr: rc.teamMeta.abbr,
+            playerId: rc.query?.playerId || '',
+            playerName: rc.query?.name || '',
+            position: rc.query?.position || '',
+            espnUrl: rc.query?.espnUrl || '',
+            initialTab: state.sheetPlayerTab || 'overview',
+            forceRefresh: true
+          });
         }
         break;
       }
@@ -2774,12 +3057,29 @@ function bindEvents() {
         const targetPlayer = getPlayerById(pid);
         closeStatRankModal();
         if (targetPlayer) {
+          state.sheetRemoteContext = null;
           state.sheetMode = 'player';
           state.sheetPlayerId = targetPlayer.id;
           state.sheetPlayerTab = 'stats';
           state.sheetPlayerMentionsSort = 'top';
           renderSheet();
         }
+        break;
+      }
+
+      case 'open-opponent-player-from-rank-modal': {
+        const teamAbbr = btn.getAttribute('data-opp-team') || '';
+        const oppName = btn.getAttribute('data-opp-player-name') || '';
+        const oppPos = btn.getAttribute('data-opp-player-pos') || '';
+        const oppEspnUrl = btn.getAttribute('data-opp-espn-url') || '';
+        closeStatRankModal();
+        void openOpponentPlayerSheet({
+          teamAbbr,
+          playerName: oppName,
+          position: oppPos,
+          espnUrl: oppEspnUrl,
+          initialTab: 'stats'
+        });
         break;
       }
 
@@ -2827,9 +3127,26 @@ function bindEvents() {
         renderMain();
         break;
 
-      case 'sync-live-wire-now':
-        await pollLowLatencyTweetAndInjuryWire(true);
+      case 'sync-live-wire-now': {
+        const rc = state.sheetMode === 'player' ? state.sheetRemoteContext : null;
+        if (rc?.teamMeta) {
+          await Promise.allSettled([
+            openOpponentPlayerSheet({
+              teamAbbr: rc.teamMeta.abbr,
+              playerId: rc.query?.playerId || '',
+              playerName: rc.query?.name || '',
+              position: rc.query?.position || '',
+              espnUrl: rc.query?.espnUrl || '',
+              initialTab: state.sheetPlayerTab || 'overview',
+              forceRefresh: true
+            }),
+            pollLowLatencyTweetAndInjuryWire(true)
+          ]);
+        } else {
+          await pollLowLatencyTweetAndInjuryWire(true);
+        }
         break;
+      }
 
       case 'set-pod-format': {
         const nextFmt = btn.getAttribute('data-format') === 'solo' ? 'solo' : 'two_host';
@@ -3852,7 +4169,9 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
 async function pollLowLatencyTweetAndInjuryWire(manual = false) {
   if (!state.appData) return;
   const requestedFocusPlayerId =
-    state.sheetMode === 'player' && state.sheetPlayerId ? String(state.sheetPlayerId) : null;
+    state.sheetMode === 'player' && !state.sheetRemoteContext && state.sheetPlayerId
+      ? String(state.sheetPlayerId)
+      : null;
 
   if (isBackgroundSyncing) {
     if (manual) {
@@ -3906,7 +4225,9 @@ async function pollLowLatencyTweetAndInjuryWire(manual = false) {
         queuedManualSync = null;
         const effectiveFocus =
           nextReq.focusPlayerId ||
-          (state.sheetMode === 'player' && state.sheetPlayerId ? String(state.sheetPlayerId) : null);
+          (state.sheetMode === 'player' && !state.sheetRemoteContext && state.sheetPlayerId
+            ? String(state.sheetPlayerId)
+            : null);
         activeWirePollMeta = {
           manual: true,
           focusPlayerId: effectiveFocus,
@@ -4022,7 +4343,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
     if (queuedManualSync && state.appData) {
       const pendingFocus = queuedManualSync.focusPlayerId;
       queuedManualSync = null;
-      if (pendingFocus && state.sheetMode === 'player') {
+      if (pendingFocus && state.sheetMode === 'player' && !state.sheetRemoteContext) {
         state.sheetPlayerId = pendingFocus;
       }
       pollLowLatencyTweetAndInjuryWire(true);
@@ -4278,6 +4599,11 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       }),
       getState: () => state,
       openSharedUrl: loc => handleIncomingSharedLink(loc),
+      openOpponentPlayerSheet: opts => openOpponentPlayerSheet(opts),
+      clearRemoteTeamCache: () => clearRemoteTeamCache(),
+      setRemoteTeamDataBaseOverride: override => {
+        globalThis.__REMOTE_TEAM_DATA_BASE_OVERRIDE__ = override || null;
+      },
       syncSharedGeminiKey: (opts = {}) => syncSharedGeminiKeyAcrossTeams({ triggerBriefs: false, ...opts }),
       forceRender: () => {
         renderMain();
