@@ -378,7 +378,7 @@ function renderGeminiConnectionStatusCard(
         ${
           hasSharedItemAbove
             ? 'No API key needed to listen above. Add one below only to generate new custom episodes.'
-            : 'Saved privately on this device. Unlocks Auto Pod and on-demand AI Analysis.'
+            : 'Saved privately on this device & shared across all 32 NFL team apps. Unlocks Auto Pod and AI Analysis.'
         }
       </div>
       <div class="gemini-key-row">

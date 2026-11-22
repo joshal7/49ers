@@ -93,6 +93,7 @@ import {
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
 import { refreshLiveStandingsMetricsInTeamStats } from '../engine/statsLeaderboardEngine.js';
+import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js';
 
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
 const LEGACY_WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v1';
@@ -357,6 +358,7 @@ export const DEFAULT_USER_PREFS = {
   defaultPodDurationMin: 3, // 2..20
   workerBaseUrl: '',
   geminiApiKey: '',
+  geminiApiKeyUpdatedAt: 0,
   geminiNewsApiKey: '',
   verifiedGeminiModel: '',
   geminiApiBaseUrl: '',
@@ -373,109 +375,120 @@ export const DEFAULT_USER_PREFS = {
 export function loadUserPrefs() {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return structuredCloneFallback(DEFAULT_USER_PREFS);
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-      return structuredCloneFallback(DEFAULT_USER_PREFS);
+    let prefs = structuredCloneFallback(DEFAULT_USER_PREFS);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        const orderIsV3 = parsed.dashboardOrderVersion === 3;
+        const themeIsV2 = parsed.themeDefaultVersion === 2;
+        prefs = {
+          ...prefs,
+          ...parsed,
+          theme: themeIsV2 && (parsed.theme === 'dark' || parsed.theme === 'light') ? parsed.theme : 'light',
+          themeDefaultVersion: 2,
+          dashboardOrderVersion: 3,
+          dashboardOrder: orderIsV3 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
+          hiddenHomeBlockIds:
+            orderIsV3 && Array.isArray(parsed.hiddenHomeBlockIds) ? parsed.hiddenHomeBlockIds : [],
+          pinnedHomeBlockIds:
+            orderIsV3 && Array.isArray(parsed.pinnedHomeBlockIds) ? parsed.pinnedHomeBlockIds : [],
+          disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
+          disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
+          geminiApiKey: typeof parsed.geminiApiKey === 'string' ? parsed.geminiApiKey.trim() : '',
+          geminiApiKeyUpdatedAt:
+            Number.isFinite(Number(parsed.geminiApiKeyUpdatedAt)) && Number(parsed.geminiApiKeyUpdatedAt) > 0
+              ? Math.floor(Number(parsed.geminiApiKeyUpdatedAt))
+              : 0,
+          geminiNewsApiKey: typeof parsed.geminiNewsApiKey === 'string' ? parsed.geminiNewsApiKey.trim() : '',
+          podFormat: parsed.podFormat === 'solo' ? 'solo' : 'two_host',
+          defaultPodDurationMin:
+            Number.isFinite(Number(parsed.defaultPodDurationMin)) && Number(parsed.defaultPodDurationMin) >= 2
+              ? Math.min(20, Math.round(Number(parsed.defaultPodDurationMin)))
+              : 3,
+          verifiedGeminiModel:
+            typeof parsed.verifiedGeminiModel === 'string' ? parsed.verifiedGeminiModel.trim() : '',
+          geminiApiBaseUrl:
+            typeof parsed.geminiApiBaseUrl === 'string' ? parsed.geminiApiBaseUrl.trim() : '',
+          capSelectedYear: typeof parsed.capSelectedYear === 'string' ? parsed.capSelectedYear : null,
+          capMoves: parsed.capMoves && typeof parsed.capMoves === 'object' ? parsed.capMoves : {},
+          capMovesByYear:
+            parsed.capMovesByYear && typeof parsed.capMovesByYear === 'object' && !Array.isArray(parsed.capMovesByYear)
+              ? parsed.capMovesByYear
+              : {},
+          playoffForcedWinners:
+            parsed.playoffForcedWinners && typeof parsed.playoffForcedWinners === 'object'
+              ? parsed.playoffForcedWinners
+              : {},
+          localCustomAnalyses: Array.isArray(parsed.localCustomAnalyses) ? parsed.localCustomAnalyses : [],
+          localCustomEpisodes: Array.isArray(parsed.localCustomEpisodes) ? parsed.localCustomEpisodes : [],
+          deletedEpisodeIds: Array.isArray(parsed.deletedEpisodeIds) ? parsed.deletedEpisodeIds : [],
+          deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : [],
+          newsSortMode: parsed.newsSortMode === 'latest' ? 'latest' : 'top',
+          groupSimilarStories: parsed.groupSimilarStories !== false,
+          feedDensity: parsed.feedDensity === 'compact' ? 'compact' : 'rich',
+          lastVisitedAt:
+            typeof parsed.lastVisitedAt === 'string' && !Number.isNaN(Date.parse(parsed.lastVisitedAt))
+              ? parsed.lastVisitedAt
+              : null,
+          readItemKeys: Array.isArray(parsed.readItemKeys)
+            ? parsed.readItemKeys.filter(k => typeof k === 'string' && k.length > 0).slice(-400)
+            : [],
+          pushAlerts: {
+            enabled: Boolean(parsed.pushAlerts?.enabled),
+            channels: {
+              tier1Breaking: parsed.pushAlerts?.channels?.tier1Breaking !== false,
+              dailyBriefReady: parsed.pushAlerts?.channels?.dailyBriefReady !== false,
+              practiceDowngrades: Boolean(parsed.pushAlerts?.channels?.practiceDowngrades)
+            },
+            subscribedAt: typeof parsed.pushAlerts?.subscribedAt === 'string' ? parsed.pushAlerts.subscribedAt : null,
+            endpoint: typeof parsed.pushAlerts?.endpoint === 'string' ? parsed.pushAlerts.endpoint : ''
+          },
+          deltaSnapshots:
+            parsed.deltaSnapshots && typeof parsed.deltaSnapshots === 'object' && !Array.isArray(parsed.deltaSnapshots)
+              ? {
+                  week: Number.isFinite(Number(parsed.deltaSnapshots.week)) ? Number(parsed.deltaSnapshots.week) : null,
+                  healthWeek: Number.isFinite(Number(parsed.deltaSnapshots.healthWeek))
+                    ? Number(parsed.deltaSnapshots.healthWeek)
+                    : Number.isFinite(Number(parsed.deltaSnapshots.week))
+                      ? Number(parsed.deltaSnapshots.week)
+                      : null,
+                  healthByPlayer:
+                    parsed.deltaSnapshots.healthByPlayer && typeof parsed.deltaSnapshots.healthByPlayer === 'object'
+                      ? parsed.deltaSnapshots.healthByPlayer
+                      : {},
+                  oppHealthKey:
+                    typeof parsed.deltaSnapshots.oppHealthKey === 'string' ? parsed.deltaSnapshots.oppHealthKey : null,
+                  oppHealthByPlayer:
+                    parsed.deltaSnapshots.oppHealthByPlayer && typeof parsed.deltaSnapshots.oppHealthByPlayer === 'object'
+                      ? parsed.deltaSnapshots.oppHealthByPlayer
+                      : {},
+                  statsByKey:
+                    parsed.deltaSnapshots.statsByKey && typeof parsed.deltaSnapshots.statsByKey === 'object'
+                      ? parsed.deltaSnapshots.statsByKey
+                      : {},
+                  playoffBaseline:
+                    parsed.deltaSnapshots.playoffBaseline && typeof parsed.deltaSnapshots.playoffBaseline === 'object'
+                      ? parsed.deltaSnapshots.playoffBaseline
+                      : null
+                }
+              : {
+                  week: null,
+                  healthWeek: null,
+                  healthByPlayer: {},
+                  oppHealthKey: null,
+                  oppHealthByPlayer: {},
+                  statsByKey: {},
+                  playoffBaseline: null
+                }
+        };
+      }
     }
-    const orderIsV3 = parsed.dashboardOrderVersion === 3;
-    const themeIsV2 = parsed.themeDefaultVersion === 2;
-    return {
-      ...structuredCloneFallback(DEFAULT_USER_PREFS),
-      ...parsed,
-      theme: themeIsV2 && (parsed.theme === 'dark' || parsed.theme === 'light') ? parsed.theme : 'light',
-      themeDefaultVersion: 2,
-      dashboardOrderVersion: 3,
-      dashboardOrder: orderIsV3 && Array.isArray(parsed.dashboardOrder) ? parsed.dashboardOrder : [],
-      hiddenHomeBlockIds:
-        orderIsV3 && Array.isArray(parsed.hiddenHomeBlockIds) ? parsed.hiddenHomeBlockIds : [],
-      pinnedHomeBlockIds:
-        orderIsV3 && Array.isArray(parsed.pinnedHomeBlockIds) ? parsed.pinnedHomeBlockIds : [],
-      disabledReporterIds: Array.isArray(parsed.disabledReporterIds) ? parsed.disabledReporterIds : [],
-      disabledOutlets: Array.isArray(parsed.disabledOutlets) ? parsed.disabledOutlets : [],
-      geminiApiKey: typeof parsed.geminiApiKey === 'string' ? parsed.geminiApiKey.trim() : '',
-      geminiNewsApiKey: typeof parsed.geminiNewsApiKey === 'string' ? parsed.geminiNewsApiKey.trim() : '',
-      podFormat: parsed.podFormat === 'solo' ? 'solo' : 'two_host',
-      defaultPodDurationMin:
-        Number.isFinite(Number(parsed.defaultPodDurationMin)) && Number(parsed.defaultPodDurationMin) >= 2
-          ? Math.min(20, Math.round(Number(parsed.defaultPodDurationMin)))
-          : 3,
-      verifiedGeminiModel:
-        typeof parsed.verifiedGeminiModel === 'string' ? parsed.verifiedGeminiModel.trim() : '',
-      geminiApiBaseUrl:
-        typeof parsed.geminiApiBaseUrl === 'string' ? parsed.geminiApiBaseUrl.trim() : '',
-      capSelectedYear: typeof parsed.capSelectedYear === 'string' ? parsed.capSelectedYear : null,
-      capMoves: parsed.capMoves && typeof parsed.capMoves === 'object' ? parsed.capMoves : {},
-      capMovesByYear:
-        parsed.capMovesByYear && typeof parsed.capMovesByYear === 'object' && !Array.isArray(parsed.capMovesByYear)
-          ? parsed.capMovesByYear
-          : {},
-      playoffForcedWinners:
-        parsed.playoffForcedWinners && typeof parsed.playoffForcedWinners === 'object'
-          ? parsed.playoffForcedWinners
-          : {},
-      localCustomAnalyses: Array.isArray(parsed.localCustomAnalyses) ? parsed.localCustomAnalyses : [],
-      localCustomEpisodes: Array.isArray(parsed.localCustomEpisodes) ? parsed.localCustomEpisodes : [],
-      deletedEpisodeIds: Array.isArray(parsed.deletedEpisodeIds) ? parsed.deletedEpisodeIds : [],
-      deletedAnalysisIds: Array.isArray(parsed.deletedAnalysisIds) ? parsed.deletedAnalysisIds : [],
-      newsSortMode: parsed.newsSortMode === 'latest' ? 'latest' : 'top',
-      groupSimilarStories: parsed.groupSimilarStories !== false,
-      feedDensity: parsed.feedDensity === 'compact' ? 'compact' : 'rich',
-      lastVisitedAt:
-        typeof parsed.lastVisitedAt === 'string' && !Number.isNaN(Date.parse(parsed.lastVisitedAt))
-          ? parsed.lastVisitedAt
-          : null,
-      readItemKeys: Array.isArray(parsed.readItemKeys)
-        ? parsed.readItemKeys.filter(k => typeof k === 'string' && k.length > 0).slice(-400)
-        : [],
-      pushAlerts: {
-        enabled: Boolean(parsed.pushAlerts?.enabled),
-        channels: {
-          tier1Breaking: parsed.pushAlerts?.channels?.tier1Breaking !== false,
-          dailyBriefReady: parsed.pushAlerts?.channels?.dailyBriefReady !== false,
-          practiceDowngrades: Boolean(parsed.pushAlerts?.channels?.practiceDowngrades)
-        },
-        subscribedAt: typeof parsed.pushAlerts?.subscribedAt === 'string' ? parsed.pushAlerts.subscribedAt : null,
-        endpoint: typeof parsed.pushAlerts?.endpoint === 'string' ? parsed.pushAlerts.endpoint : ''
-      },
-      deltaSnapshots:
-        parsed.deltaSnapshots && typeof parsed.deltaSnapshots === 'object' && !Array.isArray(parsed.deltaSnapshots)
-          ? {
-              week: Number.isFinite(Number(parsed.deltaSnapshots.week)) ? Number(parsed.deltaSnapshots.week) : null,
-              healthWeek: Number.isFinite(Number(parsed.deltaSnapshots.healthWeek))
-                ? Number(parsed.deltaSnapshots.healthWeek)
-                : Number.isFinite(Number(parsed.deltaSnapshots.week))
-                  ? Number(parsed.deltaSnapshots.week)
-                  : null,
-              healthByPlayer:
-                parsed.deltaSnapshots.healthByPlayer && typeof parsed.deltaSnapshots.healthByPlayer === 'object'
-                  ? parsed.deltaSnapshots.healthByPlayer
-                  : {},
-              oppHealthKey:
-                typeof parsed.deltaSnapshots.oppHealthKey === 'string' ? parsed.deltaSnapshots.oppHealthKey : null,
-              oppHealthByPlayer:
-                parsed.deltaSnapshots.oppHealthByPlayer && typeof parsed.deltaSnapshots.oppHealthByPlayer === 'object'
-                  ? parsed.deltaSnapshots.oppHealthByPlayer
-                  : {},
-              statsByKey:
-                parsed.deltaSnapshots.statsByKey && typeof parsed.deltaSnapshots.statsByKey === 'object'
-                  ? parsed.deltaSnapshots.statsByKey
-                  : {},
-              playoffBaseline:
-                parsed.deltaSnapshots.playoffBaseline && typeof parsed.deltaSnapshots.playoffBaseline === 'object'
-                  ? parsed.deltaSnapshots.playoffBaseline
-                  : null
-            }
-          : {
-              week: null,
-              healthWeek: null,
-              healthByPlayer: {},
-              oppHealthKey: null,
-              oppHealthByPlayer: {},
-              statsByKey: {},
-              playoffBaseline: null
-            }
-    };
+
+    const syncRes = reconcilePrefsWithSameOriginSharedKey(prefs);
+    if (syncRes.changed && (raw || prefs.geminiApiKey)) {
+      saveUserPrefs(prefs);
+    }
+    return prefs;
   } catch {
     return structuredCloneFallback(DEFAULT_USER_PREFS);
   }

@@ -34,7 +34,13 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=90';
+} from './services/dataService.js?v=91';
+import {
+  SHARED_GEMINI_KEY_STORAGE_KEY,
+  publishSharedGeminiApiKey,
+  publishClearedSharedGeminiApiKey,
+  syncPrefsWithSharedGeminiKeyVault
+} from './services/sharedApiKeyStore.js?v=1';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -3021,8 +3027,14 @@ function bindEvents() {
         btn.innerHTML = `${iconSvg('loader', 14, 'btn-spin-icon')}<span>Verifying…</span>`;
         try {
           const verified = await verifyGeminiApiKey(rawKey, state.prefs.geminiApiBaseUrl);
-          state.prefs.geminiApiKey = rawKey;
-          state.prefs.verifiedGeminiModel = verified.bestModel || '';
+          const published = await publishSharedGeminiApiKey({
+            apiKey: rawKey,
+            verifiedModel: verified.bestModel || '',
+            updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+          });
+          state.prefs.geminiApiKey = published.apiKey;
+          state.prefs.verifiedGeminiModel = published.verifiedModel;
+          state.prefs.geminiApiKeyUpdatedAt = published.updatedAt;
           saveUserPrefs(state.prefs);
           state.geminiKeyNotice = '';
           state.showGeminiKeyGuide = false;
@@ -3037,8 +3049,12 @@ function bindEvents() {
       }
 
       case 'clear-gemini-key': {
+        const cleared = await publishClearedSharedGeminiApiKey({
+          updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+        });
         state.prefs.geminiApiKey = '';
         state.prefs.verifiedGeminiModel = '';
+        state.prefs.geminiApiKeyUpdatedAt = cleared.updatedAt;
         saveUserPrefs(state.prefs);
         state.geminiKeyNotice = '';
         renderSheet();
@@ -3342,17 +3358,33 @@ function bindEvents() {
         if (passEl) state.prefs.groupPasscode = passEl.value.trim();
         if (urlEl) state.prefs.workerBaseUrl = urlEl.value.trim();
         if (geminiKeyEl) {
+          const prevKey = String(state.prefs.geminiApiKey || '').trim();
           const nextKey = geminiKeyEl.value.trim();
-          state.prefs.geminiApiKey = nextKey;
           if (!nextKey) {
+            state.prefs.geminiApiKey = '';
             state.prefs.verifiedGeminiModel = '';
+            if (prevKey) {
+              const cleared = await publishClearedSharedGeminiApiKey({
+                updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+              });
+              state.prefs.geminiApiKeyUpdatedAt = cleared.updatedAt;
+            }
           } else {
+            let nextModel = nextKey === prevKey ? state.prefs.verifiedGeminiModel || '' : '';
             try {
               const verified = await verifyGeminiApiKey(nextKey, state.prefs.geminiApiBaseUrl);
-              state.prefs.verifiedGeminiModel = verified.bestModel || '';
+              nextModel = verified.bestModel || nextModel;
             } catch {
               // Keep user's key saved even if offline or verifying later
             }
+            const published = await publishSharedGeminiApiKey({
+              apiKey: nextKey,
+              verifiedModel: nextModel,
+              updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+            });
+            state.prefs.geminiApiKey = published.apiKey;
+            state.prefs.verifiedGeminiModel = published.verifiedModel;
+            state.prefs.geminiApiKeyUpdatedAt = published.updatedAt;
           }
         }
         saveUserPrefs(state.prefs);
@@ -4224,6 +4256,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       }),
       getState: () => state,
       openSharedUrl: loc => handleIncomingSharedLink(loc),
+      syncSharedGeminiKey: (opts = {}) => syncSharedGeminiKeyAcrossTeams({ triggerBriefs: false, ...opts }),
       forceRender: () => {
         renderMain();
         if (state.sheetMode) renderSheet();
@@ -4295,11 +4328,43 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
   }
 }
 
+let sharedGeminiKeySyncPromise = null;
+
+async function syncSharedGeminiKeyAcrossTeams({ triggerBriefs = true, vaultUrlOverride = '' } = {}) {
+  if (sharedGeminiKeySyncPromise) return sharedGeminiKeySyncPromise;
+  sharedGeminiKeySyncPromise = (async () => {
+    try {
+      const res = await syncPrefsWithSharedGeminiKeyVault(state.prefs, { vaultUrlOverride });
+      if (res.changed) {
+        saveUserPrefs(state.prefs);
+        if (res.nextKey && res.nextKey !== res.prevKey) {
+          state.geminiKeyNotice = '';
+          state.showGeminiKeyGuide = false;
+          if (state.jobStatus?.error) state.jobStatus = null;
+          if (triggerBriefs && state.appData) {
+            triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
+          }
+        }
+        if (state.appData) renderMain();
+        if (state.sheetMode === 'settings') renderSheet();
+      }
+      return res;
+    } catch {
+      return { action: 'noop', changed: false, prevKey: '', nextKey: '', vaultChecked: false };
+    } finally {
+      sharedGeminiKeySyncPromise = null;
+    }
+  })();
+  return sharedGeminiKeySyncPromise;
+}
+
 async function init() {
   state.prefs = loadUserPrefs();
   applyTheme(state.prefs.theme);
   applyFeedDensity(state.prefs.feedDensity);
   state.newsSortMode = normalizeNewsSortMode(state.prefs.newsSortMode || 'top');
+  // Start cross-subdomain NFL key vault sync immediately in parallel with app data boot
+  syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
   // Preserve prior visit watermark for the entire active session so "N new since …" stays stable
   state.sessionLastVisitedAt = state.prefs.lastVisitedAt || null;
   if (!state.prefs.lastVisitedAt) {
@@ -4396,6 +4461,7 @@ async function init() {
       return;
     }
     if (document.visibilityState === 'visible') {
+      syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
       if (!state.appData) {
         bootOrRecoverAppData({ manual: false });
       } else if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
@@ -4408,6 +4474,7 @@ async function init() {
     }
   });
   window.addEventListener('focus', () => {
+    syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
     if (!state.appData) {
       bootOrRecoverAppData({ manual: false });
     } else if (Date.now() - lastWirePollMs >= 15_000) {
@@ -4416,7 +4483,13 @@ async function init() {
       triggerDailyTopNewsBriefSync();
     }
   });
+  window.addEventListener('storage', e => {
+    if (e.key === SHARED_GEMINI_KEY_STORAGE_KEY) {
+      syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
+    }
+  });
   window.addEventListener('online', () => {
+    syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
     if (!state.appData) {
       bootOrRecoverAppData({ manual: true });
     } else {
@@ -4486,7 +4559,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=110', { updateViaCache: 'none' })
+        .register('./sw.js?v=111', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

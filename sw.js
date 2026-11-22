@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v132';
+const CACHE_NAME = '49ers-faithful-v133';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -31,6 +31,7 @@ const CORE_ASSETS = [
   './src/components/spiderChart.js',
   './src/components/audioPlayer.js',
   './src/services/dataService.js',
+  './src/services/sharedApiKeyStore.js',
   './src/services/aiWorkerClient.js',
   './src/services/podcastAudioStore.js',
   './src/services/shareService.js',

@@ -16320,6 +16320,121 @@ test('Top News Brief Schedule Fidelity: zero false practice-report invalidations
   }
 });
 
+await testAsync(
+  'Cross-Team Shared Gemini API Key Store: strict 32-team allowlist, automatic backfill, LWW updates & zombie-proof clear tombstones',
+  async () => {
+    const {
+      ALLOWED_NFL_TEAM_SLUGS,
+      SHARED_GEMINI_KEY_STORAGE_KEY,
+      isAllowedNflTeamHostname,
+      shouldUseCrossSubdomainVault,
+      reconcileGeminiKeyState,
+      reconcilePrefsWithSameOriginSharedKey,
+      readSameOriginSharedGeminiKey,
+      writeSameOriginSharedGeminiKey
+    } = await import('../src/services/sharedApiKeyStore.js');
+
+    assert.equal(ALLOWED_NFL_TEAM_SLUGS.length, 34, 'Must include all 32 NFL teams + 49ers2 + nfl');
+    for (const slug of ['49ers', '49ers2', 'lions', 'bills', 'chiefs', 'eagles', 'cowboys', 'packers', 'nfl']) {
+      assert.equal(isAllowedNflTeamHostname(`${slug}.joshal.com`), true, `${slug}.joshal.com must be allowlisted`);
+    }
+    for (const blocked of [
+      'www.joshal.com',
+      'workouts.joshal.com',
+      'whisky.joshal.com',
+      'joshal.com',
+      'eviljoshal.com',
+      '49ers.joshal.com.evil.com',
+      'localhost',
+      '127.0.0.1',
+      'nfl-hq-canary.pages.dev'
+    ]) {
+      assert.equal(isAllowedNflTeamHostname(blocked), false, `${blocked} must NEVER be allowlisted`);
+    }
+
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: '49ers.joshal.com', origin: 'https://49ers.joshal.com' }),
+      true
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: 'lions.joshal.com', origin: 'https://lions.joshal.com' }),
+      true
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: 'nfl.joshal.com', origin: 'https://nfl.joshal.com' }),
+      false
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: '127.0.0.1', origin: 'http://127.0.0.1:8080' }),
+      false
+    );
+
+    const rEmpty = reconcileGeminiKeyState({ geminiApiKey: '', geminiApiKeyUpdatedAt: 0 }, null, 1000);
+    assert.equal(rEmpty.action, 'noop');
+    assert.equal(rEmpty.changed, false);
+
+    const rBackfill = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 0 },
+      null,
+      2000
+    );
+    assert.equal(rBackfill.action, 'push_local');
+    assert.equal(rBackfill.shouldPushToShared, true);
+    assert.equal(rBackfill.recordToPush.k, 'AIzaLegacy49ersKey');
+
+    const rApply = reconcileGeminiKeyState(
+      { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 },
+      { v: 1, k: 'AIzaLegacy49ersKey', m: 'gemini-4-hydrogen', t: 2000, c: 0 },
+      2500
+    );
+    assert.equal(rApply.action, 'apply_shared');
+    assert.equal(rApply.apiKey, 'AIzaLegacy49ersKey');
+
+    const rRotate = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-3.8-flash', geminiApiKeyUpdatedAt: 2000 },
+      { v: 1, k: 'AIzaRotatedNewKey', m: 'gemini-4-hydrogen', t: 3000, c: 0 },
+      3500
+    );
+    assert.equal(rRotate.action, 'apply_shared');
+    assert.equal(rRotate.apiKey, 'AIzaRotatedNewKey');
+
+    const rClear = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaRotatedNewKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 3000 },
+      { v: 1, k: '', m: '', t: 4000, c: 1 },
+      4500
+    );
+    assert.equal(rClear.action, 'apply_clear');
+    assert.equal(rClear.apiKey, '');
+
+    const rReconnect = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaReconnectedKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 5000 },
+      { v: 1, k: '', m: '', t: 4000, c: 1 },
+      5500
+    );
+    assert.equal(rReconnect.action, 'push_local');
+    assert.equal(rReconnect.recordToPush.k, 'AIzaReconnectedKey');
+
+    const map = new Map();
+    const memStorage = {
+      getItem: k => (map.has(k) ? map.get(k) : null),
+      setItem: (k, v) => map.set(k, String(v)),
+      removeItem: k => map.delete(k)
+    };
+    const teamAPrefs = { geminiApiKey: 'AIzaOneTimeKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 0 };
+    reconcilePrefsWithSameOriginSharedKey(teamAPrefs, { storage: memStorage, nowMs: 6000 });
+    assert.ok(Boolean(memStorage.getItem(SHARED_GEMINI_KEY_STORAGE_KEY)));
+
+    const teamBPrefs = { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 };
+    reconcilePrefsWithSameOriginSharedKey(teamBPrefs, { storage: memStorage, nowMs: 6100 });
+    assert.equal(teamBPrefs.geminiApiKey, 'AIzaOneTimeKey');
+
+    writeSameOriginSharedGeminiKey({ v: 1, k: '', m: '', t: 7000, c: 1 }, memStorage);
+    assert.equal(readSameOriginSharedGeminiKey(memStorage)?.c, 1);
+    reconcilePrefsWithSameOriginSharedKey(teamAPrefs, { storage: memStorage, nowMs: 7100 });
+    assert.equal(teamAPrefs.geminiApiKey, '');
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);
