@@ -25,7 +25,7 @@
 
 export const SHARED_GEMINI_KEY_STORAGE_KEY = 'joshal_nfl_shared_gemini_key_v1';
 export const SHARED_GEMINI_KEY_CHANNEL = 'joshal_nfl_key_sync_v1';
-export const DEFAULT_KEY_VAULT_URL = 'https://nfl.joshal.com/key-sync.html';
+export const DEFAULT_KEY_VAULT_URL = 'https://nfl.joshal.com/key-sync';
 export const DEFAULT_VAULT_TIMEOUT_MS = 2500;
 
 export const ALLOWED_NFL_TEAM_SLUGS = Object.freeze([
