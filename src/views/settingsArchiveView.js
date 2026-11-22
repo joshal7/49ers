@@ -307,6 +307,7 @@ export function renderSettingsSheetHtml({
           .map(r => {
             const enabled = !disabledReps.has(r.id);
             const repLink = sanitizeExternalUrl(r.xUrl || r.profileUrl, null);
+            const repLinkLabel = r.handle || (r.outletId === 'knbr_radio' ? 'KNBR 680' : 'Profile');
             const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
             const tierCls = tier === 1 ? 'badge-gold' : 'badge-neutral';
             const tierShort = tier === 1 ? 'Tier 1 Trusted' : tier === 2 ? 'Tier 2 Beat/Film' : 'Tier 3 Viable';
@@ -318,8 +319,10 @@ export function renderSettingsSheetHtml({
                     <span class="badge ${tierCls}" style="font-size:9.5px;padding:1px 6px">${esc(tierShort)}</span>
                     ${
                       repLink
-                        ? `<a href="${esc(repLink)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:var(--gold-bright);font-size:11px;display:inline-flex;align-items:center;gap:3px">${esc(r.handle)} ${iconSvg('externalLink', 10)}</a>`
-                        : `<span style="color:var(--gold-bright);font-size:11px">${esc(r.handle)}</span>`
+                        ? `<a href="${esc(repLink)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:var(--gold-bright);font-size:11px;display:inline-flex;align-items:center;gap:3px">${esc(repLinkLabel)} ${iconSvg('externalLink', 10)}</a>`
+                        : r.handle
+                          ? `<span style="color:var(--gold-bright);font-size:11px">${esc(r.handle)}</span>`
+                          : ''
                     }
                   </div>
                   <div style="font-size:11px;color:var(--text-secondary)">${esc(r.role)}</div>

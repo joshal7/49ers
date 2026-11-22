@@ -123,6 +123,7 @@ import {
 } from '../src/engine/digestExperienceEngine.js';
 import {
   extractBeatAttributionFromText,
+  resolveReporterFromNameOrHandle,
   corroborateAndAnnotateWireStream,
   buildXBeatListSearchUrl,
   buildXPlayerScoopSearchUrl,
@@ -3912,8 +3913,48 @@ await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranki
     'Pearsall worked on a side field Wednesday, Sam Warren of The Athletic reports.'
   );
   assert.equal(warrenAttr.reporterId, 'sam_warren');
-  assert.equal(warrenAttr.authorHandle, '@SamWarren_SF');
+  assert.equal(warrenAttr.authorHandle, '@samwarren83');
   assert.equal(warrenAttr.trustTier, 2);
+
+  // Legacy handle alias resolution normalizes updated handles cleanly (e.g. @dkurtenbach -> @dieter)
+  const dieterLegacy = resolveReporterFromNameOrHandle('@dkurtenbach');
+  assert.equal(dieterLegacy?.id, 'dieter_kurtenbach');
+  assert.equal(dieterLegacy?.handle, '@dieter');
+  assert.equal(dieterLegacy?.xUrl, 'https://x.com/dieter');
+
+  const crockerLegacy = resolveReporterFromNameOrHandle('@eric_crocker');
+  assert.equal(crockerLegacy?.id, 'eric_crocker');
+  assert.equal(crockerLegacy?.handle, '@Crocky209');
+
+  const jonnydelLegacy = resolveReporterFromNameOrHandle('@jonnydelsfa');
+  assert.equal(jonnydelLegacy?.id, 'jonnydel');
+  assert.equal(jonnydelLegacy?.handle, '@jonnydels');
+
+  const kruegerLegacy = resolveReporterFromNameOrHandle('@sportslarryknbr');
+  assert.equal(kruegerLegacy?.id, 'larry_krueger');
+  assert.equal(kruegerLegacy?.handle, '@sportslarryk');
+
+  const grahamChannelAlias = resolveReporterFromNameOrHandle('@TheSFNiners');
+  assert.equal(grahamChannelAlias?.id, 'brad_graham');
+  assert.equal(grahamChannelAlias?.handle, '@Graham_SFN');
+
+  const timRyanEntry = resolveReporterFromNameOrHandle('Tim Ryan');
+  assert.equal(timRyanEntry?.handle, '@TimRyan99');
+
+  const gregPapaEntry = resolveReporterFromNameOrHandle('Greg Papa');
+  assert.equal(gregPapaEntry?.handle, '');
+  assert.equal(gregPapaEntry?.xUrl, null);
+  assert.equal(gregPapaEntry?.profileUrl, 'https://www.knbr.com/49ers/');
+
+  const harrisonEntry = resolveReporterFromNameOrHandle('Harrison Rich');
+  assert.equal(harrisonEntry?.handle, '@harrisonrich_');
+
+  const livelyEntry = resolveReporterFromNameOrHandle('Matt Lively');
+  assert.equal(livelyEntry?.handle, '@mattblively');
+  assert.equal(livelyEntry?.outletName, 'CBS News Bay Area (KPIX)');
+
+  const peacockEntry = resolveReporterFromNameOrHandle('Brian Peacock');
+  assert.equal(peacockEntry?.handle, '@BDPeacock');
 
   const schefterEmoji = extractBeatAttributionFromText(
     '‼️ Schefter: 49ers are activating LB Tatum Bethune from injured reserve ahead of Sunday.'
@@ -4041,8 +4082,24 @@ await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranki
   const combinedDirectXQueries = ['trusted', 'film', 'insiders']
     .map(m => (new URL(buildXBeatListSearchUrl(m, { reporters: settingsReporters })).searchParams.get('q') || '').toLowerCase())
     .join(' ');
+  const retiredOrWrongHandles = new Set([
+    'dkurtenbach',
+    'samwarren_sf',
+    'noah_furtado',
+    'timryan49ers',
+    'gregpapa',
+    'eric_crocker',
+    'sportslarryknbr',
+    'jonnydelsfa',
+    'nflrums'
+  ]);
   for (const rep of settingsReporters) {
     const cleanHandle = String(rep.handle || '').replace(/^@/, '').toLowerCase();
+    assert.ok(
+      !retiredOrWrongHandles.has(cleanHandle),
+      `Stale or inaccurate X handle @${cleanHandle} must not appear in data/reporters.json (${rep.name})`
+    );
+    if (!cleanHandle) continue;
     assert.ok(
       combinedDirectXQueries.includes(`from:${cleanHandle}`),
       `Expected Settings Tier ${rep.trustTier} reporter ${rep.name} (@${cleanHandle}) to be included in Direct X Beat Lists`
@@ -4051,11 +4108,23 @@ await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranki
   const trustedQ = new URL(xTrustedUrl).searchParams.get('q') || '';
   assert.ok(
     trustedQ.includes('from:MaioccoNBCS') &&
-      trustedQ.includes('from:SamWarren_SF') &&
-      trustedQ.includes('from:noah_furtado') &&
-      trustedQ.includes('from:dkurtenbach') &&
-      trustedQ.includes('from:grantcohn'),
-    `Trusted Beat must include Tier 1, Tier 2, and Tier 3 49ers beat writers from Settings: ${trustedQ}`
+      trustedQ.includes('from:harrisonrich_') &&
+      trustedQ.includes('from:mattblively') &&
+      trustedQ.includes('from:dieter') &&
+      trustedQ.includes('from:grantcohn') &&
+      !trustedQ.includes('from:dkurtenbach') &&
+      !trustedQ.includes('from:GregPapa'),
+    `Trusted Beat must include verified Tier 1, Tier 2, and Tier 3 49ers beat writers from Settings: ${trustedQ}`
+  );
+  const filmQ = new URL(xFilmUrl).searchParams.get('q') || '';
+  assert.ok(
+    filmQ.includes('from:jonnydels') &&
+      filmQ.includes('from:TimRyan99') &&
+      filmQ.includes('from:Crocky209') &&
+      filmQ.includes('from:BDPeacock') &&
+      filmQ.includes('from:Graham_SFN') &&
+      filmQ.includes('from:sportslarryk'),
+    `Film & Analysts X list must use verified current handles: ${filmQ}`
   );
   const mutedTrustedQ = new URL(
     buildXBeatListSearchUrl('trusted', {
@@ -4064,7 +4133,7 @@ await testAsync('X-Beat Attribution, Trust-Tier + First-Mover Injury Scoop Ranki
     })
   ).searchParams.get('q') || '';
   assert.ok(
-    !mutedTrustedQ.includes('from:grantcohn') && !mutedTrustedQ.includes('from:dkurtenbach'),
+    !mutedTrustedQ.includes('from:grantcohn') && !mutedTrustedQ.includes('from:dieter'),
     `Direct X Beat Lists must respect Settings disabledReporterIds & muteHotTakePersonalities: ${mutedTrustedQ}`
   );
   assert.ok(xInjUrl.includes('MaioccoNBCS'));
@@ -11176,7 +11245,7 @@ await testAsync(
       author: 'NFL Trade Rumors',
       outletId: 'nfl_trade_rumors',
       outletName: 'NFL Trade Rumors',
-      authorHandle: '@nflrums',
+      authorHandle: '@nfltrade_rumors',
       title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
       fullText: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
       url: 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q',
@@ -11326,7 +11395,7 @@ await testAsync(
         author: 'NFL Trade Rumors',
         outletId: 'nfl_trade_rumors',
         outletName: 'NFL Trade Rumors',
-        authorHandle: '@nflrums',
+        authorHandle: '@nfltrade_rumors',
         title: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
         fullText: 'NFC Notes: Christian McCaffrey, Christian Parker, 49ers, Cowboys, Giants',
         url: 'https://bsky.app/profile/nfltraderumors.bsky.social/post/3n2k6eqwce32q',

@@ -213,8 +213,8 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     reporterId: 'dianna_russini',
     reporterName: 'Dianna Russini',
     authorHandle: '@DMRussini',
-    outletId: 'athletic',
-    outletName: 'The Athletic',
+    outletId: 'nfl_network',
+    outletName: 'The Russini Report',
     isNationalInsider: true
   },
   {
@@ -231,8 +231,8 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     actor: 'nfltraderumors.bsky.social',
     reporterId: null,
     reporterName: 'NFL Trade Rumors',
-    authorHandle: '@nflrums',
-    authorProfileUrl: 'https://x.com/nflrums',
+    authorHandle: '@nfltrade_rumors',
+    authorProfileUrl: 'https://x.com/nfltrade_rumors',
     outletId: 'nfl_trade_rumors',
     outletName: 'NFL Trade Rumors',
     isNationalInsider: true
@@ -273,7 +273,7 @@ export const FLAGSHIP_PODCAST_SHOWS_CLIENT = [
     id: '49ers_talk',
     collectionId: 1153457233,
     name: '49ers Talk',
-    hosts: 'Matt Maiocco & Laura Britt',
+    hosts: 'Matt Maiocco & Jennifer Lee Chan',
     network: 'NBC Sports Bay Area',
     feedUrl: 'https://feeds.simplecast.com/SCmnvidR',
     appleShowUrl: 'https://podcasts.apple.com/us/podcast/49ers-talk-a-san-francisco-49ers-podcast/id1153457233'
@@ -282,7 +282,7 @@ export const FLAGSHIP_PODCAST_SHOWS_CLIENT = [
     id: '49ers_plus_minus',
     collectionId: 1827546443,
     name: '49ers +/-',
-    hosts: 'Tim Kawakami & SF Standard Beat',
+    hosts: 'Tim Kawakami & Matt Barrows',
     network: 'The San Francisco Standard / Audacy',
     feedUrl: 'https://rss.amperwave.net/v2/feed/audacynetwork/49ers-plus-minus',
     appleShowUrl: 'https://podcasts.apple.com/us/podcast/49ers-plus-minus/id1827546443'

@@ -560,8 +560,8 @@ function renderBeatPodcastsDirectory({
       ? shows
       : [
           { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
-          { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Laura Britt' },
-          { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & SF Standard Beat' },
+          { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },
+          { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & Matt Barrows' },
           { id: 'dieter_and_hutch', name: 'Dieter and Hutch', hosts: 'Dieter Kurtenbach & Jake Hutchinson' },
           { id: 'locked_on_49ers', name: 'Locked On 49ers', hosts: 'Brian Peacock & Eric Crocker' },
           { id: 'lombardi_lounge', name: 'Lombardi Lounge', hosts: 'David Lombardi' }

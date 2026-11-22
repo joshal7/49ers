@@ -609,7 +609,7 @@ async function collectEdgeLiveWire(
   { maxXHydrate = 14, includeYouTube = true, useCache = true, writeCache = true } = {}
 ) {
   if (useCache) {
-    const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v5', 'json');
+    const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v6', 'json');
     if (cachedWire && Array.isArray(cachedWire.items)) {
       return { cached: true, ...cachedWire };
     }
@@ -622,7 +622,7 @@ async function collectEdgeLiveWire(
     { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', sfOnly: false },
     { outletId: 'pfrumors', outletName: 'Pro Football Rumors', url: 'https://www.profootballrumors.com/san-francisco-49ers/feed', sfOnly: false },
     { outletId: 'nfl_trade_rumors', outletName: 'NFL Trade Rumors', url: 'https://nfltraderumors.co/feed/', sfOnly: true },
-    { outletId: 'nfl_network', outletName: 'ProFootballTalk', url: 'https://www.nbcsports.com/nfl/profootballtalk.rss', sfOnly: true },
+    { outletId: 'nfl_network', outletName: 'ProFootballTalk', url: 'https://profootballtalk.nbcsports.com/feed/', sfOnly: true },
     { outletId: 'sf_standard', outletName: 'The SF Standard', url: 'https://www.sfstandard.com/sports/feed/', sfOnly: true }
   ];
 
@@ -702,7 +702,7 @@ async function collectEdgeLiveWire(
     if (otherTeamLeadRe.test(cleanBody)) return false;
     return sfPlayerRe.test(bodyClean);
   };
-  const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|49erswebzone|nbcs49ers|ninersnation|davidbonilla49)$/i;
+  const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|brianajeannel|graham_sfn|thesfNiners|49erswebzone|nbcs49ers|ninersnation)$/i;
   const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
   const discoveredStatusMap = new Map();
   const seenEdgeUrls = new Set();
@@ -927,7 +927,7 @@ async function collectEdgeLiveWire(
 
   const payload = { updatedAt: new Date().toISOString(), items };
   if (writeCache && env.SHARED_CACHE && items.length > 0 && includeYouTube && maxXHydrate >= 10) {
-    await env.SHARED_CACHE.put('wire:rss_live_v5', JSON.stringify(payload), { expirationTtl: 60 });
+    await env.SHARED_CACHE.put('wire:rss_live_v6', JSON.stringify(payload), { expirationTtl: 60 });
   }
   return { cached: false, ...payload };
 }

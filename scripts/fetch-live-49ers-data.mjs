@@ -2874,7 +2874,7 @@ async function main() {
           feedKey === 'pfrumors'
             ? 'https://www.profootballrumors.com/san-francisco-49ers'
             : feedKey === 'nflrums'
-              ? 'https://x.com/nflrums'
+              ? 'https://x.com/nfltrade_rumors'
               : (attr.xUrl || null),
         trustTier: attr.trustTier,
         isBreaking: brk.isBreaking,

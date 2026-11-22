@@ -235,7 +235,7 @@ export function classifyNewsItemCategory(item = {}) {
     const isTweetStreamClip = Boolean(item.videoStreamUrl) && (item.type === 'tweet' || item.type === 'social');
     const isDedicatedPureFilmChannel =
       (DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) ||
-        /\b(theqbschool|jonnydelsfa|jonnydel|baldynfl)\b/i.test(channelOrAuthor)) &&
+        /\b(theqbschool|jonnydels|jonnydelsfa|jonnydel|baldynfl)\b/i.test(channelOrAuthor)) &&
       !/\b(mailbag|q\s*&\s*a|live\s*stream\s*q&a|podcast)\b/i.test(title);
     const isTapeChannel = TRUE_FILM_VIDEO_CHANNEL_REGEX.test(channelOrAuthor);
     const isTapeTitle = TRUE_FILM_VIDEO_TITLE_REGEX.test(title);
@@ -3333,6 +3333,7 @@ const BARE_SECTION_ROOT_PATH_REGEX =
 
 const BRAND_SOCIAL_HANDLE_SET = new Set([
   '49erswebzone',
+  'nfltrade_rumors',
   'nflrums',
   'nfltraderumors',
   'pfrumors',
