@@ -271,7 +271,7 @@ export function renderSettingsSheetHtml({
             : ''
         }
         <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Gemini API Key (saved on device)</label>
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Gemini API Key (shared across all 32 NFL apps)</label>
           <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free Key ${iconSvg('externalLink', 10)}</a>
         </div>
         <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />
@@ -287,7 +287,7 @@ export function renderSettingsSheetHtml({
         </button>
         ${
           userPrefs.geminiApiKey
-            ? `<button type="button" class="btn-ghost" data-action="clear-gemini-key">
+            ? `<button type="button" class="btn-ghost" data-action="clear-gemini-key" title="Clears your Gemini API key across all 32 NFL team apps on this device">
                  ${iconSvg('trash', 13)}
                  <span>Clear Key</span>
                </button>`

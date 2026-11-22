@@ -18,7 +18,12 @@ import http from 'node:http';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
-import { buildNflPortalDist, getGroupedPortalTeams } from '../scripts/build-nfl-portal.mjs';
+import {
+  buildKeySyncVaultHtml,
+  buildNflPortalDist,
+  getGroupedPortalTeams,
+  getKeySyncAllowedOrigins
+} from '../scripts/build-nfl-portal.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -387,6 +392,154 @@ async function main() {
         await new Promise(r => setTimeout(r, 220));
         const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
         fs.writeFileSync(path.join(SCREENSHOT_DIR, 'iphone16-light.png'), Buffer.from(shot.data, 'base64'));
+      }
+    });
+
+    await test('dist-nfl/key-sync.html & _headers enforce strict 32-team allowlist + CSP (zero SmugMug/www leakage)', () => {
+      const vaultHtmlPath = path.join(ROOT, 'dist-nfl', 'key-sync.html');
+      const headersPath = path.join(ROOT, 'dist-nfl', '_headers');
+      assert.ok(fs.existsSync(vaultHtmlPath), 'dist-nfl/key-sync.html must be generated');
+      const vaultHtml = fs.readFileSync(vaultHtmlPath, 'utf8');
+      const headersTxt = fs.readFileSync(headersPath, 'utf8');
+      const allowedOrigins = getKeySyncAllowedOrigins();
+      assert.equal(allowedOrigins.length, 34, 'Must allowlist all 32 teams + 49ers2 + nfl');
+      for (const origin of allowedOrigins) {
+        assert.ok(vaultHtml.includes(origin), `key-sync.html must allowlist ${origin}`);
+        assert.ok(headersTxt.includes(origin), `_headers CSP frame-ancestors must allowlist ${origin}`);
+      }
+      assert.ok(!vaultHtml.includes('www.joshal.com'), 'key-sync.html must NEVER allowlist www.joshal.com');
+      assert.ok(!vaultHtml.includes('workouts.joshal.com'), 'key-sync.html must NEVER allowlist workouts.joshal.com');
+      assert.ok(!headersTxt.includes('www.joshal.com'), '_headers must NEVER allowlist www.joshal.com');
+      assert.ok(
+        headersTxt.includes("Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors"),
+        '_headers must hermetically seal /key-sync.html with default-src none + strict frame-ancestors'
+      );
+    });
+
+    await test('Cross-Origin Chrome E2E: API key entered on Team Origin A syncs automatically to Team Origin B, rejects unallowlisted origins, and propagates clear tombstones', async () => {
+      const sharedStoreJs = fs.readFileSync(path.join(ROOT, 'src', 'services', 'sharedApiKeyStore.js'), 'utf8');
+      const makeTeamHarnessServer = () =>
+        new Promise(resolve => {
+          const s = http.createServer((req, res) => {
+            if (req.url === '/sharedApiKeyStore.js') {
+              res.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' });
+              res.end(sharedStoreJs);
+              return;
+            }
+            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end('<!DOCTYPE html><html><head><meta name="referrer" content="no-referrer"></head><body>Team Harness</body></html>');
+          });
+          s.listen(0, '127.0.0.1', () => resolve({ server: s, port: s.address().port }));
+        });
+
+      const srvA = await makeTeamHarnessServer();
+      const srvB = await makeTeamHarnessServer();
+      const srvEvil = await makeTeamHarnessServer();
+      const originA = `http://127.0.0.1:${srvA.port}`;
+      const originB = `http://127.0.0.1:${srvB.port}`;
+      const originEvil = `http://127.0.0.1:${srvEvil.port}`;
+
+      const vaultHtml = buildKeySyncVaultHtml({ extraAllowedOrigins: [originA, originB] });
+      const srvVault = await new Promise(resolve => {
+        const s = http.createServer((req, res) => {
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(vaultHtml);
+        });
+        s.listen(0, '127.0.0.1', () => resolve({ server: s, port: s.address().port }));
+      });
+      const vaultUrl = `http://127.0.0.1:${srvVault.port}/key-sync.html`;
+
+      try {
+        // 1. Origin A (e.g. lions.joshal.com) publishes API key to cross-origin vault
+        await cdp.send('Page.navigate', { url: originA });
+        await new Promise(r => setTimeout(r, 200));
+        const pubRes = await evalJs(
+          cdp,
+          `(async () => {
+            const mod = await import('/sharedApiKeyStore.js');
+            mod.resetSharedVaultClientForTests();
+            return await mod.publishSharedGeminiApiKey(
+              { apiKey: 'AIzaCrossOriginOneTimeKey32', verifiedModel: 'gemini-4-hydrogen' },
+              { vaultUrlOverride: ${JSON.stringify(vaultUrl)} }
+            );
+          })()`
+        );
+        assert.equal(pubRes.apiKey, 'AIzaCrossOriginOneTimeKey32');
+
+        // 2. Origin B (e.g. bills.joshal.com — DIFFERENT origin, completely empty localStorage!) syncs automatically
+        await cdp.send('Page.navigate', { url: originB });
+        await new Promise(r => setTimeout(r, 200));
+        const syncB = await evalJs(
+          cdp,
+          `(async () => {
+            localStorage.clear();
+            const mod = await import('/sharedApiKeyStore.js');
+            mod.resetSharedVaultClientForTests();
+            const prefs = { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 };
+            const res = await mod.syncPrefsWithSharedGeminiKeyVault(prefs, { vaultUrlOverride: ${JSON.stringify(vaultUrl)} });
+            return { res, prefs };
+          })()`
+        );
+        assert.equal(syncB.res.vaultChecked, true);
+        assert.equal(syncB.res.action, 'apply_shared');
+        assert.equal(syncB.prefs.geminiApiKey, 'AIzaCrossOriginOneTimeKey32');
+        assert.equal(syncB.prefs.verifiedGeminiModel, 'gemini-4-hydrogen');
+
+        // 3. Unallowlisted Origin Evil (e.g. www.joshal.com / third party) gets ZERO key from vault!
+        await cdp.send('Page.navigate', { url: originEvil });
+        await new Promise(r => setTimeout(r, 200));
+        const syncEvil = await evalJs(
+          cdp,
+          `(async () => {
+            localStorage.clear();
+            const mod = await import('/sharedApiKeyStore.js');
+            mod.resetSharedVaultClientForTests();
+            const prefs = { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 };
+            const res = await mod.syncPrefsWithSharedGeminiKeyVault(prefs, {
+              vaultUrlOverride: ${JSON.stringify(vaultUrl)},
+              timeoutMs: 850
+            });
+            return { res, prefs };
+          })()`
+        );
+        assert.equal(syncEvil.prefs.geminiApiKey, '', 'Unallowlisted origin must NEVER receive API key');
+
+        // 4. Origin B clears API key (writes tombstone to vault)
+        await cdp.send('Page.navigate', { url: originB });
+        await new Promise(r => setTimeout(r, 200));
+        await evalJs(
+          cdp,
+          `(async () => {
+            const mod = await import('/sharedApiKeyStore.js');
+            mod.resetSharedVaultClientForTests();
+            return await mod.publishClearedSharedGeminiApiKey({}, { vaultUrlOverride: ${JSON.stringify(vaultUrl)} });
+          })()`
+        );
+
+        // 5. Origin A (which previously had the key locally) syncs and cleanly clears — zero zombie resurrection!
+        await cdp.send('Page.navigate', { url: originA });
+        await new Promise(r => setTimeout(r, 200));
+        const syncAAfterClear = await evalJs(
+          cdp,
+          `(async () => {
+            const mod = await import('/sharedApiKeyStore.js');
+            mod.resetSharedVaultClientForTests();
+            const prefs = {
+              geminiApiKey: 'AIzaCrossOriginOneTimeKey32',
+              verifiedGeminiModel: 'gemini-4-hydrogen',
+              geminiApiKeyUpdatedAt: ${pubRes.updatedAt}
+            };
+            const res = await mod.syncPrefsWithSharedGeminiKeyVault(prefs, { vaultUrlOverride: ${JSON.stringify(vaultUrl)} });
+            return { res, prefs };
+          })()`
+        );
+        assert.equal(syncAAfterClear.res.action, 'apply_clear');
+        assert.equal(syncAAfterClear.prefs.geminiApiKey, '', 'Origin A must clear key when cleared on Origin B');
+      } finally {
+        srvA.server.close();
+        srvB.server.close();
+        srvEvil.server.close();
+        srvVault.server.close();
       }
     });
 

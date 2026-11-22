@@ -16,6 +16,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
+import {
+  SHARED_GEMINI_KEY_CHANNEL,
+  SHARED_GEMINI_KEY_STORAGE_KEY,
+  getAllowedNflTeamOrigins
+} from '../src/services/sharedApiKeyStore.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = path.join(ROOT, 'dist-nfl');
@@ -1070,6 +1075,89 @@ function buildIndexHtml(grouped) {
 `;
 }
 
+export function getKeySyncAllowedOrigins() {
+  const fromRegistry = ALL_NFL_TEAMS.map(t => `https://${t.slug}.joshal.com`);
+  return Array.from(new Set([...getAllowedNflTeamOrigins(), ...fromRegistry, 'https://49ers2.joshal.com', 'https://nfl.joshal.com'])).sort();
+}
+
+export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {
+  const origins = Array.from(new Set([...getKeySyncAllowedOrigins(), ...extraAllowedOrigins]));
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>NFL Key Sync Vault</title>
+</head>
+<body>
+  <script>
+    (function () {
+      var CHANNEL = ${JSON.stringify(SHARED_GEMINI_KEY_CHANNEL)};
+      var STORAGE_KEY = ${JSON.stringify(SHARED_GEMINI_KEY_STORAGE_KEY)};
+      var ALLOWED_ORIGINS = new Set(${JSON.stringify(origins)});
+
+      function normalizeRecord(raw) {
+        if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+        var t = Number(raw.t);
+        if (!isFinite(t) || t <= 0) return null;
+        var cleared = raw.c === 1 || raw.c === true;
+        var k = cleared ? '' : String(raw.k || '').trim();
+        var m = cleared ? '' : String(raw.m || '').trim();
+        if (!cleared && !k) return null;
+        return { v: 1, k: k, m: m, t: Math.floor(t), c: cleared ? 1 : 0 };
+      }
+
+      function readStored() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          return normalizeRecord(JSON.parse(raw));
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function writeStored(rec) {
+        var next = normalizeRecord(rec);
+        if (!next) return readStored();
+        var cur = readStored();
+        if (cur && cur.t > next.t) return cur;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+          return next;
+        } catch (e) {
+          return cur;
+        }
+      }
+
+      window.addEventListener('message', function (event) {
+        if (!ALLOWED_ORIGINS.has(event.origin)) return;
+        var msg = event.data;
+        if (!msg || typeof msg !== 'object' || msg.channel !== CHANNEL || !msg.id) return;
+        var reply = { channel: CHANNEL, id: msg.id, ok: true, record: null };
+        if (msg.type === 'get') {
+          reply.record = readStored();
+        } else if (msg.type === 'set') {
+          reply.record = writeStored(msg.record);
+        } else if (msg.type === 'clear') {
+          var clearTs = Math.max(1, Math.floor(Number(msg.t) || Date.now()));
+          reply.record = writeStored({ v: 1, k: '', m: '', t: clearTs, c: 1 });
+        } else {
+          reply.ok = false;
+        }
+        try {
+          if (event.source && typeof event.source.postMessage === 'function') {
+            event.source.postMessage(reply, event.origin);
+          }
+        } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>
+`;
+}
+
 export function buildNflPortalDist() {
   fs.rmSync(DIST, { recursive: true, force: true });
   fs.mkdirSync(DIST, { recursive: true });
@@ -1100,12 +1188,14 @@ export function buildNflPortalDist() {
   };
   fs.writeFileSync(path.join(DIST, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
 
-  // 3. Generate index.html
+  // 3. Generate index.html + hermetically sealed same-site key-sync.html vault
   const grouped = getGroupedPortalTeams();
   const html = buildIndexHtml(grouped);
   fs.writeFileSync(path.join(DIST, 'index.html'), html, 'utf8');
+  fs.writeFileSync(path.join(DIST, 'key-sync.html'), buildKeySyncVaultHtml(), 'utf8');
 
   // 4. Cloudflare Pages static caching & security headers
+  const frameAncestorsList = ["'self'", ...getKeySyncAllowedOrigins()].join(' ');
   const headersTxt = [
     '/*',
     '  X-Content-Type-Options: nosniff',
@@ -1115,6 +1205,10 @@ export function buildNflPortalDist() {
     '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800',
     '',
     '/index.html',
+    '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
+    '',
+    '/key-sync.html',
+    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
     '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
     ''
   ].join('\n');

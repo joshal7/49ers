@@ -371,6 +371,87 @@ async function main() {
       expectedConf: 'NFC',
       allowSfWire: true
     });
+
+    // Cross-Team One-Time API Key Persistence E2E (Lions -> Bills -> 49ers -> Clear on Bills -> Cleared on Lions)
+    const evalJson = async expr => {
+      const r = await cdp.send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true });
+      if (r.exceptionDetails) {
+        throw new Error(`JS error: ${r.exceptionDetails.exception?.description || r.exceptionDetails.text}`);
+      }
+      return r.result?.value;
+    };
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: 393,
+      height: 852,
+      deviceScaleFactor: 3,
+      mobile: true
+    });
+
+    // 1. Enter Gemini API Key ONCE on Lions One Pride via Settings
+    await cdp.send('Page.navigate', { url: `${baseUrl}/?team=lions` });
+    await new Promise(r => setTimeout(r, 1200));
+    await evalJson(`localStorage.clear()`);
+    await cdp.send('Page.navigate', { url: `${baseUrl}/?team=lions` });
+    await new Promise(r => setTimeout(r, 1200));
+    await evalJson(`(() => {
+      const st = window.__49ersDiagnostics.getState();
+      st.prefs.geminiApiBaseUrl = 'http://127.0.0.1:1/mock-offline';
+      document.getElementById('openSettingsBtn')?.click();
+    })()`);
+    await new Promise(r => setTimeout(r, 350));
+    await evalJson(`(() => {
+      const inp = document.getElementById('prefGeminiKeyInput');
+      inp.value = 'AIzaOneTimeAll32TeamsKey';
+      document.querySelector('[data-action="save-group-config"]')?.click();
+    })()`);
+    await new Promise(r => setTimeout(r, 700));
+    const lionsKeyState = await evalJson(`window.__49ersDiagnostics.getState().prefs.geminiApiKey`);
+    assert.equal(lionsKeyState, 'AIzaOneTimeAll32TeamsKey', 'Lions must save Gemini API key');
+
+    // 2. Navigate to Bills Mafia -> key must be active automatically with ZERO re-entry!
+    await cdp.send('Page.navigate', { url: `${baseUrl}/?team=bills` });
+    await new Promise(r => setTimeout(r, 1200));
+    await evalJson(`document.querySelector('.bottom-nav [data-nav-tab="audio"]')?.click()`);
+    await new Promise(r => setTimeout(r, 350));
+    await evalJson(`document.querySelector('[data-studio-sub="podcast"]')?.click()`);
+    await new Promise(r => setTimeout(r, 400));
+    const billsAutoKey = await evalJson(`({
+      key: window.__49ersDiagnostics.getState().prefs.geminiApiKey,
+      hasGenerator: Boolean(document.querySelector('[data-podcast-generator-card]')),
+      hasUnconnectedBox: Boolean(document.querySelector('[data-gemini-setup-card="unconnected"]'))
+    })`);
+    assert.equal(billsAutoKey.key, 'AIzaOneTimeAll32TeamsKey', 'Bills Mafia must automatically inherit API key from Lions');
+    assert.equal(billsAutoKey.hasGenerator, true, 'Bills Audio & AI Auto Pod must render generator card');
+    assert.equal(billsAutoKey.hasUnconnectedBox, false, 'Bills Audio & AI Auto Pod must NOT show unconnected API key box');
+
+    // 3. Navigate to 49ers -> key must ALSO be active automatically!
+    await cdp.send('Page.navigate', { url: `${baseUrl}/?team=49ers` });
+    await new Promise(r => setTimeout(r, 1200));
+    const ninersAutoKey = await evalJson(`window.__49ersDiagnostics.getState().prefs.geminiApiKey`);
+    assert.equal(ninersAutoKey, 'AIzaOneTimeAll32TeamsKey', '49ers must automatically inherit API key entered on Lions');
+
+    // 4. Clear API key on Bills Mafia -> navigate back to Lions -> Lions must cleanly clear (zero zombie key!)
+    await cdp.send('Page.navigate', { url: `${baseUrl}/?team=bills` });
+    await new Promise(r => setTimeout(r, 1000));
+    await evalJson(`document.getElementById('openSettingsBtn')?.click()`);
+    await new Promise(r => setTimeout(r, 350));
+    await evalJson(`document.querySelector('[data-action="clear-gemini-key"]')?.click()`);
+    await new Promise(r => setTimeout(r, 450));
+
+    await cdp.send('Page.navigate', { url: `${baseUrl}/?team=lions` });
+    await new Promise(r => setTimeout(r, 1200));
+    await evalJson(`document.querySelector('.bottom-nav [data-nav-tab="audio"]')?.click()`);
+    await new Promise(r => setTimeout(r, 350));
+    await evalJson(`document.querySelector('[data-studio-sub="podcast"]')?.click()`);
+    await new Promise(r => setTimeout(r, 400));
+    const lionsAfterClear = await evalJson(`({
+      key: window.__49ersDiagnostics.getState().prefs.geminiApiKey,
+      hasUnconnectedBox: Boolean(document.querySelector('[data-gemini-setup-card="unconnected"]'))
+    })`);
+    assert.equal(lionsAfterClear.key, '', 'Clearing API key on Bills must clear it on Lions (no zombie resurrection)');
+    assert.equal(lionsAfterClear.hasUnconnectedBox, true, 'Lions Audio & AI Auto Pod must show Connect API Key box after clear');
+    console.log('  ✓ Cross-Team One-Time API Key Sync passed (Lions -> Bills -> 49ers -> Clear Tombstone -> Lions)');
+
     console.log('\n======================================================');
     console.log('CANARY E2E QA SUMMARY: ALL PASSED (0 failures)');
     console.log('======================================================\n');

@@ -16320,6 +16320,163 @@ test('Top News Brief Schedule Fidelity: zero false practice-report invalidations
   }
 });
 
+await testAsync(
+  'Cross-Team Shared Gemini API Key Store: strict 32-team allowlist, automatic backfill, LWW updates & zombie-proof clear tombstones',
+  async () => {
+    const {
+      ALLOWED_NFL_TEAM_SLUGS,
+      SHARED_GEMINI_KEY_STORAGE_KEY,
+      isAllowedNflTeamHostname,
+      shouldUseCrossSubdomainVault,
+      reconcileGeminiKeyState,
+      reconcilePrefsWithSameOriginSharedKey,
+      readSameOriginSharedGeminiKey,
+      writeSameOriginSharedGeminiKey
+    } = await import('../src/services/sharedApiKeyStore.js');
+
+    // 1. Strict 32-team + 49ers2 + nfl allowlist (zero leakage to www.joshal.com SmugMug or lookalikes)
+    assert.equal(ALLOWED_NFL_TEAM_SLUGS.length, 34, 'Must include all 32 NFL teams + 49ers2 + nfl');
+    for (const slug of ['49ers', '49ers2', 'lions', 'bills', 'chiefs', 'eagles', 'cowboys', 'packers', 'nfl']) {
+      assert.equal(isAllowedNflTeamHostname(`${slug}.joshal.com`), true, `${slug}.joshal.com must be allowlisted`);
+    }
+    for (const blocked of [
+      'www.joshal.com',
+      'workouts.joshal.com',
+      'whisky.joshal.com',
+      'joshal.com',
+      'eviljoshal.com',
+      '49ers.joshal.com.evil.com',
+      'localhost',
+      '127.0.0.1',
+      'nfl-hq-canary.pages.dev'
+    ]) {
+      assert.equal(isAllowedNflTeamHostname(blocked), false, `${blocked} must NEVER be allowlisted`);
+    }
+
+    // 2. Remote vault activation guard (active on official team hosts, silent on localhost/pages.dev/nfl portal itself)
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: 'lions.joshal.com', origin: 'https://lions.joshal.com' }),
+      true
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: '49ers.joshal.com', origin: 'https://49ers.joshal.com' }),
+      true
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: 'nfl.joshal.com', origin: 'https://nfl.joshal.com' }),
+      false,
+      'nfl.joshal.com must not iframe itself'
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: '127.0.0.1', origin: 'http://127.0.0.1:8080' }),
+      false,
+      'Localhost must stay offline-safe without external vault requests unless explicitly overridden'
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({
+        hostname: '127.0.0.1',
+        origin: 'http://127.0.0.1:4101',
+        vaultUrlOverride: 'http://127.0.0.1:4100/key-sync.html'
+      }),
+      true,
+      'Explicit cross-origin vault override must be supported for E2E verification'
+    );
+
+    // 3. Pure reconciliation matrix (all 6 state transitions)
+    // 3a. Both empty -> noop
+    const rEmpty = reconcileGeminiKeyState({ geminiApiKey: '', geminiApiKeyUpdatedAt: 0 }, null, 1000);
+    assert.equal(rEmpty.action, 'noop');
+    assert.equal(rEmpty.changed, false);
+
+    // 3b. Pre-feature existing 49ers.joshal.com user (updatedAt=0) + empty vault -> auto-backfill!
+    const rBackfill = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 0 },
+      null,
+      2000
+    );
+    assert.equal(rBackfill.action, 'push_local');
+    assert.equal(rBackfill.shouldPushToShared, true);
+    assert.equal(rBackfill.recordToPush.k, 'AIzaLegacy49ersKey');
+    assert.equal(rBackfill.recordToPush.t, 2000);
+
+    // 3c. Fresh Team B (Bills) opens with empty localStorage -> automatically inherits key from vault!
+    const rApply = reconcileGeminiKeyState(
+      { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 },
+      { v: 1, k: 'AIzaLegacy49ersKey', m: 'gemini-4-hydrogen', t: 2000, c: 0 },
+      2500
+    );
+    assert.equal(rApply.action, 'apply_shared');
+    assert.equal(rApply.changed, true);
+    assert.equal(rApply.apiKey, 'AIzaLegacy49ersKey');
+    assert.equal(rApply.verifiedModel, 'gemini-4-hydrogen');
+    assert.equal(rApply.updatedAt, 2000);
+
+    // 3d. Key rotated on Team B (t=3000) -> Team A (t=2000) automatically upgrades to new key!
+    const rRotate = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-3.8-flash', geminiApiKeyUpdatedAt: 2000 },
+      { v: 1, k: 'AIzaRotatedNewKey', m: 'gemini-4-hydrogen', t: 3000, c: 0 },
+      3500
+    );
+    assert.equal(rRotate.action, 'apply_shared');
+    assert.equal(rRotate.apiKey, 'AIzaRotatedNewKey');
+    assert.equal(rRotate.verifiedModel, 'gemini-4-hydrogen');
+
+    // 3e. Explicit Clear Tombstone (c=1, t=4000) clears Team A (t=3000) AND pre-feature Team C (t=0) — zero zombie resurrection!
+    const rClear = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaRotatedNewKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 3000 },
+      { v: 1, k: '', m: '', t: 4000, c: 1 },
+      4500
+    );
+    assert.equal(rClear.action, 'apply_clear');
+    assert.equal(rClear.changed, true);
+    assert.equal(rClear.apiKey, '');
+    assert.equal(rClear.shouldPushToShared, false);
+
+    const rClearLegacy = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaOldPreFeatureKey', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 },
+      { v: 1, k: '', m: '', t: 4000, c: 1 },
+      4500
+    );
+    assert.equal(rClearLegacy.action, 'apply_clear');
+    assert.equal(rClearLegacy.apiKey, '');
+
+    // 3f. Re-connecting new key AFTER clear tombstone (t=5000 > 4000) wins cleanly!
+    const rReconnect = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaReconnectedKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 5000 },
+      { v: 1, k: '', m: '', t: 4000, c: 1 },
+      5500
+    );
+    assert.equal(rReconnect.action, 'push_local');
+    assert.equal(rReconnect.shouldPushToShared, true);
+    assert.equal(rReconnect.recordToPush.k, 'AIzaReconnectedKey');
+
+    // 4. Same-origin storage end-to-end simulation (Lions -> Bills -> Clear -> Lions)
+    const map = new Map();
+    const memStorage = {
+      getItem: k => (map.has(k) ? map.get(k) : null),
+      setItem: (k, v) => map.set(k, String(v)),
+      removeItem: k => map.delete(k)
+    };
+    const lionsPrefs = { geminiApiKey: 'AIzaOneTimeKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 0 };
+    const lionsRes = reconcilePrefsWithSameOriginSharedKey(lionsPrefs, { storage: memStorage, nowMs: 6000 });
+    assert.equal(lionsRes.action, 'push_local');
+    assert.ok(memStorage.has ? true : Boolean(memStorage.getItem(SHARED_GEMINI_KEY_STORAGE_KEY)));
+
+    const billsPrefs = { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 };
+    const billsRes = reconcilePrefsWithSameOriginSharedKey(billsPrefs, { storage: memStorage, nowMs: 6100 });
+    assert.equal(billsRes.action, 'apply_shared');
+    assert.equal(billsPrefs.geminiApiKey, 'AIzaOneTimeKey');
+    assert.equal(billsPrefs.verifiedGeminiModel, 'gemini-4-hydrogen');
+
+    // Writing a clear tombstone clears Lions on next reconciliation
+    writeSameOriginSharedGeminiKey({ v: 1, k: '', m: '', t: 7000, c: 1 }, memStorage);
+    assert.equal(readSameOriginSharedGeminiKey(memStorage)?.c, 1);
+    const lionsAfterClear = reconcilePrefsWithSameOriginSharedKey(lionsPrefs, { storage: memStorage, nowMs: 7100 });
+    assert.equal(lionsAfterClear.action, 'apply_clear');
+    assert.equal(lionsPrefs.geminiApiKey, '');
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);
