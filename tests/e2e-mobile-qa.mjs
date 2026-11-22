@@ -6445,16 +6445,26 @@ async function main() {
     await runStep('Unobstructed Non-Frosted Top Header, Magnifying Glass Hit-Test, Mobile Keyboard-Safe Search Sheet, Autocomplete, Spelling Autocorrect & Deep Tweet/Article Word Filtering', async () => {
       await cdp.setViewport(393, 852, true, 3);
       const searchUxAudit = await cdp.eval(() => {
-        // 1. Verify top header is solid/non-frosted and #openSearchBtn is completely unobstructed
+        // 1. Verify top header is fixed/solid/non-frosted and BOTH #openSearchBtn & adjacent #openSettingsBtn are completely unobstructed
         const headerEl = document.querySelector('.top-header');
         const headerStyle = headerEl ? getComputedStyle(headerEl) : null;
+        const headerPosition = headerStyle?.position || '';
         const headerBackdrop = headerStyle?.backdropFilter || headerStyle?.webkitBackdropFilter || 'none';
+        const headerRect = headerEl?.getBoundingClientRect();
+        const mainViewRect = document.getElementById('mainView')?.getBoundingClientRect();
         const searchBtn = document.getElementById('openSearchBtn');
+        const settingsBtn = document.getElementById('openSettingsBtn');
         const btnRect = searchBtn?.getBoundingClientRect();
+        const setRect = settingsBtn?.getBoundingClientRect();
         const cx = btnRect ? btnRect.left + btnRect.width / 2 : 0;
         const cy = btnRect ? btnRect.top + btnRect.height / 2 : 0;
         const topHitEl = btnRect ? document.elementFromPoint(cx, cy) : null;
         const searchBtnUnobstructed = Boolean(searchBtn && topHitEl && (topHitEl === searchBtn || searchBtn.contains(topHitEl)));
+        const sx = setRect ? setRect.left + setRect.width / 2 : 0;
+        const sy = setRect ? setRect.top + setRect.height / 2 : 0;
+        const setHitEl = setRect ? document.elementFromPoint(sx, sy) : null;
+        const settingsBtnUnobstructed = Boolean(settingsBtn && setHitEl && (setHitEl === settingsBtn || settingsBtn.contains(setHitEl)));
+        const mainClearsFixedHeader = Boolean(headerRect && mainViewRect && mainViewRect.top >= headerRect.bottom - 1);
 
         // 2. Open Search -> verify top-docked visual-viewport layout stays above simulated mobile keyboard (468px vv height)
         searchBtn?.click();
@@ -6514,10 +6524,14 @@ async function main() {
         document.getElementById('closeSheetBtn')?.click();
 
         return {
+          headerPosition,
           headerBackdrop,
           btnWidth: btnRect ? Math.round(btnRect.width) : 0,
           btnHeight: btnRect ? Math.round(btnRect.height) : 0,
+          setHeight: setRect ? Math.round(setRect.height) : 0,
           searchBtnUnobstructed,
+          settingsBtnUnobstructed,
+          mainClearsFixedHeader,
           sheetModeAttr,
           backdropAlignItems,
           sheetTopKb: sheetRectKb ? Math.round(sheetRectKb.top) : 9999,
@@ -6536,12 +6550,18 @@ async function main() {
       });
 
       assert(
-        searchUxAudit.headerBackdrop === 'none',
-        `Top header must have ZERO frosted backdrop-filter: ${JSON.stringify(searchUxAudit)}`
+        searchUxAudit.headerPosition === 'fixed' &&
+          searchUxAudit.headerBackdrop === 'none' &&
+          searchUxAudit.mainClearsFixedHeader,
+        `Top header must be fixed, solid non-frosted, and cleared by mainView: ${JSON.stringify(searchUxAudit)}`
       );
       assert(
-        searchUxAudit.searchBtnUnobstructed && searchUxAudit.btnWidth >= 36 && searchUxAudit.btnHeight >= 36,
-        `Header magnifying glass search button must be unobstructed and >=36x36px: ${JSON.stringify(searchUxAudit)}`
+        searchUxAudit.searchBtnUnobstructed &&
+          searchUxAudit.settingsBtnUnobstructed &&
+          searchUxAudit.btnWidth >= 38 &&
+          searchUxAudit.btnHeight >= 38 &&
+          searchUxAudit.setHeight >= 38,
+        `Header magnifying glass search & adjacent settings buttons must be unobstructed and >=38px: ${JSON.stringify(searchUxAudit)}`
       );
       assert(
         searchUxAudit.sheetModeAttr === 'search' &&

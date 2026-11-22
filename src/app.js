@@ -142,6 +142,16 @@ function clearRecentSearchTerms() {
   } catch {}
 }
 
+function syncTopHeaderHeight() {
+  if (typeof document === 'undefined') return;
+  const headerEl = document.querySelector('.top-header');
+  if (!headerEl) return;
+  const h = Math.ceil(headerEl.getBoundingClientRect().height || 0);
+  if (h > 24) {
+    document.documentElement.style.setProperty('--top-header-h', `${h}px`);
+  }
+}
+
 function syncVisualViewportVars() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
   const root = document.documentElement;
@@ -1840,13 +1850,28 @@ function bindEvents() {
     openUniversalSearchSheet({ seedFromActiveFeed: true });
   });
 
-  // Live visualViewport sync so top-docked mobile Search stays 100% above the on-screen keyboard
+  // Live top-header offset & visualViewport sync so content never hides behind fixed header
+  // and top-docked mobile Search stays 100% above the on-screen keyboard
+  syncTopHeaderHeight();
   syncVisualViewportVars();
+  const topHeaderEl = document.querySelector('.top-header');
+  if (topHeaderEl && typeof ResizeObserver === 'function') {
+    const headerRo = new ResizeObserver(() => syncTopHeaderHeight());
+    headerRo.observe(topHeaderEl);
+  }
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', syncVisualViewportVars, { passive: true });
     window.visualViewport.addEventListener('scroll', syncVisualViewportVars, { passive: true });
   }
-  window.addEventListener('orientationchange', () => setTimeout(syncVisualViewportVars, 120), { passive: true });
+  window.addEventListener(
+    'orientationchange',
+    () =>
+      setTimeout(() => {
+        syncTopHeaderHeight();
+        syncVisualViewportVars();
+      }, 120),
+    { passive: true }
+  );
   document.addEventListener('focusin', e => {
     if (e.target?.id === 'universalSearchInput') {
       syncVisualViewportVars();
@@ -1950,6 +1975,7 @@ function bindEvents() {
 
   window.addEventListener('resize', () => {
     closeJargonPopover();
+    syncTopHeaderHeight();
     syncVisualViewportVars();
   }, { passive: true });
   document.addEventListener(
