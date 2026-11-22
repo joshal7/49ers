@@ -69,7 +69,8 @@ import {
   computeCatchUpState,
   sortNewsFeedByMode,
   extractPresserTakeaways,
-  estimateItemEffortCue
+  estimateItemEffortCue,
+  matchNewsItemSearchQuery
 } from '../engine/digestExperienceEngine.js';
 
 export const NEWS_NAV_CLUSTERS = [
@@ -942,6 +943,7 @@ export function renderNewsViewHtml({
   newsSortMode = 'top', // 'top' (default) | 'latest'
   newsTopicFilter = 'all',
   newsSearchQuery = '',
+  newsSourceFilter = null,
   filteredRawItems,
   activeVideosSet = new Set(),
   userPrefs,
@@ -1111,23 +1113,38 @@ export function renderNewsViewHtml({
               : dedupedTradesAndRoster;
 
   const cleanSearchQuery = String(newsSearchQuery || '').trim();
+  const cleanSourceFilter =
+    typeof newsSourceFilter === 'string'
+      ? newsSourceFilter.trim()
+      : newsSourceFilter?.name
+        ? String(newsSourceFilter.name).trim()
+        : '';
+  const hasActiveFeedSearch = Boolean(cleanSearchQuery || cleanSourceFilter);
   const applyTopicAndSearch = list => {
-    if (!cleanSearchQuery) return list;
-    const tokens = cleanSearchQuery.toLowerCase().split(/\s+/).filter(Boolean);
-    return list.filter(it => {
-      const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''} ${it.author || ''} ${it.outletName || ''} ${(it.mentionedPlayers || []).map(p => p.name).join(' ')}`.toLowerCase();
-      return tokens.every(tok => hay.includes(tok));
-    });
+    if (!hasActiveFeedSearch) return list;
+    return list.filter(it =>
+      matchNewsItemSearchQuery(it, cleanSearchQuery, {
+        sourceFilter: cleanSourceFilter ? newsSourceFilter : null
+      }).matched
+    );
   };
 
-  // Only show a slim search-clear strip below the toolbar when an active search filter is applied
-  const activeSearchStrip = cleanSearchQuery
+  // Only show a slim search-clear strip below the toolbar when an active search or source filter is applied
+  const activePoolMatchCount = hasActiveFeedSearch ? applyTopicAndSearch(baseActivePool).length : 0;
+  const activeSearchLabelParts = [];
+  if (cleanSearchQuery) activeSearchLabelParts.push(`“${cleanSearchQuery.slice(0, 22)}${cleanSearchQuery.length > 22 ? '…' : ''}”`);
+  if (cleanSourceFilter) activeSearchLabelParts.push(cleanSourceFilter.slice(0, 22));
+  const activeSearchStrip = hasActiveFeedSearch
     ? `
       <div class="news-digest-controls" data-news-digest-controls>
         <div class="news-sort-row">
           <button type="button" class="pill-btn active news-search-active-pill" data-action="clear-news-search-filter" title="Clear feed search filter">
-            <span>&ldquo;${esc(cleanSearchQuery.slice(0, 18))}&rdquo;</span>
+            <span>${esc(activeSearchLabelParts.join(' • '))} (${activePoolMatchCount})</span>
             ${iconSvg('close', 11)}
+          </button>
+          <button type="button" class="btn-ghost btn-compact" data-action="open-search" title="Edit search">
+            ${iconSvg('search', 11)}
+            <span>Edit</span>
           </button>
         </div>
       </div>

@@ -119,6 +119,12 @@ import {
   estimateItemEffortCue,
   extractInlinePreviewVisual,
   runUniversalSearch,
+  getSearchAutocompleteSuggestions,
+  suggestSpellingCorrection,
+  buildUniversalSearchLexicon,
+  matchNewsItemSearchQuery,
+  highlightSearchTextHtml,
+  damerauLevenshtein,
   urlBase64ToUint8Array
 } from '../src/engine/digestExperienceEngine.js';
 import {
@@ -15756,6 +15762,153 @@ test(
     );
   }
 );
+
+test('Universal Search Engine: word & multi-word autocomplete, news source autocomplete, spelling autocorrect, deep tweet/article word filtering & XSS-safe highlighting', () => {
+  const sampleAppData = {
+    roster: {
+      players: [
+        { id: '4361741', name: 'Brock Purdy', position: 'QB', jersey: 13, rosterBucket: 'active', injuryType: '' },
+        { id: '3117251', name: 'Christian McCaffrey', position: 'RB', jersey: 23, rosterBucket: 'active', injuryType: 'Achilles' },
+        { id: '3040151', name: 'George Kittle', position: 'TE', jersey: 85, rosterBucket: 'active', injuryType: 'Hamstring' },
+        { id: '4360438', name: 'Brandon Aiyuk', position: 'WR', jersey: 11, rosterBucket: 'ir', injuryType: 'Knee' }
+      ]
+    },
+    reporters: {
+      outlets: [
+        { id: 'nbcsba', name: 'NBC Sports Bay Area' },
+        { id: 'webzone', name: '49ers Webzone' },
+        { id: 'espn', name: 'ESPN NFL & 49ers Beat' }
+      ],
+      reporters: [
+        { id: 'matt_maiocco', name: 'Matt Maiocco', handle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', category: 'beat', trustTier: 1, role: '49ers Insider' },
+        { id: 'matt_barrows', name: 'Matt Barrows', handle: '@mattbarrows', outletId: 'athletic', outletName: 'The Athletic', category: 'beat', trustTier: 1, role: '49ers Beat Writer' },
+        { id: 'david_lombardi', name: 'David Lombardi', handle: '@LombardiHimself', outletId: 'standard', outletName: 'The SF Standard', category: 'beat', trustTier: 2, role: '49ers Reporter' },
+        { id: 'adam_schefter', name: 'Adam Schefter', handle: '@AdamSchefter', outletId: 'espn', outletName: 'ESPN', category: 'national', trustTier: 1, role: 'Senior NFL Insider' }
+      ]
+    },
+    beatPodcasts: {
+      shows: [{ id: '49ers_talk', name: '49ers Talk' }, { id: 'gold_standard', name: 'The Gold Standard' }],
+      episodes: [
+        { id: 'ep1', showId: '49ers_talk', showName: '49ers Talk', title: 'Purdy red zone rhythm & Week 11 takeaways', publishedAt: '2026-11-18T18:00:00Z' }
+      ]
+    }
+  };
+
+  const sampleItems = [
+    {
+      id: 'tw_maiocco_1',
+      type: 'tweet',
+      title: 'Brandon Aiyuk roster exemption deadline update',
+      fullText: 'What happens next with 49ers wide receiver Brandon Aiyuk and his looming roster exemption deadline? Kyle Shanahan said the knee rehab remains on schedule.',
+      author: 'Matt Maiocco',
+      reporterId: 'matt_maiocco',
+      authorHandle: '@MaioccoNBCS',
+      outletName: 'NBC Sports Bay Area',
+      url: 'https://x.com/MaioccoNBCS/status/1900000001',
+      publishedAt: '2026-11-18T17:00:00Z',
+      mentionedPlayers: [{ id: '4360438', name: 'Brandon Aiyuk' }]
+    },
+    {
+      id: 'art_webzone_1',
+      type: 'article',
+      title: '49ers Film Review: Wide-9 Pass Rush Stunts',
+      summary: 'Detailed breakdown of how San Francisco used interior twists and nickel blitz geometry to collapse the pocket on third down against Dallas.',
+      externalDescription: 'Plus salary cap rollover implications for 2027 contract extensions.',
+      author: '49ers Webzone',
+      outletId: 'webzone',
+      outletName: '49ers Webzone',
+      url: 'https://www.49erswebzone.com/articles/wide-9-stunts/',
+      publishedAt: '2026-11-18T15:00:00Z',
+      category: 'film'
+    },
+    {
+      id: 'tw_schefter_1',
+      type: 'tweet',
+      title: 'Christian McCaffrey expected to play Sunday',
+      fullText: '49ers RB Christian McCaffrey (Achilles) practiced in full Friday and carries no injury designation for Sunday.',
+      author: 'Adam Schefter',
+      reporterId: 'adam_schefter',
+      authorHandle: '@AdamSchefter',
+      outletName: 'ESPN',
+      url: 'https://x.com/AdamSchefter/status/1900000002',
+      publishedAt: '2026-11-18T16:30:00Z',
+      mentionedPlayers: [{ id: '3117251', name: 'Christian McCaffrey' }]
+    }
+  ];
+
+  // 1. News source autocomplete (by name, @handle, and outlet)
+  const acMai = getSearchAutocompleteSuggestions('mai', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.ok(acMai.some(a => a.kind === 'source' && a.label === 'Matt Maiocco'), 'Typing "mai" must autocomplete news source Matt Maiocco');
+
+  const acHandle = getSearchAutocompleteSuggestions('@Maioc', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.ok(acHandle.some(a => a.kind === 'source' && a.label === 'Matt Maiocco'), 'Typing "@Maioc" must autocomplete Matt Maiocco by handle');
+
+  const acWebz = getSearchAutocompleteSuggestions('webz', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.ok(acWebz.some(a => a.kind === 'source' && a.label === '49ers Webzone'), 'Typing "webz" must autocomplete outlet 49ers Webzone');
+
+  const acNbcs = getSearchAutocompleteSuggestions('nbcs', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.ok(acNbcs.some(a => a.kind === 'source' && a.label.includes('NBC Sports Bay Area')), 'Typing "nbcs" must autocomplete NBC Sports Bay Area');
+
+  // 2. Word & multi-word autocomplete from live tweet/article corpus & NFL terms
+  const acExemp = getSearchAutocompleteSuggestions('exemp', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.ok(acExemp.some(a => /exemption/i.test(a.label)), 'Typing "exemp" must autocomplete live tweet word "exemption"');
+
+  const acMulti = getSearchAutocompleteSuggestions('purdy inj', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.ok(acMulti.some(a => /^purdy injur/i.test(a.query)), 'Multi-word autocomplete "purdy inj" must complete the trailing word while preserving "purdy"');
+
+  // 3. Spelling autocorrect ("Did you mean...?" + auto-fallback + literal escape + no false positives)
+  const lexicon = buildUniversalSearchLexicon({ appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.equal(damerauLevenshtein('prudy', 'purdy'), 1, 'Damerau-Levenshtein must count transposition as 1 edit');
+  assert.equal(suggestSpellingCorrection('mccafrey', lexicon)?.suggestedQuery, 'McCaffrey', '"mccafrey" must suggest "McCaffrey"');
+  assert.equal(suggestSpellingCorrection('shannahan', lexicon)?.suggestedQuery, 'Shanahan', '"shannahan" must suggest "Shanahan"');
+  assert.equal(suggestSpellingCorrection('maioco', lexicon)?.suggestedQuery, 'Maiocco', '"maioco" must suggest "Maiocco"');
+  assert.equal(suggestSpellingCorrection('achiles', lexicon)?.suggestedQuery, 'Achilles', '"achiles" must suggest "Achilles"');
+  assert.equal(suggestSpellingCorrection('#13', lexicon), null, 'Jersey query "#13" must never be falsely autocorrected');
+
+  const autoCorrectedRes = runUniversalSearch('mccafrey', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.equal(autoCorrectedRes.didAutoCorrect, true, 'Misspelled "mccafrey" must auto-fallback to corrected results');
+  assert.equal(autoCorrectedRes.correctedQuery, 'McCaffrey');
+  assert.ok(autoCorrectedRes.players.some(p => p.name === 'Christian McCaffrey'), 'Autocorrected "mccafrey" must return Christian McCaffrey');
+
+  const literalRes = runUniversalSearch('mccafrey', { appData: sampleAppData, filteredRawItems: sampleItems, forceLiteral: true });
+  assert.equal(literalRes.didAutoCorrect, false, 'forceLiteral must respect literal search');
+  assert.equal(literalRes.players.length, 0, 'forceLiteral "mccafrey" must not force corrected players');
+  assert.equal(literalRes.spellingSuggestion?.suggestedQuery, 'McCaffrey', 'forceLiteral must still offer Did you mean McCaffrey');
+
+  // 4. Deep word filtering inside tweets & news articles + source-scoped word filtering + scope tabs
+  const tweetWordRes = runUniversalSearch('exemption', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.equal(tweetWordRes.news.length, 1, 'Word inside tweet fullText ("exemption") must match tweet');
+  assert.equal(tweetWordRes.news[0].id, 'tw_maiocco_1');
+  assert.equal(tweetWordRes.news[0].formatLabel, 'Tweet');
+
+  const articleBodyWordRes = runUniversalSearch('geometry', { appData: sampleAppData, filteredRawItems: sampleItems });
+  assert.equal(articleBodyWordRes.news.length, 1, 'Word inside article summary ("geometry") must match article');
+  assert.equal(articleBodyWordRes.news[0].id, 'art_webzone_1');
+  assert.ok(articleBodyWordRes.news[0].snippet.toLowerCase().includes('geometry'), 'Article body match must extract snippet containing matched word');
+
+  const sourceScopedRes = runUniversalSearch('rehab', {
+    appData: sampleAppData,
+    filteredRawItems: sampleItems,
+    sourceFilter: { key: 'matt maiocco', name: 'Matt Maiocco' }
+  });
+  assert.equal(sourceScopedRes.news.length, 1, 'Source-scoped word filter (Matt Maiocco + "rehab") must match only Matt Maiocco tweet');
+  assert.equal(sourceScopedRes.news[0].id, 'tw_maiocco_1');
+
+  const tweetsOnlyRes = runUniversalSearch('49ers', { appData: sampleAppData, filteredRawItems: sampleItems, scope: 'tweets' });
+  assert.ok(tweetsOnlyRes.news.every(n => n.isTweet), 'scope="tweets" must return only tweets');
+  const articlesOnlyRes = runUniversalSearch('49ers', { appData: sampleAppData, filteredRawItems: sampleItems, scope: 'articles' });
+  assert.ok(articlesOnlyRes.news.every(n => n.isArticle), 'scope="articles" must return only articles');
+
+  // Shared matcher used by newsView.js
+  assert.equal(matchNewsItemSearchQuery(sampleItems[1], 'rollover').matched, true, 'matchNewsItemSearchQuery must match words in externalDescription');
+  assert.equal(matchNewsItemSearchQuery(sampleItems[0], 'rehab', { sourceFilter: { name: 'ESPN' } }).matched, false, 'matchNewsItemSearchQuery must enforce sourceFilter');
+
+  // 5. XSS-safe highlighting + regex metacharacter safety
+  const simpleEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const hl = highlightSearchTextHtml('Aiyuk <script>alert(1)</script> knee rehab', ['knee', '[bad(regex*'], simpleEsc);
+  assert.ok(!hl.includes('<script>'), 'highlightSearchTextHtml must escape HTML tags');
+  assert.ok(hl.includes('<mark class="search-hl">knee</mark>'), 'highlightSearchTextHtml must highlight matched word safely');
+});
 
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);

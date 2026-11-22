@@ -10,7 +10,7 @@
   <!-- iPhone 16 Safari Home Screen Shortcut & Chrome Mobile PWA Meta -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" id="metaStatusBarStyle" />
   <meta name="apple-mobile-web-app-title" content="49ers HQ" />
   <meta name="theme-color" content="#F7F5F0" id="metaThemeColor" />
 
@@ -27,10 +27,10 @@
   <link rel="dns-prefetch" href="https://cdn.49erswebzone.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=56" />
+  <link rel="stylesheet" href="./src/styles.css?v=58" />
 </head>
 <body>
-  <!-- Full-Bleed Sticky Glass Header -->
+  <!-- Full-Bleed Sticky Solid Header (Zero Frost / Unobstructed Top Controls) -->
   <header class="top-header" role="banner">
     <div class="header-row">
       <div class="brand-lockup" id="brandHomeTrigger" role="button" tabindex="0" data-action="go-home" style="cursor:pointer" aria-label="Return to Home Dashboard">
@@ -50,8 +50,8 @@
       </div>
 
       <div class="header-actions">
-        <button type="button" id="openSearchBtn" class="icon-btn header-search-btn" data-action="open-search" aria-label="Search Players, News & Podcasts" title="Search (/)">
-          <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <button type="button" id="openSearchBtn" class="icon-btn header-search-btn" data-action="open-search" aria-label="Search Players, Sources, Tweets, Articles & Podcasts" title="Search (/)">
+          <svg class="ui-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7"/>
             <line x1="20" y1="20" x2="16.2" y2="16.2"/>
           </svg>
@@ -245,6 +245,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=110"></script>
+  <script type="module" src="./src/app.js?v=111"></script>
 </body>
 </html>

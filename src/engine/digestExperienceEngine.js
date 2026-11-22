@@ -790,170 +790,22 @@ export function extractInlinePreviewVisual(item = {}) {
 }
 
 /* ============================================================================
- * 2. Universal Instant Search (Players, News & Film, Podcasts & AI, Sections)
+ * 2. Universal Instant Search (Delegated to universalSearchEngine.js)
  * ============================================================================ */
 
-const QUICK_SECTION_TARGETS = [
-  { id: 'sec_matchup', title: 'Upcoming Matchup & Coaching Intel', subtitle: 'Game & Season', keywords: 'matchup game preview spread coaching trenches opponent', navTab: 'season', subTab: 'matchup' },
-  { id: 'sec_health', title: 'Team Health & Injury Report', subtitle: 'Game & Season', keywords: 'health injury report practice dnp lp fp ir reserve', navTab: 'season', subTab: 'health' },
-  { id: 'sec_schedule', title: 'Full Season Schedule', subtitle: 'Game & Season', keywords: 'schedule calendar games bye international venue', navTab: 'season', subTab: 'schedule' },
-  { id: 'sec_stats', title: 'Team Stats & Power Rankings', subtitle: 'Game & Season', keywords: 'stats rankings epa offense defense special teams power rankings', navTab: 'season', subTab: 'stats' },
-  { id: 'sec_trade', title: 'Trades & Deadline Intel', subtitle: 'Game & Season', keywords: 'trade deadline rumors acquisitions needs', navTab: 'season', subTab: 'trade' },
-  { id: 'sec_playoffs', title: 'Playoff Odds & Rooting Guide', subtitle: 'Game & Season', keywords: 'playoffs monte carlo seed bye rooting guide standings', navTab: 'season', subTab: 'playoffs' },
-  { id: 'sec_draft', title: 'Draft Big Board & Mocks', subtitle: 'Game & Season', keywords: 'draft big board mock prospects combine pff buzz', navTab: 'season', subTab: 'draft_prep' },
-  { id: 'sec_draft_recap', title: 'Draft Recap & Rookies', subtitle: 'Game & Season', keywords: 'draft recap rookies udfa spider chart', navTab: 'season', subTab: 'draft_class' },
-  { id: 'sec_roster', title: '53-Man Roster Explorer', subtitle: 'Roster & Cap', keywords: 'roster players jersey ras snap share', navTab: 'roster', subTab: 'roster' },
-  { id: 'sec_depth', title: 'Dual Depth Chart', subtitle: 'Roster & Cap', keywords: 'depth chart starters backups rotation', navTab: 'roster', subTab: 'depth' },
-  { id: 'sec_cap', title: 'Salary Cap & Armchair GM Simulator', subtitle: 'Roster & Cap', keywords: 'salary cap overthecap dead money restructure cut rollover contract', navTab: 'roster', subTab: 'cap' },
-  { id: 'sec_podcasts', title: '49ers Beat Podcasts (6 Shows)', subtitle: 'Audio & AI', keywords: 'podcasts gold standard 49ers talk locked on lombardi plus minus', navTab: 'audio', subTab: 'beat_podcasts' },
-  { id: 'sec_autopod', title: 'Auto Pod Studio', subtitle: 'Audio & AI', keywords: 'autopod auto pod audio briefing studio', navTab: 'audio', subTab: 'podcast' },
-  { id: 'sec_analysis', title: 'On-Demand AI Deep Analysis', subtitle: 'Audio & AI', keywords: 'ai analysis deep research scouting ask gemini', navTab: 'audio', subTab: 'analysis' }
-];
-
-function normSearchToken(s = '') {
-  return String(s || '')
-    .toLowerCase()
-    .replace(/['’`.]/g, '')
-    .trim();
-}
-
-export function runUniversalSearch(
-  rawQuery = '',
-  { appData = null, filteredRawItems = [], allEpisodes = [], allAnalyses = [] } = {}
-) {
-  const qRaw = String(rawQuery || '').trim();
-  const qClean = qRaw.replace(/^#/, '');
-  const qNorm = normSearchToken(qClean);
-
-  if (!qNorm) {
-    return {
-      query: '',
-      totalCount: 0,
-      players: [],
-      news: [],
-      audioAndAi: [],
-      sections: QUICK_SECTION_TARGETS.slice(0, 6)
-    };
-  }
-
-  const tokens = qNorm.split(/\s+/).filter(Boolean);
-  const matchesAllTokens = haystack => {
-    const h = normSearchToken(haystack);
-    return tokens.every(tok => h.includes(tok));
-  };
-
-  // 1. Players
-  const players = [];
-  for (const p of appData?.roster?.players || []) {
-    const jerseyStr = p.jersey != null ? String(p.jersey) : '';
-    const isExactJersey = /^\d{1,2}$/.test(qClean) && jerseyStr === qClean;
-    const hay = `${p.name || ''} ${p.position || ''} ${p.college || ''} ${p.injuryType || ''} ${p.rosterBucket || ''} ${jerseyStr}`;
-    if (isExactJersey || matchesAllTokens(hay)) {
-      const nameStarts = normSearchToken(p.name).startsWith(qNorm) ? 2 : 0;
-      const activeBonus = p.rosterBucket === 'active' ? 1 : 0;
-      players.push({
-        id: p.id,
-        name: p.name,
-        position: p.position,
-        jersey: p.jersey,
-        headshotUrl: p.headshotUrl,
-        rosterBucket: p.rosterBucket,
-        injuryType: p.injuryType,
-        playBadgeLabel: p.playBadgeLabel,
-        playProbabilityPct: p.playProbabilityPct,
-        score: (isExactJersey ? 10 : 0) + nameStarts + activeBonus
-      });
-    }
-  }
-  players.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
-
-  // 2. News & Film
-  const news = [];
-  const newsSource = Array.isArray(filteredRawItems) && filteredRawItems.length > 0
-    ? filteredRawItems
-    : appData?.news?.rawStream || [];
-  const seenNewsUrls = new Set();
-  for (const it of newsSource) {
-    const hay = `${it.title || ''} ${it.summary || ''} ${it.fullText || ''} ${it.author || ''} ${it.outletName || ''} ${(it.mentionedPlayers || []).map(p => p.name).join(' ')}`;
-    if (!matchesAllTokens(hay)) continue;
-    const isTw = it.type === 'tweet' || it.type === 'social';
-    const href = isTw
-      ? sanitizeExternalUrl(resolveOriginalTweetUrl(it, newsSource), null)
-      : sanitizeExternalUrl(it.url, null);
-    if (!href) continue;
-    const normUrl = href.toLowerCase().replace(/\/+$/, '');
-    if (seenNewsUrls.has(normUrl)) continue;
-    seenNewsUrls.add(normUrl);
-    news.push({
-      id: it.id,
-      type: it.type,
-      category: it.category,
-      title: it.title || it.fullText || '',
-      author: formatWireSourceDisplayName(it.author || it.outletName || '49ers Beat', it),
-      href,
-      publishedAt: it.publishedAt,
-      pubMs: getItemTimestampMs(it)
-    });
-  }
-  news.sort((a, b) => b.pubMs - a.pubMs);
-
-  // 3. Beat Podcasts, Auto Pods & AI Analyses
-  const audioAndAi = [];
-  for (const ep of appData?.beatPodcasts?.episodes || []) {
-    if (matchesAllTokens(`${ep.title || ''} ${ep.showName || ''} ${ep.hosts || ''} ${ep.summary || ''}`)) {
-      audioAndAi.push({
-        kind: 'beat_podcast',
-        id: ep.id || ep.title,
-        title: ep.title,
-        subtitle: `${ep.showName || 'Podcast'}${ep.durationDisplay ? ` • ${ep.durationDisplay}` : ''}`,
-        publishedAt: ep.publishedAt,
-        showId: ep.showId
-      });
-    }
-  }
-  for (const ep of allEpisodes || []) {
-    if (matchesAllTokens(`${ep.title || ''} ${ep.topic || ''}`)) {
-      audioAndAi.push({
-        kind: 'autopod',
-        id: ep.id,
-        title: ep.title,
-        subtitle: `Auto Pod • ${ep.presetLabel || 'Briefing'}`,
-        publishedAt: ep.createdAt
-      });
-    }
-  }
-  for (const rep of allAnalyses || []) {
-    if (matchesAllTokens(`${rep.title || ''} ${rep.summary || ''}`)) {
-      audioAndAi.push({
-        kind: 'analysis',
-        id: rep.id,
-        title: rep.title,
-        subtitle: 'AI Deep Analysis',
-        publishedAt: rep.createdAt
-      });
-    }
-  }
-
-  // 4. Quick Section Jumps
-  const sections = QUICK_SECTION_TARGETS.filter(sec =>
-    matchesAllTokens(`${sec.title} ${sec.subtitle} ${sec.keywords}`)
-  );
-
-  const topPlayers = players.slice(0, 5);
-  const topNews = news.slice(0, 6);
-  const topAudio = audioAndAi.slice(0, 4);
-  const topSections = sections.slice(0, 4);
-
-  return {
-    query: qRaw,
-    totalCount: topPlayers.length + topNews.length + topAudio.length + topSections.length,
-    totalNewsMatches: news.length,
-    players: topPlayers,
-    news: topNews,
-    audioAndAi: topAudio,
-    sections: topSections
-  };
-}
+export {
+  SEARCH_SCOPES,
+  QUICK_SECTION_TARGETS,
+  normalizeSearchText,
+  tokenizeSearchQuery,
+  damerauLevenshtein,
+  buildUniversalSearchLexicon,
+  suggestSpellingCorrection,
+  getSearchAutocompleteSuggestions,
+  matchNewsItemSearchQuery,
+  highlightSearchTextHtml,
+  runUniversalSearch
+} from './universalSearchEngine.js';
 
 /* ============================================================================
  * 12. Quiet Web Push Alert Helpers

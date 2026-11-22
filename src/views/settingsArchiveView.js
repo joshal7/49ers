@@ -17,7 +17,9 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import {
   evaluatePushSupportStatus,
-  runUniversalSearch
+  highlightSearchTextHtml,
+  runUniversalSearch,
+  SEARCH_SCOPES
 } from '../engine/digestExperienceEngine.js';
 import {
   AI_STUDIO_DIRECT_KEY_URL,
@@ -338,33 +340,233 @@ export function renderSettingsSheetHtml({
   `;
 }
 
-export function renderUniversalSearchSheetHtml({
+function buildSearchHighlightTokens(res) {
+  const effective = String(res?.effectiveQuery || res?.query || '').trim();
+  if (!effective) return [];
+  const stripped = effective.replace(/"/g, ' ').replace(/^[#@]+/, '');
+  return stripped
+    .split(/\s+/)
+    .map(t => t.replace(/^[#@]+/, '').trim())
+    .filter(t => t.length >= 2);
+}
+
+export function renderUniversalSearchScopeBarHtml(res = {}) {
+  const hasFilter = Boolean(res?.query || res?.activeSource);
+  if (!hasFilter) return '';
+  const counts = res.countsByScope || {};
+  const activeScope = res.activeScope || 'all';
+
+  const visibleScopes = SEARCH_SCOPES.filter(sc => {
+    if (sc.key === 'all' || sc.key === activeScope) return true;
+    return Number(counts[sc.key] || 0) > 0;
+  });
+
+  if (visibleScopes.length <= 1) return '';
+
+  return `
+    <div class="search-scope-bar" role="tablist" aria-label="Filter search results by type" data-search-scope-bar>
+      ${visibleScopes
+        .map(sc => {
+          const cnt = Number(counts[sc.key] || 0);
+          const isActive = sc.key === activeScope;
+          return `
+            <button type="button"
+                    role="tab"
+                    aria-selected="${isActive ? 'true' : 'false'}"
+                    class="search-scope-pill${isActive ? ' active' : ''}"
+                    data-action="search-set-scope"
+                    data-search-scope="${esc(sc.key)}">
+              <span>${esc(sc.label)}</span>
+              ${sc.key !== 'all' ? `<span class="search-scope-cnt mono">${cnt}</span>` : ''}
+            </button>
+          `;
+        })
+        .join('')}
+    </div>
+  `;
+}
+
+export function renderUniversalSearchResultsHtml({
   query = '',
   appData = null,
   filteredRawItems = [],
   allEpisodes = [],
-  allAnalyses = []
+  allAnalyses = [],
+  scope = 'all',
+  sourceFilter = null,
+  forceLiteral = false,
+  recentSearches = [],
+  precomputedResult = null
 }) {
-  const res = runUniversalSearch(query, {
-    appData,
-    filteredRawItems,
-    allEpisodes,
-    allAnalyses
-  });
-  const hasQuery = Boolean(res.query);
+  const res =
+    precomputedResult ||
+    runUniversalSearch(query, {
+      appData,
+      filteredRawItems,
+      allEpisodes,
+      allAnalyses,
+      scope,
+      sourceFilter,
+      forceLiteral
+    });
 
-  // Suggested quick pills when query is empty (top injured starters + key shortcuts)
+  const hasQuery = Boolean(res.query);
+  const hasSource = Boolean(res.activeSource);
+  const hasFilter = hasQuery || hasSource;
+  const hlTokens = buildSearchHighlightTokens(res);
+
+  // Suggested quick pills when query & source are empty (top injured starters + key shortcuts)
   const injuredSuggestions = (appData?.health?.practiceReport || [])
     .slice(0, 3)
     .map(p => p?.name)
     .filter(Boolean);
-  const quickChips = [...injuredSuggestions, 'Purdy', 'Cap', 'Film', 'Playoffs'].slice(0, 6);
+  const quickChips = [...new Set([...injuredSuggestions, 'Purdy', 'Cap', 'Film', 'Playoffs'])].slice(0, 6);
+
+  const recentChipsHtml =
+    !hasFilter && Array.isArray(recentSearches) && recentSearches.length > 0
+      ? `
+        <div class="search-group" data-search-group="recent">
+          <div class="search-group-head">
+            <div class="sub-label" style="margin:0">Recent</div>
+            <button type="button" class="btn-ghost btn-compact" data-action="search-clear-recent" style="font-size:10.5px;padding:2px 6px">Clear</button>
+          </div>
+          <div class="search-quick-chips" aria-label="Recent Searches">
+            ${recentSearches
+              .slice(0, 4)
+              .map(
+                term =>
+                  `<button type="button" class="pill-btn search-chip-compact" data-action="fill-universal-search" data-search-query="${esc(term)}">${esc(term)}</button>`
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  const emptyQuickChipsHtml = !hasFilter
+    ? `
+        <div class="search-quick-chips" aria-label="Suggested Searches">
+          ${quickChips
+            .map(
+              ch =>
+                `<button type="button" class="pill-btn search-chip-compact" data-action="fill-universal-search" data-search-query="${esc(ch)}">${esc(ch)}</button>`
+            )
+            .join('')}
+        </div>
+        ${
+          Array.isArray(res.topSources) && res.topSources.length > 0
+            ? `
+              <div class="search-group" data-search-group="top-sources">
+                <div class="sub-label">Filter by News Source</div>
+                <div class="search-quick-chips" aria-label="Popular News Sources">
+                  ${res.topSources
+                    .slice(0, 6)
+                    .map(
+                      src => `
+                        <button type="button" class="pill-btn search-source-chip" data-action="search-select-source" data-source-key="${esc(src.key)}" data-source-name="${esc(src.name)}">
+                          <span>${esc(src.name)}</span>
+                          <span class="search-chip-cnt mono">${src.itemCount}</span>
+                        </button>
+                      `
+                    )
+                    .join('')}
+                </div>
+              </div>
+            `
+            : ''
+        }
+      `
+    : '';
+
+  // Autocomplete Suggestions Strip (Words, Topics, Players & News Sources)
+  const autocompleteHtml =
+    hasQuery && Array.isArray(res.autocomplete) && res.autocomplete.length > 0
+      ? `
+        <div class="search-autocomplete-strip" role="listbox" aria-label="Autocomplete Suggestions" data-search-autocomplete>
+          ${res.autocomplete
+            .map((ac, idx) => {
+              const isSource = ac.kind === 'source';
+              const action = isSource ? 'search-select-source' : 'search-apply-autocomplete';
+              const extraAttrs = isSource
+                ? `data-source-key="${esc(ac.sourceKey || '')}" data-source-name="${esc(ac.sourceName || ac.label)}"`
+                : `data-search-query="${esc(ac.query)}"`;
+              return `
+                <button type="button"
+                        role="option"
+                        class="search-ac-chip is-${esc(ac.kind)}"
+                        data-action="${action}"
+                        data-ac-index="${idx}"
+                        ${extraAttrs}>
+                  <span class="search-ac-label">${highlightSearchTextHtml(ac.label, hlTokens, esc)}</span>
+                  <span class="search-ac-tag">${esc(ac.badge)}</span>
+                </button>
+              `;
+            })
+            .join('')}
+        </div>
+      `
+      : '';
+
+  // Autocorrect / Spelling Suggestion Banner
+  let spellingBannerHtml = '';
+  if (res.didAutoCorrect && res.correctedQuery) {
+    spellingBannerHtml = `
+      <div class="search-spelling-banner is-autocorrected" data-search-spelling-banner>
+        <div class="search-spelling-line">
+          <span>Showing results for</span>
+          <button type="button" class="search-spelling-link" data-action="fill-universal-search" data-search-query="${esc(res.correctedQuery)}">${esc(res.correctedQuery)}</button>
+        </div>
+        <div class="search-spelling-sub">
+          <span>Search instead for</span>
+          <button type="button" class="search-spelling-literal" data-action="search-force-literal" data-search-query="${esc(res.originalQuery)}">&ldquo;${esc(res.originalQuery)}&rdquo;</button>
+        </div>
+      </div>
+    `;
+  } else if (res.spellingSuggestion?.suggestedQuery) {
+    spellingBannerHtml = `
+      <div class="search-spelling-banner" data-search-spelling-banner>
+        <div class="search-spelling-line">
+          <span>Did you mean</span>
+          <button type="button" class="search-spelling-link" data-action="fill-universal-search" data-search-query="${esc(res.spellingSuggestion.suggestedQuery)}">${esc(res.spellingSuggestion.suggestedQuery)}</button><span>?</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Sources Group (Reporters, Beat Writers, Outlets, Film Creators)
+  const sourcesHtml =
+    Array.isArray(res.sources) && res.sources.length > 0
+      ? `
+        <div class="search-group" data-search-group="sources">
+          <div class="sub-label">News Sources (${res.countsByScope?.sources || res.sources.length})</div>
+          <div class="search-result-list">
+            ${res.sources
+              .map(
+                src => `
+              <button type="button" class="search-result-row" data-action="search-select-source" data-source-key="${esc(src.key)}" data-source-name="${esc(src.name)}">
+                <span class="search-result-icon" aria-hidden="true">${iconSvg('news', 14)}</span>
+                <div class="search-result-meta">
+                  <div class="search-result-title">
+                    <strong>${highlightSearchTextHtml(src.name, hlTokens, esc)}</strong>
+                    ${src.handle ? `<span class="mono" style="color:var(--gold-bright);font-size:11px;margin-left:4px">${esc(src.handle)}</span>` : ''}
+                  </div>
+                  <div class="search-result-sub">${esc(src.sourceKind)}${src.outletName && src.outletName !== src.name ? ` • ${esc(src.outletName)}` : ''}${src.itemCount > 0 ? ` • ${src.itemCount} ${src.itemCount === 1 ? 'post' : 'posts'}` : ''}</div>
+                </div>
+                <span class="badge badge-neutral mono" style="font-size:10px">Filter</span>
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
 
   const playersHtml =
     res.players.length > 0
       ? `
         <div class="search-group" data-search-group="players">
-          <div class="sub-label">Players (${res.players.length})</div>
+          <div class="sub-label">Players (${res.countsByScope?.players || res.players.length})</div>
           <div class="search-result-list">
             ${res.players
               .map(
@@ -372,7 +574,7 @@ export function renderUniversalSearchSheetHtml({
               <button type="button" class="search-result-row" data-action="search-open-player" data-player-id="${esc(p.id)}">
                 ${renderPlayerAvatarHtml(p, 30)}
                 <div class="search-result-meta">
-                  <div class="search-result-title"><strong>${esc(p.name)}</strong> <span class="mono" style="color:var(--gold-bright);font-size:11px">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</span></div>
+                  <div class="search-result-title"><strong>${highlightSearchTextHtml(p.name, hlTokens, esc)}</strong> <span class="mono" style="color:var(--gold-bright);font-size:11px">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</span></div>
                   <div class="search-result-sub">${esc(p.injuryType ? `${p.injuryType} • ${p.playBadgeLabel || ''}` : p.rosterBucket === 'ir' ? 'Injured Reserve' : 'Active 53')}</div>
                 </div>
                 ${
@@ -389,30 +591,53 @@ export function renderUniversalSearchSheetHtml({
       `
       : '';
 
+  const newsHeadingLabel =
+    res.activeScope === 'tweets'
+      ? 'Tweets'
+      : res.activeScope === 'articles'
+        ? 'News Articles'
+        : res.activeScope === 'videos'
+          ? 'Videos & Film'
+          : 'Tweets, Articles & Film';
+
   const newsHtml =
     res.news.length > 0
       ? `
         <div class="search-group" data-search-group="news">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px">
-            <div class="sub-label" style="margin:0">News &amp; Film (${res.totalNewsMatches})</div>
-            <button type="button" class="btn-ghost btn-compact" data-action="search-filter-news-feed" data-search-query="${esc(res.query)}">
+          <div class="search-group-head">
+            <div class="sub-label" style="margin:0">${newsHeadingLabel} (${res.totalNewsMatches})</div>
+            <button type="button" class="btn-ghost btn-compact" data-action="search-filter-news-feed" data-search-query="${esc(res.effectiveQuery || res.query)}" data-source-name="${esc(res.activeSource?.name || '')}" data-search-scope="${esc(res.activeScope)}">
               <span>Filter Feed</span>
               ${iconSvg('arrowRight', 11)}
             </button>
           </div>
           <div class="search-result-list">
             ${res.news
-              .map(
-                n => `
+              .map(n => {
+                const trimmedTitle = n.title.length > 135 ? `${n.title.slice(0, 132)}…` : n.title;
+                const showSnippet =
+                  Boolean(n.snippet) &&
+                  n.snippet.length >= 16 &&
+                  !n.title.toLowerCase().includes(n.snippet.slice(0, 28).toLowerCase());
+                const fmtCls = n.isTweet ? 'is-tweet' : n.isVideo ? 'is-video' : 'is-article';
+                return `
               <a href="${esc(n.href)}" target="_blank" rel="noopener noreferrer" class="search-result-row search-result-link" data-read-key="${esc(n.id || n.href)}">
                 <div class="search-result-meta">
-                  <div class="search-result-title">${esc(n.title.slice(0, 120))}${n.title.length > 120 ? '…' : ''}</div>
-                  <div class="search-result-sub">${esc(n.author)}${n.publishedAt ? ` • ${esc(formatRelativeAge(n.publishedAt))}` : ''}</div>
+                  <div class="search-result-title">${highlightSearchTextHtml(trimmedTitle, hlTokens, esc)}</div>
+                  ${
+                    showSnippet
+                      ? `<div class="search-result-snippet">${highlightSearchTextHtml(n.snippet, hlTokens, esc)}</div>`
+                      : ''
+                  }
+                  <div class="search-result-sub">
+                    <span class="search-fmt-tag ${fmtCls}">${esc(n.formatLabel || 'News')}</span>
+                    <span>${highlightSearchTextHtml(n.author, hlTokens, esc)}${n.publishedAt ? ` • ${esc(formatRelativeAge(n.publishedAt))}` : ''}</span>
+                  </div>
                 </div>
                 <span class="search-row-arrow">${iconSvg('externalLink', 12)}</span>
               </a>
-            `
-              )
+            `;
+              })
               .join('')}
           </div>
         </div>
@@ -431,8 +656,32 @@ export function renderUniversalSearchSheetHtml({
               <button type="button" class="search-result-row" data-action="search-jump-audio" data-audio-kind="${esc(a.kind)}" data-show-id="${esc(a.showId || '')}">
                 <span class="search-result-icon" aria-hidden="true">${iconSvg(a.kind === 'analysis' ? 'sparkles' : 'audio', 14)}</span>
                 <div class="search-result-meta">
-                  <div class="search-result-title">${esc(a.title)}</div>
+                  <div class="search-result-title">${highlightSearchTextHtml(a.title, hlTokens, esc)}</div>
                   <div class="search-result-sub">${esc(a.subtitle)}${a.publishedAt ? ` • ${esc(formatRelativeAge(a.publishedAt))}` : ''}</div>
+                </div>
+                <span class="search-row-arrow">${iconSvg('arrowRight', 13)}</span>
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `
+      : '';
+
+  const glossaryHtml =
+    Array.isArray(res.glossary) && res.glossary.length > 0
+      ? `
+        <div class="search-group" data-search-group="glossary">
+          <div class="sub-label">Football &amp; CBA Glossary (${res.glossary.length})</div>
+          <div class="search-result-list">
+            ${res.glossary
+              .map(
+                g => `
+              <button type="button" class="search-result-row" data-jargon="${esc(g.key)}">
+                <div class="search-result-meta">
+                  <div class="search-result-title"><strong>${highlightSearchTextHtml(g.term, hlTokens, esc)}</strong> <span class="badge badge-neutral" style="font-size:9.5px;padding:1px 5px;margin-left:4px">${esc(g.category)}</span></div>
+                  <div class="search-result-sub">${esc(g.definition.slice(0, 125))}${g.definition.length > 125 ? '…' : ''}</div>
                 </div>
                 <span class="search-row-arrow">${iconSvg('arrowRight', 13)}</span>
               </button>
@@ -448,14 +697,14 @@ export function renderUniversalSearchSheetHtml({
     res.sections.length > 0
       ? `
         <div class="search-group" data-search-group="sections">
-          <div class="sub-label">${hasQuery ? 'Quick Jumps' : 'Sections &amp; Tools'}</div>
+          <div class="sub-label">${hasFilter ? 'Quick Jumps' : 'Sections &amp; Tools'}</div>
           <div class="search-result-list">
             ${res.sections
               .map(
                 s => `
               <button type="button" class="search-result-row" data-action="search-jump-section" data-nav-tab="${esc(s.navTab)}" data-sub-tab="${esc(s.subTab || '')}">
                 <div class="search-result-meta">
-                  <div class="search-result-title"><strong>${esc(s.title)}</strong></div>
+                  <div class="search-result-title"><strong>${highlightSearchTextHtml(s.title, hlTokens, esc)}</strong></div>
                   <div class="search-result-sub">${esc(s.subtitle)}</div>
                 </div>
                 <span class="search-row-arrow">${iconSvg('arrowRight', 13)}</span>
@@ -469,52 +718,116 @@ export function renderUniversalSearchSheetHtml({
       : '';
 
   const emptyStateHtml =
-    hasQuery && res.totalCount === 0
+    hasFilter && res.totalCount === 0
       ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-secondary)">
-           No direct matches for <strong>&ldquo;${esc(res.query)}&rdquo;</strong>.
-           <div style="margin-top:8px">
-             <button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`49ers deep dive on ${res.query}`)}">
-               ${iconSvg('sparkles', 13)}
-               <span>Ask AI about &ldquo;${esc(res.query.slice(0, 32))}&rdquo;</span>
-             </button>
+           No direct matches${res.query ? ` for <strong>&ldquo;${esc(res.query)}&rdquo;</strong>` : ''}${res.activeSource ? ` in <strong>${esc(res.activeSource.name)}</strong>` : ''}.
+           <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+             ${
+               res.activeSource
+                 ? `<button type="button" class="btn-ghost btn-compact" data-action="search-clear-source">Clear source filter</button>`
+                 : ''
+             }
+             ${
+               res.query
+                 ? `<button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`49ers deep dive on ${res.query}`)}">
+                      ${iconSvg('sparkles', 13)}
+                      <span>Ask AI about &ldquo;${esc(res.query.slice(0, 32))}&rdquo;</span>
+                    </button>`
+                 : ''
+             }
            </div>
          </div>`
       : '';
 
   return `
+    ${recentChipsHtml}
+    ${emptyQuickChipsHtml}
+    ${autocompleteHtml}
+    ${spellingBannerHtml}
+    ${sourcesHtml}
+    ${playersHtml}
+    ${newsHtml}
+    ${audioHtml}
+    ${glossaryHtml}
+    ${sectionsHtml}
+    ${emptyStateHtml}
+  `;
+}
+
+export function renderUniversalSearchSheetHtml({
+  query = '',
+  appData = null,
+  filteredRawItems = [],
+  allEpisodes = [],
+  allAnalyses = [],
+  scope = 'all',
+  sourceFilter = null,
+  forceLiteral = false,
+  recentSearches = []
+}) {
+  const res = runUniversalSearch(query, {
+    appData,
+    filteredRawItems,
+    allEpisodes,
+    allAnalyses,
+    scope,
+    sourceFilter,
+    forceLiteral
+  });
+  const hasQuery = Boolean(res.query);
+  const hasSource = Boolean(res.activeSource);
+
+  return `
     <div class="universal-search-wrap" data-universal-search>
-      <div class="search-input-wrap">
-        ${iconSvg('search', 16, 'search-input-icon')}
-        <input type="search" id="universalSearchInput" class="text-input has-lead-icon"
-               style="font-size:16px"
-               placeholder="Search players, #13, injuries, news, film, cap, podcasts…"
-               value="${esc(query)}"
-               autocomplete="off"
-               aria-label="Search 49ers Faithful" />
-        ${
-          hasQuery
-            ? `<button type="button" class="search-clear-btn" data-action="clear-universal-search" aria-label="Clear search">${iconSvg('close', 13)}</button>`
-            : ''
-        }
+      <div class="search-sticky-controls" id="universalSearchStickyControls">
+        <div class="search-input-wrap">
+          ${iconSvg('search', 16, 'search-input-icon')}
+          <input type="search" id="universalSearchInput" class="text-input has-lead-icon search-has-clear"
+                 style="font-size:16px"
+                 placeholder="${hasSource ? `Search words in ${esc(res.activeSource.name)}…` : 'Search players, #13, beat writers, words in tweets/articles…'}"
+                 value="${esc(query)}"
+                 autocomplete="off"
+                 autocorrect="off"
+                 autocapitalize="off"
+                 spellcheck="false"
+                 enterkeyhint="search"
+                 aria-label="Search 49ers Faithful" />
+          <button type="button" id="universalSearchClearBtn" class="search-clear-btn" data-action="clear-universal-search" aria-label="Clear search" ${hasQuery || hasSource ? '' : 'hidden'}>${iconSvg('close', 13)}</button>
+        </div>
+
+        <div id="universalSearchActiveSourceBar" class="search-active-source-bar" ${hasSource ? '' : 'hidden'}>
+          ${
+            hasSource
+              ? `
+                <span class="search-source-active-pill" data-active-source-pill>
+                  <span>Source: <strong>${esc(res.activeSource.name)}</strong></span>
+                  <button type="button" class="search-pill-x" data-action="search-clear-source" aria-label="Remove source filter">${iconSvg('close', 11)}</button>
+                </span>
+                <span class="search-source-hint">Type words to filter within ${esc(res.activeSource.name)}</span>
+              `
+              : ''
+          }
+        </div>
+
+        <div id="universalSearchScopeBarWrap">
+          ${renderUniversalSearchScopeBarHtml(res)}
+        </div>
       </div>
 
-      ${
-        !hasQuery
-          ? `<div class="search-quick-chips" aria-label="Suggested Searches">
-              ${quickChips
-                .map(
-                  ch => `<button type="button" class="pill-btn" data-action="fill-universal-search" data-search-query="${esc(ch)}">${esc(ch)}</button>`
-                )
-                .join('')}
-             </div>`
-          : ''
-      }
-
-      ${playersHtml}
-      ${newsHtml}
-      ${audioHtml}
-      ${sectionsHtml}
-      ${emptyStateHtml}
+      <div id="universalSearchResultsPane" class="search-results-pane" data-search-results-pane>
+        ${renderUniversalSearchResultsHtml({
+          query,
+          appData,
+          filteredRawItems,
+          allEpisodes,
+          allAnalyses,
+          scope,
+          sourceFilter,
+          forceLiteral,
+          recentSearches,
+          precomputedResult: res
+        })}
+      </div>
     </div>
   `;
 }

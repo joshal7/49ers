@@ -93,21 +93,69 @@ import { renderHomeDashboardHtml } from './views/homeView.js?v=87';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=89';
+} from './views/newsView.js?v=90';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=89';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
 import {
   renderSettingsSheetHtml,
-  renderUniversalSearchSheetHtml
-} from './views/settingsArchiveView.js?v=86';
+  renderUniversalSearchSheetHtml,
+  renderUniversalSearchResultsHtml,
+  renderUniversalSearchScopeBarHtml
+} from './views/settingsArchiveView.js?v=87';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
   urlBase64ToUint8Array,
-  evaluatePushSupportStatus
-} from './engine/digestExperienceEngine.js?v=90';
+  evaluatePushSupportStatus,
+  runUniversalSearch,
+  normalizeSearchText
+} from './engine/digestExperienceEngine.js?v=91';
+
+const RECENT_SEARCHES_KEY = '49ers_faithful_recent_searches_v1';
+
+function loadRecentSearches() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY) || '[]');
+    return Array.isArray(raw) ? raw.map(s => String(s || '').trim()).filter(Boolean).slice(0, 6) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveRecentSearchTerm(term = '') {
+  const clean = String(term || '').trim();
+  if (!clean || clean.length < 2) return;
+  const norm = clean.toLowerCase();
+  const next = [clean, ...(state.recentSearches || []).filter(t => t.toLowerCase() !== norm)].slice(0, 6);
+  state.recentSearches = next;
+  try {
+    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(next));
+  } catch {}
+}
+
+function clearRecentSearchTerms() {
+  state.recentSearches = [];
+  try {
+    localStorage.removeItem(RECENT_SEARCHES_KEY);
+  } catch {}
+}
+
+function syncVisualViewportVars() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+  const root = document.documentElement;
+  if (!root) return;
+  const vv = window.visualViewport;
+  const layoutH = window.innerHeight || root.clientHeight || 0;
+  const vvH = vv && Number.isFinite(vv.height) && vv.height > 120 ? Math.round(vv.height) : layoutH;
+  const vvTop = vv && Number.isFinite(vv.offsetTop) ? Math.max(0, Math.round(vv.offsetTop)) : 0;
+  const keyboardInset = vv ? Math.max(0, Math.round(layoutH - vv.height - vv.offsetTop)) : 0;
+  if (vvH > 0) root.style.setProperty('--vv-height', `${vvH}px`);
+  root.style.setProperty('--vv-offset-top', `${vvTop}px`);
+  root.style.setProperty('--vv-keyboard-inset', `${keyboardInset}px`);
+  root.classList.toggle('is-virtual-keyboard-open', keyboardInset > 110);
+}
 
 const state = {
   appData: null,
@@ -123,12 +171,17 @@ const state = {
   newsSortMode: 'top', // 'top' (default) | 'latest'
   newsTopicFilter: 'all',
   newsSearchQuery: '',
+  newsSourceFilter: null,
   activeVideosSet: new Set(),
   lastWireSyncAt: null,
   isSyncingWire: false,
   sessionLastVisitedAt: null,
   tabScrollPositions: {},
   universalSearchQuery: '',
+  universalSearchScope: 'all',
+  universalSearchSource: null,
+  universalSearchForceLiteral: false,
+  recentSearches: loadRecentSearches(),
   pushStatusNotice: '',
 
   // Roster & Cap state
@@ -341,6 +394,10 @@ function applyTheme(theme) {
   const metaTheme = document.getElementById('metaThemeColor');
   if (metaTheme) {
     metaTheme.setAttribute('content', clean === 'light' ? '#F7F5F0' : '#0B0D10');
+  }
+  const metaStatusBar = document.getElementById('metaStatusBarStyle');
+  if (metaStatusBar) {
+    metaStatusBar.setAttribute('content', clean === 'light' ? 'default' : 'black');
   }
 }
 
@@ -1079,6 +1136,7 @@ function renderMain() {
         newsSortMode: state.newsSortMode,
         newsTopicFilter: state.newsTopicFilter,
         newsSearchQuery: state.newsSearchQuery,
+        newsSourceFilter: state.newsSourceFilter,
         filteredRawItems,
         reportersById: reportersMap,
         activeVideosSet: state.activeVideosSet,
@@ -1363,6 +1421,123 @@ function renderStatRankModal() {
   });
 }
 
+function getFilteredRawItemsForSearch() {
+  return filterNewsByUserPrefs(
+    state.appData?.news?.rawStream || [],
+    getReportersMap(),
+    state.prefs
+  );
+}
+
+function focusUniversalSearchInput({ moveCursorToEnd = false } = {}) {
+  const inp = document.getElementById('universalSearchInput');
+  if (!inp) return;
+  try {
+    inp.focus({ preventScroll: true });
+  } catch {
+    inp.focus();
+  }
+  if (moveCursorToEnd) {
+    try {
+      const len = inp.value.length;
+      inp.setSelectionRange(len, len);
+    } catch {}
+  }
+  syncVisualViewportVars();
+}
+
+function updateUniversalSearchLiveDom({ resetScroll = true, syncInputValue = false } = {}) {
+  if (state.sheetMode !== 'search') return;
+  const resultsPane = document.getElementById('universalSearchResultsPane');
+  if (!resultsPane) {
+    renderSheet({ preserveScroll: false });
+    return;
+  }
+
+  const filteredRawItems = getFilteredRawItemsForSearch();
+  const allEpisodes = getAllEpisodes();
+  const allAnalyses = getSavedAnalyses();
+  const res = runUniversalSearch(state.universalSearchQuery, {
+    appData: state.appData,
+    filteredRawItems,
+    allEpisodes,
+    allAnalyses,
+    scope: state.universalSearchScope,
+    sourceFilter: state.universalSearchSource,
+    forceLiteral: state.universalSearchForceLiteral
+  });
+
+  const inp = document.getElementById('universalSearchInput');
+  if (inp) {
+    if (syncInputValue && inp.value !== state.universalSearchQuery) {
+      inp.value = state.universalSearchQuery;
+    }
+    inp.placeholder = res.activeSource
+      ? `Search words in ${res.activeSource.name}…`
+      : 'Search players, #13, beat writers, words in tweets/articles…';
+  }
+
+  const clearBtn = document.getElementById('universalSearchClearBtn');
+  if (clearBtn) {
+    clearBtn.hidden = !(res.query || res.activeSource);
+  }
+
+  const sourceBar = document.getElementById('universalSearchActiveSourceBar');
+  if (sourceBar) {
+    if (res.activeSource) {
+      sourceBar.hidden = false;
+      sourceBar.innerHTML = `
+        <span class="search-source-active-pill" data-active-source-pill>
+          <span>Source: <strong>${esc(res.activeSource.name)}</strong></span>
+          <button type="button" class="search-pill-x" data-action="search-clear-source" aria-label="Remove source filter">${iconSvg('close', 11)}</button>
+        </span>
+        <span class="search-source-hint">Type words to filter within ${esc(res.activeSource.name)}</span>
+      `;
+    } else {
+      sourceBar.hidden = true;
+      sourceBar.innerHTML = '';
+    }
+  }
+
+  const scopeWrap = document.getElementById('universalSearchScopeBarWrap');
+  if (scopeWrap) {
+    scopeWrap.innerHTML = renderUniversalSearchScopeBarHtml(res);
+  }
+
+  resultsPane.innerHTML = renderUniversalSearchResultsHtml({
+    query: state.universalSearchQuery,
+    appData: state.appData,
+    filteredRawItems,
+    allEpisodes,
+    allAnalyses,
+    scope: state.universalSearchScope,
+    sourceFilter: state.universalSearchSource,
+    forceLiteral: state.universalSearchForceLiteral,
+    recentSearches: state.recentSearches,
+    precomputedResult: res
+  });
+
+  if (resetScroll) {
+    resultsPane.scrollTop = 0;
+  }
+}
+
+function openUniversalSearchSheet({ seedFromActiveFeed = false } = {}) {
+  if (seedFromActiveFeed && state.activeNavTab === 'news') {
+    if (state.newsSearchQuery && !state.universalSearchQuery) {
+      state.universalSearchQuery = state.newsSearchQuery;
+    }
+    if (state.newsSourceFilter && !state.universalSearchSource) {
+      state.universalSearchSource = state.newsSourceFilter;
+    }
+  }
+  state.universalSearchForceLiteral = false;
+  state.sheetMode = 'search';
+  syncVisualViewportVars();
+  renderSheet();
+  focusUniversalSearchInput({ moveCursorToEnd: true });
+}
+
 function renderSheet({ preserveScroll = false } = {}) {
   const backdrop = document.getElementById('bottomSheetBackdrop');
   const eyebrow = document.getElementById('sheetEyebrow');
@@ -1372,6 +1547,8 @@ function renderSheet({ preserveScroll = false } = {}) {
 
   if (!state.sheetMode) {
     backdrop.hidden = true;
+    backdrop.removeAttribute('data-sheet-mode');
+    document.body.classList.remove('sheet-open');
     syncLiveWireButtonsDom();
     return;
   }
@@ -1385,7 +1562,10 @@ function renderSheet({ preserveScroll = false } = {}) {
       )
     : null;
 
+  backdrop.setAttribute('data-sheet-mode', state.sheetMode);
   backdrop.hidden = false;
+  document.body.classList.add('sheet-open');
+  syncVisualViewportVars();
   syncLiveWireButtonsDom();
 
   preserveFocusAroundRender(() => {
@@ -1428,19 +1608,19 @@ function renderSheet({ preserveScroll = false } = {}) {
       });
       if (!preserveScroll) body.scrollTop = 0;
     } else if (state.sheetMode === 'search') {
-      if (eyebrow) eyebrow.textContent = 'Universal Search';
-      if (title) title.textContent = 'Find Anything';
-      const filteredRawItems = filterNewsByUserPrefs(
-        state.appData?.news?.rawStream || [],
-        getReportersMap(),
-        state.prefs
-      );
+      if (eyebrow) eyebrow.textContent = '49ers Faithful';
+      if (title) title.textContent = 'Search';
+      const filteredRawItems = getFilteredRawItemsForSearch();
       body.innerHTML = renderUniversalSearchSheetHtml({
         query: state.universalSearchQuery,
         appData: state.appData,
         filteredRawItems,
         allEpisodes: getAllEpisodes(),
-        allAnalyses: getSavedAnalyses()
+        allAnalyses: getSavedAnalyses(),
+        scope: state.universalSearchScope,
+        sourceFilter: state.universalSearchSource,
+        forceLiteral: state.universalSearchForceLiteral,
+        recentSearches: state.recentSearches
       });
       if (!preserveScroll) body.scrollTop = 0;
     }
@@ -1655,10 +1835,28 @@ function bindEvents() {
     renderMain();
   });
 
-  document.getElementById('openSearchBtn')?.addEventListener('click', () => {
-    state.sheetMode = 'search';
-    renderSheet();
-    requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+  document.getElementById('openSearchBtn')?.addEventListener('click', e => {
+    e.stopPropagation();
+    openUniversalSearchSheet({ seedFromActiveFeed: true });
+  });
+
+  // Live visualViewport sync so top-docked mobile Search stays 100% above the on-screen keyboard
+  syncVisualViewportVars();
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncVisualViewportVars, { passive: true });
+    window.visualViewport.addEventListener('scroll', syncVisualViewportVars, { passive: true });
+  }
+  window.addEventListener('orientationchange', () => setTimeout(syncVisualViewportVars, 120), { passive: true });
+  document.addEventListener('focusin', e => {
+    if (e.target?.id === 'universalSearchInput') {
+      syncVisualViewportVars();
+      setTimeout(syncVisualViewportVars, 180);
+    }
+  });
+  document.addEventListener('focusout', e => {
+    if (e.target?.id === 'universalSearchInput') {
+      setTimeout(syncVisualViewportVars, 120);
+    }
   });
 
   document.getElementById('openSettingsBtn')?.addEventListener('click', () => {
@@ -1716,14 +1914,32 @@ function bindEvents() {
       document.querySelector('[data-action="save-inline-gemini-key"]')?.click();
       return;
     }
+    if (e.target?.id === 'universalSearchInput') {
+      if (e.key === 'Tab') {
+        const firstAc = document.querySelector('#universalSearchResultsPane [data-search-autocomplete] [data-ac-index="0"]');
+        if (firstAc) {
+          e.preventDefault();
+          firstAc.click();
+          return;
+        }
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (state.universalSearchQuery.trim()) {
+          saveRecentSearchTerm(state.universalSearchQuery.trim());
+        }
+        // Dismiss mobile keyboard so results expand cleanly to fill the full screen
+        e.target.blur();
+        syncVisualViewportVars();
+        return;
+      }
+    }
     if (
       (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) &&
       !e.target?.closest?.('input, textarea, select, [contenteditable]')
     ) {
       e.preventDefault();
-      state.sheetMode = 'search';
-      renderSheet();
-      requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+      openUniversalSearchSheet({ seedFromActiveFeed: true });
       return;
     }
     if (e.key === 'Escape' && state.sheetMode) {
@@ -1732,7 +1948,10 @@ function bindEvents() {
     }
   });
 
-  window.addEventListener('resize', () => closeJargonPopover(), { passive: true });
+  window.addEventListener('resize', () => {
+    closeJargonPopover();
+    syncVisualViewportVars();
+  }, { passive: true });
   document.addEventListener(
     'scroll',
     e => {
@@ -1802,6 +2021,11 @@ function bindEvents() {
     }
 
     const anchorHit = e.target.closest('a[href]');
+    if (anchorHit?.classList?.contains('search-result-link')) {
+      if (state.universalSearchQuery.trim()) saveRecentSearchTerm(state.universalSearchQuery.trim());
+      const rk = anchorHit.getAttribute('data-read-key');
+      if (rk) markReadKey(rk);
+    }
     const btn = e.target.closest('[data-action]');
     if (anchorHit && (!btn || btn.contains(anchorHit))) return;
     if (!btn) return;
@@ -1941,27 +2165,88 @@ function bindEvents() {
       }
 
       case 'open-search':
-        state.sheetMode = 'search';
-        renderSheet();
-        requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+        openUniversalSearchSheet({ seedFromActiveFeed: true });
         break;
 
       case 'fill-universal-search':
         state.universalSearchQuery = btn.getAttribute('data-search-query') || '';
-        renderSheet();
-        requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+        state.universalSearchForceLiteral = false;
+        updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: true });
+        focusUniversalSearchInput({ moveCursorToEnd: true });
+        break;
+
+      case 'search-apply-autocomplete':
+        state.universalSearchQuery = btn.getAttribute('data-search-query') || '';
+        state.universalSearchForceLiteral = false;
+        updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: true });
+        focusUniversalSearchInput({ moveCursorToEnd: true });
+        break;
+
+      case 'search-select-source': {
+        const sourceKey = btn.getAttribute('data-source-key') || '';
+        const sourceName = btn.getAttribute('data-source-name') || '';
+        if (sourceName) {
+          state.universalSearchSource = { key: sourceKey || normalizeSearchText(sourceName), name: sourceName };
+          // If the typed query was just a prefix/match of the source name itself, clear the text input
+          // so the user immediately sees all tweets & articles from that source and can type words to filter inside it.
+          const qNorm = normalizeSearchText(state.universalSearchQuery.replace(/^@+/, ''));
+          const sNorm = normalizeSearchText(sourceName);
+          if (
+            !qNorm ||
+            sNorm.includes(qNorm) ||
+            sNorm.split(/\s+/).some(w => w.startsWith(qNorm)) ||
+            state.universalSearchQuery.trim().startsWith('@')
+          ) {
+            state.universalSearchQuery = '';
+          }
+          state.universalSearchForceLiteral = false;
+          if (state.universalSearchScope === 'sources' || state.universalSearchScope === 'players') {
+            state.universalSearchScope = 'all';
+          }
+          updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: true });
+          focusUniversalSearchInput({ moveCursorToEnd: true });
+        }
+        break;
+      }
+
+      case 'search-clear-source':
+        state.universalSearchSource = null;
+        state.universalSearchForceLiteral = false;
+        updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: false });
+        focusUniversalSearchInput({ moveCursorToEnd: true });
+        break;
+
+      case 'search-set-scope': {
+        const nextScope = btn.getAttribute('data-search-scope') || 'all';
+        state.universalSearchScope = nextScope;
+        updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: false });
+        break;
+      }
+
+      case 'search-force-literal':
+        state.universalSearchForceLiteral = true;
+        updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: false });
+        break;
+
+      case 'search-clear-recent':
+        clearRecentSearchTerms();
+        updateUniversalSearchLiveDom({ resetScroll: false, syncInputValue: false });
         break;
 
       case 'clear-universal-search':
         state.universalSearchQuery = '';
-        renderSheet();
-        requestAnimationFrame(() => document.getElementById('universalSearchInput')?.focus());
+        state.universalSearchSource = null;
+        state.universalSearchScope = 'all';
+        state.universalSearchForceLiteral = false;
+        updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: true });
+        focusUniversalSearchInput({ moveCursorToEnd: true });
         break;
 
       case 'search-open-player': {
         const pid = btn.getAttribute('data-player-id');
         const target = getPlayerById(pid);
         if (target) {
+          if (state.universalSearchQuery.trim()) saveRecentSearchTerm(state.universalSearchQuery.trim());
           state.sheetMode = 'player';
           state.sheetPlayerId = target.id;
           state.sheetPlayerTab = 'overview';
@@ -1973,13 +2258,18 @@ function bindEvents() {
 
       case 'search-filter-news-feed': {
         const q = btn.getAttribute('data-search-query') || state.universalSearchQuery || '';
+        const srcName = btn.getAttribute('data-source-name') || state.universalSearchSource?.name || '';
+        const scopeAttr = btn.getAttribute('data-search-scope') || state.universalSearchScope || 'all';
+        if (q.trim()) saveRecentSearchTerm(q.trim());
         state.sheetMode = null;
         renderSheet();
         saveCurrentTabScroll();
         state.activeNavTab = 'news';
-        state.newsCategoryFilter = 'all';
+        state.newsCategoryFilter =
+          scopeAttr === 'tweets' || scopeAttr === 'articles' || scopeAttr === 'videos' ? scopeAttr : 'all';
         state.newsTopicFilter = 'all';
         state.newsSearchQuery = q.trim();
+        state.newsSourceFilter = srcName ? { key: normalizeSearchText(srcName), name: srcName } : null;
         window.scrollTo({ top: 0, behavior: 'instant' });
         renderMain();
         break;
@@ -1988,6 +2278,7 @@ function bindEvents() {
       case 'search-jump-audio': {
         const kind = btn.getAttribute('data-audio-kind') || 'beat_podcasts';
         const showId = btn.getAttribute('data-show-id') || '';
+        if (state.universalSearchQuery.trim()) saveRecentSearchTerm(state.universalSearchQuery.trim());
         state.sheetMode = null;
         renderSheet();
         saveCurrentTabScroll();
@@ -2006,6 +2297,7 @@ function bindEvents() {
       case 'search-jump-section': {
         const navTab = btn.getAttribute('data-nav-tab') || 'home';
         const subTab = btn.getAttribute('data-sub-tab') || '';
+        if (state.universalSearchQuery.trim()) saveRecentSearchTerm(state.universalSearchQuery.trim());
         state.sheetMode = null;
         renderSheet();
         saveCurrentTabScroll();
@@ -2050,6 +2342,7 @@ function bindEvents() {
 
       case 'clear-news-search-filter':
         state.newsSearchQuery = '';
+        state.newsSourceFilter = null;
         renderMain();
         break;
 
@@ -3053,7 +3346,8 @@ function bindEvents() {
       renderSheet();
     } else if (t.id === 'universalSearchInput') {
       state.universalSearchQuery = t.value;
-      renderSheet({ preserveScroll: false });
+      state.universalSearchForceLiteral = false;
+      updateUniversalSearchLiveDom({ resetScroll: true, syncInputValue: false });
     }
   });
 

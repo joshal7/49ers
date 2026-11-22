@@ -6421,6 +6421,136 @@ async function main() {
       await cdp.assertNoOverflow('High-Signal Digestion Suite (393x852)');
     });
 
+    await runStep('Unobstructed Non-Frosted Top Header, Magnifying Glass Hit-Test, Mobile Keyboard-Safe Search Sheet, Autocomplete, Spelling Autocorrect & Deep Tweet/Article Word Filtering', async () => {
+      await cdp.setViewport(393, 852, true, 3);
+      const searchUxAudit = await cdp.eval(() => {
+        // 1. Verify top header is solid/non-frosted and #openSearchBtn is completely unobstructed
+        const headerEl = document.querySelector('.top-header');
+        const headerStyle = headerEl ? getComputedStyle(headerEl) : null;
+        const headerBackdrop = headerStyle?.backdropFilter || headerStyle?.webkitBackdropFilter || 'none';
+        const searchBtn = document.getElementById('openSearchBtn');
+        const btnRect = searchBtn?.getBoundingClientRect();
+        const cx = btnRect ? btnRect.left + btnRect.width / 2 : 0;
+        const cy = btnRect ? btnRect.top + btnRect.height / 2 : 0;
+        const topHitEl = btnRect ? document.elementFromPoint(cx, cy) : null;
+        const searchBtnUnobstructed = Boolean(searchBtn && topHitEl && (topHitEl === searchBtn || searchBtn.contains(topHitEl)));
+
+        // 2. Open Search -> verify top-docked visual-viewport layout stays above simulated mobile keyboard (468px vv height)
+        searchBtn?.click();
+        const backdrop = document.getElementById('bottomSheetBackdrop');
+        const sheet = document.getElementById('bottomSheetContainer');
+        const resultsPane = document.getElementById('universalSearchResultsPane');
+        const inputElBefore = document.getElementById('universalSearchInput');
+
+        // Simulate mobile virtual keyboard shrinking visual viewport to 468px
+        document.documentElement.style.setProperty('--vv-height', '468px');
+        document.documentElement.style.setProperty('--vv-offset-top', '0px');
+        document.documentElement.classList.add('is-virtual-keyboard-open');
+
+        const sheetModeAttr = backdrop?.getAttribute('data-sheet-mode') || '';
+        const backdropAlignItems = backdrop ? getComputedStyle(backdrop).alignItems : '';
+        const sheetRectKb = sheet?.getBoundingClientRect();
+        const paneRectKb = resultsPane?.getBoundingClientRect();
+
+        // 3. News Source Autocomplete ("mai" -> Matt Maiocco -> click to filter by source)
+        if (inputElBefore) {
+          inputElBefore.value = 'mai';
+          inputElBefore.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        const inputElAfter = document.getElementById('universalSearchInput');
+        const inputPreservedAcrossKeystrokes = Boolean(inputElBefore && inputElBefore === inputElAfter);
+        const acChipsText = Array.from(document.querySelectorAll('[data-search-autocomplete] .search-ac-chip')).map(
+          el => el.textContent.trim()
+        );
+        const sourceAcBtn = document.querySelector('[data-search-autocomplete] .search-ac-chip.is-source');
+        sourceAcBtn?.click();
+        const activeSourcePillText = document.querySelector('[data-active-source-pill]')?.textContent?.trim() || '';
+        document.querySelector('[data-action="search-clear-source"]')?.click();
+
+        // 4. Spelling Autocorrect ("mccafrey" -> auto-shows McCaffrey + banner)
+        if (inputElAfter) {
+          inputElAfter.value = 'mccafrey';
+          inputElAfter.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        const spellingBannerText = document.querySelector('[data-search-spelling-banner]')?.textContent?.trim() || '';
+        const autocorrectPlayerHits = document.querySelectorAll('[data-search-group="players"] .search-result-row').length;
+
+        // 5. Deep word filtering inside tweets/articles + highlighting + scope tabs
+        if (inputElAfter) {
+          inputElAfter.value = 'knee';
+          inputElAfter.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        const newsHits = document.querySelectorAll('[data-search-group="news"] .search-result-row').length;
+        const highlightMarks = document.querySelectorAll('#universalSearchResultsPane mark.search-hl').length;
+        const scopeTabs = Array.from(document.querySelectorAll('[data-search-scope-bar] .search-scope-pill')).map(
+          el => el.getAttribute('data-search-scope')
+        );
+
+        // Clean up simulated keyboard CSS vars & close search
+        document.documentElement.classList.remove('is-virtual-keyboard-open');
+        document.documentElement.style.removeProperty('--vv-height');
+        document.documentElement.style.removeProperty('--vv-offset-top');
+        document.getElementById('closeSheetBtn')?.click();
+
+        return {
+          headerBackdrop,
+          btnWidth: btnRect ? Math.round(btnRect.width) : 0,
+          btnHeight: btnRect ? Math.round(btnRect.height) : 0,
+          searchBtnUnobstructed,
+          sheetModeAttr,
+          backdropAlignItems,
+          sheetTopKb: sheetRectKb ? Math.round(sheetRectKb.top) : 9999,
+          sheetBottomKb: sheetRectKb ? Math.round(sheetRectKb.bottom) : 9999,
+          paneHeightKb: paneRectKb ? Math.round(paneRectKb.height) : 0,
+          paneBottomKb: paneRectKb ? Math.round(paneRectKb.bottom) : 9999,
+          inputPreservedAcrossKeystrokes,
+          acChipsText,
+          activeSourcePillText,
+          spellingBannerText,
+          autocorrectPlayerHits,
+          newsHits,
+          highlightMarks,
+          scopeTabs
+        };
+      });
+
+      assert(
+        searchUxAudit.headerBackdrop === 'none',
+        `Top header must have ZERO frosted backdrop-filter: ${JSON.stringify(searchUxAudit)}`
+      );
+      assert(
+        searchUxAudit.searchBtnUnobstructed && searchUxAudit.btnWidth >= 36 && searchUxAudit.btnHeight >= 36,
+        `Header magnifying glass search button must be unobstructed and >=36x36px: ${JSON.stringify(searchUxAudit)}`
+      );
+      assert(
+        searchUxAudit.sheetModeAttr === 'search' &&
+          searchUxAudit.sheetTopKb <= 2 &&
+          searchUxAudit.sheetBottomKb <= 472 &&
+          searchUxAudit.paneHeightKb >= 160 &&
+          searchUxAudit.paneBottomKb <= 472,
+        `Mobile search sheet & results pane must stay completely above simulated 468px keyboard viewport: ${JSON.stringify(searchUxAudit)}`
+      );
+      assert(
+        searchUxAudit.inputPreservedAcrossKeystrokes,
+        `Universal search input element must NOT be recreated across keystrokes (prevents iOS keyboard bounce): ${JSON.stringify(searchUxAudit)}`
+      );
+      assert(
+        searchUxAudit.acChipsText.some(t => /maiocco/i.test(t)) && /source:/i.test(searchUxAudit.activeSourcePillText),
+        `News source autocomplete & source pill selection failed: ${JSON.stringify(searchUxAudit)}`
+      );
+      assert(
+        /showing results for/i.test(searchUxAudit.spellingBannerText) &&
+          /mccaffrey/i.test(searchUxAudit.spellingBannerText) &&
+          searchUxAudit.autocorrectPlayerHits >= 1,
+        `Spelling autocorrect ("mccafrey" -> "McCaffrey") failed: ${JSON.stringify(searchUxAudit)}`
+      );
+      assert(
+        searchUxAudit.newsHits >= 1 && searchUxAudit.highlightMarks >= 1 && searchUxAudit.scopeTabs.includes('all'),
+        `Deep tweet/article word search, highlight marks, or scope tabs failed: ${JSON.stringify(searchUxAudit)}`
+      );
+      await cdp.assertNoOverflow('Unobstructed Header & Keyboard-Safe Search Suite (393x852)');
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,
