@@ -4214,7 +4214,12 @@ async function main() {
         ).filter(tr => {
           const subTxt = tr.querySelector('.sticky-player-sub')?.textContent || '';
           const badgeTxt = tr.querySelector('.badge')?.textContent || '';
-          return /\bStarter\b/.test(subTxt) && !/Full Go|Cleared/i.test(badgeTxt);
+          const pctM = badgeTxt.match(/(\d{1,3})%/);
+          const pctVal = pctM ? Number(pctM[1]) : null;
+          const isClearedRow =
+            /Full Go|Cleared|Likely|In \(Active\)/i.test(badgeTxt) ||
+            (pctVal !== null && pctVal >= 85 && !/\b(?:Out|Doubtful|IR)\b/i.test(badgeTxt));
+          return /\bStarter\b/.test(subTxt) && !isClearedRow;
         }).length;
         const startersClearedNum = parseInt(String(scorecardVals[1] || '0').split('/')[0], 10);
         const availExplainTrigger = oppSec?.querySelector('[data-jargon="availability_index"]');
@@ -4230,15 +4235,27 @@ async function main() {
         )
           .filter(el => el.scrollWidth > el.clientWidth + 1)
           .map(el => `${el.className}: "${el.textContent.trim()}" (${el.scrollWidth}>${el.clientWidth})`);
+        const oppParityDebug = {
+          hasAvailIdx: oppSecText.includes('Availability Index'),
+          noWhatThisMeans: !oppSecText.includes('What this means'),
+          hasStartersCleared: oppSecText.includes('Starters Cleared'),
+          availPopoverOpened,
+          clippedScorecardEls,
+          startersClearedNum,
+          oppStarterRowsInTable,
+          scorecardVals,
+          hasPracticeParticipation: oppSecText.includes('Practice Participation'),
+          has4GameTracker: oppSecText.includes('4-Game Return Window Tracker')
+        };
         const oppHasParity =
-          oppSecText.includes('Availability Index') &&
-          !oppSecText.includes('What this means') &&
-          oppSecText.includes('Starters Cleared') &&
-          availPopoverOpened &&
-          clippedScorecardEls.length === 0 &&
-          startersClearedNum === Math.max(0, 22 - oppStarterRowsInTable) &&
-          oppSecText.includes('Practice Participation') &&
-          oppSecText.includes('4-Game Return Window Tracker');
+          oppParityDebug.hasAvailIdx &&
+          oppParityDebug.noWhatThisMeans &&
+          oppParityDebug.hasStartersCleared &&
+          oppParityDebug.availPopoverOpened &&
+          oppParityDebug.clippedScorecardEls.length === 0 &&
+          oppParityDebug.startersClearedNum === Math.max(0, 22 - oppParityDebug.oppStarterRowsInTable) &&
+          oppParityDebug.hasPracticeParticipation &&
+          oppParityDebug.has4GameTracker;
 
         // 3. Verify Trade Window shows recent Buckner trade + inline <details> Earlier Completed Trades for Osa Odighizuwa
         document.querySelector('[data-action="set-season-sub"][data-season-sub="trade"]').click();
@@ -4326,6 +4343,7 @@ async function main() {
           seasonTabVisitedCount: seasonTabVisited.length,
           heroPlayerAvatars,
           oppHasParity,
+          oppParityDebug,
           olderStartsCollapsed,
           tradeHasBucknerAndInlineOsa,
           jargonTermsFound,
@@ -4351,7 +4369,10 @@ async function main() {
 
       // Assert #5A & #5B
       assert(upgradesAudit.heroPlayerAvatars === 0, `Expected 0 player avatars in Upcoming Matchup hero box, got ${upgradesAudit.heroPlayerAvatars}`);
-      assert(upgradesAudit.oppHasParity, 'Opponent Health section missing parity metrics (Availability Index, Starters Cleared, Maxx Crosby, 4-Game IR Tracker)');
+      assert(
+        upgradesAudit.oppHasParity,
+        `Opponent Health section missing parity metrics: ${JSON.stringify(upgradesAudit.oppParityDebug)}`
+      );
 
       // Assert #6: Recent trade visible + older trade collapsible inline inside Trade tab
       assert(upgradesAudit.olderStartsCollapsed, 'Earlier Completed Trades (<details>) should start collapsed when recent trades exist');

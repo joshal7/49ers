@@ -116,7 +116,7 @@ function formatCoachingBulletHtml(bullet = '', seenJargon = null) {
 
 function matchupAdvantageBadgeClass(advantage = '') {
   const s = String(advantage || '').trim();
-  if (/\beven\b|\btoss[-\s]?up\b|\bpush\b|\bsplit\b/i.test(s)) return 'badge-gold';
+  if (/\beven\b|\btoss[-\s]?up\b|\bpush\b|\bsplit\b|strength\s+vs\.?\s+strength/i.test(s)) return 'badge-gold';
   if (/\b(?:sf|49ers|niners|san francisco)\b/i.test(s)) return 'badge-positive';
   return 'badge-warning';
 }
@@ -775,7 +775,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
-                data-prompt="${esc(`Deep film and protection breakdown for Week ${um.week} ${sfIsAway ? `49ers at ${um.oppName}` : `${um.oppName} at 49ers`}: ${um.coachingMatchup?.headline || 'coaching chess match and trench keys'}`)}">
+                data-prompt="${esc(`Balanced All-22 breakdown for Week ${um.week} ${sfIsAway ? `49ers at ${um.oppName}` : `${um.oppName} at 49ers`} (${um.betting?.spread || 'spread TBD'}): where each team holds real unit edges, vulnerabilities & paths to win`)}">
           ${iconSvg('sparkles', 13)}
           <span>AI Film Prep</span>
         </button>

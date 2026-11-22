@@ -23,6 +23,8 @@
 import {
   buildLiveGroundingSystemPrompt,
   buildAuthoritativeLiveContextSnapshot,
+  buildBalancedLeagueComparisonBlock,
+  describeSpreadCalibration,
   sanitizeHallucinatedRosterText
 } from '../engine/groundingValidator.js';
 import {
@@ -2493,8 +2495,8 @@ export async function generateOnDemandAutopodcast({
 /* ==========================================================================
    1/Day Live Gemini 4 Hydrogen (XHIGH) Matchup Intel (Strictly <= 1 Credit / PT Day)
    ========================================================================== */
-const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v3';
-const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v2';
+const DAILY_MATCHUP_CACHE_KEY = 'joshal_49ers_daily_matchup_v4';
+const DAILY_MATCHUP_ATTEMPT_KEY = 'joshal_49ers_daily_matchup_attempt_v3';
 
 export function getPacificDateKey(nowMs = Date.now()) {
   try {
@@ -2705,10 +2707,15 @@ export function buildDailyMatchupIntelPrompt(appData) {
     })
     .join('\n');
 
+  const spreadCal = describeSpreadCalibration(um.betting?.spread || '', oppName, um.oppRecord || '');
+  const balancedComparison = buildBalancedLeagueComparisonBlock(appData, { compact: true });
+
   return [
-    `DAILY_MATCHUP_INTEL_JSON — Synthesize today's All-22 film & situational preview for Week ${um.week || ''} San Francisco 49ers (${um.sfRecord || ''}) vs. ${oppName} (${um.oppRecord || ''}).`,
+    `DAILY_MATCHUP_INTEL_JSON — Synthesize today's impartial, two-sided All-22 film & situational preview for Week ${um.week || ''} San Francisco 49ers (${um.sfRecord || ''}) vs. ${oppName} (${um.oppRecord || ''}).`,
     `Current Coaching Headline to preserve/refine (keep salient HC/OC/DC names): "${um.coachingMatchup?.headline || `Kyle Shanahan & DC Raheem Morris vs. ${oppName} Staff`}"`,
     `Venue & Line: ${um.venue || ''} | Spread ${um.betting?.spread || '—'}, O/U ${um.betting?.overUnder || '—'}, ${um.betting?.restAdvantage || ''}`,
+    `SPREAD & IMPARTIALITY CALIBRATION: ${spreadCal.guidanceLine}`,
+    balancedComparison ? `LEAGUE-WIDE SYMMETRIC COMPARISON (BOTH SIDES' STRENGTHS & WEAKNESSES):\n${balancedComparison}` : '',
     `49ers Injury Designations: ${sfPr || 'None'}`,
     `${oppAbbr} Injury Designations: ${oppInj || 'None'}`,
     `${oppAbbr} Healthy Starters: ${oppHealthy || 'See live roster'}`,
@@ -2716,16 +2723,18 @@ export function buildDailyMatchupIntelPrompt(appData) {
     `2026 Unit Rank Benchmarks:\n${unitBenchmarks}`,
     `Active 2026 49ers Starters & Verified Stats:\n${activeSfStars}`,
     '',
-    'STRICT NON-OVERLAP EDITORIAL ARCHITECTURE (MANDATORY):',
-    `0. OPPONENT DEPTH-CHART ACCURACY: Ground every opponent player ranking/role claim strictly in "${oppAbbr} Depth-Chart Hierarchy & 2026 Production" above—NEVER call injured WR2–WR4/depth players an opponent's "top wideouts" or "#1 option" when a healthy WR1/RB1 star starter with higher snap share/production is Active!`,
-    '1. `coachingMatchup` = PURE COORDINATOR CHESS, SCHEME TENDENCIES & SITUATIONAL LEVERS ONLY:',
-    '   - ZERO active player names inside `coachingMatchup.summary` or `coachingMatchup.bullets`! Talk strictly about coaches/coordinators (Kyle Shanahan, Raheem Morris, and opponent HC/OC/DC), personnel groupings (21 personnel, 12/21, condensed splits), motion & coverage tendencies (jet motion, orbit motion, spot-drop Cover 3, Tampa-2, two-high, Quarters, Cover 6, cloud-trap, honey-hole, hook/curl, curl/flat, between the numbers, between the hashes), run-scheme vs box math (gap-scheme, pin-and-pull, counter, duo, A- and B-gaps, light boxes), and 3rd-down / red-zone / penalty / game-script triggers backed by exact rankings.',
-    '   - `bullets` must have 4 items, each starting with a concrete 3-to-6-word tactical heading and colon (e.g., `"Pass-Game Efficiency & Coverage Shell Delta: Crisp 2-sentence coordinator analysis"` — NEVER write generic placeholder words like `"Subtopic"` or `"Heading"`). Bullet 1 MUST begin with `"Pass-Game Efficiency & Coverage Shell Delta:"`.',
-    '2. `keyMatchupsMatrix` = 5 SPECIFIC PLAYER-VS-PLAYER / TRENCH SCOUTING BATTLES:',
+    'STRICT NON-OVERLAP & FAIR-AND-BALANCED EDITORIAL ARCHITECTURE (MANDATORY):',
+    `0. OPPONENT DEPTH-CHART ACCURACY & IMPARTIAL TWO-SIDED CALIBRATION: Write like an objective national NFL scout—NEVER a 49ers homer. Give full, substantive tactical credit to ${oppName}'s top-10 units, coaching scheme, and star players AND be candid about San Francisco's bottom-half NFL rankings and injury vulnerabilities. Match your confidence strictly to the betting spread (${um.betting?.spread || 'TBD'}). Ground every opponent player ranking/role claim strictly in "${oppAbbr} Depth-Chart Hierarchy & 2026 Production" above—NEVER call injured WR2–WR4/depth players an opponent's "top wideouts" or "#1 option" when a healthy WR1/RB1 star starter with higher snap share/production is Active!`,
+    '1. `coachingMatchup` = PURE COORDINATOR CHESS, SCHEME TENDENCIES & SITUATIONAL LEVERS ONLY (BOTH SIDELINES):',
+    '   - ZERO active player names inside `coachingMatchup.summary` or `coachingMatchup.bullets`! Talk strictly about coaches/coordinators (Kyle Shanahan, Raheem Morris, and opponent HC/OC/DC), personnel groupings (21 personnel, 12/21, condensed splits), motion & coverage tendencies (jet motion, orbit motion, spot-drop Cover 3, Tampa-2, two-high, Quarters, Cover 6, cloud-trap, honey-hole, hook/curl, curl/flat, between the numbers, between the hashes), run-scheme vs box math (gap-scheme, pin-and-pull, counter, duo, A- and B-gaps, light boxes), and 3rd-down / red-zone / penalty / special-teams / game-script triggers backed by exact rankings for BOTH teams (explicitly detailing how the opponent\'s top units can disrupt San Francisco, not just how SF attacks).',
+    '   - `bullets` must have 4 items, each starting with a concrete 3-to-6-word tactical heading and colon (e.g., `"Pass-Game Efficiency & Coverage Shell Delta: Crisp 2-sentence two-sided coordinator analysis"` — NEVER write generic placeholder words like `"Subtopic"` or `"Heading"`). Bullet 1 MUST begin with `"Pass-Game Efficiency & Coverage Shell Delta:"`.',
+    '2. `keyMatchupsMatrix` = 5 SPECIFIC PLAYER-VS-PLAYER / TRENCH SCOUTING BATTLES (HONEST, SYMMETRIC ADVANTAGES):',
     '   - Zero repetition of generic coordinator summaries! Put ALL specific 49ers & opponent player names, 2026 player stats, injury/GTD leverage, and physical technique clashes here.',
-    '   - Each of the 5 objects MUST include: `phaseTag` (short 2-3 word label), `unitMatchup` ("SF Player(s) vs. Opp Player(s)"), `advantage` (e.g. "SF Heavy Edge", "SF Trench Edge", "Even Star Clash"), `sfPlayers` (array of 1-3 exact 49ers player full names), `statComparison` ("SF: <exact metric> | OPP: <exact metric>"), `tacticalDetail` (2 vivid sentences on 1-on-1 leverage, technique & health), and `filmTell` (1 concrete TV viewing tell starting without a prefix).',
+    `   - Each of the 5 objects MUST include: \`phaseTag\` (short 2-3 word label), \`unitMatchup\` ("SF Player(s) vs. Opp Player(s)"), \`advantage\` (strictly calibrated to the verified 32-team ranks & injuries—use balanced labels across BOTH sides such as "SF Edge", "SF Heavy Edge", "Strength vs. Strength", "Even Star Clash", "Even Trench Battle", "${oppAbbr} Edge", "${oppAbbr} Heavy Edge"; NEVER hand San Francisco lopsided edges where ${oppAbbr} holds superior unit ranks or healthier personnel!), \`sfPlayers\` (array of 1-3 exact 49ers player full names), \`statComparison\` ("SF: <exact metric> | ${oppAbbr}: <exact metric>"), \`tacticalDetail\` (2 vivid, even-handed sentences on 1-on-1 leverage, technique, health & risk for both sides), and \`filmTell\` (1 concrete TV viewing tell starting without a prefix).`,
     '3. Output ONLY valid raw JSON matching: {"coachingMatchup":{"headline":"...","summary":"...","bullets":["..."]},"keyMatchupsMatrix":[{"phaseTag":"...","unitMatchup":"...","advantage":"...","sfPlayers":["..."],"statComparison":"...","tacticalDetail":"...","filmTell":"..."}]}.'
-  ].join('\n');
+  ]
+    .filter(Boolean)
+    .join('\n');
 }
 
 export function parseAndSanitizeDailyMatchupIntel(rawTextOrObj, um = {}, rosterPlayers = []) {
@@ -3476,11 +3485,14 @@ export function buildDailyTopNewsBriefPrompt(
     )
     .join('\n');
 
+  const balancedLeagueBlock = buildBalancedLeagueComparisonBlock(appData, { compact: true });
+
   return [
-    `DAILY_TOP_NEWS_BRIEF_JSON — Act as Editor-in-Chief of "49ers Faithful" and synthesize today's San Francisco 49ers (${meta.teamRecord || ''}${meta.standingSummary ? `, ${meta.standingSummary}` : ''}, Week ${meta.currentWeek || ''}, next vs. ${um.oppName || um.oppAbbr || 'Opponent'}) Top News Brief.`,
+    `DAILY_TOP_NEWS_BRIEF_JSON — Act as an impartial national NFL Editor-in-Chief for "49ers Faithful" and synthesize today's San Francisco 49ers (${meta.teamRecord || ''}${meta.standingSummary ? `, ${meta.standingSummary}` : ''}, Week ${meta.currentWeek || ''}, next vs. ${um.oppName || um.oppAbbr || 'Opponent'}) Top News Brief.`,
     postGameDossierBlock,
     previousBriefLine,
     nfcContenders ? `NFC Standings & Seed Context: ${nfcContenders}` : '',
+    balancedLeagueBlock ? `LEAGUE-WIDE & MATCHUP BALANCE CONTEXT (USE FOR OBJECTIVE PROPORTION — DO NOT FORCE IRRELEVANT STATS):\n${balancedLeagueBlock}` : '',
     !cycleState.isPostGameCycle
       ? `Active Week ${meta.currentWeek || ''} Practice Report (LATEST OFFICIAL W/T/F STATUS SUPERSEDES OLDER MIDWEEK ARTICLES): ${sfPr || 'See verified wire sources below.'}`
       : sfPr
@@ -3494,14 +3506,15 @@ export function buildDailyTopNewsBriefPrompt(
     'FLUID EDITORIAL JUDGMENT & QUALITY PRINCIPLES (READ CAREFULLY — DO NOT BE FORMULAIC):',
     '1. DYNAMIC FOCUS BASED ON REAL-WORLD IMPORTANCE & FRESHNESS: There is NO fixed template of topics. Determine what a sharp, well-informed 49ers fan needs to know most right now based on the calendar moment and what actually broke since the last update:',
     '   - Post-Game: Lead with the game result, record/NFC West/seed impact, and defining macro team performance (e.g., historic yardage, explosive plays). Spotlight the primary stars who drove the outcome (Purdy, McCaffrey, Deebo, Kittle, Warner, Bosa) plus notable debuts (e.g., a newly acquired starter\'s stat line) and key role-player scores in proper proportion. Pair offensive/defensive bright spots (run stops, takeaways) with candid tape/box-score concerns (pass-rush drought, passing yards/TDs/4th-downs/4Q points yielded, sacks absorbed, penalty yards, in-game injuries) and immediate next-week travel/altitude/matchup or division-rival stakes.',
-    '   - Mid-Week In-Season: Center on fresh 49ers & opponent injury/practice shifts (always reporting the latest Friday/Thursday status over older mid-week notes, and distinguishing veteran rest from real injuries), key tactical matchup angles, and high-impact NFC contender news affecting San Francisco\'s standings or playoff seed.',
+    '   - Mid-Week In-Season: Center on fresh 49ers & opponent injury/practice shifts (always reporting the latest Friday/Thursday status over older mid-week notes, and distinguishing veteran rest from real injuries), balanced two-sided tactical matchup angles (crediting opponent top units and spread realism), and high-impact NFC contender news affecting San Francisco\'s standings or playoff seed.',
     '   - Offseason (Feb–Aug): Let salary cap maneuvers, free agency, trades, coaching changes, Combine testing, and Draft buzz lead naturally.',
     '   - Breaking / Non-Standard News Anytime: Whenever a major trade, injury, league ruling, or off-field/ownership story (e.g., a front-office or ownership controversy) breaks, give it immediate prominence proportional to its magnitude—never bury big news behind routine filler.',
-    '2. MACRO BEFORE MICRO (PROPORTIONATE CALLOUTS): Never fixate on minor backups, isolated mid-game tweets, or practice trivia at the expense of the big picture, team-wide performance, star players, or glaring unit flaws.',
-    '3. TARGET LENGTH & STRUCTURE (NO REDUNDANT TOP SUMMARY PARAGRAPH): Write ~185–240 visible words total across `headline` + 3 to 5 dynamic `bullets` (choose 3, 4, or 5 bullets organically to fit today\'s distinct high-value angles—e.g., 4–5 tight bullets for a packed game recap, 3–4 bullets on a focused news day). Do NOT include a separate summary paragraph; every bullet must add non-redundant information.',
-    '4. COMPLETE JOURNALISTIC PROSE & MINIMAL-DISTRACTION CITATIONS (`[S#]`): Write crisp, complete sentences with exact numbers. Place separate bare `[S1]` `[S2]` markers right before punctuation (NEVER group inside one bracket like `[S1, S2]`, NEVER write reporter/outlet names or "per [S1]" in prose, NEVER use teaser phrases like "latest on..."/"click here", rhetorical questions, emojis, or ellipses "...").',
-    '5. SUBTOPIC NAMING: Each bullet object in `bullets` MUST have a specific, descriptive 2–4 word `"subtopic"` naming that exact angle (e.g., `"Cowboys Shootout Win"`, `"McCaffrey & Purdy Shine"`, `"Weaponry & Debuts"`, `"Defense (Run Stop vs. Air Raid)"`, `"Looking Ahead"`, `"Secondary Injury Watch"`) and `"body"` containing the 1–3 sentence analysis with `[S#]` citations. NEVER write generic placeholder labels such as `"Bold Subtopic"`, `"Subtopic"`, or `"Topic Title"`.',
-    '6. Output ONLY valid raw JSON matching: {"headline":"Crisp 9-15 word headline","bullets":[{"subtopic":"Specific 2-4 Word Subtopic","body":"Factual sentences with inline [S1] markers."}],"citedSourceIds":["S1","S2"]}.'
+    '2. FAIR, BALANCED & LEAGUE-CALIBRATED JOURNALISM (ZERO HOMERISM): Maintain the sober, even-handed tone of independent national NFL journalism—never a cheerleading fan blog or team PR release. Pair 49ers strengths with candid league-relative vulnerabilities (e.g., defensive pass-rush drought, secondary injuries, penalty discipline, or kicking issues), credit peer contenders and upcoming opponents\' top-ranked units honestly, and calibrate matchup framing strictly to the betting spread (e.g., a 2.5-to-3.5-point line signals a tight, competitive test rather than a comfortable edge).',
+    '3. MACRO BEFORE MICRO (PROPORTIONATE CALLOUTS): Never fixate on minor backups, isolated mid-game tweets, or practice trivia at the expense of the big picture, team-wide performance, star players, or glaring unit flaws.',
+    '4. TARGET LENGTH & STRUCTURE (NO REDUNDANT TOP SUMMARY PARAGRAPH): Write ~185–240 visible words total across `headline` + 3 to 5 dynamic `bullets` (choose 3, 4, or 5 bullets organically to fit today\'s distinct high-value angles—e.g., 4–5 tight bullets for a packed game recap, 3–4 bullets on a focused news day). Do NOT include a separate summary paragraph; every bullet must add non-redundant information.',
+    '5. COMPLETE JOURNALISTIC PROSE & MINIMAL-DISTRACTION CITATIONS (`[S#]`): Write crisp, complete sentences with exact numbers. Place separate bare `[S1]` `[S2]` markers right before punctuation (NEVER group inside one bracket like `[S1, S2]`, NEVER write reporter/outlet names or "per [S1]" in prose, NEVER use teaser phrases like "latest on..."/"click here", rhetorical questions, emojis, or ellipses "...").',
+    '6. SUBTOPIC NAMING: Each bullet object in `bullets` MUST have a specific, descriptive 2–4 word `"subtopic"` naming that exact angle (e.g., `"Cowboys Shootout Win"`, `"McCaffrey & Purdy Shine"`, `"Weaponry & Debuts"`, `"Defense (Run Stop vs. Air Raid)"`, `"Looking Ahead"`, `"Secondary Injury Watch"`) and `"body"` containing the 1–3 sentence analysis with `[S#]` citations. NEVER write generic placeholder labels such as `"Bold Subtopic"`, `"Subtopic"`, or `"Topic Title"`.',
+    '7. Output ONLY valid raw JSON matching: {"headline":"Crisp 9-15 word headline","bullets":[{"subtopic":"Specific 2-4 Word Subtopic","body":"Factual sentences with inline [S1] markers."}],"citedSourceIds":["S1","S2"]}.'
   ]
     .filter(Boolean)
     .join('\n');
@@ -4505,22 +4518,37 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     const playoffCite = pickCite(/playoff|seed|nfc|standings|division|power rankings/i);
     const hasAltitudeNews = candidates.some(c => /altitude|mexico city|7,350/i.test(`${c.title} ${c.fullBody}`));
     const venueClause = hasAltitudeNews ? ' at high altitude in Mexico City' : '';
+    const oppAbbrClean = String(um.oppAbbr || '').toUpperCase();
+    let oppStrengthClause = '';
+    if (oppAbbrClean && oppAbbrClean !== 'TBD' && oppAbbrClean !== 'BYE') {
+      const oppTopMetric = (appData?.scheduleMatchup?.teamStats?.units || [])
+        .flatMap(u => u.coreRows || [])
+        .map(r => {
+          const op = (r.leaderboard || []).find(x => x.team === oppAbbrClean);
+          return op && Number(op.rank) <= 5 ? { label: r.label, rank: Number(op.rank), disp: op.disp } : null;
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.rank - b.rank)[0];
+      if (oppTopMetric) {
+        oppStrengthClause = `—a unit ranked #${oppTopMetric.rank} in ${oppTopMetric.label} (${oppTopMetric.disp})`;
+      }
+    }
 
     if (dynamicBullets.length >= 3) {
-      // Combine upcoming matchup + NFC playoff position cleanly in one tight bullet (~45 words)
+      // Combine upcoming matchup + opponent strength + NFC playoff position cleanly in one tight bullet (~50 words)
       dynamicBullets.push(
-        `Week ${wk} ${oppShortToken || 'Matchup'} & NFC Standing: Turning to the ${oppContext}${venueClause}${matchupCites}, San Francisco (${rec}, ${m.standingSummary || 'NFC West'}) holds a ${sfOdds.makePlayoffsPct ?? 93}% postseason projection, ${sfOdds.winDivisionPct ?? 82}% NFC West title mark, and ${sfOdds.seed1ByePct ?? 40}% #1 Seed Bye equity${playoffCite}.`
+        `Week ${wk} ${oppShortToken || 'Matchup'} & NFC Standing: Turning to the ${oppContext}${venueClause}${oppStrengthClause}${matchupCites}, San Francisco (${rec}, ${m.standingSummary || 'NFC West'}) holds a ${sfOdds.makePlayoffsPct ?? 93}% postseason projection, ${sfOdds.winDivisionPct ?? 82}% NFC West title mark, and ${sfOdds.seed1ByePct ?? 40}% #1 Seed Bye equity${playoffCite}.`
       );
     } else {
       const dnpCbPlayers = dnpPlayers.filter(p => /CB|DB/i.test(p.position));
       const cbStoryCite = pickCite(/corner|lenoir|green|secondary/i);
       if (dnpCbPlayers.length >= 2 && cbStoryCite) {
         dynamicBullets.push(
-          `Week ${wk} Matchup & Secondary Watch: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan and DC Raheem Morris turn focus to the ${oppContext}${venueClause}${matchupCites}.`
+          `Week ${wk} Matchup & Secondary Watch: With cornerbacks ${joinNamesNatural(dnpCbPlayers.map(p => p.name))} sidelined ${latestDayInfo.label}${cbStoryCite}, Kyle Shanahan and DC Raheem Morris turn focus to the ${oppContext}${venueClause}${oppStrengthClause}${matchupCites}.`
         );
       } else {
         dynamicBullets.push(
-          `Week ${wk} ${oppShortToken || 'Opponent'} Outlook: Kyle Shanahan and DC Raheem Morris open installation for the ${oppContext}${venueClause} as San Francisco prepares for a pivotal NFC matchup${matchupCites}.`
+          `Week ${wk} ${oppShortToken || 'Opponent'} Outlook: Kyle Shanahan and DC Raheem Morris open installation for the ${oppContext}${venueClause}${oppStrengthClause} as San Francisco prepares for a pivotal NFC matchup${matchupCites}.`
         );
       }
       dynamicBullets.push(

@@ -8,7 +8,11 @@
  */
 
 import { formatCompactDollars } from './capSimulator.js';
-import { getDisallowedFormer49ers } from './groundingValidator.js';
+import {
+  getDisallowedFormer49ers,
+  describeSpreadCalibration,
+  buildBalancedLeagueComparisonBlock
+} from './groundingValidator.js';
 import { isStaleCompletedGameAvailabilityItem, resolveGameNewsContext } from './breakingClassifier.js';
 import { AMBIGUOUS_PLAYER_SURNAMES } from './linkIntegrity.js';
 
@@ -408,12 +412,19 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
   const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
   const sfOdds = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
   const dp = appData?.seasonal?.draftPrep2027 || {};
+  const spreadCalibration = describeSpreadCalibration(
+    matchup.betting?.spread || '',
+    matchup.oppName || '',
+    matchup.oppRecord || ''
+  );
+  const balancedLeagueBlock = buildBalancedLeagueComparisonBlock(appData, { compact: true });
 
   // Build text summary for LLM prompts or grounding logs
   const summaryLines = [
     `DEEP RESEARCH DOSSIER FOR TOPIC: "${query}"`,
     `Primary Focus: ${intent.matchedGroups.map(g => g.label).join(', ') || 'Full-Team 49ers Roster, Scheme & Cap Synthesis'}`,
-    `Team Standing: ${appData?.meta?.teamRecord || '6-1'} (${appData?.meta?.standingSummary || '1st NFC West'}) | Week ${matchup.week || appData?.meta?.currentWeek || 9} vs. ${matchup.oppName || 'Opponent'} (${matchup.betting?.spread || 'SF favored'})`,
+    `Team Standing: ${appData?.meta?.teamRecord || '6-1'} (${appData?.meta?.standingSummary || '1st NFC West'}) | Week ${matchup.week || appData?.meta?.currentWeek || 9} vs. ${matchup.oppName || 'Opponent'} (${matchup.oppRecord || 'NFL'}, Line: ${matchup.betting?.spread || 'TBD'})`,
+    ...(balancedLeagueBlock ? [balancedLeagueBlock] : []),
     `Active Available Contributors (${activeHealthyDossiers.length}):`,
     ...activeHealthyDossiers.map(
       d =>
@@ -485,6 +496,8 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
     cap26,
     cap27,
     matchup,
+    spreadCalibration,
+    balancedLeagueBlock,
     sfOdds,
     draftPrep: dp,
     dossierSummaryText: summaryLines.join('\n')
@@ -523,30 +536,37 @@ export function buildNotebookLmPodcastScript({
   const solo = format === 'solo';
   const rec = appData?.meta?.teamRecord || '6-1';
   const curWk = d.matchup?.week || appData?.meta?.currentWeek || 9;
-  const oppName = d.matchup?.oppName || 'Las Vegas Raiders';
-  const spread = d.matchup?.betting?.spread || 'SF -9.5';
+  const oppName = d.matchup?.oppName || 'the upcoming opponent';
+  const oppRecord = d.matchup?.oppRecord && d.matchup.oppRecord !== '—' ? ` (${d.matchup.oppRecord})` : '';
+  const spread = d.matchup?.betting?.spread || 'Even';
+  const spreadCal = d.spreadCalibration || describeSpreadCalibration(spread, oppName, d.matchup?.oppRecord || '');
   const groupLabel = d.primaryGroup?.label || cleanTopic;
   const cap26M = ((d.cap26?.teamCapSpace || 35_164_858) / 1_000_000).toFixed(2);
   const cap27DefM = Math.abs((d.cap27?.teamCapSpace ?? -31_540_066) / 1_000_000).toFixed(2);
   const pickCount = d.draftPrep?.pickInventory?.length || 6;
 
-  // Build ordered pool of rich, non-repetitive conversational modules from the Deep Research Dossier
+  // Build ordered pool of rich, non-repetitive, fair-minded conversational modules from the Deep Research Dossier
   const candidateModules = [];
 
-  // Module 1: Cold Open & Big-Picture Framing
+  // Module 1: Cold Open & Market-Calibrated Framing
+  const tightSpreadClause =
+    spreadCal.tier === 'toss_up' && spreadCal.impliedSfWinPct != null
+      ? `—and with the market pricing it as a tight ${spread} coin-flip around ${spreadCal.impliedSfWinPct} percent implied odds, there's a real case on both sides`
+      : `—and looking across the 32-team league numbers, there's plenty of nuance on both sides of the ledger`;
+
   candidateModules.push([
     {
       speaker: 'Marcus',
       text: solo
-        ? `Welcome in to 49ers Faithful. Today we're doing a deep-dive ${mins}-minute briefing on ${cleanTopic}—pulling straight from the live 2026 fifty-three-man ledger, nflverse play-by-play EPA, practice participation, and OverTheCap's multi-year books.`
-        : `Welcome in to 49ers Faithful. Elena, we just wrapped our deep research pass on ${cleanTopic}, and with the Niners sitting at ${rec} coming into Week ${curWk} against the ${oppName}, there's a ton moving underneath the surface right now.`
+        ? `Welcome in to 49ers Faithful. Today's ${mins}-minute briefing examines ${cleanTopic} through an impartial league-wide lens—pulling straight from the live 2026 fifty-three-man ledger, nflverse play-by-play EPA, practice participation, and OverTheCap's multi-year books.`
+        : `Welcome in to 49ers Faithful. Elena, we just wrapped an even-handed research pass on ${cleanTopic}, and with San Francisco sitting at ${rec} entering Week ${curWk} against ${oppName}${oppRecord}${tightSpreadClause}.`
     },
     {
       speaker: solo ? 'Marcus' : 'Elena',
       text:
         d.activeSidelined.length > 0 || d.irReserve.length > 0
-          ? `There really is, Marcus. On paper people see San Francisco holding the one seed in the NFC, but when you open up the ${groupLabel.toLowerCase()} depth chart, injuries and reserve designations have completely reshaped who's actually taking snaps on Sunday.`
-          : `That's right. When you cross-check our live snap shares with expected points added and the 2027 salary cap horizon, the picture is way more nuanced than standard box-score talk.`
+          ? `There really is, Marcus. Record alone never tells the whole story—once you open the ${groupLabel.toLowerCase()} depth chart alongside league-wide unit ranks, injuries and reserve designations create real vulnerabilities that opposing staffs can target.`
+          : `Exactly. Once you stack San Francisco's snap shares and EPA against all 32 teams—and weigh where the opponent actually holds clear advantages—the picture is way more balanced than standard box-score hype.`
     }
   ]);
 
@@ -557,7 +577,7 @@ export function buildNotebookLmPodcastScript({
         speaker: 'Marcus',
         text: `First, quick roster housekeeping—${d.intent.disallowedAsked.join(' and ')} ${
           d.intent.disallowedAsked.length === 1 ? 'is' : 'are'
-        } no longer on the live 2026 San Francisco roster, so we're focusing strictly on the active contributors and reserve timelines actually in the building.`
+        } no longer on the live 2026 San Francisco roster, so this breakdown focuses strictly on the active contributors and reserve timelines actually in the building.`
       }
     ]);
   }
@@ -567,7 +587,7 @@ export function buildNotebookLmPodcastScript({
     const sidelinedSummary = d.activeSidelined
       .slice(0, 3)
       .map(p => {
-        const st = p.spokenStat ? `—who's given us ${p.spokenStat}—` : '';
+        const st = p.spokenStat ? `—who's posted ${p.spokenStat}—` : '';
         return `${p.name}${st}is ruled ${p.healthStatus.toLowerCase()} dealing with ${p.injuryType ? p.injuryType.toLowerCase() : 'an injury'}`;
       })
       .join(', while ');
@@ -630,13 +650,38 @@ export function buildNotebookLmPodcastScript({
     ]);
   }
 
-  // Module 4: Scheme Mechanics & Quarterback / Coordinator Synergy
+  // Module 4: Balanced Counterpoint — Opponent Strengths & San Francisco's League-Wide Vulnerabilities
+  const balLines = String(d.balancedLeagueBlock || '').split('\n');
+  const oppAdvRaw = balLines.find(l => l.includes('MAJOR STATISTICAL ADVANTAGES OVER SF')) || '';
+  const sfWeakRaw = balLines.find(l => l.includes('49ERS LEAGUE-WIDE VULNERABILITIES')) || '';
+  const oppAdvItems = oppAdvRaw ? oppAdvRaw.split(': ').slice(1).join(': ').split(' | ').slice(0, 2).join(' and ') : '';
+  const sfWeakItems = sfWeakRaw ? sfWeakRaw.split(': ').slice(1).join(': ').split(' | ').slice(0, 2).join(' and ') : '';
+
+  if (oppAdvItems || sfWeakItems) {
+    candidateModules.push([
+      {
+        speaker: solo ? 'Marcus' : 'Elena',
+        text: oppAdvItems
+          ? `Hold on though—let's give full credit to the other sideline, because the 32-team numbers explain why this matchup isn't lopsided. ${oppName} actually holds real statistical edges in ${oppAdvItems}.`
+          : `Hold on though—let's keep the league-wide perspective honest here, because San Francisco's bottom-half metrics show up in ${sfWeakItems}.`
+      },
+      {
+        speaker: 'Marcus',
+        text:
+          sfWeakItems && oppAdvItems
+            ? `That's a fair pushback. San Francisco still has genuine league-relative flaws in ${sfWeakItems}, so opposing coordinators have a clear blueprint if they keep the 49ers off schedule.`
+            : `Exactly—ignoring those pressure points leads to lazy analysis, and good opponents will attack those exact weak spots.`
+      }
+    ]);
+  }
+
+  // Module 5: Scheme Mechanics & Quarterback / Coordinator Synergy
   const purdy = (appData?.roster?.players || []).find(p => p.name === 'Brock Purdy');
   const kittle = (appData?.roster?.players || []).find(p => p.name === 'George Kittle');
   const cmc = (appData?.roster?.players || []).find(p => p.name === 'Christian McCaffrey');
   const schemeText =
     d.primaryGroup?.schemeNote ||
-    "Kyle Shanahan's condensed splits and Raheem Morris's disguised split-safety rotations dictate how San Francisco wins leverage on third down.";
+    "Kyle Shanahan's condensed splits and Raheem Morris's disguised split-safety rotations dictate how San Francisco tries to manufacture leverage on third down.";
 
   candidateModules.push([
     {
@@ -653,16 +698,16 @@ export function buildNotebookLmPodcastScript({
               kittle?.stats2026?.receiving?.targetSharePct ?? 22.4
             } percent target share over the middle and Christian McCaffrey absorbs ${
               cmc?.stats2026?.receiving?.targetSharePct ?? 20.5
-            } percent on choice routes—forcing safeties down so healthy wideouts get cleaner glances and deep overs.`
-          : `And the numbers back up the tape. Brock Purdy sits at +${
+            } percent on choice routes—though disciplined two-high defenses can bracket the middle if perimeter separation lags.`
+          : `And the numbers show both the ceiling and the tension. Brock Purdy sits at +${
               purdy?.stats2026?.passing?.epa ? Number(purdy.stats2026.passing.epa).toFixed(1) : '63.2'
             } passing EPA with a +${
               purdy?.stats2026?.passing?.cpoe ? Number(purdy.stats2026.passing.cpoe).toFixed(1) : '4.2'
-            } percent completion rate over expected because every unit stays married to run-action leverage.`
+            } percent completion rate over expected, which relies on staying ahead of the sticks so pass protection holds up.`
     }
   ]);
 
-  // Module 5: Salary Cap, Contracts & 2026 -> 2027 Article 13 Rollover Math
+  // Module 6: Salary Cap, Contracts & 2026 -> 2027 Article 13 Rollover Math
   const capPlayers = [...d.activeHealthy, ...d.activeSidelined, ...d.irReserve].filter(p => p.cap2026);
   const capPlayerDetail =
     capPlayers.length > 0
@@ -675,15 +720,15 @@ export function buildNotebookLmPodcastScript({
   candidateModules.push([
     {
       speaker: solo ? 'Marcus' : 'Elena',
-      text: `Now let's connect the OverTheCap ledger, because every roster decision right now is really a two-year equation. ${capPlayerDetail}Team-wide, San Francisco holds $${cap26M}M in 2026 Top-51 space, which gives John Lynch huge 9/18ths midseason base-salary flexibility—but we're staring at a projected -$${cap27DefM}M cap deficit in 2027.`
+      text: `Now let's connect the OverTheCap ledger, because every roster decision right now is really a two-year equation. ${capPlayerDetail}Team-wide, San Francisco holds $${cap26M}M in 2026 Top-51 space, which gives John Lynch 9/18ths midseason base-salary flexibility—but the franchise is staring at a projected -$${cap27DefM}M cap deficit in 2027.`
     },
     {
       speaker: 'Marcus',
-      text: `Hold on—underscore that point for everyone listening. Because of CBA Article 13 rollover, every dollar we don't spend right now carries straight into 2027 to erase that deficit, and we only own ${pickCount} total picks in the 2027 draft after sending our fourth-rounder to Indy for DeForest Buckner.`
+      text: `Hold on—underscore that point for everyone listening. Because of CBA Article 13 rollover, every dollar San Francisco doesn't spend right now carries straight into 2027 to offset that deficit, and the team only owns ${pickCount} total picks in the 2027 draft after sending its fourth-rounder to Indy for DeForest Buckner.`
     }
   ]);
 
-  // Module 6: External Trade Fits & Practice Squad Elevations
+  // Module 7: External Trade Fits & Practice Squad Elevations
   if (d.relevantTradeTargets.length > 0 || d.practiceSquad.length > 0) {
     const tList = d.relevantTradeTargets
       .slice(0, 3)
@@ -698,7 +743,7 @@ export function buildNotebookLmPodcastScript({
       {
         speaker: solo ? 'Marcus' : 'Elena',
         text: tList
-          ? `That's why if the front office looks outside the building before the deadline, discipline is everything. Our highest-graded realistic fits here are cost-controlled targets like ${tList}—players whose remaining 2026 base proration stays tiny without wrecking our 2027 books.`
+          ? `That's why if the front office looks outside the building, discipline matters. The cleanest cost-controlled fits are targets like ${tList}—players whose remaining 2026 base proration stays modest without compounding San Francisco's 2027 books.`
           : `That's why internal development and smart practice-squad elevations matter so much before burning scarce 2027 draft capital.`
       },
       ...(psList
@@ -712,15 +757,15 @@ export function buildNotebookLmPodcastScript({
     ]);
   }
 
-  // Module 7: Upcoming Matchup Tactical Application
+  // Module 8: Upcoming Matchup Tactical Application (Two-Sided)
   const trenchKey =
     d.matchup?.keyMatchupsMatrix?.[0]?.tacticalDetail ||
-    `Against the ${oppName} at ${spread}, staying ahead of the chains on first down neutralizes pass-rush ears pinning back.`;
+    `Against ${oppName} at ${spread}, early-down efficiency and third-down protection will decide which sideline dictates tempo.`;
 
   candidateModules.push([
     {
       speaker: 'Marcus',
-      text: `Looking straight ahead to Week ${curWk} against the ${oppName} with the line sitting at ${spread}: ${cleanSentence(
+      text: `Looking straight ahead to Week ${curWk} against ${oppName} with the line sitting at ${spread}: ${cleanSentence(
         trenchKey
       )}`
     }
@@ -961,10 +1006,10 @@ export function buildDeepScoutingAnalysisMarkdown({
     sections.push(`#### 5. Verified Beat Wire & Live Reporting Signals\n${wireLines.join('\n')}`);
   }
 
-  // Section 6: Matchup & Playoff Outlook
+  // Section 6: Matchup, League Vulnerabilities & Playoff Outlook
   const keyMatchup =
     d.matchup?.keyMatchupsMatrix?.[0]?.tacticalDetail ||
-    'Leverage 21-personnel motion and four-man Wide-9 rush pressure to dictate third-down spacing.';
+    'Early-down efficiency, third-down protection, and red-zone execution on both sidelines will swing the game script.';
   const rawSpread = String(d.matchup?.betting?.spread || '');
   const rawOu = Number(d.matchup?.betting?.overUnder);
   const spreadNumMatch = rawSpread.match(/([+-]?\d+(?:\.\d+)?)/);
@@ -977,16 +1022,32 @@ export function buildDeepScoutingAnalysisMarkdown({
     const oppImplied = ((rawOu - (sfFav ? absSpread : -absSpread)) / 2).toFixed(1);
     impliedScoreClause = ` • Implied Score \`SF ${sfImplied} – ${oppImplied}\``;
   }
+  const mdBalLines = String(d.balancedLeagueBlock || '').split('\n');
+  const mdOppAdv = mdBalLines.find(l => l.includes('MAJOR STATISTICAL ADVANTAGES OVER SF')) || '';
+  const mdSfWeak = mdBalLines.find(l => l.includes('49ERS LEAGUE-WIDE VULNERABILITIES')) || '';
+  const mdSpreadCal = d.spreadCalibration || describeSpreadCalibration(rawSpread, oppName, d.matchup?.oppRecord || '');
+  const balancedBulletLines = [
+    `* **Vs. ${oppName} (\`${d.matchup?.betting?.spread || 'Line TBD'}\`, O/U \`${
+      d.matchup?.betting?.overUnder || '—'
+    }\`${impliedScoreClause}${
+      mdSpreadCal.impliedSfWinPct != null ? ` • ~${mdSpreadCal.impliedSfWinPct}% implied SF win prob` : ''
+    })**: ${keyMatchup}`,
+    mdOppAdv
+      ? `* **Opponent Strengths & Counter-Case**: ${mdOppAdv.split(': ').slice(1).join(': ')}`
+      : null,
+    mdSfWeak
+      ? `* **San Francisco League-Relative Vulnerabilities**: ${mdSfWeak.split(': ').slice(1).join(': ')}`
+      : null,
+    `* **10,000-Run Calibrated Simulation**: Projected \`${d.sfOdds?.projectedWins ?? 12.0} Wins\` • Playoff Berth \`${
+      d.sfOdds?.makePlayoffsPct ?? 93.0
+    }%\` • Win NFC West \`${d.sfOdds?.winDivisionPct ?? 82.6}%\` • **#1 Seed Bye \`${
+      d.sfOdds?.seed1ByePct ?? 34.5
+    }%\`**.`
+  ]
+    .filter(Boolean)
+    .join('\n');
   sections.push(
-    `#### ${d.matchedNews.length > 0 ? '6' : '5'}. Week ${curWk} Matchup & Calibrated NFC Seeding Impact\n` +
-      `* **Vs. ${oppName} (\`${d.matchup?.betting?.spread || 'SF Favored'}\`, O/U \`${
-        d.matchup?.betting?.overUnder || '—'
-      }\`${impliedScoreClause})**: ${keyMatchup}\n` +
-      `* **10,000-Run Calibrated Simulation**: Projected \`${d.sfOdds?.projectedWins ?? 12.0} Wins\` • Playoff Berth \`${
-        d.sfOdds?.makePlayoffsPct ?? 93.0
-      }%\` • Win NFC West \`${d.sfOdds?.winDivisionPct ?? 82.6}%\` • **#1 Seed Bye \`${
-        d.sfOdds?.seed1ByePct ?? 34.5
-      }%\`**.`
+    `#### ${d.matchedNews.length > 0 ? '6' : '5'}. Week ${curWk} Balanced Matchup, Vulnerabilities & NFC Seeding Impact\n${balancedBulletLines}`
   );
 
   return sections.join('\n\n');

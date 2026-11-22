@@ -5139,10 +5139,10 @@ export async function hydrateLiveEspnOverlay(appData) {
         um.aiMatchupMeta = null;
         um.coachingMatchup = {
           headline: `Kyle Shanahan & DC Raheem Morris vs. ${nextGame.opponent?.coach || `${um.oppName} Staff`} (${nextGame.homeAway === 'home' ? "Levi's Stadium" : 'Road Test'})`,
-          summary: `Week ${nextWk} coordinator duel pitting Kyle Shanahan's 21 personnel motion sequencing and DC Raheem Morris's disguised split-safety rotations against ${um.oppName} (${um.oppRecord}).`,
+          summary: `Week ${nextWk} two-sided coordinator chess match pitting Kyle Shanahan's 21-personnel motion attack and DC Raheem Morris's split-safety defense against ${um.oppName} (${um.oppRecord})—testing both San Francisco's offensive efficiency and its defensive pass-rush and secondary consistency.`,
           bullets: [
-            `Pass-Game Efficiency & Coverage Shell Delta: Shanahan uses condensed splits, jet motion, and orbit motion to force ${um.oppName}'s secondary to declare single-high vs. two-high leverage before attacking the intermediate honey-hole between hook/curl and curl/flat defenders on play-action choice/dagger concepts.`,
-            `Trench Run-Fit & Split-Safety Box Math: Raheem Morris anchors the A- and B-gaps out of light boxes while holding disguised two-high shells until the snap before spinning into Quarters, Cover 6, or Robber.`
+            `Pass-Game Efficiency & Coverage Shell Delta: Shanahan uses condensed splits, jet motion, and orbit motion to diagnose ${um.oppName}'s single-high vs. two-high rotations pre-snap, while ${um.oppName}'s front and disguised coverage shells aim to disrupt timing windows and pressure intermediate reads.`,
+            `Trench Run-Fit & Two-Way Leverage: Raheem Morris leans on light-box run fits and disguised Quarters/Cover 6 rotations, while ${um.oppName}'s offense tests San Francisco's pass rush and perimeter coverage discipline on early downs and in the red zone.`
           ]
         };
         if (um.franchiseHistory && !isTbdOpponent) {

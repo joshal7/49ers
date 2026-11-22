@@ -715,10 +715,10 @@ function renderPodcastStudio({
   const wkLabel = um.week ? `Week ${um.week}` : `Week ${appData?.meta?.currentWeek || ''}`.trim();
   const oppShort = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || 'Matchup';
   const topicChips = [
-    `${wkLabel} ${oppShort} Film & Trench Protection Plan`.trim(),
+    `${wkLabel} 49ers vs. ${oppShort}: Balanced Matchup, Spread & Keys for Both Teams`.trim(),
     '49ers Wide Receivers: Injury Timeline, Target Share & Cap Math',
-    'DeForest Buckner + Nick Bosa Wide-9 Stunt Geometry',
-    `Calibrated #1 NFC Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%) & Conference Tiebreakers`
+    '49ers Pass Rush & Pass Defense Reality Check vs. League Benchmarks',
+    `Calibrated #1 NFC Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%) & Conference Contenders`
   ];
 
   const isActiveExpanded = Boolean(activeEp && expandedTranscriptIds.has(activeEp.id));
@@ -1070,10 +1070,10 @@ function renderDeepAnalysisRunner({
   const wkLabel = um.week ? `Week ${um.week}` : 'upcoming';
   const oppLabel = um.oppName || 'opponent';
   const quickPrompts = [
+    `Balanced ${wkLabel} 49ers vs. ${oppLabel} scouting breakdown: unit edges, vulnerabilities & paths to win for both teams`,
     'Deep dive on 49ers Wide Receivers: active depth, IR/Out timelines, target share & 2027 cap math',
     'Assess 49ers 2026 trade window needs, realistic seller targets, 9/18ths rental math & 2027 -$31.54M cap horizon',
-    'Evaluate Brock Purdy 2026 EPA/play, CPOE, and pressure-to-sack avoidance vs. two-high shells',
-    `How DC Raheem Morris pairs DeForest Buckner, Keion White & Nick Bosa in ${wkLabel} vs. ${oppLabel}`
+    'Honest league-wide check on 49ers pass rush, pass defense & special teams weaknesses vs. NFC contenders'
   ];
 
   const sharedHeroReport = sharedAnalysisHighlightId

@@ -123,7 +123,8 @@ import {
 } from '../src/engine/gameDayRosterEngine.js';
 import {
   validateNoHallucinatedRosterClaims,
-  sanitizeHallucinatedRosterText
+  sanitizeHallucinatedRosterText,
+  classifySymmetricUnitAdvantage
 } from '../src/engine/groundingValidator.js';
 import {
   AMBIGUOUS_PLAYER_SURNAMES,
@@ -5269,44 +5270,110 @@ async function main() {
 
   const sfOffEpaStat = getUnitMetricEntry('total_off_epa_game', 'SF');
   const oppOffPtsStat = getUnitMetricEntry('off_pts_game', oppAbbrTarget);
+  const oppDefPtsStat = getUnitMetricEntry('def_pts_allowed_game', oppAbbrTarget);
+  const sfDefPtsStat = getUnitMetricEntry('def_pts_allowed_game', 'SF');
   const sf3rdStat = getUnitMetricEntry('off_third_down_pct', 'SF');
   const oppDef3rdStat = getUnitMetricEntry('def_third_down_pct_allowed', oppAbbrTarget);
   const sfRzStat = getUnitMetricEntry('off_red_zone_td_pct', 'SF');
   const oppDefRzStat = getUnitMetricEntry('def_red_zone_td_pct_allowed', oppAbbrTarget);
+  const sfDefEpaStat = getUnitMetricEntry('def_epa_allowed_game', 'SF');
   const oppDefEpaStat = getUnitMetricEntry('def_epa_allowed_game', oppAbbrTarget);
+  const sfDefPassEpaStat = getUnitMetricEntry('def_pass_epa_allowed_game', 'SF');
+  const oppDefPassEpaStat = getUnitMetricEntry('def_pass_epa_allowed_game', oppAbbrTarget);
+  const sfDefSackRateStat = getUnitMetricEntry('def_sack_rate', 'SF');
+  const sfDefSacksStat = getUnitMetricEntry('def_sacks_game', 'SF');
   const sfDefRushEpaStat = getUnitMetricEntry('def_rush_epa_allowed_game', 'SF');
   const sfDefYpcStat = getUnitMetricEntry('def_yds_per_carry_allowed', 'SF');
   const sfDefExpAllowed = getUnitMetricEntry('def_explosive_plays_allowed_game', 'SF');
   const oppDefRushYdsStat = getUnitMetricEntry('def_rush_yds_allowed_game', oppAbbrTarget);
+  const oppDefRushEpaStat = getUnitMetricEntry('def_rush_epa_allowed_game', oppAbbrTarget);
   const oppDefYpcStat = getUnitMetricEntry('def_yds_per_carry_allowed', oppAbbrTarget);
   const sfPenYdsStat = getUnitMetricEntry('margin_pen_yds_game', 'SF');
   const oppPenYdsStat = getUnitMetricEntry('margin_pen_yds_game', oppAbbrTarget);
+  const sfToDiffStat = getUnitMetricEntry('margin_turnover_diff', 'SF');
+  const oppToDiffStat = getUnitMetricEntry('margin_turnover_diff', oppAbbrTarget);
 
-  // Strictly orthogonalized: Coaching Matchup = 100% Coordinator Tendencies, Scheme Families & Situational Chess (zero player lists!)
+  const oppPassDefCompositeRank = Math.round(
+    (Number(oppDefPassEpaStat.rank || 16) + Number(oppDef3rdStat.rank || 16)) / 2
+  );
+  const sfPassRushCompositeRank = Math.round(
+    (Number(sfDefSacksStat.rank || 16) + Number(sfDefSackRateStat.rank || 16)) / 2
+  );
+  const oppRunDefCompositeRank = Math.round(
+    (Number(oppDefRushYdsStat.rank || 16) + Number(oppDefYpcStat.rank || 16) + Number(oppDefRushEpaStat.rank || 16)) / 3
+  );
+  const oppHasEliteDefense = Number(oppDefEpaStat.rank || 16) <= 8;
+  const oppHasStrongRedZone = Number(oppDefRzStat.rank || 16) <= 10 && Number(oppDef3rdStat.rank || 16) <= 12;
+  const moneyDownVerdict = oppHasStrongRedZone
+    ? `creating a genuine strength-on-strength clash where ${oppStaff.dc ? `DC ${oppStaff.dc}` : oppShortName}'s red-zone tightness can force field goals and keep the margin inside one score`
+    : Number(oppDefRzStat.rank || 16) >= 18 && Number(oppDef3rdStat.rank || 16) >= 18
+      ? `giving Shanahan measurable 4th-and-short leverage inside plus territory if protection holds`
+      : `making red-zone touchdown conversion and third-and-medium execution decisive swing variables for both staffs`;
+
+  const penAndToEdgeNote =
+    Number(oppPenYdsStat.rank || 16) + 4 <= Number(sfPenYdsStat.rank || 16) ||
+    Number(oppToDiffStat.rank || 16) + 4 <= Number(sfToDiffStat.rank || 16)
+      ? `${oppAbbrTarget} holds a clear hidden-yardage and discipline edge in penalties (${oppPenYdsStat.disp}/gm, #${oppPenYdsStat.rank} vs. SF ${sfPenYdsStat.disp}, #${sfPenYdsStat.rank}) and turnover margin (${oppToDiffStat.disp}, #${oppToDiffStat.rank} vs. SF ${sfToDiffStat.disp}, #${sfToDiffStat.rank}).`
+      : `Discipline & ball security check: SF ${sfPenYdsStat.disp} penalty yds/gm (#${sfPenYdsStat.rank}) and ${sfToDiffStat.disp} turnover diff (#${sfToDiffStat.rank}) vs. ${oppAbbrTarget} ${oppPenYdsStat.disp} (#${oppPenYdsStat.rank}) and ${oppToDiffStat.disp} (#${oppToDiffStat.rank}).`;
+
+  // Strictly orthogonalized & symmetrically balanced: Coaching Matchup = Coordinator Tendencies, Scheme Families & Situational Chess for BOTH sidelines
   const coachingMatchupDynamic =
     oppAbbrTarget === 'DAL'
       ? {
           headline: `Kyle Shanahan & DC Raheem Morris vs. Cowboys ${oppStaffTitle}`,
-          summary: `Dallas wins high-possession track meets (${oppOffPtsStat.disp} PPG, #${oppOffPtsStat.rank} NFL) to mask the league's #${oppDefEpaStat.rank} defense in EPA allowed/game (${oppDefEpaStat.disp}) and #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}). That script plays directly into Kyle Shanahan's ball-control efficiency (#${sfOffEpaStat.rank} Off. EPA at ${sfOffEpaStat.disp}/gm) while DC Raheem Morris's #${sfDefRushEpaStat.rank} run-stopping structure (${sfDefYpcStat.disp}/carry allowed) dares HC Brian Schottenheimer and OC Klayton Adams to abandon balance.`,
+          summary: `Dallas wins high-possession track meets (${oppOffPtsStat.disp} PPG, #${oppOffPtsStat.rank} NFL) to mask the league's #${oppDefEpaStat.rank} defense in EPA allowed/game (${oppDefEpaStat.disp}) and #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}). That script tests Kyle Shanahan's ball-control efficiency (#${sfOffEpaStat.rank} Off. EPA at ${sfOffEpaStat.disp}/gm) while DC Raheem Morris's #${sfDefRushEpaStat.rank} run-stopping structure (${sfDefYpcStat.disp}/carry allowed) tries to offset a #${sfDefPassEpaStat.rank} pass defense against HC Brian Schottenheimer and OC Klayton Adams.`,
           bullets: [
             `Pass-Game Efficiency & Coverage Shell Delta: San Francisco enters #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%) against DC Matt Eberflus's low-blitz four-man rush (#${oppDefSacksRank.rank} in sacks/gm) and spot-drop Cover 3 and Tampa-2 shells. Shanahan counters landmark zone drops by pairing 21 personnel and condensed splits with pre-snap jet motion and orbit motion—widening curl/flat defenders to attack the 12-to-22 yard honey-hole between hook/curl linebackers and deep safeties on play-action choice/dagger concepts between the numbers and between the hashes.`,
-            `Gap-Scheme Run Script vs. Split-Safety Box Math: Cowboys OC Klayton Adams leans on downhill gap-scheme runs—pin-and-pull, counter, and duo targeting the A- and B-gaps—to stay ahead of the chains, yet runs into SF's #${sfDefRushEpaStat.rank} NFL rush defense (${sfDefRushEpaStat.disp} Rush EPA/gm). Morris holds disguised two-high shells until the snap before spinning into Quarters, Cover 6, or cloud-trap, stuffing early-down runs out of light boxes while holding opponents to an NFL-best ${sfDefExpAllowed.disp} explosive plays/gm (#${sfDefExpAllowed.rank}).`,
-            `Money-Down, Red-Zone & Penalty Asymmetry: Situational execution is the steepest coaching mismatch on the Week 10 slate—SF converts ${sf3rdStat.disp} on 3rd down (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips into TDs (#${sfRzStat.rank}), whereas Eberflus's unit surrenders ${oppDef3rdStat.disp} on 3rd down (#${oppDef3rdStat.rank}) and ${oppDefRzStat.disp} red-zone TDs (#${oppDefRzStat.rank}). Compounded by Dallas's #${oppPenYdsStat.rank} penalty discipline (${oppPenYdsStat.disp}/gm vs. SF's ${sfPenYdsStat.disp} at #${sfPenYdsStat.rank}), sustained 10-play 12/21 personnel drives bleed the clock and strand Dallas's #${oppOffPtsStat.rank} scoring offense on the bench.`,
-            `Late-Down Disguise & Game-Script Trigger: Brian Schottenheimer's West Coast passing attack (#${oppPassEpaRank.rank} Passing EPA at +${oppPassEpaRank.value.toFixed(2)}/gm) thrives on rhythm sight adjustments when ahead of the sticks, but becomes vulnerable when trailing by two scores. If Shanahan scripts an early lead off opening bootleg and play-action sequenced looks, Morris unlocks 3rd-and-long sim pressure and Wide-9 interior T-E stunt packages without sacrificing seven-man coverage.`
+            `Gap-Scheme Run Script vs. Split-Safety Box Math: Cowboys OC Klayton Adams leans on downhill gap-scheme runs—pin-and-pull, counter, and duo targeting the A- and B-gaps—to stay ahead of the chains, running into SF's #${sfDefRushEpaStat.rank} NFL rush defense (${sfDefRushEpaStat.disp} Rush EPA/gm). Morris holds disguised two-high shells until the snap before spinning into Quarters, Cover 6, or cloud-trap, though Dallas's #${oppPassEpaRank.rank} passing attack can stress SF's #${sfDefPassEpaStat.rank} pass defense if SF's #${sfDefSacksStat.rank} pass rush fails to get home.`,
+            `Money-Down, Red-Zone & Penalty Asymmetry: SF converts ${sf3rdStat.disp} on 3rd down (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips into TDs (#${sfRzStat.rank}), whereas Eberflus's unit surrenders ${oppDef3rdStat.disp} on 3rd down (#${oppDef3rdStat.rank}) and ${oppDefRzStat.disp} red-zone TDs (#${oppDefRzStat.rank}). Compounded by Dallas's #${oppPenYdsStat.rank} penalty discipline (${oppPenYdsStat.disp}/gm vs. SF's ${sfPenYdsStat.disp} at #${sfPenYdsStat.rank}), sustained 10-play 12/21 personnel drives are SF's cleanest path to keeping Dallas's #${oppOffPtsStat.rank} scoring offense off the field.`,
+            `Late-Down Disguise & Game-Script Trigger: Brian Schottenheimer's West Coast passing attack (#${oppPassEpaRank.rank} Passing EPA at +${oppPassEpaRank.value.toFixed(2)}/gm) thrives on rhythm sight adjustments and explosive perimeter throws, creating genuine shootout risk if San Francisco's four-man rush stalls late.`
           ]
         }
       : {
           headline: `Kyle Shanahan & DC Raheem Morris vs. ${oppNameTarget} ${oppStaffTitle}`,
-          summary: `San Francisco (${sfStandingsDetail.record}) brings the NFL's #${sfOffEpaStat.rank} Offensive EPA unit (${sfOffEpaStat.disp}/gm) and #${sfDefRushEpaStat.rank} Rush EPA defense (${sfDefRushEpaStat.disp}/gm) into a contrasting coordinator duel against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}) and ${oppStaffTitle}. Shanahan's play-calling script centers on 21 personnel and pre-snap motion to dictate box counts, while Raheem Morris's split-safety rotations cap explosive plays (${sfDefExpAllowed.disp}/gm, #${sfDefExpAllowed.rank} NFL).`,
+          summary: oppHasEliteDefense
+            ? `San Francisco (${sfStandingsDetail.record}, #${sfOffEpaStat.rank} Off. EPA at ${sfOffEpaStat.disp}/gm) faces a true heavyweight scheme test against ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}), whose ${oppStaff.dc ? `DC ${oppStaff.dc}` : 'defense'} ranks #${oppDefEpaStat.rank} in Def. EPA Allowed (${oppDefEpaStat.disp}/gm), #${oppDefPtsStat.rank} in Points Allowed (${oppDefPtsStat.disp}), and #${oppDefSacksRank.rank} in Sacks/Gm (${oppDefSacksRank.value.toFixed(2)}). While SF pairs top-ranked offensive efficiency with #${sfDefRushEpaStat.rank} run defense (${sfDefRushEpaStat.disp}/gm), ${oppShortName}'s pass rush, red-zone stinginess (#${oppDefRzStat.rank}), and SF's #${sfDefSacksStat.rank} pass rush and #${sfDefPassEpaStat.rank} pass defense explain why the betting market prices a tight contest.`
+            : `San Francisco (${sfStandingsDetail.record}, #${sfOffEpaStat.rank} Off. EPA at ${sfOffEpaStat.disp}/gm, #${sfDefEpaStat.rank} Def. EPA at ${sfDefEpaStat.disp}/gm) meets ${oppNameTarget} (${teamRecordsMap.get(oppAbbrTarget)?.record || '—'}, #${oppOffPtsStat.rank} PPG offense, #${oppDefEpaStat.rank} Def. EPA) in a contrasting coordinator duel with ${oppStaffTitle}. Shanahan's 21-personnel motion and Morris's #${sfDefRushEpaStat.rank} run defense must balance against SF's #${sfDefPassEpaStat.rank} pass defense and #${sfDefSacksStat.rank} sack output.`,
           bullets: [
-            `Pass-Game Efficiency & Coverage Shell Delta: Entering #${sfPassEpaRank.rank} in Passing EPA/game (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%), Shanahan uses condensed splits, jet motion, and orbit motion to force ${oppStaff.dc ? `DC ${oppStaff.dc}` : `${oppShortName}'s defense`} to tip single-high vs. two-high rotations pre-snap before attacking the intermediate honey-hole between hook/curl and curl/flat defenders on play-action choice/dagger and boot flood concepts.`,
-            `Trench Run-Fit & Box-Count Chess: Against ${oppStaff.oc ? `OC ${oppStaff.oc}'s` : `${oppShortName}'s`} early-down run script (#${oppRushEpaRank.rank} Rushing EPA)—mixing pin-and-pull, counter, and duo targeting the A- and B-gaps—Morris anchors light boxes (#${sfDefYpcStat.rank} at ${sfDefYpcStat.disp}/carry allowed) while disguising Quarters, Cover 6, and cloud-trap shells behind a Wide-9 four-man rush.`,
-            `Money-Down & Red-Zone Execution: SF converts ${sf3rdStat.disp} of 3rd downs (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips (#${sfRzStat.rank}) versus ${oppAbbrTarget}'s #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}) and #${oppDefRzStat.rank} red-zone TD rate allowed (${oppDefRzStat.disp}), giving Shanahan clear 4th-and-short go-for-it leverage inside plus territory.`,
-            `Tempo, Penalty & Rest Leverage: ${venueDisplayDynamic} • ${restAdvDisplay} (SF ${sfPenYdsStat.disp} penalty yds/gm, #${sfPenYdsStat.rank} vs. ${oppAbbrTarget} ${oppPenYdsStat.disp}, #${oppPenYdsStat.rank}).`
+            `Pass-Game Efficiency & Coverage Shell Delta: SF enters #${sfPassEpaRank.rank} in Passing EPA/gm (+${sfPassEpaRank.value.toFixed(2)}) and #${sfSackAllowRank.rank} in Sack Rate Allowed (${sfSackAllowRank.value.toFixed(1)}%), but meets ${oppStaff.dc ? `DC ${oppStaff.dc}'s` : `${oppShortName}'s`} #${oppDefPassEpaStat.rank} pass defense (${oppDefPassEpaStat.disp}/gm) and #${oppDefSacksRank.rank} pass rush (${oppDefSacksRank.value.toFixed(2)} sacks/gm). Shanahan's condensed splits, jet motion, and orbit motion must identify disguised single-high vs. two-high rotations pre-snap before pressure collapses intermediate honey-hole windows between hook/curl and curl/flat defenders on play-action choice/dagger concepts.`,
+            `Trench Run-Fit & Pass-Rush Tradeoff: Against ${oppStaff.oc ? `OC ${oppStaff.oc}'s` : `${oppShortName}'s`} run script (#${oppRushEpaRank.rank} Rush EPA)—mixing pin-and-pull, counter, and duo at the A- and B-gaps—Morris anchors light boxes (#${sfDefYpcStat.rank} at ${sfDefYpcStat.disp}/carry allowed) while disguising Quarters, Cover 6, and cloud-trap shells; however, SF's #${sfDefSacksStat.rank} sack rate (${sfDefSacksStat.disp}/gm) and #${sfDefPassEpaStat.rank} pass defense leave clear windows if opposing QBs stay clean on early downs.`,
+            `Money-Down & Red-Zone Execution: SF converts ${sf3rdStat.disp} of 3rd downs (#${sf3rdStat.rank}) and ${sfRzStat.disp} of red-zone trips (#${sfRzStat.rank}) versus ${oppAbbrTarget}'s #${oppDef3rdStat.rank} 3rd-down defense (${oppDef3rdStat.disp}) and #${oppDefRzStat.rank} red-zone TD rate allowed (${oppDefRzStat.disp}), ${moneyDownVerdict}.`,
+            `Tempo, Penalties, Turnovers & Venue: ${venueDisplayDynamic} • ${restAdvDisplay}. ${penAndToEdgeNote}`
           ]
         };
 
-  // Key Matchups = 5 Specific 1-on-1 / Unit Scouting Battles with Tale-of-the-Tape stats & Broadcast Film Tells
+  // Key Matchups = 5 Specific, Symmetrically Calibrated 1-on-1 / Unit Scouting Battles
+  const passOffVsPassDefAdv = classifySymmetricUnitAdvantage(
+    sfPassEpaRank.rank,
+    oppPassDefCompositeRank,
+    oppAbbrTarget,
+    { tieLabel: 'Even Star Clash', strengthVsStrengthLabel: 'Strength vs. Strength' }
+  );
+  const sfRushVsOppOlAdv = classifySymmetricUnitAdvantage(
+    sfPassRushCompositeRank,
+    oppSackAllowRank.rank,
+    oppAbbrTarget,
+    { tieLabel: 'Even Trench Battle', sfEdgeLabel: 'SF Trench Edge', oppEdgeLabel: `${oppAbbrTarget} Trench Edge` }
+  );
+  const sfCovVsOppPassAdv = classifySymmetricUnitAdvantage(
+    sfDefPassEpaStat.rank,
+    oppPassEpaRank.rank,
+    oppAbbrTarget,
+    { tieLabel: 'Even Star Clash', strengthVsStrengthLabel: 'Strength vs. Strength' }
+  );
+  const sfRunVsOppRunDefAdv = classifySymmetricUnitAdvantage(
+    sfRushEpaRank.rank,
+    oppRunDefCompositeRank,
+    oppAbbrTarget,
+    { tieLabel: 'Even Trench Battle', strengthVsStrengthLabel: 'Strength vs. Strength' }
+  );
+  const sfOlVsOppPassRushAdv = classifySymmetricUnitAdvantage(
+    sfSackAllowRank.rank,
+    oppDefSacksRank.rank,
+    oppAbbrTarget,
+    { tieLabel: 'Even Trench Battle', sfEdgeLabel: 'SF Trench Edge', oppEdgeLabel: `${oppAbbrTarget} Edge` }
+  );
+
   const keyMatchupsMatrixDynamic =
     oppAbbrTarget === 'DAL'
       ? [
@@ -5322,10 +5389,10 @@ async function main() {
           {
             phaseTag: 'Interior Pass-Rush Revenge',
             unitMatchup: `DeForest Buckner, Osa Odighizuwa & Nick Bosa vs. Dak Prescott, C Cooper Beebe & RG Tyler Booker`,
-            advantage: 'SF Trench Edge',
+            advantage: sfRushVsOppOlAdv,
             sfPlayers: ['DeForest Buckner', 'Osa Odighizuwa', 'Nick Bosa'],
-            statComparison: `SF: Buckner + Odighizuwa 6.0 Sacks, 21 Pressures, 19 QB Hits | DAL: ${oppSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${oppSackAllowRank.rank} NFL)`,
-            tacticalDetail: `Former Cowboy Osa Odighizuwa (#92 — 11 pressures, 9 QB hits) knows every pass-set tell of Dallas interior starters Tyler Smith (LG #73), Cooper Beebe (C #56), and Tyler Booker (RG #52), and now pairs with DeForest Buckner (#99 — 4.0 sacks, 10 QB hits, 81% snaps). Winning immediate 3-tech and 2i A/B-gap penetration on T-E stunts prevents Beebe from sliding protection toward LT Tyler Guyton (#60) or RT Terence Steele (#78), isolating Nick Bosa 1-on-1 on the Wide-9 rail to collapse Dak Prescott's step-up lane.`,
+            statComparison: `SF: ${sfDefSacksStat.disp} Sacks/Gm (#${sfDefSacksStat.rank}) · Buckner + Odighizuwa 6.0 Sk | DAL: ${oppSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${oppSackAllowRank.rank} NFL)`,
+            tacticalDetail: `Former Cowboy Osa Odighizuwa (#92 — 11 pressures, 9 QB hits) knows every pass-set tell of Dallas interior starters Tyler Smith (LG #73), Cooper Beebe (C #56), and Tyler Booker (RG #52), and pairs with DeForest Buckner (#99 — 4.0 sacks, 10 QB hits). However, San Francisco's overall pass rush still ranks #${sfDefSacksStat.rank} in sacks/gm (${sfDefSacksStat.disp}), so interior T-E stunts must finish consistently or Dak Prescott will have clean pockets.`,
             filmTell: `On 3rd-and-5+, key C #56 Cooper Beebe's initial slide direction—whenever Beebe turns toward Buckner (#99), Odighizuwa (#92) and Bosa (#97) get two-on-two twist lanes on the opposite side.`
           },
           {
@@ -5349,7 +5416,7 @@ async function main() {
           {
             phaseTag: 'Pocket Integrity & TE Attrition',
             unitMatchup: `Trent Williams, Dominick Puni & Jake Brendel vs. Quinnen Williams, Kenny Clark & Rashan Gary`,
-            advantage: 'SF Edge',
+            advantage: sfOlVsOppPassRushAdv,
             sfPlayers: ['Trent Williams', 'Dominick Puni', 'Jake Brendel'],
             statComparison: `SF: ${sfSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${sfSackAllowRank.rank} NFL), 17.9% Pressure | DAL: ${oppDefSacksRank.value.toFixed(2)} Sacks/Gm (#${oppDefSacksRank.rank} NFL)`,
             tacticalDetail: `Dallas features heavyweight interior talent in DTs Quinnen Williams (#92) and Kenny Clark (#97) plus edge rusher Rashan Gary (#7), yet ranks #${oppDefSacksRank.rank} in sacks/gm (${oppDefSacksRank.value.toFixed(2)}). LT Trent Williams (#71) erasing Gary 1-on-1 on the blindside lets C Jake Brendel (#64) and RG Dominick Puni (#77, 99% snaps) sustain firm interior combo-blocks on Quinnen Williams—giving Purdy 3.01s average time-to-throw while Dallas's own TE unit is thinned by Jake Ferguson (44% Long Shot, knee) and Luke Schoonmaker (73% GTD, groin).`,
@@ -5360,47 +5427,56 @@ async function main() {
           {
             phaseTag: 'Middle-Field Passing Spine',
             unitMatchup: `Brock Purdy, George Kittle & Keenan Allen vs. ${oppShortName} Seam & Slot Coverage`,
-            advantage: 'SF Edge',
+            advantage: passOffVsPassDefAdv,
             sfPlayers: ['Brock Purdy', 'George Kittle', 'Keenan Allen'],
-            statComparison: `SF: +${sfPassEpaRank.value.toFixed(2)} Pass EPA/Gm (#${sfPassEpaRank.rank}) | ${oppAbbrTarget}: #${oppDef3rdStat.rank} 3rd-Down Def (${oppDef3rdStat.disp})`,
-            tacticalDetail: `Brock Purdy pairs George Kittle's intermediate seam/over separation with Keenan Allen's veteran slot option routes between the numbers, forcing ${oppNameTarget}'s linebackers into constant high-low conflict.`,
-            filmTell: `Watch Kittle (#85) and Allen align in reduced splits on 3rd-and-medium—whichever defender widens with motion opens the inward-breaking dagger or option sit route.`
+            statComparison: `SF: +${sfPassEpaRank.value.toFixed(2)} Pass EPA/Gm (#${sfPassEpaRank.rank}) | ${oppAbbrTarget}: #${oppDefPassEpaStat.rank} Pass EPA Def (${oppDefPassEpaStat.disp}) · #${oppDef3rdStat.rank} 3rd-Down (${oppDef3rdStat.disp})`,
+            tacticalDetail:
+              Number(oppDefPassEpaStat.rank || 16) <= 8
+                ? `Brock Purdy's intermediate timing to George Kittle and Keenan Allen runs straight into one of the NFL's stingiest pass defenses (${oppDefPassEpaStat.disp} Pass EPA allowed, #${oppDefPassEpaStat.rank}; ${oppDef3rdStat.disp} on 3rd down, #${oppDef3rdStat.rank}). Disguised mugged fronts and late post-snap rotations can bait hot throws if SF's motion doesn't clarify coverage leverage.`
+                : `Brock Purdy pairs George Kittle's intermediate seam/over separation with Keenan Allen's veteran slot option routes between the numbers, testing ${oppNameTarget}'s linebackers in high-low conflict while keeping pass protection clean.`,
+            filmTell: `Watch Kittle (#85) and Allen align in reduced splits on 3rd-and-medium—check whether ${oppShortName} shows two-high pre-snap and rotates late to rob the inward-breaking dagger or option sit route.`
           },
           {
             phaseTag: 'Interior & Wide-9 Rush',
             unitMatchup: `Nick Bosa, DeForest Buckner & Osa Odighizuwa vs. ${oppQbStarter} & ${oppShortName} O-Line`,
-            advantage: oppSackAllowRank.rank >= 12 ? 'SF Heavy Edge' : 'SF Trench Edge',
+            advantage: sfRushVsOppOlAdv,
             sfPlayers: ['Nick Bosa', 'DeForest Buckner', 'Osa Odighizuwa'],
-            statComparison: `SF: Buckner + Odighizuwa 6.0 Sacks, 21 Pressures | ${oppAbbrTarget}: ${oppSackAllowRank.value.toFixed(1)}% Sack Rate (#${oppSackAllowRank.rank})`,
-            tacticalDetail: `Aligning DeForest Buckner and Osa Odighizuwa as 3-tech and 2i penetrators forces ${oppNameTarget}'s center and guards to honor interior A/B-gap T-E stunts, isolating Nick Bosa 1-on-1 on the Wide-9 edge against ${oppQbStarter}.`,
-            filmTell: `Key the opposing center's slide protection on 3rd-and-long—sliding inside toward Buckner (#99) leaves Bosa (#97) singled up on the edge.`
+            statComparison: `SF: ${sfDefSacksStat.disp} Sacks/Gm (#${sfDefSacksStat.rank}) · ${sfDefSackRateStat.disp} Sack Rate (#${sfDefSackRateStat.rank}) | ${oppAbbrTarget}: ${oppSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${oppSackAllowRank.rank})`,
+            tacticalDetail:
+              Number(sfDefSacksStat.rank || 16) >= 20
+                ? `Despite star names up front in Nick Bosa, DeForest Buckner, and Osa Odighizuwa, San Francisco enters ranked #${sfDefSacksStat.rank} in sacks/gm (${sfDefSacksStat.disp}) and #${sfDefSackRateStat.rank} in defensive sack rate (${sfDefSackRateStat.disp}). ${oppNameTarget}'s #${oppSackAllowRank.rank} pass protection (${oppSackAllowRank.value.toFixed(1)}% sack rate) offers an opportunity, but SF's front must convert pressures into finishes without fourth-quarter fatigue.`
+                : `DeForest Buckner and Osa Odighizuwa penetrating the A/B-gaps on T-E stunts force ${oppNameTarget}'s interior slides to honor the middle, creating 1-on-1 Wide-9 edge matchups for Nick Bosa against ${oppQbStarter}.`,
+            filmTell: `Key the opposing center's slide protection on 3rd-and-long—track whether SF's interior twists actually collapse ${oppQbStarter}'s step-up lane or stall out past 3.0 seconds.`
           },
           {
             phaseTag: 'Perimeter & Nickel Coverage',
             unitMatchup: `Renardo Green, Deommodore Lenoir & Fred Warner vs. ${oppQbStarter} & ${oppSkillStar}`,
-            advantage: 'Even Star Clash',
+            advantage: sfCovVsOppPassAdv,
             sfPlayers: ['Renardo Green', 'Deommodore Lenoir', 'Fred Warner'],
-            statComparison: `SF: Green 4 INT (61.6 Rtg) · Warner 76 Tkl, 4 FF | ${oppAbbrTarget}: #${oppPassEpaRank.rank} Pass EPA`,
-            tacticalDetail: `Deommodore Lenoir sliding into the nickel slot alongside Renardo Green outside and Fred Warner patrolling deep middle crossers challenges ${oppQbStarter}'s primary timing windows to ${oppSkillStar}.`,
-            filmTell: `Watch Lenoir (#2) bump inside in nickel on 3rd-and-4-to-7 while Warner (#54) disguises middle-hook depth until the snap.`
+            statComparison: `SF: #${sfDefPassEpaStat.rank} Pass EPA Def (${sfDefPassEpaStat.disp}) · Green 4 INT | ${oppAbbrTarget}: #${oppPassEpaRank.rank} Pass EPA (${oppPassEpaRank.value >= 0 ? '+' : ''}${oppPassEpaRank.value.toFixed(2)}/gm)`,
+            tacticalDetail: `San Francisco's #${sfDefPassEpaStat.rank} pass defense (${sfDefPassEpaStat.disp}/gm) faces a high-leverage test containing ${oppSkillStar} and ${oppQbStarter}'s play-action timing windows—especially with Deommodore Lenoir and Renardo Green managing late-season wear while Fred Warner patrols deep middle crossers.`,
+            filmTell: `Watch Lenoir (#2) bump inside in nickel on 3rd-and-4-to-7 and see whether SF shades safety help over ${oppSkillStar} or leaves outside corners isolated on digs and go balls.`
           },
           {
             phaseTag: 'Wide-Zone & Choice Mismatch',
             unitMatchup: `Christian McCaffrey & Kyle Juszczyk vs. ${oppShortName} Second-Level Run Fits`,
-            advantage: 'SF Edge',
+            advantage: sfRunVsOppRunDefAdv,
             sfPlayers: ['Christian McCaffrey', 'Kyle Juszczyk'],
-            statComparison: `SF: #${sfRushEpaRank.rank} Rush EPA (+${sfRushEpaRank.value.toFixed(2)}/gm) | ${oppAbbrTarget}: ${oppDefRushYdsStat.disp}/Gm Allowed (#${oppDefRushYdsStat.rank})`,
-            tacticalDetail: `Christian McCaffrey stretches horizontal edges on outside zone behind Kyle Juszczyk before punishing over-pursuing linebackers on backside B-gap cutbacks and angle/Texas choice routes.`,
-            filmTell: `When Juszczyk (#44) inserts weakside off pre-snap motion, look for McCaffrey (#23) pressing the frontside C-gap before planting vertical in one cut.`
+            statComparison: `SF: #${sfRushEpaRank.rank} Rush EPA (+${sfRushEpaRank.value.toFixed(2)}/gm) | ${oppAbbrTarget}: ${oppDefRushYdsStat.disp}/Gm (#${oppDefRushYdsStat.rank}) · ${oppDefRushEpaStat.disp} Rush EPA (#${oppDefRushEpaStat.rank})`,
+            tacticalDetail: `Christian McCaffrey stretches horizontal edges on outside zone behind Kyle Juszczyk against a ${oppNameTarget} front ranking #${oppDefRushYdsStat.rank} in rush yards allowed (${oppDefRushYdsStat.disp}/gm) and #${oppDefRushEpaStat.rank} in Rush EPA allowed (${oppDefRushEpaStat.disp}/gm). Staying ahead of the chains on first down is vital so SF avoids predictable 3rd-and-long passing situations.`,
+            filmTell: `When Juszczyk (#44) inserts weakside off pre-snap motion, watch whether ${oppShortName}'s linebackers hold backside B-gap integrity or open cutback lanes for McCaffrey (#23).`
           },
           {
-            phaseTag: 'Blindside & Pocket Anchor',
+            phaseTag: 'Blindside & Pass-Rush Stress',
             unitMatchup: `Trent Williams, Dominick Puni & Jake Brendel vs. ${oppEdgeOrStar} & ${oppShortName} Pass Rush`,
-            advantage: sfSackAllowRank.rank <= oppDefSacksRank.rank ? 'SF Edge' : 'Even Trench Battle',
+            advantage: sfOlVsOppPassRushAdv,
             sfPlayers: ['Trent Williams', 'Dominick Puni', 'Jake Brendel'],
             statComparison: `SF: ${sfSackAllowRank.value.toFixed(1)}% Sack Rate Allowed (#${sfSackAllowRank.rank}) | ${oppAbbrTarget}: ${oppDefSacksRank.value.toFixed(2)} Sacks/Gm (#${oppDefSacksRank.rank})`,
-            tacticalDetail: `LT Trent Williams locking down the blindside solo allows C Jake Brendel and RG Dominick Puni to sustain interior combo-blocks and slide protection against ${oppEdgeOrStar}.`,
-            filmTell: `Watch whether SF leaves Trent Williams (#71) on a true island without TE chip help so George Kittle (#85) can release cleanly into intermediate routes.`
+            tacticalDetail:
+              Number(oppDefSacksRank.rank || 16) <= 8
+                ? `This is one of ${oppNameTarget}'s sharpest paths to dictating the game: ${oppEdgeOrStar} headlines an elite #${oppDefSacksRank.rank} NFL pass rush (${oppDefSacksRank.value.toFixed(2)} sacks/gm) that attacks protection rules with simulated pressures and edge stunts. Even with Trent Williams anchoring the blindside and Dominick Puni at RG, C Jake Brendel and the interior must sort late blitzers cleanly or drive-killing sacks will swing field position.`
+                : `LT Trent Williams anchoring the blindside allows C Jake Brendel and RG Dominick Puni to sustain interior combo-blocks and slide protection against ${oppEdgeOrStar} and ${oppShortName}'s #${oppDefSacksRank.rank} pass rush (${oppDefSacksRank.value.toFixed(2)} sacks/gm).`,
+            filmTell: `Watch whether SF can leave Trent Williams (#71) isolated without TE chip help—or whether ${oppEdgeOrStar} and simulated interior pressures force George Kittle (#85) to stay in to protect.`
           }
         ];
 

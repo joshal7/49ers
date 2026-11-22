@@ -152,35 +152,35 @@ const EPISODES_SPEC = [
       },
       {
         speaker: 'Marcus',
-        text: `Walk through that front-four geometry for a second. Because from Weeks 3 through 7 without Bosa, Osa Odighizuwa basically carried our interior pass rush on his back.`
+        text: `Walk through that front-four geometry for a second. Because from Weeks 3 through 7 without Bosa, Osa Odighizuwa carried most of San Francisco's interior pass rush, and overall sack production still lagged the league.`
       },
       {
         speaker: 'Elena',
-        text: `Right, and he was terrific doing it. Now Morris drops six-foot-seven DeForest Buckner into the 3-technique weak, shades Odighizuwa at the 2i strong, and puts Bosa and Keion White out on the Wide-9 rails. If Vegas slides the center toward Bosa, Buckner gets singled up on a guard. You just can't block both.`
+        text: `Right, and that's why this debut matters as a real proof-of-concept rather than a given. Morris can drop six-foot-seven DeForest Buckner at 3-technique weak, shade Odighizuwa at 2i strong, and align Bosa and Keion White on the Wide-9 rails—forcing protection slides to choose, provided the front finishes consistently late in the fourth quarter.`
       },
       {
         speaker: 'Marcus',
-        text: `Exactly. And look across the sideline at who's calling plays for Las Vegas. First-year head coach Klint Kubiak spent all of 2023 right here in Santa Clara as Kyle Shanahan's Passing Game Specialist.`
+        text: `Exactly. And look across the sideline at who's calling plays for Las Vegas. First-year head coach Klint Kubiak spent all of 2023 right here in Santa Clara as Kyle Shanahan's Passing Game Specialist, which cuts both ways on game day.`
       },
       {
         speaker: 'Elena',
-        text: `So there are zero secrets on the tendencies tape.`
+        text: `No secrets on either sideline—Kubiak knows Shanahan's tells just as well as San Francisco knows his.`
       },
       {
         speaker: 'Marcus',
-        text: `None at all. Kubiak wants outside zone with Ashton Jeanty to set up deep play-action crossers for Kirk Cousins and Brock Bowers. That's the exact intermediate route spacing Fred Warner and Deommodore Lenoir bait with disguised split-safety rotations every single day in practice.`
+        text: `Exactly right. Kubiak wants outside zone with Ashton Jeanty to set up deep play-action crossers for Kirk Cousins and Brock Bowers—and if the Niners' pass defense gets stressed early, Bowers is a genuine matchup headache over the middle against Fred Warner and Deommodore Lenoir.`
       },
       {
         speaker: 'Elena',
-        text: `Plus we've got a full seven-day rest edge coming off the bye. Under Shanahan, when QB1 is healthy post-bye, the Niners average +0.21 EPA/play on their opening fifteen scripted snaps. And Brock Purdy has been surgical—+${purdyEpaSpoken} passing EPA, +${purdyCpoeSpoken}% CPOE, and just a ${purdySackRate}% sack rate.`
+        text: `San Francisco does hold a seven-day rest edge coming off the bye, and Brock Purdy has posted +${purdyEpaSpoken} passing EPA, +${purdyCpoeSpoken}% CPOE, and a ${purdySackRate}% sack rate. Still, the defense has to prove its pass rush can actually close out drives.`
       },
       {
         speaker: 'Marcus',
-        text: `The one guy who can wreck the script is Maxx Crosby. Whenever he flips away from Trent Williams to line up over Colton McKivitz at right tackle, expect heavy 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk—plus quick rhythm throws to Brandin Cooks, Jordan Watkins, Jacob Cowing, and Demarcus Robinson back off IR.`
+        text: `And Maxx Crosby can wreck any script on his own. Whenever he flips away from Trent Williams to line up over Colton McKivitz at right tackle, expect heavy 21-personnel chip-and-release help from George Kittle and Kyle Juszczyk—plus quick rhythm throws to Brandin Cooks, Jordan Watkins, Jacob Cowing, and Demarcus Robinson back off IR.`
       },
       {
         speaker: 'Elena',
-        text: `Keep Crosby off Purdy's spot on third-and-medium, keep Bosa on a smart 45-snap pitch count in his first game back, and that implied projection of ${impliedScoreDisplay} feels right on the money.`
+        text: `If Crosby forces third-and-long or San Francisco's front tires late, Vegas can hang right inside the number—so keeping Purdy clean and managing Bosa's snap count will decide whether the game matches that ${impliedScoreDisplay} projection.`
       }
     ]
   },
@@ -251,7 +251,7 @@ const EPISODES_SPEC = [
     turns: [
       {
         speaker: 'Marcus',
-        text: `We're inside the final countdown to Tuesday's November 10th, 1 PM Pacific trade deadline. John Lynch already sent our ${nextSeasonYear} fourth-rounder to Indy to bring DeForest Buckner home. Looking strictly at the film and the injury wire, Elena, how do you stack our remaining needs?`
+        text: `We're inside the final countdown to Tuesday's November 10th, 1 PM Pacific trade deadline. John Lynch already sent San Francisco's ${nextSeasonYear} fourth-rounder to Indy to bring DeForest Buckner back. Looking strictly at the film and the injury wire, Elena, how do you stack the remaining roster needs?`
       },
       {
         speaker: 'Elena',
@@ -271,7 +271,7 @@ const EPISODES_SPEC = [
       },
       {
         speaker: 'Elena',
-        text: `Not at all—and getting that direction right really matters. Signing bonus proration stays with the seller, and the buyer only takes on 9/18ths of remaining ${activeSeasonYear} base pay. So our $${cap26SpaceM}M in ${activeSeasonYear} space is actually worth over $65M+ in annualized base-salary buying power right now.`
+        text: `Not at all—and getting that direction right really matters. Signing bonus proration stays with the seller, and the buyer only takes on 9/18ths of remaining ${activeSeasonYear} base pay. So San Francisco's $${cap26SpaceM}M in ${activeSeasonYear} space is actually worth over $65M+ in annualized base-salary buying power right now.`
       },
       {
         speaker: 'Marcus',

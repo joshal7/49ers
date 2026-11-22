@@ -15910,6 +15910,158 @@ test('Universal Search Engine: word & multi-word autocomplete, news source autoc
   assert.ok(hl.includes('<mark class="search-hl">knee</mark>'), 'highlightSearchTextHtml must highlight matched word safely');
 });
 
+await testAsync('Fair, balanced & spread-calibrated assessments across autopodcasts, news briefs, matchup intel & deep analyses (zero homer bias)', async () => {
+  const {
+    describeSpreadCalibration,
+    classifySymmetricUnitAdvantage,
+    buildBalancedLeagueComparisonBlock,
+    buildLiveGroundingSystemPrompt,
+    buildAuthoritativeLiveContextSnapshot
+  } = await import('../src/engine/groundingValidator.js');
+  const {
+    CALIBRATED_OBJECTIVITY_CHARTER,
+    NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT,
+    DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT,
+    buildStage2NotebookLmScriptPrompt,
+    buildStage2NotebookLmPolishPrompt,
+    buildStage3AnalysisAuditPrompt
+  } = await import('../src/engine/geminiStudioPrompts.js');
+  const { EDITORIAL_SYSTEM_PROMPT } = await import('../worker/index.js');
+
+  // 1. Spread calibration across tight toss-ups, favorites & underdogs
+  const tight25 = describeSpreadCalibration('SF -2.5', 'Minnesota Vikings', '7-2');
+  assert.equal(tight25.tier, 'toss_up', 'SF -2.5 must classify as a tight coin-flip / toss-up');
+  assert.ok(tight25.impliedSfWinPct >= 55 && tight25.impliedSfWinPct <= 60, `SF -2.5 implied win prob must be ~58%, got ${tight25.impliedSfWinPct}%`);
+  assert.ok(/50\/50|coin-flip/i.test(tight25.guidanceLine), 'SF -2.5 guidance must demand ~50/50 two-sided balance');
+
+  const oppFav = describeSpreadCalibration('MIN -2.5', 'Minnesota Vikings', '7-2');
+  assert.equal(oppFav.tier, 'toss_up');
+  assert.ok(oppFav.impliedSfWinPct >= 40 && oppFav.impliedSfWinPct <= 45, `MIN -2.5 must imply ~42% SF win prob, got ${oppFav.impliedSfWinPct}%`);
+
+  const heavyDog = describeSpreadCalibration('SF +7.5', 'Kansas City Chiefs', '8-1');
+  assert.equal(heavyDog.tier, 'clear_underdog');
+  assert.ok(heavyDog.impliedSfWinPct <= 30, 'SF +7.5 must imply clear underdog probability');
+
+  // 2. Symmetric 32-team unit matchup advantage classification
+  assert.equal(
+    classifySymmetricUnitAdvantage(8, 1, 'MIN', { tieLabel: 'Even Trench Battle', oppEdgeLabel: 'MIN Edge' }),
+    'MIN Edge',
+    'MIN #1 pass rush vs SF #8 pass pro must credit MIN Edge'
+  );
+  assert.equal(
+    classifySymmetricUnitAdvantage(2, 2, 'MIN', { tieLabel: 'Even Star Clash', strengthVsStrengthLabel: 'Strength vs. Strength' }),
+    'Strength vs. Strength',
+    'SF #2 pass offense vs MIN #2 pass defense must classify as Strength vs. Strength'
+  );
+  assert.equal(
+    classifySymmetricUnitAdvantage(30, 27, 'MIN', { tieLabel: 'Even Trench Battle' }),
+    'Even Trench Battle',
+    'SF #30 pass rush vs MIN #27 sack rate allowed must NOT award SF Heavy Edge'
+  );
+  assert.equal(
+    classifySymmetricUnitAdvantage(28, 4, 'MIN'),
+    'MIN Heavy Edge',
+    'Opponent #4 vs SF #28 must credit MIN Heavy Edge'
+  );
+  assert.equal(
+    classifySymmetricUnitAdvantage(1, 16, 'MIN'),
+    'SF Heavy Edge',
+    'SF #1 vs Opponent #16 must credit SF Heavy Edge'
+  );
+
+  // 3. League-wide symmetric comparison injected into live snapshot & deep research dossier
+  const readDataFile = fn => JSON.parse(fs.readFileSync(path.join(rootDir, 'data', fn), 'utf8'));
+  const liveBundle = {
+    meta: readDataFile('meta.json'),
+    roster: readDataFile('roster.json'),
+    health: readDataFile('health.json'),
+    scheduleMatchup: readDataFile('schedule-matchup.json'),
+    cap: readDataFile('cap.json'),
+    seasonal: readDataFile('seasonal.json'),
+    news: readDataFile('news.json')
+  };
+  const balancedBlock = buildBalancedLeagueComparisonBlock(liveBundle);
+  assert.ok(balancedBlock.includes('SPREAD & TONE CALIBRATION'), 'Balanced block must include spread calibration');
+  assert.ok(balancedBlock.includes('49ERS LEAGUE-WIDE VULNERABILITIES'), 'Balanced block must surface SF bottom-half NFL ranks');
+  assert.ok(balancedBlock.includes('MAJOR STATISTICAL ADVANTAGES OVER SF'), 'Balanced block must surface opponent top-unit advantages over SF');
+
+  const liveSnap = buildAuthoritativeLiveContextSnapshot(liveBundle, { compactForDossier: true });
+  assert.ok(liveSnap.includes('49ERS LEAGUE-WIDE VULNERABILITIES'), 'Compact live snapshot for podcasts/analyses must include SF league-wide flaws');
+  assert.ok(liveSnap.includes('SPREAD & TONE CALIBRATION'), 'Compact live snapshot must include spread calibration');
+
+  const matchupDossier = compileDeepResearchDossier({
+    query: 'Week 11 49ers vs Vikings preview',
+    appData: liveBundle
+  });
+  assert.ok(matchupDossier.dossierSummaryText.includes('SPREAD & TONE CALIBRATION'), 'Stage-1 deep dossier must include spread calibration');
+  assert.ok(matchupDossier.dossierSummaryText.includes('MAJOR STATISTICAL ADVANTAGES OVER SF'), 'Stage-1 deep dossier must include opponent statistical advantages');
+
+  // 4. All AI prompt surfaces enforce impartial, non-homer, spread-calibrated standards
+  assert.ok(/IMPARTIAL NATIONAL-ANALYST LENS/i.test(CALIBRATED_OBJECTIVITY_CHARTER));
+  assert.ok(/third-person|third person/i.test(NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT));
+  assert.ok(/NO HOMER ECHO CHAMBER/i.test(NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT));
+  assert.ok(/without homerism/i.test(DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT));
+  assert.ok(/EVEN-HANDED NATIONAL ANALYST TONE/i.test(buildStage2NotebookLmScriptPrompt({ topic: 'SF vs MIN', durationMinutes: 3, format: 'two_host', researchMemo: '', liveContextSnapshot: '' })));
+  assert.ok(/Impartiality & Spread-Calibration Audit/i.test(buildStage2NotebookLmPolishPrompt({ topic: 'SF vs MIN', durationMinutes: 3, format: 'two_host', draftJsonText: '[]', liveContextSnapshot: '' })));
+  assert.ok(/Impartiality & Spread-Calibration Audit/i.test(buildStage3AnalysisAuditPrompt({ question: 'SF vs MIN', draftMarkdown: 'draft', liveContextSnapshot: '' })));
+  assert.ok(/FAIR, BALANCED & NON-HOMER ASSESSMENT MANDATE/i.test(buildLiveGroundingSystemPrompt(liveBundle)));
+  assert.ok(/FAIR, BALANCED & NON-HOMER ASSESSMENT MANDATE/i.test(EDITORIAL_SYSTEM_PROMPT));
+
+  const matchupPrompt = buildDailyMatchupIntelPrompt(liveBundle);
+  assert.ok(matchupPrompt.includes('SPREAD & IMPARTIALITY CALIBRATION'), 'Daily matchup prompt must include spread calibration');
+  assert.ok(matchupPrompt.includes('MIN Edge') && matchupPrompt.includes('MIN Heavy Edge'), 'Daily matchup prompt must show explicit opponent edge labels');
+
+  const newsCands = selectTopNewsBriefSourceCandidates(liveBundle, 12);
+  const newsPrompt = buildDailyTopNewsBriefPrompt(liveBundle, newsCands);
+  assert.ok(/FAIR, BALANCED & LEAGUE-CALIBRATED JOURNALISM/i.test(newsPrompt), 'Daily news brief prompt must include fair & balanced journalism rule');
+  assert.ok(newsPrompt.includes('LEAGUE-WIDE & MATCHUP BALANCE CONTEXT'), 'Daily news brief prompt must include league-wide balance context');
+
+  // 5. Deterministic fallback autopodcast & scouting markdown avoid first-person homer pronouns and include balanced counterpoints
+  const podTurns = buildNotebookLmPodcastScript({
+    query: 'Week 11 49ers vs Vikings matchup',
+    durationMinutes: 4,
+    format: 'two_host',
+    appData: liveBundle,
+    dossier: matchupDossier
+  });
+  const podCombined = podTurns.map(t => t.text).join(' ');
+  assert.ok(!/\b(?:our interior|our highest-graded|wrecking our|we're staring at|we only own|given us)\b/i.test(podCombined), 'Deterministic podcast must avoid first-person homer pronouns');
+  assert.ok(/statistical edges|league-relative flaws|coin-flip/i.test(podCombined), 'Deterministic podcast must voice opponent edges and SF vulnerabilities');
+
+  const scoutingMd = buildDeepScoutingAnalysisMarkdown({
+    query: 'Week 11 49ers vs Vikings matchup',
+    appData: liveBundle,
+    dossier: matchupDossier
+  });
+  assert.ok(scoutingMd.includes('Opponent Strengths & Counter-Case'), 'Deterministic scouting report must include opponent strengths counter-case');
+  assert.ok(scoutingMd.includes('San Francisco League-Relative Vulnerabilities'), 'Deterministic scouting report must include SF league-relative vulnerabilities');
+
+  // 6. Live Week 11 SF vs MIN schedule-matchup.json has balanced, stat-honest advantages
+  const umLive = liveBundle.scheduleMatchup?.upcomingMatchup;
+  if (umLive?.oppAbbr === 'MIN') {
+    const advs = (umLive.keyMatchupsMatrix || []).map(x => x.advantage);
+    assert.ok(advs.some(a => /\bMIN\b/i.test(a)), `Week 11 SF vs MIN must credit at least one MIN edge, got: ${advs.join(', ')}`);
+    assert.ok(!advs.includes('SF Heavy Edge'), `Week 11 SF vs 7-2 MIN (#1 Defense) must not fabricate SF Heavy Edge, got: ${advs.join(', ')}`);
+    assert.ok(
+      !(umLive.coachingMatchup?.bullets || []).some(b => /clear 4th-and-short go-for-it leverage/i.test(b)),
+      'Week 11 vs #1 Red-Zone Defense MIN must not hardcode automatic 4th-and-short leverage'
+    );
+  }
+
+  // 7. Anti-fluff filter catches blind pro-49ers homer clickbait symmetrically without penalizing analytical criticism
+  const homerHype = scoreContentSignal(
+    '49ers are an unstoppable juggernaut and guaranteed blowout Super Bowl lock!!',
+    'Nobody can beat the 49ers this year!!'
+  );
+  assert.equal(homerHype.isClickbait, true, 'Blind homer clickbait hype must be flagged symmetrically with rage-bait');
+  const candidCritique = scoreContentSignal(
+    '49ers pass rush ranks #29 in sacks/gm (1.78) and #31 in defensive sack rate (4.6%) entering Week 11',
+    'All-22 tape shows wide-9 pressures stalling on 3rd-and-long with +2.78 Pass EPA allowed.'
+  );
+  assert.equal(candidCritique.isClickbait, false, 'Candid analytical critique of 49ers weaknesses must pass with high signal');
+  assert.ok(candidCritique.signalScore >= 70, `Analytical critique signalScore should be >=70, got ${candidCritique.signalScore}`);
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

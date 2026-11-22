@@ -24,6 +24,7 @@ const CLICKBAIT_PATTERNS = [
   /\bpanic\s+button\b/i,
   /\bis\s+it\s+time\s+to\s+(fire|bench)\b/i,
   /\bhot\s+seat\b/i,
+  /\b(?:super\s+bowl\s+lock|unstoppable\s+juggernaut|nobody\s+can\s+(?:beat|stop)\s+the\s+(?:49ers|niners)|guaranteed\s+(?:win|blowout|victory))\b/i,
   /!{2,}|\?{2,}/
 ];
 

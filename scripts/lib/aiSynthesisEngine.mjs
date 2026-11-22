@@ -435,6 +435,7 @@ export async function runVerifiedDeepGeminiSynthesis({
       '3) Active vs. Injured Reserve vs. Out 49ers players, coaching staff (DC Raheem Morris), and opponent coaches/records.',
       '4) Trade target current teams, 2026 production (reject 0-sack aging traps), and 2027 contract guarantees/extensions.',
       '5) Calibrated Playoff Monte Carlo odds (must match the exact snapshot numbers).',
+      '6) Impartiality & Balance Audit: Strip any homerism, first-person "we/our" fan pronouns, or effusive cheerleading. Ensure assessments are calibrated to the Vegas spread / implied win probability and give honest weight to opponent top-10 units, star players, and 49ers league-relative weaknesses.',,
       expectJson
         ? 'Output ONLY the corrected, valid JSON structure with zero markdown fences or commentary.'
         : 'Output ONLY the corrected final markdown analysis with zero meta-commentary.',

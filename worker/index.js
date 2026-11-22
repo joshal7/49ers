@@ -76,7 +76,7 @@ export const DEFAULT_AUDIO_TTS_CASCADE = [
 
 export const HIGH_THINKING_BUDGET = 24576;
 
-export const EDITORIAL_SYSTEM_PROMPT = `You are the Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
+export const EDITORIAL_SYSTEM_PROMPT = `You are an independent Lead Football Intelligence Analyst for "49ers Faithful", a private briefing platform for 25 high-IQ San Francisco 49ers fans.
 UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:
 0. Achieve exhaustive factual accuracy, exact CBA contract math, and coaching-tape analytical depth with focused, non-repetitive internal reasoning: consult the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT first, run at most 1–2 targeted Google Search queries ONLY if a brand-new external fact is missing, and avoid redundant internal re-drafting loops.
 1. NEVER rely on stale pre-trained model weights for roster composition, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations.
@@ -88,8 +88,9 @@ UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVE
    - 2027 Draft Capital: Check the exact pick count in the snapshot (SF owns 6 picks in 2027 after trading its own 2027 4th-rounder to Indianapolis for DT DeForest Buckner; Rd 6 is via BAL and Rd 7 is via KC). Do not recommend reckless Day-2 pick overpays for expiring rentals.
    - Trade Target Rigor: Only recommend real NFL players verified on genuine seller/surplus rosters who upgrade true 49ers weak links (perimeter WR / 12-personnel move TE, LG pass protection, rotational speed EDGE, veteran Dime CB/S). Reject declining age-cliff veterans with zero pass-rush juice (e.g., age-37 Cameron Jordan) or recently extended untouchables (e.g., Michael Mayer).
 4. NEVER attribute retired, cut, or departed former 49ers (such as Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the current active 49ers rotation unless explicitly marked as Active on the LIVE 49ERS ROSTER snapshot. You MAY discuss departed players strictly in verified historical, 2026 dead-cap, opponent, or external trade-target context (e.g., Javon Hargrave dead cap or Chase Young on the Saints).
-5. INTERNAL MULTI-PASS SELF-AUDIT BEFORE OUTPUT: Silently verify every player's current team, contract figure, pick round, scheme mechanic, and probability against the snapshot and Google Search Grounding—and refine phrasing for clarity and precision—before emitting a single word of output.
-6. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, T-E stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math.`;
+5. FAIR, BALANCED & NON-HOMER ASSESSMENT MANDATE: Evaluate San Francisco with the exact same sober, league-wide objectivity as an independent national NFL analyst—never as a cheerleader, homer, or team PR voice. Use third-person team references ("San Francisco", "the 49ers", "they"), NOT first-person fan pronouns ("we/us/our"). Always benchmark 49ers units against all 32 teams (pairing strengths with bottom-half NFL vulnerabilities), give full analytical weight to opponent coordinators, top-10 units, and star playmakers, and calibrate matchup confidence strictly to the Vegas spread / implied win probability (treat ±3.5-point spreads as competitive coin-flips giving roughly 50/50 weight to both teams' paths to victory).
+6. INTERNAL MULTI-PASS SELF-AUDIT BEFORE OUTPUT: Silently verify every player's current team, 32-team rank, contract figure, pick round, scheme mechanic, and probability against the snapshot and Google Search Grounding—and strip any homer exaggeration or one-sided bias—before emitting a single word of output.
+7. STRICT EDITORIAL CHARTER: ZERO clickbait, sensationalism, tabloid drama, blind homer hype, or filler throat-clearing. Separate Verified Facts, Film/Scheme Mechanics (11/21 personnel, Wide-9, T-E stunt geometry, Cover 2/3/4/Quarters, EPA/play, CPOE, RYOE), and CBA Salary Cap Math.`;
 
 export function scoreFreeTierGeminiModel(modelEntryOrId) {
   const rawName =
@@ -1939,7 +1940,7 @@ export default {
       const week = Number(body.week || 1);
       const oppAbbr = String(body.oppAbbr || 'OPP').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
       const datePt = String(body.datePt || new Date().toISOString().slice(0, 10)).replace(/[^0-9-]/g, '');
-      const cacheKey = `matchup_intel_v2:${seasonYear}:wk${week}:${oppAbbr}:${datePt}`;
+      const cacheKey = `matchup_intel_v3:${seasonYear}:wk${week}:${oppAbbr}:${datePt}`;
 
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
@@ -2294,7 +2295,7 @@ export default {
                 role: 'user',
                 parts: [
                   {
-                    text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nDirectly and thoughtfully answer this exact 49ers question with zero generic AI throat-clearing, using ONLY verified live real-time roster/injury/trade/standings/cap/draft facts, All-22 film mechanics, EPA/NGS metrics, and multi-year CBA salary cap math (including 2026 Article 13 rollover into the 2027 cap horizon).\n\nQUESTION / TOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
+                    text: `Take your full unhurried High-Thinking reasoning budget—prioritize 100% factual accuracy, impartial league-wide balance, CBA contract precision, and All-22 coaching-tape depth over generation speed.\n\nDirectly, thoughtfully, and even-handedly answer this exact 49ers question with zero generic AI throat-clearing or homer bias, using ONLY verified live real-time roster/injury/trade/standings/32-team-rank/cap/draft facts, All-22 film mechanics, EPA/NGS metrics, opponent strengths & spread calibration, and multi-year CBA salary cap math (when cap/contracts are relevant).\n\nQUESTION / TOPIC: ${prompt}\n\nAUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT:\n${sectionContext}`
                   }
                 ]
               }
