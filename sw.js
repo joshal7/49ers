@@ -3,7 +3,7 @@ const SW_SUB_MATCH = SW_HOST.match(/^([a-z0-9-]+)\.joshal\.com$/);
 const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = SW_RAW_SUB === '49ers' || SW_RAW_SUB === '49ers2' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
-const CACHE_NAME = SW_TEAM_SLUG === '49ers' ? '49ers-faithful-v136' : `${SW_TEAM_SLUG}-hq-v7`;
+const CACHE_NAME = SW_TEAM_SLUG === '49ers' ? '49ers-faithful-v137' : `${SW_TEAM_SLUG}-hq-v8`;
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-', `${SW_TEAM_SLUG}-podcast-studio-audio-`];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -106,8 +106,12 @@ self.addEventListener('activate', event => {
       if (oldKeys.length > 0) {
         try {
           const nextCache = await caches.open(CACHE_NAME);
-          // Carry forward any core/data asset that failed to pre-fetch on a flaky cellular SW install
+          // Carry forward ONLY offline data/media assets that failed to pre-fetch on a flaky cellular SW install.
+          // NEVER carry forward stale .js/.css/.html application code across cache versions!
           for (const assetUrl of CORE_ASSETS) {
+            if (!/^\.\/(?:data|assets)\//.test(assetUrl) && assetUrl !== './apple-touch-icon.png') {
+              continue;
+            }
             const alreadyPresent = await nextCache.match(assetUrl, { ignoreSearch: true });
             if (alreadyPresent) continue;
             for (const oldKey of oldKeys) {

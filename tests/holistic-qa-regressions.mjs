@@ -3191,6 +3191,67 @@ test(
   }
 );
 
+test(
+  'No in-game/post-game/pre-game live wire notification banner exists in views/CSS, and SW + module cache-busters prevent stale banner replay',
+  () => {
+    const viewFiles = fs
+      .readdirSync(path.join(rootDir, 'src/views'))
+      .filter(f => f.endsWith('.js'))
+      .map(f => ({ name: f, src: fs.readFileSync(path.join(rootDir, 'src/views', f), 'utf8') }));
+    const css = fs.readFileSync(path.join(rootDir, 'src/styles.css'), 'utf8');
+    const appSrc = fs.readFileSync(path.join(rootDir, 'src/app.js'), 'utf8');
+    const homeSrc = fs.readFileSync(path.join(rootDir, 'src/views/homeView.js'), 'utf8');
+    const swSrc = fs.readFileSync(path.join(rootDir, 'sw.js'), 'utf8');
+
+    const forbiddenPatterns = [
+      'gameday-above-brief-banner',
+      'New updates above brief until postgame summary',
+      'POST-GAME LIVE WIRE',
+      'LIVE IN-GAME WIRE',
+      'OVERTIME LIVE WIRE',
+      'DELAYED KICKOFF • LIVE WIRE',
+      'PRE-GAME INACTIVES & WARMUPS'
+    ];
+    for (const vf of viewFiles) {
+      for (const pat of forbiddenPatterns) {
+        assert.equal(
+          vf.src.toLowerCase().includes(pat.toLowerCase()),
+          false,
+          `View src/views/${vf.name} must not render removed live-wire banner token: ${pat}`
+        );
+      }
+    }
+    assert.equal(
+      css.includes('.gameday-above-brief-banner'),
+      false,
+      'Dead .gameday-above-brief-banner CSS must stay removed'
+    );
+
+    // Ensure app.js & homeView.js cache-bust updated homeView/newsView modules and SW registration
+    const homeVerMatch = appSrc.match(/from\s+'\.\/views\/homeView\.js\?v=(\d+)'/);
+    const newsVerAppMatch = appSrc.match(/from\s+'\.\/views\/newsView\.js\?v=(\d+)'/);
+    const newsVerHomeMatch = homeSrc.match(/from\s+'\.\/newsView\.js\?v=(\d+)'/);
+    const swRegVerMatch = appSrc.match(/\.register\('\.\/sw\.js\?v=(\d+)'/);
+    assert.ok(homeVerMatch && Number(homeVerMatch[1]) >= 89, 'app.js must import cache-busted homeView.js?v>=89');
+    assert.ok(newsVerAppMatch && Number(newsVerAppMatch[1]) >= 92, 'app.js must import cache-busted newsView.js?v>=92');
+    assert.ok(
+      newsVerHomeMatch && newsVerHomeMatch[1] === newsVerAppMatch[1],
+      'homeView.js must import the same cache-busted newsView.js?v= specifier as app.js'
+    );
+    assert.ok(swRegVerMatch && Number(swRegVerMatch[1]) >= 110, 'app.js must register cache-busted sw.js?v>=110');
+    assert.ok(
+      appSrc.includes('pendingSwReload') && appSrc.includes("document.addEventListener('visibilitychange'"),
+      'app.js must defer controllerchange reload cleanly and check SW updates on foreground resume'
+    );
+
+    // Ensure sw.js activate never carries forward stale .js/.css/.html code from prior caches
+    assert.ok(
+      swSrc.includes("!/^\\.\\/(?:data|assets)\\//.test(assetUrl)"),
+      'sw.js activate carry-forward must skip .js/.css/.html application code'
+    );
+  }
+);
+
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {
   process.exit(1);
