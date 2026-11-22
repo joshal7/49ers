@@ -173,8 +173,7 @@ function renderSingleDashboardCard({
         appData?.news?.dailyTopNewsBrief || buildDeterministicDailyTopNewsBrief(appData, nowHomeMs);
       const {
         breakingAboveBrief,
-        gameDayLiveMode,
-        gameDayPhaseLabel
+        gameDayLiveMode
       } = partitionBreakingNewsAboveBrief(rawList, dailyBrief, nowHomeMs, {
         appData,
         promoteAllGameDayNews: true,
@@ -246,15 +245,6 @@ function renderSingleDashboardCard({
 
       const rosterPlayers = appData?.roster?.players || [];
       const homeVisibleAboveBrief = gameDayLiveMode ? breakingAboveBrief.slice(0, 6) : breakingAboveBrief;
-      const homeGameDayBannerHtml = gameDayLiveMode
-        ? `<div class="gameday-above-brief-banner" data-gameday-above-brief-banner>
-             <span class="gameday-live-label">
-               <span class="gameday-live-dot" aria-hidden="true"></span>
-               <span>${esc(gameDayPhaseLabel || 'Game-Day Live Wire')}</span>
-             </span>
-             <span class="gameday-live-note mono">New updates above brief until postgame summary</span>
-           </div>`
-        : '';
       const homeMoreGameDayHtml =
         gameDayLiveMode && breakingAboveBrief.length > homeVisibleAboveBrief.length
           ? `<button type="button" class="btn-ghost btn-compact" data-action="jump-view" data-target-tab="news" style="align-self:flex-start">
@@ -263,9 +253,8 @@ function renderSingleDashboardCard({
              </button>`
           : '';
       const breakingTopHomeHtml =
-        homeVisibleAboveBrief.length > 0 || gameDayLiveMode
+        homeVisibleAboveBrief.length > 0
           ? `<div style="display:flex;flex-direction:column;gap:8px" data-breaking-above-brief${gameDayLiveMode ? ' data-gameday-live-above-brief="true"' : ''}>
-              ${homeGameDayBannerHtml}
               ${homeVisibleAboveBrief
                 .map((item, idx) =>
                   renderWireItemCardHtml(item, {

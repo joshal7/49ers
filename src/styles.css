@@ -5662,55 +5662,6 @@ tr.unit-overall-banner.overall-stat-row td {
   border-color: rgba(179, 153, 93, 0.55);
 }
 
-.gameday-above-brief-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 4px 8px;
-  padding: 5px 9px;
-  border-radius: 7px;
-  background: rgba(170, 0, 0, 0.08);
-  border: 1px solid rgba(170, 0, 0, 0.22);
-  min-width: 0;
-}
-
-[data-theme="light"] .gameday-above-brief-banner {
-  background: rgba(170, 0, 0, 0.055);
-  border-color: rgba(170, 0, 0, 0.2);
-}
-
-.gameday-live-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10.8px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--scarlet-bright, #d41919);
-  min-width: 0;
-}
-
-[data-theme="light"] .gameday-live-label {
-  color: #9e0b0f;
-}
-
-.gameday-live-dot {
-  width: 6.5px;
-  height: 6.5px;
-  border-radius: 50%;
-  background: #d41919;
-  box-shadow: 0 0 0 2px rgba(212, 25, 25, 0.22);
-  flex-shrink: 0;
-}
-
-.gameday-live-note {
-  font-size: 10.2px;
-  color: var(--text-muted);
-  min-width: 0;
-}
-
 /* ==========================================================================
    2027 NFL Draft: 49ers 1st-Pick Mock Draft Database & Consensus Big Board
    ========================================================================== */
