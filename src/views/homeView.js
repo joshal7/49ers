@@ -87,7 +87,8 @@ export function renderHomeDashboardHtml({
   userPrefs = null,
   activeVideosSet = new Set(),
   isCustomizingLayout,
-  sessionLastVisitedAt = null
+  sessionLastVisitedAt = null,
+  nowMs = Date.now()
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const customizeBar = `
@@ -130,7 +131,8 @@ export function renderHomeDashboardHtml({
         userPrefs,
         activeVideosSet,
         isCustomizingLayout,
-        sessionLastVisitedAt
+        sessionLastVisitedAt,
+        nowMs
       })
     )
     .join('');
@@ -171,7 +173,8 @@ function renderSingleDashboardCard({
   userPrefs = null,
   activeVideosSet = new Set(),
   isCustomizingLayout,
-  sessionLastVisitedAt = null
+  sessionLastVisitedAt = null,
+  nowMs = Date.now()
 }) {
   const reorderControlsHtml = isCustomizingLayout
     ? `
@@ -195,7 +198,7 @@ function renderSingleDashboardCard({
 
   switch (block.id) {
     case 'news_briefs': {
-      const nowHomeMs = Date.now();
+      const nowHomeMs = Number.isFinite(nowMs) ? nowMs : Date.now();
       const prioritizedHomeStream = sortNewsWithBreakingPriority(
         filterFreshVideosForCurrentSlate(
           filterOutCompletedGameAvailabilityItems(
@@ -220,11 +223,15 @@ function renderSingleDashboardCard({
       );
       const dailyBrief =
         appData?.news?.dailyTopNewsBrief || buildDeterministicDailyTopNewsBrief(appData, nowHomeMs);
-      const { breakingAboveBrief } = partitionBreakingNewsAboveBrief(
-        rawList,
-        dailyBrief,
-        nowHomeMs
-      );
+      const {
+        breakingAboveBrief,
+        gameDayLiveMode,
+        gameDayPhaseLabel
+      } = partitionBreakingNewsAboveBrief(rawList, dailyBrief, nowHomeMs, {
+        appData,
+        promoteAllGameDayNews: true,
+        requireAiPostGameBrief: true
+      });
       const promotedIds = new Set(breakingAboveBrief.map(it => it?.id).filter(Boolean));
       const promotedUrls = new Set(breakingAboveBrief.map(it => it?.url).filter(Boolean));
 
@@ -290,10 +297,28 @@ function renderSingleDashboardCard({
         : '';
 
       const rosterPlayers = appData?.roster?.players || [];
+      const homeVisibleAboveBrief = gameDayLiveMode ? breakingAboveBrief.slice(0, 6) : breakingAboveBrief;
+      const homeGameDayBannerHtml = gameDayLiveMode
+        ? `<div class="gameday-above-brief-banner" data-gameday-above-brief-banner>
+             <span class="gameday-live-label">
+               <span class="gameday-live-dot" aria-hidden="true"></span>
+               <span>${esc(gameDayPhaseLabel || 'Game-Day Live Wire')}</span>
+             </span>
+             <span class="gameday-live-note mono">New updates above brief until postgame summary</span>
+           </div>`
+        : '';
+      const homeMoreGameDayHtml =
+        gameDayLiveMode && breakingAboveBrief.length > homeVisibleAboveBrief.length
+          ? `<button type="button" class="btn-ghost btn-compact" data-action="jump-view" data-target-tab="news" style="align-self:flex-start">
+               <span>View all ${breakingAboveBrief.length} game-day updates</span>
+               ${iconSvg('arrowRight', 11)}
+             </button>`
+          : '';
       const breakingTopHomeHtml =
-        breakingAboveBrief.length > 0
-          ? `<div style="display:flex;flex-direction:column;gap:8px" data-breaking-above-brief>
-              ${breakingAboveBrief
+        homeVisibleAboveBrief.length > 0 || gameDayLiveMode
+          ? `<div style="display:flex;flex-direction:column;gap:8px" data-breaking-above-brief${gameDayLiveMode ? ' data-gameday-live-above-brief="true"' : ''}>
+              ${homeGameDayBannerHtml}
+              ${homeVisibleAboveBrief
                 .map((item, idx) =>
                   renderWireItemCardHtml(item, {
                     prioritizedRaw: prioritizedHomeStream,
@@ -305,6 +330,7 @@ function renderSingleDashboardCard({
                   })
                 )
                 .join('')}
+              ${homeMoreGameDayHtml}
             </div>`
           : '';
 

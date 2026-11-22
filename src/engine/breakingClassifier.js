@@ -50,7 +50,16 @@ const IN_GAME_INJURY_RETURN_REGEX =
   /\b(questionable to return|probable to return|doubtful to return|ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|cleared to return|cleared concussion protocol|back in the game|returning to the game|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|(?:headed|going|went|walked|taken) to the locker room|blue medical tent|medical tent|evaluated for (?:a )?concussion|concussion (?:evaluation|protocol)|carted (?:off|to the locker room|away)|in an air cast|air cast|on crutches|walking boot|non-contact (?:injury|knee|ankle|leg)|limped off|limping off|helped off(?: the field)?|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|(?:left|exited) (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s) (?:game|contest|matchup)|in-game injury|injury update:\s*[a-z])\b/i;
 
 const MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX =
-  /\b(cramps?|cramping|dehydrat(?:ed|ion)|wind knocked out|shook it off|stayed in the game|back in on the next play|minor nick|looks like (?:it )?(?:could|might) be|from the broadcast angle|by video|my guess is|fearing the worst|looks bad|didn['’]?t look good|hopefully not|pray(?:ing|ers) for)\b/i;
+  /\b(cramps?|cramping|dehydrat(?:ed|ion)|wind knocked out(?: of him)?|knocked the wind out|(?:missed|out for|sat out|sidelined for|exited for)\s+(?:a|one|two|1|2|a couple(?: of)?|a few)\s+(?:play|plays|snap|snaps)|for a play or two|for a couple(?: of)? (?:plays|snaps)|briefly (?:exited|left|shaken up|sidelined)|catching his breath|got his breath back|needed a breather|just a breather|shook it off|stayed in the game|back in on the next (?:play|snap|series|drive)|minor nick|looks like (?:it )?(?:could|might) be|from the broadcast angle|by video|my guess is|fearing the worst|looks bad|didn['’]?t look good|hopefully not|pray(?:ing|ers) for)\b/i;
+
+const SERIOUS_INJURY_ESCALATION_REGEX =
+  /\b(ruled out|downgraded to out|doubtful to return|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|carted (?:off|to the locker room|away)|in an air cast|air cast|non-contact (?:injury|knee|ankle|leg)|locker room|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|torn (?:acl|achilles|pectoral|meniscus|patellar)|fracture[d]?|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|ribs)|dislocat(?:ed|ion)|on crutches|walking boot|\bmri\b|\bx-rays?\b|ct scan)\b/i;
+
+const CATASTROPHIC_IN_GAME_INJURY_REGEX =
+  /\b(carted (?:off|to the locker room|away)|in an air cast|air cast|non-contact (?:injury|knee|ankle|leg)|torn (?:acl|achilles|pectoral|patellar)|season-ending|out for (?:the )?(?:rest of (?:the )?)?(?:\d{4} )?season|fracture[d]?|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand)|dislocat(?:ed|ion)|ambulance|hospital|immobiliz)\b/i;
+
+const SERIOUS_IN_GAME_INJURY_REGEX =
+  /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|doubtful to return|unlikely to return|(?:headed|going|went|walked|taken) to the locker room|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|on crutches|walking boot|high[- ]ankle sprain|out (?:at least )?(?:\d+(?:-\d+)?|multiple|several) weeks)\b/i;
 
 const CONFIRMED_IN_GAME_STATUS_REGEX =
   /\b(ruled out|downgraded to out|questionable to return|doubtful to return|probable to return|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|cleared to return|cleared concussion protocol|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|blue medical tent|medical tent|locker room|carted|air cast|walked off with trainers|helped off(?: the field)?|examined by trainers|concussion (?:evaluation|protocol)|mri|x-rays?|ct scan|confirmed|diagnosed)\b/i;
@@ -425,7 +434,8 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     upcomingKickoffMs,
     upcomingOppAbbr,
     upcomingOppNickname,
-    tradeDeadlineMs
+    tradeDeadlineMs,
+    rosterPlayers: Array.isArray(appData?.roster?.players) ? appData.roster.players : []
   };
 
   // 1. Check if a 49ers game is currently in progress (from kickoff until completion; supports OT & weather delays)
@@ -593,6 +603,237 @@ export function isNon49ersTeamSubjectLead(leadClaim = '', item = {}) {
   return hasOppLeadSubject;
 }
 
+const FRANCHISE_CORE_PLAYER_SLUGS = new Set([
+  'brockpurdy',
+  'christianmccaffrey',
+  'nickbosa',
+  'fredwarner',
+  'georgekittle',
+  'trentwilliams'
+]);
+
+const CORE_STARTER_FALLBACK_SLUGS = new Set([
+  'deommodorelenoir',
+  'deebosamuel',
+  'mikeevans',
+  'rickypearsall',
+  'dregreenlaw',
+  'osaodighizuwa',
+  'deforestbuckner',
+  'dominickpuni',
+  'coltonmckivitz',
+  'jiayirbrown',
+  'malikmustapha',
+  'jauanjennings',
+  'brandonaiyuk',
+  'jakebrendel',
+  'renardogreen'
+]);
+
+function normalizeRosterSlug(name = '') {
+  return String(name || '')
+    .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+/**
+ * Classifies in-game injury severity (`0.0 .. 1.0`):
+ *  - `minor` (`0.10`): wind knocked out, missed a play or two / couple snaps, cramps, shook it off, unconfirmed video speculation
+ *  - `moderate` (`0.48–0.55`): questionable to return, blue medical tent, limped/helped off, or cleared/returned to action
+ *  - `serious` (`0.82`): ruled out for game, doubtful to return, headed to locker room, concussion evaluation/protocol, confirmed multi-week/MRI news
+ *  - `catastrophic` (`1.00`): carted off, air cast, non-contact knee/ankle/leg injury, torn ACL/Achilles/pec, fracture, season-ending
+ */
+export function computeInGameInjurySeverity(item = {}) {
+  const lead = extractPrimaryClaimText(item);
+  const full = `${lead} ${String(item?.fullText || item?.title || '').slice(0, 260)}`.trim();
+  if (!full) return { severityScore: 0, severityTier: 'minor' };
+
+  const hasSeriousEscalation = SERIOUS_INJURY_ESCALATION_REGEX.test(full);
+  const isMinor = MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(full) && !hasSeriousEscalation;
+  if (isMinor) {
+    return { severityScore: 0.1, severityTier: 'minor' };
+  }
+
+  const isNegatedTear = NEGATED_CATASTROPHIC_INJURY_REGEX.test(full);
+  const fullForCatastrophic = isNegatedTear
+    ? full.replace(/\b(?:torn\s+(?:acl|achilles|pectoral|patellar)|season-ending\s+[a-z]+)\b/gi, '')
+    : full;
+
+  if (CATASTROPHIC_INJURY_CHECK(fullForCatastrophic)) {
+    return { severityScore: 1.0, severityTier: 'catastrophic' };
+  }
+  if (
+    SERIOUS_IN_GAME_INJURY_REGEX.test(full) ||
+    (MATERIAL_INJURY_DIAGNOSIS_REGEX.test(full) && !DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(lead))
+  ) {
+    return { severityScore: 0.82, severityTier: 'serious' };
+  }
+  if (
+    /\b(returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|cleared to return|cleared concussion protocol|is back in the (?:game|huddle|lineup)|back on the field)\b/i.test(
+      full
+    )
+  ) {
+    return { severityScore: 0.48, severityTier: 'moderate' };
+  }
+  if (IN_GAME_INJURY_RETURN_REGEX.test(full)) {
+    return { severityScore: 0.55, severityTier: 'moderate' };
+  }
+  return { severityScore: 0.1, severityTier: 'minor' };
+}
+
+function CATASTROPHIC_INJURY_CHECK(text = '') {
+  return CATASTROPHIC_IN_GAME_INJURY_REGEX.test(text);
+}
+
+/**
+ * Evaluates the injured 49ers player's roster value (`0.0 .. 1.0`) dynamically from `rosterPlayers`
+ * (snap share %, 2026 cap hit / market value, position leverage, starter status) so franchise cornerstones
+ * like CMC / Purdy / Bosa / Warner / Kittle / Trent (`0.92–1.00`) outrank core starters (`0.55–0.85`)
+ * and rotational/depth players like Sebastian Valdez (`0.16–0.40`).
+ */
+export function computePlayerRosterValue(item = {}, rosterPlayers = []) {
+  const lead = extractPrimaryClaimText(item);
+  const full = `${lead} ${String(item?.fullText || item?.title || '').slice(0, 260)}`.trim();
+  const pool = Array.isArray(rosterPlayers) ? rosterPlayers : [];
+
+  let matchedRosterObj = null;
+  let resolvedSlug = '';
+
+  // 1. Match via `item.mentionedPlayers` against `rosterPlayers`
+  if (Array.isArray(item?.mentionedPlayers) && item.mentionedPlayers.length > 0) {
+    const mp = item.mentionedPlayers[0];
+    resolvedSlug = normalizeRosterSlug(mp?.name || mp?.id || '');
+    if (pool.length > 0) {
+      matchedRosterObj =
+        pool.find(
+          p =>
+            (mp?.id && p?.id && String(p.id) === String(mp.id)) ||
+            (resolvedSlug && normalizeRosterSlug(p?.name) === resolvedSlug)
+        ) || null;
+    }
+  }
+
+  // 2. Fallback: match directly from tweet/headline text against `rosterPlayers` (full name or unique surname/CMC)
+  if (!matchedRosterObj && pool.length > 0 && full) {
+    const shorthandSlug = resolveFallback49ersShorthandSlug(full);
+    if (shorthandSlug) {
+      matchedRosterObj = pool.find(p => normalizeRosterSlug(p?.name) === shorthandSlug) || null;
+      if (!resolvedSlug) resolvedSlug = shorthandSlug;
+    }
+    if (!matchedRosterObj) {
+      const fullLower = full.toLowerCase();
+      for (const p of pool) {
+        if (!p?.name || p.rosterBucket === 'retired') continue;
+        const cleanName = String(p.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+        if (cleanName.length >= 5 && fullLower.includes(cleanName.toLowerCase())) {
+          matchedRosterObj = p;
+          resolvedSlug = normalizeRosterSlug(p.name);
+          break;
+        }
+      }
+    }
+    // Unique surname fallback inside rosterPlayers (e.g. "Valdez carted off" -> Sebastian Valdez)
+    if (!matchedRosterObj) {
+      const surnameCounts = new Map();
+      for (const p of pool) {
+        const parts = String(p?.name || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim().split(/\s+/);
+        const sn = parts.length >= 2 ? parts[parts.length - 1].toLowerCase() : '';
+        if (sn.length >= 5) surnameCounts.set(sn, (surnameCounts.get(sn) || 0) + 1);
+      }
+      for (const p of pool) {
+        const parts = String(p?.name || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim().split(/\s+/);
+        const sn = parts.length >= 2 ? parts[parts.length - 1].toLowerCase() : '';
+        if (sn.length >= 5 && surnameCounts.get(sn) === 1 && new RegExp(`\\b${escapeRegexToken(sn)}\\b`, 'i').test(full)) {
+          matchedRosterObj = p;
+          resolvedSlug = normalizeRosterSlug(p.name);
+          break;
+        }
+      }
+    }
+  }
+
+  // 3. Fallback when `rosterPlayers` is empty (e.g. unit test without full roster loaded)
+  if (!resolvedSlug) {
+    const leadSlugs = extractLeadProperNameSlugs(lead);
+    resolvedSlug = leadSlugs[0] || resolveFallback49ersShorthandSlug(full);
+  }
+
+  let valueScore = 0.58; // Neutral starter default when roster is unavailable and player is unrecognized
+  let playerName = matchedRosterObj?.name || item?.mentionedPlayers?.[0]?.name || '';
+
+  if (matchedRosterObj) {
+    const pos = String(matchedRosterObj.position || '').trim().toUpperCase();
+    const snap = Number(matchedRosterObj.primarySnapPct ?? matchedRosterObj.snapPct ?? 0);
+    const capM = Number(matchedRosterObj.capHit2026 || matchedRosterObj.capHit || 0) / 1_000_000;
+    const isStarter = Boolean(matchedRosterObj.isStarter || snap >= 55);
+
+    let s = 0;
+    // Snap share component (0.04 .. 0.38)
+    if (snap >= 85) s += 0.38;
+    else if (snap >= 65) s += 0.3;
+    else if (snap >= 50) s += 0.22;
+    else if (snap >= 30) s += 0.12;
+    else s += 0.04;
+
+    // Market / Cap value component (0.05 .. 0.36)
+    if (capM >= 14) s += 0.36;
+    else if (capM >= 9) s += 0.32;
+    else if (capM >= 5) s += 0.22;
+    else if (capM >= 2.5) s += 0.14;
+    else s += 0.05;
+
+    // Position & starter leverage (0.00 .. 0.30)
+    if (pos === 'QB' && isStarter) s += 0.3;
+    else if (isStarter && ['RB', 'WR', 'TE', 'OT', 'DE', 'EDGE', 'CB', 'LB'].includes(pos)) s += 0.16;
+    else if (isStarter && ['DT', 'OG', 'C', 'S', 'FS', 'SS', 'FB'].includes(pos)) s += 0.11;
+    else if (['K', 'PK', 'P', 'LS'].includes(pos)) s += 0.06;
+
+    valueScore = Math.min(1, Number(s.toFixed(3)));
+    const slug = normalizeRosterSlug(matchedRosterObj.name);
+    if (FRANCHISE_CORE_PLAYER_SLUGS.has(slug)) {
+      valueScore = Math.max(valueScore, slug === 'brockpurdy' ? 1.0 : 0.95);
+    } else if (CORE_STARTER_FALLBACK_SLUGS.has(slug)) {
+      valueScore = Math.max(valueScore, 0.65);
+    }
+  } else if (FRANCHISE_CORE_PLAYER_SLUGS.has(resolvedSlug)) {
+    valueScore = resolvedSlug === 'brockpurdy' ? 1.0 : 0.95;
+  } else if (CORE_STARTER_FALLBACK_SLUGS.has(resolvedSlug)) {
+    valueScore = 0.7;
+  } else if (/\b(?:valdez|sebastian valdez|practice squad|backup|reserve|special teamer)\b/i.test(full)) {
+    valueScore = 0.2;
+  }
+
+  const valueTier =
+    valueScore >= 0.85
+      ? 'franchise'
+      : valueScore >= 0.5
+        ? 'core_starter'
+        : valueScore >= 0.16
+          ? 'rotational'
+          : 'depth';
+
+  return { valueScore, valueTier, playerName };
+}
+
+/**
+ * Combines in-game injury severity (`60%`) and player roster value (`40%`) into a calibrated priority score (`0..1`).
+ * Minor 1-2 play knocks (e.g. "wind knocked out for a play or two") are clamped to `0.05` regardless of player star power.
+ */
+export function computeInGameInjuryPriority(item = {}, rosterPlayers = []) {
+  const sev = computeInGameInjurySeverity(item);
+  const val = computePlayerRosterValue(item, rosterPlayers);
+  const impactScore =
+    sev.severityTier === 'minor'
+      ? 0.05
+      : Number((0.6 * sev.severityScore + 0.4 * val.valueScore).toFixed(3));
+  return {
+    impactScore,
+    ...sev,
+    ...val
+  };
+}
+
 export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext = null) {
   const ctx =
     gameContext && typeof gameContext === 'object' && gameContext.appData
@@ -624,8 +865,10 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
 
   // Evaluate primary event patterns strictly against `leadClaim` (never trailing recap paragraphs or opposing-team player injuries!)
   const hasConfirmedInGameStatus = CONFIRMED_IN_GAME_STATUS_REGEX.test(leadClaim);
+  const hasSeriousInjuryEscalation = SERIOUS_INJURY_ESCALATION_REGEX.test(`${leadClaim} ${fullTweetOrLead}`);
   const isMinorOrSpeculativeInjury =
-    MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(leadClaim) && !hasConfirmedInGameStatus;
+    MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(`${leadClaim} ${fullTweetOrLead}`) &&
+    !hasSeriousInjuryEscalation;
   const isDiagnosticScheduledOnly =
     DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(leadClaim) && !MATERIAL_INJURY_DIAGNOSIS_REGEX.test(leadClaim);
   const isNegatedCatastrophicTear = NEGATED_CATASTROPHIC_INJURY_REGEX.test(leadClaim);
@@ -734,18 +977,30 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       };
     }
 
-    // Confirmed/salient in-game injury updates & material diagnostic updates get urgent `LIVE INJURY UPDATE`
-    // while minor cramps, speculative video takes, scheduled-MRI remarks, and Tier-3 vague blurbs stay calm!
+    // Confirmed/salient in-game injury updates & material diagnostic updates are calibrated by
+    // Injury Severity (minor 1-2 play knocks vs moderate vs serious/catastrophic) × Player Value (CMC/franchise/starters vs rotational/depth like Valdez).
     if ((matchesInGame || matchesMaterialInjuryDiagnosis) && (effectiveTrustTier <= 2 || hasConfirmedInGameStatus)) {
-      return {
-        isBreaking: true,
-        isUrgentBreaking: true,
-        isInGameInjury: true,
-        storyTier: 'in_game_injury',
-        breakingPriority: matchesMaterialInjuryDiagnosis ? 3.34 : 3.3,
-        breakingBadge: 'LIVE INJURY UPDATE',
-        ageHours
-      };
+      const injPri = computeInGameInjuryPriority(item, ctx?.rosterPlayers);
+      if (injPri.severityTier !== 'minor') {
+        const isHighValuePlayer = injPri.valueScore >= 0.5;
+        const isUrgentLive = isHighValuePlayer || matchesMaterialInjuryDiagnosis;
+        return {
+          isBreaking: isUrgentLive,
+          isUrgentBreaking: isUrgentLive,
+          isInGameInjury: true,
+          storyTier: 'in_game_injury',
+          breakingPriority: isUrgentLive
+            ? Number((3.05 + injPri.impactScore * 0.45).toFixed(3))
+            : Number((2.55 + injPri.impactScore * 0.4).toFixed(3)),
+          breakingBadge: isUrgentLive ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
+          injurySeverityScore: injPri.severityScore,
+          injurySeverityTier: injPri.severityTier,
+          playerValueScore: injPri.valueScore,
+          playerValueTier: injPri.valueTier,
+          injuryImpactScore: injPri.impactScore,
+          ageHours
+        };
+      }
     }
 
     if (matchesPostGameInjury && !isMinorOrSpeculativeInjury && !isDiagnosticScheduledOnly && effectiveTrustTier <= 2) {
@@ -826,19 +1081,30 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     };
   }
 
-  // 3. LIVE / RECENT SIDELINE IN-GAME INJURY UPDATES (<16h)
+  // 3. LIVE / RECENT SIDELINE IN-GAME INJURY UPDATES (<16h), calibrated by Injury Severity × Player Value
   if (matchesInGame && ageHours <= 16 && (effectiveTrustTier <= 2 || hasConfirmedInGameStatus || Boolean(item.isFirstMoverInjuryScoop))) {
-    const isUrgent = ageHours <= 4.5;
-    return {
-      isBreaking: isUrgent,
-      isUrgentBreaking: isUrgent,
-      isInGameInjury: ageHours <= 8,
-      isPostGameInjuryUpdate: Boolean(ctx?.postGame48h),
-      storyTier: 'in_game_injury',
-      breakingPriority: isUrgent ? 3.28 : decayPriority(2.65, ageHours, 7.5),
-      breakingBadge: isUrgent ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
-      ageHours
-    };
+    const injPri = computeInGameInjuryPriority(item, ctx?.rosterPlayers);
+    if (injPri.severityTier !== 'minor') {
+      const isHighValueOrFirstMover = injPri.valueScore >= 0.5 || Boolean(item.isFirstMoverInjuryScoop);
+      const isUrgent = ageHours <= 4.5 && isHighValueOrFirstMover;
+      return {
+        isBreaking: isUrgent,
+        isUrgentBreaking: isUrgent,
+        isInGameInjury: ageHours <= 8,
+        isPostGameInjuryUpdate: Boolean(ctx?.postGame48h),
+        storyTier: 'in_game_injury',
+        breakingPriority: isUrgent
+          ? Number((3.02 + injPri.impactScore * 0.45).toFixed(3))
+          : decayPriority(2.45 + injPri.impactScore * 0.35, ageHours, 7.5),
+        breakingBadge: isUrgent ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
+        injurySeverityScore: injPri.severityScore,
+        injurySeverityTier: injPri.severityTier,
+        playerValueScore: injPri.valueScore,
+        playerValueTier: injPri.valueTier,
+        injuryImpactScore: injPri.impactScore,
+        ageHours
+      };
+    }
   }
 
   // 4. TIER-2 OFFICIAL ROSTER MOVES & IR RETURN DESIGNATIONS (e.g. "49ers Designate DT CJ West For Return")
@@ -1041,10 +1307,17 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       ? item._clusterNewestAgeHours
       : rawAgeHours;
 
-  // Live In-Game Override: keep live sideline injuries & in-game beat updates strictly at the very top
+  // Live In-Game Override: prioritize confirmed injuries by Severity × Player Value (e.g. serious CMC > serious Valdez > routine plays/minor knocks)
   if (ctx?.inGame) {
-    if (item.isInGameInjury && isUrgentBreakingBadge(item.breakingBadge)) return 500 - Math.min(45, clusterAnchorAge * 12);
-    if (item.isInGameInjury) return 440 - Math.min(45, clusterAnchorAge * 12);
+    if (item.isInGameInjury) {
+      const impact = Number.isFinite(Number(item.injuryImpactScore))
+        ? Number(item.injuryImpactScore)
+        : computeInGameInjuryPriority(item, ctx?.rosterPlayers).impactScore;
+      if (isUrgentBreakingBadge(item.breakingBadge)) {
+        return 500 + impact * 70 - Math.min(40, clusterAnchorAge * 12);
+      }
+      return 430 + impact * 65 - Math.min(40, clusterAnchorAge * 12);
+    }
     if (item.storyTier === 'live_in_game') return 360 - Math.min(50, clusterAnchorAge * 14);
     if (item.storyTier === 'tier1_major' && clusterAnchorAge <= 6) return 420 - clusterAnchorAge * 12;
   }
@@ -1590,7 +1863,16 @@ export function sortNewsWithBreakingPriority(
         isPostGameInjuryUpdate: Boolean(cls.isPostGameInjuryUpdate),
         isStalePreGameAvailability: Boolean(cls.isStalePreGameAvailability),
         breakingPriority: withinWindow ? cls.breakingPriority : 0,
-        breakingBadge: withinWindow ? cls.breakingBadge : null
+        breakingBadge: withinWindow ? cls.breakingBadge : null,
+        ...(Number.isFinite(cls.injuryImpactScore)
+          ? {
+              injurySeverityScore: cls.injurySeverityScore,
+              injurySeverityTier: cls.injurySeverityTier,
+              playerValueScore: cls.playerValueScore,
+              playerValueTier: cls.playerValueTier,
+              injuryImpactScore: cls.injuryImpactScore
+            }
+          : {})
       };
       enriched.storyRank = computeWireStoryRank(enriched, nowMs, ctx);
       return enriched;
@@ -2081,7 +2363,8 @@ const CORE_49ERS_SHORTHAND_PLAYER_SLUGS = [
   { re: /\brenardo\b/i, slug: 'renardogreen' },
   { re: /\bmckivitz\b/i, slug: 'coltonmckivitz' },
   { re: /\bbrendel\b/i, slug: 'jakebrendel' },
-  { re: /\bwinters\b/i, slug: 'deewinters' }
+  { re: /\bwinters\b/i, slug: 'deewinters' },
+  { re: /\bvaldez\b/i, slug: 'sebastianvaldez' }
 ];
 
 function resolveFallback49ersShorthandSlug(lead = '') {
@@ -4962,16 +5245,32 @@ export function partitionBreakingNewsAboveBrief(
       }
     }
 
+    const rosterPlayersForSort = Array.isArray(appData?.roster?.players) ? appData.roster.players : [];
+    const resolveGdInjuryTierAndScore = it => {
+      const isUrgInj = Boolean(it?.isInGameInjury && isUrgentBreakingBadge(it?.breakingBadge));
+      const isUrgOther = !isUrgInj && isUrgentBreakingBadge(it?.breakingBadge);
+      const isNonUrgInj = Boolean(it?.isInGameInjury && !isUrgInj);
+      const bucket = isUrgInj ? 3 : isUrgOther ? 2 : isNonUrgInj ? 1 : 0;
+      const ms = resolveClusterLatestTimestampMs(it, nowMs) || 0;
+      if (bucket === 3 || bucket === 1) {
+        const impact = Number.isFinite(Number(it?.injuryImpactScore))
+          ? Number(it.injuryImpactScore)
+          : computeInGameInjuryPriority(it, rosterPlayersForSort).impactScore;
+        const ageH = ms > 0 ? Math.max(0, (nowMs - ms) / 3_600_000) : 0;
+        // Severity × Player Value dominates (0..100 pts), with gentle recency decay (18 pts/hr)
+        return { bucket, score: impact * 100 - ageH * 18, ms };
+      }
+      return { bucket, score: 0, ms };
+    };
+
     breakingAboveBrief.sort((a, b) => {
-      const aInj = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
-      const bInj = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
-      if (aInj !== bInj) return bInj - aInj;
-      const aUrg = isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
-      const bUrg = isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
-      if (aUrg !== bUrg) return bUrg - aUrg;
-      const aMs = resolveClusterLatestTimestampMs(a, nowMs) || 0;
-      const bMs = resolveClusterLatestTimestampMs(b, nowMs) || 0;
-      return bMs - aMs;
+      const aMeta = resolveGdInjuryTierAndScore(a);
+      const bMeta = resolveGdInjuryTierAndScore(b);
+      if (aMeta.bucket !== bMeta.bucket) return bMeta.bucket - aMeta.bucket;
+      if ((aMeta.bucket === 3 || aMeta.bucket === 1) && Math.abs(bMeta.score - aMeta.score) >= 0.5) {
+        return bMeta.score - aMeta.score;
+      }
+      return bMeta.ms - aMeta.ms;
     });
 
     return {

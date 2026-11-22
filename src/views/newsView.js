@@ -1186,7 +1186,9 @@ export function renderNewsViewHtml({
   if (activeFilter === 'all') {
     const dailyBrief =
       appData?.news?.dailyTopNewsBrief || buildDeterministicDailyTopNewsBrief(appData, nowMs);
-    const requireAiPostGameBrief = hasPendingPostGameAiBriefAttempt(appData, userPrefs, nowMs);
+    // Keep ALL game-day news above yesterday's AI summary until a real post-game AI summary
+    // (`live-gemini-daily` or `pipeline-gemini-daily`) has actually been created!
+    const requireAiPostGameBrief = true;
     const gdWindow = evaluateGameDayAboveBriefWindow(appData, dailyBrief, nowMs, {
       requireAiSource: requireAiPostGameBrief
     });
@@ -1232,7 +1234,7 @@ export function renderNewsViewHtml({
           <div class="card breaking-above-brief-card${gameDayLiveMode ? ' gameday-live-above-card' : ''}" data-breaking-above-brief${gameDayLiveMode ? ' data-gameday-live-above-brief="true"' : ''} style="display:flex;flex-direction:column;gap:9px">
             ${gameDayBannerHtml}
             ${breakingAboveBrief
-              .slice(0, 45)
+              .slice(0, 200)
               .map((item, idx) =>
                 renderWireItemCardHtml(item, {
                   prioritizedRaw,

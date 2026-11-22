@@ -1190,7 +1190,14 @@ export function extractLiveInGameInjurySignals(
     const clauses = splitTextIntoGameDayClauses(text);
 
     for (const clause of clauses) {
-      if (/\b(?:shook it off and stayed in|stayed in the game|no injury)\b/i.test(clause)) continue;
+      const hasMinorKnockOnly =
+        /\b(?:shook it off and stayed in|stayed in the game|no injury|wind knocked out(?: of him)?|knocked the wind out|(?:missed|out for|sat out|exited for)\s+(?:a|one|two|1|2|a couple(?: of)?|a few)\s+(?:play|plays|snap|snaps)|for a play or two|for a couple(?: of)? (?:plays|snaps)|catching his breath|just a breather|back in on the next (?:play|snap|series|drive)|cramps?|cramping)\b/i.test(
+          clause
+        ) &&
+        !/\b(?:ruled out|downgraded to out|doubtful to return|carted|air cast|locker room|concussion|torn|fracture|won'?t return|will not return)\b/i.test(
+          clause
+        );
+      if (hasMinorKnockOnly) continue;
 
       const isReturned =
         /\b(returned to (?:the|tonight'?s|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s)?\s*(?:game|action|contest|matchup|field)|has returned|is back in the (?:game|huddle|lineup)|back on the field|cleared to return|cleared concussion protocol|helmet back on and in|exited (?:the )?(?:blue )?medical tent and (?:is )?back)\b/i.test(

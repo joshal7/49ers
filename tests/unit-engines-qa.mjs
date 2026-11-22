@@ -185,6 +185,7 @@ import {
   isUrgentBreakingBadge,
   classifyNewsItemCategory,
   classifyBreakingItem,
+  computeInGameInjuryPriority,
   computeInjuryProgressionLevel,
   computeWireStoryRank,
   sortNewsWithBreakingPriority,
@@ -15455,6 +15456,235 @@ test(
     const cappedInGame = sortNewsWithBreakingPriority(fourDistinctInjuries, inGameNow, { appData: liveApp, maxUrgentBreakingBadges: 3 });
     const urgentCount = cappedInGame.filter(x => isUrgentBreakingBadge(x.breakingBadge)).length;
     assert.equal(urgentCount, 3, `Expected scarcity cap of 3 urgent breaking badges even during live game, got ${urgentCount}`);
+  }
+);
+
+test(
+  'Game-day above-brief guarantee on Home + News until real post-game AI summary AND Severity × Player Value in-game injury ranking (CMC serious > Valdez serious > CMC wind knocked out / routine plays)',
+  () => {
+    const realRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+    const koIso = '2026-11-23T01:20:00Z';
+    const koMs = Date.parse(koIso);
+    const inGameNow = koMs + 80 * 60_000;
+
+    const yesterdayAiBrief = {
+      headline: 'Saturday 5 PM Briefing: 49ers Finalize Game Plan Ahead of Vikings SNF',
+      bullets: ['49ers wrapped Saturday walk-through ahead of Week 11.', 'Brock Purdy ready for Vikings blitz packages.'],
+      cycleKey: '2026-11-21@17PT',
+      generatedAt: '2026-11-22T01:00:00Z',
+      source: 'pipeline-gemini-daily',
+      sources: []
+    };
+
+    const cmcSeriousTweet = {
+      id: 'cmc_serious',
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      outletName: 'NBC Sports Bay Area',
+      trustTier: 1,
+      title: 'Christian McCaffrey (knee) went down with a non-contact injury and is headed to the locker room, questionable to return.',
+      fullText: 'Christian McCaffrey (knee) went down with a non-contact injury and is headed to the locker room, questionable to return.',
+      url: 'https://x.com/MaioccoNBCS/status/9101',
+      publishedAt: new Date(inGameNow - 6 * 60_000).toISOString()
+    };
+
+    const valdezSeriousNewerTweet = {
+      id: 'valdez_serious_newer',
+      type: 'tweet',
+      author: 'Matt Barrows',
+      outletName: 'The Athletic',
+      trustTier: 1,
+      title: '49ers DT Sebastian Valdez (ankle) has been ruled out for the rest of tonight’s game after heading to the locker room.',
+      fullText: '49ers DT Sebastian Valdez (ankle) has been ruled out for the rest of tonight’s game after heading to the locker room.',
+      url: 'https://x.com/mattbarrows/status/9102',
+      publishedAt: new Date(inGameNow - 2 * 60_000).toISOString() // Newer than CMC!
+    };
+
+    const cmcWindKnockedOutTweet = {
+      id: 'cmc_minor_wind',
+      type: 'tweet',
+      author: 'Nick Wagoner',
+      outletName: 'ESPN',
+      trustTier: 1,
+      title: 'Christian McCaffrey exited the game for a play or two after getting the wind knocked out of him, catching his breath on the sideline.',
+      fullText: 'Christian McCaffrey exited the game for a play or two after getting the wind knocked out of him, catching his breath on the sideline.',
+      url: 'https://x.com/nwagoner/status/9103',
+      publishedAt: new Date(inGameNow - 1 * 60_000).toISOString() // Newest tweet!
+    };
+
+    const routineDriveTweet = {
+      id: 'routine_drive',
+      type: 'tweet',
+      author: 'David Lombardi',
+      outletName: 'The SF Standard',
+      trustTier: 1,
+      title: '49ers convert 3rd-and-6 with a quick slant to Ricky Pearsall across midfield.',
+      fullText: '49ers convert 3rd-and-6 with a quick slant to Ricky Pearsall across midfield.',
+      url: 'https://x.com/LombardiHimself/status/9104',
+      publishedAt: new Date(inGameNow - 30_000).toISOString()
+    };
+
+    // 1. Verify Severity × Player Value scores against real 2026 roster.json
+    const cmcSeriousPri = computeInGameInjuryPriority(cmcSeriousTweet, realRoster.players);
+    const valdezSeriousPri = computeInGameInjuryPriority(valdezSeriousNewerTweet, realRoster.players);
+    const cmcMinorPri = computeInGameInjuryPriority(cmcWindKnockedOutTweet, realRoster.players);
+
+    assert.equal(cmcSeriousPri.valueTier, 'franchise', 'CMC must score as franchise-tier value');
+    assert.equal(cmcSeriousPri.severityTier, 'catastrophic', 'Non-contact knee + locker room must score catastrophic');
+    assert.equal(valdezSeriousPri.valueTier, 'rotational', 'Sebastian Valdez (39% snaps, $0.84M) must score as rotational value');
+    assert.equal(valdezSeriousPri.severityTier, 'serious', 'Valdez ruled out must score serious severity');
+    assert.equal(cmcMinorPri.severityTier, 'minor', 'CMC wind knocked out for a play or two must score minor');
+    assert.ok(
+      cmcSeriousPri.impactScore > valdezSeriousPri.impactScore && valdezSeriousPri.impactScore > cmcMinorPri.impactScore,
+      `Expected impact ordering CMC serious (${cmcSeriousPri.impactScore}) > Valdez serious (${valdezSeriousPri.impactScore}) > CMC wind knocked out (${cmcMinorPri.impactScore})`
+    );
+
+    // 2. Verify extractLiveInGameInjurySignals ignores CMC's minor 1-2 play wind-knocked-out knock!
+    const liveWin = { isActive: true, hasKickoffStarted: true, kickoffMs: koMs, safetyEndMs: koMs + 5.25 * 3600_000 };
+    const minorOnlySig = extractLiveInGameInjurySignals([cmcWindKnockedOutTweet], realRoster.players, liveWin);
+    assert.equal(minorOnlySig.list.length, 0, 'Wind knocked out for a play or two must NOT trigger 50% QTR on Health table');
+
+    // 3. Verify live in-game ranking AND game-day above-brief ordering:
+    //    CMC serious (#1, urgent LIVE INJURY UPDATE) > Valdez serious (#2, calm INJURY UPDATE) > routine / CMC wind knocked out (no badge)!
+    const gdApp = {
+      meta: { seasonYear: 2026, currentWeek: 11, teamRecord: '7-3' },
+      roster: realRoster,
+      health: { week: 11, practiceReport: [], irReserve: [] },
+      scheduleMatchup: {
+        schedule: [
+          {
+            id: '401873077',
+            week: 11,
+            seasonType: 'REG',
+            dateIso: koIso,
+            completed: false,
+            statusState: 'in',
+            statusDetail: '3rd - 8:15',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ],
+        upcomingMatchup: {
+          week: 11,
+          gameId: '401873077',
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          dateIso: koIso,
+          kickoffIso: koIso,
+          liveState: 'in',
+          isGameInProgress: true,
+          statusDetail: '3rd - 8:15',
+          opponentHealth: { teamAbbr: 'MIN', injuryReport: [], irReserve: [], keyStartersHealthy: [] }
+        }
+      },
+      news: {
+        dailyTopNewsBrief: yesterdayAiBrief,
+        rawStream: [routineDriveTweet, cmcWindKnockedOutTweet, valdezSeriousNewerTweet, cmcSeriousTweet]
+      }
+    };
+
+    const sortedInGame = sortNewsWithBreakingPriority(gdApp.news.rawStream, inGameNow, { appData: gdApp });
+    assert.equal(sortedInGame[0].id, 'cmc_serious', 'Serious CMC injury must rank #1 even when Valdez & routine tweets are newer');
+    assert.equal(sortedInGame[0].breakingBadge, 'LIVE INJURY UPDATE');
+    assert.equal(sortedInGame[0].isUrgentBreaking, true);
+
+    assert.equal(sortedInGame[1].id, 'valdez_serious_newer', 'Serious Valdez injury must rank #2 (below CMC serious, above routine plays & minor knocks)');
+    assert.equal(sortedInGame[1].breakingBadge, 'INJURY UPDATE', 'Rotational/depth serious injury uses calm INJURY UPDATE rather than urgent red breaking');
+    assert.equal(sortedInGame[1].isUrgentBreaking, false);
+
+    const cmcMinorRanked = sortedInGame.find(x => x.id === 'cmc_minor_wind');
+    assert.equal(cmcMinorRanked.breakingBadge, null, 'CMC wind knocked out for a play or two must have ZERO breaking badge');
+    assert.equal(cmcMinorRanked.isInGameInjury, false);
+
+    const partLive = partitionBreakingNewsAboveBrief(sortedInGame, yesterdayAiBrief, inGameNow, {
+      appData: gdApp,
+      promoteAllGameDayNews: true,
+      requireAiPostGameBrief: true
+    });
+    assert.equal(partLive.gameDayLiveMode, true);
+    assert.equal(partLive.breakingAboveBrief.length, 4, 'ALL 4 game-day items must go ABOVE yesterday’s AI summary');
+    assert.equal(partLive.breakingAboveBrief[0].id, 'cmc_serious', 'Above-brief #1 must be CMC serious');
+    assert.equal(partLive.breakingAboveBrief[1].id, 'valdez_serious_newer', 'Above-brief #2 must be Valdez serious');
+
+    // 4. Verify rendered `Home` AND `News & Film` BOTH place game-day news ABOVE yesterday's AI summary,
+    //    keep it above even if a non-AI deterministic fallback exists post-Final, and flip back ONLY when real post-game AI brief arrives!
+    const homeNewsBlock = [{ id: 'news_briefs', title: 'Top 49ers News', shortTitle: 'News', badgeLabel: 'Live', icon: 'news' }];
+    const homeLiveHtml = renderHomeDashboardHtml({
+      orderedBlocks: homeNewsBlock,
+      appData: { ...gdApp, news: { ...gdApp.news, rawStream: sortedInGame } },
+      filteredRawItems: sortedInGame,
+      userPrefs: {},
+      nowMs: inGameNow
+    });
+    const homeBannerPos = homeLiveHtml.indexOf('data-gameday-above-brief-banner');
+    const homeBriefPos = homeLiveHtml.indexOf('data-daily-news-brief');
+    assert.ok(homeBannerPos > -1 && homeBriefPos > -1 && homeBannerPos < homeBriefPos, 'Home must place game-day news ABOVE yesterday’s AI summary');
+    assert.ok(
+      homeLiveHtml.indexOf('Christian McCaffrey (knee)') < homeBriefPos &&
+        homeLiveHtml.indexOf('Sebastian Valdez (ankle)') < homeBriefPos,
+      'Home must render CMC and Valdez game-day updates ABOVE yesterday’s AI summary'
+    );
+
+    // Post-Final with ONLY deterministic fallback (no client API key!) -> News & Home MUST keep game news ABOVE brief!
+    const postFinalMs = koMs + 4 * 3600_000;
+    gdApp.scheduleMatchup.schedule[0].completed = true;
+    gdApp.scheduleMatchup.schedule[0].statusState = 'post';
+    gdApp.scheduleMatchup.schedule[0].statusDetail = 'Final';
+    gdApp.scheduleMatchup.upcomingMatchup.completed = true;
+    gdApp.scheduleMatchup.upcomingMatchup.liveState = 'post';
+    gdApp.scheduleMatchup.upcomingMatchup.isGameInProgress = false;
+    gdApp.news.dailyTopNewsBrief = {
+      headline: 'Deterministic Fallback Postgame Recap',
+      bullets: ['49ers beat Vikings.', 'Stats summary.'],
+      cycleKey: '2026-11-22@postgame-wk11',
+      isPostGame: true,
+      gameWeek: 11,
+      generatedAt: new Date(postFinalMs).toISOString(),
+      source: 'deterministic-fallback',
+      sources: []
+    };
+    const newsAwaitingAiHtml = renderNewsViewHtml({
+      appData: gdApp,
+      newsCategoryFilter: 'all',
+      filteredRawItems: sortedInGame,
+      activeVideosSet: new Set(),
+      userPrefs: {}, // No client API key!
+      nowMs: postFinalMs
+    });
+    assert.ok(
+      newsAwaitingAiHtml.includes('data-gameday-above-brief-banner') &&
+        newsAwaitingAiHtml.indexOf('data-gameday-above-brief-banner') < newsAwaitingAiHtml.indexOf('data-daily-news-brief'),
+      'News must keep game news ABOVE non-AI deterministic fallback even when user has no client Gemini API key'
+    );
+
+    // Once real post-game AI summary (`pipeline-gemini-daily`) arrives -> AI summary immediately returns to top on BOTH News & Home!
+    gdApp.news.dailyTopNewsBrief = {
+      ...gdApp.news.dailyTopNewsBrief,
+      headline: 'AI Post-Game Summary: 49ers Defeat Vikings 27-24 in Week 11 SNF',
+      source: 'pipeline-gemini-daily'
+    };
+    const newsAfterAiHtml = renderNewsViewHtml({
+      appData: gdApp,
+      newsCategoryFilter: 'all',
+      filteredRawItems: sortedInGame,
+      activeVideosSet: new Set(),
+      userPrefs: {},
+      nowMs: postFinalMs + 5 * 60_000
+    });
+    assert.ok(
+      !newsAfterAiHtml.includes('data-gameday-above-brief-banner'),
+      'News must put the new post-game AI summary back on top immediately once created'
+    );
+    const homeAfterAiHtml = renderHomeDashboardHtml({
+      orderedBlocks: homeNewsBlock,
+      appData: { ...gdApp, news: { ...gdApp.news, rawStream: sortedInGame } },
+      filteredRawItems: sortedInGame,
+      userPrefs: {},
+      nowMs: postFinalMs + 5 * 60_000
+    });
+    assert.ok(
+      !homeAfterAiHtml.includes('data-gameday-above-brief-banner'),
+      'Home must put the new post-game AI summary back on top immediately once created'
+    );
   }
 );
 
