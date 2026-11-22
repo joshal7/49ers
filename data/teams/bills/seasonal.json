@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T17:09:18.941Z",
+  "updatedAt": "2026-11-22T22:38:47.984Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Nov 10, 2026 4:00 PM ET",
@@ -34,46 +34,46 @@
         "name": "Buffalo Bills",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
         "division": "AFC East",
-        "currentRecord": "8-1",
-        "powerRating": 1567,
-        "projectedWins": 14.7,
-        "makePlayoffsPct": 98.6,
-        "winDivisionPct": 95.5,
-        "seed1ByePct": 36.3,
-        "wildCardPct": 3,
+        "currentRecord": "9-1",
+        "powerRating": 1574,
+        "projectedWins": 15,
+        "makePlayoffsPct": 99.4,
+        "winDivisionPct": 97,
+        "seed1ByePct": 40.6,
+        "wildCardPct": 2.5,
         "seedDistribution": {
-          "1": 36.3,
-          "2": 22.5,
-          "3": 19,
-          "4": 17.7,
-          "5": 0.5,
+          "1": 40.6,
+          "2": 22.8,
+          "3": 18.6,
+          "4": 15,
+          "5": 0.6,
           "6": 1.1,
-          "7": 1.4
+          "7": 0.8
         },
-        "missedPlayoffsPct": 1.4
+        "missedPlayoffsPct": 0.6
       },
       "sfOdds": {
         "abbr": "BUF",
         "name": "Buffalo Bills",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
         "division": "AFC East",
-        "currentRecord": "8-1",
-        "powerRating": 1567,
-        "projectedWins": 14.7,
-        "makePlayoffsPct": 98.6,
-        "winDivisionPct": 95.5,
-        "seed1ByePct": 36.3,
-        "wildCardPct": 3,
+        "currentRecord": "9-1",
+        "powerRating": 1574,
+        "projectedWins": 15,
+        "makePlayoffsPct": 99.4,
+        "winDivisionPct": 97,
+        "seed1ByePct": 40.6,
+        "wildCardPct": 2.5,
         "seedDistribution": {
-          "1": 36.3,
-          "2": 22.5,
-          "3": 19,
-          "4": 17.7,
-          "5": 0.5,
+          "1": 40.6,
+          "2": 22.8,
+          "3": 18.6,
+          "4": 15,
+          "5": 0.6,
           "6": 1.1,
-          "7": 1.4
+          "7": 0.8
         },
-        "missedPlayoffsPct": 1.4
+        "missedPlayoffsPct": 0.6
       },
       "allTeamOdds": [
         {
@@ -81,23 +81,46 @@
           "name": "Buffalo Bills",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
           "division": "AFC East",
-          "currentRecord": "8-1",
-          "powerRating": 1567,
-          "projectedWins": 14.7,
-          "makePlayoffsPct": 98.6,
-          "winDivisionPct": 95.5,
-          "seed1ByePct": 36.3,
-          "wildCardPct": 3,
+          "currentRecord": "9-1",
+          "powerRating": 1574,
+          "projectedWins": 15,
+          "makePlayoffsPct": 99.4,
+          "winDivisionPct": 97,
+          "seed1ByePct": 40.6,
+          "wildCardPct": 2.5,
           "seedDistribution": {
-            "1": 36.3,
-            "2": 22.5,
-            "3": 19,
-            "4": 17.7,
-            "5": 0.5,
+            "1": 40.6,
+            "2": 22.8,
+            "3": 18.6,
+            "4": 15,
+            "5": 0.6,
             "6": 1.1,
-            "7": 1.4
+            "7": 0.8
           },
-          "missedPlayoffsPct": 1.4
+          "missedPlayoffsPct": 0.6
+        },
+        {
+          "abbr": "KC",
+          "name": "Kansas City Chiefs",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
+          "division": "AFC West",
+          "currentRecord": "8-2",
+          "powerRating": 1577,
+          "projectedWins": 13.7,
+          "makePlayoffsPct": 96.7,
+          "winDivisionPct": 59.2,
+          "seed1ByePct": 17.7,
+          "wildCardPct": 37.5,
+          "seedDistribution": {
+            "1": 17.7,
+            "2": 15.4,
+            "3": 14.3,
+            "4": 11.9,
+            "5": 25.4,
+            "6": 7.9,
+            "7": 4.1
+          },
+          "missedPlayoffsPct": 3.3
         },
         {
           "abbr": "JAX",
@@ -107,20 +130,20 @@
           "currentRecord": "7-2",
           "powerRating": 1585,
           "projectedWins": 13.7,
-          "makePlayoffsPct": 96.3,
-          "winDivisionPct": 91.2,
-          "seed1ByePct": 17.4,
-          "wildCardPct": 5.2,
+          "makePlayoffsPct": 96.2,
+          "winDivisionPct": 90.7,
+          "seed1ByePct": 15,
+          "wildCardPct": 5.5,
           "seedDistribution": {
-            "1": 17.4,
-            "2": 23.4,
-            "3": 23.4,
-            "4": 27,
-            "5": 1,
-            "6": 1.9,
-            "7": 2.3
+            "1": 15,
+            "2": 24.3,
+            "3": 23.2,
+            "4": 28.2,
+            "5": 0.9,
+            "6": 2.7,
+            "7": 1.9
           },
-          "missedPlayoffsPct": 3.7
+          "missedPlayoffsPct": 3.8
         },
         {
           "abbr": "CIN",
@@ -130,43 +153,20 @@
           "currentRecord": "7-2",
           "powerRating": 1564,
           "projectedWins": 13.7,
-          "makePlayoffsPct": 95,
-          "winDivisionPct": 69.1,
-          "seed1ByePct": 17,
-          "wildCardPct": 25.9,
+          "makePlayoffsPct": 95.7,
+          "winDivisionPct": 74.8,
+          "seed1ByePct": 14.6,
+          "wildCardPct": 20.9,
           "seedDistribution": {
-            "1": 17,
-            "2": 20.4,
-            "3": 19,
-            "4": 12.7,
-            "5": 10.8,
-            "6": 9.4,
-            "7": 5.7
+            "1": 14.6,
+            "2": 20.8,
+            "3": 21.7,
+            "4": 17.7,
+            "5": 7.4,
+            "6": 8.3,
+            "7": 5.3
           },
-          "missedPlayoffsPct": 5
-        },
-        {
-          "abbr": "KC",
-          "name": "Kansas City Chiefs",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
-          "division": "AFC West",
-          "currentRecord": "7-2",
-          "powerRating": 1564,
-          "projectedWins": 13.2,
-          "makePlayoffsPct": 93.5,
-          "winDivisionPct": 52.5,
-          "seed1ByePct": 14,
-          "wildCardPct": 40.9,
-          "seedDistribution": {
-            "1": 14,
-            "2": 13.5,
-            "3": 12.8,
-            "4": 12.2,
-            "5": 23.6,
-            "6": 10.9,
-            "7": 6.4
-          },
-          "missedPlayoffsPct": 6.6
+          "missedPlayoffsPct": 4.3
         },
         {
           "abbr": "DEN",
@@ -176,43 +176,43 @@
           "currentRecord": "7-2",
           "powerRating": 1514,
           "projectedWins": 13.1,
-          "makePlayoffsPct": 89.2,
-          "winDivisionPct": 46,
-          "seed1ByePct": 11.8,
-          "wildCardPct": 43.3,
+          "makePlayoffsPct": 89.8,
+          "winDivisionPct": 39.7,
+          "seed1ByePct": 10.8,
+          "wildCardPct": 50.1,
           "seedDistribution": {
-            "1": 11.8,
-            "2": 11.7,
-            "3": 12.4,
-            "4": 10.1,
-            "5": 21.4,
-            "6": 13.7,
-            "7": 8.2
+            "1": 10.8,
+            "2": 10.7,
+            "3": 10.8,
+            "4": 7.3,
+            "5": 28.6,
+            "6": 13.2,
+            "7": 8.3
           },
-          "missedPlayoffsPct": 10.8
+          "missedPlayoffsPct": 10.2
         },
         {
           "abbr": "PIT",
           "name": "Pittsburgh Steelers",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
           "division": "AFC North",
-          "currentRecord": "6-3",
-          "powerRating": 1516,
-          "projectedWins": 11.9,
-          "makePlayoffsPct": 76.1,
-          "winDivisionPct": 19.3,
-          "seed1ByePct": 2.8,
-          "wildCardPct": 56.8,
+          "currentRecord": "6-4",
+          "powerRating": 1512,
+          "projectedWins": 11.4,
+          "makePlayoffsPct": 69,
+          "winDivisionPct": 12.6,
+          "seed1ByePct": 0.8,
+          "wildCardPct": 56.4,
           "seedDistribution": {
-            "1": 2.8,
-            "2": 5.7,
-            "3": 6.1,
-            "4": 4.8,
-            "5": 22.5,
-            "6": 19.8,
-            "7": 14.4
+            "1": 0.8,
+            "2": 3,
+            "3": 4.5,
+            "4": 4.2,
+            "5": 17.9,
+            "6": 22.1,
+            "7": 16.4
           },
-          "missedPlayoffsPct": 23.9
+          "missedPlayoffsPct": 31
         },
         {
           "abbr": "CLE",
@@ -221,21 +221,21 @@
           "division": "AFC North",
           "currentRecord": "6-4",
           "powerRating": 1476,
-          "projectedWins": 10.4,
-          "makePlayoffsPct": 56,
-          "winDivisionPct": 11.1,
-          "seed1ByePct": 0.5,
-          "wildCardPct": 45,
+          "projectedWins": 10.3,
+          "makePlayoffsPct": 55.9,
+          "winDivisionPct": 12.4,
+          "seed1ByePct": 0.4,
+          "wildCardPct": 43.5,
           "seedDistribution": {
-            "1": 0.5,
+            "1": 0.4,
             "2": 2.1,
-            "3": 4,
-            "4": 4.5,
-            "5": 9.5,
-            "6": 16.3,
-            "7": 19.1
+            "3": 4.3,
+            "4": 5.7,
+            "5": 7.7,
+            "6": 16.4,
+            "7": 19.5
           },
-          "missedPlayoffsPct": 44
+          "missedPlayoffsPct": 44.1
         },
         {
           "abbr": "NE",
@@ -245,20 +245,20 @@
           "currentRecord": "5-5",
           "powerRating": 1484,
           "projectedWins": 9.3,
-          "makePlayoffsPct": 37.2,
-          "winDivisionPct": 4.3,
+          "makePlayoffsPct": 38,
+          "winDivisionPct": 3,
           "seed1ByePct": 0.1,
-          "wildCardPct": 32.9,
+          "wildCardPct": 34.9,
           "seedDistribution": {
             "1": 0.1,
-            "2": 0.4,
-            "3": 1.3,
-            "4": 2.5,
-            "5": 5.1,
-            "6": 11.2,
-            "7": 16.6
+            "2": 0.5,
+            "3": 1,
+            "4": 1.5,
+            "5": 5.7,
+            "6": 12.2,
+            "7": 17.1
           },
-          "missedPlayoffsPct": 62.8
+          "missedPlayoffsPct": 62
         },
         {
           "abbr": "HOU",
@@ -268,20 +268,20 @@
           "currentRecord": "4-6",
           "powerRating": 1527,
           "projectedWins": 9.6,
-          "makePlayoffsPct": 32.4,
-          "winDivisionPct": 8.4,
-          "seed1ByePct": 0.1,
-          "wildCardPct": 24,
+          "makePlayoffsPct": 35.3,
+          "winDivisionPct": 9.1,
+          "seed1ByePct": 0,
+          "wildCardPct": 26.2,
           "seedDistribution": {
-            "1": 0.1,
+            "1": 0,
             "2": 0.3,
-            "3": 1.5,
-            "4": 6.6,
-            "5": 3.3,
-            "6": 8.5,
-            "7": 12.1
+            "3": 1.4,
+            "4": 7.5,
+            "5": 3.9,
+            "6": 9.3,
+            "7": 12.9
           },
-          "missedPlayoffsPct": 67.6
+          "missedPlayoffsPct": 64.7
         },
         {
           "abbr": "LV",
@@ -291,66 +291,43 @@
           "currentRecord": "4-6",
           "powerRating": 1471,
           "projectedWins": 8.2,
-          "makePlayoffsPct": 14.1,
-          "winDivisionPct": 1.5,
+          "makePlayoffsPct": 16,
+          "winDivisionPct": 1.1,
           "seed1ByePct": 0,
-          "wildCardPct": 12.6,
+          "wildCardPct": 14.9,
           "seedDistribution": {
             "1": 0,
-            "2": 0.1,
+            "2": 0,
             "3": 0.3,
-            "4": 1.1,
-            "5": 1.4,
-            "6": 4.1,
-            "7": 7.1
+            "4": 0.7,
+            "5": 1.7,
+            "6": 4.7,
+            "7": 8.5
           },
-          "missedPlayoffsPct": 85.9
+          "missedPlayoffsPct": 84.1
         },
         {
           "abbr": "BAL",
           "name": "Baltimore Ravens",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
           "division": "AFC North",
-          "currentRecord": "4-6",
+          "currentRecord": "4-7",
           "powerRating": 1461,
-          "projectedWins": 7.7,
-          "makePlayoffsPct": 7.9,
-          "winDivisionPct": 0.5,
-          "seed1ByePct": 0,
-          "wildCardPct": 7.4,
-          "seedDistribution": {
-            "1": 0,
-            "2": 0,
-            "3": 0.2,
-            "4": 0.4,
-            "5": 0.7,
-            "6": 2.4,
-            "7": 4.4
-          },
-          "missedPlayoffsPct": 92.1
-        },
-        {
-          "abbr": "IND",
-          "name": "Indianapolis Colts",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
-          "division": "AFC South",
-          "currentRecord": "3-8",
-          "powerRating": 1438,
-          "projectedWins": 6.2,
-          "makePlayoffsPct": 1.2,
+          "projectedWins": 7.3,
+          "makePlayoffsPct": 5.2,
           "winDivisionPct": 0.2,
           "seed1ByePct": 0,
-          "wildCardPct": 0.9,
+          "wildCardPct": 5,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0,
             "4": 0.2,
-            "5": 0,
-            "6": 0.2,
-            "7": 0.7
+            "5": 0.3,
+            "6": 1.6,
+            "7": 3
           },
-          "missedPlayoffsPct": 98.9
+          "missedPlayoffsPct": 94.8
         },
         {
           "abbr": "NYJ",
@@ -360,18 +337,41 @@
           "currentRecord": "2-8",
           "powerRating": 1451,
           "projectedWins": 6.1,
-          "makePlayoffsPct": 1,
+          "makePlayoffsPct": 1.1,
           "winDivisionPct": 0,
           "seed1ByePct": 0,
-          "wildCardPct": 1,
+          "wildCardPct": 1.1,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0,
             "4": 0,
             "5": 0,
+            "6": 0.2,
+            "7": 0.9
+          },
+          "missedPlayoffsPct": 98.9
+        },
+        {
+          "abbr": "IND",
+          "name": "Indianapolis Colts",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
+          "division": "AFC South",
+          "currentRecord": "3-8",
+          "powerRating": 1438,
+          "projectedWins": 6.3,
+          "makePlayoffsPct": 1,
+          "winDivisionPct": 0.2,
+          "seed1ByePct": 0,
+          "wildCardPct": 0.8,
+          "seedDistribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0.2,
+            "5": 0,
             "6": 0.1,
-            "7": 0.8
+            "7": 0.7
           },
           "missedPlayoffsPct": 99
         },
@@ -403,77 +403,50 @@
           "name": "Miami Dolphins",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
           "division": "AFC East",
-          "currentRecord": "1-8",
-          "powerRating": 1437,
-          "projectedWins": 5.4,
-          "makePlayoffsPct": 0.5,
-          "winDivisionPct": 0.1,
+          "currentRecord": "1-9",
+          "powerRating": 1428,
+          "projectedWins": 5,
+          "makePlayoffsPct": 0.1,
+          "winDivisionPct": 0,
           "seed1ByePct": 0,
-          "wildCardPct": 0.5,
+          "wildCardPct": 0.1,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0,
-            "4": 0.1,
+            "4": 0,
             "5": 0,
-            "6": 0.2,
-            "7": 0.3
+            "6": 0,
+            "7": 0.1
           },
-          "missedPlayoffsPct": 99.5
+          "missedPlayoffsPct": 99.9
         },
         {
           "abbr": "TEN",
           "name": "Tennessee Titans",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
           "division": "AFC South",
-          "currentRecord": "1-8",
-          "powerRating": 1441,
-          "projectedWins": 5.3,
-          "makePlayoffsPct": 0.5,
-          "winDivisionPct": 0.2,
+          "currentRecord": "1-9",
+          "powerRating": 1431,
+          "projectedWins": 4.8,
+          "makePlayoffsPct": 0.1,
+          "winDivisionPct": 0.1,
           "seed1ByePct": 0,
-          "wildCardPct": 0.3,
+          "wildCardPct": 0.1,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0,
-            "4": 0.2,
+            "4": 0.1,
             "5": 0,
-            "6": 0.1,
-            "7": 0.2
+            "6": 0,
+            "7": 0
           },
-          "missedPlayoffsPct": 99.5
+          "missedPlayoffsPct": 99.9
         }
       ]
     },
     "rootingLeverage": [
-      {
-        "gameId": "401873070",
-        "week": 11,
-        "matchupLabel": "MIA @ BUF",
-        "away": "MIA",
-        "home": "BUF",
-        "isTeamGame": true,
-        "is49ersGame": true,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "BUF",
-        "rootAgainstTeam": "MIA",
-        "rootFor": "BUF",
-        "rootSide": "HOME",
-        "homeWinProbPct": 72.2,
-        "expectedImpactScore": 19.5,
-        "leverageTag": "Direct Control",
-        "leverageReason": "BUF head-to-head result directly controls AFC East & #1 Seed Bye trajectory",
-        "maxSwingPct": 21.4,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 21.4,
-        "seed1SwingPct": 21.4,
-        "divSwingPct": 5.8,
-        "berthSwingPct": 2.6,
-        "byeLeveragePct": 21.4,
-        "divisionLeveragePct": 5.8,
-        "totalLeverageScore": 33
-      },
       {
         "gameId": "2026_11_MIA_BUF",
         "week": 11,
@@ -487,19 +460,19 @@
         "rootAgainstTeam": "MIA",
         "rootFor": "BUF",
         "rootSide": "HOME",
-        "homeWinProbPct": 72.2,
-        "expectedImpactScore": 19.4,
+        "homeWinProbPct": 74,
+        "expectedImpactScore": 17.8,
         "leverageTag": "Direct Control",
         "leverageReason": "BUF head-to-head result directly controls AFC East & #1 Seed Bye trajectory",
-        "maxSwingPct": 21.3,
+        "maxSwingPct": 19.9,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 21.3,
-        "seed1SwingPct": 21.3,
-        "divSwingPct": 5.8,
-        "berthSwingPct": 2.7,
-        "byeLeveragePct": 21.3,
-        "divisionLeveragePct": 5.8,
-        "totalLeverageScore": 33
+        "primaryDeltaPct": 19.9,
+        "seed1SwingPct": 19.9,
+        "divSwingPct": 3.8,
+        "berthSwingPct": 1.8,
+        "byeLeveragePct": 19.9,
+        "divisionLeveragePct": 3.8,
+        "totalLeverageScore": 28.8
       },
       {
         "gameId": "2026_11_JAX_NYG",
@@ -515,126 +488,18 @@
         "rootFor": "NYG",
         "rootSide": "HOME",
         "homeWinProbPct": 44,
-        "expectedImpactScore": 4.6,
+        "expectedImpactScore": 4.8,
         "leverageTag": "Inter-Conf Help",
         "leverageReason": "NFC club NYG hands AFC contender JAX a loss without adding an AFC rival win",
-        "maxSwingPct": 4.6,
+        "maxSwingPct": 4.8,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.6,
-        "seed1SwingPct": 4.6,
+        "primaryDeltaPct": 4.8,
+        "seed1SwingPct": 4.8,
         "divSwingPct": 0,
         "berthSwingPct": 0.1,
-        "byeLeveragePct": 4.6,
+        "byeLeveragePct": 4.8,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 5.6
-      },
-      {
-        "gameId": "401873069",
-        "week": 11,
-        "matchupLabel": "JAX @ NYG",
-        "away": "JAX",
-        "home": "NYG",
-        "isTeamGame": false,
-        "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "NYG",
-        "rootAgainstTeam": "JAX",
-        "rootFor": "NYG",
-        "rootSide": "HOME",
-        "homeWinProbPct": 44,
-        "expectedImpactScore": 4.1,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "NFC club NYG hands AFC contender JAX a loss without adding an AFC rival win",
-        "maxSwingPct": 4.1,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.1,
-        "seed1SwingPct": 4.1,
-        "divSwingPct": 0,
-        "berthSwingPct": 0.1,
-        "byeLeveragePct": 4.1,
-        "divisionLeveragePct": 0,
-        "totalLeverageScore": 5
-      },
-      {
-        "gameId": "2026_11_ARI_KC",
-        "week": 11,
-        "matchupLabel": "ARI @ KC",
-        "away": "ARI",
-        "home": "KC",
-        "isTeamGame": false,
-        "is49ersGame": false,
-        "recommendedWinner": "AWAY",
-        "rootForTeam": "ARI",
-        "rootAgainstTeam": "KC",
-        "rootFor": "ARI",
-        "rootSide": "AWAY",
-        "homeWinProbPct": 73,
-        "expectedImpactScore": 3.5,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "NFC club ARI hands AFC contender KC a loss without adding an AFC rival win",
-        "maxSwingPct": 3.9,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 3.9,
-        "seed1SwingPct": 3.9,
-        "divSwingPct": 0.2,
-        "berthSwingPct": 0.2,
-        "byeLeveragePct": 3.9,
-        "divisionLeveragePct": 0.2,
-        "totalLeverageScore": 5
-      },
-      {
-        "gameId": "401873067",
-        "week": 11,
-        "matchupLabel": "ARI @ KC",
-        "away": "ARI",
-        "home": "KC",
-        "isTeamGame": false,
-        "is49ersGame": false,
-        "recommendedWinner": "AWAY",
-        "rootForTeam": "ARI",
-        "rootAgainstTeam": "KC",
-        "rootFor": "ARI",
-        "rootSide": "AWAY",
-        "homeWinProbPct": 73,
-        "expectedImpactScore": 3.3,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "NFC club ARI hands AFC contender KC a loss without adding an AFC rival win",
-        "maxSwingPct": 3.6,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 3.6,
-        "seed1SwingPct": 3.6,
-        "divSwingPct": 0.1,
-        "berthSwingPct": 0.1,
-        "byeLeveragePct": 3.6,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 4.5
-      },
-      {
-        "gameId": "401873078",
-        "week": 11,
-        "matchupLabel": "CIN @ WAS",
-        "away": "CIN",
-        "home": "WAS",
-        "isTeamGame": false,
-        "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "WAS",
-        "rootAgainstTeam": "CIN",
-        "rootFor": "WAS",
-        "rootSide": "HOME",
-        "homeWinProbPct": 42.7,
-        "expectedImpactScore": 3.5,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "NFC club WAS hands AFC contender CIN a loss without adding an AFC rival win",
-        "maxSwingPct": 3.5,
-        "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 3.5,
-        "seed1SwingPct": 3.5,
-        "divSwingPct": 0,
-        "berthSwingPct": 0,
-        "byeLeveragePct": 3.5,
-        "divisionLeveragePct": 0,
-        "totalLeverageScore": 4.2
+        "totalLeverageScore": 5.8
       },
       {
         "gameId": "2026_11_CIN_WAS",
@@ -650,18 +515,126 @@
         "rootFor": "WAS",
         "rootSide": "HOME",
         "homeWinProbPct": 42.7,
-        "expectedImpactScore": 3.3,
+        "expectedImpactScore": 4.6,
         "leverageTag": "Inter-Conf Help",
         "leverageReason": "NFC club WAS hands AFC contender CIN a loss without adding an AFC rival win",
-        "maxSwingPct": 3.3,
+        "maxSwingPct": 4.6,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 3.3,
-        "seed1SwingPct": 3.3,
+        "primaryDeltaPct": 4.6,
+        "seed1SwingPct": 4.6,
+        "divSwingPct": 0.1,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 4.6,
+        "divisionLeveragePct": 0.1,
+        "totalLeverageScore": 5.6
+      },
+      {
+        "gameId": "401873078",
+        "week": 11,
+        "matchupLabel": "CIN @ WAS",
+        "away": "CIN",
+        "home": "WAS",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "HOME",
+        "rootForTeam": "WAS",
+        "rootAgainstTeam": "CIN",
+        "rootFor": "WAS",
+        "rootSide": "HOME",
+        "homeWinProbPct": 42.7,
+        "expectedImpactScore": 4.6,
+        "leverageTag": "Inter-Conf Help",
+        "leverageReason": "NFC club WAS hands AFC contender CIN a loss without adding an AFC rival win",
+        "maxSwingPct": 4.6,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 4.6,
+        "seed1SwingPct": 4.6,
         "divSwingPct": 0,
-        "berthSwingPct": 0.1,
-        "byeLeveragePct": 3.3,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 4.6,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 4
+        "totalLeverageScore": 5.5
+      },
+      {
+        "gameId": "2026_11_ARI_KC",
+        "week": 11,
+        "matchupLabel": "ARI @ KC",
+        "away": "ARI",
+        "home": "KC",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "ARI",
+        "rootAgainstTeam": "KC",
+        "rootFor": "ARI",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 75.7,
+        "expectedImpactScore": 4.1,
+        "leverageTag": "Inter-Conf Help",
+        "leverageReason": "NFC club ARI hands AFC contender KC a loss without adding an AFC rival win",
+        "maxSwingPct": 4.6,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 4.6,
+        "seed1SwingPct": 4.6,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.1,
+        "byeLeveragePct": 4.6,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 5.8
+      },
+      {
+        "gameId": "401873069",
+        "week": 11,
+        "matchupLabel": "JAX @ NYG",
+        "away": "JAX",
+        "home": "NYG",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "HOME",
+        "rootForTeam": "NYG",
+        "rootAgainstTeam": "JAX",
+        "rootFor": "NYG",
+        "rootSide": "HOME",
+        "homeWinProbPct": 44,
+        "expectedImpactScore": 4.4,
+        "leverageTag": "Inter-Conf Help",
+        "leverageReason": "NFC club NYG hands AFC contender JAX a loss without adding an AFC rival win",
+        "maxSwingPct": 4.4,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 4.4,
+        "seed1SwingPct": 4.4,
+        "divSwingPct": 0,
+        "berthSwingPct": 0.2,
+        "byeLeveragePct": 4.4,
+        "divisionLeveragePct": 0,
+        "totalLeverageScore": 5.4
+      },
+      {
+        "gameId": "2026_11_LV_DEN",
+        "week": 11,
+        "matchupLabel": "LV @ DEN",
+        "away": "LV",
+        "home": "DEN",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "LV",
+        "rootAgainstTeam": "DEN",
+        "rootFor": "LV",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 61.2,
+        "expectedImpactScore": 2.8,
+        "leverageTag": "#1 Bye Race",
+        "leverageReason": "Drops AFC top-seed contender DEN in the #1 Seed Bye chase",
+        "maxSwingPct": 2.9,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 2.9,
+        "seed1SwingPct": 2.9,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 2.9,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 3.7
       },
       {
         "gameId": "401873075",
@@ -677,18 +650,45 @@
         "rootFor": "LV",
         "rootSide": "AWAY",
         "homeWinProbPct": 61.2,
-        "expectedImpactScore": 3,
+        "expectedImpactScore": 2.6,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender DEN in the #1 Seed Bye chase",
-        "maxSwingPct": 3.1,
+        "maxSwingPct": 2.7,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 3.1,
-        "seed1SwingPct": 3.1,
-        "divSwingPct": 0,
+        "primaryDeltaPct": 2.7,
+        "seed1SwingPct": 2.7,
+        "divSwingPct": 0.2,
         "berthSwingPct": 0.1,
-        "byeLeveragePct": 3.1,
-        "divisionLeveragePct": 0,
-        "totalLeverageScore": 3.8
+        "byeLeveragePct": 2.7,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 3.5
+      },
+      {
+        "gameId": "2026_11_NYJ_LAC",
+        "week": 11,
+        "matchupLabel": "NYJ @ LAC",
+        "away": "NYJ",
+        "home": "LAC",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "HOME",
+        "rootForTeam": "LAC",
+        "rootAgainstTeam": "NYJ",
+        "rootFor": "LAC",
+        "rootSide": "HOME",
+        "homeWinProbPct": 51.7,
+        "expectedImpactScore": 0.6,
+        "leverageTag": "AFC East Race",
+        "leverageReason": "Hands division rival NYJ a loss in the AFC East crown & tiebreaker race",
+        "maxSwingPct": 0.6,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 0.6,
+        "seed1SwingPct": 0.6,
+        "divSwingPct": 0.1,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 0.6,
+        "divisionLeveragePct": 0.1,
+        "totalLeverageScore": 0.8
       },
       {
         "gameId": "2026_12_KC_BUF",
@@ -703,19 +703,19 @@
         "rootAgainstTeam": "KC",
         "rootFor": "BUF",
         "rootSide": "HOME",
-        "homeWinProbPct": 55.6,
-        "expectedImpactScore": 26.7,
+        "homeWinProbPct": 54.7,
+        "expectedImpactScore": 28.3,
         "leverageTag": "Direct Control",
         "leverageReason": "BUF head-to-head result directly controls AFC East & #1 Seed Bye trajectory",
-        "maxSwingPct": 26.9,
+        "maxSwingPct": 28.4,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 26.9,
-        "seed1SwingPct": 26.9,
-        "divSwingPct": 4.8,
-        "berthSwingPct": 1.9,
-        "byeLeveragePct": 26.9,
-        "divisionLeveragePct": 4.8,
-        "totalLeverageScore": 38.2
+        "primaryDeltaPct": 28.4,
+        "seed1SwingPct": 28.4,
+        "divSwingPct": 3.7,
+        "berthSwingPct": 1.3,
+        "byeLeveragePct": 28.4,
+        "divisionLeveragePct": 3.7,
+        "totalLeverageScore": 38.6
       },
       {
         "gameId": "401873082",
@@ -730,19 +730,19 @@
         "rootAgainstTeam": "KC",
         "rootFor": "BUF",
         "rootSide": "HOME",
-        "homeWinProbPct": 55.6,
-        "expectedImpactScore": 24.5,
+        "homeWinProbPct": 54.7,
+        "expectedImpactScore": 27.1,
         "leverageTag": "Direct Control",
         "leverageReason": "BUF head-to-head result directly controls AFC East & #1 Seed Bye trajectory",
-        "maxSwingPct": 24.6,
+        "maxSwingPct": 27.2,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 24.6,
-        "seed1SwingPct": 24.6,
-        "divSwingPct": 4.9,
-        "berthSwingPct": 2.1,
-        "byeLeveragePct": 24.6,
-        "divisionLeveragePct": 4.9,
-        "totalLeverageScore": 35.7
+        "primaryDeltaPct": 27.2,
+        "seed1SwingPct": 27.2,
+        "divSwingPct": 3.4,
+        "berthSwingPct": 1.2,
+        "byeLeveragePct": 27.2,
+        "divisionLeveragePct": 3.4,
+        "totalLeverageScore": 36.8
       },
       {
         "gameId": "2026_12_TEN_JAX",
@@ -757,36 +757,36 @@
         "rootAgainstTeam": "JAX",
         "rootFor": "TEN",
         "rootSide": "AWAY",
-        "homeWinProbPct": 73.8,
-        "expectedImpactScore": 4.8,
+        "homeWinProbPct": 74.9,
+        "expectedImpactScore": 4.4,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender JAX in the #1 Seed Bye chase",
-        "maxSwingPct": 5.4,
+        "maxSwingPct": 5,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 5.4,
-        "seed1SwingPct": 5.4,
+        "primaryDeltaPct": 5,
+        "seed1SwingPct": 5,
         "divSwingPct": 0,
-        "berthSwingPct": 0.1,
-        "byeLeveragePct": 5.4,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 5,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 6.5
+        "totalLeverageScore": 6
       }
     ],
     "seedPathCards": [
       {
         "target": "#1 AFC Seed (First-Round Bye)",
-        "probabilityPct": 36.3,
-        "pathSummary": "Buffalo Bills project to 14.7 wins (36.3% #1 AFC seed probability across 10,000 Empirical-Bayes simulations)."
+        "probabilityPct": 40.6,
+        "pathSummary": "Buffalo Bills project to 15 wins (40.6% #1 AFC seed probability across 10,000 Empirical-Bayes simulations)."
       },
       {
         "target": "AFC East Division Title",
-        "probabilityPct": 95.5,
-        "pathSummary": "95.5% probability to claim the AFC East crown and host at least one playoff game at Highmark Stadium."
+        "probabilityPct": 97,
+        "pathSummary": "97% probability to claim the AFC East crown and host at least one playoff game at Highmark Stadium."
       },
       {
         "target": "AFC Playoff Berth",
-        "probabilityPct": 98.6,
-        "pathSummary": "98.6% overall playoff berth odds (3% via Wild Card seeds #5–#7)."
+        "probabilityPct": 99.4,
+        "pathSummary": "99.4% overall playoff berth odds (2.5% via Wild Card seeds #5–#7)."
       }
     ],
     "simulatorInputs": {
@@ -798,19 +798,19 @@
           "name": "Buffalo Bills",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
           "division": "AFC East",
-          "wins": 8,
+          "wins": 9,
           "losses": 1,
           "ties": 0,
-          "divWins": 1,
+          "divWins": 2,
           "divLosses": 1,
           "divTies": 0,
-          "confWins": 5,
+          "confWins": 6,
           "confLosses": 1,
           "confTies": 0,
-          "pointDiff": 88,
-          "pointsFor": 287,
-          "pointsAgainst": 199,
-          "powerRating": 1567
+          "pointDiff": 105,
+          "pointsFor": 313,
+          "pointsAgainst": 208,
+          "powerRating": 1574
         },
         {
           "abbr": "NE",
@@ -837,18 +837,18 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
           "division": "AFC East",
           "wins": 1,
-          "losses": 8,
+          "losses": 9,
           "ties": 0,
           "divWins": 1,
-          "divLosses": 1,
+          "divLosses": 2,
           "divTies": 0,
           "confWins": 1,
-          "confLosses": 5,
+          "confLosses": 6,
           "confTies": 0,
-          "pointDiff": -76,
-          "pointsFor": 148,
-          "pointsAgainst": 224,
-          "powerRating": 1437
+          "pointDiff": -93,
+          "pointsFor": 157,
+          "pointsAgainst": 250,
+          "powerRating": 1428
         },
         {
           "abbr": "NYJ",
@@ -875,7 +875,7 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
           "division": "AFC North",
           "wins": 4,
-          "losses": 6,
+          "losses": 7,
           "ties": 0,
           "divWins": 0,
           "divLosses": 2,
@@ -883,9 +883,9 @@
           "confWins": 2,
           "confLosses": 5,
           "confTies": 0,
-          "pointDiff": -50,
-          "pointsFor": 209,
-          "pointsAgainst": 259,
+          "pointDiff": -52,
+          "pointsFor": 242,
+          "pointsAgainst": 294,
           "powerRating": 1461
         },
         {
@@ -932,7 +932,7 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
           "division": "AFC North",
           "wins": 6,
-          "losses": 3,
+          "losses": 4,
           "ties": 0,
           "divWins": 2,
           "divLosses": 2,
@@ -940,10 +940,10 @@
           "confWins": 3,
           "confLosses": 3,
           "confTies": 0,
-          "pointDiff": 16,
-          "pointsFor": 198,
-          "pointsAgainst": 182,
-          "powerRating": 1516
+          "pointDiff": 13,
+          "pointsFor": 214,
+          "pointsAgainst": 201,
+          "powerRating": 1512
         },
         {
           "abbr": "HOU",
@@ -1008,7 +1008,7 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
           "division": "AFC South",
           "wins": 1,
-          "losses": 8,
+          "losses": 9,
           "ties": 0,
           "divWins": 1,
           "divLosses": 2,
@@ -1016,17 +1016,17 @@
           "confWins": 1,
           "confLosses": 6,
           "confTies": 0,
-          "pointDiff": -72,
-          "pointsFor": 167,
-          "pointsAgainst": 239,
-          "powerRating": 1441
+          "pointDiff": -93,
+          "pointsFor": 197,
+          "pointsAgainst": 290,
+          "powerRating": 1431
         },
         {
           "abbr": "KC",
           "name": "Kansas City Chiefs",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
           "division": "AFC West",
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
           "ties": 0,
           "divWins": 3,
@@ -1035,10 +1035,10 @@
           "confWins": 6,
           "confLosses": 1,
           "confTies": 0,
-          "pointDiff": 81,
-          "pointsFor": 237,
-          "pointsAgainst": 156,
-          "powerRating": 1564
+          "pointDiff": 108,
+          "pointsFor": 271,
+          "pointsAgainst": 163,
+          "powerRating": 1577
         },
         {
           "abbr": "DEN",
@@ -1104,19 +1104,19 @@
           "name": "Buffalo Bills",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
           "division": "AFC East",
-          "wins": 8,
+          "wins": 9,
           "losses": 1,
           "ties": 0,
-          "divWins": 1,
+          "divWins": 2,
           "divLosses": 1,
           "divTies": 0,
-          "confWins": 5,
+          "confWins": 6,
           "confLosses": 1,
           "confTies": 0,
-          "pointDiff": 88,
-          "pointsFor": 287,
-          "pointsAgainst": 199,
-          "powerRating": 1567
+          "pointDiff": 105,
+          "pointsFor": 313,
+          "pointsAgainst": 208,
+          "powerRating": 1574
         },
         {
           "abbr": "NE",
@@ -1143,18 +1143,18 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
           "division": "AFC East",
           "wins": 1,
-          "losses": 8,
+          "losses": 9,
           "ties": 0,
           "divWins": 1,
-          "divLosses": 1,
+          "divLosses": 2,
           "divTies": 0,
           "confWins": 1,
-          "confLosses": 5,
+          "confLosses": 6,
           "confTies": 0,
-          "pointDiff": -76,
-          "pointsFor": 148,
-          "pointsAgainst": 224,
-          "powerRating": 1437
+          "pointDiff": -93,
+          "pointsFor": 157,
+          "pointsAgainst": 250,
+          "powerRating": 1428
         },
         {
           "abbr": "NYJ",
@@ -1181,7 +1181,7 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
           "division": "AFC North",
           "wins": 4,
-          "losses": 6,
+          "losses": 7,
           "ties": 0,
           "divWins": 0,
           "divLosses": 2,
@@ -1189,9 +1189,9 @@
           "confWins": 2,
           "confLosses": 5,
           "confTies": 0,
-          "pointDiff": -50,
-          "pointsFor": 209,
-          "pointsAgainst": 259,
+          "pointDiff": -52,
+          "pointsFor": 242,
+          "pointsAgainst": 294,
           "powerRating": 1461
         },
         {
@@ -1238,7 +1238,7 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
           "division": "AFC North",
           "wins": 6,
-          "losses": 3,
+          "losses": 4,
           "ties": 0,
           "divWins": 2,
           "divLosses": 2,
@@ -1246,10 +1246,10 @@
           "confWins": 3,
           "confLosses": 3,
           "confTies": 0,
-          "pointDiff": 16,
-          "pointsFor": 198,
-          "pointsAgainst": 182,
-          "powerRating": 1516
+          "pointDiff": 13,
+          "pointsFor": 214,
+          "pointsAgainst": 201,
+          "powerRating": 1512
         },
         {
           "abbr": "HOU",
@@ -1314,7 +1314,7 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
           "division": "AFC South",
           "wins": 1,
-          "losses": 8,
+          "losses": 9,
           "ties": 0,
           "divWins": 1,
           "divLosses": 2,
@@ -1322,17 +1322,17 @@
           "confWins": 1,
           "confLosses": 6,
           "confTies": 0,
-          "pointDiff": -72,
-          "pointsFor": 167,
-          "pointsAgainst": 239,
-          "powerRating": 1441
+          "pointDiff": -93,
+          "pointsFor": 197,
+          "pointsAgainst": 290,
+          "powerRating": 1431
         },
         {
           "abbr": "KC",
           "name": "Kansas City Chiefs",
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
           "division": "AFC West",
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
           "ties": 0,
           "divWins": 3,
@@ -1341,10 +1341,10 @@
           "confWins": 6,
           "confLosses": 1,
           "confTies": 0,
-          "pointDiff": 81,
-          "pointsFor": 237,
-          "pointsAgainst": 156,
-          "powerRating": 1564
+          "pointDiff": 108,
+          "pointsFor": 271,
+          "pointsAgainst": 163,
+          "powerRating": 1577
         },
         {
           "abbr": "DEN",
@@ -1408,55 +1408,55 @@
         "SF": 1565,
         "SEA": 1539,
         "LAR": 1547,
-        "ARI": 1427,
-        "DET": 1547,
+        "ARI": 1416,
+        "DET": 1553,
         "MIN": 1546,
         "GB": 1505,
-        "CHI": 1548,
-        "PHI": 1440,
-        "DAL": 1502,
+        "CHI": 1552,
+        "PHI": 1445,
+        "DAL": 1517,
         "NYG": 1507,
         "WAS": 1477,
-        "TB": 1518,
-        "NO": 1471,
+        "TB": 1508,
+        "NO": 1466,
         "ATL": 1455,
-        "CAR": 1486
+        "CAR": 1489
       },
       "afcPowerRatings": {
         "SF": 1565,
         "SEA": 1539,
         "LAR": 1547,
-        "ARI": 1427,
-        "DET": 1547,
+        "ARI": 1416,
+        "DET": 1553,
         "MIN": 1546,
         "GB": 1505,
-        "CHI": 1548,
-        "PHI": 1440,
-        "DAL": 1502,
+        "CHI": 1552,
+        "PHI": 1445,
+        "DAL": 1517,
         "NYG": 1507,
         "WAS": 1477,
-        "TB": 1518,
-        "NO": 1471,
+        "TB": 1508,
+        "NO": 1466,
         "ATL": 1455,
-        "CAR": 1486
+        "CAR": 1489
       },
       "afcRatings": {
         "SF": 1565,
         "SEA": 1539,
         "LAR": 1547,
-        "ARI": 1427,
-        "DET": 1547,
+        "ARI": 1416,
+        "DET": 1553,
         "MIN": 1546,
         "GB": 1505,
-        "CHI": 1548,
-        "PHI": 1440,
-        "DAL": 1502,
+        "CHI": 1552,
+        "PHI": 1445,
+        "DAL": 1517,
         "NYG": 1507,
         "WAS": 1477,
-        "TB": 1518,
-        "NO": 1471,
+        "TB": 1508,
+        "NO": 1466,
         "ATL": 1455,
-        "CAR": 1486
+        "CAR": 1489
       },
       "otherConferenceStandings": {
         "SF": {
@@ -1479,15 +1479,15 @@
         },
         "ARI": {
           "wins": 3,
-          "losses": 7,
+          "losses": 8,
           "ties": 0,
-          "pointDiff": -105
+          "pointDiff": -132
         },
         "DET": {
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
           "ties": 0,
-          "pointDiff": 58
+          "pointDiff": 68
         },
         "MIN": {
           "wins": 7,
@@ -1502,22 +1502,22 @@
           "pointDiff": 5
         },
         "CHI": {
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
           "ties": 0,
-          "pointDiff": 57
+          "pointDiff": 65
         },
         "PHI": {
-          "wins": 2,
+          "wins": 3,
           "losses": 7,
           "ties": 0,
-          "pointDiff": -73
+          "pointDiff": -70
         },
         "DAL": {
-          "wins": 4,
+          "wins": 5,
           "losses": 6,
           "ties": 0,
-          "pointDiff": 4
+          "pointDiff": 25
         },
         "NYG": {
           "wins": 5,
@@ -1533,15 +1533,15 @@
         },
         "TB": {
           "wins": 3,
-          "losses": 6,
+          "losses": 7,
           "ties": 0,
-          "pointDiff": 24
+          "pointDiff": 14
         },
         "NO": {
           "wins": 3,
-          "losses": 6,
+          "losses": 7,
           "ties": 0,
-          "pointDiff": -34
+          "pointDiff": -42
         },
         "ATL": {
           "wins": 3,
@@ -1550,10 +1550,10 @@
           "pointDiff": -57
         },
         "CAR": {
-          "wins": 4,
+          "wins": 5,
           "losses": 5,
           "ties": 0,
-          "pointDiff": -17
+          "pointDiff": -15
         }
       },
       "afcStandings": {
@@ -1577,15 +1577,15 @@
         },
         "ARI": {
           "wins": 3,
-          "losses": 7,
+          "losses": 8,
           "ties": 0,
-          "pointDiff": -105
+          "pointDiff": -132
         },
         "DET": {
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
           "ties": 0,
-          "pointDiff": 58
+          "pointDiff": 68
         },
         "MIN": {
           "wins": 7,
@@ -1600,22 +1600,22 @@
           "pointDiff": 5
         },
         "CHI": {
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
           "ties": 0,
-          "pointDiff": 57
+          "pointDiff": 65
         },
         "PHI": {
-          "wins": 2,
+          "wins": 3,
           "losses": 7,
           "ties": 0,
-          "pointDiff": -73
+          "pointDiff": -70
         },
         "DAL": {
-          "wins": 4,
+          "wins": 5,
           "losses": 6,
           "ties": 0,
-          "pointDiff": 4
+          "pointDiff": 25
         },
         "NYG": {
           "wins": 5,
@@ -1631,15 +1631,15 @@
         },
         "TB": {
           "wins": 3,
-          "losses": 6,
+          "losses": 7,
           "ties": 0,
-          "pointDiff": 24
+          "pointDiff": 14
         },
         "NO": {
           "wins": 3,
-          "losses": 6,
+          "losses": 7,
           "ties": 0,
-          "pointDiff": -34
+          "pointDiff": -42
         },
         "ATL": {
           "wins": 3,
@@ -1648,10 +1648,10 @@
           "pointDiff": -57
         },
         "CAR": {
-          "wins": 4,
+          "wins": 5,
           "losses": 5,
           "ties": 0,
-          "pointDiff": -17
+          "pointDiff": -15
         }
       },
       "completedGames": [
@@ -2856,6 +2856,62 @@
           "awayScore": 23
         },
         {
+          "id": "401873070",
+          "week": 11,
+          "home": "BUF",
+          "away": "MIA",
+          "homeScore": 26,
+          "awayScore": 9
+        },
+        {
+          "id": "401873071",
+          "week": 11,
+          "home": "CHI",
+          "away": "NO",
+          "homeScore": 21,
+          "awayScore": 13
+        },
+        {
+          "id": "401873073",
+          "week": 11,
+          "home": "DAL",
+          "away": "TEN",
+          "homeScore": 51,
+          "awayScore": 30
+        },
+        {
+          "id": "401873072",
+          "week": 11,
+          "home": "DET",
+          "away": "TB",
+          "homeScore": 31,
+          "awayScore": 21
+        },
+        {
+          "id": "401873067",
+          "week": 11,
+          "home": "KC",
+          "away": "ARI",
+          "homeScore": 34,
+          "awayScore": 7
+        },
+        {
+          "id": "401873076",
+          "week": 11,
+          "home": "PHI",
+          "away": "PIT",
+          "homeScore": 19,
+          "awayScore": 16
+        },
+        {
+          "id": "401873068",
+          "week": 11,
+          "home": "CAR",
+          "away": "BAL",
+          "homeScore": 35,
+          "awayScore": 33
+        },
+        {
           "id": "401873066",
           "week": 11,
           "home": "HOU",
@@ -3717,55 +3773,6 @@
           "week": 18,
           "home": "WAS",
           "away": "DAL",
-          "neutral": false
-        },
-        {
-          "id": "401873070",
-          "week": 11,
-          "home": "BUF",
-          "away": "MIA",
-          "neutral": false
-        },
-        {
-          "id": "401873071",
-          "week": 11,
-          "home": "CHI",
-          "away": "NO",
-          "neutral": false
-        },
-        {
-          "id": "401873073",
-          "week": 11,
-          "home": "DAL",
-          "away": "TEN",
-          "neutral": false
-        },
-        {
-          "id": "401873072",
-          "week": 11,
-          "home": "DET",
-          "away": "TB",
-          "neutral": false
-        },
-        {
-          "id": "401873067",
-          "week": 11,
-          "home": "KC",
-          "away": "ARI",
-          "neutral": false
-        },
-        {
-          "id": "401873076",
-          "week": 11,
-          "home": "PHI",
-          "away": "PIT",
-          "neutral": false
-        },
-        {
-          "id": "401873068",
-          "week": 11,
-          "home": "CAR",
-          "away": "BAL",
           "neutral": false
         },
         {
@@ -16964,88 +16971,1154 @@
     "otcDraftUrl": "https://overthecap.com/salary-cap/buffalo-bills",
     "picks": [
       {
-        "playerId": "4683153",
-        "name": "Skyler Bell",
-        "position": "WR",
-        "college": "UConn",
-        "round": 7,
-        "overallPick": 220,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683153.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4683153",
-        "status": "Active 53",
-        "summary": "UDFA (2026) • 5' 11\" 192 lbs"
-      },
-      {
-        "playerId": "4869533",
-        "name": "Jude Bowry",
-        "position": "OT",
-        "college": "Boston College",
-        "round": 7,
-        "overallPick": 221,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869533.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4869533",
-        "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 5\" 314 lbs"
-      },
-      {
-        "playerId": "4594321",
-        "name": "Kaleb Elarms-Orr",
+        "playerId": "4870886",
+        "name": "TJ Parker",
         "position": "LB",
-        "college": "TCU",
-        "round": 7,
-        "overallPick": 222,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594321.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4594321",
+        "college": "Clemson",
+        "round": 2,
+        "pick": 35,
+        "overallPick": 35,
+        "jersey": 99,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870886.png",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4870886/tj-parker",
+        "pfrUrl": "https://www.pro-football-reference.com/players/P/ParkTJ00.htm",
+        "consensusBigBoardRank": 35,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 13140746,
         "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 2\" 234 lbs"
+        "roleSummary": "Active 53 • 6' 3\" 263 lbs • 35% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 8.56 RAS (NFL Combine Official)",
+          "Standout measurables: Weight 263 lbs (99th %ile) · Height 6'4\" (95th %ile)",
+          "2026 Usage: 35% primary snap share across 9 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "LB",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 8.56,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 76,
+              "displayValue": "6'4\"",
+              "unit": "in",
+              "percentile": 95,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 263,
+              "displayValue": "263 lbs",
+              "unit": "lbs",
+              "percentile": 99,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 33.51,
+              "displayValue": "33.5\"",
+              "unit": "in",
+              "percentile": 99,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.68,
+              "displayValue": "4.68s",
+              "unit": "s",
+              "percentile": 55,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.63,
+              "displayValue": "1.63s",
+              "unit": "s",
+              "percentile": 54,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 34,
+              "displayValue": "34.0\"",
+              "unit": "in",
+              "percentile": 53,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 120,
+              "displayValue": "10'0\"",
+              "unit": "in",
+              "percentile": 66,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.07,
+              "displayValue": "7.07s",
+              "unit": "s",
+              "percentile": 65,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.24,
+              "displayValue": "4.24s",
+              "unit": "s",
+              "percentile": 72,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 26,
+              "displayValue": "26 reps",
+              "unit": "reps",
+              "percentile": 84,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Brandon Short",
+              "draftYear": 2000,
+              "school": "Penn State",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/ShorBr20.htm"
+            },
+            {
+              "name": "Rolando McClain",
+              "draftYear": 2010,
+              "school": "Alabama",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/McClRo00.htm"
+            },
+            {
+              "name": "Mike Rose",
+              "draftYear": 2022,
+              "school": "Iowa St.",
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RoseMi00.htm"
+            }
+          ]
+        }
       },
       {
         "playerId": "4832035",
         "name": "Davison Igbinosun",
         "position": "CB",
         "college": "Ohio State",
-        "round": 7,
-        "overallPick": 223,
+        "round": 2,
+        "pick": 62,
+        "overallPick": 62,
+        "jersey": 21,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832035.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4832035",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4832035/davison-igbinosun",
+        "pfrUrl": "https://www.pro-football-reference.com/players/I/IgbiDa01.htm",
+        "consensusBigBoardRank": 62,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 7949010,
         "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 2\" 193 lbs"
+        "roleSummary": "Active 53 • 6' 2\" 193 lbs • 65% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 6.95 RAS (NFL Combine Official)",
+          "Standout measurables: Height 6'2\" (93th %ile)",
+          "2026 Usage: 65% primary snap share across 9 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "CB",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 6.95,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 74,
+              "displayValue": "6'2\"",
+              "unit": "in",
+              "percentile": 93,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 189,
+              "displayValue": "189 lbs",
+              "unit": "lbs",
+              "percentile": 33,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 32.29,
+              "displayValue": "32.3\"",
+              "unit": "in",
+              "percentile": 93,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.45,
+              "displayValue": "4.45s",
+              "unit": "s",
+              "percentile": 65,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.55,
+              "displayValue": "1.55s",
+              "unit": "s",
+              "percentile": 66,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 34,
+              "displayValue": "34.0\"",
+              "unit": "in",
+              "percentile": 24,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 120,
+              "displayValue": "10'0\"",
+              "unit": "in",
+              "percentile": 33,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 6.83,
+              "displayValue": "6.83s",
+              "unit": "s",
+              "percentile": 71,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.09,
+              "displayValue": "4.09s",
+              "unit": "s",
+              "percentile": 71,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 14,
+              "displayValue": "14 reps",
+              "unit": "reps",
+              "percentile": 43,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Jermod McCoy",
+              "draftYear": 2026,
+              "school": "Tennessee",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/McCoJe00.htm"
+            },
+            {
+              "name": "Ahmad Gardner",
+              "draftYear": 2022,
+              "school": "Cincinnati",
+              "similarityPct": 90,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GardSa00.htm"
+            },
+            {
+              "name": "Hezekiah Masses",
+              "draftYear": 2026,
+              "school": "California",
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MassHe00.htm"
+            }
+          ]
+        }
+      },
+      {
+        "playerId": "4869533",
+        "name": "Jude Bowry",
+        "position": "OT",
+        "college": "Boston College",
+        "round": 4,
+        "pick": 102,
+        "overallPick": 102,
+        "jersey": 74,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869533.png",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4869533/jude-bowry",
+        "pfrUrl": "https://www.pro-football-reference.com/players/B/BowrJu00.htm",
+        "consensusBigBoardRank": 102,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 5720744,
+        "status": "Active 53",
+        "roleSummary": "Active 53 • 6' 5\" 314 lbs • 5% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 7.75 RAS (NFL Combine Official)",
+          "Standout measurables: Broad Jump 9'7\" (97th %ile) · Vertical 34.5\" (96th %ile)",
+          "2026 Usage: 5% primary snap share across 2 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "OT",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 7.75,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 77,
+              "displayValue": "6'5\"",
+              "unit": "in",
+              "percentile": 32,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 314,
+              "displayValue": "314 lbs",
+              "unit": "lbs",
+              "percentile": 52,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 33.97,
+              "displayValue": "34.0\"",
+              "unit": "in",
+              "percentile": 32,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 5.08,
+              "displayValue": "5.08s",
+              "unit": "s",
+              "percentile": 79,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.77,
+              "displayValue": "1.77s",
+              "unit": "s",
+              "percentile": 78,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 34.5,
+              "displayValue": "34.5\"",
+              "unit": "in",
+              "percentile": 96,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 115,
+              "displayValue": "9'7\"",
+              "unit": "in",
+              "percentile": 97,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.53,
+              "displayValue": "7.53s",
+              "unit": "s",
+              "percentile": 83,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.68,
+              "displayValue": "4.68s",
+              "unit": "s",
+              "percentile": 63,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 26,
+              "displayValue": "26 reps",
+              "unit": "reps",
+              "percentile": 64,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Jawaan Taylor",
+              "draftYear": 2019,
+              "school": "Florida",
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/TaylJa02.htm"
+            },
+            {
+              "name": "Caedan Wallace",
+              "draftYear": 2024,
+              "school": "Penn St.",
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/W/WallCa00.htm"
+            },
+            {
+              "name": "Drew Shelton",
+              "draftYear": 2026,
+              "school": "Penn St.",
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/ShelDr00.htm"
+            }
+          ]
+        }
+      },
+      {
+        "playerId": "4683153",
+        "name": "Skyler Bell",
+        "position": "WR",
+        "college": "UConn",
+        "round": 4,
+        "pick": 125,
+        "overallPick": 125,
+        "jersey": 13,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683153.png",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4683153/skyler-bell",
+        "pfrUrl": "https://www.pro-football-reference.com/players/B/BellSk00.htm",
+        "consensusBigBoardRank": 125,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 5471764,
+        "status": "Active 53",
+        "roleSummary": "Active 53 • 5' 11\" 192 lbs • 47% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 8.34 RAS (NFL Combine Official)",
+          "Standout measurables: Vertical 41.0\" (96th %ile) · Broad Jump 11'1\" (96th %ile)",
+          "2026 Usage: 47% primary snap share across 3 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "WR",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 8.34,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 72,
+              "displayValue": "6'0\"",
+              "unit": "in",
+              "percentile": 36,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 192,
+              "displayValue": "192 lbs",
+              "unit": "lbs",
+              "percentile": 28,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 31.45,
+              "displayValue": "31.4\"",
+              "unit": "in",
+              "percentile": 36,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.4,
+              "displayValue": "4.40s",
+              "unit": "s",
+              "percentile": 85,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.53,
+              "displayValue": "1.53s",
+              "unit": "s",
+              "percentile": 85,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 41,
+              "displayValue": "41.0\"",
+              "unit": "in",
+              "percentile": 96,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 133,
+              "displayValue": "11'1\"",
+              "unit": "in",
+              "percentile": 96,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 6.77,
+              "displayValue": "6.77s",
+              "unit": "s",
+              "percentile": 84,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.19,
+              "displayValue": "4.19s",
+              "unit": "s",
+              "percentile": 59,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 15,
+              "displayValue": "15 reps",
+              "unit": "reps",
+              "percentile": 55,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Trey Palmer",
+              "draftYear": 2023,
+              "school": "Nebraska",
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/P/PalmTr00.htm"
+            },
+            {
+              "name": "Jeremy Maclin",
+              "draftYear": 2009,
+              "school": "Missouri",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MaclJe00.htm"
+            },
+            {
+              "name": "Clyde Gates",
+              "draftYear": 2011,
+              "school": "Abilene Christian",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GateCl00.htm"
+            }
+          ]
+        }
+      },
+      {
+        "playerId": "4594321",
+        "name": "Kaleb Elarms-Orr",
+        "position": "LB",
+        "college": "TCU",
+        "round": 4,
+        "pick": 126,
+        "overallPick": 126,
+        "jersey": 52,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594321.png",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4594321/kaleb-elarms-orr",
+        "pfrUrl": "https://www.pro-football-reference.com/players/E/ElarKa00.htm",
+        "consensusBigBoardRank": 126,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 5462960,
+        "status": "Active 53",
+        "roleSummary": "Active 53 • 6' 2\" 234 lbs • 21% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 8.23 RAS (NFL Combine Official)",
+          "Standout measurables: Vertical 40.0\" (97th %ile) · 40-Yd Dash 4.47s (95th %ile)",
+          "2026 Usage: 21% primary snap share across 9 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "LB",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 6,
+          "compositeRas": 8.23,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 74,
+              "displayValue": "6'2\"",
+              "unit": "in",
+              "percentile": 66,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 234,
+              "displayValue": "234 lbs",
+              "unit": "lbs",
+              "percentile": 35,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 32.28,
+              "displayValue": "32.3\"",
+              "unit": "in",
+              "percentile": 66,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.47,
+              "displayValue": "4.47s",
+              "unit": "s",
+              "percentile": 95,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.56,
+              "displayValue": "1.56s",
+              "unit": "s",
+              "percentile": 95,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 40,
+              "displayValue": "40.0\"",
+              "unit": "in",
+              "percentile": 97,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 124,
+              "displayValue": "10'4\"",
+              "unit": "in",
+              "percentile": 85,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.1,
+              "displayValue": "7.10s",
+              "unit": "s",
+              "percentile": 59,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.41,
+              "displayValue": "4.41s",
+              "unit": "s",
+              "percentile": 22,
+              "isCombineVerified": true
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 23,
+              "displayValue": "23 reps",
+              "unit": "reps",
+              "percentile": 62,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Trenton Simpson",
+              "draftYear": 2023,
+              "school": "Clemson",
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/S/SimpTr00.htm"
+            },
+            {
+              "name": "Chance Campbell",
+              "draftYear": 2022,
+              "school": "Mississippi",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CampCh02.htm"
+            },
+            {
+              "name": "Channing Tindall",
+              "draftYear": 2022,
+              "school": "Georgia",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/T/TindCh00.htm"
+            }
+          ]
+        }
       },
       {
         "playerId": "5076951",
         "name": "Jalon Kilgore",
         "position": "S",
         "college": "South Carolina",
-        "round": 7,
-        "overallPick": 224,
+        "round": 5,
+        "pick": 167,
+        "overallPick": 167,
+        "jersey": 29,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5076951.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/5076951",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/5076951/jalon-kilgore",
+        "pfrUrl": "https://www.pro-football-reference.com/players/K/KilgJa00.htm",
+        "consensusBigBoardRank": 167,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 4843324,
         "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 1\" 210 lbs"
+        "roleSummary": "Active 53 • 6' 1\" 210 lbs • 9% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 8.12 RAS (NFL Combine Official)",
+          "Standout measurables: 40-Yd Dash 4.40s (94th %ile) · 10-Yd Split 1.53s (93th %ile)",
+          "2026 Usage: 9% primary snap share across 2 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "S",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 7,
+          "compositeRas": 8.12,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 73,
+              "displayValue": "6'1\"",
+              "unit": "in",
+              "percentile": 69,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 210,
+              "displayValue": "210 lbs",
+              "unit": "lbs",
+              "percentile": 65,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 31.87,
+              "displayValue": "31.9\"",
+              "unit": "in",
+              "percentile": 69,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.4,
+              "displayValue": "4.40s",
+              "unit": "s",
+              "percentile": 94,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.53,
+              "displayValue": "1.53s",
+              "unit": "s",
+              "percentile": 93,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 37,
+              "displayValue": "37.0\"",
+              "unit": "in",
+              "percentile": 69,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 130,
+              "displayValue": "10'10\"",
+              "unit": "in",
+              "percentile": 92,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.01,
+              "displayValue": "7.01s",
+              "unit": "s",
+              "percentile": 49,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.32,
+              "displayValue": "4.32s",
+              "unit": "s",
+              "percentile": 21,
+              "isCombineVerified": true
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 16,
+              "displayValue": "16 reps",
+              "unit": "reps",
+              "percentile": 43,
+              "isCombineVerified": true
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Tyree Gillespie",
+              "draftYear": 2021,
+              "school": "Missouri",
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GillTy00.htm"
+            },
+            {
+              "name": "Dane Belton",
+              "draftYear": 2022,
+              "school": "Iowa",
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BeltDa00.htm"
+            },
+            {
+              "name": "Nick Cross",
+              "draftYear": 2022,
+              "school": "Maryland",
+              "similarityPct": 89,
+              "pfrUrl": "https://www.pro-football-reference.com/players/C/CrosNi00.htm"
+            }
+          ]
+        }
       },
       {
-        "playerId": "4870886",
-        "name": "TJ Parker",
-        "position": "LB",
-        "college": "Clemson",
-        "round": 7,
-        "overallPick": 225,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870886.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4870886",
-        "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 3\" 263 lbs"
+        "playerId": "4685347",
+        "name": "Zane Durant",
+        "position": "DT",
+        "college": "Penn State",
+        "round": 5,
+        "pick": 181,
+        "overallPick": 181,
+        "jersey": 92,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685347.png",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4685347/zane-durant",
+        "pfrUrl": "https://www.pro-football-reference.com/players/D/DuraZa00.htm",
+        "consensusBigBoardRank": 181,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 3779607,
+        "status": "Injured Reserve",
+        "roleSummary": "Injured Reserve • 6' 1\" 290 lbs",
+        "strengths": [
+          "Athletic Profile: 6.60 RAS (NFL Combine Official)",
+          "Standout measurables: 40-Yd Dash 4.75s (97th %ile) · 10-Yd Split 1.65s (97th %ile)"
+        ],
+        "spiderProfile": {
+          "posGroup": "IDL",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 5,
+          "compositeRas": 6.6,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 73,
+              "displayValue": "6'1\"",
+              "unit": "in",
+              "percentile": 10,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 290,
+              "displayValue": "290 lbs",
+              "unit": "lbs",
+              "percentile": 17,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 32.46,
+              "displayValue": "32.5\"",
+              "unit": "in",
+              "percentile": 10,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.75,
+              "displayValue": "4.75s",
+              "unit": "s",
+              "percentile": 97,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.65,
+              "displayValue": "1.65s",
+              "unit": "s",
+              "percentile": 97,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 33.5,
+              "displayValue": "33.5\"",
+              "unit": "in",
+              "percentile": 89,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 112,
+              "displayValue": "9'4\"",
+              "unit": "in",
+              "percentile": 80,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.59,
+              "displayValue": "7.59s",
+              "unit": "s",
+              "percentile": 61,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.56,
+              "displayValue": "4.56s",
+              "unit": "s",
+              "percentile": 66,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 27,
+              "displayValue": "27 reps",
+              "unit": "reps",
+              "percentile": 52,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Calijah Kancey",
+              "draftYear": 2023,
+              "school": "Pittsburgh",
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/K/KancCa00.htm"
+            },
+            {
+              "name": "Skyler Gill-Howard",
+              "draftYear": 2026,
+              "school": "Texas Tech",
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/G/GillSk00.htm"
+            },
+            {
+              "name": "Mike Daniels",
+              "draftYear": 2012,
+              "school": "Iowa",
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DaniMi00.htm"
+            }
+          ]
+        }
       },
       {
-        "playerId": "4682749",
-        "name": "Kani Walker",
+        "playerId": null,
+        "name": "Toriano Pride",
         "position": "CB",
-        "college": "Arkansas",
+        "college": "Missouri",
         "round": 7,
-        "overallPick": 226,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682749.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4682749",
-        "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 2\" 204 lbs"
+        "pick": 220,
+        "overallPick": 220,
+        "jersey": null,
+        "headshotUrl": "",
+        "espnUrl": null,
+        "pfrUrl": "https://www.pro-football-reference.com/players/P/PridTo00.htm",
+        "consensusBigBoardRank": 220,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 4030000,
+        "status": "Drafted",
+        "roleSummary": "2026 Round 7, Pick #220 selection from Missouri.",
+        "strengths": [
+          "Athletic Profile: 6.32 RAS (NFL Combine Official)",
+          "Standout measurables: 40-Yd Dash 4.32s (97th %ile) · 10-Yd Split 1.50s (97th %ile)"
+        ],
+        "spiderProfile": {
+          "posGroup": "CB",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 7,
+          "compositeRas": 6.32,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 70,
+              "displayValue": "5'10\"",
+              "unit": "in",
+              "percentile": 21,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 185,
+              "displayValue": "185 lbs",
+              "unit": "lbs",
+              "percentile": 18,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 30.77,
+              "displayValue": "30.8\"",
+              "unit": "in",
+              "percentile": 21,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.32,
+              "displayValue": "4.32s",
+              "unit": "s",
+              "percentile": 97,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.5,
+              "displayValue": "1.50s",
+              "unit": "s",
+              "percentile": 97,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 37.5,
+              "displayValue": "37.5\"",
+              "unit": "in",
+              "percentile": 69,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 128,
+              "displayValue": "10'8\"",
+              "unit": "in",
+              "percentile": 82,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.2,
+              "displayValue": "7.20s",
+              "unit": "s",
+              "percentile": 13,
+              "isCombineVerified": true
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.11,
+              "displayValue": "4.11s",
+              "unit": "s",
+              "percentile": 67,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 13,
+              "displayValue": "13 reps",
+              "unit": "reps",
+              "percentile": 33,
+              "isCombineVerified": true
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Phillip Buchanon",
+              "draftYear": 2002,
+              "school": "Miami (FL)",
+              "similarityPct": 99,
+              "pfrUrl": "https://www.pro-football-reference.com/players/B/BuchPh20.htm"
+            },
+            {
+              "name": "Andre Goodman",
+              "draftYear": 2002,
+              "school": "South Carolina",
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Andre%20Goodman"
+            },
+            {
+              "name": "Cobie Durant",
+              "draftYear": 2022,
+              "school": "South Carolina St.",
+              "similarityPct": 94,
+              "pfrUrl": "https://www.pro-football-reference.com/players/D/DuraDe01.htm"
+            }
+          ]
+        }
       },
       {
         "playerId": "4682758",
@@ -17053,23 +18126,143 @@
         "position": "P",
         "college": "Florida",
         "round": 7,
-        "overallPick": 227,
+        "pick": 239,
+        "overallPick": 239,
+        "jersey": 39,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682758.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4682758",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4682758/tommy-doman-jr",
+        "pfrUrl": "https://www.pro-football-reference.com/players/D/DomaTo00.htm",
+        "consensusBigBoardRank": 239,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 4512172,
         "status": "Active 53",
-        "summary": "UDFA (2026) • 6' 4\" 214 lbs"
-      },
-      {
-        "playerId": "4685347",
-        "name": "Zane Durant",
-        "position": "DT",
-        "college": "Penn State",
-        "round": 7,
-        "overallPick": 228,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685347.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4685347",
-        "status": "IR",
-        "summary": "UDFA (2026) • 6' 1\" 290 lbs"
+        "roleSummary": "Active 53 • 6' 4\" 214 lbs • 34% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 8.49 RAS (Pro Day / Calibrated Athletic Profile)",
+          "Standout measurables: Height 6'4\" (88th %ile)",
+          "2026 Usage: 34% primary snap share across 9 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "SPEC",
+          "sourceType": "Pro Day / Calibrated Athletic Profile",
+          "verifiedDrillCount": 2,
+          "compositeRas": 8.49,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 76,
+              "displayValue": "6'4\"",
+              "unit": "in",
+              "percentile": 88,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 214,
+              "displayValue": "214 lbs",
+              "unit": "lbs",
+              "percentile": 62,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 32.64,
+              "displayValue": "32.6\"",
+              "unit": "in",
+              "percentile": 88,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.81,
+              "displayValue": "4.81s",
+              "unit": "s",
+              "percentile": 77,
+              "isCombineVerified": false
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.67,
+              "displayValue": "1.67s",
+              "unit": "s",
+              "percentile": 79,
+              "isCombineVerified": false
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 31.4,
+              "displayValue": "31.4\"",
+              "unit": "in",
+              "percentile": 59,
+              "isCombineVerified": false
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 113,
+              "displayValue": "9'5\"",
+              "unit": "in",
+              "percentile": 56,
+              "isCombineVerified": false
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.24,
+              "displayValue": "7.24s",
+              "unit": "s",
+              "percentile": 73,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.37,
+              "displayValue": "4.37s",
+              "unit": "s",
+              "percentile": 76,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 16,
+              "displayValue": "16 reps",
+              "unit": "reps",
+              "percentile": 56,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "B.J. Sander",
+              "draftYear": 2004,
+              "school": "Ohio State",
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=B.J.%20Sander"
+            },
+            {
+              "name": "Adam Graessle",
+              "draftYear": 2007,
+              "school": "Pittsburgh",
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Adam%20Graessle"
+            },
+            {
+              "name": "Matt Payne",
+              "draftYear": 2005,
+              "school": "BYU",
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Matt%20Payne"
+            }
+          ]
+        }
       },
       {
         "playerId": "4606712",
@@ -17077,25 +18270,416 @@
         "position": "G",
         "college": "Texas A&M",
         "round": 7,
-        "overallPick": 229,
+        "pick": 241,
+        "overallPick": 241,
+        "jersey": 60,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4606712.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4606712",
-        "status": "IR",
-        "summary": "UDFA (2026) • 6' 5\" 314 lbs"
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4606712/armaj-reed-adams",
+        "pfrUrl": "https://www.pro-football-reference.com/players/R/ReedAr01.htm",
+        "consensusBigBoardRank": 241,
+        "stealDelta": 0,
+        "estimated4YrRookieTotal": 4509752,
+        "status": "Injured Reserve",
+        "roleSummary": "Injured Reserve • 6' 5\" 314 lbs • 4% 2026 snaps",
+        "strengths": [
+          "Athletic Profile: 7.51 RAS (NFL Combine Official)",
+          "Standout measurables: Height 6'6\" (93th %ile) · Broad Jump 9'2\" (86th %ile)",
+          "2026 Usage: 4% primary snap share across 1 games."
+        ],
+        "spiderProfile": {
+          "posGroup": "IOL",
+          "sourceType": "NFL Combine Official",
+          "verifiedDrillCount": 6,
+          "compositeRas": 7.51,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 78,
+              "displayValue": "6'6\"",
+              "unit": "in",
+              "percentile": 93,
+              "isCombineVerified": true
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 314,
+              "displayValue": "314 lbs",
+              "unit": "lbs",
+              "percentile": 66,
+              "isCombineVerified": true
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 33.94,
+              "displayValue": "33.9\"",
+              "unit": "in",
+              "percentile": 93,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 5.28,
+              "displayValue": "5.28s",
+              "unit": "s",
+              "percentile": 43,
+              "isCombineVerified": true
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.84,
+              "displayValue": "1.84s",
+              "unit": "s",
+              "percentile": 41,
+              "isCombineVerified": true
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 29.5,
+              "displayValue": "29.5\"",
+              "unit": "in",
+              "percentile": 67,
+              "isCombineVerified": true
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 110,
+              "displayValue": "9'2\"",
+              "unit": "in",
+              "percentile": 86,
+              "isCombineVerified": true
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 7.88,
+              "displayValue": "7.88s",
+              "unit": "s",
+              "percentile": 41,
+              "isCombineVerified": true
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.71,
+              "displayValue": "4.71s",
+              "unit": "s",
+              "percentile": 54,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 27,
+              "displayValue": "27 reps",
+              "unit": "reps",
+              "percentile": 62,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Ryan Johanningmeier",
+              "draftYear": 2000,
+              "school": "Colorado",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Ryan%20Johanningmeier"
+            },
+            {
+              "name": "Miles Frazier",
+              "draftYear": 2025,
+              "school": "LSU",
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/F/FrazMi00.htm"
+            },
+            {
+              "name": "Frank Ragnow",
+              "draftYear": 2018,
+              "school": "Arkansas",
+              "similarityPct": 91,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RagnFr00.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "priorityUdfas": [
+      {
+        "playerId": "4682749",
+        "displayName": "Kani Walker",
+        "name": "Kani Walker",
+        "position": "CB",
+        "college": "Arkansas",
+        "jersey": 41,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682749.png",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4682749/kani-walker",
+        "otcUrl": "https://overthecap.com/player/kani-walker/13414/",
+        "status": "PRACTICE_SQUAD",
+        "roleSummary": "PRACTICE_SQUAD • 6' 2\" 204 lbs",
+        "summary": "Undrafted / CFA • 6' 2\" 204 lbs",
+        "spiderProfile": {
+          "posGroup": "CB",
+          "sourceType": "Pro Day / Calibrated Athletic Profile",
+          "verifiedDrillCount": 0,
+          "compositeRas": 8.11,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 74,
+              "displayValue": "6'2\"",
+              "unit": "in",
+              "percentile": 93,
+              "isCombineVerified": false
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 204,
+              "displayValue": "204 lbs",
+              "unit": "lbs",
+              "percentile": 88,
+              "isCombineVerified": false
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 32.38,
+              "displayValue": "32.4\"",
+              "unit": "in",
+              "percentile": 96,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.49,
+              "displayValue": "4.49s",
+              "unit": "s",
+              "percentile": 50,
+              "isCombineVerified": false
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.56,
+              "displayValue": "1.56s",
+              "unit": "s",
+              "percentile": 54,
+              "isCombineVerified": false
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 37.4,
+              "displayValue": "37.4\"",
+              "unit": "in",
+              "percentile": 66,
+              "isCombineVerified": false
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 123,
+              "displayValue": "10'3\"",
+              "unit": "in",
+              "percentile": 54,
+              "isCombineVerified": false
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 6.87,
+              "displayValue": "6.87s",
+              "unit": "s",
+              "percentile": 66,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.11,
+              "displayValue": "4.11s",
+              "unit": "s",
+              "percentile": 67,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 16,
+              "displayValue": "16 reps",
+              "unit": "reps",
+              "percentile": 65,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Mike Rumph",
+              "draftYear": 2002,
+              "school": "Miami (FL)",
+              "similarityPct": 96,
+              "pfrUrl": "https://www.pro-football-reference.com/players/R/RumpMi20.htm"
+            },
+            {
+              "name": "Willie Middlebrooks",
+              "draftYear": 2001,
+              "school": "Minnesota",
+              "similarityPct": 93,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/MiddWi20.htm"
+            },
+            {
+              "name": "Nnamdi Asomugha",
+              "draftYear": 2003,
+              "school": "California",
+              "similarityPct": 92,
+              "pfrUrl": "https://www.pro-football-reference.com/players/A/AsomNn20.htm"
+            }
+          ]
+        }
       },
       {
         "playerId": "4430270",
+        "displayName": "Ja'Mori Maclin",
         "name": "Ja'Mori Maclin",
         "position": "WR",
         "college": "Kentucky",
-        "round": 7,
-        "overallPick": 230,
+        "jersey": 84,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430270.png",
-        "espnUrl": "https://www.espn.com/nfl/player/_/id/4430270",
+        "espnUrl": "https://www.espn.com/nfl/player/_/id/4430270/jamori-maclin",
+        "otcUrl": "https://overthecap.com/player/jamori-maclin/13410/",
         "status": "PRACTICE_SQUAD",
-        "summary": "UDFA (2026) • 5' 10\" 183 lbs"
+        "roleSummary": "PRACTICE_SQUAD • 5' 10\" 183 lbs",
+        "summary": "Undrafted / CFA • 5' 10\" 183 lbs",
+        "spiderProfile": {
+          "posGroup": "WR",
+          "sourceType": "Pro Day / Calibrated Athletic Profile",
+          "verifiedDrillCount": 0,
+          "compositeRas": 6.06,
+          "axes": [
+            {
+              "key": "heightIn",
+              "label": "Height",
+              "value": 70,
+              "displayValue": "5'10\"",
+              "unit": "in",
+              "percentile": 12,
+              "isCombineVerified": false
+            },
+            {
+              "key": "weightLb",
+              "label": "Weight",
+              "value": 183,
+              "displayValue": "183 lbs",
+              "unit": "lbs",
+              "percentile": 12,
+              "isCombineVerified": false
+            },
+            {
+              "key": "armIn",
+              "label": "Arm Length",
+              "value": 30.58,
+              "displayValue": "30.6\"",
+              "unit": "in",
+              "percentile": 8,
+              "isCombineVerified": false
+            },
+            {
+              "key": "forty",
+              "label": "40-Yd Dash",
+              "value": 4.43,
+              "displayValue": "4.43s",
+              "unit": "s",
+              "percentile": 76,
+              "isCombineVerified": false
+            },
+            {
+              "key": "tenSplit",
+              "label": "10-Yd Split",
+              "value": 1.54,
+              "displayValue": "1.54s",
+              "unit": "s",
+              "percentile": 77,
+              "isCombineVerified": false
+            },
+            {
+              "key": "vertical",
+              "label": "Vertical",
+              "value": 36.9,
+              "displayValue": "36.9\"",
+              "unit": "in",
+              "percentile": 66,
+              "isCombineVerified": false
+            },
+            {
+              "key": "broad",
+              "label": "Broad Jump",
+              "value": 123,
+              "displayValue": "10'3\"",
+              "unit": "in",
+              "percentile": 61,
+              "isCombineVerified": false
+            },
+            {
+              "key": "threeCone",
+              "label": "3-Cone",
+              "value": 6.8,
+              "displayValue": "6.80s",
+              "unit": "s",
+              "percentile": 80,
+              "isCombineVerified": false
+            },
+            {
+              "key": "shuttle",
+              "label": "20-Yd Shuttle",
+              "value": 4.14,
+              "displayValue": "4.14s",
+              "unit": "s",
+              "percentile": 72,
+              "isCombineVerified": false
+            },
+            {
+              "key": "bench",
+              "label": "Bench Press",
+              "value": 14,
+              "displayValue": "14 reps",
+              "unit": "reps",
+              "percentile": 45,
+              "isCombineVerified": false
+            }
+          ],
+          "historicalComps": [
+            {
+              "name": "Dan Sheldon",
+              "draftYear": 2005,
+              "school": "Northern Illinois",
+              "similarityPct": 97,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dan%20Sheldon"
+            },
+            {
+              "name": "Robert Kilow",
+              "draftYear": 2001,
+              "school": "Arkansas State",
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Robert%20Kilow"
+            },
+            {
+              "name": "Shaun McDonald",
+              "draftYear": 2003,
+              "school": "Arizona State",
+              "similarityPct": 95,
+              "pfrUrl": "https://www.pro-football-reference.com/players/M/McDoSh00.htm"
+            }
+          ]
+        }
       }
-    ],
-    "priorityUdfas": []
+    ]
   }
 }

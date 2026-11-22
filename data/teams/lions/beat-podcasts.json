@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-22T17:09:14.552Z",
+  "updatedAt": "2026-11-22T22:38:44.392Z",
   "windowDays": 7,
-  "totalEpisodes": 19,
+  "totalEpisodes": 17,
   "shows": [
     {
       "id": "locked_on_lions",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/6e/cf/76/6ecf76dc-5c50-d1f5-6522-c0beee7beb93/mza_10179336279226318045.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "pride_of_detroit",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/TTEOS7469992862",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-detroit-lions-podcast/id1003655963?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ab/ef/21/abef2155-093d-02ff-1e96-6c76fb94a2f0/mza_10688540341408589190.png/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "dungeon_of_doom",
@@ -404,46 +404,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
       "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/a0cc13/lockedon.simplecastaudio.com/05bcf1ce-c643-45f9-b7f9-bd4cf110ab06/episodes/d7fe0296-0808-46c2-a7a5-bd524d857dd0/audio/128/default.mp3?aid=rss_feed&awCollectionId=05bcf1ce-c643-45f9-b7f9-bd4cf110ab06&awEpisodeId=d7fe0296-0808-46c2-a7a5-bd524d857dd0&feed=ASw0G4io"
-    },
-    {
-      "id": "pod_locked_on_lions_1000802114582",
-      "trackId": 1000802114582,
-      "collectionId": 1140514879,
-      "showId": "locked_on_lions",
-      "showName": "Locked On Lions",
-      "showFullTitle": "Locked On Lions - Daily Podcast On The Detroit Lions",
-      "hosts": "Matt Dery",
-      "network": "Locked On Podcast Network",
-      "title": "LIONS SQUAD SHOW: Detroit Lions vs New England Patriots | Postgame Show",
-      "summary": "LIONS SQUAD SHOW: Detroit Lions vs New England Patriots | Postgame Show Detroit Lions News discussed Locked On Lions SQUAD SHOW twice per week with Jake Riepma, Natalie Kerwin & Bradford Banta, joined weekly by Dave Birkett of the Detroit Free Press. Detroit Lions Schedule: ",
-      "publishedAt": "2026-11-15T19:16:11.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d4/de/39/d4de3917-043e-8f95-648e-9ae4acb04a3e/mza_3989481444335762688.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/lions-squad-show-detroit-lions-vs-new-england-patriots/id1140514879?i=1000802114582&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/a0cc13/lockedon.simplecastaudio.com/05bcf1ce-c643-45f9-b7f9-bd4cf110ab06/episodes/ed157b79-3edf-47ae-827d-7124b5c5901d/audio/128/default.mp3?aid=rss_feed&awCollectionId=05bcf1ce-c643-45f9-b7f9-bd4cf110ab06&awEpisodeId=ed157b79-3edf-47ae-827d-7124b5c5901d&feed=ASw0G4io"
-    },
-    {
-      "id": "pod_detroit_lions_podcast_1000802115499",
-      "trackId": 1000802115499,
-      "collectionId": 1003655963,
-      "showId": "detroit_lions_podcast",
-      "showName": "The Detroit Lions Podcast",
-      "showFullTitle": "The Detroit Lions Podcast",
-      "hosts": "Chris Risdon & Jeff Risdon",
-      "network": "Detroit Lions Podcast",
-      "title": "Detroit Lions vs New England Patriots Post Game Show - Detroit Lions Podcast Reacts",
-      "summary": "Detroit Lions vs New England Patriots post game reaction from the Detroit Lions Podcast. Chris and Michael Grey go live immediately after Detroit’s Week 10 game in Munich. The show covers the final game result, the live post game presser, complete game analysis and live list",
-      "publishedAt": "2026-11-15T19:15:34.000Z",
-      "durationMinutes": 74,
-      "durationDisplay": "74 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ab/ef/21/abef2155-093d-02ff-1e96-6c76fb94a2f0/mza_10688540341408589190.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/detroit-lions-vs-new-england-patriots-post-game-show/id1003655963?i=1000802115499&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-detroit-lions-podcast/id1003655963?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/TTEOS7469992862",
-      "audioStreamUrl": "https://traffic.megaphone.fm/TTEOS6911678477.mp3"
     }
   ]
 }

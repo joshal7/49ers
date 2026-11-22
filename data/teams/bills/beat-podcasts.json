@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-22T17:09:18.184Z",
+  "updatedAt": "2026-11-22T22:38:47.867Z",
   "windowDays": 7,
-  "totalEpisodes": 25,
+  "totalEpisodes": 23,
   "shows": [
     {
       "id": "locked_on_bills",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/8c06ff/feeds.simplecast.com/LIaoLB9Y",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bills-daily-podcast-on-the-buffalo-bills/id1145479962?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/ee/d8/fb/eed8fb20-1eee-5056-153d-5e961a648130/mza_2064787666452726245.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "cover_1_buffalo",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.spreaker.com/show/2885244/episodes/feed",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/cover-1-buffalo/id1370118411?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/6f/bc/42/6fbc4226-c514-4ff4-d5bc-f3e2233218a2/mza_17600526120269137796.jpg/600x600bb.jpg",
-      "episodeCount7d": 2
+      "episodeCount7d": 1
     },
     {
       "id": "buffalo_rumblings",
@@ -536,46 +536,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/shout-a-football-podcast-on-the-buffalo-bills/id1507446314?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/shoutabuffalobillspodcast",
       "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM2602928987.mp3"
-    },
-    {
-      "id": "pod_locked_on_bills_1000802139444",
-      "trackId": 1000802139444,
-      "collectionId": 1145479962,
-      "showId": "locked_on_bills",
-      "showName": "Locked On Bills",
-      "showFullTitle": "Locked On Bills - Daily Podcast On The Buffalo Bills",
-      "hosts": "Joe Marino",
-      "network": "Locked On Podcast Network",
-      "title": "BILLS SQUAD SHOW: CLINICAL: Buffalo Bills and James Cook MASTER Jets, SECURE Commanding AFC East Lead",
-      "summary": "00:00 Bills' win over Jets analysis 04:04 Jets struggle with red zone efficiency 09:48 Bills forcing plays on special occasions 11:27 Discussion on Dawson Knox's Role 15:16 GameTime app for NFL tickets 18:21 Jets' defense performance review 23:18 Analyzing recent defensive s",
-      "publishedAt": "2026-11-15T22:34:25.000Z",
-      "durationMinutes": 60,
-      "durationDisplay": "60 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4a/a7/9d/4aa79dd4-ed80-c2d8-ce6a-d1c20c516925/mza_12770929965955856212.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bills-squad-show-clinical-buffalo-bills-and-james/id1145479962?i=1000802139444&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bills-daily-podcast-on-the-buffalo-bills/id1145479962?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/8c06ff/feeds.simplecast.com/LIaoLB9Y",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8c06ff/lockedon.simplecastaudio.com/d5c86183-3556-42ef-a0fc-3e82326ec162/episodes/0de9bdde-2f13-457e-a9c0-f24705db60ed/audio/128/default.mp3?aid=rss_feed&awCollectionId=d5c86183-3556-42ef-a0fc-3e82326ec162&awEpisodeId=0de9bdde-2f13-457e-a9c0-f24705db60ed&feed=LIaoLB9Y"
-    },
-    {
-      "id": "pod_cover_1_buffalo_1000802137200",
-      "trackId": 1000802137200,
-      "collectionId": 1370118411,
-      "showId": "cover_1_buffalo",
-      "showName": "Cover 1 Buffalo",
-      "showFullTitle": "Cover 1 Buffalo",
-      "hosts": "Greg Tompsett & Aaron Quinn",
-      "network": "Cover 1 Sports",
-      "title": "Bills @ Jets Week 10 Postgame Show | Cover 1 Buffalo Podcast | C1 BUF",
-      "summary": "Cover 1 Buffalo analyzing the latest Buffalo Bills news and film.",
-      "publishedAt": "2026-11-15T22:17:01.000Z",
-      "durationMinutes": 44,
-      "durationDisplay": "44 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/6f/bc/42/6fbc4226-c514-4ff4-d5bc-f3e2233218a2/mza_17600526120269137796.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bills-jets-week-10-postgame-show-cover-1-buffalo-podcast/id1370118411?i=1000802137200&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/cover-1-buffalo/id1370118411?uo=4",
-      "feedUrl": "https://www.spreaker.com/show/2885244/episodes/feed",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/api.spreaker.com/download/episode/76392548/bills_jets_week_10_postgame_show_cover_1_buffalo_podcast_c1_buf.mp3"
     }
   ]
 }

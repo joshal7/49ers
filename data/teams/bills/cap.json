@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T17:09:18.941Z",
+  "updatedAt": "2026-11-22T22:38:47.984Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
   "spotracUrl": "https://www.spotrac.com/nfl/buffalo-bills/cap/",
@@ -220,10 +220,10 @@
     {
       "id": "3918298",
       "otcId": "6892",
-      "otcSlug": null,
+      "otcSlug": "josh-allen",
       "otcUrl": "https://overthecap.com/player/josh-allen/6892/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3918298",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Josh%20Allen",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3918298/josh-allen",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/AlleJo02.htm",
       "name": "Josh Allen",
       "position": "QB",
       "jersey": 17,
@@ -446,10 +446,10 @@
     {
       "id": "3115293",
       "otcId": "7494",
-      "otcSlug": null,
+      "otcSlug": "kyle-allen",
       "otcUrl": "https://overthecap.com/player/kyle-allen/7494/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3115293",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Kyle%20Allen",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3115293/kyle-allen",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/AlleKy00.htm",
       "name": "Kyle Allen",
       "position": "QB",
       "jersey": 11,
@@ -546,9 +546,9 @@
     {
       "id": "4367203",
       "otcId": "10637",
-      "otcSlug": null,
+      "otcSlug": "alec-anderson",
       "otcUrl": "https://overthecap.com/player/alec-anderson/10637/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4367203",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4367203/alec-anderson",
       "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Alec%20Anderson",
       "name": "Alec Anderson",
       "position": "OT",
@@ -604,10 +604,10 @@
     {
       "id": "4683153",
       "otcId": "13269",
-      "otcSlug": null,
+      "otcSlug": "skyler-bell",
       "otcUrl": "https://overthecap.com/player/skyler-bell/13269/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683153",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Skyler%20Bell",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4683153/skyler-bell",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BellSk00.htm",
       "name": "Skyler Bell",
       "position": "WR",
       "jersey": 13,
@@ -788,10 +788,10 @@
     {
       "id": "4869533",
       "otcId": "13246",
-      "otcSlug": null,
+      "otcSlug": "jude-bowry",
       "otcUrl": "https://overthecap.com/player/jude-bowry/13246/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4869533",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Jude%20Bowry",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4869533/jude-bowry",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BowrJu00.htm",
       "name": "Jude Bowry",
       "position": "OT",
       "jersey": 74,
@@ -972,10 +972,10 @@
     {
       "id": "4030899",
       "otcId": "9557",
-      "otcSlug": null,
+      "otcSlug": "spencer-brown",
       "otcUrl": "https://overthecap.com/player/spencer-brown/9557/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4030899",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Spencer%20Brown",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4030899/spencer-brown",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BrowSp00.htm",
       "name": "Spencer Brown",
       "position": "OT",
       "jersey": 79,
@@ -1198,10 +1198,10 @@
     {
       "id": "4635008",
       "otcId": "11641",
-      "otcSlug": null,
+      "otcSlug": "keon-coleman",
       "otcUrl": "https://overthecap.com/player/keon-coleman/11641/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4635008",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Keon%20Coleman",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4635008/keon-coleman",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/ColeKe02.htm",
       "name": "Keon Coleman",
       "position": "WR",
       "jersey": 0,
@@ -1298,10 +1298,10 @@
     {
       "id": "4379399",
       "otcId": "10108",
-      "otcSlug": null,
+      "otcSlug": "james-cook",
       "otcUrl": "https://overthecap.com/player/james-cook/10108/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4379399",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=James%20Cook%20III",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4379399/james-cook-iii",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CookJa01.htm",
       "name": "James Cook III",
       "position": "RB",
       "jersey": 4,
@@ -1524,10 +1524,10 @@
     {
       "id": "3056608",
       "otcId": "6918",
-      "otcSlug": null,
+      "otcSlug": "austin-corbett",
       "otcUrl": "https://overthecap.com/player/austin-corbett/6918/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3056608",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Austin%20Corbett",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3056608/austin-corbett",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CorbAu00.htm",
       "name": "Austin Corbett",
       "position": "C",
       "jersey": 63,
@@ -1582,10 +1582,10 @@
     {
       "id": "4035448",
       "otcId": "8823",
-      "otcSlug": null,
+      "otcSlug": "lloyd-cushenberry",
       "otcUrl": "https://overthecap.com/player/lloyd-cushenberry/8823/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035448",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Lloyd%20Cushenberry%20III",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035448/lloyd-cushenberry-iii",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CushLl00.htm",
       "name": "Lloyd Cushenberry III",
       "position": "C",
       "jersey": 53,
@@ -1640,10 +1640,10 @@
     {
       "id": "4429501",
       "otcId": "11736",
-      "otcSlug": null,
+      "otcSlug": "ray-davis",
       "otcUrl": "https://overthecap.com/player/ray-davis/11736/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4429501",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Ray%20Davis",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4429501/ray-davis",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviRa04.htm",
       "name": "Ray Davis",
       "position": "RB",
       "jersey": 7,
@@ -1740,10 +1740,10 @@
     {
       "id": "3051324",
       "otcId": "5649",
-      "otcSlug": null,
+      "otcSlug": "dion-dawkins",
       "otcUrl": "https://overthecap.com/player/dion-dawkins/5649/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3051324",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dion%20Dawkins",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3051324/dion-dawkins",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DawkDi00.htm",
       "name": "Dion Dawkins",
       "position": "OT",
       "jersey": 73,
@@ -1924,10 +1924,10 @@
     {
       "id": "4037235",
       "otcId": "8297",
-      "otcSlug": null,
+      "otcSlug": "greg-dortch",
       "otcUrl": "https://overthecap.com/player/greg-dortch/8297/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4037235",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Greg%20Dortch",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4037235/greg-dortch",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DortGr01.htm",
       "name": "Greg Dortch",
       "position": "WR",
       "jersey": 19,
@@ -1982,10 +1982,10 @@
     {
       "id": "4368828",
       "otcId": "11812",
-      "otcSlug": null,
+      "otcSlug": "tylan-grable",
       "otcUrl": "https://overthecap.com/player/tylan-grable/11812/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4368828",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Tylan%20Grable",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4368828/tylan-grable",
+      "pfrUrl": "https://www.pro-football-reference.com/players/G/GrabTy00.htm",
       "name": "Tylan Grable",
       "position": "OT",
       "jersey": 68,
@@ -2082,10 +2082,10 @@
     {
       "id": "4573699",
       "otcId": "12533",
-      "otcSlug": null,
+      "otcSlug": "jackson-hawes",
       "otcUrl": "https://overthecap.com/player/jackson-hawes/12533/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4573699",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Jackson%20Hawes",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4573699/jackson-hawes",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HaweJa00.htm",
       "name": "Jackson Hawes",
       "position": "TE",
       "jersey": 85,
@@ -2224,10 +2224,10 @@
     {
       "id": "3915411",
       "otcId": "7977",
-      "otcSlug": null,
+      "otcSlug": "ty-johnson",
       "otcUrl": "https://overthecap.com/player/ty-johnson/7977/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3915411",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Ty%20Johnson",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3915411/ty-johnson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnTy02.htm",
       "name": "Ty Johnson",
       "position": "RB",
       "jersey": 26,
@@ -2282,10 +2282,10 @@
     {
       "id": "4385690",
       "otcId": "10849",
-      "otcSlug": null,
+      "otcSlug": "dalton-kincaid",
       "otcUrl": "https://overthecap.com/player/dalton-kincaid/10849/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4385690",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dalton%20Kincaid",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4385690/dalton-kincaid",
+      "pfrUrl": "https://www.pro-football-reference.com/players/K/KincDa00.htm",
       "name": "Dalton Kincaid",
       "position": "TE",
       "jersey": 86,
@@ -2382,10 +2382,10 @@
     {
       "id": "3930086",
       "otcId": "7887",
-      "otcSlug": null,
+      "otcSlug": "dawson-knox",
       "otcUrl": "https://overthecap.com/player/dawson-knox/7887/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3930086",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dawson%20Knox",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3930086/dawson-knox",
+      "pfrUrl": "https://www.pro-football-reference.com/players/K/KnoxDa00.htm",
       "name": "Dawson Knox",
       "position": "TE",
       "jersey": 88,
@@ -2524,10 +2524,10 @@
     {
       "id": "4688552",
       "otcId": "12780",
-      "otcSlug": null,
+      "otcSlug": "keleki-latu",
       "otcUrl": "https://overthecap.com/player/keleki-latu/12780/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4688552",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Keleki%20Latu",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4688552/keleki-latu",
+      "pfrUrl": "https://www.pro-football-reference.com/players/L/LatuKe00.htm",
       "name": "Keleki Latu",
       "position": "TE",
       "jersey": 83,
@@ -2624,10 +2624,10 @@
     {
       "id": "4033748",
       "otcId": "7881",
-      "otcSlug": null,
+      "otcSlug": "connor-mcgovern",
       "otcUrl": "https://overthecap.com/player/connor-mcgovern/7881/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4033748",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Connor%20McGovern",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4033748/connor-mcgovern",
+      "pfrUrl": "https://www.pro-football-reference.com/players/M/McGoCo01.htm",
       "name": "Connor McGovern",
       "position": "C",
       "jersey": 66,
@@ -2850,10 +2850,10 @@
     {
       "id": "3915416",
       "otcId": "6909",
-      "otcSlug": null,
+      "otcSlug": "d-j-moore",
       "otcUrl": "https://overthecap.com/player/d-j-moore/6909/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3915416",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=DJ%20Moore",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3915416/dj-moore",
+      "pfrUrl": "https://www.pro-football-reference.com/players/M/MoorD.00.htm",
       "name": "DJ Moore",
       "position": "WR",
       "jersey": 2,
@@ -3076,10 +3076,10 @@
     {
       "id": "4373678",
       "otcId": "10193",
-      "otcSlug": null,
+      "otcSlug": "khalil-shakir",
       "otcUrl": "https://overthecap.com/player/khalil-shakir/10193/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4373678",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Khalil%20Shakir",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4373678/khalil-shakir",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/ShakKh00.htm",
       "name": "Khalil Shakir",
       "position": "WR",
       "jersey": 10,
@@ -3302,10 +3302,10 @@
     {
       "id": "4428696",
       "otcId": "10883",
-      "otcSlug": null,
+      "otcSlug": "ocyrus-torrence",
       "otcUrl": "https://overthecap.com/player/ocyrus-torrence/10883/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428696",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=O'Cyrus%20Torrence",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428696/ocyrus-torrence",
+      "pfrUrl": "https://www.pro-football-reference.com/players/T/TorrOC00.htm",
       "name": "O'Cyrus Torrence",
       "position": "G",
       "jersey": 64,
@@ -3528,10 +3528,10 @@
     {
       "id": "4401823",
       "otcId": "10033",
-      "otcSlug": null,
+      "otcSlug": "dee-alford",
       "otcUrl": "https://overthecap.com/player/dee-alford/10033/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4401823",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dee%20Alford",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4401823/dee-alford",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/AlfoDe00.htm",
       "name": "Dee Alford",
       "position": "CB",
       "jersey": 23,
@@ -3670,10 +3670,10 @@
     {
       "id": "4366349",
       "otcId": "12278",
-      "otcSlug": null,
+      "otcSlug": "joe-andreessen",
       "otcUrl": "https://overthecap.com/player/joe-andreessen/12278/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4366349",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Joe%20Andreessen",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4366349/joe-andreessen",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/AndrJo02.htm",
       "name": "Joe Andreessen",
       "position": "LB",
       "jersey": 44,
@@ -3812,10 +3812,10 @@
     {
       "id": "4379778",
       "otcId": "10230",
-      "otcSlug": null,
+      "otcSlug": "christian-benford",
       "otcUrl": "https://overthecap.com/player/christian-benford/10230/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4379778",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Christian%20Benford",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4379778/christian-benford",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BenfCh00.htm",
       "name": "Christian Benford",
       "position": "CB",
       "jersey": 47,
@@ -4038,10 +4038,10 @@
     {
       "id": "4259166",
       "otcId": "10134",
-      "otcSlug": null,
+      "otcSlug": "terrel-bernard",
       "otcUrl": "https://overthecap.com/player/terrel-bernard/10134/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259166",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Terrel%20Bernard",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4259166/terrel-bernard",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BernTe00.htm",
       "name": "Terrel Bernard",
       "position": "LB",
       "jersey": 8,
@@ -4264,10 +4264,10 @@
     {
       "id": "4676004",
       "otcId": "11668",
-      "otcSlug": null,
+      "otcSlug": "cole-bishop",
       "otcUrl": "https://overthecap.com/player/cole-bishop/11668/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4676004",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Cole%20Bishop",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4676004/cole-bishop",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BishCo00.htm",
       "name": "Cole Bishop",
       "position": "S",
       "jersey": 24,
@@ -4364,10 +4364,10 @@
     {
       "id": "4426883",
       "otcId": "11703",
-      "otcSlug": null,
+      "otcSlug": "dewayne-carter",
       "otcUrl": "https://overthecap.com/player/dewayne-carter/11703/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4426883",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=DeWayne%20Carter",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4426883/dewayne-carter",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CartDe03.htm",
       "name": "DeWayne Carter",
       "position": "DT",
       "jersey": 90,
@@ -4464,10 +4464,10 @@
     {
       "id": "3116733",
       "otcId": "6890",
-      "otcSlug": null,
+      "otcSlug": "bradley-chubb",
       "otcUrl": "https://overthecap.com/player/bradley-chubb/6890/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3116733",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Bradley%20Chubb",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3116733/bradley-chubb",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/ChubBr00.htm",
       "name": "Bradley Chubb",
       "position": "LB",
       "jersey": 9,
@@ -4648,10 +4648,10 @@
     {
       "id": "3915487",
       "otcId": "8917",
-      "otcSlug": null,
+      "otcSlug": "mike-danna",
       "otcUrl": "https://overthecap.com/player/mike-danna/8917/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3915487",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Mike%20Danna",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3915487/mike-danna",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DannMi00.htm",
       "name": "Mike Danna",
       "position": "DE",
       "jersey": 51,
@@ -4706,10 +4706,10 @@
     {
       "id": "4594321",
       "otcId": "13270",
-      "otcSlug": null,
+      "otcSlug": "kaleb-elarms-orr",
       "otcUrl": "https://overthecap.com/player/kaleb-elarms-orr/13270/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4594321",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Kaleb%20Elarms-Orr",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4594321/kaleb-elarms-orr",
+      "pfrUrl": "https://www.pro-football-reference.com/players/E/ElarKa00.htm",
       "name": "Kaleb Elarms-Orr",
       "position": "LB",
       "jersey": 52,
@@ -4890,10 +4890,10 @@
     {
       "id": "4044133",
       "otcId": "9198",
-      "otcSlug": null,
+      "otcSlug": "sam-franklin",
       "otcUrl": "https://overthecap.com/player/sam-franklin/9198/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4044133",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Sam%20Franklin%20Jr.",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4044133/sam-franklin-jr",
+      "pfrUrl": "https://www.pro-football-reference.com/players/F/FranSa00.htm",
       "name": "Sam Franklin Jr.",
       "position": "S",
       "jersey": 28,
@@ -5032,10 +5032,10 @@
     {
       "id": "3127294",
       "otcId": "7925",
-      "otcSlug": null,
+      "otcSlug": "greg-gaines",
       "otcUrl": "https://overthecap.com/player/greg-gaines/7925/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3127294",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Greg%20Gaines",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3127294/greg-gaines",
+      "pfrUrl": "https://www.pro-football-reference.com/players/G/GainGr00.htm",
       "name": "Greg Gaines",
       "position": "DT",
       "jersey": 97,
@@ -5090,10 +5090,10 @@
     {
       "id": "4688931",
       "otcId": "12390",
-      "otcSlug": null,
+      "otcSlug": "maxwell-hairston",
       "otcUrl": "https://overthecap.com/player/maxwell-hairston/12390/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4688931",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Maxwell%20Hairston",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4688931/maxwell-hairston",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HairMa00.htm",
       "name": "Maxwell Hairston",
       "position": "CB",
       "jersey": 1,
@@ -5232,10 +5232,10 @@
     {
       "id": "4036060",
       "otcId": "9676",
-      "otcSlug": null,
+      "otcSlug": "damar-hamlin",
       "otcUrl": "https://overthecap.com/player/damar-hamlin/9676/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4036060",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Damar%20Hamlin",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4036060/damar-hamlin",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HamlDa00.htm",
       "name": "Damar Hamlin",
       "position": "S",
       "jersey": 3,
@@ -5290,10 +5290,10 @@
     {
       "id": "4596480",
       "otcId": "12530",
-      "otcSlug": null,
+      "otcSlug": "jordan-hancock",
       "otcUrl": "https://overthecap.com/player/jordan-hancock/12530/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4596480",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Jordan%20Hancock",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4596480/jordan-hancock",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HancJo00.htm",
       "name": "Jordan Hancock",
       "position": "CB",
       "jersey": 37,
@@ -5432,10 +5432,10 @@
     {
       "id": "4033234",
       "otcId": "9215",
-      "otcSlug": null,
+      "otcSlug": "michael-hoecht",
       "otcUrl": "https://overthecap.com/player/michael-hoecht/9215/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4033234",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Michael%20Hoecht",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4033234/michael-hoecht",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HoecMi00.htm",
       "name": "Michael Hoecht",
       "position": "DE",
       "jersey": 55,
@@ -5616,10 +5616,10 @@
     {
       "id": "4036134",
       "otcId": "7907",
-      "otcSlug": null,
+      "otcSlug": "amani-hooker",
       "otcUrl": "https://overthecap.com/player/amani-hooker/7907/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4036134",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Amani%20Hooker",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4036134/amani-hooker",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HookAm00.htm",
       "name": "Amani Hooker",
       "position": "S",
       "jersey": 22,
@@ -5758,10 +5758,10 @@
     {
       "id": "4832035",
       "otcId": "13206",
-      "otcSlug": null,
+      "otcSlug": "davison-igbinosun",
       "otcUrl": "https://overthecap.com/player/davison-igbinosun/13206/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4832035",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Davison%20Igbinosun",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4832035/davison-igbinosun",
+      "pfrUrl": "https://www.pro-football-reference.com/players/I/IgbiDa01.htm",
       "name": "Davison Igbinosun",
       "position": "CB",
       "jersey": 21,
@@ -5942,10 +5942,10 @@
     {
       "id": "4432715",
       "otcId": "12432",
-      "otcSlug": null,
+      "otcSlug": "landon-jackson",
       "otcUrl": "https://overthecap.com/player/landon-jackson/12432/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4432715",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Landon%20Jackson",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4432715/landon-jackson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/J/JackLa03.htm",
       "name": "Landon Jackson",
       "position": "DE",
       "jersey": 94,
@@ -6084,10 +6084,10 @@
     {
       "id": "5076951",
       "otcId": "13311",
-      "otcSlug": null,
+      "otcSlug": "jalon-kilgore",
       "otcUrl": "https://overthecap.com/player/jalon-kilgore/13311/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5076951",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Jalon%20Kilgore",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/5076951/jalon-kilgore",
+      "pfrUrl": "https://www.pro-football-reference.com/players/K/KilgJa00.htm",
       "name": "Jalon Kilgore",
       "position": "S",
       "jersey": 29,
@@ -6268,10 +6268,10 @@
     {
       "id": "4039303",
       "otcId": "7800",
-      "otcSlug": null,
+      "otcSlug": "ed-oliver",
       "otcUrl": "https://overthecap.com/player/ed-oliver/7800/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039303",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Ed%20Oliver",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039303/ed-oliver",
+      "pfrUrl": "https://www.pro-football-reference.com/players/O/OlivEd00.htm",
       "name": "Ed Oliver",
       "position": "DT",
       "jersey": 91,
@@ -6494,10 +6494,10 @@
     {
       "id": "4870886",
       "otcId": "13179",
-      "otcSlug": null,
+      "otcSlug": "t-j-parker",
       "otcUrl": "https://overthecap.com/player/t-j-parker/13179/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4870886",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=TJ%20Parker",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4870886/tj-parker",
+      "pfrUrl": "https://www.pro-football-reference.com/players/P/ParkTJ00.htm",
       "name": "TJ Parker",
       "position": "LB",
       "jersey": 99,
@@ -6676,12 +6676,238 @@
       }
     },
     {
+      "id": "4362506",
+      "otcId": "9494",
+      "otcSlug": "gregory-rousseau",
+      "otcUrl": "https://overthecap.com/player/gregory-rousseau/9494/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4362506/greg-rousseau",
+      "pfrUrl": "https://www.pro-football-reference.com/players/R/RousGr00.htm",
+      "name": "Greg Rousseau",
+      "position": "LB",
+      "jersey": 15,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362506.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 4920000,
+          "proratedSigning": 3500000,
+          "proratedOption": 2800000,
+          "proratedBonus": 6300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 250000,
+          "otherBonus": 0,
+          "currentYearBonuses": 590000,
+          "guaranteedSalary": 18920000,
+          "capNumber": 11790000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 43123000,
+              "capSavings": -31333000
+            },
+            "june_1_cut": {
+              "deadMoney": 32623000,
+              "capSavings": -20833000
+            },
+            "trade": {
+              "deadMoney": 14000000,
+              "capSavings": -2210000
+            },
+            "june_1_trade": {
+              "deadMoney": 3500000,
+              "capSavings": 8290000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 3164000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 3164000
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 16410000,
+          "proratedSigning": 3500000,
+          "proratedOption": 2800000,
+          "proratedBonus": 6300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 250000,
+          "otherBonus": 0,
+          "currentYearBonuses": 590000,
+          "guaranteedSalary": 10203000,
+          "capNumber": 23300000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 20703000,
+              "capSavings": 2597000
+            },
+            "june_1_cut": {
+              "deadMoney": 13703000,
+              "capSavings": 9597000
+            },
+            "trade": {
+              "deadMoney": 10500000,
+              "capSavings": 12800000
+            },
+            "june_1_trade": {
+              "deadMoney": 3500000,
+              "capSavings": 19800000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 11550000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 12320000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 17410000,
+          "proratedSigning": 3500000,
+          "proratedOption": 2800000,
+          "proratedBonus": 6300000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 250000,
+          "otherBonus": 0,
+          "currentYearBonuses": 590000,
+          "guaranteedSalary": 0,
+          "capNumber": 24300000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 7000000,
+              "capSavings": 17300000
+            },
+            "june_1_cut": {
+              "deadMoney": 3500000,
+              "capSavings": 20800000
+            },
+            "trade": {
+              "deadMoney": 7000000,
+              "capSavings": 17300000
+            },
+            "june_1_trade": {
+              "deadMoney": 3500000,
+              "capSavings": 20800000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 10903333
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 13084000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 15410000,
+          "proratedSigning": 3500000,
+          "proratedOption": 2800000,
+          "proratedBonus": 6300000,
+          "rosterBonusRegular": 3000000,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 250000,
+          "otherBonus": 0,
+          "currentYearBonuses": 3590000,
+          "guaranteedSalary": 0,
+          "capNumber": 25300000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3500000,
+              "capSavings": 21800000
+            },
+            "june_1_cut": {
+              "deadMoney": 3500000,
+              "capSavings": 21800000
+            },
+            "trade": {
+              "deadMoney": 3500000,
+              "capSavings": 21800000
+            },
+            "june_1_trade": {
+              "deadMoney": 3500000,
+              "capSavings": 21800000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 8655000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 13848000
+            }
+          }
+        },
+        "2030": {
+          "year": 2030,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 0,
+          "proratedOption": 2800000,
+          "proratedBonus": 2800000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 2800000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 2800000
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 2800000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 2800000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 2800000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1116000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4684527",
       "otcId": "12401",
-      "otcSlug": null,
+      "otcSlug": "t-j-sanders",
       "otcUrl": "https://overthecap.com/player/t-j-sanders/12401/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4684527",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=T.J.%20Sanders",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4684527/tj-sanders",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/SandTJ00.htm",
       "name": "T.J. Sanders",
       "position": "DT",
       "jersey": 98,
@@ -6820,10 +7046,10 @@
     {
       "id": "4428548",
       "otcId": "11776",
-      "otcSlug": null,
+      "otcSlug": "javon-solomon",
       "otcUrl": "https://overthecap.com/player/javon-solomon/11776/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428548",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Javon%20Solomon",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4428548/javon-solomon",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/SoloJa00.htm",
       "name": "Javon Solomon",
       "position": "LB",
       "jersey": 56,
@@ -6920,10 +7146,10 @@
     {
       "id": "4831989",
       "otcId": "12469",
-      "otcSlug": null,
+      "otcSlug": "deone-walker",
       "otcUrl": "https://overthecap.com/player/deone-walker/12469/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4831989",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Deone%20Walker",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4831989/deone-walker",
+      "pfrUrl": "https://www.pro-football-reference.com/players/W/WalkDe04.htm",
       "name": "Deone Walker",
       "position": "DT",
       "jersey": 96,
@@ -7062,10 +7288,10 @@
     {
       "id": "4568624",
       "otcId": "10915",
-      "otcSlug": null,
+      "otcSlug": "dorian-williams",
       "otcUrl": "https://overthecap.com/player/dorian-williams/10915/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4568624",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dorian%20Williams",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4568624/dorian-williams",
+      "pfrUrl": "https://www.pro-football-reference.com/players/W/WillDo04.htm",
       "name": "Dorian Williams",
       "position": "LB",
       "jersey": 42,
@@ -7120,10 +7346,10 @@
     {
       "id": "3917232",
       "otcId": "8928",
-      "otcSlug": null,
+      "otcSlug": "tyler-bass",
       "otcUrl": "https://overthecap.com/player/tyler-bass/8928/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3917232",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Tyler%20Bass",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3917232/tyler-bass",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BassTy00.htm",
       "name": "Tyler Bass",
       "position": "PK",
       "jersey": 16,
@@ -7220,10 +7446,10 @@
     {
       "id": "4682758",
       "otcId": "13383",
-      "otcSlug": null,
+      "otcSlug": "tommy-doman",
       "otcUrl": "https://overthecap.com/player/tommy-doman/13383/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4682758",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Tommy%20Doman%20Jr.",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4682758/tommy-doman-jr",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DomaTo00.htm",
       "name": "Tommy Doman Jr.",
       "position": "P",
       "jersey": 39,
@@ -7404,10 +7630,10 @@
     {
       "id": "2976549",
       "otcId": "5045",
-      "otcSlug": null,
+      "otcSlug": "reid-ferguson",
       "otcUrl": "https://overthecap.com/player/reid-ferguson/5045/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/2976549",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Reid%20Ferguson",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2976549/reid-ferguson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/F/FergRe00.htm",
       "name": "Reid Ferguson",
       "position": "LS",
       "jersey": 69,
@@ -7546,10 +7772,10 @@
     {
       "id": "4685347",
       "otcId": "13325",
-      "otcSlug": null,
+      "otcSlug": "zane-durant",
       "otcUrl": "https://overthecap.com/player/zane-durant/13325/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685347",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Zane%20Durant",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4685347/zane-durant",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DuraZa00.htm",
       "name": "Zane Durant",
       "position": "DT",
       "jersey": 92,
@@ -7686,12 +7912,154 @@
       }
     },
     {
+      "id": "4242433",
+      "otcId": "9541",
+      "otcSlug": "josh-palmer",
+      "otcUrl": "https://overthecap.com/player/josh-palmer/9541/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4242433/joshua-palmer",
+      "pfrUrl": "https://www.pro-football-reference.com/players/P/PalmJo00.htm",
+      "name": "Joshua Palmer",
+      "position": "WR",
+      "jersey": 5,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242433.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 7410000,
+          "proratedSigning": 1600000,
+          "proratedOption": 0,
+          "proratedBonus": 1600000,
+          "rosterBonusRegular": 1000000,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 250000,
+          "otherBonus": 0,
+          "currentYearBonuses": 1590000,
+          "guaranteedSalary": 0,
+          "capNumber": 10600000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 4800000,
+              "capSavings": 5800000
+            },
+            "june_1_cut": {
+              "deadMoney": 1600000,
+              "capSavings": 9000000
+            },
+            "trade": {
+              "deadMoney": 4800000,
+              "capSavings": 5800000
+            },
+            "june_1_trade": {
+              "deadMoney": 1600000,
+              "capSavings": 9000000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 4933333
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 5920000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 1600000,
+          "proratedOption": 0,
+          "proratedBonus": 1600000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 3200000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3200000,
+              "capSavings": 0
+            },
+            "june_1_cut": {
+              "deadMoney": 1600000,
+              "capSavings": 1600000
+            },
+            "trade": {
+              "deadMoney": 3200000,
+              "capSavings": 0
+            },
+            "june_1_trade": {
+              "deadMoney": 1600000,
+              "capSavings": 1600000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": -652500
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1044000
+            }
+          }
+        },
+        "2029": {
+          "year": 2029,
+          "rosterBucket": "active",
+          "isVoidYear": true,
+          "baseSalary": 0,
+          "proratedSigning": 1600000,
+          "proratedOption": 0,
+          "proratedBonus": 1600000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 0,
+          "transactions": {
+            "cut": {
+              "deadMoney": 1600000,
+              "capSavings": -1600000
+            },
+            "june_1_cut": {
+              "deadMoney": 1600000,
+              "capSavings": -1600000
+            },
+            "trade": {
+              "deadMoney": 1600000,
+              "capSavings": -1600000
+            },
+            "june_1_trade": {
+              "deadMoney": 1600000,
+              "capSavings": -1600000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -1080000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4606712",
       "otcId": "13385",
-      "otcSlug": null,
+      "otcSlug": "armaj-reed-adams",
       "otcUrl": "https://overthecap.com/player/armaj-reed-adams/13385/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4606712",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Ar'maj%20Reed-Adams",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4606712/armaj-reed-adams",
+      "pfrUrl": "https://www.pro-football-reference.com/players/R/ReedAr01.htm",
       "name": "Ar'maj Reed-Adams",
       "position": "G",
       "jersey": 60,
@@ -7872,10 +8240,10 @@
     {
       "id": "4568703",
       "otcId": "12537",
-      "otcSlug": null,
+      "otcSlug": "dorian-strong",
       "otcUrl": "https://overthecap.com/player/dorian-strong/12537/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4568703",
-      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Dorian%20Strong",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4568703/dorian-strong",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/StroDo01.htm",
       "name": "Dorian Strong",
       "position": "CB",
       "jersey": 43,

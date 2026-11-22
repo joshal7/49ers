@@ -1,0 +1,506 @@
+/**
+ * Shared Stage-1 nflverse League-Wide Player Context Loader
+ *
+ * Fetches all league-wide nflverse datasets ONCE per pipeline run (zero per-team duplication):
+ * - `players.csv.gz` (gsis_id, pfr_id, espn_id, otc_id, draft_year/round/pick, college, height/weight)
+ * - `combine.csv.gz` (8,900+ NFL Combine records → MockDraftable-style spider percentiles & comps)
+ * - `stats_player_reg_{seasonYear..seasonYear-3}.csv.gz` + `stats_player_week_{seasonYear}.csv.gz`
+ * - `snap_counts_{seasonYear}.csv.gz`
+ * - `nextgen_stats/ngs_{passing,receiving,rushing}.csv.gz`
+ * - `pfr_advstats/advstats_{season,week}_{pass,rush,rec,def}.csv.gz`
+ * - `espn_data/qbr_{season,week}_level.csv.gz`
+ * - `draft_picks/draft_picks.csv.gz`
+ * - `injuries/injuries_{seasonYear}.csv.gz`
+ */
+
+import zlib from 'node:zlib';
+import { normalizeAnyTeamAbbr } from '../../src/config/teamRegistry.js';
+import {
+  aggregateEspnQbr2026,
+  aggregateWeeklyNgsStats2026,
+  aggregateWeeklyPfrAdvStats2026
+} from '../../src/engine/statsLeaderboardEngine.js';
+import { buildCombineIndexer } from './combineSpider.mjs';
+
+const NFLVERSE_BASE = 'https://github.com/nflverse/nflverse-data/releases/download';
+const UA_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  Accept: '*/*'
+};
+
+export function normPlayerName(name = '') {
+  return String(name || '')
+    .toLowerCase()
+    .replace(/\b(jr|sr|ii|iii|iv|v)\b\.?/g, '')
+    .replace(/[^a-z0-9]/g, '')
+    .trim();
+}
+
+function num(v, decimals = null) {
+  if (v === null || v === undefined || v === '' || v === 'NA' || v === 'NaN') return 0;
+  const n = Number(v);
+  if (!Number.isFinite(n)) return 0;
+  return decimals !== null ? Number(n.toFixed(decimals)) : n;
+}
+
+export function parseCsv(text = '') {
+  if (!text || typeof text !== 'string') return [];
+  const rows = [];
+  let headers = null;
+  let field = '';
+  let row = [];
+  let inQuotes = false;
+
+  const commitRow = () => {
+    if (row.length === 1 && row[0] === '') {
+      row = [];
+      return;
+    }
+    if (!headers) {
+      headers = row.map(h => h.replace(/^\uFEFF/, '').trim());
+    } else {
+      const obj = {};
+      for (let i = 0; i < headers.length; i += 1) {
+        obj[headers[i]] = row[i] !== undefined ? row[i] : '';
+      }
+      rows.push(obj);
+    }
+    row = [];
+  };
+
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (text[i + 1] === '"') {
+          field += '"';
+          i += 1;
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        field += ch;
+      }
+    } else if (ch === '"') {
+      inQuotes = true;
+    } else if (ch === ',') {
+      row.push(field);
+      field = '';
+    } else if (ch === '\n' || ch === '\r') {
+      if (ch === '\r' && text[i + 1] === '\n') i += 1;
+      row.push(field);
+      field = '';
+      commitRow();
+    } else {
+      field += ch;
+    }
+  }
+  if (field.length > 0 || row.length > 0) {
+    row.push(field);
+    commitRow();
+  }
+  return rows;
+}
+
+const MAX_CONCURRENT_CSV = 6;
+let activeCsvFetches = 0;
+const csvWaitQueue = [];
+
+async function acquireCsvSlot() {
+  if (activeCsvFetches < MAX_CONCURRENT_CSV) {
+    activeCsvFetches += 1;
+    return;
+  }
+  await new Promise(resolve => csvWaitQueue.push(resolve));
+}
+
+function releaseCsvSlot() {
+  const next = csvWaitQueue.shift();
+  if (next) next();
+  else activeCsvFetches = Math.max(0, activeCsvFetches - 1);
+}
+
+async function fetchCsv(url, retries = 2) {
+  await acquireCsvSlot();
+  try {
+    let lastErr;
+    for (let attempt = 0; attempt <= retries; attempt += 1) {
+      try {
+        const res = await fetch(url, {
+          headers: UA_HEADERS,
+          redirect: 'follow',
+          signal: AbortSignal.timeout(45000)
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+        const buf = Buffer.from(await res.arrayBuffer());
+        const isGzip = url.endsWith('.gz') || (buf.length >= 2 && buf[0] === 0x1f && buf[1] === 0x8b);
+        const text = isGzip ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
+        return parseCsv(text);
+      } catch (err) {
+        lastErr = err;
+        if (attempt < retries) {
+          await new Promise(r => setTimeout(r, 900 * (attempt + 1)));
+        }
+      }
+    }
+    throw lastErr;
+  } finally {
+    releaseCsvSlot();
+  }
+}
+
+async function fetchCsvWithFallback(primaryUrl, fallbackUrl = null) {
+  try {
+    return await fetchCsv(primaryUrl, 2);
+  } catch (err) {
+    if (fallbackUrl) {
+      try {
+        return await fetchCsv(fallbackUrl, 1);
+      } catch {
+        // swallow secondary fallback failure
+      }
+    }
+    console.warn(`[stage-1/nflverse] Optional CSV unavailable (${primaryUrl}): ${err?.message || err}`);
+    return [];
+  }
+}
+
+/**
+ * Estimates 4-year rookie contract value by overall pick slot (2026 NFL CBA rookie wage scale)
+ * when OverTheCap contract totals are not yet populated for a rookie pick.
+ */
+export function estimate4YrRookieContractByPick(overallPick = 200) {
+  const p = Math.max(1, Math.min(262, Number(overallPick) || 200));
+  if (p === 1) return 44_500_000;
+  if (p <= 5) return Math.round(44_500_000 - (p - 1) * 3_100_000);
+  if (p <= 10) return Math.round(32_000_000 - (p - 5) * 1_900_000);
+  if (p <= 20) return Math.round(22_500_000 - (p - 10) * 650_000);
+  if (p <= 32) return Math.round(16_000_000 - (p - 20) * 260_000);
+  if (p <= 64) return Math.round(11_400_000 - (p - 32) * 145_000);
+  if (p <= 100) return Math.round(6_700_000 - (p - 64) * 36_000);
+  if (p <= 140) return Math.round(5_350_000 - (p - 100) * 20_000);
+  if (p <= 220) return Math.round(4_550_000 - (p - 140) * 6_500);
+  return 4_020_000;
+}
+
+/**
+ * Loads and pre-indexes ALL league-wide nflverse datasets once in Stage 1.
+ */
+export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
+  const prevSeasonYear = seasonYear - 1;
+  console.log(`[stage-1/nflverse] Loading shared league-wide player, combine, stats, snap, NGS, PFR, QBR & draft datasets (${seasonYear})...`);
+
+  const [
+    nflPlayers,
+    statsPlayerCurrent,
+    statsPlayerWeekCurrent,
+    statsPlayerPrev1,
+    statsPlayerPrev2,
+    statsPlayerPrev3,
+    ngsPassing,
+    ngsReceiving,
+    ngsRushing,
+    pfrPass,
+    pfrPassWeekCurrent,
+    pfrRush,
+    pfrRushWeekCurrent,
+    pfrRec,
+    pfrRecWeekCurrent,
+    pfrDef,
+    pfrDefWeekCurrent,
+    qbrSeasonRows,
+    qbrWeekRows,
+    snapsCurrent,
+    injuriesCurrent,
+    combineRows,
+    draftPicksRows
+  ] = await Promise.all([
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/players/players.csv.gz`, `${NFLVERSE_BASE}/players/players.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_week_${seasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 1}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 2}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear - 3}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_passing.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_passing.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_receiving.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv.gz`, `${NFLVERSE_BASE}/nextgen_stats/ngs_rushing.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_pass.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_pass_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_pass_${prevSeasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_rush.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_rush.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_rush_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_rush_${prevSeasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_rec.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_rec.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_rec_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_rec_${prevSeasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_season_def.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/pfr_advstats/advstats_week_def_${seasonYear}.csv.gz`, `${NFLVERSE_BASE}/pfr_advstats/advstats_week_def_${prevSeasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/espn_data/qbr_season_level.csv.gz`, `${NFLVERSE_BASE}/espn_data/qbr_season_level.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/espn_data/qbr_week_level.csv.gz`, `${NFLVERSE_BASE}/espn_data/qbr_week_level.csv`),
+    fetchCsvWithFallback(
+      `${NFLVERSE_BASE}/snap_counts/snap_counts_${seasonYear}.csv.gz`,
+      `${NFLVERSE_BASE}/snap_counts/snap_counts_${prevSeasonYear}.csv.gz`
+    ),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/injuries/injuries_${seasonYear}.csv.gz`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/combine/combine.csv.gz`, `${NFLVERSE_BASE}/combine/combine.csv`),
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/draft_picks/draft_picks.csv.gz`, `${NFLVERSE_BASE}/draft_picks/draft_picks.csv`)
+  ]);
+
+  // 1. Combine Spider Chart Indexer (MockDraftable 0–100th positional percentiles + RAS + Comps)
+  const { buildPlayerSpiderProfile } = buildCombineIndexer(combineRows);
+
+  // 2. Index 4-season player stats by GSIS ID & normalized name
+  const seasonStatsByGsis = new Map();
+  const seasonStatsByName = new Map();
+  for (const [yr, dataset] of [
+    [seasonYear, statsPlayerCurrent],
+    [seasonYear - 1, statsPlayerPrev1],
+    [seasonYear - 2, statsPlayerPrev2],
+    [seasonYear - 3, statsPlayerPrev3]
+  ]) {
+    for (const row of dataset) {
+      const entry = {
+        season: yr,
+        team: normalizeAnyTeamAbbr(row.recent_team || '') || row.recent_team || '',
+        games: num(row.games),
+        passing: {
+          completions: num(row.completions),
+          attempts: num(row.attempts),
+          yards: num(row.passing_yards),
+          tds: num(row.passing_tds),
+          ints: num(row.passing_interceptions),
+          sacks: num(row.sacks_suffered),
+          epa: num(row.passing_epa, 2),
+          cpoe: num(row.passing_cpoe, 2),
+          airYards: num(row.passing_air_yards),
+          yac: num(row.passing_yards_after_catch),
+          firstDowns: num(row.passing_first_downs)
+        },
+        rushing: {
+          carries: num(row.carries),
+          yards: num(row.rushing_yards),
+          tds: num(row.rushing_tds),
+          epa: num(row.rushing_epa, 2),
+          firstDowns: num(row.rushing_first_downs),
+          explosive10Plus: num(row.rushing_10),
+          fumblesLost: num(row.rushing_fumbles_lost)
+        },
+        receiving: {
+          receptions: num(row.receptions),
+          targets: num(row.targets),
+          yards: num(row.receiving_yards),
+          tds: num(row.receiving_tds),
+          epa: num(row.receiving_epa, 2),
+          yac: num(row.receiving_yards_after_catch),
+          airYards: num(row.receiving_air_yards),
+          targetSharePct: num(Number(row.target_share || 0) * 100, 1),
+          airYardsSharePct: num(Number(row.air_yards_share || 0) * 100, 1),
+          wopr: num(row.wopr, 2),
+          racr: num(row.racr, 2),
+          firstDowns: num(row.receiving_first_downs)
+        },
+        defense: {
+          soloTackles: num(row.def_tackles_solo),
+          assistTackles: num(row.def_tackle_assists) + num(row.def_tackles_with_assist),
+          totalTackles: num(row.def_tackles_solo) + num(row.def_tackle_assists) + num(row.def_tackles_with_assist),
+          tfl: num(row.def_tackles_for_loss),
+          sacks: num(row.def_sacks, 1),
+          qbHits: num(row.def_qb_hits),
+          ints: num(row.def_interceptions),
+          passDefended: num(row.def_pass_defended),
+          forcedFumbles: num(row.def_fumbles_forced)
+        },
+        kicking: {
+          fgMade: num(row.fg_made),
+          fgAtt: num(row.fg_att),
+          fgPct: num(Number(row.fg_pct || 0) * 100, 1),
+          fgLong: num(row.fg_long),
+          patMade: num(row.pat_made),
+          patAtt: num(row.pat_att),
+          punts: num(row.pt_att),
+          puntYards: num(row.pt_yards),
+          puntInside20: num(row.pt_inside_20)
+        }
+      };
+
+      if (row.player_id) {
+        if (!seasonStatsByGsis.has(row.player_id)) seasonStatsByGsis.set(row.player_id, []);
+        seasonStatsByGsis.get(row.player_id).push(entry);
+      }
+      const nk = normPlayerName(row.player_display_name || row.player_name);
+      if (nk) {
+        if (!seasonStatsByName.has(nk)) seasonStatsByName.set(nk, []);
+        seasonStatsByName.get(nk).push(entry);
+      }
+    }
+  }
+
+  // 3. ESPN Total QBR, NextGen Stats, PFR Advanced Stats
+  const qbrAgg = aggregateEspnQbr2026({
+    qbrSeason: qbrSeasonRows,
+    qbrWeek: qbrWeekRows,
+    seasonYear
+  });
+  const ngsAgg = aggregateWeeklyNgsStats2026({
+    ngsPassing,
+    ngsReceiving,
+    ngsRushing,
+    seasonYear
+  });
+  const pfrAdvAgg = aggregateWeeklyPfrAdvStats2026({
+    pfrPassSeason: pfrPass,
+    pfrRushSeason: pfrRush,
+    pfrRecSeason: pfrRec,
+    pfrDefSeason: pfrDef,
+    pfrPassWeek: pfrPassWeekCurrent,
+    pfrRushWeek: pfrRushWeekCurrent,
+    pfrRecWeek: pfrRecWeekCurrent,
+    pfrDefWeek: pfrDefWeekCurrent,
+    statsPlayerWeek: statsPlayerWeekCurrent,
+    nflPlayers,
+    seasonYear
+  });
+
+  // 4. Aggregate 2026 Regular-Season Snap Counts (both per-team and all-teams for mid-season trades)
+  const snapsByTeamAndPfr = new Map();
+  const snapsByTeamAndName = new Map();
+  const snapsAllTeamsByPfr = new Map();
+  const snapsAllTeamsByName = new Map();
+  const seenAllSnapGames = new Set();
+  const seenTeamSnapGames = new Set();
+
+  for (const s of snapsCurrent) {
+    if (s.game_type && s.game_type !== 'REG') continue;
+    const pfrKey = s.pfr_player_id || '';
+    const nk = normPlayerName(s.player);
+    const idKey = pfrKey || nk;
+    if (!idKey) continue;
+
+    const allDedupKey = `${idKey}::${s.game_id || s.week || ''}`;
+    if (!seenAllSnapGames.has(allDedupKey)) {
+      seenAllSnapGames.add(allDedupKey);
+      const allCur = snapsAllTeamsByPfr.get(idKey) || {
+        games: 0,
+        offSnaps: 0,
+        offPctSum: 0,
+        defSnaps: 0,
+        defPctSum: 0,
+        stSnaps: 0,
+        stPctSum: 0
+      };
+      allCur.games += 1;
+      allCur.offSnaps += num(s.offense_snaps);
+      allCur.offPctSum += num(s.offense_pct);
+      allCur.defSnaps += num(s.defense_snaps);
+      allCur.defPctSum += num(s.defense_pct);
+      allCur.stSnaps += num(s.st_snaps);
+      allCur.stPctSum += num(s.st_pct);
+      snapsAllTeamsByPfr.set(idKey, allCur);
+      if (nk) snapsAllTeamsByName.set(nk, allCur);
+    }
+
+    const teamAbbr = normalizeAnyTeamAbbr(s.team || '');
+    if (!teamAbbr) continue;
+    const teamDedupKey = `${teamAbbr}::${idKey}::${s.game_id || s.week || ''}`;
+    if (seenTeamSnapGames.has(teamDedupKey)) continue;
+    seenTeamSnapGames.add(teamDedupKey);
+
+    if (!snapsByTeamAndPfr.has(teamAbbr)) snapsByTeamAndPfr.set(teamAbbr, new Map());
+    if (!snapsByTeamAndName.has(teamAbbr)) snapsByTeamAndName.set(teamAbbr, new Map());
+    const tPfrMap = snapsByTeamAndPfr.get(teamAbbr);
+    const tNameMap = snapsByTeamAndName.get(teamAbbr);
+    const cur = tPfrMap.get(idKey) || {
+      games: 0,
+      offSnaps: 0,
+      offPctSum: 0,
+      defSnaps: 0,
+      defPctSum: 0,
+      stSnaps: 0,
+      stPctSum: 0
+    };
+    cur.games += 1;
+    cur.offSnaps += num(s.offense_snaps);
+    cur.offPctSum += num(s.offense_pct);
+    cur.defSnaps += num(s.defense_snaps);
+    cur.defPctSum += num(s.defense_pct);
+    cur.stSnaps += num(s.st_snaps);
+    cur.stPctSum += num(s.st_pct);
+    tPfrMap.set(idKey, cur);
+    if (nk) tNameMap.set(nk, cur);
+  }
+
+  // 5. Index weekly injuries by teamAbbr -> normName -> weekly history array
+  const weeklyInjByTeamAndName = new Map();
+  for (const row of injuriesCurrent) {
+    const teamAbbr = normalizeAnyTeamAbbr(row.team || '');
+    const nk = normPlayerName(row.full_name);
+    if (!teamAbbr || !nk) continue;
+    if (!weeklyInjByTeamAndName.has(teamAbbr)) weeklyInjByTeamAndName.set(teamAbbr, new Map());
+    const teamMap = weeklyInjByTeamAndName.get(teamAbbr);
+    if (!teamMap.has(nk)) teamMap.set(nk, []);
+    teamMap.get(nk).push({
+      week: num(row.week),
+      injury: row.report_primary_injury || row.practice_primary_injury || '',
+      gameStatus: row.report_status || '',
+      practiceStatus: row.practice_status || ''
+    });
+  }
+
+  // 6. Index draft picks for current seasonYear by drafting teamAbbr
+  const draftPicksByTeam = new Map();
+  const draftPickByPfrId = new Map();
+  const draftPickByNameYear = new Map();
+  for (const dp of draftPicksRows) {
+    const yr = Number(dp.season || 0);
+    const rd = Number(dp.round || 0);
+    const pk = Number(dp.pick || 0);
+    if (!yr || !rd || !pk) continue;
+    const teamAbbr = normalizeAnyTeamAbbr(dp.team || '');
+    const normObj = {
+      season: yr,
+      round: rd,
+      pick: pk,
+      team: teamAbbr,
+      name: String(dp.pfr_player_name || dp.player_name || '').trim(),
+      pfrId: String(dp.pfr_player_id || '').trim() || null,
+      gsisId: String(dp.gsis_id || '').trim() || null,
+      position: String(dp.position || '').trim() || 'ATH',
+      college: String(dp.college || '').trim() || '',
+      age: Number(dp.age) || null
+    };
+    if (normObj.pfrId) draftPickByPfrId.set(normObj.pfrId, normObj);
+    const nk = normPlayerName(normObj.name);
+    if (nk) draftPickByNameYear.set(`${nk}:${yr}`, normObj);
+    if (yr === seasonYear && teamAbbr) {
+      if (!draftPicksByTeam.has(teamAbbr)) draftPicksByTeam.set(teamAbbr, []);
+      draftPicksByTeam.get(teamAbbr).push(normObj);
+    }
+  }
+  for (const list of draftPicksByTeam.values()) {
+    list.sort((a, b) => a.pick - b.pick);
+  }
+
+  console.log(
+    `[stage-1/nflverse] Loaded players=${nflPlayers.length}, combine=${combineRows.length}, stats${seasonYear}=${statsPlayerCurrent.length}, snaps${seasonYear}=${snapsCurrent.length}, draftPicks=${draftPicksRows.length}, pfrMaxWk=${pfrAdvAgg.maxChartedWeek || 0}`
+  );
+
+  return {
+    seasonYear,
+    nflPlayers,
+    statsPlayerCurrent,
+    statsPlayerWeekCurrent,
+    snapsCurrent,
+    combineRowsCount: combineRows.length,
+    buildPlayerSpiderProfile,
+    seasonStatsByGsis,
+    seasonStatsByName,
+    ...qbrAgg,
+    ...ngsAgg,
+    ...pfrAdvAgg,
+    snapsByTeamAndPfr,
+    snapsByTeamAndName,
+    snapsAllTeamsByPfr,
+    snapsAllTeamsByName,
+    weeklyInjByTeamAndName,
+    draftPicksByTeam,
+    draftPickByPfrId,
+    draftPickByNameYear
+  };
+}

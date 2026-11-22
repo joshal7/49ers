@@ -916,6 +916,105 @@ await test('Multi-team Coaching Matchup, AI Matchup Intel prompt, Spread Calibra
   setActiveTeamConfig('SF');
 });
 
+await test('Player-Level Parity & Zero Regressions (Spider Charts, Stats, Snaps, Leaderboards, Health, Depth Chart, Draft Recap)', () => {
+  for (const slug of ['lions', 'bills']) {
+    const dir = path.join(ROOT, 'data', 'teams', slug);
+    const roster = JSON.parse(fs.readFileSync(path.join(dir, 'roster.json'), 'utf8'));
+    const health = JSON.parse(fs.readFileSync(path.join(dir, 'health.json'), 'utf8'));
+    const dc = JSON.parse(fs.readFileSync(path.join(dir, 'depth-chart.json'), 'utf8'));
+    const seasonal = JSON.parse(fs.readFileSync(path.join(dir, 'seasonal.json'), 'utf8'));
+    const sched = JSON.parse(fs.readFileSync(path.join(dir, 'schedule-matchup.json'), 'utf8'));
+    const players = roster.players || [];
+
+    assert.ok(players.length >= 60, `${slug} roster should have >= 60 players`);
+    assert.ok(
+      Object.keys(roster.positionalLeaderboards || {}).length >= 100,
+      `${slug} must populate >= 100 positional leaderboards`
+    );
+    assert.ok(
+      Object.keys(roster.peerDirectory || {}).length >= 800,
+      `${slug} must populate >= 800 league peers`
+    );
+
+    let withStats2026 = 0;
+    let withStatProfile = 0;
+    let withCareer = 0;
+    let withSnaps = 0;
+    let withRealDraft = 0;
+    for (const p of players) {
+      assert.ok(p.spiderProfile && Array.isArray(p.spiderProfile.axes) && p.spiderProfile.axes.length >= 6, `${slug} ${p.name} missing spiderProfile axes`);
+      assert.ok(Number.isFinite(p.spiderProfile.compositeRas), `${slug} ${p.name} missing compositeRas`);
+      assert.ok(Number.isFinite(p.health?.playProbabilityPct), `${slug} ${p.name} missing health.playProbabilityPct`);
+      assert.ok(Boolean(p.health?.playBadgeLabel), `${slug} ${p.name} missing health.playBadgeLabel`);
+      assert.ok(!/san-francisco-49ers/i.test(p.otcUrl || ''), `${slug} ${p.name} leaked 49ers OTC URL`);
+      if (p.stats2026) withStats2026 += 1;
+      if (p.statProfile2026?.hasActiveStats) withStatProfile += 1;
+      if ((p.careerSeasons || []).length > 0) withCareer += 1;
+      if ((p.snapSummary?.offenseSnaps || 0) + (p.snapSummary?.defenseSnaps || 0) + (p.snapSummary?.stSnaps || 0) > 0) withSnaps += 1;
+      if (/^\d{4}\s*•\s*Rd\s*\d+,\s*Pick\s*#\d+/.test(p.draftInfo || '')) withRealDraft += 1;
+    }
+    assert.ok(withStats2026 >= 40, `${slug} expected >= 40 players with stats2026, got ${withStats2026}`);
+    assert.ok(withStatProfile >= 45, `${slug} expected >= 45 players with statProfile2026, got ${withStatProfile}`);
+    assert.ok(withCareer >= 50, `${slug} expected >= 50 players with careerSeasons, got ${withCareer}`);
+    assert.ok(withSnaps >= 45, `${slug} expected >= 45 players with snapSummary, got ${withSnaps}`);
+    assert.ok(withRealDraft >= 35, `${slug} expected >= 35 drafted players with real draftInfo, got ${withRealDraft}`);
+
+    // Practice report & opponent health invariants (no undefined probabilities, no healthy Active fantasy recaps)
+    for (const r of health.practiceReport || []) {
+      assert.ok(Number.isFinite(r.playProbabilityPct), `${slug} practiceReport ${r.name} missing playProbabilityPct`);
+      assert.ok(Boolean(r.playBadgeLabel), `${slug} practiceReport ${r.name} missing playBadgeLabel`);
+      assert.ok(
+        !(r.gameStatus === 'Active' && /^healthy$/i.test(r.injuryType || '') && r.wed === '-' && r.thu === '-' && r.fri === '-'),
+        `${slug} practiceReport polluted with healthy active player ${r.name}`
+      );
+      assert.ok(
+        !(r.gameStatus === 'Active' && r.playProbabilityPct === 0),
+        `${slug} practiceReport contradiction on ${r.name}: Active yet 0% Out`
+      );
+    }
+    for (const oppRow of sched.upcomingMatchup?.opponentHealth?.injuryReport || []) {
+      assert.ok(Number.isFinite(oppRow.playProbabilityPct), `${slug} opponentHealth ${oppRow.name} missing playProbabilityPct`);
+      assert.ok(Boolean(oppRow.playBadgeLabel), `${slug} opponentHealth ${oppRow.name} missing playBadgeLabel`);
+    }
+
+    // Depth chart unit naming & ordering (Special Teams must NEVER be labeled "Offense (Special Teams)")
+    const unitNames = (dc.units || []).map(u => u.unitName);
+    assert.ok(!unitNames.some(n => /offense\s*\(\s*special/i.test(n)), `${slug} depth chart mislabeled Special Teams as Offense`);
+    const offIdx = unitNames.findIndex(n => /^Offense/i.test(n));
+    const defIdx = unitNames.findIndex(n => /^Defense/i.test(n));
+    const stIdx = unitNames.findIndex(n => /^Special Teams/i.test(n));
+    if (offIdx >= 0 && defIdx >= 0) assert.ok(offIdx < defIdx, `${slug} Offense must precede Defense`);
+    if (defIdx >= 0 && stIdx >= 0) assert.ok(defIdx < stIdx, `${slug} Defense must precede Special Teams`);
+
+    // Draft Recap 2026 picks schema + spiderProfile
+    const picks = seasonal.draftClass2026?.picks || [];
+    assert.ok(picks.length >= 4, `${slug} draftClass2026 should have >= 4 picks, got ${picks.length}`);
+    for (const pk of picks) {
+      assert.ok(Number.isFinite(pk.round) && pk.round >= 1 && pk.round <= 7, `${slug} draft pick ${pk.name} invalid round`);
+      assert.ok(Number.isFinite(pk.pick) && pk.pick >= 1 && pk.pick <= 262, `${slug} draft pick ${pk.name} missing pick number`);
+      assert.ok(Boolean(pk.roleSummary), `${slug} draft pick ${pk.name} missing roleSummary`);
+      assert.ok(pk.spiderProfile && pk.spiderProfile.axes?.length >= 6, `${slug} draft pick ${pk.name} missing spiderProfile`);
+    }
+
+    // Spotlight check: Jahmyr Gibbs on Lions must have full official Combine spider chart, 2026 + career stats & clean health
+    if (slug === 'lions') {
+      const gibbs = players.find(p => p.name === 'Jahmyr Gibbs');
+      assert.ok(gibbs, 'Jahmyr Gibbs must exist on Lions roster');
+      assert.equal(gibbs.pfrId, 'GibbJa01');
+      assert.equal(gibbs.gsisId, '00-0039139');
+      assert.equal(gibbs.otcSlug, 'jahmyr-gibbs');
+      assert.equal(gibbs.draftInfo, '2023 • Rd 1, Pick #12');
+      assert.equal(gibbs.spiderProfile.sourceType, 'NFL Combine Official');
+      assert.ok(gibbs.primarySnapPct > 0, 'Jahmyr Gibbs primarySnapPct must be > 0');
+      assert.ok(gibbs.stats2026 && gibbs.stats2026.rushing.yards > 0, 'Jahmyr Gibbs must have 2026 rushing stats');
+      assert.ok(gibbs.statProfile2026?.hasActiveStats, 'Jahmyr Gibbs must have statProfile2026');
+      assert.ok(gibbs.careerSeasons.length >= 4, 'Jahmyr Gibbs must have >= 4 career seasons (2023-2026)');
+      assert.equal(gibbs.health.isOnPracticeReport, false, 'Healthy Jahmyr Gibbs must not be on practice report');
+      assert.ok(gibbs.health.playProbabilityPct >= 95, 'Healthy Jahmyr Gibbs must have >= 95% play probability');
+    }
+  }
+});
+
 // Restore default SF active team singleton
 setActiveTeamConfig('SF');
 
