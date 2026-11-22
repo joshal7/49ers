@@ -6446,7 +6446,9 @@ async function main() {
         const headerStyle = headerEl ? getComputedStyle(headerEl) : null;
         const headerPosition = headerStyle?.position || '';
         const headerBackdrop = headerStyle?.backdropFilter || headerStyle?.webkitBackdropFilter || 'none';
+        const headerPaddingTop = parseFloat(headerStyle?.paddingTop || '0') || 0;
         const headerRect = headerEl?.getBoundingClientRect();
+        const headerHeight = headerRect ? Math.round(headerRect.height) : 0;
         const mainViewRect = document.getElementById('mainView')?.getBoundingClientRect();
         const searchBtn = document.getElementById('openSearchBtn');
         const settingsBtn = document.getElementById('openSettingsBtn');
@@ -6476,6 +6478,7 @@ async function main() {
 
         const sheetModeAttr = backdrop?.getAttribute('data-sheet-mode') || '';
         const backdropAlignItems = backdrop ? getComputedStyle(backdrop).alignItems : '';
+        const searchSheetPaddingTop = sheet ? parseFloat(getComputedStyle(sheet).paddingTop || '0') || 0 : 0;
         const sheetRectKb = sheet?.getBoundingClientRect();
         const paneRectKb = resultsPane?.getBoundingClientRect();
 
@@ -6522,6 +6525,9 @@ async function main() {
         return {
           headerPosition,
           headerBackdrop,
+          headerPaddingTop,
+          headerHeight,
+          searchSheetPaddingTop,
           btnWidth: btnRect ? Math.round(btnRect.width) : 0,
           btnHeight: btnRect ? Math.round(btnRect.height) : 0,
           setHeight: setRect ? Math.round(setRect.height) : 0,
@@ -6548,8 +6554,11 @@ async function main() {
       assert(
         searchUxAudit.headerPosition === 'fixed' &&
           searchUxAudit.headerBackdrop === 'none' &&
-          searchUxAudit.mainClearsFixedHeader,
-        `Top header must be fixed, solid non-frosted, and cleared by mainView: ${JSON.stringify(searchUxAudit)}`
+          searchUxAudit.mainClearsFixedHeader &&
+          searchUxAudit.headerPaddingTop <= 12 &&
+          searchUxAudit.headerHeight <= 68 &&
+          searchUxAudit.searchSheetPaddingTop <= 12,
+        `Top header must be fixed, solid non-frosted, compact with zero dead browser top whitespace, and cleared by mainView: ${JSON.stringify(searchUxAudit)}`
       );
       assert(
         searchUxAudit.searchBtnUnobstructed &&

@@ -6836,17 +6836,16 @@ a.raw-item-thumb.salient-thumb:hover {
   padding: 0 10px;
 }
 
-/* iOS Safari & iOS 26+ Home Screen PWA: clear Apple's native half-frosted top scroll-edge & status-bar blur completely */
+/* iOS Home Screen PWA (standalone only): clear Dynamic Island / status bar & iOS 26 top scroll-edge blur.
+   Regular iOS Safari & Chrome tabs already render browser chrome/status bar above the web viewport,
+   so they inherit the compact base calc(env(safe-area-inset-top, 0px) + 8px) padding with zero dead top space. */
 @supports (-webkit-touch-callout: none) {
-  .top-header {
-    padding-top: max(calc(env(safe-area-inset-top, 0px) + 28px), 48px);
-  }
   @media (display-mode: standalone) {
     .top-header {
       padding-top: max(calc(env(safe-area-inset-top, 0px) + 28px), 84px);
     }
   }
-  @media (orientation: landscape) and (max-height: 500px) {
+  @media (display-mode: standalone) and (orientation: landscape) and (max-height: 500px) {
     .top-header {
       padding-top: calc(env(safe-area-inset-top, 0px) + 6px);
     }
@@ -7383,18 +7382,15 @@ a.raw-item-thumb.salient-thumb:hover {
   }
 }
 
+/* iOS Home Screen PWA (standalone only): keep Search sheet clear of Dynamic Island / status bar.
+   Regular iOS Safari & Chrome tabs inherit the compact base env(safe-area-inset-top, 0px) padding. */
 @supports (-webkit-touch-callout: none) {
-  @media (max-width: 639px) {
-    .sheet-backdrop[data-sheet-mode="search"] .bottom-sheet {
-      padding-top: max(calc(env(safe-area-inset-top, 0px) + 22px), 44px);
-    }
-  }
   @media (max-width: 639px) and (display-mode: standalone) {
     .sheet-backdrop[data-sheet-mode="search"] .bottom-sheet {
       padding-top: max(calc(env(safe-area-inset-top, 0px) + 22px), 78px);
     }
   }
-  @media (orientation: landscape) and (max-height: 500px) {
+  @media (display-mode: standalone) and (orientation: landscape) and (max-height: 500px) {
     .sheet-backdrop[data-sheet-mode="search"] .bottom-sheet {
       padding-top: calc(env(safe-area-inset-top, 0px) + 4px);
     }
